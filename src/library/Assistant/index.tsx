@@ -27,7 +27,7 @@ export const Assistant = () => {
         transition={{
           duration: 0.5,
           type: "spring",
-          bounce: 0.25
+          bounce: 0.22
         }}
         variants={variants}
       >

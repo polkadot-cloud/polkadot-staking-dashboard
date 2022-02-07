@@ -19,3 +19,9 @@ button {
   border: none;
   cursor: pointer;
 }
+
+a {
+  color: #222;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -20,7 +20,7 @@ export const ContentWrapper = styled.div`
   flex-flow: column nowrap;
   overflow: auto;
   flex-grow: 1;
-  background: rgba(215,215,215,0.96);
+  background: rgba(225,225,225,0.96);
   padding: 0 0.75rem;
   margin: 0.75rem;
 `;

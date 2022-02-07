@@ -44,14 +44,6 @@ export const Wrapper = styled.div`
         font-size: 0.9rem;
       }
     }
-    p {
-      margin: 0;
-      &.label {
-        font-size: 0.85rem;
-        color: #666;
-        text-transform: uppercase;
-      }
-    }
   }
 `;
 

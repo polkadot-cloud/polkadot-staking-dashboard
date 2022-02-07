@@ -1,9 +1,11 @@
 import styled from 'styled-components';
-import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MINIMUM_HEIGHT } from './constants';
+import { motion } from 'framer-motion';
+import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MINIMUM_HEIGHT, INTERFACE_MINIMUM_WIDTH } from './constants';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
     width: 100%;
+    min-width: ${INTERFACE_MINIMUM_WIDTH}px;
     background: #fbfbfb;
     display: flex;
     flex-flow: column nowrap;
@@ -28,8 +30,16 @@ export const SideInterfaceWrapper = styled.div`
 
 // Main interface wrapper
 export const MainInterfaceWrapper = styled.div`
-    flex-grow: 1;
-    height: 100%;
+    flex: 1;
     display: flex;
     flex-flow: row nowrap;
+    overflow: auto;
+`;
+
+// Page wrapper
+export const PageWrapper = styled(motion.div)`
+    flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 1rem 1rem;
 `;

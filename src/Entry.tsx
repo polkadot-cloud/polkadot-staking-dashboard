@@ -12,6 +12,8 @@ import AssistantButton from './library/AssistantButton';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
 import { useApi } from './contexts/Api';
+import { BrowserRouter } from "react-router-dom";
+import Router from './Router';
 
 export const Entry = () => {
 
@@ -31,16 +33,18 @@ export const Entry = () => {
       <BodyInterfaceWrapper>
         <Assistant />
 
-        {/* Left side menu */}
-        <SideInterfaceWrapper>
-          <SideMenu />
-        </SideInterfaceWrapper>
+        <BrowserRouter>
+          {/* Left side menu */}
+          <SideInterfaceWrapper>
+            <SideMenu />
+          </SideInterfaceWrapper>
 
-        {/* Main Content Window */}
-        <MainInterfaceWrapper>
-          <AssistantButton />
-
-        </MainInterfaceWrapper>
+          {/* Main Content Window */}
+          <MainInterfaceWrapper>
+            <AssistantButton />
+            <Router />
+          </MainInterfaceWrapper>
+        </BrowserRouter>
       </BodyInterfaceWrapper>
 
       {/* Network status and network details */}

@@ -16,7 +16,7 @@ export const BlockNumber = () => {
   const subscribeToBlockHeads = async (api: any) => {
     if (isReady() === true) {
       await api.rpc.chain.subscribeNewHeads((header: any) => {
-        setBlockNumber(header.number.toHuman());
+        setBlockNumber('#' + header.number.toHuman());
       });
     }
   }

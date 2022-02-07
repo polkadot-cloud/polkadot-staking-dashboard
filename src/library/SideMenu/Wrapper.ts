@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   overflow: auto;
   flex: 1;
   margin: 1.5rem 1rem;
-  width: 100%;
+  min-width: 200px;
   &:hover {
     transform: scale(1.005);
   }
@@ -22,6 +22,10 @@ export const ItemWrapper = styled.div<any>`
   justify-content: flex-start;
   align-items: center;
   transition: background 0.2s;
+  padding: 0.75rem 0.5rem;
+  margin: 0.4rem 0;
+  font-size: 1rem;
+
   &:hover {
     background: ${props => !props.active ?
     `rgba(0,0,0,0.03)` :
@@ -31,15 +35,10 @@ export const ItemWrapper = styled.div<any>`
   span {
     margin-right: 0.8rem;
   }
-  button {
-    padding: 0.4rem;
-    margin: 0.4rem 0;
-    font-size: 1rem;
-  }
 `;
 
 export const HeadingWrapper = styled.div<any>`
-  margin: 0.75rem 0 0.25rem 0;
+  margin: 1.25rem 0 0.25rem 0;
   font-size: 0.8rem;
   padding: 0 0.5rem;
   display: flex;

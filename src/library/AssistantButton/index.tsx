@@ -10,9 +10,6 @@ export const AssistantButton = () => {
     <Wrapper>
       <div>
         <section>
-          <p className='label'>subject</p>
-        </section>
-        <section>
           <motion.button
             onClick={() => { assistant.toggle() }}
             whileHover={{ scale: 1.02 }}
