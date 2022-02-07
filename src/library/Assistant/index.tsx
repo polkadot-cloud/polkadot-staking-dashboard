@@ -1,6 +1,6 @@
 import { useAssistant } from '../../contexts/Assistant';
-import { Wrapper, ContentWrapper } from './Wrapper';
-import { MAX_ASSISTANT_INTERFACE_WIDTH } from '../../constants';
+import { Wrapper, ContentWrapper, ListWrapper } from './Wrapper';
+import Item from './Item';
 
 export const Assistant = () => {
 
@@ -15,33 +15,32 @@ export const Assistant = () => {
       opacity: 1,
       right: '0px',
     },
-  }
+  };
 
-  const initial = assistant.open ? `hidden` : `visible`;
   const animate = assistant.open ? `visible` : `hidden`;
 
   return (
     <>
       <Wrapper
-        initial={initial}
+        initial={false}
         animate={animate}
         transition={{
           duration: 0.5,
+          type: "spring",
+          bounce: 0.25
         }}
         variants={variants}
-        style={{
-          display: 'flex',
-          position: 'absolute',
-          top: 0,
-          width: '100%',
-          maxWidth: `${MAX_ASSISTANT_INTERFACE_WIDTH}px`,
-          height: '100%',
-          flexFlow: 'column nowrap',
-          zIndex: 2,
-        }}
       >
         <ContentWrapper>
-          <h2 onClick={() => { assistant.toggle() }}>Assistant</h2>
+          <h2 onClick={() => { assistant.toggle() }}>[Subject]</h2>
+          <ListWrapper>
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+            <Item />
+          </ListWrapper>
+
         </ContentWrapper>
       </Wrapper>
     </>

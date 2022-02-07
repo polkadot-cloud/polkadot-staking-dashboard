@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 // import { useDemo, DemoContextState } from './contexts/Demo';
 // import { DemoBar } from './library/DemoBar';
 import { NetworkBar } from './library/NetworkBar';
@@ -10,8 +11,16 @@ import {
 import AssistantButton from './library/AssistantButton';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
+import { useApi } from './contexts/Api';
 
 export const Entry = () => {
+
+  const { connect }: any = useApi();
+
+  // initial connection to Polakdot API
+  useEffect(() => {
+    connect();
+  }, []);
 
   // const demo: DemoContextState = useDemo();
 

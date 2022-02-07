@@ -7,49 +7,49 @@ export const Wrapper = styled.div`
   flex-flow: row-reverse wrap;
   padding: 1.2rem; 
   transition: all 0.15s;
-  &:hover {
-    transform: scale(1.03);
-  }
 
   section {
     width: 100%;
     margin-bottom: 0.5rem;
-    text-align: right;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
   }
-
   > div {
     display: flex;
     flex-flow: column wrap;
 
     button {
       flex: 1;
-      border: 1px solid;
-      font-size: 1rem;
-      padding: 0.3rem 0.75rem;
-      margin: 0.2rem 0;
-      border-radius: 0.75rem;
+      font-size: 1.04rem;
+      padding: 0.5rem 1.25rem 0.5rem 0.75rem;
+      margin: 0.025rem 0;
+      border-radius: 0.85rem;
       box-shadow: none;
-      background: none;
+      background: rgba(230,230,230,0.9);
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-end;
       align-items: center;
+      align-content: center;
       cursor: pointer;
-      &:hover {
-        transform: scale(1.005);
-      }
+
       > div:first-child {
-        margin-right: 0.25rem;
+        margin-right: 0.5rem;
+        background: #666;
+        border-radius: 0.5rem;
+        color: #eee;
+        padding: 0.2rem 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
       }
     }
-
     p {
       margin: 0;
       &.label {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        color: #666;
+        text-transform: uppercase;
       }
     }
   }
