@@ -8,7 +8,6 @@ export const Router = () => {
   return (
     <AnimatePresence>
       <Routes>
-
         {PAGES_CONFIG.map((page, pageIndex) =>
           <Route
             key={`main_interface_page_${pageIndex}`}

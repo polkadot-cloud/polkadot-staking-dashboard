@@ -16,7 +16,7 @@ export const PAGE_CATEGORIES = [
 export const PAGES_CONFIG = [
   {
     category: 1,
-    title: 'Dashboard',
+    title: 'Home',
     uri: '/'
   },
   {

@@ -86,7 +86,7 @@ export const NetworkBar = () => {
             Network Info
           </button>
           <ConnectionSymbol color={symbolColor} />
-          <BlockNumber />
+          {status === CONNECTION_STATUS[2] && <BlockNumber />}
         </section>
       </div>
     </Wrapper>

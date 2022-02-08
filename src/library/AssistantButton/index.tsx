@@ -15,7 +15,7 @@ export const AssistantButton = () => {
             whileHover={{ scale: 1.02 }}
           >
             <div>5</div>
-            <div>Assistant</div>
+            Assistant
           </motion.button>
         </section>
       </div>
