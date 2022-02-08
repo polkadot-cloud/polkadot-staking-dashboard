@@ -25,10 +25,12 @@ export const NetworkBar = () => {
     minimised: {
       opacity: 1,
       height: 'auto',
+      background: 'white'
     },
     maximised: {
       opacity: 1,
       height: '200px',
+      background: '#d33079'
     },
   };
 
@@ -83,12 +85,17 @@ export const NetworkBar = () => {
         </section>
         <section>
           <button onClick={() => { setOpen(!open) }}>
-            Network Info
+            {open ? `Collapse Info` : `Network Info`}
           </button>
           <ConnectionSymbol color={symbolColor} />
           {status === CONNECTION_STATUS[2] && <BlockNumber />}
         </section>
       </div>
+      {open &&
+        <div className='row details'>
+          <p>Real-time Network Metrics</p>
+        </div>
+      }
     </Wrapper>
   )
 }

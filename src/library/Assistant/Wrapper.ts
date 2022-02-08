@@ -21,8 +21,26 @@ export const ContentWrapper = styled.div`
   overflow: auto;
   flex-grow: 1;
   background: rgba(225,225,225,0.96);
-  padding: 0 0.75rem;
+  padding: 0 0.5rem;
   margin: 0.75rem;
+
+  > h3 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 0 0.5rem;
+
+    span {
+      flex-grow: 1;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    svg {
+      margin-left: 0.5rem;
+    }
+}
 `;
 
 export const ListWrapper = styled.div`
@@ -55,7 +73,7 @@ export const ItemWrapper = styled(motion.div)`
       text-transform: uppercase;
       font-size: 0.7rem;
     }
-    > h2 {
+    > h3 {
       margin-top: 0;
     }
   }

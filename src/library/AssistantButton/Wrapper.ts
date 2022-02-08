@@ -36,12 +36,12 @@ export const Wrapper = styled.div`
 
       > div:first-child {
         margin-right: 0.5rem;
-        background: #666;
+        background: #333;
         border-radius: 0.5rem;
         color: #eee;
         padding: 0.2rem 0.5rem;
-        font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        font-variation-settings: 'wght' 700;
       }
     }
   }

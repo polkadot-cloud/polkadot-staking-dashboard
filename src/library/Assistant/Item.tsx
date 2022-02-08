@@ -15,7 +15,7 @@ export const Item = () => {
         }}
       >
         <h4>Tutorials</h4>
-        <h2>Title</h2>
+        <h3>Title</h3>
       </motion.button>
     </Wrapper>
   );

@@ -13,17 +13,12 @@ body {
   overflow: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, h3 {
+  font-weight: normal;
+  font-variation-settings: 'wght' 675;
 }
 
-button {
-  font-family: 'Work Sans', 'sans-serif', sans-serif;
-  background: none;
-  box-shadow: none;
-  border: none;
-  cursor: pointer;
+a {
   font-variation-settings: 'wght' 525;
 }
 
@@ -33,11 +28,11 @@ a {
   cursor: pointer;
 }
 
-h1, h2, h3 {
-  font-weight: normal;
-  font-variation-settings: 'wght' 675;
-}
-
-a {
+button {
+  font-family: 'Work Sans', 'sans-serif', sans-serif;
+  background: none;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
   font-variation-settings: 'wght' 525;
 }

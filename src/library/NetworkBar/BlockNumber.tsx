@@ -14,7 +14,8 @@ export const BlockNumber = () => {
 
   // dynamic block number subscription: basic, no unsubscribe
   const subscribeToBlockHeads = async (api: any) => {
-    if (isReady() === true) {
+
+    if (isReady() === true && api !== null) {
       await api.rpc.chain.subscribeNewHeads((header: any) => {
         setBlockNumber('#' + header.number.toHuman());
       });

@@ -36,4 +36,12 @@ export const PAGES_CONFIG = [
   }
 ];
 
+export const pageTitleFromUri = (pathname: string) => {
+  for (let page of PAGES_CONFIG) {
+    if (page.uri === pathname)
+      return page.title;
+  }
+  return '';
+}
+
 export default PAGES_CONFIG;

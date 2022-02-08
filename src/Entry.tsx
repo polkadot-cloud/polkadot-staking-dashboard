@@ -31,9 +31,8 @@ export const Entry = () => {
       {/* Demo mode controller */}
       {/* <DemoBar /> */}
       <BodyInterfaceWrapper>
-        <Assistant />
-
         <BrowserRouter>
+          <Assistant />
           {/* Left side menu */}
           <SideInterfaceWrapper>
             <SideMenu />

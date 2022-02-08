@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div) <any>`
   width: 100%;
-  background: white;
   border-top: 1px solid #eee;
   display: flex;
   flex-flow: column nowrap;
@@ -20,6 +19,25 @@ export const Wrapper = styled(motion.div) <any>`
     justify-content: flex-start;
     align-items: center;
     align-content: center;
+
+    &.details {
+      padding: 1rem;
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: flex-end;
+      align-content: flex-start;
+      flex: 1;
+
+      p {
+        font-size: 0.9rem;
+        font-variation-settings: 'wght' 700;
+        color: white;
+      }
+    }
+
+    &:first-child {
+      background: white;
+    }
 
     p {
       margin: 0 0.25rem;
