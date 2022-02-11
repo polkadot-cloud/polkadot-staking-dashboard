@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
   overflow-x: auto;
   > h2 {
-    margin: 0.2rem 0;
+    margin: 0.4rem 0;
   }
 `;
 

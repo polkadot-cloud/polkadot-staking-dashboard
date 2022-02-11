@@ -11,7 +11,7 @@ export const StatBoxList = (props: any) => {
       <ListWrapper>
         <Scrollable>
           {items.map((item: any, index: number) =>
-            <Item {...item} />
+            <Item {...item} key={index} />
           )}
         </Scrollable>
       </ListWrapper>

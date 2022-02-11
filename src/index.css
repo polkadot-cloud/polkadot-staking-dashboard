@@ -15,35 +15,34 @@ body {
 
 h1 {
   font-weight: normal;
-  font-size: 2.25rem;
+  font-size: 2.15rem;
   font-variation-settings: 'wght' 675;
+  margin-top: 0;
 }
 
 h2 {
   color: #555;
   font-variation-settings: 'wght' 450;
   font-weight: normal;
+  font-size: 1.5rem;
 }
 
 h3 {
   font-variation-settings: 'wght' 575;
   font-weight: normal;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 h4 {
   font-variation-settings: 'wght' 490;
   font-weight: normal;
-  font-size: 0.95rem;
-}
-
-a {
-  font-variation-settings: 'wght' 525;
+  font-size: 0.9rem;
 }
 
 a {
   color: #222;
   text-decoration: none;
   cursor: pointer;
+  font-variation-settings: 'wght' 525;
 }
 
 button {

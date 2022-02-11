@@ -38,7 +38,7 @@ export const PAGES_CONFIG = [
   },
   {
     category: 3,
-    title: 'Browse',
+    title: 'Validators',
     uri: '/validators',
     Entry: Browse,
   },

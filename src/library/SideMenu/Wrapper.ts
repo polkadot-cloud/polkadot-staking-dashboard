@@ -12,6 +12,24 @@ export const Wrapper = styled.div`
   &:hover {
     transform: scale(1.005);
   }
+  display: flex;
+  flex-flow: column nowrap;
+
+  section {
+    &:first-child {
+      flex-grow: 1;
+    }
+    &:last-child {
+      button {
+        transition: color 0.2s;
+        margin: 0 0.25rem;
+        color: #999;
+        &:hover {
+        color: #666;
+      }
+    }
+  }
+}
 `;
 
 export const ItemWrapper = styled.div<any>`
@@ -46,6 +64,12 @@ export const HeadingWrapper = styled.div<any>`
   justify-content: flex-start;
   align-items: center;
   opacity: 0.6;
+`;
+
+export const Separator = styled.div`
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
 `;
 
 export default Wrapper;

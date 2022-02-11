@@ -3,9 +3,6 @@ import { StatBoxList } from '../library/StatBoxList';
 
 export const Overview = (props: PageProps) => {
 
-  const { page } = props;
-  const { title } = page;
-
   const items = [
     {
       label: "Total Nominators",
@@ -23,7 +20,6 @@ export const Overview = (props: PageProps) => {
 
   return (
     <>
-      <h1>{title}</h1>
       <StatBoxList title="What's Happening" items={items} />
     </>
   );

@@ -1,4 +1,5 @@
 import { APIContextWrapper } from './contexts/Api';
+import { ConnectContextWrapper } from './contexts/Connect';
 import { DemoContextWrapper } from './contexts/Demo';
 import { AssistantContextWrapper } from './contexts/Assistant';
 import { Entry } from './Entry';
@@ -6,11 +7,13 @@ import { Entry } from './Entry';
 function App () {
   return (
     <DemoContextWrapper>
-      <APIContextWrapper>
-        <AssistantContextWrapper>
-          <Entry />
-        </AssistantContextWrapper>
-      </APIContextWrapper>
+      <ConnectContextWrapper>
+        <APIContextWrapper>
+          <AssistantContextWrapper>
+            <Entry />
+          </AssistantContextWrapper>
+        </APIContextWrapper>
+      </ConnectContextWrapper>
     </DemoContextWrapper>
   );
 }
