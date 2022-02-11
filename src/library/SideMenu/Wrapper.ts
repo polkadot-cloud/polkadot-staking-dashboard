@@ -39,7 +39,7 @@ export const ItemWrapper = styled.div<any>`
 
 export const HeadingWrapper = styled.div<any>`
   margin: 1.25rem 0 0.25rem 0;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   padding: 0 0.5rem;
   display: flex;
   flex-flow: row wrap;
