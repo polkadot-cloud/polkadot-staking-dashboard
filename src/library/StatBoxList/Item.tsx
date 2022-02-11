@@ -2,22 +2,22 @@ import { StatBoxWrapper } from './Wrapper';
 
 export const Item = (props: any) => {
 
-  const { label } = props;
+  const { label, value } = props;
 
   return (
     <StatBoxWrapper
-    whileHover={{ scale: 1.02 }}
-        transition={{
-          duration: 0.5,
-          type: "spring",
-          bounce: 0.4,
-        }}
+      whileHover={{ scale: 1.02 }}
+      transition={{
+        duration: 0.5,
+        type: "spring",
+        bounce: 0.4,
+      }}
     >
       <section>
-
+        <h1>{value}</h1>
       </section>
       <section>
-        <h3>{label}</h3>
+        <h4>{label}</h4>
       </section>
     </StatBoxWrapper>
   );

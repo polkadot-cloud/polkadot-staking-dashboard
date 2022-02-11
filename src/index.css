@@ -28,6 +28,12 @@ h2 {
 h3 {
   font-variation-settings: 'wght' 575;
   font-weight: normal;
+  font-size: 1.1rem;
+}
+h4 {
+  font-variation-settings: 'wght' 490;
+  font-weight: normal;
+  font-size: 0.95rem;
 }
 
 a {
