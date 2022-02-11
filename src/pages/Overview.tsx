@@ -1,4 +1,5 @@
 import { PageProps } from './types';
+import { StatBoxList } from '../library/StatBoxList';
 
 export const Overview = (props: PageProps) => {
 
@@ -8,6 +9,7 @@ export const Overview = (props: PageProps) => {
   return (
     <>
       <h1>{title}</h1>
+      <StatBoxList title="What's Happening" />
     </>
   );
 }

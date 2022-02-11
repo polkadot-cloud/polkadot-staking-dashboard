@@ -13,9 +13,21 @@ body {
   overflow: hidden;
 }
 
-h1, h2, h3 {
+h1 {
   font-weight: normal;
+  font-size: 2.25rem;
   font-variation-settings: 'wght' 675;
+}
+
+h2 {
+  color: #555;
+  font-variation-settings: 'wght' 450;
+  font-weight: normal;
+}
+
+h3 {
+  font-variation-settings: 'wght' 575;
+  font-weight: normal;
 }
 
 a {
