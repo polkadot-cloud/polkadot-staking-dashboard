@@ -3,13 +3,15 @@ import React from 'react';
 // context type
 export interface ConnectContextState {
   status: number,
-  toggle: () => void,
+  connect: () => void,
+  disconnect: () => void;
 }
 
 // context definition
 export const ConnectContext: React.Context<ConnectContextState> = React.createContext({
   status: 0,
-  toggle: () => { }
+  connect: () => { },
+  disconnect: () => { }
 });
 
 // useAssistant
@@ -22,15 +24,20 @@ export class ConnectContextWrapper extends React.Component {
     status: 0,
   };
 
-  toggle = () => {
-    this.setState({ status: this.state.status === 1 ? 0 : 1 })
+  connect = () => {
+    this.setState({ status: 1 })
+  }
+
+  disconnect = () => {
+    this.setState({ status: 0 })
   }
 
   render () {
     return (
       <ConnectContext.Provider value={{
         status: this.state.status,
-        toggle: this.toggle
+        connect: this.connect,
+        disconnect: this.disconnect
       }}>
         {this.props.children}
       </ConnectContext.Provider>

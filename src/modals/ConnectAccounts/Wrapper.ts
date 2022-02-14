@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   button {
     border: 1px solid #eee;
     border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     transition: background 0.1s;
     font-size: 1rem;
 

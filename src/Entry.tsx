@@ -27,12 +27,13 @@ export class Entry extends React.Component {
   render () {
     return (
       <EntryWrapper>
-        {/* modal */}
-        <Modal />
-        {/* Demo mode controller */}
-        <DemoBar />
-        <BodyInterfaceWrapper>
-          <BrowserRouter>
+        <BrowserRouter>
+          {/* modal */}
+          <Modal />
+          {/* Demo mode controller */}
+          <DemoBar />
+          <BodyInterfaceWrapper>
+
             <Assistant />
             {/* Left side menu */}
             <SideInterfaceWrapper>
@@ -44,11 +45,11 @@ export class Entry extends React.Component {
               <AssistantButton />
               <Router />
             </MainInterfaceWrapper>
-          </BrowserRouter>
-        </BodyInterfaceWrapper>
+          </BodyInterfaceWrapper>
 
-        {/* Network status and network details */}
-        <NetworkBar />
+          {/* Network status and network details */}
+          <NetworkBar />
+        </BrowserRouter>
       </EntryWrapper>
     );
   }
