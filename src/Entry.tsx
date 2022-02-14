@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-// import { useDemo, DemoContextState } from './contexts/Demo';
-// import { DemoBar } from './library/DemoBar';
+import { useDemo, DemoContextState } from './contexts/Demo';
+import { DemoBar } from './library/DemoBar';
 import { NetworkBar } from './library/NetworkBar';
 import {
   EntryWrapper,
@@ -24,12 +24,12 @@ export const Entry = () => {
     connect();
   }, []);
 
-  // const demo: DemoContextState = useDemo();
+  const demo: DemoContextState = useDemo();
 
   return (
     <EntryWrapper>
       {/* Demo mode controller */}
-      {/* <DemoBar /> */}
+      <DemoBar />
       <BodyInterfaceWrapper>
         <BrowserRouter>
           <Assistant />

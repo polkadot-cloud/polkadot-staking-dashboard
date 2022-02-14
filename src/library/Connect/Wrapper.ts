@@ -11,7 +11,7 @@ export const Wrapper = styled(motion.button) <any>`
   flex: 1;
   width: 100%;
   padding: 0.75rem 0.5rem;
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.5rem 0 1.5rem 0;
   font-size: 1rem;
   color: white;
   font-variation-settings: 'wght' 600;

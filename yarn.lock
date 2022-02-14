@@ -2289,6 +2289,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/window-or-global@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/@types/window-or-global/-/window-or-global-1.0.4.tgz#cebf412eac8f64fe864bd3bd46ef2e33ff9e8133"
+  integrity sha512-+tJmApNoyWOxINwhTuMD8b9UegcB8HUSoLzBHPKIxq2XMnmUKCwPV2/+n8qkjkabx2diA68hDSAohESC9uC2kg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/ws@^8.2.2":
   version "8.2.2"
   resolved "https://registry.npmjs.org/@types/ws/-/ws-8.2.2.tgz#7c5be4decb19500ae6b3d563043cd407bf366c21"
@@ -9182,6 +9189,11 @@ which@^2.0.1:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+window-or-global@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/window-or-global/-/window-or-global-1.0.1.tgz#dbe45ba2a291aabc56d62cf66c45b7fa322946de"
+  integrity sha1-2+RboqKRqrxW1iz2bEW3+jIpRt4=
 
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"

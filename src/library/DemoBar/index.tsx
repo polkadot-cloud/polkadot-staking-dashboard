@@ -1,6 +1,13 @@
 import Wrapper from './Wrapper';
+import { useDemo } from '../../contexts/Demo';
 
 export const DemoBar = () => {
+
+  const { mode } = useDemo();
+
+  if (mode === 0) {
+    return (<></>);
+  }
 
   return (
     <Wrapper>

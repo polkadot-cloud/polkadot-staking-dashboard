@@ -8,17 +8,11 @@ export const PAGE_CATEGORIES = [
   {
     _id: 1,
     title: 'default'
-  },
-  {
+  }, {
     _id: 2,
-    title: 'Nominate',
-  },
-  {
-    _id: 3,
     title: 'Validators',
-  },
-  {
-    _id: 4,
+  }, {
+    _id: 3,
     title: 'Explore',
   }
 ];
@@ -29,27 +23,23 @@ export const PAGES_CONFIG = [
     title: 'Overview',
     uri: '/',
     Entry: Overview,
-  },
-  {
-    category: 2,
+  }, {
+    category: 1,
     title: 'Nominations',
     uri: '/nominations',
     Entry: Nominations,
-  },
-  {
-    category: 3,
+  }, {
+    category: 2,
     title: 'Validators',
     uri: '/validators',
     Entry: Browse,
-  },
-  {
-    category: 3,
+  }, {
+    category: 2,
     title: 'Payouts',
     uri: '/payouts',
     Entry: Payouts,
-  },
-  {
-    category: 4,
+  }, {
+    category: 3,
     title: 'Community',
     uri: '/community-projects',
     Entry: Projects,
