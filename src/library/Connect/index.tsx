@@ -1,14 +1,12 @@
 import Wrapper from './Wrapper';
-import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
 
 export const Connect = () => {
 
-  const connect = useConnect();
-  const { toggle } = useModal();
+  const { setStatus } = useModal();
 
   return (
-    <Wrapper onClick={() => toggle()}>
+    <Wrapper onClick={() => setStatus(1)}>
       Connect Accounts
     </Wrapper>
   )

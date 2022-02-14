@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 import { Wrapper, ContentWrapper } from './Wrapper';
 import { useModal } from '../../contexts/Modal';
-import { motion, useAnimation } from 'framer-motion';
+import { useAnimation } from 'framer-motion';
+import { ConnectAccounts } from '../../modals/ConnectAccounts';
 
 export const Modal = (props: any) => {
 
-  const { open, toggle } = useModal();
+  const { status, setStatus, modal } = useModal();
   const controls = useAnimation();
-
-  const { content } = props;
 
   const onFadeIn = async () => {
     await controls.start("visible");
@@ -16,7 +15,7 @@ export const Modal = (props: any) => {
 
   const onFadeOut = async () => {
     await controls.start("hidden");
-    toggle();
+    setStatus(0);
   }
 
   const variants = {
@@ -29,12 +28,17 @@ export const Modal = (props: any) => {
   };
 
   useEffect(() => {
-    if (open) {
+    // modal has been opened - fade in
+    if (status === 1) {
       onFadeIn();
     }
-  }, [open]);
+    // an external component triggered modal closure - fade out
+    if (status === 2) {
+      onFadeOut();
+    }
+  }, [status]);
 
-  if (!open) {
+  if (status === 0) {
     return (<></>);
   }
 
@@ -52,7 +56,7 @@ export const Modal = (props: any) => {
       <div className='content_wrapper'>
         <ContentWrapper
         >
-          {content}
+          {modal === 'ConnectAccounts' && <ConnectAccounts />}
         </ContentWrapper>
         <button className='close' onClick={() => { onFadeOut() }}>
         </button>
