@@ -42,6 +42,6 @@ export const PageWrapper = styled(motion.div)`
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    padding: 3rem 1rem;
+    padding: 3.75rem 1rem;
     overflow: hidden;
 `;
