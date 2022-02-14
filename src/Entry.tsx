@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useDemo, DemoContextState } from './contexts/Demo';
+import React from 'react';
 import { DemoBar } from './library/DemoBar';
 import { NetworkBar } from './library/NetworkBar';
 import {
@@ -8,48 +7,51 @@ import {
   MainInterfaceWrapper,
   BodyInterfaceWrapper,
 } from './Wrappers';
+import { Modal } from './library/Modal';
 import AssistantButton from './library/AssistantButton';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
-import { useApi } from './contexts/Api';
+import { APIContext } from './contexts/Api';
 import { BrowserRouter } from "react-router-dom";
 import Router from './Router';
 
-export const Entry = () => {
+export class Entry extends React.Component {
 
-  const { connect }: any = useApi();
+  static contextType?: React.Context<any> = APIContext;
 
-  // initial connection to Polakdot API
-  useEffect(() => {
-    connect();
-  }, []);
+  componentDidMount () {
+    // initial connection to Polakdot API
+    this.context.connect();
+  }
 
-  const demo: DemoContextState = useDemo();
+  render () {
+    return (
+      <EntryWrapper>
+        {/* modal */}
+        <Modal />
+        {/* Demo mode controller */}
+        <DemoBar />
+        <BodyInterfaceWrapper>
+          <BrowserRouter>
+            <Assistant />
+            {/* Left side menu */}
+            <SideInterfaceWrapper>
+              <SideMenu />
+            </SideInterfaceWrapper>
 
-  return (
-    <EntryWrapper>
-      {/* Demo mode controller */}
-      <DemoBar />
-      <BodyInterfaceWrapper>
-        <BrowserRouter>
-          <Assistant />
-          {/* Left side menu */}
-          <SideInterfaceWrapper>
-            <SideMenu />
-          </SideInterfaceWrapper>
+            {/* Main Content Window */}
+            <MainInterfaceWrapper>
+              <AssistantButton />
+              <Router />
+            </MainInterfaceWrapper>
+          </BrowserRouter>
+        </BodyInterfaceWrapper>
 
-          {/* Main Content Window */}
-          <MainInterfaceWrapper>
-            <AssistantButton />
-            <Router />
-          </MainInterfaceWrapper>
-        </BrowserRouter>
-      </BodyInterfaceWrapper>
-
-      {/* Network status and network details */}
-      <NetworkBar />
-    </EntryWrapper>
-  );
+        {/* Network status and network details */}
+        <NetworkBar />
+      </EntryWrapper>
+    );
+  }
 }
 
 export default Entry;
