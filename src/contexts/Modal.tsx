@@ -1,4 +1,3 @@
-import { Null } from '@polkadot/types-codec';
 import React from 'react';
 
 // context type
