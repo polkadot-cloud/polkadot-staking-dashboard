@@ -3,12 +3,14 @@ import { useDemo } from '../../contexts/Demo';
 import window from 'window-or-global';
 import { useConnect } from '../../contexts/Connect';
 import { useNavigate } from 'react-router-dom';
+import { useAssistant } from '../../contexts/Assistant';
 
 export const DemoBar = () => {
 
   const demo = useDemo();
   const connect = useConnect();
   const navigate = useNavigate();
+  const assistant = useAssistant();
 
   if (demo.mode === 0) {
     return (<></>);
@@ -20,8 +22,11 @@ export const DemoBar = () => {
     window.localStorage.clear();
     // clear accounts connected
     connect.disconnect();
+    //close assistant
+    if (assistant.open) {
+      assistant.toggle();
+    }
     // refresh window + back to overview
-    // window.location.href = '/';
     navigate('/');
     // close demo bar
     demo.switch(0);

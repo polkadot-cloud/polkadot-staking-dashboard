@@ -1,35 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from "framer-motion";
-import { useApi } from '../../contexts/Api';
+import { useNetworkMetrics } from '../../contexts/Network';
 
 export const BlockNumber = () => {
 
-  const { api, isReady }: any = useApi();
+  const { metrics } = useNetworkMetrics();
 
   useEffect(() => {
-    subscribeToBlockHeads(api);
-  }, [api]);
-
-  const [blockNumber, setBlockNumber] = useState('');
-
-  // dynamic block number subscription: basic, no unsubscribe
-  const subscribeToBlockHeads = async (api: any) => {
-
-    if (isReady() === true && api !== null) {
-      await api.rpc.chain.subscribeNewHeads((header: any) => {
-        setBlockNumber('#' + header.number.toHuman());
-      });
-    }
-  }
+  }, [metrics.blockNumber]);
 
   return (
     <motion.div
       animate={{ opacity: [0.5, 1] }}
       transition={{ duration: 0.5 }}
     >
-      {blockNumber}
+      {metrics.blockNumber}
     </motion.div>
   );
 }

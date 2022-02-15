@@ -6,6 +6,8 @@ export const Browse = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
+  // counterForValidators
+
   const items = [
     {
       label: "Active Validators",

@@ -32,7 +32,7 @@ export const StatBoxWrapper = styled(motion.div)`
   border-radius: 1rem;
   margin-right: 1rem;
   flex-basis: 33%;
-  min-width: 200px;
+  min-width: 250px;
   max-width: 275px;
   flex-grow: 1;
   flex-shrink: 0;
@@ -49,11 +49,12 @@ export const StatBoxWrapper = styled(motion.div)`
       display: flex;
       flex-flow: column wrap;
       justify-content: flex-end;
+      padding-bottom: 0.2rem;
       h1 {
         font-variation-settings: 'wght' 510;
         margin: 0;
         padding: 0.85rem 0;
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
     }
     &:last-child {

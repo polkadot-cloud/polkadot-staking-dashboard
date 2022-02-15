@@ -14,6 +14,7 @@ import Assistant from './library/Assistant';
 import { APIContext } from './contexts/Api';
 import { BrowserRouter } from "react-router-dom";
 import Router from './Router';
+import { NetworkMetricsContextWrapper } from './contexts/Network';
 
 export class Entry extends React.Component {
 
@@ -26,31 +27,33 @@ export class Entry extends React.Component {
 
   render () {
     return (
-      <EntryWrapper>
-        <BrowserRouter>
-          {/* modal */}
-          <Modal />
-          {/* Demo mode controller */}
-          <DemoBar />
-          <BodyInterfaceWrapper>
+      <NetworkMetricsContextWrapper>
+        <EntryWrapper>
+          <BrowserRouter>
+            {/* modal */}
+            <Modal />
+            {/* Demo mode controller */}
+            <DemoBar />
+            <BodyInterfaceWrapper>
 
-            <Assistant />
-            {/* Left side menu */}
-            <SideInterfaceWrapper>
-              <SideMenu />
-            </SideInterfaceWrapper>
+              <Assistant />
+              {/* Left side menu */}
+              <SideInterfaceWrapper>
+                <SideMenu />
+              </SideInterfaceWrapper>
 
-            {/* Main Content Window */}
-            <MainInterfaceWrapper>
-              <AssistantButton />
-              <Router />
-            </MainInterfaceWrapper>
-          </BodyInterfaceWrapper>
+              {/* Main Content Window */}
+              <MainInterfaceWrapper>
+                <AssistantButton />
+                <Router />
+              </MainInterfaceWrapper>
+            </BodyInterfaceWrapper>
 
-          {/* Network status and network details */}
-          <NetworkBar />
-        </BrowserRouter>
-      </EntryWrapper>
+            {/* Network status and network details */}
+            <NetworkBar />
+          </BrowserRouter>
+        </EntryWrapper>
+      </NetworkMetricsContextWrapper>
     );
   }
 }
