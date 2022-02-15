@@ -8,7 +8,7 @@ import BlockNumber from './BlockNumber';
 
 export const NetworkBar = () => {
 
-  const { status }: any = useApi();
+  const { status, consts }: any = useApi();
 
   const [open, setOpen] = useState(false);
 
@@ -29,7 +29,7 @@ export const NetworkBar = () => {
     },
     maximised: {
       opacity: 1,
-      height: '200px',
+      height: '180px',
       background: '#d33079'
     },
   };
@@ -93,7 +93,17 @@ export const NetworkBar = () => {
       </div>
       {open &&
         <div className='row details'>
-          <p>Real-time Network Metrics</p>
+
+          <div>
+            <p>Maximum Nominations: {consts.maxNominations}</p>
+          </div>
+          <div>
+            <p>Active Era: {consts.activeEra}</p>
+          </div>
+
+          <div>
+            <p>Sessions Per Era: {consts.sessionsPerEra}</p>
+          </div>
         </div>
       }
     </Wrapper>

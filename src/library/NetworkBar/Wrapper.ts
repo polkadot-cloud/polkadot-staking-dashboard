@@ -23,14 +23,23 @@ export const Wrapper = styled(motion.div) <any>`
     &.details {
       padding: 1rem;
       display: flex;
-      flex-flow: column wrap;
-      justify-content: flex-end;
-      align-content: flex-start;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-content: flex-end;
       flex: 1;
+
+      > div {
+        padding: 0rem 1.5rem 0rem 0;
+      }
+
+      h2 {
+        color: white;
+        margin: 0.5rem;
+      }
 
       p {
         font-size: 0.9rem;
-        font-variation-settings: 'wght' 700;
+        font-variation-settings: 'wght' 600;
         color: white;
       }
     }

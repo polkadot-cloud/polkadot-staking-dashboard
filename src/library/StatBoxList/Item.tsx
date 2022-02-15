@@ -1,8 +1,9 @@
 import { StatBoxWrapper } from './Wrapper';
+import NumberEasing from 'che-react-number-easing';
 
 export const Item = (props: any) => {
 
-  const { label, value } = props;
+  const { label, value, unit } = props;
 
   return (
     <StatBoxWrapper
@@ -14,7 +15,17 @@ export const Item = (props: any) => {
       }}
     >
       <section>
-        <h1>{value}</h1>
+        <h1>
+          <NumberEasing
+            ease="quintInOut"
+            precision={2}
+            speed={250}
+            trail={false}
+            useLocaleString={true}
+            value={value}
+          />
+          &nbsp;{unit}
+        </h1>
       </section>
       <section>
         <h4>{label}</h4>

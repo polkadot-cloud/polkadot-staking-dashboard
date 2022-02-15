@@ -19,7 +19,10 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
   const { isReady, api }: any = useApi();
 
-  const [activeEra, setActiveEra]: any = useState(0);
+  const [activeEra, setActiveEra]: any = useState({
+    index: 0,
+    start: 0,
+  });
   const [blockNumber, setBlockNumber]: any = useState(0);
 
   useEffect(() => {
@@ -43,7 +46,10 @@ export const NetworkMetricsContextWrapper = (props: any) => {
       });
 
       const unsub2 = await api.query.staking.activeEra((activeEra: any) => {
-        setActiveEra(activeEra.toHuman());
+        setActiveEra(activeEra.unwrapOrDefault({
+          index: 0,
+          start: 0
+        }).toHuman());
       });
 
       return [unsub1, unsub2];
