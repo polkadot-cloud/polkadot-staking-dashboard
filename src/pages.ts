@@ -1,5 +1,5 @@
 import Overview from './pages/Overview';
-import Nominations from './pages/nominate/Nominations';
+import Stake from './pages/nominate/Stake';
 import Browse from './pages/validators/Browse';
 import Payouts from './pages/validators/Payouts';
 import Projects from './pages/explore/Projects';
@@ -25,9 +25,9 @@ export const PAGES_CONFIG = [
     Entry: Overview,
   }, {
     category: 1,
-    title: 'Nominations',
-    uri: '/nominations',
-    Entry: Nominations,
+    title: 'Stake',
+    uri: '/stake',
+    Entry: Stake,
   }, {
     category: 2,
     title: 'Validators',

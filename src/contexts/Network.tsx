@@ -23,21 +23,32 @@ export const NetworkMetricsContextWrapper = (props: any) => {
   const [blockNumber, setBlockNumber]: any = useState(0);
 
   useEffect(() => {
-    subscribeToBlockHeads(api);
-  }, [api]);
+    let unsub: any = subscribeToBlockHeads(api);
+
+    return (() => {
+      if (unsub != null) {
+        for (let u = 0; u < unsub.length; u++) {
+          unsub[u]();
+        }
+      }
+    })
+  }, [isReady()]);
 
   // dynamic block number subscription: basic, no unsubscribe
   const subscribeToBlockHeads = async (api: any) => {
     if (isReady()) {
 
-      await api.rpc.chain.subscribeNewHeads((header: any) => {
+      const unsub1 = await api.rpc.chain.subscribeNewHeads((header: any) => {
         setBlockNumber('#' + header.number.toHuman());
       });
 
-      await api.query.staking.activeEra((activeEra: any) => {
+      const unsub2 = await api.query.staking.activeEra((activeEra: any) => {
         setActiveEra(activeEra.toHuman());
       });
+
+      return [unsub1, unsub2];
     }
+    return null;
   }
 
   return (

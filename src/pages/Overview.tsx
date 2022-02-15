@@ -48,7 +48,7 @@ export const Overview = (props: PageProps) => {
     let unsub: any = subscribeToStakingOverview();
 
     return (() => {
-      unsub = null;
+      unsub();
     })
   }, [isReady()]);
 
