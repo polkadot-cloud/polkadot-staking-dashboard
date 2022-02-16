@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
     .item {
       flex: 1;
       font-size: 1rem;
-      padding: 0rem 1rem 0rem 0;
+      padding: 0rem 1rem 0rem 1rem;
       margin: 0.25rem 0;
       height: 2.3rem;
       border-radius: 0.95rem;
@@ -41,12 +41,11 @@ export const Wrapper = styled.div`
         color: #eee;
         font-size: 0.95rem;
         font-variation-settings: 'wght' 700;
-        margin-left: 0.75rem;
-        margin-right: 0.6rem;
+        margin-right: 0.5rem;
       }
 
       > div:first-child {
-        padding: 0.2rem 0.5rem;
+        padding: 0.2rem 0.65rem;
       }
     }
   }

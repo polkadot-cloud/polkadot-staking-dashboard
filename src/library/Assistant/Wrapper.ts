@@ -18,18 +18,28 @@ export const ContentWrapper = styled.div`
   border-radius: 0.8rem;
   display: flex;
   flex-flow: column nowrap;
-  overflow: auto;
+  overflow: hidden;
   flex-grow: 1;
   background: rgba(225,225,225,0.96);
-  padding: 0 0.5rem;
   margin: 0.75rem;
+`;
+
+export const HeaderWrapper = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-end;
+  height: 2.5rem;
+  padding-bottom: 0.75rem;
 
   > h3 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    padding: 0 0.5rem;
-
+    padding: 0 1rem;
+    margin: 0;
+    
     span {
       flex-grow: 1;
       display: flex;
@@ -40,31 +50,34 @@ export const ContentWrapper = styled.div`
     svg {
       margin-left: 0.5rem;
     }
-}
+  }
 `;
 
-export const ListWrapper = styled.div`
+export const ListWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row wrap;
   flex-grow: 1;
   align-content: flex-start;
+  overflow: auto;
+  padding: 0.25rem 0.5rem;
 `;
 
-export const ItemWrapper = styled(motion.div)`
+export const ItemWrapper = styled(motion.div) <any>`
   display: flex;
-  width: 50%;
-  height: 200px;
+  width: ${props => props.width};
+  height: ${props => props.height === undefined ? `180px` : props.height};
   overflow: auto;
   
   .item {
     background: #f8f8f8;
     border-radius: 1rem;
     flex: 1;
-    margin: 0.4rem;
+    margin: 0.3rem;
     padding: 0 0.75rem;
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
+    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `1px solid #d9d9d9`};
 
     > h4 {
       font-weight: normal;
@@ -74,7 +87,7 @@ export const ItemWrapper = styled(motion.div)`
       font-size: 0.7rem;
     }
     > h3 {
-      margin-top: 0;
+      margin: 0;
     }
   }
 `;

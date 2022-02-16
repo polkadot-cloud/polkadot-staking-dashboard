@@ -4,7 +4,6 @@ import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import Identicon from '@polkadot/react-identicon';
 
-
 export const AssistantButton = () => {
 
   const assistant = useAssistant();
@@ -20,13 +19,13 @@ export const AssistantButton = () => {
         <motion.button
           className='item'
           whileHover={{ scale: 1.02 }}
+          style={{ paddingLeft: 0 }}
         >
           <Identicon
             value={demoAddress}
             size={26}
             theme="polkadot"
           />
-
           {demoAddressClipped}
         </motion.button>
       </section>
@@ -37,7 +36,7 @@ export const AssistantButton = () => {
           onClick={() => { assistant.toggle() }}
           whileHover={{ scale: 1.02 }}
         >
-          <div className='label'>5</div>
+          {connect.status === 0 && <div className='label'>1</div>}
           Assistant
         </motion.button>
       </section>
