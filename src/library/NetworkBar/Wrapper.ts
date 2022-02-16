@@ -19,17 +19,19 @@ export const Wrapper = styled(motion.div) <any>`
     justify-content: flex-start;
     align-items: center;
     align-content: center;
+    overflow-x: auto;
 
     &.details {
       padding: 1rem;
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
-      align-content: flex-end;
+      align-content: flex-start;
       flex: 1;
 
       > div {
         padding: 0rem 1.5rem 0rem 0;
+        max-width: 300px;
       }
 
       h2 {
@@ -41,6 +43,12 @@ export const Wrapper = styled(motion.div) <any>`
         font-size: 0.9rem;
         font-variation-settings: 'wght' 600;
         color: white;
+
+        &.desc {
+          margin-top: 0.4rem;
+          font-variation-settings: 'wght' 420;
+          font-size: 0.8rem;
+        }
       }
     }
 

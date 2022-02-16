@@ -80,14 +80,13 @@ export const Assistant = () => {
                 onClick={connectOnClick}
               />
             }
-
-            <Item width="50%" label='tutorials' title='Title' />
-            <Item width="50%" label='tutorials' title='Title' />
-            <Item width="66%" label='tutorials' title='Title' />
-            <Item width="34%" label='tutorials' title='Title' />
-            <Item width="100%" label='tutorials' title='Title' />
-            <Item width="50%" label='tutorials' title='Title' />
-            <Item width="50%" label='tutorials' title='Title' />
+            <Item width="50%" label='tutorials' title='Title' ext />
+            <Item width="50%" label='tutorials' title='Title' ext />
+            <Item width="66%" label='tutorials' title='Title' ext />
+            <Item width="34%" label='tutorials' title='Title' ext />
+            <Item width="100%" label='tutorials' title='Title' ext />
+            <Item width="50%" label='tutorials' title='Title' ext />
+            <Item width="50%" label='tutorials' title='Title' ext />
           </ListWrapper>
 
         </ContentWrapper>

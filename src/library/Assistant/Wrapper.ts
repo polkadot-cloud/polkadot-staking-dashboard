@@ -29,9 +29,10 @@ export const HeaderWrapper = styled.div`
   border-bottom: 1px solid #ccc;
   display: flex;
   flex-flow: column wrap;
-  justify-content: flex-end;
-  height: 2.5rem;
-  padding-bottom: 0.75rem;
+  justify-content: center;
+  height: 3rem;
+  flex-shrink: 0;
+
 
   > h3 {
     display: flex;
@@ -67,7 +68,7 @@ export const ItemWrapper = styled(motion.div) <any>`
   width: ${props => props.width};
   height: ${props => props.height === undefined ? `180px` : props.height};
   overflow: auto;
-  
+
   .item {
     background: #f8f8f8;
     border-radius: 1rem;
@@ -77,7 +78,8 @@ export const ItemWrapper = styled(motion.div) <any>`
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
-    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `1px solid #d9d9d9`};
+    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `2px solid #d9d9d9`};
+    position: relative;
 
     > h4 {
       font-weight: normal;
@@ -88,6 +90,18 @@ export const ItemWrapper = styled(motion.div) <any>`
     }
     > h3 {
       margin: 0;
+    }
+
+    .ext {
+      position: absolute;
+      bottom: 0.7rem;
+      right: 0.7rem;
+      transition: all 0.2s;
+    }
+    &:hover {
+      .ext {
+        color: #d33079;
+      }
     }
   }
 `;
