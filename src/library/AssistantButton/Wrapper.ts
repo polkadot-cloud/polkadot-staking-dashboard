@@ -39,9 +39,9 @@ export const Wrapper = styled.div`
         background: #333;
         border-radius: 0.5rem;
         color: #eee;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         font-variation-settings: 'wght' 700;
-        margin-right: 0.5rem;
+        margin-right: 0.6rem;
       }
 
       > div:first-child {

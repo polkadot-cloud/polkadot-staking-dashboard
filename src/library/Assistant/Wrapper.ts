@@ -33,7 +33,6 @@ export const HeaderWrapper = styled.div`
   height: 3rem;
   flex-shrink: 0;
 
-
   > h3 {
     display: flex;
     flex-flow: row wrap;
@@ -60,7 +59,7 @@ export const ListWrapper = styled(motion.div)`
   flex-grow: 1;
   align-content: flex-start;
   overflow: auto;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 `;
 
 export const ItemWrapper = styled(motion.div) <any>`
@@ -78,7 +77,8 @@ export const ItemWrapper = styled(motion.div) <any>`
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
-    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `2px solid #d9d9d9`};
+    justify-content: flex-start;
+    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `2px solid #dfdfdf`};
     position: relative;
 
     > h4 {
@@ -90,6 +90,7 @@ export const ItemWrapper = styled(motion.div) <any>`
     }
     > h3 {
       margin: 0;
+      text-align: left;
     }
 
     .ext {

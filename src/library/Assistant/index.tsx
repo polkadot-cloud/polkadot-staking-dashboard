@@ -80,13 +80,25 @@ export const Assistant = () => {
                 onClick={connectOnClick}
               />
             }
-            <Item width="50%" label='tutorials' title='Title' ext />
-            <Item width="50%" label='tutorials' title='Title' ext />
-            <Item width="66%" label='tutorials' title='Title' ext />
-            <Item width="34%" label='tutorials' title='Title' ext />
-            <Item width="100%" label='tutorials' title='Title' ext />
-            <Item width="50%" label='tutorials' title='Title' ext />
-            <Item width="50%" label='tutorials' title='Title' ext />
+            <Item width="50%" label='tutorials' title='What is Polkadot Staking?' ext />
+            <Item width="50%" label='tutorials' title='Validators and Nominators' ext />
+            <Item
+              width="66%"
+              label='tutorials'
+              title='What are Staking Pools?'
+              content='The new way to stake on Polakdot'
+              ext
+            />
+            <Item width="34%" label='tutorials' title='Choosing Validators: What to Know' ext />
+            <Item
+              width="100%"
+              label='tutorials'
+              title='Understanding Payouts'
+              content="Read about receiving staking rewards and initiating payouts."
+              ext
+            />
+            <Item width="50%" label='tutorials' title='Bonding and Unbonding' ext />
+            <Item width="50%" label='tutorials' title='Slashing and Staking Risks' ext />
           </ListWrapper>
 
         </ContentWrapper>
