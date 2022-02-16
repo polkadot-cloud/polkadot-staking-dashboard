@@ -3,12 +3,14 @@ import { useApi } from './Api';
 
 // context type
 export interface NetworkMetricsContextState {
-  metrics: any,
+  metrics: any;
+  staking: any;
 }
 
 // context definition
 export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = React.createContext({
   metrics: {},
+  staking: {},
 });
 
 // useNetworkMetrics
@@ -24,9 +26,14 @@ export const NetworkMetricsContextWrapper = (props: any) => {
     start: 0,
   });
   const [blockNumber, setBlockNumber]: any = useState(0);
+  const [stakingMetrics, setStakingMetrics]: any = useState({
+    lastReward: 0,
+    lastTotalStake: 0,
+    totalNominators: 0,
+  });
 
   useEffect(() => {
-    let unsub: any = subscribeToBlockHeads(api);
+    let unsub: any = subscribeToNetworkMetrics(api);
 
     return (() => {
       if (unsub != null) {
@@ -38,13 +45,15 @@ export const NetworkMetricsContextWrapper = (props: any) => {
   }, [isReady()]);
 
   // dynamic block number subscription: basic, no unsubscribe
-  const subscribeToBlockHeads = async (api: any) => {
+  const subscribeToNetworkMetrics = async (api: any) => {
     if (isReady()) {
 
+      // get new block heads
       const unsub1 = await api.rpc.chain.subscribeNewHeads((header: any) => {
         setBlockNumber('#' + header.number.toHuman());
       });
 
+      // get active era
       const unsub2 = await api.query.staking.activeEra((activeEra: any) => {
         setActiveEra(activeEra.unwrapOrDefault({
           index: 0,
@@ -63,6 +72,7 @@ export const NetworkMetricsContextWrapper = (props: any) => {
         blockNumber: blockNumber,
         activeEra: activeEra,
       },
+      staking: { ...stakingMetrics },
     }}>
       {props.children}
     </NetworkMetricsContext.Provider>

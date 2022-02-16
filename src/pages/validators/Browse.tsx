@@ -20,12 +20,12 @@ export const Browse = (props: PageProps) => {
     {
       label: "Current Epoch",
       value: 1,
-      unit: "DOT",
+      unit: "",
     },
     {
       label: "Current Era",
       value: metrics.activeEra.index,
-      unit: "DOT",
+      unit: "",
     },
   ];
 

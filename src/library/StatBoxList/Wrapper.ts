@@ -6,12 +6,12 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
   overflow-x: auto;
   > h2 {
-    margin: 0.4rem 0;
+    margin: 0.2rem 0;
   }
 `;
 
 export const ListWrapper = styled.div`
-  height: 125px;
+  height: 120px;
   display: flex;
   flex-flow: row nowrap;
   overflow-x: auto;

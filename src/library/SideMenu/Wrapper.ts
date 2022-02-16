@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   overflow: auto;
   flex: 1;
   margin: 1.5rem 1rem;
-  min-width: 200px;
+  min-width: 190px;
   &:hover {
     transform: scale(1.005);
   }
