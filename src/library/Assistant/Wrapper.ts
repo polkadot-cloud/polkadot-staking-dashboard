@@ -20,13 +20,14 @@ export const ContentWrapper = styled.div`
   flex-flow: column nowrap;
   overflow: hidden;
   flex-grow: 1;
-  background: rgba(225,225,225,0.96);
+  background: rgba(225,225,225,0.9);
+  backdrop-filter: blur(4px);
   margin: 0.75rem;
 `;
 
 export const HeaderWrapper = styled.div`
   width: 100%;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #dadada;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -65,7 +66,7 @@ export const ListWrapper = styled(motion.div)`
 export const ItemWrapper = styled(motion.div) <any>`
   display: flex;
   width: ${props => props.width};
-  height: ${props => props.height === undefined ? `180px` : props.height};
+  height: ${props => props.height === undefined ? `160px` : props.height};
   overflow: auto;
 
   .item {
@@ -91,6 +92,12 @@ export const ItemWrapper = styled(motion.div) <any>`
     > h3 {
       margin: 0;
       text-align: left;
+      transition: all 0.2s;
+      color: #000;
+    }
+    
+    > p {
+      font-variation-settings: 'wght' 420;
     }
 
     .ext {
@@ -100,6 +107,9 @@ export const ItemWrapper = styled(motion.div) <any>`
       transition: all 0.2s;
     }
     &:hover {
+      > h3 {
+        color: #d33079;
+      }
       .ext {
         color: #d33079;
       }

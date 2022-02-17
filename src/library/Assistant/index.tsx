@@ -98,7 +98,7 @@ export const Assistant = () => {
               ext
             />
             <Item width="50%" label='tutorials' title='Bonding and Unbonding' ext />
-            <Item width="50%" label='tutorials' title='Slashing and Staking Risks' ext />
+            <Item width="50%" label='tutorials' title='Slashing and Staking' ext />
           </ListWrapper>
 
         </ContentWrapper>

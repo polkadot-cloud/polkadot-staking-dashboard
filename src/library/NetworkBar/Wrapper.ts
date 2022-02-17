@@ -53,7 +53,7 @@ export const Wrapper = styled(motion.div) <any>`
     }
 
     &:first-child {
-      background: white;
+      background: #f2f2f2;
     }
 
     p {

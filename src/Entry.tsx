@@ -15,6 +15,7 @@ import { APIContext } from './contexts/Api';
 import { BrowserRouter } from "react-router-dom";
 import Router from './Router';
 import { NetworkMetricsContextWrapper } from './contexts/Network';
+import { Example } from './library/Notifications/Example';
 
 export class Entry extends React.Component {
 
@@ -51,6 +52,7 @@ export class Entry extends React.Component {
 
             {/* Network status and network details */}
             <NetworkBar />
+            <Example />
           </BrowserRouter>
         </EntryWrapper>
       </NetworkMetricsContextWrapper>

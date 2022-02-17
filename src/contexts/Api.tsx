@@ -21,7 +21,7 @@ export class APIContextWrapper extends React.Component {
     api: null,
     status: CONNECTION_STATUS[1],
     consts: {
-      activeEra: 0,
+      bondDuration: 0,
       maxNominations: 0,
       sessionsPerEra: 0,
     }
@@ -68,7 +68,7 @@ export class APIContextWrapper extends React.Component {
       api: apiInstance,
       status: CONNECTION_STATUS[2],
       consts: {
-        activeEra: _metrics[0].toHuman(),
+        bondDuration: _metrics[0].toHuman(),
         maxNominations: _metrics[1].toHuman(),
         sessionsPerEra: _metrics[2].toHuman(),
       }

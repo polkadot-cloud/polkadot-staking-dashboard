@@ -93,12 +93,11 @@ export const NetworkBar = () => {
       </div>
       {open &&
         <div className='row details'>
-
           <div>
             <p>Maximum Nominations: {consts.maxNominations}</p>
           </div>
           <div>
-            <p>Active Era: {consts.activeEra}</p>
+            <p>Bond Duration: {consts.bondDuration} Days</p>
           </div>
 
           <div>
