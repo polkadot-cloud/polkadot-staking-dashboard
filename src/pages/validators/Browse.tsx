@@ -15,7 +15,7 @@ export const Browse = (props: PageProps) => {
     {
       label: "Active Validators",
       value: 297,
-      unit: "DOT",
+      unit: "",
     },
     {
       label: "Current Epoch",

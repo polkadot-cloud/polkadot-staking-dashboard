@@ -16,12 +16,12 @@ export const Example = () => {
   }
 
   useEffect(() => {
-    // // listen for D key to toggle demo bar
-    // window.onkeydown = (e: KeyboardEvent): any => {
-    //   if (e.code === 'KeyN') {
-    //     setNotifications(add(notificationsRef.current));
-    //   }
-    // }
+    // listen for D key to toggle demo bar
+    window.onkeydown = (e: KeyboardEvent): any => {
+      if (e.code === 'KeyN') {
+        setNotifications(add(notificationsRef.current));
+      }
+    }
   }, []);
 
   return (
@@ -42,7 +42,7 @@ export const Example = () => {
             >
               <div>
                 <h3>Welcome to Polkadot Staking!</h3>
-                <h4>Connect your accounts to get started.</h4>
+                <h4>Connect your accounts to get started. Visit the Assistant if you get stuck at any point along the way.</h4>
                 <CloseButton
                   close={() => setNotifications(remove(notificationsRef.current, id))}
                 />
@@ -51,12 +51,12 @@ export const Example = () => {
           ))
         }
       </AnimatePresence>
-      <button
+      {/* <button
         className="add"
         onClick={() => { setNotifications(add(notificationsRef.current)) }}
       >
         +
-      </button>
+      </button> */}
     </Wrapper>
   );
 };

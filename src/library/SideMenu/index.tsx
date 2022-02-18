@@ -29,7 +29,12 @@ export const SideMenu = () => {
             {PAGES_CONFIG.map((page, pageIndex) =>
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id &&
-                  <Item name={page.title} to={page.uri} active={page.uri === pathname} />
+                  <Item
+                    name={page.title}
+                    to={page.uri}
+                    active={page.uri === pathname}
+                    icon={<FontAwesomeIcon icon={page.icon} transform='shrink-1' />}
+                  />
                 }
               </React.Fragment>
             )

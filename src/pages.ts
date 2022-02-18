@@ -3,6 +3,13 @@ import Stake from './pages/nominate/Stake';
 import Browse from './pages/validators/Browse';
 import Payouts from './pages/validators/Payouts';
 import Projects from './pages/explore/Projects';
+import {
+  faUserFriends,
+  faBraille,
+  faServer,
+  faWallet,
+  faChartLine
+} from '@fortawesome/free-solid-svg-icons';
 
 export const PAGE_CATEGORIES = [
   {
@@ -23,26 +30,31 @@ export const PAGES_CONFIG = [
     title: 'Overview',
     uri: '/',
     Entry: Overview,
+    icon: faBraille,
   }, {
     category: 1,
     title: 'Stake',
     uri: '/stake',
     Entry: Stake,
+    icon: faChartLine,
   }, {
     category: 2,
     title: 'Validators',
     uri: '/validators',
     Entry: Browse,
+    icon: faServer,
   }, {
     category: 2,
     title: 'Payouts',
     uri: '/payouts',
     Entry: Payouts,
+    icon: faWallet,
   }, {
     category: 3,
     title: 'Community',
     uri: '/community-projects',
     Entry: Projects,
+    icon: faUserFriends,
   },
 ];
 
