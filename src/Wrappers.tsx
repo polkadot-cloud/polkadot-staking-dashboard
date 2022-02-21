@@ -50,12 +50,12 @@ export const PageWrapper = styled(motion.div)`
 export const PageRowWrapper = styled.div<any>`
     margin: 1rem 0;
     display: flex;
+    flex-shrink: 0;
     flex-flow: row nowrap;
     width: 100%;
     padding-right: 6rem;
     box-sizing: border-box;
     overflow-x: scroll;
-
     * {
         box-sizing: border-box;
     }

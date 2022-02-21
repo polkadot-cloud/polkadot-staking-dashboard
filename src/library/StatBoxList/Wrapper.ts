@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
     margin: 0.2rem 0;
   }
   margin: 1rem 0;
+  flex-shrink: 0;
 `;
 
 export const ListWrapper = styled.div`
