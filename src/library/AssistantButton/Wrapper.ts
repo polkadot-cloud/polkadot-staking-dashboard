@@ -41,7 +41,7 @@ export const Wrapper = styled.div`
         border-radius: 0.8rem;
         color: #d33079;
         font-size: 0.85rem;
-        font-variation-settings: 'wght' 490;
+        font-variation-settings: 'wght' 505;
         margin-right: 0.6rem;
       }
 

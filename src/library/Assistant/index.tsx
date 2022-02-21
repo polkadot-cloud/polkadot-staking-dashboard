@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAssistant } from '../../contexts/Assistant';
-import { Wrapper, ContentWrapper, ListWrapper, HeaderWrapper } from './Wrapper';
+import { Wrapper, ContentWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import Item from './Item';
 import { pageTitleFromUri } from '../../pages';
 import { useLocation } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleRight as faArrow } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
+import Heading from './Heading';
+import Definition from './Definition';
 
 export const Assistant = () => {
 
@@ -67,7 +69,6 @@ export const Assistant = () => {
             </h3>
           </HeaderWrapper>
           <ListWrapper>
-
             {/* only display if accounts not yet connected */}
             {connect.status === 0 &&
               <Item
@@ -80,6 +81,15 @@ export const Assistant = () => {
                 onClick={connectOnClick}
               />
             }
+
+            <Heading title="Definitions" />
+
+            <Definition />
+            <Definition />
+            <Definition />
+
+            <Heading title="Help Articles" />
+
             <Item width="50%" label='tutorials' title='What is Polkadot Staking?' ext />
             <Item width="50%" label='tutorials' title='Validators and Nominators' ext />
             <Item

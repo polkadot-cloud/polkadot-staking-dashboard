@@ -15,7 +15,7 @@ export const Wrapper = styled(motion.div) <any>`
 `;
 
 export const ContentWrapper = styled.div`
-  border-radius: 0.8rem;
+  border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
   overflow: hidden;
@@ -63,23 +63,76 @@ export const ListWrapper = styled(motion.div)`
   padding: 0.5rem 0.5rem;
 `;
 
+export const HeadingWrapper = styled.div`
+  width: 100%;
+  padding: 0 0.6rem;
+  > h4 {
+    margin: 0.5rem 0 0;
+    padding: 0.5rem 0;
+    font-variation-settings: 'wght' 575;
+    color: #333;
+  }
+`;
+
+export const DefinitionWrapper = styled(motion.div) <any>`
+  width: 100%;
+  display: flex;
+  
+  > button {
+    background: rgba(255,255,255,0.6);
+    border-radius: 0.75rem;
+    margin: 0.45rem;
+    padding: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    position: relative;
+    flex: 1;
+
+    > div:first-child {
+      display: flex;
+      flex-flow: column wrap;
+      align-items: flex-start;
+      justify-content: center;
+      flex: 1;
+
+      > h3 {
+        margin: 0;
+        text-align: left;
+        transition: all 0.2s;
+        color: #000;
+      }
+      > p {
+        font-variation-settings: 'wght' 420;
+        margin: 0.5rem 0 0 0;
+      }
+    }
+    &:hover {
+      > div:last-child {
+        transition: color 0.15s;
+        color: #d33079;
+      }
+    }
+  }
+`;
+
 export const ItemWrapper = styled(motion.div) <any>`
   display: flex;
   width: ${props => props.width};
   height: ${props => props.height === undefined ? `160px` : props.height};
   overflow: auto;
 
-  .item {
-    background: #f8f8f8;
-    border-radius: 1rem;
+  > * {
+    background: rgba(255,255,255,0.65);
+    border-radius: 0.75rem;
     flex: 1;
-    margin: 0.3rem;
     padding: 0 0.75rem;
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
-    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `2px solid #dfdfdf`};
+    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `none`};
+    margin: ${props => props.actionRequired === true ? `0.2rem` : `0.4rem`};
     position: relative;
 
     > h4 {
@@ -95,7 +148,7 @@ export const ItemWrapper = styled(motion.div) <any>`
       transition: all 0.2s;
       color: #000;
     }
-    
+  
     > p {
       font-variation-settings: 'wght' 420;
     }

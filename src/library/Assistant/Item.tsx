@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ItemWrapper as Wrapper } from './Wrapper';
+import { ItemWrapper as Wrapper } from './Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 
