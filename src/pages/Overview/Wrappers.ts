@@ -19,7 +19,7 @@ export const GraphWrapper = styled.div`
 
   h1, h5 {
     margin: 0;
-    padding: 0.2rem 0;
+    padding: 0.25rem 0;
   }
   .graph {
     position: relative;

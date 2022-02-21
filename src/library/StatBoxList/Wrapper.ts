@@ -51,7 +51,6 @@ export const StatBoxWrapper = styled(motion.div)`
       display: flex;
       flex-flow: column wrap;
       justify-content: flex-end;
-      padding-bottom: 0.2rem;
       h1 {
         font-variation-settings: 'wght' 510;
         margin: 0;
