@@ -34,7 +34,8 @@ export const options = {
     y: {
       grid: {
         drawBorder: false,
-        color: '#fff',
+        color: 'rgba(255,255,255,0)',
+        borderColor: 'rgba(255,255,255,0)',
       },
     },
   },

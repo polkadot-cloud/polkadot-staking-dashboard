@@ -8,6 +8,7 @@ export const Wrapper = styled(motion.div)`
     height: 100%;
     z-index: 7;
     backdrop-filter: blur(8px);
+    background: rgba(240,240,240, 0.6);
 
     /* modal content wrapper */
     .content_wrapper {

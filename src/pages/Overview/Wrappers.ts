@@ -8,9 +8,9 @@ export const MainWrapper = styled.div`
 `;
 
 export const GraphWrapper = styled.div`
-  padding: 1.5rem 1rem;
+  padding: 1.2rem;
   border-radius: 1rem;
-  background: #fff;
+  background: rgba(255,255,255,0.8);
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
@@ -19,12 +19,8 @@ export const GraphWrapper = styled.div`
 
   h1, h5 {
     margin: 0;
-    padding: 0.1rem 0;
+    padding: 0.2rem 0;
   }
-  h5 {
-    text-transform: uppercase;
-  }
-
   .graph {
     position: relative;
     flex: 1;

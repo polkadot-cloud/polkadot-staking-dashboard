@@ -38,7 +38,7 @@ export const StatBoxWrapper = styled(motion.div)`
   max-width: 275px;
   flex-grow: 1;
   flex-shrink: 0;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.95);
   display: flex;
   flex-flow: column wrap;
   overflow: hidden;
