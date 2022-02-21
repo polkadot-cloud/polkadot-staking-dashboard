@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
       padding: 0rem 1rem 0rem 1rem;
       margin: 0.25rem 0;
       height: 2.3rem;
-      border-radius: 0.95rem;
+      border-radius: 1.2rem;
       box-shadow: none;
       background: rgba(230,230,230,0.9);
       display: flex;
@@ -34,18 +34,19 @@ export const Wrapper = styled.div`
       align-items: center;
       align-content: center;
       cursor: pointer;
+      font-variation-settings: 'wght' 490;
 
       .label {
-        background: #333;
-        border-radius: 0.5rem;
-        color: #eee;
-        font-size: 0.92rem;
-        font-variation-settings: 'wght' 700;
+        border: 1px solid #d33079;
+        border-radius: 0.8rem;
+        color: #d33079;
+        font-size: 0.85rem;
+        font-variation-settings: 'wght' 490;
         margin-right: 0.6rem;
       }
 
       > div:first-child {
-        padding: 0.2rem 0.65rem;
+        padding: 0.15rem 0.6rem;
       }
     }
   }
