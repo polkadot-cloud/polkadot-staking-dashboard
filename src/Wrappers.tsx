@@ -44,6 +44,8 @@ export const PageWrapper = styled(motion.div)`
     flex-flow: column nowrap;
     padding: 3.75rem 1rem;
     overflow: hidden;
+    overflow-y: scroll;
+    flex-grow: 1;
 `;
 
 // Page Row wrapper

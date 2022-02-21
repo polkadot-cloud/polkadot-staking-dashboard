@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  background: #f2f2f2;
+  background: #f0f0f0;
   border-radius: 0.6rem;
   transition: all 0.15s;
   padding: 1rem 0.5rem;
@@ -23,9 +23,9 @@ export const Wrapper = styled.div`
       button {
         transition: color 0.2s;
         margin: 0 0.25rem;
-        color: #999;
+        color: #777;
         &:hover {
-        color: #666;
+        color: #555;
       }
     }
   }

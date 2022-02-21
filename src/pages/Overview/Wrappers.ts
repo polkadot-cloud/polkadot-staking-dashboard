@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MainWrapper = styled.div`
-  flex-basis: 60%;
+  flex-basis: 66%;
   padding-right: 1.5rem;
   overflow: hidden;
   min-width: 500px;
@@ -26,15 +26,15 @@ export const GraphWrapper = styled.div`
     flex: 1;
     flex-flow: column wrap;
     justify-content: center;
-    min-height: 250px;
     width: 100%;
     margin-top: 1.5rem;
+    min-height: 225px;
   }
 `;
 
 export const SecondaryWrapper = styled.div`
   border-radius: 1rem;
-  background: #fff;
-  flex-basis: 40%;
+  background: rgba(255,255,255,0.8);
+  flex-basis: 34%;
   flex: 1;
 `;
