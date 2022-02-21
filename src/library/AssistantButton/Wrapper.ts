@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
       height: 2.3rem;
       border-radius: 1.2rem;
       box-shadow: none;
-      background: rgba(230,230,230,0.9);
+      background: rgba(225,225,225,0.9);
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-end;
