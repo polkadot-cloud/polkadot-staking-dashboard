@@ -14,10 +14,11 @@ body {
 }
 
 h1 {
+  color: #333;
   font-weight: normal;
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-variation-settings: 'wght' 450;
-  margin-top: 0;
+  margin: 0;
 }
 
 h2 {

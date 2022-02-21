@@ -126,13 +126,13 @@ export const ItemWrapper = styled(motion.div) <any>`
     background: rgba(255,255,255,0.65);
     border-radius: 0.75rem;
     flex: 1;
-    padding: 0 0.75rem;
+    padding: 0 0.8rem;
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
     border: ${props => props.actionRequired === true ? `3px solid #d33079` : `none`};
-    margin: ${props => props.actionRequired === true ? `0.2rem` : `0.4rem`};
+    margin: ${props => props.actionRequired === true ? `0.3rem` : `0.4rem`};
     position: relative;
 
     > h4 {
@@ -160,9 +160,6 @@ export const ItemWrapper = styled(motion.div) <any>`
       transition: all 0.2s;
     }
     &:hover {
-      > h3 {
-        color: #d33079;
-      }
       .ext {
         color: #d33079;
       }

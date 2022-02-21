@@ -10,7 +10,7 @@ export const MainWrapper = styled.div`
 export const GraphWrapper = styled.div`
   padding: 1.2rem;
   border-radius: 1rem;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.7);
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
@@ -34,7 +34,7 @@ export const GraphWrapper = styled.div`
 
 export const SecondaryWrapper = styled.div`
   border-radius: 1rem;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.5);
   flex-basis: 34%;
   flex: 1;
 `;

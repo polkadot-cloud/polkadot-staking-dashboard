@@ -37,11 +37,11 @@ export const Wrapper = styled.div`
       font-variation-settings: 'wght' 490;
 
       .label {
-        border: 1px solid #d33079;
+        border: 0.125rem solid #d33079;
         border-radius: 0.8rem;
         color: #d33079;
         font-size: 0.85rem;
-        font-variation-settings: 'wght' 505;
+        font-variation-settings: 'wght' 525;
         margin-right: 0.6rem;
       }
 

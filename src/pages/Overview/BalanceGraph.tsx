@@ -44,7 +44,10 @@ export const data = {
 export const BalanceGraph = () => {
 
   return (
-    <Doughnut options={options} data={data} />
+    <Doughnut
+      options={options}
+      data={data}
+    />
   );
 }
 

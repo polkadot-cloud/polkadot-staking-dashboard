@@ -19,8 +19,8 @@ export const Item = (props: any) => {
     >
       <motion.button
         className='item'
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.015 }}
+        whileTap={{ scale: 0.99 }}
         transition={{
           duration: 0.5,
           type: "spring",

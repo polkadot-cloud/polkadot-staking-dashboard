@@ -5,10 +5,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   overflow-x: auto;
-  > h2 {
-    margin: 0.2rem 0;
-  }
-  margin: 1rem 0;
+  margin: 0.25rem 0 0.5rem;
   flex-shrink: 0;
 `;
 
@@ -38,7 +35,7 @@ export const StatBoxWrapper = styled(motion.div)`
   max-width: 275px;
   flex-grow: 1;
   flex-shrink: 0;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.75);
   display: flex;
   flex-flow: column wrap;
   overflow: hidden;

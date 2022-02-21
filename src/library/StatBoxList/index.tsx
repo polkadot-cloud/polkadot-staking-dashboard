@@ -3,11 +3,10 @@ import Item from './Item';
 
 export const StatBoxList = (props: any) => {
 
-  const { title, items } = props;
+  const { items } = props;
 
   return (
     <Wrapper>
-      <h2>{title}</h2>
       <ListWrapper>
         <Scrollable>
           {items.map((item: any, index: number) =>

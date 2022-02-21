@@ -11,6 +11,7 @@ export const StakeSections = styled.div`
   max-width: 1000px;
   display: flex;
   flex-flow: row wrap;
+  margin: 1rem 0;
 `;
 
 export const Section = styled.div`

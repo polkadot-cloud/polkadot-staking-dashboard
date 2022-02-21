@@ -12,7 +12,7 @@ export const Stake = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <h2>{title}</h2>
+      <h1>{title}</h1>
       <StakeSections>
         <Section>
           <div>

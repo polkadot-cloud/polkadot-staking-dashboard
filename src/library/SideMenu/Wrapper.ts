@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  background: #f0f0f0;
+  background: #efefef;
   border-radius: 0.6rem;
   transition: all 0.15s;
   padding: 1rem 0.5rem;
@@ -19,11 +19,12 @@ export const Wrapper = styled.div`
     &:first-child {
       flex-grow: 1;
     }
+    /* Github icon */
     &:last-child {
       button {
         transition: color 0.2s;
         margin: 0 0.25rem;
-        color: #777;
+        color: #666;
         &:hover {
         color: #555;
       }
@@ -34,7 +35,7 @@ export const Wrapper = styled.div`
 
 export const ItemWrapper = styled.div<any>`
   border-radius: 0.5rem;
-  background: ${props => props.active ? `rgba(0,0,0,0.05)` : `none`};
+  background: ${props => props.active ? `rgba(0,0,0,0.06)` : `none`};
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -46,8 +47,8 @@ export const ItemWrapper = styled.div<any>`
 
   &:hover {
     background: ${props => !props.active ?
-    `rgba(0,0,0,0.03)` :
-    `rgba(0,0,0,0.05)`
+    `rgba(0,0,0,0.04)` :
+    `rgba(0,0,0,0.08)`
   };
   }
   span {

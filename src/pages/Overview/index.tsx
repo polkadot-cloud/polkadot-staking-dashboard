@@ -31,7 +31,8 @@ export const Overview = (props: PageProps) => {
 
   return (
     <>
-      <StatBoxList title="What's Happening" items={items} />
+      <h1>What's Happening</h1>
+      <StatBoxList items={items} />
       <PageRowWrapper>
         <MainWrapper>
           <GraphWrapper>
