@@ -49,6 +49,11 @@ export const Wrapper = styled.div`
       }
     }
   }
+
+  /* overwrite default cursor behaviour for Identicon  */
+  svg, .ui--IdentityIcon {
+    cursor: default;
+  }
 `;
 
 export default Wrapper;

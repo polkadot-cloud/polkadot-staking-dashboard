@@ -7,8 +7,8 @@ import {
   faUserFriends,
   faBraille,
   faServer,
-  faWallet,
-  faChartLine
+  faChartLine,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const PAGE_CATEGORIES = [
@@ -48,7 +48,7 @@ export const PAGES_CONFIG = [
     title: 'Payouts',
     uri: '/payouts',
     Entry: Payouts,
-    icon: faWallet,
+    icon: faStar,
   }, {
     category: 3,
     title: 'Community',
