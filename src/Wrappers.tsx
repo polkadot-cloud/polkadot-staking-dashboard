@@ -45,3 +45,18 @@ export const PageWrapper = styled(motion.div)`
     padding: 3.75rem 1rem;
     overflow: hidden;
 `;
+
+// Page Row wrapper
+export const PageRowWrapper = styled.div<any>`
+    margin: 1rem 0;
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    padding-right: 6rem;
+    box-sizing: border-box;
+    overflow-x: scroll;
+
+    * {
+        box-sizing: border-box;
+    }
+`;

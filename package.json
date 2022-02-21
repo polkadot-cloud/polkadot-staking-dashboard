@@ -1,6 +1,7 @@
 {
   "name": "staking-experience-demo-ts",
   "version": "0.1.0",
+  "license": "apache-2.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -14,9 +15,11 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "bn.js": "^5.2.0",
+    "chart.js": "^3.7.1",
     "che-react-number-easing": "^0.1.4",
     "framer-motion": "^6.2.4",
     "react": "^18.0.0-beta-24dd07bd2-20211208",
+    "react-chartjs-2": "^4.0.1",
     "react-dom": "^18.0.0-beta-24dd07bd2-20211208",
     "react-lorem-ipsum": "^1.4.9",
     "react-router-dom": "^6.2.1",
@@ -27,6 +30,8 @@
     "window-or-global": "^1.0.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.7",
+    "@types/": "faker-js/faker",
     "@types/jest": "^27.4.0",
     "@types/node": "^16.11.22",
     "@types/react": "^17.0.39",

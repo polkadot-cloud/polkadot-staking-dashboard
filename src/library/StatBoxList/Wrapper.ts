@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   > h2 {
     margin: 0.2rem 0;
   }
+  margin: 1rem 0;
 `;
 
 export const ListWrapper = styled.div`
@@ -30,7 +31,7 @@ export const Scrollable = styled.div`
 
 export const StatBoxWrapper = styled(motion.div)`
   border-radius: 1rem;
-  margin-right: 1rem;
+  margin-right: 1.25rem;
   flex-basis: 33%;
   min-width: 250px;
   max-width: 275px;
