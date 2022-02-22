@@ -9,10 +9,11 @@ import { useLocation } from 'react-router-dom';
 import { useAssistant } from '../../contexts/Assistant';
 import { useModal } from '../../contexts/Modal';
 import External from './Items/External';
+import Action from './Items/Action';
 
 export const Sections = (props: any) => {
 
-  const { setActiveSection } = props;
+  const { setActiveSection, pageMeta } = props;
 
   const connect = useConnect();
   const { pathname } = useLocation();
@@ -26,6 +27,13 @@ export const Sections = (props: any) => {
     // open connect
     modal.setStatus(1);
   }
+
+  // resources to display
+  const { definitions, external } = pageMeta;
+
+  // external width patterns
+  let curFlexWidth = 0;
+  const flexWidths = [66, 34, 100, 50, 50,];
 
   return (
     <>
@@ -41,26 +49,59 @@ export const Sections = (props: any) => {
           </div>
         </HeaderWrapper>
         <ListWrapper>
+
           {/* only display if accounts not yet connected */}
           {connect.status === 0 &&
-            <External
-              width="100%"
+            <Action
               height="120px"
               label='next step'
               title='Connect Your Accounts'
-              content="Connect your Polkadot accounts to start staking."
-              actionRequired={true}
+              subtitle="Connect your Polkadot accounts to start staking."
               onClick={connectOnClick}
             />
           }
 
-          <Heading title="Definitions" />
+          {/* Display definitions */}
+          {definitions.length > 0 &&
+            <>
+              <Heading title="Definitions" />
+              {definitions.map((item: any, index: number) =>
+                <Definition
+                  key={`def_${index}`}
+                  onClick={() => setActiveSection(1)}
+                  title={item.title}
+                  description={item.description}
+                />
+              )}
+            </>
+          }
 
-          <Definition onClick={() => setActiveSection(1)} />
-          <Definition onClick={() => setActiveSection(1)} />
-          <Definition onClick={() => setActiveSection(1)} />
+          {/* Display external */}
+          {external.length > 0 &&
+            <>
+              <Heading title="Articles" />
+              {external.map((item: any, index: number) => {
 
-          <Heading title="Help Articles" />
+                const thisRteturn: any = <External
+                  key={`ext_${index}`}
+                  width={flexWidths[curFlexWidth]}
+                  label={item.label}
+                  title={item.title}
+                  subtitle={item.subtitle}
+                  url={item.url}
+                />;
+
+                curFlexWidth = curFlexWidth > (flexWidths.length - 1)
+                  ? 0
+                  : curFlexWidth + 1;
+
+                return thisRteturn;
+              })}
+            </>
+          }
+
+          {/* 
+          <Heading title="Articles" />
 
           <External width="50%" label='tutorials' title='What is Polkadot Staking?' ext />
           <External width="50%" label='tutorials' title='Validators and Nominators' ext />
@@ -80,7 +121,8 @@ export const Sections = (props: any) => {
             ext
           />
           <External width="50%" label='tutorials' title='Bonding and Unbonding' ext />
-          <External width="50%" label='tutorials' title='Slashing and Staking' ext />
+          <External width="50%" label='tutorials' title='Slashing and Staking' ext /> */}
+
         </ListWrapper>
       </ContentWrapper>
 

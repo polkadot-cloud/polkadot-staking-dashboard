@@ -5,7 +5,11 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 export const Heading = (props: any) => {
 
-  const { onClick } = props;
+  const { onClick, title, description } = props;
+
+  let subtitle = description[0].length > 50
+    ? description[0].substring(0, 50) + '...'
+    : description[0];
 
   return (
     <Wrapper width="100%" height="100px">
@@ -21,8 +25,8 @@ export const Heading = (props: any) => {
         onClick={onClick}
       >
         <div>
-          <h3>Definition</h3>
-          <p>Short summary of definition.</p>
+          <h3>{title}</h3>
+          <p>{subtitle}</p>
         </div>
         <div>
           <FontAwesomeIcon icon={faChevronRight} />

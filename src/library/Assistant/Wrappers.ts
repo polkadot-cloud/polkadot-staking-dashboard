@@ -9,12 +9,11 @@ export const Wrapper = styled(motion.div) <any>`
   width: 100%;
   max-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px;
   height: 100%;
-  z-index: 2;
+  z-index: 6;
   display: flex;
   flex-flow: column nowrap;
   overflow: hidden;
   box-sizing: border-box;
-
   * { 
     box-sizing: border-box;
   }
@@ -26,6 +25,7 @@ export const SectionsWrapper = styled(motion.div)`
   flex-flow: row nowrap;
   overflow: auto;
   position: relative;
+  flex: 1;
 `;
 
 export const ContentWrapper = styled.div`
@@ -156,6 +156,7 @@ export const DefinitionWrapper = styled(motion.div) <any>`
       > p {
         font-variation-settings: 'wght' 420;
         margin: 0.5rem 0 0 0;
+        text-align: left;
       }
     }
     &:hover {
@@ -172,6 +173,8 @@ export const ItemWrapper = styled(motion.div) <any>`
   width: ${props => props.width};
   height: ${props => props.height === undefined ? `160px` : props.height};
   overflow: auto;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 
   > * {
     background: rgba(255,255,255,0.65);
@@ -202,6 +205,7 @@ export const ItemWrapper = styled(motion.div) <any>`
   
     > p {
       font-variation-settings: 'wght' 420;
+      text-align: left;
     }
 
     .ext {

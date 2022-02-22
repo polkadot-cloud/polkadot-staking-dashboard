@@ -3,6 +3,7 @@ import { useAssistant } from '../../contexts/Assistant';
 import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
 import { Sections } from './Sections';
+import { ASSISTANT_CONFIG } from '../../pages';
 
 export const Assistant = () => {
 
@@ -34,7 +35,8 @@ export const Assistant = () => {
   };
 
   useEffect(() => {
-    console.log('refetch assistant items');
+    const page = pathname === '/' ? 'overview' : pathname.substring(1, pathname.length);
+    assistant.setPage(page);
   }, [pathname]);
 
   // animate assistant container default
@@ -43,33 +45,37 @@ export const Assistant = () => {
   // animate assistant container default
   const animateSections = activeSection === 0 ? `home` : `item`;
 
+  // get page meta from active page
+  const pageMeta = Object.values(ASSISTANT_CONFIG).find((item: any) =>
+    item.key === assistant.page
+  );
+
   return (
-    <>
-      <Wrapper
-        initial={false}
-        animate={animateContainer}
+    <Wrapper
+      initial={false}
+      animate={animateContainer}
+      transition={{
+        duration: 0.5,
+        type: "spring",
+        bounce: 0.22
+      }}
+      variants={containerVariants}
+    >
+      <SectionsWrapper
+        animate={animateSections}
         transition={{
           duration: 0.5,
           type: "spring",
           bounce: 0.22
         }}
-        variants={containerVariants}
+        variants={sectionVariants}
       >
-        <SectionsWrapper
-          animate={animateSections}
-          transition={{
-            duration: 0.5,
-            type: "spring",
-            bounce: 0.22
-          }}
-          variants={sectionVariants}
-        >
-          <Sections
-            setActiveSection={setActiveSection}
-          />
-        </SectionsWrapper>
-      </Wrapper>
-    </>
+        <Sections
+          setActiveSection={setActiveSection}
+          pageMeta={pageMeta}
+        />
+      </SectionsWrapper>
+    </Wrapper>
   );
 }
 

@@ -3,19 +3,15 @@ import { ItemWrapper as Wrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 
-export const External = (props: any) => {
+export const Action = (props: any) => {
 
-  let { width, height, subtitle, label, title, url } = props;
-
-  const handleClick = () => {
-    window.open(url, '_blank');
-  }
+  let { height, subtitle, label, title, onClick } = props;
 
   return (
     <Wrapper
-      width={`${width}%`}
+      width='100%'
       height={height}
-      border={undefined}
+      border={`3px solid #d33079`}
     >
       <motion.button
         className='item'
@@ -26,15 +22,14 @@ export const External = (props: any) => {
           type: "spring",
           bounce: 0.4,
         }}
-        onClick={handleClick}
+        onClick={onClick}
       >
         <h4>{label}</h4>
         <h3>{title}</h3>
-        {width > 50 && <p>{subtitle}</p>}
-        <FontAwesomeIcon icon={faExt} className='ext' />
+        <p>{subtitle}</p>
       </motion.button>
     </Wrapper>
   );
 }
 
-export default External;
+export default Action;
