@@ -58,13 +58,19 @@ export const Headers = () => {
           {showAccountMenu &&
             <ul className='accounts'>
               <Item
-                onClick={() => modal.setStatus(1)}
+                onClick={() => {
+                  modal.setStatus(1);
+                  toggleAccountMenu(false);
+                }}
                 whileHover={{ scale: 1.01 }}
               >
                 Switch Accounts
               </Item>
               <Item
-                onClick={() => connect.disconnect()}
+                onClick={() => {
+                  connect.disconnect();
+                  toggleAccountMenu(false);
+                }}
                 whileHover={{ scale: 1.01 }}
               >
                 Disconnect
