@@ -30,7 +30,7 @@ export const Wrapper = styled(motion.div) <any>`
       flex: 1;
 
       > div {
-        padding: 0rem 1.5rem 0rem 0;
+        padding: 0.25rem 1.5rem 0.25rem;
       }
 
       h2 {

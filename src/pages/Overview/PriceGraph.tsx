@@ -74,7 +74,7 @@ export const data = {
   datasets: [
     {
       label: 'Price',
-      data: labels.map(() => faker.default.datatype.number({ min: -1000, max: 1000 })),
+      data: labels.map(() => faker.default.datatype.number({ min: 16.10, max: 24.21 })),
       borderColor: '#d33079',
       backgroundColor: '#d33079',
       pointStyle: undefined,

@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
     .item {
       flex: 1;
       font-size: 1rem;
-      padding: 0rem 1rem 0rem 1rem;
+      padding: 0rem 1.25rem;
       margin: 0.25rem 0;
       height: 2.3rem;
       border-radius: 1.2rem;
@@ -34,7 +34,12 @@ export const Wrapper = styled.div`
       align-items: center;
       align-content: center;
       cursor: pointer;
-      font-variation-settings: 'wght' 490;
+      font-variation-settings: 'wght' 540;
+
+      &.connect {
+        background: #d33079;
+        color: white;
+      }
 
       .label {
         border: 0.125rem solid #d33079;

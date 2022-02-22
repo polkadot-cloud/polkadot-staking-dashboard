@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from "framer-motion";
 import { Wrapper, ConnectionSymbol } from './Wrapper';
 import { useApi } from '../../contexts/Api';
-import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
+import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_icon.svg';
 import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS } from '../../constants';
 import BlockNumber from './BlockNumber';
 import { useStakingMetrics } from '../../contexts/Staking';

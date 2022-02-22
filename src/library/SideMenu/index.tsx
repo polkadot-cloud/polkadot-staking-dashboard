@@ -4,20 +4,20 @@ import Heading from './Heading';
 import Item from './Item';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../pages';
 import { useLocation } from 'react-router-dom';
-import Connect from '../Connect';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useConnect } from '../../contexts/Connect';
+import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 
 export const SideMenu = () => {
 
-  const connect = useConnect();
   const { pathname } = useLocation();
 
   return (
     <Wrapper>
       <section>
-        {connect.status === 0 && <Connect />}
+        <div className='logo'>
+          <PolkadotLogoSVG style={{ maxHeight: '100%' }} />
+        </div>
 
         {PAGE_CATEGORIES.map((category, categoryIndex) =>
           <React.Fragment key={`sidemenu_category_${categoryIndex}`}>

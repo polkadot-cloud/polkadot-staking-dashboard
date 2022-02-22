@@ -6,7 +6,7 @@ import { StakingMetricsContextWrapper } from './contexts/Staking';
 import { DemoBar } from './library/DemoBar';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './library/Modal';
-import AssistantButton from './library/AssistantButton';
+import AssistantButton from './library/Headers';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
 import { BrowserRouter } from "react-router-dom";

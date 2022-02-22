@@ -16,6 +16,16 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
+  .logo {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    width: 100%;
+    height: 1.35rem;
+    padding: 0.4rem 0.35rem;
+    margin-bottom: 1rem;
+  }
+
   section {
     &:first-child {
       flex-grow: 1;
