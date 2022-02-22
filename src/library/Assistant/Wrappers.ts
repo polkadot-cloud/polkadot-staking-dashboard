@@ -40,40 +40,50 @@ export const ContentWrapper = styled.div`
 
 export const HeaderWrapper = styled.div`
   width: 100%;
-  border-bottom: 1px solid #dadada;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  height: 3rem;
-  flex-shrink: 0;
+
+  .hold {
+    border-bottom: 1px solid #dadada;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    height: 3rem;
+    flex-shrink: 0;
+    margin: 0;
+  }
 
   button {
-    border-radius: 1rem;
-    border: 1px solid #222;
     color: #222;
-    padding: 0.3rem 0.75rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-variation-settings: 'wght' 575;
-    background: rgba(255,255,255,0.25)
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    &.close {
+      border: 1px solid #222;
+      border-radius: 1rem;
+      background: rgba(255,255,255,0.25);
+      padding: 0.3rem 0.75rem;
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  span {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  svg {
+    margin-left: 0.5rem;
   }
 
   h3 {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    padding: 0 1rem;
-    margin: 0;
-    
-    span {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-end;
-      align-items: center;
-    }
-    svg {
-      margin-left: 0.5rem;
-    }
+    padding: 0 1rem;  
   }
 `;
 
@@ -83,7 +93,25 @@ export const ListWrapper = styled(motion.div)`
   flex-grow: 1;
   align-content: flex-start;
   overflow: auto;
-  padding: 0.5rem 0.5rem;
+  padding: 0.75rem 0.5rem;
+
+  > button {
+    padding: 0.25rem; 
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    color: #222;
+  }
+  h2 {
+    color: #222;
+    padding: 0 0.75rem;
+    margin: 0.5rem 0;
+  }
+  .definition {
+    padding: 0.75rem;
+    line-height: 1.4rem;
+    margin: 0;
+  }
 `;
 
 export const HeadingWrapper = styled.div`

@@ -2,7 +2,7 @@ import { pageTitleFromUri } from '../../pages';
 import Heading from './Heading';
 import Definition from './Items/Definition';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowCircleLeft as faBack } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft as faBack } from '@fortawesome/free-solid-svg-icons';
 import { ContentWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import { useConnect } from '../../contexts/Connect';
 import { useLocation } from 'react-router-dom';
@@ -31,14 +31,14 @@ export const Sections = (props: any) => {
     <>
       <ContentWrapper>
         <HeaderWrapper>
-          <h3>
-            {pageTitleFromUri(pathname)} Resources
+          <div className='hold'>
+            <h3>{pageTitleFromUri(pathname)} Resources</h3>
             <span>
-              <button onClick={() => { assistant.toggle() }}>
+              <button className='close' onClick={() => { assistant.toggle() }}>
                 Close
               </button>
             </span>
-          </h3>
+          </div>
         </HeaderWrapper>
         <ListWrapper>
           {/* only display if accounts not yet connected */}
@@ -86,14 +86,29 @@ export const Sections = (props: any) => {
 
       <ContentWrapper>
         <HeaderWrapper>
-          <h3>
-            <FontAwesomeIcon icon={faBack} transform="grow-6" style={{ cursor: 'pointer' }} onClick={() => { setActiveSection(0) }} />
-            &nbsp; Inner Information
+          <div className='hold'>
+            <button onClick={() => setActiveSection(0)}>
+              <FontAwesomeIcon
+                icon={faBack}
+                transform="shrink-4"
+                style={{ cursor: 'pointer', marginRight: '0.3rem' }}
+              /> Back
+            </button>
+
             <span>
-              <button onClick={() => { assistant.toggle() }}>Close</button>
+              <button className='close' onClick={() => { assistant.toggle() }}>Close</button>
             </span>
-          </h3>
+          </div>
         </HeaderWrapper>
+        <ListWrapper>
+          <h2>Epoch</h2>
+          <p className='definition'>
+            An epoch is another name for a session in Polkadot. A different set of validators are selected to validate blocks at the beginning of every epoch.
+          </p>
+          <p className='definition'>
+            1 epoch is currently 4 hours in Polkadot.
+          </p>
+        </ListWrapper>
       </ContentWrapper>
     </>
   )
