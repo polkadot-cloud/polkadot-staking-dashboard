@@ -10,7 +10,6 @@ export const Headers = () => {
   const connect = useConnect();
 
   const connectWeb3 = async () => {
-
     // subscribe to web3 accounts
     connect.setAccounts();
   }

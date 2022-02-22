@@ -7,7 +7,6 @@ import { ContentWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import { useConnect } from '../../contexts/Connect';
 import { useLocation } from 'react-router-dom';
 import { useAssistant } from '../../contexts/Assistant';
-import { useModal } from '../../contexts/Modal';
 import External from './Items/External';
 import Action from './Items/Action';
 
@@ -18,14 +17,13 @@ export const Sections = (props: any) => {
   const connect = useConnect();
   const { pathname } = useLocation();
   const assistant = useAssistant();
-  const modal = useModal();
 
   // connect handler
   const connectOnClick = () => {
     // close assistant
     assistant.toggle();
     // open connect
-    modal.setStatus(1);
+    connect.setAccounts();
   }
 
   // resources to display
