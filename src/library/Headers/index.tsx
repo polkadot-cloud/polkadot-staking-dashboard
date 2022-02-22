@@ -4,6 +4,8 @@ import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
 import Identicon from '@polkadot/react-identicon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 export const Headers = () => {
 
@@ -54,6 +56,11 @@ export const Headers = () => {
               theme="polkadot"
             />
             {demoAddressClipped} | {connect.activeAccount.name}
+            <FontAwesomeIcon
+              icon={!showAccountMenu ? faBars : faMinus}
+              transform={!showAccountMenu ? "shrink-4" : "shrink-6"}
+              style={{ cursor: 'pointer', marginLeft: '0.75rem' }}
+            />
           </Item>
           {showAccountMenu &&
             <ul className='accounts'>
