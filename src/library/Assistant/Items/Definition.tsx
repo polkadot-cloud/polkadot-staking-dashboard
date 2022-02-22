@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { DefinitionWrapper as Wrapper } from './Wrappers';
+import { DefinitionWrapper as Wrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 

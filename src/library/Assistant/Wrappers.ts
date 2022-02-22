@@ -102,7 +102,7 @@ export const DefinitionWrapper = styled(motion.div) <any>`
   display: flex;
   
   > button {
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.65);
     border-radius: 0.75rem;
     margin: 0.45rem;
     padding: 1rem;
@@ -154,8 +154,8 @@ export const ItemWrapper = styled(motion.div) <any>`
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
-    border: ${props => props.actionRequired === true ? `3px solid #d33079` : `none`};
-    margin: ${props => props.actionRequired === true ? `0.3rem` : `0.4rem`};
+    border: ${props => props.border === undefined ? `none` : props.border};
+    margin: ${props => props.border === undefined ? `0.4rem` : `0.3rem`};
     position: relative;
 
     > h4 {

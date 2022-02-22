@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { ItemWrapper as Wrapper } from './Wrappers';
+import { ItemWrapper as Wrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 
-export const Item = (props: any) => {
+export const External = (props: any) => {
 
-  let { content, label, title, onClick } = props;
+  let { content, label, title, onClick, actionRequired } = props;
 
   if (onClick === undefined) {
     onClick = () => { };
@@ -15,7 +15,7 @@ export const Item = (props: any) => {
     <Wrapper
       width={props.width}
       height={props.height}
-      actionRequired={props.actionRequired}
+      border={actionRequired ? `3px solid #d33079` : undefined}
     >
       <motion.button
         className='item'
@@ -37,4 +37,4 @@ export const Item = (props: any) => {
   );
 }
 
-export default Item;
+export default External;
