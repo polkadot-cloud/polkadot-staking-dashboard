@@ -62,6 +62,7 @@ export class APIContextWrapper extends React.Component {
       apiInstance.consts.staking.bondingDuration,
       apiInstance.consts.staking.maxNominations,
       apiInstance.consts.staking.sessionsPerEra,
+      apiInstance.consts.staking.maxNominatorRewardedPerValidator,
     ]);
 
     this.setState({
@@ -71,6 +72,7 @@ export class APIContextWrapper extends React.Component {
         bondDuration: _metrics[0].toHuman(),
         maxNominations: _metrics[1].toHuman(),
         sessionsPerEra: _metrics[2].toHuman(),
+        maxNominatorRewardedPerValidator: _metrics[3].toHuman(),
       }
     });
   }

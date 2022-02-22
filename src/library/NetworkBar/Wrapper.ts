@@ -31,7 +31,6 @@ export const Wrapper = styled(motion.div) <any>`
 
       > div {
         padding: 0rem 1.5rem 0rem 0;
-        max-width: 300px;
       }
 
       h2 {

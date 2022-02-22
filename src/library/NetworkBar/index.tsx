@@ -29,7 +29,7 @@ export const NetworkBar = () => {
     },
     maximised: {
       opacity: 1,
-      height: '180px',
+      height: '150px',
       background: '#d33079'
     },
   };
@@ -42,7 +42,7 @@ export const NetworkBar = () => {
       initial={false}
       animate={animate}
       transition={{
-        duration: 0.3,
+        duration: 0.4,
         type: "spring",
         bounce: 0.15
       }}
@@ -102,6 +102,9 @@ export const NetworkBar = () => {
 
           <div>
             <p>Sessions Per Era: {consts.sessionsPerEra}</p>
+          </div>
+          <div>
+            <p>Max Nominators Rewarded per Validator: {consts.maxNominatorRewardedPerValidator}</p>
           </div>
         </div>
       }
