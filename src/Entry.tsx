@@ -1,21 +1,8 @@
 import React from 'react';
-import { DemoBar } from './library/DemoBar';
-import { NetworkBar } from './library/NetworkBar';
-import {
-  EntryWrapper,
-  SideInterfaceWrapper,
-  MainInterfaceWrapper,
-  BodyInterfaceWrapper,
-} from './Wrappers';
-import { Modal } from './library/Modal';
-import AssistantButton from './library/AssistantButton';
-import SideMenu from './library/SideMenu';
-import Assistant from './library/Assistant';
+import { EntryWrapper } from './Wrappers';
 import { APIContext } from './contexts/Api';
-import { BrowserRouter } from "react-router-dom";
 import Router from './Router';
 import { NetworkMetricsContextWrapper } from './contexts/Network';
-import { Example } from './library/Notifications/Example';
 
 export class Entry extends React.Component {
 
@@ -26,34 +13,12 @@ export class Entry extends React.Component {
     this.context.connect();
   }
 
+  // wrap entire router with network metrics: required for making staking calls
   render () {
     return (
       <NetworkMetricsContextWrapper>
         <EntryWrapper>
-          <BrowserRouter>
-            {/* modal */}
-            <Modal />
-            {/* Demo mode controller */}
-            <DemoBar />
-            <BodyInterfaceWrapper>
-
-              <Assistant />
-              {/* Left side menu */}
-              <SideInterfaceWrapper>
-                <SideMenu />
-              </SideInterfaceWrapper>
-
-              {/* Main Content Window */}
-              <MainInterfaceWrapper>
-                <AssistantButton />
-                <Router />
-              </MainInterfaceWrapper>
-            </BodyInterfaceWrapper>
-
-            {/* Network status and network details */}
-            <NetworkBar />
-            <Example />
-          </BrowserRouter>
+          <Router />
         </EntryWrapper>
       </NetworkMetricsContextWrapper>
     );

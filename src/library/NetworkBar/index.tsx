@@ -5,10 +5,12 @@ import { useApi } from '../../contexts/Api';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS } from '../../constants';
 import BlockNumber from './BlockNumber';
+import { useStakingMetrics } from '../../contexts/Staking';
 
 export const NetworkBar = () => {
 
   const { status, consts }: any = useApi();
+  const { staking }: any = useStakingMetrics();
 
   const [open, setOpen] = useState(false);
 
@@ -105,6 +107,12 @@ export const NetworkBar = () => {
           </div>
           <div>
             <p>Max Nominators Rewarded per Validator: {consts.maxNominatorRewardedPerValidator}</p>
+          </div>
+          <div>
+            <p>Nominator Cap: {staking.maxNominatorsCount}</p>
+          </div>
+          <div>
+            <p>Validator Cap: {staking.maxValidatorsCount}</p>
           </div>
         </div>
       }

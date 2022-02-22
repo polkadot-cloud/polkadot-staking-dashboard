@@ -33,7 +33,7 @@ export const Sections = (props: any) => {
 
   // external width patterns
   let curFlexWidth = 0;
-  const flexWidths = [60, 40, 100, 50, 50,];
+  const flexWidths = [66, 34, 100, 50, 50,];
 
   // get definition
   const _innerDefinition = assistant.innerDefinition;

@@ -26,6 +26,8 @@ export const StakingMetricsContextWrapper = (props: any) => {
     lastReward: 0,
     lastTotalStake: 0,
     totalNominators: 0,
+    maxNominatorsCount: 0,
+    maxValidatorsCount: 0,
   });
 
   const subscribeToStakingkMetrics = async (api: any) => {
@@ -37,9 +39,11 @@ export const StakingMetricsContextWrapper = (props: any) => {
       // subscribe to staking metrics
       const unsub = await api.queryMulti([
         api.query.staking.counterForNominators,
+        api.query.staking.maxNominatorsCount,
+        api.query.staking.maxValidatorsCount,
         [api.query.staking.erasValidatorReward, previousEra],
         [api.query.staking.erasTotalStake, previousEra],
-      ], ([_totalNominators, _lastReward, _lastTotalStake]: any) => {
+      ], ([_totalNominators, _maxNominatorsCount, _maxValidatorsCount, _lastReward, _lastTotalStake]: any) => {
 
         // format lastReward
         _lastReward = _lastReward.unwrapOrDefault(0);
@@ -49,10 +53,15 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
         _lastTotalStake = new BN(_lastTotalStake / (10 ** 10)).toNumber();
 
+        console.log(_maxNominatorsCount.toString());
+        console.log(_maxValidatorsCount.toString());
+
         setStakingMetrics({
           totalNominators: _totalNominators.toNumber(),
           lastReward: _lastReward,
           lastTotalStake: _lastTotalStake,
+          maxNominatorsCount: _maxNominatorsCount.toString(),
+          maxValidatorsCount: _maxValidatorsCount.toString(),
         });
       });
 
