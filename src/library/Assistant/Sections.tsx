@@ -33,7 +33,19 @@ export const Sections = (props: any) => {
 
   // external width patterns
   let curFlexWidth = 0;
-  const flexWidths = [66, 34, 100, 50, 50,];
+  const flexWidths = [60, 40, 100, 50, 50,];
+
+  // get definition
+  const _innerDefinition = assistant.innerDefinition;
+  let innerDefinition = {
+    title: '',
+    description: []
+  };
+
+  if (_innerDefinition.title !== undefined) {
+    innerDefinition.title = _innerDefinition.title;
+    innerDefinition.description = _innerDefinition.description;
+  }
 
   return (
     <>
@@ -68,7 +80,10 @@ export const Sections = (props: any) => {
               {definitions.map((item: any, index: number) =>
                 <Definition
                   key={`def_${index}`}
-                  onClick={() => setActiveSection(1)}
+                  onClick={() => {
+                    assistant.setInnerDefinition(item);
+                    setActiveSection(1);
+                  }}
                   title={item.title}
                   description={item.description}
                 />
@@ -100,29 +115,6 @@ export const Sections = (props: any) => {
             </>
           }
 
-          {/* 
-          <Heading title="Articles" />
-
-          <External width="50%" label='tutorials' title='What is Polkadot Staking?' ext />
-          <External width="50%" label='tutorials' title='Validators and Nominators' ext />
-          <External
-            width="66%"
-            label='tutorials'
-            title='What are Staking Pools?'
-            content='The new way to stake on Polakdot'
-            ext
-          />
-          <External width="34%" label='tutorials' title='Choosing Validators: What to Know' ext />
-          <External
-            width="100%"
-            label='tutorials'
-            title='Understanding Payouts'
-            content="Read about receiving staking rewards and initiating payouts."
-            ext
-          />
-          <External width="50%" label='tutorials' title='Bonding and Unbonding' ext />
-          <External width="50%" label='tutorials' title='Slashing and Staking' ext /> */}
-
         </ListWrapper>
       </ContentWrapper>
 
@@ -143,13 +135,12 @@ export const Sections = (props: any) => {
           </div>
         </HeaderWrapper>
         <ListWrapper>
-          <h2>Epoch</h2>
-          <p className='definition'>
-            An epoch is another name for a session in Polkadot. A different set of validators are selected to validate blocks at the beginning of every epoch.
-          </p>
-          <p className='definition'>
-            1 epoch is currently 4 hours in Polkadot.
-          </p>
+          <h2>{innerDefinition.title}</h2>
+          {innerDefinition.description.map((item, index) =>
+            <p key={`inner_def_${index}`} className='definition'>
+              {item}
+            </p>
+          )}
         </ListWrapper>
       </ContentWrapper>
     </>

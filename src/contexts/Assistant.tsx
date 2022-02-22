@@ -7,6 +7,7 @@ export interface AssistantContextState {
   innerDefinition: any,
   toggle: () => void;
   setPage: (page: string) => void;
+  setInnerDefinition: (meta: any) => void;
 }
 
 // context definition
@@ -16,6 +17,7 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
   innerDefinition: {},
   toggle: () => { },
   setPage: (p: string) => { },
+  setInnerDefinition: (m: any) => { },
 });
 
 // useAssistant
@@ -37,6 +39,13 @@ export class AssistantContextWrapper extends React.Component {
     })
   }
 
+  setInnerDefinition = (meta: any) => {
+    this.setState({
+      ...this.state,
+      innerDefinition: meta,
+    });
+  }
+
   toggle = () => {
     this.setState({ open: this.state.open === 1 ? 0 : 1 })
   }
@@ -49,6 +58,7 @@ export class AssistantContextWrapper extends React.Component {
         innerDefinition: this.state.innerDefinition,
         toggle: this.toggle,
         setPage: this.setPage,
+        setInnerDefinition: this.setInnerDefinition,
       }}>
         {this.props.children}
       </AssistantContext.Provider>

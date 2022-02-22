@@ -69,6 +69,13 @@ export const ASSISTANT_CONFIG = [
           'An epoch is another name for a session in Polkadot. A different set of validators are selected to validate blocks at the beginning of every epoch.',
           '1 epoch is currently 4 hours in Polkadot.'
         ],
+      },
+      {
+        title: 'Era',
+        description: [
+          'At the end of each era, validators are rewarded DOT based on how many era points they accumulated in that era. This DOT reward is then distributed amongst the nominators of the validator via a payout.',
+          '1 era is currently 24 hours in Polkadot.'
+        ],
       }
     ],
     external: [
