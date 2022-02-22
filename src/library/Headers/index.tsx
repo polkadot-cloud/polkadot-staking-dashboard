@@ -1,13 +1,17 @@
-import { motion } from "framer-motion";
-import Wrapper from './Wrapper';
+import { useState } from 'react';
+import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
+import { useModal } from '../../contexts/Modal';
 import Identicon from '@polkadot/react-identicon';
 
 export const Headers = () => {
 
+  const [showAccountMenu, toggleAccountMenu]: any = useState(false);
+
   const assistant = useAssistant();
   const connect = useConnect();
+  const modal = useModal();
 
   const connectWeb3 = async () => {
     // subscribe to web3 accounts
@@ -25,44 +29,59 @@ export const Headers = () => {
     <Wrapper>
       {/* not connected, display connect accounts */}
       {connect.status === 0 &&
-        <section>
-          <motion.button
-            className='item connect'
+        <HeadingWrapper>
+          <Item
+            className='connect'
             onClick={() => connectWeb3()}
             whileHover={{ scale: 1.02 }}
           >
             Connect Accounts
-          </motion.button>
-        </section>
+          </Item>
+        </HeadingWrapper>
       }
 
       {/* connected, display connected accounts */}
-      {connect.status === 1 && <section>
-        <motion.button
-          className='item'
-          whileHover={{ scale: 1.02 }}
-          style={{ paddingLeft: 0 }}
-          onClick={() => connect.disconnect()}
-        >
-          <Identicon
-            value={connect.activeAccount.address}
-            size={26}
-            theme="polkadot"
-          />
-          {demoAddressClipped} | {connect.activeAccount.name}
-        </motion.button>
-      </section>
+      {connect.status === 1 &&
+        <HeadingWrapper>
+          <Item
+            whileHover={{ scale: 1.02 }}
+            style={{ paddingLeft: 0 }}
+            onClick={() => toggleAccountMenu(showAccountMenu ? false : true)}
+          >
+            <Identicon
+              value={connect.activeAccount.address}
+              size={26}
+              theme="polkadot"
+            />
+            {demoAddressClipped} | {connect.activeAccount.name}
+          </Item>
+          {showAccountMenu &&
+            <ul className='accounts'>
+              <Item
+                onClick={() => modal.setStatus(1)}
+                whileHover={{ scale: 1.01 }}
+              >
+                Switch Accounts
+              </Item>
+              <Item
+                onClick={() => connect.disconnect()}
+                whileHover={{ scale: 1.01 }}
+              >
+                Disconnect
+              </Item>
+            </ul>
+          }
+        </HeadingWrapper>
       }
-      <section>
-        <motion.button
-          className='item'
+      <HeadingWrapper>
+        <Item
           onClick={() => { assistant.toggle() }}
           whileHover={{ scale: 1.02 }}
         >
           {connect.status === 0 && <div className='label'>1</div>}
           Assistant
-        </motion.button>
-      </section>
+        </Item>
+      </HeadingWrapper>
     </Wrapper>
   );
 }
