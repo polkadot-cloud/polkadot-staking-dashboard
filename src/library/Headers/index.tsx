@@ -1,14 +1,8 @@
-import { useEffect } from 'react';
 import { motion } from "framer-motion";
 import Wrapper from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import Identicon from '@polkadot/react-identicon';
-import {
-  web3Enable,
-  web3AccountsSubscribe,
-} from '@polkadot/extension-dapp';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 export const Headers = () => {
 
@@ -17,22 +11,9 @@ export const Headers = () => {
 
   const connectWeb3 = async () => {
 
-    // attempt to connect to Polkadot JS extension
-    const extensions = await web3Enable('rb_polkadot_staking');
-
-    // no extension found
-    if (extensions.length === 0) {
-      return;
-    }
     // subscribe to web3 accounts
     connect.setAccounts();
   }
-
-  // automatically connect to web3 (will work if already authorized)
-  // 'auto connect' should be a toggle stored in localStorage for user-set auto connect.
-  useEffect(() => {
-    connectWeb3();
-  }, []);
 
   let demoAddress, demoAddressClipped;
   if (connect.status === 1) {
@@ -40,8 +21,6 @@ export const Headers = () => {
     demoAddress = connect.accounts[0].address;
     demoAddressClipped = demoAddress.substring(0, 6) + '...' + demoAddress.substring(demoAddress.length - 6, demoAddress.length);
   }
-
-
 
   return (
     <Wrapper>
@@ -60,10 +39,11 @@ export const Headers = () => {
 
       {/* connected, display connected accounts */}
       {connect.status === 1 && <section>
-        <motion.div
+        <motion.button
           className='item'
           whileHover={{ scale: 1.02 }}
           style={{ paddingLeft: 0 }}
+          onClick={() => connect.disconnect()}
         >
           <Identicon
             value={connect.activeAccount.address}
@@ -71,7 +51,7 @@ export const Headers = () => {
             theme="polkadot"
           />
           {demoAddressClipped} | {connect.activeAccount.name}
-        </motion.div>
+        </motion.button>
       </section>
       }
       <section>

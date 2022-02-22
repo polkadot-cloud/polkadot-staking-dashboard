@@ -37,7 +37,21 @@ export class ConnectContextWrapper extends React.Component {
     unsubscribe: () => { },
   };
 
+  // automatically connect to web3 (will work if already authorized)
+  // 'auto connect' should be a toggle stored in localStorage for user-set auto connect.
+  componentDidMount () {
+    this.subscribeWeb3Accounts();
+  }
+
   subscribeWeb3Accounts = async () => {
+
+    // attempt to connect to Polkadot JS extension
+    const extensions = await web3Enable('rb_polkadot_staking');
+
+    // no extension found
+    if (extensions.length === 0) {
+      return;
+    }
 
     let accounts: any = [];
 
@@ -78,10 +92,16 @@ export class ConnectContextWrapper extends React.Component {
   }
 
   disconnect = () => {
-    this.setState({ ...this.state, status: 0 });
+    this.setState({
+      status: 0,
+      accounts: [],
+      activeAccount: {},
+      unsubscribe: () => { },
+    });
   }
 
   setAccounts = () => {
+    // subscribe to accounts via polkadot.js extension
     this.subscribeWeb3Accounts();
   }
 

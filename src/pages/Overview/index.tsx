@@ -46,7 +46,7 @@ export const Overview = (props: PageProps) => {
 
         <SecondaryWrapper>
           <GraphWrapper>
-            <h5>Your Balance DOT</h5>
+            <h5>Your DOT Balance</h5>
             <h1>$6,521.22</h1>
             <div className='graph'>
               <BalanceGraph />
