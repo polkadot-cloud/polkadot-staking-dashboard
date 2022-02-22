@@ -53,9 +53,6 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
         _lastTotalStake = new BN(_lastTotalStake / (10 ** 10)).toNumber();
 
-        console.log(_maxNominatorsCount.toString());
-        console.log(_maxValidatorsCount.toString());
-
         setStakingMetrics({
           totalNominators: _totalNominators.toNumber(),
           lastReward: _lastReward,

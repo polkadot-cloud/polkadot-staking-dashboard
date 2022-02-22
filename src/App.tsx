@@ -6,6 +6,7 @@ import { ModalContextWrapper } from './contexts/Modal';
 import { Entry } from './Entry';
 
 function App () {
+
   return (
     <DemoContextWrapper>
       <ConnectContextWrapper>

@@ -1,19 +1,47 @@
+import { useEffect } from 'react';
 import { motion } from "framer-motion";
 import Wrapper from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import Identicon from '@polkadot/react-identicon';
-import { useModal } from '../../contexts/Modal';
+import {
+  web3Enable,
+  web3AccountsSubscribe,
+} from '@polkadot/extension-dapp';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 export const Headers = () => {
 
   const assistant = useAssistant();
   const connect = useConnect();
-  const { setStatus } = useModal();
 
-  // demo purposes
-  const demoAddress = '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3';
-  const demoAddressClipped = '133YZZ…mqD3u3';
+  const connectWeb3 = async () => {
+
+    // attempt to connect to Polkadot JS extension
+    const extensions = await web3Enable('rb_polkadot_staking');
+
+    // no extension found
+    if (extensions.length === 0) {
+      return;
+    }
+    // subscribe to web3 accounts
+    connect.setAccounts();
+  }
+
+  // automatically connect to web3 (will work if already authorized)
+  // 'auto connect' should be a toggle stored in localStorage for user-set auto connect.
+  useEffect(() => {
+    connectWeb3();
+  }, []);
+
+  let demoAddress, demoAddressClipped;
+  if (connect.status === 1) {
+    // const { accounts } = connect;
+    demoAddress = connect.accounts[0].address;
+    demoAddressClipped = demoAddress.substring(0, 6) + '...' + demoAddress.substring(demoAddress.length - 6, demoAddress.length);
+  }
+
+
 
   return (
     <Wrapper>
@@ -22,7 +50,7 @@ export const Headers = () => {
         <section>
           <motion.button
             className='item connect'
-            onClick={() => setStatus(1)}
+            onClick={() => connectWeb3()}
             whileHover={{ scale: 1.02 }}
           >
             Connect Accounts
@@ -32,18 +60,18 @@ export const Headers = () => {
 
       {/* connected, display connected accounts */}
       {connect.status === 1 && <section>
-        <motion.button
+        <motion.div
           className='item'
           whileHover={{ scale: 1.02 }}
           style={{ paddingLeft: 0 }}
         >
           <Identicon
-            value={demoAddress}
+            value={connect.activeAccount.address}
             size={26}
             theme="polkadot"
           />
-          {demoAddressClipped}
-        </motion.button>
+          {demoAddressClipped} | {connect.activeAccount.name}
+        </motion.div>
       </section>
       }
       <section>

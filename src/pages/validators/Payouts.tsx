@@ -1,13 +1,10 @@
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
-import { useNetworkMetrics } from '../../contexts/Network';
 
 export const Payouts = (props: PageProps) => {
 
   const { page } = props;
   const { title } = page;
-
-  const { metrics } = useNetworkMetrics();
 
   // counterForValidators
 
