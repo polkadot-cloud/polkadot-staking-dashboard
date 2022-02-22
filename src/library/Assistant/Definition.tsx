@@ -5,6 +5,8 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 export const Heading = (props: any) => {
 
+  const { onClick } = props;
+
   return (
     <Wrapper width="100%" height="100px">
       <motion.button
@@ -16,7 +18,7 @@ export const Heading = (props: any) => {
           type: "spring",
           bounce: 0.4,
         }}
-        onClick={props.onClick}
+        onClick={onClick}
       >
         <div>
           <h3>Definition</h3>

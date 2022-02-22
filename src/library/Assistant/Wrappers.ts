@@ -12,14 +12,27 @@ export const Wrapper = styled(motion.div) <any>`
   z-index: 2;
   display: flex;
   flex-flow: column nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  * { 
+    box-sizing: border-box;
+  }
+`;
+
+export const SectionsWrapper = styled(motion.div)`
+  width: 200%;
+  display: flex;
+  flex-flow: row nowrap;
+  overflow: auto;
+  position: relative;
 `;
 
 export const ContentWrapper = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
-  overflow: hidden;
-  flex-grow: 1;
+  flex-basis: 50%;
   background: rgba(225,225,225,0.9);
   backdrop-filter: blur(4px);
   margin: 0.75rem;
@@ -34,7 +47,17 @@ export const HeaderWrapper = styled.div`
   height: 3rem;
   flex-shrink: 0;
 
-  > h3 {
+  button {
+    border-radius: 1rem;
+    border: 1px solid #222;
+    color: #222;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.9rem;
+    font-variation-settings: 'wght' 575;
+    background: rgba(255,255,255,0.25)
+  }
+
+  h3 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;

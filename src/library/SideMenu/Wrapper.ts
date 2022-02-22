@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -33,24 +34,26 @@ export const Wrapper = styled.div`
 }
 `;
 
-export const ItemWrapper = styled.div<any>`
+export const ItemWrapper = styled(motion.div) <any>`
   border-radius: 0.5rem;
-  background: ${props => props.active ? `rgba(0,0,0,0.06)` : `none`};
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  transition: background 0.2s;
+  transition: all 0.2s;
   padding: 0.75rem 0.5rem;
-  margin: 0.4rem 0;
+  margin: 0.35rem 0;
   font-size: 1rem;
 
-  &:hover {
-    background: ${props => !props.active ?
-    `rgba(0,0,0,0.04)` :
-    `rgba(0,0,0,0.08)`
-  };
+  &.active {
+    background: rgba(0,0,0,0.04);
+    background: linear-gradient(90deg, rgba(0,0,0,0.07) 0%, rgba(0,0,0,0.04) 100%);
   }
+
+  &.inactive:hover {
+    background: rgba(0,0,0,0.04);
+  }
+
   span {
     margin-right: 0.8rem;
   }
