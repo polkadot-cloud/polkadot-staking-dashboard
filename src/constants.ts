@@ -3,6 +3,8 @@
 
 export const API_ENDPOINT = 'wss://rpc.polkadot.io';
 
+export const POLKADOT_URL = 'https://polkadot.network';
+
 export const CONNECTION_STATUS = [
   'disconnected',
   'connecting',
