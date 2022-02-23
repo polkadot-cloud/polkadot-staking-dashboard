@@ -39,6 +39,7 @@ export const StatBoxWrapper = styled(motion.div)`
   display: flex;
   flex-flow: column wrap;
   overflow: hidden;
+  z-index: 0;
 
   > section {
     padding: 0 1.15rem;

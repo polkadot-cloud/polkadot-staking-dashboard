@@ -1,18 +1,35 @@
 import Wrapper from './Wrapper';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
+import Identicon from '@polkadot/react-identicon';
 
 export const ConnectAccounts = () => {
 
-  const { connect } = useConnect();
+  const { accounts, setActiveAccount } = useConnect();
   const modal = useModal();
 
   return (
     <Wrapper>
-      <h2>Connect Accounts</h2>
-      <button onClick={() => { connect(); modal.setStatus(2); }}>
-        Polkadot JS
-      </button>
+      <h2>Switch Accounts</h2>
+      {accounts.map((item: any, index: number) => {
+
+        const { address, name } = item;
+
+        return (
+          <button key={`switch_acnt_${index}`} onClick={() => {
+            setActiveAccount(address);
+            modal.setStatus(2);
+          }}>
+            <Identicon
+              value={address}
+              size={26}
+              theme="polkadot"
+              style={{ marginRight: '0.5rem' }}
+            />
+            {name}
+          </button>
+        );
+      })}
     </Wrapper>
   )
 }

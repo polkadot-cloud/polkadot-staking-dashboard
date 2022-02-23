@@ -1,3 +1,5 @@
+import { Line } from 'react-chartjs-2';
+import * as faker from '@faker-js/faker';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,8 +10,6 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import * as faker from '@faker-js/faker';
 
 ChartJS.register(
   CategoryScale,
@@ -82,6 +82,10 @@ export const data = {
     },
   ],
 };
+
+/*
+*/
+
 export const PriceGraph = () => {
 
   return (

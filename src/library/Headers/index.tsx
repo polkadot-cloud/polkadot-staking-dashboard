@@ -79,6 +79,7 @@ export const Headers = () => {
                   toggleAccountMenu(false);
                 }}
                 whileHover={{ scale: 1.01 }}
+                style={{ color: '#ae2324' }}
               >
                 Disconnect
               </Item>

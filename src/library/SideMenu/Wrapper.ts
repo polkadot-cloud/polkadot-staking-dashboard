@@ -50,18 +50,18 @@ export const ItemWrapper = styled(motion.div) <any>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  transition: all 0.2s;
   padding: 0.75rem 0.5rem;
   margin: 0.35rem 0;
   font-size: 1rem;
 
   &.active {
     background: rgba(0,0,0,0.04);
-    background: linear-gradient(90deg, rgba(0,0,0,0.07) 0%, rgba(0,0,0,0.04) 100%);
+    background: linear-gradient(90deg, rgba(0,0,0,0.07) 0%, rgba(0,0,0,0.03) 100%);
   }
 
   &.inactive:hover {
-    background: rgba(0,0,0,0.04);
+    background: rgba(0,0,0,0.02);
+    background: linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%);
   }
 
   span {

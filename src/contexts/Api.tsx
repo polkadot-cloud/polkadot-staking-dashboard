@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { API_ENDPOINT, CONNECTION_STATUS } from '../constants';
+import { API_ENDPOINT, CONNECTION_STATUS, ENDPOINTS } from '../constants';
 
 // api context definition
 export const APIContext: any = React.createContext({
@@ -9,6 +9,7 @@ export const APIContext: any = React.createContext({
   status: CONNECTION_STATUS[0],
   isReady: () => { },
   consts: {},
+  prices: {},
 });
 
 // import context as a hook
@@ -24,8 +25,60 @@ export class APIContextWrapper extends React.Component {
       bondDuration: 0,
       maxNominations: 0,
       sessionsPerEra: 0,
+    },
+    prices: {
+      lastPrice: 0,
+      change: 0,
     }
   };
+
+  // get dot price straight away
+  componentDidMount () {
+    this.initiatePrices();
+  }
+
+  componentWillUnmount () {
+    if (this.priceHandle) {
+      clearInterval(this.priceHandle);
+      this.priceHandle = 0;
+    }
+  }
+
+  fetchPrices = async () => {
+
+    const urls = [
+      ENDPOINTS.priceChange,
+    ];
+
+    Promise.all(urls.map(u => fetch(u, { method: 'GET' }))).then(responses =>
+      Promise.all(responses.map(res => res.json()))
+    ).then(texts => {
+      // const _price = texts[0];
+      const _change = texts[0];
+
+      if (_change.lastPrice !== undefined && _change.priceChangePercent !== undefined) {
+        let price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(2);
+        let change: string = (Math.round(_change.priceChangePercent * 100) / 100).toFixed(2);
+
+        this.setState({
+          ...this.state,
+          prices: {
+            lastPrice: price,
+            change: change,
+          }
+        });
+      }
+    });
+  }
+
+  // subscribe to price data
+  priceHandle: any;
+  initiatePrices = async () => {
+    this.fetchPrices();
+    this.priceHandle = setInterval(() => {
+      this.fetchPrices();
+    }, 1000 * 60);
+  }
 
   // returns whether api is ready to be used
   isReady = () => {
@@ -44,10 +97,16 @@ export class APIContextWrapper extends React.Component {
     // connected to api event
     // other provider event listeners
     wsProvider.on('disconnected', () => {
-      this.setState({ status: CONNECTION_STATUS[0] });
+      this.setState({
+        ...this.state,
+        status: CONNECTION_STATUS[0]
+      });
     });
     wsProvider.on('connected', () => {
-      this.setState({ status: CONNECTION_STATUS[2] });
+      this.setState({
+        ...this.state,
+        status: CONNECTION_STATUS[2]
+      });
     });
     // wsProvider.on('ready', () => {
     // });
@@ -66,6 +125,7 @@ export class APIContextWrapper extends React.Component {
     ]);
 
     this.setState({
+      ...this.state,
       api: apiInstance,
       status: CONNECTION_STATUS[2],
       consts: {
@@ -81,10 +141,11 @@ export class APIContextWrapper extends React.Component {
     return (
       <APIContext.Provider value={{
         connect: this.connect,
+        isReady: this.isReady,
         api: this.state.api,
         status: this.state.status,
         consts: this.state.consts,
-        isReady: this.isReady,
+        prices: this.state.prices,
       }}>
         {this.props.children}
       </APIContext.Provider>

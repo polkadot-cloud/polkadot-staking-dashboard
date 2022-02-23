@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   flex-flow: row nowrap;
   padding: 1rem  1.2rem; 
   transition: all 0.15s;
+  z-index: 5;
 
   /* overwrite default cursor behaviour for Identicon  */
   svg, .ui--IdentityIcon {

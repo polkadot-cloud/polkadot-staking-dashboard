@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-  margin: 0.5rem 0;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
 
   h2 {
     margin-top: 0;
@@ -11,10 +13,16 @@ export const Wrapper = styled.div`
 
   button {
     border: 1px solid #eee;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1rem;
-    transition: background 0.1s;
+    width: 100%;
+    margin: 0.25rem 0;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
     font-size: 1rem;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    background: #fbfbfb;
 
     &:hover {
       background: #fafafa;

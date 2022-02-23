@@ -49,7 +49,7 @@ export const Modal = (props: any) => {
       }}
       animate={controls}
       transition={{
-        duration: 0.25,
+        duration: 0.15,
       }}
       variants={variants}
     >

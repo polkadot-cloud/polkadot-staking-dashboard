@@ -6,11 +6,12 @@ import {
 
 // context type
 export interface ConnectContextState {
-  status: number,
   connect: () => void,
   disconnect: () => void;
-  accounts: any;
   setAccounts: () => void;
+  setActiveAccount: (a: string) => void;
+  status: number,
+  accounts: any;
   activeAccount: any;
 }
 
@@ -19,8 +20,9 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
   status: 0,
   connect: () => { },
   disconnect: () => { },
-  accounts: [],
   setAccounts: () => { },
+  setActiveAccount: (a: string) => { },
+  accounts: [],
   activeAccount: {},
 });
 
@@ -105,6 +107,17 @@ export class ConnectContextWrapper extends React.Component {
     this.subscribeWeb3Accounts();
   }
 
+  setActiveAccount = (address: string) => {
+    const account = this.state.accounts.find((item: any) => {
+      return (item.address === address);
+    });
+
+    this.setState({
+      ...this.state,
+      activeAccount: account
+    });
+  }
+
   render () {
     return (
       <ConnectContext.Provider value={{
@@ -114,6 +127,7 @@ export class ConnectContextWrapper extends React.Component {
         connect: this.connect,
         disconnect: this.disconnect,
         setAccounts: this.setAccounts,
+        setActiveAccount: this.setActiveAccount,
       }}>
         {this.props.children}
       </ConnectContext.Provider>

@@ -37,8 +37,7 @@ export const SideMenu = () => {
                   />
                 }
               </React.Fragment>
-            )
-            }
+            )}
           </React.Fragment>
         )}
       </section>

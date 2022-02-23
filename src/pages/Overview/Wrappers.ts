@@ -21,6 +21,12 @@ export const GraphWrapper = styled.div`
     margin: 0;
     padding: 0.25rem 0;
   }
+  h1 {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
   .graph {
     position: relative;
     flex: 1;
@@ -29,6 +35,20 @@ export const GraphWrapper = styled.div`
     width: 100%;
     margin-top: 1.5rem;
     min-height: 250px;
+  }
+  .change {
+    margin-left: 0.6rem;
+    font-size: 0.9rem;
+    color: white;
+    border-radius: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    font-variation-settings: 'wght' 550;
+    &.pos {
+      background: #3eb955;
+    }
+    &.neg {
+      background: #d2545d;
+    }
   }
 `;
 
