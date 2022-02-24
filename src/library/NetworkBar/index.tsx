@@ -89,8 +89,24 @@ export const NetworkBar = () => {
           <button onClick={() => { setOpen(!open) }}>
             {open ? `Collapse Info` : `Network Info`}
           </button>
-          <ConnectionSymbol color={symbolColor} />
-          {status === CONNECTION_STATUS[2] && <BlockNumber />}
+          <div className='stat_separator' style={{ marginRight: 0 }}>
+            {status === CONNECTION_STATUS[2] &&
+              <BlockNumber />
+            }
+            <ConnectionSymbol color={symbolColor} />
+          </div>
+
+          <div className='separator'></div>
+
+          <div className='stat_separator'>
+            <span className={`change${prices.change < 0 ? ` neg` : prices.change > 0 ? ` pos` : ``}`}>
+              {prices.change < 0 ? `` : prices.change > 0 ? `+` : ``}{prices.change}%
+            </span>
+          </div>
+
+          <div className='stat_separator'>
+            1 DOT / {prices.lastPrice} USD
+          </div>
         </section>
       </div>
       {open &&

@@ -10,13 +10,6 @@ import NumberEasing from 'che-react-number-easing';
 export const Overview = (props: PageProps) => {
 
   const { staking } = useStakingMetrics();
-  // const { prices }: any = useApi();
-
-  /*
-    <span className={`change${prices.change < 0 ? ` neg` : prices.change > 0 ? ` pos` : ``}`}>
-    {prices.change < 0 ? `` : prices.change > 0 ? `+` : ``}{prices.change}
-    </span>
-  */
 
   // stats
   const items = [
@@ -36,7 +29,6 @@ export const Overview = (props: PageProps) => {
       unit: "DOT",
     },
   ];
-
 
   return (
     <>
