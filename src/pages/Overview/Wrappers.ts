@@ -15,7 +15,7 @@ export const GraphWrapper = styled.div`
   flex-flow: column nowrap;
   width: 100%;
   flex: 1;
-  max-height: 400px;
+  min-height: 425px;
 
   h1, h5 {
     margin: 0;
@@ -64,7 +64,6 @@ export const GraphWrapper = styled.div`
 
 export const SecondaryWrapper = styled.div`
   border-radius: 1rem;
-  background: rgba(255,255,255,0.5);
   flex-basis: 34%;
   flex: 1;
 `;

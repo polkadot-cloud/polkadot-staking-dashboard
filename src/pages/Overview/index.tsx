@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useStakingMetrics } from '../../contexts/Staking';
@@ -7,8 +6,6 @@ import { MainWrapper, GraphWrapper, SecondaryWrapper } from './Wrappers';
 import PayoutGraph from './PayoutGraph';
 import BalanceGraph from './BalanceGraph';
 import NumberEasing from 'che-react-number-easing';
-import { useApi } from '../../contexts/Api';
-import * as faker from '@faker-js/faker';
 
 export const Overview = (props: PageProps) => {
 
@@ -59,7 +56,7 @@ export const Overview = (props: PageProps) => {
                 value={17.18}
               />&nbsp;DOT
             </h1>
-            <p><button>Last Month</button></p>
+            <p><button>Past Month</button></p>
             <div className='graph'>
               <PayoutGraph />
             </div>

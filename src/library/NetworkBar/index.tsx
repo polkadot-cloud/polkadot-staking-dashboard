@@ -9,7 +9,7 @@ import { useStakingMetrics } from '../../contexts/Staking';
 
 export const NetworkBar = () => {
 
-  const { status, consts }: any = useApi();
+  const { status, consts, prices }: any = useApi();
   const { staking }: any = useStakingMetrics();
 
   const [open, setOpen] = useState(false);
