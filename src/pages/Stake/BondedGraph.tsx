@@ -37,15 +37,13 @@ export const options = {
 };
 
 export const data = {
-  labels: ['Free', 'Bonded', 'Reserved', 'Vesting'],
+  labels: ['Free', 'Bonded'],
   datasets: [
     {
       label: 'DOT',
-      data: [12, 19, 3, 5],
+      data: [12, 19],
       backgroundColor: [
         '#d33079',
-        '#eb86b4',
-        '#ccc',
         '#eee',
       ],
       borderWidth: 1,
@@ -53,7 +51,7 @@ export const data = {
   ],
 };
 
-export const BalanceGraph = () => {
+export const BondedGraph = () => {
 
   return (
     <Doughnut
@@ -63,4 +61,4 @@ export const BalanceGraph = () => {
   );
 }
 
-export default BalanceGraph;
+export default BondedGraph;

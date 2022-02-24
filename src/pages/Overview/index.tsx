@@ -31,13 +31,15 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
+  const GRAPH_HEIGHT = 375;
+
   return (
     <>
       <h1>What's Happening</h1>
       <StatBoxList items={items} />
       <PageRowWrapper>
         <MainWrapper>
-          <GraphWrapper>
+          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }}>
             <h5>Your Payouts</h5>
             <h1>
               <NumberEasing
@@ -57,7 +59,7 @@ export const Overview = (props: PageProps) => {
         </MainWrapper>
 
         <SecondaryWrapper>
-          <GraphWrapper>
+          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }}>
             <h5>Your DOT Balance</h5>
             <h1>$6,521.22</h1>
             <div className='graph' style={{ paddingRight: '1rem' }}>

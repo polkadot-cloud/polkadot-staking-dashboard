@@ -1,11 +1,9 @@
-import { Wrapper, Item } from './Wrappers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
+import { Wrapper, Item } from '../Overview/Announcements/Wrappers';
 import { motion } from 'framer-motion';
-import { useStakingMetrics } from '../../../contexts/Staking';
-import { useApi } from '../../../contexts/Api';
+import { useStakingMetrics } from '../../contexts/Staking';
+import { useApi } from '../../contexts/Api';
 
-export const Announcements = () => {
+export const Nominations = () => {
 
   const { isReady }: any = useApi();
   const { staking }: any = useStakingMetrics();
@@ -15,7 +13,7 @@ export const Announcements = () => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.25,
+        staggerChildren: 0.25
       }
     }
   };
@@ -25,7 +23,7 @@ export const Announcements = () => {
       opacity: 0
     },
     show: {
-      opacity: 1,
+      opacity: 1
     }
   };
 
@@ -43,23 +41,16 @@ export const Announcements = () => {
       <motion.div variants={container} initial="hidden" animate="show">
         <motion.div variants={listItem}>
           <h4>
-            Announcements
+            Your Nominations
           </h4>
         </motion.div>
 
         <Item variants={listItem}>
-          <h5>
-            <FontAwesomeIcon
-              icon={faBack}
-              style={{ marginRight: '0.6rem' }}
-            />
-            Nominator limit has been reached
-          </h5>
-          <p>Maximum nominations have been reached on the network. Please wait for more slots if you wish to nominate.</p>
+          <p>...</p>
         </Item>
       </motion.div>
     </Wrapper>
   );
 }
 
-export default Announcements;
+export default Nominations;

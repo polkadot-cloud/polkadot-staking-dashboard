@@ -1,5 +1,5 @@
 import Overview from './pages/Overview';
-import Stake from './pages/nominate/Stake';
+import Stake from './pages/Stake';
 import Browse from './pages/validators/Browse';
 import Payouts from './pages/validators/Payouts';
 import Projects from './pages/explore/Projects';

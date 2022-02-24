@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ListWrapper = styled.div`
-  height: 120px;
+  height: 110px;
   display: flex;
   flex-flow: row nowrap;
   overflow-x: auto;

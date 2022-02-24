@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   flex: 1;
   display: flex;
   flex-flow: column wrap;
+  width: 100%;
 `;
 export const Item = styled(motion.div)`
   list-style: none;
