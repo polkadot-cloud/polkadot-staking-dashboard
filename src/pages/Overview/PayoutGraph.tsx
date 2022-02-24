@@ -30,6 +30,10 @@ export const options = {
         drawBorder: true,
         color: '#eee',
       },
+      ticks: {
+        maxTicksLimit: 30,
+        autoSkip: true,
+      }
     },
     y: {
       grid: {

@@ -16,12 +16,11 @@ export const Item = styled(motion.div)`
   margin: 1rem 0.25rem;
   padding: 1.5rem 1rem;
   border-radius: 1rem;
-  background: rgba(229,229,229,0.25);
+  background: rgba(222,222,222,0.25);
 
   h5 {
     margin: 0 0 0.75rem;
     color: #b1185d;
-    text-transform: uppercase;
     font-variation-settings: 'wght' 500;
   }
 

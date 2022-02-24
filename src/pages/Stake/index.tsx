@@ -7,21 +7,45 @@ import { motion } from 'framer-motion';
 import { Nominations } from './Nominations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
+import { StatBoxList } from '../../library/StatBoxList';
 
 export const Stake = (props: PageProps) => {
 
   const { page } = props;
   const { title } = page;
 
+  const items = [
+    {
+      label: "Bonded",
+      value: 19,
+      unit: "DOT",
+      format: "number",
+    },
+    {
+      label: "Free",
+      value: 12,
+      unit: "DOT",
+      format: "number",
+    },
+    {
+      label: "Status",
+      value: "6 Nominations",
+      unit: "",
+      format: 'text',
+    },
+  ];
+
   return (
     <Wrapper>
       <h1>{title}</h1>
+      <StatBoxList title="This Session" items={items} />
+
       <PageRowWrapper>
         <MainWrapper>
           <GraphWrapper>
             <h3>Bonded Funds</h3>
             <div className='graph_with_extra'>
-              <div className='graph' style={{ flex: 0, paddingRight: '1rem', maxWidth: 300 }}>
+              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
                 <BondedGraph />
               </div>
               <div className='extra'>
@@ -49,16 +73,18 @@ export const Stake = (props: PageProps) => {
                 <h2>Manual Selection</h2>
                 <p>Manually browse and nominate validators from the validator list.</p>
 
-                <p className='go'>Browse Validators <FontAwesomeIcon
-                  icon={faGo}
-                  transform="shrink-2"
-                  style={{ marginLeft: '0.5rem' }}
-                />
+                <p className='go'>
+                  Browse Validators
+                  <FontAwesomeIcon
+                    icon={faGo}
+                    transform="shrink-2"
+                    style={{ marginLeft: '0.5rem' }}
+                  />
                 </p>
               </motion.button>
               <motion.button whileHover={{ scale: 1.01 }}>
                 <h2>Smart Nominate</h2>
-                <p>Nominate the best matching validators based on your requirements.</p>
+                <p>Nominate the most suited validators based on your requirements.</p>
                 <p className='go'>
                   Start <FontAwesomeIcon
                     icon={faGo}

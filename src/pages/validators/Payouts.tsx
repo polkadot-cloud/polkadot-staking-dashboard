@@ -13,16 +13,19 @@ export const Payouts = (props: PageProps) => {
       label: "Last Era Paid",
       value: 297,
       unit: "",
+      format: "number",
     },
     {
       label: "Time Left this Era",
       value: 1,
       unit: "",
+      format: "number",
     },
     {
       label: "Outstanding Payouts",
       value: 0,
       unit: "",
+      format: "number",
     },
   ];
 

@@ -17,6 +17,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bn.js": "^5.2.0",
     "chart.js": "^3.7.1",
+    "chartjs-plugin-datalabels": "^2.0.0",
     "che-react-number-easing": "^0.1.4",
     "framer-motion": "^6.2.4",
     "moment": "^2.29.1",

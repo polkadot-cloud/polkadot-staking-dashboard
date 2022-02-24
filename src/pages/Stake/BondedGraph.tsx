@@ -1,5 +1,6 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -20,7 +21,7 @@ export const options = {
           size: 15,
           color: '#333',
           weight: '500',
-        }
+        },
       },
     },
     tooltip: {
@@ -37,7 +38,7 @@ export const options = {
 };
 
 export const data = {
-  labels: ['Free', 'Bonded'],
+  labels: ['Free:', 'Bonded'],
   datasets: [
     {
       label: 'DOT',

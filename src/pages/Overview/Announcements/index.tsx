@@ -53,9 +53,9 @@ export const Announcements = () => {
               icon={faBack}
               style={{ marginRight: '0.6rem' }}
             />
-            Nominator limit has been reached
+            Nominator Limit Has Been Reached
           </h5>
-          <p>Maximum nominations have been reached on the network. Please wait for more slots if you wish to nominate.</p>
+          <p>The maximum allowed nominations have been reached on the network. Please wait for available slots if you wish to nominate.</p>
         </Item>
       </motion.div>
     </Wrapper>

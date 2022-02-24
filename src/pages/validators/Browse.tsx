@@ -16,16 +16,19 @@ export const Browse = (props: PageProps) => {
       label: "Active Validators",
       value: 297,
       unit: "",
+      format: "number",
     },
     {
       label: "Current Epoch",
       value: 1,
       unit: "",
+      format: "number",
     },
     {
       label: "Current Era",
       value: metrics.activeEra.index,
       unit: "",
+      format: "number",
     },
   ];
 

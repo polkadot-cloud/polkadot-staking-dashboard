@@ -18,16 +18,19 @@ export const Overview = (props: PageProps) => {
       label: "Total Nominators",
       value: staking.totalNominators,
       unit: "",
+      format: "number",
     },
     {
       label: "Total Staked",
       value: staking.lastTotalStake,
       unit: "DOT",
+      format: "number",
     },
     {
       label: "Last Reward Payout",
       value: staking.lastReward,
       unit: "DOT",
+      format: "number",
     },
   ];
 

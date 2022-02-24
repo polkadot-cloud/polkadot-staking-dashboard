@@ -19,7 +19,7 @@ export const NominateWrapper = styled.div`
     flex-basis: 50%;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 1.2rem;
     background: rgba(240,240,240,0.7);
     height: auto;
     border-radius: 0.85rem;
@@ -31,8 +31,8 @@ export const NominateWrapper = styled.div`
     }
     h2 {
       font-size: 1.2rem;
-      color: #444; 
-      margin: 0 0 0.2rem;
+      color: #222; 
+      margin: 0 0 0.4rem;
     }
     p {
       color: #222;
@@ -47,6 +47,8 @@ export const NominateWrapper = styled.div`
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
+      justify-content: center;
+      align-content: center;
       padding: 0;
       margin-top: 1rem;
       transition: color 0.2s;

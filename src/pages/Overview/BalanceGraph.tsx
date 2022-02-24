@@ -20,7 +20,7 @@ export const options = {
           size: 15,
           color: '#333',
           weight: '500',
-        }
+        },
       },
     },
     tooltip: {

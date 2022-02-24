@@ -3532,6 +3532,11 @@ chart.js@^3.7.1:
   resolved "https://registry.npmjs.org/chart.js/-/chart.js-3.7.1.tgz#0516f690c6a8680c6c707e31a4c1807a6f400ada"
   integrity sha512-8knRegQLFnPQAheZV8MjxIXc5gQEfDFD897BJgv/klO/vtIyFFmgMXrNfgrXpbTr/XbTturxRgxIXx/Y+ASJBA==
 
+chartjs-plugin-datalabels@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/chartjs-plugin-datalabels/-/chartjs-plugin-datalabels-2.0.0.tgz#caacefb26803d968785071eab012dde8746c5939"
+  integrity sha512-WBsWihphzM0Y8fmQVm89+iy99mmgejmj5/jcsYqwxSioLRL/zqJ4Scv/eXq5ZqvG3TpojlGzZLeaOaSvDm7fwA==
+
 che-react-number-easing@^0.1.4:
   version "0.1.4"
   resolved "https://registry.npmjs.org/che-react-number-easing/-/che-react-number-easing-0.1.4.tgz#4dfc190b63d2503b31bf08fbedc120790797333c"
