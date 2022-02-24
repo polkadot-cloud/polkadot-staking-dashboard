@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Wrapper, ConnectionSymbol } from './Wrapper';
 import { useApi } from '../../contexts/Api';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_icon.svg';
-import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS } from '../../constants';
+import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, API_ENDPOINT, ENDPOINT_PRICE } from '../../constants';
 import BlockNumber from './BlockNumber';
 import { useStakingMetrics } from '../../contexts/Staking';
 
@@ -25,13 +25,11 @@ export const NetworkBar = () => {
   // handle expand transitions
   const variants = {
     minimised: {
-      opacity: 1,
-      height: 'auto',
+      height: '2.6rem',
       background: 'white'
     },
     maximised: {
-      opacity: 1,
-      height: '150px',
+      height: '130px',
       background: '#d33079'
     },
   };
@@ -40,7 +38,6 @@ export const NetworkBar = () => {
 
   return (
     <Wrapper
-      open={open}
       initial={false}
       animate={animate}
       transition={{
@@ -109,29 +106,16 @@ export const NetworkBar = () => {
           </div>
         </section>
       </div>
-      {open &&
-        <div className='row details'>
-          <div>
-            <p>Maximum Nominations: {consts.maxNominations}</p>
-          </div>
-          <div>
-            <p>Bond Duration: {consts.bondDuration} Days</p>
-          </div>
-
-          <div>
-            <p>Sessions Per Era: {consts.sessionsPerEra}</p>
-          </div>
-          <div>
-            <p>Max Nominators Rewarded per Validator: {consts.maxNominatorRewardedPerValidator}</p>
-          </div>
-          <div>
-            <p>Nominator Cap: {staking.maxNominatorsCount}</p>
-          </div>
-          <div>
-            <p>Validator Cap: {staking.maxValidatorsCount}</p>
-          </div>
+      <div className='details'>
+        <div>
+          <p>Polkadot Node Endpoint:</p>
+          <p className='val'>{API_ENDPOINT}</p>
         </div>
-      }
+        <div>
+          <p>Price Tracker:</p>
+          <p className='val'>{ENDPOINT_PRICE}</p>
+        </div>
+      </div>
     </Wrapper>
   )
 }

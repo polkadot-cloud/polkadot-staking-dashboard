@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   overflow-x: auto;
-  margin: 0.25rem 0 0.5rem;
+  margin: 0.25rem 0;
   flex-shrink: 0;
 `;
 

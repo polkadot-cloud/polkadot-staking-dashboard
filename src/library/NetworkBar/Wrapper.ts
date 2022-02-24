@@ -7,10 +7,11 @@ export const Wrapper = styled(motion.div) <any>`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  align-items: ${props => props.open === true ? `flex-start` : `center`};
+  align-items: center;
   font-size: 0.75rem;
   color: #444;
   position: relative;
+  overflow: hidden;
 
   .row {
     width: 100%;
@@ -19,41 +20,11 @@ export const Wrapper = styled(motion.div) <any>`
     justify-content: flex-start;
     align-items: center;
     align-content: center;
-    overflow-x: auto;
 
     /* top row (always visible on collapsed) */
     &:first-child {
       background: #f2f2f2;
     }
-
-    /* bottom row (collapsed by default) */
-    &.details {
-      padding: 1rem;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-start;
-      align-content: flex-start;
-      flex: 1;
-
-      > div {
-        padding: 0.25rem 1.5rem 0.25rem;
-      }
-      h2 {
-        color: white;
-        margin: 0.5rem;
-      }
-      p {
-        font-size: 0.9rem;
-        font-variation-settings: 'wght' 600;
-        color: white;
-        &.desc {
-          margin-top: 0.4rem;
-          font-variation-settings: 'wght' 420;
-          font-size: 0.8rem;
-        }
-      }
-    }
-
     p {
       margin: 0 0.25rem;
       color: #666;
@@ -80,7 +51,7 @@ export const Wrapper = styled(motion.div) <any>`
         display: flex;
         flex-flow: row wrap;
         align-items: center;
-        flex: 1;
+        flex-grow: 1;
         .network_icon {
           margin-right: 0.5rem;
           width: 1.5rem;
@@ -111,6 +82,42 @@ export const Wrapper = styled(motion.div) <any>`
       }
     }
   }
+
+   /* bottom row (collapsed by default) */
+   .details {
+      width: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-content: center;
+      align-items: center;
+      padding: 1rem 0.5rem;
+      box-sizing: border-box;
+      overflow-x: auto;
+
+      > div {
+        padding: 0.25rem 1.5rem 0.25rem;
+        background: rgba(0,0,0,0.1);
+        margin: 0 0.5rem;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        min-width: 250px;
+        display: flex;
+        flex-flow: column nowrap;
+      }
+      p {
+        margin: 0;
+        font-size: 0.85rem;
+        font-variation-settings: 'wght' 500;
+        color: #f1f1f1;
+        padding: 0.2rem 0;
+
+        &.val {
+          font-size: 0.85rem;
+          color: #e6e6e6;
+        }
+      }
+    }
 `;
 
 export const ConnectionSymbol = styled.div<any>`

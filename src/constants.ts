@@ -22,6 +22,7 @@ export const INTERFACE_MINIMUM_HEIGHT: number = 400;
 export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
 
+export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3/';
 export const ENDPOINTS = {
   priceChange: 'https://api.binance.com/api/v3/ticker/24hr?symbol=DOTUSDT',
 }
