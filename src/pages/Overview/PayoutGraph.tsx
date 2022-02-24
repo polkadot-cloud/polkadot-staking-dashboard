@@ -58,7 +58,7 @@ export const options = {
           return [];
         },
         label: (context: any) => {
-          return '$' + context.parsed.y + ' ' + context.label;
+          return context.parsed.y + ' DOT, ' + context.label;
         },
       },
       intersect: false,
@@ -89,7 +89,10 @@ export const data = {
   datasets: [
     {
       label: 'Price',
-      data: labels.map(() => payout += faker.default.datatype.number({ min: 0.09, max: 0.15 })),
+      data: labels.map(() => {
+        let newPayout = payout += (0.05 + Math.random() * 0.1);
+        return newPayout;
+      }),
       borderColor: '#d33079',
       backgroundColor: '#d33079',
       pointStyle: undefined,

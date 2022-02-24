@@ -38,7 +38,7 @@ export const Projects = (props: PageProps) => {
     <Wrapper>
       <h1>{title}</h1>
 
-      <h3>Validators</h3>
+      <h3>Validator Programs</h3>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
           cool icon here

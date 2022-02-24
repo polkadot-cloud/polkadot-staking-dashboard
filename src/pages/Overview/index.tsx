@@ -43,7 +43,7 @@ export const Overview = (props: PageProps) => {
       <PageRowWrapper>
         <MainWrapper>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }}>
-            <h5>Your Payouts</h5>
+            <h5>Your Accumulated Payouts</h5>
             <h1>
               <NumberEasing
                 ease="quintInOut"
