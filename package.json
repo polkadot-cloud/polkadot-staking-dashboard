@@ -19,6 +19,7 @@
     "chart.js": "^3.7.1",
     "che-react-number-easing": "^0.1.4",
     "framer-motion": "^6.2.4",
+    "moment": "^2.29.1",
     "react": "^18.0.0-beta-24dd07bd2-20211208",
     "react-chartjs-2": "^4.0.1",
     "react-dom": "^18.0.0-beta-24dd07bd2-20211208",

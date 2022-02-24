@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Line } from 'react-chartjs-2';
 import * as faker from '@faker-js/faker';
 import {
@@ -20,7 +21,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
 export const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -67,14 +67,25 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+// dummy dates for graph
+let labels = [];
+const start = moment('2022-01-24');
+const end = moment('2022-02-24');
 
+// If you want an inclusive end date (fully-closed interval)
+for (var m = moment(start); m.diff(end, 'days') <= 0; m.add(1, 'days')) {
+  let newDate = m.format('Do MMM');
+  labels.push(newDate);
+}
+
+// dummy payout graph
+let payout = 10.03;
 export const data = {
   labels,
   datasets: [
     {
       label: 'Price',
-      data: labels.map(() => faker.default.datatype.number({ min: 16.10, max: 24.21 })),
+      data: labels.map(() => payout += faker.default.datatype.number({ min: 0.09, max: 0.15 })),
       borderColor: '#d33079',
       backgroundColor: '#d33079',
       pointStyle: undefined,
@@ -83,14 +94,11 @@ export const data = {
   ],
 };
 
-/*
-*/
-
-export const PriceGraph = () => {
+export const PayoutGraph = (props: any) => {
 
   return (
     <Line options={options} data={data} />
   );
 }
 
-export default PriceGraph;
+export default PayoutGraph;
