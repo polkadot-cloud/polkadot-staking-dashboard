@@ -12,17 +12,17 @@ export const Wrapper = styled.div`
   }
 
   button {
-    border: 1px solid #eee;
     width: 100%;
-    margin: 0.25rem 0;
-    padding: 0.5rem;
-    border-radius: 0.75rem;
+    margin: 0.4rem 0;
+    padding: 0.75rem 0.5rem;
+    border-radius: 1rem;
     font-size: 1rem;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    background: #fbfbfb;
+    background: #f8f8f8;
+    transition: background 0.15s;
 
     &:hover {
       background: #fafafa;
