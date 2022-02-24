@@ -42,7 +42,7 @@ export const PageWrapper = styled(motion.div)`
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    padding: 4rem 1rem;
+    padding: 4rem 1rem 2rem 1rem;
     overflow: hidden;
     overflow-y: scroll;
     flex-grow: 1;
@@ -60,5 +60,10 @@ export const PageRowWrapper = styled.div<any>`
     overflow-x: scroll;
     * {
         box-sizing: border-box;
+    }
+
+    /* kill heading padding, already applied to wrapper */
+    h1, h2, h3, h4 {
+        margin-top: 0;
     }
 `;

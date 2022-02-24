@@ -8,8 +8,20 @@ export const options = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: false,
-      position: 'top' as const,
+      padding: {
+        right: 20,
+      },
+      display: true,
+      position: 'left' as const,
+      align: 'center' as const,
+      labels: {
+        padding: 20,
+        font: {
+          size: 15,
+          color: '#333',
+          weight: '500',
+        }
+      },
     },
     tooltip: {
       displayColors: false,
