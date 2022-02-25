@@ -90,7 +90,7 @@ export const data = {
     {
       label: 'Price',
       data: labels.map(() => {
-        let newPayout = payout += (0.05 + Math.random() * 0.1);
+        let newPayout = (payout += (0.05 + Math.random() * 0.1)).toFixed(7);
         return newPayout;
       }),
       borderColor: '#d33079',

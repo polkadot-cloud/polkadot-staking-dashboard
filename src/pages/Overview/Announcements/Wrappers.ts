@@ -19,9 +19,15 @@ export const Item = styled(motion.div)`
   background: rgba(222,222,222,0.25);
 
   h5 {
-    margin: 0 0 0.75rem;
-    color: #b1185d;
+    margin: 0 0 0.75rem;;
     font-variation-settings: 'wght' 500;
+
+    &.danger {
+      color: #d2545d;
+    }
+    &.warning {
+      color: #b5a200;
+    }
   }
 
   p {

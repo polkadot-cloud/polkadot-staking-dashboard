@@ -41,7 +41,7 @@ export const NetworkBar = () => {
       initial={false}
       animate={animate}
       transition={{
-        duration: 0.4,
+        duration: 0.2,
         type: "spring",
         bounce: 0.15
       }}

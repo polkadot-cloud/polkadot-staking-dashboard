@@ -33,9 +33,31 @@ export const Announcements = () => {
     return (<></>);
   }
 
-  const showAnnouncement = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
-  if (!showAnnouncement) {
+  const nominatorCapReached = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
+  const nominatorReachedPercentage = parseInt(staking.totalNominators) / (parseInt(staking.maxNominatorsCount) * 0.01);
+
+  if (nominatorCapReached) {
     return (<></>);
+  }
+
+  let announcements = [];
+
+  // maximum nominators have been reached
+  if (nominatorCapReached) {
+    announcements.push({
+      class: 'danger',
+      title: 'Nominator Limit Has Been Reached',
+      subtitle: 'The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.',
+    });
+  }
+
+  // 90% plus nominators reached - warning
+  if (nominatorReachedPercentage >= 90) {
+    announcements.push({
+      class: 'warning',
+      title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached`,
+      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${staking.maxNominatorsCount}`,
+    });
   }
 
   return (
@@ -46,17 +68,18 @@ export const Announcements = () => {
             Announcements
           </h4>
         </motion.div>
-
-        <Item variants={listItem}>
-          <h5>
-            <FontAwesomeIcon
-              icon={faBack}
-              style={{ marginRight: '0.6rem' }}
-            />
-            Nominator Limit Has Been Reached
-          </h5>
-          <p>The maximum allowed nominations have been reached on the network. Please wait for available slots if you wish to nominate.</p>
-        </Item>
+        {announcements.map((item, index) =>
+          <Item key={`announcement_${index}`} variants={listItem}>
+            <h5 className={item.class}>
+              <FontAwesomeIcon
+                icon={faBack}
+                style={{ marginRight: '0.6rem' }}
+              />
+              {item.title}
+            </h5>
+            <p>{item.subtitle}</p>
+          </Item>
+        )}
       </motion.div>
     </Wrapper>
   );
