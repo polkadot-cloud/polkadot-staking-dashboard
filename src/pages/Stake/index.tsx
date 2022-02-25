@@ -72,26 +72,29 @@ export const Stake = (props: PageProps) => {
               <motion.button whileHover={{ scale: 1.01 }}>
                 <h2>Manual Selection</h2>
                 <p>Manually browse and nominate validators from the validator list.</p>
-
-                <p className='go'>
-                  Browse Validators
-                  <FontAwesomeIcon
-                    icon={faGo}
-                    transform="shrink-2"
-                    style={{ marginLeft: '0.5rem' }}
-                  />
-                </p>
+                <div className='foot'>
+                  <p className='go'>
+                    Browse Validators
+                    <FontAwesomeIcon
+                      icon={faGo}
+                      transform="shrink-2"
+                      style={{ marginLeft: '0.5rem' }}
+                    />
+                  </p>
+                </div>
               </motion.button>
               <motion.button whileHover={{ scale: 1.01 }}>
                 <h2>Smart Nominate</h2>
                 <p>Nominate the most suited validators based on your requirements.</p>
-                <p className='go'>
-                  Start <FontAwesomeIcon
-                    icon={faGo}
-                    transform="shrink-2"
-                    style={{ marginLeft: '0.5rem' }}
-                  />
-                </p>
+                <div className='foot'>
+                  <p className='go'>
+                    Start <FontAwesomeIcon
+                      icon={faGo}
+                      transform="shrink-2"
+                      style={{ marginLeft: '0.5rem' }}
+                    />
+                  </p>
+                </div>
               </motion.button>
             </NominateWrapper>
           </GraphWrapper>

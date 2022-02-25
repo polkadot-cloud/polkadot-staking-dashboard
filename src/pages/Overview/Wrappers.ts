@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const MainWrapper = styled.div`
-  flex-basis: 66%;
-  max-width: 66%;
+  flex-basis: 60%;
+  max-width: 60%;
   padding-right: 1.5rem;
   overflow: hidden;
   min-width: 500px;

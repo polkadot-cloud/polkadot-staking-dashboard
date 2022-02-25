@@ -18,10 +18,10 @@ export const NominateWrapper = styled.div`
     flex-flow: column nowrap;
     flex-basis: 50%;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 1.2rem;
     background: rgba(240,240,240,0.7);
-    height: auto;
+    height: 170px;
     border-radius: 0.85rem;
     &:first-child{
       margin-right: 0.6rem;
@@ -42,15 +42,21 @@ export const NominateWrapper = styled.div`
       text-align: center;
       font-variation-settings: 'wght' 500;
     }
+    .foot {
+      width: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 1;
+    }
     .go {
       color: #555;
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
       justify-content: center;
-      align-content: center;
       padding: 0;
-      margin-top: 1rem;
       transition: color 0.2s;
     }
     &:hover {
