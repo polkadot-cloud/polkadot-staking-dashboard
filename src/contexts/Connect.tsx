@@ -55,10 +55,9 @@ export class ConnectContextWrapper extends React.Component {
       return;
     }
 
-    let accounts: any = [];
-
     // fetch accounts and subscribe to account changes
     const unsubscribe = await web3AccountsSubscribe((injectedAccounts) => {
+      let accounts: any = [];
       injectedAccounts.map((account) => {
 
         const { address, meta } = account;
