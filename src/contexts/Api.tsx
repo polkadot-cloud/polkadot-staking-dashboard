@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { ACTIVE_ENDPOINT, CONNECTION_STATUS, ENDPOINTS } from '../constants';
+import { ACTIVE_ENDPOINT, CONNECTION_STATUS, API_ENDPOINTS } from '../constants';
 
 // api context definition
 export const APIContext: any = React.createContext({
@@ -47,7 +47,7 @@ export class APIContextWrapper extends React.Component {
   fetchPrices = async () => {
 
     const urls = [
-      ENDPOINTS.priceChange,
+      `${API_ENDPOINTS.priceChange}${ACTIVE_ENDPOINT.api.priceTicker}`,
     ];
 
     Promise.all(urls.map(u => fetch(u, { method: 'GET' }))).then(responses =>
@@ -92,7 +92,7 @@ export class APIContextWrapper extends React.Component {
     this.setState({ status: CONNECTION_STATUS[1] });
 
     // attempting to connect to api
-    const wsProvider = new WsProvider(ACTIVE_ENDPOINT);
+    const wsProvider = new WsProvider(ACTIVE_ENDPOINT.endpoint);
 
     // connected to api event
     // other provider event listeners

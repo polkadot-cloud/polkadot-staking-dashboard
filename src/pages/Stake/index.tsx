@@ -8,6 +8,7 @@ import { Nominations } from './Nominations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
 import { StatBoxList } from '../../library/StatBoxList';
+import { ACTIVE_ENDPOINT } from '../../constants';
 
 export const Stake = (props: PageProps) => {
 
@@ -18,13 +19,13 @@ export const Stake = (props: PageProps) => {
     {
       label: "Bonded",
       value: 19,
-      unit: "DOT",
+      unit: ACTIVE_ENDPOINT.unit,
       format: "number",
     },
     {
       label: "Free",
       value: 12,
-      unit: "DOT",
+      unit: ACTIVE_ENDPOINT.unit,
       format: "number",
     },
     {

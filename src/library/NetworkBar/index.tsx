@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Wrapper, ConnectionSymbol } from './Wrapper';
 import { useApi } from '../../contexts/Api';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_icon.svg';
+import { ReactComponent as WestendLogoSVG } from '../../img/westend_icon.svg';
 import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ACTIVE_ENDPOINT, ENDPOINT_PRICE } from '../../constants';
 import BlockNumber from './BlockNumber';
 
@@ -34,6 +35,9 @@ export const NetworkBar = () => {
 
   const animate = open ? `maximised` : `minimised`;
 
+  // TO DO: abstract this into generalised logic
+  let Icon = ACTIVE_ENDPOINT.endpoint === 'polkadot' ? PolkadotLogoSVG : WestendLogoSVG;
+
   return (
     <Wrapper
       initial={false}
@@ -47,8 +51,8 @@ export const NetworkBar = () => {
     >
       <div className='row'>
         <section>
-          <PolkadotLogoSVG className='network_icon' />
-          <p>Polkadot</p>
+          <Icon className='network_icon' />
+          <p>{ACTIVE_ENDPOINT.name}</p>
 
           <div className='separator'></div>
 
@@ -100,14 +104,14 @@ export const NetworkBar = () => {
           </div>
 
           <div className='stat_separator'>
-            1 DOT / {prices.lastPrice} USD
+            1 {ACTIVE_ENDPOINT.api.unit} / {prices.lastPrice} USD
           </div>
         </section>
       </div>
       <div className='details'>
         <div>
           <p>Polkadot Node Endpoint:</p>
-          <p className='val'>{ACTIVE_ENDPOINT}</p>
+          <p className='val'>{ACTIVE_ENDPOINT.endpoint}</p>
         </div>
         <div>
           <p>Price Tracker:</p>

@@ -31,9 +31,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
   });
 
   const subscribeToStakingkMetrics = async (api: any) => {
-
     if (isReady() && metrics.activeEra.index !== 0) {
-
       const previousEra = metrics.activeEra.index - 1;
 
       // subscribe to staking metrics

@@ -4,11 +4,27 @@
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
 export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
 
-export const ACTIVE_NETWORK = 'polkadot';
+export const ACTIVE_NETWORK = 'westend';
 
 export const NODE_ENDPOINTS = {
-  polkadot: 'wss://rpc.polkadot.io',
-  westend: 'wss://westend-rpc.polkadot.io',
+  polkadot: {
+    name: 'Polkadot',
+    endpoint: 'wss://rpc.polkadot.io',
+    unit: 'DOT',
+    api: {
+      unit: 'DOT',
+      priceTicker: 'DOTUSDT',
+    }
+  },
+  westend: {
+    name: 'Westend',
+    endpoint: 'wss://westend-rpc.polkadot.io',
+    unit: 'WND',
+    api: {
+      unit: 'DOT',
+      priceTicker: 'DOTUSDT',
+    }
+  }
 }
 
 export const ACTIVE_ENDPOINT = NODE_ENDPOINTS[ACTIVE_NETWORK];
@@ -33,6 +49,6 @@ export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
 
 export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3/';
-export const ENDPOINTS = {
-  priceChange: 'https://api.binance.com/api/v3/ticker/24hr?symbol=DOTUSDT',
+export const API_ENDPOINTS = {
+  priceChange: 'https://api.binance.com/api/v3/ticker/24hr?symbol=',
 }

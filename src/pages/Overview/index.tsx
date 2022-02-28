@@ -7,6 +7,7 @@ import PayoutGraph from './PayoutGraph';
 import BalanceGraph from './BalanceGraph';
 import NumberEasing from 'che-react-number-easing';
 import Announcements from './Announcements';
+import { ACTIVE_ENDPOINT } from '../../constants';
 
 export const Overview = (props: PageProps) => {
 
@@ -23,13 +24,13 @@ export const Overview = (props: PageProps) => {
     {
       label: "Total Staked",
       value: staking.lastTotalStake,
-      unit: "DOT",
+      unit: ACTIVE_ENDPOINT.unit,
       format: "number",
     },
     {
       label: "Last Reward Payout",
       value: staking.lastReward,
-      unit: "DOT",
+      unit: ACTIVE_ENDPOINT.unit,
       format: "number",
     },
   ];
@@ -52,7 +53,7 @@ export const Overview = (props: PageProps) => {
                 trail={false}
                 useLocaleString={false}
                 value={17.18}
-              />&nbsp;DOT
+              />&nbsp;{ACTIVE_ENDPOINT.unit}
             </h1>
             <p><button>Past Month</button></p>
             <div className='graph'>
@@ -63,7 +64,7 @@ export const Overview = (props: PageProps) => {
 
         <SecondaryWrapper>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }}>
-            <h5>Your DOT Balance</h5>
+            <h5>Your {ACTIVE_ENDPOINT.unit} Balance</h5>
             <h1>$6,521.22</h1>
             <div className='graph' style={{ paddingRight: '1rem' }}>
               <BalanceGraph />

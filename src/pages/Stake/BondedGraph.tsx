@@ -1,6 +1,6 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { ACTIVE_ENDPOINT } from '../../constants';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -29,7 +29,7 @@ export const options = {
       backgroundColor: '#333',
       callbacks: {
         label: (context: any) => {
-          return context.label + ': ' + context.parsed + ' DOT';
+          return `${context.label} ${context.parsed} ${ACTIVE_ENDPOINT.unit}`;
         },
       }
     }
@@ -41,7 +41,7 @@ export const data = {
   labels: ['Free:', 'Bonded'],
   datasets: [
     {
-      label: 'DOT',
+      label: ACTIVE_ENDPOINT.unit,
       data: [12, 19],
       backgroundColor: [
         '#d33079',

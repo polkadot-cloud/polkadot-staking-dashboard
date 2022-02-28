@@ -55,10 +55,17 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
       // get active era
       const unsub2 = await api.query.staking.activeEra((activeEra: any) => {
-        setActiveEra(activeEra.unwrapOrDefault({
+
+        // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
+        let _activeEra = activeEra.unwrapOrDefault({
           index: 0,
           start: 0
-        }).toHuman());
+        }).toString();
+
+        // convert JSON string to object
+        _activeEra = JSON.parse(_activeEra);
+
+        setActiveEra(_activeEra);
       });
 
       return [unsub1, unsub2];

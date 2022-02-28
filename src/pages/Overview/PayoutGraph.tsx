@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
-import * as faker from '@faker-js/faker';
+import { ACTIVE_ENDPOINT } from '../../constants';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -50,7 +50,7 @@ export const options = {
     },
     title: {
       display: false,
-      text: 'DOT Historical Price',
+      text: `${ACTIVE_ENDPOINT.unit} Accumulated Payouts`,
     },
     tooltip: {
       callbacks: {
@@ -58,7 +58,7 @@ export const options = {
           return [];
         },
         label: (context: any) => {
-          return context.parsed.y + ' DOT, ' + context.label;
+          return `${context.parsed.y} ${context.label}`;
         },
       },
       intersect: false,
