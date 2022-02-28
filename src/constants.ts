@@ -1,16 +1,23 @@
 /*
- * Global Constants */
+ * SVGs 
+*/
+import { ReactComponent as PolkadotLogoSVG } from './img/polkadot_icon.svg';
+import { ReactComponent as WestendLogoSVG } from './img/westend_icon.svg';
 
+/*
+ * Global Constants 
+*/
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
 export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
 
-export const ACTIVE_NETWORK = 'westend';
+export const ACTIVE_NETWORK = 'polkadot';
 
 export const NODE_ENDPOINTS = {
   polkadot: {
     name: 'Polkadot',
     endpoint: 'wss://rpc.polkadot.io',
     unit: 'DOT',
+    icon: PolkadotLogoSVG,
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
@@ -20,6 +27,7 @@ export const NODE_ENDPOINTS = {
     name: 'Westend',
     endpoint: 'wss://westend-rpc.polkadot.io',
     unit: 'WND',
+    icon: WestendLogoSVG,
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',

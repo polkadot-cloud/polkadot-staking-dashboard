@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { motion } from "framer-motion";
 import { Wrapper, ConnectionSymbol } from './Wrapper';
 import { useApi } from '../../contexts/Api';
-import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_icon.svg';
-import { ReactComponent as WestendLogoSVG } from '../../img/westend_icon.svg';
 import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ACTIVE_ENDPOINT, ENDPOINT_PRICE } from '../../constants';
 import BlockNumber from './BlockNumber';
 
@@ -28,30 +26,27 @@ export const NetworkBar = () => {
       background: 'white'
     },
     maximised: {
-      height: '130px',
+      height: '260px',
       background: '#d33079'
     },
   };
 
   const animate = open ? `maximised` : `minimised`;
 
-  // TO DO: abstract this into generalised logic
-  let Icon = ACTIVE_ENDPOINT.endpoint === 'polkadot' ? PolkadotLogoSVG : WestendLogoSVG;
-
   return (
     <Wrapper
       initial={false}
       animate={animate}
       transition={{
-        duration: 0.2,
+        duration: 0.4,
         type: "spring",
-        bounce: 0.15
+        bounce: 0.25
       }}
       variants={variants}
     >
       <div className='row'>
         <section>
-          <Icon className='network_icon' />
+          <ACTIVE_ENDPOINT.icon className='network_icon' />
           <p>{ACTIVE_ENDPOINT.name}</p>
 
           <div className='separator'></div>
