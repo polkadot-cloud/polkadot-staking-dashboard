@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { API_ENDPOINT, CONNECTION_STATUS, ENDPOINTS } from '../constants';
+import { ACTIVE_ENDPOINT, CONNECTION_STATUS, ENDPOINTS } from '../constants';
 
 // api context definition
 export const APIContext: any = React.createContext({
@@ -92,7 +92,7 @@ export class APIContextWrapper extends React.Component {
     this.setState({ status: CONNECTION_STATUS[1] });
 
     // attempting to connect to api
-    const wsProvider = new WsProvider(API_ENDPOINT);
+    const wsProvider = new WsProvider(ACTIVE_ENDPOINT);
 
     // connected to api event
     // other provider event listeners

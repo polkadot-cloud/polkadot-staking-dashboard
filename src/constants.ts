@@ -1,7 +1,17 @@
 /*
  * Global Constants */
 
-export const API_ENDPOINT = 'wss://rpc.polkadot.io';
+export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
+export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
+
+export const ACTIVE_NETWORK = 'polkadot';
+
+export const NODE_ENDPOINTS = {
+  polkadot: 'wss://rpc.polkadot.io',
+  westend: 'wss://westend-rpc.polkadot.io',
+}
+
+export const ACTIVE_ENDPOINT = NODE_ENDPOINTS[ACTIVE_NETWORK];
 
 export const POLKADOT_URL = 'https://polkadot.network';
 

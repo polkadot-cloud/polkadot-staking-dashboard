@@ -3,14 +3,12 @@ import { motion } from "framer-motion";
 import { Wrapper, ConnectionSymbol } from './Wrapper';
 import { useApi } from '../../contexts/Api';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_icon.svg';
-import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, API_ENDPOINT, ENDPOINT_PRICE } from '../../constants';
+import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ACTIVE_ENDPOINT, ENDPOINT_PRICE } from '../../constants';
 import BlockNumber from './BlockNumber';
-import { useStakingMetrics } from '../../contexts/Staking';
 
 export const NetworkBar = () => {
 
-  const { status, consts, prices }: any = useApi();
-  const { staking }: any = useStakingMetrics();
+  const { status, prices }: any = useApi();
 
   const [open, setOpen] = useState(false);
 
@@ -109,7 +107,7 @@ export const NetworkBar = () => {
       <div className='details'>
         <div>
           <p>Polkadot Node Endpoint:</p>
-          <p className='val'>{API_ENDPOINT}</p>
+          <p className='val'>{ACTIVE_ENDPOINT}</p>
         </div>
         <div>
           <p>Price Tracker:</p>
