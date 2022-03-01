@@ -76,11 +76,13 @@ export const NetworkInfo = styled(motion.div)`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  align-content: center;
+  align-content: flex-start;
   align-items: center;
   padding: 1rem 0.5rem;
   box-sizing: border-box;
   overflow-x: auto;
+  background: #d33079;
+  flex: 1;
 
   > div {
     padding: 0.25rem 1.5rem 0.25rem;

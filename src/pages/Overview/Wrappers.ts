@@ -31,16 +31,6 @@ export const GraphWrapper = styled.div<any>`
     justify-content: flex-start;
     align-items: center;
   }
-  p {
-    margin: 0;
-    padding-top: 0.5rem;
-
-    button {
-      background: #f1f1f1;
-      border-radius: 0.75rem;
-      padding: 0.3rem 0.75rem;
-    }
-  }
   .graph {
     position: relative;
     flex: ${props => props.flex ? 1 : 0};
@@ -66,12 +56,6 @@ export const GraphWrapper = styled.div<any>`
       align-content: flex-end;
       height: 190px;
       border: 1px solid;
-
-      .buttons {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: flex-end;
-      }
     }
   }
 

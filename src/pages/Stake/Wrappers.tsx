@@ -41,6 +41,7 @@ export const NominateWrapper = styled.div`
       padding: 0.5rem 1rem 0 1rem;
       text-align: center;
       font-variation-settings: 'wght' 500;
+      margin: 0;
     }
     .foot {
       width: 100%;
