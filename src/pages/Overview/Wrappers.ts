@@ -19,6 +19,7 @@ export const GraphWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   flex: 1;
+  margin-top: 1rem;
 
   h1, h5 {
     margin: 0;
@@ -60,25 +61,17 @@ export const GraphWrapper = styled.div`
     .extra {
       flex: 1;
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: row wrap;
       justify-content: flex-end;
       align-items: flex-end;
+      align-content: flex-end;
       height: 190px;
+      border: 1px solid;
+
       .buttons {
         display: flex;
         flex-flow: row wrap;
         justify-content: flex-end;
-        > button {
-          flex: 1;
-          min-width: 140px;
-          background: #f1f1f1;
-          padding: 0.6rem 1rem;
-          border-radius: 0.75rem;
-          margin: 0.75rem 0 0 0.75rem;
-          font-size: 1.1rem;
-          font-variation-settings: 'wght' 500;
-          color: #222;
-        }
       }
     }
   }

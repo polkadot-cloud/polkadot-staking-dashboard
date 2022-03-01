@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
 import { StatBoxList } from '../../library/StatBoxList';
 import { ACTIVE_ENDPOINT } from '../../constants';
+import { Button, ButtonRow } from '../../library/Button';
 
 export const Stake = (props: PageProps) => {
 
@@ -41,7 +42,7 @@ export const Stake = (props: PageProps) => {
       <h1>{title}</h1>
       <StatBoxList title="This Session" items={items} />
 
-      <PageRowWrapper>
+      <PageRowWrapper noVerticalSpacer>
         <MainWrapper>
           <GraphWrapper>
             <h3>Bonded Funds</h3>
@@ -49,25 +50,13 @@ export const Stake = (props: PageProps) => {
               <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
                 <BondedGraph />
               </div>
-              <div className='extra'>
-                <div className='buttons'>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Bond Extra
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Unbond
-                  </motion.button>
-                </div>
-              </div>
+              <ButtonRow style={{ height: '190px' }}>
+                <Button title='Bond Extra' />
+                <Button title='Unbond' />
+              </ButtonRow>
             </div>
           </GraphWrapper>
-          <GraphWrapper style={{ marginTop: '1rem' }}>
+          <GraphWrapper>
             <h3>Choose Validators</h3>
             <NominateWrapper>
               <motion.button whileHover={{ scale: 1.01 }}>

@@ -50,7 +50,7 @@ export const PageWrapper = styled(motion.div)`
 
 // Page Row wrapper
 export const PageRowWrapper = styled.div<any>`
-    margin: 1rem 0;
+    margin: ${props => props.noVerticalSpacer === true ? `0` : `1rem 0`};
     display: flex;
     flex-shrink: 0;
     flex-flow: row nowrap;
