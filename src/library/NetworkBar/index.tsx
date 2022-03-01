@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { motion } from "framer-motion";
 import { Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator } from './Wrappers';
 import { useApi } from '../../contexts/Api';
-import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ACTIVE_ENDPOINT, ENDPOINT_PRICE } from '../../constants';
+import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ENDPOINT_PRICE } from '../../constants';
 import BlockNumber from './BlockNumber';
 
 export const NetworkBar = () => {
 
-  const { status, prices }: any = useApi();
+  const { status, prices, switchNetwork, network }: any = useApi();
 
   const [open, setOpen] = useState(false);
 
@@ -44,8 +44,8 @@ export const NetworkBar = () => {
     >
       <Summary>
         <section>
-          <ACTIVE_ENDPOINT.icon className='network_icon' />
-          <p>{ACTIVE_ENDPOINT.name}</p>
+          <network.icon className='network_icon' />
+          <p>{network.name}</p>
 
           <Separator />
 
@@ -97,7 +97,7 @@ export const NetworkBar = () => {
           </div>
 
           <div className='stat'>
-            1 {ACTIVE_ENDPOINT.api.unit} / {prices.lastPrice} USD
+            1 {network.api.unit} / {prices.lastPrice} USD
           </div>
         </section>
       </Summary>
@@ -107,9 +107,12 @@ export const NetworkBar = () => {
           <h3>Network</h3>
         </div>
         <div className='row'>
-          <div>
-            <p>{ACTIVE_ENDPOINT.name}</p>
-          </div>
+          <button onClick={() => switchNetwork('polkadot')}>
+            <p>Polkadot</p>
+          </button>
+          <button onClick={() => switchNetwork('westend')}>
+            <p>Westend</p>
+          </button>
         </div>
 
         <div className='row'>
@@ -117,8 +120,8 @@ export const NetworkBar = () => {
         </div>
         <div className='row'>
           <div>
-            <p>{ACTIVE_ENDPOINT.name} Node Endpoint:</p>
-            <p className='val'>{ACTIVE_ENDPOINT.endpoint}</p>
+            <p>{network.name} Node Endpoint:</p>
+            <p className='val'>{network.endpoint}</p>
           </div>
           <div>
             <p>Price Tracker:</p>
@@ -126,7 +129,7 @@ export const NetworkBar = () => {
           </div>
         </div>
       </NetworkInfo>
-    </Wrapper>
+    </Wrapper >
   )
 }
 

@@ -36,10 +36,6 @@ export const Announcements = () => {
   const nominatorCapReached = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
   const nominatorReachedPercentage = parseInt(staking.totalNominators) / (parseInt(staking.maxNominatorsCount) * 0.01);
 
-  if (nominatorCapReached) {
-    return (<></>);
-  }
-
   let announcements = [];
 
   // maximum nominators have been reached
@@ -58,6 +54,10 @@ export const Announcements = () => {
       title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached`,
       subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${staking.maxNominatorsCount}`,
     });
+  }
+
+  if (!announcements.length) {
+    return (<></>);
   }
 
   return (

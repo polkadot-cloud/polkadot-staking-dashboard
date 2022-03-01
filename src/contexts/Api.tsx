@@ -1,11 +1,16 @@
 import React from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { ACTIVE_ENDPOINT, CONNECTION_STATUS, API_ENDPOINTS } from '../constants';
+import { NODE_ENDPOINTS, CONNECTION_STATUS, API_ENDPOINTS } from '../constants';
+
+// interface for endpoint options
+type NetworkOptions = 'polkadot' | 'westend';
 
 // api context definition
 export const APIContext: any = React.createContext({
   api: null,
   connect: () => { },
+  disconnect: () => { },
+  switchNetwork: () => { },
   status: CONNECTION_STATUS[0],
   isReady: () => { },
   consts: {},
@@ -29,8 +34,25 @@ export class APIContextWrapper extends React.Component {
     prices: {
       lastPrice: 0,
       change: 0,
-    }
+    },
+    activeNetwork: localStorage.getItem('network'),
+    network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
   };
+
+  defaultState = () => {
+    return {
+      api: null,
+      consts: {
+        bondDuration: 0,
+        maxNominations: 0,
+        sessionsPerEra: 0,
+      },
+      prices: {
+        lastPrice: 0,
+        change: 0,
+      }
+    };
+  }
 
   // get dot price straight away
   componentDidMount () {
@@ -47,7 +69,7 @@ export class APIContextWrapper extends React.Component {
   fetchPrices = async () => {
 
     const urls = [
-      `${API_ENDPOINTS.priceChange}${ACTIVE_ENDPOINT.api.priceTicker}`,
+      `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[this.state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
     ];
 
     Promise.all(urls.map(u => fetch(u, { method: 'GET' }))).then(responses =>
@@ -85,14 +107,15 @@ export class APIContextWrapper extends React.Component {
     return (this.state.status === CONNECTION_STATUS[2] && this.state.api !== null);
   }
 
+
   // connect to websocket and return api into context
-  connect = async () => {
+  connect = async (network: keyof NetworkOptions) => {
 
     // set conection status to 'connecting'
     this.setState({ status: CONNECTION_STATUS[1] });
 
-    // attempting to connect to api
-    const wsProvider = new WsProvider(ACTIVE_ENDPOINT.endpoint);
+    // connect to network
+    const wsProvider = new WsProvider(NODE_ENDPOINTS[network].endpoint);
 
     // connected to api event
     // other provider event listeners
@@ -137,15 +160,46 @@ export class APIContextWrapper extends React.Component {
     });
   }
 
+  disconnect = async () => {
+    const { api }: any = this.state;
+    await api.disconnect();
+  }
+
+  switchNetwork = async (newNetwork: keyof NetworkOptions) => {
+    if (newNetwork === this.state.activeNetwork) {
+      return;
+    }
+
+    // disconnect from current network
+    await this.disconnect();
+
+    // update local storage network
+    window.localStorage.setItem('network', String(newNetwork));
+
+    // update app state
+    this.setState({
+      ...this.defaultState(),
+      status: CONNECTION_STATUS[0],
+      activeNetwork: newNetwork,
+      network: NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
+    });
+
+    // reconnect
+    this.connect(newNetwork);
+  }
+
   render () {
     return (
       <APIContext.Provider value={{
         connect: this.connect,
+        disconnect: this.disconnect,
+        switchNetwork: this.switchNetwork,
         isReady: this.isReady,
         api: this.state.api,
         status: this.state.status,
         consts: this.state.consts,
         prices: this.state.prices,
+        network: this.state.network,
       }}>
         {this.props.children}
       </APIContext.Provider>

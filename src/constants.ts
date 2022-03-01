@@ -10,9 +10,10 @@ import { ReactComponent as WestendLogoSVG } from './img/westend_icon.svg';
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
 export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
 
+export const DEFAULT_NETWORK = 'polkadot';
 export const ACTIVE_NETWORK = 'polkadot';
 
-export const NODE_ENDPOINTS = {
+export const NODE_ENDPOINTS: any = {
   polkadot: {
     name: 'Polkadot',
     endpoint: 'wss://rpc.polkadot.io',
@@ -32,10 +33,9 @@ export const NODE_ENDPOINTS = {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
     }
-  }
+  },
+  _: {}
 }
-
-export const ACTIVE_ENDPOINT = NODE_ENDPOINTS[ACTIVE_NETWORK];
 
 export const POLKADOT_URL = 'https://polkadot.network';
 

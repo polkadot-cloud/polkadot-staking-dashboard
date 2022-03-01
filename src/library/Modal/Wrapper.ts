@@ -9,6 +9,7 @@ export const Wrapper = styled(motion.div)`
     z-index: 7;
     backdrop-filter: blur(4px);
     background: rgba(240,240,240, 0.6);
+    /* background: rgba(211,48,121, 0.6); Polkadot themed background */
 
     /* modal content wrapper */
     .content_wrapper {
@@ -26,16 +27,6 @@ export const Wrapper = styled(motion.div)`
           height: 100%;
           z-index: 8;
           cursor: default;
-      }
-
-      /* modal content */
-      .content {
-        width: 100%;
-        max-width: 500px;
-        padding: 1rem;
-        background: white;
-        z-index: 9;
-        border-radius: 0.75rem;
       }
     }
 `;

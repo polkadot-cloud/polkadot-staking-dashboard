@@ -7,10 +7,11 @@ import PayoutGraph from './PayoutGraph';
 import BalanceGraph from './BalanceGraph';
 import NumberEasing from 'che-react-number-easing';
 import Announcements from './Announcements';
-import { ACTIVE_ENDPOINT } from '../../constants';
+import { useApi } from '../../contexts/Api';
 
 export const Overview = (props: PageProps) => {
 
+  const { network }: any = useApi();
   const { staking } = useStakingMetrics();
 
   // stats
@@ -24,13 +25,13 @@ export const Overview = (props: PageProps) => {
     {
       label: "Total Staked",
       value: staking.lastTotalStake,
-      unit: ACTIVE_ENDPOINT.unit,
+      unit: network.unit,
       format: "number",
     },
     {
       label: "Last Reward Payout",
       value: staking.lastReward,
-      unit: ACTIVE_ENDPOINT.unit,
+      unit: network.unit,
       format: "number",
     },
   ];
@@ -53,7 +54,7 @@ export const Overview = (props: PageProps) => {
                 trail={false}
                 useLocaleString={false}
                 value={17.18}
-              />&nbsp;{ACTIVE_ENDPOINT.unit}
+              />&nbsp;{network.unit}
             </h1>
             <p><button>Past Month</button></p>
             <div className='graph'>
@@ -64,7 +65,7 @@ export const Overview = (props: PageProps) => {
 
         <SecondaryWrapper>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
-            <h5>Your {ACTIVE_ENDPOINT.unit} Balance</h5>
+            <h5>Your {network.unit} Balance</h5>
             <h1>$6,521.22</h1>
             <div className='graph'>
               <BalanceGraph />

@@ -99,7 +99,7 @@ export const NetworkInfo = styled(motion.div)`
       width: 100%;
     }
 
-    > div {
+    > div, > button {
       padding: 0.25rem 1.5rem 0.25rem;
       background: rgba(0,0,0,0.1);
       margin-right: 1rem;

@@ -4,13 +4,11 @@ import { useApi } from './Api';
 // context type
 export interface NetworkMetricsContextState {
   metrics: any;
-  staking: any;
 }
 
 // context definition
 export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = React.createContext({
   metrics: {},
-  staking: {},
 });
 
 // useNetworkMetrics
@@ -26,11 +24,6 @@ export const NetworkMetricsContextWrapper = (props: any) => {
     start: 0,
   });
   const [blockNumber, setBlockNumber]: any = useState(0);
-  const [stakingMetrics, setStakingMetrics]: any = useState({
-    lastReward: 0,
-    lastTotalStake: 0,
-    totalNominators: 0,
-  });
 
   useEffect(() => {
     let unsub: any = subscribeToNetworkMetrics(api);
@@ -78,8 +71,7 @@ export const NetworkMetricsContextWrapper = (props: any) => {
       metrics: {
         blockNumber: blockNumber,
         activeEra: activeEra,
-      },
-      staking: { ...stakingMetrics },
+      }
     }}>
       {props.children}
     </NetworkMetricsContext.Provider>

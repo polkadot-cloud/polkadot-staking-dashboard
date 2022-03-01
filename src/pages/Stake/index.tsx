@@ -8,10 +8,12 @@ import { Nominations } from './Nominations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
 import { StatBoxList } from '../../library/StatBoxList';
-import { ACTIVE_ENDPOINT } from '../../constants';
 import { Button, ButtonRow } from '../../library/Button';
+import { useApi } from '../../contexts/Api';
 
 export const Stake = (props: PageProps) => {
+
+  const { network }: any = useApi();
 
   const { page } = props;
   const { title } = page;
@@ -20,13 +22,13 @@ export const Stake = (props: PageProps) => {
     {
       label: "Bonded",
       value: 19,
-      unit: ACTIVE_ENDPOINT.unit,
+      unit: network.unit,
       format: "number",
     },
     {
       label: "Free",
       value: 12,
-      unit: ACTIVE_ENDPOINT.unit,
+      unit: network.unit,
       format: "number",
     },
     {
