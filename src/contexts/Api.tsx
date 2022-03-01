@@ -54,11 +54,6 @@ export class APIContextWrapper extends React.Component {
     };
   }
 
-  // get dot price straight away
-  componentDidMount () {
-    this.initiatePrices();
-  }
-
   componentWillUnmount () {
     if (this.priceHandle) {
       clearInterval(this.priceHandle);
@@ -107,7 +102,6 @@ export class APIContextWrapper extends React.Component {
     return (this.state.status === CONNECTION_STATUS[2] && this.state.api !== null);
   }
 
-
   // connect to websocket and return api into context
   connect = async (network: keyof NetworkOptions) => {
 
@@ -136,6 +130,9 @@ export class APIContextWrapper extends React.Component {
     // wsProvider.on('error', () => {
     // });
 
+    // connect to price ticker handler
+    this.initiatePrices();
+
     // wait for instance to connect, then assign instance to context state
     const apiInstance = await ApiPromise.create({ provider: wsProvider });
 
@@ -161,16 +158,19 @@ export class APIContextWrapper extends React.Component {
   }
 
   disconnect = async () => {
+    // stop price ticker
+    clearInterval(this.priceHandle);
+    // disconnect from api
     const { api }: any = this.state;
     await api.disconnect();
   }
+
 
   switchNetwork = async (newNetwork: keyof NetworkOptions) => {
     if (newNetwork === this.state.activeNetwork) {
       return;
     }
-
-    // disconnect from current network
+    // disconnect from current network and stop tickers
     await this.disconnect();
 
     // update local storage network
