@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from "framer-motion";
-import { Wrapper, ConnectionSymbol } from './Wrapper';
+import { Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator } from './Wrappers';
 import { useApi } from '../../contexts/Api';
 import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ACTIVE_ENDPOINT, ENDPOINT_PRICE } from '../../constants';
 import BlockNumber from './BlockNumber';
@@ -22,12 +22,10 @@ export const NetworkBar = () => {
   // handle expand transitions
   const variants = {
     minimised: {
-      height: '2.6rem',
-      background: 'white'
+      height: '2.5rem',
     },
     maximised: {
       height: '260px',
-      background: '#d33079'
     },
   };
 
@@ -44,12 +42,12 @@ export const NetworkBar = () => {
       }}
       variants={variants}
     >
-      <div className='row'>
+      <Summary>
         <section>
           <ACTIVE_ENDPOINT.icon className='network_icon' />
           <p>{ACTIVE_ENDPOINT.name}</p>
 
-          <div className='separator'></div>
+          <Separator />
 
           {status === CONNECTION_STATUS[0] &&
             <motion.p
@@ -83,36 +81,37 @@ export const NetworkBar = () => {
           <button onClick={() => { setOpen(!open) }}>
             {open ? `Collapse Info` : `Network Info`}
           </button>
-          <div className='stat_separator' style={{ marginRight: 0 }}>
+          <div className='stat' style={{ marginRight: 0 }}>
             {status === CONNECTION_STATUS[2] &&
               <BlockNumber />
             }
             <ConnectionSymbol color={symbolColor} />
           </div>
 
-          <div className='separator'></div>
+          <Separator />
 
-          <div className='stat_separator'>
+          <div className='stat'>
             <span className={`change${prices.change < 0 ? ` neg` : prices.change > 0 ? ` pos` : ``}`}>
               {prices.change < 0 ? `` : prices.change > 0 ? `+` : ``}{prices.change}%
             </span>
           </div>
 
-          <div className='stat_separator'>
+          <div className='stat'>
             1 {ACTIVE_ENDPOINT.api.unit} / {prices.lastPrice} USD
           </div>
         </section>
-      </div>
-      <div className='details'>
+      </Summary>
+
+      <NetworkInfo>
         <div>
-          <p>Polkadot Node Endpoint:</p>
+          <p>{ACTIVE_ENDPOINT.name} Node Endpoint:</p>
           <p className='val'>{ACTIVE_ENDPOINT.endpoint}</p>
         </div>
         <div>
           <p>Price Tracker:</p>
           <p className='val'>{ENDPOINT_PRICE}</p>
         </div>
-      </div>
+      </NetworkInfo>
     </Wrapper>
   )
 }
