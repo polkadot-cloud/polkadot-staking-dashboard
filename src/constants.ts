@@ -33,9 +33,8 @@ export const NODE_ENDPOINTS: any = {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
     }
-  },
-  _: {}
-}
+  }
+};
 
 export const POLKADOT_URL = 'https://polkadot.network';
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from "framer-motion";
 import { Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator } from './Wrappers';
 import { useApi } from '../../contexts/Api';
-import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ENDPOINT_PRICE } from '../../constants';
+import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ENDPOINT_PRICE, NODE_ENDPOINTS } from '../../constants';
 import BlockNumber from './BlockNumber';
 
 export const NetworkBar = () => {
@@ -106,13 +106,16 @@ export const NetworkBar = () => {
         <div className='row'>
           <h3>Network</h3>
         </div>
+
         <div className='row'>
-          <button onClick={() => switchNetwork('polkadot')}>
-            <p>Polkadot</p>
-          </button>
-          <button onClick={() => switchNetwork('westend')}>
-            <p>Westend</p>
-          </button>
+          {Object.entries(NODE_ENDPOINTS).map(([key, item]: any, index: any) => (
+            <button
+              key={`switch_network_${index}`}
+              onClick={() => switchNetwork(key)}
+            >
+              <p>{item.name}</p>
+            </button>
+          ))}
         </div>
 
         <div className='row'>
