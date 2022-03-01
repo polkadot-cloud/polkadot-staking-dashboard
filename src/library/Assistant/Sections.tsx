@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { useAssistant } from '../../contexts/Assistant';
 import External from './Items/External';
 import Action from './Items/Action';
+import { ACTIVE_ENDPOINT } from '../../constants';
 
 export const Sections = (props: any) => {
 
@@ -66,7 +67,7 @@ export const Sections = (props: any) => {
               height="120px"
               label='next step'
               title='Connect Your Accounts'
-              subtitle="Connect your Polkadot accounts to start staking."
+              subtitle={`Connect your ${ACTIVE_ENDPOINT.name} accounts to start staking.`}
               onClick={connectOnClick}
             />
           }
