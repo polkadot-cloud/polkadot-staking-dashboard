@@ -36,7 +36,7 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
-  const GRAPH_HEIGHT = 375;
+  const GRAPH_HEIGHT = 365;
 
   return (
     <>
@@ -44,7 +44,7 @@ export const Overview = (props: PageProps) => {
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }}>
+          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <h5>Your Accumulated Payouts</h5>
             <h1>
               <NumberEasing
@@ -56,7 +56,7 @@ export const Overview = (props: PageProps) => {
                 value={17.18}
               />&nbsp;{network.unit}
             </h1>
-            <p><button>Past Month</button></p>
+            <p><button className='small_button'>Past Month</button></p>
             <div className='graph'>
               <PayoutGraph />
             </div>

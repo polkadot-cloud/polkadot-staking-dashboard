@@ -31,6 +31,15 @@ export const GraphWrapper = styled.div<any>`
     justify-content: flex-start;
     align-items: center;
   }
+  p {
+    margin: 0.25rem 0 0;
+  }
+
+  .small_button {
+    background: #f1f1f1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+  }
   .graph {
     position: relative;
     flex: ${props => props.flex ? 1 : 0};
