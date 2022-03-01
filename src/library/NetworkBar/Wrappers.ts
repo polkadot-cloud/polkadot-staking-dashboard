@@ -73,39 +73,63 @@ export const Summary = styled.div`
 
 export const NetworkInfo = styled(motion.div)`
   width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-content: flex-start;
-  align-items: center;
-  padding: 1rem 0.5rem;
-  box-sizing: border-box;
-  overflow-x: auto;
   background: #d33079;
   flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  padding: 0.25rem 1rem 1.25rem 1rem;
+  overflow-y: auto;
 
-  > div {
-    padding: 0.25rem 1.5rem 0.25rem;
-    background: rgba(0,0,0,0.1);
-    margin: 0 0.5rem;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    min-width: 250px;
+  > .row {
     display: flex;
-    flex-flow: column nowrap;
-  }
-  p {
-    margin: 0;
-    font-size: 0.85rem;
-    font-variation-settings: 'wght' 500;
-    color: #f1f1f1;
-    padding: 0.2rem 0;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
 
-    &.val {
+    > h3 {
+      color: #eee;
       font-size: 0.85rem;
-      color: #e6e6e6;
+      margin: 1.5rem 0 0.75rem 0;
+      padding: 0.6rem 0.3rem 0rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      width: 100%;
+    }
+
+    > div {
+      padding: 0.25rem 1.5rem 0.25rem;
+      background: rgba(0,0,0,0.1);
+      margin-right: 1rem;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      display: flex;
+      flex-flow: column nowrap;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      font-variation-settings: 'wght' 500;
+      color: #f1f1f1;
+      padding: 0.2rem 0;
+
+      &.val {
+        font-size: 0.85rem;
+        color: #e6e6e6;
+      }
     }
   }
+
+  > .row:first-child > h3 {
+      margin-top: 0.5rem;
+      border-top: 0;
+    }
 `;
 
 export const Separator = styled.div`

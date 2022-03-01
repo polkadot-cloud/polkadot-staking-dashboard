@@ -25,7 +25,7 @@ export const NetworkBar = () => {
       height: '2.5rem',
     },
     maximised: {
-      height: '260px',
+      height: '275px',
     },
   };
 
@@ -103,13 +103,27 @@ export const NetworkBar = () => {
       </Summary>
 
       <NetworkInfo>
-        <div>
-          <p>{ACTIVE_ENDPOINT.name} Node Endpoint:</p>
-          <p className='val'>{ACTIVE_ENDPOINT.endpoint}</p>
+        <div className='row'>
+          <h3>Network</h3>
         </div>
-        <div>
-          <p>Price Tracker:</p>
-          <p className='val'>{ENDPOINT_PRICE}</p>
+        <div className='row'>
+          <div>
+            <p>{ACTIVE_ENDPOINT.name}</p>
+          </div>
+        </div>
+
+        <div className='row'>
+          <h3>Endpoints</h3>
+        </div>
+        <div className='row'>
+          <div>
+            <p>{ACTIVE_ENDPOINT.name} Node Endpoint:</p>
+            <p className='val'>{ACTIVE_ENDPOINT.endpoint}</p>
+          </div>
+          <div>
+            <p>Price Tracker:</p>
+            <p className='val'>{ENDPOINT_PRICE}</p>
+          </div>
         </div>
       </NetworkInfo>
     </Wrapper>
