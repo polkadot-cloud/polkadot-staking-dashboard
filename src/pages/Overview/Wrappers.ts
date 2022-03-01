@@ -9,7 +9,7 @@ export const MainWrapper = styled.div`
   flex-grow: 1;
 `;
 
-export const GraphWrapper = styled.div`
+export const GraphWrapper = styled.div<any>`
   padding: 1rem 1.2rem;
   border-radius: 1rem;
   background: rgba(255,255,255,0.7);
@@ -43,13 +43,12 @@ export const GraphWrapper = styled.div`
   }
   .graph {
     position: relative;
-    flex: 1;
+    flex: ${props => props.flex ? 1 : 0};
     flex-flow: row wrap;
     justify-content: center;
     width: 100%;
     margin-top: 1.5rem;
   }
-
   .graph_with_extra {
     width: 100%;
     display: flex;

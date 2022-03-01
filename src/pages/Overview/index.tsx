@@ -63,10 +63,10 @@ export const Overview = (props: PageProps) => {
         </MainWrapper>
 
         <SecondaryWrapper>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }}>
+          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <h5>Your {ACTIVE_ENDPOINT.unit} Balance</h5>
             <h1>$6,521.22</h1>
-            <div className='graph' style={{ paddingRight: '1rem' }}>
+            <div className='graph'>
               <BalanceGraph />
             </div>
           </GraphWrapper>
