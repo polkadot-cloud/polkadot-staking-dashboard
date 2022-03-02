@@ -1,3 +1,6 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { StatBoxWrapper } from './Wrapper';
 import NumberEasing from 'che-react-number-easing';
 

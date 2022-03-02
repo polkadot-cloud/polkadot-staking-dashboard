@@ -1,4 +1,6 @@
-import * as React from "react";
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { motion } from "framer-motion";
 
 const Path = (props: any) => (

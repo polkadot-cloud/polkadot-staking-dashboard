@@ -1,3 +1,6 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import React from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { NODE_ENDPOINTS, CONNECTION_STATUS, API_ENDPOINTS } from '../constants';

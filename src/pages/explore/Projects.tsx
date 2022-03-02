@@ -1,3 +1,6 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { PageProps } from '../types';
 import { Wrapper, ItemsWrapper, Item } from './Wrappers';
 
