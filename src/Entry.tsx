@@ -6,13 +6,13 @@ import { EntryWrapper } from './Wrappers';
 import { APIContext } from './contexts/Api';
 import Router from './Router';
 import { NetworkMetricsContextWrapper } from './contexts/Network';
+import { BalancesContextWrapper } from './contexts/Balances';
 
 export class Entry extends React.Component {
 
   static contextType?: React.Context<any> = APIContext;
 
   componentDidMount () {
-
     // set initial active network
     const network = localStorage.getItem('network');
 
@@ -24,9 +24,11 @@ export class Entry extends React.Component {
   render () {
     return (
       <NetworkMetricsContextWrapper>
-        <EntryWrapper>
-          <Router />
-        </EntryWrapper>
+        <BalancesContextWrapper>
+          <EntryWrapper>
+            <Router />
+          </EntryWrapper>
+        </BalancesContextWrapper>
       </NetworkMetricsContextWrapper>
     );
   }

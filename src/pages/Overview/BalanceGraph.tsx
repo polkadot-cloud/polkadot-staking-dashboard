@@ -13,7 +13,7 @@ export class BalanceGraph extends React.Component<any, any> {
 
   // stop component refersh triggered by other API updates
   shouldComponentUpdate (nextProps: any, nextState: any) {
-    return (nextState !== this.state);
+    return (nextProps.balances !== this.props.balances);
   }
 
   render () {
@@ -45,7 +45,7 @@ export class BalanceGraph extends React.Component<any, any> {
           backgroundColor: '#333',
           callbacks: {
             label: (context: any) => {
-              return `${context.label}: ${context.parsed} ${network.unit}`;
+              return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
             },
           }
         }
@@ -53,16 +53,27 @@ export class BalanceGraph extends React.Component<any, any> {
       cutout: '70%',
     };
 
+    const { balances } = this.props;
+    let { free, miscFrozen } = balances;
+
+    // convert to DOT unit
+    free = free / (10 ** 10);
+
+    let graphFrozen = (miscFrozen) / (10 ** 10);
+    let graphFree = free - graphFrozen;
+
+    if (graphFrozen === 0) graphFrozen = -1;
+    if (graphFree === 0) graphFree = -1;
+
     const data = {
-      labels: ['Free', 'Bonded', 'Reserved', 'Vesting'],
+      labels: ['Free', 'Locked'],
       datasets: [
         {
           label: network.unit,
-          data: [12, 19, 3, 5],
+          data: [graphFree, graphFrozen],
           backgroundColor: [
             '#d33079',
             '#eb86b4',
-            '#ccc',
             '#eee',
           ],
           borderWidth: 1,

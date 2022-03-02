@@ -28,8 +28,6 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
   accounts: [],
   activeAccount: {},
 });
-
-// useAssistant
 export const useConnect = () => React.useContext(ConnectContext);
 
 // wrapper component to provide components with context
@@ -59,9 +57,12 @@ export class ConnectContextWrapper extends React.Component {
     }
 
     // fetch accounts and subscribe to account changes
-    const unsubscribe = await web3AccountsSubscribe((injectedAccounts) => {
+    const unsubscribe = await web3AccountsSubscribe(async (injectedAccounts) => {
+
+      // populate accounts
       let accounts: any = [];
-      injectedAccounts.map((account, i) => {
+
+      injectedAccounts.map(async (account, i) => {
         const { address, meta } = account;
         const { name, source } = meta;
 
@@ -86,7 +87,7 @@ export class ConnectContextWrapper extends React.Component {
     this.setState({
       ...this.state,
       unsubscribe: unsubscribe,
-    })
+    });
   }
 
   componentWillUnmount () {

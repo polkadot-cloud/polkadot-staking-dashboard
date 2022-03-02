@@ -65,7 +65,6 @@ export class APIContextWrapper extends React.Component {
   }
 
   fetchPrices = async () => {
-
     const urls = [
       `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[this.state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
     ];

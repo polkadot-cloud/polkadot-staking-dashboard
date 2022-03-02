@@ -11,11 +11,13 @@ import BalanceGraph from './BalanceGraph';
 import NumberEasing from 'che-react-number-easing';
 import Announcements from './Announcements';
 import { useApi } from '../../contexts/Api';
+import { useBalances } from '../../contexts/Balances';
 
 export const Overview = (props: PageProps) => {
 
   const { network }: any = useApi();
-  const { staking } = useStakingMetrics();
+  const { staking }: any = useStakingMetrics();
+  const { balances }: any = useBalances();
 
   // stats
   const items = [
@@ -71,7 +73,7 @@ export const Overview = (props: PageProps) => {
             <h5>Your {network.unit} Balance</h5>
             <h1>$6,521.22</h1>
             <div className='graph'>
-              <BalanceGraph />
+              <BalanceGraph balances={balances} />
             </div>
           </GraphWrapper>
         </SecondaryWrapper>
