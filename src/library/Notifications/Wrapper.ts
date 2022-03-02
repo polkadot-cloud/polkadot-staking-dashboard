@@ -45,26 +45,6 @@ export const Wrapper = styled.ul`
     }
   }
 
-  button {
-    outline: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-  }
-
-  button.add {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 28px;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   button.close {
     position: absolute;
     top: 10px;

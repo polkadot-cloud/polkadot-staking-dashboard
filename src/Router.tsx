@@ -14,7 +14,7 @@ import {
   MainInterfaceWrapper,
   BodyInterfaceWrapper,
 } from './Wrappers';
-// import { Example } from './library/Notifications/Example';
+import Notifications from './library/Notifications';
 
 export const Router = () => {
 
@@ -76,7 +76,7 @@ export const Router = () => {
         <NetworkBar />
 
         {/* Testing notification popup */}
-        {/* <Example /> */}
+        <Notifications />
 
       </StakingMetricsContextWrapper>
     </BrowserRouter>

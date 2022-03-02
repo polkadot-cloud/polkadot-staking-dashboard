@@ -4,7 +4,7 @@ import { CloseButton } from "./CloseButton";
 import { add, remove } from "./array-utils";
 import Wrapper from './Wrapper';
 
-export const Example = () => {
+export const Notifications = () => {
 
   const [notifications, _setNotifications]: any = useState([]);
 
@@ -42,7 +42,7 @@ export const Example = () => {
             >
               <div>
                 <h3>Welcome to Polkadot Staking!</h3>
-                <h4>Connect your accounts to get started. Visit the Assistant if you get stuck at any point along the way.</h4>
+                <h4>Connect your accounts to get started.</h4>
                 <CloseButton
                   close={() => setNotifications(remove(notificationsRef.current, id))}
                 />
@@ -51,12 +51,8 @@ export const Example = () => {
           ))
         }
       </AnimatePresence>
-      {/* <button
-        className="add"
-        onClick={() => { setNotifications(add(notificationsRef.current)) }}
-      >
-        +
-      </button> */}
     </Wrapper>
   );
 };
+
+export default Notifications;
