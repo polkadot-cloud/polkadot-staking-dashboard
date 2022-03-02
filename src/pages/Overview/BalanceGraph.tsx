@@ -62,8 +62,10 @@ export class BalanceGraph extends React.Component<any, any> {
     let graphFrozen = (miscFrozen) / (10 ** 10);
     let graphFree = free - graphFrozen;
 
-    if (graphFrozen === 0) graphFrozen = -1;
-    if (graphFree === 0) graphFree = -1;
+    if (graphFrozen === 0 && graphFree === 0) {
+      graphFrozen = -1;
+      graphFree = -1;
+    } 
 
     const data = {
       labels: ['Free', 'Locked'],
