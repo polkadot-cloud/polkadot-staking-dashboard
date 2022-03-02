@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"
 import { PAGES_CONFIG } from './pages';
 import { StakingMetricsContextWrapper } from './contexts/Staking';
-import { DemoBar } from './library/DemoBar';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './library/Modal';
 import AssistantButton from './library/Headers';
@@ -24,9 +23,6 @@ export const Router = () => {
 
       {/* Modal: closed by default */}
       <Modal />
-
-      {/* Demo mode controller */}
-      <DemoBar />
 
       {/* Wrap entire interface with staking metrics provider */}
       <StakingMetricsContextWrapper>
