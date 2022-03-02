@@ -3,7 +3,6 @@ import { EntryWrapper } from './Wrappers';
 import { APIContext } from './contexts/Api';
 import Router from './Router';
 import { NetworkMetricsContextWrapper } from './contexts/Network';
-import { DEFAULT_NETWORK } from './constants';
 
 export class Entry extends React.Component {
 

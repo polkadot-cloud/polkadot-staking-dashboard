@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
 import { ItemWrapper as Wrapper } from '../Wrappers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 
 export const Action = (props: any) => {
 

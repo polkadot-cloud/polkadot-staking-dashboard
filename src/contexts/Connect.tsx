@@ -58,8 +58,7 @@ export class ConnectContextWrapper extends React.Component {
     // fetch accounts and subscribe to account changes
     const unsubscribe = await web3AccountsSubscribe((injectedAccounts) => {
       let accounts: any = [];
-      injectedAccounts.map((account) => {
-
+      injectedAccounts.map((account, i) => {
         const { address, meta } = account;
         const { name, source } = meta;
 
@@ -69,13 +68,16 @@ export class ConnectContextWrapper extends React.Component {
           name: name,
           source: source
         });
+        return false;
+      });
 
-        this.setState({
-          status: 1,
-          accounts: accounts,
-          activeAccount: accounts[0],
-        });
-      })
+      this.setState({
+        ...this.state,
+        status: 1,
+        accounts: accounts,
+        activeAccount: accounts[0],
+      });
+
     }, { ss58Format: 0 });
 
     this.setState({
