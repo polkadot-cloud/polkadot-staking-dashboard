@@ -7,6 +7,7 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import { useStakingMetrics } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
+import { humanNumber } from '../../../Utils';
 
 export const Announcements = () => {
 
@@ -55,7 +56,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'warning',
       title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached`,
-      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${staking.maxNominatorsCount}`,
+      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(staking.maxNominatorsCount)}`,
     });
   }
 

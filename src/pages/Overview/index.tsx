@@ -12,12 +12,19 @@ import NumberEasing from 'che-react-number-easing';
 import Announcements from './Announcements';
 import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
+import { planckToDot, fiatAmount, humanNumber } from '../../Utils';
 
 export const Overview = (props: PageProps) => {
 
-  const { network }: any = useApi();
+  const { network, prices }: any = useApi();
   const { staking }: any = useStakingMetrics();
   const { balances }: any = useBalances();
+
+  // get user's total DOT balance
+  let freeDot = planckToDot(balances.free);
+
+  // convert balance to fiat value
+  let freeBalance = fiatAmount(freeDot * prices.lastPrice);
 
   // stats
   const items = [
@@ -41,7 +48,7 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
-  const GRAPH_HEIGHT = 365;
+  const GRAPH_HEIGHT = 375;
 
   return (
     <>
@@ -71,8 +78,9 @@ export const Overview = (props: PageProps) => {
         <SecondaryWrapper>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <h5>Your {network.unit} Balance</h5>
-            <h1>$6,521.22</h1>
-            <div className='graph'>
+            <h1>{freeDot} DOT&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span>
+            </h1>
+            <div className='graph' style={{ maxWidth: 400, paddingRight: 10, }}>
               <BalanceGraph balances={balances} />
             </div>
           </GraphWrapper>

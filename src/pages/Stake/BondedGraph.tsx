@@ -23,6 +23,7 @@ export class BondedGraph extends React.Component {
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      spacing: 2,
       plugins: {
         legend: {
           padding: {

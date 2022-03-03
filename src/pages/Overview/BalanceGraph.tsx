@@ -5,6 +5,7 @@ import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { APIContext } from '../../contexts/Api';
+import { planckToDot } from '../../Utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -20,13 +21,30 @@ export class BalanceGraph extends React.Component<any, any> {
 
     const { network }: any = this.context;
 
+    const { balances } = this.props;
+    let { free, miscFrozen } = balances;
+
+    // convert to DOT unit
+    free = planckToDot(free);
+
+    let graphFrozen = planckToDot(miscFrozen);
+    let graphFree = free - graphFrozen;
+
+    let zeroBalance = false;
+    if (graphFrozen === 0 && graphFree === 0) {
+      graphFrozen = -1;
+      graphFree = -1;
+      zeroBalance = true;
+    }
+
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      spacing: zeroBalance ? 0 : 5,
       plugins: {
         legend: {
           padding: {
-            right: 20,
+            right: 10,
           },
           display: true,
           position: 'left' as const,
@@ -53,22 +71,8 @@ export class BalanceGraph extends React.Component<any, any> {
       cutout: '70%',
     };
 
-    const { balances } = this.props;
-    let { free, miscFrozen } = balances;
-
-    // convert to DOT unit
-    free = free / (10 ** 10);
-
-    let graphFrozen = (miscFrozen) / (10 ** 10);
-    let graphFree = free - graphFrozen;
-
-    if (graphFrozen === 0 && graphFree === 0) {
-      graphFrozen = -1;
-      graphFree = -1;
-    } 
-
     const data = {
-      labels: ['Free', 'Locked'],
+      labels: ['Transferrable', 'Locked'],
       datasets: [
         {
           label: network.unit,

@@ -27,6 +27,17 @@ export const GraphWrapper = styled.div<any>`
   h1, h5 {
     margin: 0;
     padding: 0.25rem 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-end;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    .fiat {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 0.25rem;
+    }
   }
   h1 {
     display: flex;
