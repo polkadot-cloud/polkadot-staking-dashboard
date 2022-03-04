@@ -7,6 +7,11 @@ import NumberEasing from 'che-react-number-easing';
 export const Item = (props: any) => {
 
   const { label, value, unit, format } = props;
+  let { currency } = props;
+
+  if (currency === undefined) {
+    currency = '';
+  }
 
   return (
     <StatBoxWrapper
@@ -25,8 +30,9 @@ export const Item = (props: any) => {
               precision={2}
               speed={250}
               trail={false}
-              useLocaleString={true}
               value={value}
+              useLocaleString={true}
+              currency={currency}
             />
             &nbsp;{unit}
           </h1>

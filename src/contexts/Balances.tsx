@@ -39,6 +39,10 @@ export const BalancesContextWrapper = (props: any) => {
   // get active account balances. Should be called when an account switches
   const getBalances = async () => {
 
+    if (activeAccount.address === undefined) {
+      return;
+    }
+
     // subscribe to account balances
     const unsub1 = await api.query.system.account(activeAccount.address, ({ nonce, data: balance }: any) => {
       let { free, reserved, miscFrozen, feeFrozen } = balance;
