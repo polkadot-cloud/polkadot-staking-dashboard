@@ -12,7 +12,6 @@ import { ReactComponent as WestendLogoSVG } from './img/westend_icon.svg';
 */
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
 export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
-
 export const DEFAULT_NETWORK = 'polkadot';
 export const ACTIVE_NETWORK = 'polkadot';
 
@@ -62,3 +61,12 @@ export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3/';
 export const API_ENDPOINTS = {
   priceChange: 'https://api.binance.com/api/v3/ticker/24hr?symbol=',
 }
+
+
+/*
+ * Fallback config values
+*/
+export const MAX_NOMINATIONS = 16;
+export const BONDING_DURATION = 28;
+export const SESSIONS_PER_ERA = 6;
+export const MAX_NOMINATOR_REWARDED_PER_VALIDATOR = 256;

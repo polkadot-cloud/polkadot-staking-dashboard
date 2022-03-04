@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { NODE_ENDPOINTS, CONNECTION_STATUS, API_ENDPOINTS } from '../constants';
+import * as consts from '../constants';
 
 // interface for endpoint options
 type NetworkOptions = 'polkadot' | 'westend';
@@ -14,7 +14,7 @@ export const APIContext: any = React.createContext({
   connect: () => { },
   disconnect: () => { },
   switchNetwork: () => { },
-  status: CONNECTION_STATUS[0],
+  status: consts.CONNECTION_STATUS[0],
   isReady: () => { },
   consts: {},
   prices: {},
@@ -28,7 +28,7 @@ export class APIContextWrapper extends React.Component {
 
   state = {
     api: null,
-    status: CONNECTION_STATUS[1],
+    status: consts.CONNECTION_STATUS[1],
     consts: {
       bondDuration: 0,
       maxNominations: 0,
@@ -39,7 +39,7 @@ export class APIContextWrapper extends React.Component {
       change: 0,
     },
     activeNetwork: localStorage.getItem('network'),
-    network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
+    network: consts.NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
   };
 
   defaultState = () => {
@@ -66,7 +66,7 @@ export class APIContextWrapper extends React.Component {
 
   fetchPrices = async () => {
     const urls = [
-      `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[this.state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
+      `${consts.API_ENDPOINTS.priceChange}${consts.NODE_ENDPOINTS[this.state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
     ];
 
     Promise.all(urls.map(u => fetch(u, { method: 'GET' }))).then(responses =>
@@ -101,30 +101,30 @@ export class APIContextWrapper extends React.Component {
 
   // returns whether api is ready to be used
   isReady = () => {
-    return (this.state.status === CONNECTION_STATUS[2] && this.state.api !== null);
+    return (this.state.status === consts.CONNECTION_STATUS[2] && this.state.api !== null);
   }
 
   // connect to websocket and return api into context
   connect = async (network: keyof NetworkOptions) => {
 
     // set conection status to 'connecting'
-    this.setState({ status: CONNECTION_STATUS[1] });
+    this.setState({ status: consts.CONNECTION_STATUS[1] });
 
     // connect to network
-    const wsProvider = new WsProvider(NODE_ENDPOINTS[network].endpoint);
+    const wsProvider = new WsProvider(consts.NODE_ENDPOINTS[network].endpoint);
 
     // connected to api event
     // other provider event listeners
     wsProvider.on('disconnected', () => {
       this.setState({
         ...this.state,
-        status: CONNECTION_STATUS[0]
+        status: consts.CONNECTION_STATUS[0]
       });
     });
     wsProvider.on('connected', () => {
       this.setState({
         ...this.state,
-        status: CONNECTION_STATUS[2]
+        status: consts.CONNECTION_STATUS[2]
       });
     });
     // wsProvider.on('ready', () => {
@@ -146,15 +146,21 @@ export class APIContextWrapper extends React.Component {
       apiInstance.consts.staking.maxNominatorRewardedPerValidator,
     ]);
 
+    // fallback to default values
+    const bondDuration = _metrics[0] ? _metrics[0].toHuman() : consts.BONDING_DURATION;
+    const sessionsPerEra = _metrics[2] ? _metrics[2].toHuman() : consts.SESSIONS_PER_ERA;
+    const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : consts.MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
+    const maxNominations = _metrics[1] ? _metrics[1].toHuman() : consts.MAX_NOMINATIONS;
+
     this.setState({
       ...this.state,
       api: apiInstance,
-      status: CONNECTION_STATUS[2],
+      status: consts.CONNECTION_STATUS[2],
       consts: {
-        bondDuration: _metrics[0].toHuman(),
-        maxNominations: _metrics[1].toHuman(),
-        sessionsPerEra: _metrics[2].toHuman(),
-        maxNominatorRewardedPerValidator: _metrics[3].toHuman(),
+        bondDuration: bondDuration,
+        maxNominations: maxNominations,
+        sessionsPerEra: sessionsPerEra,
+        maxNominatorRewardedPerValidator: maxNominatorRewardedPerValidator,
       }
     });
   }
@@ -181,9 +187,9 @@ export class APIContextWrapper extends React.Component {
     // update app state
     this.setState({
       ...this.defaultState(),
-      status: CONNECTION_STATUS[0],
+      status: consts.CONNECTION_STATUS[0],
       activeNetwork: newNetwork,
-      network: NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
+      network: consts.NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
     });
 
     // reconnect
