@@ -78,7 +78,7 @@ export class BalanceGraph extends React.Component<any, any> {
           label: network.unit,
           data: [graphFree, graphFrozen],
           backgroundColor: [
-            '#d33079',
+            zeroBalance ? '#ddd' : '#d33079',
             '#eee',
           ],
           borderWidth: 1,
