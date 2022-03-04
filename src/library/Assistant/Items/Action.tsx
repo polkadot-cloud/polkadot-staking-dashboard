@@ -15,7 +15,7 @@ export const Action = (props: any) => {
       border={`3px solid #d33079`}
     >
       <motion.button
-        className='item'
+        className='item action'
         whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.99 }}
         transition={{

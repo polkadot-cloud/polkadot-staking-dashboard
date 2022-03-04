@@ -188,14 +188,12 @@ export const ItemWrapper = styled(motion.div) <any>`
     flex-flow: column nowrap;
     align-items: flex-start;
     justify-content: flex-start;
-    border: ${props => props.border === undefined ? `none` : props.border};
-    margin: ${props => props.border === undefined ? `0.4rem` : `0.3rem`};
+    margin: 0.4rem;
     position: relative;
 
     > h4 {
       font-weight: normal;
       margin: 0.65rem 0;
-      color: #666;
       text-transform: uppercase;
       font-size: 0.7rem;
     }
@@ -203,9 +201,8 @@ export const ItemWrapper = styled(motion.div) <any>`
       margin: 0;
       text-align: left;
       transition: all 0.2s;
-      color: #000;
     }
-  
+
     > p {
       font-variation-settings: 'wght' 420;
       text-align: left;
@@ -220,6 +217,19 @@ export const ItemWrapper = styled(motion.div) <any>`
     &:hover {
       .ext {
         color: #d33079;
+      }
+    }
+
+    &.action {
+      background: rgba(211, 48, 121, 0.85);
+      > h4 {
+        color: #eee;
+      }
+      > h3 {
+        color: #fff;
+      }
+      > p {
+        color: #fff;
       }
     }
   }
