@@ -40,7 +40,7 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
   // manage unsubscribe
   useEffect(() => {
-    let unsub: any = subscribeToNetworkMetrics(api);
+    subscribeToNetworkMetrics(api);
 
     return (() => {
       if (state.unsub !== undefined) {
@@ -65,7 +65,7 @@ export const NetworkMetricsContextWrapper = (props: any) => {
         if (block !== undefined) {
           _state = {
             ..._state,
-            blockNumber: '#' + block.toNumber()
+            blockNumber: '#' + block.toHuman()
           }
         }
 
