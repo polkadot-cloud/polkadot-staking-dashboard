@@ -8,7 +8,7 @@ import { APIContext } from '../../contexts/Api';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export class BondedGraph extends React.Component {
+export class BondedGraph extends React.Component<any, any> {
   static contextType = APIContext;
 
   // stop component refersh triggered by other API updates
@@ -55,7 +55,7 @@ export class BondedGraph extends React.Component {
     };
 
     const data = {
-      labels: ['Free:', 'Bonded'],
+      labels: ['Free', 'Bonded'],
       datasets: [
         {
           label: network.unit,

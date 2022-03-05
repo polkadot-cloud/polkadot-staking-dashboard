@@ -22,20 +22,29 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
   const { isReady, api }: any = useApi();
 
-  const [activeEra, setActiveEra]: any = useState({
-    index: 0,
-    start: 0,
-  });
-  const [blockNumber, setBlockNumber]: any = useState(0);
+  // const [activeEra, setActiveEra]: any = useState({
+  //   index: 0,
+  //   start: 0,
+  // });
+  // const [blockNumber, setBlockNumber]: any = useState(0);
 
+  const [state, setState]: any = useState({
+    now: 0,
+    blockNumber: 0,
+    activeEra: {
+      index: 0,
+      start: 0,
+    },
+    unsub: undefined,
+  });
+
+  // manage unsubscribe
   useEffect(() => {
     let unsub: any = subscribeToNetworkMetrics(api);
 
     return (() => {
-      if (unsub != null) {
-        for (let u = 0; u < unsub.length; u++) {
-          unsub[u]();
-        }
+      if (state.unsub !== undefined) {
+        state.unsub();
       }
     })
   }, [isReady()]);
@@ -44,13 +53,21 @@ export const NetworkMetricsContextWrapper = (props: any) => {
   const subscribeToNetworkMetrics = async (api: any) => {
     if (isReady()) {
 
-      // get new block heads
-      const unsub1 = await api.rpc.chain.subscribeNewHeads((header: any) => {
-        setBlockNumber('#' + header.number.toHuman());
-      });
+      const unsub = await api.queryMulti([
+        api.query.timestamp.now,
+        api.query.system.number,
+        api.query.staking.activeEra,
+      ], ([now, block, activeEra]: any) => {
 
-      // get active era
-      const unsub2 = await api.query.staking.activeEra((activeEra: any) => {
+        let _state = {};
+
+        // format block number
+        if (block !== undefined) {
+          _state = {
+            ..._state,
+            blockNumber: '#' + block.toNumber()
+          }
+        }
 
         // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
         let _activeEra = activeEra.unwrapOrDefault({
@@ -61,19 +78,25 @@ export const NetworkMetricsContextWrapper = (props: any) => {
         // convert JSON string to object
         _activeEra = JSON.parse(_activeEra);
 
-        setActiveEra(_activeEra);
+        _state = {
+          ..._state,
+          now: now.toNumber(),
+          activeEra: _activeEra,
+        };
+        setState(_state);
       });
 
-      return [unsub1, unsub2];
+      return unsub;
     }
-    return null;
+    return undefined;
   }
 
   return (
     <NetworkMetricsContext.Provider value={{
       metrics: {
-        blockNumber: blockNumber,
-        activeEra: activeEra,
+        now: state.now,
+        blockNumber: state.blockNumber,
+        activeEra: state.activeEra,
       }
     }}>
       {props.children}

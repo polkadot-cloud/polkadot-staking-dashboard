@@ -13,18 +13,29 @@ import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
 import { StatBoxList } from '../../library/StatBoxList';
 import { Button, ButtonRow } from '../../library/Button';
 import { useApi } from '../../contexts/Api';
+import { useBalances } from '../../contexts/Balances';
+import { planckToDot } from '../../Utils';
 
 export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
+  const { ledger }: any = useBalances();
 
   const { page } = props;
   const { title } = page;
+  const { active, total } = ledger;
+
+  let { unlocking } = ledger;
+  let totalUnlocking = 0;
+  for (let i = 0; i < unlocking.length; i++) {
+    unlocking[i] = planckToDot(unlocking[i]);
+    totalUnlocking += unlocking[i];
+  }
 
   const items = [
     {
       label: "Bonded",
-      value: 19,
+      value: planckToDot(active),
       unit: network.unit,
       format: "number",
     },
@@ -53,7 +64,10 @@ export const Stake = (props: PageProps) => {
             <h3>Bonded Funds</h3>
             <div className='graph_with_extra'>
               <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
-                <BondedGraph />
+                <BondedGraph
+                  active={planckToDot(active)}
+                  unlocking={planckToDot(totalUnlocking)}
+                />
               </div>
               <ButtonRow style={{ height: '190px' }}>
                 <Button title='Bond Extra' />
