@@ -3,6 +3,10 @@
 
 import BN from "bn.js";
 
+export const clipAddress = (val: string) => {
+  return val.substring(0, 6) + '...' + val.substring(val.length - 6, val.length);
+}
+
 export const numCommaFormatted = (x: BN | number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -16,7 +20,6 @@ export const fiatAmount: any = (val: any) => {
 }
 
 export const humanNumber: any = (val: any) => {
-
   var str = val.toString().split(".");
   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return str.join(".");

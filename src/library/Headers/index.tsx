@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { Wrapper, HeadingWrapper, Item } from './Wrapper';
+import { Wrapper, HeadingWrapper, Account, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import Identicon from '@polkadot/react-identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faCogs } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from './Dropdown';
+import { clipAddress } from '../../Utils';
 
 export const Headers = () => {
 
@@ -17,36 +18,47 @@ export const Headers = () => {
   const assistant = useAssistant();
   const connect = useConnect();
 
+  // subscribe to web3 accounts
   const connectWeb3 = async () => {
-    // subscribe to web3 accounts
     connect.setAccounts();
-  }
-
-  let demoAddress, demoAddressClipped;
-  if (connect.status === 1) {
-    // const { accounts } = connect;
-    demoAddress = connect.accounts[0].address;
-    demoAddressClipped = demoAddress.substring(0, 6) + '...' + demoAddress.substring(demoAddress.length - 6, demoAddress.length);
   }
 
   return (
     <Wrapper>
 
-      {/* connected, display dropdown toggle */}
+      {/* connected, display stash and controller */}
       {connect.status === 1 &&
-        <HeadingWrapper>
-          <Item
-            whileHover={{ scale: 1.02 }}
-            style={{ paddingLeft: 0 }}
-          >
-            <Identicon
-              value={connect.activeAccount.address}
-              size={26}
-              theme="polkadot"
-            />
-            {demoAddressClipped} | {connect.activeAccount.name}
-          </Item>
-        </HeadingWrapper>
+        <>
+          <HeadingWrapper>
+            <Account
+              whileHover={{ scale: 1.02 }}
+              style={{ paddingLeft: 0 }}
+            >
+              <Identicon
+                value={connect.activeAccount.address}
+                size={26}
+                theme="polkadot"
+              />
+              <span className='title'>{clipAddress(connect.activeAccount.address)}</span>
+              {/* {connect.activeAccount.name} */}
+              <div className='label'>Stash</div>
+            </Account>
+          </HeadingWrapper>
+          <HeadingWrapper>
+            <Account
+              whileHover={{ scale: 1.02 }}
+              style={{ paddingLeft: 0 }}
+            >
+              <Identicon
+                value={connect.activeAccount.address}
+                size={26}
+                theme="polkadot"
+              />
+              <span className='title'>{clipAddress(connect.activeAccount.address)}</span>
+              <div className='label'>Controller</div>
+            </Account>
+          </HeadingWrapper>
+        </>
       }
 
       {/* not connected, display connect accounts */}
