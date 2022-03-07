@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { Wrapper, HeadingWrapper, Account, Item } from './Wrapper';
+import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
-import Identicon from '@polkadot/react-identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faCogs } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from './Dropdown';
-import { clipAddress } from '../../Utils';
+import { Account } from '../Account';
 
 export const Headers = () => {
 
@@ -31,32 +30,15 @@ export const Headers = () => {
         <>
           <HeadingWrapper>
             <Account
-              whileHover={{ scale: 1.02 }}
-              style={{ paddingLeft: 0 }}
-            >
-              <Identicon
-                value={connect.activeAccount.address}
-                size={26}
-                theme="polkadot"
-              />
-              <span className='title'>{clipAddress(connect.activeAccount.address)}</span>
-              {/* {connect.activeAccount.name} */}
-              <div className='label'>Stash</div>
-            </Account>
+              address={connect.activeAccount.address}
+              label='Stash'
+            />
           </HeadingWrapper>
           <HeadingWrapper>
             <Account
-              whileHover={{ scale: 1.02 }}
-              style={{ paddingLeft: 0 }}
-            >
-              <Identicon
-                value={connect.activeAccount.address}
-                size={26}
-                theme="polkadot"
-              />
-              <span className='title'>{clipAddress(connect.activeAccount.address)}</span>
-              <div className='label'>Controller</div>
-            </Account>
+              address={connect.activeAccount.address}
+              label='Controller'
+            />
           </HeadingWrapper>
         </>
       }
