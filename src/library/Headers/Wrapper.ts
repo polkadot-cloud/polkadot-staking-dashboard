@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   right: 0;
   display: flex;
   flex-flow: row nowrap;
-  padding: 1rem  1.2rem; 
+  padding: 0.75rem  1rem; 
   transition: all 0.15s;
   z-index: 5;
 
@@ -24,7 +24,7 @@ export const HeadingWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
-  margin-left: 1rem;
+  margin-left: 0.75rem;
   position: relative;
 
   &:first-child {
@@ -34,12 +34,13 @@ export const HeadingWrapper = styled.div`
   /* accounts dropdown */
   .accounts {
     position: absolute;
-    border-radius: 1.2rem;
+    border-radius: 1rem;
     background: rgba(225,225,225,0.5);
     backdrop-filter: blur(4px);
     top: 3rem;
-    left: 0;
+    right: 0;
     width: 100%;
+    min-width: 250px;
     list-style: none;
     margin: 0;
     padding: 0rem 0.25rem;
@@ -51,9 +52,9 @@ export const HeadingWrapper = styled.div`
 
 export const Item = styled(motion.button)`
     flex-grow: 1;  
-    padding: 0rem 1.25rem;
+    padding: 0rem 1rem;
     margin: 0.25rem 0;
-    border-radius: 1.2rem;
+    border-radius: 1rem;
     box-shadow: none;
     background: rgba(225,225,225,0.9);
     display: flex;

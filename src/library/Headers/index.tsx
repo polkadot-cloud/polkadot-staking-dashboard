@@ -5,18 +5,17 @@ import { useState } from 'react';
 import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
-import { useModal } from '../../contexts/Modal';
 import Identicon from '@polkadot/react-identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faCogs } from '@fortawesome/free-solid-svg-icons';
+import Dropdown from './Dropdown';
 
 export const Headers = () => {
 
-  const [showAccountMenu, toggleAccountMenu]: any = useState(false);
+  const [showMenu, toggleMenu]: any = useState(false);
 
   const assistant = useAssistant();
   const connect = useConnect();
-  const modal = useModal();
 
   const connectWeb3 = async () => {
     // subscribe to web3 accounts
@@ -32,6 +31,24 @@ export const Headers = () => {
 
   return (
     <Wrapper>
+
+      {/* connected, display dropdown toggle */}
+      {connect.status === 1 &&
+        <HeadingWrapper>
+          <Item
+            whileHover={{ scale: 1.02 }}
+            style={{ paddingLeft: 0 }}
+          >
+            <Identicon
+              value={connect.activeAccount.address}
+              size={26}
+              theme="polkadot"
+            />
+            {demoAddressClipped} | {connect.activeAccount.name}
+          </Item>
+        </HeadingWrapper>
+      }
+
       {/* not connected, display connect accounts */}
       {connect.status === 0 &&
         <HeadingWrapper>
@@ -45,51 +62,7 @@ export const Headers = () => {
         </HeadingWrapper>
       }
 
-      {/* connected, display connected accounts */}
-      {connect.status === 1 &&
-        <HeadingWrapper>
-          <Item
-            whileHover={{ scale: 1.02 }}
-            style={{ paddingLeft: 0 }}
-            onClick={() => toggleAccountMenu(showAccountMenu ? false : true)}
-          >
-            <Identicon
-              value={connect.activeAccount.address}
-              size={26}
-              theme="polkadot"
-            />
-            {demoAddressClipped} | {connect.activeAccount.name}
-            <FontAwesomeIcon
-              icon={!showAccountMenu ? faBars : faMinus}
-              transform={!showAccountMenu ? "shrink-4" : "shrink-6"}
-              style={{ cursor: 'pointer', marginLeft: '0.75rem' }}
-            />
-          </Item>
-          {showAccountMenu &&
-            <ul className='accounts'>
-              <Item
-                onClick={() => {
-                  modal.setStatus(1);
-                  toggleAccountMenu(false);
-                }}
-                whileHover={{ scale: 1.01 }}
-              >
-                Switch Accounts
-              </Item>
-              <Item
-                onClick={() => {
-                  connect.disconnect();
-                  toggleAccountMenu(false);
-                }}
-                whileHover={{ scale: 1.01 }}
-                style={{ color: '#ae2324' }}
-              >
-                Disconnect
-              </Item>
-            </ul>
-          }
-        </HeadingWrapper>
-      }
+      {/* always display assistant */}
       <HeadingWrapper>
         <Item
           onClick={() => { assistant.toggle() }}
@@ -99,6 +72,26 @@ export const Headers = () => {
           Assistant
         </Item>
       </HeadingWrapper>
+
+
+      {/* connected, display connected accounts */}
+      {connect.status === 1 &&
+        <HeadingWrapper>
+          <Item
+            whileHover={{ scale: 1.02 }}
+            style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
+            onClick={() => toggleMenu(showMenu ? false : true)}
+          >
+            <FontAwesomeIcon
+              icon={!showMenu ? faCog : faCogs}
+              transform={!showMenu ? undefined : `shrink-2`}
+              style={{ cursor: 'pointer', color: '#444' }}
+            />
+          </Item>
+          {showMenu && <Dropdown toggleMenu={toggleMenu} />}
+        </HeadingWrapper>
+      }
+
     </Wrapper>
   );
 }
