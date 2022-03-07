@@ -21,12 +21,13 @@ import { useConnect } from '../../contexts/Connect';
 export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
-  const { ledger }: any = useBalances();
-  const connect = useConnect();
+  const { getAccountLedger }: any = useBalances();
+  const { activeAccount } = useConnect();
 
   const { page } = props;
   const { title } = page;
-  const { active, total } = ledger;
+  const ledger = getAccountLedger(activeAccount);
+  const { active } = ledger;
 
   let { unlocking } = ledger;
   let totalUnlocking = 0;
@@ -68,13 +69,13 @@ export const Stake = (props: PageProps) => {
             <StakingAccount>
               <h4>Stash</h4>
               <Account
-                address={connect.activeAccount.address}
+                address={activeAccount}
               />
             </StakingAccount>
             <StakingAccount>
               <h4>Controller</h4>
               <Account
-                address={connect.activeAccount.address}
+                address={activeAccount}
               />
             </StakingAccount>
           </GraphWrapper>

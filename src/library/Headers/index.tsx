@@ -6,7 +6,7 @@ import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faCogs } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faCogs, faLink } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from './Dropdown';
 import { Account } from '../Account';
 
@@ -24,25 +24,32 @@ export const Headers = () => {
 
   return (
     <Wrapper>
-
       {/* connected, display stash and controller */}
       {connect.status === 1 &&
         <>
           <HeadingWrapper>
             <Account
-              address={connect.activeAccount.address}
+              address={connect.activeAccount}
               label='Stash'
             />
+            <HeadingWrapper>
+              <Item style={{ background: 'none', padding: 0 }}>
+                <FontAwesomeIcon
+                  icon={faLink}
+                  transform={`shrink-2`}
+                  style={{ color: '#666' }}
+                />
+              </Item>
+            </HeadingWrapper>
           </HeadingWrapper>
           <HeadingWrapper>
             <Account
-              address={connect.activeAccount.address}
+              address={connect.activeAccount}
               label='Controller'
             />
           </HeadingWrapper>
         </>
       }
-
       {/* not connected, display connect accounts */}
       {connect.status === 0 &&
         <HeadingWrapper>
@@ -55,7 +62,6 @@ export const Headers = () => {
           </Item>
         </HeadingWrapper>
       }
-
       {/* always display assistant */}
       <HeadingWrapper>
         <Item
@@ -66,7 +72,6 @@ export const Headers = () => {
           Assistant
         </Item>
       </HeadingWrapper>
-
 
       {/* connected, display connected accounts */}
       {connect.status === 1 &&
@@ -85,7 +90,6 @@ export const Headers = () => {
           {showMenu && <Dropdown toggleMenu={toggleMenu} />}
         </HeadingWrapper>
       }
-
     </Wrapper>
   );
 }

@@ -15,7 +15,7 @@ export interface ConnectContextState {
   setActiveAccount: (a: string) => void;
   status: number,
   accounts: any;
-  activeAccount: any;
+  activeAccount: string;
 }
 
 // context definition
@@ -26,7 +26,7 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
   setAccounts: () => { },
   setActiveAccount: (a: string) => { },
   accounts: [],
-  activeAccount: {},
+  activeAccount: '',
 });
 export const useConnect = () => React.useContext(ConnectContext);
 
@@ -36,7 +36,7 @@ export class ConnectContextWrapper extends React.Component {
   state = {
     status: 0,
     accounts: [],
-    activeAccount: {},
+    activeAccount: '',
     unsubscribe: () => { },
   };
 
@@ -56,10 +56,9 @@ export class ConnectContextWrapper extends React.Component {
       return;
     }
 
+
     // fetch accounts and subscribe to account changes
     const unsubscribe = await web3AccountsSubscribe(async (injectedAccounts) => {
-
-      // populate accounts
       let accounts: any = [];
 
       injectedAccounts.map(async (account, i) => {
@@ -72,6 +71,11 @@ export class ConnectContextWrapper extends React.Component {
           name: name,
           source: source
         });
+
+        // TO DO: fetch balances / ledger / bonded (move from Balances)
+        // set unsubscribes to account record 
+
+
         return false;
       });
 
@@ -79,8 +83,10 @@ export class ConnectContextWrapper extends React.Component {
         ...this.state,
         status: 1,
         accounts: accounts,
-        activeAccount: accounts[0],
+        activeAccount: accounts[0].address,
       });
+
+      // TO DO: check if accounts disconnected on change, unsubscribe to them if so
 
     }, { ss58Format: 0 });
 
@@ -102,7 +108,7 @@ export class ConnectContextWrapper extends React.Component {
     this.setState({
       status: 0,
       accounts: [],
-      activeAccount: {},
+      activeAccount: undefined,
       unsubscribe: () => { },
     });
   }
@@ -113,13 +119,9 @@ export class ConnectContextWrapper extends React.Component {
   }
 
   setActiveAccount = (address: string) => {
-    const account = this.state.accounts.find((item: any) => {
-      return (item.address === address);
-    });
-
     this.setState({
       ...this.state,
-      activeAccount: account
+      activeAccount: address
     });
   }
 

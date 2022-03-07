@@ -22,12 +22,6 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
   const { isReady, api }: any = useApi();
 
-  // const [activeEra, setActiveEra]: any = useState({
-  //   index: 0,
-  //   start: 0,
-  // });
-  // const [blockNumber, setBlockNumber]: any = useState(0);
-
   const [state, setState]: any = useState({
     now: 0,
     blockNumber: 0,
@@ -41,7 +35,6 @@ export const NetworkMetricsContextWrapper = (props: any) => {
   // manage unsubscribe
   useEffect(() => {
     subscribeToNetworkMetrics(api);
-
     return (() => {
       if (state.unsub !== undefined) {
         state.unsub();

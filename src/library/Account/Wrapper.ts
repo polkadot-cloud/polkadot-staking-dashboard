@@ -29,9 +29,9 @@ export const Wrapper = styled(motion.button)`
     .label {
       background: rgba(220,220,220,0.75);
       border-radius: 0.75rem;
-      color: #444;
-      font-size: 0.85rem;
-      font-variation-settings: 'wght' 525;
+      color: #333;
+      font-size: 0.82rem;
+      font-variation-settings: 'wght' 535;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
