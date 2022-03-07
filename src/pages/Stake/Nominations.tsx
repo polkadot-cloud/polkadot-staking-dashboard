@@ -30,28 +30,23 @@ export const Nominations = () => {
     }
   };
 
-  if (!isReady()) {
-    return (<></>);
-  }
-
-  const showAnnouncement = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
-  if (!showAnnouncement) {
-    return (<></>);
-  }
+  // const showAnnouncement = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
+  // if (!showAnnouncement) {
+  //   return (<></>);
+  // }
 
   return (
     <Wrapper>
-      <motion.div variants={container} initial="hidden" animate="show">
-        <motion.div variants={listItem}>
-          <h4>
-            Your Nominations
-          </h4>
+      <h3>
+        Your Nominations
+      </h3>
+      {isReady() &&
+        <motion.div variants={container} initial="hidden" animate="show">
+          <Item variants={listItem}>
+            <p>...</p>
+          </Item>
         </motion.div>
-
-        <Item variants={listItem}>
-          <p>...</p>
-        </Item>
-      </motion.div>
+      }
     </Wrapper>
   );
 }

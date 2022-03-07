@@ -128,13 +128,9 @@ export const Stake = (props: PageProps) => {
                 <Button title='Unbond' />
               </ButtonRow>
             </div>
-          </GraphWrapper>
-        </MainWrapper>
 
-      </PageRowWrapper>
-      <PageRowWrapper>
-        <MainWrapper>
-          <Nominations />
+            <Nominations />
+          </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>
     </Wrapper>
