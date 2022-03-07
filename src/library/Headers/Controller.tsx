@@ -16,7 +16,7 @@ export const Controller = () => {
   return (
     <>
       <Account
-        clickable={false}
+        canClick={false}
         unassigned={controller === null}
         address={controller}
         label='Controller'

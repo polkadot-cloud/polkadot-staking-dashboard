@@ -102,7 +102,7 @@ export class ConnectContextWrapper extends React.Component {
     this.setState({
       status: 0,
       accounts: [],
-      activeAccount: undefined,
+      activeAccount: '',
       unsubscribe: () => { },
     });
   }

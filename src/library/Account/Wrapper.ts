@@ -15,12 +15,13 @@ export const Wrapper = styled(motion.button) <any>`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    cursor: ${props => props.clickable ? 'pointer' : 'default'};
     font-variation-settings: 'wght' 540;
     height: 2.3rem;
     font-size: 0.88rem;
     position: relative;
     transition: width 0.2s;
+    cursor: ${props => props.cursor};
+    background: #f1f1f1;
 
     .title {
       margin: 0 0.75rem 0 0;

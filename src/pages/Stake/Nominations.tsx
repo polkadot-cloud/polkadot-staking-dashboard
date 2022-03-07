@@ -3,13 +3,12 @@
 
 import { Wrapper, Item } from '../Overview/Announcements/Wrappers';
 import { motion } from 'framer-motion';
-import { useStakingMetrics } from '../../contexts/Staking';
 import { useApi } from '../../contexts/Api';
 
-export const Nominations = () => {
+export const Nominations = (props: any) => {
 
   const { isReady }: any = useApi();
-  const { staking }: any = useStakingMetrics();
+  const { nominators } = props;
 
   const container = {
     hidden: { opacity: 0 },
@@ -40,13 +39,21 @@ export const Nominations = () => {
       <h3>
         Your Nominations
       </h3>
-      {isReady() &&
+      <Item variants={listItem}>
+        <p>...</p>
+      </Item>
+
+      {/* {isReady() &&
         <motion.div variants={container} initial="hidden" animate="show">
-          <Item variants={listItem}>
-            <p>...</p>
-          </Item>
+          {nominators.map((item: any, index: number) => {
+            return (
+              <Item key={`nominator_list_${index}`} variants={listItem}>
+                <p>...</p>
+              </Item>
+            )
+          })}
         </motion.div>
-      }
+      } */}
     </Wrapper>
   );
 }

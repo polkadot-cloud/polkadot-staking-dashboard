@@ -6,9 +6,11 @@ import { useApi } from './Api';
 import { useConnect } from './Connect';
 
 export const BalancesContext: any = React.createContext({
+  getAccount: (a: string) => { },
   getAccountBalance: (a: string) => { },
   getAccountLedger: (a: string) => { },
   getBondedAccount: (a: string) => { },
+  getAccountNominators: (a: string) => { },
   accounts: [],
 });
 export const useBalances = () => React.useContext(BalancesContext);
@@ -46,6 +48,10 @@ export const BalancesContextWrapper = (props: any) => {
       total: 0,
       unlocking: [],
     };
+  }
+
+  const defaultNominators = () => {
+    return [];
   }
 
   // unsub and resubscribe to newly active account
@@ -86,7 +92,8 @@ export const BalancesContextWrapper = (props: any) => {
         [api.query.system.account, address],
         [api.query.staking.ledger, address],
         [api.query.staking.bonded, address],
-      ], ([{ nonce, data: balance }, ledger, bonded]: any) => {
+        [api.query.staking.nominators, address],
+      ], ([{ nonce, data: balance }, ledger, bonded, nominators]: any) => {
 
         // account state update
         let _account: any = {
@@ -122,8 +129,16 @@ export const BalancesContextWrapper = (props: any) => {
         _bonded = _bonded === null
           ? null
           : _bonded.toHuman();
-
         _account['bonded'] = _bonded;
+
+        // set account nominators
+        let _nominators = nominators.unwrapOr(null);
+        if (_nominators === null) {
+          _nominators = defaultNominators();
+        } else {
+          _nominators = _nominators.targets.toHuman();
+        }
+        _account['nominators'] = _nominators;
 
         // update account in context state
         let _accounts = Object.values(stateRef.current.accounts);
@@ -182,11 +197,33 @@ export const BalancesContextWrapper = (props: any) => {
     return bonded;
   }
 
+
+  // get an account's nominators
+  const getAccountNominators = (address: string) => {
+    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
+    if (!account.length) {
+      return [];
+    }
+    const { nominators } = account[0];
+    return nominators;
+  }
+
+  //get an account
+  const getAccount = (address: string) => {
+    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
+    if (!account.length) {
+      return null;
+    }
+    return account[0];
+  }
+
   return (
     <BalancesContext.Provider value={{
+      getAccount: getAccount,
       getAccountBalance: getAccountBalance,
       getAccountLedger: getAccountLedger,
       getBondedAccount: getBondedAccount,
+      getAccountNominators: getAccountNominators,
       accounts: stateRef.current.accounts,
     }}>
       {props.children}

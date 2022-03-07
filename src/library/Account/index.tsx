@@ -7,17 +7,16 @@ import { clipAddress } from '../../Utils';
 
 export const Account = (props: any) => {
 
-  let { address, label, unassigned, clickable }: any = props;
+  let { address, label, unassigned }: any = props;
+  let { canClick }: { canClick: boolean } = props;
 
   address = address === undefined ? 'Unassigned' : address;
-  clickable = clickable === undefined ? true : clickable;
 
   return (
     <Wrapper
-      whileHover={{ scale: clickable ? 1.02 : 1 }}
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
-      clickable={clickable}
+      cursor={canClick ? `pointer` : `default`}
     >
       {unassigned &&
         <span className='title unassigned'>Not Set</span>

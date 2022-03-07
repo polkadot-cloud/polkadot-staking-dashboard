@@ -21,15 +21,16 @@ import { useConnect } from '../../contexts/Connect';
 export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
-  const { getAccountLedger, getBondedAccount }: any = useBalances();
+  const { getAccountLedger, getBondedAccount, getAccountNominators }: any = useBalances();
   const { activeAccount } = useConnect();
 
   const { page } = props;
   const { title } = page;
-  const ledger = getAccountLedger(activeAccount);
   const controller = getBondedAccount(activeAccount);
+  const ledger = getAccountLedger(controller);
+  const nominators = getAccountNominators(activeAccount);
 
-  const { active } = ledger;
+  const { active, total } = ledger;
 
   let { unlocking } = ledger;
   let totalUnlocking = 0;
@@ -37,6 +38,8 @@ export const Stake = (props: PageProps) => {
     unlocking[i] = planckToDot(unlocking[i]);
     totalUnlocking += unlocking[i];
   }
+
+  const remaining = total - active - totalUnlocking;
 
   const items = [
     {
@@ -47,15 +50,15 @@ export const Stake = (props: PageProps) => {
     },
     {
       label: "Free",
-      value: 12,
+      value: planckToDot(remaining),
       unit: network.unit,
       format: "number",
     },
     {
       label: "Status",
-      value: "6 Nominations",
-      unit: "",
-      format: 'text',
+      value: nominators.length,
+      unit: `Nomination${nominators.length === 1 ? `` : `s`}`,
+      format: 'number',
     },
   ];
 
@@ -65,19 +68,41 @@ export const Stake = (props: PageProps) => {
       <StatBoxList title="This Session" items={items} />
 
       <PageRowWrapper noVerticalSpacer>
+        <MainWrapper paddingRight>
+          <GraphWrapper>
+            <h3>Bonded Funds</h3>
+            <div className='graph_with_extra'>
+              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
+                <BondedGraph
+                  active={planckToDot(active)}
+                  unlocking={planckToDot(totalUnlocking)}
+                  remaining={planckToDot(remaining)}
+                  total={total}
+                />
+              </div>
+              <ButtonRow style={{ height: '190px' }}>
+                <Button title='Bond Extra' />
+                <Button title='Unbond' />
+              </ButtonRow>
+            </div>
+            <Nominations nominators={nominators} />
+          </GraphWrapper>
+        </MainWrapper>
         <SecondaryWrapper>
           <GraphWrapper>
-            <h3>Staking Accounts</h3>
+            <h3>Accounts</h3>
             <StakingAccount>
               <h4>Stash</h4>
               <Account
+                canClick={false}
+                unassigned={activeAccount === ''}
                 address={activeAccount}
               />
             </StakingAccount>
-            <StakingAccount>
+            <StakingAccount last>
               <h4>Controller</h4>
               <Account
-                clickable={false}
+                canClick={false}
                 unassigned={controller === null}
                 address={controller}
               />
@@ -118,25 +143,6 @@ export const Stake = (props: PageProps) => {
           </GraphWrapper>
 
         </SecondaryWrapper>
-        <MainWrapper paddingLeft>
-          <GraphWrapper>
-            <h3>Bonded Funds</h3>
-            <div className='graph_with_extra'>
-              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
-                <BondedGraph
-                  active={planckToDot(active)}
-                  unlocking={planckToDot(totalUnlocking)}
-                />
-              </div>
-              <ButtonRow style={{ height: '190px' }}>
-                <Button title='Bond Extra' />
-                <Button title='Unbond' />
-              </ButtonRow>
-            </div>
-
-            <Nominations />
-          </GraphWrapper>
-        </MainWrapper>
       </PageRowWrapper>
     </Wrapper>
   );

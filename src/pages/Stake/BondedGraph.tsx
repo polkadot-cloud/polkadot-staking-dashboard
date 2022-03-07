@@ -13,17 +13,25 @@ export class BondedGraph extends React.Component<any, any> {
 
   // stop component refersh triggered by other API updates
   shouldComponentUpdate (nextProps: any, nextState: any) {
-    return (nextState !== this.state);
+    return (this.props !== nextProps);
   }
 
   render () {
 
     const { network }: any = this.context;
 
+    let { active, unlocking, remaining, total } = this.props;
+
+    let zeroBalance = false;
+    if (total === 0 || total === undefined) {
+      remaining = -1;
+      zeroBalance = true;
+    }
+
     const options = {
       responsive: true,
       maintainAspectRatio: false,
-      spacing: 2,
+      spacing: zeroBalance ? 0 : 2,
       plugins: {
         legend: {
           padding: {
@@ -46,22 +54,24 @@ export class BondedGraph extends React.Component<any, any> {
           backgroundColor: '#333',
           callbacks: {
             label: (context: any) => {
-              return `${context.label} ${context.parsed} ${network.unit}`;
+              return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
             },
           }
         }
       },
       cutout: '70%',
+      backgroundColor: '#f00f00',
     };
 
     const data = {
-      labels: ['Free', 'Bonded'],
+      labels: ['Active', 'Unlocking', 'Free'],
       datasets: [
         {
           label: network.unit,
-          data: [12, 19],
+          data: [active, unlocking, remaining],
           backgroundColor: [
             '#d33079',
+            '#ccc',
             '#eee',
           ],
           borderWidth: 1,

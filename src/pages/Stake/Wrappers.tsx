@@ -9,8 +9,8 @@ export const Wrapper = styled.div`
   justify-content: flex-start;
 `;
 
-export const StakingAccount = styled.div`
-  margin-bottom: 0.5rem;
+export const StakingAccount = styled.div<any>`
+  margin-bottom: ${props => props.last === true ? `none` : '1rem'};
   h4 {
     color: #333;
   }
@@ -32,6 +32,7 @@ export const NominateWrapper = styled.div`
     background: rgba(240,240,240,0.7);
     height: 170px;
     border-radius: 0.85rem;
+    border: 1px solid rgba(100,100,100,0.05);
 
     &:first-child{
       margin-bottom: 1rem;

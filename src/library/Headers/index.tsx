@@ -32,9 +32,9 @@ export const Headers = () => {
         <>
           <HeadingWrapper>
             <Account
+              canClick={false}
               address={connect.activeAccount}
               label='Stash'
-              onClick={() => { modal.setStatus(1); }}
             />
           </HeadingWrapper>
           <HeadingWrapper>
@@ -82,13 +82,21 @@ export const Headers = () => {
           {showMenu &&
             <Dropdown
               items={
-                <Item
-                  onClick={() => { connect.disconnect(); toggleMenu(false); }}
-                  whileHover={{ scale: 1.01 }}
-                  style={{ color: '#ae2324' }}
-                >
-                  Disconnect Accounts
-                </Item>
+                <>
+                  <Item
+                    onClick={() => { modal.setStatus(1); toggleMenu(false); }}
+                    whileHover={{ scale: 1.01 }}
+                  >
+                    Switch Account
+                  </Item>
+                  <Item
+                    onClick={() => { connect.disconnect(); toggleMenu(false); }}
+                    whileHover={{ scale: 1.01 }}
+                    style={{ color: '#ae2324' }}
+                  >
+                    Disconnect
+                  </Item>
+                </>
               }
             />
           }
