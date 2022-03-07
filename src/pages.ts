@@ -3,6 +3,7 @@
 
 import Overview from './pages/Overview';
 import Stake from './pages/Stake';
+import Pools from './pages/Pools';
 import Browse from './pages/validators/Browse';
 import Payouts from './pages/validators/Payouts';
 import Projects from './pages/explore/Projects';
@@ -12,6 +13,7 @@ import {
   faServer,
   faChartLine,
   faStar,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const PAGE_CATEGORIES = [
@@ -40,6 +42,12 @@ export const PAGES_CONFIG = [
     uri: '/stake',
     Entry: Stake,
     icon: faChartLine,
+  }, {
+    category: 1,
+    title: 'Pools',
+    uri: '/pools',
+    Entry: Pools,
+    icon: faUsers,
   }, {
     category: 2,
     title: 'Validators',
@@ -149,6 +157,13 @@ export const ASSISTANT_CONFIG = [
         subtitle: '',
         url: 'https://polkadot.network/'
       },
+    ],
+  },
+  {
+    key: 'pools',
+    definitions: [
+    ],
+    external: [
     ],
   },
   {
