@@ -54,6 +54,9 @@ export const GraphWrapper = styled.div<any>`
     margin: 0.25rem 0 0;
   }
 
+  h4 {
+    margin-bottom: 0.5rem;
+  }
   .small_button {
     background: #f1f1f1;
     padding: 0.25rem 0.75rem;

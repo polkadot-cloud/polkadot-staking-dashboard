@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageProps } from '../types';
-import { Wrapper, NominateWrapper } from './Wrappers';
+import { Wrapper, NominateWrapper, StakingAccount } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { GraphWrapper, MainWrapper, SecondaryWrapper } from '../Overview/Wrappers';
 import BondedGraph from './BondedGraph';
@@ -15,11 +15,14 @@ import { Button, ButtonRow } from '../../library/Button';
 import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
+import Account from '../../library/Account';
+import { useConnect } from '../../contexts/Connect';
 
 export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
   const { ledger }: any = useBalances();
+  const connect = useConnect();
 
   const { page } = props;
   const { title } = page;
@@ -62,10 +65,18 @@ export const Stake = (props: PageProps) => {
         <SecondaryWrapper>
           <GraphWrapper>
             <h3>Staking Accounts</h3>
-            <h4>Stash</h4>
-            <h4>...</h4>
-            <h4>Controller</h4>
-            <h4>...</h4>
+            <StakingAccount>
+              <h4>Stash</h4>
+              <Account
+                address={connect.activeAccount.address}
+              />
+            </StakingAccount>
+            <StakingAccount>
+              <h4>Controller</h4>
+              <Account
+                address={connect.activeAccount.address}
+              />
+            </StakingAccount>
           </GraphWrapper>
 
           <GraphWrapper>

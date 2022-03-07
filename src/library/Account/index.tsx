@@ -7,7 +7,9 @@ import { clipAddress } from '../../Utils';
 
 export const Account = (props: any) => {
 
-  const { address, label }: any = props;
+  let { address, label }: any = props;
+
+  address = address === undefined ? 'Unassigned' : address;
 
   return (
     <Wrapper
@@ -20,7 +22,9 @@ export const Account = (props: any) => {
         theme="polkadot"
       />
       <span className='title'>{clipAddress(address)}</span>
-      <div className='label'>{label}</div>
+      {label !== undefined &&
+        <div className='label'>{label}</div>
+      }
     </Wrapper>
   );
 }

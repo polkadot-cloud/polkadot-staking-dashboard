@@ -9,6 +9,12 @@ export const Wrapper = styled.div`
   justify-content: flex-start;
 `;
 
+export const StakingAccount = styled.div`
+  margin-bottom: 0.5rem;
+  h4 {
+    color: #333;
+  }
+`;
 export const NominateWrapper = styled.div`
   width: 100%;
   display: flex;

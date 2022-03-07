@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.button)`
-    flex-grow: 1;  
+    flex: 1;  
     padding: 0rem 0.35rem;
     margin: 0.25rem 0;
     border-radius: 1rem;
@@ -13,7 +13,7 @@ export const Wrapper = styled(motion.button)`
     box-shadow: none;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
     font-variation-settings: 'wght' 540;
