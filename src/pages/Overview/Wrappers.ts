@@ -10,10 +10,10 @@ export const MainWrapper = styled.div<any>`
   min-width: 500px;
   flex-grow: 1;
   ${props => props.paddingLeft && `
-  padding-left: 1.5rem;`
+  padding-left: 1rem;`
   }
   ${props => props.paddingRight && `
-  padding-right: 1.5rem;`
+  padding-right: 1rem;`
   }
 `;
 
