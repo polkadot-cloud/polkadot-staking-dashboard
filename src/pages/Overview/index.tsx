@@ -55,7 +55,7 @@ export const Overview = (props: PageProps) => {
       <h1>What's Happening</h1>
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
-        <MainWrapper>
+        <MainWrapper paddingRight>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <h5>Your Accumulated Payouts</h5>
             <h1>
