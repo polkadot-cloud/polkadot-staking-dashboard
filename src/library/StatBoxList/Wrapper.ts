@@ -55,7 +55,7 @@ export const StatBoxWrapper = styled(motion.div)`
         font-variation-settings: 'wght' 510;
         margin: 0;
         padding: 0.85rem 0;
-        font-size: 1.45rem;
+        font-size: 1.4rem;
       }
     }
     &:last-child {
