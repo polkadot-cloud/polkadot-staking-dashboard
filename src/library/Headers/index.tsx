@@ -6,7 +6,7 @@ import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faCogs, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faCogs } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from './Dropdown';
 import { Account } from '../Account';
 
@@ -32,15 +32,6 @@ export const Headers = () => {
               address={connect.activeAccount}
               label='Stash'
             />
-            <HeadingWrapper>
-              <Item style={{ background: 'none', padding: 0 }}>
-                <FontAwesomeIcon
-                  icon={faLink}
-                  transform={`shrink-2`}
-                  style={{ color: '#666' }}
-                />
-              </Item>
-            </HeadingWrapper>
           </HeadingWrapper>
           <HeadingWrapper>
             <Account
