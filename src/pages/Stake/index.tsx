@@ -21,12 +21,14 @@ import { useConnect } from '../../contexts/Connect';
 export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
-  const { getAccountLedger }: any = useBalances();
+  const { getAccountLedger, getBondedAccount }: any = useBalances();
   const { activeAccount } = useConnect();
 
   const { page } = props;
   const { title } = page;
   const ledger = getAccountLedger(activeAccount);
+  const controller = getBondedAccount(activeAccount);
+
   const { active } = ledger;
 
   let { unlocking } = ledger;
@@ -75,7 +77,9 @@ export const Stake = (props: PageProps) => {
             <StakingAccount>
               <h4>Controller</h4>
               <Account
-                address={activeAccount}
+                clickable={false}
+                unassigned={controller === null}
+                address={controller}
               />
             </StakingAccount>
           </GraphWrapper>

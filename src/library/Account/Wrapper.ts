@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const Wrapper = styled(motion.button)`
+export const Wrapper = styled(motion.button) <any>`
     flex: 1;  
     padding: 0rem 0.35rem;
     margin: 0.25rem 0;
@@ -15,7 +15,7 @@ export const Wrapper = styled(motion.button)`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    cursor: pointer;
+    cursor: ${props => props.clickable ? 'pointer' : 'default'};
     font-variation-settings: 'wght' 540;
     height: 2.3rem;
     font-size: 0.88rem;
@@ -24,6 +24,11 @@ export const Wrapper = styled(motion.button)`
 
     .title {
       margin: 0 0.75rem 0 0;
+
+      &.unassigned {
+        margin-left: 1rem;
+        color: #666;
+      }
     }
 
     .label {

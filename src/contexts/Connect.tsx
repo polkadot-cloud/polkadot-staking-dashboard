@@ -72,10 +72,6 @@ export class ConnectContextWrapper extends React.Component {
           source: source
         });
 
-        // TO DO: fetch balances / ledger / bonded (move from Balances)
-        // set unsubscribes to account record 
-
-
         return false;
       });
 
@@ -85,8 +81,6 @@ export class ConnectContextWrapper extends React.Component {
         accounts: accounts,
         activeAccount: accounts[0].address,
       });
-
-      // TO DO: check if accounts disconnected on change, unsubscribe to them if so
 
     }, { ss58Format: 0 });
 

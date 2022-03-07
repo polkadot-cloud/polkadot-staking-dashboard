@@ -20,7 +20,7 @@ export const Overview = (props: PageProps) => {
   const { network, prices }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { staking }: any = useStakingMetrics();
-  const { getAccountBalance }: any = useBalances();
+  const { getAccountBalance, getBondedAccount }: any = useBalances();
 
   const balance = getAccountBalance(activeAccount);
 

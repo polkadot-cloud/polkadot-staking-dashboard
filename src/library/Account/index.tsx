@@ -7,21 +7,33 @@ import { clipAddress } from '../../Utils';
 
 export const Account = (props: any) => {
 
-  let { address, label }: any = props;
+  let { address, label, unassigned, clickable }: any = props;
 
   address = address === undefined ? 'Unassigned' : address;
+  clickable = clickable === undefined ? true : clickable;
 
   return (
     <Wrapper
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: clickable ? 1.02 : 1 }}
       style={{ paddingLeft: 0 }}
+      onClick={props.onClick}
+      clickable={clickable}
     >
-      <Identicon
-        value={address}
-        size={26}
-        theme="polkadot"
-      />
-      <span className='title'>{clipAddress(address)}</span>
+      {unassigned &&
+        <span className='title unassigned'>Not Set</span>
+      }
+      {unassigned !== true &&
+        <>
+          <Identicon
+            value={address}
+            size={26}
+            theme="polkadot"
+            style={{ cursor: 'default' }}
+          />
+          <span className='title'>{clipAddress(address)}</span>
+        </>
+      }
+
       {label !== undefined &&
         <div className='label'>{label}</div>
       }

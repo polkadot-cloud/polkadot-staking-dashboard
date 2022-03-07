@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
+import { useModal } from '../../contexts/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faCogs } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from './Dropdown';
 import { Account } from '../Account';
+import { Controller } from './Controller';
 
 export const Headers = () => {
 
@@ -16,6 +18,7 @@ export const Headers = () => {
 
   const assistant = useAssistant();
   const connect = useConnect();
+  const modal = useModal();
 
   // subscribe to web3 accounts
   const connectWeb3 = async () => {
@@ -31,13 +34,11 @@ export const Headers = () => {
             <Account
               address={connect.activeAccount}
               label='Stash'
+              onClick={() => { modal.setStatus(1); }}
             />
           </HeadingWrapper>
           <HeadingWrapper>
-            <Account
-              address={connect.activeAccount}
-              label='Controller'
-            />
+            <Controller />
           </HeadingWrapper>
         </>
       }
@@ -70,7 +71,7 @@ export const Headers = () => {
           <Item
             whileHover={{ scale: 1.02 }}
             style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
-            onClick={() => toggleMenu(showMenu ? false : true)}
+            onClick={() => { toggleMenu(showMenu ? false : true); }}
           >
             <FontAwesomeIcon
               icon={!showMenu ? faCog : faCogs}
@@ -78,7 +79,19 @@ export const Headers = () => {
               style={{ cursor: 'pointer', color: '#444' }}
             />
           </Item>
-          {showMenu && <Dropdown toggleMenu={toggleMenu} />}
+          {showMenu &&
+            <Dropdown
+              items={
+                <Item
+                  onClick={() => { connect.disconnect(); toggleMenu(false); }}
+                  whileHover={{ scale: 1.01 }}
+                  style={{ color: '#ae2324' }}
+                >
+                  Disconnect Accounts
+                </Item>
+              }
+            />
+          }
         </HeadingWrapper>
       }
     </Wrapper>

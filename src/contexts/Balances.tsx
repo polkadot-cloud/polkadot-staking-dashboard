@@ -8,6 +8,7 @@ import { useConnect } from './Connect';
 export const BalancesContext: any = React.createContext({
   getAccountBalance: (a: string) => { },
   getAccountLedger: (a: string) => { },
+  getBondedAccount: (a: string) => { },
   accounts: [],
 });
 export const useBalances = () => React.useContext(BalancesContext);
@@ -84,7 +85,8 @@ export const BalancesContextWrapper = (props: any) => {
       const unsub = await api.queryMulti([
         [api.query.system.account, address],
         [api.query.staking.ledger, address],
-      ], ([{ nonce, data: balance }, ledger]: any) => {
+        [api.query.staking.bonded, address],
+      ], ([{ nonce, data: balance }, ledger, bonded]: any) => {
 
         // account state update
         let _account: any = {
@@ -101,11 +103,12 @@ export const BalancesContextWrapper = (props: any) => {
         };
 
         // set account ledger
-        ledger = ledger.unwrapOrDefault(null);
-        if (ledger === null) {
-          _account['ledger'] = undefined;
+        let _ledger = ledger.unwrapOr(null);
+        if (_ledger === null) {
+          _account['ledger'] = defaultLedger();
         } else {
-          const { stash, total, active, unlocking } = ledger;
+
+          const { stash, total, active, unlocking } = _ledger;
           _account['ledger'] = {
             stash: stash.toHuman(),
             active: active.toNumber(),
@@ -113,6 +116,14 @@ export const BalancesContextWrapper = (props: any) => {
             unlocking: unlocking.toHuman(),
           };
         }
+
+        // set account bonded (controller) or null
+        let _bonded = bonded.unwrapOr(null);
+        _bonded = _bonded === null
+          ? null
+          : _bonded.toHuman();
+
+        _account['bonded'] = _bonded;
 
         // update account in context state
         let _accounts = Object.values(stateRef.current.accounts);
@@ -127,6 +138,9 @@ export const BalancesContextWrapper = (props: any) => {
       _unsubscribe.push(unsub);
       setState({ ...stateRef.current, unsub: _unsubscribe });
     }
+
+    // TO DO: tidy-up accounts that no longer exist 
+    // refer to Connect accounts, rm metadata if does not exist on Connect.
   }
 
 
@@ -158,10 +172,21 @@ export const BalancesContextWrapper = (props: any) => {
     return ledger;
   }
 
+  //get an account's bonded (controller) account)
+  const getBondedAccount = (address: string) => {
+    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
+    if (!account.length) {
+      return null;
+    }
+    const { bonded } = account[0];
+    return bonded;
+  }
+
   return (
     <BalancesContext.Provider value={{
       getAccountBalance: getAccountBalance,
       getAccountLedger: getAccountLedger,
+      getBondedAccount: getBondedAccount,
       accounts: stateRef.current.accounts,
     }}>
       {props.children}
