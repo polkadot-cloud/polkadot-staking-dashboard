@@ -12,34 +12,33 @@ export const Wrapper = styled.div`
 export const NominateWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column wrap;
   align-items: flex-start;
   position: relative;
 
   > button {
     display: flex;
-    flex-flow: column nowrap;
-    flex-basis: 50%;
+    flex-flow: column wrap;
+    flex-basis: 100%;
     align-items: center;
     justify-content: flex-start;
-    padding: 1.2rem;
+    padding: 1rem;
     background: rgba(240,240,240,0.7);
     height: 170px;
     border-radius: 0.85rem;
+
     &:first-child{
-      margin-right: 0.6rem;
-    }
-    &:last-child{
-      margin-left: 0.6rem;
+      margin-bottom: 1rem;
     }
     h2 {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: #222; 
       margin: 0 0 0.4rem;
+      font-variation-settings: 'wght' 500;
     }
     p {
       color: #222;
-      font-size: 0.88rem;
+      font-size: 0.87rem;
       line-height: 1.3rem;
       padding: 0.5rem 1rem 0 1rem;
       text-align: center;
@@ -53,6 +52,7 @@ export const NominateWrapper = styled.div`
       align-items: center;
       justify-content: flex-end;
       flex: 1;
+      margin-top: 0.75rem;
     }
     .go {
       color: #555;

@@ -3,13 +3,18 @@
 
 import styled from 'styled-components';
 
-export const MainWrapper = styled.div`
-  flex-basis: 60%;
-  max-width: 60%;
-  padding-right: 1.5rem;
+export const MainWrapper = styled.div<any>`
+  flex-basis: 65%;
+  max-width: 65%;
   overflow: hidden;
   min-width: 500px;
   flex-grow: 1;
+  ${props => props.paddingLeft && `
+  padding-left: 1.5rem;`
+  }
+  ${props => props.paddingRight && `
+  padding-right: 1.5rem;`
+  }
 `;
 
 export const GraphWrapper = styled.div<any>`

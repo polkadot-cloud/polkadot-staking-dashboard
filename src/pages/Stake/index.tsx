@@ -59,22 +59,15 @@ export const Stake = (props: PageProps) => {
       <StatBoxList title="This Session" items={items} />
 
       <PageRowWrapper noVerticalSpacer>
-        <MainWrapper>
+        <SecondaryWrapper>
           <GraphWrapper>
-            <h3>Bonded Funds</h3>
-            <div className='graph_with_extra'>
-              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
-                <BondedGraph
-                  active={planckToDot(active)}
-                  unlocking={planckToDot(totalUnlocking)}
-                />
-              </div>
-              <ButtonRow style={{ height: '190px' }}>
-                <Button title='Bond Extra' />
-                <Button title='Unbond' />
-              </ButtonRow>
-            </div>
+            <h3>Staking Accounts</h3>
+            <h4>Stash</h4>
+            <h4>...</h4>
+            <h4>Controller</h4>
+            <h4>...</h4>
           </GraphWrapper>
+
           <GraphWrapper>
             <h3>Choose Validators</h3>
             <NominateWrapper>
@@ -107,15 +100,26 @@ export const Stake = (props: PageProps) => {
               </motion.button>
             </NominateWrapper>
           </GraphWrapper>
-        </MainWrapper>
-
-        <SecondaryWrapper>
-          <GraphWrapper>
-            <h3>Delegate to Pools</h3>
-            <h4>We're working on it.</h4>
-          </GraphWrapper>
 
         </SecondaryWrapper>
+        <MainWrapper paddingLeft>
+          <GraphWrapper>
+            <h3>Bonded Funds</h3>
+            <div className='graph_with_extra'>
+              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
+                <BondedGraph
+                  active={planckToDot(active)}
+                  unlocking={planckToDot(totalUnlocking)}
+                />
+              </div>
+              <ButtonRow style={{ height: '190px' }}>
+                <Button title='Bond Extra' />
+                <Button title='Unbond' />
+              </ButtonRow>
+            </div>
+          </GraphWrapper>
+        </MainWrapper>
+
       </PageRowWrapper>
       <PageRowWrapper>
         <MainWrapper>
