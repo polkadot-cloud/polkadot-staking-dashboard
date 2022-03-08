@@ -49,7 +49,6 @@ export class ConnectContextWrapper extends React.Component {
   }
 
   subscribeWeb3Accounts = async () => {
-
     // attempt to connect to Polkadot JS extension
     const extensions = await web3Enable('rb_polkadot_staking');
 
@@ -57,8 +56,6 @@ export class ConnectContextWrapper extends React.Component {
     if (extensions.length === 0) {
       return;
     }
-
-
     // fetch accounts and subscribe to account changes
     const unsubscribe = await web3AccountsSubscribe(async (injectedAccounts) => {
       let accounts: any = [];
@@ -66,30 +63,32 @@ export class ConnectContextWrapper extends React.Component {
       injectedAccounts.map(async (account, i) => {
         const { address, meta } = account;
         const { name, source } = meta;
-
         // format accounts into standard app format
         accounts.push({
           address: address,
           name: name,
           source: source
         });
-
         return false;
       });
+
+
+      // manage localStorage active account
+      let _activeAccount = this.getLocalStorageActiveAccount();
+      if (_activeAccount === '') {
+        this.setLocalStorageActiveAccount(accounts[0].address);
+        _activeAccount = accounts[0].address;
+      }
 
       this.setState({
         ...this.state,
         status: 1,
         accounts: accounts,
-        activeAccount: accounts[0].address,
+        activeAccount: _activeAccount,
       });
-
     }, { ss58Format: 0 });
 
-    this.setState({
-      ...this.state,
-      unsubscribe: unsubscribe,
-    });
+    this.setState({ ...this.state, unsubscribe: unsubscribe, });
   }
 
   componentWillUnmount () {
@@ -101,6 +100,7 @@ export class ConnectContextWrapper extends React.Component {
   }
 
   disconnect = () => {
+    this.removeLocalStorageActiveAccount();
     this.setState({
       status: 0,
       accounts: [],
@@ -115,6 +115,7 @@ export class ConnectContextWrapper extends React.Component {
   }
 
   setActiveAccount = (address: string) => {
+    this.setLocalStorageActiveAccount(address);
     this.setState({
       ...this.state,
       activeAccount: address
@@ -124,6 +125,22 @@ export class ConnectContextWrapper extends React.Component {
   accountExists = (addr: string) => {
     const account = this.state.accounts.filter((acc: any) => acc.address === addr);
     return account.length;
+  }
+
+  setLocalStorageActiveAccount = (addr: string) => {
+    localStorage.setItem('active_acount', addr);
+  }
+
+  getLocalStorageActiveAccount = () => {
+    const account = localStorage.getItem('active_acount') === null
+      ? ''
+      : localStorage.getItem('active_acount');
+
+    return account;
+  }
+
+  removeLocalStorageActiveAccount = () => {
+    localStorage.removeItem('active_account');
   }
 
   render () {
@@ -137,6 +154,7 @@ export class ConnectContextWrapper extends React.Component {
         disconnect: this.disconnect,
         setAccounts: this.setAccounts,
         setActiveAccount: this.setActiveAccount,
+
       }}>
         {this.props.children}
       </ConnectContext.Provider>
