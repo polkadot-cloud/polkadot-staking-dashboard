@@ -17,12 +17,15 @@ import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
 import Account from '../../library/Account';
 import { useConnect } from '../../contexts/Connect';
+import { GLOBAL_MESSGE_KEYS } from '../../constants';
 
 export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
   const { getAccountLedger, getBondedAccount, getAccountNominators }: any = useBalances();
-  const { activeAccount } = useConnect();
+  const { activeAccount, getMessage } = useConnect();
+
+  const controllerNotImported = getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED);
 
   const { page } = props;
   const { title } = page;
@@ -69,10 +72,18 @@ export const Stake = (props: PageProps) => {
 
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight>
-          <GraphWrapper>
-            <h3>Next Steps</h3>
 
-          </GraphWrapper>
+          {controllerNotImported !== null &&
+            <GraphWrapper style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
+              <h3>Next Step: Import Controller Account</h3>
+              <h4>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</h4>
+
+              <ButtonRow style={{ width: '100%', padding: 0, }}>
+                <Button title='Set new Controller' />
+              </ButtonRow>
+
+            </GraphWrapper>
+          }
           <GraphWrapper>
             <h3>Bonded Funds</h3>
             <div className='graph_with_extra'>

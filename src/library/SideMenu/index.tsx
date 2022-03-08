@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Wrapper, LogoWrapper, Separator } from './Wrapper';
 import Heading from './Heading';
 import Item from './Item';
@@ -13,34 +13,56 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
-import { POLKADOT_URL } from '../../constants';
+import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
 
 export const SideMenu = () => {
 
-  const { activeAccount, accountExists }: any = useConnect();
+  const { activeAccount, accountExists, setMessage, status: connectStatus }: any = useConnect();
   const { getBondedAccount }: any = useBalances();
   const { pathname }: any = useLocation();
 
-  // inject actions into PAGE_CONFIG
-  let PAGES_CONFIG_WITH_ACTIONS: any = Object.values(PAGES_CONFIG);
+  const [pageConfigWithMessages, setPageConfigWithMessages]: any = useState(Object.assign(PAGES_CONFIG));
 
-  for (let i = 0; i < PAGES_CONFIG_WITH_ACTIONS.length; i++) {
-    let { uri } = PAGES_CONFIG_WITH_ACTIONS[i];
+  // determine account messages here
 
-    switch (uri) {
-      // inject Staking warning if controller account does not exist
-      case '/stake':
+  useEffect(() => {
+
+    // only process account messages and warnings once accounts are connected
+    if (connectStatus === 1) {
+      let _pageConfigWithMessages: any = Object.assign(PAGES_CONFIG);
+
+      let messages: any = [];
+
+      for (let i = 0; i < _pageConfigWithMessages.length; i++) {
+        let { uri } = _pageConfigWithMessages[i];
         let controller = getBondedAccount(activeAccount);
-        // ensure controller has been set
-        if (controller !== null) {
-          // check if it is a connected account
-          if (!accountExists(controller)) {
-            PAGES_CONFIG_WITH_ACTIONS[i].action = faExclamationTriangle;
+
+        if (uri === '/stake') {
+          // inject Staking warning if controller account does not exist
+          // ensure controller has been set
+          if (controller !== null) {
+            // check if it is a connected account
+            if (!accountExists(controller)) {
+
+              // add message to app context
+              messages.push({
+                key: GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED,
+                msg: true
+              });
+              // set warning symbol in menu
+              _pageConfigWithMessages[i].action = faExclamationTriangle;
+            } else {
+              _pageConfigWithMessages[i].action = undefined;
+            }
           }
         }
-        break;
+      }
+      setPageConfigWithMessages(_pageConfigWithMessages);
+      for (let msg of messages) {
+        setMessage(msg.key, msg.msg);
+      }
     }
-  }
+  }, [activeAccount, connectStatus]);
 
   return (
     <Wrapper>
@@ -60,7 +82,7 @@ export const SideMenu = () => {
             {category.title !== 'default' && <Heading title={category.title} />}
 
             {/* display category links*/}
-            {PAGES_CONFIG_WITH_ACTIONS.map((page: any, pageIndex: number) =>
+            {pageConfigWithMessages.map((page: any, pageIndex: number) =>
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id &&
                   <Item

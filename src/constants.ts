@@ -64,6 +64,13 @@ export const API_ENDPOINTS = {
 
 
 /*
+ * Global messages for app components
+*/
+export const GLOBAL_MESSGE_KEYS = {
+  CONTROLLER_NOT_IMPORTED: 'controller_not_imported'
+};
+
+/*
  * Fallback config values
 */
 export const MAX_NOMINATIONS = 16;

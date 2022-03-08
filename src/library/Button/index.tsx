@@ -11,10 +11,9 @@ export const ButtonRow = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
   align-content: flex-end;
-  height: 190px;
 `;
 
-const Wrapper = styled(motion.button)`
+const Wrapper = styled(motion.button) <any>`
   flex-grow: 1;
   background: #f1f1f1;
   padding: 0.6rem 1rem;
@@ -27,7 +26,7 @@ const Wrapper = styled(motion.button)`
 
 export const Button = (props: any) => {
 
-  const { title } = props;
+  const { title, nopadding } = props;
 
   return (
     <Wrapper

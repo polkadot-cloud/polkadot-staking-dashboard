@@ -9,7 +9,6 @@ export const Item = (props: any) => {
 
   const { name, active, to, icon, action } = props;
 
-
   return (
     <Link to={to}>
       <Wrapper

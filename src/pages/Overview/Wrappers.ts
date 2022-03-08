@@ -18,6 +18,7 @@ export const MainWrapper = styled.div<any>`
 `;
 
 export const GraphWrapper = styled.div<any>`
+  box-sizing: border-box;
   padding: 1rem 1.2rem;
   border-radius: 1rem;
   background: rgba(255,255,255,0.7);
@@ -54,8 +55,12 @@ export const GraphWrapper = styled.div<any>`
     margin: 0.25rem 0 0;
   }
 
+  h3 {
+    margin-top: 0.25rem;
+  }
   h4 {
     margin-bottom: 0.5rem;
+    line-height: 1.3rem;
   }
   .small_button {
     background: #f1f1f1;

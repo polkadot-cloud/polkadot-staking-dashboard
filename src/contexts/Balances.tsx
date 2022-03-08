@@ -151,7 +151,12 @@ export const BalancesContextWrapper = (props: any) => {
 
       // assign new subscription
       _unsubscribe.push(unsub);
-      setState({ ...stateRef.current, unsub: _unsubscribe });
+
+      // update context state
+      setState({
+        ...stateRef.current,
+        unsub: _unsubscribe
+      });
     }
 
     // TO DO: tidy-up accounts that no longer exist 
