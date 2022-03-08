@@ -131,6 +131,16 @@ export const ASSISTANT_CONFIG = [
     key: 'stake',
     definitions: [
       {
+        title: 'Stash and Controller Accounts',
+        description: [
+          'The Stash and Controller are simply Polkadot accounts that manage your staking activity.',
+          'Your Stash account is the account used to hold your staked funds, whereas the Controller account is used to carry out Staking actions on the Stash account\'s behalf.',
+          'When you switch accounts in this app, you are actually switching your Stash account. Your Controller account is then automatically fetched for you.',
+          'This app assumes you have both Stash and Controller accounts imported. If you do not, you will not be able to use all app functions.',
+          'You can assign a different Controller account on the Stake page.',
+        ],
+      },
+      {
         title: 'Bonding',
         description: [
           'Bonding funds is the process of "locking" (or staking) DOT. Bonded DOT will then be automatically allocated to one or more of your nominated validators. ',
