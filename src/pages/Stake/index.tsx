@@ -80,7 +80,7 @@ export const Stake = (props: PageProps) => {
               <h4>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</h4>
 
               <ButtonRow style={{ width: '100%', padding: 0, }}>
-                <Button title='Set new Controller' />
+                <Button title='Set New Controller' />
               </ButtonRow>
             </GraphWrapper>
           }
@@ -89,7 +89,7 @@ export const Stake = (props: PageProps) => {
           {controller === null &&
             <GraphWrapper>
               <h3>Set Up Staking</h3>
-              <h4>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</h4>
+              <h4>You have not yet started staking. Let's get set up.</h4>
 
               <ButtonRow style={{ padding: 0, }}>
                 <Button title='Start Staking' primary inline />
