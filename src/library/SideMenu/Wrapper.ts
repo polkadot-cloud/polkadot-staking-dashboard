@@ -67,8 +67,15 @@ export const ItemWrapper = styled(motion.div) <any>`
     background: linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%);
   }
 
-  span {
+  .icon {
     margin-right: 0.8rem;
+  }
+
+  .action {
+    flex: 1;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
   }
 `;
 

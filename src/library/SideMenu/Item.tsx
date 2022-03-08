@@ -3,10 +3,11 @@
 
 import { ItemWrapper as Wrapper } from './Wrapper';
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Item = (props: any) => {
 
-  const { name, active, to, icon } = props;
+  const { name, active, to, icon, action } = props;
 
 
   return (
@@ -19,10 +20,19 @@ export const Item = (props: any) => {
           duration: 0.1,
         }}
       >
-        <span>
+        <div className='icon'>
           {icon}
-        </span>
-        {name}
+        </div>
+
+        <div className='name'>
+          {name}
+        </div>
+        {action &&
+          <div className='action'>
+            <FontAwesomeIcon icon={action} color="rgba(242, 185, 27,0.5)" />
+          </div>
+        }
+
       </Wrapper>
     </Link>
   )

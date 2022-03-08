@@ -69,7 +69,6 @@ export const PAGES_CONFIG = [
   },
 ];
 
-
 export const ASSISTANT_CONFIG = [
   {
     key: 'overview',

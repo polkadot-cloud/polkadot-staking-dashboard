@@ -14,6 +14,7 @@ export const Account = (props: any) => {
 
   return (
     <Wrapper
+      whileHover={{ scale: 1.01 }}
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}

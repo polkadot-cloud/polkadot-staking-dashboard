@@ -70,6 +70,10 @@ export const Stake = (props: PageProps) => {
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight>
           <GraphWrapper>
+            <h3>Next Steps</h3>
+
+          </GraphWrapper>
+          <GraphWrapper>
             <h3>Bonded Funds</h3>
             <div className='graph_with_extra'>
               <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>

@@ -13,6 +13,7 @@ export interface ConnectContextState {
   disconnect: () => void;
   setAccounts: () => void;
   setActiveAccount: (a: string) => void;
+  accountExists: (a: string) => number;
   status: number,
   accounts: any;
   activeAccount: string;
@@ -25,6 +26,7 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
   disconnect: () => { },
   setAccounts: () => { },
   setActiveAccount: (a: string) => { },
+  accountExists: (a: string) => 0,
   accounts: [],
   activeAccount: '',
 });
@@ -119,12 +121,18 @@ export class ConnectContextWrapper extends React.Component {
     });
   }
 
+  accountExists = (addr: string) => {
+    const account = this.state.accounts.filter((acc: any) => acc.address === addr);
+    return account.length;
+  }
+
   render () {
     return (
       <ConnectContext.Provider value={{
         status: this.state.status,
         accounts: this.state.accounts,
         activeAccount: this.state.activeAccount,
+        accountExists: this.accountExists,
         connect: this.connect,
         disconnect: this.disconnect,
         setAccounts: this.setAccounts,
