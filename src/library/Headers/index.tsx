@@ -35,6 +35,7 @@ export const Headers = () => {
               canClick={false}
               address={connect.activeAccount}
               label='Stash'
+              filled
             />
           </HeadingWrapper>
           <HeadingWrapper>

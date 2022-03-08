@@ -10,6 +10,9 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   width: 100%;
   margin-top: 1.5rem;
+  h3 {
+    margin-bottom: 0;
+  }
 `;
 export const Item = styled(motion.div)`
   list-style: none;

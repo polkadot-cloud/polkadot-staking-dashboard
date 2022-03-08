@@ -60,7 +60,6 @@ export class BondedGraph extends React.Component<any, any> {
         }
       },
       cutout: '70%',
-      backgroundColor: '#f00f00',
     };
 
     const data = {

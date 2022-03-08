@@ -15,23 +15,27 @@ export const ButtonRow = styled.div`
 
 const Wrapper = styled(motion.button) <any>`
   flex-grow: 1;
-  background: #f1f1f1;
-  padding: 0.6rem 1rem;
-  border-radius: 0.75rem;
-  margin: 0.75rem 0 0.75rem 0.75rem;
-  font-size: 1rem;
+  background: ${props => props.type === 'default' ? '#f1f1f1' : '#d33079'};
+  padding: 0.6rem 1.2rem;
+  border-radius: 1.1rem;
+  margin: ${props => props.margin};
+  font-size: 0.95rem;
   font-variation-settings: 'wght' 500;
-  color: #222;
+  color: ${props => props.type === 'default' ? '#222' : '#fafafa'};
 `;
 
 export const Button = (props: any) => {
 
-  const { title, nopadding } = props;
+  let { title, primary, inline } = props;
+  primary = primary === undefined ? false : primary;
+  inline = inline === undefined ? false : inline;
 
   return (
     <Wrapper
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
+      type={primary === true ? 'invert' : 'default'}
+      margin={inline ? '0.75rem 0' : '0.75rem 0 0.75rem 0.75rem'}
     >
       {title}
     </Wrapper>

@@ -21,6 +21,7 @@ export const Controller = () => {
         address={controller}
         label='Controller'
         style={{ cursor: 'default' }}
+        filled
       />
     </>
   );

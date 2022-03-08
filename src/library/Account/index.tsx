@@ -7,10 +7,11 @@ import { clipAddress } from '../../Utils';
 
 export const Account = (props: any) => {
 
-  let { address, label, unassigned }: any = props;
+  let { address, label, unassigned, filled }: any = props;
   let { canClick }: { canClick: boolean } = props;
 
   address = address === undefined ? 'Unassigned' : address;
+  filled = filled === undefined ? false : filled;
 
   return (
     <Wrapper
@@ -18,11 +19,13 @@ export const Account = (props: any) => {
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}
+      fill={filled ? '#f1f1f1' : 'none'}
     >
       {unassigned &&
         <span className='title unassigned'>Not Set</span>
       }
-      {unassigned !== true &&
+      {
+        unassigned !== true &&
         <>
           <Identicon
             value={address}
@@ -34,10 +37,11 @@ export const Account = (props: any) => {
         </>
       }
 
-      {label !== undefined &&
+      {
+        label !== undefined &&
         <div className='label'>{label}</div>
       }
-    </Wrapper>
+    </Wrapper >
   );
 }
 

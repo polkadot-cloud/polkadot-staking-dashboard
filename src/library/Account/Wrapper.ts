@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.button) <any>`
-    flex: 1;  
+    flex-grow: 1;  
     padding: 0rem 0.35rem;
     margin: 0.25rem 0;
     border-radius: 1rem;
@@ -21,7 +21,7 @@ export const Wrapper = styled(motion.button) <any>`
     position: relative;
     transition: width 0.2s;
     cursor: ${props => props.cursor};
-    background: #f1f1f1;
+    background: ${props => props.fill};
 
     .title {
       margin: 0 0.75rem 0 0;

@@ -73,6 +73,7 @@ export const Stake = (props: PageProps) => {
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight>
 
+          {/* warning: controller account not present. unable to stake */}
           {controllerNotImported !== null &&
             <GraphWrapper style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
               <h3>Next Step: Import Controller Account</h3>
@@ -81,7 +82,18 @@ export const Stake = (props: PageProps) => {
               <ButtonRow style={{ width: '100%', padding: 0, }}>
                 <Button title='Set new Controller' />
               </ButtonRow>
+            </GraphWrapper>
+          }
 
+          {/* finish staking. Start bonding */}
+          {controller === null &&
+            <GraphWrapper>
+              <h3>Set Up Staking</h3>
+              <h4>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</h4>
+
+              <ButtonRow style={{ padding: 0, }}>
+                <Button title='Start Staking' primary inline />
+              </ButtonRow>
             </GraphWrapper>
           }
           <GraphWrapper>
@@ -95,10 +107,13 @@ export const Stake = (props: PageProps) => {
                   total={total}
                 />
               </div>
-              <ButtonRow style={{ height: '190px' }}>
-                <Button title='Bond Extra' />
-                <Button title='Unbond' />
-              </ButtonRow>
+              {/* once staking, have control over bonding */}
+              {controller !== null &&
+                <ButtonRow style={{ height: '190px' }}>
+                  <Button title='Bond Extra' />
+                  <Button title='Unbond' />
+                </ButtonRow>
+              }
             </div>
             <Nominations nominators={nominators} />
           </GraphWrapper>
@@ -106,21 +121,21 @@ export const Stake = (props: PageProps) => {
         <SecondaryWrapper>
           <GraphWrapper>
             <h3>Accounts</h3>
+            <h4>Stash</h4>
             <StakingAccount>
-              <h4>Stash</h4>
               <Account
                 canClick={false}
                 unassigned={activeAccount === ''}
                 address={activeAccount}
               />
             </StakingAccount>
+            <h4>Controller</h4>
             <StakingAccount last>
-              <h4>Controller</h4>
               <Account
                 canClick={false}
                 unassigned={controller === null}
                 address={controller}
-              />
+              /> <Button title='Set Controller' />
             </StakingAccount>
           </GraphWrapper>
 

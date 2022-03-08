@@ -29,31 +29,26 @@ export const Nominations = (props: any) => {
     }
   };
 
-  // const showAnnouncement = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
-  // if (!showAnnouncement) {
-  //   return (<></>);
-  // }
-
   return (
     <Wrapper>
-      <h3>
-        Your Nominations
-      </h3>
-      <Item variants={listItem}>
-        <p>...</p>
-      </Item>
+      <h3>Your Nominations</h3>
 
-      {/* {isReady() &&
+      {isReady() &&
         <motion.div variants={container} initial="hidden" animate="show">
-          {nominators.map((item: any, index: number) => {
-            return (
-              <Item key={`nominator_list_${index}`} variants={listItem}>
-                <p>...</p>
-              </Item>
-            )
-          })}
+
+          {nominators.length === 0 &&
+            <Item variants={listItem}>
+              <p>Finish staking setup to manage your nominated validators.</p>
+            </Item>
+          }
+
+          {nominators.length > 0 &&
+            <Item variants={listItem}>
+              <p>You are currently nominating {nominators.length} validator{nominators.length === 1 ? '' : 's'}.</p>
+            </Item>
+          }
         </motion.div>
-      } */}
+      }
     </Wrapper>
   );
 }
