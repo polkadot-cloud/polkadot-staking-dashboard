@@ -16,18 +16,16 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
-export const PAGE_CATEGORIES = [
-  {
-    _id: 1,
-    title: 'default'
-  }, {
-    _id: 2,
-    title: 'Validators',
-  }, {
-    _id: 3,
-    title: 'Explore',
-  }
-];
+export const PAGE_CATEGORIES = [{
+  _id: 1,
+  title: 'default'
+}, {
+  _id: 2,
+  title: 'Validators',
+}, {
+  _id: 3,
+  title: 'Explore',
+}];
 
 export const PAGES_CONFIG = [
   {

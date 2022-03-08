@@ -98,7 +98,6 @@ export const NetworkBar = () => {
               {prices.change < 0 ? `` : prices.change > 0 ? `+` : ``}{prices.change}%
             </span>
           </div>
-
           <div className='stat'>
             1 {network.api.unit} / {prices.lastPrice} USD
           </div>
@@ -126,8 +125,12 @@ export const NetworkBar = () => {
         </div>
         <div className='row'>
           <div>
-            <p>{network.name} Node Endpoint:</p>
+            <p>Node Endpoint:</p>
             <p className='val'>{network.endpoint}</p>
+          </div>
+          <div>
+            <p>Subscan Endpoint:</p>
+            <p className='val'>{network.subscanEndpoint}</p>
           </div>
           <div>
             <p>Price Tracker:</p>

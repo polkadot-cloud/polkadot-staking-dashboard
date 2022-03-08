@@ -19,6 +19,7 @@ export const NODE_ENDPOINTS: any = {
   polkadot: {
     name: 'Polkadot',
     endpoint: 'wss://rpc.polkadot.io',
+    subscanEndpoint: 'https://polkadot.api.subscan.io',
     unit: 'DOT',
     icon: PolkadotLogoSVG,
     api: {
@@ -29,6 +30,7 @@ export const NODE_ENDPOINTS: any = {
   westend: {
     name: 'Westend',
     endpoint: 'wss://westend-rpc.polkadot.io',
+    subscanEndpoint: 'https://westend.api.subscan.io',
     unit: 'WND',
     icon: WestendLogoSVG,
     api: {
@@ -57,12 +59,6 @@ export const INTERFACE_MINIMUM_HEIGHT: number = 400;
 export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
 
-export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3/';
-export const API_ENDPOINTS = {
-  priceChange: 'https://api.binance.com/api/v3/ticker/24hr?symbol=',
-}
-
-
 /*
  * Global messages for app components
 */
@@ -77,3 +73,16 @@ export const MAX_NOMINATIONS = 16;
 export const BONDING_DURATION = 28;
 export const SESSIONS_PER_ERA = 6;
 export const MAX_NOMINATOR_REWARDED_PER_VALIDATOR = 256;
+
+/*
+ * Third party API keys and endpoints
+*/
+
+export const API_SUBSCAN_KEY = 'd37149339f64775155a82a53f4253b27';
+
+export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3';
+
+export const API_ENDPOINTS = {
+  priceChange: `${ENDPOINT_PRICE}/ticker/24hr?symbol=`,
+  subscanRewardSlash: '/api/scan/account/reward_slash',
+};
