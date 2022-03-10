@@ -158,7 +158,7 @@ export class PayoutGraph extends React.Component<any, any> {
           data: this.state.list.map((item: any, index: number) => {
             return planckToDot(item.amount);
           }),
-          borderColor: 'rgba(211, 48, 121, 0.5)',
+          borderColor: 'rgba(211, 48, 121, 0.6)',
           backgroundColor: '#d33079',
           pointStyle: undefined,
           pointRadius: 0,
@@ -239,7 +239,7 @@ export class PayoutGraph extends React.Component<any, any> {
 
     return (
       <>
-        <div className='graph'>
+        <div className='graph' style={{ paddingLeft: '0.8rem', paddingRight: '0.8rem' }}>
           <div style={{ height: '75px' }}>
             <Line options={options_line} data={data_line} />
           </div>
