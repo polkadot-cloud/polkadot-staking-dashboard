@@ -29,6 +29,20 @@ export const GraphWrapper = styled.div<any>`
   width: 100%;
   flex: 1;
   margin-top: 1rem;
+  position: relative;
+
+  .label {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 0.8rem;
+    font-variation-settings: 'wght' 550;
+    border: 1px solid #d33079;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    color: #d33079;
+    opacity: 0.8;
+  }
 
   h1, h5 {
     margin: 0;

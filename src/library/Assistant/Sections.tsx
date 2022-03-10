@@ -117,7 +117,6 @@ export const Sections = (props: any) => {
               })}
             </>
           }
-
         </ListWrapper>
       </ContentWrapper>
 

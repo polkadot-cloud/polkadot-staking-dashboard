@@ -86,3 +86,5 @@ export const API_ENDPOINTS = {
   priceChange: `${ENDPOINT_PRICE}/ticker/24hr?symbol=`,
   subscanRewardSlash: '/api/scan/account/reward_slash',
 };
+
+export const SUBSCAN_ENABLED = true;

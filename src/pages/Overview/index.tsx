@@ -8,19 +8,20 @@ import { PageRowWrapper } from '../../Wrappers';
 import { MainWrapper, GraphWrapper, SecondaryWrapper } from './Wrappers';
 import PayoutGraph from './PayoutGraph';
 import BalanceGraph from './BalanceGraph';
-import NumberEasing from 'che-react-number-easing';
 import Announcements from './Announcements';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot, fiatAmount, humanNumber } from '../../Utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 
 export const Overview = (props: PageProps) => {
 
   const { network, prices }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { staking }: any = useStakingMetrics();
-  const { getAccountBalance, getBondedAccount }: any = useBalances();
+  const { getAccountBalance }: any = useBalances();
 
   const balance = getAccountBalance(activeAccount);
 
@@ -52,7 +53,7 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
-  const GRAPH_HEIGHT = 375;
+  const GRAPH_HEIGHT = 400;
 
   return (
     <>
@@ -61,7 +62,7 @@ export const Overview = (props: PageProps) => {
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
-            <h5>Your {network.unit} Balance</h5>
+            <h5>{network.unit} Balance</h5>
             <h1>{freeDot} DOT&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span>
             </h1>
             <div className='graph' style={{ maxWidth: 400, paddingRight: 10, }}>
@@ -71,21 +72,16 @@ export const Overview = (props: PageProps) => {
         </SecondaryWrapper>
         <MainWrapper paddingLeft>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
-            <h5>Your Accumulated Payouts</h5>
-            <h1>
-              <NumberEasing
-                ease="quintInOut"
-                precision={4}
-                speed={250}
-                trail={false}
-                useLocaleString={false}
-                value={17.18}
-              />&nbsp;{network.unit}
-            </h1>
-            <p><button className='small_button'>Past Month</button></p>
-            <div className='graph'>
-              <PayoutGraph />
+            <div className='label'>
+              <FontAwesomeIcon
+                icon={faProjectDiagram}
+                transform="shrink-2"
+                style={{ marginRight: '0.3rem' }}
+              />
+              Subscan
             </div>
+            <h5>Recent Payouts</h5>
+            <PayoutGraph account={activeAccount} />
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>
