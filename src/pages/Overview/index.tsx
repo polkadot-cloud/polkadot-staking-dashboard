@@ -59,7 +59,17 @@ export const Overview = (props: PageProps) => {
       <h1>What's Happening</h1>
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
-        <MainWrapper paddingRight>
+        <SecondaryWrapper>
+          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
+            <h5>Your {network.unit} Balance</h5>
+            <h1>{freeDot} DOT&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span>
+            </h1>
+            <div className='graph' style={{ maxWidth: 400, paddingRight: 10, }}>
+              <BalanceGraph balances={balance} />
+            </div>
+          </GraphWrapper>
+        </SecondaryWrapper>
+        <MainWrapper paddingLeft>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <h5>Your Accumulated Payouts</h5>
             <h1>
@@ -78,17 +88,6 @@ export const Overview = (props: PageProps) => {
             </div>
           </GraphWrapper>
         </MainWrapper>
-
-        <SecondaryWrapper>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
-            <h5>Your {network.unit} Balance</h5>
-            <h1>{freeDot} DOT&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span>
-            </h1>
-            <div className='graph' style={{ maxWidth: 400, paddingRight: 10, }}>
-              <BalanceGraph balances={balance} />
-            </div>
-          </GraphWrapper>
-        </SecondaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper>
         <Announcements />
