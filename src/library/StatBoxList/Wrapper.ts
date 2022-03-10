@@ -62,6 +62,7 @@ export const StatBoxWrapper = styled(motion.div)`
       h4 {
       margin: 0;
       padding-bottom: 1rem;
+      opacity: 0.8;
     }
   }
 }
