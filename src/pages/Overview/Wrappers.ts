@@ -37,10 +37,10 @@ export const GraphWrapper = styled.div<any>`
     top: 10px;
     font-size: 0.8rem;
     font-variation-settings: 'wght' 550;
-    border: 1px solid #d33079;
+    background: #d33079;
     border-radius: 0.3rem;
     padding: 0.2rem 0.4rem;
-    color: #d33079;
+    color: #fff;
     opacity: 0.8;
   }
 
@@ -88,6 +88,13 @@ export const GraphWrapper = styled.div<any>`
     justify-content: center;
     width: 100%;
     margin-top: 1.5rem;
+  }
+  .graph_line {
+    background: #f1f1f1;
+    border-radius: 0.75rem;
+    margin-top: 1.25rem;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
   }
   .graph_with_extra {
     width: 100%;

@@ -68,8 +68,8 @@ export class PayoutGraph extends React.Component<any, any> {
         'X-API-Key': API_SUBSCAN_KEY,
       },
       body: JSON.stringify({
-        row: 20,
-        page: 1,
+        row: 21,
+        page: 0,
         address: this.props.account,
       }),
       method: "POST"
@@ -105,6 +105,7 @@ export class PayoutGraph extends React.Component<any, any> {
             borderColor: 'rgba(255,255,255,0)',
           },
           ticks: {
+            display: false,
             maxTicksLimit: 30,
             autoSkip: true,
           }
@@ -112,6 +113,7 @@ export class PayoutGraph extends React.Component<any, any> {
         y: {
           ticks: {
             display: false,
+            beginAtZero: false,
           },
           grid: {
             drawBorder: false,
@@ -158,7 +160,14 @@ export class PayoutGraph extends React.Component<any, any> {
           data: this.state.list.map((item: any, index: number) => {
             return planckToDot(item.amount);
           }),
-          borderColor: 'rgba(211, 48, 121, 0.6)',
+          borderColor: (context: any) => {
+            const chart = context.chart;
+            const { ctx, chartArea } = chart;
+            if (!chartArea) {
+              return;
+            }
+            return getGradient(ctx, chartArea, true);
+          },
           backgroundColor: '#d33079',
           pointStyle: undefined,
           pointRadius: 0,
@@ -179,9 +188,16 @@ export class PayoutGraph extends React.Component<any, any> {
             return planckToDot(item.amount);
           }),
           borderColor: '#d33079',
-          backgroundColor: '#d33079',
+          backgroundColor: (context: any) => {
+            const chart = context.chart;
+            const { ctx, chartArea } = chart;
+            if (!chartArea) {
+              return;
+            }
+            return getGradient(ctx, chartArea, false);
+          },
           pointRadius: 0,
-          borderRadius: 6,
+          borderRadius: 5,
         },
       ],
     };
@@ -189,7 +205,7 @@ export class PayoutGraph extends React.Component<any, any> {
     const config_bar = {
       responsive: true,
       maintainAspectRatio: false,
-      barPercentage: 0.38,
+      barPercentage: 0.37,
       scales: {
         x: {
           grid: {
@@ -237,14 +253,46 @@ export class PayoutGraph extends React.Component<any, any> {
       },
     };
 
+    let lastPayout: any = null;
+
+    if (this.state.list.length > 0) {
+      let _last = this.state.list.reverse()[0];
+      lastPayout = {
+        amount: planckToDot(_last['amount']),
+        block_timestamp: _last['block_timestamp'] + "",
+      };
+    }
+
+    let width: number, height: number, gradient: any;
+    function getGradient (ctx: any, chartArea: any, inverse: boolean) {
+      const chartWidth = chartArea.right - chartArea.left;
+      const chartHeight = chartArea.bottom - chartArea.top;
+      if (!gradient || width !== chartWidth || height !== chartHeight) {
+        // Create the gradient because this is either the first render
+        // or the size of the chart has changed
+        width = chartWidth;
+        height = chartHeight;
+        gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+        gradient.addColorStop(inverse ? 1 : 0, 'rgba(203, 37, 111, 0.9)');
+        gradient.addColorStop(inverse ? 0 : 1, 'rgba(223, 81, 144, 0.7)');
+      }
+
+      return gradient;
+    }
+
+
     return (
       <>
+        <h1>{lastPayout === null ? 0 : lastPayout.amount} DOT&nbsp;<span className='fiat'>{lastPayout === null ? `` : moment.unix(lastPayout['block_timestamp']).fromNow()}</span>
+        </h1>
         <div className='graph' style={{ paddingLeft: '0.8rem', paddingRight: '0.8rem' }}>
-          <div style={{ height: '75px' }}>
-            <Line options={options_line} data={data_line} />
-          </div>
-          <div style={{ height: '240px' }}>
+          <div style={{ height: '185px' }}>
             <Bar options={config_bar} data={data_bar} />
+          </div>
+          <div className='graph_line' style={{
+            height: '60px', backgroundColor: '#f1f1f1'
+          }}>
+            <Line options={options_line} data={data_line} />
           </div>
         </div>
       </>

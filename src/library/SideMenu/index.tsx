@@ -25,7 +25,7 @@ export const SideMenu = () => {
 
   // determine account messages here
 
-  useEffect(() => {
+  useEffect(() => { 
 
     // only process account messages and warnings once accounts are connected
     if (connectStatus === 1) {
