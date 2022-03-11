@@ -17,7 +17,7 @@ export const APIContext: any = React.createContext({
   status: consts.CONNECTION_STATUS[0],
   isReady: () => { },
   consts: {},
-  prices: {},
+  fetchDotPrice: () => { },
 });
 
 // import context as a hook
@@ -34,10 +34,6 @@ export class APIContextWrapper extends React.Component {
       maxNominations: 0,
       sessionsPerEra: 0,
     },
-    prices: {
-      lastPrice: 0,
-      change: 0,
-    },
     activeNetwork: localStorage.getItem('network'),
     network: consts.NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
   };
@@ -50,53 +46,27 @@ export class APIContextWrapper extends React.Component {
         maxNominations: 0,
         sessionsPerEra: 0,
       },
-      prices: {
-        lastPrice: 0,
-        change: 0,
-      }
     };
   }
 
-  componentWillUnmount () {
-    if (this.priceHandle) {
-      clearInterval(this.priceHandle);
-      this.priceHandle = 0;
-    }
-  }
-
-  fetchPrices = async () => {
+  fetchDotPrice = async () => {
     const urls = [
       `${consts.API_ENDPOINTS.priceChange}${consts.NODE_ENDPOINTS[this.state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
     ];
+    let responses = await Promise.all(urls.map(u => fetch(u, { method: 'GET' })))
+    let texts = await Promise.all(responses.map(res => res.json()));
 
-    Promise.all(urls.map(u => fetch(u, { method: 'GET' }))).then(responses =>
-      Promise.all(responses.map(res => res.json()))
-    ).then(texts => {
-      // const _price = texts[0];
-      const _change = texts[0];
+    const _change = texts[0];
 
-      if (_change.lastPrice !== undefined && _change.priceChangePercent !== undefined) {
-        let price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(2);
-        let change: string = (Math.round(_change.priceChangePercent * 100) / 100).toFixed(2);
+    if (_change.lastPrice !== undefined && _change.priceChangePercent !== undefined) {
+      let price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(2);
+      let change: string = (Math.round(_change.priceChangePercent * 100) / 100).toFixed(2);
 
-        this.setState({
-          ...this.state,
-          prices: {
-            lastPrice: price,
-            change: change,
-          }
-        });
-      }
-    });
-  }
-
-  // subscribe to price data
-  priceHandle: any;
-  initiatePrices = async () => {
-    this.fetchPrices();
-    this.priceHandle = setInterval(() => {
-      this.fetchPrices();
-    }, 1000 * 60);
+      return {
+        lastPrice: price,
+        change: change,
+      };
+    }
   }
 
   // returns whether api is ready to be used
@@ -133,7 +103,7 @@ export class APIContextWrapper extends React.Component {
     // });
 
     // connect to price ticker handler
-    this.initiatePrices();
+    // this.initiatePrices();
 
     // wait for instance to connect, then assign instance to context state
     const apiInstance = await ApiPromise.create({ provider: wsProvider });
@@ -166,8 +136,6 @@ export class APIContextWrapper extends React.Component {
   }
 
   disconnect = async () => {
-    // stop price ticker
-    clearInterval(this.priceHandle);
     // disconnect from api
     const { api }: any = this.state;
     await api.disconnect();
@@ -202,11 +170,11 @@ export class APIContextWrapper extends React.Component {
         connect: this.connect,
         disconnect: this.disconnect,
         switchNetwork: this.switchNetwork,
+        fetchDotPrice: this.fetchDotPrice,
         isReady: this.isReady,
         api: this.state.api,
         status: this.state.status,
         consts: this.state.consts,
-        prices: this.state.prices,
         network: this.state.network,
       }}>
         {this.props.children}

@@ -196,7 +196,7 @@ export const PayoutGraphInner = (props: any) => {
   let lastPayout: any = null;
 
   if (payouts.length > 0) {
-    let _last = payouts.reverse()[0];
+    let _last = payouts[payouts.length - 1];
     lastPayout = {
       amount: planckToDot(_last['amount']),
       block_timestamp: _last['block_timestamp'] + "",

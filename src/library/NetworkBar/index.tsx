@@ -1,16 +1,17 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import { Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator } from './Wrappers';
-import { useApi } from '../../contexts/Api';
+import { useApi, APIContext } from '../../contexts/Api';
 import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ENDPOINT_PRICE, NODE_ENDPOINTS } from '../../constants';
 import BlockNumber from './BlockNumber';
 
-export const NetworkBar = () => {
+export const NetworkBarInner = (props: any) => {
 
-  const { status, prices, switchNetwork, network }: any = useApi();
+  const { status, switchNetwork, network }: any = useApi();
+  const { prices } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -138,8 +139,65 @@ export const NetworkBar = () => {
           </div>
         </div>
       </NetworkInfo>
-    </Wrapper >
+    </Wrapper>
   )
+}
+
+export class NetworkBar extends React.Component<any, any> {
+  static contextType = APIContext;
+
+  state = {
+    prices: {
+      lastPrice: 0,
+      change: 0,
+    },
+  }
+
+  stateRef: any;
+  constructor (props: any) {
+    super(props);
+    this.stateRef = React.createRef();
+    this.stateRef.current = this.state;
+  }
+
+  _setState (_state: any) {
+    this.stateRef.current = _state;
+    this.setState(_state);
+  }
+
+  // subscribe to price data
+  priceHandle: any;
+  initiatePriceInterval = async () => {
+    const prices = await this.context.fetchDotPrice();
+    this._setState({
+      prices: prices
+    });
+
+    this.priceHandle = setInterval(async () => {
+      const prices = await this.context.fetchDotPrice();
+      this._setState({
+        prices: prices
+      });
+    }, 1000 * 60);
+  }
+
+  // set up price feed interval
+  componentDidMount () {
+    this.initiatePriceInterval();
+  }
+  componentWillUnmount () {
+    clearInterval(this.priceHandle);
+  }
+
+  shouldComponentUpdate (nextProps: any, nextState: any) {
+    return (this.state.prices !== nextState.prices);
+  }
+
+  render () {
+    return (
+      <NetworkBarInner {...this.props} prices={this.stateRef.current.prices} />
+    )
+  }
 }
 
 export default NetworkBar;
