@@ -16,7 +16,7 @@ export const ListWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
   overflow-x: auto;
-  padding-bottom: 1rem;
+  padding-bottom: 1.25rem;
   overflow: hidden;
 `;
 

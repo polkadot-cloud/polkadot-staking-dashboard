@@ -166,7 +166,7 @@ export class PayoutGraph extends React.Component<any, any> {
             if (!chartArea) {
               return;
             }
-            return getGradient(ctx, chartArea, true);
+            return getGradient(ctx, chartArea);
           },
           backgroundColor: '#d33079',
           pointStyle: undefined,
@@ -194,7 +194,7 @@ export class PayoutGraph extends React.Component<any, any> {
             if (!chartArea) {
               return;
             }
-            return getGradient(ctx, chartArea, false);
+            return getGradient(ctx, chartArea);
           },
           pointRadius: 0,
           borderRadius: 5,
@@ -264,7 +264,7 @@ export class PayoutGraph extends React.Component<any, any> {
     }
 
     let width: number, height: number, gradient: any;
-    function getGradient (ctx: any, chartArea: any, inverse: boolean) {
+    function getGradient (ctx: any, chartArea: any) {
       const chartWidth = chartArea.right - chartArea.left;
       const chartHeight = chartArea.bottom - chartArea.top;
       if (!gradient || width !== chartWidth || height !== chartHeight) {
@@ -273,8 +273,8 @@ export class PayoutGraph extends React.Component<any, any> {
         width = chartWidth;
         height = chartHeight;
         gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-        gradient.addColorStop(inverse ? 1 : 0, 'rgba(203, 37, 111, 0.9)');
-        gradient.addColorStop(inverse ? 0 : 1, 'rgba(223, 81, 144, 0.7)');
+        gradient.addColorStop(0, 'rgba(203, 37, 111, 0.9)');
+        gradient.addColorStop(1, 'rgba(223, 81, 144, 0.7)');
       }
 
       return gradient;
