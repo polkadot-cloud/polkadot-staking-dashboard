@@ -73,7 +73,7 @@ export const PayoutLine = (props: any) => {
             return [];
           },
           label: (context: any) => {
-            return `${context.parsed.y} ${context.label}`;
+            return `${context.parsed.y} ${network.unit}`;
           },
         },
         intersect: false,
