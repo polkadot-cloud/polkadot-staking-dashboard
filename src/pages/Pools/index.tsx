@@ -5,7 +5,7 @@ import { PageProps } from '../types';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { PageRowWrapper } from '../../Wrappers';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
+import { MainWrapper } from '../../library/Layout/Wrappers';
 
 export const Pools = (props: PageProps) => {
 

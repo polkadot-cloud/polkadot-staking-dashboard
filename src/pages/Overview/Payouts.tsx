@@ -31,11 +31,10 @@ export const PayoutsInner = (props: any) => {
           payouts={payouts}
           height='185px'
         />
-        <div style={{ marginTop: '1.5rem' }}>
+        <div style={{ marginTop: '1rem' }}>
           <PayoutLine
             payouts={payouts}
             height='75px'
-            background='linear-gradient(0deg, rgba(241,241,241,1) 0%, rgba(244,244,244,1) 100%)'
           />
         </div>
       </div>

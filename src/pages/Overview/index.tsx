@@ -44,7 +44,7 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
-  const GRAPH_HEIGHT = 425;
+  const GRAPH_HEIGHT = 400;
 
   return (
     <>
