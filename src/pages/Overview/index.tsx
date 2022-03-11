@@ -66,7 +66,7 @@ export const Overview = (props: PageProps) => {
           >
             <SubscanButton />
             <h3>Recent Payouts</h3>
-            <PayoutGraph account={activeAccount} payouts={payouts.slice(39, 60)} />
+            <PayoutGraph account={activeAccount} payouts={payouts.slice(50, 60)} />
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>
