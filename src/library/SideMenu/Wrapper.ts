@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
   overflow: auto;
   flex: 1;
   margin: 1rem 1rem;
-  min-width: 190px;
+  min-width: 170px;
   &:hover {
     transform: scale(1.005);
   }
