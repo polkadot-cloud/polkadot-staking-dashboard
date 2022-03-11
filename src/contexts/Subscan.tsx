@@ -47,7 +47,7 @@ export const SubscanContextWrapper = (props: any) => {
         'X-API-Key': API_SUBSCAN_KEY,
       },
       body: JSON.stringify({
-        row: 21,
+        row: 60,
         page: 0,
         address: activeAccount,
       }),
