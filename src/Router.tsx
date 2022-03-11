@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"
 import { PAGES_CONFIG } from './pages';
 import { StakingMetricsContextWrapper } from './contexts/Staking';
+import { MessagesContextWrapper } from './contexts/Messages';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './library/Modal';
 import AssistantButton from './library/Headers';
@@ -19,16 +20,15 @@ import {
 } from './Wrappers';
 import Notifications from './library/Notifications';
 
-export const Router = () => {
+export const RouterInner = () => {
 
   return (
     <BrowserRouter>
-
       {/* Modal: closed by default */}
       <Modal />
 
-      {/* Wrap entire interface with staking metrics provider */}
-      <StakingMetricsContextWrapper>
+      {/* App related messages for UI control */}
+      <MessagesContextWrapper>
         <BodyInterfaceWrapper>
 
           {/* Assistant: closed by default */}
@@ -74,16 +74,26 @@ export const Router = () => {
             </AnimatePresence>
           </MainInterfaceWrapper>
         </BodyInterfaceWrapper>
+      </MessagesContextWrapper>
 
-        {/* Network status and network details */}
-        <NetworkBar />
+      {/* Network status and network details */}
+      <NetworkBar />
 
-        {/* Testing notification popup */}
-        <Notifications />
-
-      </StakingMetricsContextWrapper>
+      {/* Testing notification popup */}
+      <Notifications />
     </BrowserRouter>
 
+  );
+}
+
+// We wrap the main router component to make staking metrics available
+// to child contexts.
+export const Router = () => {
+
+  return (
+    <StakingMetricsContextWrapper>
+      <RouterInner />
+    </StakingMetricsContextWrapper>
   );
 }
 
