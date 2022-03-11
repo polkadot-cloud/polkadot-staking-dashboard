@@ -25,7 +25,7 @@ export const SideMenu = () => {
 
   // determine account messages here
 
-  useEffect(() => { 
+  useEffect(() => {
 
     // only process account messages and warnings once accounts are connected
     if (connectStatus === 1) {
@@ -100,7 +100,7 @@ export const SideMenu = () => {
       </section>
       <section>
         <Separator />
-        <button onClick={() => console.log("go to github")}>
+        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
           <FontAwesomeIcon icon={faGithub} transform='grow-10' />
         </button>
       </section>
