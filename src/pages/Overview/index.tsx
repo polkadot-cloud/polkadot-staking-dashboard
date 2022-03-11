@@ -44,11 +44,11 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
-  const GRAPH_HEIGHT = 400;
+  const GRAPH_HEIGHT = 410;
 
   return (
     <>
-      <h1>What's Happening</h1>
+      <h1 className='title'>What's Happening</h1>
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper>
@@ -65,13 +65,15 @@ export const Overview = (props: PageProps) => {
             flex
           >
             <SubscanButton />
-            <h5>Recent Payouts</h5>
+            <h3>Recent Payouts</h3>
             <PayoutGraph account={activeAccount} payouts={payouts.slice(39, 60)} />
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>
-      <PageRowWrapper>
-        <Announcements />
+      <PageRowWrapper noVerticalSpacer>
+        <GraphWrapper>
+          <Announcements />
+        </GraphWrapper>
       </PageRowWrapper>
     </>
   );

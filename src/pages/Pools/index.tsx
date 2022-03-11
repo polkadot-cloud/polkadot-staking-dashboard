@@ -12,34 +12,9 @@ export const Pools = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { metrics } = useNetworkMetrics();
-
-  // counterForValidators
-
-  const items = [
-    {
-      label: "Active Validators",
-      value: 297,
-      unit: "",
-      format: "number",
-    },
-    {
-      label: "Current Epoch",
-      value: 1,
-      unit: "",
-      format: "number",
-    },
-    {
-      label: "Current Era",
-      value: metrics.activeEra.index,
-      unit: "",
-      format: "number",
-    },
-  ];
-
   return (
     <>
-      <h1>{title}</h1>
+      <h1 className='title'>{title}</h1>
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper>
           <GraphWrapper>

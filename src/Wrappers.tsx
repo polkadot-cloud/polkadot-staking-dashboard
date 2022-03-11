@@ -38,6 +38,12 @@ export const MainInterfaceWrapper = styled.div`
     display: flex;
     flex-flow: row nowrap;
     overflow: auto;
+
+    h1.title {
+        font-size: 1.65rem;
+        font-variation-settings: 'wght' 420;
+        margin-bottom: 0.2rem;
+    }
 `;
 
 // Page wrapper
@@ -45,7 +51,7 @@ export const PageWrapper = styled(motion.div)`
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    padding: 4rem 1rem 2rem 1rem;
+    padding: 4.2rem 1rem 2rem 1rem;
     overflow: hidden;
     overflow-y: scroll;
     flex-grow: 1;

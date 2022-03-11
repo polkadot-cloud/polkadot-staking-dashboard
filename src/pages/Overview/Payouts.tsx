@@ -6,10 +6,13 @@ import moment from 'moment';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import { planckToDot } from '../../Utils';
-
+import {
+  useApi
+} from '../../contexts/Api';
 export const PayoutsInner = (props: any) => {
 
   const { payouts } = props;
+  const { network }: any = useApi();
 
   let lastPayout: any = null;
 
@@ -24,7 +27,7 @@ export const PayoutsInner = (props: any) => {
   return (
     <>
       <h1>
-        {lastPayout === null ? 0 : lastPayout.amount} DOT&nbsp;<span className='fiat'>{lastPayout === null ? `` : moment.unix(lastPayout['block_timestamp']).fromNow()}</span>
+        {lastPayout === null ? 0 : lastPayout.amount} {network.unit}&nbsp;<span className='fiat'>{lastPayout === null ? `` : moment.unix(lastPayout['block_timestamp']).fromNow()}</span>
       </h1>
       <div className='graph'>
         <PayoutBar

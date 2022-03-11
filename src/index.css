@@ -19,8 +19,8 @@ body {
 h1 {
   color: #333;
   font-weight: normal;
-  font-size: 1.6rem;
-  font-variation-settings: 'wght' 450;
+  font-size: 1.4rem;
+  font-variation-settings: 'wght' 482;
   margin: 0;
 }
 
@@ -32,15 +32,16 @@ h2 {
 }
 
 h3 {
-  font-variation-settings: 'wght' 540;
+  font-variation-settings: 'wght' 500;
   font-weight: normal;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
+  color: #333;
 }
 
 h4 {
   font-variation-settings: 'wght' 490;
   font-weight: normal;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 h5 {

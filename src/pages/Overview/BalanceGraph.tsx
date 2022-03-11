@@ -92,8 +92,8 @@ export const BalanceGraphInner = (props: any) => {
 
   return (
     <>
-      <h5>{network.unit} Balance</h5>
-      <h1>{freeDot} DOT&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h1>
+      <h3>{network.unit} Balance</h3>
+      <h1>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h1>
       <div className='graph' style={{ maxWidth: 400, paddingRight: 10, }}>
         <Doughnut
           options={options}

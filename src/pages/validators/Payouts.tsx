@@ -18,12 +18,12 @@ export const Payouts = (props: PageProps) => {
 
   return (
     <>
-      <h1>{title}</h1>
+      <h1 className='title'>{title}</h1>
       {/* <StatBoxList title="This Session" items={items} /> */}
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />
-          <h5>Payout History [date from - date to]</h5>
+          <h3>Payout History [date from - date to]</h3>
 
           <div className='graph'>
             <PayoutBar

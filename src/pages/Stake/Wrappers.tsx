@@ -24,6 +24,7 @@ export const NominateWrapper = styled.div`
   flex-flow: column wrap;
   align-items: flex-start;
   position: relative;
+  padding: 0.5rem 0;
 
   > button {
     display: flex;

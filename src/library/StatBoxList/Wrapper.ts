@@ -12,11 +12,11 @@ export const Wrapper = styled.div`
 `;
 
 export const ListWrapper = styled.div`
-  height: 100px;
+  height: 105px;
   display: flex;
   flex-flow: row nowrap;
   overflow-x: auto;
-  padding-bottom: 1.25rem;
+  padding-bottom: 1rem;
   overflow: hidden;
 `;
 
@@ -52,16 +52,14 @@ export const StatBoxWrapper = styled(motion.div)`
       flex-flow: column wrap;
       justify-content: flex-end;
       h1 {
-        font-variation-settings: 'wght' 510;
         margin: 0;
         padding: 0.85rem 0;
-        font-size: 1.4rem;
       }
     }
     &:last-child {
       h4 {
       margin: 0;
-      padding-bottom: 1rem;
+      padding-bottom: 1.3rem;
       opacity: 0.8;
     }
   }

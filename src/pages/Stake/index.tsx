@@ -68,7 +68,7 @@ export const Stake = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <h1>{title}</h1>
+      <h1 className='title'>{title}</h1>
       <StatBoxList title="This Session" items={items} />
 
       <PageRowWrapper noVerticalSpacer>

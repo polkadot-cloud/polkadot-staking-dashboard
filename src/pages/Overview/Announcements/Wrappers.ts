@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   width: 100%;
-  margin-top: 1.5rem;
   h3 {
     margin-bottom: 0;
   }
@@ -21,9 +20,10 @@ export const Item = styled(motion.div)`
   justify-content: flex-start;
   align-items: flex-start;
   margin: 1rem 0.25rem;
-  padding: 1.5rem 1rem;
-  border-radius: 1rem;
-  background: rgba(222,222,222,0.25);
+  padding: 1rem 0rem;
+  border-bottom: 2px solid #f1f1f1;
+  /* background: linear-gradient(90deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.25) 100%); */
+
 
   h5 {
     margin: 0 0 0.75rem;;
@@ -41,6 +41,7 @@ export const Item = styled(motion.div)`
     margin: 0;
     color: #333;
     font-size: 0.9rem;
+    line-height: 1.2rem;
     font-variation-settings: 'wght' 500;
   }
 `;

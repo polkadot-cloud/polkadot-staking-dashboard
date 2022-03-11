@@ -68,9 +68,7 @@ export const Announcements = () => {
     <Wrapper>
       <motion.div variants={container} initial="hidden" animate="show">
         <motion.div variants={listItem}>
-          <h4>
-            Announcements
-          </h4>
+          <h3>Announcements</h3>
         </motion.div>
         {announcements.map((item, index) =>
           <Item key={`announcement_${index}`} variants={listItem}>

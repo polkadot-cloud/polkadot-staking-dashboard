@@ -30,9 +30,9 @@ export const GraphWrapper = styled.div<any>`
     opacity: 0.8;
   }
 
-  h1, h5 {
+  h1, h4 {
     margin: 0;
-    padding: 0.25rem 0;
+    padding: 0.3rem 0;
     display: flex;
     flex-flow: row wrap;
     align-content: flex-end;
@@ -42,7 +42,7 @@ export const GraphWrapper = styled.div<any>`
     .fiat {
       font-size: 1rem;
       color: #555;
-      margin-top: 0.25rem;
+      margin-top: 0.2rem;
     }
   }
   h1 {
@@ -56,10 +56,10 @@ export const GraphWrapper = styled.div<any>`
   }
 
   h3 {
-    margin-top: 0.25rem;
+    margin-top: 0.45rem;
+    margin-bottom: 0.8rem;
   }
   h4 {
-    margin-bottom: 0.5rem;
     line-height: 1.3rem;
   }
   .small_button {

@@ -15,19 +15,24 @@ export const LogoWrapper = styled(motion.button)`
 `;
 
 export const Wrapper = styled.div`
-  background: #efefef;
-  border-radius: 0.6rem;
-  transition: all 0.15s;
+  background: none;
+  border-radius: 0.7rem;
+  transition: all 0.2s;
   padding: 1rem 0.5rem;
   overflow: auto;
   flex: 1;
-  margin: 1.5rem 1rem;
+  margin: 1rem 1rem;
   min-width: 190px;
   &:hover {
     transform: scale(1.005);
   }
   display: flex;
   flex-flow: column nowrap;
+  background: #f1f1f1;
+
+  &:hover {
+    /* background: #f6f6f6; */
+  }
 
   section {
     &:first-child {
@@ -91,8 +96,8 @@ export const HeadingWrapper = styled.div<any>`
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 1rem;
+  border-bottom: 1px solid #e1e1e1;
+  margin-bottom: 0.75rem;
   padding: 0 0.5rem;
 `;
 
