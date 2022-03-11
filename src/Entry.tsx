@@ -7,7 +7,6 @@ import { APIContext } from './contexts/Api';
 import Router from './Router';
 import { NetworkMetricsContextWrapper } from './contexts/Network';
 import { BalancesContextWrapper } from './contexts/Balances';
-import { MessagesContextWrapper } from './contexts/Messages';
 import { SubscanContextWrapper } from './contexts/Subscan';
 
 export class Entry extends React.Component {
