@@ -2,40 +2,41 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageProps } from '../types';
-import { StatBoxList } from '../../library/StatBoxList';
+import { useSubscan } from '../../contexts/Subscan';
+import { GraphWrapper } from '../../library/Graphs/Wrappers';
+import { PageRowWrapper } from '../../Wrappers';
+import { SubscanButton } from '../../library/SubscanButton';
+import { PayoutLine } from '../../library/Graphs/PayoutLine';
+import { PayoutBar } from '../../library/Graphs/PayoutBar';
 
 export const Payouts = (props: PageProps) => {
+
+  const { payouts }: any = useSubscan();
 
   const { page } = props;
   const { title } = page;
 
-  // counterForValidators
-
-  const items = [
-    {
-      label: "Last Era Paid",
-      value: 297,
-      unit: "",
-      format: "number",
-    },
-    {
-      label: "Time Left this Era",
-      value: 1,
-      unit: "",
-      format: "number",
-    },
-    {
-      label: "Outstanding Payouts",
-      value: 0,
-      unit: "",
-      format: "number",
-    },
-  ];
-
   return (
     <>
       <h1>{title}</h1>
-      <StatBoxList title="This Session" items={items} />
+      {/* <StatBoxList title="This Session" items={items} /> */}
+      <PageRowWrapper>
+        <GraphWrapper>
+          <SubscanButton />
+          <h5>Payout History [date from - date to]</h5>
+
+          <div className='graph'>
+            <PayoutBar
+              payouts={payouts.slice(0, 60)}
+              height='120px'
+            />
+            <PayoutLine
+              payouts={payouts.slice(0, 60)}
+              height='70px'
+            />
+          </div>
+        </GraphWrapper>
+      </PageRowWrapper>
     </>
   );
 }

@@ -3,20 +3,6 @@
 
 import styled from 'styled-components';
 
-export const MainWrapper = styled.div<any>`
-  flex-basis: 65%;
-  max-width: 65%;
-  overflow: hidden;
-  min-width: 500px;
-  flex-grow: 1;
-  ${props => props.paddingLeft && `
-  padding-left: 1rem;`
-  }
-  ${props => props.paddingRight && `
-  padding-right: 1rem;`
-  }
-`;
-
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;
   padding: 1rem 1.2rem;
@@ -90,12 +76,10 @@ export const GraphWrapper = styled.div<any>`
     margin-top: 1.5rem;
   }
   .graph_line {
-    background: #f1f1f1;
-    background: linear-gradient(101deg, rgba(241,241,241,1) 0%, rgba(244,244,244,1) 100%);
     border-radius: 0.75rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     margin-left: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem 0.5rem 1rem;
   }
   .graph_with_extra {
     width: 100%;
@@ -131,11 +115,4 @@ export const GraphWrapper = styled.div<any>`
       background: #d2545d;
     }
   }
-`;
-
-export const SecondaryWrapper = styled.div`
-  border-radius: 1rem;
-  flex: 1;
-  width: 100%;
-  min-width: 400px;
 `;

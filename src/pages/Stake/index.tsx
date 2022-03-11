@@ -4,7 +4,8 @@
 import { PageProps } from '../types';
 import { Wrapper, NominateWrapper, StakingAccount } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
-import { GraphWrapper, MainWrapper, SecondaryWrapper } from '../Overview/Wrappers';
+import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
+import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import BondedGraph from './BondedGraph';
 import { motion } from 'framer-motion';
 import { Nominations } from './Nominations';

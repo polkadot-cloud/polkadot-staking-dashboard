@@ -5,15 +5,15 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useStakingMetrics } from '../../contexts/Staking';
 import { PageRowWrapper } from '../../Wrappers';
-import { MainWrapper, GraphWrapper, SecondaryWrapper } from './Wrappers';
-import PayoutGraph from './PayoutGraph';
+import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
+import { GraphWrapper } from '../../library/Graphs/Wrappers';
+import PayoutGraph from './Payouts';
 import BalanceGraph from './BalanceGraph';
 import Announcements from './Announcements';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useSubscan } from '../../contexts/Subscan';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
+import { SubscanButton } from '../../library/SubscanButton';
 
 export const Overview = (props: PageProps) => {
 
@@ -52,22 +52,21 @@ export const Overview = (props: PageProps) => {
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
+          <GraphWrapper
+            style={{ minHeight: GRAPH_HEIGHT }}
+            flex
+          >
             <BalanceGraph />
           </GraphWrapper>
         </SecondaryWrapper>
         <MainWrapper paddingLeft>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
-            <div className='label'>
-              <FontAwesomeIcon
-                icon={faProjectDiagram}
-                transform="shrink-2"
-                style={{ marginRight: '0.3rem' }}
-              />
-              Subscan
-            </div>
+          <GraphWrapper
+            style={{ minHeight: GRAPH_HEIGHT }}
+            flex
+          >
+            <SubscanButton />
             <h5>Recent Payouts</h5>
-            <PayoutGraph account={activeAccount} payouts={payouts} />
+            <PayoutGraph account={activeAccount} payouts={payouts.slice(39, 60)} />
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>
