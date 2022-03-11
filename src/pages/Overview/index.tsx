@@ -12,6 +12,7 @@ import Announcements from './Announcements';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useBalances } from '../../contexts/Balances';
+import { useSubscan } from '../../contexts/Subscan';
 import { planckToDot, fiatAmount, humanNumber } from '../../Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +23,7 @@ export const Overview = (props: PageProps) => {
   const { activeAccount }: any = useConnect();
   const { staking }: any = useStakingMetrics();
   const { getAccountBalance }: any = useBalances();
+  const { payouts }: any = useSubscan();
 
   const balance = getAccountBalance(activeAccount);
 
@@ -81,7 +83,7 @@ export const Overview = (props: PageProps) => {
               Subscan
             </div>
             <h5>Recent Payouts</h5>
-            <PayoutGraph account={activeAccount} />
+            <PayoutGraph account={activeAccount} payouts={payouts} />
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>

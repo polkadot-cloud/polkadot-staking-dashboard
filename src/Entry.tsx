@@ -7,6 +7,7 @@ import { APIContext } from './contexts/Api';
 import Router from './Router';
 import { NetworkMetricsContextWrapper } from './contexts/Network';
 import { BalancesContextWrapper } from './contexts/Balances';
+import { SubscanContextWrapper } from './contexts/Subscan';
 
 export class Entry extends React.Component {
 
@@ -25,9 +26,11 @@ export class Entry extends React.Component {
     return (
       <NetworkMetricsContextWrapper>
         <BalancesContextWrapper>
-          <EntryWrapper>
-            <Router />
-          </EntryWrapper>
+          <SubscanContextWrapper>
+            <EntryWrapper>
+              <Router />
+            </EntryWrapper>
+          </SubscanContextWrapper>
         </BalancesContextWrapper>
       </NetworkMetricsContextWrapper>
     );
