@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageProps } from '../types';
-import { StatBoxList } from '../../library/StatBoxList';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { PageRowWrapper } from '../../Wrappers';
-import { GraphWrapper, MainWrapper, SecondaryWrapper } from '../Overview/Wrappers';
+import { GraphWrapper } from '../../library/Graphs/Wrappers';
+import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
 
 export const Pools = (props: PageProps) => {
 
