@@ -20,7 +20,7 @@ export const MessagesContextWrapper = (props: any) => {
 
 
   useEffect(() => {
-    console.log('re-configure messages');
+    // console.log('re-configure messages');
   }, [activeAccount, connectStatus])
 
   const [state, setState]: any = useState({
