@@ -93,7 +93,7 @@ export const GraphWrapper = styled.div<any>`
     background: #f1f1f1;
     background: linear-gradient(101deg, rgba(241,241,241,1) 0%, rgba(244,244,244,1) 100%);
     border-radius: 0.75rem;
-    margin-top: 1.25rem;
+    margin-top: 2rem;
     margin-left: 1rem;
     padding: 0.5rem 1rem;
   }

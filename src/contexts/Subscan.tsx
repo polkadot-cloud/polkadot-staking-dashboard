@@ -32,7 +32,7 @@ export const SubscanContextWrapper = (props: any) => {
 
   const fetchPayouts = () => {
 
-    if (!SUBSCAN_ENABLED) {
+    if (!SUBSCAN_ENABLED || activeAccount === '') {
       return;
     }
 

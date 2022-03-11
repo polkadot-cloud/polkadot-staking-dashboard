@@ -228,7 +228,7 @@ export const PayoutGraphInner = (props: any) => {
           <Bar options={config_bar} data={data_bar} />
         </div>
         <div className='graph_line' style={{
-          height: '60px', backgroundColor: '#f1f1f1'
+          height: '65px', backgroundColor: '#f1f1f1'
         }}>
           <Line options={options_line} data={data_line} />
         </div>
