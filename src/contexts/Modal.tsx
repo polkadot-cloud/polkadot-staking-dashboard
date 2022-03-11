@@ -20,7 +20,6 @@ export const AssistantContext: React.Context<ModalContextState> = React.createCo
   modal: DEFAULT_MODAL_COMPONENT,
 });
 
-// useModal
 export const useModal = () => React.useContext(AssistantContext);
 
 // wrapper component to provide components with context
