@@ -32,12 +32,12 @@ export const PayoutsInner = (props: any) => {
       <div className='graph'>
         <PayoutBar
           payouts={payouts}
-          height='185px'
+          height='200px'
         />
         <div style={{ marginTop: '1rem' }}>
           <PayoutLine
             payouts={payouts}
-            height='75px'
+            height='80px'
           />
         </div>
       </div>

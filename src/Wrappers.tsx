@@ -51,10 +51,10 @@ export const PageWrapper = styled(motion.div)`
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    padding: 4.2rem 1rem 2rem 1rem;
+    padding: 4.2rem 3rem 2rem 2.2rem;
     overflow: hidden;
     overflow-y: scroll;
-    flex-grow: 1;
+    flex-grow: 1;    
 `;
 
 // Page Row wrapper
@@ -64,9 +64,9 @@ export const PageRowWrapper = styled.div<any>`
     flex-shrink: 0;
     flex-flow: row nowrap;
     width: 100%;
-    padding-right: 6rem;
     box-sizing: border-box;
     overflow-x: scroll;
+
     * {
         box-sizing: border-box;
     }

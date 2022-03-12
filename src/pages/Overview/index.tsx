@@ -7,7 +7,7 @@ import { useStakingMetrics } from '../../contexts/Staking';
 import { PageRowWrapper } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
-import PayoutGraph from './Payouts';
+import Payouts from './Payouts';
 import BalanceGraph from './BalanceGraph';
 import Announcements from './Announcements';
 import { useApi } from '../../contexts/Api';
@@ -44,7 +44,7 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
-  const GRAPH_HEIGHT = 410;
+  const GRAPH_HEIGHT = 430;
 
   return (
     <>
@@ -66,7 +66,7 @@ export const Overview = (props: PageProps) => {
           >
             <SubscanButton />
             <h3>Recent Payouts</h3>
-            <PayoutGraph account={activeAccount} payouts={payouts.slice(50, 60)} />
+            <Payouts account={activeAccount} payouts={payouts.slice(50, 60)} />
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>

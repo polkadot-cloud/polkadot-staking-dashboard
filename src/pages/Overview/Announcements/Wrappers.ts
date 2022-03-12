@@ -9,8 +9,9 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   width: 100%;
+
   h3 {
-    margin-bottom: 0;
+    margin-bottom: 1.4rem;
   }
 `;
 export const Item = styled(motion.div)`
@@ -24,12 +25,11 @@ export const Item = styled(motion.div)`
   background: linear-gradient(90deg, rgba(242,242,242,0.6) 0%, rgba(242,242,242,0.35) 100%);
   border-radius: 0.5rem;
 
-  h4 {
+  h3 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin: 0 0 0.4rem;;
-    font-variation-settings: 'wght' 500;
+    margin: 0 0 0.8rem;;
     padding: 0.2rem 0;
 
     &.danger {
@@ -45,6 +45,6 @@ export const Item = styled(motion.div)`
     color: #444;
     font-size: 0.9rem;
     line-height: 1.2rem;
-    font-variation-settings: 'wght' 450;
+    font-variation-settings: 'wght' 490;
   }
 `;
