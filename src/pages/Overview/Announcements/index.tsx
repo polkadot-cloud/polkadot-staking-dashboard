@@ -56,7 +56,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'warning',
       title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached`,
-      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(staking.maxNominatorsCount)}`,
+      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(staking.maxNominatorsCount)}.`,
     });
   }
 
@@ -72,13 +72,13 @@ export const Announcements = () => {
         </motion.div>
         {announcements.map((item, index) =>
           <Item key={`announcement_${index}`} variants={listItem}>
-            <h5 className={item.class}>
+            <h4 className={item.class}>
               <FontAwesomeIcon
                 icon={faBack}
                 style={{ marginRight: '0.6rem' }}
               />
               {item.title}
-            </h5>
+            </h4>
             <p>{item.subtitle}</p>
           </Item>
         )}

@@ -14,7 +14,7 @@ const Wrapper = styled(motion.button) <any>`
   font-variation-settings: 'wght' 550;
   background: #d33079;
   border-radius: 0.3rem;
-  padding: 0.2rem 0.4rem;
+  padding: 0.34rem 0.4rem;
   color: #fff;
   opacity: 0.8;
 `;

@@ -20,13 +20,15 @@ export const Item = styled(motion.div)`
   justify-content: flex-start;
   align-items: flex-start;
   margin: 1rem 0.25rem;
-  padding: 1rem 0rem;
-  border-bottom: 2px solid #f1f1f1;
-  /* background: linear-gradient(90deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.25) 100%); */
+  padding: 1rem 1rem;
+  background: linear-gradient(90deg, rgba(242,242,242,0.6) 0%, rgba(242,242,242,0.35) 100%);
+  border-radius: 0.5rem;
 
-
-  h5 {
-    margin: 0 0 0.75rem;;
+  h4 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin: 0 0 0.4rem;;
     font-variation-settings: 'wght' 500;
 
     &.danger {
@@ -39,9 +41,9 @@ export const Item = styled(motion.div)`
 
   p {
     margin: 0;
-    color: #333;
+    color: #444;
     font-size: 0.9rem;
     line-height: 1.2rem;
-    font-variation-settings: 'wght' 500;
+    font-variation-settings: 'wght' 450;
   }
 `;
