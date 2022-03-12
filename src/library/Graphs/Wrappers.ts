@@ -57,10 +57,7 @@ export const GraphWrapper = styled.div<any>`
 
   h3 {
     margin-top: 0.45rem;
-    margin-bottom: 0.8rem;
-  }
-  h4 {
-    line-height: 1.3rem;
+    margin-bottom: 0.5rem;
   }
   .small_button {
     background: #f1f1f1;
