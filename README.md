@@ -2,7 +2,7 @@
 
 *This project is a work in progress, and should only be used for testing and development purposes. Do not use this app for Polkadot staking until its initial release.*
 
-![stakingExperience](https://user-images.githubusercontent.com/13929023/156370538-a5ba7ea7-b665-4139-80e4-2698b934e35d.png)
+<img width="1571" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/158018829-744ed1a7-044c-463e-98ac-10f23df8c0b7.png">
 
 ### Project Updates
 
