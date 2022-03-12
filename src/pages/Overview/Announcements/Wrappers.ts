@@ -30,6 +30,7 @@ export const Item = styled(motion.div)`
     align-items: center;
     margin: 0 0 0.4rem;;
     font-variation-settings: 'wght' 500;
+    padding: 0.2rem 0;
 
     &.danger {
       color: #d2545d;
