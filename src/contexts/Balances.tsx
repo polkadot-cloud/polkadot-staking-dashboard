@@ -17,7 +17,7 @@ export const useBalances = () => React.useContext(BalancesContext);
 
 export const BalancesContextWrapper = (props: any) => {
 
-  const { api, isReady }: any = useApi();
+  const { api, isReady, network }: any = useApi();
   const { accounts }: any = useConnect();
 
   const [state, _setState]: any = useState({
@@ -63,7 +63,7 @@ export const BalancesContextWrapper = (props: any) => {
     return (() => {
       unsubscribeAll(false);
     });
-  }, [accounts, isReady()]);
+  }, [accounts, network, isReady()]);
 
 
   // unsubscribe from all activeAccount subscriptions

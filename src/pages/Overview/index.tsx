@@ -56,7 +56,7 @@ export const Overview = (props: PageProps) => {
             style={{ minHeight: GRAPH_HEIGHT }}
             flex
           >
-            <BalanceGraph />
+            <BalanceGraph network={network} />
           </GraphWrapper>
         </SecondaryWrapper>
         <MainWrapper paddingLeft>

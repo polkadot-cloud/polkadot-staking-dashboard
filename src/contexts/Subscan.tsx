@@ -27,7 +27,7 @@ export const SubscanContextWrapper = (props: any) => {
 
   useEffect(() => {
     fetchPayouts();
-  }, [activeAccount]);
+  }, [activeAccount, network]);
 
 
   const fetchPayouts = () => {
