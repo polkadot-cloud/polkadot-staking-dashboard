@@ -28,6 +28,7 @@ export const Summary = styled.div`
   p {
     margin: 0 0.25rem;
     color: #666;
+    font-size: 0.75rem;
   }
   .stat {
     margin: 0 0.25rem;
@@ -97,7 +98,7 @@ export const NetworkInfo = styled(motion.div)`
       font-size: 0.85rem;
       margin: 1.5rem 0 0.75rem 0;
       padding: 0.6rem 0.3rem 0rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      border-top: 1px solid rgba(255,255,255,0.05);
       width: 100%;
     }
 
