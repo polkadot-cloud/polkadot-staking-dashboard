@@ -36,7 +36,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
-  background: rgba(225,225,225,0.9);
+  background: rgba(225,225,225,0.93);
   backdrop-filter: blur(4px);
   margin: 0.75rem;
 `;

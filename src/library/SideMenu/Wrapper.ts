@@ -28,7 +28,7 @@ export const Wrapper = styled.div`
   }
   display: flex;
   flex-flow: column nowrap;
-  background: #f1f1f1;
+  background: #eee;
 
   &:hover {
     /* background: #f6f6f6; */

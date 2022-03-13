@@ -8,6 +8,10 @@
   src: url('../public/fonts/WorkSans-VariableFont_wght.ttf');
 }
 
+html {
+  font-size: 16px; /* global font size */
+}
+
 body {
   margin: 0;
   font-family: 'Work Sans', 'sans-serif', sans-serif;
@@ -22,7 +26,7 @@ h1 {
   font-size: 1.4rem;
   font-variation-settings: 'wght' 530;
   margin: 0;
-}
+  }
 
 h2 {
   color: #555;
@@ -51,6 +55,9 @@ h5 {
   font-size: 0.85rem;
 }
 
+p {
+  font-size: 0.92rem;
+}
 a {
   color: #222;
   text-decoration: none;

@@ -10,10 +10,12 @@ export const EntryWrapper = styled.div`
     width: 100%;
     min-width: ${INTERFACE_MINIMUM_WIDTH}px;
     background: #fbfbfb;
-    background: linear-gradient(300deg, rgba(235,235,235,1) 0%, rgba(252,252,252,1) 100%);
+    background: linear-gradient(-225deg, rgba(251,251,251,1) 0%, rgba(229,229,229,1) 100%);
     display: flex;
     flex-flow: column nowrap;
     height: 100vh;
+
+    font-size: 10px;
 `;
 
 // Body interface wrapper
