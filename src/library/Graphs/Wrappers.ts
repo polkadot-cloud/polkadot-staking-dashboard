@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;
-  padding: 1.2rem;
+  padding: 1rem 1.2rem;
   border-radius: 1rem;
   background: rgba(255,255,255,0.7);
   display: flex;

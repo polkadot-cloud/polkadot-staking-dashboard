@@ -149,7 +149,7 @@ export const Stake = (props: PageProps) => {
 
           <GraphWrapper>
             <h3>Choose Validators</h3>
-            <NominateWrapper>
+            <NominateWrapper style={{ marginTop: '0.5rem' }}>
               <motion.button whileHover={{ scale: 1.01 }}>
                 <h2>Manual Selection</h2>
                 <p>Manually browse and nominate validators from the validator list.</p>

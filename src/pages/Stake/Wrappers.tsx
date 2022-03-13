@@ -7,6 +7,10 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
+
+  h3 {
+    margin-bottom: 0;
+    }
 `;
 
 export const StakingAccount = styled.div<any>`

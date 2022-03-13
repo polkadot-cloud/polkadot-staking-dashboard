@@ -52,7 +52,7 @@ export const MainInterfaceWrapper = styled.div`
     h1.title {
         font-size: 1.65rem;
         font-variation-settings: 'wght' 420;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.25rem;
     }
 `;
 
@@ -61,7 +61,7 @@ export const PageWrapper = styled(motion.div)`
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    padding: 8vh 0 2rem;
+    padding: 8.5vh 0 2rem;
     margin: 0 2.6rem;
     overflow: hidden;
     overflow-y: scroll;
