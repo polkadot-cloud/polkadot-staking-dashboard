@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;
-  padding: 1rem 1.2rem;
+  padding: 1.2rem;
   border-radius: 1rem;
   background: rgba(255,255,255,0.7);
   display: flex;
@@ -14,7 +14,7 @@ export const GraphWrapper = styled.div<any>`
   align-items: flex-start;
   width: 100%;
   flex: 1;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   position: relative;
 
   .label {

@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MINIMUM_HEIGHT, INTERFACE_MINIMUM_WIDTH } from './constants';
+import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MINIMUM_HEIGHT, INTERFACE_MINIMUM_WIDTH, INTERFACE_MAXIMUM_WIDTH } from './constants';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
@@ -32,12 +32,20 @@ export const SideInterfaceWrapper = styled.div`
     flex-flow: column nowrap;
 `;
 
+
+// Scroll wrapper
+export const PageScrollWrapper = styled.div`
+    flex: 1;
+    overflow: auto;
+`;
+
 // Main interface wrapper
 export const MainInterfaceWrapper = styled.div`
     flex: 1;
     display: flex;
     flex-flow: row nowrap;
     overflow: auto;
+    max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
 
     h1.title {
         font-size: 1.65rem;
@@ -51,10 +59,11 @@ export const PageWrapper = styled(motion.div)`
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    padding: 4.2rem 3rem 2rem 2.6rem;
+    padding: 4.2rem 0 2rem;
+    margin: 0 2.6rem;
     overflow: hidden;
     overflow-y: scroll;
-    flex-grow: 1;    
+    flex-grow: 1;
 `;
 
 // Page Row wrapper
