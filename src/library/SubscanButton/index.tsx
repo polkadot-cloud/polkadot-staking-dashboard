@@ -10,8 +10,8 @@ const Wrapper = styled(motion.button) <any>`
   position: absolute;
   right: 10px;
   top: 10px;
-  font-size: 0.8rem;
-  font-variation-settings: 'wght' 550;
+  font-size: 0.85rem;
+  font-variation-settings: 'wght' 570;
   background: #d33079;
   border-radius: 0.3rem;
   padding: 0.34rem 0.4rem;
