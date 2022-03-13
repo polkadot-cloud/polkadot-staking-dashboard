@@ -8,6 +8,7 @@ import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
+import moment from 'moment';
 
 export const Payouts = (props: PageProps) => {
 
@@ -19,11 +20,18 @@ export const Payouts = (props: PageProps) => {
   return (
     <>
       <h1 className='title'>{title}</h1>
-      {/* <StatBoxList title="This Session" items={items} /> */}
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />
-          <h3>Payout History [date from - date to]</h3>
+          <h3>Payout History</h3>
+          <h1>
+            {(payouts.length) ?
+              <span className='fiat'>
+                {moment.unix(payouts[0].block_timestamp).format('Do MMMM')} - {moment.unix(payouts[payouts.length - 1].block_timestamp).format('Do MMMM')}
+              </span>
+              : <span className='fiat'>None</span>
+            }
+          </h1>
 
           <div className='graph'>
             <PayoutBar
