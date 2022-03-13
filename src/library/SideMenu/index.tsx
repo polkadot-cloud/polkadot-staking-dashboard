@@ -7,8 +7,8 @@ import Heading from './Heading';
 import Item from './Item';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../pages';
 import { useConnect } from '../../contexts/Connect'
-import { useBalances } from '../../contexts/Balances';
 import { useLocation } from 'react-router-dom';
+import { useMessages } from '../../contexts/Messages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -17,52 +17,40 @@ import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
 
 export const SideMenu = () => {
 
-  const { activeAccount, accountExists, setMessage, status: connectStatus }: any = useConnect();
-  const { getBondedAccount }: any = useBalances();
+  const { activeAccount, status: connectStatus }: any = useConnect();
+  const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
 
-  const [pageConfigWithMessages, setPageConfigWithMessages]: any = useState(Object.assign(PAGES_CONFIG));
-
-  // determine account messages here
+  const [pageConfig, setPageConfig]: any = useState({
+    categories: Object.assign(PAGE_CATEGORIES),
+    pages: Object.assign(PAGES_CONFIG),
+  });
 
   useEffect(() => {
 
     // only process account messages and warnings once accounts are connected
     if (connectStatus === 1) {
-      let _pageConfigWithMessages: any = Object.assign(PAGES_CONFIG);
-
-      let messages: any = [];
+      let _pageConfigWithMessages: any = Object.assign(pageConfig.pages);
 
       for (let i = 0; i < _pageConfigWithMessages.length; i++) {
         let { uri } = _pageConfigWithMessages[i];
-        let controller = getBondedAccount(activeAccount);
 
         if (uri === '/stake') {
-          // inject Staking warning if controller account does not exist
-          // ensure controller has been set
-          if (controller !== null) {
-            // check if it is a connected account
-            if (!accountExists(controller)) {
-
-              // add message to app context
-              messages.push({
-                key: GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED,
-                msg: true
-              });
-              // set warning symbol in menu
-              _pageConfigWithMessages[i].action = faExclamationTriangle;
-            } else {
-              _pageConfigWithMessages[i].action = undefined;
-            }
+          let notImported = getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED);
+          if (notImported === true) {
+            _pageConfigWithMessages[i].action = faExclamationTriangle;
+          } else {
+            _pageConfigWithMessages[i].action = null;
           }
         }
       }
-      setPageConfigWithMessages(_pageConfigWithMessages);
-      for (let msg of messages) {
-        setMessage(msg.key, msg.msg);
-      }
+
+      setPageConfig({
+        categories: pageConfig.categories,
+        pages: _pageConfigWithMessages,
+      });
     }
-  }, [activeAccount, connectStatus]);
+  }, [activeAccount, connectStatus, getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
   return (
     <Wrapper>
@@ -75,14 +63,14 @@ export const SideMenu = () => {
           <PolkadotLogoSVG style={{ maxHeight: '100%' }} />
         </LogoWrapper>
 
-        {PAGE_CATEGORIES.map((category, categoryIndex) =>
+        {pageConfig.categories.map((category: any, categoryIndex: number) =>
           <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
 
             {/* display heading if not `default` (used for top links) */}
             {category.title !== 'default' && <Heading title={category.title} />}
 
             {/* display category links*/}
-            {pageConfigWithMessages.map((page: any, pageIndex: number) =>
+            {pageConfig.pages.map((page: any, pageIndex: number) =>
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id &&
                   <Item

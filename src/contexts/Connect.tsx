@@ -15,13 +15,9 @@ export interface ConnectContextState {
   setAccounts: () => void;
   setActiveAccount: (a: string) => void;
   accountExists: (a: string) => number;
-  getMessage: (k: string) => any;
-  setMessage: (k: string, v: any) => any;
-  removeMessage: (k: string) => void;
   status: number,
   accounts: any;
   activeAccount: string;
-  messages: Array<any>;
 }
 
 // context definition
@@ -32,12 +28,8 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
   setAccounts: () => { },
   setActiveAccount: (a: string) => { },
   accountExists: (a: string) => 0,
-  getMessage: (k: string) => { },
-  setMessage: (k: string, v: any) => { },
-  removeMessage: (k: string) => { },
   accounts: [],
   activeAccount: '',
-  messages: [{}],
 });
 export const useConnect = () => React.useContext(ConnectContext);
 
@@ -129,7 +121,6 @@ export class ConnectContextWrapper extends React.Component {
     this.setState({
       ...this.state,
       activeAccount: address,
-      messages: [],
     });
   }
 
@@ -156,40 +147,6 @@ export class ConnectContextWrapper extends React.Component {
     localStorage.removeItem('active_account');
   }
 
-  // manage app messages
-
-  getMessage = (key: string) => {
-    const _message = this.state.messages.filter((msg: any) => msg.key === key);
-    if (_message.length) {
-      return _message[0];
-    } else {
-      return null;
-    }
-  }
-
-  setMessage = (key: string, msg: any) => {
-    // remove if key exists
-    let _messages: any = this.state.messages.filter((msg: any) => msg.key !== key);
-    // add message
-    _messages.push({
-      key: key,
-      msg: msg,
-    });
-
-    this.setState({
-      ...this.state,
-      messages: _messages,
-    });
-  }
-
-  removeMessage = (key: string) => {
-    const _messages = this.state.messages.filter((msg: any) => msg.key !== key);
-    this.setState({
-      ...this.state,
-      messages: _messages,
-    });
-  }
-
   render () {
     return (
       <ConnectContext.Provider value={{
@@ -200,11 +157,7 @@ export class ConnectContextWrapper extends React.Component {
         connect: this.connect,
         disconnect: this.disconnect,
         setAccounts: this.setAccounts,
-        setActiveAccount: this.setActiveAccount,
-        getMessage: this.getMessage,
-        setMessage: this.setMessage,
-        removeMessage: this.removeMessage,
-        messages: this.state.messages,
+        setActiveAccount: this.setActiveAccount
       }}>
         {this.props.children}
       </ConnectContext.Provider>

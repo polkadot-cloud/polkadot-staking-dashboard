@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useState, useEffect } from 'react';
 import { PageProps } from '../types';
 import { Wrapper, NominateWrapper, StakingAccount } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
@@ -15,6 +16,7 @@ import { StatBoxList } from '../../library/StatBoxList';
 import { Button, ButtonRow } from '../../library/Button';
 import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
+import { useMessages } from '../../contexts/Messages';
 import { planckToDot } from '../../Utils';
 import Account from '../../library/Account';
 import { useConnect } from '../../contexts/Connect';
@@ -24,9 +26,14 @@ export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
   const { getAccountLedger, getBondedAccount, getAccountNominators }: any = useBalances();
-  const { activeAccount, getMessage } = useConnect();
+  const { activeAccount } = useConnect();
+  const { getMessage }: any = useMessages();
 
-  const controllerNotImported = getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED);
+  const [controllerNotImported, setControllerNotImported] = useState(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
+
+  useEffect(() => {
+    setControllerNotImported(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
+  }, [getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
   const { page } = props;
   const { title } = page;
