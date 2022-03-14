@@ -14,6 +14,8 @@ export const List = styled(motion.div)`
 
   > .item {
     display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
     flex-grow: 1;
     flex-basis: 50%;
   }

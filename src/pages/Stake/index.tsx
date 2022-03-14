@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { PageProps } from '../types';
 import { Wrapper, NominateWrapper, StakingAccount } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
@@ -21,9 +21,11 @@ import { planckToDot } from '../../Utils';
 import Account from '../../library/Account';
 import { useConnect } from '../../contexts/Connect';
 import { GLOBAL_MESSGE_KEYS } from '../../constants';
+import { useNavigate } from 'react-router-dom';
 
 export const Stake = (props: PageProps) => {
 
+  const navigate = useNavigate();
   const { network }: any = useApi();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
   const { activeAccount } = useConnect();
@@ -72,6 +74,8 @@ export const Stake = (props: PageProps) => {
       format: 'number',
     },
   ];
+
+  const handleBrowseValidatorsClick = useCallback(() => navigate('/validators', { replace: true }), [navigate]);
 
   return (
     <Wrapper>
@@ -150,7 +154,7 @@ export const Stake = (props: PageProps) => {
           <GraphWrapper>
             <h3>Choose Validators</h3>
             <NominateWrapper style={{ marginTop: '0.5rem' }}>
-              <motion.button whileHover={{ scale: 1.01 }}>
+              <motion.button whileHover={{ scale: 1.01 }} onClick={handleBrowseValidatorsClick}>
                 <h2>Manual Selection</h2>
                 <p>Manually browse and nominate validators from the validator list.</p>
                 <div className='foot'>

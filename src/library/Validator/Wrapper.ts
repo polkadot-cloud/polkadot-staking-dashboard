@@ -18,9 +18,18 @@ export const Wrapper = styled(motion.div)`
     justify-content: flex-start;
     align-items: center;
 
+    h4 {
+      margin-top: 0;
+    }
+
     .right {
       display: flex;
-      margin-left: 1rem;
+      margin-left: 0.75rem;
+      flex-grow: 1;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      align-content: center;
     }
   }
 `;
