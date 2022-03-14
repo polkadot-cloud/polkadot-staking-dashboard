@@ -9,11 +9,15 @@ import BN from "bn.js";
 // context type
 export interface StakingMetricsContextState {
   staking: any;
+  validators: any;
+  fetchSessionValidators: () => void;
 }
 
 // context definition
 export const StakingMetricsContext: React.Context<StakingMetricsContextState> = React.createContext({
   staking: {},
+  validators: [],
+  fetchSessionValidators: () => { },
 });
 
 // useStakingMetrics
@@ -32,6 +36,12 @@ export const StakingMetricsContextWrapper = (props: any) => {
     maxNominatorsCount: 0,
     maxValidatorsCount: 0,
     minNominatorBond: 0,
+    unsub: null,
+  });
+
+  const [sessionValidators, setSessionValidators]: any = useState({
+    validators: [],
+    unsub: null,
   });
 
   const subscribeToStakingkMetrics = async (api: any) => {
@@ -59,6 +69,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
         _lastTotalStake = new BN(_lastTotalStake / (10 ** 10)).toNumber();
 
         setStakingMetrics({
+          ...stakingMetrics,
           totalNominators: _totalNominators.toNumber(),
           lastReward: _lastReward,
           lastTotalStake: _lastTotalStake,
@@ -69,27 +80,56 @@ export const StakingMetricsContextWrapper = (props: any) => {
         });
       });
 
-      return [unsub];
+      setStakingMetrics({
+        ...stakingMetrics,
+        unsub: unsub,
+      });
     }
-    return null;
+  }
+
+  const fetchSessionValidators = async () => {
+
+    if (!isReady())
+      return;
+
+    // subscribe to session validators
+    const unsub = await api.queryMulti([
+      api.query.session.validators,
+    ], ([_validators]: any) => {
+
+      setSessionValidators({
+        ...sessionValidators,
+        validators: _validators.toHuman(),
+      });
+    });
+
+    setSessionValidators({
+      ...sessionValidators,
+      unsub: unsub,
+    });
   }
 
   useEffect(() => {
-    let unsub: any = subscribeToStakingkMetrics(api);
+    subscribeToStakingkMetrics(api);
 
     return (() => {
-      if (unsub != null) {
-        for (let u = 0; u < unsub.length; u++) {
-          unsub[u]();
-        }
+      if (stakingMetrics.unsub !== null) {
+        stakingMetrics.unsub();
+      }
+
+      if (sessionValidators.unsub !== null) {
+        sessionValidators.unsub();
       }
     })
   }, [isReady(), metrics.activeEra]);
 
   return (
-    <StakingMetricsContext.Provider value={{
-      staking: stakingMetrics
-    }}>
+    <StakingMetricsContext.Provider
+      value={{
+        fetchSessionValidators: fetchSessionValidators,
+        staking: stakingMetrics,
+        validators: sessionValidators.validators,
+      }}>
       {props.children}
     </StakingMetricsContext.Provider>
   );

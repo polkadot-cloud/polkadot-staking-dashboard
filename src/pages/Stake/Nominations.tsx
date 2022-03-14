@@ -31,7 +31,6 @@ export const Nominations = (props: any) => {
     }
   };
 
-
   return (
     <Wrapper>
       <h3>Your Nominations</h3>
