@@ -61,7 +61,7 @@ export const Summary = styled.div`
       align-items: center;
       flex-flow: row-reverse wrap;
       button {
-        background: #eee;
+        border: 1px solid #e1e1e1;
         border-radius: 0.4rem;
         padding: 0.25rem 0.5rem;
         color: #444;
