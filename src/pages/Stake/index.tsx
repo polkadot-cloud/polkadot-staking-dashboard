@@ -25,7 +25,7 @@ import { GLOBAL_MESSGE_KEYS } from '../../constants';
 export const Stake = (props: PageProps) => {
 
   const { network }: any = useApi();
-  const { getAccountLedger, getBondedAccount, getAccountNominators }: any = useBalances();
+  const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
   const { activeAccount } = useConnect();
   const { getMessage }: any = useMessages();
 
@@ -39,7 +39,7 @@ export const Stake = (props: PageProps) => {
   const { title } = page;
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
-  const nominators = getAccountNominators(activeAccount);
+  const nominations = getAccountNominations(activeAccount);
 
   const { active, total } = ledger;
 
@@ -67,8 +67,8 @@ export const Stake = (props: PageProps) => {
     },
     {
       label: "Status",
-      value: nominators.length,
-      unit: `Nomination${nominators.length === 1 ? `` : `s`}`,
+      value: nominations.length,
+      unit: `Nomination${nominations.length === 1 ? `` : `s`}`,
       format: 'number',
     },
   ];
@@ -123,7 +123,7 @@ export const Stake = (props: PageProps) => {
                 </ButtonRow>
               }
             </div>
-            <Nominations nominators={nominators} />
+            <Nominations nominations={nominations} />
           </GraphWrapper>
         </MainWrapper>
         <SecondaryWrapper>

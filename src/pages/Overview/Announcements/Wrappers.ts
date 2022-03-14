@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   width: 100%;
 
   h3 {
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.2rem;
   }
 `;
 export const Item = styled(motion.div)`
