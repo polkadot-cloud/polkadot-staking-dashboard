@@ -10,14 +10,18 @@ import BN from "bn.js";
 export interface StakingMetricsContextState {
   staking: any;
   validators: any;
+  meta: any;
   fetchSessionValidators: () => void;
+  fetchValidatorMetaBatch: (k: string, v: []) => void;
 }
 
 // context definition
 export const StakingMetricsContext: React.Context<StakingMetricsContextState> = React.createContext({
   staking: {},
   validators: [],
+  meta: {},
   fetchSessionValidators: () => { },
+  fetchValidatorMetaBatch: (k: string, v: []) => { },
 });
 
 // useStakingMetrics
@@ -43,6 +47,10 @@ export const StakingMetricsContextWrapper = (props: any) => {
     validators: [],
     unsub: null,
   });
+
+  const [validatorMetaBatches, setValidatorMetaBatch]: any = useState({
+  })
+
 
   const subscribeToStakingkMetrics = async (api: any) => {
     if (isReady() && metrics.activeEra.index !== 0) {
@@ -87,6 +95,25 @@ export const StakingMetricsContextWrapper = (props: any) => {
     }
   }
 
+  /*
+    Fetches a new batch of subscribed validator metadata. Stores the returning
+    metadata alongside the unsubscribe function in state:
+    
+    key: {
+      validators: [
+        {
+          address: string,
+          identity: {...},
+        }
+      ],
+      unsub: () => {},
+    },
+  */
+  const fetchValidatorMetaBatch = async (key: string, validators: []) => {
+    // TODO: subscribe to validator meta batch and store in state.
+
+  }
+
   const fetchSessionValidators = async () => {
 
     if (!isReady())
@@ -113,13 +140,21 @@ export const StakingMetricsContextWrapper = (props: any) => {
     subscribeToStakingkMetrics(api);
 
     return (() => {
+
+      // unsubscribe from staking metrics
       if (stakingMetrics.unsub !== null) {
         stakingMetrics.unsub();
       }
 
+      // unsubscribe from session validators
       if (sessionValidators.unsub !== null) {
         sessionValidators.unsub();
       }
+
+      // unsubscribe from any validator meta batches
+      Object.entries(validatorMetaBatches).map(([_, item]: any, index: number) => {
+        item.unsub();
+      });
     })
   }, [isReady(), metrics.activeEra]);
 
@@ -127,8 +162,10 @@ export const StakingMetricsContextWrapper = (props: any) => {
     <StakingMetricsContext.Provider
       value={{
         fetchSessionValidators: fetchSessionValidators,
+        fetchValidatorMetaBatch: fetchValidatorMetaBatch,
         staking: stakingMetrics,
         validators: sessionValidators.validators,
+        meta: validatorMetaBatches,
       }}>
       {props.children}
     </StakingMetricsContext.Provider>

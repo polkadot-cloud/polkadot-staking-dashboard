@@ -23,7 +23,10 @@ export const Nominations = (props: any) => {
           }
 
           {nominations.length > 0 &&
-            <ValidatorList validators={nominations} />
+            <ValidatorList
+              validators={nominations}
+              batchKey='stake_nominations'
+            />
           }
         </>
       }

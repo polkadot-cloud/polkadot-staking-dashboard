@@ -23,8 +23,6 @@ export const Browse = (props: PageProps) => {
     fetchSessionValidators();
   }, [isReady()]);
 
-  // counterForValidators
-
   const items = [
     {
       label: "Active Validators",
@@ -62,7 +60,10 @@ export const Browse = (props: PageProps) => {
             }
 
             {validators.length > 0 &&
-              <ValidatorList validators={validators.slice(0, 20)} />
+              <ValidatorList
+                validators={validators.slice(0, 20)}
+                batchKey='validators_browse'
+              />
             }
           </>
         }
