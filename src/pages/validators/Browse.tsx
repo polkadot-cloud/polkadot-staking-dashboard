@@ -63,6 +63,7 @@ export const Browse = (props: PageProps) => {
               <ValidatorList
                 validators={validators.slice(0, 20)}
                 batchKey='validators_browse'
+                layout='col'
               />
             }
           </>

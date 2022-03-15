@@ -13,19 +13,20 @@ export const Nominations = (props: any) => {
   return (
     <Wrapper>
       <h3>Your Nominations</h3>
-
       {isReady() &&
         <>
           {nominations.length === 0 &&
-            <div style={{ marginTop: '0.4rem' }}>
-              <h4>Finish staking setup to manage your nominated validators.</h4>
-            </div>
+            <>
+              <div style={{ marginTop: '0.4rem' }}>
+                <h4>Finish staking setup to manage your nominated validators.</h4>
+              </div>
+            </>
           }
-
           {nominations.length > 0 &&
             <ValidatorList
               validators={nominations}
               batchKey='stake_nominations'
+              layout='col'
             />
           }
         </>
