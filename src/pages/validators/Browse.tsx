@@ -2,15 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { useStakingMetrics } from '../../contexts/Staking';
-import { List } from '../../library/List';
-import { Validator } from '../../library/Validator';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
+import { ValidatorList } from '../../library/ValidatorList';
 
 export const Browse = (props: PageProps) => {
 
@@ -48,25 +46,6 @@ export const Browse = (props: PageProps) => {
     },
   ];
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.04
-      }
-    }
-  };
-
-  const listItem = {
-    hidden: {
-      opacity: 0
-    },
-    show: {
-      opacity: 1
-    }
-  };
-
   return (
     <>
       <h1 className='title'>{title}</h1>
@@ -77,21 +56,13 @@ export const Browse = (props: PageProps) => {
         {isReady() &&
           <>
             {validators.length === 0 &&
-              <List variants={container} initial="hidden" animate="show">
-                <motion.div className='item' variants={listItem}>
-                  <h4>Fetching validators...</h4>
-                </motion.div>
-              </List>
+              <div className='item'>
+                <h4>Fetching validators...</h4>
+              </div>
             }
 
             {validators.length > 0 &&
-              <List variants={container} initial="hidden" animate="show">
-                {validators.slice(0, 20).map((addr: string, index: number) =>
-                  <motion.div className='item' key={`nomination_${index}`} variants={listItem}>
-                    <Validator address={addr} />
-                  </motion.div>
-                )}
-              </List>
+              <ValidatorList validators={validators.slice(0, 20)} />
             }
           </>
         }
