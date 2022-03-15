@@ -17,7 +17,7 @@ export const Nominations = (props: any) => {
       {isReady() &&
         <>
           {nominations.length === 0 &&
-            <div className='item' >
+            <div style={{ marginTop: '0.4rem' }}>
               <h4>Finish staking setup to manage your nominated validators.</h4>
             </div>
           }

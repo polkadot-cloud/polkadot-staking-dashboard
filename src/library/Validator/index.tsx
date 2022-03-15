@@ -5,6 +5,7 @@ import React from 'react';
 import { Wrapper } from './Wrapper';
 import Identicon from '@polkadot/react-identicon';
 import { clipAddress } from '../../Utils';
+import { motion } from 'framer-motion';
 
 export const ValidatorInner = (props: any) => {
 
@@ -21,9 +22,13 @@ export const ValidatorInner = (props: any) => {
           theme="polkadot"
           style={{ cursor: 'default' }}
         />
-        <div className='right'>
+        <motion.div
+          className='right'
+          animate={{ opacity: [0, 1] }}
+          transition={{ duration: 0.2, delay: 0.3 }}
+        >
           <h4>{!synced ? '' : display === null ? clipAddress(address) : <b>{meta.identity.info.display.Raw}</b>}</h4>
-        </div>
+        </motion.div>
       </div>
     </Wrapper>
   )
