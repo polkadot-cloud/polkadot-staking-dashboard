@@ -14,7 +14,7 @@ export const Wrapper = styled(motion.div)`
     background: linear-gradient(90deg, rgba(242,242,242,1) 0%, rgba(242,242,242,0.6) 100%);
     border-radius: 0.75rem;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
 

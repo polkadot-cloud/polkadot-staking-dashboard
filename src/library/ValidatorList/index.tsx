@@ -1,15 +1,30 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { List } from '../../library/List';
 import { motion } from 'framer-motion';
 import { Validator } from '../../library/Validator';
-import { StakingMetricsContext } from '../../contexts/Staking';
+import { useApi } from '../../contexts/Api';
+import { StakingMetricsContext, useStakingMetrics } from '../../contexts/Staking';
 
 export const ValidatorListInner = (props: any) => {
 
+  const { isReady }: any = useApi();
+  const { fetchValidatorMetaBatch, getValidatorMetaBatch }: any = useStakingMetrics();
   const { validators }: any = props;
+
+  const [metaSynced, setMetaSynced] = useState(false);
+
+  useEffect(() => {
+    fetchValidatorMetaBatch(props.batchKey, props.validators);
+    setMetaSynced(true);
+  }, [isReady()]);
+
+  useEffect(() => {
+    if (getValidatorMetaBatch(props.batchKey) !== null) {
+    }
+  }, [getValidatorMetaBatch(props.batchKey)]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -32,11 +47,21 @@ export const ValidatorListInner = (props: any) => {
     }
   };
 
+  if (!validators.length) {
+    return (<></>);
+  }
+
+  const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
+
   return (
     <List variants={container} initial="hidden" animate="show">
       {validators.map((addr: string, index: number) =>
         <motion.div className='item' key={`nomination_${index}`} variants={listItem}>
-          <Validator address={addr} />
+          <Validator
+            address={addr}
+            meta={meta[index] ?? null}
+            synced={metaSynced}
+          />
         </motion.div>
       )}
     </List>
@@ -47,22 +72,13 @@ export class ValidatorList extends React.Component<any, any> {
 
   static contextType = StakingMetricsContext;
 
-  state = {
-    meta: {},
-  }
-
   shouldComponentUpdate (nextProps: any, nextState: any) {
-    return (this.props.validators !== nextProps.validators || this.state.meta !== nextState.meta);
-  }
-
-  componentDidMount () {
-    this.context.fetchValidatorMetaBatch(this.props.batchKey, this.props.validators);
+    return (this.props.validators !== nextProps.validators);
   }
 
   render () {
     return (
       <ValidatorListInner
-        meta={this.state.meta}
         {...this.props}
       />
     )

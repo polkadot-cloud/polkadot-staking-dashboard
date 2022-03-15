@@ -13,6 +13,7 @@ export interface StakingMetricsContextState {
   meta: any;
   fetchSessionValidators: () => void;
   fetchValidatorMetaBatch: (k: string, v: []) => void;
+  getValidatorMetaBatch: (k: string) => any;
 }
 
 // context definition
@@ -22,6 +23,7 @@ export const StakingMetricsContext: React.Context<StakingMetricsContextState> = 
   meta: {},
   fetchSessionValidators: () => { },
   fetchValidatorMetaBatch: (k: string, v: []) => { },
+  getValidatorMetaBatch: (k: string) => { },
 });
 
 // useStakingMetrics
@@ -49,8 +51,9 @@ export const StakingMetricsContextWrapper = (props: any) => {
   });
 
   const [validatorMetaBatches, setValidatorMetaBatch]: any = useState({
+    meta: {},
+    unsubs: [],
   })
-
 
   const subscribeToStakingkMetrics = async (api: any) => {
     if (isReady() && metrics.activeEra.index !== 0) {
@@ -106,18 +109,39 @@ export const StakingMetricsContextWrapper = (props: any) => {
           identity: {...},
         }
       ],
-      unsub: () => {},
     },
   */
   const fetchValidatorMetaBatch = async (key: string, validators: []) => {
-    // TODO: subscribe to validator meta batch and store in state.
+    if (!isReady()) { return }
 
+    if (!validators.length) { return; }
+
+    // subscribe to identities
+    const unsub = await api.query.identity.identityOf.multi(validators, (_identities: any) => {
+      let identities = [];
+      for (let i = 0; i < _identities.length; i++) {
+        identities.push({
+          address: validators[i],
+          identity: _identities[i].toHuman(),
+        });
+      }
+      validatorMetaBatches.meta[key] = identities;
+
+      // commit all meta data
+      setValidatorMetaBatch(validatorMetaBatches);
+    });
+
+    // commit unsub
+    const { unsubs } = validatorMetaBatches;
+    unsubs.push([unsub]);
+    setValidatorMetaBatch({
+      ...validatorMetaBatches,
+      unsubs: unsubs,
+    });
   }
 
   const fetchSessionValidators = async () => {
-
-    if (!isReady())
-      return;
+    if (!isReady()) { return }
 
     // subscribe to session validators
     const unsub = await api.queryMulti([
@@ -152,20 +176,32 @@ export const StakingMetricsContextWrapper = (props: any) => {
       }
 
       // unsubscribe from any validator meta batches
-      Object.entries(validatorMetaBatches).map(([_, item]: any, index: number) => {
-        item.unsub();
+      Object.entries(validatorMetaBatches.unsubs).map(([_, item]: any, index: number) => {
+        for (let u of item) {
+          u();
+        }
       });
     })
   }, [isReady(), metrics.activeEra]);
+
+
+  const getValidatorMetaBatch = (key: string) => {
+    if (validatorMetaBatches.meta[key] === undefined) {
+      return null;
+    }
+
+    return validatorMetaBatches.meta[key];
+  }
 
   return (
     <StakingMetricsContext.Provider
       value={{
         fetchSessionValidators: fetchSessionValidators,
         fetchValidatorMetaBatch: fetchValidatorMetaBatch,
+        getValidatorMetaBatch: getValidatorMetaBatch,
         staking: stakingMetrics,
         validators: sessionValidators.validators,
-        meta: validatorMetaBatches,
+        meta: validatorMetaBatches.meta,
       }}>
       {props.children}
     </StakingMetricsContext.Provider>
