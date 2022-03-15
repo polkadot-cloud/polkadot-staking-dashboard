@@ -53,7 +53,7 @@ export const Browse = (props: PageProps) => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05
+        staggerChildren: 0.04
       }
     }
   };

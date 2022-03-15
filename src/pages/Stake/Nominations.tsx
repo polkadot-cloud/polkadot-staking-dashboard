@@ -17,7 +17,7 @@ export const Nominations = (props: any) => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05
+        staggerChildren: 0.04
       }
     }
   };
