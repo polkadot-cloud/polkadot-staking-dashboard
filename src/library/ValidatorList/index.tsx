@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { List, Header, Wrapper as ListWrapper } from '../../library/List';
 import { motion } from 'framer-motion';
 import { Validator } from '../../library/Validator';
@@ -13,11 +13,23 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 export const ValidatorListInner = (props: any) => {
 
   const { isReady }: any = useApi();
-  const { fetchValidatorMetaBatch, getValidatorMetaBatch }: any = useStakingMetrics();
+  const {
+    fetchValidatorMetaBatch,
+    getValidatorMetaBatch,
+    VALIDATORS_PER_BATCH_MUTLI,
+  }: any = useStakingMetrics();
   const { validators }: any = props;
 
+  const [renderIteration, _setRenderIteration]: any = useState(1);
   const [metaSynced, setMetaSynced] = useState(false);
   const [layout, setLayout] = useState(props.layout);
+
+  const renderIterationRef = useRef(renderIteration);
+
+  const setRenderIteration = (iter: number) => {
+    renderIterationRef.current = iter;
+    _setRenderIteration(iter);
+  }
 
   useEffect(() => {
     fetchValidatorMetaBatch(props.batchKey, props.validators);
@@ -25,9 +37,22 @@ export const ValidatorListInner = (props: any) => {
   }, [isReady()]);
 
   useEffect(() => {
-    if (getValidatorMetaBatch(props.batchKey) !== null) {
+    setRenderIteration(1);
+  }, [props.validators])
+
+  let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
+  const listValidators = validators.slice(0, batchEnd);
+
+  useEffect(() => {
+    if (batchEnd >= validators.length) {
+      return;
     }
-  }, [getValidatorMetaBatch(props.batchKey)]);
+    setTimeout(() => {
+      setRenderIteration(renderIterationRef.current + 1)
+    }, 1000);
+
+  }, [renderIterationRef.current, props.validators]);
+
 
   const container = {
     hidden: { opacity: 0 },
@@ -71,7 +96,7 @@ export const ValidatorListInner = (props: any) => {
         initial="hidden"
         animate="show"
       >
-        {validators.map((addr: string, index: number) =>
+        {listValidators.map((addr: string, index: number) =>
           <motion.div className={`item ${layout === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
             <Validator
               address={addr}
@@ -84,6 +109,7 @@ export const ValidatorListInner = (props: any) => {
     </ListWrapper>
   );
 }
+
 
 export class ValidatorList extends React.Component<any, any> {
 

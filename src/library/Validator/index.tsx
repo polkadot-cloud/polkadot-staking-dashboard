@@ -22,13 +22,16 @@ export const ValidatorInner = (props: any) => {
           theme="polkadot"
           style={{ cursor: 'default' }}
         />
-        <motion.div
-          className='right'
-          animate={{ opacity: [0, 1] }}
-          transition={{ duration: 0.2, delay: 0.3 }}
-        >
-          <h4>{!synced ? '' : display === null ? clipAddress(address) : <b>{meta.identity.info.display.Raw}</b>}</h4>
-        </motion.div>
+        {synced &&
+          <motion.div
+            className='right'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2, delay: 0.3 }}
+          >
+            <h4>{display === null ? clipAddress(address) : meta.identity.info.display.Raw}</h4>
+          </motion.div>
+        }
       </div>
     </Wrapper>
   )

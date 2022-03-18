@@ -6,24 +6,34 @@ import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
 import BN from "bn.js";
 
+// validators per batch in multi-batch fetching
+const VALIDATORS_PER_BATCH_MUTLI = 20;
+const THROTTLE_VALIDATOR_RENDER = 250;
+
 // context type
 export interface StakingMetricsContextState {
+  VALIDATORS_PER_BATCH_MUTLI: number,
+  THROTTLE_VALIDATOR_RENDER: number,
   staking: any;
   validators: any;
   meta: any;
   fetchSessionValidators: () => void;
   fetchValidatorMetaBatch: (k: string, v: []) => void;
   getValidatorMetaBatch: (k: string) => any;
+  removeValidatorMetaBatch: (k: string) => void;
 }
 
 // context definition
 export const StakingMetricsContext: React.Context<StakingMetricsContextState> = React.createContext({
+  VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
+  THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
   staking: {},
   validators: [],
   meta: {},
   fetchSessionValidators: () => { },
   fetchValidatorMetaBatch: (k: string, v: []) => { },
   getValidatorMetaBatch: (k: string) => { },
+  removeValidatorMetaBatch: (k: string) => { },
 });
 
 // useStakingMetrics
@@ -100,16 +110,18 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
   /*
     Fetches a new batch of subscribed validator metadata. Stores the returning
-    metadata alongside the unsubscribe function in state:
-    
-    key: {
-      validators: [
-        {
-          address: string,
-          identity: {...},
-        }
-      ],
-    },
+    metadata alongside the unsubscribe function in state.
+    structure:
+    {
+      key: {
+        validators: [
+          {
+            address: string,
+            identity: {...},
+          }
+        ],
+      },
+  };
   */
   const fetchValidatorMetaBatch = async (key: string, validators: []) => {
     if (!isReady()) { return }
@@ -185,20 +197,28 @@ export const StakingMetricsContextWrapper = (props: any) => {
   }, [isReady(), metrics.activeEra]);
 
 
+  const removeValidatorMetaBatch = (key: string) => {
+    if (validatorMetaBatches.meta[key] !== undefined) {
+      delete validatorMetaBatches.meta[key];
+    }
+  }
+
   const getValidatorMetaBatch = (key: string) => {
     if (validatorMetaBatches.meta[key] === undefined) {
       return null;
     }
-
     return validatorMetaBatches.meta[key];
   }
 
   return (
     <StakingMetricsContext.Provider
       value={{
+        VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
+        THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
         fetchSessionValidators: fetchSessionValidators,
         fetchValidatorMetaBatch: fetchValidatorMetaBatch,
         getValidatorMetaBatch: getValidatorMetaBatch,
+        removeValidatorMetaBatch: removeValidatorMetaBatch,
         staking: stakingMetrics,
         validators: sessionValidators.validators,
         meta: validatorMetaBatches.meta,

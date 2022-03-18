@@ -7,7 +7,9 @@ import { motion } from 'framer-motion';
 export const Wrapper = styled(motion.div) <any>`
   flex-grow: 1;
   padding: 0.5rem;
-  
+  display: flex;
+  flex-flow: row nowrap;
+
   > div {
     padding: 0.75rem;
     flex-grow: 1;
@@ -15,21 +17,24 @@ export const Wrapper = styled(motion.div) <any>`
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row nowrap;
+    overflow: hidden;
     justify-content: flex-start;
     align-items: center;
-
-    h4 {
-      margin-top: 0;
-    }
+    overflow-x: auto;
 
     .right {
       display: flex;
       margin-left: 0.75rem;
-      flex-grow: 1;
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: row nowrap;
       align-items: center;
       align-content: center;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    h4 {
+      margin-top: 0;
     }
   }
 `;
