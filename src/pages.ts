@@ -15,6 +15,7 @@ import {
   faStar,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
+import { URI_PREFIX } from './constants';
 
 export const PAGE_CATEGORIES = [{
   _id: 1,
@@ -31,37 +32,37 @@ export const PAGES_CONFIG = [
   {
     category: 1,
     title: 'Overview',
-    uri: '/',
+    uri: URI_PREFIX + '/',
     Entry: Overview,
     icon: faBraille,
   }, {
     category: 1,
     title: 'Stake',
-    uri: '/stake',
+    uri: URI_PREFIX + '/stake',
     Entry: Stake,
     icon: faChartLine,
   }, {
     category: 1,
     title: 'Pools',
-    uri: '/pools',
+    uri: URI_PREFIX + '/pools',
     Entry: Pools,
     icon: faUsers,
   }, {
     category: 2,
     title: 'Validators',
-    uri: '/validators',
+    uri: URI_PREFIX + '/validators',
     Entry: Browse,
     icon: faServer,
   }, {
     category: 2,
     title: 'Payouts',
-    uri: '/payouts',
+    uri: URI_PREFIX + '/payouts',
     Entry: Payouts,
     icon: faStar,
   }, {
     category: 3,
     title: 'Community',
-    uri: '/community',
+    uri: URI_PREFIX + '/community',
     Entry: Projects,
     icon: faUserFriends,
   },

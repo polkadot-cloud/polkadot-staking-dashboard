@@ -7,6 +7,7 @@ import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
 import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../pages';
+import { URI_PREFIX } from '../../constants';
 
 export const Assistant = () => {
 
@@ -38,7 +39,8 @@ export const Assistant = () => {
   };
 
   useEffect(() => {
-    const page = pathname === '/' ? 'overview' : pathname.substring(1, pathname.length);
+    const lastUriItem = pathname.substring(pathname.lastIndexOf('/') + 1);
+    const page = lastUriItem.trim() === '' ? 'overview' : lastUriItem;
     assistant.setPage(page);
   }, [pathname]);
 

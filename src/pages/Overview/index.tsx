@@ -71,9 +71,7 @@ export const Overview = (props: PageProps) => {
         </MainWrapper>
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
-        <GraphWrapper>
-          <Announcements />
-        </GraphWrapper>
+        <Announcements />
       </PageRowWrapper>
     </>
   );

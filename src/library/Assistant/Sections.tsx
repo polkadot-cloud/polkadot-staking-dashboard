@@ -32,7 +32,9 @@ export const Sections = (props: any) => {
   }
 
   // resources to display
-  const { definitions, external } = pageMeta;
+
+  const definitions = pageMeta?.definitions ?? [];
+  const external = pageMeta?.external ?? [];
 
   // external width patterns
   let curFlexWidth = 0;

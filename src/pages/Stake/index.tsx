@@ -20,7 +20,7 @@ import { useMessages } from '../../contexts/Messages';
 import { planckToDot } from '../../Utils';
 import Account from '../../library/Account';
 import { useConnect } from '../../contexts/Connect';
-import { GLOBAL_MESSGE_KEYS } from '../../constants';
+import { GLOBAL_MESSGE_KEYS, URI_PREFIX } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 
 export const Stake = (props: PageProps) => {
@@ -75,7 +75,7 @@ export const Stake = (props: PageProps) => {
     },
   ];
 
-  const handleBrowseValidatorsClick = useCallback(() => navigate('/validators', { replace: true }), [navigate]);
+  const handleBrowseValidatorsClick = useCallback(() => navigate(URI_PREFIX + '/validators', { replace: true }), [navigate]);
 
   return (
     <Wrapper>

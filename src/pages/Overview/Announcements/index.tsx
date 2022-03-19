@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { useStakingMetrics } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
 import { humanNumber } from '../../../Utils';
+import { GraphWrapper } from '../../../library/Graphs/Wrappers';
 
 export const Announcements = () => {
 
@@ -65,25 +66,27 @@ export const Announcements = () => {
   }
 
   return (
-    <Wrapper>
-      <motion.div variants={container} initial="hidden" animate="show">
-        <motion.div variants={listItem}>
-          <h3>Announcements</h3>
+    <GraphWrapper>
+      <Wrapper>
+        <motion.div variants={container} initial="hidden" animate="show">
+          <motion.div variants={listItem}>
+            <h3>Announcements</h3>
+          </motion.div>
+          {announcements.map((item, index) =>
+            <Item key={`announcement_${index}`} variants={listItem}>
+              <h3 className={item.class}>
+                <FontAwesomeIcon
+                  icon={faBack}
+                  style={{ marginRight: '0.6rem' }}
+                />
+                {item.title}
+              </h3>
+              <p>{item.subtitle}</p>
+            </Item>
+          )}
         </motion.div>
-        {announcements.map((item, index) =>
-          <Item key={`announcement_${index}`} variants={listItem}>
-            <h3 className={item.class}>
-              <FontAwesomeIcon
-                icon={faBack}
-                style={{ marginRight: '0.6rem' }}
-              />
-              {item.title}
-            </h3>
-            <p>{item.subtitle}</p>
-          </Item>
-        )}
-      </motion.div>
-    </Wrapper>
+      </Wrapper>
+    </GraphWrapper>
   );
 }
 

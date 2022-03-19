@@ -20,6 +20,7 @@ import {
   PageScrollWrapper,
 } from './Wrappers';
 import Notifications from './library/Notifications';
+import { Overview } from './pages/Overview';
 
 export const RouterInner = () => {
 
@@ -72,6 +73,24 @@ export const RouterInner = () => {
                       />
                     )
                   })}
+                  <Route
+                    path='/'
+                    element={
+                      <PageWrapper
+                        key={`main_interface_key__default`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{
+                          duration: 0.8,
+                          type: "spring",
+                          bounce: 0.4
+                        }}
+                      >
+                        <Overview page={PAGES_CONFIG[0]} />
+                      </PageWrapper>
+                    }
+                  />
                 </Routes>
               </AnimatePresence>
             </MainInterfaceWrapper>

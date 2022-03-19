@@ -10,6 +10,8 @@ import { ReactComponent as WestendLogoSVG } from './img/westend_icon.svg';
 /*
  * Global Constants 
 */
+export const URI_PREFIX = '/polkadot-staking-dashboard';
+
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
 export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
 export const DEFAULT_NETWORK = 'polkadot';
