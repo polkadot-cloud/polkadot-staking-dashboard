@@ -2,8 +2,10 @@
 
 *This project is a work in progress, and should only be used for testing and development purposes. Do not use this app for Polkadot staking until its initial release.*
 
-<img width="1571" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/158018829-744ed1a7-044c-463e-98ac-10f23df8c0b7.png">
+#### Live Demo:
+[https://rossbulat.github.io/polkadot-staking-dashboard/](https://rossbulat.github.io/polkadot-staking-dashboard/)
 
+<img width="1571" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/158018829-744ed1a7-044c-463e-98ac-10f23df8c0b7.png">
 
 ### Milestones
 
