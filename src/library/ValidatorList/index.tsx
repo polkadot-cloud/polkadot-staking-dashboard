@@ -53,7 +53,6 @@ export const ValidatorListInner = (props: any) => {
 
   }, [renderIterationRef.current, props.validators]);
 
-
   const container = {
     hidden: { opacity: 0 },
     show: {

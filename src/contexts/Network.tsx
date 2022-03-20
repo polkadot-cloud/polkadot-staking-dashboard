@@ -24,7 +24,6 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
   const [state, setState]: any = useState({
     now: 0,
-    blockNumber: 0,
     activeEra: {
       index: 0,
       start: 0,
@@ -42,25 +41,16 @@ export const NetworkMetricsContextWrapper = (props: any) => {
     })
   }, [isReady()]);
 
-  // dynamic block number subscription: basic, no unsubscribe
+  // active subscription
   const subscribeToNetworkMetrics = async (api: any) => {
     if (isReady()) {
 
       const unsub = await api.queryMulti([
         api.query.timestamp.now,
-        api.query.system.number,
         api.query.staking.activeEra,
-      ], ([now, block, activeEra]: any) => {
+      ], ([now, activeEra]: any) => {
 
         let _state = {};
-
-        // format block number
-        if (block !== undefined) {
-          _state = {
-            ..._state,
-            blockNumber: '#' + block.toHuman()
-          }
-        }
 
         // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
         let _activeEra = activeEra.unwrapOrDefault({
@@ -88,7 +78,6 @@ export const NetworkMetricsContextWrapper = (props: any) => {
     <NetworkMetricsContext.Provider value={{
       metrics: {
         now: state.now,
-        blockNumber: state.blockNumber,
         activeEra: state.activeEra,
       }
     }}>
