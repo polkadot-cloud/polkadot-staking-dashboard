@@ -34,7 +34,7 @@ export const Announcements = () => {
     }
   };
 
-  if (!isReady()) {
+  if (!isReady() || staking.maxNominatorsCount === 0) {
     return (<></>);
   }
 
