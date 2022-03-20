@@ -46,9 +46,8 @@ export const NetworkMetricsContextWrapper = (props: any) => {
     if (isReady()) {
 
       const unsub = await api.queryMulti([
-        api.query.timestamp.now,
         api.query.staking.activeEra,
-      ], ([now, activeEra]: any) => {
+      ], ([activeEra]: any) => {
 
         let _state = {};
 
@@ -63,7 +62,6 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
         _state = {
           ..._state,
-          now: now.toNumber(),
           activeEra: _activeEra,
         };
         setState(_state);
