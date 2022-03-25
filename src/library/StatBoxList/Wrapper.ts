@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ListWrapper = styled.div`
-  height: 105px;
+  height: 100px;
   display: flex;
   flex-flow: row nowrap;
   overflow-x: auto;
@@ -37,7 +37,7 @@ export const StatBoxWrapper = styled(motion.div)`
   max-width: 275px;
   flex-grow: 1;
   flex-shrink: 0;
-  background: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.5);
   display: flex;
   flex-flow: column wrap;
   overflow: hidden;

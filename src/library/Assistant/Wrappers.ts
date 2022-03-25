@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from '../../constants';
 
 export const Wrapper = styled(motion.div) <any>`
-  position: absolute;
+  position: fixed;
   right: -600px;
   top: 0;
   width: 100%;
@@ -36,7 +36,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
-  background: rgba(225,225,225,0.93);
+  background: rgba(228,228,228,0.93);
   backdrop-filter: blur(4px);
   margin: 0.75rem;
 `;

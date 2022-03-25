@@ -17,7 +17,7 @@ export const Wrapper = styled(motion.div) <any>`
   bottom: 0px;
   left: 0px;
   overflow: hidden;
-  background: linear-gradient(-225deg, rgba(241,241,241,1) 0%, rgba(229,229,229,1) 100%);
+  background: rgba(229,229,229,1);
 `;
 
 export const Summary = styled.div`

@@ -37,7 +37,7 @@ export const HeadingWrapper = styled.div`
   .accounts {
     position: absolute;
     border-radius: 1rem;
-    background: rgba(225,225,225,0.5);
+    background: rgba(241,241,241,0.5);
     backdrop-filter: blur(4px);
     top: 3rem;
     right: 0;
@@ -58,7 +58,7 @@ export const Item = styled(motion.button)`
     margin: 0.25rem 0;
     border-radius: 1rem;
     box-shadow: none;
-    background: rgba(225,225,225,0.9);
+    background: rgb(241, 241, 241);
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -66,7 +66,7 @@ export const Item = styled(motion.button)`
     cursor: pointer;
     font-variation-settings: 'wght' 540;
     height: 2.3rem;
-    font-size: 1rem;
+    font-size: 1.08rem;
 
     &.connect {
       background: #d33079;

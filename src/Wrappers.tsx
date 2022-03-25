@@ -10,7 +10,7 @@ export const EntryWrapper = styled.div`
     width: 100%;
     min-width: ${INTERFACE_MINIMUM_WIDTH}px;
     background: #fbfbfb;
-    background: linear-gradient(-225deg, rgba(251,251,251,1) 0%, rgba(229,229,229,1) 100%);
+    background: linear-gradient(180deg, rgba(251,251,251,1) 0%, rgba(229,229,229,1) 100%);
     display: flex;
     flex-flow: column nowrap;
     min-height: 100vh;
@@ -44,6 +44,7 @@ export const MainInterfaceWrapper = styled.div`
         font-size: 1.7rem;
         font-variation-settings: 'wght' 460;
         margin-bottom: 0.3rem;
+        color: #333;
     }
 `;
 
