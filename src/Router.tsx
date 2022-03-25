@@ -22,6 +22,9 @@ import {
 import Notifications from './library/Notifications';
 import { Overview } from './pages/Overview';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+import { TITLE_DEFAULT } from './constants';
+
 
 export const RouterInner = () => {
 
@@ -74,6 +77,9 @@ export const RouterInner = () => {
                             bounce: 0.4
                           }}
                         >
+                          <Helmet>
+                            <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
+                          </Helmet>
                           <Entry page={page} />
                         </PageWrapper>
                       }

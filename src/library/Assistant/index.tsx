@@ -7,7 +7,6 @@ import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
 import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../pages';
-import { URI_PREFIX } from '../../constants';
 
 export const Assistant = () => {
 
