@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MINIMUM_HEIGHT, INTERFACE_MINIMUM_WIDTH, INTERFACE_MAXIMUM_WIDTH } from './constants';
+import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MINIMUM_WIDTH, INTERFACE_MAXIMUM_WIDTH } from './constants';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
@@ -13,59 +13,48 @@ export const EntryWrapper = styled.div`
     background: linear-gradient(-225deg, rgba(251,251,251,1) 0%, rgba(229,229,229,1) 100%);
     display: flex;
     flex-flow: column nowrap;
-    height: 100vh;
-
-    font-size: 10px;
+    min-height: 100vh;
+    flex-grow: 1;
 `;
 
 // Body interface wrapper
 export const BodyInterfaceWrapper = styled.div`
     display: flex;
+    flex-flow: row nowrap;
     position: relative;
-    flex: 1;
-    min-height: ${INTERFACE_MINIMUM_HEIGHT}px;
+    flex-grow: 1;
 `;
 
 // Side interface wrapper
 export const SideInterfaceWrapper = styled.div`
-    height: 100%;
+    height: 100vh;
     min-width: ${SIDE_MENU_INTERFACE_WIDTH}px;
     display: flex;
     flex-flow: column nowrap;
-`;
-
-
-// Scroll wrapper
-export const PageScrollWrapper = styled.div`
-    flex: 1;
-    overflow: auto;
+    position: sticky;
+    top: 0px;
 `;
 
 // Main interface wrapper
 export const MainInterfaceWrapper = styled.div`
     flex: 1;
     display: flex;
-    flex-flow: row nowrap;
-    overflow: auto;
-    max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
-
+    flex-flow: column nowrap;
     h1.title {
-        font-size: 1.65rem;
-        font-variation-settings: 'wght' 420;
-        margin-bottom: 0.25rem;
+        font-size: 1.7rem;
+        font-variation-settings: 'wght' 460;
+        margin-bottom: 0.3rem;
     }
 `;
 
 // Page wrapper
 export const PageWrapper = styled(motion.div)`
-    flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    padding: 8.5vh 0 2rem;
-    margin: 0 2.6rem;
-    overflow: hidden;
-    overflow-y: scroll;
+    padding: 1.8vh 0 4.5rem 0;
+    margin: 0 2rem;
     flex-grow: 1;
+    max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
 `;
 
 // Page Row wrapper

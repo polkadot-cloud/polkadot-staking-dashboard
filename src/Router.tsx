@@ -9,7 +9,7 @@ import { StakingMetricsContextWrapper } from './contexts/Staking';
 import { MessagesContextWrapper } from './contexts/Messages';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './library/Modal';
-import AssistantButton from './library/Headers';
+import { Headers } from './library/Headers';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
 import { BrowserRouter } from "react-router-dom";
@@ -17,7 +17,6 @@ import {
   SideInterfaceWrapper,
   MainInterfaceWrapper,
   BodyInterfaceWrapper,
-  PageScrollWrapper,
 } from './Wrappers';
 import Notifications from './library/Notifications';
 import { Overview } from './pages/Overview';
@@ -42,59 +41,57 @@ export const RouterInner = () => {
           </SideInterfaceWrapper>
 
           {/* Main Content Window */}
-          <PageScrollWrapper>
-            <MainInterfaceWrapper>
-              <AssistantButton />
+          <MainInterfaceWrapper>
+            <Headers />
 
-              <AnimatePresence>
-                <Routes>
-                  {PAGES_CONFIG.map((page, pageIndex) => {
-                    const { Entry } = page;
-                    return (
-                      <Route
-                        key={`main_interface_page_${pageIndex}`}
-                        path={page.uri}
-                        element={
+            <AnimatePresence>
+              <Routes>
+                {PAGES_CONFIG.map((page, pageIndex) => {
+                  const { Entry } = page;
+                  return (
+                    <Route
+                      key={`main_interface_page_${pageIndex}`}
+                      path={page.uri}
+                      element={
 
-                          <PageWrapper
-                            key={`main_interface_key__${pageIndex}`}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 20 }}
-                            transition={{
-                              duration: 0.8,
-                              type: "spring",
-                              bounce: 0.4
-                            }}
-                          >
-                            <Entry page={page} />
-                          </PageWrapper>
-                        }
-                      />
-                    )
-                  })}
-                  <Route
-                    path='/'
-                    element={
-                      <PageWrapper
-                        key={`main_interface_key__default`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{
-                          duration: 0.8,
-                          type: "spring",
-                          bounce: 0.4
-                        }}
-                      >
-                        <Overview page={PAGES_CONFIG[0]} />
-                      </PageWrapper>
-                    }
-                  />
-                </Routes>
-              </AnimatePresence>
-            </MainInterfaceWrapper>
-          </PageScrollWrapper>
+                        <PageWrapper
+                          key={`main_interface_key__${pageIndex}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 20 }}
+                          transition={{
+                            duration: 0.8,
+                            type: "spring",
+                            bounce: 0.4
+                          }}
+                        >
+                          <Entry page={page} />
+                        </PageWrapper>
+                      }
+                    />
+                  )
+                })}
+                <Route
+                  path='/'
+                  element={
+                    <PageWrapper
+                      key={`main_interface_key__default`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{
+                        duration: 0.8,
+                        type: "spring",
+                        bounce: 0.4
+                      }}
+                    >
+                      <Overview page={PAGES_CONFIG[0]} />
+                    </PageWrapper>
+                  }
+                />
+              </Routes>
+            </AnimatePresence>
+          </MainInterfaceWrapper>
         </BodyInterfaceWrapper>
       </MessagesContextWrapper>
 

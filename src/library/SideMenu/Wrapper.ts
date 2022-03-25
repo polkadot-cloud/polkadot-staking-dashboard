@@ -21,8 +21,8 @@ export const Wrapper = styled.div`
   padding: 1rem 0.5rem;
   overflow: auto;
   flex: 1;
-  margin: 1.2rem 0 1.2rem 1rem;
-  min-width: 170px;
+  margin: 1.2rem 0 3.8rem 1rem;
+  min-width: 180px;
   &:hover {
     transform: scale(1.005);
   }
@@ -58,9 +58,9 @@ export const ItemWrapper = styled(motion.div) <any>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.75rem 0.5rem;
+  padding: 0.8rem 0.5rem;
   margin: 0.35rem 0;
-  font-size: 1.04rem;
+  font-size: 1.08rem;
 
   &.active {
     background: rgba(0,0,0,0.04);

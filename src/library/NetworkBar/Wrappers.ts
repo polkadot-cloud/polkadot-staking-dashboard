@@ -13,8 +13,11 @@ export const Wrapper = styled(motion.div) <any>`
   align-items: center;
   font-size: 0.75rem;
   color: #444;
-  position: relative;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
   overflow: hidden;
+  background: linear-gradient(-225deg, rgba(241,241,241,1) 0%, rgba(229,229,229,1) 100%);
 `;
 
 export const Summary = styled.div`

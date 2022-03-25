@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  position: absolute;
-  right: 0;
+  position: sticky;
+  top: 0px;
+  right: 0px;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: flex-end;
   padding: 0.75rem  1rem; 
   transition: all 0.15s;
   z-index: 5;

@@ -57,8 +57,7 @@ export const CONNECTION_SYMBOL_COLORS: any = {
 }
 
 export const INTERFACE_MINIMUM_WIDTH: number = 800;
-export const INTERFACE_MAXIMUM_WIDTH: number = 1325;
-export const INTERFACE_MINIMUM_HEIGHT: number = 400;
+export const INTERFACE_MAXIMUM_WIDTH: number = 1300;
 export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
 
