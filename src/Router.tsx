@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useEffect } from 'react';
 import { PageWrapper } from './Wrappers';
 import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"
@@ -20,11 +21,19 @@ import {
 } from './Wrappers';
 import Notifications from './library/Notifications';
 import { Overview } from './pages/Overview';
+import { useLocation } from 'react-router-dom';
 
 export const RouterInner = () => {
 
+  const { pathname } = useLocation();
+
+  // scroll to top on page change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
-    <BrowserRouter>
+    <>
       {/* Modal: closed by default */}
       <Modal />
 
@@ -100,7 +109,7 @@ export const RouterInner = () => {
 
       {/* Testing notification popup */}
       <Notifications />
-    </BrowserRouter>
+    </>
 
   );
 }
@@ -111,7 +120,9 @@ export const Router = () => {
 
   return (
     <StakingMetricsContextWrapper>
-      <RouterInner />
+      <BrowserRouter>
+        <RouterInner />
+      </BrowserRouter>
     </StakingMetricsContextWrapper>
   );
 }
