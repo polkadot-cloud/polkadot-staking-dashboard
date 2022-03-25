@@ -9,6 +9,7 @@ import { SubscanButton } from '../../library/SubscanButton';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import moment from 'moment';
+import { PageTitle } from '../../library/PageTitle';
 
 export const Payouts = (props: PageProps) => {
 
@@ -19,7 +20,7 @@ export const Payouts = (props: PageProps) => {
 
   return (
     <>
-      <h1 className='title'>{title}</h1>
+      <PageTitle title={title} />
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 export const Wrapper = styled.div`
   h3 {
     color: #555;
+    margin-top: 2rem;
   }
 `;
 export const ItemsWrapper = styled(motion.div)`

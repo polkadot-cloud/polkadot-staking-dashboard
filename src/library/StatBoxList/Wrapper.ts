@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
   overflow-x: auto;
   flex-shrink: 0;
+  padding: 0 2rem;
 `;
 
 export const ListWrapper = styled.div`

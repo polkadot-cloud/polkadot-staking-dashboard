@@ -22,6 +22,7 @@ import Account from '../../library/Account';
 import { useConnect } from '../../contexts/Connect';
 import { GLOBAL_MESSGE_KEYS, URI_PREFIX } from '../../constants';
 import { useNavigate } from 'react-router-dom';
+import { PageTitle } from '../../library/PageTitle';
 
 export const Stake = (props: PageProps) => {
 
@@ -79,7 +80,7 @@ export const Stake = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <h1 className='title'>{title}</h1>
+      <PageTitle title={title} />
       <StatBoxList title="This Session" items={items} />
 
       <PageRowWrapper noVerticalSpacer>

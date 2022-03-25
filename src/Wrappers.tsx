@@ -52,21 +52,47 @@ export const MainInterfaceWrapper = styled.div`
 export const PageWrapper = styled(motion.div)`
     display: flex;
     flex-flow: column nowrap;
-    padding: 1.8vh 0 4.5rem 0;
-    margin: 0 2rem;
-    flex-grow: 1;
+    padding: 0 0 4.5rem 0;
+    flex: 1;
     max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
+`;
+
+// Sticky page title wrapper
+export const PageTitleWrapper = styled.header<any>` 
+    position: sticky;
+    top: 0px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: ${props => props.isSticky ? '4vh ' : '1.8vh '};
+    padding-bottom: ${props => props.isSticky ? '1rem ' : '0.25vh '};
+    width: 100%;
+    background: ${props => props.isSticky ? '#f7f7f7 ' : 'none'};
+    z-index: 4;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-end;
+    min-height: 30px;
+    transition: padding 0.2s ease-out, background-color 0.2s;
+    transition-delay: 0.1;
+
+    h1 {
+     font-size: ${props => props.isSticky ? '1.5rem ' : '1.7rem'};
+     transition: font-size 0.5s;
+     font-variation-settings: 'wght' 480;
+    }
 `;
 
 // Page Row wrapper
 export const PageRowWrapper = styled.div<any>`
-    margin: ${props => props.noVerticalSpacer === true ? `0` : `1rem 0`};
+    margin-top: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
+    margin-bottom: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
     display: flex;
     flex-shrink: 0;
     flex-flow: row nowrap;
     width: 100%;
     box-sizing: border-box;
     overflow-x: scroll;
+    margin: 0 2rem;
 
     * {
         box-sizing: border-box;

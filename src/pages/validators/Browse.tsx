@@ -9,6 +9,8 @@ import { useNetworkMetrics } from '../../contexts/Network';
 import { useStakingMetrics } from '../../contexts/Staking';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
+import { PageTitle } from '../../library/PageTitle';
+import { PageRowWrapper } from '../../Wrappers';
 
 export const Browse = (props: PageProps) => {
 
@@ -46,29 +48,30 @@ export const Browse = (props: PageProps) => {
 
   return (
     <>
-      <h1 className='title'>{title}</h1>
+      <PageTitle title={title} />
       <StatBoxList title="This Session" items={items} />
+      <PageRowWrapper>
+        <GraphWrapper>
+          <h3>Browse Active Validators</h3>
+          {isReady() &&
+            <>
+              {validators.length === 0 &&
+                <div className='item'>
+                  <h4>Fetching validators...</h4>
+                </div>
+              }
 
-      <GraphWrapper>
-        <h3>Browse Active Validators</h3>
-        {isReady() &&
-          <>
-            {validators.length === 0 &&
-              <div className='item'>
-                <h4>Fetching validators...</h4>
-              </div>
-            }
-
-            {validators.length > 0 &&
-              <ValidatorList
-                validators={validators}
-                batchKey='validators_browse'
-                layout='col'
-              />
-            }
-          </>
-        }
-      </GraphWrapper>
+              {validators.length > 0 &&
+                <ValidatorList
+                  validators={validators}
+                  batchKey='validators_browse'
+                  layout='col'
+                />
+              }
+            </>
+          }
+        </GraphWrapper>
+      </PageRowWrapper>
     </>
   );
 }

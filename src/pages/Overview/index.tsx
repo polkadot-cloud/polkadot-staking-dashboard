@@ -14,6 +14,7 @@ import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useSubscan } from '../../contexts/Subscan';
 import { SubscanButton } from '../../library/SubscanButton';
+import { PageTitle } from '../../library/PageTitle';
 
 export const Overview = (props: PageProps) => {
 
@@ -48,8 +49,8 @@ export const Overview = (props: PageProps) => {
 
   return (
     <>
-      <h1 className='title'>What's Happening</h1>
-      <StatBoxList items={items} />
+      <PageTitle title="What's Happening" />
+        <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper>
           <GraphWrapper

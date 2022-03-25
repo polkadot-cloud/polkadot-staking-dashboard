@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageProps } from '../types';
-import { useNetworkMetrics } from '../../contexts/Network';
 import { PageRowWrapper } from '../../Wrappers';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { MainWrapper } from '../../library/Layout/Wrappers';
+import { PageTitle } from '../../library/PageTitle';
 
 export const Pools = (props: PageProps) => {
 
@@ -14,7 +14,7 @@ export const Pools = (props: PageProps) => {
 
   return (
     <>
-      <h1 className='title'>{title}</h1>
+      <PageTitle title={title} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper>
           <GraphWrapper>

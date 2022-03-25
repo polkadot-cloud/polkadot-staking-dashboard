@@ -3,6 +3,8 @@
 
 import { PageProps } from '../types';
 import { Wrapper, ItemsWrapper, Item } from './Wrappers';
+import { PageTitle } from '../../library/PageTitle';
+import { PageRowWrapper } from '../../Wrappers';
 
 export const Projects = (props: PageProps) => {
 
@@ -39,25 +41,28 @@ export const Projects = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <h1 className='title'>{title}</h1>
+      <PageTitle title={title} />
 
-      <h3>Validator Programs</h3>
-      <ItemsWrapper variants={container} initial="hidden" animate="show">
-        <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
-          cool icon here
-        </Item>
-      </ItemsWrapper>
+      <PageRowWrapper>
+        <div>
+          <h3>Validator Programs</h3>
+          <ItemsWrapper variants={container} initial="hidden" animate="show">
+            <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
+              cool icon here
+            </Item>
+          </ItemsWrapper>
 
-      <h3>Staking in the Polkadot Ecosystem</h3>
-      <ItemsWrapper variants={container} initial="hidden" animate="show">
-        <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
-          cool icon here
-        </Item>
-        <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
-          cool icon here
-        </Item>
-      </ItemsWrapper>
-
+          <h3>Staking in the Polkadot Ecosystem</h3>
+          <ItemsWrapper variants={container} initial="hidden" animate="show">
+            <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
+              cool icon here
+            </Item>
+            <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
+              cool icon here
+            </Item>
+          </ItemsWrapper>
+        </div>
+      </PageRowWrapper>
     </Wrapper>
   );
 }
