@@ -30,16 +30,15 @@ export const Headers = () => {
   return (
     <Wrapper>
       <div className='menu'>
-        <button
-          style={{ width: '50px' }}
+        <Item
+          style={{ width: '50px', flex: 0 }}
           onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
         >
           <FontAwesomeIcon
             icon={faBars}
-            transform={`grow-5`}
             style={{ cursor: 'pointer', color: '#666' }}
           />
-        </button>
+        </Item>
       </div>
       {/* connected, display stash and controller */}
       {connect.status === 1 &&

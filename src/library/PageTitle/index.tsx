@@ -16,7 +16,7 @@ export const PageTitle = ({ title }: any) => {
       ([e]) => setIsSticky(e.intersectionRatio < 1),
       {
         threshold: [1],
-        rootMargin: '-1px 0px 0px 0px',  // alternativly, use this and set `top:0` in the CSS
+        rootMargin: '-1px 0px 0px 0px',
       }
     )
 
@@ -26,7 +26,7 @@ export const PageTitle = ({ title }: any) => {
     return function () {
       observer.unobserve(cachedRef);
     }
-  }, [])
+  }, [isSticky])
 
   return (
     <PageTitleWrapper ref={ref} isSticky={isSticky}>

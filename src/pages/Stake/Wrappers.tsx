@@ -33,7 +33,8 @@ export const NominateWrapper = styled.div`
   > button {
     display: flex;
     flex-flow: column wrap;
-    flex-basis: 100%;
+    flex: 1;
+    width: 100%;
     align-items: center;
     justify-content: flex-start;
     padding: 1rem;
