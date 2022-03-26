@@ -18,6 +18,7 @@ export const Wrapper = styled(motion.div) <any>`
   left: 0px;
   overflow: hidden;
   background: rgba(229,229,229,1);
+  z-index: 6;
 `;
 
 export const Summary = styled.div`

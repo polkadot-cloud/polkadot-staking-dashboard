@@ -12,7 +12,6 @@ export const GraphWrapper = styled.div<any>`
   flex-flow: column nowrap;
   align-content: flex-start;
   align-items: flex-start;
-  width: 100%;
   flex: 1;
   margin-top: 1.2rem;
   position: relative;
@@ -88,6 +87,7 @@ export const GraphWrapper = styled.div<any>`
     justify-content: flex-start;
     align-items: flex-start;
     height: 190px;
+    flex: 1;
 
     .extra {
       flex: 1;

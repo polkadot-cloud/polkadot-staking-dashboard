@@ -3,26 +3,41 @@
 
 import { motion } from "framer-motion";
 import styled from 'styled-components';
+import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const Wrapper = styled.div`
   position: sticky;
   top: 0px;
   right: 0px;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: flex-end;
+  align-items: center;
+  align-content: center;
   padding: 0.75rem  1rem; 
   transition: all 0.15s;
   z-index: 5;
+  margin-bottom: 0.5rem;
+
 
   /* overwrite default cursor behaviour for Identicon  */
   svg, .ui--IdentityIcon {
     cursor: default;
   }
+
+  .menu {
+    display: none;
+    @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-items: center;
+      flex-grow: 1;
+    }
+  }
 `;
 
 export const HeadingWrapper = styled.div`
-  margin-bottom: 0.5rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;

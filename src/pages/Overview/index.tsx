@@ -50,7 +50,7 @@ export const Overview = (props: PageProps) => {
   return (
     <>
       <PageTitle title="What's Happening" />
-        <StatBoxList items={items} />
+      <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper>
           <GraphWrapper

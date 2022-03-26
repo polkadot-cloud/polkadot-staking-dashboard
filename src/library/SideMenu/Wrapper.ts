@@ -3,6 +3,7 @@
 
 import { motion } from "framer-motion";
 import styled from 'styled-components';
+import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const LogoWrapper = styled(motion.button)`
   display: flex;
@@ -17,22 +18,25 @@ export const LogoWrapper = styled(motion.button)`
 export const Wrapper = styled.div`
   background: none;
   border-radius: 0.7rem;
-  transition: all 0.2s;
   padding: 1rem 0.5rem;
   overflow: auto;
-  flex: 1;
+  flex-grow: 1;
   margin: 1.2rem 0 3.8rem 1rem;
-  min-width: 180px;
   &:hover {
     transform: scale(1.005);
   }
   display: flex;
   flex-flow: column nowrap;
   background: #eee;
-  background: rgba(0,0,0,0.027);
+  background: rgb(242,242,242);
+  background: linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%);
+  backdrop-filter: blur(4px);
 
-  &:hover {
-    /* background: #f6f6f6; */
+  .close-menu {
+    display: none;
+    @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+      display: inline;
+    }
   }
 
   section {
@@ -59,7 +63,7 @@ export const ItemWrapper = styled(motion.div) <any>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.8rem 0.5rem;
+  padding: 0.9rem 0.5rem;
   margin: 0.35rem 0;
   font-size: 1.08rem;
 

@@ -15,6 +15,7 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@types/lodash.throttle": "^4.1.6",
     "@types/react-helmet": "^6.1.5",
     "bn.js": "^5.2.0",
     "chart.js": "^3.7.1",
@@ -22,6 +23,7 @@
     "che-react-number-easing": "^0.1.4",
     "follow-redirects": ">=1.14.8",
     "framer-motion": "^6.2.4",
+    "lodash.throttle": "^4.1.1",
     "moment": "^2.29.1",
     "nth-check": ">=2.0.1",
     "react": "^18.0.0-beta-24dd07bd2-20211208",
@@ -49,6 +51,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",

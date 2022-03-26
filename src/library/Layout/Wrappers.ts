@@ -4,11 +4,11 @@
 import styled from 'styled-components';
 
 export const MainWrapper = styled.div<any>`
+  box-sizing: border-box;
   flex-basis: 60%;
   max-width: 60%;
   overflow: hidden;
-  min-width: 500px;
-  flex-grow: 1;
+  flex: 1;
   ${props => props.paddingLeft && `
   padding-left: 1.2rem;`
   }
@@ -18,8 +18,8 @@ export const MainWrapper = styled.div<any>`
 `;
 
 export const SecondaryWrapper = styled.div`
+  box-sizing: border-box;
+  flex-basis: 40%;
   border-radius: 1rem;
   flex: 1;
-  width: 100%;
-  min-width: 400px;
 `;

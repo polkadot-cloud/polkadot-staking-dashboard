@@ -4,13 +4,16 @@
 import { ItemWrapper as Wrapper } from './Wrapper';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useUi } from '../../contexts/UI';
 
 export const Item = (props: any) => {
+
+  const { setSideMenu }: any = useUi();
 
   const { name, active, to, icon, action } = props;
 
   return (
-    <Link to={to}>
+    <Link to={to} onClick={() => setSideMenu(0)}>
       <Wrapper
         className={active ? `active` : `inactive`}
         whileHover={{ scale: 1.02 }}

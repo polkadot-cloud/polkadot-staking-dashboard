@@ -11,15 +11,17 @@ import { useLocation } from 'react-router-dom';
 import { useMessages } from '../../contexts/Messages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
+import { useUi } from '../../contexts/UI';
 
 export const SideMenu = () => {
 
   const { activeAccount, status: connectStatus }: any = useConnect();
   const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
+  const { setSideMenu, sideMenuOpen }: any = useUi();
 
   const [pageConfig, setPageConfig]: any = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -55,6 +57,15 @@ export const SideMenu = () => {
   return (
     <Wrapper>
       <section>
+
+        <button
+          className='close-menu'
+          style={{ fontVariationSettings: "'wght' 450", margin: '0.2rem 0 1rem 0', opacity: 0.7 }}
+          onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
+        >
+          Close
+        </button>
+
         <LogoWrapper
           onClick={() => { window.open(POLKADOT_URL, '_blank') }}
           whileHover={{ scale: 1.02 }}

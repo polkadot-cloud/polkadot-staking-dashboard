@@ -7,10 +7,11 @@ import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faCogs } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faCogs, faBars } from '@fortawesome/free-solid-svg-icons';
 import Dropdown from './Dropdown';
 import { Account } from '../Account';
 import { Controller } from './Controller';
+import { useUi } from '../../contexts/UI';
 
 export const Headers = () => {
 
@@ -19,6 +20,7 @@ export const Headers = () => {
   const assistant = useAssistant();
   const connect = useConnect();
   const modal = useModal();
+  const { setSideMenu, sideMenuOpen }: any = useUi();
 
   // subscribe to web3 accounts
   const connectWeb3 = async () => {
@@ -27,6 +29,18 @@ export const Headers = () => {
 
   return (
     <Wrapper>
+      <div className='menu'>
+        <button
+          style={{ width: '50px' }}
+          onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
+        >
+          <FontAwesomeIcon
+            icon={faBars}
+            transform={`grow-5`}
+            style={{ cursor: 'pointer', color: '#666' }}
+          />
+        </button>
+      </div>
       {/* connected, display stash and controller */}
       {connect.status === 1 &&
         <>

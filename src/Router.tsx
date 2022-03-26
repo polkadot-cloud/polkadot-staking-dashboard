@@ -24,16 +24,35 @@ import { Overview } from './pages/Overview';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import { TITLE_DEFAULT } from './constants';
-
+import { useUi } from './contexts/UI';
+import throttle from 'lodash.throttle';
+import { SIDE_MENU_STICKY_THRESHOLD } from './constants';
 
 export const RouterInner = () => {
 
   const { pathname } = useLocation();
+  const { sideMenuOpen, setSideMenu } = useUi();
 
   // scroll to top on page change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+
+  // listen to window resize to hide SideMenu
+  useEffect(() => {
+    window.addEventListener('resize', windowThrottle);
+    return (() => {
+      window.removeEventListener("resize", windowThrottle);
+    })
+  }, []);
+
+  const throttleCallback = () => {
+    if (window.innerWidth >= SIDE_MENU_STICKY_THRESHOLD) {
+      setSideMenu(0);
+    }
+  }
+  const windowThrottle = throttle(throttleCallback, 200, { trailing: true, leading: false });
 
   return (
     <>
@@ -48,7 +67,7 @@ export const RouterInner = () => {
           <Assistant />
 
           {/* Left side menu */}
-          <SideInterfaceWrapper>
+          <SideInterfaceWrapper open={sideMenuOpen}>
             <SideMenu />
           </SideInterfaceWrapper>
 
@@ -68,13 +87,13 @@ export const RouterInner = () => {
 
                         <PageWrapper
                           key={`main_interface_key__${pageIndex}`}
-                          initial={{ opacity: 0, y: 20 }}
+                          initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 20 }}
+                          exit={{ opacity: 0, y: 10 }}
                           transition={{
-                            duration: 0.8,
-                            type: "spring",
-                            bounce: 0.4
+                            duration: 0.2,
+                            // type: "spring",
+                            // bounce: 0.4
                           }}
                         >
                           <Helmet>

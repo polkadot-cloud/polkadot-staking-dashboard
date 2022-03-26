@@ -4,6 +4,7 @@
 import { APIContextWrapper } from './contexts/Api';
 import { ConnectContextWrapper } from './contexts/Connect';
 import { AssistantContextWrapper } from './contexts/Assistant';
+import { UIContextWrapper } from './contexts/UI';
 import { ModalContextWrapper } from './contexts/Modal';
 import { Entry } from './Entry';
 import { DEFAULT_NETWORK } from './constants';
@@ -18,15 +19,17 @@ function App () {
   }
 
   return (
-    <ConnectContextWrapper>
-      <APIContextWrapper>
-        <AssistantContextWrapper>
-          <ModalContextWrapper>
-            <Entry />
-          </ModalContextWrapper>
-        </AssistantContextWrapper>
-      </APIContextWrapper>
-    </ConnectContextWrapper>
+    <UIContextWrapper>
+      <ConnectContextWrapper>
+        <APIContextWrapper>
+          <AssistantContextWrapper>
+            <ModalContextWrapper>
+              <Entry />
+            </ModalContextWrapper>
+          </AssistantContextWrapper>
+        </APIContextWrapper>
+      </ConnectContextWrapper>
+    </UIContextWrapper>
   );
 }
 

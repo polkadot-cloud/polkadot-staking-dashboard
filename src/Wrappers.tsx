@@ -3,12 +3,12 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MINIMUM_WIDTH, INTERFACE_MAXIMUM_WIDTH } from './constants';
+import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MAXIMUM_WIDTH, SIDE_MENU_STICKY_THRESHOLD } from './constants';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
+    box-sizing: border-box;
     width: 100%;
-    min-width: ${INTERFACE_MINIMUM_WIDTH}px;
     background: #fbfbfb;
     background: linear-gradient(180deg, rgba(249,249,249,1) 0%, rgba(249,249,249,1) 100px, rgba(229,229,229,1) 100%);
     background-attachment: fixed;
@@ -20,6 +20,7 @@ export const EntryWrapper = styled.div`
 
 // Body interface wrapper
 export const BodyInterfaceWrapper = styled.div`
+    box-sizing: border-box;
     display: flex;
     flex-flow: row nowrap;
     position: relative;
@@ -27,43 +28,50 @@ export const BodyInterfaceWrapper = styled.div`
 `;
 
 // Side interface wrapper
-export const SideInterfaceWrapper = styled.div`
+export const SideInterfaceWrapper = styled.div<any>`
+    box-sizing: border-box;
     height: 100vh;
-    min-width: ${SIDE_MENU_INTERFACE_WIDTH}px;
     display: flex;
     flex-flow: column nowrap;
     position: sticky;
     top: 0px;
+    z-index: 6;
+    flex: 0;
+    overflow: hidden;
+    min-width: ${SIDE_MENU_INTERFACE_WIDTH}px;
+    max-width: ${SIDE_MENU_INTERFACE_WIDTH}px;
+    transition: all 0.15s ease-in-out;
+
+    @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+        position: absolute;
+        top: 0;
+        left: ${props => props.open ? 0 : '-200px'};
+    }
 `;
 
 // Main interface wrapper
 export const MainInterfaceWrapper = styled.div`
+    box-sizing: border-box;
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
-    h1.title {
-        font-size: 1.7rem;
-        font-variation-settings: 'wght' 460;
-        margin-bottom: 0.3rem;
-        color: #333;
-    }
 `;
 
 // Page wrapper
 export const PageWrapper = styled(motion.div)`
+    box-sizing: border-box;
     display: flex;
     flex-flow: column nowrap;
-    padding: 0 0 4.5rem 0;
-    flex: 1;
+    padding-bottom: 4.5rem;
     max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
+    flex: 1;
 `;
 
 // Sticky page title wrapper
 export const PageTitleWrapper = styled.header<any>` 
+    box-sizing: border-box;
     position: sticky;
     top: 0px;
-    padding-left: 2rem;
-    padding-right: 2rem;
     padding-top: ${props => props.isSticky ? '4vh ' : '1.8vh '};
     padding-bottom: ${props => props.isSticky ? '1rem ' : '0.25vh '};
     width: 100%;
@@ -80,21 +88,22 @@ export const PageTitleWrapper = styled.header<any>`
      font-size: ${props => props.isSticky ? '1.5rem ' : '1.7rem'};
      transition: font-size 0.5s;
      font-variation-settings: 'wght' 440;
+     padding-left: 2rem;
+     padding-right: 2rem;
     }
 `;
 
 // Page Row wrapper
 export const PageRowWrapper = styled.div<any>`
+    box-sizing: border-box;
     margin-top: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
     margin-bottom: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
     display: flex;
     flex-shrink: 0;
     flex-flow: row nowrap;
     width: 100%;
-    box-sizing: border-box;
-    overflow-x: scroll;
-    margin: 0 2rem;
-
+    padding-left: 2rem;
+    padding-right: 2rem;
     * {
         box-sizing: border-box;
     }
