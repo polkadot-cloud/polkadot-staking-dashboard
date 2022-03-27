@@ -6,7 +6,7 @@ import { PageProps } from '../types';
 import { Wrapper, NominateWrapper, StakingAccount } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
-import { GraphWrapper } from '../../library/Graphs/Wrappers';
+import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
 import BondedGraph from './BondedGraph';
 import { motion } from 'framer-motion';
 import { Nominations } from './Nominations';
@@ -109,30 +109,34 @@ export const Stake = (props: PageProps) => {
               </ButtonRow>
             </GraphWrapper>
           }
-          <GraphWrapper>
-            <h3>Bonded Funds</h3>
-            <div className='graph_with_extra'>
-              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
-                <BondedGraph
-                  active={planckToDot(active)}
-                  unlocking={planckToDot(totalUnlocking)}
-                  remaining={planckToDot(remaining)}
-                  total={total}
-                />
-              </div>
-              {/* once staking, have control over bonding */}
-              {controller !== null &&
-                <ButtonRow style={{ height: '190px' }}>
-                  <Button title='Bond Extra' />
-                  <Button title='Unbond' />
-                </ButtonRow>
-              }
+          <SectionWrapper>
+            <div className='head'>
+              <h3>Bonded Funds</h3>
             </div>
+            <GraphWrapper>
+              <div className='graph_with_extra'>
+                <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
+                  <BondedGraph
+                    active={planckToDot(active)}
+                    unlocking={planckToDot(totalUnlocking)}
+                    remaining={planckToDot(remaining)}
+                    total={total}
+                  />
+                </div>
+                {/* once staking, have control over bonding */}
+                {controller !== null &&
+                  <ButtonRow style={{ height: '190px', paddingRight: '1rem' }}>
+                    <Button title='Bond Extra' />
+                    <Button title='Unbond' />
+                  </ButtonRow>
+                }
+              </div>
+            </GraphWrapper>
             <Nominations nominations={nominations} />
-          </GraphWrapper>
+          </SectionWrapper>
         </MainWrapper>
         <SecondaryWrapper>
-          <GraphWrapper>
+          <SectionWrapper>
             <h3>Accounts</h3>
             <h4>Stash</h4>
             <StakingAccount>
@@ -150,9 +154,9 @@ export const Stake = (props: PageProps) => {
                 address={controller}
               /> <Button title='Set Controller' />
             </StakingAccount>
-          </GraphWrapper>
+          </SectionWrapper>
 
-          <GraphWrapper>
+          <SectionWrapper>
             <h3>Choose Validators</h3>
             <NominateWrapper style={{ marginTop: '0.5rem' }}>
               <motion.button whileHover={{ scale: 1.01 }} onClick={handleBrowseValidatorsClick}>
@@ -183,7 +187,7 @@ export const Stake = (props: PageProps) => {
                 </div>
               </motion.button>
             </NominateWrapper>
-          </GraphWrapper>
+          </SectionWrapper>
 
         </SecondaryWrapper>
       </PageRowWrapper>

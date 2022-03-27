@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-export const GraphWrapper = styled.div<any>`
+export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
   padding: 1rem 1.2rem;
   border-radius: 1rem;
@@ -15,6 +15,26 @@ export const GraphWrapper = styled.div<any>`
   flex: 1;
   margin-top: 1.2rem;
   position: relative;
+  overflow: hidden;
+`;
+
+export const GraphWrapper = styled.div<any>`
+  box-sizing: border-box;
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.7);
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex: 1;
+  margin-top: 1.2rem;
+  position: relative;
+  overflow: hidden;
+
+  .inner {
+    width: 100%;
+    height: 100%;
+  }
 
   .label {
     position: absolute;
@@ -27,6 +47,9 @@ export const GraphWrapper = styled.div<any>`
     padding: 0.2rem 0.4rem;
     color: #fff;
     opacity: 0.8;
+  }
+  .head {
+    padding: 1rem 1.2rem 0 1.2rem;
   }
 
   h1, h4 {
@@ -72,11 +95,12 @@ export const GraphWrapper = styled.div<any>`
     flex-flow: row wrap;
     justify-content: center;
     width: 100%;
-    margin-top: 1.5rem;
+    padding: 1rem 1.2rem;
+
   }
   .graph_line {
     border-radius: 0.75rem;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     margin-left: 1rem;
     padding: 1rem 1rem 0.5rem 1rem;
   }

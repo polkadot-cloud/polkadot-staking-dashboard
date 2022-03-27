@@ -19,7 +19,7 @@ export class BondedGraph extends React.Component<any, any> {
   render () {
 
     const { network }: any = this.context;
-
+    
     let { active, unlocking, remaining, total } = this.props;
 
     let zeroBalance = false;

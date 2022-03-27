@@ -15,6 +15,8 @@ import { useConnect } from '../../contexts/Connect';
 import { useSubscan } from '../../contexts/Subscan';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PageTitle } from '../../library/PageTitle';
+import { planckToDot } from '../../Utils';
+import moment from 'moment';
 
 export const Overview = (props: PageProps) => {
 
@@ -47,18 +49,22 @@ export const Overview = (props: PageProps) => {
 
   const GRAPH_HEIGHT = 430;
 
+  let lastPayout: any = null;
+  if (payouts.length > 0) {
+    let _last = payouts[payouts.length - 1];
+    lastPayout = {
+      amount: planckToDot(_last['amount']),
+      block_timestamp: _last['block_timestamp'] + "",
+    };
+  }
+
   return (
     <>
       <PageTitle title="What's Happening" />
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper>
-          <GraphWrapper
-            style={{ minHeight: GRAPH_HEIGHT }}
-            flex
-          >
-            <BalanceGraph network={network} />
-          </GraphWrapper>
+          <BalanceGraph network={network} />
         </SecondaryWrapper>
         <MainWrapper paddingLeft>
           <GraphWrapper
@@ -66,7 +72,12 @@ export const Overview = (props: PageProps) => {
             flex
           >
             <SubscanButton />
-            <h3>Recent Payouts</h3>
+            <div className='head'>
+              <h3>Recent Payouts</h3>
+              <h1>
+                {lastPayout === null ? 0 : lastPayout.amount} {network.unit}&nbsp;<span className='fiat'>{lastPayout === null ? `` : moment.unix(lastPayout['block_timestamp']).fromNow()}</span>
+              </h1>
+            </div>
             <Payouts account={activeAccount} payouts={payouts.slice(50, 60)} />
           </GraphWrapper>
         </MainWrapper>

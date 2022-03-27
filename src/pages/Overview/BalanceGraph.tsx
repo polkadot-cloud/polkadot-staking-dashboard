@@ -8,11 +8,12 @@ import { useApi, APIContext } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { planckToDot, fiatAmount, humanNumber } from '../../Utils';
+import { GraphWrapper } from '../../library/Graphs/Wrappers';
+import { useSize, formatSize } from '../../library/Graphs/Utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BalanceGraphInner = (props: any) => {
-
   const { network }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { getAccountBalance }: any = useBalances();
@@ -47,10 +48,10 @@ export const BalanceGraphInner = (props: any) => {
     spacing: zeroBalance ? 0 : 5,
     plugins: {
       legend: {
+        display: true,
         padding: {
           right: 10,
         },
-        display: true,
         position: 'left' as const,
         align: 'center' as const,
         labels: {
@@ -90,16 +91,26 @@ export const BalanceGraphInner = (props: any) => {
     ],
   };
 
+  const ref: any = React.useRef();
+  let size = useSize(ref.current);
+  let { width, height, minHeight } = formatSize(size, 352);
+
   return (
     <>
-      <h3>{network.unit} Balance</h3>
-      <h1>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h1>
-      <div className='graph' style={{ maxWidth: 400, paddingRight: 10, }}>
-        <Doughnut
-          options={options}
-          data={data}
-        />
-      </div>
+      <GraphWrapper flex>
+        <div className='head'>
+          <h3>{network.unit} Balance</h3>
+          <h1>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h1>
+        </div>
+        <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
+          <div className='graph donut' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
+            <Doughnut
+              options={options}
+              data={data}
+            />
+          </div>
+        </div>
+      </GraphWrapper>
     </>
   );
 }

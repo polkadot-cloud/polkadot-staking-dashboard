@@ -12,7 +12,7 @@ export const Wrapper = styled(motion.div) <any>`
 
   > div {
     padding: 0.75rem;
-    flex-grow: 1;
+    flex: 1;
     background: linear-gradient(90deg, rgba(242,242,242,1) 0%, rgba(242,242,242,0.6) 100%);
     border-radius: 0.75rem;
     display: flex;
@@ -34,7 +34,7 @@ export const Wrapper = styled(motion.div) <any>`
     }
 
     h4 {
-      margin-top: 0;
+      margin: 0;
     }
   }
 `;

@@ -7,7 +7,7 @@ import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { useStakingMetrics } from '../../contexts/Staking';
-import { GraphWrapper } from '../../library/Graphs/Wrappers';
+import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
@@ -51,7 +51,7 @@ export const Browse = (props: PageProps) => {
       <PageTitle title={title} />
       <StatBoxList title="This Session" items={items} />
       <PageRowWrapper>
-        <GraphWrapper>
+        <SectionWrapper>
           <h3>Browse Active Validators</h3>
           {isReady() &&
             <>
@@ -70,7 +70,7 @@ export const Browse = (props: PageProps) => {
               }
             </>
           }
-        </GraphWrapper>
+        </SectionWrapper>
       </PageRowWrapper>
     </>
   );

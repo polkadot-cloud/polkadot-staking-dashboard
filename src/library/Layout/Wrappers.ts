@@ -20,6 +20,7 @@ export const MainWrapper = styled.div<any>`
 export const SecondaryWrapper = styled.div`
   box-sizing: border-box;
   flex-basis: 40%;
+  max-width: 40%;
   border-radius: 1rem;
   flex: 1;
 `;
