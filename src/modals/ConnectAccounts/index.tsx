@@ -13,7 +13,7 @@ export const ConnectAccounts = () => {
 
   return (
     <Wrapper>
-      <h2>Switch Accounts</h2>
+      <h2>Choose Stash Account</h2>
       {accounts.map((item: any, index: number) => {
 
         const { address, name } = item;

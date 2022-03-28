@@ -9,9 +9,12 @@ import { motion } from 'framer-motion';
 
 export const ValidatorInner = (props: any) => {
 
-  const { address, meta, synced } = props;
+  const { synced, address, identity, prefs } = props;
 
-  let display = meta?.identity?.info?.display?.Raw ?? null;
+  let display = identity?.info?.display?.Raw ?? null;
+
+  // prefs.commission
+  // prefs.blocked
 
   return (
     <Wrapper>
@@ -22,14 +25,14 @@ export const ValidatorInner = (props: any) => {
           theme="polkadot"
           style={{ cursor: 'default' }}
         />
-        {synced &&
+        {synced.identities &&
           <motion.div
             className='right'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            <h4>{display === null ? clipAddress(address) : meta.identity.info.display.Raw}</h4>
+            <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
           </motion.div>
         }
       </div>
@@ -39,7 +42,7 @@ export const ValidatorInner = (props: any) => {
 
 export class Validator extends React.Component<any, any> {
   shouldComponentUpdate (nextProps: any, nextState: any) {
-    return (this.props.meta !== nextProps.meta);
+    return (this.props !== nextProps);
   }
 
   render () {

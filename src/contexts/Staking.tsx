@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, } from 'react';
 import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
 import BN from "bn.js";
@@ -15,9 +15,9 @@ export interface StakingMetricsContextState {
   VALIDATORS_PER_BATCH_MUTLI: number,
   THROTTLE_VALIDATOR_RENDER: number,
   staking: any;
-  validators: any;
+  session: any;
   meta: any;
-  fetchSessionValidators: () => void;
+  fetchValidators: () => void;
   fetchValidatorMetaBatch: (k: string, v: []) => void;
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
@@ -28,9 +28,9 @@ export const StakingMetricsContext: React.Context<StakingMetricsContextState> = 
   VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
   THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
   staking: {},
-  validators: [],
+  session: [],
   meta: {},
-  fetchSessionValidators: () => { },
+  fetchValidators: () => { },
   fetchValidatorMetaBatch: (k: string, v: []) => { },
   getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
@@ -55,15 +55,22 @@ export const StakingMetricsContextWrapper = (props: any) => {
     unsub: null,
   });
 
-  const [sessionValidators, setSessionValidators]: any = useState({
-    validators: [],
+  const [sessionValidators, setValidators]: any = useState({
+    session: [],
     unsub: null,
   });
 
-  const [validatorMetaBatches, setValidatorMetaBatch]: any = useState({
+  const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({
     meta: {},
     unsubs: [],
-  })
+  });
+
+  const validatorMetaBatchesRef = useRef(validatorMetaBatches);
+
+  const setValidatorMetaBatch = (val: any) => {
+    validatorMetaBatchesRef.current = val;
+    _setValidatorMetaBatch(val);
+  }
 
   const subscribeToStakingkMetrics = async (api: any) => {
     if (isReady() && metrics.activeEra.index !== 0) {
@@ -108,19 +115,21 @@ export const StakingMetricsContextWrapper = (props: any) => {
     }
   }
 
+
   /*
     Fetches a new batch of subscribed validator metadata. Stores the returning
     metadata alongside the unsubscribe function in state.
     structure:
     {
       key: {
-        validators: [
+        [
           {
-            address: string,
-            identity: {...},
-          }
-        ],
-      },
+          addresses [],
+          prefs: [],
+          identities: [],
+        }
+      ]
+    },
   };
   */
   const fetchValidatorMetaBatch = async (key: string, validators: []) => {
@@ -128,45 +137,64 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
     if (!validators.length) { return; }
 
+    // store batch addresses
+    let batchesUpdated = Object.assign(validatorMetaBatches);
+    batchesUpdated.meta[key] = {};
+    batchesUpdated.meta[key].addresses = validators;
+    setValidatorMetaBatch(batchesUpdated);
+
     // subscribe to identities
     const unsub = await api.query.identity.identityOf.multi(validators, (_identities: any) => {
       let identities = [];
       for (let i = 0; i < _identities.length; i++) {
-        identities.push({
-          address: validators[i],
-          identity: _identities[i].toHuman(),
-        });
+        identities.push(_identities[i].toHuman());
       }
-      validatorMetaBatches.meta[key] = identities;
-
-      // commit all meta data
-      setValidatorMetaBatch(validatorMetaBatches);
+      // commit update
+      let batchesUpdated = Object.assign(validatorMetaBatches);
+      batchesUpdated.meta[key].identities = identities;
+      setValidatorMetaBatch(batchesUpdated);
     });
 
-    // commit unsub
+
+    // subscribe to validator prefs
+    const unsub2 = await api.query.staking.validators.multi(validators, (_validators: any) => {
+      let prefs = [];
+      for (let i = 0; i < _validators.length; i++) {
+        prefs.push(_validators[i].toHuman());
+      }
+      // commit update
+      let batchesUpdated = Object.assign(validatorMetaBatches);
+      batchesUpdated.meta[key].prefs = prefs;
+      setValidatorMetaBatch(batchesUpdated);
+    });
+
+    // commit unsubs
     const { unsubs } = validatorMetaBatches;
-    unsubs.push([unsub]);
+    unsubs.push([unsub, unsub2]);
     setValidatorMetaBatch({
       ...validatorMetaBatches,
       unsubs: unsubs,
     });
   }
 
-  const fetchSessionValidators = async () => {
+  /* 
+   * Fetches the currently active session's validator set.
+   */
+  const fetchValidators = async () => {
     if (!isReady()) { return }
 
     // subscribe to session validators
     const unsub = await api.queryMulti([
       api.query.session.validators,
-    ], ([_validators]: any) => {
+    ], ([_sessionValidators,]: any) => {
 
-      setSessionValidators({
+      setValidators({
         ...sessionValidators,
-        validators: _validators.toHuman(),
+        session: _sessionValidators.toHuman(),
       });
     });
 
-    setSessionValidators({
+    setValidators({
       ...sessionValidators,
       unsub: unsub,
     });
@@ -215,12 +243,12 @@ export const StakingMetricsContextWrapper = (props: any) => {
       value={{
         VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
         THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
-        fetchSessionValidators: fetchSessionValidators,
+        fetchValidators: fetchValidators,
         fetchValidatorMetaBatch: fetchValidatorMetaBatch,
         getValidatorMetaBatch: getValidatorMetaBatch,
         removeValidatorMetaBatch: removeValidatorMetaBatch,
         staking: stakingMetrics,
-        validators: sessionValidators.validators,
+        session: sessionValidators.session,
         meta: validatorMetaBatches.meta,
       }}>
       {props.children}

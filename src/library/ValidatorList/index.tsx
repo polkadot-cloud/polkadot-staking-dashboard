@@ -41,7 +41,6 @@ export const ValidatorListInner = (props: any) => {
   }, [props.validators])
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
-  const listValidators = validators.slice(0, batchEnd);
 
   useEffect(() => {
     if (batchEnd >= validators.length) {
@@ -50,8 +49,12 @@ export const ValidatorListInner = (props: any) => {
     setTimeout(() => {
       setRenderIteration(renderIterationRef.current + 1)
     }, 250);
-
   }, [renderIterationRef.current, props.validators]);
+
+
+  if (!validators.length) {
+    return (<></>);
+  }
 
   const container = {
     hidden: { opacity: 0 },
@@ -74,11 +77,16 @@ export const ValidatorListInner = (props: any) => {
     }
   };
 
-  if (!validators.length) {
-    return (<></>);
-  }
-
   const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
+  const identities = meta.identities ?? [];
+  const prefs = meta.prefs ?? [];
+
+  const synced = {
+    identities: (identities.length > 0) ?? false,
+    prefs: (prefs.length > 0) ?? false,
+  };
+
+  const listValidators = validators.slice(0, batchEnd);
 
   return (
     <ListWrapper>
@@ -95,15 +103,18 @@ export const ValidatorListInner = (props: any) => {
         initial="hidden"
         animate="show"
       >
-        {listValidators.map((addr: string, index: number) =>
-          <motion.div className={`item ${layout === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
-            <Validator
-              address={addr}
-              meta={meta[index] ?? null}
-              synced={metaSynced}
-            />
-          </motion.div>
-        )}
+        {listValidators.map((addr: string, index: number) => {
+          return (
+            <motion.div className={`item ${layout === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
+              <Validator
+                address={addr}
+                identity={identities[index]}
+                prefs={prefs[index]}
+                synced={synced}
+              />
+            </motion.div>
+          )
+        })}
       </List>
     </ListWrapper>
   );

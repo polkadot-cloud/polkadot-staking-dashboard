@@ -21,8 +21,8 @@ export const Item = styled(motion.div)`
   justify-content: flex-start;
   align-items: flex-start;
   margin: 1rem 0.25rem;
-  padding: 1rem 1rem;
-  background: linear-gradient(90deg, rgba(242,242,242,0.6) 0%, rgba(242,242,242,0.35) 100%);
+  padding: 1.2rem 1rem;
+  background: linear-gradient(90deg, rgba(244,244,244,0.85) 0%, rgba(244,244,244,0.65) 100%);
   border-radius: 0.5rem;
 
   h3 {
@@ -32,6 +32,9 @@ export const Item = styled(motion.div)`
     margin: 0 0 0.8rem;;
     padding: 0.2rem 0;
 
+    &.neutral {
+      color: #d33079;
+    }
     &.danger {
       color: #d2545d;
     }

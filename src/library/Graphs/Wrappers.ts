@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
-  padding: 1rem 1.2rem;
+  padding: ${props => props.transparent ? '1rem 0rem' : '1rem 1.2rem'};
   border-radius: 1rem;
-  background: rgba(255,255,255,0.7);
+  background: ${props => props.transparent ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.7)'};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
@@ -17,7 +17,6 @@ export const SectionWrapper = styled.div<any>`
 
   h4 {
     margin: 0.75rem 0;
-
   }
 `;
 

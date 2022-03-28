@@ -11,6 +11,7 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
+import { planckToDot } from '../../Utils';
 
 export const Browse = (props: PageProps) => {
 
@@ -19,22 +20,17 @@ export const Browse = (props: PageProps) => {
   const { title } = page;
 
   const { metrics } = useNetworkMetrics();
-  const { validators, fetchSessionValidators }: any = useStakingMetrics();
+  const { session, fetchValidators, staking }: any = useStakingMetrics();
+  const { minNominatorBond } = staking;
 
   useEffect(() => {
-    fetchSessionValidators();
+    fetchValidators();
   }, [isReady()]);
 
   const items = [
     {
       label: "Active Validators",
-      value: 297,
-      unit: "",
-      format: "number",
-    },
-    {
-      label: "Current Epoch",
-      value: 1,
+      value: session.length,
       unit: "",
       format: "number",
     },
@@ -42,6 +38,12 @@ export const Browse = (props: PageProps) => {
       label: "Current Era",
       value: metrics.activeEra.index,
       unit: "",
+      format: "number",
+    },
+    {
+      label: "Min Nomination Bond",
+      value: planckToDot(minNominatorBond),
+      unit: "DOT",
       format: "number",
     },
   ];
@@ -55,15 +57,15 @@ export const Browse = (props: PageProps) => {
           <h3>Browse Active Validators</h3>
           {isReady() &&
             <>
-              {validators.length === 0 &&
+              {session.length === 0 &&
                 <div className='item'>
                   <h4>Fetching validators...</h4>
                 </div>
               }
 
-              {validators.length > 0 &&
+              {session.length > 0 &&
                 <ValidatorList
-                  validators={validators}
+                  validators={session}
                   batchKey='validators_browse'
                   layout='col'
                 />

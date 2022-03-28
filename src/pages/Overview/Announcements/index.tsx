@@ -7,13 +7,14 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import { useStakingMetrics } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
-import { humanNumber } from '../../../Utils';
-import { GraphWrapper } from '../../../library/Graphs/Wrappers';
+import { humanNumber, planckToDot } from '../../../Utils';
+import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 
 export const Announcements = () => {
 
-  const { isReady }: any = useApi();
+  const { isReady, network }: any = useApi();
   const { staking }: any = useStakingMetrics();
+  const { minNominatorBond } = staking;
 
   const container = {
     hidden: { opacity: 0 },
@@ -61,12 +62,21 @@ export const Announcements = () => {
     });
   }
 
+  // minimum nomination bond
+  announcements.push({
+    class: 'neutral',
+    title: `The Minimum Nomination Bond is now at ${planckToDot(minNominatorBond)} ${network.unit}`,
+    subtitle: `The minimum bonding amount of ${network.unit} to start nominating validators is now at ${planckToDot(minNominatorBond)} ${network.unit}.`,
+  })
+
+
+
   if (!announcements.length) {
     return (<></>);
   }
 
   return (
-    <GraphWrapper>
+    <SectionWrapper transparent>
       <Wrapper>
         <motion.div variants={container} initial="hidden" animate="show">
           <motion.div variants={listItem}>
@@ -86,7 +96,7 @@ export const Announcements = () => {
           )}
         </motion.div>
       </Wrapper>
-    </GraphWrapper>
+    </SectionWrapper>
   );
 }
 
