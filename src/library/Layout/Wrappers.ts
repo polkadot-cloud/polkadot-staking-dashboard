@@ -10,10 +10,10 @@ export const MainWrapper = styled.div<any>`
   overflow: hidden;
   flex: 1;
   ${props => props.paddingLeft && `
-  padding-left: 1.2rem;`
+  padding-left: 1rem;`
   }
   ${props => props.paddingRight && `
-  padding-right: 1.2rem;`
+  padding-right: 1rem;`
   }
 `;
 

@@ -50,7 +50,7 @@ export const Header = styled.div`
 `;
 
 
-export const List = styled(motion.div)`
+export const List = styled(motion.div) <any>`
   margin-top: 1rem;
   display: flex;
   flex-flow: row wrap;
@@ -69,7 +69,15 @@ export const List = styled(motion.div)`
     }
 
     &.col {
-      flex-basis: 50%;
+      flex-grow: 1;
+      flex-basis: 100%;
+      @media(min-width: 650px) {
+        flex-basis: 50%;
+      }
+      @media(min-width: 1250px) {
+        flex-basis: ${props => props.allowMoreCols ? `33%` : `50%`};
+      }
+     
     }
   }
 `;

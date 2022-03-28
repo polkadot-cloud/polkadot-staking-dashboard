@@ -73,3 +73,11 @@ button {
   cursor: pointer;
   font-variation-settings: 'wght' 525;
 }
+
+label {
+  font-size: 0.85rem;
+  font-variation-settings: 'wght' 450;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+}

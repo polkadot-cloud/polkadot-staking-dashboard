@@ -6,6 +6,8 @@ import { Wrapper } from './Wrapper';
 import Identicon from '@polkadot/react-identicon';
 import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPercentage } from '@fortawesome/free-solid-svg-icons';
 
 export const ValidatorInner = (props: any) => {
 
@@ -27,13 +29,23 @@ export const ValidatorInner = (props: any) => {
         />
         {synced.identities &&
           <motion.div
-            className='right'
+            className='identity'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
             <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
           </motion.div>
+        }
+        {synced.prefs &&
+          <label>
+            <FontAwesomeIcon
+              icon={faPercentage}
+              transform="shrink-1"
+              style={{ marginRight: '0.25rem' }}
+            />
+            {prefs.commission}
+          </label>
         }
       </div>
     </Wrapper>

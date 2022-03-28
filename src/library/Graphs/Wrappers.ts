@@ -13,7 +13,7 @@ export const SectionWrapper = styled.div<any>`
   align-content: flex-start;
   align-items: flex-start;
   flex: 1;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
 
   h4 {
     margin: 0.75rem 0;
@@ -29,7 +29,7 @@ export const GraphWrapper = styled.div<any>`
   align-content: flex-start;
   align-items: flex-start;
   flex: 1;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
   position: relative;
   overflow: hidden;
 

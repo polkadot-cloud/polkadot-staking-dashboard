@@ -68,6 +68,8 @@ export const Browse = (props: PageProps) => {
                   batchKey='validators_browse'
                   layout='col'
                   title='Active Validators'
+                  allowMoreCols
+                  allowFilters
                 />
               }
             </>

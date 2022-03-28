@@ -8,21 +8,22 @@ import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
 import { StakingMetricsContext, useStakingMetrics } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faGripVertical, faPercentage } from '@fortawesome/free-solid-svg-icons';
+import { useUi } from '../../contexts/UI';
+import { FiltersWrapper, Item } from './Filters';
 
 export const ValidatorListInner = (props: any) => {
 
+  const { setListFormat, listFormat }: any = useUi();
   const { isReady }: any = useApi();
   const {
     fetchValidatorMetaBatch,
     getValidatorMetaBatch,
     VALIDATORS_PER_BATCH_MUTLI,
   }: any = useStakingMetrics();
-  const { validators }: any = props;
+  const { validators, allowMoreCols, allowFilters }: any = props;
 
   const [renderIteration, _setRenderIteration]: any = useState(1);
-  const [metaSynced, setMetaSynced] = useState(false);
-  const [layout, setLayout] = useState(props.layout);
 
   const renderIterationRef = useRef(renderIteration);
 
@@ -33,7 +34,6 @@ export const ValidatorListInner = (props: any) => {
 
   useEffect(() => {
     fetchValidatorMetaBatch(props.batchKey, props.validators);
-    setMetaSynced(true);
   }, [isReady()]);
 
   useEffect(() => {
@@ -95,18 +95,45 @@ export const ValidatorListInner = (props: any) => {
           <h3>{props.title}</h3>
         </div>
         <div>
-          <button onClick={() => setLayout('row')}><FontAwesomeIcon icon={faBars} color={layout === 'row' ? '#d33079' : '#222'} /></button>
-          <button onClick={() => setLayout('col')}><FontAwesomeIcon icon={faGripVertical} color={layout === 'col' ? '#d33079' : '#222'} /></button>
+          <button onClick={() => setListFormat('row')}><FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : '#222'} /></button>
+          <button onClick={() => setListFormat('col')}><FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : '#222'} /></button>
         </div>
       </Header>
       <List
         variants={container}
         initial="hidden"
         animate="show"
+        allowMoreCols={allowMoreCols}
       >
+        {allowFilters &&
+          <FiltersWrapper>
+            <Item
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{
+                duration: 0.5,
+                type: "spring",
+                bounce: 0.4,
+              }}
+            >
+              <div>
+                <div className='icon'>
+                  <FontAwesomeIcon
+                    icon={faPercentage}
+                    color='#ccc'
+                    transform="grow-15"
+                  />
+                </div>
+              </div>
+              <div>
+                <p>lowest commission</p>
+              </div>
+            </Item>
+          </FiltersWrapper>
+        }
         {listValidators.map((addr: string, index: number) => {
           return (
-            <motion.div className={`item ${layout === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
+            <motion.div className={`item ${listFormat === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
               <Validator
                 address={addr}
                 identity={identities[index]}

@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
   padding: 1rem 0.5rem;
   overflow: auto;
   flex-grow: 1;
-  margin: 1.2rem 0 3.8rem 1rem;
+  margin: 1rem 0 3.6rem 1rem;
   &:hover {
     transform: scale(1.005);
   }
@@ -64,8 +64,8 @@ export const ItemWrapper = styled(motion.div) <any>`
   justify-content: flex-start;
   align-items: center;
   padding: 0.9rem 0.5rem;
-  margin: 0.35rem 0;
-  font-size: 1.08rem;
+  margin: 0.3rem 0;
+  font-size: 1rem;
 
   &.active {
     background: rgba(0,0,0,0.04);

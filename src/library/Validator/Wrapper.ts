@@ -11,7 +11,7 @@ export const Wrapper = styled(motion.div) <any>`
   width: 100%;
 
   > div {
-    padding: 0.75rem;
+    padding: 0.75rem 0.6rem;
     flex: 1;
     background: linear-gradient(90deg, rgba(242,242,242,1) 0%, rgba(242,242,242,0.6) 100%);
     border-radius: 0.75rem;
@@ -22,15 +22,20 @@ export const Wrapper = styled(motion.div) <any>`
     align-items: center;
     overflow-x: auto;
 
-    .right {
+    .identity {
       display: flex;
       margin-left: 0.75rem;
+      margin-right: 0.25rem;
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
       align-content: center;
       overflow: hidden;
       flex: 1;
+    }
+    label {
+      border-radius: 0.6rem;
+      color: #aaa;
     }
 
     h4 {

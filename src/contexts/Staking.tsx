@@ -160,7 +160,15 @@ export const StakingMetricsContextWrapper = (props: any) => {
     const unsub2 = await api.query.staking.validators.multi(validators, (_validators: any) => {
       let prefs = [];
       for (let i = 0; i < _validators.length; i++) {
-        prefs.push(_validators[i].toHuman());
+
+        let _prefs = _validators[i].toHuman();
+        // remove `%` from commission
+        let _commission = Number(_prefs.commission.slice(0, -1));
+
+        prefs.push({
+          commission: parseFloat(_commission.toFixed(2)),
+          blocked: _prefs.blocked,
+        });
       }
       // commit update
       let batchesUpdated = Object.assign(validatorMetaBatches);
@@ -186,7 +194,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
     // subscribe to session validators
     const unsub = await api.queryMulti([
       api.query.session.validators,
-    ], ([_sessionValidators,]: any) => {
+    ], ([_sessionValidators]: any) => {
 
       setValidators({
         ...sessionValidators,
