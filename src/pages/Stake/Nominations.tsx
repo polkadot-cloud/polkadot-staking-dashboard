@@ -12,7 +12,6 @@ export const Nominations = (props: any) => {
 
   return (
     <Wrapper>
-      <h3>Your Nominations</h3>
       {isReady() &&
         <>
           {nominations.length === 0 &&
@@ -27,7 +26,9 @@ export const Nominations = (props: any) => {
               validators={nominations}
               batchKey='stake_nominations'
               layout='col'
+              title='Your Nominations'
             />
+
           }
         </>
       }

@@ -17,6 +17,10 @@ export const Header = styled.div`
   padding: 0 0.25rem 0.5rem 0.25rem;
   flex: 1;
   border-bottom: 1px solid #eee;
+
+  h3 {
+    margin: 0;
+  }
   
   > div {
     display: flex; 

@@ -92,6 +92,7 @@ export const ValidatorListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
+          <h3>{props.title}</h3>
         </div>
         <div>
           <button onClick={() => setLayout('row')}><FontAwesomeIcon icon={faBars} color={layout === 'row' ? '#d33079' : '#222'} /></button>

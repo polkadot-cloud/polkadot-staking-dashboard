@@ -54,7 +54,6 @@ export const Browse = (props: PageProps) => {
       <StatBoxList title="This Session" items={items} />
       <PageRowWrapper>
         <SectionWrapper>
-          <h3>Browse Active Validators</h3>
           {isReady() &&
             <>
               {session.length === 0 &&
@@ -68,6 +67,7 @@ export const Browse = (props: PageProps) => {
                   validators={session}
                   batchKey='validators_browse'
                   layout='col'
+                  title='Active Validators'
                 />
               }
             </>

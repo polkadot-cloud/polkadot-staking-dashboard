@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div) <any>`
   width: 100%;
-  border-top: 1px solid #e1e1e1;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -17,8 +16,9 @@ export const Wrapper = styled(motion.div) <any>`
   bottom: 0px;
   left: 0px;
   overflow: hidden;
-  background: rgba(229,229,229,1);
+  background: rgba(229,229,229,0.75);
   z-index: 6;
+  backdrop-filter: blur(4px);
 `;
 
 export const Summary = styled.div`

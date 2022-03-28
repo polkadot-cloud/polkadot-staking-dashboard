@@ -69,8 +69,6 @@ export const Announcements = () => {
     subtitle: `The minimum bonding amount of ${network.unit} to start nominating validators is now at ${planckToDot(minNominatorBond)} ${network.unit}.`,
   })
 
-
-
   if (!announcements.length) {
     return (<></>);
   }
