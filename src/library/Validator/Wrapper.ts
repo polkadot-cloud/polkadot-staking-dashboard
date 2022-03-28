@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.div) <any>`
-  flex-grow: 1;
   padding: 0.5rem;
   display: flex;
   flex-flow: row nowrap;
+  width: 100%;
 
   > div {
     padding: 0.75rem;
@@ -35,6 +35,9 @@ export const Wrapper = styled(motion.div) <any>`
 
     h4 {
       margin: 0;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 `;

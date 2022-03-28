@@ -14,8 +14,6 @@ export const SectionWrapper = styled.div<any>`
   align-items: flex-start;
   flex: 1;
   margin-top: 1.2rem;
-  position: relative;
-  overflow: hidden;
 `;
 
 export const GraphWrapper = styled.div<any>`

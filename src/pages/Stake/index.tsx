@@ -113,7 +113,7 @@ export const Stake = (props: PageProps) => {
             <div className='head'>
               <h3>Bonded Funds</h3>
             </div>
-            <GraphWrapper>
+            <GraphWrapper style={{ background: 'none' }}>
               <div className='graph_with_extra'>
                 <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
                   <BondedGraph

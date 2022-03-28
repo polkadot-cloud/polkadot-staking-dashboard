@@ -58,6 +58,7 @@ export const List = styled(motion.div)`
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    overflow: hidden;
 
     &.row {
       flex-basis: 100%;

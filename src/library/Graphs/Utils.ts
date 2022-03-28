@@ -17,7 +17,7 @@ export const useSize = (element: any) => {
     const throttleCallback = () => {
       setSize(getSize(element));
     }
-    const resizeThrottle = throttle(throttleCallback, 200, { trailing: true, leading: false });
+    const resizeThrottle = throttle(throttleCallback, 100, { trailing: true, leading: false });
 
     window.addEventListener('resize', resizeThrottle);
     return (() => {

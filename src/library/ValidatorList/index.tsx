@@ -49,7 +49,7 @@ export const ValidatorListInner = (props: any) => {
     }
     setTimeout(() => {
       setRenderIteration(renderIterationRef.current + 1)
-    }, 1000);
+    }, 250);
 
   }, [renderIterationRef.current, props.validators]);
 
