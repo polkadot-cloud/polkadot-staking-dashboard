@@ -6,8 +6,7 @@ import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.button) <any>`
     flex-grow: 1;  
-    padding: 0rem 0.35rem;
-    margin: 0.25rem 0;
+    padding: 0.35rem;
     border-radius: 1rem;
     border: 2px solid rgb(241, 241, 241);
     box-shadow: none;

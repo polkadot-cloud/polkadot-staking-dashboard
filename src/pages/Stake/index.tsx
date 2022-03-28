@@ -100,14 +100,14 @@ export const Stake = (props: PageProps) => {
 
           {/* finish staking. Start bonding */}
           {controller === null &&
-            <GraphWrapper>
+            <SectionWrapper>
               <h3>Set Up Staking</h3>
               <h4>You have not yet started staking. Let's get set up.</h4>
 
-              <ButtonRow style={{ padding: 0, }}>
+              <ButtonRow style={{ padding: '1rem 0', }}>
                 <Button title='Start Staking' primary inline />
               </ButtonRow>
-            </GraphWrapper>
+            </SectionWrapper>
           }
           <SectionWrapper>
             <div className='head'>

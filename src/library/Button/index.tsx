@@ -35,7 +35,7 @@ export const Button = (props: any) => {
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       type={primary === true ? 'invert' : 'default'}
-      margin={inline ? '0.75rem 0' : '0.75rem 0 0.75rem 0.75rem'}
+      margin={inline ? '0' : '0 0.75rem'}
     >
       {title}
     </Wrapper>

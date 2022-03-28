@@ -17,7 +17,6 @@ export const StakingAccount = styled.div<any>`
   margin-bottom: ${props => props.last === true ? `none` : '1rem'};
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
   h4 {
     color: #333;
   }
