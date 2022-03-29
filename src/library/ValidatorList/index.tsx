@@ -8,9 +8,10 @@ import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
 import { StakingMetricsContext, useStakingMetrics } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faGripVertical, faPercentage } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faGripVertical, faPercentage, faStopCircle, faUserSlash, faBalanceScaleLeft } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
-import { FiltersWrapper, Item } from './Filters';
+import { FiltersWrapper } from './Filters';
+import { Item } from './Item';
 
 export const ValidatorListInner = (props: any) => {
 
@@ -106,28 +107,24 @@ export const ValidatorListInner = (props: any) => {
       >
         {allowFilters &&
           <FiltersWrapper>
-            <Item
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.99 }}
-              transition={{
-                duration: 0.5,
-                type: "spring",
-                bounce: 0.4,
-              }}
-            >
-              <div>
-                <div className='icon'>
-                  <FontAwesomeIcon
-                    icon={faPercentage}
-                    color='#ccc'
-                    transform="grow-15"
-                  />
-                </div>
+
+            <div className='section'>
+              <div className='head'>Order</div>
+              <div className='items'>
+                <Item label='lowest commission' icon={faPercentage} transform='grow-12' />
               </div>
-              <div>
-                <p>lowest commission</p>
+            </div>
+
+            <div className='separator'></div>
+            <div className='section'>
+              <div className='head'>Filter</div>
+              <div className='items'>
+                <Item label='over subscribed' icon={faUserSlash} transform='grow-8' />
+                <Item label='100% commission' icon={faBalanceScaleLeft} transform='grow-6' />
+                <Item label='blocked nominations' icon={faStopCircle} transform='grow-10' />
               </div>
-            </Item>
+            </div>
+
           </FiltersWrapper>
         }
         <motion.div

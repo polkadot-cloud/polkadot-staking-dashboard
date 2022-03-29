@@ -38,7 +38,6 @@ export const Wrapper = styled(motion.div) <any>`
       flex-flow: row wrap;
       justify-content: flex-end;
       align-items: center;
-      flex-grow: 1;
 
       label {
         border-radius: 0.6rem;
