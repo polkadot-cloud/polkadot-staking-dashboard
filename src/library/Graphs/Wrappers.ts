@@ -51,7 +51,7 @@ export const GraphWrapper = styled.div<any>`
     opacity: 0.8;
   }
   .head {
-    padding: 1rem 1.2rem 0 1.2rem;
+    padding: 0.75rem 1.2rem 0.5rem 1.2rem;
   }
 
   h1, h4 {

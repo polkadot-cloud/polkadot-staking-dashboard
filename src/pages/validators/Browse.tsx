@@ -52,7 +52,7 @@ export const Browse = (props: PageProps) => {
     <>
       <PageTitle title={title} />
       <StatBoxList title="This Session" items={items} />
-      <PageRowWrapper>
+      <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
           {isReady() &&
             <>

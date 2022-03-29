@@ -7,61 +7,79 @@ import { motion } from "framer-motion";
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  overflow-x: auto;
-  flex-shrink: 0;
+  justify-content: flex-start;
   padding: 0 2rem;
-`;
-
-export const ListWrapper = styled.div`
-  height: 100px;
-  display: flex;
-  flex-flow: row nowrap;
-  overflow-x: auto;
-  padding-bottom: 1rem;
   overflow: hidden;
 `;
 
-export const Scrollable = styled.div`
+export const ListWrapper = styled.div`
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   overflow-x: auto;
-  padding: 1rem 0;
-  height: 100%;
-  flex: 1;
+  padding-top: 1rem;
 `;
 
 export const StatBoxWrapper = styled(motion.div)`
-  border-radius: 1rem;
-  margin-right: 1.25rem;
-  flex-basis: 33%;
-  min-width: 250px;
-  max-width: 275px;
-  flex-grow: 1;
-  flex-shrink: 0;
-  background: rgba(255,255,255,0.5);
   display: flex;
   flex-flow: column wrap;
   overflow: hidden;
   z-index: 0;
+  flex-basis: 100%;
+  flex: 1;
+  flex-basis: 100%;
+  margin-bottom: 1rem;
 
-  > section {
-    padding: 0 1.15rem;
-
-    &:first-child {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column wrap;
-      justify-content: flex-end;
-      h1 {
-        margin: 0;
-        padding: 0.85rem 0;
-      }
+  /* responsive screen sizing */
+  h1 {
+    font-size: 1.2rem;
+  }
+  @media(min-width: 750px) {
+    flex-basis: 33%;
+    min-width: 200px;
+    max-width: none;
+    margin-bottom: 0;
+  }
+  
+  @media(min-width: 950px) {
+    max-width: 275px;
+    h1 {
+      font-size: 1.4rem;
     }
-    &:last-child {
-      h4 {
-      margin: 0;
-      padding-bottom: 1.3rem;
-      opacity: 0.8;
+  }
+
+  .content {
+    border-radius: 1rem;
+    background: rgba(255,255,255,0.6);
+    display: flex;
+    flex-flow: column wrap;
+    overflow: hidden;
+    margin-right: 1.25rem;
+    padding: 1.2rem 0;
+
+    @media(max-width: 749px) {
+        margin-right: 0;
+        padding: 0.9rem 0;
+    }
+
+    > section {
+      padding: 0 1.15rem;
+
+      &:first-child {
+        flex-grow: 1;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: flex-end;
+        
+        h1 {
+          margin: 0;
+          padding: 0.2rem 0 1rem 0;
+        }
+      }
+      &:last-child {
+        h4 {
+        margin: 0;
+        opacity: 0.8;
+      }
     }
   }
 }

@@ -22,28 +22,30 @@ export const Item = (props: any) => {
         bounce: 0.4,
       }}
     >
-      <section>
-        {format === 'number' &&
-          <h1>
-            <NumberEasing
-              ease="quintInOut"
-              precision={2}
-              speed={250}
-              trail={false}
-              value={value}
-              useLocaleString={true}
-              currency={currency}
-            />
-            &nbsp;{unit}
-          </h1>
-        }
-        {format === 'text' &&
-          <h1>{value}</h1>
-        }
-      </section>
-      <section>
-        <h4>{label}</h4>
-      </section>
+      <div className='content'>
+        <section>
+          {format === 'number' &&
+            <h1>
+              <NumberEasing
+                ease="quintInOut"
+                precision={2}
+                speed={250}
+                trail={false}
+                value={value}
+                useLocaleString={true}
+                currency={currency}
+              />
+              &nbsp;{unit}
+            </h1>
+          }
+          {format === 'text' &&
+            <h1>{value}</h1>
+          }
+        </section>
+        <section>
+          <h4>{label}</h4>
+        </section>
+      </div>
     </StatBoxWrapper>
   );
 }
