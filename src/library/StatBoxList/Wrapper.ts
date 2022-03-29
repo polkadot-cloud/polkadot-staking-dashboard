@@ -9,20 +9,17 @@ export const Wrapper = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   padding: 0 2rem;
-  overflow: hidden;
 `;
 
 export const ListWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  overflow-x: auto;
   padding-top: 1rem;
 `;
 
 export const StatBoxWrapper = styled(motion.div)`
   display: flex;
   flex-flow: column wrap;
-  overflow: hidden;
   z-index: 0;
   flex-basis: 100%;
   flex: 1;
@@ -52,7 +49,6 @@ export const StatBoxWrapper = styled(motion.div)`
     background: rgba(255,255,255,0.6);
     display: flex;
     flex-flow: column wrap;
-    overflow: hidden;
     margin-right: 1.25rem;
     padding: 1.2rem 0;
 
