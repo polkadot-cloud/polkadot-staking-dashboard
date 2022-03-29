@@ -23,7 +23,6 @@ export const ValidatorInner = (props: any) => {
 
   let total_nominations = stake?.total_nominations ?? 0;
 
-  console.log(total_nominations, consts.maxNominatorRewardedPerValidator);
   return (
     <Wrapper>
       <div>
