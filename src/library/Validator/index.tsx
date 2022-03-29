@@ -7,17 +7,23 @@ import Identicon from '@polkadot/react-identicon';
 import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPercentage } from '@fortawesome/free-solid-svg-icons';
+import { faStopCircle, faUserSlash } from '@fortawesome/free-solid-svg-icons';
+import { useApi } from '../../contexts/Api';
 
 export const ValidatorInner = (props: any) => {
 
-  const { synced, address, identity, prefs } = props;
+  const { consts }: any = useApi();
+
+  const { synced, address, identity, prefs, stake } = props;
 
   let display = identity?.info?.display?.Raw ?? null;
 
-  // prefs.commission
-  // prefs.blocked
+  let commission = prefs?.commission ?? null;
+  let blocked = prefs?.blocked ?? null;
 
+  let total_nominations = stake?.total_nominations ?? 0;
+
+  console.log(total_nominations, consts.maxNominatorRewardedPerValidator);
   return (
     <Wrapper>
       <div>
@@ -42,14 +48,36 @@ export const ValidatorInner = (props: any) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2, delay: 0.1 }}
+            className='labels'
+          >
+            <label>
+              {commission}%
+            </label>
+            {blocked &&
+              <label>
+                <FontAwesomeIcon
+                  icon={faUserSlash}
+                  color='#d2545d'
+                  transform="shrink-1"
+                  style={{ marginRight: '0.25rem' }}
+                />
+              </label>
+            }
+          </motion.div>
+        }
+        {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
           >
             <label>
               <FontAwesomeIcon
-                icon={faPercentage}
-                transform="shrink-1"
-                style={{ marginRight: '0.25rem' }}
+                icon={faStopCircle}
+                color='#d2545d'
+                transform="grow-1"
+                style={{ marginLeft: '0.75rem' }}
               />
-              {prefs.commission}
             </label>
           </motion.div>
         }

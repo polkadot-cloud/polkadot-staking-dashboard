@@ -132,7 +132,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
     },
   };
   */
-  const fetchValidatorMetaBatch = async (key: string, validators: []) => {
+  const fetchValidatorMetaBatch = async (key: string, validators: any) => {
     if (!isReady()) { return }
 
     if (!validators.length) { return; }
@@ -176,9 +176,37 @@ export const StakingMetricsContextWrapper = (props: any) => {
       setValidatorMetaBatch(batchesUpdated);
     });
 
+
+    let args: any = [];
+    for (let i = 0; i < validators.length; i++) {
+      args.push([metrics.activeEra.index, validators[i]]);
+    }
+    // subscribe to validator nominators
+    const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
+      let stake = [];
+      for (let _v of _validators) {
+        let v = _v.toHuman();
+        let others = v.others ?? [];
+
+        // account for yourself being an additional nominator
+        let total_nominations = others.length + 1;
+
+        stake.push({
+          total: v.total,
+          own: v.own,
+          total_nominations: total_nominations,
+        });
+      }
+      // commit update
+      let batchesUpdated = Object.assign(validatorMetaBatches);
+      batchesUpdated.meta[key].stake = stake;
+      setValidatorMetaBatch(batchesUpdated);
+    });
+
+
     // commit unsubs
     const { unsubs } = validatorMetaBatches;
-    unsubs.push([unsub, unsub2]);
+    unsubs.push([unsub, unsub2, unsub3]);
     setValidatorMetaBatch({
       ...validatorMetaBatches,
       unsubs: unsubs,

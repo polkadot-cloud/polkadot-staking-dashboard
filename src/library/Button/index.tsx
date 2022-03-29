@@ -11,6 +11,10 @@ export const ButtonRow = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
   align-content: flex-end;
+
+  > button {
+    margin-bottom :0.75rem;
+  }
 `;
 
 const Wrapper = styled(motion.button) <any>`

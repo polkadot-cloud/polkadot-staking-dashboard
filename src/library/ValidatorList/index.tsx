@@ -80,10 +80,12 @@ export const ValidatorListInner = (props: any) => {
   const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
   const identities = meta.identities ?? [];
   const prefs = meta.prefs ?? [];
+  const stake = meta.stake ?? [];
 
   const synced = {
     identities: (identities.length > 0) ?? false,
     prefs: (prefs.length > 0) ?? false,
+    stake: (stake.length > 0) ?? false,
   };
 
   const listValidators = validators.slice(0, batchEnd);
@@ -100,7 +102,7 @@ export const ValidatorListInner = (props: any) => {
         </div>
       </Header>
       <List
-        allowMoflexreCols={allowMoreCols ? '33%' : '50%'}
+        flexBasisLarge={allowMoreCols ? '33%' : '50%'}
       >
         {allowFilters &&
           <FiltersWrapper>
@@ -141,6 +143,7 @@ export const ValidatorListInner = (props: any) => {
                   address={addr}
                   identity={identities[index]}
                   prefs={prefs[index]}
+                  stake={stake[index]}
                   synced={synced}
                 />
               </motion.div>

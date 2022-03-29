@@ -50,7 +50,7 @@ export const Header = styled.div`
 `;
 
 
-export const List = styled(motion.div) <any>`
+export const List = styled.div<any>`
   margin-top: 1rem;
   width: 100%;
 
@@ -77,7 +77,7 @@ export const List = styled(motion.div) <any>`
           flex-basis: 50%;
         }
         @media(min-width: 1250px) {
-          flex-basis: ${props => props.allowMoreCols ? `33%` : `50%`};
+          flex-basis: ${props => props.flexBasisLarge};
         }
       }
     }

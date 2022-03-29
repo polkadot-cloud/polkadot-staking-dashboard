@@ -33,9 +33,18 @@ export const Wrapper = styled(motion.div) <any>`
       overflow: hidden;
       flex: 1;
     }
-    label {
-      border-radius: 0.6rem;
-      color: #aaa;
+    .labels {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-end;
+      align-items: center;
+      flex-grow: 1;
+
+      label {
+        border-radius: 0.6rem;
+        color: #aaa;
+        margin-left: 0.75rem;
+      }
     }
 
     h4 {
