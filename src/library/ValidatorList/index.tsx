@@ -119,9 +119,9 @@ export const ValidatorListInner = (props: any) => {
             <div className='section'>
               <div className='head'>Filter</div>
               <div className='items'>
-                <Item label='over subscribed' icon={faUserSlash} transform='grow-8' />
+                <Item label='over subscribed' icon={faStopCircle} transform='grow-10' />
                 <Item label='100% commission' icon={faBalanceScaleLeft} transform='grow-6' />
-                <Item label='blocked nominations' icon={faStopCircle} transform='grow-10' />
+                <Item label='blocked nominations' icon={faUserSlash} transform='grow-9' />
               </div>
             </div>
 
