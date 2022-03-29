@@ -100,10 +100,7 @@ export const ValidatorListInner = (props: any) => {
         </div>
       </Header>
       <List
-        variants={container}
-        initial="hidden"
-        animate="show"
-        allowMoreCols={allowMoreCols}
+        allowMoflexreCols={allowMoreCols ? '33%' : '50%'}
       >
         {allowFilters &&
           <FiltersWrapper>
@@ -131,18 +128,25 @@ export const ValidatorListInner = (props: any) => {
             </Item>
           </FiltersWrapper>
         }
-        {listValidators.map((addr: string, index: number) => {
-          return (
-            <motion.div className={`item ${listFormat === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
-              <Validator
-                address={addr}
-                identity={identities[index]}
-                prefs={prefs[index]}
-                synced={synced}
-              />
-            </motion.div>
-          )
-        })}
+        <motion.div
+          className='transition'
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          {listValidators.map((addr: string, index: number) => {
+            return (
+              <motion.div className={`item ${listFormat === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
+                <Validator
+                  address={addr}
+                  identity={identities[index]}
+                  prefs={prefs[index]}
+                  synced={synced}
+                />
+              </motion.div>
+            )
+          })}
+        </motion.div>
       </List>
     </ListWrapper>
   );

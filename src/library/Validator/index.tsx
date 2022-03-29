@@ -38,14 +38,20 @@ export const ValidatorInner = (props: any) => {
           </motion.div>
         }
         {synced.prefs &&
-          <label>
-            <FontAwesomeIcon
-              icon={faPercentage}
-              transform="shrink-1"
-              style={{ marginRight: '0.25rem' }}
-            />
-            {prefs.commission}
-          </label>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
+          >
+            <label>
+              <FontAwesomeIcon
+                icon={faPercentage}
+                transform="shrink-1"
+                style={{ marginRight: '0.25rem' }}
+              />
+              {prefs.commission}
+            </label>
+          </motion.div>
         }
       </div>
     </Wrapper>
