@@ -91,12 +91,10 @@ export const ValidatorListInner = (props: any) => {
 
   const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
   const identities = meta.identities ?? [];
-  const prefs = meta.prefs ?? [];
   const stake = meta.stake ?? [];
 
   const synced = {
     identities: (identities.length > 0) ?? false,
-    prefs: (prefs.length > 0) ?? false,
     stake: (stake.length > 0) ?? false,
   };
 
@@ -168,13 +166,12 @@ export const ValidatorListInner = (props: any) => {
           initial="hidden"
           animate="show"
         >
-          {listValidators.map((addr: string, index: number) => {
+          {listValidators.map((validator: any, index: number) => {
             return (
               <motion.div className={`item ${listFormat === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
                 <Validator
-                  address={addr}
+                  validator={validator}
                   identity={identities[index]}
-                  prefs={prefs[index]}
                   stake={stake[index]}
                   synced={synced}
                 />

@@ -29,7 +29,7 @@ export const Browse = (props: PageProps) => {
 
   const items = [
     {
-      label: "Active Validators",
+      label: "Validators",
       value: session.length,
       unit: "",
       format: "number",
@@ -67,7 +67,7 @@ export const Browse = (props: PageProps) => {
                   validators={session}
                   batchKey='validators_browse'
                   layout='col'
-                  title='Active Validators'
+                  title='Validators'
                   allowMoreCols
                   allowFilters
                 />

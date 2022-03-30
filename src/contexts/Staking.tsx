@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef, } from 'react';
 import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
 import BN from "bn.js";
+import { sleep } from '../Utils';
 
 // validators per batch in multi-batch fetching
 const VALIDATORS_PER_BATCH_MUTLI = 20;
@@ -14,26 +15,26 @@ const THROTTLE_VALIDATOR_RENDER = 250;
 export interface StakingMetricsContextState {
   VALIDATORS_PER_BATCH_MUTLI: number,
   THROTTLE_VALIDATOR_RENDER: number,
-  staking: any;
-  session: any;
-  meta: any;
   fetchValidators: () => void;
   fetchValidatorMetaBatch: (k: string, v: []) => void;
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
+  staking: any;
+  session: any;
+  meta: any;
 }
 
 // context definition
 export const StakingMetricsContext: React.Context<StakingMetricsContextState> = React.createContext({
   VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
   THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
-  staking: {},
-  session: [],
-  meta: {},
   fetchValidators: () => { },
   fetchValidatorMetaBatch: (k: string, v: []) => { },
   getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
+  staking: {},
+  session: [],
+  meta: {},
 });
 
 // useStakingMetrics
@@ -57,12 +58,11 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
   const [sessionValidators, setValidators]: any = useState({
     session: [],
-    unsub: null,
   });
 
   const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({
     meta: {},
-    unsubs: [],
+    unsubs: {},
   });
 
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
@@ -115,6 +115,35 @@ export const StakingMetricsContextWrapper = (props: any) => {
     }
   }
 
+  /* 
+   * Fetches the currently active session's validator set.
+   * Validator meta batches are derived from this initial list.
+   */
+  const fetchValidators = async () => {
+    if (!isReady()) { return }
+
+    let validators: any = [];
+    const exposures = await api.query.staking.validators.entries();
+    exposures.forEach(([_args, _prefs]: any) => {
+      let address = _args.args[0].toHuman();
+      let prefs = _prefs.toHuman();
+
+      // remove `%` from commission
+      let _commission = Number(prefs.commission.slice(0, -1));
+
+      validators.push({
+        address: address,
+        prefs: {
+          commission: parseFloat(_commission.toFixed(2)),
+          blocked: prefs.blocked
+        }
+      });
+    });
+
+    setValidators({
+      session: validators,
+    });
+  }
 
   /*
     Fetches a new batch of subscribed validator metadata. Stores the returning
@@ -125,7 +154,6 @@ export const StakingMetricsContextWrapper = (props: any) => {
         [
           {
           addresses [],
-          prefs: [],
           identities: [],
         }
       ]
@@ -137,14 +165,27 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
     if (!validators.length) { return; }
 
+    // tidy up if existing batch exists
+    delete validatorMetaBatches[key];
+    if (validatorMetaBatches.unsubs[key] !== undefined) {
+      for (let unsub of validatorMetaBatches.unsubs[key]) {
+        unsub();
+      }
+    }
+
+    let addresses = [];
+    for (let v of validators) {
+      addresses.push(v.address);
+    }
+
     // store batch addresses
     let batchesUpdated = Object.assign(validatorMetaBatches);
     batchesUpdated.meta[key] = {};
-    batchesUpdated.meta[key].addresses = validators;
+    batchesUpdated.meta[key].addresses = addresses;
     setValidatorMetaBatch(batchesUpdated);
 
     // subscribe to identities
-    const unsub = await api.query.identity.identityOf.multi(validators, (_identities: any) => {
+    const unsub = await api.query.identity.identityOf.multi(addresses, (_identities: any) => {
       let identities = [];
       for (let i = 0; i < _identities.length; i++) {
         identities.push(_identities[i].toHuman());
@@ -156,32 +197,14 @@ export const StakingMetricsContextWrapper = (props: any) => {
     });
 
 
-    // subscribe to validator prefs
-    const unsub2 = await api.query.staking.validators.multi(validators, (_validators: any) => {
-      let prefs = [];
-      for (let i = 0; i < _validators.length; i++) {
+    // intentional throttle to prevent slow render updates
+    await sleep(500);
 
-        let _prefs = _validators[i].toHuman();
-        // remove `%` from commission
-        let _commission = Number(_prefs.commission.slice(0, -1));
-
-        prefs.push({
-          commission: parseFloat(_commission.toFixed(2)),
-          blocked: _prefs.blocked,
-        });
-      }
-      // commit update
-      let batchesUpdated = Object.assign(validatorMetaBatches);
-      batchesUpdated.meta[key].prefs = prefs;
-      setValidatorMetaBatch(batchesUpdated);
-    });
-
-
+    // subscribe to validator nominators
     let args: any = [];
     for (let i = 0; i < validators.length; i++) {
-      args.push([metrics.activeEra.index, validators[i]]);
+      args.push([metrics.activeEra.index, validators[i].address]);
     }
-    // subscribe to validator nominators
     const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
       let stake = [];
       for (let _v of _validators) {
@@ -203,36 +226,13 @@ export const StakingMetricsContextWrapper = (props: any) => {
       setValidatorMetaBatch(batchesUpdated);
     });
 
-
     // commit unsubs
-    const { unsubs } = validatorMetaBatches;
-    unsubs.push([unsub, unsub2, unsub3]);
+    let { unsubs } = validatorMetaBatches;
+    unsubs[key] = [unsub, unsub3];
+
     setValidatorMetaBatch({
       ...validatorMetaBatches,
       unsubs: unsubs,
-    });
-  }
-
-  /* 
-   * Fetches the currently active session's validator set.
-   */
-  const fetchValidators = async () => {
-    if (!isReady()) { return }
-
-    // subscribe to session validators
-    const unsub = await api.queryMulti([
-      api.query.session.validators,
-    ], ([_sessionValidators]: any) => {
-
-      setValidators({
-        ...sessionValidators,
-        session: _sessionValidators.toHuman(),
-      });
-    });
-
-    setValidators({
-      ...sessionValidators,
-      unsub: unsub,
     });
   }
 
@@ -240,21 +240,14 @@ export const StakingMetricsContextWrapper = (props: any) => {
     subscribeToStakingkMetrics(api);
 
     return (() => {
-
       // unsubscribe from staking metrics
       if (stakingMetrics.unsub !== null) {
         stakingMetrics.unsub();
       }
-
-      // unsubscribe from session validators
-      if (sessionValidators.unsub !== null) {
-        sessionValidators.unsub();
-      }
-
       // unsubscribe from any validator meta batches
-      Object.entries(validatorMetaBatches.unsubs).map(([_, item]: any, index: number) => {
-        for (let u of item) {
-          u();
+      Object.values(validatorMetaBatches.unsubs).map((item: any, index: number) => {
+        for (let unsub of item) {
+          unsub();
         }
       });
     })

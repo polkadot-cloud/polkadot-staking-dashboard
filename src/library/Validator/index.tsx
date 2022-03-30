@@ -14,8 +14,9 @@ export const ValidatorInner = (props: any) => {
 
   const { consts }: any = useApi();
 
-  const { synced, address, identity, prefs, stake } = props;
+  const { validator, synced, identity, stake } = props;
 
+  let { address, prefs } = validator;
   let display = identity?.info?.display?.Raw ?? null;
 
   let commission = prefs?.commission ?? null;
@@ -42,28 +43,21 @@ export const ValidatorInner = (props: any) => {
             <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
           </motion.div>
         }
-        {synced.prefs &&
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2, delay: 0.1 }}
-            className='labels'
-          >
+        <div className='labels'>
+          <label>
+            {commission}%
+          </label>
+          {blocked &&
             <label>
-              {commission}%
+              <FontAwesomeIcon
+                icon={faUserSlash}
+                color='#d2545d'
+                transform="shrink-1"
+                style={{ marginRight: '0.25rem' }}
+              />
             </label>
-            {blocked &&
-              <label>
-                <FontAwesomeIcon
-                  icon={faUserSlash}
-                  color='#d2545d'
-                  transform="shrink-1"
-                  style={{ marginRight: '0.25rem' }}
-                />
-              </label>
-            }
-          </motion.div>
-        }
+          }
+        </div>
         {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
           <motion.div
             initial={{ opacity: 0 }}
