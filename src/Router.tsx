@@ -8,6 +8,7 @@ import { AnimatePresence } from "framer-motion"
 import { PAGES_CONFIG } from './pages';
 import { StakingMetricsContextWrapper } from './contexts/Staking';
 import { MessagesContextWrapper } from './contexts/Messages';
+import { UIContextWrapper } from './contexts/UI';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './library/Modal';
 import { Headers } from './library/Headers';
@@ -59,75 +60,78 @@ export const RouterInner = () => {
       {/* Modal: closed by default */}
       <Modal />
 
-      {/* App related messages for UI control */}
-      <MessagesContextWrapper>
-        <BodyInterfaceWrapper>
+      {/* UI context */}
+      <UIContextWrapper>
+        {/* App related messages for UI control */}
+        <MessagesContextWrapper>
+          <BodyInterfaceWrapper>
 
-          {/* Assistant: closed by default */}
-          <Assistant />
+            {/* Assistant: closed by default */}
+            <Assistant />
 
-          {/* Left side menu */}
-          <SideInterfaceWrapper open={sideMenuOpen}>
-            <SideMenu />
-          </SideInterfaceWrapper>
+            {/* Left side menu */}
+            <SideInterfaceWrapper open={sideMenuOpen}>
+              <SideMenu />
+            </SideInterfaceWrapper>
 
-          {/* Main Content Window */}
-          <MainInterfaceWrapper>
-            <Headers />
+            {/* Main Content Window */}
+            <MainInterfaceWrapper>
+              <Headers />
 
-            <AnimatePresence>
-              <Routes>
-                {PAGES_CONFIG.map((page, pageIndex) => {
-                  const { Entry } = page;
-                  return (
-                    <Route
-                      key={`main_interface_page_${pageIndex}`}
-                      path={page.uri}
-                      element={
+              <AnimatePresence>
+                <Routes>
+                  {PAGES_CONFIG.map((page, pageIndex) => {
+                    const { Entry } = page;
+                    return (
+                      <Route
+                        key={`main_interface_page_${pageIndex}`}
+                        path={page.uri}
+                        element={
 
-                        <PageWrapper
-                          key={`main_interface_key__${pageIndex}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{
-                            duration: 0.2,
-                            // type: "spring",
-                            // bounce: 0.4
-                          }}
-                        >
-                          <Helmet>
-                            <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
-                          </Helmet>
-                          <Entry page={page} />
-                        </PageWrapper>
-                      }
-                    />
-                  )
-                })}
-                <Route
-                  path='/'
-                  element={
-                    <PageWrapper
-                      key={`main_interface_key__default`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
-                      transition={{
-                        duration: 0.8,
-                        type: "spring",
-                        bounce: 0.4
-                      }}
-                    >
-                      <Overview page={PAGES_CONFIG[0]} />
-                    </PageWrapper>
-                  }
-                />
-              </Routes>
-            </AnimatePresence>
-          </MainInterfaceWrapper>
-        </BodyInterfaceWrapper>
-      </MessagesContextWrapper>
+                          <PageWrapper
+                            key={`main_interface_key__${pageIndex}`}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{
+                              duration: 0.2,
+                              // type: "spring",
+                              // bounce: 0.4
+                            }}
+                          >
+                            <Helmet>
+                              <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
+                            </Helmet>
+                            <Entry page={page} />
+                          </PageWrapper>
+                        }
+                      />
+                    )
+                  })}
+                  <Route
+                    path='/'
+                    element={
+                      <PageWrapper
+                        key={`main_interface_key__default`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{
+                          duration: 0.8,
+                          type: "spring",
+                          bounce: 0.4
+                        }}
+                      >
+                        <Overview page={PAGES_CONFIG[0]} />
+                      </PageWrapper>
+                    }
+                  />
+                </Routes>
+              </AnimatePresence>
+            </MainInterfaceWrapper>
+          </BodyInterfaceWrapper>
+        </MessagesContextWrapper>
+      </UIContextWrapper>
 
       {/* Network status and network details */}
       <NetworkBar />
