@@ -90,8 +90,8 @@ export const ItemWrapper = styled(motion.div) <any>`
 `;
 
 export const HeadingWrapper = styled.div<any>`
-  margin: 1.5rem 0 0.25rem 0;
-  font-size: 0.95rem;
+  margin: 1.2rem 0 0.5rem 0;
+  font-size: 0.92rem;
   padding: 0 0.5rem;
   display: flex;
   flex-flow: row wrap;

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 
 export const FiltersWrapper = styled.div`
   width: 100%;
@@ -13,10 +12,10 @@ export const FiltersWrapper = styled.div`
   align-items: flex-end;
 
   > .separator {
-    border-right: 1px solid #e1e1e1;
+    border-right: 2px solid #eee;
     width: 1px;
     height: 80px;
-    margin: 0 1rem;
+    margin: 0 1.2rem;
   }
 
   > .section {
@@ -28,7 +27,7 @@ export const FiltersWrapper = styled.div`
       flex: 1;
       padding-bottom: 0.6rem;
       font-size: 0.8rem;
-      color: #666;
+      color: #333;
     }
 
     > .items {
@@ -40,21 +39,21 @@ export const FiltersWrapper = styled.div`
   }
 `;
 
-export const Item = styled(motion.button)`
-    width: 120px;
+export const Item = styled.div<any>`
+    width: 110px;
     height: 80px;
     border-radius: 0.75rem;
-    /* background: rgba(211, 48, 121, 0.85); */
-    background: #f4f4f4;
+    background: ${props => props.active ? 'rgba(211, 48, 121, 0.85)' : '#f4f4f4'};
     display: flex;
     flex-flow: column nowrap;
     margin-right: 1rem;
+    position: relative;
 
     &:last-child {
       margin-right: 0;
     }
 
-    > div {
+    section {
       display: flex;
       flex-flow: row wrap;
       padding-left: 0.5rem;
@@ -87,13 +86,26 @@ export const Item = styled(motion.button)`
       justify-content: flex-start;
 
       p {
-        color: #999;
+        color: ${props => props.active ? 'white' : '#999'};
         font-size: 0.85rem;
         margin: 0;
         text-align: left;
         font-variation-settings: 'wght' 550;
         padding-top: 0.15rem;
       }
+    }
+
+    .active {
+      position: absolute;
+      right: -4px;
+      width: 20px;
+      height: 20px;
+      z-index: 2;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }   
 `;

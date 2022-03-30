@@ -15,16 +15,17 @@ import { Item } from './Item';
 
 export const ValidatorListInner = (props: any) => {
 
-  const { setListFormat, listFormat }: any = useUi();
+  const { setListFormat, listFormat, validators: validatorsUi, setValidatorsOrder }: any = useUi();
   const { isReady }: any = useApi();
   const {
     fetchValidatorMetaBatch,
     getValidatorMetaBatch,
     VALIDATORS_PER_BATCH_MUTLI,
   }: any = useStakingMetrics();
-  const { validators, allowMoreCols, allowFilters }: any = props;
+  const { allowMoreCols, allowFilters }: any = props;
 
   const [renderIteration, _setRenderIteration]: any = useState(1);
+  const [validators, setValidators]: any = useState(props.validators);
 
   const renderIterationRef = useRef(renderIteration);
 
@@ -33,13 +34,23 @@ export const ValidatorListInner = (props: any) => {
     _setRenderIteration(iter);
   }
 
+  // start fetching metadata batches
   useEffect(() => {
-    fetchValidatorMetaBatch(props.batchKey, props.validators);
+    fetchValidatorMetaBatch(props.batchKey, validators);
   }, [isReady()]);
 
+
+  // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
+    handleValidatorsUpdate();
+  }, [props.validators, validatorsUi])
+
+  const handleValidatorsUpdate = async () => {
+    // TODO: handle ordering here if set.
+    setValidators(props.validators);
     setRenderIteration(1);
-  }, [props.validators])
+  }
+
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
 
@@ -49,8 +60,8 @@ export const ValidatorListInner = (props: any) => {
     }
     setTimeout(() => {
       setRenderIteration(renderIterationRef.current + 1)
-    }, 250);
-  }, [renderIterationRef.current, props.validators]);
+    }, 500);
+  }, [renderIterationRef.current, validators]);
 
 
   if (!validators.length) {
@@ -89,6 +100,7 @@ export const ValidatorListInner = (props: any) => {
     stake: (stake.length > 0) ?? false,
   };
 
+  // first batch of validators
   const listValidators = validators.slice(0, batchEnd);
 
   return (
@@ -107,11 +119,16 @@ export const ValidatorListInner = (props: any) => {
       >
         {allowFilters &&
           <FiltersWrapper>
-
             <div className='section'>
               <div className='head'>Order</div>
               <div className='items'>
-                <Item label='lowest commission' icon={faPercentage} transform='grow-12' />
+                <Item
+                  label='lowest commission'
+                  icon={faPercentage}
+                  transform='grow-12'
+                  active={validatorsUi.orderBy === 'commission'}
+                  onClick={() => setValidatorsOrder()}
+                />
               </div>
             </div>
 
@@ -119,9 +136,27 @@ export const ValidatorListInner = (props: any) => {
             <div className='section'>
               <div className='head'>Filter</div>
               <div className='items'>
-                <Item label='over subscribed' icon={faStopCircle} transform='grow-10' />
-                <Item label='100% commission' icon={faBalanceScaleLeft} transform='grow-6' />
-                <Item label='blocked nominations' icon={faUserSlash} transform='grow-9' />
+                <Item
+                  label='over subscribed'
+                  icon={faStopCircle}
+                  transform='grow-10'
+                  active={false}
+                  onClick={() => { }}
+                />
+                <Item
+                  label='100% commission'
+                  icon={faBalanceScaleLeft}
+                  transform='grow-6'
+                  active={false}
+                  onClick={() => { }}
+                />
+                <Item
+                  label='blocked nominations'
+                  icon={faUserSlash}
+                  transform='grow-9'
+                  active={false}
+                  onClick={() => { }}
+                />
               </div>
             </div>
 
