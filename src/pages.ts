@@ -22,9 +22,12 @@ export const PAGE_CATEGORIES = [{
   title: 'default'
 }, {
   _id: 2,
-  title: 'Validators',
+  title: 'Staking',
 }, {
   _id: 3,
+  title: 'Validators',
+}, {
+  _id: 4,
   title: 'Explore',
 }];
 
@@ -36,31 +39,31 @@ export const PAGES_CONFIG = [
     Entry: Overview,
     icon: faBraille,
   }, {
-    category: 1,
+    category: 2,
     title: 'Stake',
     uri: URI_PREFIX + '/stake',
     Entry: Stake,
     icon: faChartLine,
   }, {
-    category: 1,
+    category: 2,
     title: 'Pools',
     uri: URI_PREFIX + '/pools',
     Entry: Pools,
     icon: faUsers,
   }, {
-    category: 2,
+    category: 3,
     title: 'Validators',
     uri: URI_PREFIX + '/validators',
     Entry: Browse,
     icon: faServer,
   }, {
-    category: 2,
+    category: 3,
     title: 'Payouts',
     uri: URI_PREFIX + '/payouts',
     Entry: Payouts,
     icon: faStar,
   }, {
-    category: 3,
+    category: 4,
     title: 'Community',
     uri: URI_PREFIX + '/community',
     Entry: Projects,
@@ -112,18 +115,6 @@ export const ASSISTANT_CONFIG = [
         subtitle: '',
         url: 'https://polkadot.network/'
       },
-      {
-        label: 'Tutorials',
-        title: 'Choosing Validators: What to Know?',
-        subtitle: '',
-        url: 'https://polkadot.network/'
-      },
-      {
-        label: 'Tutorials',
-        title: 'Bonding and Unbonding',
-        subtitle: '',
-        url: 'https://polkadot.network/'
-      },
     ]
   },
   {
@@ -142,21 +133,30 @@ export const ASSISTANT_CONFIG = [
       {
         title: 'Bonding',
         description: [
-          'Bonding funds is the process of "locking" (or staking) DOT. Bonded DOT will then be automatically allocated to one or more of your nominated validators. ',
+          'Bonding funds is the process of "locking" (or staking) DOT. Bonded DOT will then be automatically allocated to one or more of your nominated validators.',
         ],
       },
       {
         title: 'Nominating',
         description: [
-          'Nominating is the process of selecting validators you wish to stake your DOT to. You can choose to nominate up to 16 validators for each of your accounts. ',
+          'Nominating is the process of selecting validators you wish to stake your DOT to. You can choose to nominate up to 16 validators for each of your accounts.',
+          'Once you have nominated your selected validators, they become your nominations.'
+        ],
+      },
+      {
+        title: 'Nominations',
+        description: [
+          'Your nominations are the validators you have chosen to nominate. You can nominate up to 16 validators.',
+          'Your bonded funds are automatically distributed to nominations that are active in the staking era.',
+          'As long as at least one of your nominations is actively validating in a session, your funds will be staked with that validator and you will receive rewards.'
         ],
       },
     ],
     external: [
       {
         label: 'Tutorials',
-        title: 'What are Staking Pools?',
-        subtitle: 'The new way to stake on Polkadot',
+        title: 'Bonding and Unbonding',
+        subtitle: '',
         url: 'https://polkadot.network/'
       },
       {
@@ -172,18 +172,66 @@ export const ASSISTANT_CONFIG = [
     definitions: [
     ],
     external: [
+      {
+        label: 'Tutorials',
+        title: 'What are Staking Pools?',
+        subtitle: 'The new way to stake on Polkadot',
+        url: 'https://polkadot.network/'
+      },
     ],
   },
   {
     key: 'validators',
     definitions: [
+      {
+        title: 'Minimum Nomination Bond',
+        description: [
+          'The minimum amount you need bonded in order to nominate.',
+        ],
+      },
+      {
+        title: 'Commission',
+        description: [
+          'Validators can take a percentage of the rewards they earn. This chunk is called their commission.',
+          'Nominating validators with low commissions mean you will receive a larger share of the rewards they generate.',
+          'Many validators will have a commission rate of 100%, meaning you will receive no rewards by nominating these validators.',
+          'Examples of such validators include those operating on behalf of exchanges, where nominating and reward distribution is done centrally on the exchange in question.',
+          'A validator can update their commission rates as and when they please, and such changes will have an impact on your profitability. Be sure to monitor your nominations on this dashboard to keep updated on their commission rates.'
+        ],
+      },
+      {
+        title: 'Over Subscribed',
+        description: [
+          'Only the top 256 nominators for each validator are rewarded in Polkadot. When this number is surpassed, this validator is considered over subscribed.',
+        ],
+      },
+      {
+        title: 'Blocked Nominations',
+        description: [
+          'When a validator has blocked nominations, nominators are unable to nominate them.',
+        ],
+      },
     ],
     external: [
+      {
+        label: 'Tutorials',
+        title: 'Choosing Validators: What to Know?',
+        subtitle: '',
+        url: 'https://polkadot.network/'
+      },
     ],
   },
   {
     key: 'payouts',
     definitions: [
+      {
+        title: 'Payout History',
+        description: [
+          'Historical records of payouts made for your nominations.',
+          'Requesting payouts is a manual process, so you may receive payouts for multiple eras in quick succession or in a sporadic fashion. Your payout graphs may therefore have multiple payouts occur on the same day, or have days where there were no payouts.',
+          'This does not mean that you were not nominating or generating rewards in that period - only that the payout for that period was not yet made.',
+        ],
+      },
     ],
     external: [
       {
@@ -199,6 +247,12 @@ export const ASSISTANT_CONFIG = [
     definitions: [
     ],
     external: [
+      {
+        label: 'Be Featured',
+        title: 'Be Featured on Staking Dashboard',
+        subtitle: 'Get in touch to get your project featured on this page.',
+        url: 'https://polkadot.network/'
+      },
     ],
   },
 ];
