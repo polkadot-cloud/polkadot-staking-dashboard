@@ -33,31 +33,35 @@ export const ValidatorInner = (props: any) => {
           theme="polkadot"
           style={{ cursor: 'default' }}
         />
-        {synced.identities &&
-          <motion.div
-            className='identity'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2, delay: 0.1 }}
-          >
-            <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
-          </motion.div>
-        }
-        <div className='labels'>
-          <label>
-            {commission}%
-          </label>
-          {blocked &&
-            <label>
-              <FontAwesomeIcon
-                icon={faUserSlash}
-                color='#d2545d'
-                transform="shrink-1"
-                style={{ marginRight: '0.25rem' }}
-              />
-            </label>
+        <div style={{ flexGrow: 1 }}>
+          {synced.identities &&
+            <motion.div
+              className='identity'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+            >
+              <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
+            </motion.div>
           }
         </div>
+        {prefs !== undefined &&
+          <div className='labels'>
+            <label>
+              {commission}%
+            </label>
+            {blocked &&
+              <label>
+                <FontAwesomeIcon
+                  icon={faUserSlash}
+                  color='#d2545d'
+                  transform="shrink-1"
+                  style={{ marginRight: '0.25rem' }}
+                />
+              </label>
+            }
+          </div>
+        }
         {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
           <motion.div
             initial={{ opacity: 0 }}
@@ -81,7 +85,7 @@ export const ValidatorInner = (props: any) => {
 
 export class Validator extends React.Component<any, any> {
   shouldComponentUpdate (nextProps: any, nextState: any) {
-    return (this.props !== nextProps);
+    return (this.props.validator !== nextProps.validator || this.props.synced !== nextProps.synced);
   }
 
   render () {
