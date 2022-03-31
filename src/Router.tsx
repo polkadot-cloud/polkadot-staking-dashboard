@@ -55,83 +55,82 @@ export const RouterInner = () => {
   }
   const windowThrottle = throttle(throttleCallback, 200, { trailing: true, leading: false });
 
+  console.log(sideMenuOpen);
+
   return (
     <>
       {/* Modal: closed by default */}
       <Modal />
 
-      {/* UI context */}
-      <UIContextWrapper>
-        {/* App related messages for UI control */}
-        <MessagesContextWrapper>
-          <BodyInterfaceWrapper>
+      {/* App related messages for UI control */}
+      <MessagesContextWrapper>
+        <BodyInterfaceWrapper>
 
-            {/* Assistant: closed by default */}
-            <Assistant />
+          {/* Assistant: closed by default */}
+          <Assistant />
 
-            {/* Left side menu */}
-            <SideInterfaceWrapper open={sideMenuOpen}>
-              <SideMenu />
-            </SideInterfaceWrapper>
+          {/* Left side menu */}
+          <SideInterfaceWrapper open={sideMenuOpen}>
+            <SideMenu />
+          </SideInterfaceWrapper>
 
-            {/* Main Content Window */}
-            <MainInterfaceWrapper>
-              <Headers />
+          {/* Main Content Window */}
+          <MainInterfaceWrapper>
+            <Headers />
 
-              <AnimatePresence>
-                <Routes>
-                  {PAGES_CONFIG.map((page, pageIndex) => {
-                    const { Entry } = page;
-                    return (
-                      <Route
-                        key={`main_interface_page_${pageIndex}`}
-                        path={page.uri}
-                        element={
+            <AnimatePresence>
+              <Routes>
+                {PAGES_CONFIG.map((page, pageIndex) => {
+                  const { Entry } = page;
+                  return (
+                    <Route
+                      key={`main_interface_page_${pageIndex}`}
+                      path={page.uri}
+                      element={
 
-                          <PageWrapper
-                            key={`main_interface_key__${pageIndex}`}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            transition={{
-                              duration: 0.2,
-                              // type: "spring",
-                              // bounce: 0.4
-                            }}
-                          >
-                            <Helmet>
-                              <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
-                            </Helmet>
-                            <Entry page={page} />
-                          </PageWrapper>
-                        }
-                      />
-                    )
-                  })}
-                  <Route
-                    path='/'
-                    element={
-                      <PageWrapper
-                        key={`main_interface_key__default`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{
-                          duration: 0.8,
-                          type: "spring",
-                          bounce: 0.4
-                        }}
-                      >
-                        <Overview page={PAGES_CONFIG[0]} />
-                      </PageWrapper>
-                    }
-                  />
-                </Routes>
-              </AnimatePresence>
-            </MainInterfaceWrapper>
-          </BodyInterfaceWrapper>
-        </MessagesContextWrapper>
-      </UIContextWrapper>
+                        <PageWrapper
+                          key={`main_interface_key__${pageIndex}`}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{
+                            duration: 0.2,
+                            // type: "spring",
+                            // bounce: 0.4
+                          }}
+                        >
+                          <Helmet>
+                            <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
+                          </Helmet>
+                          <Entry page={page} />
+                        </PageWrapper>
+                      }
+                    />
+                  )
+                })}
+                <Route
+                  path='/'
+                  element={
+                    <PageWrapper
+                      key={`main_interface_key__default`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{
+                        duration: 0.8,
+                        type: "spring",
+                        bounce: 0.4
+                      }}
+                    >
+                      <Overview page={PAGES_CONFIG[0]} />
+                    </PageWrapper>
+                  }
+                />
+              </Routes>
+            </AnimatePresence>
+          </MainInterfaceWrapper>
+        </BodyInterfaceWrapper>
+      </MessagesContextWrapper>
 
       {/* Network status and network details */}
       <NetworkBar />
@@ -143,14 +142,24 @@ export const RouterInner = () => {
   );
 }
 
-// We wrap the main router component to make staking metrics available
+// We wrap UI Context around `RouterInner` to give it access to the context.
+export const RouterWithUIContext = () => {
+
+  return (
+    <UIContextWrapper>
+      <RouterInner />
+    </UIContextWrapper>
+  );
+}
+
+// We wrap the main router component to make staking metrics available.
 // to child contexts.
 export const Router = () => {
 
   return (
     <StakingMetricsContextWrapper>
       <BrowserRouter>
-        <RouterInner />
+        <RouterWithUIContext />
       </BrowserRouter>
     </StakingMetricsContextWrapper>
   );
