@@ -77,12 +77,7 @@ export const ValidatorListInner = (props: any) => {
     setTimeout(() => {
       setRenderIteration(renderIterationRef.current + 1)
     }, 500);
-  }, [renderIterationRef.current, validators]);
-
-  // update lists upon raw validator changes
-  useEffect(() => {
-    setValidatorsDefault(props.validators);
-  }, [props.validators])
+  }, [renderIterationRef.current]);
 
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
