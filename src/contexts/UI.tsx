@@ -145,6 +145,10 @@ export const UIContextWrapper = (props: any) => {
   }
 
   const filterInactive = (list: any) => {
+    // if list has not yet been populated, return original list
+    if (session.list.length === 0) {
+      return list;
+    }
     list = list.filter((validator: any) => session.list.includes(validator.address));
     return list;
   }
