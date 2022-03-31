@@ -160,16 +160,23 @@ export const StakingMetricsContextWrapper = (props: any) => {
     },
   };
   */
-  const fetchValidatorMetaBatch = async (key: string, validators: any) => {
+  const fetchValidatorMetaBatch = async (key: string, validators: any, refetch: boolean = false) => {
     if (!isReady()) { return }
 
     if (!validators.length) { return; }
 
-    // tidy up if existing batch exists
-    delete validatorMetaBatches[key];
-    if (validatorMetaBatches.unsubs[key] !== undefined) {
-      for (let unsub of validatorMetaBatches.unsubs[key]) {
-        unsub();
+    if (!refetch) {
+      // if already exists, do not re-fetch
+      if (validatorMetaBatches.unsubs[key] !== undefined) {
+        return;
+      }
+    } else {
+      // tidy up if existing batch exists
+      delete validatorMetaBatches[key];
+      if (validatorMetaBatches.unsubs[key] !== undefined) {
+        for (let unsub of validatorMetaBatches.unsubs[key]) {
+          unsub();
+        }
       }
     }
 

@@ -85,7 +85,7 @@ export const ValidatorInner = (props: any) => {
 
 export class Validator extends React.Component<any, any> {
   shouldComponentUpdate (nextProps: any, nextState: any) {
-    return (this.props.validator !== nextProps.validator || this.props.synced !== nextProps.synced);
+    return (this.props.validator !== nextProps.validator || this.props.synced);
   }
 
   render () {
