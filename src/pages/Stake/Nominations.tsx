@@ -22,29 +22,41 @@ export const Nominations = (props: any) => {
     });
   }
 
+  const [fetching, setFetching] = useState(true);
   const [nominations, setNominations] = useState(nominationsFormatted ?? []);
 
   const fetchNominationsMeta = async () => {
     const nominationsWithPrefs = await fetchValidatorPrefs(nominationsFormatted);
     if (nominationsWithPrefs) {
+      setFetching(false);
       setNominations(nominationsWithPrefs);
     }
   }
-
   useEffect(() => {
     fetchNominationsMeta();
   }, [isReady(), props.nominations]);
+
+  useEffect(() => {
+  }, [nominations]);
+
+  if (fetching) {
+    return (
+      <Wrapper>
+        <div style={{ marginTop: '1rem' }}>
+          <h4>Fetching your nominations...</h4>
+        </div>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
       {isReady() &&
         <>
           {nominations.length === 0 &&
-            <>
-              <div style={{ marginTop: '1rem' }}>
-                <h4>Finish staking setup to manage your nominated validators.</h4>
-              </div>
-            </>
+            <div style={{ marginTop: '1rem' }}>
+              <h4>Finish staking setup to manage your nominated validators.</h4>
+            </div>
           }
           {nominations.length > 0 &&
             <ValidatorList

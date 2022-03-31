@@ -17,38 +17,37 @@ export const Wrapper = styled(motion.div) <any>`
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row nowrap;
-    overflow: hidden;
     justify-content: flex-start;
     align-items: center;
-    overflow-x: auto;
+    flex: 1;
+    max-width: 100%;
 
     .identity {
       display: flex;
       margin-left: 0.75rem;
-      margin-right: 0.25rem;
-      display: flex;
+      margin-right: 0.5rem;
       flex-flow: row nowrap;
       align-items: center;
       align-content: center;
       overflow: hidden;
-      flex: 1;
+      flex-shrink: 1;
+      flex-grow: 1;
     }
     .labels {
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: row nowrap;
       justify-content: flex-end;
       align-items: center;
+      flex: 1;
 
       label {
-        border-radius: 0.6rem;
         color: #aaa;
-        margin-left: 0.75rem;
       }
     }
 
     h4 {
       margin: 0;
-      width: 100%;
+      flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
     }

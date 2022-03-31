@@ -33,51 +33,53 @@ export const ValidatorInner = (props: any) => {
           theme="polkadot"
           style={{ cursor: 'default' }}
         />
-        <div style={{ flexGrow: 1 }}>
-          {synced.identities &&
-            <motion.div
-              className='identity'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2, delay: 0.1 }}
-            >
-              <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
-            </motion.div>
-          }
-        </div>
-        {prefs !== undefined &&
-          <div className='labels'>
-            <label>
-              {commission}%
-            </label>
-            {blocked &&
-              <label>
-                <FontAwesomeIcon
-                  icon={faUserSlash}
-                  color='#d2545d'
-                  transform="shrink-1"
-                  style={{ marginRight: '0.25rem' }}
-                />
-              </label>
-            }
-          </div>
-        }
-        {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
+
+        {synced.identities &&
           <motion.div
+            className='identity'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            <label>
-              <FontAwesomeIcon
-                icon={faStopCircle}
-                color='#d2545d'
-                transform="grow-1"
-                style={{ marginLeft: '0.75rem' }}
-              />
-            </label>
+            <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
           </motion.div>
         }
+
+        <div className='labels'>
+          {prefs !== undefined &&
+            <>
+              <label>
+                {commission}%
+              </label>
+              {blocked &&
+                <label>
+                  <FontAwesomeIcon
+                    icon={faUserSlash}
+                    color='#d2545d'
+                    transform="shrink-1"
+                    style={{ marginRight: '0.25rem' }}
+                  />
+                </label>
+              }
+            </>
+          }
+          {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+            >
+              <label>
+                <FontAwesomeIcon
+                  icon={faStopCircle}
+                  color='#d2545d'
+                  transform="grow-1"
+                  style={{ marginLeft: '0.75rem' }}
+                />
+              </label>
+            </motion.div>
+          }
+        </div>
       </div>
     </Wrapper>
   )
