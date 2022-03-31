@@ -8,14 +8,13 @@ import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
 import { StakingMetricsContext, useStakingMetrics } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faGripVertical, faPercentage, faStopCircle, faUserSlash, faBalanceScaleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
-import { FiltersWrapper } from './Filters';
-import { Item } from './Item';
+import { Filters } from './Filters';
 
 export const ValidatorListInner = (props: any) => {
 
-  const { setListFormat, listFormat, validators: validatorsUi, setValidatorsOrder }: any = useUi();
+  const { setListFormat, listFormat, validators: validatorsUi }: any = useUi();
   const { isReady }: any = useApi();
   const {
     fetchValidatorMetaBatch,
@@ -115,51 +114,7 @@ export const ValidatorListInner = (props: any) => {
       <List
         flexBasisLarge={allowMoreCols ? '33%' : '50%'}
       >
-        {allowFilters &&
-          <FiltersWrapper>
-            <div className='section'>
-              <div className='head'>Order</div>
-              <div className='items'>
-                <Item
-                  label='lowest commission'
-                  icon={faPercentage}
-                  transform='grow-12'
-                  active={validatorsUi.orderBy === 'commission'}
-                  onClick={() => setValidatorsOrder()}
-                />
-              </div>
-            </div>
-
-            <div className='separator'></div>
-            <div className='section'>
-              <div className='head'>Filter</div>
-              <div className='items'>
-                <Item
-                  label='over subscribed'
-                  icon={faStopCircle}
-                  transform='grow-10'
-                  active={false}
-                  onClick={() => { }}
-                />
-                <Item
-                  label='100% commission'
-                  icon={faBalanceScaleLeft}
-                  transform='grow-6'
-                  active={false}
-                  onClick={() => { }}
-                />
-                <Item
-                  label='blocked nominations'
-                  icon={faUserSlash}
-                  transform='grow-9'
-                  active={false}
-                  onClick={() => { }}
-                />
-              </div>
-            </div>
-
-          </FiltersWrapper>
-        }
+        {allowFilters && <Filters />}
         <motion.div
           className='transition'
           variants={container}

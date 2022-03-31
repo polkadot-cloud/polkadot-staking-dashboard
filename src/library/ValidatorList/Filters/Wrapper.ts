@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-export const FiltersWrapper = styled.div`
+export const Wrapper = styled.div`
   width: 100%;
   padding: 0.25rem 0.5rem 1rem 0.5rem;
   display: flex;
@@ -39,7 +39,7 @@ export const FiltersWrapper = styled.div`
   }
 `;
 
-export const Item = styled.div<any>`
+export const ItemWrapper = styled.div<any>`
     width: 110px;
     height: 80px;
     border-radius: 0.75rem;
@@ -110,4 +110,4 @@ export const Item = styled.div<any>`
   }   
 `;
 
-export default FiltersWrapper;
+export default Wrapper;

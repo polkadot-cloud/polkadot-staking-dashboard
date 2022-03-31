@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { Item as ItemWrapper } from './Filters'
+import { ItemWrapper } from './Wrapper'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
@@ -38,9 +38,7 @@ export const Item = (props: any) => {
         onClick();
       }}
     >
-      <ItemWrapper
-        active={active}
-      >
+      <ItemWrapper active={active}>
         <section>
           <motion.div
             className='active'
@@ -55,7 +53,6 @@ export const Item = (props: any) => {
           >
             <FontAwesomeIcon icon={faCheckCircle} color='rgba(211, 48, 121, 0.85)' transform="grow-4" />
           </motion.div>
-
           <div className='icon'>
             <FontAwesomeIcon icon={icon}
               color={active ? 'white' : '#ccc'}
