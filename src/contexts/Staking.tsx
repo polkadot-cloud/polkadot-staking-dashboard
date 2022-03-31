@@ -164,7 +164,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
     if (!refetch) {
       // if already exists, do not re-fetch
-      if (validatorMetaBatches.unsubs[key] !== undefined) {
+      if (validatorMetaBatches[key] !== undefined) {
         return;
       }
     } else {

@@ -2,12 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { useStaking } from './Staking';
+import { useApi } from './Api';
 
 export interface UIContextState {
   setSideMenu: (v: number) => void;
   setListFormat: (v: string) => void;
   orderValidators: (v: string) => void;
-  applyValidatorFilters: (l: any, f?: any) => void;
+  applyValidatorOrder: (l: any, o: string) => any;
+  applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
   sideMenuOpen: number;
   listFormat: string;
@@ -18,7 +21,8 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   setSideMenu: (v: number) => { },
   setListFormat: (v: string) => { },
   orderValidators: (v: string) => { },
-  applyValidatorFilters: (l: any, f?: any) => { },
+  applyValidatorOrder: (l: any, o: string) => { },
+  applyValidatorFilters: (l: any, k: string, f?: any) => { },
   toggleFilterValidators: (v: string, l: any) => { },
   sideMenuOpen: 0,
   listFormat: 'col',
@@ -29,14 +33,16 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIContextWrapper = (props: any) => {
 
-  // const { meta } = useStaking();
+  const { meta }: any = useStaking();
+  const { consts }: any = useApi();
+  const { maxNominatorRewardedPerValidator } = consts;
 
   const [state, setState]: any = useState({
     sideMenuOpen: 0,
     listFormat: 'col',
     validators: {
       order: 'default',
-      filter: ['over_subscribed'],
+      filter: [],
     }
   });
 
@@ -82,52 +88,83 @@ export const UIContextWrapper = (props: any) => {
     setValidatorsFilter(filter);
   }
 
-  const applyValidatorFilters = async (list: any, filter: any = state.validators.filter) => {
+  const applyValidatorFilters = (list: any, batchKey: string, filter: any = state.validators.filter) => {
 
-    if (filter.includes('over_subscribed')) {
-      list = filterOverSubscribed(list);
-    }
     if (filter.includes('all_commission')) {
       list = filterAllCommission(list);
     }
     if (filter.includes('blocked_nominations')) {
       list = filterBlockedNominations(list);
     }
+    if (filter.includes('over_subscribed')) {
+      list = filterOverSubscribed(list, batchKey);
+    }
+
     return list;
   }
 
-  const filterOverSubscribed = (list: any) => {
-    return list;
+  const filterOverSubscribed = (list: any, batchKey: string) => {
+    if (meta[batchKey] === undefined) {
+      return list;
+    }
+    let filteredList: any = [];
+    for (let validator of list) {
+      let addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+
+      // if we cannot derive data, fallback to include validator in filtered list
+      if (addressBatchIndex === -1) {
+        filteredList.push(validator);
+        continue;
+      }
+      let stake = meta[batchKey]?.stake ?? false;
+      if (!stake) {
+        filteredList.push(validator);
+        continue;
+      }
+      let totalNominations = stake[addressBatchIndex].total_nominations ?? 0;
+      if (totalNominations < maxNominatorRewardedPerValidator) {
+        filteredList.push(validator);
+        continue;
+      }
+    }
+
+    return filteredList;
   }
 
   const filterAllCommission = (list: any) => {
+    list = list.filter((validator: any) => validator.prefs.commission !== 100);
     return list;
   }
 
   const filterBlockedNominations = (list: any) => {
+    list = list.filter((validator: any) => validator.prefs.blocked !== true);
     return list;
   }
 
   // Validator list ordering functions
 
   const orderValidators = (by: string) => {
-    let action = state.validators.order === by ? 'revert' : 'apply';
-    // update list
-    if (action === 'revert') {
-      orderDefault();
-    } else {
-      orderLowestCommission();
+    let action = state.validators.order === by
+      ? 'revert'
+      : 'apply';
+
+    let order = action === 'revert'
+      ? 'default'
+      : by;
+
+    setValidatorsOrder(order);
+  }
+
+  const applyValidatorOrder = (list: any, order: string) => {
+    if (order === 'commission') {
+      return orderLowestCommission(list);
     }
-    setValidatorsOrder(action === 'revert' ? 'default' : by);
+    return list;
   }
 
-  const orderLowestCommission = () => {
-    // let list: any = [];
-    // list.sort((a: any, b: any) => (a.commission < b.commission) ? 1 : -1)
-  }
-
-  const orderDefault = () => {
-    // fall back to default list
+  const orderLowestCommission = (list: any) => {
+    let orderedList = [...list].sort((a: any, b: any) => (a.prefs.commission - b.prefs.commission));
+    return orderedList;
   }
 
   return (
@@ -135,6 +172,7 @@ export const UIContextWrapper = (props: any) => {
       setSideMenu: setSideMenu,
       setListFormat: setListFormat,
       orderValidators: orderValidators,
+      applyValidatorOrder: applyValidatorOrder,
       applyValidatorFilters: applyValidatorFilters,
       toggleFilterValidators: toggleFilterValidators,
       sideMenuOpen: state.sideMenuOpen,

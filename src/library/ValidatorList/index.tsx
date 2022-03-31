@@ -16,13 +16,22 @@ const ITEMS_PER_PAGE = 60;
 
 export const ValidatorListInner = (props: any) => {
 
-  const { setListFormat, listFormat, validators: validatorsUi, applyValidatorFilters }: any = useUi();
+  const {
+    setListFormat,
+    listFormat,
+    validators: validatorsUi,
+    applyValidatorFilters,
+    applyValidatorOrder
+  }: any = useUi();
+
   const { isReady }: any = useApi();
+
   const {
     fetchValidatorMetaBatch,
     getValidatorMetaBatch,
     VALIDATORS_PER_BATCH_MUTLI,
   }: any = useStaking();
+
   const { allowMoreCols, allowFilters, pagination }: any = props;
 
   const [page, setPage]: any = useState(1);
@@ -51,38 +60,6 @@ export const ValidatorListInner = (props: any) => {
   let pageEnd = (page * ITEMS_PER_PAGE) - 1;
   let pageStart = pageEnd - (ITEMS_PER_PAGE - 1);
 
-  useEffect(() => {
-    if (batchEnd >= pageEnd) {
-      return;
-    }
-    setTimeout(() => {
-      setRenderIteration(renderIterationRef.current + 1)
-    }, 500);
-  }, [renderIterationRef.current, validators]);
-
-
-  // list ui changes / validator changes trigger re-render of list
-  useEffect(() => {
-    setValidatorsDefault(props.validators);
-  }, [props.validators])
-
-  // list ui changes / validator changes trigger re-render of list
-  useEffect(() => {
-    handleValidatorsFilterUpdate();
-  }, [validatorsUi])
-
-
-  const handleValidatorsFilterUpdate = async () => {
-    const filteredValidators = await applyValidatorFilters(validatorsDefault);
-    setValidators(filteredValidators);
-    setPage(1);
-    setRenderIteration(1);
-  }
-
-  if (!validators.length) {
-    return (<></>);
-  }
-
   // format component display data
   const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
   const identities = meta.identities ?? [];
@@ -93,9 +70,37 @@ export const ValidatorListInner = (props: any) => {
     stake: (stake.length > 0) ?? false,
   };
 
-  // first batch of validators
-  const _listValidators = validators.slice(pageStart);
-  const listValidators = _listValidators.slice(0, ITEMS_PER_PAGE);
+  useEffect(() => {
+    if (batchEnd >= pageEnd) {
+      return;
+    }
+    setTimeout(() => {
+      setRenderIteration(renderIterationRef.current + 1)
+    }, 500);
+  }, [renderIterationRef.current, validators]);
+
+  // update lists upon raw validator changes
+  useEffect(() => {
+    setValidatorsDefault(props.validators);
+  }, [props.validators])
+
+  // list ui changes / validator changes trigger re-render of list
+  useEffect(() => {
+    handleValidatorsFilterUpdate();
+  }, [validatorsUi, synced.stake])
+
+  const handleValidatorsFilterUpdate = () => {
+    let filteredValidators = Object.assign(validatorsDefault);
+    filteredValidators = applyValidatorOrder(filteredValidators, validatorsUi.order);
+    filteredValidators = applyValidatorFilters(filteredValidators, props.batchKey);
+    setValidators(filteredValidators);
+    setPage(1);
+    setRenderIteration(1);
+  }
+
+  if (!validators.length) {
+    return (<></>);
+  }
 
   const container = {
     hidden: { opacity: 0 },
@@ -117,6 +122,10 @@ export const ValidatorListInner = (props: any) => {
       opacity: 1,
     }
   };
+
+  // first batch of validators
+  const _listValidators = validators.slice(pageStart);
+  const listValidators = _listValidators.slice(0, ITEMS_PER_PAGE);
 
   return (
     <ListWrapper>
@@ -156,12 +165,16 @@ export const ValidatorListInner = (props: any) => {
           animate="show"
         >
           {listValidators.map((validator: any, index: number) => {
+
+            // fetch batch data by referring to default list index
+            let batchIndex = validatorsDefault.indexOf(validator);
+
             return (
               <motion.div className={`item ${listFormat === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
                 <Validator
                   validator={validator}
-                  identity={identities[index]}
-                  stake={stake[index]}
+                  identity={identities[batchIndex]}
+                  stake={stake[batchIndex]}
                   synced={synced}
                 />
               </motion.div>
