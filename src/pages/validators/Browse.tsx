@@ -6,7 +6,7 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useNetworkMetrics } from '../../contexts/Network';
-import { useStakingMetrics } from '../../contexts/Staking';
+import { useStaking } from '../../contexts/Staking';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
@@ -20,7 +20,7 @@ export const Browse = (props: PageProps) => {
   const { title } = page;
 
   const { metrics } = useNetworkMetrics();
-  const { session, fetchValidators, staking }: any = useStakingMetrics();
+  const { session, fetchValidators, staking }: any = useStaking();
   const { minNominatorBond } = staking;
 
   useEffect(() => {

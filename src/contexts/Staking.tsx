@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef, } from 'react';
 import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
 import BN from "bn.js";
-import { sleep } from '../Utils';
+import { sleep, removePercentage } from '../Utils';
 
 // validators per batch in multi-batch fetching
 const VALIDATORS_PER_BATCH_MUTLI = 20;
@@ -19,6 +19,7 @@ export interface StakingMetricsContextState {
   fetchValidatorMetaBatch: (k: string, v: []) => void;
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
+  fetchValidatorPrefs: (v: any) => any;
   staking: any;
   session: any;
   meta: any;
@@ -32,13 +33,14 @@ export const StakingMetricsContext: React.Context<StakingMetricsContextState> = 
   fetchValidatorMetaBatch: (k: string, v: []) => { },
   getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
+  fetchValidatorPrefs: (v: any) => { },
   staking: {},
   session: [],
   meta: {},
 });
 
-// useStakingMetrics
-export const useStakingMetrics = () => React.useContext(StakingMetricsContext);
+// useStaking
+export const useStaking = () => React.useContext(StakingMetricsContext);
 
 // wrapper component to provide components with context
 export const StakingMetricsContextWrapper = (props: any) => {
@@ -128,8 +130,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
       let address = _args.args[0].toHuman();
       let prefs = _prefs.toHuman();
 
-      // remove `%` from commission
-      let _commission = Number(prefs.commission.slice(0, -1));
+      let _commission = removePercentage(prefs.commission);
 
       validators.push({
         address: address,
@@ -203,7 +204,6 @@ export const StakingMetricsContextWrapper = (props: any) => {
       setValidatorMetaBatch(batchesUpdated);
     });
 
-
     // intentional throttle to prevent slow render updates
     await sleep(1000);
 
@@ -241,6 +241,40 @@ export const StakingMetricsContextWrapper = (props: any) => {
       ...validatorMetaBatches,
       unsubs: unsubs,
     });
+  }
+
+  /*
+   * fetches prefs for a list of validators
+   */
+  const fetchValidatorPrefs = async (_validators: any) => {
+
+    if (!_validators.length) {
+      return false;
+    }
+
+    let validators: any = [];
+    for (let v of _validators) {
+      validators.push(v.address);
+    }
+
+    const prefsAll = await api.query.staking.validators.multi(validators);
+
+    let validatorsWithPrefs = [];
+    let i = 0;
+    for (let _prefs of prefsAll) {
+      let prefs = _prefs.toHuman();
+      let commission = removePercentage(prefs.commission);
+
+      validatorsWithPrefs.push({
+        address: validators[i],
+        prefs: {
+          commission: commission,
+          blocked: prefs.blocked,
+        }
+      });
+      i++;
+    }
+    return validatorsWithPrefs;
   }
 
   useEffect(() => {
@@ -283,6 +317,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
         fetchValidatorMetaBatch: fetchValidatorMetaBatch,
         getValidatorMetaBatch: getValidatorMetaBatch,
         removeValidatorMetaBatch: removeValidatorMetaBatch,
+        fetchValidatorPrefs: fetchValidatorPrefs,
         staking: stakingMetrics,
         session: sessionValidators.session,
         meta: validatorMetaBatches.meta,

@@ -28,3 +28,7 @@ export const humanNumber: any = (val: any) => {
 export const sleep = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
+
+export const removePercentage = (v: string) => {
+  return Number(v.slice(0, -1));
+}

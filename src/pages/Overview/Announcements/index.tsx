@@ -5,7 +5,7 @@ import { Wrapper, Item } from './Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
-import { useStakingMetrics } from '../../../contexts/Staking';
+import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
 import { humanNumber, planckToDot } from '../../../Utils';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
@@ -13,7 +13,7 @@ import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 export const Announcements = () => {
 
   const { isReady, network }: any = useApi();
-  const { staking }: any = useStakingMetrics();
+  const { staking }: any = useStaking();
   const { minNominatorBond } = staking;
 
   const container = {

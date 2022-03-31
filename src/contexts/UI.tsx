@@ -27,7 +27,7 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIContextWrapper = (props: any) => {
 
-  // const { meta } = useStakingMetrics();
+  // const { meta } = useStaking();
 
   const [state, setState]: any = useState({
     sideMenuOpen: 0,

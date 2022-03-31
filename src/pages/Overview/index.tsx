@@ -3,7 +3,7 @@
 
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
-import { useStakingMetrics } from '../../contexts/Staking';
+import { useStaking } from '../../contexts/Staking';
 import { PageRowWrapper } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
@@ -22,7 +22,7 @@ export const Overview = (props: PageProps) => {
 
   const { network }: any = useApi();
   const { activeAccount }: any = useConnect();
-  const { staking }: any = useStakingMetrics();
+  const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
 
   // stats
