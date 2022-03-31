@@ -33,7 +33,7 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIContextWrapper = (props: any) => {
 
-  const { meta }: any = useStaking();
+  const { meta, session }: any = useStaking();
   const { consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
 
@@ -144,8 +144,8 @@ export const UIContextWrapper = (props: any) => {
     return list;
   }
 
-  // TODO: refer to session validators
   const filterInactive = (list: any) => {
+    list = list.filter((validator: any) => session.list.includes(validator.address));
     return list;
   }
 
