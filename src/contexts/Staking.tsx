@@ -198,7 +198,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
 
     // intentional throttle to prevent slow render updates
-    await sleep(500);
+    await sleep(1000);
 
     // subscribe to validator nominators
     let args: any = [];

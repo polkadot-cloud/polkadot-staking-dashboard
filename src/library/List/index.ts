@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -49,6 +48,37 @@ export const Header = styled.div`
   }
 `;
 
+export const Pagination = styled.div<any>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+
+  h4 {
+    margin: 0;
+  }
+  
+  > div:first-child {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+  }
+  > div:last-child {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      margin-left: 0.5rem;
+      &.next {
+        color: ${props => props.next ? 'rgb(211, 48, 121)' : '#aaa'};
+      }
+
+      &.prev {
+        color: ${props => props.prev ? 'rgb(211, 48, 121)' : '#aaa'};
+      }
+    }
+  }
+`;
 
 export const List = styled.div<any>`
   margin-top: 1rem;

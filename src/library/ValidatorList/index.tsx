@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
-import { List, Header, Wrapper as ListWrapper } from '../../library/List';
+import { List, Header, Wrapper as ListWrapper, Pagination } from '../../library/List';
 import { motion } from 'framer-motion';
 import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
 import { Filters } from './Filters';
+
+const ITEMS_PER_PAGE = 60;
 
 export const ValidatorListInner = (props: any) => {
 
@@ -21,22 +23,39 @@ export const ValidatorListInner = (props: any) => {
     getValidatorMetaBatch,
     VALIDATORS_PER_BATCH_MUTLI,
   }: any = useStakingMetrics();
-  const { allowMoreCols, allowFilters }: any = props;
+  const { allowMoreCols, allowFilters, pagination }: any = props;
 
   const [renderIteration, _setRenderIteration]: any = useState(1);
   const [validators, setValidators]: any = useState(props.validators);
+  const [page, setPage]: any = useState(1);
 
+  // pagination
+  let totalPages = Math.ceil(validators.length / ITEMS_PER_PAGE);
+  let nextPage = page + 1 > totalPages ? totalPages : page + 1;
+  let prevPage = page - 1 < 1 ? 1 : page - 1;
+
+  // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
-
   const setRenderIteration = (iter: number) => {
     renderIterationRef.current = iter;
     _setRenderIteration(iter);
   }
-
-  // start fetching metadata batches
   useEffect(() => {
     fetchValidatorMetaBatch(props.batchKey, validators);
   }, [isReady()]);
+
+  let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
+  let pageEnd = (page * ITEMS_PER_PAGE) - 1;
+  let pageStart = pageEnd - (ITEMS_PER_PAGE - 1);
+
+  useEffect(() => {
+    if (batchEnd >= pageEnd) {
+      return;
+    }
+    setTimeout(() => {
+      setRenderIteration(renderIterationRef.current + 1)
+    }, 500);
+  }, [renderIterationRef.current, validators]);
 
 
   // list ui changes / validator changes trigger re-render of list
@@ -50,22 +69,24 @@ export const ValidatorListInner = (props: any) => {
     setRenderIteration(1);
   }
 
-
-  let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
-
-  useEffect(() => {
-    if (batchEnd >= validators.length) {
-      return;
-    }
-    setTimeout(() => {
-      setRenderIteration(renderIterationRef.current + 1)
-    }, 500);
-  }, [renderIterationRef.current, validators]);
-
-
   if (!validators.length) {
     return (<></>);
   }
+
+  // format component display data
+  const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
+  const identities = meta.identities ?? [];
+  const stake = meta.stake ?? [];
+
+  const synced = {
+    identities: (identities.length > 0) ?? false,
+    stake: (stake.length > 0) ?? false,
+  };
+
+
+  // first batch of validators
+  const _listValidators = validators.slice(pageStart);
+  const listValidators = _listValidators.slice(0, ITEMS_PER_PAGE);
 
   const container = {
     hidden: { opacity: 0 },
@@ -88,18 +109,6 @@ export const ValidatorListInner = (props: any) => {
     }
   };
 
-  const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
-  const identities = meta.identities ?? [];
-  const stake = meta.stake ?? [];
-
-  const synced = {
-    identities: (identities.length > 0) ?? false,
-    stake: (stake.length > 0) ?? false,
-  };
-
-  // first batch of validators
-  const listValidators = validators.slice(0, batchEnd);
-
   return (
     <ListWrapper>
       <Header>
@@ -115,6 +124,22 @@ export const ValidatorListInner = (props: any) => {
         flexBasisLarge={allowMoreCols ? '33%' : '50%'}
       >
         {allowFilters && <Filters />}
+
+        {pagination &&
+          <Pagination
+            prev={page !== 1}
+            next={page !== totalPages}
+          >
+            <div>
+              <h4>Page {page} of {totalPages}</h4>
+            </div>
+            <div>
+              <button className='prev' onClick={() => setPage(prevPage)}>Prev</button>
+              <button className='next' onClick={() => setPage(nextPage)}>Next</button>
+            </div>
+          </Pagination>
+        }
+
         <motion.div
           className='transition'
           variants={container}

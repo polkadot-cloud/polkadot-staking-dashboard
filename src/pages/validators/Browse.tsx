@@ -70,6 +70,7 @@ export const Browse = (props: PageProps) => {
                   title='Validators'
                   allowMoreCols
                   allowFilters
+                  pagination
                 />
               }
             </>

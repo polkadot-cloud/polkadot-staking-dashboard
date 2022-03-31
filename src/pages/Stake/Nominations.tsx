@@ -36,7 +36,6 @@ export const Nominations = (props: any) => {
               layout='col'
               title='Your Nominations'
             />
-
           }
         </>
       }
