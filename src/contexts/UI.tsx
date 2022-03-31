@@ -7,7 +7,8 @@ export interface UIContextState {
   setSideMenu: (v: number) => void;
   setListFormat: (v: string) => void;
   orderValidators: (v: string) => void;
-  filterValidators: (v: string) => void;
+  applyValidatorFilters: (l: any, f?: any) => void;
+  toggleFilterValidators: (v: string, l: any) => void;
   sideMenuOpen: number;
   listFormat: string;
   validators: any;
@@ -17,7 +18,8 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   setSideMenu: (v: number) => { },
   setListFormat: (v: string) => { },
   orderValidators: (v: string) => { },
-  filterValidators: (v: string) => { },
+  applyValidatorFilters: (l: any, f?: any) => { },
+  toggleFilterValidators: (v: string, l: any) => { },
   sideMenuOpen: 0,
   listFormat: 'col',
   validators: {},
@@ -57,7 +59,8 @@ export const UIContextWrapper = (props: any) => {
 
   const setValidatorsFilter = (filter: any) => {
     setState({
-      ...state, validators: {
+      ...state,
+      validators: {
         ...state.validators,
         filter: filter,
       }
@@ -66,15 +69,20 @@ export const UIContextWrapper = (props: any) => {
 
   // Validator list filtering functions
 
-  const filterValidators = (type: string) => {
-    let filter = state.validators.filter;
-    let action = state.validators.filter.includes(type) ? 'remove' : 'push';
+  const toggleFilterValidators = (f: string) => {
+    let filter = Object.assign(state.validators.filter);
+    let action = state.validators.filter.includes(f) ? 'remove' : 'push';
 
-    filter = action === 'remove'
-      ? filter.splice(filter.indexOf(type))
-      : filter.push(type);
+    if (action === 'remove') {
+      let index = filter.indexOf(f);
+      filter.splice(index, 1);
+    } else {
+      filter.push(f);
+    }
+    setValidatorsFilter(filter);
+  }
 
-    let list: any = []; // TODO: fetch default list
+  const applyValidatorFilters = async (list: any, filter: any = state.validators.filter) => {
 
     if (filter.includes('over_subscribed')) {
       list = filterOverSubscribed(list);
@@ -85,10 +93,7 @@ export const UIContextWrapper = (props: any) => {
     if (filter.includes('blocked_nominations')) {
       list = filterBlockedNominations(list);
     }
-
-    // TODO: apply filtered list
-
-    setValidatorsFilter(filter);
+    return list;
   }
 
   const filterOverSubscribed = (list: any) => {
@@ -130,7 +135,8 @@ export const UIContextWrapper = (props: any) => {
       setSideMenu: setSideMenu,
       setListFormat: setListFormat,
       orderValidators: orderValidators,
-      filterValidators: filterValidators,
+      applyValidatorFilters: applyValidatorFilters,
+      toggleFilterValidators: toggleFilterValidators,
       sideMenuOpen: state.sideMenuOpen,
       listFormat: state.listFormat,
       validators: state.validators,

@@ -16,7 +16,7 @@ const ITEMS_PER_PAGE = 60;
 
 export const ValidatorListInner = (props: any) => {
 
-  const { setListFormat, listFormat, validators: validatorsUi }: any = useUi();
+  const { setListFormat, listFormat, validators: validatorsUi, applyValidatorFilters }: any = useUi();
   const { isReady }: any = useApi();
   const {
     fetchValidatorMetaBatch,
@@ -25,9 +25,12 @@ export const ValidatorListInner = (props: any) => {
   }: any = useStaking();
   const { allowMoreCols, allowFilters, pagination }: any = props;
 
-  const [renderIteration, _setRenderIteration]: any = useState(1);
-  const [validators, setValidators]: any = useState(props.validators);
   const [page, setPage]: any = useState(1);
+  const [renderIteration, _setRenderIteration]: any = useState(1);
+  // default list of validators
+  const [validatorsDefault, setValidatorsDefault] = useState(props.validators);
+  // manipulated list (ordering, filtering) of validators
+  const [validators, setValidators]: any = useState(props.validators ?? []);
 
   // pagination
   let totalPages = Math.ceil(validators.length / ITEMS_PER_PAGE);
@@ -58,18 +61,23 @@ export const ValidatorListInner = (props: any) => {
   }, [renderIterationRef.current, validators]);
 
 
-  // TODO: handle ordering and filtering changes with useEffect.
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
-    handleValidatorsUpdate();
-  }, [props.validators, validatorsUi])
+    setValidatorsDefault(props.validators);
+  }, [props.validators])
 
-  const handleValidatorsUpdate = async () => {
-    // TODO: handle ordering and filtering here if set.
-    setValidators(props.validators);
+  // list ui changes / validator changes trigger re-render of list
+  useEffect(() => {
+    handleValidatorsFilterUpdate();
+  }, [validatorsUi])
+
+
+  const handleValidatorsFilterUpdate = async () => {
+    const filteredValidators = await applyValidatorFilters(validatorsDefault);
+    setValidators(filteredValidators);
+    setPage(1);
     setRenderIteration(1);
   }
-
 
   if (!validators.length) {
     return (<></>);
@@ -84,7 +92,6 @@ export const ValidatorListInner = (props: any) => {
     identities: (identities.length > 0) ?? false,
     stake: (stake.length > 0) ?? false,
   };
-
 
   // first batch of validators
   const _listValidators = validators.slice(pageStart);

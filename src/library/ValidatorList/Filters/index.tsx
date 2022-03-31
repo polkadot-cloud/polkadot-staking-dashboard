@@ -8,7 +8,7 @@ import { useUi } from '../../../contexts/UI';
 
 export const Filters = () => {
 
-  const { validators: validatorsUi, orderValidators, filterValidators }: any = useUi();
+  const { validators: validatorsUi, orderValidators, toggleFilterValidators }: any = useUi();
 
   return (
     <Wrapper>
@@ -34,21 +34,27 @@ export const Filters = () => {
             icon={faStopCircle}
             transform='grow-10'
             active={validatorsUi.filter?.includes('over_subscribed') ?? false}
-            onClick={() => { filterValidators('over_subscribed') }}
+            onClick={() => {
+              toggleFilterValidators('over_subscribed');
+            }}
           />
           <Item
             label='100% commission'
             icon={faBalanceScaleLeft}
             transform='grow-6'
             active={validatorsUi.filter?.includes('all_commission') ?? false}
-            onClick={() => { filterValidators('all_commission') }}
+            onClick={() => {
+              toggleFilterValidators('all_commission');
+            }}
           />
           <Item
             label='blocked nominations'
             icon={faUserSlash}
             transform='grow-9'
             active={validatorsUi.filter?.includes('blocked_nominations') ?? false}
-            onClick={() => { filterValidators('blocked_nominations') }}
+            onClick={() => {
+              toggleFilterValidators('blocked_nominations');
+            }}
           />
         </div>
       </div>
