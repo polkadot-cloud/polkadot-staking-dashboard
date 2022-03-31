@@ -3,7 +3,7 @@
 
 import { Wrapper } from './Wrapper';
 import { Item } from './Item';
-import { faPercentage, faStopCircle, faUserSlash, faBalanceScaleLeft, faEllipsisH, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faPercentage, faExclamationTriangle, faUserSlash, faBalanceScaleLeft, faClock } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../../contexts/UI';
 
 export const Filters = () => {
@@ -40,7 +40,7 @@ export const Filters = () => {
           />
           <Item
             label='over subscribed'
-            icon={faStopCircle}
+            icon={faExclamationTriangle}
             transform='grow-10'
             active={validatorsUi.filter?.includes('over_subscribed') ?? false}
             onClick={() => {
