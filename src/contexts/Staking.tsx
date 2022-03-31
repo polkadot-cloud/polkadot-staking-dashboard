@@ -23,6 +23,7 @@ export interface StakingMetricsContextState {
   staking: any;
   validators: any;
   meta: any;
+  session: any;
 }
 
 // context definition
@@ -37,6 +38,7 @@ export const StakingMetricsContext: React.Context<StakingMetricsContextState> = 
   staking: {},
   validators: [],
   meta: {},
+  session: {},
 });
 
 // useStaking
@@ -59,6 +61,10 @@ export const StakingMetricsContextWrapper = (props: any) => {
   });
 
   const [validators, setValidators]: any = useState([]);
+  const [sessionValidators, setSessionValidators] = useState({
+    list: [],
+    unsub: null,
+  });
 
   const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({
     meta: {},
@@ -122,6 +128,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
   const fetchValidators = async () => {
     if (!isReady()) { return }
 
+    // fetch validator set
     let validators: any = [];
     const exposures = await api.query.staking.validators.entries();
     exposures.forEach(([_args, _prefs]: any) => {
@@ -140,6 +147,25 @@ export const StakingMetricsContextWrapper = (props: any) => {
     });
 
     setValidators(validators);
+  }
+
+  /*
+   * subscribe to active session
+  */
+  const subscribeSessionValidators = async (api: any) => {
+
+    if (isReady() && metrics.activeEra.index !== 0) {
+      const unsub = await api.query.session.validators((_validators: any) => {
+        setSessionValidators({
+          ...sessionValidators,
+          list: _validators.toHuman()
+        });
+      });
+      setSessionValidators({
+        ...sessionValidators,
+        unsub: unsub
+      });
+    }
   }
 
   /*
@@ -275,6 +301,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
 
   useEffect(() => {
     subscribeToStakingkMetrics(api);
+    subscribeSessionValidators(api);
 
     return (() => {
       // unsubscribe from staking metrics
@@ -317,6 +344,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
         staking: stakingMetrics,
         validators: validators,
         meta: validatorMetaBatches.meta,
+        session: sessionValidators,
       }}>
       {props.children}
     </StakingMetricsContext.Provider>

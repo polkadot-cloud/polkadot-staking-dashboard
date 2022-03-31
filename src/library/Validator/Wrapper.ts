@@ -41,10 +41,12 @@ export const Wrapper = styled(motion.div) <any>`
       flex: 1;
 
       label {
+        margin-left: 0.65rem;
         color: #aaa;
       }
     }
 
+    svg { margin: 0; }
     h4 {
       margin: 0;
       flex: 1;

@@ -13,7 +13,6 @@ import { useApi } from '../../contexts/Api';
 export const ValidatorInner = (props: any) => {
 
   const { consts }: any = useApi();
-
   const { validator, synced, identity, stake } = props;
 
   let { address, prefs } = validator;
@@ -57,7 +56,6 @@ export const ValidatorInner = (props: any) => {
                     icon={faUserSlash}
                     color='#d2545d'
                     transform="shrink-1"
-                    style={{ marginRight: '0.25rem' }}
                   />
                 </label>
               }
@@ -73,8 +71,7 @@ export const ValidatorInner = (props: any) => {
                 <FontAwesomeIcon
                   icon={faStopCircle}
                   color='#d2545d'
-                  transform="grow-1"
-                  style={{ marginLeft: '0.75rem' }}
+                  transform="grow-2"
                 />
               </label>
             </motion.div>

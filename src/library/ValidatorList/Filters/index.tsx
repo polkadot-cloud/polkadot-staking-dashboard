@@ -3,7 +3,7 @@
 
 import { Wrapper } from './Wrapper';
 import { Item } from './Item';
-import { faPercentage, faStopCircle, faUserSlash, faBalanceScaleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faPercentage, faStopCircle, faUserSlash, faBalanceScaleLeft, faEllipsisH, faClock } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../../contexts/UI';
 
 export const Filters = () => {
@@ -29,6 +29,15 @@ export const Filters = () => {
       <div className='section'>
         <div className='head'>Exclude</div>
         <div className='items'>
+          <Item
+            label='inactive validators'
+            icon={faClock}
+            transform='grow-10'
+            active={validatorsUi.filter?.includes('inactive') ?? false}
+            onClick={() => {
+              toggleFilterValidators('inactive');
+            }}
+          />
           <Item
             label='over subscribed'
             icon={faStopCircle}

@@ -99,6 +99,9 @@ export const UIContextWrapper = (props: any) => {
     if (filter.includes('over_subscribed')) {
       list = filterOverSubscribed(list, batchKey);
     }
+    if (filter.includes('inactive')) {
+      list = filterInactive(list);
+    }
 
     return list;
   }
@@ -138,6 +141,11 @@ export const UIContextWrapper = (props: any) => {
 
   const filterBlockedNominations = (list: any) => {
     list = list.filter((validator: any) => validator.prefs.blocked !== true);
+    return list;
+  }
+
+  // TODO: refer to session validators
+  const filterInactive = (list: any) => {
     return list;
   }
 
