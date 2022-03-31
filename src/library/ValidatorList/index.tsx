@@ -58,16 +58,18 @@ export const ValidatorListInner = (props: any) => {
   }, [renderIterationRef.current, validators]);
 
 
+  // TODO: handle ordering and filtering changes with useEffect.
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     handleValidatorsUpdate();
   }, [props.validators, validatorsUi])
 
   const handleValidatorsUpdate = async () => {
-    // TODO: handle ordering here if set.
+    // TODO: handle ordering and filtering here if set.
     setValidators(props.validators);
     setRenderIteration(1);
   }
+
 
   if (!validators.length) {
     return (<></>);

@@ -8,7 +8,7 @@ import { useUi } from '../../../contexts/UI';
 
 export const Filters = () => {
 
-  const { validators: validatorsUi, setValidatorsOrder }: any = useUi();
+  const { validators: validatorsUi, orderValidators, filterValidators }: any = useUi();
 
   return (
     <Wrapper>
@@ -19,36 +19,36 @@ export const Filters = () => {
             label='lowest commission'
             icon={faPercentage}
             transform='grow-12'
-            active={validatorsUi.orderBy === 'commission'}
-            onClick={() => setValidatorsOrder()}
+            active={validatorsUi.order === 'commission'}
+            onClick={() => orderValidators('commission')}
           />
         </div>
       </div>
 
       <div className='separator'></div>
       <div className='section'>
-        <div className='head'>Filter</div>
+        <div className='head'>Exclude</div>
         <div className='items'>
           <Item
             label='over subscribed'
             icon={faStopCircle}
             transform='grow-10'
-            active={false}
-            onClick={() => { }}
+            active={validatorsUi.filter?.includes('over_subscribed') ?? false}
+            onClick={() => { filterValidators('over_subscribed') }}
           />
           <Item
             label='100% commission'
             icon={faBalanceScaleLeft}
             transform='grow-6'
-            active={false}
-            onClick={() => { }}
+            active={validatorsUi.filter?.includes('all_commission') ?? false}
+            onClick={() => { filterValidators('all_commission') }}
           />
           <Item
             label='blocked nominations'
             icon={faUserSlash}
             transform='grow-9'
-            active={false}
-            onClick={() => { }}
+            active={validatorsUi.filter?.includes('blocked_nominations') ?? false}
+            onClick={() => { filterValidators('blocked_nominations') }}
           />
         </div>
       </div>
