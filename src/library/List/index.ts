@@ -71,10 +71,11 @@ export const Pagination = styled.div<any>`
       margin-left: 0.5rem;
       &.next {
         color: ${props => props.next ? 'rgb(211, 48, 121)' : '#aaa'};
+        cursor: ${props => props.next ? 'pointer' : 'default'};
       }
-
       &.prev {
         color: ${props => props.prev ? 'rgb(211, 48, 121)' : '#aaa'};
+        cursor: ${props => props.prev ? 'pointer' : 'default'};
       }
     }
   }

@@ -21,7 +21,7 @@ export interface StakingMetricsContextState {
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
   staking: any;
-  session: any;
+  validators: any;
   meta: any;
 }
 
@@ -35,7 +35,7 @@ export const StakingMetricsContext: React.Context<StakingMetricsContextState> = 
   removeValidatorMetaBatch: (k: string) => { },
   fetchValidatorPrefs: (v: any) => { },
   staking: {},
-  session: [],
+  validators: [],
   meta: {},
 });
 
@@ -58,9 +58,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
     unsub: null,
   });
 
-  const [sessionValidators, setValidators]: any = useState({
-    session: [],
-  });
+  const [validators, setValidators]: any = useState([]);
 
   const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({
     meta: {},
@@ -118,7 +116,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
   }
 
   /* 
-   * Fetches the currently active session's validator set.
+   * Fetches the active validator set.
    * Validator meta batches are derived from this initial list.
    */
   const fetchValidators = async () => {
@@ -141,9 +139,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
       });
     });
 
-    setValidators({
-      session: validators,
-    });
+    setValidators(validators);
   }
 
   /*
@@ -319,7 +315,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
         removeValidatorMetaBatch: removeValidatorMetaBatch,
         fetchValidatorPrefs: fetchValidatorPrefs,
         staking: stakingMetrics,
-        session: sessionValidators.session,
+        validators: validators,
         meta: validatorMetaBatches.meta,
       }}>
       {props.children}

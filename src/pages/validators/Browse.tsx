@@ -20,7 +20,7 @@ export const Browse = (props: PageProps) => {
   const { title } = page;
 
   const { metrics } = useNetworkMetrics();
-  const { session, fetchValidators, staking }: any = useStaking();
+  const { validators, fetchValidators, staking }: any = useStaking();
   const { minNominatorBond } = staking;
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const Browse = (props: PageProps) => {
   const items = [
     {
       label: "Validators",
-      value: session.length,
+      value: validators.length,
       unit: "",
       format: "number",
     },
@@ -51,20 +51,20 @@ export const Browse = (props: PageProps) => {
   return (
     <>
       <PageTitle title={title} />
-      <StatBoxList title="This Session" items={items} />
+      <StatBoxList title="Staking Metrics" items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
           {isReady() &&
             <>
-              {session.length === 0 &&
+              {validators.length === 0 &&
                 <div className='item'>
                   <h4>Fetching validators...</h4>
                 </div>
               }
 
-              {session.length > 0 &&
+              {validators.length > 0 &&
                 <ValidatorList
-                  validators={session}
+                  validators={validators}
                   batchKey='validators_browse'
                   layout='col'
                   title='Validators'
