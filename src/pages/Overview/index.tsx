@@ -5,7 +5,7 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useStaking } from '../../contexts/Staking';
 import { PageRowWrapper } from '../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
+import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import Payouts from './Payouts';
 import BalanceGraph from './BalanceGraph';

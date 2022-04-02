@@ -92,6 +92,7 @@ export const ItemWrapper = styled.div<any>`
         text-align: left;
         font-variation-settings: 'wght' 550;
         padding-top: 0.15rem;
+        line-height: 0.9rem;
       }
     }
 

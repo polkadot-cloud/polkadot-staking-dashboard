@@ -51,7 +51,10 @@ export const BalancesContextWrapper = (props: any) => {
   }
 
   const defaultNominations = () => {
-    return [];
+    return {
+      targets: [],
+      submittedIn: 0,
+    };
   }
 
   // unsub and resubscribe to newly active account
@@ -136,8 +139,12 @@ export const BalancesContextWrapper = (props: any) => {
         if (_nominations === null) {
           _nominations = defaultNominations();
         } else {
-          _nominations = _nominations.targets.toHuman();
+          _nominations = {
+            targets: _nominations.targets.toHuman(),
+            submittedIn: _nominations.submittedIn.toHuman(),
+          };
         }
+
         _account['nominations'] = _nominations;
 
         // update account in context state
@@ -210,7 +217,7 @@ export const BalancesContextWrapper = (props: any) => {
       return [];
     }
     const { nominations } = account[0];
-    return nominations;
+    return nominations.targets;
   }
 
   //get an account

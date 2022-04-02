@@ -1,49 +1,58 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 import { useApi } from '../../contexts/Api';
+import { useConnect } from '../../contexts/Connect';
 import { useStaking } from '../../contexts/Staking';
+import { useBalances } from '../../contexts/Balances';
 import { ValidatorList } from '../../library/ValidatorList';
+import { NominateWrapper } from './Wrappers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { URI_PREFIX } from '../../constants';
 
 export const Nominations = (props: any) => {
 
+  const navigate = useNavigate();
   const { isReady }: any = useApi();
   const { fetchValidatorPrefs }: any = useStaking();
-
-  // re-format list into objects with address
-  let nominationsFormatted: any = [];
-  let _nominations = props.nominations ?? [];
-
-  for (let i = 0; i < _nominations.length; i++) {
-    nominationsFormatted.push({
-      address: _nominations[i]
-    });
-  }
+  const { accounts, getAccountNominations }: any = useBalances();
+  const { activeAccount } = useConnect();
 
   const [fetching, setFetching] = useState(true);
-  const [nominations, setNominations] = useState(nominationsFormatted ?? []);
+  const [nominations, setNominations] = useState([]);
 
   const fetchNominationsMeta = async () => {
-    const nominationsWithPrefs = await fetchValidatorPrefs(nominationsFormatted);
+    const nominationsWithPrefs = await fetchValidatorPrefs(nominations);
     if (nominationsWithPrefs) {
-      setFetching(false);
       setNominations(nominationsWithPrefs);
     }
+    setFetching(false);
   }
-  useEffect(() => {
-    fetchNominationsMeta();
-  }, [isReady(), props.nominations]);
 
   useEffect(() => {
-  }, [nominations]);
+    let _nominations = getAccountNominations(activeAccount);
+    _nominations = _nominations.map((item: any, index: any) => { return ({ address: item }) });
+
+    setNominations(_nominations);
+  }, [isReady(), activeAccount, accounts]);
+
+  useEffect(() => {
+    fetchNominationsMeta();
+  }, [isReady()]);
+
+  const handleBrowseValidatorsClick = useCallback(() => navigate(URI_PREFIX + '/validators', { replace: true }), [navigate]);
+
 
   if (fetching) {
     return (
       <Wrapper>
         <div style={{ marginTop: '1rem' }}>
-          <h4>Fetching your nominations...</h4>
+          <p>Fetching your nominations...</p>
         </div>
       </Wrapper>
     );
@@ -54,9 +63,38 @@ export const Nominations = (props: any) => {
       {isReady() &&
         <>
           {nominations.length === 0 &&
-            <div style={{ marginTop: '1rem' }}>
-              <h4>Finish staking setup to manage your nominated validators.</h4>
-            </div>
+            <>
+              <h3>Your Nominations</h3>
+              <NominateWrapper style={{ marginTop: '0.5rem' }}>
+                <motion.button whileHover={{ scale: 1.01 }} onClick={handleBrowseValidatorsClick}>
+                  <h2>Manual Selection</h2>
+                  <p>Manually browse and nominate validators from the validator list.</p>
+                  <div className='foot'>
+                    <p className='go'>
+                      Browse Validators
+                      <FontAwesomeIcon
+                        icon={faGo}
+                        transform="shrink-2"
+                        style={{ marginLeft: '0.5rem' }}
+                      />
+                    </p>
+                  </div>
+                </motion.button>
+                <motion.button whileHover={{ scale: 1.01 }}>
+                  <h2>Smart Nominate</h2>
+                  <p>Nominate the most suited validators based on your requirements.</p>
+                  <div className='foot'>
+                    <p className='go'>
+                      Start <FontAwesomeIcon
+                        icon={faGo}
+                        transform="shrink-2"
+                        style={{ marginLeft: '0.5rem' }}
+                      />
+                    </p>
+                  </div>
+                </motion.button>
+              </NominateWrapper>
+            </>
           }
           {nominations.length > 0 &&
             <ValidatorList

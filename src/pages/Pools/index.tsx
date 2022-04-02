@@ -4,7 +4,7 @@
 import { PageProps } from '../types';
 import { PageRowWrapper } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { MainWrapper } from '../../library/Layout/Wrappers';
+import { MainWrapper } from '../../library/Layout';
 import { PageTitle } from '../../library/PageTitle';
 
 export const Pools = (props: PageProps) => {

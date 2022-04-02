@@ -30,7 +30,7 @@ const Wrapper = styled(motion.button) <any>`
 
 export const Button = (props: any) => {
 
-  let { title, primary, inline } = props;
+  let { title, primary, inline, onClick } = props;
   primary = primary === undefined ? false : primary;
   inline = inline === undefined ? false : inline;
 
@@ -39,7 +39,8 @@ export const Button = (props: any) => {
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       type={primary === true ? 'invert' : 'default'}
-      margin={inline ? '0' : '0 0.75rem'}
+      margin={inline ? '0' : '0 0.5rem'}
+      onClick={() => onClick()}
     >
       {title}
     </Wrapper>

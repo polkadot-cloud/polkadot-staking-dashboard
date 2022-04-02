@@ -55,8 +55,6 @@ export const RouterInner = () => {
   }
   const windowThrottle = throttle(throttleCallback, 200, { trailing: true, leading: false });
 
-  console.log(sideMenuOpen);
-
   return (
     <>
       {/* Modal: closed by default */}

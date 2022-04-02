@@ -52,9 +52,17 @@ export const ValidatorListInner = (props: any) => {
     renderIterationRef.current = iter;
     _setRenderIteration(iter);
   }
+
+  // fetch validators when ready
   useEffect(() => {
     fetchValidatorMetaBatch(props.batchKey, validators);
   }, [isReady()]);
+
+  // wipe list if account changes
+  useEffect(() => {
+
+  }, [isReady()]);
+
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
   let pageEnd = (page * ITEMS_PER_PAGE) - 1;

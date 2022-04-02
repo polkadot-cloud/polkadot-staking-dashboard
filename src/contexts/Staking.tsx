@@ -234,6 +234,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
     for (let i = 0; i < validators.length; i++) {
       args.push([metrics.activeEra.index, validators[i].address]);
     }
+
     const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
       let stake = [];
       for (let _v of _validators) {

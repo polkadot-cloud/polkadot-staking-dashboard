@@ -1,49 +1,35 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, useCallback } from 'react';
 import { PageProps } from '../types';
-import { Wrapper, NominateWrapper, StakingAccount } from './Wrappers';
+import { Wrapper, Separator } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../library/Layout/Wrappers';
-import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
-import BondedGraph from './BondedGraph';
-import { motion } from 'framer-motion';
+import { MainWrapper, SecondaryWrapper, StickyWrapper } from '../../library/Layout';
+import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { Nominations } from './Nominations';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
 import { StatBoxList } from '../../library/StatBoxList';
 import { Button, ButtonRow } from '../../library/Button';
 import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
-import { useMessages } from '../../contexts/Messages';
 import { planckToDot } from '../../Utils';
-import Account from '../../library/Account';
 import { useConnect } from '../../contexts/Connect';
-import { GLOBAL_MESSGE_KEYS, URI_PREFIX } from '../../constants';
-import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../library/PageTitle';
+import { Controller } from './Controller';
+import { Bond } from './Bond';
+import { StakingAccount } from './Wrappers';
+import Account from '../../library/Account';
 
 export const Stake = (props: PageProps) => {
 
-  const navigate = useNavigate();
   const { network }: any = useApi();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
   const { activeAccount } = useConnect();
-  const { getMessage }: any = useMessages();
-
-  const [controllerNotImported, setControllerNotImported] = useState(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
-
-  useEffect(() => {
-    setControllerNotImported(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
-  }, [getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
   const { page } = props;
   const { title } = page;
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const nominations = getAccountNominations(activeAccount);
-
   const { active, total } = ledger;
 
   let { unlocking } = ledger;
@@ -76,119 +62,70 @@ export const Stake = (props: PageProps) => {
     },
   ];
 
-  const handleBrowseValidatorsClick = useCallback(() => navigate(URI_PREFIX + '/validators', { replace: true }), [navigate]);
-
   return (
     <Wrapper>
       <PageTitle title={title} />
       <StatBoxList title="This Session" items={items} />
-
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight>
-
-          {/* warning: controller account not present. unable to stake */}
-          {controllerNotImported !== null &&
-            <GraphWrapper style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
-              <h3>Next Step: Import Controller Account</h3>
-              <h4>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</h4>
-
-              <ButtonRow style={{ width: '100%', padding: 0, }}>
-                <Button title='Set New Controller' />
-              </ButtonRow>
-            </GraphWrapper>
-          }
-
-          {/* finish staking. Start bonding */}
-          {controller === null &&
-            <SectionWrapper>
-              <h3>Set Up Staking</h3>
-              <h4>You have not yet started staking. Let's get set up.</h4>
-
-              <ButtonRow style={{ padding: '1rem 0', }}>
-                <Button title='Start Staking' primary inline />
-              </ButtonRow>
-            </SectionWrapper>
-          }
           <SectionWrapper>
-            <div className='head'>
-              <h3>Bonded Funds</h3>
-            </div>
-            <GraphWrapper style={{ background: 'none', marginBottom: '1.5rem' }}>
-              <div className='graph_with_extra'>
-                <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
-                  <BondedGraph
-                    active={planckToDot(active)}
-                    unlocking={planckToDot(totalUnlocking)}
-                    remaining={planckToDot(remaining)}
-                    total={total}
-                  />
-                </div>
-                {/* once staking, have control over bonding */}
-                {controller !== null &&
-                  <ButtonRow style={{ height: '190px', paddingRight: '1rem' }}>
-                    <Button title='Bond Extra' />
-                    <Button title='Unbond' />
-                  </ButtonRow>
-                }
-              </div>
-            </GraphWrapper>
-            <Nominations nominations={nominations} />
+            <Separator padding />
+
+            {controller === null &&
+              <>
+                <h2>Staking Setup</h2>
+                <h3>You have not yet started staking. Let's get set up.</h3>
+                <Separator />
+                <Controller />
+                <Separator />
+              </>
+            }
+            <Bond />
+
+            {controller === null
+              ? <Separator />
+              : <Separator padding />
+            }
+            <Nominations />
           </SectionWrapper>
         </MainWrapper>
+
         <SecondaryWrapper>
-          <SectionWrapper>
-            <h3>Accounts</h3>
-            <h4>Stash</h4>
-            <StakingAccount>
-              <Account
-                canClick={false}
-                unassigned={activeAccount === ''}
-                address={activeAccount}
-              />
-            </StakingAccount>
-            <h4>Controller</h4>
-            <StakingAccount last>
-              <Account
-                canClick={false}
-                unassigned={controller === null}
-                address={controller}
-              /> <Button title='Set Controller' />
-            </StakingAccount>
-          </SectionWrapper>
+          <StickyWrapper>
 
-          <SectionWrapper>
-            <h3>Choose Validators</h3>
-            <NominateWrapper style={{ marginTop: '0.5rem' }}>
-              <motion.button whileHover={{ scale: 1.01 }} onClick={handleBrowseValidatorsClick}>
-                <h2>Manual Selection</h2>
-                <p>Manually browse and nominate validators from the validator list.</p>
-                <div className='foot'>
-                  <p className='go'>
-                    Browse Validators
-                    <FontAwesomeIcon
-                      icon={faGo}
-                      transform="shrink-2"
-                      style={{ marginLeft: '0.5rem' }}
-                    />
-                  </p>
-                </div>
-              </motion.button>
-              <motion.button whileHover={{ scale: 1.01 }}>
-                <h2>Smart Nominate</h2>
-                <p>Nominate the most suited validators based on your requirements.</p>
-                <div className='foot'>
-                  <p className='go'>
-                    Start <FontAwesomeIcon
-                      icon={faGo}
-                      transform="shrink-2"
-                      style={{ marginLeft: '0.5rem' }}
-                    />
-                  </p>
-                </div>
-              </motion.button>
-            </NominateWrapper>
-          </SectionWrapper>
+            {/* finish staking messaage */}
+            {controller === null &&
+              <SectionWrapper>
+                <h3>Setup Progress</h3>
+                <p>You have not yet started staking. Let's get set up.</p>
 
+                <ButtonRow style={{ padding: '1rem 0 0', }}>
+                  <Button title='Start Staking' primary inline />
+                </ButtonRow>
+              </SectionWrapper>
+            }
+
+            {/* Start status */}
+            {controller !== null &&
+              <>
+                <SectionWrapper>
+                  <h3 style={{ marginBottom: '1rem' }}>Controller</h3>
+                  <StakingAccount last>
+                    <Account
+                      canClick={false}
+                      unassigned={controller === null}
+                      address={controller}
+                    /> <Button title='Change' />
+                  </StakingAccount>
+                </SectionWrapper>
+
+                <SectionWrapper>
+                  <h3>Staking Status: Active</h3>
+                  <h4>You are currently staking and earning rewards.</h4>
+                </SectionWrapper>
+              </>
+            }
+          </StickyWrapper>
         </SecondaryWrapper>
       </PageRowWrapper>
     </Wrapper>

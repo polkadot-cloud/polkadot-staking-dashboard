@@ -13,6 +13,12 @@ export const Wrapper = styled.div`
     }
 `;
 
+export const Separator = styled.div<any>`
+  border-top: ${props => props.padding ? 'none' : '2px solid #eee'};
+  width: 100%;
+  margin: ${props => props.padding ? '0.75rem 0 0 0' : '2rem 0 2rem 0'};
+`;
+
 export const StakingAccount = styled.div<any>`
   margin-bottom: ${props => props.last === true ? `none` : '1rem'};
   display: flex;
@@ -24,10 +30,10 @@ export const StakingAccount = styled.div<any>`
 export const NominateWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
   align-items: flex-start;
   position: relative;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
 
   > button {
     display: flex;
@@ -38,12 +44,16 @@ export const NominateWrapper = styled.div`
     justify-content: flex-start;
     padding: 1rem;
     background: rgba(240,240,240,0.7);
-    height: 170px;
+    height: 130px;
     border-radius: 0.85rem;
 
     &:first-child{
-      margin-bottom: 1rem;
+      margin-right: 0.5rem;
     }
+    &:last-child{
+      margin-left: 0.5rem;
+    }
+
     h2 {
       font-size: 1.15rem;
       color: #222; 
@@ -66,7 +76,6 @@ export const NominateWrapper = styled.div`
       align-items: center;
       justify-content: flex-end;
       flex: 1;
-      margin-top: 0.75rem;
     }
     .go {
       color: #555;

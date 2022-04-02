@@ -1,0 +1,73 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+import { planckToDot } from '../../Utils';
+import BondedGraph from './BondedGraph';
+import { useApi } from '../../contexts/Api';
+import { useConnect } from '../../contexts/Connect';
+import { useBalances } from '../../contexts/Balances';
+import { Button, ButtonRow } from '../../library/Button';
+import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
+import { HalfWrapper, HalfItem } from '../../library/Layout';
+
+export const Bond = () => {
+
+  const { network }: any = useApi();
+  const { activeAccount } = useConnect();
+  const { getAccountLedger, getBondedAccount }: any = useBalances();
+
+  const controller = getBondedAccount(activeAccount);
+  const ledger = getAccountLedger(controller);
+  const { active, total } = ledger;
+
+  let { unlocking } = ledger;
+  let totalUnlocking = 0;
+  for (let i = 0; i < unlocking.length; i++) {
+    unlocking[i] = planckToDot(unlocking[i]);
+    totalUnlocking += unlocking[i];
+  }
+
+  const remaining = total - active - totalUnlocking;
+
+  return (
+    <SectionWrapper transparent>
+      <div className='head'>
+        <h3>Bond{total > 0 && `ed`} {network.unit}</h3>
+        {total === 0 &&
+          <p style={{ margin: '0.5rem 0' }}>Your bonded {network.unit}s will be distributed to your nominators automatically to maximise your payouts.</p>
+        }
+      </div>
+
+      <HalfWrapper alignItems='flex-end'>
+        <HalfItem>
+          <GraphWrapper style={{ background: 'none', marginBottom: '1.5rem' }}>
+            <div className='graph_with_extra'>
+              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
+                <BondedGraph
+                  active={planckToDot(active)}
+                  unlocking={planckToDot(totalUnlocking)}
+                  remaining={planckToDot(remaining)}
+                  total={total}
+                />
+              </div>
+            </div>
+          </GraphWrapper>
+        </HalfItem>
+        <HalfItem>
+          {/* once staking, have control over bonding */}
+          {controller !== null
+            ?
+            <ButtonRow style={{ height: '190px', paddingRight: '1rem' }}>
+              <Button title='Bond Extra' />
+              <Button title='Unbond' />
+            </ButtonRow>
+            :
+            <Button inline title={`Bond ${network.unit}`} />
+          }
+        </HalfItem>
+      </HalfWrapper>
+    </SectionWrapper>
+  )
+}
+
+export default Bond;
