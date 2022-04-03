@@ -58,6 +58,7 @@ export const Wrapper = styled(motion.div) <any>`
       flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 `;
