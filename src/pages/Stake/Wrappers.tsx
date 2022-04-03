@@ -7,7 +7,6 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
-  margin-bottom: 5rem;
 
   h3 {
     margin-bottom: 0;
