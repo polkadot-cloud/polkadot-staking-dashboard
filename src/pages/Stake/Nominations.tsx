@@ -98,12 +98,14 @@ export const Nominations = (props: any) => {
             </>
           }
           {nominations.length > 0 &&
-            <ValidatorList
-              validators={nominations}
-              batchKey='stake_nominations'
-              layout='col'
-              title='Your Nominations'
-            />
+            <div style={{ marginTop: '1rem' }}>
+              <ValidatorList
+                validators={nominations}
+                batchKey='stake_nominations'
+                layout='col'
+                title='Your Nominations'
+              />
+            </div>
           }
         </>
       }

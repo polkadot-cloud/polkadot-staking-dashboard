@@ -8,7 +8,7 @@ import { MainWrapper, SecondaryWrapper, StickyWrapper } from '../../library/Layo
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { Nominations } from './Nominations';
 import { StatBoxList } from '../../library/StatBoxList';
-import { Button, ButtonRow } from '../../library/Button';
+import { Button } from '../../library/Button';
 import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
@@ -21,6 +21,8 @@ import Account from '../../library/Account';
 import { useAssistant } from '../../contexts/Assistant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import { ColumnWrapper, ColumnItem } from '../../library/Layout';
 
 export const Stake = (props: PageProps) => {
 
@@ -74,12 +76,11 @@ export const Stake = (props: PageProps) => {
         <MainWrapper paddingRight>
           <SectionWrapper>
             <Separator padding />
-
             {controller === null &&
               <>
-                <h2>Staking Setup</h2>
-                <h3>You have not yet started staking. Let's get set up.</h3>
-                <Separator />
+                <h1>Staking Setup</h1>
+                <Separator padding />
+                <Separator padding />
                 <Controller />
                 <Separator />
               </>
@@ -100,12 +101,31 @@ export const Stake = (props: PageProps) => {
             {/* finish staking messaage */}
             {controller === null &&
               <SectionWrapper>
-                <h3>Setup Progress</h3>
-                <p>You have not yet started staking. Let's get set up.</p>
+                <h3>Progress</h3>
+                <ColumnWrapper>
+                  <ColumnItem>
+                    <p>
+                      <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
+                      Set controller account
+                    </p>
+                  </ColumnItem>
+                  <ColumnItem>
+                    <p>
+                      <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
+                      Set amount to Bond
+                    </p>
+                  </ColumnItem>
+                  <ColumnItem>
+                    <p>
+                      <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
+                      Select your nominations
+                    </p>
+                  </ColumnItem>
+                  <ColumnItem>
+                    <Button title='Start Staking' primary inline />
+                  </ColumnItem>
+                </ColumnWrapper>
 
-                <ButtonRow style={{ padding: '1rem 0 0', }}>
-                  <Button title='Start Staking' primary inline />
-                </ButtonRow>
               </SectionWrapper>
             }
 
@@ -127,7 +147,7 @@ export const Stake = (props: PageProps) => {
                       canClick={false}
                       unassigned={controller === null}
                       address={controller}
-                    /> <Button title='Change' />
+                    /> <Button primary title='Change' />
                   </StakingAccount>
                 </SectionWrapper>
 

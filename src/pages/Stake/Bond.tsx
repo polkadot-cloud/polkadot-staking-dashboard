@@ -39,34 +39,44 @@ export const Bond = () => {
         </h3>
       </div>
 
-      <HalfWrapper alignItems='flex-end'>
-        <HalfItem>
-          <GraphWrapper style={{ background: 'none', marginBottom: '1.5rem' }}>
-            <div className='graph_with_extra'>
-              <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
-                <BondedGraph
-                  active={planckToDot(active)}
-                  unlocking={planckToDot(totalUnlocking)}
-                  remaining={planckToDot(remaining)}
-                  total={total}
-                />
+      {controller !== null &&
+        <HalfWrapper alignItems='flex-end'>
+          <HalfItem>
+            <GraphWrapper style={{ background: 'none', marginBottom: '1.5rem' }}>
+              <div className='graph_with_extra'>
+                <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
+                  <BondedGraph
+                    active={planckToDot(active)}
+                    unlocking={planckToDot(totalUnlocking)}
+                    remaining={planckToDot(remaining)}
+                    total={total}
+                  />
+                </div>
               </div>
-            </div>
-          </GraphWrapper>
-        </HalfItem>
-        <HalfItem>
-          {/* once staking, have control over bonding */}
-          {controller !== null
-            ?
+            </GraphWrapper>
+          </HalfItem>
+          <HalfItem>
             <ButtonRow style={{ height: '190px', paddingRight: '1rem' }}>
-              <Button title='Bond Extra' />
-              <Button title='Unbond' />
+              <Button primary title='Bond Extra' />
+              <Button primary title='Unbond' />
             </ButtonRow>
-            :
-            <Button inline title={`Bond ${network.unit}`} />
-          }
-        </HalfItem>
-      </HalfWrapper>
+          </HalfItem>
+        </HalfWrapper>
+      }
+
+      {controller === null &&
+        <HalfWrapper alignItems='flex-end'>
+          <HalfItem>
+            <h5>Available: {remaining} {network.unit}</h5>
+            <input type="text" placeholder='0 DOT' />
+          </HalfItem>
+          <HalfItem>
+            <div>
+              <Button inline title={`Max`} />
+            </div>
+          </HalfItem>
+        </HalfWrapper>
+      }
     </SectionWrapper>
   )
 }
