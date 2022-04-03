@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAssistant } from '../../contexts/Assistant';
 import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
@@ -12,8 +12,6 @@ export const Assistant = () => {
 
   const assistant = useAssistant();
   const { pathname } = useLocation();
-
-  const [activeSection, setActiveSection] = useState(0);
 
   // container variants
   const containerVariants = {
@@ -47,7 +45,7 @@ export const Assistant = () => {
   const animateContainer = assistant.open ? `visible` : `hidden`;
 
   // animate assistant container default
-  const animateSections = activeSection === 0 ? `home` : `item`;
+  const animateSections = assistant.activeSection === 0 ? `home` : `item`;
 
   // get page meta from active page
   const pageMeta = Object.values(ASSISTANT_CONFIG).find((item: any) =>
@@ -75,7 +73,6 @@ export const Assistant = () => {
         variants={sectionVariants}
       >
         <Sections
-          setActiveSection={setActiveSection}
           pageMeta={pageMeta}
         />
       </SectionsWrapper>

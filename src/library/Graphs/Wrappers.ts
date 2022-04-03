@@ -14,7 +14,24 @@ export const SectionWrapper = styled.div<any>`
   align-items: flex-start;
   flex: 1;
   width: 100%;
-  margin-top: ${props => props.transparent ? '0rem' : '1rem'};;
+  margin-top: ${props => props.transparent ? '0rem' : '1rem'};
+
+  h3 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+
+    > button {
+      svg {
+      margin-left: 0.4rem;
+      color: #ddd;
+
+      &:hover {
+        color: rgba(211, 48, 121, 0.85);
+      }
+    }
+    }
+  }
 
   h4 {
     margin: 0.75rem 0;

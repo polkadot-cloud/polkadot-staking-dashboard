@@ -11,6 +11,7 @@ import Account from '../../library/Account';
 import { useConnect } from '../../contexts/Connect';
 import { useMessages } from '../../contexts/Messages';
 import { GLOBAL_MESSGE_KEYS } from '../../constants';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const Controller = () => {
 
@@ -42,13 +43,13 @@ export const Controller = () => {
       {/* controller management */}
       {controllerNotImported === null &&
         <SectionWrapper transparent>
-          <h3>Set Controller Account</h3>
+          <h3>
+            Set Controller Account
+            <OpenAssistantIcon page="stake" title="Stash and Controller Accounts" />
+          </h3>
           <HalfWrapper alignItems='flex-end'>
             <HalfItem>
               <ColumnWrapper>
-                <ColumnItem>
-                  <p style={{ margin: '0.5rem 0' }}>A Controller account is used to carry out Staking actions on the Stash account's behalf.</p>
-                </ColumnItem>
                 <ColumnItem>
                   <StakingAccount last>
                     <Account

@@ -17,7 +17,7 @@ import Action from './Items/Action';
 export const Sections = (props: any) => {
 
   const { network }: any = useApi();
-  const { setActiveSection, pageMeta } = props;
+  const { pageMeta } = props;
 
   const connect = useConnect();
   const { pathname } = useLocation();
@@ -87,7 +87,7 @@ export const Sections = (props: any) => {
                   key={`def_${index}`}
                   onClick={() => {
                     assistant.setInnerDefinition(item);
-                    setActiveSection(1);
+                    assistant.setActiveSection(1);
                   }}
                   title={item.title}
                   description={item.description}
@@ -125,7 +125,7 @@ export const Sections = (props: any) => {
       <ContentWrapper>
         <HeaderWrapper>
           <div className='hold'>
-            <button onClick={() => setActiveSection(0)}>
+            <button onClick={() => assistant.setActiveSection(0)}>
               <FontAwesomeIcon
                 icon={faBack}
                 transform="shrink-4"

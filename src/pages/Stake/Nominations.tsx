@@ -14,6 +14,7 @@ import { faCaretRight as faGo } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { URI_PREFIX } from '../../constants';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const Nominations = (props: any) => {
 
@@ -64,7 +65,7 @@ export const Nominations = (props: any) => {
         <>
           {nominations.length === 0 &&
             <>
-              <h3>Your Nominations</h3>
+              <h3>Your Nominations <OpenAssistantIcon page="stake" title="Nominations" /></h3>
               <NominateWrapper style={{ marginTop: '0.5rem' }}>
                 <motion.button whileHover={{ scale: 1.01 }} onClick={handleBrowseValidatorsClick}>
                   <h2>Manual Selection</h2>

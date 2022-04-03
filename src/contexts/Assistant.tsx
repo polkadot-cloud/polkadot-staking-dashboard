@@ -2,25 +2,38 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import { ASSISTANT_CONFIG } from '../pages';
 
 // context type
 export interface AssistantContextState {
-  open: number;
-  page: string,
-  innerDefinition: any,
   toggle: () => void;
   setPage: (page: string) => void;
   setInnerDefinition: (meta: any) => void;
+  getDefinition: (k: string, t: string) => any;
+  openAssistant: () => any,
+  closeAssistant: () => any,
+  setActiveSection: (i: number) => void;
+  goToDefinition: (k: string, t: string) => void;
+  activeSection: number,
+  open: number;
+  page: string,
+  innerDefinition: any,
 }
 
 // context definition
 export const AssistantContext: React.Context<AssistantContextState> = React.createContext({
-  open: 0,
-  page: 'overview',
-  innerDefinition: {},
   toggle: () => { },
   setPage: (p: string) => { },
   setInnerDefinition: (m: any) => { },
+  getDefinition: (k: string, t: string) => { },
+  openAssistant: () => { },
+  closeAssistant: () => { },
+  setActiveSection: (i: number) => { },
+  goToDefinition: (k: string, t: string) => { },
+  activeSection: 0,
+  open: 0,
+  page: 'overview',
+  innerDefinition: {},
 });
 
 // useAssistant
@@ -33,6 +46,7 @@ export class AssistantContextWrapper extends React.Component {
     open: 0,
     page: 'overview',
     innerDefinition: [],
+    activeSection: 0,
   };
 
   setPage = (newPage: string) => {
@@ -42,9 +56,12 @@ export class AssistantContextWrapper extends React.Component {
     })
   }
 
+  getDefinition = (key: string, title: string) => {
+    return ASSISTANT_CONFIG.find((item: any) => item.key === key)?.definitions.find((item: any) => item.title === title);
+  }
+
   setInnerDefinition = (meta: any) => {
     this.setState({
-      ...this.state,
       innerDefinition: meta,
     });
   }
@@ -53,15 +70,44 @@ export class AssistantContextWrapper extends React.Component {
     this.setState({ open: this.state.open === 1 ? 0 : 1 })
   }
 
+  openAssistant = () => {
+    this.setState({ open: 1 });
+  }
+
+  closeAssistant = () => {
+    this.setState({ open: 0 });
+  }
+
+  setActiveSection = (index: number) => {
+    this.setState({
+      activeSection: index,
+    })
+  }
+
+  goToDefinition = (page: string, title: string) => {
+    this.setPage(page);
+    this.setInnerDefinition(this.getDefinition(page, title));
+    this.openAssistant();
+    // short delay before switching to definition
+    setTimeout(() =>
+      this.setActiveSection(1), 250);
+  }
+
   render () {
     return (
       <AssistantContext.Provider value={{
-        open: this.state.open,
-        page: this.state.page,
-        innerDefinition: this.state.innerDefinition,
         toggle: this.toggle,
         setPage: this.setPage,
         setInnerDefinition: this.setInnerDefinition,
+        getDefinition: this.getDefinition,
+        openAssistant: this.openAssistant,
+        closeAssistant: this.closeAssistant,
+        setActiveSection: this.setActiveSection,
+        goToDefinition: this.goToDefinition,
+        activeSection: this.state.activeSection,
+        open: this.state.open,
+        page: this.state.page,
+        innerDefinition: this.state.innerDefinition,
       }}>
         {this.props.children}
       </AssistantContext.Provider>

@@ -9,6 +9,7 @@ import { useBalances } from '../../contexts/Balances';
 import { Button, ButtonRow } from '../../library/Button';
 import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
 import { HalfWrapper, HalfItem } from '../../library/Layout';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const Bond = () => {
 
@@ -32,10 +33,10 @@ export const Bond = () => {
   return (
     <SectionWrapper transparent>
       <div className='head'>
-        <h3>Bond{total > 0 && `ed`} {network.unit}</h3>
-        {total === 0 &&
-          <p style={{ margin: '0.5rem 0' }}>Your bonded {network.unit}s will be distributed to your nominators automatically to maximise your payouts.</p>
-        }
+        <h3>
+          Bond{total > 0 && `ed`} {network.unit}
+          <OpenAssistantIcon page="stake" title="Bonding" />
+        </h3>
       </div>
 
       <HalfWrapper alignItems='flex-end'>

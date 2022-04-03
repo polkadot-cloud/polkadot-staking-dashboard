@@ -18,9 +18,13 @@ import { Controller } from './Controller';
 import { Bond } from './Bond';
 import { StakingAccount } from './Wrappers';
 import Account from '../../library/Account';
+import { useAssistant } from '../../contexts/Assistant';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 export const Stake = (props: PageProps) => {
 
+  const { goToDefinition } = useAssistant();
   const { network }: any = useApi();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
   const { activeAccount } = useConnect();
@@ -109,7 +113,15 @@ export const Stake = (props: PageProps) => {
             {controller !== null &&
               <>
                 <SectionWrapper>
-                  <h3 style={{ marginBottom: '1rem' }}>Controller</h3>
+                  <h3 style={{ marginBottom: '1rem' }}>
+                    Controller
+                    <button onClick={() => {
+                      goToDefinition('stake', 'Stash and Controller Accounts');
+                    }}>
+                      <FontAwesomeIcon transform='grow-5' icon={faInfoCircle} />
+                    </button>
+                  </h3>
+
                   <StakingAccount last>
                     <Account
                       canClick={false}
