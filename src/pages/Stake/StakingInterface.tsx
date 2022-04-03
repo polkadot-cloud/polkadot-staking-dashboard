@@ -19,11 +19,8 @@ export const StakingInterface = () => {
 
   return (
     <SectionWrapper>
-      <Separator padding />
       {controller === null &&
         <>
-          <h1>Staking Setup</h1>
-          <Separator padding />
           <Separator padding />
           <Controller />
           <Separator />

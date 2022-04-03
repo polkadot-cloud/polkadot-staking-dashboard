@@ -70,7 +70,7 @@ export const Stake = (props: PageProps) => {
     <>
       <Wrapper>
         <PageTitle title={title} />
-        <StatBoxList title="This Session" items={items} />
+        {controller !== null && <StatBoxList title="This Session" items={items} />}
         <PageRowWrapper noVerticalSpacer>
 
           <MainWrapper paddingRight>
