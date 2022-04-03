@@ -38,8 +38,8 @@ h2 {
 h3 {
   font-variation-settings: 'wght' 530;
   font-weight: normal;
-  font-size: 1.1rem;
-  color: #444;
+  font-size: 1.02rem;
+  color: #333;
 }
 
 h4 {
@@ -50,7 +50,7 @@ h4 {
 }
 
 h5 {
-  color: #000;
+  color: #333;
   font-variation-settings: 'wght' 450;
   font-weight: normal;
   font-size: 0.88rem;
