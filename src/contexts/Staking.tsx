@@ -301,6 +301,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
   }
 
   useEffect(() => {
+    fetchValidators();
     subscribeToStakingkMetrics(api);
     subscribeSessionValidators(api);
 
@@ -317,6 +318,14 @@ export const StakingMetricsContextWrapper = (props: any) => {
       });
     })
   }, [isReady(), metrics.activeEra]);
+
+
+  useEffect(() => {
+    if (validators.length > 0) {
+      // pre-populating validator meta batches
+      fetchValidatorMetaBatch('validators_browse', validators);
+    }
+  }, [isReady(), validators]);
 
 
   const removeValidatorMetaBatch = (key: string) => {

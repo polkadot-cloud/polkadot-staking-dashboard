@@ -53,16 +53,10 @@ export const ValidatorListInner = (props: any) => {
     _setRenderIteration(iter);
   }
 
-  // fetch validators when ready
+  // fetch validators when ready if not done so already
   useEffect(() => {
     fetchValidatorMetaBatch(props.batchKey, validators);
   }, [isReady()]);
-
-  // wipe list if account changes
-  useEffect(() => {
-
-  }, [isReady()]);
-
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
   let pageEnd = (page * ITEMS_PER_PAGE) - 1;
@@ -93,12 +87,14 @@ export const ValidatorListInner = (props: any) => {
   }, [validatorsUi, synced.stake])
 
   const handleValidatorsFilterUpdate = () => {
-    let filteredValidators = Object.assign(validatorsDefault);
-    filteredValidators = applyValidatorOrder(filteredValidators, validatorsUi.order);
-    filteredValidators = applyValidatorFilters(filteredValidators, props.batchKey);
-    setValidators(filteredValidators);
-    setPage(1);
-    setRenderIteration(1);
+    if (allowFilters) {
+      let filteredValidators = Object.assign(validatorsDefault);
+      filteredValidators = applyValidatorOrder(filteredValidators, validatorsUi.order);
+      filteredValidators = applyValidatorFilters(filteredValidators, props.batchKey);
+      setValidators(filteredValidators);
+      setPage(1);
+      setRenderIteration(1);
+    }
   }
 
   if (!validators.length) {

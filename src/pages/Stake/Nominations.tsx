@@ -48,7 +48,6 @@ export const Nominations = (props: any) => {
 
   const handleBrowseValidatorsClick = useCallback(() => navigate(URI_PREFIX + '/validators', { replace: true }), [navigate]);
 
-
   if (fetching) {
     return (
       <Wrapper>

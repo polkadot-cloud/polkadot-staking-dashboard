@@ -135,12 +135,12 @@ export const UIContextWrapper = (props: any) => {
   }
 
   const filterAllCommission = (list: any) => {
-    list = list.filter((validator: any) => validator.prefs.commission !== 100);
+    list = list.filter((validator: any) => validator?.prefs?.commission !== 100);
     return list;
   }
 
   const filterBlockedNominations = (list: any) => {
-    list = list.filter((validator: any) => validator.prefs.blocked !== true);
+    list = list.filter((validator: any) => validator?.prefs?.blocked !== true);
     return list;
   }
 

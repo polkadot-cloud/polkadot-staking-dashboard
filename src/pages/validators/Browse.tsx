@@ -1,7 +1,6 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
@@ -20,12 +19,8 @@ export const Browse = (props: PageProps) => {
   const { title } = page;
 
   const { metrics } = useNetworkMetrics();
-  const { validators, fetchValidators, staking }: any = useStaking();
+  const { validators, staking }: any = useStaking();
   const { minNominatorBond } = staking;
-
-  useEffect(() => {
-    fetchValidators();
-  }, [isReady()]);
 
   const items = [
     {

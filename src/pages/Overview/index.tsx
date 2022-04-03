@@ -63,7 +63,7 @@ export const Overview = (props: PageProps) => {
       <PageTitle title="What's Happening" />
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
-        <SecondaryWrapper>
+        <SecondaryWrapper style={{ flexBasis: '40%', maxWidth: '40%' }}>
           <BalanceGraph network={network} />
         </SecondaryWrapper>
         <MainWrapper paddingLeft>
