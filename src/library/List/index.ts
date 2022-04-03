@@ -106,9 +106,11 @@ export const List = styled.div<any>`
         flex-basis: 100%;
         @media(min-width: 650px) {
           flex-basis: 50%;
+          max-width: 50%;
         }
         @media(min-width: 1250px) {
           flex-basis: ${props => props.flexBasisLarge};
+          max-width: ${props => props.flexBasisLarge};
         }
       }
     }
