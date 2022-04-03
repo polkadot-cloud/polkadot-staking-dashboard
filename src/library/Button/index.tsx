@@ -24,7 +24,7 @@ const Wrapper = styled(motion.button) <any>`
   border-radius: 1.1rem;
   margin: ${props => props.margin};
   font-size: 0.95rem;
-  font-variation-settings: 'wght' 500;
+  font-variation-settings: 'wght' 560;
   color: ${props => props.type === 'default' ? '#222' : '#fafafa'};
 `;
 

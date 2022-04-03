@@ -65,7 +65,7 @@ export const ItemWrapper = styled(motion.div) <any>`
   align-items: center;
   padding: 0.9rem 0.5rem;
   margin: 0.3rem 0;
-  font-size: 1rem;
+  font-size: 1.02rem;
 
   &.active {
     background: rgba(0,0,0,0.04);

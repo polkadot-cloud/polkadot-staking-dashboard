@@ -75,4 +75,8 @@ export const ColumnItem = styled.section`
   flex-flow: column wrap;
   box-sizing: border-box;
   padding-top: 1rem;
+
+  p {
+    margin: 0;
+  }
 `;

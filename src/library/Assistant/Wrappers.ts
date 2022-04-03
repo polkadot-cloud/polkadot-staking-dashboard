@@ -151,6 +151,7 @@ export const DefinitionWrapper = styled(motion.div) <any>`
       flex: 1;
 
       > h3 {
+        font-size: 1rem;
         margin: 0;
         text-align: left;
         transition: all 0.2s;

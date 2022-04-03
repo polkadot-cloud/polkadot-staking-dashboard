@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Separator = styled.div<any>`
-  border-top: ${props => props.padding ? 'none' : '2px solid #eee'};
+  border-top: ${props => props.padding ? 'none' : '1px solid #eee'};
   width: 100%;
   margin: ${props => props.padding ? '0.75rem 0 0 0' : '2rem 0 2rem 0'};
 `;
