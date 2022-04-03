@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageProps } from '../types';
-import { Wrapper, Separator } from './Wrappers';
+import { Wrapper } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper, StickyWrapper } from '../../library/Layout';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { Nominations } from './Nominations';
 import { StatBoxList } from '../../library/StatBoxList';
 import { Button } from '../../library/Button';
 import { useApi } from '../../contexts/Api';
@@ -14,8 +13,6 @@ import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 import { PageTitle } from '../../library/PageTitle';
-import { Controller } from './Controller';
-import { Bond } from './Bond';
 import { StakingAccount } from './Wrappers';
 import Account from '../../library/Account';
 import { useAssistant } from '../../contexts/Assistant';
@@ -23,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { ColumnWrapper, ColumnItem } from '../../library/Layout';
+import { StakingInterface } from './StakingInterface';
 
 export const Stake = (props: PageProps) => {
 
@@ -69,98 +67,80 @@ export const Stake = (props: PageProps) => {
   ];
 
   return (
-    <Wrapper>
-      <PageTitle title={title} />
-      <StatBoxList title="This Session" items={items} />
-      <PageRowWrapper noVerticalSpacer>
-        <MainWrapper paddingRight>
-          <SectionWrapper>
-            <Separator padding />
-            {controller === null &&
-              <>
-                <h1>Staking Setup</h1>
-                <Separator padding />
-                <Separator padding />
-                <Controller />
-                <Separator />
-              </>
-            }
-            <Bond />
+    <>
+      <Wrapper>
+        <PageTitle title={title} />
+        <StatBoxList title="This Session" items={items} />
+        <PageRowWrapper noVerticalSpacer>
 
-            {controller === null
-              ? <Separator />
-              : <Separator padding />
-            }
-            <Nominations />
-          </SectionWrapper>
-        </MainWrapper>
+          <MainWrapper paddingRight>
+            <StakingInterface />
+          </MainWrapper>
 
-        <SecondaryWrapper>
-          <StickyWrapper>
-
-            {/* finish staking messaage */}
-            {controller === null &&
-              <SectionWrapper>
-                <h3>Progress</h3>
-                <ColumnWrapper>
-                  <ColumnItem>
-                    <p>
-                      <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
-                      Set controller account
-                    </p>
-                  </ColumnItem>
-                  <ColumnItem>
-                    <p>
-                      <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
-                      Set amount to Bond
-                    </p>
-                  </ColumnItem>
-                  <ColumnItem>
-                    <p>
-                      <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
-                      Select your nominations
-                    </p>
-                  </ColumnItem>
-                  <ColumnItem>
-                    <Button title='Start Staking' primary inline />
-                  </ColumnItem>
-                </ColumnWrapper>
-
-              </SectionWrapper>
-            }
-
-            {/* Start status */}
-            {controller !== null &&
-              <>
+          <SecondaryWrapper>
+            <StickyWrapper>
+              {controller === null &&
                 <SectionWrapper>
-                  <h3 style={{ marginBottom: '1rem' }}>
-                    Controller
-                    <button onClick={() => {
-                      goToDefinition('stake', 'Stash and Controller Accounts');
-                    }}>
-                      <FontAwesomeIcon transform='grow-5' icon={faInfoCircle} />
-                    </button>
-                  </h3>
-
-                  <StakingAccount last>
-                    <Account
-                      canClick={false}
-                      unassigned={controller === null}
-                      address={controller}
-                    /> <Button primary title='Change' />
-                  </StakingAccount>
+                  <h3>Progress</h3>
+                  <ColumnWrapper>
+                    <ColumnItem>
+                      <p>
+                        <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
+                        Set controller account
+                      </p>
+                    </ColumnItem>
+                    <ColumnItem>
+                      <p>
+                        <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
+                        Set amount to Bond
+                      </p>
+                    </ColumnItem>
+                    <ColumnItem>
+                      <p>
+                        <FontAwesomeIcon color="#ccc" transform='grow-5' icon={faCheckSquare} style={{ marginRight: '0.75rem' }} />
+                        Select nominations
+                      </p>
+                    </ColumnItem>
+                    <ColumnItem>
+                      <div style={{ width: '100%', height: '40px', display: 'flex' }}><Button title='Start Staking' primary inline /></div>
+                    </ColumnItem>
+                  </ColumnWrapper>
                 </SectionWrapper>
+              }
 
-                <SectionWrapper>
-                  <h3>Staking Status: Active</h3>
-                  <h4>You are currently staking and earning rewards.</h4>
-                </SectionWrapper>
-              </>
-            }
-          </StickyWrapper>
-        </SecondaryWrapper>
-      </PageRowWrapper>
-    </Wrapper>
+              {/* Start status */}
+              {controller !== null &&
+                <>
+                  <SectionWrapper>
+                    <h3 style={{ marginBottom: '1rem' }}>
+                      Controller
+                      <button onClick={() => {
+                        goToDefinition('stake', 'Stash and Controller Accounts');
+                      }}>
+                        <FontAwesomeIcon transform='grow-5' icon={faInfoCircle} />
+                      </button>
+                    </h3>
+
+                    <StakingAccount last>
+                      <Account
+                        canClick={false}
+                        unassigned={controller === null}
+                        address={controller}
+                      /> <Button primary title='Change' />
+                    </StakingAccount>
+                  </SectionWrapper>
+
+                  <SectionWrapper>
+                    <h3>Staking Status: Active</h3>
+                    <h4>You are currently staking and earning rewards.</h4>
+                  </SectionWrapper>
+                </>
+              }
+            </StickyWrapper>
+          </SecondaryWrapper>
+        </PageRowWrapper>
+      </Wrapper>
+    </>
   );
 }
 

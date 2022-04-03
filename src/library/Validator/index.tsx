@@ -7,7 +7,7 @@ import Identicon from '@polkadot/react-identicon';
 import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faUserSlash } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faUserSlash, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from '../../contexts/Api';
 
 export const ValidatorInner = (props: any) => {
@@ -76,6 +76,13 @@ export const ValidatorInner = (props: any) => {
               </label>
             </motion.div>
           }
+          <label>
+            <button>
+              <FontAwesomeIcon
+                icon={faChartLine}
+              />
+            </button>
+          </label>
         </div>
       </div>
     </Wrapper>

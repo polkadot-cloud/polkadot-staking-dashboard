@@ -87,10 +87,10 @@ export class AssistantContextWrapper extends React.Component {
   goToDefinition = (page: string, title: string) => {
     this.setPage(page);
     this.setInnerDefinition(this.getDefinition(page, title));
-    this.openAssistant();
-    // short delay before switching to definition
-    setTimeout(() =>
-      this.setActiveSection(1), 250);
+    this.setActiveSection(1);
+
+    // short timeout to hide inner transition
+    setTimeout(() => this.openAssistant(), 60);
   }
 
   render () {

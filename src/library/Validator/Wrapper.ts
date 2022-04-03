@@ -41,8 +41,14 @@ export const Wrapper = styled(motion.div) <any>`
       flex: 1;
 
       label {
-        margin-left: 0.65rem;
+        margin-left: 0.5rem;
         color: #aaa;
+        button {
+          color: #aaa;
+          &:hover {
+            color: #666;
+          }
+        }
       }
     }
 
