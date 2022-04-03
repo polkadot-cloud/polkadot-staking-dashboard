@@ -4,6 +4,7 @@
 import { Separator } from './Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { Nominations } from './Nominations';
+import { GenerateNominations } from './GenerateNominations';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { Controller } from './Controller';
@@ -33,7 +34,11 @@ export const StakingInterface = () => {
         ? <Separator />
         : <Separator padding />
       }
-      <Nominations />
+
+      {controller === null
+        ? <GenerateNominations />
+        : <Nominations />
+      }
     </SectionWrapper>
   )
 }
