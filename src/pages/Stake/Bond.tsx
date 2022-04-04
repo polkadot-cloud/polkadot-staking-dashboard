@@ -33,10 +33,10 @@ export const Bond = () => {
   return (
     <SectionWrapper transparent>
       <div className='head'>
-        <h3>
+        <h2>
           Bond{total > 0 && `ed`} {network.unit}
           <OpenAssistantIcon page="stake" title="Bonding" />
-        </h3>
+        </h2>
       </div>
 
       {controller !== null &&

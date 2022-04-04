@@ -9,6 +9,7 @@ import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { Controller } from './Controller';
 import { Bond } from './Bond';
+import { Element } from 'react-scroll'
 
 export const StakingInterface = () => {
 
@@ -18,25 +19,28 @@ export const StakingInterface = () => {
   const controller = getBondedAccount(activeAccount);
 
   return (
-    <SectionWrapper>
+    <>
       {controller === null &&
-        <>
+        <SectionWrapper>
           <Separator padding />
+          <Element name="controller" style={{ position: 'absolute' }} />
           <Controller />
           <Separator />
-        </>
+        </SectionWrapper>
       }
-      <Bond />
-      {controller === null
-        ? <Separator />
-        : <Separator padding />
-      }
+      <SectionWrapper>
+        <Element name="bond" style={{ position: 'absolute' }} />
+        <Bond />
+      </SectionWrapper>
 
-      {controller === null
-        ? <GenerateNominations />
-        : <Nominations />
-      }
-    </SectionWrapper>
+      <SectionWrapper>
+        <Element name="nominate" style={{ position: 'absolute' }} />
+        {controller === null
+          ? <GenerateNominations />
+          : <Nominations />
+        }
+      </SectionWrapper>
+    </>
   )
 }
 

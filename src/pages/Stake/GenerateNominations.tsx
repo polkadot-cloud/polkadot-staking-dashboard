@@ -10,13 +10,13 @@ import { useBalances } from '../../contexts/Balances';
 import { ValidatorList } from '../../library/ValidatorList';
 import { useUi } from '../../contexts/UI';
 // import { shuffle } from '../../Utils';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const GenerateNominations = (props: any) => {
 
   const { isReady }: any = useApi();
   const { getValidatorMetaBatch, validators }: any = useStaking();
-  const { accounts }: any = useBalances();
-  const { activeAccount } = useConnect();
+
   const {
     listFormat,
     applyValidatorOrder,
@@ -30,49 +30,67 @@ export const GenerateNominations = (props: any) => {
   const batchKey = 'generated_nominations';
 
   useEffect(() => {
-    // wait for validator meta data to be fetched
-    let validatorsReady = getValidatorMetaBatch(rawBatchKey);
-    if (validatorsReady !== null) {
-      if (validatorsReady.stake === undefined)
-        return;
-    }
-    // generate nominations from validator list
-    let _nominations = Object.assign(validators);
-    // filter validators to find profitable candidates
-    _nominations = applyValidatorFilters(_nominations, rawBatchKey, ['all_commission', 'blocked_nominations', 'over_subscribed', 'inactive']);
-    // order validators to find profitable candidates
-    _nominations = applyValidatorOrder(_nominations, 'commission');
-    // TODO: unbiased shuffle resulting validators
-    // _nominations = shuffle(_nominations);
-    // choose subset of validators
-    _nominations = _nominations.slice(0, 16);
-    setNominations(_nominations);
-    setFetching(false);
-  }, [isReady(), activeAccount, accounts, getValidatorMetaBatch(rawBatchKey)]);
 
-  if (fetching) {
-    return (
-      <Wrapper>
-        <div style={{ marginTop: '1rem' }}>
-          <p>Generating nominations...</p>
-        </div>
-      </Wrapper>
-    );
-  }
+    if (!isReady()) {
+      return;
+    }
+
+    if (!validators.length) {
+      return;
+    }
+    // wait for validator meta data to be fetched
+    let batch = getValidatorMetaBatch(rawBatchKey);
+    if (batch === null) {
+      return;
+    } else {
+      if (batch.stake === undefined) {
+        return;
+      }
+    }
+
+    if (fetching) {
+      // generate nominations from validator list
+      let _nominations = Object.assign(validators);
+      // filter validators to find profitable candidates
+      _nominations = applyValidatorFilters(_nominations, rawBatchKey, ['all_commission', 'blocked_nominations', 'over_subscribed', 'inactive']);
+      // order validators to find profitable candidates
+      _nominations = applyValidatorOrder(_nominations, 'commission');
+      // TODO: unbiased shuffle resulting validators
+      // _nominations = shuffle(_nominations);
+      // choose subset of validators
+      _nominations = _nominations.slice(0, 16);
+      setNominations(_nominations);
+      setFetching(false);
+    }
+  });
 
   return (
     <Wrapper>
-      {isReady() &&
+      <h2>
+        Nominate
+        <OpenAssistantIcon page="stake" title="Nominating" />
+      </h2>
+      {fetching
+        ?
+        <div style={{ marginTop: '1rem' }}>
+          <p>Fetching your nominations...</p>
+        </div>
+        :
         <>
-          {nominations.length > 0 &&
-            <div style={{ marginTop: '1rem' }}>
-              <ValidatorList
-                validators={nominations}
-                batchKey={batchKey}
-                layout={listFormat}
-                title='Generated Nominations'
-              />
-            </div>
+          {isReady() &&
+            <>
+
+              {nominations.length > 0 &&
+                <div style={{ marginTop: '1rem' }}>
+                  <ValidatorList
+                    validators={nominations}
+                    batchKey={batchKey}
+                    layout={listFormat}
+                    title='Generated Nominations'
+                  />
+                </div>
+              }
+            </>
           }
         </>
       }

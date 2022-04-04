@@ -7,7 +7,6 @@ import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MAXIMUM_WIDTH, SIDE_MENU_STICKY_TH
 export const MainWrapper = styled.div<any>`
   box-sizing: border-box;
   flex-basis: 66%;
-  max-width: 66%;
   overflow: hidden;
   flex: 1;
   ${props => props.paddingLeft && `

@@ -43,10 +43,10 @@ export const Controller = () => {
       {/* controller management */}
       {controllerNotImported === null &&
         <SectionWrapper transparent>
-          <h3>
+          <h2>
             Set Controller Account
             <OpenAssistantIcon page="stake" title="Stash and Controller Accounts" />
-          </h3>
+          </h2>
           <HalfWrapper alignItems='flex-end'>
             <HalfItem>
               <ColumnWrapper>

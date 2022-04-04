@@ -212,7 +212,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
     let batchesUpdated = Object.assign(validatorMetaBatches);
     batchesUpdated.meta[key] = {};
     batchesUpdated.meta[key].addresses = addresses;
-    setValidatorMetaBatch(batchesUpdated);
+    setValidatorMetaBatch({ ...batchesUpdated });
 
     // subscribe to identities
     const unsub = await api.query.identity.identityOf.multi(addresses, (_identities: any) => {
@@ -223,7 +223,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
       // commit update
       let batchesUpdated = Object.assign(validatorMetaBatches);
       batchesUpdated.meta[key].identities = identities;
-      setValidatorMetaBatch(batchesUpdated);
+      setValidatorMetaBatch({ ...batchesUpdated });
     });
 
     // intentional throttle to prevent slow render updates
@@ -235,8 +235,9 @@ export const StakingMetricsContextWrapper = (props: any) => {
       args.push([metrics.activeEra.index, validators[i].address]);
     }
 
-    const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
+    const unsub2 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
       let stake = [];
+
       for (let _v of _validators) {
         let v = _v.toHuman();
         let others = v.others ?? [];
@@ -250,15 +251,16 @@ export const StakingMetricsContextWrapper = (props: any) => {
           total_nominations: total_nominations,
         });
       }
+
       // commit update
       let batchesUpdated = Object.assign(validatorMetaBatches);
       batchesUpdated.meta[key].stake = stake;
-      setValidatorMetaBatch(batchesUpdated);
+      setValidatorMetaBatch({ ...batchesUpdated });
     });
 
     // commit unsubs
     let { unsubs } = validatorMetaBatches;
-    unsubs[key] = [unsub, unsub3];
+    unsubs[key] = [unsub, unsub2];
 
     setValidatorMetaBatch({
       ...validatorMetaBatches,
@@ -311,14 +313,14 @@ export const StakingMetricsContextWrapper = (props: any) => {
         stakingMetrics.unsub();
       }
       // unsubscribe from any validator meta batches
-      Object.values(validatorMetaBatches.unsubs).map((item: any, index: number) => {
-        for (let unsub of item) {
-          unsub();
-        }
+
+      Object.values(validatorMetaBatches.unsubs).map((batch: any, index: number) => {
+        Object.entries(batch).map(([k, v]: any) => {
+          v();
+        });
       });
     })
   }, [isReady(), metrics.activeEra]);
-
 
   useEffect(() => {
     if (validators.length > 0) {
@@ -353,7 +355,7 @@ export const StakingMetricsContextWrapper = (props: any) => {
         fetchValidatorPrefs: fetchValidatorPrefs,
         staking: stakingMetrics,
         validators: validators,
-        meta: validatorMetaBatches.meta,
+        meta: validatorMetaBatchesRef.current.meta,
         session: sessionValidators,
       }}>
       {props.children}
