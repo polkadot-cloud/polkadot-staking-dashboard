@@ -19,9 +19,9 @@ export const ButtonRow = styled.div`
 
 const Wrapper = styled(motion.button) <any>`
   flex-grow: 1;
-  background: ${props => props.type === 'default' ? '#f1f1f1' : '#d33079'};
+  background: ${props => props.type === 'default' ? '#f1f1f1' : 'rgba(211, 48, 121, 0.9)'};
   padding: 0.6rem 1.2rem;
-  border-radius: 1.1rem;
+  border-radius: 1rem;
   margin: ${props => props.margin};
   font-size: 0.95rem;
   font-variation-settings: 'wght' 560;

@@ -119,7 +119,6 @@ export const GraphWrapper = styled.div<any>`
 
   }
   .graph_line {
-    border-radius: 0.75rem;
     margin-top: 1.5rem;
     margin-left: 1rem;
     padding: 1rem 1rem 0.5rem 1rem;

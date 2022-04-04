@@ -17,6 +17,7 @@ import { SubscanButton } from '../../library/SubscanButton';
 import { PageTitle } from '../../library/PageTitle';
 import { planckToDot } from '../../Utils';
 import moment from 'moment';
+import { GRAPH_HEIGHT } from '../../constants';
 
 export const Overview = (props: PageProps) => {
 
@@ -47,8 +48,6 @@ export const Overview = (props: PageProps) => {
     },
   ];
 
-  const GRAPH_HEIGHT = 430;
-
   let lastPayout: any = null;
   if (payouts.length > 0) {
     let _last = payouts[payouts.length - 1];
@@ -67,10 +66,7 @@ export const Overview = (props: PageProps) => {
           <BalanceGraph network={network} />
         </SecondaryWrapper>
         <MainWrapper paddingLeft>
-          <GraphWrapper
-            style={{ minHeight: GRAPH_HEIGHT }}
-            flex
-          >
+          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <SubscanButton />
             <div className='head'>
               <h3>Recent Payouts</h3>
