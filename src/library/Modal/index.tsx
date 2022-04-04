@@ -6,8 +6,9 @@ import { Wrapper, ContentWrapper } from './Wrapper';
 import { useModal } from '../../contexts/Modal';
 import { useAnimation } from 'framer-motion';
 import { ConnectAccounts } from '../../modals/ConnectAccounts';
+import { EraPoints } from '../../modals/EraPoints';
 
-export const Modal = (props: any) => {
+export const Modal = () => {
 
   const { status, setStatus, modal } = useModal();
   const controls = useAnimation();
@@ -57,9 +58,9 @@ export const Modal = (props: any) => {
       variants={variants}
     >
       <div className='content_wrapper'>
-        <ContentWrapper
-        >
+        <ContentWrapper>
           {modal === 'ConnectAccounts' && <ConnectAccounts />}
+          {modal === 'EraPoints' && <EraPoints />}
         </ContentWrapper>
         <button className='close' onClick={() => { onFadeOut() }}>
         </button>

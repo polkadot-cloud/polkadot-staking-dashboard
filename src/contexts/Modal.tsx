@@ -7,7 +7,9 @@ import React from 'react';
 export interface ModalContextState {
   status: number;
   setStatus: (status: number) => void;
+  openModalWith: (modal: string, confi?: any) => void;
   modal: string;
+  config: any;
 }
 
 // default modal content
@@ -17,7 +19,9 @@ const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';
 export const AssistantContext: React.Context<ModalContextState> = React.createContext({
   status: 0,
   setStatus: (status) => { },
+  openModalWith: (modal: string, config?: any) => { },
   modal: DEFAULT_MODAL_COMPONENT,
+  config: {},
 });
 
 export const useModal = () => React.useContext(AssistantContext);
@@ -28,6 +32,7 @@ export class ModalContextWrapper extends React.Component {
   state = {
     status: 0,
     modal: DEFAULT_MODAL_COMPONENT,
+    config: {},
   };
 
   setStatus = (newStatus: number) => {
@@ -36,12 +41,22 @@ export class ModalContextWrapper extends React.Component {
     })
   }
 
+  openModalWith = (modal: string, config: any = {}) => {
+    this.setState({
+      modal: modal,
+      status: 1,
+      config: config,
+    });
+  }
+
   render () {
     return (
       <AssistantContext.Provider value={{
         status: this.state.status,
         setStatus: this.setStatus,
+        openModalWith: this.openModalWith,
         modal: this.state.modal,
+        config: this.state.config,
       }}>
         {this.props.children}
       </AssistantContext.Provider>

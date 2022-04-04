@@ -8,10 +8,10 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   align-items: center;
   justify-content: flex-start;
-  padding: 0.5rem;
+  padding: 1rem;
 
   h2 {
-    margin-top: 0;
+    margin-top: 0.5rem;
   }
 
   button {

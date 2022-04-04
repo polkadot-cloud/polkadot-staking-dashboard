@@ -61,6 +61,7 @@ export const INTERFACE_MAXIMUM_WIDTH: number = 1250;
 export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
 export const SIDE_MENU_STICKY_THRESHOLD: number = 1175;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
+export const GRAPH_HEIGHT = 430;
 
 /*
  * Global messages for app components
@@ -88,6 +89,7 @@ export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3';
 export const API_ENDPOINTS = {
   priceChange: `${ENDPOINT_PRICE}/ticker/24hr?symbol=`,
   subscanRewardSlash: '/api/scan/account/reward_slash',
+  subscanEraStat: '/api/scan/staking/era_stat',
 };
 
 export const SUBSCAN_ENABLED = true;

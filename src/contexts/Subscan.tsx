@@ -7,10 +7,12 @@ import { useConnect } from './Connect';
 import { SUBSCAN_ENABLED, API_ENDPOINTS, API_SUBSCAN_KEY } from '../constants';
 
 export interface SubscanContextState {
+  fetchEraPoints: (v: string, e: number) => void;
   payouts: any;
 }
 
 export const SubscanContext: React.Context<SubscanContextState> = React.createContext({
+  fetchEraPoints: (v: string, e: number) => { },
   payouts: [],
 });
 
@@ -21,25 +23,20 @@ export const SubscanContextWrapper = (props: any) => {
   const { network }: any = useApi();
   const { activeAccount }: any = useConnect();
 
-  const [state, setState]: any = useState({
-    payouts: [],
-  });
+  const [payouts, setPayouts]: any = useState([]);
 
+  // fetch payouts as soon as network is ready
   useEffect(() => {
     fetchPayouts();
   }, [activeAccount, network]);
 
-
   const fetchPayouts = () => {
-
     if (!SUBSCAN_ENABLED || activeAccount === '') {
       return;
     }
 
     // reset payouts immediately
-    setState({
-      payouts: []
-    });
+    setPayouts([]);
 
     fetch(network.subscanEndpoint + API_ENDPOINTS['subscanRewardSlash'], {
       headers: {
@@ -57,21 +54,54 @@ export const SubscanContextWrapper = (props: any) => {
       .then(res => {
         if (res.message === 'Success') {
           if (res.data.list !== null) {
-            setState({
-              payouts: res.data.list.reverse(),
-            });
+            setPayouts(res.data.list.reverse());
           } else {
-            setState({
-              payouts: [],
-            });
+            setPayouts([]);
           }
         }
       });
   }
 
+  const fetchEraPoints = async (address: string, era: number) => {
+    if (!SUBSCAN_ENABLED || address === '') {
+      return;
+    }
+    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS['subscanEraStat'], {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': API_SUBSCAN_KEY,
+      },
+      body: JSON.stringify({
+        row: 60,
+        page: 0,
+        address: address,
+      }),
+      method: "POST"
+    });
+
+    res = await res.json();
+    if (res.message === 'Success') {
+      if (res.data?.list !== null) {
+        let list = [];
+        for (let i = era; i > (era - 60); i--) {
+          list.push({
+            era: i,
+            reward_point: res.data.list.find((item: any) => item.era === i)?.reward_point ?? 0
+          });
+        }
+
+        return list;
+      } else {
+        return [];
+      }
+    }
+    return [];
+  }
+
   return (
     <SubscanContext.Provider value={{
-      payouts: state.payouts,
+      fetchEraPoints: fetchEraPoints,
+      payouts: payouts,
     }}>
       {props.children}
     </SubscanContext.Provider>

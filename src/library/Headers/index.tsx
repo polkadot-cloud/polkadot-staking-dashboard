@@ -19,7 +19,7 @@ export const Headers = () => {
 
   const assistant = useAssistant();
   const connect = useConnect();
-  const modal = useModal();
+  const { openModalWith } = useModal();
   const { setSideMenu, sideMenuOpen }: any = useUi();
 
   // subscribe to web3 accounts
@@ -98,7 +98,7 @@ export const Headers = () => {
               items={
                 <>
                   <Item
-                    onClick={() => { modal.setStatus(1); toggleMenu(false); }}
+                    onClick={() => { openModalWith('ConnectAccounts'); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                   >
                     Switch Account

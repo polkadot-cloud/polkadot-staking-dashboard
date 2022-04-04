@@ -36,11 +36,24 @@ export const Wrapper = styled(motion.div)`
 
 export const ContentWrapper = styled(motion.div)`
   width: 100%;
-  max-width: 500px;
-  padding: 1rem;
+  max-width: 800px;
   background: white;
   z-index: 9;
   border-radius: 0.75rem;
+  overflow: hidden;
+  overflow-y: scroll;
+  position: relative;
+  
+  .header {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 1rem 1rem 0 1rem;
+  }
+  .body {
+    padding: 1rem;
+  }
 `;
 
 export default Wrapper;

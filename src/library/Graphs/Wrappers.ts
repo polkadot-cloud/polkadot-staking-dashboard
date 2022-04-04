@@ -15,8 +15,9 @@ export const SectionWrapper = styled.div<any>`
   flex: 1;
   width: 100%;
   margin-top: ${props => props.transparent ? '0rem' : '1rem'};
-
-  h3 {
+  position: relative;
+  
+  h2, h3 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
