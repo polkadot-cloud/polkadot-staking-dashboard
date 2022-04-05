@@ -371,8 +371,14 @@ export const StakingContextWrapper = (props: any) => {
 
     let batchesUpdated = Object.assign(validatorMetaBatches, {});
     batchesUpdated.meta[key].addresses.splice(index, 1);
-    batchesUpdated.meta[key].identities.splice(index, 1);
-    batchesUpdated.meta[key].stake.splice(index, 1);
+
+    if (batchesUpdated.meta[key].stake !== undefined) {
+      batchesUpdated.meta[key].identities.splice(index, 1);
+    }
+
+    if (batchesUpdated.meta[key].stake !== undefined) {
+      batchesUpdated.meta[key].stake.splice(index, 1);
+    }
 
     setValidatorMetaBatch({ ...batchesUpdated });
   }
