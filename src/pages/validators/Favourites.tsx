@@ -68,6 +68,7 @@ export const Favourites = (props: PageProps) => {
                   allowMoreCols
                   pagination
                   toggleFavourites
+                  refetchOnListUpdate
                 />
               }
             </>

@@ -34,6 +34,10 @@ export const ValidatorListInner = (props: any) => {
 
   const { allowMoreCols, allowFilters, toggleFavourites, pagination }: any = props;
 
+  let refetchOnListUpdate = props.refetchOnListUpdate !== undefined
+    ? props.refetchOnListUpdate
+    : false;
+
   const [page, setPage]: any = useState(1);
   const [renderIteration, _setRenderIteration]: any = useState(1);
   // default list of validators
@@ -55,7 +59,7 @@ export const ValidatorListInner = (props: any) => {
 
   // fetch validators when ready if not done so already
   useEffect(() => {
-    fetchValidatorMetaBatch(props.batchKey, validators);
+    fetchValidatorMetaBatch(props.batchKey, validators, refetchOnListUpdate);
   }, [isReady(), validatorsDefault]);
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;

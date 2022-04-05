@@ -67,6 +67,7 @@ export const Nominations = () => {
                     batchKey={batchKey}
                     layout='col'
                     title='Your Nominations'
+                    refetchOnListUpdate
                   />
                 </div>
               }
