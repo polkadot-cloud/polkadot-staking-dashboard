@@ -4,7 +4,7 @@
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
+import { MainWrapper, SecondaryWrapper, StickyWrapper } from '../../library/Layout';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
@@ -81,12 +81,14 @@ export const Stake = (props: PageProps) => {
           {/* Start status */}
           {!inSetup() &&
             <SecondaryWrapper>
-              <Controller />
+              <StickyWrapper>
+                <Controller />
 
-              <SectionWrapper>
-                <h3>Staking Status: Active</h3>
-                <h4>You are currently staking and earning rewards.</h4>
-              </SectionWrapper>
+                <SectionWrapper>
+                  <h3>Staking Status: Active</h3>
+                  <h4>You are currently staking and earning rewards.</h4>
+                </SectionWrapper>
+              </StickyWrapper>
             </SecondaryWrapper>
           }
 
