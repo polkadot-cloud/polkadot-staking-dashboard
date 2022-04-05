@@ -12,6 +12,7 @@ import Dropdown from './Dropdown';
 import { Account } from '../Account';
 import { Controller } from './Controller';
 import { useUi } from '../../contexts/UI';
+import { Spinner } from './Spinner';
 
 export const Headers = () => {
 
@@ -20,7 +21,7 @@ export const Headers = () => {
   const assistant = useAssistant();
   const connect = useConnect();
   const { openModalWith } = useModal();
-  const { setSideMenu, sideMenuOpen }: any = useUi();
+  const { setSideMenu, sideMenuOpen, isSyncing }: any = useUi();
 
   // subscribe to web3 accounts
   const connectWeb3 = async () => {
@@ -40,6 +41,9 @@ export const Headers = () => {
           />
         </Item>
       </div>
+
+      {isSyncing() && <Spinner />}
+
       {/* connected, display stash and controller */}
       {connect.status === 1 &&
         <>

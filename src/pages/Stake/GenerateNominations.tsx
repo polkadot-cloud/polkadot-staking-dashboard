@@ -10,7 +10,7 @@ import { useUi } from '../../contexts/UI';
 // import { shuffle } from '../../Utils';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
-export const GenerateNominations = (props: any) => {
+export const GenerateNominations = () => {
 
   const { isReady }: any = useApi();
   const { getValidatorMetaBatch, validators }: any = useStaking();

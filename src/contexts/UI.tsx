@@ -2,7 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { useConnect } from './Connect';
+import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
+import { useBalances } from './Balances';
 import { useApi } from './Api';
 
 export interface UIContextState {
@@ -12,6 +15,7 @@ export interface UIContextState {
   applyValidatorOrder: (l: any, o: string) => any;
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
+  isSyncing: () => any;
   sideMenuOpen: number;
   listFormat: string;
   validators: any;
@@ -24,6 +28,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   applyValidatorOrder: (l: any, o: string) => { },
   applyValidatorFilters: (l: any, k: string, f?: any) => { },
   toggleFilterValidators: (v: string, l: any) => { },
+  isSyncing: () => false,
   sideMenuOpen: 0,
   listFormat: 'col',
   validators: {},
@@ -33,9 +38,13 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIContextWrapper = (props: any) => {
 
+  const { activeAccount } = useConnect();
   const { meta, session }: any = useStaking();
   const { consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
+  const { metrics }: any = useNetworkMetrics();
+  const { getAccount }: any = useBalances();
+
 
   const [state, setState]: any = useState({
     sideMenuOpen: 0,
@@ -179,6 +188,23 @@ export const UIContextWrapper = (props: any) => {
     return orderedList;
   }
 
+  /*
+   * Helper function to determine whether the dashboard is still
+   * fetching remote data.
+   */
+  const isSyncing = () => {
+
+    // check era has synced from Network
+    if (metrics.activeEra.index === 0) {
+      return true;
+    }
+    // check account has synced from Balances
+    if (getAccount(activeAccount) === null) {
+      return true;
+    }
+    return false;
+  }
+
   return (
     <UIContext.Provider value={{
       setSideMenu: setSideMenu,
@@ -187,6 +213,7 @@ export const UIContextWrapper = (props: any) => {
       applyValidatorOrder: applyValidatorOrder,
       applyValidatorFilters: applyValidatorFilters,
       toggleFilterValidators: toggleFilterValidators,
+      isSyncing: isSyncing,
       sideMenuOpen: state.sideMenuOpen,
       listFormat: state.listFormat,
       validators: state.validators,
