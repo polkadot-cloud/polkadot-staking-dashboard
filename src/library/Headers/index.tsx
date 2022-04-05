@@ -13,19 +13,33 @@ import { Account } from '../Account';
 import { Controller } from './Controller';
 import { useUi } from '../../contexts/UI';
 import { Spinner } from './Spinner';
+import { pageFromUri } from '../../Utils';
+import { useLocation } from 'react-router-dom';
+import { useStaking } from '../../contexts/Staking';
 
 export const Headers = () => {
 
   const [showMenu, toggleMenu]: any = useState(false);
 
+  const { pathname } = useLocation();
   const assistant = useAssistant();
   const connect = useConnect();
   const { openModalWith } = useModal();
+  const { validators } = useStaking();
   const { setSideMenu, sideMenuOpen, isSyncing }: any = useUi();
 
   // subscribe to web3 accounts
   const connectWeb3 = async () => {
     connect.setAccounts();
+  }
+
+  let syncing = isSyncing();
+
+  // keep syncing if on validators page and still fetching
+  if (pageFromUri(pathname) === 'validators') {
+    if (!validators.length) {
+      syncing = true;
+    }
   }
 
   return (
@@ -42,7 +56,7 @@ export const Headers = () => {
         </Item>
       </div>
 
-      {isSyncing() && <Spinner />}
+      {syncing && <Spinner />}
 
       {/* connected, display stash and controller */}
       {connect.status === 1 &&

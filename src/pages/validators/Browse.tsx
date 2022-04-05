@@ -14,10 +14,10 @@ import { planckToDot } from '../../Utils';
 
 export const Browse = (props: PageProps) => {
 
-  const { isReady }: any = useApi();
   const { page } = props;
   const { title } = page;
 
+  const { isReady }: any = useApi();
   const { metrics } = useNetworkMetrics();
   const { validators, staking }: any = useStaking();
   const { minNominatorBond } = staking;

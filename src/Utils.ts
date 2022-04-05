@@ -43,3 +43,9 @@ export const shuffle = (array: any) => {
   }
   return array;
 }
+
+export const pageFromUri = (pathname: string) => {
+  const lastUriItem = pathname.substring(pathname.lastIndexOf('/') + 1);
+  const page = lastUriItem.trim() === '' ? 'overview' : lastUriItem;
+  return page;
+}

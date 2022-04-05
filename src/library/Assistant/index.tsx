@@ -7,6 +7,7 @@ import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
 import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../pages';
+import { pageFromUri } from '../../Utils';
 
 export const Assistant = () => {
 
@@ -36,9 +37,7 @@ export const Assistant = () => {
   };
 
   useEffect(() => {
-    const lastUriItem = pathname.substring(pathname.lastIndexOf('/') + 1);
-    const page = lastUriItem.trim() === '' ? 'overview' : lastUriItem;
-    assistant.setPage(page);
+    assistant.setPage(pageFromUri(pathname));
   }, [pathname]);
 
   // animate assistant container default
