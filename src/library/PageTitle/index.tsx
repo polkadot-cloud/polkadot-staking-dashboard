@@ -6,14 +6,14 @@ import { PageTitleWrapper } from '../../Wrappers';
 
 export const PageTitle = (props: any) => {
 
-  const { title, setTitleIsSticky } = props;
+  const { title, setTitleOffset } = props;
   const [isSticky, setIsSticky] = useState(false);
 
-  let ref = useRef();
+  let ref: any = useRef();
 
   // mount 
   useEffect(() => {
-    const cachedRef: any = ref.current;
+    const cachedRef = ref.current;
     const observer = new IntersectionObserver(
       ([e]) => setIsSticky(e.intersectionRatio < 1),
       {
@@ -31,8 +31,8 @@ export const PageTitle = (props: any) => {
   useEffect(() => {
     // if a parent component is monitoring sticky state, 
     // update it here.
-    if (setTitleIsSticky !== undefined) {
-      setTitleIsSticky(isSticky);
+    if (setTitleOffset !== undefined) {
+      setTitleOffset(ref?.current?.offsetHeight ?? 0);
     }
   }, [isSticky]);
 

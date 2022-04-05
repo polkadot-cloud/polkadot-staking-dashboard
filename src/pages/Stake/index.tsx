@@ -26,7 +26,7 @@ export const Stake = (props: PageProps) => {
   const { inSetup } = useStaking();
 
   // monitor page title sticky
-  const [titleIsSticky, setTitleIsSticky] = useState(false);
+  const [titleOffset, setTitleOffset] = useState(false);
 
   const { page } = props;
   const { title } = page;
@@ -68,7 +68,7 @@ export const Stake = (props: PageProps) => {
   return (
     <>
       <Wrapper>
-        <PageTitle title={title} setTitleIsSticky={setTitleIsSticky} />
+        <PageTitle title={title} setTitleOffset={setTitleOffset} />
         {!inSetup() && <StatBoxList title="This Session" items={items} />}
         <PageRowWrapper noVerticalSpacer>
 
@@ -78,7 +78,7 @@ export const Stake = (props: PageProps) => {
 
           {inSetup() &&
             <SecondaryWrapper>
-              <Progress titleIsSticky={titleIsSticky} />
+              <Progress titleOffset={titleOffset} />
             </SecondaryWrapper>
           }
 
