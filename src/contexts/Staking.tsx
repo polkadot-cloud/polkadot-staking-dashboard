@@ -6,13 +6,15 @@ import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
 import BN from "bn.js";
 import { sleep, removePercentage } from '../Utils';
+import { useBalances } from './Balances';
+import { useConnect } from './Connect';
 
 // validators per batch in multi-batch fetching
 const VALIDATORS_PER_BATCH_MUTLI = 20;
 const THROTTLE_VALIDATOR_RENDER = 250;
 
 // context type
-export interface StakingMetricsContextState {
+export interface StakingContextState {
   VALIDATORS_PER_BATCH_MUTLI: number,
   THROTTLE_VALIDATOR_RENDER: number,
   fetchValidators: () => void;
@@ -20,6 +22,10 @@ export interface StakingMetricsContextState {
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
+  hasController: () => any;
+  isBonding: () => any;
+  isNominating: () => any;
+  inSetup: () => any;
   staking: any;
   validators: any;
   meta: any;
@@ -27,7 +33,7 @@ export interface StakingMetricsContextState {
 }
 
 // context definition
-export const StakingMetricsContext: React.Context<StakingMetricsContextState> = React.createContext({
+export const StakingContext: React.Context<StakingContextState> = React.createContext({
   VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
   THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
   fetchValidators: () => { },
@@ -35,6 +41,10 @@ export const StakingMetricsContext: React.Context<StakingMetricsContextState> = 
   getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
   fetchValidatorPrefs: (v: any) => { },
+  hasController: () => false,
+  isBonding: () => false,
+  isNominating: () => false,
+  inSetup: () => false,
   staking: {},
   validators: [],
   meta: {},
@@ -42,13 +52,15 @@ export const StakingMetricsContext: React.Context<StakingMetricsContextState> = 
 });
 
 // useStaking
-export const useStaking = () => React.useContext(StakingMetricsContext);
+export const useStaking = () => React.useContext(StakingContext);
 
 // wrapper component to provide components with context
-export const StakingMetricsContextWrapper = (props: any) => {
+export const StakingContextWrapper = (props: any) => {
 
+  const { activeAccount } = useConnect();
   const { isReady, api }: any = useApi();
   const { metrics }: any = useNetworkMetrics();
+  const { getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
 
   const [stakingMetrics, setStakingMetrics]: any = useState({
     lastReward: 0,
@@ -329,7 +341,6 @@ export const StakingMetricsContextWrapper = (props: any) => {
     }
   }, [isReady(), validators]);
 
-
   const removeValidatorMetaBatch = (key: string) => {
     if (validatorMetaBatches.meta[key] !== undefined) {
       delete validatorMetaBatches.meta[key];
@@ -343,8 +354,45 @@ export const StakingMetricsContextWrapper = (props: any) => {
     return validatorMetaBatches.meta[key];
   }
 
+  /*
+   * Helper function to determine whether the active account
+   * has set a controller account.
+   */
+  const hasController = () => {
+    return getBondedAccount(activeAccount) === null ? false : true;
+  }
+
+  /*
+   * Helper function to determine whether the active account
+   * is bonding, or is yet to start.
+   */
+  const isBonding = () => {
+    if (!hasController()) {
+      return false;
+    }
+    const ledger = getAccountLedger(getBondedAccount(activeAccount));
+    return ledger.active > 0;
+  }
+
+  /*
+   * Helper function to determine whether the active account
+   * is nominating, or is yet to start.
+   */
+  const isNominating = () => {
+    const nominations = getAccountNominations(activeAccount);
+    return nominations.length > 0;
+  }
+
+  /*
+   * Helper function to determine whether the active account
+   * is nominating, or is yet to start.
+   */
+  const inSetup = () => {
+    return (!hasController || !isBonding() || !isNominating());
+  }
+
   return (
-    <StakingMetricsContext.Provider
+    <StakingContext.Provider
       value={{
         VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
         THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
@@ -353,12 +401,16 @@ export const StakingMetricsContextWrapper = (props: any) => {
         getValidatorMetaBatch: getValidatorMetaBatch,
         removeValidatorMetaBatch: removeValidatorMetaBatch,
         fetchValidatorPrefs: fetchValidatorPrefs,
+        hasController: hasController,
+        isBonding: isBonding,
+        isNominating: isNominating,
+        inSetup: inSetup,
         staking: stakingMetrics,
         validators: validators,
         meta: validatorMetaBatchesRef.current.meta,
         session: sessionValidators,
       }}>
       {props.children}
-    </StakingMetricsContext.Provider>
+    </StakingContext.Provider>
   );
 }

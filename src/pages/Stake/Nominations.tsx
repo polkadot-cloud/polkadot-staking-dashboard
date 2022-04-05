@@ -10,7 +10,7 @@ import { useBalances } from '../../contexts/Balances';
 import { ValidatorList } from '../../library/ValidatorList';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
-export const Nominations = (props: any) => {
+export const Nominations = () => {
 
   const { isReady }: any = useApi();
   const { fetchValidatorPrefs }: any = useStaking();

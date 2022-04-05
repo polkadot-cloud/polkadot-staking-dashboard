@@ -6,7 +6,7 @@ import { List, Header, Wrapper as ListWrapper, Pagination } from '../../library/
 import { motion } from 'framer-motion';
 import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
-import { StakingMetricsContext, useStaking } from '../../contexts/Staking';
+import { StakingContext, useStaking } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
@@ -188,7 +188,7 @@ export const ValidatorListInner = (props: any) => {
 
 export class ValidatorList extends React.Component<any, any> {
 
-  static contextType = StakingMetricsContext;
+  static contextType = StakingContext;
 
   shouldComponentUpdate (nextProps: any, nextState: any) {
     return (this.props.validators !== nextProps.validators);

@@ -4,9 +4,7 @@
 import { useEffect, useState } from 'react';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
 import { useStaking } from '../../contexts/Staking';
-import { useBalances } from '../../contexts/Balances';
 import { ValidatorList } from '../../library/ValidatorList';
 import { useUi } from '../../contexts/UI';
 // import { shuffle } from '../../Utils';

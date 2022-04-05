@@ -6,7 +6,7 @@ import { PageWrapper } from './Wrappers';
 import { Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"
 import { PAGES_CONFIG } from './pages';
-import { StakingMetricsContextWrapper } from './contexts/Staking';
+import { StakingContextWrapper } from './contexts/Staking';
 import { MessagesContextWrapper } from './contexts/Messages';
 import { UIContextWrapper } from './contexts/UI';
 import { NetworkBar } from './library/NetworkBar';
@@ -155,11 +155,11 @@ export const RouterWithUIContext = () => {
 export const Router = () => {
 
   return (
-    <StakingMetricsContextWrapper>
+    <StakingContextWrapper>
       <BrowserRouter>
         <RouterWithUIContext />
       </BrowserRouter>
-    </StakingMetricsContextWrapper>
+    </StakingContextWrapper>
   );
 }
 

@@ -6,6 +6,7 @@ import BondedGraph from './BondedGraph';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useBalances } from '../../contexts/Balances';
+import { useStaking } from '../../contexts/Staking';
 import { Button, ButtonRow } from '../../library/Button';
 import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
 import { HalfWrapper, HalfItem } from '../../library/Layout';
@@ -15,7 +16,10 @@ export const Bond = () => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getAccountLedger, getBondedAccount }: any = useBalances();
+  const { isBonding } = useStaking();
+  const { getAccountLedger, getBondedAccount, getAccountBalance }: any = useBalances();
+  const balance = getAccountBalance(activeAccount);
+  let { free } = balance;
 
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
@@ -39,7 +43,7 @@ export const Bond = () => {
         </h2>
       </div>
 
-      {controller !== null &&
+      {isBonding() &&
         <HalfWrapper alignItems='flex-end'>
           <HalfItem>
             <GraphWrapper style={{ background: 'none', marginBottom: '1.5rem' }}>
@@ -64,10 +68,10 @@ export const Bond = () => {
         </HalfWrapper>
       }
 
-      {controller === null &&
+      {!isBonding() &&
         <HalfWrapper alignItems='flex-end'>
           <HalfItem>
-            <h5>Available: {remaining} {network.unit}</h5>
+            <h5>Available: {planckToDot(free)} {network.unit}</h5>
             <input type="text" placeholder='0 DOT' />
           </HalfItem>
           <HalfItem>

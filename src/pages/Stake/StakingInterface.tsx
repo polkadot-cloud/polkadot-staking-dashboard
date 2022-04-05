@@ -5,26 +5,22 @@ import { Separator } from './Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { Nominations } from './Nominations';
 import { GenerateNominations } from './GenerateNominations';
-import { useBalances } from '../../contexts/Balances';
-import { useConnect } from '../../contexts/Connect';
-import { Controller } from './Controller';
+import { useStaking } from '../../contexts/Staking';
+import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Element } from 'react-scroll'
 
 export const StakingInterface = () => {
 
-  const { getBondedAccount }: any = useBalances();
-  const { activeAccount } = useConnect();
-
-  const controller = getBondedAccount(activeAccount);
+  const { hasController, isNominating } = useStaking();
 
   return (
     <>
-      {controller === null &&
+      {!hasController() &&
         <SectionWrapper>
           <Separator padding />
           <Element name="controller" style={{ position: 'absolute' }} />
-          <Controller />
+          <SetController />
           <Separator />
         </SectionWrapper>
       }
@@ -35,7 +31,7 @@ export const StakingInterface = () => {
 
       <SectionWrapper>
         <Element name="nominate" style={{ position: 'absolute' }} />
-        {controller === null
+        {!isNominating()
           ? <GenerateNominations />
           : <Nominations />
         }

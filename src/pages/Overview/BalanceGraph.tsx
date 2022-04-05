@@ -20,14 +20,14 @@ export const BalanceGraphInner = (props: any) => {
   const balance = getAccountBalance(activeAccount);
 
   const { prices } = props;
+  let { free, miscFrozen } = balance;
 
   // get user's total DOT balance
-  let freeDot = planckToDot(balance.free);
-
+  let freeDot = planckToDot(free);
   // convert balance to fiat value
   let freeBalance = fiatAmount(freeDot * prices.lastPrice);
 
-  let { free, miscFrozen } = balance;
+  
 
   // convert to DOT unit
   free = planckToDot(free);
