@@ -58,13 +58,13 @@ export const RouterInner = () => {
 
   return (
     <>
-      {/* Modal: closed by default */}
-      <Modal />
-
       {/* App related messages for UI control */}
       <MessagesContextWrapper>
         {/* Subscan communication */}
         <SubscanContextWrapper>
+
+          {/* Modal: closed by default */}
+          <Modal />
           <BodyInterfaceWrapper>
 
             {/* Assistant: closed by default */}
