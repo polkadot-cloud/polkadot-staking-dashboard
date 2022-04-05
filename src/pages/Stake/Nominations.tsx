@@ -18,14 +18,17 @@ export const Nominations = () => {
   const { activeAccount } = useConnect();
 
   const [fetching, setFetching] = useState(true);
+
+  // TODO: can move this to context to prevent re-fetching on page visit
   const [nominations, setNominations] = useState([]);
+  const [nominationsWithPrefs, setNominationsWithPrefs] = useState([]);
 
   const batchKey = 'stake_nominations';
 
   const fetchNominationsMeta = async () => {
-    const nominationsWithPrefs = await fetchValidatorPrefs(nominations);
-    if (nominationsWithPrefs) {
-      setNominations(nominationsWithPrefs);
+    const _nominationsWithPrefs = await fetchValidatorPrefs(nominations);
+    if (_nominationsWithPrefs) {
+      setNominationsWithPrefs(_nominationsWithPrefs);
     }
     setFetching(false);
   }
@@ -33,13 +36,14 @@ export const Nominations = () => {
   useEffect(() => {
     let _nominations = getAccountNominations(activeAccount);
     _nominations = _nominations.map((item: any, index: any) => { return ({ address: item }) });
-
     setNominations(_nominations);
   }, [isReady(), activeAccount, accounts]);
 
   useEffect(() => {
-    fetchNominationsMeta();
-  }, [isReady()]);
+    if (isReady()) {
+      fetchNominationsMeta();
+    }
+  }, [nominations]);
 
   return (
     <Wrapper>
@@ -59,7 +63,7 @@ export const Nominations = () => {
               {nominations.length > 0 &&
                 <div style={{ marginTop: '1rem' }}>
                   <ValidatorList
-                    validators={nominations}
+                    validators={nominationsWithPrefs}
                     batchKey={batchKey}
                     layout='col'
                     title='Your Nominations'
