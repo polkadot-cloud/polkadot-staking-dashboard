@@ -1,12 +1,10 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ProgressButton } from './Wrappers';
+import { StatusButton } from '../../library/StatusButton';
 import { StickyWrapper } from '../../library/Layout';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { Button } from '../../library/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { Link } from 'react-scroll'
 import { useStaking } from '../../contexts/Staking';
 
@@ -22,30 +20,15 @@ export const Progress = () => {
 
         <div style={{ width: '100%', marginTop: '1.5rem' }}>
           <Link to="controller" smooth={true} duration={350} offset={-95}>
-            <ProgressButton>
-              <section>
-                <FontAwesomeIcon color="#ccc" transform='grow-1' icon={hasController() ? faCheckCircle : faCircle} />
-              </section>
-              <section>Set controller account</section>
-            </ProgressButton>
+            <StatusButton checked={hasController()} label='Set controller account' />
           </Link>
 
           <Link to="bond" smooth={true} duration={350} offset={-95}>
-            <ProgressButton>
-              <section>
-                <FontAwesomeIcon color="#ccc" transform='grow-1' icon={isBonding() ? faCheckCircle : faCircle} />
-              </section>
-              <section>Set amount to Bond</section>
-            </ProgressButton>
+            <StatusButton checked={isBonding()} label='Set amount to Bond' />
           </Link>
 
           <Link to="nominate" smooth={true} duration={350} offset={-95}>
-            <ProgressButton>
-              <section>
-                <FontAwesomeIcon color="#ccc" transform='grow-1' icon={isNominating() ? faCheckCircle : faCircle} />
-              </section>
-              <section>Select nominations</section>
-            </ProgressButton>
+            <StatusButton checked={isNominating()} label='Select nominations' />
           </Link>
           <div style={{ width: '100%', height: '40px', display: 'flex' }}><Button title='Start Staking' primary inline /></div>
         </div>

@@ -63,6 +63,12 @@ export const SIDE_MENU_STICKY_THRESHOLD: number = 1175;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
 export const GRAPH_HEIGHT = 430;
 
+
+/*
+ * Toggle-able services
+*/
+export const SERVICES = ['subscan', 'binance_spot'];
+
 /*
  * Global messages for app components
 */

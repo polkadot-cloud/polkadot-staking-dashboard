@@ -7,6 +7,7 @@ import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
 import { useBalances } from './Balances';
 import { useApi } from './Api';
+import { SERVICES } from '../constants';
 
 export interface UIContextState {
   setSideMenu: (v: number) => void;
@@ -16,9 +17,11 @@ export interface UIContextState {
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
   isSyncing: () => any;
+  toggleService: (k: string) => void;
   sideMenuOpen: number;
   listFormat: string;
   validators: any;
+  services: any;
 }
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
@@ -29,9 +32,11 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   applyValidatorFilters: (l: any, k: string, f?: any) => { },
   toggleFilterValidators: (v: string, l: any) => { },
   isSyncing: () => false,
+  toggleService: (k: string) => { },
   sideMenuOpen: 0,
   listFormat: 'col',
   validators: {},
+  services: SERVICES,
 });
 
 export const useUi = () => React.useContext(UIContext);
@@ -45,6 +50,11 @@ export const UIContextWrapper = (props: any) => {
   const { metrics }: any = useNetworkMetrics();
   const { getAccount }: any = useBalances();
 
+  let _services: any = localStorage.getItem('services');
+  if (_services === null) {
+    _services = SERVICES;
+  }
+
 
   const [state, setState]: any = useState({
     sideMenuOpen: 0,
@@ -52,7 +62,8 @@ export const UIContextWrapper = (props: any) => {
     validators: {
       order: 'default',
       filter: [],
-    }
+    },
+    services: _services,
   });
 
   const setSideMenu = (v: number) => {
@@ -111,7 +122,6 @@ export const UIContextWrapper = (props: any) => {
     if (filter.includes('inactive')) {
       list = filterInactive(list);
     }
-
     return list;
   }
 
@@ -139,7 +149,6 @@ export const UIContextWrapper = (props: any) => {
         continue;
       }
     }
-
     return filteredList;
   }
 
@@ -205,6 +214,20 @@ export const UIContextWrapper = (props: any) => {
     return false;
   }
 
+  // service toggling
+
+  const toggleService = (key: string) => {
+    let services = Object.assign(state.services);
+    if (state.services.find((item: any) => item === key)) {
+      services = services.filter((service: any) => service !== key);
+    } else {
+      services.push(key);
+    }
+
+    localStorage.setItem('services', services);
+    setState({ ...state, services: services, })
+  }
+
   return (
     <UIContext.Provider value={{
       setSideMenu: setSideMenu,
@@ -214,9 +237,11 @@ export const UIContextWrapper = (props: any) => {
       applyValidatorFilters: applyValidatorFilters,
       toggleFilterValidators: toggleFilterValidators,
       isSyncing: isSyncing,
+      toggleService: toggleService,
       sideMenuOpen: state.sideMenuOpen,
       listFormat: state.listFormat,
       validators: state.validators,
+      services: state.services,
     }}>
       {props.children}
     </UIContext.Provider>

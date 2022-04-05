@@ -55,8 +55,11 @@ export const GenerateNominations = () => {
       _nominations = applyValidatorOrder(_nominations, 'commission');
       // TODO: unbiased shuffle resulting validators
       // _nominations = shuffle(_nominations);
+
       // choose subset of validators
-      _nominations = _nominations.slice(0, 16);
+      if (_nominations.length) {
+        _nominations = _nominations.slice(0, 16);
+      }
       setNominations(_nominations);
       setFetching(false);
     }

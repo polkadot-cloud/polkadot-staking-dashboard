@@ -108,6 +108,12 @@ export const Headers = () => {
                     Switch Account
                   </Item>
                   <Item
+                    onClick={() => { openModalWith('Settings'); toggleMenu(false); }}
+                    whileHover={{ scale: 1.01 }}
+                  >
+                    Services
+                  </Item>
+                  <Item
                     onClick={() => { connect.disconnect(); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                     style={{ color: '#ae2324' }}
