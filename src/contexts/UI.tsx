@@ -53,8 +53,9 @@ export const UIContextWrapper = (props: any) => {
   let _services: any = localStorage.getItem('services');
   if (_services === null) {
     _services = SERVICES;
+  } else {
+    _services = JSON.parse(_services);
   }
-
 
   const [state, setState]: any = useState({
     sideMenuOpen: 0,
@@ -224,7 +225,7 @@ export const UIContextWrapper = (props: any) => {
       services.push(key);
     }
 
-    localStorage.setItem('services', services);
+    localStorage.setItem('services', JSON.stringify(services));
     setState({ ...state, services: services, })
   }
 
