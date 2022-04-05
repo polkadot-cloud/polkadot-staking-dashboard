@@ -6,7 +6,7 @@ import Stake from './pages/Stake';
 import Pools from './pages/Pools';
 import Browse from './pages/validators/Browse';
 import Favourites from './pages/validators/Favourites';
-import Payouts from './pages/Stake/Payouts';
+import Payouts from './pages/Payouts';
 import Projects from './pages/explore/Projects';
 import {
   faUserFriends,
