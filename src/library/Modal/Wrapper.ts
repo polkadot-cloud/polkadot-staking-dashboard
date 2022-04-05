@@ -34,9 +34,9 @@ export const Wrapper = styled(motion.div)`
     }
 `;
 
-export const ContentWrapper = styled(motion.div)`
+export const ContentWrapper = styled.div<any>`
   width: 100%;
-  max-width: 800px;
+  max-width: ${props => props.size === 'large' ? '800px' : '600px'};
   background: white;
   z-index: 9;
   border-radius: 0.75rem;

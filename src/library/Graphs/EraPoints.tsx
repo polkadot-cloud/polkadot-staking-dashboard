@@ -26,7 +26,9 @@ ChartJS.register(
 
 export const EraPoints = (props: any) => {
 
-  const { items, height } = props;
+  let { items, height } = props;
+
+  items = items === undefined ? [] : items;
 
   const options = {
     responsive: true,

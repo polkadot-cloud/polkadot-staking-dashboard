@@ -116,13 +116,13 @@ export const Headers = () => {
               items={
                 <>
                   <Item
-                    onClick={() => { openModalWith('ConnectAccounts'); toggleMenu(false); }}
+                    onClick={() => { openModalWith('ConnectAccounts', {}, 'small'); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                   >
                     Switch Account
                   </Item>
                   <Item
-                    onClick={() => { openModalWith('Settings'); toggleMenu(false); }}
+                    onClick={() => { openModalWith('Settings', {}, 'small'); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                   >
                     Services

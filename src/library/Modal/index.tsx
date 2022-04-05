@@ -11,7 +11,7 @@ import { Settings } from '../../modals/Settings';
 
 export const Modal = () => {
 
-  const { status, setStatus, modal } = useModal();
+  const { status, setStatus, modal, size } = useModal();
   const controls = useAnimation();
 
   const onFadeIn = async () => {
@@ -59,7 +59,7 @@ export const Modal = () => {
       variants={variants}
     >
       <div className='content_wrapper'>
-        <ContentWrapper>
+        <ContentWrapper size={size}>
           {modal === 'ConnectAccounts' && <ConnectAccounts />}
           {modal === 'EraPoints' && <EraPoints />}
           {modal === 'Settings' && <Settings />}

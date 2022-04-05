@@ -12,12 +12,13 @@ import Identicon from '@polkadot/react-identicon';
 import { clipAddress } from '../Utils';
 import { useNetworkMetrics } from '../contexts/Network';
 
-export const EraPoints = (props: any) => {
+export const EraPoints = () => {
 
   const { config } = useModal();
   const { address } = config;
   const { fetchEraPoints }: any = useSubscan();
   const { metrics } = useNetworkMetrics();
+
 
   const [list, setList] = useState([]);
 
