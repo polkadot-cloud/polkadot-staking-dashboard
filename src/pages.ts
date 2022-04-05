@@ -51,17 +51,17 @@ export const PAGES_CONFIG = [
     Entry: Pools,
     icon: faUsers,
   }, {
+    category: 2,
+    title: 'Payouts',
+    uri: URI_PREFIX + '/payouts',
+    Entry: Payouts,
+    icon: faStar,
+  }, {
     category: 3,
     title: 'Validators',
     uri: URI_PREFIX + '/validators',
     Entry: Browse,
     icon: faServer,
-  }, {
-    category: 3,
-    title: 'Payouts',
-    uri: URI_PREFIX + '/payouts',
-    Entry: Payouts,
-    icon: faStar,
   }, {
     category: 4,
     title: 'Community',
