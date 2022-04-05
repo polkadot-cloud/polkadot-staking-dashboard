@@ -66,6 +66,7 @@ export const Browse = (props: PageProps) => {
                   allowMoreCols
                   allowFilters
                   pagination
+                  toggleFavourites
                 />
               }
             </>

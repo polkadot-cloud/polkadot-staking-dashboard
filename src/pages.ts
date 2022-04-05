@@ -5,6 +5,7 @@ import Overview from './pages/Overview';
 import Stake from './pages/Stake';
 import Pools from './pages/Pools';
 import Browse from './pages/validators/Browse';
+import Favourites from './pages/validators/Favourites';
 import Payouts from './pages/Stake/Payouts';
 import Projects from './pages/explore/Projects';
 import {
@@ -14,6 +15,7 @@ import {
   faChartLine,
   faStar,
   faUsers,
+  faThumbtack
 } from '@fortawesome/free-solid-svg-icons';
 import { URI_PREFIX } from './constants';
 
@@ -62,6 +64,12 @@ export const PAGES_CONFIG = [
     uri: URI_PREFIX + '/validators',
     Entry: Browse,
     icon: faServer,
+  }, {
+    category: 3,
+    title: 'Favourites',
+    uri: URI_PREFIX + '/favourites',
+    Entry: Favourites,
+    icon: faThumbtack,
   }, {
     category: 4,
     title: 'Community',

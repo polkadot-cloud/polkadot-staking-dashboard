@@ -48,6 +48,9 @@ export const Wrapper = styled(motion.div) <any>`
           &:hover {
             color: #666;
           }
+          &.active {
+          color: rgba(211, 48, 121, 0.85);
+        }
         }
       }
     }

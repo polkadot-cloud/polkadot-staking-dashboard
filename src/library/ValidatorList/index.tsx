@@ -32,7 +32,7 @@ export const ValidatorListInner = (props: any) => {
     VALIDATORS_PER_BATCH_MUTLI,
   }: any = useStaking();
 
-  const { allowMoreCols, allowFilters, pagination }: any = props;
+  const { allowMoreCols, allowFilters, toggleFavourites, pagination }: any = props;
 
   const [page, setPage]: any = useState(1);
   const [renderIteration, _setRenderIteration]: any = useState(1);
@@ -56,7 +56,7 @@ export const ValidatorListInner = (props: any) => {
   // fetch validators when ready if not done so already
   useEffect(() => {
     fetchValidatorMetaBatch(props.batchKey, validators);
-  }, [isReady()]);
+  }, [isReady(), validatorsDefault]);
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
   let pageEnd = (page * ITEMS_PER_PAGE) - 1;
@@ -71,6 +71,11 @@ export const ValidatorListInner = (props: any) => {
     identities: (identities.length > 0) ?? false,
     stake: (stake.length > 0) ?? false,
   };
+
+  useEffect(() => {
+    setValidatorsDefault(props.validators);
+    setValidators(props.validators);
+  }, [props.validators]);
 
   useEffect(() => {
     if (batchEnd >= pageEnd) {
@@ -175,6 +180,7 @@ export const ValidatorListInner = (props: any) => {
                   identity={identities[batchIndex]}
                   stake={stake[batchIndex]}
                   synced={synced}
+                  toggleFavourites={toggleFavourites}
                 />
               </motion.div>
             )

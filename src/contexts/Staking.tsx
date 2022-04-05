@@ -22,12 +22,15 @@ export interface StakingContextState {
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
+  addFavourite: (a: string) => any;
+  removeFavourite: (a: string) => any;
   hasController: () => any;
   isBonding: () => any;
   isNominating: () => any;
   inSetup: () => any;
   staking: any;
   validators: any;
+  favourites: any;
   meta: any;
   session: any;
 }
@@ -41,12 +44,15 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
   getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
   fetchValidatorPrefs: (v: any) => { },
+  addFavourite: (a: string) => { },
+  removeFavourite: (a: string) => { },
   hasController: () => false,
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => false,
   staking: {},
   validators: [],
+  favourites: [],
   meta: {},
   session: {},
 });
@@ -72,7 +78,13 @@ export const StakingContextWrapper = (props: any) => {
     unsub: null,
   });
 
+  let _favourites: any = localStorage.getItem('favourites');
+  _favourites = _favourites === null
+    ? []
+    : JSON.parse(_favourites);
+
   const [validators, setValidators]: any = useState([]);
+  const [favourites, setFavourites]: any = useState(_favourites);
   const [sessionValidators, setSessionValidators] = useState({
     list: [],
     unsub: null,
@@ -157,7 +169,6 @@ export const StakingContextWrapper = (props: any) => {
         }
       });
     });
-
     setValidators(validators);
   }
 
@@ -355,6 +366,28 @@ export const StakingContextWrapper = (props: any) => {
   }
 
   /*
+   * Adds a favourite validator.
+   */
+  const addFavourite = (address: string) => {
+    let _favourites: any = Object.assign(favourites);
+    if (!_favourites.includes(address)) {
+      _favourites.push(address);
+    }
+    localStorage.setItem('favourites', JSON.stringify(_favourites));
+    setFavourites([..._favourites]);
+  }
+
+  /*
+   * Removes a favourite validator if they exist.
+   */
+  const removeFavourite = (address: string) => {
+    let _favourites = Object.assign(favourites);
+    _favourites = _favourites.filter((validator: any) => validator !== address);
+    localStorage.setItem('favourites', JSON.stringify(_favourites));
+    setFavourites([..._favourites]);
+  }
+
+  /*
    * Helper function to determine whether the active account
    * has set a controller account.
    */
@@ -401,12 +434,15 @@ export const StakingContextWrapper = (props: any) => {
         getValidatorMetaBatch: getValidatorMetaBatch,
         removeValidatorMetaBatch: removeValidatorMetaBatch,
         fetchValidatorPrefs: fetchValidatorPrefs,
+        addFavourite: addFavourite,
+        removeFavourite: removeFavourite,
         hasController: hasController,
         isBonding: isBonding,
         isNominating: isNominating,
         inSetup: inSetup,
         staking: stakingMetrics,
         validators: validators,
+        favourites: favourites,
         meta: validatorMetaBatchesRef.current.meta,
         session: sessionValidators,
       }}>

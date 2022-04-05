@@ -8,15 +8,16 @@ import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
+import { useStaking } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faUserSlash, faChartLine } from '@fortawesome/free-solid-svg-icons';
-
+import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
 export const ValidatorInner = (props: any) => {
 
   const { consts }: any = useApi();
   const { openModalWith } = useModal();
-  const { validator, synced, identity, stake } = props;
+  const { addFavourite, removeFavourite, favourites } = useStaking();
+  const { validator, synced, identity, stake, toggleFavourites } = props;
 
   let { address, prefs } = validator;
   let display = identity?.info?.display?.Raw ?? null;
@@ -86,6 +87,20 @@ export const ValidatorInner = (props: any) => {
               <FontAwesomeIcon icon={faChartLine} />
             </button>
           </label>
+
+          {toggleFavourites &&
+            <label>
+              <button
+                className={favourites.includes(address) ? 'active' : undefined}
+                onClick={() => {
+                  favourites.includes(address)
+                    ? removeFavourite(address)
+                    : addFavourite(address);
+                }}>
+                <FontAwesomeIcon icon={faThumbtack} />
+              </button>
+            </label>
+          }
         </div>
       </div>
     </Wrapper>
