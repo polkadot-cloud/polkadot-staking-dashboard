@@ -6,7 +6,7 @@ import { PageTitleWrapper } from '../../Wrappers';
 
 export const PageTitle = (props: any) => {
 
-  const { title, setTitleOffset } = props;
+  const { title, setStickyTitle } = props;
   const [isSticky, setIsSticky] = useState(false);
 
   let ref: any = useRef();
@@ -31,8 +31,8 @@ export const PageTitle = (props: any) => {
   useEffect(() => {
     // if a parent component is monitoring sticky state, 
     // update it here.
-    if (setTitleOffset !== undefined) {
-      setTitleOffset(ref?.current?.offsetHeight ?? 0);
+    if (setStickyTitle !== undefined) {
+      setStickyTitle(isSticky);
     }
   }, [isSticky]);
 

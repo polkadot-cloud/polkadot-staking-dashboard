@@ -13,11 +13,15 @@ export const Progress = (props: any) => {
   // TODO: replace with setup form state
   const { hasController, isBonding, isNominating } = useStaking();
 
-  const { titleOffset } = props;
-  let offset = -45;
-  if (titleOffset) {
-    offset -= titleOffset;
+  const { stickyTitle } = props;
+
+  let offset = -55;
+  if (stickyTitle) {
+    offset -= 60;
+  } else {
+    offset -= 15;
   }
+
   return (
     <StickyWrapper>
       <SectionWrapper>
