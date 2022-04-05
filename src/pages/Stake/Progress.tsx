@@ -8,26 +8,31 @@ import { Button } from '../../library/Button';
 import { Link } from 'react-scroll'
 import { useStaking } from '../../contexts/Staking';
 
-export const Progress = () => {
+export const Progress = (props: any) => {
 
   // TODO: replace with setup form state
   const { hasController, isBonding, isNominating } = useStaking();
 
+  const { titleIsSticky } = props;
+  let offset = -60;
+  if (titleIsSticky) {
+    offset -= 33;
+  }
   return (
     <StickyWrapper>
       <SectionWrapper>
         <h3>Progress</h3>
 
         <div style={{ width: '100%', marginTop: '1.5rem' }}>
-          <Link to="controller" smooth={true} duration={350} offset={-95}>
+          <Link to="controller" smooth={true} spy={true} duration={350} offset={offset}>
             <StatusButton checked={hasController()} label='Set controller account' />
           </Link>
 
-          <Link to="bond" smooth={true} duration={350} offset={-95}>
+          <Link to="bond" smooth={true} duration={350} offset={offset}>
             <StatusButton checked={isBonding()} label='Set amount to Bond' />
           </Link>
 
-          <Link to="nominate" smooth={true} duration={350} offset={-95}>
+          <Link to="nominate" smooth={true} duration={350} offset={offset}>
             <StatusButton checked={isNominating()} label='Select nominations' />
           </Link>
           <div style={{ width: '100%', height: '40px', display: 'flex' }}><Button title='Start Staking' primary inline /></div>

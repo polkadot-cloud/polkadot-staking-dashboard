@@ -4,10 +4,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { PageTitleWrapper } from '../../Wrappers';
 
-export const PageTitle = ({ title }: any) => {
+export const PageTitle = (props: any) => {
 
+  const { title, setTitleIsSticky } = props;
   const [isSticky, setIsSticky] = useState(false);
-  const ref = useRef();
+
+  let ref = useRef();
 
   // mount 
   useEffect(() => {
@@ -19,14 +21,20 @@ export const PageTitle = ({ title }: any) => {
         rootMargin: '-1px 0px 0px 0px',
       }
     )
-
     observer.observe(cachedRef);
-
     // unmount
     return function () {
       observer.unobserve(cachedRef);
     }
   }, [isSticky])
+
+  useEffect(() => {
+    // if a parent component is monitoring sticky state, 
+    // update it here.
+    if (setTitleIsSticky !== undefined) {
+      setTitleIsSticky(isSticky);
+    }
+  }, [isSticky]);
 
   return (
     <PageTitleWrapper ref={ref} isSticky={isSticky}>
