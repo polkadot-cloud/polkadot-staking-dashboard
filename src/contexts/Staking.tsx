@@ -22,6 +22,7 @@ export interface StakingContextState {
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
+  removeIndexFromBatch: (k: string, i: number) => void;
   addFavourite: (a: string) => any;
   removeFavourite: (a: string) => any;
   hasController: () => any;
@@ -44,6 +45,7 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
   getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
   fetchValidatorPrefs: (v: any) => { },
+  removeIndexFromBatch: (k: string, i: number) => { },
   addFavourite: (a: string) => { },
   removeFavourite: (a: string) => { },
   hasController: () => false,
@@ -365,6 +367,16 @@ export const StakingContextWrapper = (props: any) => {
     return validatorMetaBatches.meta[key];
   }
 
+  const removeIndexFromBatch = (key: string, index: number) => {
+
+    let batchesUpdated = Object.assign(validatorMetaBatches, {});
+    batchesUpdated.meta[key].addresses.splice(index, 1);
+    batchesUpdated.meta[key].identities.splice(index, 1);
+    batchesUpdated.meta[key].stake.splice(index, 1);
+
+    setValidatorMetaBatch({ ...batchesUpdated });
+  }
+
   /*
    * Adds a favourite validator.
    */
@@ -434,6 +446,7 @@ export const StakingContextWrapper = (props: any) => {
         getValidatorMetaBatch: getValidatorMetaBatch,
         removeValidatorMetaBatch: removeValidatorMetaBatch,
         fetchValidatorPrefs: fetchValidatorPrefs,
+        removeIndexFromBatch: removeIndexFromBatch,
         addFavourite: addFavourite,
         removeFavourite: removeFavourite,
         hasController: hasController,

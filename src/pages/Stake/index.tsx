@@ -72,7 +72,7 @@ export const Stake = (props: PageProps) => {
         {!inSetup() && <StatBoxList title="This Session" items={items} />}
         <PageRowWrapper noVerticalSpacer>
 
-          <MainWrapper paddingRight>
+          <MainWrapper paddingRight style={{ maxWidth: inSetup() ? '55%' : '' }}>
             <StakingInterface />
           </MainWrapper>
 

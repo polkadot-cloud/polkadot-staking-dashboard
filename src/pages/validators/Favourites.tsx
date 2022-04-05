@@ -19,7 +19,7 @@ export const Favourites = (props: PageProps) => {
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { accounts }: any = useBalances();
-  const { favourites, fetchValidatorPrefs }: any = useStaking();
+  const { favourites, fetchValidatorPrefs, removeIndexFromBatch, fetchValidatorMetaBatch }: any = useStaking();
 
   // TODO: can move this to context to prevent re-fetching on page visit
   const [nominations, setNominations]: any = useState([]);
@@ -34,14 +34,35 @@ export const Favourites = (props: PageProps) => {
     }
   }
 
+  // pre-configure nominations
   useEffect(() => {
     let _nominations = favourites;
-    _nominations = _nominations.map((item: any, index: any) => { return ({ address: item }) });
+    _nominations = _nominations.map((item: any) => { return ({ address: item }) });
     setNominations(_nominations);
   }, [isReady(), activeAccount, accounts, favourites]);
 
+  // refetch meta batch when revisiting the page. Favourites may have been updated.
+  useEffect(() => {
+    let _nominations = favourites;
+    if (_nominations.length) {
+      _nominations = _nominations.map((item: any) => { return ({ address: item }) });
+      fetchValidatorMetaBatch(batchKey, _nominations, true);
+    }
+  }, []);
+
+  // handle favourite removal
   useEffect(() => {
     if (isReady()) {
+      // remove item from meta batxh
+      const removedItem: any = nominationsWithPrefs.filter((_n: any) => {
+        let f = nominations.find((_m: any) => _m.address === _n.address);
+        return (f === undefined);
+      });
+      if (removedItem.length) {
+        const index = nominationsWithPrefs.map((item: any) => item.address).indexOf(removedItem[0].address);
+        removeIndexFromBatch(batchKey, index);
+      }
+      // update list meta
       fetchNominationsMeta();
     }
   }, [nominations]);
@@ -68,7 +89,6 @@ export const Favourites = (props: PageProps) => {
                   allowMoreCols
                   pagination
                   toggleFavourites
-                  refetchOnListUpdate
                 />
               }
             </>
