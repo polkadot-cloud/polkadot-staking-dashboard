@@ -97,5 +97,3 @@ export const API_ENDPOINTS = {
   subscanRewardSlash: '/api/scan/account/reward_slash',
   subscanEraStat: '/api/scan/staking/era_stat',
 };
-
-export const SUBSCAN_ENABLED = true;

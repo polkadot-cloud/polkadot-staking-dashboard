@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApi } from './Api';
 import { useConnect } from './Connect';
-import { SUBSCAN_ENABLED, API_ENDPOINTS, API_SUBSCAN_KEY } from '../constants';
+import { API_ENDPOINTS, API_SUBSCAN_KEY } from '../constants';
 
 export interface SubscanContextState {
   fetchEraPoints: (v: string, e: number) => void;
@@ -31,7 +31,7 @@ export const SubscanContextWrapper = (props: any) => {
   }, [activeAccount, network]);
 
   const fetchPayouts = () => {
-    if (!SUBSCAN_ENABLED || activeAccount === '') {
+    if (activeAccount === '') {
       return;
     }
 
@@ -63,7 +63,7 @@ export const SubscanContextWrapper = (props: any) => {
   }
 
   const fetchEraPoints = async (address: string, era: number) => {
-    if (!SUBSCAN_ENABLED || address === '') {
+    if (address === '') {
       return;
     }
     let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS['subscanEraStat'], {
