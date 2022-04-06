@@ -82,89 +82,94 @@ export const BalancesContextWrapper = (props: any) => {
     }
   }
 
+
+  // make a balance subscription
+  const subscribeToBalances = async (address: string) => {
+
+    // Subscribe to account balances and ledger
+    const unsub = await api.queryMulti([
+      [api.query.system.account, address],
+      [api.query.staking.ledger, address],
+      [api.query.staking.bonded, address],
+      [api.query.staking.nominators, address],
+    ], ([{ nonce, data: balance }, ledger, bonded, nominations]: any) => {
+
+      // account state update
+      let _account: any = {
+        address: address,
+      };
+
+      // set account balance
+      let { free, reserved, miscFrozen, feeFrozen } = balance;
+      _account['balance'] = {
+        free: parseInt(free.toString()),
+        reserved: parseInt(reserved.toString()),
+        miscFrozen: parseInt(miscFrozen.toString()),
+        feeFrozen: parseInt(feeFrozen.toString()),
+      };
+
+      // set account ledger
+      let _ledger = ledger.unwrapOr(null);
+      if (_ledger === null) {
+        _account['ledger'] = defaultLedger();
+      } else {
+
+        const { stash, total, active, unlocking } = _ledger;
+        _account['ledger'] = {
+          stash: stash.toHuman(),
+          active: active.toNumber(),
+          total: total.toNumber(),
+          unlocking: unlocking.toHuman(),
+        };
+      }
+
+      // set account bonded (controller) or null
+      let _bonded = bonded.unwrapOr(null);
+      _bonded = _bonded === null
+        ? null
+        : _bonded.toHuman();
+      _account['bonded'] = _bonded;
+
+      // set account nominations
+      let _nominations = nominations.unwrapOr(null);
+      if (_nominations === null) {
+        _nominations = defaultNominations();
+      } else {
+        _nominations = {
+          targets: _nominations.targets.toHuman(),
+          submittedIn: _nominations.submittedIn.toHuman(),
+        };
+      }
+
+      _account['nominations'] = _nominations;
+
+      // update account in context state
+      let _accounts = Object.values(stateRef.current.accounts);
+      _accounts = _accounts.filter((acc: any) => acc.address !== address);
+      _accounts.push(_account);
+
+      // update state
+      setState({ ...stateRef.current, accounts: _accounts });
+    });
+
+    return unsub;
+  }
+
   // get active account balances. Should be called when an account switches
   const getBalances = async () => {
 
-    let _unsubscribe = [];
+    let unsubs = [];
     for (let account of accounts) {
-
       let { address } = account;
+      unsubs.push(subscribeToBalances(address));
+    }
 
-      // Subscribe to account balances and ledger
-      const unsub = await api.queryMulti([
-        [api.query.system.account, address],
-        [api.query.staking.ledger, address],
-        [api.query.staking.bonded, address],
-        [api.query.staking.nominators, address],
-      ], ([{ nonce, data: balance }, ledger, bonded, nominations]: any) => {
-
-        // account state update
-        let _account: any = {
-          address: address,
-        };
-
-        // set account balance
-        let { free, reserved, miscFrozen, feeFrozen } = balance;
-        _account['balance'] = {
-          free: parseInt(free.toString()),
-          reserved: parseInt(reserved.toString()),
-          miscFrozen: parseInt(miscFrozen.toString()),
-          feeFrozen: parseInt(feeFrozen.toString()),
-        };
-
-        // set account ledger
-        let _ledger = ledger.unwrapOr(null);
-        if (_ledger === null) {
-          _account['ledger'] = defaultLedger();
-        } else {
-
-          const { stash, total, active, unlocking } = _ledger;
-          _account['ledger'] = {
-            stash: stash.toHuman(),
-            active: active.toNumber(),
-            total: total.toNumber(),
-            unlocking: unlocking.toHuman(),
-          };
-        }
-
-        // set account bonded (controller) or null
-        let _bonded = bonded.unwrapOr(null);
-        _bonded = _bonded === null
-          ? null
-          : _bonded.toHuman();
-        _account['bonded'] = _bonded;
-
-        // set account nominations
-        let _nominations = nominations.unwrapOr(null);
-        if (_nominations === null) {
-          _nominations = defaultNominations();
-        } else {
-          _nominations = {
-            targets: _nominations.targets.toHuman(),
-            submittedIn: _nominations.submittedIn.toHuman(),
-          };
-        }
-
-        _account['nominations'] = _nominations;
-
-        // update account in context state
-        let _accounts = Object.values(stateRef.current.accounts);
-        _accounts = _accounts.filter((acc: any) => acc.address !== address);
-        _accounts.push(_account);
-
-        // update state
-        setState({ ...stateRef.current, accounts: _accounts });
-      });
-
-      // assign new subscription
-      _unsubscribe.push(unsub);
-
-      // update context state
+    Promise.all(unsubs).then((unsubs) => {
       setState({
         ...stateRef.current,
-        unsub: _unsubscribe
+        unsub: unsubs
       });
-    }
+    });
 
     // TO DO: tidy-up accounts that no longer exist 
     // refer to Connect accounts, rm metadata if does not exist on Connect.
