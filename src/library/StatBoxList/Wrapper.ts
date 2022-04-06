@@ -40,7 +40,7 @@ export const StatBoxWrapper = styled(motion.div)`
   @media(min-width: 950px) {
     max-width: 275px;
     h2 {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     }
   }
 
@@ -68,7 +68,7 @@ export const StatBoxWrapper = styled(motion.div)`
         
         h2 {
           margin: 0;
-          padding: 0.2rem 0 0.9rem 0;
+          padding: 0.2rem 0 0.75rem 0;
         }
       }
       &:last-child {
