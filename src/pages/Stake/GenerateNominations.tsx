@@ -99,7 +99,7 @@ export const GenerateNominations = () => {
             setFetching(true);
           }}
           />
-          {favourites.length &&
+          {!favourites.length ? <></> :
             <Button title="Get Favourites" onClick={() => {
               setMethod('Favourites');
               removeValidatorMetaBatch(batchKey);
