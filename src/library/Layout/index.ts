@@ -31,7 +31,6 @@ export const SecondaryWrapper = styled.div`
   flex: 1;
 `;
 
-
 export const StickyWrapper = styled.div`
   position: sticky;
   top: 80px;
