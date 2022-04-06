@@ -338,7 +338,6 @@ export const StakingContextWrapper = (props: any) => {
         stakingMetrics.unsub();
       }
       // unsubscribe from any validator meta batches
-
       Object.values(validatorMetaBatches.unsubs).map((batch: any, index: number) => {
         Object.entries(batch).map(([k, v]: any) => {
           v();

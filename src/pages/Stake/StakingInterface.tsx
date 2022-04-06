@@ -4,11 +4,11 @@
 import { Separator } from './Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { Nominations } from './Nominations';
-import { GenerateNominations } from './GenerateNominations';
+import { ChooseNominators } from './ChooseNominators';
 import { useStaking } from '../../contexts/Staking';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
-import { Element } from 'react-scroll'
+import { Element } from 'react-scroll';
 
 export const StakingInterface = () => {
 
@@ -32,7 +32,7 @@ export const StakingInterface = () => {
       <SectionWrapper>
         <Element name="nominate" style={{ position: 'absolute' }} />
         {!isNominating()
-          ? <GenerateNominations />
+          ? <ChooseNominators />
           : <Nominations />
         }
       </SectionWrapper>

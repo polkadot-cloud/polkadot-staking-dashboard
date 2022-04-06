@@ -13,7 +13,7 @@ export const Wrapper = styled(motion.div) <any>`
   > div {
     padding: 0.75rem 0.6rem;
     flex: 1;
-    background: linear-gradient(90deg, rgba(242,242,242,1) 0%, rgba(242,242,242,0.6) 100%);
+    background: linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%);
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row nowrap;

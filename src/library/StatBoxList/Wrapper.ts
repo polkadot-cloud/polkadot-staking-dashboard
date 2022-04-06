@@ -3,12 +3,18 @@
 
 import styled from 'styled-components';
 import { motion } from "framer-motion";
+import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   padding: 0 1.5rem;
+
+  @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 `;
 
 export const ListWrapper = styled.div`

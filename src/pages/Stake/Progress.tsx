@@ -24,7 +24,7 @@ export const Progress = (props: any) => {
 
   return (
     <StickyWrapper>
-      <SectionWrapper>
+      <SectionWrapper transparent style={{ padding: '1rem' }}>
         <h3>Progress</h3>
 
         <div style={{ width: '100%', marginTop: '1.5rem' }}>
@@ -39,7 +39,9 @@ export const Progress = (props: any) => {
           <Link to="nominate" smooth={true} duration={350} offset={offset}>
             <StatusButton checked={isNominating()} label='Select nominations' />
           </Link>
-          <div style={{ width: '100%', height: '40px', display: 'flex' }}><Button title='Start Staking' primary inline /></div>
+          <div style={{ width: '100%', height: '40px', display: 'flex' }}>
+            <Button title='Start Staking' primary inline />
+          </div>
         </div>
       </SectionWrapper>
     </StickyWrapper>

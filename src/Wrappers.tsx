@@ -106,6 +106,11 @@ export const PageRowWrapper = styled.div<any>`
     width: 100%;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+
+    @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
     * {
         box-sizing: border-box;
     }
