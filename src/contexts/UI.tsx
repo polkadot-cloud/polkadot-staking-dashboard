@@ -43,12 +43,12 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIContextWrapper = (props: any) => {
 
-  const { activeAccount } = useConnect();
+  const { accounts: connectAccounts, activeAccount } = useConnect();
   const { meta, session }: any = useStaking();
   const { consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
-  const { getAccount }: any = useBalances();
+  const { accounts, getAccount }: any = useBalances();
 
   let _services: any = localStorage.getItem('services');
   if (_services === null) {
@@ -203,13 +203,16 @@ export const UIContextWrapper = (props: any) => {
    * fetching remote data.
    */
   const isSyncing = () => {
-
     // check era has synced from Network
     if (metrics.activeEra.index === 0) {
       return true;
     }
     // check account has synced from Balances
     if (getAccount(activeAccount) === null) {
+      return true;
+    }
+    // check that all accounts have been synced
+    if (accounts.length < connectAccounts.length) {
       return true;
     }
     return false;
