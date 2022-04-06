@@ -12,6 +12,7 @@ import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
+import { useUi } from '../../contexts/UI';
 import { PageTitle } from '../../library/PageTitle';
 import { StakingInterface } from './StakingInterface';
 import { useStaking } from '../../contexts/Staking';
@@ -24,6 +25,7 @@ export const Stake = (props: PageProps) => {
   const { activeAccount } = useConnect();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
   const { inSetup } = useStaking();
+  const { isSyncing } = useUi();
 
   // monitor page title sticky
   const [stickyTitle, setStickyTitle] = useState(false);
@@ -65,38 +67,48 @@ export const Stake = (props: PageProps) => {
     },
   ];
 
+  let _inSetup: boolean = inSetup();
+  let _isSyncing = isSyncing();
+
   return (
     <>
       <Wrapper>
         <PageTitle title={title} setStickyTitle={setStickyTitle} />
-        {!inSetup() && <StatBoxList title="This Session" items={items} />}
-        <PageRowWrapper noVerticalSpacer>
 
-          <MainWrapper paddingRight style={{ maxWidth: inSetup() ? '55%' : '' }}>
-            <StakingInterface />
-          </MainWrapper>
+        {_isSyncing
+          ? <></>
+          :
+          <>
+            {!_inSetup && <StatBoxList title="This Session" items={items} />}
+            <PageRowWrapper noVerticalSpacer>
 
-          {inSetup() &&
-            <SecondaryWrapper>
-              <Progress stickyTitle={stickyTitle} />
-            </SecondaryWrapper>
-          }
+              <MainWrapper paddingRight style={{ maxWidth: _inSetup ? '55%' : '' }}>
+                <StakingInterface />
+              </MainWrapper>
 
-          {/* Start status */}
-          {!inSetup() &&
-            <SecondaryWrapper>
-              <StickyWrapper>
-                <Controller />
+              {_inSetup &&
+                <SecondaryWrapper>
+                  <Progress stickyTitle={stickyTitle} />
+                </SecondaryWrapper>
+              }
 
-                <SectionWrapper>
-                  <h3>Staking Status: Active</h3>
-                  <h4>You are currently staking and earning rewards.</h4>
-                </SectionWrapper>
-              </StickyWrapper>
-            </SecondaryWrapper>
-          }
+              {/* Start status */}
+              {!_inSetup &&
+                <SecondaryWrapper>
+                  <StickyWrapper>
+                    <Controller />
 
-        </PageRowWrapper>
+                    <SectionWrapper>
+                      <h3>Staking Status: Active</h3>
+                      <h4>You are currently staking and earning rewards.</h4>
+                    </SectionWrapper>
+                  </StickyWrapper>
+                </SecondaryWrapper>
+              }
+
+            </PageRowWrapper>
+          </>
+        }
       </Wrapper>
     </>
   );

@@ -45,7 +45,7 @@ export const SideInterfaceWrapper = styled.div<any>`
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
         position: fixed;
         top: 0;
-        left: ${props => props.open ? 0 : '-200px'};
+        left: ${props => props.open ? 0 : `-${SIDE_MENU_INTERFACE_WIDTH}px`};
     }
 `;
 
@@ -72,7 +72,7 @@ export const PageTitleWrapper = styled.header<any>`
     box-sizing: border-box;
     position: sticky;
     top: 0px;
-    padding-top: ${props => props.isSticky ? '4.5vh ' : '1.8vh '};
+    padding-top: ${props => props.isSticky ? '4.5vh ' : '1.4vh '};
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
         padding-top: ${props => props.isSticky ? '7vh ' : '2vh '};
     }
@@ -104,8 +104,8 @@ export const PageRowWrapper = styled.div<any>`
     flex-shrink: 0;
     flex-flow: row nowrap;
     width: 100%;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     * {
         box-sizing: border-box;
     }

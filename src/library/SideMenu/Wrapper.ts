@@ -27,10 +27,11 @@ export const Wrapper = styled.div`
   }
   display: flex;
   flex-flow: column nowrap;
-  background: #eee;
-  background: rgb(242,242,242);
-  background: linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%);
   backdrop-filter: blur(4px);
+  @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    background: rgb(242,242,242);
+      background: linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%);
+  }
 
   .close-menu {
     display: none;

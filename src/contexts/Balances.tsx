@@ -188,11 +188,12 @@ export const BalancesContextWrapper = (props: any) => {
 
   //get an account's ledger metadata
   const getAccountLedger = (address: string) => {
-    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
-    if (!account.length) {
+    const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
+    if (account === undefined) {
       return defaultLedger();
     }
-    const { ledger } = account[0];
+    const { ledger } = account;
+
     if (ledger.stash === undefined) {
       return defaultLedger();
     }
@@ -220,13 +221,13 @@ export const BalancesContextWrapper = (props: any) => {
     return nominations.targets;
   }
 
-  //get an account
+  // get an account
   const getAccount = (address: string) => {
-    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
-    if (!account.length) {
+    const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
+    if (account === undefined) {
       return null;
     }
-    return account[0];
+    return account;
   }
 
   return (

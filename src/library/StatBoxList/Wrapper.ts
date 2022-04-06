@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
 `;
 
 export const ListWrapper = styled.div`
@@ -68,7 +68,7 @@ export const StatBoxWrapper = styled(motion.div)`
         
         h2 {
           margin: 0;
-          padding: 0.2rem 0 1rem 0;
+          padding: 0.2rem 0 0.9rem 0;
         }
       }
       &:last-child {
