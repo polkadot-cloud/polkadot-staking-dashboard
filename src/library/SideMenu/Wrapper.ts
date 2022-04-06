@@ -25,6 +25,7 @@ export const Wrapper = styled.div`
   &:hover {
     transform: scale(1.005);
   }
+  transition: all 0.2s;
   display: flex;
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);

@@ -10,7 +10,7 @@ export const EntryWrapper = styled.div`
     box-sizing: border-box;
     width: 100%;
     background: #fbfbfb;
-    background: linear-gradient(180deg, rgba(249,249,249,1) 0%, rgba(249,249,249,1) 100px, rgba(229,229,229,1) 100%);
+    background: linear-gradient(180deg, rgba(247,247,247,1) 0%, rgba(247,247,247,1) 100px, rgba(229,229,229,1) 100%);
     background-attachment: fixed;
     display: flex;
     flex-flow: column nowrap;
@@ -78,7 +78,7 @@ export const PageTitleWrapper = styled.header<any>`
     }
     padding-bottom: ${props => props.isSticky ? '1rem ' : '0.25vh '};
     width: 100%;
-    background: ${props => props.isSticky ? 'rgba(249,249,249,1) ' : 'none'};
+    background: ${props => props.isSticky ? 'rgba(247,247,247,1) ' : 'none'};
     z-index: 4;
     display: flex;
     flex-flow: column wrap;
