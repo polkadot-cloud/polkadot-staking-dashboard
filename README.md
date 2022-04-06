@@ -18,7 +18,7 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Polkadot JS accounts import
 - [x] Stash / controller account abstraction
 - [x] Performant validator list fetching and meta data syncing
-- [ ] Validator filtering initialisation and favourite validators
+- [x] Validator filtering initialisation and favourite validators
 - [ ] Recent Payout Subscan list 
 - [ ] Screen size support 
 - [ ] Theming support
