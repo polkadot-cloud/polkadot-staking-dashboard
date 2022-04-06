@@ -20,7 +20,15 @@ export const ValidatorInner = (props: any) => {
   const { validator, synced, identity, stake, toggleFavourites } = props;
 
   let { address, prefs } = validator;
+
+  // display.Raw
   let display = identity?.info?.display?.Raw ?? null;
+  // legal.Raw
+  display = display === null ? identity?.info?.legal.Raw ?? null : display;
+  // web.Raw
+  display = display === null ? identity?.info?.web.Raw ?? null : display;
+  // email.raw
+  display = display === null ? identity?.info?.email.Raw ?? null : display;
 
   let commission = prefs?.commission ?? null;
   let blocked = prefs?.blocked ?? null;
