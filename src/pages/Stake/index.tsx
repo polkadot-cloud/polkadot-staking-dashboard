@@ -16,7 +16,7 @@ import { useUi } from '../../contexts/UI';
 import { PageTitle } from '../../library/PageTitle';
 import { StakingInterface } from './StakingInterface';
 import { useStaking } from '../../contexts/Staking';
-import { Progress } from './Progress';
+import { Progress } from './Progress/Progress';
 import { Controller } from './Controller';
 
 export const Stake = (props: PageProps) => {
@@ -81,7 +81,7 @@ export const Stake = (props: PageProps) => {
           <>
             {!_inSetup && <StatBoxList title="This Session" items={items} />}
             <PageRowWrapper noVerticalSpacer>
-              <MainWrapper paddingRight style={{ maxWidth: _inSetup ? '55%' : '' }}>
+              <MainWrapper paddingRight thin={_inSetup}>
                 <StakingInterface />
               </MainWrapper>
 

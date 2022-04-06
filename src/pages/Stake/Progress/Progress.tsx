@@ -1,12 +1,13 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { StatusButton } from '../../library/StatusButton';
-import { StickyWrapper } from '../../library/Layout';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { Button } from '../../library/Button';
+import { StatusButton } from '../../../library/StatusButton';
+import { StickyWrapper } from '../../../library/Layout';
+import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import { Button } from '../../../library/Button';
 import { Link } from 'react-scroll'
-import { useStaking } from '../../contexts/Staking';
+import { useStaking } from '../../../contexts/Staking';
+import { StyledHeader } from './Wrapper';
 
 export const Progress = (props: any) => {
 
@@ -25,9 +26,12 @@ export const Progress = (props: any) => {
   return (
     <StickyWrapper>
       <SectionWrapper transparent style={{ padding: '1rem' }}>
-        <h3>Progress</h3>
+        <StyledHeader>
+          <div><h3>Setup Progress</h3></div>
+          <div>0%</div>
+        </StyledHeader>
 
-        <div style={{ width: '100%', marginTop: '1.5rem' }}>
+        <div style={{ width: '100%', marginTop: '1rem' }}>
           <Link to="controller" smooth={true} spy={true} duration={350} offset={offset}>
             <StatusButton checked={hasController()} label='Set controller account' />
           </Link>
@@ -44,7 +48,7 @@ export const Progress = (props: any) => {
           </div>
         </div>
       </SectionWrapper>
-    </StickyWrapper>
+    </StickyWrapper >
   )
 }
 

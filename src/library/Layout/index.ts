@@ -2,11 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MAXIMUM_WIDTH, SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const MainWrapper = styled.div<any>`
   box-sizing: border-box;
   flex-basis: 66%;
+
+  /* force thin width */
+  @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    flex-basis: ${props => props.thin ? '55%' : '66%'};
+    max-width: ${props => props.thin ? '55%' : '66%'};
+  }
   overflow: hidden;
   flex: 1;
   ${props => props.paddingLeft && `

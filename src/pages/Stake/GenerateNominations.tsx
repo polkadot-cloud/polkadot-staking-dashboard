@@ -8,7 +8,6 @@ import { useStaking } from '../../contexts/Staking';
 import { ValidatorList } from '../../library/ValidatorList';
 import { useUi } from '../../contexts/UI';
 import { Button } from '../../library/Button';
-
 // import { shuffle } from '../../Utils';
 
 export const GenerateNominations = () => {
