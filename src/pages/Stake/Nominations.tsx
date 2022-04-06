@@ -43,7 +43,7 @@ export const Nominations = () => {
     if (isReady()) {
       fetchNominationsMeta();
     }
-  }, [nominations]);
+  }, [isReady(), nominations]);
 
   return (
     <Wrapper>
