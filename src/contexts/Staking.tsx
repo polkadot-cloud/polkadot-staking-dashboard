@@ -355,7 +355,13 @@ export const StakingContextWrapper = (props: any) => {
   }, [isReady(), validators]);
 
   const removeValidatorMetaBatch = (key: string) => {
+
     if (validatorMetaBatches.meta[key] !== undefined) {
+      // ubsubscribe from updates
+      for (let unsub of validatorMetaBatches.unsubs[key]) {
+        unsub();
+      }
+      // wipe data
       delete validatorMetaBatches.meta[key];
     }
   }
