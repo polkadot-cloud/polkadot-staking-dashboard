@@ -18,7 +18,7 @@ export const Pools = (props: PageProps) => {
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper>
           <SectionWrapper>
-            <h3>Nomination Pools</h3>
+            <h2>Nomination Pools</h2>
             <h4>In progress.</h4>
           </SectionWrapper>
         </MainWrapper>

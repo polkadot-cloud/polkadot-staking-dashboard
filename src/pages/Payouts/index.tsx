@@ -31,15 +31,15 @@ export const Payouts = (props: PageProps) => {
         <GraphWrapper>
           <SubscanButton />
           <div className='head'>
-            <h3>Payout History</h3>
-            <h1>
+            <h4>Payout History</h4>
+            <h2>
               {(payouts.length) ?
-                <span className='fiat'>
+                <>
                   {moment.unix(payouts[0].block_timestamp).format('Do MMMM')} - {moment.unix(payouts[payouts.length - 1].block_timestamp).format('Do MMMM')}
-                </span>
+                </>
                 : <span className='fiat'>None</span>
               }
-            </h1>
+            </h2>
           </div>
 
           <div className='inner' ref={ref} style={{ minHeight: minHeight }}>

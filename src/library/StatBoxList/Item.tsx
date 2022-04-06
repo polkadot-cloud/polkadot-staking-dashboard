@@ -25,7 +25,7 @@ export const Item = (props: any) => {
       <div className='content'>
         <section>
           {format === 'number' &&
-            <h1>
+            <h2>
               <NumberEasing
                 ease="quintInOut"
                 precision={2}
@@ -36,7 +36,7 @@ export const Item = (props: any) => {
                 currency={currency}
               />
               &nbsp;{unit}
-            </h1>
+            </h2>
           }
           {format === 'text' &&
             <h1>{value}</h1>

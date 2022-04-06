@@ -7,7 +7,7 @@ export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
   padding: ${props => props.transparent ? '0rem 0rem' : '1rem'};
   border-radius: 1rem;
-  background: ${props => props.transparent ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.7)'};
+  background: ${props => props.transparent ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.5)'};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
@@ -42,7 +42,7 @@ export const SectionWrapper = styled.div<any>`
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;
   border-radius: 1rem;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.5);
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
@@ -73,7 +73,7 @@ export const GraphWrapper = styled.div<any>`
     padding: 0.75rem 1.2rem 0.5rem 1.2rem;
   }
 
-  h1, h4 {
+  h2, h4 {
     margin: 0;
     padding: 0.3rem 0;
     display: flex;
@@ -88,7 +88,7 @@ export const GraphWrapper = styled.div<any>`
       margin-top: 0.2rem;
     }
   }
-  h1 {
+  h2 {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -96,11 +96,6 @@ export const GraphWrapper = styled.div<any>`
   }
   p {
     margin: 0.25rem 0 0;
-  }
-
-  h3 {
-    margin-top: 0.4rem;
-    margin-bottom: 0.5rem;
   }
   h4 {
     margin-top: 0.4rem;

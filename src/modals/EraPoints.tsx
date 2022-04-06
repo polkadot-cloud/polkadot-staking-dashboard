@@ -51,7 +51,7 @@ export const EraPoints = () => {
         <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>
 
           <div className='head' style={{ padding: 0 }}>
-            <h3>Recent Era Points</h3>
+            <h4>Recent Era Points</h4>
           </div>
 
           <div className='inner' ref={ref} style={{ minHeight: minHeight }}>

@@ -27,7 +27,6 @@ export const BalanceGraphInner = (props: any) => {
   // convert balance to fiat value
   let freeBalance = fiatAmount(freeDot * prices.lastPrice);
 
-  
 
   // convert to DOT unit
   free = planckToDot(free);
@@ -99,8 +98,8 @@ export const BalanceGraphInner = (props: any) => {
     <>
       <GraphWrapper flex>
         <div className='head'>
-          <h3>{network.unit} Balance</h3>
-          <h1>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h1>
+          <h4>{network.unit} Balance</h4>
+          <h2>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h2>
         </div>
         <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
           <div className='graph donut' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>

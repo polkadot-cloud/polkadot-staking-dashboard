@@ -69,10 +69,10 @@ export const Overview = (props: PageProps) => {
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <SubscanButton />
             <div className='head'>
-              <h3>Recent Payouts</h3>
-              <h1>
+              <h4>Recent Payouts</h4>
+              <h2>
                 {lastPayout === null ? 0 : lastPayout.amount} {network.unit}&nbsp;<span className='fiat'>{lastPayout === null ? `` : moment.unix(lastPayout['block_timestamp']).fromNow()}</span>
-              </h1>
+              </h2>
             </div>
             <Payouts account={activeAccount} payouts={payouts.slice(50, 60)} />
           </GraphWrapper>

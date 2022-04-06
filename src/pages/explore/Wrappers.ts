@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const Wrapper = styled.div`
-  h3 {
+  h2 {
     color: #555;
     margin-top: 2rem;
   }
