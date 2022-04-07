@@ -32,7 +32,7 @@ export const SubscanContextWrapper = (props: any) => {
   // fetch payouts as soon as network is ready
   useEffect(() => {
     fetchPayouts();
-  }, [activeAccount, accounts, network]);
+  }, [activeAccount, network]);
 
   const fetchPayouts = () => {
     if (activeAccount === '' || !services.includes('subscan')) {
