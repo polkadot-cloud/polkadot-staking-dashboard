@@ -239,20 +239,63 @@ export const StakingContextWrapper = (props: any) => {
     batchesUpdated.meta[key].addresses = addresses;
     setValidatorMetaBatch({ ...batchesUpdated });
 
-    // subscribe to identities
-    const unsub = await api.query.identity.identityOf.multi(addresses, (_identities: any) => {
-      let identities = [];
-      for (let i = 0; i < _identities.length; i++) {
-        identities.push(_identities[i].toHuman());
-      }
-      // commit update
-      let batchesUpdated = Object.assign(validatorMetaBatches);
-      batchesUpdated.meta[key].identities = identities;
-      setValidatorMetaBatch({ ...batchesUpdated });
-    });
+    const subscribeToIdentities = async (addresses: any) => {
 
-    // intentional throttle to prevent slow render updates
-    await sleep(1000);
+      const unsub = await api.query.identity.identityOf.multi(addresses, (_identities: any) => {
+        let identities = [];
+        for (let i = 0; i < _identities.length; i++) {
+          identities.push(_identities[i].toHuman());
+        }
+        let batchesUpdated = Object.assign(validatorMetaBatches);
+        batchesUpdated.meta[key].identities = identities;
+        setValidatorMetaBatch({ ...batchesUpdated });
+      });
+      return unsub;
+    }
+
+    const subscribeToSuperIdentities = async (addresses: any) => {
+      const unsub = await api.query.identity.superOf.multi(addresses, async (_supers: any) => {
+
+        // determine where supers exist
+        let supers: any = [];
+        let supersWithIdentity: any = [];
+
+        for (let i = 0; i < _supers.length; i++) {
+          let _super = _supers[i].toHuman();
+          supers.push(_super);
+          if (_super !== null) {
+            supersWithIdentity.push(i);
+          }
+        }
+
+        // get supers one-off multi query
+        let query = supers.filter((s: any) => s !== null).map((s: any) => s[0]);
+
+        let temp = await api.query.identity.identityOf.multi(query, (_identities: any) => {
+          for (let j = 0; j < _identities.length; j++) {
+            let _identity = _identities[j].toHuman();
+            // inject identity into super array
+            supers[supersWithIdentity[j]].identity = _identity;
+          }
+        });
+        temp();
+
+        let batchesUpdated = Object.assign(validatorMetaBatches);
+        batchesUpdated.meta[key].supers = supers;
+        setValidatorMetaBatch({ ...batchesUpdated });
+      });
+      return unsub;
+    }
+
+    await Promise.all(
+      [subscribeToIdentities(addresses),
+      subscribeToSuperIdentities(addresses)]).then((unsubs: any) => {
+        addMetaBatchUnsubs(key, unsubs);
+      });
+
+
+    // intentional throttle to prevent slow render updates.
+    await sleep(750);
 
     // subscribe to validator nominators
     let args: any = [];
@@ -260,7 +303,7 @@ export const StakingContextWrapper = (props: any) => {
       args.push([metrics.activeEra.index, validators[i].address]);
     }
 
-    const unsub2 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
+    const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
       let stake = [];
 
       for (let _v of _validators) {
@@ -283,14 +326,7 @@ export const StakingContextWrapper = (props: any) => {
       setValidatorMetaBatch({ ...batchesUpdated });
     });
 
-    // commit unsubs
-    let { unsubs } = validatorMetaBatches;
-    unsubs[key] = [unsub, unsub2];
-
-    setValidatorMetaBatch({
-      ...validatorMetaBatches,
-      unsubs: unsubs,
-    });
+    addMetaBatchUnsubs(key, [unsub3]);
   }
 
   /*
@@ -446,6 +482,25 @@ export const StakingContextWrapper = (props: any) => {
   const inSetup = () => {
     return (!hasController || !isBonding() || !isNominating());
   }
+
+
+  /*
+   * Helper function to add mataBatch unsubs by key.
+   */
+  const addMetaBatchUnsubs = (key: string, unsubs: any) => {
+
+    let _unsubs = validatorMetaBatches.unsubs;
+    let _keyUnsubs = _unsubs[key] ?? [];
+
+    _keyUnsubs.push(...unsubs)
+    _unsubs[key] = _keyUnsubs;
+
+    setValidatorMetaBatch({
+      ...validatorMetaBatches,
+      unsubs: _unsubs,
+    });
+  }
+
 
   return (
     <StakingContext.Provider

@@ -6,9 +6,15 @@ import { Item } from './Item';
 import { faPercentage, faExclamationTriangle, faUserSlash, faBalanceScaleLeft, faClock } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../../contexts/UI';
 
-export const Filters = () => {
+export const Filters = (props: any) => {
 
+  const { setInitial } = props;
   const { validators: validatorsUi, orderValidators, toggleFilterValidators }: any = useUi();
+
+  const handleFilter = (fn: any, filter: string) => {
+    setInitial(true);
+    fn(filter);
+  }
 
   return (
     <Wrapper>
@@ -20,7 +26,7 @@ export const Filters = () => {
             icon={faPercentage}
             transform='grow-12'
             active={validatorsUi.order === 'commission'}
-            onClick={() => orderValidators('commission')}
+            onClick={() => handleFilter(orderValidators, 'commission')}
           />
         </div>
       </div>
@@ -35,7 +41,7 @@ export const Filters = () => {
             transform='grow-10'
             active={validatorsUi.filter?.includes('inactive') ?? false}
             onClick={() => {
-              toggleFilterValidators('inactive');
+              handleFilter(toggleFilterValidators, 'inactive');
             }}
           />
           <Item
@@ -44,7 +50,7 @@ export const Filters = () => {
             transform='grow-10'
             active={validatorsUi.filter?.includes('over_subscribed') ?? false}
             onClick={() => {
-              toggleFilterValidators('over_subscribed');
+              handleFilter(toggleFilterValidators, 'over_subscribed');
             }}
           />
           <Item
@@ -53,7 +59,7 @@ export const Filters = () => {
             transform='grow-6'
             active={validatorsUi.filter?.includes('all_commission') ?? false}
             onClick={() => {
-              toggleFilterValidators('all_commission');
+              handleFilter(toggleFilterValidators, 'all_commission');
             }}
           />
           <Item
@@ -62,7 +68,7 @@ export const Filters = () => {
             transform='grow-9'
             active={validatorsUi.filter?.includes('blocked_nominations') ?? false}
             onClick={() => {
-              toggleFilterValidators('blocked_nominations');
+              handleFilter(toggleFilterValidators, 'blocked_nominations');
             }}
           />
         </div>

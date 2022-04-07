@@ -10,6 +10,7 @@ import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
 import { useStaking } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getIdentityDisplay } from './Utils';
 import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
 export const ValidatorInner = (props: any) => {
@@ -17,19 +18,11 @@ export const ValidatorInner = (props: any) => {
   const { consts }: any = useApi();
   const { openModalWith } = useModal();
   const { addFavourite, removeFavourite, favourites } = useStaking();
-  const { validator, synced, identity, stake, toggleFavourites } = props;
+  const { initial, validator, synced, identity, superIdentity, stake, toggleFavourites } = props;
 
   let { address, prefs } = validator;
 
-  // display.Raw
-  let display = identity?.info?.display?.Raw ?? null;
-  // legal.Raw
-  display = display === null ? identity?.info?.legal.Raw ?? null : display;
-  // web.Raw
-  display = display === null ? identity?.info?.web.Raw ?? null : display;
-  // email.raw
-  display = display === null ? identity?.info?.email.Raw ?? null : display;
-
+  let display = getIdentityDisplay(identity, superIdentity);
   let commission = prefs?.commission ?? null;
   let blocked = prefs?.blocked ?? null;
 
@@ -46,14 +39,44 @@ export const ValidatorInner = (props: any) => {
         />
 
         {synced.identities &&
-          <motion.div
-            className='identity'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2, delay: 0.1 }}
-          >
-            <h4>{display === null ? clipAddress(address) : identity.info.display.Raw}</h4>
-          </motion.div>
+          <>
+            {display !== null && <>
+              {initial
+                ?
+                <motion.div
+                  className='identity'
+                  initial={{ opacity: 0.5 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h4>{display}</h4>
+                </motion.div>
+                :
+                <div className='identity'>
+                  <h4>{display}</h4>
+                </div>
+              }
+            </>
+            }
+            {display === null && <>
+              {initial
+                ?
+                <motion.div
+                  className='identity'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                >
+                  <h4>{clipAddress(address)}</h4>
+                </motion.div>
+                :
+                <div className='identity'>
+                  <h4>{clipAddress(address)}</h4>
+                </div>
+              }
+            </>
+            }
+          </>
         }
 
         <div className='labels'>
@@ -91,6 +114,7 @@ export const ValidatorInner = (props: any) => {
           <label>
             <button onClick={() => openModalWith('EraPoints', {
               address: address,
+              identity: display,
             })}>
               <FontAwesomeIcon icon={faChartLine} />
             </button>

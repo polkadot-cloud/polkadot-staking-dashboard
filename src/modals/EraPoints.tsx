@@ -15,7 +15,7 @@ import { useNetworkMetrics } from '../contexts/Network';
 export const EraPoints = () => {
 
   const { config } = useModal();
-  const { address } = config;
+  const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
   const { metrics } = useNetworkMetrics();
 
@@ -45,7 +45,7 @@ export const EraPoints = () => {
           theme="polkadot"
           style={{ cursor: 'default', marginRight: '0.75rem' }}
         />
-        <h1>{clipAddress(address)}</h1>
+        <h1>{identity === null ? clipAddress(address) : identity}</h1>
       </div>
       <div className='body'>
         <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>

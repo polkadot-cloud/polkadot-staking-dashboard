@@ -12,7 +12,7 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
 import { Filters } from './Filters';
 
-const ITEMS_PER_PAGE = 60;
+const ITEMS_PER_PAGE = 50;
 
 export const ValidatorListInner = (props: any) => {
 
@@ -44,6 +44,8 @@ export const ValidatorListInner = (props: any) => {
   const [validatorsDefault, setValidatorsDefault] = useState(props.validators);
   // manipulated list (ordering, filtering) of validators
   const [validators, setValidators]: any = useState(props.validators ?? []);
+  // is this the initial render
+  const [initial, setInitial] = useState(true);
 
   // pagination
   let totalPages = Math.ceil(validators.length / ITEMS_PER_PAGE);
@@ -69,16 +71,19 @@ export const ValidatorListInner = (props: any) => {
   // format component display data
   const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
   const identities = meta.identities ?? [];
+  const supers = meta.supers ?? [];
   const stake = meta.stake ?? [];
 
   const synced = {
     identities: (identities.length > 0) ?? false,
+    supers: (supers.length > 0) ?? false,
     stake: (stake.length > 0) ?? false,
   };
 
   useEffect(() => {
     setValidatorsDefault(props.validators);
     setValidators(props.validators);
+    setInitial(true);
   }, [props.validators]);
 
   useEffect(() => {
@@ -149,7 +154,7 @@ export const ValidatorListInner = (props: any) => {
       <List
         flexBasisLarge={allowMoreCols ? '33%' : '50%'}
       >
-        {allowFilters && <Filters />}
+        {allowFilters && <Filters setInitial={setInitial} />}
 
         {pagination &&
           <Pagination
@@ -160,8 +165,8 @@ export const ValidatorListInner = (props: any) => {
               <h4>Page {page} of {totalPages}</h4>
             </div>
             <div>
-              <button className='prev' onClick={() => setPage(prevPage)}>Prev</button>
-              <button className='next' onClick={() => setPage(nextPage)}>Next</button>
+              <button className='prev' onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
+              <button className='next' onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
             </div>
           </Pagination>
         }
@@ -174,14 +179,16 @@ export const ValidatorListInner = (props: any) => {
         >
           {listValidators.map((validator: any, index: number) => {
 
-            // fetch batch data by referring to default list index
+            // fetch batch data by referring to default list index.
             let batchIndex = validatorsDefault.indexOf(validator);
 
             return (
               <motion.div className={`item ${listFormat === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
                 <Validator
+                  initial={initial}
                   validator={validator}
                   identity={identities[batchIndex]}
+                  superIdentity={supers[batchIndex]}
                   stake={stake[batchIndex]}
                   synced={synced}
                   toggleFavourites={toggleFavourites}
