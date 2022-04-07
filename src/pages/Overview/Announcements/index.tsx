@@ -7,12 +7,14 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
+import { useUi } from '../../../contexts/UI';
 import { humanNumber, planckToDot } from '../../../Utils';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-
+import { Announcement as AnnouncementLoader } from '../../../library/Loaders/Announcement';
 export const Announcements = () => {
 
-  const { isReady, network }: any = useApi();
+  const { isSyncing } = useUi();
+  const { network }: any = useApi();
   const { staking }: any = useStaking();
   const { minNominatorBond } = staking;
 
@@ -34,10 +36,6 @@ export const Announcements = () => {
       opacity: 1,
     }
   };
-
-  if (!isReady() || staking.totalNominators === 0) {
-    return (<></>);
-  }
 
   const nominatorCapReached = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
   const nominatorReachedPercentage = parseInt(staking.totalNominators) / (parseInt(staking.maxNominatorsCount) * 0.01);
@@ -69,29 +67,29 @@ export const Announcements = () => {
     subtitle: `The minimum bonding amount of ${network.unit} to start nominating validators is now at ${planckToDot(minNominatorBond)} ${network.unit}.`,
   })
 
-  if (!announcements.length) {
-    return (<></>);
-  }
-
   return (
     <SectionWrapper transparent>
       <Wrapper>
-        <motion.div variants={container} initial="hidden" animate="show">
+        <motion.div variants={container} initial="hidden" animate="show" style={{ width: '100%' }}>
           <motion.div variants={listItem}>
             <h3 style={{ marginTop: '1.75rem' }}>Announcements</h3>
           </motion.div>
-          {announcements.map((item, index) =>
-            <Item key={`announcement_${index}`} variants={listItem}>
-              <h3 className={item.class}>
-                <FontAwesomeIcon
-                  icon={faBack}
-                  style={{ marginRight: '0.6rem' }}
-                />
-                {item.title}
-              </h3>
-              <p>{item.subtitle}</p>
-            </Item>
-          )}
+
+          {isSyncing()
+            ? <AnnouncementLoader />
+            : announcements.map((item, index) =>
+              <Item key={`announcement_${index}`} variants={listItem}>
+                <h3 className={item.class}>
+                  <FontAwesomeIcon
+                    icon={faBack}
+                    style={{ marginRight: '0.6rem' }}
+                  />
+                  {item.title}
+                </h3>
+                <p>{item.subtitle}</p>
+              </Item>
+            )
+          }
         </motion.div>
       </Wrapper>
     </SectionWrapper>
