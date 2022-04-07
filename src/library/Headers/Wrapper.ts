@@ -52,7 +52,7 @@ export const HeadingWrapper = styled.div`
   .accounts {
     position: absolute;
     border-radius: 1rem;
-    background: rgba(241,241,241,0.5);
+    background: rgba(237,237,237,0.4);
     backdrop-filter: blur(4px);
     top: 3rem;
     right: 0;
@@ -73,7 +73,7 @@ export const Item = styled(motion.button)`
     margin: 0.25rem 0;
     border-radius: 1rem;
     box-shadow: none;
-    background: rgb(241, 241, 241);
+    background: rgb(237, 237, 237);
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;

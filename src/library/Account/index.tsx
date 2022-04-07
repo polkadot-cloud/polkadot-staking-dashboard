@@ -19,7 +19,7 @@ export const Account = (props: any) => {
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}
-      fill={filled ? '#f1f1f1' : 'none'}
+      fill={filled ? 'rgb(237, 237, 237)' : 'none'}
     >
       {unassigned &&
         <span className='title unassigned'>Not Set</span>

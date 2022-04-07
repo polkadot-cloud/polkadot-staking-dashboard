@@ -8,7 +8,7 @@ export const Wrapper = styled(motion.button) <any>`
     flex-grow: 1;  
     padding: 0.35rem;
     border-radius: 1rem;
-    border: 2px solid rgb(241, 241, 241);
+    border: 2px solid rgb(237, 237, 237);
     box-shadow: none;
     display: flex;
     flex-flow: row nowrap;
