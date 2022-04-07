@@ -43,12 +43,12 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIContextWrapper = (props: any) => {
 
-  const { accounts: connectAccounts, activeAccount } = useConnect();
-  const { meta, session }: any = useStaking();
-  const { consts }: any = useApi();
+  const { accounts: connectAccounts } = useConnect();
+  const { meta, session, staking }: any = useStaking();
+  const { isReady, consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
-  const { accounts, getAccount }: any = useBalances();
+  const { accounts }: any = useBalances();
 
   let _services: any = localStorage.getItem('services');
   if (_services === null) {
@@ -204,12 +204,22 @@ export const UIContextWrapper = (props: any) => {
    */
   const isSyncing = () => {
 
-    // check era has synced from Network
+    // api not ready
+    if (!isReady()) {
+      return true;
+    }
+
+    // staking metrics have synced
+    if (staking.lastReward === 0) {
+      return true;
+    }
+
+    // era has synced from Network
     if (metrics.activeEra.index === 0) {
       return true;
     }
 
-    // check that all accounts have been synced
+    // all accounts have been synced
     if (accounts.length < connectAccounts.length) {
       return true;
     }
