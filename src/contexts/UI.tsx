@@ -203,14 +203,12 @@ export const UIContextWrapper = (props: any) => {
    * fetching remote data.
    */
   const isSyncing = () => {
+
     // check era has synced from Network
     if (metrics.activeEra.index === 0) {
       return true;
     }
-    // check account has synced from Balances
-    if (getAccount(activeAccount) === null) {
-      return true;
-    }
+
     // check that all accounts have been synced
     if (accounts.length < connectAccounts.length) {
       return true;
