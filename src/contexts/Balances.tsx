@@ -156,23 +156,15 @@ export const BalancesContextWrapper = (props: any) => {
   }
 
   // get active account balances. Should be called when an account switches
+  // TODO: tidy-up accounts that no longer exist 
   const getBalances = async () => {
-
-    let unsubs = [];
-    for (let account of accounts) {
-      let { address } = account;
-      unsubs.push(subscribeToBalances(address));
-    }
-
-    Promise.all(unsubs).then((unsubs) => {
-      setState({
-        ...stateRef.current,
-        unsub: unsubs
+    Promise.all(
+      accounts.map((a: any) => subscribeToBalances(a.address))).then((unsubs: any) => {
+        setState({
+          ...stateRef.current,
+          unsub: unsubs
+        });
       });
-    });
-
-    // TO DO: tidy-up accounts that no longer exist 
-    // refer to Connect accounts, rm metadata if does not exist on Connect.
   }
 
 
