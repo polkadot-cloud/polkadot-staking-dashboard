@@ -16,7 +16,7 @@ export const Wrapper = styled(motion.div) <any>`
     background: linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%);
     border-radius: 0.75rem;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
     flex: 1;
@@ -26,12 +26,11 @@ export const Wrapper = styled(motion.div) <any>`
       display: flex;
       margin-left: 0.75rem;
       margin-right: 0.5rem;
-      flex-flow: row nowrap;
+      flex-flow: row wrap;
       align-items: center;
       align-content: center;
       overflow: hidden;
-      flex-shrink: 1;
-      flex-grow: 1;
+      flex: 1;
     }
     .labels {
       display: flex;
