@@ -19,18 +19,18 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Stash / controller account abstraction
 - [x] Performant validator list fetching and meta data syncing
 - [x] Validator filtering initialisation and favourite validators
+- [ ] Staking Setup form
+- [ ] Extrinsics
 - [ ] Recent Payout Subscan list 
 - [ ] Screen size support 
 - [ ] Theming support
-- [ ] Extrinsics 
 - [ ] Node only / External API toggles
-
 
 Additional features that are being considered:
 
 - [ ] Validator selection algorithm
 - [ ] Validator ranking algorithm
-- [ ] Tailsman support
+- [ ] Talisman support
 - [ ] Wallet Connect support
 
 ## Project Updates
