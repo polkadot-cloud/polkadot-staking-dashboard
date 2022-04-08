@@ -1,6 +1,6 @@
 # Polkadot Staking Dashboard
 
-> This project is a work in progress, and should only be used for testing and development purposes. Do not use this app for Polkadot staking until its initial release.*
+> This project is a work in progress, and should only be used for testing and development purposes. Do not use this app for Polkadot staking until its initial release.
 
 ## Demo
 [https://rossbulat.github.io/polkadot-staking-dashboard/](https://rossbulat.github.io/polkadot-staking-dashboard/)
