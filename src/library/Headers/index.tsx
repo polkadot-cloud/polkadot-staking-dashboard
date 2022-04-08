@@ -113,6 +113,7 @@ export const Headers = () => {
           </Item>
           {showMenu &&
             <Dropdown
+              toggleMenu={toggleMenu}
               items={
                 <>
                   <Item

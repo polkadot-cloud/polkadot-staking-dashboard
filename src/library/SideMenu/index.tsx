@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Wrapper, LogoWrapper, Separator } from './Wrapper';
 import Heading from './Heading';
 import Item from './Item';
@@ -15,6 +15,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
 import { useUi } from '../../contexts/UI';
+import { useOutsideAlerter } from '../../library/Hooks';
 
 export const SideMenu = () => {
 
@@ -54,10 +55,14 @@ export const SideMenu = () => {
     }
   }, [activeAccount, connectStatus, getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
-  return (
-    <Wrapper>
-      <section>
+  const ref = useRef(null);
+  useOutsideAlerter(ref, () => {
+    setSideMenu(0);
+  });
 
+  return (
+    <Wrapper ref={ref}>
+      <section>
         <button
           className='close-menu'
           style={{ fontVariationSettings: "'wght' 450", margin: '0.2rem 0 1rem 0', opacity: 0.7 }}
