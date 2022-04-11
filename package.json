@@ -25,7 +25,7 @@
     "follow-redirects": ">=1.14.8",
     "framer-motion": "^6.2.4",
     "lodash.throttle": "^4.1.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "nth-check": ">=2.0.1",
     "react": "^18.0.0-beta-24dd07bd2-20211208",
     "react-chartjs-2": "^4.0.1",
