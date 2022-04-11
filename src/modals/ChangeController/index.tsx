@@ -1,13 +1,27 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useState } from 'react';
 import Wrapper from './Wrapper';
+import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { Dropdown } from '../../library/Dropdown';
+import { AccountDropdown } from '../../library/AccountDropdown';
+import { useBalances } from '../../contexts/Balances';
 
 export const ChangeController = () => {
+
+  const { accounts, activeAccount, getAccount } = useConnect();
+  const { getBondedAccount }: any = useBalances();
+  const controller = getBondedAccount(activeAccount);
+  const account = getAccount(controller);
+
+  const [selected, setSelected] = useState(account);
+
+  const handleOnChange = (selected: any) => {
+    setSelected(selected);
+  }
 
   return (
     <Wrapper>
@@ -15,14 +29,11 @@ export const ChangeController = () => {
         <FontAwesomeIcon transform='grow-2' icon={faExchangeAlt} />
         Change Controller Account
       </h3>
-
-      <Dropdown
-        items={[]}
-        onChange={(selected: any) => {
-          console.log(selected);
-        }}
-        label='Select Account'
-        placeholder='Account'
+      <AccountDropdown
+        items={accounts.filter((acc: any) => acc.address !== activeAccount)}
+        onChange={handleOnChange}
+        placeholder='Select Account'
+        value={selected}
       />
       <div className='foot'>
         <div>

@@ -4,7 +4,7 @@ export const StyledDownshift = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 250px;
+  height: 17rem;
   overflow: hidden;
 
   /* title of dropdown */ 
@@ -25,7 +25,7 @@ export const StyledController = styled.button<any>`
   border: none;
   position: absolute;
   right: 0;
-  top: 2rem;
+  top: 0;
   width: 2.2rem;
   height: 2.2rem;
   display: flex;
@@ -37,22 +37,28 @@ export const StyledController = styled.button<any>`
 `;
 
 export const StyledDropdown = styled.div`
+  position: relative;
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 1rem 0 0;
   border-bottom: none;
-  width: 100%;
-  height: 150px;
+  width: auto;
+  height: 14rem;
+  background: #fafafa;
+  border-radius: 0.75rem;
+  margin-top: 0.5rem;
   overflow: auto;
+  z-index: 1;
 
   .item {
     padding: 0.5rem;
     cursor: pointer;
-    margin: 0.2rem 0;
+    margin: 0.25rem;
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
+    transition: background 0.1s;
 
     .icon {
       margin-right: 0.5rem;

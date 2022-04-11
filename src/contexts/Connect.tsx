@@ -14,6 +14,7 @@ export interface ConnectContextState {
   setAccounts: () => void;
   setActiveAccount: (a: string) => void;
   accountExists: (a: string) => number;
+  getAccount: (a: string) => any;
   status: number,
   accounts: any;
   activeAccount: string;
@@ -27,6 +28,7 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
   setAccounts: () => { },
   setActiveAccount: (a: string) => { },
   accountExists: (a: string) => 0,
+  getAccount: (a: string) => { },
   accounts: [],
   activeAccount: '',
 });
@@ -128,6 +130,15 @@ export class ConnectContextWrapper extends React.Component {
     return account.length;
   }
 
+  getAccount = (addr: string) => {
+    const accs = this.state.accounts.filter((acc: any) => acc.address === addr);
+    if (accs.length) {
+      return accs[0];
+    } else {
+      return null;
+    }
+  }
+
   // manage localStorage for active account
 
   setLocalStorageActiveAccount = (addr: string) => {
@@ -156,7 +167,8 @@ export class ConnectContextWrapper extends React.Component {
         connect: this.connect,
         disconnect: this.disconnect,
         setAccounts: this.setAccounts,
-        setActiveAccount: this.setActiveAccount
+        setActiveAccount: this.setActiveAccount,
+        getAccount: this.getAccount,
       }}>
         {this.props.children}
       </ConnectContext.Provider>
