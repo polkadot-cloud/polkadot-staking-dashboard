@@ -7,6 +7,7 @@ import { useModal } from '../../contexts/Modal';
 import { useAnimation } from 'framer-motion';
 import { ConnectAccounts } from '../../modals/ConnectAccounts';
 import { EraPoints } from '../../modals/EraPoints';
+import { ChangeController } from '../../modals/ChangeController';
 import { Settings } from '../../modals/Settings';
 
 export const Modal = () => {
@@ -63,6 +64,7 @@ export const Modal = () => {
           {modal === 'ConnectAccounts' && <ConnectAccounts />}
           {modal === 'EraPoints' && <EraPoints />}
           {modal === 'Settings' && <Settings />}
+          {modal === 'ChangeController' && <ChangeController />}
         </ContentWrapper>
         <button className='close' onClick={() => { onFadeOut() }}>
         </button>

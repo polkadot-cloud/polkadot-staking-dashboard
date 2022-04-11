@@ -10,9 +10,11 @@ import Account from '../../library/Account';
 import { useAssistant } from '../../contexts/Assistant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { useModal } from '../../contexts/Modal';
 
 export const Controller = () => {
 
+  const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { goToDefinition } = useAssistant();
   const { getBondedAccount }: any = useBalances();
@@ -35,7 +37,12 @@ export const Controller = () => {
           canClick={false}
           unassigned={controller === null}
           address={controller}
-        /> <Button primary title='Change' />
+        />
+        <Button
+          primary
+          title='Change'
+          onClick={() => openModalWith('ChangeController', {}, 'small')}
+        />
       </StakingAccount>
     </SectionWrapper>
   )
