@@ -205,7 +205,7 @@ export const UIContextWrapper = (props: any) => {
   const isSyncing = () => {
 
     // api not ready
-    if (!isReady()) {
+    if (!isReady) {
       return true;
     }
 

@@ -41,7 +41,7 @@ export class BlockNumber extends React.Component<any, any> {
 
     const { api, isReady } = this.context;
 
-    if (isReady()) {
+    if (isReady) {
 
       const unsub = await api.rpc.chain.subscribeNewHeads((block: any) => {
         if (block !== undefined) {

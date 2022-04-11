@@ -39,11 +39,11 @@ export const NetworkMetricsContextWrapper = (props: any) => {
         state.unsub();
       }
     })
-  }, [isReady()]);
+  }, [isReady]);
 
   // active subscription
   const subscribeToNetworkMetrics = async (api: any) => {
-    if (isReady()) {
+    if (isReady) {
 
       const unsub = await api.queryMulti([
         api.query.staking.activeEra,

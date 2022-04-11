@@ -49,7 +49,7 @@ export const Browse = (props: PageProps) => {
       <StatBoxList title="Staking Metrics" items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          {isReady() &&
+          {isReady &&
             <>
               {validators.length === 0 &&
                 <div className='item'>

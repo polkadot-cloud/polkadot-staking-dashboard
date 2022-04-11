@@ -59,7 +59,7 @@ export const GenerateNominations = () => {
   }
 
   useEffect(() => {
-    if (!isReady() || !validators.length) {
+    if (!isReady || !validators.length) {
       return;
     }
 
@@ -117,7 +117,7 @@ export const GenerateNominations = () => {
         </div>
         :
         <>
-          {isReady() &&
+          {isReady &&
             nominations.length > 0 &&
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList

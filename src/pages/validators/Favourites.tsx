@@ -39,7 +39,7 @@ export const Favourites = (props: PageProps) => {
     let _nominations = favourites;
     _nominations = _nominations.map((item: any) => { return ({ address: item }) });
     setNominations(_nominations);
-  }, [isReady(), activeAccount, accounts, favourites]);
+  }, [isReady, activeAccount, accounts, favourites]);
 
   // refetch meta batch when revisiting the page. Favourites may have been updated.
   useEffect(() => {
@@ -52,7 +52,7 @@ export const Favourites = (props: PageProps) => {
 
   // handle favourite removal
   useEffect(() => {
-    if (isReady()) {
+    if (isReady) {
       // remove item from meta batxh
       const removedItem: any = nominationsWithPrefs.filter((_n: any) => {
         let f = nominations.find((_m: any) => _m.address === _n.address);
@@ -72,7 +72,7 @@ export const Favourites = (props: PageProps) => {
       <PageTitle title={title} />
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          {isReady() &&
+          {isReady &&
             <>
               {nominations.length === 0 &&
                 <div className='item'>

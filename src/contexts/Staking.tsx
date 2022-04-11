@@ -105,7 +105,7 @@ export const StakingContextWrapper = (props: any) => {
   }
 
   const subscribeToStakingkMetrics = async (api: any) => {
-    if (isReady() && metrics.activeEra.index !== 0) {
+    if (isReady && metrics.activeEra.index !== 0) {
       const previousEra = metrics.activeEra.index - 1;
 
       // subscribe to staking metrics
@@ -152,7 +152,7 @@ export const StakingContextWrapper = (props: any) => {
    * Validator meta batches are derived from this initial list.
    */
   const fetchValidators = async () => {
-    if (!isReady()) { return }
+    if (!isReady) { return }
 
     // fetch validator set
     let validators: any = [];
@@ -179,7 +179,7 @@ export const StakingContextWrapper = (props: any) => {
   */
   const subscribeSessionValidators = async (api: any) => {
 
-    if (isReady() && metrics.activeEra.index !== 0) {
+    if (isReady && metrics.activeEra.index !== 0) {
       const unsub = await api.query.session.validators((_validators: any) => {
         setSessionValidators({
           ...sessionValidators,
@@ -209,7 +209,7 @@ export const StakingContextWrapper = (props: any) => {
   };
   */
   const fetchValidatorMetaBatch = async (key: string, validators: any, refetch: boolean = false) => {
-    if (!isReady()) { return }
+    if (!isReady) { return }
 
     if (!validators.length) { return; }
 
@@ -375,19 +375,19 @@ export const StakingContextWrapper = (props: any) => {
       }
       // unsubscribe from any validator meta batches
       Object.values(validatorMetaBatches.unsubs).map((batch: any, index: number) => {
-        Object.entries(batch).map(([k, v]: any) => {
-          v();
+        return Object.entries(batch).map(([k, v]: any) => {
+          return v();
         });
       });
     })
-  }, [isReady(), metrics.activeEra]);
+  }, [isReady, metrics.activeEra]);
 
   useEffect(() => {
     if (validators.length > 0) {
       // pre-populating validator meta batches
       fetchValidatorMetaBatch('validators_browse', validators);
     }
-  }, [isReady(), validators]);
+  }, [isReady, validators]);
 
   const removeValidatorMetaBatch = (key: string) => {
 

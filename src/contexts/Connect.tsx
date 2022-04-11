@@ -6,7 +6,6 @@ import {
   web3Enable,
   web3AccountsSubscribe,
 } from '@polkadot/extension-dapp';
-import { Metadata } from '@polkadot/types';
 
 // context type
 export interface ConnectContextState {

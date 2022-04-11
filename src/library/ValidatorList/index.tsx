@@ -62,7 +62,7 @@ export const ValidatorListInner = (props: any) => {
   // fetch validators when ready if not done so already
   useEffect(() => {
     fetchValidatorMetaBatch(props.batchKey, validators, refetchOnListUpdate);
-  }, [isReady(), validatorsDefault]);
+  }, [isReady, validatorsDefault]);
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
   let pageEnd = (page * ITEMS_PER_PAGE) - 1;

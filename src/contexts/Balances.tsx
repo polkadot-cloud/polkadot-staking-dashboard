@@ -59,14 +59,14 @@ export const BalancesContextWrapper = (props: any) => {
 
   // unsub and resubscribe to newly active account
   useEffect(() => {
-    if (isReady()) {
+    if (isReady) {
       // unsubscribe and refetch active account
       unsubscribeAll(true);
     }
     return (() => {
       unsubscribeAll(false);
     });
-  }, [accounts, network, isReady()]);
+  }, [accounts, network, isReady]);
 
 
   // unsubscribe from all activeAccount subscriptions

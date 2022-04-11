@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useAssistant } from '../../contexts/Assistant';
 import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
@@ -36,9 +36,13 @@ export const Assistant = () => {
     },
   };
 
-  useEffect(() => {
+  const setPageOnPathname = useCallback(() => {
     assistant.setPage(pageFromUri(pathname));
   }, [pathname]);
+
+  useEffect(
+    () => setPageOnPathname(),
+    [setPageOnPathname]);
 
   // animate assistant container default
   const animateContainer = assistant.open ? `visible` : `hidden`;

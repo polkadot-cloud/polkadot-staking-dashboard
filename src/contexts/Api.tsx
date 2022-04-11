@@ -171,7 +171,7 @@ export class APIContextWrapper extends React.Component {
         disconnect: this.disconnect,
         switchNetwork: this.switchNetwork,
         fetchDotPrice: this.fetchDotPrice,
-        isReady: this.isReady,
+        isReady: this.isReady(),
         api: this.state.api,
         status: this.state.status,
         consts: this.state.consts,

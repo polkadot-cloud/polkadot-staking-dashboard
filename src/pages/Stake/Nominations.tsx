@@ -37,10 +37,10 @@ export const Nominations = () => {
     let _nominations = getAccountNominations(activeAccount);
     _nominations = _nominations.map((item: any, index: any) => { return ({ address: item }) });
     setNominations(_nominations);
-  }, [isReady(), activeAccount, accounts]);
+  }, [isReady, activeAccount, accounts]);
 
   useEffect(() => {
-    if (isReady()) {
+    if (isReady) {
       fetchNominationsMeta();
     }
   }, [nominations]);
@@ -58,7 +58,7 @@ export const Nominations = () => {
         </div>
         :
         <>
-          {isReady() &&
+          {isReady &&
             <>
               {nominations.length > 0 &&
                 <div style={{ marginTop: '1rem' }}>

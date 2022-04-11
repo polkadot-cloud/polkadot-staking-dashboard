@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApi } from './Api';
 import { useConnect } from './Connect';
-import { useBalances } from './Balances';
 import { useUi } from './UI';
 import { API_ENDPOINTS, API_SUBSCAN_KEY } from '../constants';
 
@@ -24,7 +23,6 @@ export const SubscanContextWrapper = (props: any) => {
 
   const { network }: any = useApi();
   const { services }: any = useUi();
-  const { accounts }: any = useBalances();
   const { activeAccount }: any = useConnect();
 
   const [payouts, setPayouts]: any = useState([]);
