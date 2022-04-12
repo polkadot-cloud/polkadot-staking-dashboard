@@ -35,7 +35,6 @@ export const Controller = () => {
       <StakingAccount last>
         <Account
           canClick={false}
-          unassigned={controller === null}
           value={controller}
         />
         <Button

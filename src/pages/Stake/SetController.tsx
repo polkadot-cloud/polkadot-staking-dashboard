@@ -11,7 +11,10 @@ import { GLOBAL_MESSGE_KEYS } from '../../constants';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { AccountSelect } from '../../library/Form/AccountSelect';
 
-export const SetController = () => {
+export const SetController = (props: any) => {
+
+  // functional props
+  const { setup, setSetup } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
@@ -28,6 +31,11 @@ export const SetController = () => {
 
   const handleOnChange = (selected: any) => {
     setSelected(selected);
+
+    setSetup({
+      ...setup,
+      controller: selected?.address ?? null
+    })
   }
 
   return (
@@ -35,30 +43,26 @@ export const SetController = () => {
       {/* warning: controller account not present. unable to stake */}
       {controllerNotImported !== null &&
         <SectionWrapper transparent style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
-          <div className='inner'>
-            <h3>Import Your Controller Account</h3>
-            <p>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</p>
+          <h3>Import Your Controller Account</h3>
+          <p>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</p>
 
-            <ButtonRow style={{ width: '100%', padding: 0, marginTop: '1rem' }}>
-              <Button inline title='Set New Controller' />
-            </ButtonRow>
-          </div>
+          <ButtonRow style={{ width: '100%', padding: 0, marginTop: '1rem' }}>
+            <Button inline title='Set New Controller' />
+          </ButtonRow>
         </SectionWrapper>
       }
 
       {/* controller management */}
       {controllerNotImported === null &&
         <SectionWrapper transparent>
-          <div className='inner'>
-            <h2>
-              Set Controller Account
-              <OpenAssistantIcon page="stake" title="Stash and Controller Accounts" />
-            </h2>
-          </div>
+          <h2>
+            Set Controller Account
+            <OpenAssistantIcon page="stake" title="Stash and Controller Accounts" />
+          </h2>
           <AccountSelect
             items={accounts.filter((acc: any) => acc.address !== activeAccount)}
             onChange={handleOnChange}
-            placeholder='Select Account'
+            placeholder='Search Account'
             value={selected}
           />
         </SectionWrapper>

@@ -3,7 +3,7 @@
 
 import Identicon from '@polkadot/react-identicon';
 import Wrapper from './Wrapper';
-import { clipAddress } from '../../Utils';
+import { clipAddress, convertRemToPixels } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 
 export const Account = (props: any) => {
@@ -14,12 +14,15 @@ export const Account = (props: any) => {
   let { value, label }: any = props;
 
   // presentational props
-  let { unassigned, format }: any = props;
-
+  let { format }: any = props;
   let filled = props.filled ?? false;
+  let fontSize = props.fontSize ?? '1rem';
+  let padding = props.padding ?? '0 0.35rem';
 
   // functional props
   let { canClick }: { canClick: boolean } = props;
+
+  let unassigned = value === null || value === undefined;
 
   // format value based on `format` prop
   let displayValue;
@@ -39,7 +42,9 @@ export const Account = (props: any) => {
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}
-      fill={filled ? 'rgb(237, 237, 237)' : 'none'}
+      fill={filled ? 'rgba(237, 237, 237, 0.5)' : 'none'}
+      fontSize={fontSize}
+      padding={padding}
     >
       {unassigned &&
         <span className='title unassigned'>Not Set</span>
@@ -48,7 +53,7 @@ export const Account = (props: any) => {
         <>
           <Identicon
             value={value}
-            size={26}
+            size={convertRemToPixels(fontSize) * 1.35}
             theme="polkadot"
             style={{ cursor: 'default' }}
           />

@@ -18,7 +18,6 @@ export const AccountDropdown = (props: any) => {
         className="item"
         {...c.getItemProps({ key: item.name, index, item })}
         style={{
-          backgroundColor: c.highlightedIndex === index ? '#f2f2f2' : '#fafafa',
           color: c.selectedItem === item ? 'rgb(211, 48, 121)' : 'black',
         }}>
         <div className='icon'>

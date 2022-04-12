@@ -11,6 +11,11 @@ export const numCommaFormatted = (x: BN | number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export const convertRemToPixels = (rem: any) => {
+  let remAsNumber = (rem.substr(0, rem.length - 3));
+  return remAsNumber * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
+
 export const planckToDot: any = (val: any) => {
   return val / (10 ** 10);
 }

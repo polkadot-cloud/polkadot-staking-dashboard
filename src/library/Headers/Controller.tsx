@@ -20,7 +20,6 @@ export const Controller = () => {
         format='name'
         label='Controller'
         canClick={false}
-        unassigned={controller === null}
         style={{ cursor: 'default' }}
         filled
       />

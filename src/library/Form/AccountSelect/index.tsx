@@ -6,11 +6,11 @@ import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
 import Identicon from '@polkadot/react-identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { clipAddress } from '../../../Utils';
+import { clipAddress, convertRemToPixels } from '../../../Utils';
 
 export const AccountSelect = (props: any) => {
 
-  const { items, onChange, label, placeholder, value }: any = props;
+  const { items, onChange, placeholder, value }: any = props;
 
   const DropdownItem = (c: any, item: any, index: number) => {
 
@@ -22,7 +22,6 @@ export const AccountSelect = (props: any) => {
         className="item"
         {...c.getItemProps({ key: item.name, index, item })}
         style={{
-          backgroundColor: c.highlightedIndex === index ? '#ededed' : '#f4f4f4',
           color: color,
           border: border,
         }}>
@@ -45,21 +44,23 @@ export const AccountSelect = (props: any) => {
       <Downshift onChange={onChange} itemToString={items => (items ? items.name : '')} initialSelectedItem={value}>
         {(c: any) => (
           <div>
-            {/* add a label tag and pass our label text to the getLabelProps function */}
-            {label && <label className='label' {...c.getLabelProps()}>
-              {label}
-            </label>
-            }
             <div style={{ position: 'relative' }}>
-              {
-              /* add our input element and pass our placeholder to the getInputProps function */}
-              <input {...c.getInputProps({ placeholder: placeholder })} className='input' style={{ paddingLeft: '0.75rem', paddingRight: '0.75rem' }} />
+              <div className='input-wrap'>
+                {value !== null &&
+                  <Identicon
+                    value={value?.address ?? ''}
+                    size={convertRemToPixels('2rem')}
+                    theme="polkadot"
+                    style={{ cursor: 'default' }}
+                  />
+                }
+                <input {...c.getInputProps({ placeholder: placeholder })} className='input' />
+              </div>
 
               {c.selectedItem && (
                 <StyledController
                   onClick={c.clearSelection}
                   aria-label="clear selection"
-                  style={{ right: '0.5rem', background: '#f2f2f2' }}
                 >
                   <FontAwesomeIcon transform='grow-2' icon={faTimes} />
                 </StyledController>
@@ -88,7 +89,7 @@ export const AccountSelect = (props: any) => {
           </div>
         )}
       </Downshift>
-    </StyledDownshift>
+    </StyledDownshift >
   )
 }
 

@@ -63,7 +63,11 @@ export const StyledDropdown = styled.div`
     justify-content: flex-start;
     align-items: center;
     transition: background 0.1s;
+    background: #fafafa;
 
+    &:hover {
+      background: #f2f2f2;
+    }
     .icon {
       margin-right: 0.5rem;
     }

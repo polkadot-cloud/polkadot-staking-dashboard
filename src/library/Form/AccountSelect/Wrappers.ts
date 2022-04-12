@@ -17,26 +17,35 @@ export const StyledDownshift = styled.div<any>`
   }
   
   /* input element of dropdown */
-  .input {
+  .input-wrap {
+    display: flex; 
+    flex-flow: row wrap;
+    align-items: center;
     box-sizing: border-box;
-    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid #e3e3e3;
+    padding: 0.1rem 0.75rem;
+    margin: 0.25rem 0;
+  }
+
+  .input {
+    border: none;
+    box-sizing: border-box;
+    padding-left: 0.75rem;
   }
 `;
 
 export const StyledController = styled.button<any>`
   box-sizing: border-box;
-  border: none;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 0.5rem;
+  top: 0.4rem;
   width: 2.2rem;
   height: 2.2rem;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  background: #f7f7f7;
-  border-radius: 0.5rem;
 `;
 
 /* dropdown box for horizontal scroll */
@@ -48,11 +57,13 @@ export const StyledSelect = styled.div`
   width: auto;
   border-radius: 0.75rem;
   z-index: 1;
-  height: 120px;
+  height: 140px;
+  background: #f7f7f7;
+  padding: 0.5rem;
 
   .items {
     width: 100%;
-    height: 150px;
+    height: 155px;
     overflow-y: hidden;
 
     display: flex;
@@ -73,13 +84,17 @@ export const StyledSelect = styled.div`
     justify-content: center;
     align-items: flex-start;
     transition: background 0.1s;
+    background: #f4f4f4;
     flex: none;
 
     &:first-child {
-      margin-left: 0.75rem;
+      margin-left: 0rem;
     }
     &:last-child {
-      margin-right: 0.75rem;
+      margin-right: 0rem;
+    }
+    &:hover {
+      background: #f0f0f0;
     }
     p {
       margin: 0.25rem 0 0;
