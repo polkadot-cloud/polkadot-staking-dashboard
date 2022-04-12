@@ -24,7 +24,6 @@ export const Wrapper = styled(motion.button) <any>`
       margin: 0 0.75rem 0 0;
       text-overflow: ellipsis;
       white-space: nowrap;
-      max-width: 90px;
       overflow: hidden;
       line-height: 2.2rem;
 

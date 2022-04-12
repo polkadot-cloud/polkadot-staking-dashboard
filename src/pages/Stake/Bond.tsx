@@ -60,7 +60,7 @@ export const Bond = () => {
             </GraphWrapper>
           </HalfItem>
           <HalfItem>
-            <ButtonRow style={{ height: '190px', paddingRight: '1rem' }}>
+            <ButtonRow style={{ height: '190px' }}>
               <Button primary title='Bond Extra' />
               <Button primary title='Unbond' />
             </ButtonRow>

@@ -44,8 +44,7 @@ export const Account = (props: any) => {
       {unassigned &&
         <span className='title unassigned'>Not Set</span>
       }
-      {
-        unassigned !== true &&
+      {unassigned !== true &&
         <>
           <Identicon
             value={value}
@@ -56,12 +55,11 @@ export const Account = (props: any) => {
           <span className='title'>{displayValue}</span>
         </>
       }
-
       {
         label !== undefined &&
         <div className='label'>{label}</div>
       }
-    </Wrapper >
+    </Wrapper>
   );
 }
 

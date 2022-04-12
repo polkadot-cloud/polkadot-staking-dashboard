@@ -78,7 +78,7 @@ export const ColumnItem = styled.section`
   display: flex;
   flex-flow: column wrap;
   box-sizing: border-box;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
 
   p {
     margin: 0;
