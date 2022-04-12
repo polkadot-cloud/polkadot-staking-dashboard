@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { Wrapper, HeadingWrapper, Item } from './Wrapper';
+import { Wrapper, HeadingWrapper, Item, ItemInactive } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
@@ -103,20 +103,37 @@ export const Headers = () => {
       {/* connected, display connected accounts */}
       {connect.status === 1 &&
         <HeadingWrapper>
-          <Item
-            whileHover={{ scale: 1.02 }}
-            style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
-            onClick={() => { toggleMenu(true); }}
-          >
-            <span>
-              <FontAwesomeIcon
-                icon={!showMenu ? faCog : faCogs}
-                transform={!showMenu ? `grow-1` : `shrink-2`}
-                style={{ cursor: 'pointer', color: '#444' }}
-                className='dropdown-toggle'
-              />
-            </span>
-          </Item>
+          {!showMenu
+            ?
+            <Item
+              whileHover={{ scale: 1.02 }}
+              style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
+              onClick={() => toggleMenu(true)}
+            >
+              <span>
+                <FontAwesomeIcon
+                  icon={faCog}
+                  transform='grow-1'
+                  style={{ cursor: 'pointer', color: '#444' }}
+                />
+              </span>
+            </Item>
+            :
+            <ItemInactive
+              whileHover={{ scale: 1.02 }}
+              style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
+            >
+              <span>
+                <FontAwesomeIcon
+                  icon={faCogs}
+                  transform='shrink-2'
+                  style={{ color: '#444' }}
+                  className='dropdown-toggle'
+                />
+              </span>
+            </ItemInactive>
+          }
+
           {showMenu &&
             <Dropdown
               toggleMenu={toggleMenu}

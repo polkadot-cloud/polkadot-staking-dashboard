@@ -104,4 +104,21 @@ export const Item = styled(motion.button)`
     }
 `;
 
+export const ItemInactive = styled(motion.div)`
+    flex-grow: 1;  
+    padding: 0 1rem;
+    border-radius: 1rem;
+    background: rgb(237, 237, 237);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    font-variation-settings: 'wght' 540;
+    font-size: 1rem;
+
+    > span {
+      line-height: 2.2rem;
+    }
+`;
+
 export default Wrapper;
