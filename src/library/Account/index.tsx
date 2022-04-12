@@ -4,14 +4,34 @@
 import Identicon from '@polkadot/react-identicon';
 import Wrapper from './Wrapper';
 import { clipAddress } from '../../Utils';
+import { useConnect } from '../../contexts/Connect';
 
 export const Account = (props: any) => {
 
-  let { address, label, unassigned, filled }: any = props;
+  const { getAccount } = useConnect();
+
+  // data props
+  let { value, label }: any = props;
+
+  // presentational props
+  let { unassigned, format }: any = props;
+
+  let filled = props.filled ?? false;
+
+  // functional props
   let { canClick }: { canClick: boolean } = props;
 
-  address = address === undefined ? 'Unassigned' : address;
-  filled = filled === undefined ? false : filled;
+  // format value based on `format` prop
+  let displayValue;
+  switch (format) {
+    case 'name':
+      displayValue = getAccount(value)?.name;
+      break;
+    default:
+      if (value) {
+        displayValue = clipAddress(value);
+      }
+  }
 
   return (
     <Wrapper
@@ -28,12 +48,12 @@ export const Account = (props: any) => {
         unassigned !== true &&
         <>
           <Identicon
-            value={address}
+            value={value}
             size={26}
             theme="polkadot"
             style={{ cursor: 'default' }}
           />
-          <span className='title'>{clipAddress(address)}</span>
+          <span className='title'>{displayValue}</span>
         </>
       }
 

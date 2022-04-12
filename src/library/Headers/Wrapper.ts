@@ -64,24 +64,30 @@ export const HeadingWrapper = styled.div`
     display: flex;
     flex-flow: column wrap;
     box-sizing: border-box;
+
+    > button {
+      margin: 0.25rem 0;
+    }
   }
 `;
 
 export const Item = styled(motion.button)`
     flex-grow: 1;  
-    padding: 0rem 1rem;
-    margin: 0.25rem 0;
+    padding: 0 1rem;
     border-radius: 1rem;
     box-shadow: none;
     background: rgb(237, 237, 237);
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     font-variation-settings: 'wght' 540;
-    height: 2.3rem;
-    font-size: 1.08rem;
+    font-size: 1rem;
+
+    > span {
+      line-height: 2.2rem;
+    }
 
     &.connect {
       background: #d33079;

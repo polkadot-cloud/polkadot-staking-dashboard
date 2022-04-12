@@ -49,10 +49,12 @@ export const Headers = () => {
           style={{ width: '50px', flex: 0 }}
           onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
         >
-          <FontAwesomeIcon
-            icon={faBars}
-            style={{ cursor: 'pointer', color: '#666' }}
-          />
+          <span>
+            <FontAwesomeIcon
+              icon={faBars}
+              style={{ cursor: 'pointer', color: '#666' }}
+            />
+          </span>
         </Item>
       </div>
 
@@ -64,8 +66,9 @@ export const Headers = () => {
           <HeadingWrapper>
             <Account
               canClick={false}
-              address={connect.activeAccount}
+              value={connect.activeAccount}
               label='Stash'
+              format='name'
               filled
             />
           </HeadingWrapper>
@@ -82,7 +85,7 @@ export const Headers = () => {
             onClick={() => connectWeb3()}
             whileHover={{ scale: 1.02 }}
           >
-            Connect Accounts
+            <span>Connect Accounts</span>
           </Item>
         </HeadingWrapper>
       }
@@ -93,7 +96,7 @@ export const Headers = () => {
           whileHover={{ scale: 1.02 }}
         >
           {connect.status === 0 && <div className='label'>1</div>}
-          Assistant
+          <span>Assistant</span>
         </Item>
       </HeadingWrapper>
 
@@ -103,13 +106,16 @@ export const Headers = () => {
           <Item
             whileHover={{ scale: 1.02 }}
             style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
-            onClick={() => { toggleMenu(showMenu ? false : true); }}
+            onClick={() => { toggleMenu(true); }}
           >
-            <FontAwesomeIcon
-              icon={!showMenu ? faCog : faCogs}
-              transform={!showMenu ? undefined : `shrink-2`}
-              style={{ cursor: 'pointer', color: '#444' }}
-            />
+            <span>
+              <FontAwesomeIcon
+                icon={!showMenu ? faCog : faCogs}
+                transform={!showMenu ? `grow-1` : `shrink-2`}
+                style={{ cursor: 'pointer', color: '#444' }}
+                className='dropdown-toggle'
+              />
+            </span>
           </Item>
           {showMenu &&
             <Dropdown
@@ -120,20 +126,20 @@ export const Headers = () => {
                     onClick={() => { openModalWith('ConnectAccounts', {}, 'small'); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                   >
-                    Switch Account
+                    <span>Switch Account</span>
                   </Item>
                   <Item
                     onClick={() => { openModalWith('Settings', {}, 'small'); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                   >
-                    Services
+                    <span>Services</span>
                   </Item>
                   <Item
                     onClick={() => { connect.disconnect(); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                     style={{ color: '#ae2324' }}
                   >
-                    Disconnect
+                    <span>Disconnect</span>
                   </Item>
                 </>
               }

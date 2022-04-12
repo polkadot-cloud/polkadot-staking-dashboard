@@ -5,23 +5,13 @@ import { motion } from "framer-motion";
 import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
-export const LogoWrapper = styled(motion.button)`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  width: 100%;
-  height: 2.1rem;
-  padding: 0.4rem 0.5rem;
-  margin-bottom: 1rem;
-`;
-
 export const Wrapper = styled.div`
   background: none;
   border-radius: 0.7rem;
   padding: 1rem 0.5rem;
   overflow: auto;
   flex-grow: 1;
-  margin: 1rem 0 3.6rem 1rem;
+  margin: 0.75rem 0 3.35rem 1rem;
   &:hover {
     transform: scale(1.005);
   }
@@ -57,6 +47,16 @@ export const Wrapper = styled.div`
     }
   }
 }
+`;
+
+export const LogoWrapper = styled(motion.button)`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  width: 100%;
+  height: 2.1rem;
+  padding: 0.4rem 0.5rem;
+  margin-bottom: 1rem;
 `;
 
 export const ItemWrapper = styled(motion.div) <any>`

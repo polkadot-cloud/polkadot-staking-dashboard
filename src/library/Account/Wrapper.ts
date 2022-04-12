@@ -6,24 +6,27 @@ import { motion } from 'framer-motion';
 
 export const Wrapper = styled(motion.button) <any>`
     flex-grow: 1;  
-    padding: 0.35rem;
+    padding: 0 0.35rem;
     border-radius: 1rem;
-    border: 2px solid rgb(237, 237, 237);
     box-shadow: none;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
     font-variation-settings: 'wght' 540;
-    height: 2.3rem;
-    font-size: 0.88rem;
     position: relative;
     transition: width 0.2s;
     cursor: ${props => props.cursor};
     background: ${props => props.fill};
-
+    font-size: 1rem;
+  
     .title {
       margin: 0 0.75rem 0 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 90px;
+      overflow: hidden;
+      line-height: 2.2rem;
 
       &.unassigned {
         margin-left: 1rem;

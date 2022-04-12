@@ -10,8 +10,8 @@ export const Dropdown = (props: any) => {
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {
-    toggleMenu();
-  });
+    toggleMenu(false);
+  }, ['dropdown-toggle']);
 
   return (
     <ul className='accounts' ref={ref}>

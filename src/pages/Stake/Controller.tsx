@@ -36,7 +36,7 @@ export const Controller = () => {
         <Account
           canClick={false}
           unassigned={controller === null}
-          address={controller}
+          value={controller}
         />
         <Button
           primary

@@ -16,10 +16,11 @@ export const Controller = () => {
   return (
     <>
       <Account
+        value={controller}
+        format='name'
+        label='Controller'
         canClick={false}
         unassigned={controller === null}
-        address={controller}
-        label='Controller'
         style={{ cursor: 'default' }}
         filled
       />
