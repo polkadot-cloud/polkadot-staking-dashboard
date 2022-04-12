@@ -1,10 +1,13 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import styled from 'styled-components';
 
-export const StyledDownshift = styled.div`
+export const StyledDownshift = styled.div<any>`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 17rem;
+  height: ${props => props.height ? props.height : 'auto'};
   overflow: hidden;
 
   /* title of dropdown */ 
@@ -36,20 +39,21 @@ export const StyledController = styled.button<any>`
   border-radius: 0.5rem;
 `;
 
+/* dropdown box for vertical scroll */
 export const StyledDropdown = styled.div`
   position: relative;
   box-sizing: border-box;
-  margin: 1rem 0 0;
+  margin: 0.5rem 0 0;
   border-bottom: none;
   width: auto;
   height: 14rem;
   background: #fafafa;
   border-radius: 0.75rem;
-  margin-top: 0.5rem;
   overflow: auto;
   z-index: 1;
 
   .item {
+    box-sizing: border-box;
     padding: 0.5rem;
     cursor: pointer;
     margin: 0.25rem;
@@ -65,5 +69,3 @@ export const StyledDropdown = styled.div`
     }
   }
 `;
-
-export default StyledDropdown;

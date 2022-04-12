@@ -7,7 +7,7 @@ import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { AccountDropdown } from '../../library/AccountDropdown';
+import { AccountDropdown } from '../../library/Form/AccountDropdown';
 import { useBalances } from '../../contexts/Balances';
 
 export const ChangeController = () => {
@@ -34,6 +34,7 @@ export const ChangeController = () => {
         onChange={handleOnChange}
         placeholder='Select Account'
         value={selected}
+        height='17rem'
       />
       <div className='foot'>
         <div>

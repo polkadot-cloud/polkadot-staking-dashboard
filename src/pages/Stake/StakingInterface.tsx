@@ -17,11 +17,11 @@ export const StakingInterface = () => {
   return (
     <>
       {!hasController() &&
-        <SectionWrapper>
+        <SectionWrapper noPadding>
           <Separator padding />
           <Element name="controller" style={{ position: 'absolute' }} />
           <SetController />
-          <Separator />
+          <Separator padding />
         </SectionWrapper>
       }
       <SectionWrapper>

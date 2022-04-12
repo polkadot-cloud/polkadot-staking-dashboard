@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
-  padding: ${props => props.transparent ? '0rem 0rem' : '1rem'};
+  padding: ${props => props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1rem'};
   border-radius: 1rem;
   background: ${props => props.transparent ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.5)'};
   display: flex;
@@ -16,6 +16,16 @@ export const SectionWrapper = styled.div<any>`
   width: 100%;
   margin-top: ${props => props.transparent ? '0rem' : '1rem'};
   position: relative;
+
+  .inner {
+    padding: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
+  }
   
   h2, h3 {
     display: flex;
