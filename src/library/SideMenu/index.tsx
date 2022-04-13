@@ -9,16 +9,19 @@ import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../pages';
 import { useConnect } from '../../contexts/Connect'
 import { useLocation } from 'react-router-dom';
 import { useMessages } from '../../contexts/Messages';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
 import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../../library/Hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faExclamationTriangle, faMoon as faDark } from '@fortawesome/free-solid-svg-icons';
+import { faCircle as faLight } from '@fortawesome/free-regular-svg-icons';
+import { useTheme } from '../../contexts/Themes';
 
 export const SideMenu = () => {
 
+  const { mode, toggleTheme } = useTheme();
   const { activeAccount, status: connectStatus }: any = useConnect();
   const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
@@ -102,11 +105,16 @@ export const SideMenu = () => {
           </React.Fragment>
         )}
       </section>
+      <Separator />
       <section>
-        <Separator />
-        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
-          <FontAwesomeIcon icon={faGithub} transform='grow-10' />
+        <button onClick={() => toggleTheme()}>
+          <FontAwesomeIcon icon={mode === 'light' ? faLight : faDark} transform='grow-7' />
         </button>
+        <div className='ext'>
+          <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
+            <FontAwesomeIcon icon={faGithub} transform='grow-9' />
+          </button>
+        </div>
       </section>
     </Wrapper>
   );

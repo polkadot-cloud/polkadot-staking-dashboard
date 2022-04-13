@@ -34,7 +34,6 @@ export const Item = (props: any) => {
             <FontAwesomeIcon icon={action} color="rgba(242, 185, 27,0.5)" />
           </div>
         }
-
       </Wrapper>
     </Link>
   )

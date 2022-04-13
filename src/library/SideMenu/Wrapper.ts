@@ -12,13 +12,11 @@ export const Wrapper = styled.div`
   overflow: auto;
   flex-grow: 1;
   margin: 0.75rem 0 3.35rem 1rem;
-  &:hover {
-    transform: scale(1.005);
-  }
   transition: all 0.2s;
   display: flex;
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
+
   @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     background: rgb(242,242,242);
       background: linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%);
@@ -35,15 +33,28 @@ export const Wrapper = styled.div`
     &:first-child {
       flex-grow: 1;
     }
-    /* Github icon */
+    /* Footer */
     &:last-child {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      padding-top: 0.5rem;
+
       button {
         transition: color 0.2s;
-        margin: 0 0.25rem;
-        color: #666;
+        margin-right: 0.25rem;
+        color: #444;
         &:hover {
-        color: #555;
+        color: #333;
       }
+    }
+    .ext {
+      flex-grow: 1;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-end;
+      padding: 0 0.5rem;
+      opacity: 0.5;
     }
   }
 }
@@ -73,16 +84,13 @@ export const ItemWrapper = styled(motion.div) <any>`
     background: rgba(0,0,0,0.04);
     background: linear-gradient(90deg, rgba(0,0,0,0.07) 0%, rgba(0,0,0,0.03) 100%);
   }
-
   &.inactive:hover {
     background: rgba(0,0,0,0.02);
     background: linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%);
   }
-
   .icon {
     margin-right: 0.8rem;
   }
-
   .action {
     flex: 1;
     display: flex;
@@ -103,7 +111,7 @@ export const HeadingWrapper = styled.div<any>`
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid #dfdfdf;
   margin-bottom: 0.75rem;
   padding: 0 0.5rem;
 `;
