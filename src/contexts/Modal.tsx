@@ -63,7 +63,7 @@ export class ModalContextWrapper extends React.Component {
         config: this.state.config,
         size: this.state.size,
       }}>
-        {this.props.children}S
+        {this.props.children}
       </AssistantContext.Provider>
     );
   }
