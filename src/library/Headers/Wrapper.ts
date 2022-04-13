@@ -78,7 +78,7 @@ export const Item = styled(motion.button)`
     box-shadow: none;
     background: rgb(237, 237, 237);
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
     cursor: pointer;
