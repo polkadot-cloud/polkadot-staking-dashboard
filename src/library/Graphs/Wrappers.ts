@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { textSecondary, backgroundSecondary } from '../../theme';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
   padding: ${props => props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1rem'};
   border-radius: 1rem;
-  background: ${props => props.transparent ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.5)'};
+  background: ${props => props.transparent ? 'none' : backgroundSecondary};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
@@ -58,7 +59,7 @@ export const SectionWrapper = styled.div<any>`
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;
   border-radius: 1rem;
-  background: rgba(255,255,255,0.5);
+  background: ${backgroundSecondary};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
@@ -100,7 +101,7 @@ export const GraphWrapper = styled.div<any>`
 
     .fiat {
       font-size: 1rem;
-      color: #555;
+      color: ${textSecondary};
       margin-top: 0.2rem;
     }
   }

@@ -12,7 +12,7 @@ export const Wrapper = styled(motion.div) <any>`
   width: 100%;
   max-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px;
   height: 100%;
-  z-index: 6;
+  z-index: 8;
   display: flex;
   flex-flow: column nowrap;
   overflow: hidden;

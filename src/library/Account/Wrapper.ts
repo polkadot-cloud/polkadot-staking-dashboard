@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { textPrimary, textSecondary, labelBackground } from '../../theme';
 
 export const Wrapper = styled(motion.button) <any>`
     padding: ${props => props.padding};
@@ -30,17 +31,18 @@ export const Wrapper = styled(motion.button) <any>`
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
+      color: ${textPrimary};
 
       &.unassigned {
         margin-left: 1rem;
-        color: #888;
+        color: ${textSecondary};
       }
     }
 
     .label {
-      background: rgba(220,220,220,0.75);
+      background: ${labelBackground};
       border-radius: 0.75rem;
-      color: #333;
+      color: ${textPrimary};
       font-size: 0.8em;
       font-variation-settings: 'wght' 535;
       display: flex;

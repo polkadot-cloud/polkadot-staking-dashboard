@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { textSecondary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -78,7 +79,7 @@ export const NominateWrapper = styled.div`
       flex: 1;
     }
     .go {
-      color: #555;
+      color: ${textSecondary};
       display: flex;
       flex-flow: row nowrap;
       align-items: center;

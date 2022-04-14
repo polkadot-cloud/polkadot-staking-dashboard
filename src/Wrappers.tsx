@@ -4,18 +4,45 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MAXIMUM_WIDTH, SIDE_MENU_STICKY_THRESHOLD } from './constants';
+import { textPrimary, backgroundGradient } from './theme';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
+    background: ${backgroundGradient};
     box-sizing: border-box;
     width: 100%;
-    background: #fbfbfb;
-    background: linear-gradient(180deg, rgba(247,247,247,1) 0%, rgba(247,247,247,1) 100px, rgba(229,229,229,1) 100%);
     background-attachment: fixed;
     display: flex;
     flex-flow: column nowrap;
     min-height: 100vh;
     flex-grow: 1;
+
+    h1 {
+        color: ${textPrimary};
+    }
+    h2 {
+        color: ${textPrimary};
+    }
+    h3 {
+        color: ${textPrimary};
+    }
+    h4 {
+        color: ${textPrimary};
+    }
+    h5 {
+        color: ${textPrimary};
+    }
+    a {
+        color: ${textPrimary};
+    }
+    input {
+        color: ${textPrimary}; 
+    }
+
+    path.primary {
+        fill: ${textPrimary};
+    }
+    
 `;
 
 // Body interface wrapper

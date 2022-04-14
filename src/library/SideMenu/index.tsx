@@ -15,8 +15,7 @@ import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../../library/Hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faExclamationTriangle, faMoon as faDark } from '@fortawesome/free-solid-svg-icons';
-import { faCircle as faLight } from '@fortawesome/free-regular-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '../../contexts/Themes';
 
 export const SideMenu = () => {
@@ -107,9 +106,6 @@ export const SideMenu = () => {
       </section>
       <Separator />
       <section>
-        <button onClick={() => toggleTheme()}>
-          <FontAwesomeIcon icon={mode === 'light' ? faLight : faDark} transform='grow-7' />
-        </button>
         <div className='ext'>
           <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
             <FontAwesomeIcon icon={faGithub} transform='grow-9' />

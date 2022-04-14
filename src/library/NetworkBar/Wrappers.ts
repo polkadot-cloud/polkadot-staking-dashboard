@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from "framer-motion";
+import { textSecondary, backgroundNetworkBar } from '../../theme';
 
 export const Wrapper = styled(motion.div) <any>`
   width: 100%;
@@ -16,7 +17,7 @@ export const Wrapper = styled(motion.div) <any>`
   bottom: 0px;
   left: 0px;
   overflow: hidden;
-  background: rgba(229,229,229,0.75);
+  background: ${backgroundNetworkBar};
   z-index: 6;
   backdrop-filter: blur(4px);
 `;
@@ -31,7 +32,6 @@ export const Summary = styled.div`
 
   p {
     margin: 0 0.25rem;
-    color: #666;
     font-size: 0.75rem;
   }
   .stat {
@@ -44,6 +44,7 @@ export const Summary = styled.div`
   /* left and right sections for each row*/
   > section {
     padding: 0.5rem 0.5rem;
+    color: ${textSecondary};
 
     /* left section */
     &:nth-child(1) {
@@ -65,10 +66,9 @@ export const Summary = styled.div`
       align-items: center;
       flex-flow: row-reverse wrap;
       button {
-        border: 1px solid #e1e1e1;
         border-radius: 0.4rem;
         padding: 0.25rem 0.5rem;
-        color: #444;
+        color: ${textSecondary};
       }
       span {
         &.pos { color: #3eb955; }
@@ -140,7 +140,8 @@ export const NetworkInfo = styled(motion.div)`
 `;
 
 export const Separator = styled.div`
-  border-left: 1px solid #ccc;
+  border-left: 1px solid ${textSecondary};
+  opacity: 0.2;
   margin: 0 0.3rem;
   width: 1px;
   height: 1rem;

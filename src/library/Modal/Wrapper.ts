@@ -9,7 +9,7 @@ export const Wrapper = styled(motion.div)`
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 7;
+    z-index: 9;
     backdrop-filter: blur(4px);
     background: rgba(240,240,240, 0.6);
     /* background: rgba(211,48,121, 0.6); Polkadot themed background */

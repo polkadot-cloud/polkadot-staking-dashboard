@@ -21,7 +21,6 @@ body {
 }
 
 h1 {
-  color: #333;
   font-weight: normal;
   font-size: 1.4rem;
   font-variation-settings: 'wght' 510;
@@ -29,7 +28,6 @@ h1 {
   }
 
 h2 {
-  color: #222;
   font-variation-settings: 'wght' 500;
   font-weight: normal;
   font-size: 1.35rem;
@@ -39,7 +37,6 @@ h3 {
   font-variation-settings: 'wght' 530;
   font-weight: normal;
   font-size: 1.02rem;
-  color: #333;
 }
 
 h4 {
@@ -63,7 +60,6 @@ p {
   margin: 0.5rem 0;
 }
 a {
-  color: #222;
   text-decoration: none;
   cursor: pointer;
   font-variation-settings: 'wght' 525;
@@ -91,7 +87,6 @@ input {
   border-bottom: 1px solid #ddd;
   padding: 0.7rem 0rem;
   font-size: 1.1rem;
-  color: #222; 
   background: none;
   transition: all 0.2s;
 }

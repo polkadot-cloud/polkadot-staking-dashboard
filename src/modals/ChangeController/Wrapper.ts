@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { textSecondary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ export const Wrapper = styled.div`
     align-items: center;
     width: 100%;
     margin-top: 0.25rem;
-    color: #555;
+    color: ${textSecondary};
     flex: 1;
     > svg {
       margin-right: 0.75rem;

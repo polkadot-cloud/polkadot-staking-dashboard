@@ -4,6 +4,7 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import { textSecondary, highlightPrimary, highlightSecondary } from '../../theme';
 
 export const Wrapper = styled.div`
   background: none;
@@ -43,18 +44,19 @@ export const Wrapper = styled.div`
       button {
         transition: color 0.2s;
         margin-right: 0.25rem;
-        color: #444;
+        color: ${textSecondary};
+        opacity: 0.5;
+
         &:hover {
-        color: #333;
-      }
+          opacity: 0.75;
+        }
     }
     .ext {
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-end;
-      padding: 0 0.5rem;
-      opacity: 0.5;
+      padding: 0;
     }
   }
 }
@@ -81,12 +83,10 @@ export const ItemWrapper = styled(motion.div) <any>`
   font-size: 1.04rem;
 
   &.active {
-    background: rgba(0,0,0,0.04);
-    background: linear-gradient(90deg, rgba(0,0,0,0.07) 0%, rgba(0,0,0,0.03) 100%);
+    background: ${highlightPrimary};
   }
   &.inactive:hover {
-    background: rgba(0,0,0,0.02);
-    background: linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%);
+    background: ${highlightSecondary};
   }
   .icon {
     margin-right: 0.8rem;
@@ -107,12 +107,14 @@ export const HeadingWrapper = styled.div<any>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  opacity: 0.6;
+  opacity: 0.7;
+  color: ${textSecondary};
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid #dfdfdf;
+  border-bottom: 1px solid ${textSecondary};
   margin-bottom: 0.75rem;
+  opacity: 0.1;
   padding: 0 0.5rem;
 `;
 

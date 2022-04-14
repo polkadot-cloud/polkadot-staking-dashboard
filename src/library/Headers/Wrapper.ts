@@ -4,6 +4,13 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import {
+  backgroundDropdown,
+  buttonPrimaryBackground,
+  textPrimary,
+  textInvert,
+  textDanger
+} from '../../theme';
 
 export const Wrapper = styled.div`
   position: sticky;
@@ -18,7 +25,6 @@ export const Wrapper = styled.div`
   transition: all 0.15s;
   z-index: 5;
   margin-bottom: 0.5rem;
-
 
   /* overwrite default cursor behaviour for Identicon  */
   svg, .ui--IdentityIcon {
@@ -50,9 +56,9 @@ export const HeadingWrapper = styled.div`
 
   /* accounts dropdown */
   .accounts {
+    background: ${backgroundDropdown};
     position: absolute;
     border-radius: 1rem;
-    background: rgba(237,237,237,0.4);
     backdrop-filter: blur(4px);
     top: 3rem;
     right: 0;
@@ -72,11 +78,11 @@ export const HeadingWrapper = styled.div`
 `;
 
 export const Item = styled(motion.button)`
+    background: ${buttonPrimaryBackground};
     flex-grow: 1;  
     padding: 0 1rem;
     border-radius: 1rem;
     box-shadow: none;
-    background: rgb(237, 237, 237);
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -86,13 +92,21 @@ export const Item = styled(motion.button)`
     font-size: 1rem;
 
     > span {
+      color: ${textPrimary};
       line-height: 2.2rem;
+
+      &.danger {
+        color: ${textDanger};
+      }
     }
 
     &.connect {
       background: #d33079;
-      color: white;
+      > span {
+        color: ${textInvert};
+      }
     }
+  
     .label {
       border: 0.125rem solid #d33079;
       border-radius: 0.8rem;
@@ -108,7 +122,7 @@ export const ItemInactive = styled(motion.div)`
     flex-grow: 1;  
     padding: 0 1rem;
     border-radius: 1rem;
-    background: rgb(237, 237, 237);
+    background: ${buttonPrimaryBackground};
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -117,6 +131,7 @@ export const ItemInactive = styled(motion.div)`
     font-size: 1rem;
 
     > span {
+      color: ${textPrimary};
       line-height: 2.2rem;
     }
 `;

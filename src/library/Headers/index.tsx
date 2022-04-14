@@ -52,7 +52,7 @@ export const Headers = () => {
           <span>
             <FontAwesomeIcon
               icon={faBars}
-              style={{ cursor: 'pointer', color: '#666' }}
+              style={{ cursor: 'pointer' }}
             />
           </span>
         </Item>
@@ -101,69 +101,69 @@ export const Headers = () => {
       </HeadingWrapper>
 
       {/* connected, display connected accounts */}
-      {connect.status === 1 &&
-        <HeadingWrapper>
-          {!showMenu
-            ?
-            <Item
-              whileHover={{ scale: 1.02 }}
-              style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
-              onClick={() => toggleMenu(true)}
-            >
-              <span>
-                <FontAwesomeIcon
-                  icon={faCog}
-                  transform='grow-1'
-                  style={{ cursor: 'pointer', color: '#444' }}
-                />
-              </span>
-            </Item>
-            :
-            <ItemInactive
-              whileHover={{ scale: 1.02 }}
-              style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
-            >
-              <span>
-                <FontAwesomeIcon
-                  icon={faCogs}
-                  transform='shrink-2'
-                  style={{ color: '#444' }}
-                  className='dropdown-toggle'
-                />
-              </span>
-            </ItemInactive>
-          }
+      <HeadingWrapper>
+        {!showMenu
+          ?
+          <Item
+            whileHover={{ scale: 1.02 }}
+            style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
+            onClick={() => toggleMenu(true)}
+          >
+            <span>
+              <FontAwesomeIcon
+                icon={faCog}
+                transform='grow-1'
+                style={{ cursor: 'pointer' }}
+              />
+            </span>
+          </Item>
+          :
+          <ItemInactive
+            whileHover={{ scale: 1.02 }}
+            style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
+          >
+            <span>
+              <FontAwesomeIcon
+                icon={faCogs}
+                transform='shrink-2'
+                className='dropdown-toggle'
+              />
+            </span>
+          </ItemInactive>
+        }
 
-          {showMenu &&
-            <Dropdown
-              toggleMenu={toggleMenu}
-              items={
-                <>
+        {showMenu &&
+          <Dropdown
+            toggleMenu={toggleMenu}
+            items={
+              <>
+                {connect.status === 1 &&
                   <Item
                     onClick={() => { openModalWith('ConnectAccounts', {}, 'small'); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
                   >
                     <span>Switch Account</span>
                   </Item>
-                  <Item
-                    onClick={() => { openModalWith('Settings', {}, 'small'); toggleMenu(false); }}
-                    whileHover={{ scale: 1.01 }}
-                  >
-                    <span>Services</span>
-                  </Item>
+                }
+                <Item
+                  onClick={() => { openModalWith('Settings', {}, 'small'); toggleMenu(false); }}
+                  whileHover={{ scale: 1.01 }}
+                >
+                  <span>Services</span>
+                </Item>
+                {connect.status === 1 &&
                   <Item
                     onClick={() => { connect.disconnect(); toggleMenu(false); }}
                     whileHover={{ scale: 1.01 }}
-                    style={{ color: '#ae2324' }}
                   >
-                    <span>Disconnect</span>
+                    <span className='danger'>Disconnect</span>
                   </Item>
-                </>
-              }
-            />
-          }
-        </HeadingWrapper>
-      }
+                }
+              </>
+            }
+          />
+        }
+      </HeadingWrapper>
     </Wrapper>
   );
 }

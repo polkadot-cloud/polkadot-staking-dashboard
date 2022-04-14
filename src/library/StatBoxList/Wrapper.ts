@@ -4,6 +4,7 @@
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import { backgroundSecondary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ export const StatBoxWrapper = styled(motion.div)`
 
   .content {
     border-radius: 1rem;
-    background: rgba(255,255,255,0.6);
+    background: ${backgroundSecondary};
     display: flex;
     flex-flow: column wrap;
     margin-right: 1.25rem;

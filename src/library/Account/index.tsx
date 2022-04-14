@@ -5,6 +5,7 @@ import Identicon from '@polkadot/react-identicon';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
+import { buttonPrimaryBackground } from '../../theme';
 
 export const Account = (props: any) => {
 
@@ -42,7 +43,7 @@ export const Account = (props: any) => {
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}
-      fill={filled ? 'rgba(237, 237, 237, 0.5)' : 'none'}
+      fill={filled ? buttonPrimaryBackground : 'none'}
       fontSize={fontSize}
       padding={padding}
     >

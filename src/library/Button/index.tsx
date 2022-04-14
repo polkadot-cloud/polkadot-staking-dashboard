@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from "framer-motion";
+import { textPrimary, textInvert, buttonPrimaryBackground } from '../../theme';
 
 export const ButtonRow = styled.div`
   flex: 1;
@@ -19,13 +20,13 @@ export const ButtonRow = styled.div`
 
 const Wrapper = styled(motion.button) <any>`
   flex-grow: 1;
-  background: ${props => props.type === 'default' ? '#f1f1f1' : 'rgba(211, 48, 121, 0.9)'};
+  background: ${props => props.type === 'default' ? buttonPrimaryBackground : 'rgba(211, 48, 121, 0.9)'};
   padding: 0.6rem 1.2rem;
   border-radius: 1rem;
   margin: ${props => props.margin};
   font-size: 0.95rem;
   font-variation-settings: 'wght' 560;
-  color: ${props => props.type === 'default' ? '#222' : '#fafafa'};
+  color: ${props => props.type === 'default' ? textPrimary : textInvert};
 `;
 
 export const Button = (props: any) => {

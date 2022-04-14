@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from "styled-components";
+import { backgroundPrimary } from '../../theme';
 
 const StyledSpinner = styled.div`
     font-size: 10px;
@@ -33,7 +34,7 @@ const StyledSpinner = styled.div`
     content: '';
   }
   &:after {
-    background: #f7f7f7;
+    background: ${backgroundPrimary};
     width: 75%;
     height: 75%;
     border-radius: 50%;
