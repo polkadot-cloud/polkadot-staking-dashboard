@@ -42,7 +42,7 @@ export const Wrapper = styled.div`
       padding-top: 0.5rem;
       button {
         transition: color 0.2s;
-        margin-right: 0.75rem;
+        margin-right: 1rem;
         color: ${textSecondary};
         opacity: 0.5;
 
