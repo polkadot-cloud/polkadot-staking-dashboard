@@ -31,6 +31,12 @@ export const backgroundNetworkBar: theme.ThemeSet = theme(v, defaultThemes.backg
 
 export const backgroundDropdown: theme.ThemeSet = theme(v, defaultThemes.background.dropdown);
 
+export const backgroundValidator: theme.ThemeSet = theme(v, defaultThemes.background.validator);
+
+export const backgroundAnnouncement: theme.ThemeSet = theme(v, defaultThemes.background.announcement);
+
+export const backgroundToggle: theme.ThemeSet = theme(v, defaultThemes.buttons.toggle.background);
+
 // highlights
 
 export const highlightPrimary: theme.ThemeSet = theme(v, defaultThemes.highlight.primary);
@@ -44,3 +50,7 @@ export const buttonPrimaryBackground: theme.ThemeSet = theme(v, defaultThemes.bu
 // labels
 
 export const labelBackground: theme.ThemeSet = theme(v, defaultThemes.background.label);
+
+// borders
+
+export const borderPrimary: theme.ThemeSet = theme(v, defaultThemes.border.primary);

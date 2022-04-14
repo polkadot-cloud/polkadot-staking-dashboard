@@ -55,7 +55,7 @@ export const Item = (props: any) => {
           </motion.div>
           <div className='icon'>
             <FontAwesomeIcon icon={icon}
-              color={active ? 'white' : '#ccc'}
+              color={active ? 'white' : '#aaa'}
               transform={transform}
             />
           </div>

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from "styled-components";
+import { textSecondary, borderPrimary } from "../../theme";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ export const Header = styled.div`
   justify-content: flex-end;
   padding: 0 0.25rem 0.5rem 0.25rem;
   flex: 1;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid ${borderPrimary};
 
   h3 {
     margin: 0;
@@ -40,6 +41,7 @@ export const Header = styled.div`
       margin-left: 0.4rem;
       opacity: 0.6;
       transition: all 0.2s;
+      color: ${textSecondary};
 
       &:hover {
         opacity: 0.9
@@ -70,11 +72,11 @@ export const Pagination = styled.div<any>`
     button {
       margin-left: 0.5rem;
       &.next {
-        color: ${props => props.next ? 'rgb(211, 48, 121)' : '#aaa'};
+        color: ${props => props.next ? 'rgb(211, 48, 121)' : textSecondary};
         cursor: ${props => props.next ? 'pointer' : 'default'};
       }
       &.prev {
-        color: ${props => props.prev ? 'rgb(211, 48, 121)' : '#aaa'};
+        color: ${props => props.prev ? 'rgb(211, 48, 121)' : textSecondary};
         cursor: ${props => props.prev ? 'pointer' : 'default'};
       }
     }

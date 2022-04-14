@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { backgroundAnnouncement } from '../../../theme';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -22,7 +23,7 @@ export const Item = styled(motion.div)`
   align-items: flex-start;
   margin: 1rem 0.25rem;
   padding: 1.2rem 1rem;
-  background: linear-gradient(90deg, rgba(244,244,244,0.85) 0%, rgba(244,244,244,0.65) 100%);
+  background: ${backgroundAnnouncement};
   border-radius: 0.5rem;
 
   h3 {

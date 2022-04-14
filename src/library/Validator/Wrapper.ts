@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { backgroundValidator } from '../../theme';
 
 export const Wrapper = styled(motion.div) <any>`
   padding: 0.5rem;
@@ -13,7 +14,7 @@ export const Wrapper = styled(motion.div) <any>`
   > div {
     padding: 0.75rem 0.6rem;
     flex: 1;
-    background: linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%);
+    background: ${backgroundValidator};
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row wrap;

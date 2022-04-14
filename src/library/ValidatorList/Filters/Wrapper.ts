@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { backgroundToggle, textSecondary, borderPrimary } from '../../../theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -12,7 +13,7 @@ export const Wrapper = styled.div`
   align-items: flex-end;
 
   > .separator {
-    border-right: 2px solid #eee;
+    border-right: 2px solid ${borderPrimary};
     width: 1px;
     height: 80px;
     margin: 0 1.2rem;
@@ -27,7 +28,7 @@ export const Wrapper = styled.div`
       flex: 1;
       padding-bottom: 0.6rem;
       font-size: 0.8rem;
-      color: #333;
+      color: ${textSecondary};
     }
 
     > .items {
@@ -43,7 +44,7 @@ export const ItemWrapper = styled.div<any>`
     width: 110px;
     height: 80px;
     border-radius: 0.75rem;
-    background: ${props => props.active ? 'rgba(211, 48, 121, 0.85)' : '#f4f4f4'};
+    background: ${props => props.active ? 'rgba(211, 48, 121, 0.85)' : backgroundToggle};
     display: flex;
     flex-flow: column nowrap;
     margin-right: 1rem;

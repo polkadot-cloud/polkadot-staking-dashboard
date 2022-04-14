@@ -85,7 +85,7 @@ export const BalanceGraphInner = (props: any) => {
           zeroBalance ? '#ddd' : '#d33079',
           '#eee',
         ],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   };

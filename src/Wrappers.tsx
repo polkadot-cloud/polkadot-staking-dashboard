@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MAXIMUM_WIDTH, SIDE_MENU_STICKY_THRESHOLD } from './constants';
-import { textPrimary, backgroundGradient } from './theme';
+import { textPrimary, backgroundGradient, backgroundPrimary } from './theme';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
@@ -105,17 +105,17 @@ export const PageTitleWrapper = styled.header<any>`
     }
     padding-bottom: ${props => props.isSticky ? '1rem ' : '0.25vh '};
     width: 100%;
-    background: ${props => props.isSticky ? 'rgba(247,247,247,1) ' : 'none'};
+    background: ${props => props.isSticky ? backgroundPrimary : 'none'};
     z-index: 4;
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-end;
     min-height: ${props => props.isSticky ? '30px ' : 'none'};
-    transition: padding 0.3s ease-out, background-color 0.2s;
+    transition: padding 0.3s ease-out;
 
     h1 {
      font-size: ${props => props.isSticky ? '1.4rem ' : '1.7rem'};
-     transition: font-size 0.5s;
+     transition: font 0.5s;
      font-variation-settings: 'wght' 440;
      padding-left: 2rem;
      padding-right: 2rem;
