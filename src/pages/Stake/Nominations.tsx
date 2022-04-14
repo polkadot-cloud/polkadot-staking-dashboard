@@ -68,6 +68,7 @@ export const Nominations = () => {
                     layout='col'
                     title='Your Nominations'
                     refetchOnListUpdate
+                    allowMoreCols
                   />
                 </div>
               }

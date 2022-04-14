@@ -47,6 +47,13 @@ export const SectionWrapper = styled.div<any>`
   h4 {
     margin: 0.75rem 0;
   }
+  .head {
+    padding: 0.25rem;
+    width: 100%;
+    h4 {
+      margin: 0 0 0.5rem 0;
+    }
+  }
 
   .option {
     border-bottom: 1px solid #ddd;
@@ -59,13 +66,13 @@ export const SectionWrapper = styled.div<any>`
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;
   border-radius: 1rem;
-  background: ${backgroundSecondary};
+  background: ${props => props.transparent ? 'none' : backgroundSecondary};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
   align-items: flex-start;
   flex: 1;
-  margin-top: 1rem;
+  margin-top: ${props => props.noMargin ? 0 : '1rem'};
   position: relative;
   overflow: hidden;
 

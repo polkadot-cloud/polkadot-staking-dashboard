@@ -10,7 +10,6 @@ import { planckToDot } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 import { useStaking } from '../../contexts/Staking';
 import { Progress } from './Progress/Progress';
-import { Separator } from './Wrappers';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
@@ -48,7 +47,6 @@ export const Setup = (props: any) => {
         <MainWrapper paddingRight thin={_inSetup}>
           {!hasController() &&
             <SectionWrapper>
-              <Separator padding />
               <Element name="controller" style={{ position: 'absolute' }} />
               <SetController
                 setup={setup}

@@ -4,7 +4,6 @@
 import { PageProps } from '../types';
 import { PageRowWrapper } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { MainWrapper } from '../../library/Layout';
 import { PageTitle } from '../../library/PageTitle';
 
 export const Pools = (props: PageProps) => {
@@ -16,12 +15,10 @@ export const Pools = (props: PageProps) => {
     <>
       <PageTitle title={title} />
       <PageRowWrapper noVerticalSpacer>
-        <MainWrapper>
-          <SectionWrapper>
-            <h2>Nomination Pools</h2>
-            <h4>In progress.</h4>
-          </SectionWrapper>
-        </MainWrapper>
+        <SectionWrapper>
+          <h2>Nomination Pools</h2>
+          <h4>In progress.</h4>
+        </SectionWrapper>
       </PageRowWrapper>
     </>
   );

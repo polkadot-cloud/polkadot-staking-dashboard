@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from "framer-motion";
-import { textPrimary, textInvert, buttonPrimaryBackground } from '../../theme';
+import { textPrimary, buttonPrimaryBackground } from '../../theme';
 
 export const ButtonRow = styled.div`
   flex: 1;
@@ -23,7 +23,7 @@ const Wrapper = styled(motion.button) <any>`
   color: ${props => props.type === 'default' ? textPrimary : 'white'};
   margin: ${props => props.margin};
   flex-grow: 1;
-  padding: 0.6rem 1.2rem;
+  padding: ${props => props.padding};
   border-radius: 1rem;
   font-size: 0.95rem;
   font-variation-settings: 'wght' 560;
@@ -31,9 +31,10 @@ const Wrapper = styled(motion.button) <any>`
 
 export const Button = (props: any) => {
 
-  let { title, primary, inline, onClick } = props;
-  primary = primary === undefined ? false : primary;
-  inline = inline === undefined ? false : inline;
+  let { title, primary, inline, thin, onClick } = props;
+  primary = primary ?? false;
+  inline = inline ?? false;
+  thin = thin ?? false;
 
   return (
     <Wrapper
@@ -41,6 +42,7 @@ export const Button = (props: any) => {
       whileTap={{ scale: 0.98 }}
       type={primary === true ? 'invert' : 'default'}
       margin={inline ? '0' : '0 0.5rem'}
+      padding={thin ? '0.32rem 1.2rem' : '0.5rem 1.2rem'}
       onClick={() => onClick()}
     >
       {title}

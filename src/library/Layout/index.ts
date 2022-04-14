@@ -25,8 +25,8 @@ export const MainWrapper = styled.div<any>`
 
 export const SecondaryWrapper = styled.div`
   box-sizing: border-box;
-  flex-basis: 33%;
-  max-width: 33%;
+  flex-basis: 40%;
+  max-width: 40%;
   border-radius: 1rem;
   flex: 1;
 `;
@@ -42,7 +42,7 @@ export const StickyWrapper = styled.div`
 
 export const HalfWrapper = styled.div<any>`
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: ${props => props.flexDirection} nowrap;
   width: 100%;
   box-sizing: border-box;
   align-items: ${props => props.alignItems};

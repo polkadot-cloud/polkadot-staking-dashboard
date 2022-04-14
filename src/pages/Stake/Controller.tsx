@@ -22,7 +22,7 @@ export const Controller = () => {
   const controller = getBondedAccount(activeAccount);
 
   return (
-    <SectionWrapper>
+    <SectionWrapper transparent>
       <h3 style={{ marginBottom: '1rem' }}>
         Controller
         <button onClick={() => {
@@ -39,7 +39,7 @@ export const Controller = () => {
         />
         <Button
           primary
-          title='Change'
+          title='Change Controller'
           onClick={() => openModalWith('ChangeController', {}, 'small')}
         />
       </StakingAccount>

@@ -14,12 +14,6 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Separator = styled.div<any>`
-  border-top: ${props => props.padding ? 'none' : '1px solid #eee'};
-  width: 100%;
-  margin: ${props => props.padding ? '0.75rem 0 0 0' : '2rem 0 2rem 0'};
-`;
-
 export const StakingAccount = styled.div<any>`
   margin-bottom: ${props => props.last === true ? `none` : '1rem'};
   display: flex;

@@ -98,7 +98,7 @@ export const BalanceGraphInner = (props: any) => {
     <>
       <GraphWrapper flex>
         <div className='head'>
-          <h4>{network.unit} Balance</h4>
+          <h4>Balance</h4>
           <h2>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h2>
         </div>
         <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
