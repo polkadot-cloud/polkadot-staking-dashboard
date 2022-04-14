@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
-import { backgroundSecondary } from '../../theme';
+import { textSecondary, backgroundSecondary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -81,6 +81,7 @@ export const StatBoxWrapper = styled(motion.div)`
       &:last-child {
         h4 {
         margin: 0;
+        color: ${textSecondary};
       }
     }
   }

@@ -9,7 +9,7 @@ export const Heading = (props: any) => {
 
   return (
     <Wrapper>
-      {title}
+      <h5>{title}</h5>
     </Wrapper>
   )
 }

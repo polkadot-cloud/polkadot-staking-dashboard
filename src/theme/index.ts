@@ -13,7 +13,7 @@ let v = 'mode';
 
 export const textPrimary: theme.ThemeSet = theme(v, defaultThemes.text.primary);
 
-export const textSecondary: theme.ThemeSet = theme(v, defaultThemes.text.primary);
+export const textSecondary: theme.ThemeSet = theme(v, defaultThemes.text.secondary);
 
 export const textInvert: theme.ThemeSet = theme(v, defaultThemes.text.invert);
 

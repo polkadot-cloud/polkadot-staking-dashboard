@@ -40,23 +40,15 @@ export const Wrapper = styled.div`
       flex-flow: row wrap;
       align-items: center;
       padding-top: 0.5rem;
-
       button {
         transition: color 0.2s;
-        margin-right: 0.25rem;
+        margin-right: 0.75rem;
         color: ${textSecondary};
         opacity: 0.5;
 
         &:hover {
           opacity: 0.75;
         }
-    }
-    .ext {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-end;
-      padding: 0;
     }
   }
 }
@@ -100,22 +92,17 @@ export const ItemWrapper = styled(motion.div) <any>`
 `;
 
 export const HeadingWrapper = styled.div<any>`
-  margin: 1.2rem 0 0.5rem 0;
-  font-size: 0.92rem;
-  padding: 0 0.5rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  opacity: 0.7;
-  color: ${textSecondary};
-`;
 
-export const Separator = styled.div`
-  border-bottom: 1px solid ${textSecondary};
-  margin-bottom: 0.75rem;
-  opacity: 0.1;
-  padding: 0 0.5rem;
+  h5 {
+    color: ${textSecondary};
+    margin: 1.1rem 0 0.2rem 0;
+    padding: 0 0.5rem;
+    opacity: 0.7;
+  }
 `;
 
 export default Wrapper;

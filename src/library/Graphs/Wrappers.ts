@@ -103,6 +103,7 @@ export const GraphWrapper = styled.div<any>`
       font-size: 1rem;
       color: ${textSecondary};
       margin-top: 0.2rem;
+      font-variation-settings: 'wght' 530;      
     }
   }
   h2 {

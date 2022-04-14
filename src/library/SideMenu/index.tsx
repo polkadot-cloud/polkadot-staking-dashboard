@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Wrapper, LogoWrapper, Separator } from './Wrapper';
+import { Wrapper, LogoWrapper } from './Wrapper';
 import Heading from './Heading';
 import Item from './Item';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../pages';
@@ -15,7 +15,8 @@ import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../../library/Hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faMoon as faDark } from '@fortawesome/free-solid-svg-icons';
+import { faCircle as faLight } from '@fortawesome/free-regular-svg-icons';
 import { useTheme } from '../../contexts/Themes';
 
 export const SideMenu = () => {
@@ -104,13 +105,15 @@ export const SideMenu = () => {
           </React.Fragment>
         )}
       </section>
-      <Separator />
+
       <section>
-        <div className='ext'>
-          <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
-            <FontAwesomeIcon icon={faGithub} transform='grow-9' />
-          </button>
-        </div>
+        <button onClick={() => toggleTheme()}>
+          <FontAwesomeIcon icon={mode === 'light' ? faLight : faDark} transform={mode === 'light' ? 'grow-9' : 'grow-7'} />
+        </button>
+        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
+          <FontAwesomeIcon icon={faGithub} transform='grow-9' />
+        </button>
+
       </section>
     </Wrapper>
   );
