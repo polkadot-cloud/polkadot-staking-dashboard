@@ -35,7 +35,7 @@ export const backgroundValidator: theme.ThemeSet = theme(v, defaultThemes.backgr
 
 export const backgroundAnnouncement: theme.ThemeSet = theme(v, defaultThemes.background.announcement);
 
-export const backgroundToggle: theme.ThemeSet = theme(v, defaultThemes.buttons.toggle.background);
+export const backgroundIdenticon: theme.ThemeSet = theme(v, defaultThemes.background.identicon);
 
 // highlights
 
@@ -47,6 +47,10 @@ export const highlightSecondary: theme.ThemeSet = theme(v, defaultThemes.highlig
 
 export const buttonPrimaryBackground: theme.ThemeSet = theme(v, defaultThemes.buttons.primary.background);
 
+export const buttonSecondaryBackground: theme.ThemeSet = theme(v, defaultThemes.buttons.secondary.background);
+
+export const backgroundToggle: theme.ThemeSet = theme(v, defaultThemes.buttons.toggle.background);
+
 // labels
 
 export const labelBackground: theme.ThemeSet = theme(v, defaultThemes.background.label);
@@ -54,3 +58,9 @@ export const labelBackground: theme.ThemeSet = theme(v, defaultThemes.background
 // borders
 
 export const borderPrimary: theme.ThemeSet = theme(v, defaultThemes.border.primary);
+
+// modal
+
+export const modalOverlayBackground: theme.ThemeSet = theme(v, defaultThemes.modal.overlay);
+
+export const modalBackground: theme.ThemeSet = theme(v, defaultThemes.modal.background);

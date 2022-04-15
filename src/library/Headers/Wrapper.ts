@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 import {
   backgroundDropdown,
-  buttonPrimaryBackground,
   textPrimary,
   textInvert,
-  textDanger
+  textDanger,
+  buttonSecondaryBackground
 } from '../../theme';
 
 export const Wrapper = styled.div`
@@ -25,11 +25,6 @@ export const Wrapper = styled.div`
   transition: all 0.15s;
   z-index: 5;
   margin-bottom: 0.5rem;
-
-  /* overwrite default cursor behaviour for Identicon  */
-  svg, .ui--IdentityIcon {
-    cursor: default;
-  }
 
   .menu {
     display: none;
@@ -78,7 +73,7 @@ export const HeadingWrapper = styled.div`
 `;
 
 export const Item = styled(motion.button)`
-    background: ${buttonPrimaryBackground};
+    background: ${buttonSecondaryBackground};
     flex-grow: 1;  
     padding: 0 1rem;
     border-radius: 1rem;
@@ -122,7 +117,7 @@ export const ItemInactive = styled(motion.div)`
     flex-grow: 1;  
     padding: 0 1rem;
     border-radius: 1rem;
-    background: ${buttonPrimaryBackground};
+    background: ${buttonSecondaryBackground};
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { buttonPrimaryBackground, backgroundToggle, textPrimary } from '../../theme';
 
 export const Wrapper = styled.button`
   width: 100%;
@@ -10,11 +11,12 @@ export const Wrapper = styled.button`
   display: flex;
   flex-flow: row-reverse wrap;
   align-items: center;
-  background: rgba(255,255,255,0.9);
+  background: ${buttonPrimaryBackground};
   transition: all 0.15s;
+  color: ${textPrimary};
 
   &:hover {
-    background: rgba(255,255,255,0.6);
+    background: ${backgroundToggle};
   }
 
   > section:last-child {

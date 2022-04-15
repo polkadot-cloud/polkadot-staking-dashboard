@@ -3,7 +3,7 @@
 
 import Downshift from 'downshift';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
-import Identicon from '@polkadot/react-identicon';
+import Identicon from '../../Identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,8 +24,6 @@ export const AccountDropdown = (props: any) => {
           <Identicon
             value={item.address}
             size={26}
-            theme="polkadot"
-            style={{ cursor: 'default' }}
           />
         </div>
         {item.name}

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { buttonPrimaryBackground, backgroundToggle, textPrimary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ export const Wrapper = styled.div`
 
   h2 {
     margin-top: 0.5rem;
+    color: ${textPrimary};
   }
 
   button {
@@ -24,11 +26,12 @@ export const Wrapper = styled.div`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    background: #f8f8f8;
+    background: ${buttonPrimaryBackground};
     transition: background 0.15s;
+    color: ${textPrimary};
 
     &:hover {
-      background: #fafafa;
+      background: ${backgroundToggle};
     }
   }
 `;

@@ -1,0 +1,29 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+import styled from 'styled-components';
+import { Identicon as IdenticonDefault } from '@polkadot/react-identicon';
+import { backgroundIdenticon } from '../../theme';
+
+const Wrapper = styled.div`
+  svg > circle:first-child {
+    fill: ${backgroundIdenticon};
+  }
+`;
+export const Identicon = (props: any) => {
+
+  const { value, size } = props;
+
+  return (
+    <Wrapper>
+      <IdenticonDefault
+        value={value}
+        size={size}
+        theme="polkadot"
+        style={{ cursor: 'default' }}
+      />
+    </Wrapper>
+  )
+}
+
+export default Identicon;

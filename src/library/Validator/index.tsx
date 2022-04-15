@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Wrapper } from './Wrapper';
-import Identicon from '@polkadot/react-identicon';
+import Identicon from '../Identicon';
 import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
 import { useApi } from '../../contexts/Api';
@@ -34,8 +34,6 @@ export const ValidatorInner = (props: any) => {
         <Identicon
           value={address}
           size={26}
-          theme="polkadot"
-          style={{ cursor: 'default' }}
         />
 
         {synced.identities &&

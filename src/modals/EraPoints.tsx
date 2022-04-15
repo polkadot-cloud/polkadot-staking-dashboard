@@ -8,7 +8,7 @@ import { EraPoints as EraPointsGraph } from '../library/Graphs/EraPoints';
 import { SubscanButton } from '../library/SubscanButton';
 import { GraphWrapper } from '../library/Graphs/Wrappers';
 import { useSize, formatSize } from '../library/Graphs/Utils';
-import Identicon from '@polkadot/react-identicon';
+import Identicon from '../library/Identicon';
 import { clipAddress } from '../Utils';
 import { useNetworkMetrics } from '../contexts/Network';
 
@@ -41,11 +41,9 @@ export const EraPoints = () => {
       <div className='header'>
         <Identicon
           value={address}
-          size={32}
-          theme="polkadot"
-          style={{ cursor: 'default', marginRight: '0.75rem' }}
+          size={40}
         />
-        <h1>{identity === null ? clipAddress(address) : identity}</h1>
+        <h1>&nbsp; {identity === null ? clipAddress(address) : identity}</h1>
       </div>
       <div className='body'>
         <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>

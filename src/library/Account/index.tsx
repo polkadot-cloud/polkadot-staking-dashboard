@@ -1,11 +1,11 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import Identicon from '@polkadot/react-identicon';
+import Identicon from '../Identicon';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
-import { buttonPrimaryBackground } from '../../theme';
+import { buttonSecondaryBackground } from '../../theme';
 
 export const Account = (props: any) => {
 
@@ -43,7 +43,7 @@ export const Account = (props: any) => {
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}
-      fill={filled ? buttonPrimaryBackground : 'none'}
+      fill={filled ? buttonSecondaryBackground : 'none'}
       fontSize={fontSize}
       padding={padding}
     >
@@ -54,9 +54,7 @@ export const Account = (props: any) => {
         <>
           <Identicon
             value={value}
-            size={convertRemToPixels(fontSize) * 1.35}
-            theme="polkadot"
-            style={{ cursor: 'default' }}
+            size={convertRemToPixels(fontSize) * 1.4}
           />
           <span className='title'>{displayValue}</span>
         </>

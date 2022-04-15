@@ -3,7 +3,7 @@
 
 import Downshift from 'downshift';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
-import Identicon from '@polkadot/react-identicon';
+import Identicon from '../../Identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { clipAddress, convertRemToPixels } from '../../../Utils';
@@ -29,8 +29,6 @@ export const AccountSelect = (props: any) => {
           <Identicon
             value={item.address}
             size={40}
-            theme="polkadot"
-            style={{ cursor: 'default' }}
           />
         </div>
         <h3 style={{ color: color }}>{item.name}</h3>
@@ -50,8 +48,6 @@ export const AccountSelect = (props: any) => {
                   <Identicon
                     value={value?.address ?? ''}
                     size={convertRemToPixels('2rem')}
-                    theme="polkadot"
-                    style={{ cursor: 'default' }}
                   />
                 }
                 <input {...c.getInputProps({ placeholder: placeholder })} className='input' />

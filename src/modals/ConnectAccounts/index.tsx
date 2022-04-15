@@ -4,7 +4,7 @@
 import Wrapper from './Wrapper';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
-import Identicon from '@polkadot/react-identicon';
+import Identicon from '../../library/Identicon';
 
 export const ConnectAccounts = () => {
 
@@ -26,10 +26,8 @@ export const ConnectAccounts = () => {
             <Identicon
               value={address}
               size={26}
-              theme="polkadot"
-              style={{ marginRight: '0.5rem' }}
             />
-            {name}
+            &nbsp; {name}
           </button>
         );
       })}

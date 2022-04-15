@@ -3,16 +3,16 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { modalOverlayBackground, modalBackground } from '../../theme';
 
 // Blurred background modal wrapper
 export const Wrapper = styled(motion.div)`
+    background: ${modalOverlayBackground};
     position: fixed;
     width: 100%;
     height: 100%;
     z-index: 9;
     backdrop-filter: blur(4px);
-    background: rgba(240,240,240, 0.6);
-    /* background: rgba(211,48,121, 0.6); Polkadot themed background */
 
     /* modal content wrapper */
     .content_wrapper {
@@ -35,9 +35,9 @@ export const Wrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div<any>`
+  background: ${modalBackground};
   width: 100%;
   max-width: ${props => props.size === 'large' ? '800px' : '600px'};
-  background: white;
   z-index: 9;
   border-radius: 0.75rem;
   overflow: hidden;
