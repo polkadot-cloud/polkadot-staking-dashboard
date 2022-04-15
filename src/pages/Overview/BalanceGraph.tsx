@@ -107,7 +107,7 @@ export const BalanceGraphInner = (props: any) => {
           <h2>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h2>
         </div>
         <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
-          <div className='graph donut' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
+          <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
             <Doughnut
               options={options}
               data={data}

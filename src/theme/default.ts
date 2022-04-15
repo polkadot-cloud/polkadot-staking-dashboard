@@ -21,21 +21,22 @@ export const defaultThemes: any = {
       'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
     secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.18)'),
-    network: v(
-      'rgba(229,229,229,0.75)',
-      'rgba(27,27,27,0.75)'
-    ),
+    network: v('rgba(229,229,229,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     label: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
-      'linear-gradient(90deg, rgba(30,30,30,0.9) 0%, rgba(30,30,30,0.6) 100%)'
+      'linear-gradient(90deg, rgba(28,28,28.9) 0%, rgba(28,28,28,0.6) 100%)'
     ),
     announcement: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
       'linear-gradient(90deg, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0.6) 100%)'
     ),
-    identicon: v('#eee', '#333')
+    identicon: v('#eee', '#333'),
+    overlay: v(
+      'linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%)',
+      'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
+    ),
   },
   highlight: {
     primary: v(
@@ -54,15 +55,9 @@ export const defaultThemes: any = {
     grid: v('#eee', '#222'),
   },
   buttons: {
-    primary: {
-      background: v('#f8f8f8', '#0d0d0d'),
-    },
-    secondary: {
-      background: v('#ebebeb', '#0c0c0c'),
-    },
-    toggle: {
-      background: v('#f4f4f4', '#1e1e1e'),
-    }
+    primary: { background: v('#f8f8f8', '#0d0d0d') },
+    secondary: { background: v('#ebebeb', '#0c0c0c') },
+    toggle: { background: v('#f4f4f4', '#1e1e1e') },
   },
   border: {
     primary: v('#eee', '#222'),
@@ -70,6 +65,13 @@ export const defaultThemes: any = {
   modal: {
     overlay: v('rgba(240,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
     background: v('#fff', '#000'),
+  },
+  assistant: {
+    background: v('rgba(228,228,228,0.93)', 'rgba(28,28,28,0.93)'),
+    link: v('#d33079', '#d33079'),
+    button: {
+      background: v('rgba(255,255,255,0.65)', 'rgba(0,0,0,0.4)'),
+    }
   }
 };
 

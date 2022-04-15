@@ -14,10 +14,9 @@ import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
 import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../../library/Hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faExclamationTriangle, faMoon as faDark } from '@fortawesome/free-solid-svg-icons';
-import { faCircle as faLight } from '@fortawesome/free-regular-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '../../contexts/Themes';
+import { SunnyOutline, Moon, LogoGithub } from 'react-ionicons'
 
 export const SideMenu = () => {
 
@@ -108,10 +107,13 @@ export const SideMenu = () => {
 
       <section>
         <button onClick={() => toggleTheme()}>
-          <FontAwesomeIcon icon={mode === 'light' ? faLight : faDark} transform={mode === 'light' ? 'grow-9' : 'grow-7'} />
+          {mode === 'light'
+            ? <SunnyOutline width='1.8rem' height='1.8rem' />
+            : <Moon width='1.5rem' height='1.5rem' />
+          }
         </button>
         <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
-          <FontAwesomeIcon icon={faGithub} transform='grow-9' />
+          <LogoGithub width='1.6rem' height='1.6rem' />
         </button>
 
       </section>

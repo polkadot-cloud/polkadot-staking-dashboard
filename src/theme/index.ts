@@ -37,6 +37,8 @@ export const backgroundAnnouncement: theme.ThemeSet = theme(v, defaultThemes.bac
 
 export const backgroundIdenticon: theme.ThemeSet = theme(v, defaultThemes.background.identicon);
 
+export const backgroundOverlay: theme.ThemeSet = theme(v, defaultThemes.background.overlay);
+
 // highlights
 
 export const highlightPrimary: theme.ThemeSet = theme(v, defaultThemes.highlight.primary);
@@ -65,4 +67,10 @@ export const modalOverlayBackground: theme.ThemeSet = theme(v, defaultThemes.mod
 
 export const modalBackground: theme.ThemeSet = theme(v, defaultThemes.modal.background);
 
-// graph
+// assistant
+
+export const assistantBackground: theme.ThemeSet = theme(v, defaultThemes.assistant.background);
+
+export const assistantButton: theme.ThemeSet = theme(v, defaultThemes.assistant.button.background);
+
+export const assistantLink: theme.ThemeSet = theme(v, defaultThemes.assistant.link);

@@ -4,6 +4,7 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from '../../constants';
+import { textPrimary, textSecondary, assistantLink, assistantButton, assistantBackground, textInvert } from '../../theme';
 
 export const Wrapper = styled(motion.div) <any>`
   position: fixed;
@@ -36,7 +37,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
-  background: rgba(228,228,228,0.93);
+  background: ${assistantBackground};
   backdrop-filter: blur(4px);
   margin: 0.75rem;
 `;
@@ -45,7 +46,6 @@ export const HeaderWrapper = styled.div`
   width: 100%;
 
   .hold {
-    border-bottom: 1px solid #dadada;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -56,7 +56,7 @@ export const HeaderWrapper = styled.div`
   }
 
   button {
-    color: #222;
+    color: ${textPrimary};
     font-size: 1rem;
     font-variation-settings: 'wght' 575;
     display: flex;
@@ -65,9 +65,8 @@ export const HeaderWrapper = styled.div`
     align-items: center;
 
     &.close {
-      border: 1px solid #222;
+      border: 1px solid ${textPrimary};
       border-radius: 1rem;
-      background: rgba(255,255,255,0.25);
       padding: 0.3rem 0.75rem;
       margin-right: 0.5rem;
       font-size: 0.9rem;
@@ -103,14 +102,18 @@ export const ListWrapper = styled(motion.div)`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    color: #222;
+    color: ${textPrimary};
   }
   h2 {
-    color: #222;
+    color: ${textPrimary};
     padding: 0 0.75rem;
     margin: 0.5rem 0;
   }
+  p {
+    color: ${textPrimary};
+  }
   .definition {
+    color: ${textPrimary};
     padding: 0.75rem;
     line-height: 1.4rem;
     margin: 0;
@@ -124,16 +127,16 @@ export const HeadingWrapper = styled.div`
     margin: 0.5rem 0 0;
     padding: 0.5rem 0;
     font-variation-settings: 'wght' 575;
-    color: #333;
+    color: ${textSecondary};
   }
 `;
 
 export const DefinitionWrapper = styled(motion.div) <any>`
   width: 100%;
   display: flex;
-  
+
   > button {
-    background: rgba(255,255,255,0.65);
+    background: ${assistantButton};
     border-radius: 0.75rem;
     margin: 0.45rem;
     padding: 1rem;
@@ -151,23 +154,21 @@ export const DefinitionWrapper = styled(motion.div) <any>`
       flex: 1;
 
       > h3 {
+        color: ${textPrimary};
         font-size: 1rem;
         margin: 0;
         text-align: left;
-        transition: all 0.2s;
-        color: #000;
       }
       > p {
+        color: ${textPrimary};
         font-variation-settings: 'wght' 420;
         margin: 0.5rem 0 0 0;
         text-align: left;
       }
     }
-    &:hover {
-      > div:last-child {
-        transition: color 0.15s;
-        color: #d33079;
-      }
+
+    p.icon {
+      opacity: 0.5;
     }
   }
 `;
@@ -180,8 +181,12 @@ export const ItemWrapper = styled(motion.div) <any>`
   flex-flow: row wrap;
   justify-content: flex-start;
 
+  p.icon {
+    opacity: 0.5
+  }
+
   > * {
-    background: rgba(255,255,255,0.65);
+    background: ${assistantButton};
     border-radius: 0.75rem;
     flex: 1;
     padding: 0 0.8rem;
@@ -193,18 +198,20 @@ export const ItemWrapper = styled(motion.div) <any>`
     position: relative;
 
     > h4 {
+      color: ${textPrimary};
       font-weight: normal;
       margin: 0.65rem 0;
       text-transform: uppercase;
       font-size: 0.7rem;
     }
     > h3 {
+      color: ${textPrimary};
       margin: 0;
       text-align: left;
-      transition: all 0.2s;
     }
 
     > p {
+      color: ${textPrimary};
       font-variation-settings: 'wght' 420;
       text-align: left;
     }
@@ -213,24 +220,18 @@ export const ItemWrapper = styled(motion.div) <any>`
       position: absolute;
       bottom: 0.7rem;
       right: 0.7rem;
-      transition: all 0.2s;
-    }
-    &:hover {
-      .ext {
-        color: #d33079;
-      }
     }
 
     &.action {
       background: rgba(211, 48, 121, 0.85);
       > h4 {
-        color: #eee;
+        color: white;
       }
       > h3 {
-        color: #fff;
+        color: white;
       }
       > p {
-        color: #fff;
+        color: white;
       }
     }
   }

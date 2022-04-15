@@ -34,7 +34,7 @@ export const External = (props: any) => {
         <h4>{label}</h4>
         <h3>{title}</h3>
         {width > 50 && <p>{subtitle}</p>}
-        <FontAwesomeIcon icon={faExt} className='ext' />
+        <p className='icon'><FontAwesomeIcon icon={faExt} className='ext' /></p>
       </motion.button>
     </Wrapper>
   );

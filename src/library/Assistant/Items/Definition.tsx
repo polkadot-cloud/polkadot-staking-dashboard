@@ -32,7 +32,7 @@ export const Heading = (props: any) => {
           <p>{subtitle}</p>
         </div>
         <div>
-          <FontAwesomeIcon icon={faChevronRight} />
+          <p className='icon'><FontAwesomeIcon icon={faChevronRight} /></p>
         </div>
       </motion.button>
     </Wrapper>

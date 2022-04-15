@@ -19,6 +19,7 @@
     "@types/react-helmet": "^6.1.5",
     "@types/react-scroll": "^1.8.3",
     "@types/styled-theming": "^2.2.5",
+    "add": "^2.0.6",
     "async": ">=3.2.2",
     "bn.js": "^5.2.0",
     "chart.js": "^3.7.1",
@@ -35,6 +36,7 @@
     "react-content-loader": "^6.2.0",
     "react-dom": "^18.0.0-beta-24dd07bd2-20211208",
     "react-helmet": "^6.1.0",
+    "react-ionicons": "^4.2.0",
     "react-lorem-ipsum": "^1.4.9",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
@@ -43,7 +45,8 @@
     "styled-theming": "^2.2.0",
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.4",
-    "window-or-global": "^1.0.1"
+    "window-or-global": "^1.0.1",
+    "yarn": "^1.22.18"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",

@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
-import { textSecondary, highlightPrimary, highlightSecondary } from '../../theme';
+import { textPrimary, textSecondary, highlightPrimary, highlightSecondary, backgroundOverlay } from '../../theme';
 
 export const Wrapper = styled.div`
   background: none;
@@ -19,11 +19,11 @@ export const Wrapper = styled.div`
   backdrop-filter: blur(4px);
 
   @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    background: rgb(242,242,242);
-      background: linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%);
+    background: ${backgroundOverlay};
   }
 
   .close-menu {
+    color: ${textPrimary};
     display: none;
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
       display: inline;
@@ -40,14 +40,19 @@ export const Wrapper = styled.div`
       flex-flow: row wrap;
       align-items: center;
       padding-top: 0.5rem;
+      
       button {
         transition: color 0.2s;
-        margin-right: 1rem;
+        margin-right: 0.25rem;
         color: ${textSecondary};
-        opacity: 0.5;
+        opacity: 0.75;
+
+        path {
+          fill: ${textSecondary};
+        }
 
         &:hover {
-          opacity: 0.75;
+          opacity: 1;
         }
     }
   }
