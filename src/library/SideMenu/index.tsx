@@ -108,12 +108,12 @@ export const SideMenu = () => {
       <section>
         <button onClick={() => toggleTheme()}>
           {mode === 'light'
-            ? <SunnyOutline width='1.8rem' height='1.8rem' />
+            ? <SunnyOutline width='1.65rem' height='1.65rem' />
             : <Moon width='1.5rem' height='1.5rem' />
           }
         </button>
         <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
-          <LogoGithub width='1.6rem' height='1.6rem' />
+          <LogoGithub width='1.5rem' height='1.5rem' />
         </button>
 
       </section>

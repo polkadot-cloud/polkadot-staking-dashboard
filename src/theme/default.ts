@@ -9,8 +9,8 @@ const v = (light: string, dark: string) => ({
 export const defaultThemes: any = {
   transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
   text: {
-    primary: v('#333', '#ddd'),
-    secondary: v('#444', '#bbb'),
+    primary: v('#333', '#ccc'),
+    secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
     danger: v('#ae2324', '#d14445'),
   },
@@ -20,17 +20,17 @@ export const defaultThemes: any = {
       'linear-gradient(180deg, rgba(245,245,245,1) 0%, rgba(245,245,245,1) 100px, rgba(229,229,229,1) 100%)',
       'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
-    secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.18)'),
+    secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.16)'),
     network: v('rgba(229,229,229,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     label: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
-      'linear-gradient(90deg, rgba(28,28,28.9) 0%, rgba(28,28,28,0.6) 100%)'
+      'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)'
     ),
     announcement: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
-      'linear-gradient(90deg, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0.6) 100%)'
+      'linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.5) 100%)'
     ),
     identicon: v('#eee', '#333'),
     overlay: v(
@@ -57,7 +57,7 @@ export const defaultThemes: any = {
   buttons: {
     primary: { background: v('#f8f8f8', '#0d0d0d') },
     secondary: { background: v('#ebebeb', '#0c0c0c') },
-    toggle: { background: v('#f4f4f4', '#1e1e1e') },
+    toggle: { background: v('#f4f4f4', '#1c1c1c') },
   },
   border: {
     primary: v('#eee', '#222'),
