@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundAnnouncement } from '../../../theme';
+import { backgroundAnnouncement, textSecondary } from '../../../theme';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -46,7 +46,7 @@ export const Item = styled(motion.div)`
 
   p {
     margin: 0;
-    color: #444;
+    color: ${textSecondary};
     font-size: 0.9rem;
     line-height: 1.2rem;
     font-variation-settings: 'wght' 490;

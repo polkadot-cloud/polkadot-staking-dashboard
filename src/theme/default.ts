@@ -19,7 +19,7 @@ export const defaultThemes = {
       'linear-gradient(180deg, rgba(245,245,245,1) 0%, rgba(245,245,245,1) 100px, rgba(229,229,229,1) 100%)',
       'linear-gradient(180deg, rgba(31,31,31,1) 0%, rgba(31,31,31,1) 100px, rgba(21,21,21,1) 100%)'
     ),
-    secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.24)'),
+    secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.18)'),
     network: v(
       'rgba(229,229,229,0.75)',
       'rgba(27,27,27,0.75)'
@@ -32,12 +32,9 @@ export const defaultThemes = {
     ),
     announcement: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
-      'linear-gradient(90deg, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.6) 100%)'
+      'linear-gradient(90deg, rgba(18,18,18,0.9) 0%, rgba(18,18,18,0.6) 100%)'
     ),
-    identicon: v(
-      '#eee',
-      '#333'
-    )
+    identicon: v('#eee', '#333')
   },
   highlight: {
     primary: v(
@@ -54,7 +51,7 @@ export const defaultThemes = {
       background: v('#f8f8f8', '#0d0d0d'),
     },
     secondary: {
-      background: v('#ebebeb', '#131313'),
+      background: v('#ebebeb', '#0c0c0c'),
     },
     toggle: {
       background: v('#f4f4f4', '#1e1e1e'),
@@ -64,14 +61,8 @@ export const defaultThemes = {
     primary: v('#eee', '#222'),
   },
   modal: {
-    overlay: v(
-      'rgba(240,240,240, 0.6)',
-      'rgba(16,16,16, 0.6)'
-    ),
-    background: v(
-      '#fff',
-      '#000'
-    ),
+    overlay: v('rgba(240,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
+    background: v('#fff', '#000'),
   }
 };
 
