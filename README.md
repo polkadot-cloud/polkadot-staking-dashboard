@@ -5,7 +5,7 @@
 ## Demo
 [https://rossbulat.github.io/polkadot-staking-dashboard/](https://rossbulat.github.io/polkadot-staking-dashboard/)
 
-<img width="1580" alt="Screenshot 2022-04-06 at 12 44 12" src="https://user-images.githubusercontent.com/13929023/161903876-4e852a3e-fb74-432b-a6a4-8bcce5962756.png">
+<img width="1581" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/163521128-1b6775a4-3676-42b1-a327-d2e6a4621347.png">
 
 ## Milestones
 
