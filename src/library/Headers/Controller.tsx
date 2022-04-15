@@ -2,12 +2,14 @@
 import { useEffect } from 'react';
 import { Account } from '../Account';
 import { useConnect } from '../../contexts/Connect';
+import { useStaking } from '../../contexts/Staking';
 import { useBalances } from '../../contexts/Balances';
 import { useModal } from '../../contexts/Modal';
 
 export const Controller = () => {
 
   const { openModalWith } = useModal();
+  const { hasController } = useStaking();
   const { activeAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
@@ -21,8 +23,8 @@ export const Controller = () => {
         value={controller}
         format='name'
         label='Controller'
-        canClick={true}
-        onClick={() => openModalWith('ChangeController', {}, 'small')}
+        canClick={hasController()}
+        onClick={() => { hasController() && openModalWith('ChangeController', {}, 'small') }}
         filled
       />
     </>
