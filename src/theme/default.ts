@@ -6,7 +6,8 @@ const v = (light: string, dark: string) => ({
   dark: dark,
 });
 
-export const defaultThemes = {
+export const defaultThemes: any = {
+  transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
   text: {
     primary: v('#333', '#ddd'),
     secondary: v('#444', '#bbb'),
@@ -45,6 +46,12 @@ export const defaultThemes = {
       'linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%)',
       'linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)'
     ),
+  },
+  graphs: {
+    colors: [v('#d33079', '#d33079'), v('#ccc', '#555'), v('#eee', '#222')],
+    inactive: v('#ddd', '#333'),
+    tooltip: v('#333', '#ddd'),
+    grid: v('#eee', '#222'),
   },
   buttons: {
     primary: {

@@ -13,6 +13,8 @@ import {
   Legend,
 } from 'chart.js';
 import { getGradient } from './Utils';
+import { defaultThemes } from '../../theme/default';
+import { useTheme } from '../../contexts/Themes';
 
 ChartJS.register(
   CategoryScale,
@@ -26,6 +28,7 @@ ChartJS.register(
 
 export const EraPoints = (props: any) => {
 
+  const { mode } = useTheme();
   let { items, height } = props;
 
   items = items === undefined ? [] : items;
@@ -37,8 +40,8 @@ export const EraPoints = (props: any) => {
       x: {
         grid: {
           drawBorder: false,
-          color: 'rgba(255,255,255,0)',
-          borderColor: 'rgba(255,255,255,0)',
+          color: defaultThemes.transparent[mode],
+          borderColor: defaultThemes.transparent[mode],
         },
         ticks: {
           display: true,
@@ -60,8 +63,8 @@ export const EraPoints = (props: any) => {
         },
         grid: {
           drawBorder: false,
-          color: 'rgba(238,238,238,1)',
-          borderColor: 'rgba(255,255,255,0)',
+          color: defaultThemes.graphs.grid[mode],
+          borderColor: defaultThemes.transparent[mode],
         },
       },
     },
@@ -74,6 +77,9 @@ export const EraPoints = (props: any) => {
         text: `Era Points`,
       },
       tooltip: {
+        displayColors: false,
+        backgroundColor: defaultThemes.graphs.tooltip[mode],
+        bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           title: () => {
             return [];
@@ -86,8 +92,6 @@ export const EraPoints = (props: any) => {
         interaction: {
           mode: 'nearest',
         },
-        displayColors: false,
-        backgroundColor: '#333',
       }
     },
   };
@@ -111,7 +115,7 @@ export const EraPoints = (props: any) => {
           }
           return getGradient(ctx, chartArea);
         },
-        backgroundColor: '#d33079',
+        backgroundColor: defaultThemes.graphs.colors[0][mode],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,

@@ -1,90 +1,84 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { APIContext } from '../../contexts/Api';
+import { defaultThemes } from '../../theme/default';
+import { useApi } from '../../contexts/Api';
+import { useTheme } from '../../contexts/Themes';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export class BondedGraph extends React.Component<any, any> {
-  static contextType = APIContext;
+export const BondedGraph = (props: any) => {
 
-  // stop component refersh triggered by other API updates
-  shouldComponentUpdate (nextProps: any, nextState: any) {
-    return (this.props !== nextProps);
+  const { mode } = useTheme();
+  const { network }: any = useApi();
+
+  let { active, unlocking, remaining, total } = props;
+
+  let zeroBalance = false;
+  if (total === 0 || total === undefined) {
+    remaining = -1;
+    zeroBalance = true;
   }
 
-  render () {
-
-    const { network }: any = this.context;
-
-    let { active, unlocking, remaining, total } = this.props;
-
-    let zeroBalance = false;
-    if (total === 0 || total === undefined) {
-      remaining = -1;
-      zeroBalance = true;
-    }
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      spacing: zeroBalance ? 0 : 2,
-      plugins: {
-        legend: {
-          padding: {
-            right: 20,
-          },
-          display: true,
-          position: 'left' as const,
-          align: 'center' as const,
-          labels: {
-            padding: 20,
-            font: {
-              size: 15,
-              color: '#333',
-              weight: '500',
-            },
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    spacing: zeroBalance ? 0 : 2,
+    plugins: {
+      legend: {
+        padding: {
+          right: 20,
+        },
+        display: true,
+        position: 'left' as const,
+        align: 'center' as const,
+        labels: {
+          padding: 20,
+          color: defaultThemes.text.primary[mode],
+          font: {
+            size: 15,
+            weight: '500',
           },
         },
-        tooltip: {
-          displayColors: false,
-          backgroundColor: '#333',
-          callbacks: {
-            label: (context: any) => {
-              return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
-            },
-          }
-        }
       },
-      cutout: '70%',
-    };
+      tooltip: {
+        displayColors: false,
+        backgroundColor: defaultThemes.graphs.tooltip[mode],
+        bodyColor: defaultThemes.text.invert[mode],
+        callbacks: {
+          label: (context: any) => {
+            return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
+          },
+        }
+      }
+    },
+    cutout: '70%',
+  };
 
-    const data = {
-      labels: ['Active', 'Unlocking', 'Free'],
-      datasets: [
-        {
-          label: network.unit,
-          data: [active, unlocking, remaining],
-          backgroundColor: [
-            '#d33079',
-            '#ccc',
-            '#eee',
-          ],
-          borderWidth: 0,
-        },
-      ],
-    };
+  const data = {
+    labels: ['Active', 'Unlocking', 'Free'],
+    datasets: [
+      {
+        label: network.unit,
+        data: [active, unlocking, remaining],
+        backgroundColor: [
+          defaultThemes.graphs.colors[0][mode],
+          defaultThemes.graphs.colors[1][mode],
+          defaultThemes.graphs.colors[2][mode],
+        ],
+        borderWidth: 0,
+      },
+    ],
+  };
 
-    return (
-      <Doughnut
-        options={options}
-        data={data}
-      />
-    );
-  }
+  return (
+    <Doughnut
+      options={options}
+      data={data}
+    />
+  );
 }
 
 export default BondedGraph;

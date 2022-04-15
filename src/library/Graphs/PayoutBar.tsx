@@ -17,6 +17,8 @@ import {
 import { planckToDot } from '../../Utils';
 import { useApi } from '../../contexts/Api';
 import { getGradient } from './Utils';
+import { defaultThemes } from '../../theme/default';
+import { useTheme } from '../../contexts/Themes';
 
 ChartJS.register(
   CategoryScale,
@@ -32,6 +34,7 @@ ChartJS.register(
 export const PayoutBar = (props: any) => {
 
   const { network }: any = useApi();
+  const { mode } = useTheme();
   const { payouts, height } = props;
 
   const data = {
@@ -45,7 +48,7 @@ export const PayoutBar = (props: any) => {
         data: payouts.map((item: any, index: number) => {
           return planckToDot(item.amount);
         }),
-        borderColor: '#d33079',
+        borderColor: defaultThemes.graphs.colors[0][mode],
         backgroundColor: (context: any) => {
           const chart = context.chart;
           const { ctx, chartArea } = chart;
@@ -68,8 +71,8 @@ export const PayoutBar = (props: any) => {
       x: {
         grid: {
           drawBorder: true,
-          color: 'rgba(255,255,255,0)',
-          borderColor: 'rgba(255,255,255,0)',
+          color: defaultThemes.transparent[mode],
+          borderColor: defaultThemes.transparent[mode],
         },
         ticks: {
           font: {
@@ -85,8 +88,8 @@ export const PayoutBar = (props: any) => {
           },
         },
         grid: {
-          color: '#eee',
-          borderColor: 'rgba(255,255,255,0)',
+          color: defaultThemes.graphs.grid[mode],
+          borderColor: defaultThemes.transparent[mode],
         },
       },
     },
@@ -98,6 +101,8 @@ export const PayoutBar = (props: any) => {
         display: false,
       },
       tooltip: {
+        backgroundColor: defaultThemes.graphs.tooltip[mode],
+        bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           title: () => {
             return [];

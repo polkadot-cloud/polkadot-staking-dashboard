@@ -15,6 +15,8 @@ import {
 import { planckToDot } from '../../Utils';
 import { useApi } from '../../contexts/Api';
 import { getGradient } from './Utils';
+import { defaultThemes } from '../../theme/default';
+import { useTheme } from '../../contexts/Themes';
 
 ChartJS.register(
   CategoryScale,
@@ -28,6 +30,7 @@ ChartJS.register(
 
 export const PayoutLine = (props: any) => {
 
+  const { mode } = useTheme();
   const { network }: any = useApi();
   const { payouts, height, background } = props;
 
@@ -38,8 +41,8 @@ export const PayoutLine = (props: any) => {
       x: {
         grid: {
           drawBorder: false,
-          color: 'rgba(255,255,255,0)',
-          borderColor: 'rgba(255,255,255,0)',
+          color: defaultThemes.transparent[mode],
+          borderColor: defaultThemes.transparent[mode],
         },
         ticks: {
           display: false,
@@ -54,8 +57,8 @@ export const PayoutLine = (props: any) => {
         },
         grid: {
           drawBorder: false,
-          color: 'rgba(238,238,238,1)',
-          borderColor: 'rgba(255,255,255,0)',
+          color: defaultThemes.graphs.grid[mode],
+          borderColor: defaultThemes.transparent[mode],
         },
       },
     },
@@ -68,6 +71,9 @@ export const PayoutLine = (props: any) => {
         text: `${network.unit} Payouts`,
       },
       tooltip: {
+        displayColors: false,
+        backgroundColor: defaultThemes.graphs.tooltip[mode],
+        bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           title: () => {
             return [];
@@ -80,8 +86,6 @@ export const PayoutLine = (props: any) => {
         interaction: {
           mode: 'nearest',
         },
-        displayColors: false,
-        backgroundColor: '#333',
       }
     },
   };
@@ -105,7 +109,7 @@ export const PayoutLine = (props: any) => {
           }
           return getGradient(ctx, chartArea);
         },
-        backgroundColor: '#d33079',
+        backgroundColor: defaultThemes.graphs.colors[2][mode],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,

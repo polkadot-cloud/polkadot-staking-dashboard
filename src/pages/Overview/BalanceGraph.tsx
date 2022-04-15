@@ -10,10 +10,14 @@ import { useConnect } from '../../contexts/Connect';
 import { planckToDot, fiatAmount, humanNumber } from '../../Utils';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
+import { defaultThemes } from '../../theme/default';
+import { useTheme } from '../../contexts/Themes';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BalanceGraphInner = (props: any) => {
+
+  const { mode } = useTheme();
   const { network }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { getAccountBalance }: any = useBalances();
@@ -55,16 +59,17 @@ export const BalanceGraphInner = (props: any) => {
         align: 'center' as const,
         labels: {
           padding: 20,
+          color: defaultThemes.text.primary[mode],
           font: {
             size: 15,
-            color: '#333',
             weight: '500',
           },
         },
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: '#333',
+        backgroundColor: defaultThemes.graphs.tooltip[mode],
+        bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           label: (context: any) => {
             return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
@@ -82,8 +87,8 @@ export const BalanceGraphInner = (props: any) => {
         label: network.unit,
         data: [graphFree, graphFrozen],
         backgroundColor: [
-          zeroBalance ? '#ddd' : '#d33079',
-          '#eee',
+          zeroBalance ? defaultThemes.graphs.inactive[mode] : defaultThemes.graphs.colors[0][mode],
+          defaultThemes.graphs.colors[2][mode],
         ],
         borderWidth: 0,
       },

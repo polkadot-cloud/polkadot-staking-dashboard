@@ -64,3 +64,5 @@ export const borderPrimary: theme.ThemeSet = theme(v, defaultThemes.border.prima
 export const modalOverlayBackground: theme.ThemeSet = theme(v, defaultThemes.modal.overlay);
 
 export const modalBackground: theme.ThemeSet = theme(v, defaultThemes.modal.background);
+
+// graph
