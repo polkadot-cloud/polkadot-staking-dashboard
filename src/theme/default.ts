@@ -19,7 +19,7 @@ export const defaultThemes = {
       'linear-gradient(180deg, rgba(245,245,245,1) 0%, rgba(245,245,245,1) 100px, rgba(229,229,229,1) 100%)',
       'linear-gradient(180deg, rgba(31,31,31,1) 0%, rgba(31,31,31,1) 100px, rgba(21,21,21,1) 100%)'
     ),
-    secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.18)'),
+    secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.24)'),
     network: v(
       'rgba(229,229,229,0.75)',
       'rgba(27,27,27,0.75)'
@@ -28,11 +28,11 @@ export const defaultThemes = {
     label: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
-      'linear-gradient(90deg, rgba(22,22,22,0.9) 0%, rgba(22,22,22,0.6) 100%)'
+      'linear-gradient(90deg, rgba(30,30,30,0.9) 0%, rgba(30,30,30,0.6) 100%)'
     ),
     announcement: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
-      'linear-gradient(90deg, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.6) 100%)'
+      'linear-gradient(90deg, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.6) 100%)'
     ),
     identicon: v(
       '#eee',
@@ -54,10 +54,10 @@ export const defaultThemes = {
       background: v('#f8f8f8', '#0d0d0d'),
     },
     secondary: {
-      background: v('#ebebeb', '#0c0c0c'),
+      background: v('#ebebeb', '#131313'),
     },
     toggle: {
-      background: v('#f4f4f4', '#181818'),
+      background: v('#f4f4f4', '#1e1e1e'),
     }
   },
   border: {
