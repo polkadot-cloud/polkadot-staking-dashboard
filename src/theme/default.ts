@@ -15,10 +15,10 @@ export const defaultThemes: any = {
     danger: v('#ae2324', '#d14445'),
   },
   background: {
-    primary: v('rgba(245,245,245,1)', 'rgba(31,31,31,1)'),
+    primary: v('rgba(245,245,245,1)', 'rgba(27,27,27,1)'),
     gradient: v(
       'linear-gradient(180deg, rgba(245,245,245,1) 0%, rgba(245,245,245,1) 100px, rgba(229,229,229,1) 100%)',
-      'linear-gradient(180deg, rgba(31,31,31,1) 0%, rgba(31,31,31,1) 100px, rgba(21,21,21,1) 100%)'
+      'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
     secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.18)'),
     network: v(
