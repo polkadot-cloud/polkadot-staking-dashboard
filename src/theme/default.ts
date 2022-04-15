@@ -67,7 +67,7 @@ export const defaultThemes: any = {
     background: v('#fff', '#000'),
   },
   assistant: {
-    background: v('rgba(228,228,228,0.93)', 'rgba(28,28,28,0.93)'),
+    background: v('rgba(228,228,228,0.93)', 'rgba(18,18,18,0.93)'),
     link: v('#d33079', '#d33079'),
     button: {
       background: v('rgba(255,255,255,0.65)', 'rgba(0,0,0,0.4)'),
