@@ -76,8 +76,8 @@ export const defaultThemes: any = {
     }
   },
   loader: {
-    foreground: v('#e1e1e1', '#111'),
-    background: v('#dadada', '#181818'),
+    foreground: v('#e1e1e1', '#151515'),
+    background: v('#dadada', '#101010'),
   }
 };
 
