@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, borderPrimary, textPrimary } from '../../../theme';
+import { borderPrimary, textPrimary, backgroundOverlay } from '../../../theme';
 
 export const StyledDownshift = styled.div<any>`
   box-sizing: border-box;
@@ -55,7 +55,7 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for vertical scroll */
 export const StyledDropdown = styled.div`
-  background: ${backgroundToggle};
+  background: ${backgroundOverlay};
   position: relative;
   box-sizing: border-box;
   margin: 0.5rem 0 0;
