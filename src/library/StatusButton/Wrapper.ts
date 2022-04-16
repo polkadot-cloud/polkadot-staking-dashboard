@@ -1,5 +1,8 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import styled from 'styled-components';
-import { buttonPrimaryBackground, backgroundToggle, textPrimary } from '../../theme';
+import { buttonPrimaryBackground, textPrimary, textSecondary } from '../../theme';
 
 export const Wrapper = styled.button`
   width: 100%;
@@ -15,17 +18,20 @@ export const Wrapper = styled.button`
   transition: all 0.15s;
   color: ${textPrimary};
 
-  &:hover {
-    background: ${backgroundToggle};
-  }
-
   > section:last-child {
+    color: ${textSecondary};
     padding-left: 0.25rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     flex: 1;
     font-variation-settings: 'wght' 420;
+  }
+
+  &:hover {
+    > section {
+      color: ${textPrimary};
+    }
   }
 `;
 

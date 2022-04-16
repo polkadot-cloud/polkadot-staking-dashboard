@@ -8,6 +8,8 @@ const v = (light: string, dark: string) => ({
 
 export const defaultThemes: any = {
   transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
+  primary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
+  secondary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
   text: {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
@@ -55,9 +57,9 @@ export const defaultThemes: any = {
     grid: v('#eee', '#222'),
   },
   buttons: {
-    primary: { background: v('#f8f8f8', '#0d0d0d') },
-    secondary: { background: v('#ebebeb', '#0c0c0c') },
-    toggle: { background: v('#f4f4f4', '#1c1c1c') },
+    primary: { background: v('#f8f8f8', '#0f0f0f') },
+    secondary: { background: v('#ebebeb', '#111') },
+    toggle: { background: v('#f4f4f4', '#1a1a1a') },
   },
   border: {
     primary: v('#eee', '#222'),

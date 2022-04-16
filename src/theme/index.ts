@@ -9,6 +9,12 @@ import { defaultThemes } from './default';
  */
 let v = 'mode';
 
+// main theme colors
+
+export const primary: theme.ThemeSet = theme(v, defaultThemes.primary);
+
+export const secondary: theme.ThemeSet = theme(v, defaultThemes.secondary);
+
 // text colors
 
 export const textPrimary: theme.ThemeSet = theme(v, defaultThemes.text.primary);

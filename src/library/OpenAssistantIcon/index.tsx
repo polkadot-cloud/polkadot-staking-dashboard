@@ -4,6 +4,7 @@
 import { useAssistant } from '../../contexts/Assistant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { Wrapper } from './Wrapper';
 
 export const OpenAssistantIcon = (props: any) => {
 
@@ -12,11 +13,11 @@ export const OpenAssistantIcon = (props: any) => {
   const { page, title } = props;
 
   return (
-    <button onClick={() => {
+    <Wrapper onClick={() => {
       goToDefinition(page, title);
     }}>
-      <FontAwesomeIcon transform='grow-5' icon={faInfoCircle} />
-    </button>
+      <FontAwesomeIcon transform='grow-3' icon={faInfoCircle} />
+    </Wrapper>
   )
 }
 

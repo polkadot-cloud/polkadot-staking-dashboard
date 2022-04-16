@@ -1,7 +1,11 @@
+// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import styled from 'styled-components';
+import { textSecondary, borderPrimary } from '../../../theme';
 
 export const StyledHeader = styled.div`
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid ${borderPrimary};
   width: 100%;
   padding-bottom: 0.5rem;
   display: flex;
@@ -13,7 +17,7 @@ export const StyledHeader = styled.div`
      display: flex;
      justify-content: flex-end;
      font-size: 1.2rem;
-     color: #666;
+     color: ${textSecondary};
    }
 `;
 

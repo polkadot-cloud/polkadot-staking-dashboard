@@ -7,15 +7,18 @@ import Identicon from '../../Identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { clipAddress, convertRemToPixels } from '../../../Utils';
+import { useTheme } from '../../../contexts/Themes'
+import { defaultThemes } from '../../../theme/default';
 
 export const AccountSelect = (props: any) => {
 
+  const { mode } = useTheme();
   const { items, onChange, placeholder, value }: any = props;
 
   const DropdownItem = (c: any, item: any, index: number) => {
 
-    const color = c.selectedItem === item ? 'rgb(211, 48, 121)' : 'black';
-    const border = c.selectedItem === item ? '1px solid rgb(211, 48, 121)' : '1px solid rgba(0,0,0,0)';
+    const color = c.selectedItem === item ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
+    const border = c.selectedItem === item ? `1px solid ${defaultThemes.primary[mode]}` : `1px solid ${defaultThemes.transparent[mode]}`;
 
     return (
       <div

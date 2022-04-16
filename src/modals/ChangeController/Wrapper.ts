@@ -39,14 +39,8 @@ export const Wrapper = styled.div`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    background: #fff;
-    transition: background 0.15s;
     color: rgba(211, 48, 121, 0.85);
     border: 1px solid rgba(211, 48, 121, 0.85);
-
-    &:hover {
-      background: #fafafa;
-    }
 
     svg {
       margin-right: 0.5rem;

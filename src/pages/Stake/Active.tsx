@@ -14,6 +14,7 @@ import { ManageBond } from './ManageBond';
 import { Button } from '../../library/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import { Separator } from './Wrappers';
 
 export const Active = () => {
 
@@ -56,26 +57,21 @@ export const Active = () => {
     },
   ];
 
-
   return (
     <>
       <StatBoxList title="This Session" items={items} />
       <PageRowWrapper noVerticalSpacer>
-
-
         <SecondaryWrapper style={{ height: 290 }}>
           <SectionWrapper >
             <ManageBond />
           </SectionWrapper>
         </SecondaryWrapper>
-
         <MainWrapper paddingLeft style={{ flex: 1 }}>
           <SectionWrapper style={{ height: 290 }} >
             <div className='head'>
               <h4>Status</h4>
               <h2>Active</h2>
-
-              <div style={{ width: '100%', borderBottom: '1px solid #ddd', margin: '1.5rem 0' }}></div>
+              <Separator />
               <h4>Reward Destination</h4>
               <h2>
                 <FontAwesomeIcon
@@ -87,10 +83,7 @@ export const Active = () => {
             </div>
           </SectionWrapper>
         </MainWrapper>
-
-
       </PageRowWrapper>
-
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
           <Nominations />

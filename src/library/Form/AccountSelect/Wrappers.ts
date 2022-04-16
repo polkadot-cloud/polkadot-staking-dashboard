@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { backgroundToggle, borderPrimary, buttonPrimaryBackground, textPrimary } from '../../../theme';
 
 export const StyledDownshift = styled.div<any>`
   box-sizing: border-box;
@@ -18,12 +19,12 @@ export const StyledDownshift = styled.div<any>`
   
   /* input element of dropdown */
   .input-wrap {
+    border: 1px solid ${borderPrimary};
     display: flex; 
     flex-flow: row wrap;
     align-items: center;
     box-sizing: border-box;
     border-radius: 1rem;
-    border: 1px solid #e3e3e3;
     padding: 0.1rem 0.75rem;
     margin: 0.25rem 0;
   }
@@ -36,6 +37,7 @@ export const StyledDownshift = styled.div<any>`
 `;
 
 export const StyledController = styled.button<any>`
+  color: ${textPrimary};
   box-sizing: border-box;
   position: absolute;
   right: 0.5rem;
@@ -50,6 +52,7 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for horizontal scroll */
 export const StyledSelect = styled.div`
+  background: ${backgroundToggle};
   position: relative;
   box-sizing: border-box;
   margin: 0.75rem 0 0;
@@ -58,7 +61,6 @@ export const StyledSelect = styled.div`
   border-radius: 0.75rem;
   z-index: 1;
   height: 140px;
-  background: #f7f7f7;
   padding: 0.5rem;
 
   .items {
@@ -72,19 +74,18 @@ export const StyledSelect = styled.div`
   }
 
   .item {
+    background: ${buttonPrimaryBackground};
     box-sizing: border-box;
     width: 240px;
     height: 100%;
     padding: 0.65rem 1rem;
     cursor: pointer;
-    margin: 0 0.37rem;
+    margin: 0rem 0.37rem;
     border-radius: 0.75rem;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
     align-items: flex-start;
-    transition: background 0.1s;
-    background: #f4f4f4;
     flex: none;
 
     &:first-child {
@@ -93,10 +94,8 @@ export const StyledSelect = styled.div`
     &:last-child {
       margin-right: 0rem;
     }
-    &:hover {
-      background: #f0f0f0;
-    }
     p {
+      color: ${textPrimary};
       margin: 0.25rem 0 0;
     }
     .icon {

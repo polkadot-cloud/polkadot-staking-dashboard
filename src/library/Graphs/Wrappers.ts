@@ -36,10 +36,6 @@ export const SectionWrapper = styled.div<any>`
     > button {
       svg {
         margin-left: 0.4rem;
-        color: #ddd;
-        &:hover {
-          color: rgba(211, 48, 121, 0.85);
-        }
       }
     }
   }

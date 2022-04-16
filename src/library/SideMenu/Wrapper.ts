@@ -43,7 +43,7 @@ export const Wrapper = styled.div`
       
       button {
         transition: color 0.2s;
-        margin-right: 0.25rem;
+        margin-right: 0.5rem;
         color: ${textSecondary};
         opacity: 0.75;
 
