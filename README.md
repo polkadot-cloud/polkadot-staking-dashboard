@@ -5,7 +5,7 @@
 ## Demo
 [https://rossbulat.github.io/polkadot-staking-dashboard/](https://rossbulat.github.io/polkadot-staking-dashboard/)
 
-<img width="1581" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/163521128-1b6775a4-3676-42b1-a327-d2e6a4621347.png">
+<img width="1576" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/163663148-c33be6b2-756d-4b15-8189-133ec8ef0f2d.png">
 
 ## Milestones
 
@@ -19,11 +19,11 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Stash / controller account abstraction
 - [x] Performant validator list fetching and meta data syncing
 - [x] Validator filtering initialisation and favourite validators
+- [x] Theming support
 - [ ] Staking Setup form
 - [ ] Extrinsics
 - [ ] Recent Payout Subscan list 
 - [ ] Screen size support 
-- [ ] Theming support
 - [ ] Node only / External API toggles
 
 Additional features that are being considered:
