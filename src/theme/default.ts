@@ -74,6 +74,10 @@ export const defaultThemes: any = {
     button: {
       background: v('rgba(255,255,255,0.65)', 'rgba(0,0,0,0.4)'),
     }
+  },
+  loader: {
+    foreground: v('#e1e1e1', '#111'),
+    background: v('#dadada', '#181818'),
   }
 };
 
