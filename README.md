@@ -20,17 +20,21 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Performant validator list fetching and meta data syncing
 - [x] Validator filtering initialisation and favourite validators
 - [x] Theming support
-- [ ] Staking Setup form
+- [ ] Integrate Intention / Active Bond Thresholds
+- [ ] Initial Nomination management tooling
 - [ ] Extrinsics
-- [ ] Recent Payout Subscan list 
-- [ ] Screen size support 
+- [ ] Recent Payouts as list
 - [ ] Node only / External API toggles
+- [ ] Screen size support 
+
+Features coming soon:
+- [ ] Nomination Pools
+- [ ] Talisman support
 
 Additional features that are being considered:
-
+- [ ] Validator Lists
 - [ ] Validator selection algorithm
 - [ ] Validator ranking algorithm
-- [ ] Talisman support
 - [ ] Wallet Connect support
 
 ## Project Updates
