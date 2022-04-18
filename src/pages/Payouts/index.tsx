@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { PageProps } from '../types';
+import { useApi } from '../../contexts/Api';
 import { useSubscan } from '../../contexts/Subscan';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
@@ -12,10 +13,15 @@ import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import moment from 'moment';
 import { PageTitle } from '../../library/PageTitle';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
+import { StatBoxList } from '../../library/StatBoxList';
+import { useStaking } from '../../contexts/Staking';
+
 
 export const Payouts = (props: PageProps) => {
 
+  const { network }: any = useApi();
   const { payouts }: any = useSubscan();
+  const { staking }: any = useStaking();
 
   const { page } = props;
   const { title } = page;
@@ -24,9 +30,20 @@ export const Payouts = (props: PageProps) => {
   let size = useSize(ref.current);
   let { width, height, minHeight } = formatSize(size, 250);
 
+  let items = [
+    {
+      label: "Last Reward Payout",
+      value: staking.lastReward,
+      unit: network.unit,
+      format: "number",
+    },
+  ];
+
   return (
     <>
       <PageTitle title={title} />
+      <StatBoxList items={items} />
+
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />

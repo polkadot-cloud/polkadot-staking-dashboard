@@ -61,12 +61,6 @@ export const Overview = (props: PageProps) => {
       tooltip: `${((activeNominators ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2)}%`,
       format: "chart",
     },
-    // { TODO: move to payotus
-    //   label: "Last Reward Payout",
-    //   value: staking.lastReward,
-    //   unit: network.unit,
-    //   format: "number",
-    // },
   ];
 
   let lastPayout: any = null;
