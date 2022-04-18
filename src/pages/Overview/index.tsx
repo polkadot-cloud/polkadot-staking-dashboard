@@ -27,13 +27,22 @@ export const Overview = (props: PageProps) => {
   const { metrics }: any = useNetworkMetrics();
   const { totalIssuance } = metrics;
   const { activeAccount }: any = useConnect();
-  const { staking, nominators }: any = useStaking();
+  const { staking, eraStakers }: any = useStaking();
   const { payouts }: any = useSubscan();
 
   const { totalNominators, maxNominatorsCount } = staking;
+  const { activeNominators } = eraStakers;
 
   // stats
   const items = [
+    {
+      label: "Global Supply Staked",
+      value: staking.lastTotalStake,
+      value2: totalIssuance - staking.lastTotalStake,
+      unit: network.unit,
+      tooltip: `${((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2)}%`,
+      format: "chart",
+    },
     {
       label: "Total Nominators",
       value: totalNominators,
@@ -45,19 +54,11 @@ export const Overview = (props: PageProps) => {
     },
     {
       label: "Active Nominators",
-      value: nominators.active,
-      value2: voterSnapshotPerBlock - nominators.active ?? 0,
+      value: activeNominators,
+      value2: voterSnapshotPerBlock - activeNominators ?? 0,
       total: voterSnapshotPerBlock,
       unit: "",
-      tooltip: `${((nominators.active ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2)}%`,
-      format: "chart",
-    },
-    {
-      label: "Global Supply Staked",
-      value: staking.lastTotalStake,
-      value2: totalIssuance - staking.lastTotalStake,
-      unit: network.unit,
-      tooltip: `${((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2)}%`,
+      tooltip: `${((activeNominators ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2)}%`,
       format: "chart",
     },
     // { TODO: move to payotus

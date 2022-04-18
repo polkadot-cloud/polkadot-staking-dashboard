@@ -10,7 +10,6 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
-import { planckToDot } from '../../Utils';
 
 export const Browse = (props: PageProps) => {
 
@@ -19,28 +18,36 @@ export const Browse = (props: PageProps) => {
 
   const { isReady }: any = useApi();
   const { metrics } = useNetworkMetrics();
-  const { validators, staking }: any = useStaking();
-  const { minNominatorBond } = staking;
+  const { validators, staking, eraStakers }: any = useStaking();
+
+  const { totalValidators, maxValidatorsCount, validatorCount } = staking;
+  const { activeValidators } = eraStakers;
 
   const items = [
     {
-      label: "Validators",
-      value: validators.length,
+      label: "Total Validators",
+      value: totalValidators,
+      value2: maxValidatorsCount - totalValidators ?? 0,
+      total: maxValidatorsCount,
       unit: "",
-      format: "number",
+      tooltip: `${((totalValidators ?? 0) / (maxValidatorsCount * 0.01)).toFixed(2)}%`,
+      format: "chart",
     },
     {
-      label: "Current Era",
+      label: "Active Validators",
+      value: activeValidators,
+      value2: validatorCount - activeValidators ?? 0,
+      total: validatorCount,
+      unit: "",
+      tooltip: `${((activeValidators ?? 0) / (validatorCount * 0.01)).toFixed(2)}%`,
+      format: "chart",
+    },
+    {
+      label: "Active Era",
       value: metrics.activeEra.index,
       unit: "",
       format: "number",
-    },
-    {
-      label: "Min Nomination Bond",
-      value: planckToDot(minNominatorBond),
-      unit: "DOT",
-      format: "number",
-    },
+    }
   ];
 
   return (

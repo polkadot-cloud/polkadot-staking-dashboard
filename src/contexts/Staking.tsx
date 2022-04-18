@@ -30,7 +30,7 @@ export interface StakingContextState {
   inSetup: () => any;
   staking: any;
   validators: any;
-  nominators: any;
+  eraStakers: any;
   favourites: any;
   meta: any;
   session: any;
@@ -53,7 +53,7 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
   inSetup: () => false,
   staking: {},
   validators: [],
-  nominators: {},
+  eraStakers: {},
   favourites: [],
   meta: {},
   session: {},
@@ -72,12 +72,15 @@ export const StakingContextWrapper = (props: any) => {
   const { getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
 
   const [stakingMetrics, setStakingMetrics]: any = useState({
+    totalNominators: 0,
+    totalValidators: 0,
     lastReward: 0,
     lastTotalStake: 0,
-    totalNominators: 0,
+    validatorCount: 0,
     maxNominatorsCount: 0,
     maxValidatorsCount: 0,
     minNominatorBond: 0,
+    historyDepth: 0,
     unsub: null,
   });
 
@@ -98,8 +101,9 @@ export const StakingContextWrapper = (props: any) => {
     unsubs: {},
   });
 
-  const [nominators, setNominators]: any = useState({
-    active: 0,
+  const [eraStakers, setEraStakers]: any = useState({
+    activeNominators: 0,
+    activeValidators: 0,
   })
 
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
@@ -116,13 +120,15 @@ export const StakingContextWrapper = (props: any) => {
       // subscribe to staking metrics
       const unsub = await api.queryMulti([
         api.query.staking.counterForNominators,
+        api.query.staking.counterForValidators,
         api.query.staking.maxNominatorsCount,
         api.query.staking.maxValidatorsCount,
+        api.query.staking.validatorCount,
         [api.query.staking.erasValidatorReward, previousEra],
         [api.query.staking.erasTotalStake, previousEra],
         api.query.staking.minNominatorBond,
         api.query.staking.historyDepth,
-      ], ([_totalNominators, _maxNominatorsCount, _maxValidatorsCount, _lastReward, _lastTotalStake, _minNominatorBond, _historyDepth]: any) => {
+      ], ([_totalNominators, _totalValidators, _maxNominatorsCount, _maxValidatorsCount, _validatorCount, _lastReward, _lastTotalStake, _minNominatorBond, _historyDepth]: any) => {
 
         // format lastReward DOT unit
         _lastReward = _lastReward.unwrapOrDefault(0);
@@ -136,11 +142,13 @@ export const StakingContextWrapper = (props: any) => {
         setStakingMetrics({
           ...stakingMetrics,
           totalNominators: _totalNominators.toNumber(),
+          totalValidators: _totalValidators.toNumber(),
           lastReward: _lastReward,
           lastTotalStake: _lastTotalStake,
-          maxNominatorsCount: _maxNominatorsCount.toString(),
-          maxValidatorsCount: _maxValidatorsCount.toString(),
-          minNominatorBond: _minNominatorBond.toString(),
+          validatorCount: _validatorCount.toNumber(),
+          maxNominatorsCount: Number(_maxNominatorsCount.toString()),
+          maxValidatorsCount: Number(_maxValidatorsCount.toString()),
+          minNominatorBond: _minNominatorBond.toNumber(),
           historyDepth: _historyDepth.toNumber(),
         });
       });
@@ -184,24 +192,27 @@ export const StakingContextWrapper = (props: any) => {
    * The top 256 nominators of each validator get rewarded.
    * This function uses the above assumption to calculate active nominator count.
    */
-  const fetchNominators = async () => {
+  const fetchEraStakers = async () => {
     if (!isReady || metrics.activeEra.index === 0) { return }
 
     const exposures = await api.query.staking.erasStakers.entries(metrics.activeEra.index);
 
     // calculate total active nominators
-    let total = 0;
+    let _activeNominators = 0;
+    let _activeValidators = 0;
     exposures.forEach(([_keys, _val]: any) => {
+      _activeValidators++;
       let _nominators = _val.toHuman()?.others?.length ?? 0;
       if (_nominators > maxNominatorRewardedPerValidator) {
-        total += maxNominatorRewardedPerValidator;
+        _activeNominators += maxNominatorRewardedPerValidator;
       } else {
-        total += _nominators;
+        _activeNominators += _nominators;
       }
 
-      setNominators({
-        ...nominators,
-        active: total,
+      setEraStakers({
+        ...eraStakers,
+        activeNominators: _activeNominators,
+        activeValidators: _activeValidators,
       })
     });
   }
@@ -397,7 +408,7 @@ export const StakingContextWrapper = (props: any) => {
 
   useEffect(() => {
     fetchValidators();
-    fetchNominators();
+    fetchEraStakers();
     subscribeToStakingkMetrics(api);
     subscribeSessionValidators(api);
 
@@ -552,7 +563,7 @@ export const StakingContextWrapper = (props: any) => {
         inSetup: inSetup,
         staking: stakingMetrics,
         validators: validators,
-        nominators: nominators,
+        eraStakers: eraStakers,
         favourites: favourites,
         meta: validatorMetaBatchesRef.current.meta,
         session: sessionValidators,
