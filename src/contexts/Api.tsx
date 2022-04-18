@@ -114,6 +114,7 @@ export class APIContextWrapper extends React.Component {
       apiInstance.consts.staking.maxNominations,
       apiInstance.consts.staking.sessionsPerEra,
       apiInstance.consts.staking.maxNominatorRewardedPerValidator,
+      apiInstance.consts.electionProviderMultiPhase.voterSnapshotPerBlock,
     ]);
 
     // fallback to default values
@@ -121,6 +122,9 @@ export class APIContextWrapper extends React.Component {
     const sessionsPerEra = _metrics[2] ? _metrics[2].toHuman() : consts.SESSIONS_PER_ERA;
     const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : consts.MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
     const maxNominations = _metrics[1] ? _metrics[1].toHuman() : consts.MAX_NOMINATIONS;
+
+    let voterSnapshotPerBlock: any = _metrics[4];
+    voterSnapshotPerBlock = voterSnapshotPerBlock.toNumber();
 
     this.setState({
       ...this.state,
@@ -130,7 +134,8 @@ export class APIContextWrapper extends React.Component {
         bondDuration: bondDuration,
         maxNominations: maxNominations,
         sessionsPerEra: sessionsPerEra,
-        maxNominatorRewardedPerValidator: maxNominatorRewardedPerValidator,
+        maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
+        voterSnapshotPerBlock: Number(voterSnapshotPerBlock),
       }
     });
   }

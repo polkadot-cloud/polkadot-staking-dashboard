@@ -11,6 +11,7 @@ import Payouts from './Payouts';
 import BalanceGraph from './BalanceGraph';
 import Announcements from './Announcements';
 import { useApi } from '../../contexts/Api';
+import { useNetworkMetrics } from '../../contexts/Network';
 import { useConnect } from '../../contexts/Connect';
 import { useSubscan } from '../../contexts/Subscan';
 import { SubscanButton } from '../../library/SubscanButton';
@@ -21,31 +22,50 @@ import { GRAPH_HEIGHT } from '../../constants';
 
 export const Overview = (props: PageProps) => {
 
-  const { network }: any = useApi();
+  const { network, consts }: any = useApi();
+  const { voterSnapshotPerBlock } = consts;
+  const { metrics }: any = useNetworkMetrics();
+  const { totalIssuance } = metrics;
   const { activeAccount }: any = useConnect();
-  const { staking }: any = useStaking();
+  const { staking, nominators }: any = useStaking();
   const { payouts }: any = useSubscan();
+
+  const { totalNominators, maxNominatorsCount } = staking;
 
   // stats
   const items = [
     {
       label: "Total Nominators",
-      value: staking.totalNominators,
+      value: totalNominators,
+      value2: maxNominatorsCount - totalNominators ?? 0,
+      total: maxNominatorsCount,
       unit: "",
-      format: "number",
+      tooltip: `${((totalNominators ?? 0) / (maxNominatorsCount * 0.01)).toFixed(2)}%`,
+      format: "chart",
     },
     {
-      label: "Total Staked",
+      label: "Active Nominators",
+      value: nominators.active,
+      value2: voterSnapshotPerBlock - nominators.active ?? 0,
+      total: voterSnapshotPerBlock,
+      unit: "",
+      tooltip: `${((nominators.active ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2)}%`,
+      format: "chart",
+    },
+    {
+      label: "Global Supply Staked",
       value: staking.lastTotalStake,
+      value2: totalIssuance - staking.lastTotalStake,
       unit: network.unit,
-      format: "number",
+      tooltip: `${((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2)}%`,
+      format: "chart",
     },
-    {
-      label: "Last Reward Payout",
-      value: staking.lastReward,
-      unit: network.unit,
-      format: "number",
-    },
+    // { TODO: move to payotus
+    //   label: "Last Reward Payout",
+    //   value: staking.lastReward,
+    //   unit: network.unit,
+    //   format: "number",
+    // },
   ];
 
   let lastPayout: any = null;

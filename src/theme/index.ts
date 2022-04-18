@@ -63,6 +63,10 @@ export const backgroundToggle: theme.ThemeSet = theme(v, defaultThemes.buttons.t
 
 export const labelBackground: theme.ThemeSet = theme(v, defaultThemes.background.label);
 
+// graphs
+
+export const tooltipBackground: theme.ThemeSet = theme(v, defaultThemes.graphs.tooltip);
+
 // borders
 
 export const borderPrimary: theme.ThemeSet = theme(v, defaultThemes.border.primary);

@@ -5,10 +5,12 @@ import Identicon from '../Identicon';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
-import { buttonSecondaryBackground } from '../../theme';
+import { useTheme } from '../../contexts/Themes';
+import { defaultThemes } from '../../theme/default';
 
 export const Account = (props: any) => {
 
+  const { mode } = useTheme();
   const { getAccount } = useConnect();
 
   // data props
@@ -43,7 +45,7 @@ export const Account = (props: any) => {
       style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}
-      fill={filled ? buttonSecondaryBackground : 'none'}
+      fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
       fontSize={fontSize}
       padding={padding}
     >

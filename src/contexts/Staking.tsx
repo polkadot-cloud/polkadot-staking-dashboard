@@ -17,7 +17,6 @@ const THROTTLE_VALIDATOR_RENDER = 250;
 export interface StakingContextState {
   VALIDATORS_PER_BATCH_MUTLI: number,
   THROTTLE_VALIDATOR_RENDER: number,
-  fetchValidators: () => void;
   fetchValidatorMetaBatch: (k: string, v: []) => void;
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
@@ -31,6 +30,7 @@ export interface StakingContextState {
   inSetup: () => any;
   staking: any;
   validators: any;
+  nominators: any;
   favourites: any;
   meta: any;
   session: any;
@@ -40,7 +40,6 @@ export interface StakingContextState {
 export const StakingContext: React.Context<StakingContextState> = React.createContext({
   VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
   THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
-  fetchValidators: () => { },
   fetchValidatorMetaBatch: (k: string, v: []) => { },
   getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
@@ -54,6 +53,7 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
   inSetup: () => false,
   staking: {},
   validators: [],
+  nominators: {},
   favourites: [],
   meta: {},
   session: {},
@@ -66,7 +66,8 @@ export const useStaking = () => React.useContext(StakingContext);
 export const StakingContextWrapper = (props: any) => {
 
   const { activeAccount } = useConnect();
-  const { isReady, api }: any = useApi();
+  const { isReady, api, consts }: any = useApi();
+  const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
 
@@ -96,6 +97,10 @@ export const StakingContextWrapper = (props: any) => {
     meta: {},
     unsubs: {},
   });
+
+  const [nominators, setNominators]: any = useState({
+    active: 0,
+  })
 
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
@@ -174,12 +179,39 @@ export const StakingContextWrapper = (props: any) => {
     setValidators(validators);
   }
 
+  /* 
+   * Fetches the active nominator count.
+   * The top 256 nominators of each validator get rewarded.
+   * This function uses the above assumption to calculate active nominator count.
+   */
+  const fetchNominators = async () => {
+    if (!isReady || metrics.activeEra.index === 0) { return }
+
+    const exposures = await api.query.staking.erasStakers.entries(metrics.activeEra.index);
+
+    // calculate total active nominators
+    let total = 0;
+    exposures.forEach(([_keys, _val]: any) => {
+      let _nominators = _val.toHuman()?.others?.length ?? 0;
+      if (_nominators > maxNominatorRewardedPerValidator) {
+        total += maxNominatorRewardedPerValidator;
+      } else {
+        total += _nominators;
+      }
+
+      setNominators({
+        ...nominators,
+        active: total,
+      })
+    });
+  }
+
   /*
    * subscribe to active session
   */
   const subscribeSessionValidators = async (api: any) => {
 
-    if (isReady && metrics.activeEra.index !== 0) {
+    if (isReady) {
       const unsub = await api.query.session.validators((_validators: any) => {
         setSessionValidators({
           ...sessionValidators,
@@ -365,6 +397,7 @@ export const StakingContextWrapper = (props: any) => {
 
   useEffect(() => {
     fetchValidators();
+    fetchNominators();
     subscribeToStakingkMetrics(api);
     subscribeSessionValidators(api);
 
@@ -501,13 +534,11 @@ export const StakingContextWrapper = (props: any) => {
     });
   }
 
-
   return (
     <StakingContext.Provider
       value={{
         VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
         THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
-        fetchValidators: fetchValidators,
         fetchValidatorMetaBatch: fetchValidatorMetaBatch,
         getValidatorMetaBatch: getValidatorMetaBatch,
         removeValidatorMetaBatch: removeValidatorMetaBatch,
@@ -521,6 +552,7 @@ export const StakingContextWrapper = (props: any) => {
         inSetup: inSetup,
         staking: stakingMetrics,
         validators: validators,
+        nominators: nominators,
         favourites: favourites,
         meta: validatorMetaBatchesRef.current.meta,
         session: sessionValidators,

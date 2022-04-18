@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
-import { textSecondary, backgroundSecondary } from '../../theme';
+import { textSecondary, textInvert, backgroundSecondary, tooltipBackground } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -13,8 +13,8 @@ export const Wrapper = styled.div`
   padding: 0 3rem 0 1.5rem;
 
   @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 `;
 
@@ -33,59 +33,102 @@ export const StatBoxWrapper = styled(motion.div)`
   flex-basis: 100%;
   margin-bottom: 1rem;
 
-  /* responsive screen sizing */
-  h2 {
-    font-size: 1.2rem;
-  }
-  @media(min-width: 750px) {
+  @media(min-width: 800px) {
     flex-basis: 33%;
     min-width: 200px;
     max-width: none;
     margin-bottom: 0;
   }
+
+  /* responsive screen sizing */
+  h2 {
+    font-size: 1.2rem;
+  }
   
   @media(min-width: 950px) {
-    max-width: 275px;
+    max-width: 300px;
     h2 {
     font-size: 1.35rem;
     }
   }
 
   .content {
-    border-radius: 1rem;
     background: ${backgroundSecondary};
     display: flex;
-    flex-flow: column wrap;
+    border-radius: 1rem;
     margin-right: 1.25rem;
     padding: 1rem 0;
+    height: 100%;
+    max-height: 80px;
+    flex-flow: row wrap;
 
     @media(max-width: 749px) {
-        margin-right: 0;
-        padding: 0.9rem 0;
+      margin-right: 0;
+      padding: 0.9rem 0;
     }
+    
+    h2, h4 { margin: 0; }
 
-    > section {
-      padding: 0 1.15rem;
+    > .chart {
+      position: relative;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      padding-left: 1rem;
 
-      &:first-child {
-        flex-grow: 1;
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: flex-end;
-        
-        h2 {
+      .tooltip {
+        background: ${tooltipBackground};
+        opacity: 0;
+        position: absolute;
+        top: -20px;
+        left: -8px;
+        z-index: 2;
+        border-radius: 0.5rem;
+        padding: 0 0.5rem;
+        width: auto;
+        max-width: 200px;
+        transition: opacity 0.2s;
+
+        p {
+          text-align: center;
+          color: ${textInvert};
           margin: 0;
-          padding: 0.2rem 0 0.75rem 0;
+          font-size: 0.9rem;
         }
       }
-      &:last-child {
-        h4 {
-        margin: 0;
-        color: ${textSecondary};
+
+      &:hover {
+        .tooltip {
+          opacity: 1;
+        }
+      }
+    }
+
+    > .labels {
+      padding-left: 1.25rem;
+      flex-basis: 70%;
+      flex: 1;
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+
+      h2 {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+        
+        span.total {
+          color: ${textSecondary};
+          font-size: 0.9rem;
+          margin-left: 0.3rem;
+          margin-top: 0.2rem;
+        }
       }
     }
   }
-}
 `;
 
 export default Wrapper;

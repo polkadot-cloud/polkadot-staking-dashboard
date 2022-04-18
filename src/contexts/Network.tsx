@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
 import { useApi } from './Api';
 
@@ -28,6 +29,7 @@ export const NetworkMetricsContextWrapper = (props: any) => {
       index: 0,
       start: 0,
     },
+    totalIssuance: 0,
     unsub: undefined,
   });
 
@@ -47,7 +49,8 @@ export const NetworkMetricsContextWrapper = (props: any) => {
 
       const unsub = await api.queryMulti([
         api.query.staking.activeEra,
-      ], ([activeEra]: any) => {
+        api.query.balances.totalIssuance,
+      ], ([activeEra, _totalIssuance]: any) => {
 
         let _state = {};
 
@@ -60,9 +63,13 @@ export const NetworkMetricsContextWrapper = (props: any) => {
         // convert JSON string to object
         _activeEra = JSON.parse(_activeEra);
 
+        // get total issuance
+        _totalIssuance = _totalIssuance.toBn().div((new BN(10 ** 10))).toNumber();
+
         _state = {
           ..._state,
           activeEra: _activeEra,
+          totalIssuance: _totalIssuance,
         };
         setState(_state);
       });
@@ -77,6 +84,7 @@ export const NetworkMetricsContextWrapper = (props: any) => {
       metrics: {
         now: state.now,
         activeEra: state.activeEra,
+        totalIssuance: state.totalIssuance,
       }
     }}>
       {props.children}
