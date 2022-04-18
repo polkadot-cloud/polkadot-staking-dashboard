@@ -101,6 +101,7 @@ export const PayoutBar = (props: any) => {
         display: false,
       },
       tooltip: {
+        displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
@@ -111,7 +112,6 @@ export const PayoutBar = (props: any) => {
             return `${context.parsed.y} ${network.unit}`;
           },
         },
-        displayColors: false,
       },
     },
   };
