@@ -6,7 +6,7 @@ import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const MainWrapper = styled.div<any>`
   box-sizing: border-box;
-  flex-basis: 66%;
+  flex-basis: 60%;
 
   /* force thin width */
   @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {

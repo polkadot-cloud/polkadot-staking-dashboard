@@ -94,12 +94,7 @@ export const Active = () => {
     <>
       <StatBoxList title="This Session" items={items} />
       <PageRowWrapper noVerticalSpacer>
-        <SecondaryWrapper style={{ height: 290 }}>
-          <SectionWrapper >
-            <ManageBond />
-          </SectionWrapper>
-        </SecondaryWrapper>
-        <MainWrapper paddingLeft style={{ flex: 1 }}>
+        <MainWrapper paddingRight style={{ flex: 1 }}>
           <SectionWrapper style={{ height: 290 }} >
             <div className='head'>
               <h4>Status</h4>
@@ -116,6 +111,11 @@ export const Active = () => {
             </div>
           </SectionWrapper>
         </MainWrapper>
+        <SecondaryWrapper style={{ height: 290 }}>
+          <SectionWrapper >
+            <ManageBond />
+          </SectionWrapper>
+        </SecondaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
