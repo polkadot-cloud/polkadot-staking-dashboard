@@ -44,7 +44,7 @@ export const useUi = () => React.useContext(UIContext);
 export const UIContextWrapper = (props: any) => {
 
   const { accounts: connectAccounts } = useConnect();
-  const { meta, session, staking }: any = useStaking();
+  const { meta, session, staking, eraStakers }: any = useStaking();
   const { isReady, consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
@@ -223,6 +223,12 @@ export const UIContextWrapper = (props: any) => {
     if (accounts.length < connectAccounts.length) {
       return true;
     }
+
+    // eraStakers has synced
+    if (!eraStakers.activeNominators) {
+      return true;
+    }
+
     return false;
   }
 
