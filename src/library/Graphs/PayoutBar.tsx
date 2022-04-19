@@ -70,9 +70,8 @@ export const PayoutBar = (props: any) => {
     scales: {
       x: {
         grid: {
+          display: false,
           drawBorder: true,
-          color: defaultThemes.transparent[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
         ticks: {
           font: {

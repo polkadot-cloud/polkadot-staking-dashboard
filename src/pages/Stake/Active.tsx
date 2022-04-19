@@ -8,6 +8,7 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useStaking } from '../../contexts/Staking';
+import { useNetworkMetrics } from '../../contexts/Network';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
@@ -22,12 +23,14 @@ export const Active = () => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus } = useStaking();
+  const { getNominationsStatus, staking } = useStaking();
+  const { metrics } = useNetworkMetrics();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
 
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const nominations = getAccountNominations(activeAccount);
+  const { minNominatorBond } = staking;
 
   // handle nomination statuses
 
@@ -53,7 +56,9 @@ export const Active = () => {
 
   // handle bonded funds 
 
-  const { active, total } = ledger;
+  const { active } = ledger;
+
+
 
   let { unlocking } = ledger;
   let totalUnlocking = 0;
@@ -62,23 +67,22 @@ export const Active = () => {
     totalUnlocking += unlocking[i];
   }
 
-  const remaining = total - active - totalUnlocking;
+  let activeBonded = planckToDot(active);
+  let minBond = planckToDot(minNominatorBond);
 
+  let label = activeBonded > minBond
+    ? "Intending to Nominate"
+    : "Below Minimum Intention";
 
+  let chart1, chart2;
+  if (activeBonded > minBond) {
+    chart1 = 1;
+    chart2 = 0;
+  } else {
+
+  }
 
   const items = [
-    {
-      label: "Bonded",
-      value: planckToDot(active),
-      unit: network.unit,
-      format: "number",
-    },
-    {
-      label: "Free",
-      value: planckToDot(remaining),
-      unit: network.unit,
-      format: "number",
-    },
     {
       label: "Active Nominations",
       value: nominationsStatus.active,
@@ -86,7 +90,19 @@ export const Active = () => {
       total: nominationsStatus.total,
       unit: '',
       tooltip: `${nominationsStatus.active ? `Active` : `Inactive`}`,
-      format: "chart",
+      format: "chart-pie",
+    },
+    {
+      label: "Bonded",
+      value: planckToDot(active),
+      unit: network.unit,
+      format: "number",
+    },
+    {
+      label: "Active Era",
+      value: metrics.activeEra.index,
+      unit: "",
+      format: "number",
     }
   ];
 

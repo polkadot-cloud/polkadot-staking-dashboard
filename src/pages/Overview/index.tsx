@@ -41,7 +41,7 @@ export const Overview = (props: PageProps) => {
       value2: totalIssuance - staking.lastTotalStake,
       unit: network.unit,
       tooltip: `${((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2)}%`,
-      format: "chart",
+      format: "chart-pie",
     },
     {
       label: "Total Nominators",
@@ -50,7 +50,7 @@ export const Overview = (props: PageProps) => {
       total: maxNominatorsCount,
       unit: "",
       tooltip: `${((totalNominators ?? 0) / (maxNominatorsCount * 0.01)).toFixed(2)}%`,
-      format: "chart",
+      format: "chart-pie",
     },
     {
       label: "Active Nominators",
@@ -59,7 +59,7 @@ export const Overview = (props: PageProps) => {
       total: voterSnapshotPerBlock,
       unit: "",
       tooltip: `${((activeNominators ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2)}%`,
-      format: "chart",
+      format: "chart-pie",
     },
   ];
 

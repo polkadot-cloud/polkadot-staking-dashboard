@@ -23,12 +23,9 @@ export const Item = (props: any) => {
       }}
     >
       <div className='content chart'>
-        {format === 'chart' &&
+        {(format === 'chart-pie' || format === 'chart-bar') &&
           <div className='chart'>
-            <StatBoxPie
-              value={value}
-              value2={value2}
-            />
+            {format === 'chart-pie' && <StatBoxPie value={value} value2={value2} />}
             {tooltip &&
               <div className='tooltip'>
                 <p>{tooltip}</p>
@@ -60,7 +57,7 @@ export const Item = (props: any) => {
               <h4>{label}</h4>
             </>
           }
-          {format === 'chart' &&
+          {(format === 'chart-pie' || format === 'chart-bar') &&
             <>
               <h2>
                 {showValue
@@ -73,7 +70,7 @@ export const Item = (props: any) => {
                       trail={false}
                       value={value}
                       useLocaleString={true}
-                    /> {unit && <>&nbsp;{unit}</>}
+                    />{unit && <>&nbsp;{unit}</>}
 
                     {showTotal &&
                       <span className='total'>
@@ -84,7 +81,7 @@ export const Item = (props: any) => {
                           trail={false}
                           value={total}
                           useLocaleString={true}
-                        />
+                        />{unit && <>&nbsp;{unit}</>}
                       </span>
                     }
                   </>

@@ -4,7 +4,6 @@
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
-import { useNetworkMetrics } from '../../contexts/Network';
 import { useStaking } from '../../contexts/Staking';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
@@ -16,8 +15,7 @@ export const Browse = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { isReady }: any = useApi();
-  const { metrics } = useNetworkMetrics();
+  const { isReady, network }: any = useApi();
   const { validators, staking, eraStakers }: any = useStaking();
 
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
@@ -31,7 +29,7 @@ export const Browse = (props: PageProps) => {
       total: maxValidatorsCount,
       unit: "",
       tooltip: `${((totalValidators ?? 0) / (maxValidatorsCount * 0.01)).toFixed(2)}%`,
-      format: "chart",
+      format: "chart-pie",
     },
     {
       label: "Active Validators",
@@ -40,14 +38,15 @@ export const Browse = (props: PageProps) => {
       total: validatorCount,
       unit: "",
       tooltip: `${((activeValidators ?? 0) / (validatorCount * 0.01)).toFixed(2)}%`,
-      format: "chart",
+      format: "chart-pie",
     },
     {
-      label: "Active Era",
-      value: metrics.activeEra.index,
-      unit: "",
+      label: "Last Era Payout",
+      value: staking.lastReward,
+      unit: network.unit,
       format: "number",
-    }
+    },
+
   ];
 
   return (

@@ -40,9 +40,8 @@ export const PayoutLine = (props: any) => {
     scales: {
       x: {
         grid: {
+          display: false,
           drawBorder: false,
-          color: defaultThemes.transparent[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
         ticks: {
           display: false,
