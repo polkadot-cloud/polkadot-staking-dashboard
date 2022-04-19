@@ -55,7 +55,7 @@ export const StatBoxWrapper = styled(motion.div)`
     display: flex;
     border-radius: 0.75rem;
     margin-right: 1.25rem;
-    padding: 1.1rem 0;
+    padding: 1rem 0;
     height: 100%;
     max-height: 90px;
     flex-flow: row wrap;
@@ -74,6 +74,10 @@ export const StatBoxWrapper = styled(motion.div)`
       justify-content: center;
       align-items: center;
       padding-left: 1rem;
+      
+      .graph {
+        opacity: 0.75;
+      }
 
       .tooltip {
         background: ${tooltipBackground};
@@ -116,11 +120,11 @@ export const StatBoxWrapper = styled(motion.div)`
         flex-flow: row wrap;
         justify-content: flex-start;
         align-items: flex-start;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
         
         span.total {
           color: ${textSecondary};
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           margin-left: 0.3rem;
           margin-top: 0.2rem;
         }

@@ -61,7 +61,7 @@ export const StatBoxPie = (props: any) => {
   };
 
   return (
-    <div style={{ width: 36, height: 36 }}>
+    <div className='graph' style={{ width: 36, height: 36 }}>
       <Pie
         options={options}
         data={data}
