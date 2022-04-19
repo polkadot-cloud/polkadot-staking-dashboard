@@ -56,8 +56,7 @@ export const StatBoxWrapper = styled(motion.div)`
     border-radius: 0.75rem;
     margin-right: 1.25rem;
     padding: 1rem 0;
-    height: 100%;
-    max-height: 90px;
+    max-height: 3.4rem;
     flex-flow: row wrap;
 
     @media(max-width: 749px) {
@@ -77,6 +76,7 @@ export const StatBoxWrapper = styled(motion.div)`
       
       .graph {
         opacity: 0.75;
+        overflow: hidden;
       }
 
       .tooltip {
@@ -114,6 +114,7 @@ export const StatBoxWrapper = styled(motion.div)`
       display: flex;
       flex-flow: column wrap;
       justify-content: center;
+      overflow: hidden;
 
       h2 {
         display: flex;
