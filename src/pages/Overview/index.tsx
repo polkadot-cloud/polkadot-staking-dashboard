@@ -36,7 +36,7 @@ export const Overview = (props: PageProps) => {
   // stats
   const items = [
     {
-      label: "Global Supply Staked",
+      label: "Supply Staked",
       value: staking.lastTotalStake,
       value2: totalIssuance - staking.lastTotalStake,
       unit: network.unit,
