@@ -22,6 +22,7 @@ export interface StakingContextState {
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
   removeIndexFromBatch: (k: string, i: number) => void;
+  getNominationsStatus: () => any;
   addFavourite: (a: string) => any;
   removeFavourite: (a: string) => any;
   hasController: () => any;
@@ -45,6 +46,7 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
   removeValidatorMetaBatch: (k: string) => { },
   fetchValidatorPrefs: (v: any) => { },
   removeIndexFromBatch: (k: string, i: number) => { },
+  getNominationsStatus: () => { },
   addFavourite: (a: string) => { },
   removeFavourite: (a: string) => { },
   hasController: () => false,
@@ -102,6 +104,7 @@ export const StakingContextWrapper = (props: any) => {
   });
 
   const [eraStakers, setEraStakers]: any = useState({
+    stakers: [],
     activeNominators: 0,
     activeValidators: 0,
   })
@@ -195,14 +198,25 @@ export const StakingContextWrapper = (props: any) => {
   const fetchEraStakers = async () => {
     if (!isReady || metrics.activeEra.index === 0) { return }
 
-    const exposures = await api.query.staking.erasStakers.entries(metrics.activeEra.index);
+    const exposures = await api.query.staking.erasStakersClipped.entries(metrics.activeEra.index);
 
     // calculate total active nominators
+    let _stakers: any = [];
     let _activeNominators = 0;
     let _activeValidators = 0;
+
     exposures.forEach(([_keys, _val]: any) => {
+
+      let address = _keys.toHuman()[1];
+
       _activeValidators++;
-      let _nominators = _val.toHuman()?.others?.length ?? 0;
+      let val = _val.toHuman();
+      _stakers.push({
+        address: address,
+        ...val
+      });
+
+      let _nominators = val?.others?.length ?? 0;
       if (_nominators > maxNominatorRewardedPerValidator) {
         _activeNominators += maxNominatorRewardedPerValidator;
       } else {
@@ -211,10 +225,37 @@ export const StakingContextWrapper = (props: any) => {
 
       setEraStakers({
         ...eraStakers,
+        stakers: _stakers,
         activeNominators: _activeNominators,
         activeValidators: _activeValidators,
       })
     });
+  }
+
+  /*
+   * Get the status of nominations.
+   * Possible statuses: waiting, inactive, active.
+  */
+  const getNominationsStatus = () => {
+    const nominations = getAccountNominations(activeAccount);
+    let statuses: any = {};
+
+    for (let nomination of nominations) {
+      let status = eraStakers.stakers.find((_n: any) => _n.address === nomination);
+
+      if (status === undefined) {
+        statuses[nomination] = 'waiting';
+        continue;
+      }
+      let exists = (status.others ?? []).find((_o: any) => _o.who === activeAccount);
+      if (exists === undefined) {
+        statuses[nomination] = 'inactive';
+        continue;
+      }
+      statuses[nomination] = 'active';
+    }
+
+    return statuses;
   }
 
   /*
@@ -555,6 +596,7 @@ export const StakingContextWrapper = (props: any) => {
         removeValidatorMetaBatch: removeValidatorMetaBatch,
         fetchValidatorPrefs: fetchValidatorPrefs,
         removeIndexFromBatch: removeIndexFromBatch,
+        getNominationsStatus: getNominationsStatus,
         addFavourite: addFavourite,
         removeFavourite: removeFavourite,
         hasController: hasController,
