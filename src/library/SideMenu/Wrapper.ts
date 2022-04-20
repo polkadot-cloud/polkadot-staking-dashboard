@@ -43,7 +43,7 @@ export const Wrapper = styled.div`
       
       button {
         transition: color 0.2s;
-        margin-right: 0.5rem;
+        margin-right: 0.45rem;
         color: ${textSecondary};
         opacity: 0.75;
 
@@ -54,9 +54,9 @@ export const Wrapper = styled.div`
         &:hover {
           opacity: 1;
         }
+      }
     }
   }
-}
 `;
 
 export const LogoWrapper = styled(motion.button)`

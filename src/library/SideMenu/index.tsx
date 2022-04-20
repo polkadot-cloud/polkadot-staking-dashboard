@@ -16,10 +16,12 @@ import { useOutsideAlerter } from '../../library/Hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '../../contexts/Themes';
-import { SunnyOutline, Moon, LogoGithub } from 'react-ionicons'
+import { SunnyOutline, Moon, LogoGithub, Cog } from 'react-ionicons'
+import { useModal } from '../../contexts/Modal';
 
 export const SideMenu = () => {
 
+  const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
   const { activeAccount, status: connectStatus }: any = useConnect();
   const { getMessage }: any = useMessages();
@@ -106,16 +108,18 @@ export const SideMenu = () => {
       </section>
 
       <section>
+        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
+          <LogoGithub width='1.45rem' height='1.45rem' />
+        </button>
+        <button onClick={() => openModalWith('Settings', {}, 'small')}>
+          <Cog width='1.65rem' height='1.65rem' />
+        </button>
         <button onClick={() => toggleTheme()}>
           {mode === 'light'
             ? <SunnyOutline width='1.65rem' height='1.65rem' />
-            : <Moon width='1.5rem' height='1.5rem' />
+            : <Moon width='1.45rem' height='1.45rem' />
           }
         </button>
-        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
-          <LogoGithub width='1.5rem' height='1.5rem' />
-        </button>
-
       </section>
     </Wrapper>
   );
