@@ -1,14 +1,12 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
-import { Wrapper, HeadingWrapper, Item, ItemInactive } from './Wrapper';
+import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faCogs, faBars } from '@fortawesome/free-solid-svg-icons';
-import Dropdown from './Dropdown';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Account } from '../Account';
 import { Controller } from './Controller';
 import { useUi } from '../../contexts/UI';
@@ -18,8 +16,6 @@ import { useLocation } from 'react-router-dom';
 import { useStaking } from '../../contexts/Staking';
 
 export const Headers = () => {
-
-  const [showMenu, toggleMenu]: any = useState(false);
 
   const { pathname } = useLocation();
   const assistant = useAssistant();
@@ -65,7 +61,8 @@ export const Headers = () => {
         <>
           <HeadingWrapper>
             <Account
-              canClick={false}
+              canClick={true}
+              onClick={() => openModalWith('ConnectAccounts', {}, 'small')}
               value={connect.activeAccount}
               label='Stash'
               format='name'
@@ -98,71 +95,6 @@ export const Headers = () => {
           {connect.status === 0 && <div className='label'>1</div>}
           <span>Assistant</span>
         </Item>
-      </HeadingWrapper>
-
-      {/* connected, display connected accounts */}
-      <HeadingWrapper>
-        {!showMenu
-          ?
-          <Item
-            whileHover={{ scale: 1.02 }}
-            style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
-            onClick={() => toggleMenu(true)}
-          >
-            <span>
-              <FontAwesomeIcon
-                icon={faCog}
-                transform='grow-1'
-                style={{ cursor: 'pointer' }}
-              />
-            </span>
-          </Item>
-          :
-          <ItemInactive
-            whileHover={{ scale: 1.02 }}
-            style={{ paddingLeft: 0, paddingRight: 0, width: '2.5rem' }}
-          >
-            <span>
-              <FontAwesomeIcon
-                icon={faCogs}
-                transform='shrink-2'
-                className='dropdown-toggle'
-              />
-            </span>
-          </ItemInactive>
-        }
-
-        {showMenu &&
-          <Dropdown
-            toggleMenu={toggleMenu}
-            items={
-              <>
-                {connect.status === 1 &&
-                  <Item
-                    onClick={() => { openModalWith('ConnectAccounts', {}, 'small'); toggleMenu(false); }}
-                    whileHover={{ scale: 1.01 }}
-                  >
-                    <span>Switch Account</span>
-                  </Item>
-                }
-                <Item
-                  onClick={() => { openModalWith('Settings', {}, 'small'); toggleMenu(false); }}
-                  whileHover={{ scale: 1.01 }}
-                >
-                  <span>Services</span>
-                </Item>
-                {connect.status === 1 &&
-                  <Item
-                    onClick={() => { connect.disconnect(); toggleMenu(false); }}
-                    whileHover={{ scale: 1.01 }}
-                  >
-                    <span className='danger'>Disconnect</span>
-                  </Item>
-                }
-              </>
-            }
-          />
-        }
       </HeadingWrapper>
     </Wrapper>
   );

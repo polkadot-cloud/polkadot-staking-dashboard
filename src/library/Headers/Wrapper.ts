@@ -8,7 +8,6 @@ import {
   backgroundDropdown,
   textPrimary,
   textInvert,
-  textDanger,
   buttonSecondaryBackground
 } from '../../theme';
 
@@ -26,6 +25,7 @@ export const Wrapper = styled.div`
   z-index: 5;
   margin-bottom: 0.5rem;
 
+  /* no longer in use */
   .menu {
     display: none;
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
@@ -89,10 +89,6 @@ export const Item = styled(motion.button)`
     > span {
       color: ${textPrimary};
       line-height: 2.2rem;
-
-      &.danger {
-        color: ${textDanger};
-      }
     }
 
     &.connect {
@@ -101,7 +97,7 @@ export const Item = styled(motion.button)`
         color: ${textInvert};
       }
     }
-  
+
     .label {
       border: 0.125rem solid #d33079;
       border-radius: 0.8rem;

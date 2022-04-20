@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonPrimaryBackground, backgroundToggle, textPrimary } from '../../theme';
+import { buttonPrimaryBackground, backgroundToggle, textPrimary, textSecondary, textDanger } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
     border-radius: 1rem;
     font-size: 1rem;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
     background: ${buttonPrimaryBackground};
@@ -33,7 +33,27 @@ export const Wrapper = styled.div`
     &:hover {
       background: ${backgroundToggle};
     }
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 1;
+      padding: 0 1rem;
+
+      &:last-child {
+        justify-content: flex-end;
+        color: ${textDanger};
+      }
+    }
   }
+`;
+
+export const Separator = styled.div`
+  border-top: 1px solid ${textSecondary};
+  width: 100%;
+  opacity: 0.1;
+  margin: 0.75rem 0rem;
 `;
 
 export default Wrapper;
