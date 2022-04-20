@@ -67,6 +67,9 @@ export const labelBackground: theme.ThemeSet = theme(v, defaultThemes.background
 
 export const tooltipBackground: theme.ThemeSet = theme(v, defaultThemes.graphs.tooltip);
 
+export const gridColor: theme.ThemeSet = theme(v, defaultThemes.graphs.grid);
+
+
 // borders
 
 export const borderPrimary: theme.ThemeSet = theme(v, defaultThemes.border.primary);

@@ -62,7 +62,7 @@ export const defaultThemes: any = {
     toggle: { background: v('#f4f4f4', '#1a1a1a') },
   },
   border: {
-    primary: v('#eee', '#222'),
+    primary: v('#eaeaea', '#222'),
   },
   modal: {
     overlay: v('rgba(240,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
