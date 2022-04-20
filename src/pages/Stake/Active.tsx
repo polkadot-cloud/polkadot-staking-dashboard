@@ -18,8 +18,9 @@ import { Button } from '../../library/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from './Wrappers';
+import { PageTitle } from '../../library/PageTitle';
 
-export const Active = () => {
+export const Active = (props: any) => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
@@ -33,7 +34,6 @@ export const Active = () => {
   const { minNominatorBond } = staking;
 
   // handle nomination statuses
-
   const [nominationsStatus, setNominationsStatus]: any = useState({
     total: 0,
     inactive: 0,
@@ -55,10 +55,7 @@ export const Active = () => {
   }, [nominationStatuses]);
 
   // handle bonded funds 
-
   const { active } = ledger;
-
-
 
   let { unlocking } = ledger;
   let totalUnlocking = 0;
@@ -108,6 +105,7 @@ export const Active = () => {
 
   return (
     <>
+      <PageTitle title={props.title} />
       <StatBoxList title="This Session" items={items} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>

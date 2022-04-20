@@ -48,3 +48,7 @@ export const pageFromUri = (pathname: string) => {
   const page = lastUriItem.trim() === '' ? 'overview' : lastUriItem;
   return page;
 }
+
+export const isNumeric = (str: any) => {
+  return !isNaN(str) && !isNaN(parseFloat(str))
+}

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, borderPrimary, buttonPrimaryBackground, textPrimary } from '../../../theme';
+import { backgroundToggle, borderPrimary, textPrimary } from '../../../theme';
 
 export const StyledDownshift = styled.div<any>`
   box-sizing: border-box;
@@ -52,41 +52,35 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for horizontal scroll */
 export const StyledSelect = styled.div`
-  background: ${backgroundToggle};
   position: relative;
   box-sizing: border-box;
   margin: 0.75rem 0 0;
-  border-bottom: none;
-  width: auto;
+  width: 100%;
   border-radius: 0.75rem;
   z-index: 1;
-  height: 140px;
-  padding: 0.5rem;
-
-  .items {
-    width: 100%;
-    height: 155px;
-    overflow-y: hidden;
-
-    display: flex;
-    flex-flow: row nowrap;
-    padding-bottom: 30px;
-  }
+  height: 200px;
+  padding: 0.25rem;
+  overflow: auto;
+  display: flex;
+  flex-flow: row wrap;
+  flex: 1;
+  border: 1px solid ${borderPrimary};
+  border-radius: 1rem;
 
   .item {
-    background: ${buttonPrimaryBackground};
+    background: ${backgroundToggle};
     box-sizing: border-box;
     width: 240px;
-    height: 100%;
+    height: 150px;
     padding: 0.65rem 1rem;
     cursor: pointer;
-    margin: 0rem 0.37rem;
+    margin: 0.25rem;
     border-radius: 0.75rem;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
     align-items: flex-start;
-    flex: none;
+    flex-grow: 1;
 
     &:first-child {
       margin-left: 0rem;

@@ -18,7 +18,7 @@ export const ButtonRow = styled.div`
   }
 `;
 
-const Wrapper = styled(motion.button) <any>`
+export const Wrapper = styled(motion.button) <any>`
   background: ${props => props.type === 'default' ? buttonSecondaryBackground : 'rgba(211, 48, 121, 0.9)'};
   color: ${props => props.type === 'default' ? textPrimary : 'white'};
   margin: ${props => props.margin};
@@ -31,10 +31,9 @@ const Wrapper = styled(motion.button) <any>`
 
 export const Button = (props: any) => {
 
-  let { title, primary, inline, thin, onClick } = props;
+  let { title, primary, inline, onClick } = props;
   primary = primary ?? false;
   inline = inline ?? false;
-  thin = thin ?? false;
 
   return (
     <Wrapper
@@ -42,7 +41,7 @@ export const Button = (props: any) => {
       whileTap={{ scale: 0.98 }}
       type={primary === true ? 'invert' : 'default'}
       margin={inline ? '0' : '0 0.5rem'}
-      padding={thin ? '0.32rem 1.2rem' : '0.5rem 1.2rem'}
+      padding={'0.5rem 1.2rem'}
       onClick={() => onClick()}
     >
       {title}

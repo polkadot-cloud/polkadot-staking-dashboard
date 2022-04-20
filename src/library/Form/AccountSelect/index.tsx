@@ -11,15 +11,12 @@ import { useTheme } from '../../../contexts/Themes'
 import { defaultThemes } from '../../../theme/default';
 
 export const AccountSelect = (props: any) => {
-
   const { mode } = useTheme();
   const { items, onChange, placeholder, value }: any = props;
 
   const DropdownItem = (c: any, item: any, index: number) => {
-
     const color = c.selectedItem === item ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
     const border = c.selectedItem === item ? `1px solid ${defaultThemes.primary[mode]}` : `1px solid ${defaultThemes.transparent[mode]}`;
-
     return (
       <div
         className="item"
@@ -42,7 +39,11 @@ export const AccountSelect = (props: any) => {
 
   return (
     <StyledDownshift>
-      <Downshift onChange={onChange} itemToString={items => (items ? items.name : '')} initialSelectedItem={value}>
+      <Downshift
+        onChange={onChange}
+        itemToString={items => (items ? items.name : '')}
+        initialSelectedItem={value}
+      >
         {(c: any) => (
           <div>
             <div style={{ position: 'relative' }}>
@@ -65,30 +66,28 @@ export const AccountSelect = (props: any) => {
                 </StyledController>
               )}
               <StyledSelect>
-                <div className='items'>
-                  {
-                    c?.inputValue === value?.name
-                      ?
-                      items
-                        .map((item: any, index: number) => {
-                          return (DropdownItem(c, item, index));
-                        })
-                      :
-                      items
-                        .filter((item: any) => !c.inputValue || item.name
-                          .toLowerCase()
-                          .includes(c.inputValue.toLowerCase()))
-                        .map((item: any, index: number) => {
-                          return (DropdownItem(c, item, index));
-                        })
-                  }
-                </div>
+                {
+                  c?.inputValue === value?.name
+                    ?
+                    items
+                      .map((item: any, index: number) => {
+                        return (DropdownItem(c, item, index));
+                      })
+                    :
+                    items
+                      .filter((item: any) => !c.inputValue || item.name
+                        .toLowerCase()
+                        .includes(c.inputValue.toLowerCase()))
+                      .map((item: any, index: number) => {
+                        return (DropdownItem(c, item, index));
+                      })
+                }
               </StyledSelect>
             </div>
           </div>
         )}
       </Downshift>
-    </StyledDownshift >
+    </StyledDownshift>
   )
 }
 

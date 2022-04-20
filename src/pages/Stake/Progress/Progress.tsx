@@ -4,11 +4,10 @@
 import { StatusButton } from '../../../library/StatusButton';
 import { StickyWrapper } from '../../../library/Layout';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { Button } from '../../../library/Button';
 import { Link } from 'react-scroll'
 import { useStaking } from '../../../contexts/Staking';
-import { StyledHeader } from './Wrapper';
 import NumberEasing from 'che-react-number-easing';
+import { PageRowWrapper } from '../../../Wrappers';
 
 export const Progress = (props: any) => {
 
@@ -32,40 +31,36 @@ export const Progress = (props: any) => {
 
   return (
     <StickyWrapper>
-      <SectionWrapper transparent style={{ padding: '1rem' }}>
-        <StyledHeader>
-          <div><h3>Setup Progress</h3></div>
-          <div>
-            <NumberEasing
-              ease="quintInOut"
-              precision={2}
-              speed={500}
-              trail={false}
-              value={progress}
-              useLocaleString={true}
-            />
-            %
+      <PageRowWrapper noVerticalSpacer>
+        <SectionWrapper transparent>
+          <div style={{ width: '100%', marginTop: '1rem', display: 'flex', flexFlow: 'row wrap', }}>
+            <Link to="controller" smooth={true} spy={true} duration={350} offset={offset} style={{ flex: 1 }}>
+              <StatusButton checked={setup.controller ?? false} label='Set controller account' />
+            </Link>
+
+            <Link to="bond" smooth={true} duration={350} offset={offset} style={{ flex: 1 }}>
+              <StatusButton checked={isBonding()} label='Set amount to Bond' />
+            </Link>
+
+            <Link to="nominate" smooth={true} duration={350} offset={offset} style={{ flex: 1 }}>
+              <StatusButton checked={isNominating()} label='Select nominations' />
+            </Link>
+
+            <div style={{ display: 'flex', flexFlow: 'row wrap', alignItems: 'center', height: '3rem' }}>
+              <NumberEasing
+                ease="quintInOut"
+                precision={2}
+                speed={500}
+                trail={false}
+                value={progress}
+                useLocaleString={true}
+              />
+              %
+            </div>
           </div>
-        </StyledHeader>
-
-        <div style={{ width: '100%', marginTop: '1rem' }}>
-          <Link to="controller" smooth={true} spy={true} duration={350} offset={offset}>
-            <StatusButton checked={setup.controller ?? false} label='Set controller account' />
-          </Link>
-
-          <Link to="bond" smooth={true} duration={350} offset={offset}>
-            <StatusButton checked={isBonding()} label='Set amount to Bond' />
-          </Link>
-
-          <Link to="nominate" smooth={true} duration={350} offset={offset}>
-            <StatusButton checked={isNominating()} label='Select nominations' />
-          </Link>
-          <div style={{ width: '100%', height: '40px', display: 'flex' }}>
-            <Button title='Start Staking' primary inline />
-          </div>
-        </div>
-      </SectionWrapper>
-    </StickyWrapper >
+        </SectionWrapper>
+      </PageRowWrapper>
+    </StickyWrapper>
   )
 }
 

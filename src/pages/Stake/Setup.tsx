@@ -3,25 +3,26 @@
 
 import { useState } from 'react';
 import { PageRowWrapper } from '../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 import { useStaking } from '../../contexts/Staking';
-import { Progress } from './Progress/Progress';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Element } from 'react-scroll';
+import { Wrapper as ButtonWrapper } from '../../library/Button';
+import { PageTitle } from '../../library/PageTitle';
 
 export const Setup = (props: any) => {
 
-  const { stickyTitle } = props;
+  // monitor page title sticky
+  const [stickyTitle, setStickyTitle] = useState(false);
 
   const { activeAccount } = useConnect();
   const { getAccountLedger, getBondedAccount }: any = useBalances();
-  const { inSetup, hasController } = useStaking();
+  const { hasController } = useStaking();
 
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
@@ -33,8 +34,6 @@ export const Setup = (props: any) => {
     totalUnlocking += unlocking[i];
   }
 
-  let _inSetup: boolean = inSetup();
-
   const [setup, setSetup] = useState({
     controller: null,
     bond: 0,
@@ -43,31 +42,40 @@ export const Setup = (props: any) => {
 
   return (
     <>
+      <PageTitle title={`${props.title} Setup`} setStickyTitle={setStickyTitle} />
       <PageRowWrapper noVerticalSpacer>
-        <MainWrapper paddingRight thin={_inSetup}>
-          {!hasController() &&
-            <SectionWrapper>
-              <Element name="controller" style={{ position: 'absolute' }} />
-              <SetController
-                setup={setup}
-                setSetup={setSetup}
-              />
-            </SectionWrapper>
-          }
+        {!hasController() &&
           <SectionWrapper>
-            <Element name="bond" style={{ position: 'absolute' }} />
-            <Bond />
+            <Element name="controller" style={{ position: 'absolute' }} />
+            <SetController
+              setup={setup}
+              setSetup={setSetup}
+            />
           </SectionWrapper>
-
-          <SectionWrapper>
-            <Element name="nominate" style={{ position: 'absolute' }} />
-            <ChooseNominators />
-          </SectionWrapper>
-        </MainWrapper>
-
-        <SecondaryWrapper>
-          <Progress setup={setup} stickyTitle={stickyTitle} />
-        </SecondaryWrapper>
+        }
+      </PageRowWrapper>
+      <PageRowWrapper noVerticalSpacer>
+        <SectionWrapper>
+          <Element name="bond" style={{ position: 'absolute' }} />
+          <Bond
+            setup={setup}
+            setSetup={setSetup}
+          />
+        </SectionWrapper>
+      </PageRowWrapper>
+      <PageRowWrapper noVerticalSpacer>
+        <SectionWrapper>
+          <Element name="nominate" style={{ position: 'absolute' }} />
+          <ChooseNominators />
+        </SectionWrapper>
+      </PageRowWrapper>
+      <PageRowWrapper>
+        <ButtonWrapper
+          margin={'0 0.5rem'}
+          padding={'0.75rem 1.2rem'}
+        >
+          Start Staking
+        </ButtonWrapper>
       </PageRowWrapper>
     </>
   );

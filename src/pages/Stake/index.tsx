@@ -1,14 +1,12 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 import { useUi } from '../../contexts/UI';
-import { PageTitle } from '../../library/PageTitle';
 import { useStaking } from '../../contexts/Staking';
 import { Active } from './Active';
 import { Setup } from './Setup';
@@ -19,9 +17,6 @@ export const Stake = (props: PageProps) => {
   const { getAccountLedger, getBondedAccount }: any = useBalances();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-
-  // monitor page title sticky
-  const [stickyTitle, setStickyTitle] = useState(false);
 
   const { page } = props;
   const { title } = page;
@@ -41,14 +36,12 @@ export const Stake = (props: PageProps) => {
   return (
     <>
       <Wrapper>
-        <PageTitle title={title} setStickyTitle={setStickyTitle} />
-
         {_isSyncing
           ? <></>
           : <>
             {_inSetup
-              ? <Setup stickyTitle={stickyTitle} />
-              : <Active />
+              ? <Setup title={title} />
+              : <Active title={title} />
             }
           </>
         }

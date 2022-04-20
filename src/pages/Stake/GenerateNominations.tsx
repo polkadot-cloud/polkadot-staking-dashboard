@@ -125,6 +125,7 @@ export const GenerateNominations = () => {
                 batchKey={batchKey}
                 layout={listFormat}
                 title={method}
+                allowMoreCols
               />
             </div>
           }

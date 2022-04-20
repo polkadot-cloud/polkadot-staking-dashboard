@@ -8,10 +8,9 @@ export const MainWrapper = styled.div<any>`
   box-sizing: border-box;
   flex-basis: 60%;
 
-  /* force thin width */
   @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    flex-basis: ${props => props.thin ? '55%' : '66%'};
-    max-width: ${props => props.thin ? '55%' : '66%'};
+    flex-basis: 66%;
+    max-width: 66%;
   }
   overflow: hidden;
   flex: 1;
