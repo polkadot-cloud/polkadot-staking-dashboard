@@ -58,7 +58,7 @@ export const StyledSelect = styled.div`
   width: 100%;
   border-radius: 0.75rem;
   z-index: 1;
-  height: 200px;
+  height: 148px;
   padding: 0.25rem;
   overflow: auto;
   display: flex;

@@ -67,13 +67,20 @@ export const AccountSelect = (props: any) => {
               )}
               <StyledSelect>
                 {
-                  items
-                    .filter((item: any) => !c.inputValue || item.name
-                      .toLowerCase()
-                      .includes(c.inputValue.toLowerCase()))
-                    .map((item: any, index: number) => {
-                      return (DropdownItem(c, item, index));
-                    })
+                  c?.inputValue === value?.name
+                    ?
+                    items
+                      .map((item: any, index: number) => {
+                        return (DropdownItem(c, item, index));
+                      })
+                    :
+                    items
+                      .filter((item: any) => !c.inputValue || item.name
+                        .toLowerCase()
+                        .includes(c.inputValue.toLowerCase()))
+                      .map((item: any, index: number) => {
+                        return (DropdownItem(c, item, index));
+                      })
                 }
               </StyledSelect>
             </div>
