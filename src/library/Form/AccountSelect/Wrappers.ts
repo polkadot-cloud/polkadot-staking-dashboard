@@ -71,7 +71,7 @@ export const StyledSelect = styled.div`
     background: ${backgroundToggle};
     box-sizing: border-box;
     width: 240px;
-    height: 150px;
+    height: 130px;
     padding: 0.65rem 1rem;
     cursor: pointer;
     margin: 0.25rem;
@@ -90,7 +90,7 @@ export const StyledSelect = styled.div`
     }
     p {
       color: ${textPrimary};
-      margin: 0.25rem 0 0;
+      margin: 0.15rem 0 0;
     }
     .icon {
       margin-bottom: 0.7rem;
