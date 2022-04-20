@@ -7,6 +7,8 @@ import { CloseButton } from "./CloseButton";
 import { add, remove } from "./array-utils";
 import Wrapper from './Wrapper';
 
+// Experimental component for quick notifications
+
 export const Notifications = () => {
 
   const [notifications, _setNotifications]: any = useState([]);
@@ -18,14 +20,14 @@ export const Notifications = () => {
     _setNotifications(val);
   }
 
-  useEffect(() => {
-    // listen for D key to toggle demo bar
-    window.onkeydown = (e: KeyboardEvent): any => {
-      if (e.code === 'KeyN') {
-        setNotifications(add(notificationsRef.current));
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   // listen for D key to toggle demo bar
+  //   window.onkeydown = (e: KeyboardEvent): any => {
+  //     if (e.code === 'KeyN') {
+  //       setNotifications(add(notificationsRef.current));
+  //     }
+  //   }
+  // }, []);
 
   return (
     <Wrapper>
