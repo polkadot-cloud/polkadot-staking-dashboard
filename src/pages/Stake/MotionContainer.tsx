@@ -18,7 +18,6 @@ export const MotionContainer = (props: any) => {
   };
 
   // animate container default
-  const initial = thisSection !== activeSection ? `visible` : `hidden`;
   const animate = thisSection === activeSection ? `visible` : `hidden`;
 
   return (
