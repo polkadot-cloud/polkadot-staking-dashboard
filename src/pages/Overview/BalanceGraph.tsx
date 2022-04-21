@@ -77,7 +77,7 @@ export const BalanceGraphInner = (props: any) => {
         }
       }
     },
-    cutout: '70%',
+    cutout: '75%',
   };
 
   const data = {
@@ -97,7 +97,7 @@ export const BalanceGraphInner = (props: any) => {
 
   const ref: any = React.useRef();
   let size = useSize(ref.current);
-  let { width, height, minHeight } = formatSize(size, 352);
+  let { width, height, minHeight } = formatSize(size, 322);
 
   return (
     <>
@@ -114,6 +114,7 @@ export const BalanceGraphInner = (props: any) => {
             />
           </div>
         </div>
+        <div style={{ paddingTop: '30px' }}></div>
       </GraphWrapper>
     </>
   );
