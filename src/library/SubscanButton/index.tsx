@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 
-const Wrapper = styled(motion.button) <any>`
+const Wrapper = styled.div <any>`
   position: absolute;
   right: 10px;
   top: 10px;
@@ -14,7 +13,7 @@ const Wrapper = styled(motion.button) <any>`
   font-variation-settings: 'wght' 570;
   background: #d33079;
   border-radius: 0.3rem;
-  padding: 0.35rem 0.4rem;
+  padding: 0.25rem 0.4rem;
   color: #fff;
   opacity: 0.8;
 `;
@@ -22,9 +21,7 @@ const Wrapper = styled(motion.button) <any>`
 export const SubscanButton = () => {
 
   return (
-    <Wrapper
-      whileHover={{ scale: 1.03 }}
-    >
+    <Wrapper>
       <FontAwesomeIcon
         icon={faProjectDiagram}
         transform="shrink-2"

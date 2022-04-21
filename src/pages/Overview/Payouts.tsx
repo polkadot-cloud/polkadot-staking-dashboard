@@ -5,6 +5,7 @@ import React from 'react';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
+import { StatusLabel } from '../../library/Graphs/StatusLabel';
 
 export const PayoutsInner = (props: any) => {
 
@@ -17,6 +18,7 @@ export const PayoutsInner = (props: any) => {
   return (
     <>
       <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
+        <StatusLabel />
         <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
           <PayoutBar
             payouts={payouts}

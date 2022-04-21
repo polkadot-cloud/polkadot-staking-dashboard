@@ -12,7 +12,7 @@ import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import moment from 'moment';
 import { PageTitle } from '../../library/PageTitle';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
-
+import { StatusLabel } from '../../library/Graphs/StatusLabel';
 
 export const Payouts = (props: PageProps) => {
 
@@ -44,8 +44,8 @@ export const Payouts = (props: PageProps) => {
               }
             </h2>
           </div>
-
           <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
+            <StatusLabel topOffset="30%" />
             <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
               <PayoutBar
                 payouts={payouts.slice(0, 60)}
