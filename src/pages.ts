@@ -145,6 +145,13 @@ export const ASSISTANT_CONFIG = [
         ],
       },
       {
+        title: 'Reward Destination',
+        description: [
+          'Choose where your rewards are sent to upon being paid out.',
+          'Rewards can be automatically bonded on top of your current bond, or they can be sent to your stash, controller, or an external account of your choosing.',
+        ],
+      },
+      {
         title: 'Nominating',
         description: [
           'Nominating is the process of selecting validators you wish to stake your DOT to. You can choose to nominate up to 16 validators for each of your accounts.',
