@@ -1,42 +1,46 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { GenerateNominations } from './GenerateNominations';
+import { SectionWrapper } from '../../library/Graphs/Wrappers';
+import { Spacer } from './Wrappers';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
 
-export const ChooseNominators = (props: any) => {
+export const Payee = (props: any) => {
 
   // functional props
   const { setup, setSetup, activeSection, setActiveSection } = props;
 
-  const thisSection = 4;
+  // staked, stash, controller, account, none
+
+  const thisSection = 3;
 
   return (
-    <>
+    <SectionWrapper transparent>
       <Header
         thisSection={thisSection}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
-        complete={setup.nominations.length > 0}
-        title='Nominate'
+        complete={setup.payee !== null}
+        title='Reward Destination'
         assistantPage='stake'
-        assistantKey='Nominating'
+        assistantKey='Reward Destination'
       />
       <MotionContainer
         thisSection={thisSection}
         activeSection={activeSection}
       >
-        <GenerateNominations />
+        <Spacer />
         <Footer
-          complete={setup.nominations.length > 0}
+          complete={setup.payee !== null}
           activeSection={activeSection}
           setActiveSection={setActiveSection}
         />
       </MotionContainer>
-    </>
+
+    </SectionWrapper>
   )
 }
 
-export default ChooseNominators;
+export default Payee;

@@ -8,13 +8,16 @@ import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { useMessages } from '../../contexts/Messages';
 import { GLOBAL_MESSGE_KEYS } from '../../constants';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { AccountSelect } from '../../library/Form/AccountSelect';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import { Spacer } from './Wrappers';
+import { MotionContainer } from './MotionContainer';
 
 export const SetController = (props: any) => {
 
   // functional props
-  const { setup, setSetup } = props;
+  const { setup, setSetup, activeSection, setActiveSection } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
@@ -38,9 +41,12 @@ export const SetController = (props: any) => {
     })
   }
 
+  const thisSection = 1;
+
   return (
     <>
-      {/* warning: controller account not present. unable to stake */}
+      {/* TODO: integrate this into the below section.
+      warning: controller account not present. unable to stake */}
       {controllerNotImported !== null &&
         <SectionWrapper transparent style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
           <h3>Import Your Controller Account</h3>
@@ -55,16 +61,33 @@ export const SetController = (props: any) => {
       {/* controller management */}
       {controllerNotImported === null &&
         <SectionWrapper transparent>
-          <h2>
-            Set Controller Account
-            <OpenAssistantIcon page="stake" title="Stash and Controller Accounts" />
-          </h2>
-          <AccountSelect
-            items={accounts.filter((acc: any) => acc.address !== activeAccount)}
-            onChange={handleOnChange}
-            placeholder='Search Account'
-            value={selected}
+          <Header
+            thisSection={thisSection}
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+            title='Set Controller Account'
+            assistantPage='stake'
+            assistantKey='Stash and Controller Accounts'
+            complete={setup.controller !== null}
           />
+          <MotionContainer
+            thisSection={thisSection}
+            activeSection={activeSection}
+          >
+            <Spacer />
+            <AccountSelect
+              items={accounts.filter((acc: any) => acc.address !== activeAccount)}
+              onChange={handleOnChange}
+              placeholder='Search Account'
+              value={selected}
+            />
+            <Footer
+              complete={setup.controller !== null}
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
+            />
+          </MotionContainer>
+
         </SectionWrapper>
       }
     </>

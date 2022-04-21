@@ -11,6 +11,7 @@ import { useStaking } from '../../contexts/Staking';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
+import { Payee } from './Payee';
 import { Element } from 'react-scroll';
 import { Wrapper as ButtonWrapper } from '../../library/Button';
 import { PageTitle } from '../../library/PageTitle';
@@ -37,8 +38,13 @@ export const Setup = (props: any) => {
   const [setup, setSetup] = useState({
     controller: null,
     bond: 0,
+    payee: null,
     nominations: []
   });
+
+  const [activeSection, setActiveSection] = useState(1);
+
+  const setupProps = { setup, setSetup, activeSection, setActiveSection };
 
   return (
     <>
@@ -47,10 +53,7 @@ export const Setup = (props: any) => {
         {!hasController() &&
           <SectionWrapper>
             <Element name="controller" style={{ position: 'absolute' }} />
-            <SetController
-              setup={setup}
-              setSetup={setSetup}
-            />
+            <SetController {...setupProps} />
           </SectionWrapper>
         }
       </PageRowWrapper>
@@ -58,15 +61,22 @@ export const Setup = (props: any) => {
         <SectionWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond
-            setup={setup}
-            setSetup={setSetup}
+            {...setupProps}
+          />
+        </SectionWrapper>
+      </PageRowWrapper>
+      <PageRowWrapper noVerticalSpacer>
+        <SectionWrapper>
+          <Element name="payee" style={{ position: 'absolute' }} />
+          <Payee
+            {...setupProps}
           />
         </SectionWrapper>
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <ChooseNominators />
+          <ChooseNominators {...setupProps} />
         </SectionWrapper>
       </PageRowWrapper>
       <PageRowWrapper>
