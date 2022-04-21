@@ -24,24 +24,27 @@ export const Wrapper = styled(motion.button) <any>`
   margin: ${props => props.margin};
   flex-grow: 1;
   padding: ${props => props.padding};
-  border-radius: 1rem;
+  border-radius:  0.75rem;
   font-size: 0.95rem;
   font-variation-settings: 'wght' 560;
 `;
 
 export const Button = (props: any) => {
 
-  let { title, primary, inline, onClick } = props;
+  let { title, primary, inline, onClick, small, disabled } = props;
   primary = primary ?? false;
   inline = inline ?? false;
+  small = small ?? false;
+  disabled = disabled ?? false;
 
   return (
     <Wrapper
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      disabled={disabled}
+      whileHover={{ scale: !disabled ? 1.02 : 1 }}
+      whileTap={{ scale: !disabled ? 0.98 : 1 }}
       type={primary === true ? 'invert' : 'default'}
       margin={inline ? '0' : '0 0.5rem'}
-      padding={'0.5rem 1.2rem'}
+      padding={small ? '0.3rem 0.75rem' : '0.5rem 1.2rem'}
       onClick={() => onClick()}
     >
       {title}
