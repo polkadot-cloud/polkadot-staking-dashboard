@@ -52,3 +52,11 @@ export const pageFromUri = (pathname: string) => {
 export const isNumeric = (str: any) => {
   return !isNaN(str) && !isNaN(parseFloat(str))
 }
+
+export const defaultIfNaN = (val: any, _default: any) => {
+  if (isNaN(val)) {
+    return _default;
+  } else {
+    return val;
+  }
+}

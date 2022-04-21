@@ -16,7 +16,7 @@ import { useConnect } from '../../contexts/Connect';
 import { useSubscan } from '../../contexts/Subscan';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PageTitle } from '../../library/PageTitle';
-import { planckToDot } from '../../Utils';
+import { planckToDot, defaultIfNaN } from '../../Utils';
 import moment from 'moment';
 import { GRAPH_HEIGHT } from '../../constants';
 
@@ -33,6 +33,10 @@ export const Overview = (props: PageProps) => {
   const { totalNominators, maxNominatorsCount } = staking;
   const { activeNominators } = eraStakers;
 
+  let supplyAsPercent = defaultIfNaN(((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2), 0);
+  let totalNominatorsAsPercent = defaultIfNaN(((totalNominators ?? 0) / (maxNominatorsCount * 0.01)).toFixed(2), 0);
+  let activeNominatorsAsPercent = defaultIfNaN(((activeNominators ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2), 0);
+
   // stats
   const items = [
     {
@@ -40,7 +44,7 @@ export const Overview = (props: PageProps) => {
       value: staking.lastTotalStake,
       value2: totalIssuance - staking.lastTotalStake,
       unit: network.unit,
-      tooltip: `${((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2)}%`,
+      tooltip: `${supplyAsPercent}%`,
       format: "chart-pie",
     },
     {
@@ -49,7 +53,7 @@ export const Overview = (props: PageProps) => {
       value2: maxNominatorsCount - totalNominators ?? 0,
       total: maxNominatorsCount,
       unit: "",
-      tooltip: `${((totalNominators ?? 0) / (maxNominatorsCount * 0.01)).toFixed(2)}%`,
+      tooltip: `${totalNominatorsAsPercent}%`,
       format: "chart-pie",
     },
     {
@@ -58,7 +62,7 @@ export const Overview = (props: PageProps) => {
       value2: voterSnapshotPerBlock - activeNominators ?? 0,
       total: voterSnapshotPerBlock,
       unit: "",
-      tooltip: `${((activeNominators ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2)}%`,
+      tooltip: `${activeNominatorsAsPercent}%`,
       format: "chart-pie",
     },
   ];

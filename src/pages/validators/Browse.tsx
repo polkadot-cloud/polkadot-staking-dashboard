@@ -9,6 +9,7 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
+import { defaultIfNaN } from '../../Utils';
 
 export const Browse = (props: PageProps) => {
 
@@ -21,6 +22,9 @@ export const Browse = (props: PageProps) => {
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
   const { activeValidators } = eraStakers;
 
+  let totalValidatorsAsPercent = defaultIfNaN(((totalValidators ?? 0) / (maxValidatorsCount * 0.01)).toFixed(2), 0);
+  let activeValidatorsAsPercent = defaultIfNaN(((activeValidators ?? 0) / (validatorCount * 0.01)).toFixed(2), 0);
+
   const items = [
     {
       label: "Total Validators",
@@ -28,7 +32,7 @@ export const Browse = (props: PageProps) => {
       value2: maxValidatorsCount - totalValidators ?? 0,
       total: maxValidatorsCount,
       unit: "",
-      tooltip: `${((totalValidators ?? 0) / (maxValidatorsCount * 0.01)).toFixed(2)}%`,
+      tooltip: `${totalValidatorsAsPercent}%`,
       format: "chart-pie",
     },
     {
@@ -37,7 +41,7 @@ export const Browse = (props: PageProps) => {
       value2: validatorCount - activeValidators ?? 0,
       total: validatorCount,
       unit: "",
-      tooltip: `${((activeValidators ?? 0) / (validatorCount * 0.01)).toFixed(2)}%`,
+      tooltip: `${activeValidatorsAsPercent}%`,
       format: "chart-pie",
     },
     {
