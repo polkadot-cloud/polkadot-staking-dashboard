@@ -35,6 +35,8 @@ export const Setup = (props: any) => {
     totalUnlocking += unlocking[i];
   }
 
+  // TODO: if account already has had some staking setup, plug in into
+  // this state to partly fill the form.
   const [setup, setSetup] = useState({
     controller: null,
     bond: 0,

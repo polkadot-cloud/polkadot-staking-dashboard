@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary, gridColor, primary } from '../../theme';
+import { textSecondary, borderPrimary, primary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -103,82 +103,8 @@ export const Separator = styled.div`
 
 export const Spacer = styled.div`
   width: 100%;
+  height: 1px;
   margin: 0.75rem 0;
-`;
-
-export const BondStatus = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-end;
-  margin-top: 1rem;
-
-  .bars {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: flex-end;
-    margin-top: 1rem;
-
-    > section {
-      box-sizing: border-box;
-      padding: 0 0.15rem;
-
-      &:nth-child(1) {
-        flex-basis: 15%;
-      }
-      &:nth-child(2) {
-        flex-basis: 40%;
-      }
-      &:nth-child(3) {
-        flex-basis: 45%;
-      }
-      h4, h5 {
-        color: ${textSecondary};
-      }
-
-      h4 {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        margin-bottom: 0.4rem;
-      }
-      h5 {
-        margin: 0;
-        position: relative;
-        opacity: 0.75;
-      }
-      .bar {
-        background: ${gridColor};
-        width: 100%;
-        padding: 0.4rem 0.5rem;
-        overflow: hidden;
-        position: relative;
-      }
-      &:first-child .bar {
-        border-top-left-radius: 1rem;
-        border-bottom-left-radius: 1rem;
-        h5 {
-          margin-left: 0.25rem;
-        }
-      }
-      &:last-child .bar {
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-      }
-    }
-
-    .progress {
-      background: ${primary};
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 0.15rem;
-      width: 100%;
-    }
-  }
 `;
 
 export default Wrapper;

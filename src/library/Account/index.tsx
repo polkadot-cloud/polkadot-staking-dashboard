@@ -63,7 +63,9 @@ export const Account = (props: any) => {
       }
       {
         label !== undefined &&
-        <div className='label'>{label}</div>
+        <div className='label'>
+          {label}
+        </div>
       }
     </Wrapper>
   );
