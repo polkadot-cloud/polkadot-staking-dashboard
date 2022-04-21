@@ -23,7 +23,7 @@ export const MotionContainer = (props: any) => {
 
   return (
     <motion.div
-      initial={initial}
+      initial={false}
       style={{ overflow: 'hidden', width: '100%', }}
       variants={containerVariants}
       animate={animate}
