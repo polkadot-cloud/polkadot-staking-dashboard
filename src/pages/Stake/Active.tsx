@@ -120,7 +120,7 @@ export const Active = (props: any) => {
                   icon={faRedoAlt}
                   transform='shrink-4'
                 />
-                &nbsp;Back to Staking &nbsp;<div><Button thin inline primary title='Update' /></div>
+                &nbsp;Back to Staking &nbsp;<div><Button small inline primary title='Update' /></div>
               </h2>
             </div>
           </SectionWrapper>

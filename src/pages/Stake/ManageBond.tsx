@@ -35,8 +35,8 @@ export const ManageBond = () => {
         <h2>
           {planckToDot(active)} {network.unit} &nbsp;
           <div>
-            <Button thin primary inline title='+' />
-            <Button thin primary title='-' />
+            <Button small primary inline title='+' />
+            <Button small primary title='-' />
           </div>
         </h2>
       </div>
