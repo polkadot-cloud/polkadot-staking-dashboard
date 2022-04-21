@@ -24,10 +24,11 @@ export const Bond = (props: any) => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { staking } = useStaking();
+  const { staking, eraStakers } = useStaking();
   const { getAccountLedger, getBondedAccount, getAccountBalance }: any = useBalances();
 
   const { minNominatorBond } = staking;
+  const { minActiveBond } = eraStakers;
   const balance = getAccountBalance(activeAccount);
   let { free } = balance;
   const controller = getBondedAccount(activeAccount);
@@ -95,7 +96,7 @@ export const Bond = (props: any) => {
           </section>
           <section>
             <h4>
-              <FontAwesomeIcon icon={bond >= minNominatorBond ? faCheck : faFlag} transform="shrink-4" />&nbsp;Nominating
+              <FontAwesomeIcon icon={bond >= minNominatorBond ? faCheck : faFlag} transform="shrink-4" />&nbsp;Nominate
             </h4>
             <div className='bar'>
               <h5>{planckToDot(minNominatorBond)} {network.unit}</h5>
@@ -103,10 +104,10 @@ export const Bond = (props: any) => {
           </section>
           <section>
             <h4>
-              <FontAwesomeIcon icon={faFlag} transform="shrink-4" />&nbsp;Receiving Rewards
+              <FontAwesomeIcon icon={faFlag} transform="shrink-4" />&nbsp;Receive Rewards
             </h4>
             <div className='bar'>
-              <h5>Coming Soon</h5>
+              <h5>{minActiveBond} {network.unit}</h5>
             </div>
           </section>
         </div>

@@ -73,13 +73,13 @@ export const BondStatus = styled.div`
       padding: 0 0.15rem;
 
       &:nth-child(1) {
-        flex-basis: 20%;
+        flex-basis: 15%;
       }
       &:nth-child(2) {
         flex-basis: 40%;
       }
       &:nth-child(3) {
-        flex-basis: 40%;
+        flex-basis: 45%;
       }
       h4, h5 {
         color: ${textSecondary};

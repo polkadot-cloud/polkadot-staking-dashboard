@@ -50,7 +50,6 @@ export const Browse = (props: PageProps) => {
       unit: network.unit,
       format: "number",
     },
-
   ];
 
   return (

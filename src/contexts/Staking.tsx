@@ -107,6 +107,7 @@ export const StakingContextWrapper = (props: any) => {
     stakers: [],
     activeNominators: 0,
     activeValidators: 0,
+    minActiveBond: 0,
   })
 
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
@@ -193,7 +194,8 @@ export const StakingContextWrapper = (props: any) => {
   /* 
    * Fetches the active nominator count.
    * The top 256 nominators of each validator get rewarded.
-   * This function uses the above assumption to calculate active nominator count.
+   * This function uses the above assumption to calculate active nominator count,
+   * As well as the minimum bond needed to be in the active set for the era.
    */
   const fetchEraStakers = async () => {
     if (!isReady || metrics.activeEra.index === 0) { return }
@@ -204,6 +206,7 @@ export const StakingContextWrapper = (props: any) => {
     let _stakers: any = [];
     let _activeNominators = 0;
     let _activeValidators = 0;
+    let _minActiveBond = new BN(0);
 
     exposures.forEach(([_keys, _val]: any) => {
 
@@ -216,19 +219,35 @@ export const StakingContextWrapper = (props: any) => {
         ...val
       });
 
-      let _nominators = val?.others?.length ?? 0;
+      let others = val?.others ?? [];
+      let _nominators = others.length ?? 0;
+      others = others.sort((a: any, b: any) => a.vlaue - b.vlaue);
+
+      // accumilate active nominators
       if (_nominators > maxNominatorRewardedPerValidator) {
         _activeNominators += maxNominatorRewardedPerValidator;
       } else {
         _activeNominators += _nominators;
       }
 
-      setEraStakers({
-        ...eraStakers,
-        stakers: _stakers,
-        activeNominators: _activeNominators,
-        activeValidators: _activeValidators,
-      })
+      // accumulate min active bond threshold
+      if (others.length) {
+        let _min = new BN(others[0].value.toString().replace(/,/g, '')); // remove commas
+        if ((_min.lt(_minActiveBond)) || _minActiveBond.toNumber() === 0) {
+          _minActiveBond = _min;
+        }
+      }
+    });
+
+    // convert _minActiveBond to DOT value
+    let minActiveBond = _minActiveBond.div(new BN(10 ** 10)).toNumber();
+
+    setEraStakers({
+      ...eraStakers,
+      stakers: _stakers,
+      activeNominators: _activeNominators,
+      activeValidators: _activeValidators,
+      minActiveBond: minActiveBond,
     });
   }
 
