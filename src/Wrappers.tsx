@@ -90,8 +90,9 @@ export const PageWrapper = styled(motion.div)`
     display: flex;
     flex-flow: column nowrap;
     padding-bottom: 4.5rem;
+    width: 100%;
     max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
-    flex: 1;
+    margin: 0 auto;
 `;
 
 // Sticky page title wrapper
@@ -117,8 +118,13 @@ export const PageTitleWrapper = styled.header<any>`
      font-size: ${props => props.isSticky ? '1.4rem ' : '1.8rem'};
      transition: font 0.5s;
      font-variation-settings: 'wght' 600;
-     padding-left: 2rem;
-     padding-right: 2rem;
+     padding-left: 1.5rem;
+     padding-right: 4.5rem;
+
+     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
     }
 `;
 
@@ -132,11 +138,11 @@ export const PageRowWrapper = styled.div<any>`
     flex-flow: row nowrap;
     width: 100%;
     padding-left: 1.5rem;
-    padding-right: 3rem;
+    padding-right: 4.5rem;
 
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-        padding-left: 2.5rem;
-        padding-right: 2.5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
     * {
         box-sizing: border-box;

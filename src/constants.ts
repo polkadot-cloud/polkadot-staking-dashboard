@@ -57,7 +57,7 @@ export const CONNECTION_SYMBOL_COLORS: any = {
   connected: 'green',
 }
 
-export const INTERFACE_MAXIMUM_WIDTH: number = 1250;
+export const INTERFACE_MAXIMUM_WIDTH: number = 1800;
 export const SIDE_MENU_INTERFACE_WIDTH: number = 210;
 export const SIDE_MENU_STICKY_THRESHOLD: number = 1175;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;

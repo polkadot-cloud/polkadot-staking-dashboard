@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textPrimary, textSecondary, labelBackground } from '../../theme';
+import { textPrimary, textSecondary, tagBackground } from '../../theme';
 
 export const Wrapper = styled(motion.button) <any>`
     padding: ${props => props.padding};
@@ -40,7 +40,7 @@ export const Wrapper = styled(motion.button) <any>`
     }
 
     .label {
-      background: ${labelBackground};
+      background: ${tagBackground};
       border-radius: 0.75rem;
       color: ${textPrimary};
       font-size: 0.8em;

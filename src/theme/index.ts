@@ -39,7 +39,7 @@ export const backgroundDropdown: theme.ThemeSet = theme(v, defaultThemes.backgro
 
 export const backgroundValidator: theme.ThemeSet = theme(v, defaultThemes.background.validator);
 
-export const backgroundAnnouncement: theme.ThemeSet = theme(v, defaultThemes.background.announcement);
+export const backgroundLabel: theme.ThemeSet = theme(v, defaultThemes.background.label);
 
 export const backgroundIdenticon: theme.ThemeSet = theme(v, defaultThemes.background.identicon);
 
@@ -61,7 +61,7 @@ export const backgroundToggle: theme.ThemeSet = theme(v, defaultThemes.buttons.t
 
 // labels
 
-export const labelBackground: theme.ThemeSet = theme(v, defaultThemes.background.label);
+export const tagBackground: theme.ThemeSet = theme(v, defaultThemes.background.tag);
 
 // graphs
 

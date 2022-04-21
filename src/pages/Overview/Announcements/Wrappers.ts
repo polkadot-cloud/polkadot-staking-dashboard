@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundAnnouncement, textSecondary } from '../../../theme';
+import { backgroundLabel, backgroundSecondary, textSecondary } from '../../../theme';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -21,10 +21,10 @@ export const Item = styled(motion.div)`
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1rem 0.25rem;
+  margin: 1rem 0;
   padding: 1.2rem 1rem;
-  background: ${backgroundAnnouncement};
-  border-radius: 0.5rem;
+  background: ${backgroundSecondary};
+  border-radius: 0.75rem;
 
   h3 {
     display: flex;

@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, labelBackground } from '../../theme';
+import { textSecondary, tagBackground } from '../../theme';
 
 export const Wrapper = styled.div`
   h2 {
@@ -20,7 +20,7 @@ export const ItemsWrapper = styled(motion.div)`
 export const Item = styled(motion.button)`
   width: 200px;
   height: 200px;
-  background: ${labelBackground};
+  background: ${tagBackground};
   color: ${textSecondary};
   margin: 1rem 2rem 1rem 0;
   border-radius: 0.75rem;
@@ -28,5 +28,4 @@ export const Item = styled(motion.button)`
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-
 `;

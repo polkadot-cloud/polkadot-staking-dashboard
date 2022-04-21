@@ -4,13 +4,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { StatusLabelWrapper } from './Wrappers';
+import { useUi } from '../../contexts/UI';
 import { useStaking } from '../../contexts/Staking';
 
 export const StatusLabel = (props: any) => {
 
+  const { isSyncing } = useUi();
   const { inSetup } = useStaking();
 
-  if (!inSetup()) {
+  if (isSyncing() || !inSetup()) {
     return (<></>);
   }
 

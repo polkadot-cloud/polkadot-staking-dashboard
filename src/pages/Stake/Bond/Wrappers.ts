@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { backgroundAnnouncement, textSecondary, primary, secondary, textInvert } from "../../../theme";
+import { backgroundLabel, textSecondary, primary, secondary, textInvert } from "../../../theme";
 
 export const BondInputWrapper = styled.div`
   width: 100%;
@@ -26,7 +26,7 @@ export const BondInputWrapper = styled.div`
 `;
 
 export const Warning = styled.div`
-  background: ${backgroundAnnouncement};
+  background: ${backgroundLabel};
   margin: 0.6rem 0;
   padding: 0.5rem 0.75rem;
   color: rgba(255, 144, 0, 1);
@@ -86,7 +86,7 @@ export const BondStatus = styled.div<any>`
         opacity: 0.75;
       }
       .bar {
-        background: ${backgroundAnnouncement};
+        background: ${backgroundLabel};
         width: 100%;
         padding: 0.4rem 0.5rem;
         overflow: hidden;

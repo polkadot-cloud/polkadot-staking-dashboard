@@ -25,15 +25,15 @@ export const defaultThemes: any = {
     secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.16)'),
     network: v('rgba(229,229,229,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
-    label: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
       'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)'
     ),
-    announcement: v(
+    label: v(
       'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
       'linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.5) 100%)'
     ),
+    tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),
     overlay: v(
       'linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%)',

@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  padding: 0 3rem 0 1.5rem;
+  padding: 0 4.5rem 0 1.5rem;
 
   @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     padding-left: 1.5rem;

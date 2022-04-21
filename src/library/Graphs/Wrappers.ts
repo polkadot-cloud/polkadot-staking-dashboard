@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, backgroundAnnouncement, backgroundSecondary } from '../../theme';
+import { textSecondary, backgroundLabel, backgroundSecondary } from '../../theme';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
@@ -188,7 +188,7 @@ export const StatusLabelWrapper = styled.div<any>`
   z-index:2;
 
   > div {
-    background: ${backgroundAnnouncement};
+    background: ${backgroundLabel};
     opacity: 0.75;
     padding: 0.75rem 1.25rem;
     border-radius: 0.75rem;
