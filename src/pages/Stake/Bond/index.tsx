@@ -38,7 +38,10 @@ export const Bond = (props: any) => {
   const ledger = getAccountLedger(controller);
   const { total } = ledger;
 
-  const [bond, setBond] = useState(planckToDot(free));
+  let freeAfterReserve: any = free - RESERVE_AMOUNT;
+  freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
+
+  const [bond, setBond] = useState(freeAfterReserve);
 
   const handleChangeBond = (e: any) => {
     let { value } = e.target;
@@ -62,10 +65,7 @@ export const Bond = (props: any) => {
   // handle errors
 
   let errors = [];
-
   let bondDisabled = false;
-  let freeAfterReserve = free - RESERVE_AMOUNT;
-  freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
 
   // pre-bond input errors
 
@@ -81,7 +81,7 @@ export const Bond = (props: any) => {
 
   // bond input errors
 
-  if (bond < minNominatorBond && bond !== '') {
+  if (bond < minNominatorBond && bond !== '' && bond !== 0) {
     errors.push(`Bond amount must be at least ${planckToDot(minNominatorBond)} ${network.unit}.`);
   }
 
