@@ -89,6 +89,7 @@ export const VOTER_SNAPSHOT_PER_BLOCK = 22500;
  * Third party API keys and endpoints
 */
 
+// TODO: check with Subscan should API key be public
 export const API_SUBSCAN_KEY = 'd37149339f64775155a82a53f4253b27';
 
 export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3';
