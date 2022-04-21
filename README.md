@@ -20,7 +20,7 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Performant validator list fetching and meta data syncing
 - [x] Validator filtering initialisation and favourite validators
 - [x] Theming support
-- [ ] Integrate Intention / Active Bond Thresholds
+- [x] Integrate Intention / Active Bond Thresholds
 - [ ] Initial Nomination management tooling
 - [ ] Extrinsics
 - [ ] Recent Payouts as list
