@@ -18,7 +18,7 @@ export const Announcements = () => {
   const { isSyncing } = useUi();
   const { network }: any = useApi();
   const { staking }: any = useStaking();
-  const { minNominatorBond } = staking;
+  const { minNominatorBond, maxNominatorsCount } = staking;
 
   const container = {
     hidden: { opacity: 0 },
@@ -48,7 +48,7 @@ export const Announcements = () => {
   if (nominatorCapReached) {
     announcements.push({
       class: 'danger',
-      title: 'Nominator Limit Has Been Reached',
+      title: 'Nominator Limit Has Been Reached.',
       subtitle: 'The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.',
     });
   }
@@ -57,7 +57,7 @@ export const Announcements = () => {
   if (nominatorReachedPercentage >= 90) {
     announcements.push({
       class: 'warning',
-      title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached`,
+      title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached.`,
       subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(staking.maxNominatorsCount)}.`,
     });
   }
@@ -65,8 +65,15 @@ export const Announcements = () => {
   // minimum nomination bond
   announcements.push({
     class: 'neutral',
-    title: `The Minimum Nomination Bond is now at ${planckToDot(minNominatorBond)} ${network.unit}`,
-    subtitle: `The minimum bonding amount of ${network.unit} to start nominating validators is now at ${planckToDot(minNominatorBond)} ${network.unit}.`,
+    title: `The minimum nominator bond is now at ${planckToDot(minNominatorBond)} ${network.unit}.`,
+    subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToDot(minNominatorBond)} ${network.unit}.`,
+  });
+
+  // maximum nominators
+  announcements.push({
+    class: 'neutral',
+    title: `The maximum nominator cap is now ${humanNumber(maxNominatorsCount)}.`,
+    subtitle: `A total of ${humanNumber(maxNominatorsCount)} nominators can now join the ${network.name} network.`,
   })
 
   return (
