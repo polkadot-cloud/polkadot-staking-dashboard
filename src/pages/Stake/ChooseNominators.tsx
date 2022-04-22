@@ -26,7 +26,10 @@ export const ChooseNominators = (props: any) => {
         thisSection={section}
         activeSection={activeSection}
       >
-        <GenerateNominations />
+        <GenerateNominations
+          setup={setup}
+          setSetup={setSetup}
+        />
         <Footer
           complete={setup.nominations.length > 0}
           activeSection={activeSection}

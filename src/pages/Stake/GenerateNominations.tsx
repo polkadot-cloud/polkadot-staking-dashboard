@@ -10,7 +10,10 @@ import { useUi } from '../../contexts/UI';
 import { Button } from '../../library/Button';
 // import { shuffle } from '../../Utils';
 
-export const GenerateNominations = () => {
+export const GenerateNominations = (props: any) => {
+
+  // functional props
+  const { setup, setSetup } = props;
 
   const { isReady }: any = useApi();
   const { getValidatorMetaBatch, validators, favourites, removeValidatorMetaBatch }: any = useStaking();
@@ -83,8 +86,16 @@ export const GenerateNominations = () => {
         default:
           _nominations = fetchMostProfitable();
       }
+
+      // update component state
       setNominations(_nominations);
       setFetching(false);
+
+      // update setup state
+      setSetup({
+        ...setup,
+        nominations: _nominations,
+      });
     }
   });
 
