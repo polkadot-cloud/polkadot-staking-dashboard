@@ -152,7 +152,7 @@ export const ValidatorListInner = (props: any) => {
         </div>
       </Header>
       <List
-        flexBasisLarge={allowMoreCols ? '33%' : '50%'}
+        flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}
       >
         {allowFilters && <Filters setInitial={setInitial} />}
 
