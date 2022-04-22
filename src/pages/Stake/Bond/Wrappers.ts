@@ -36,7 +36,7 @@ export const Warning = styled.div`
   align-items: center;
 
   h4 {
-    margin: 0 0 0 0.4rem;
+    margin: 0 0 0 0.75rem;
   }
 `;
 
