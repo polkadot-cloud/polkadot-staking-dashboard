@@ -7,6 +7,7 @@ import { clipAddress, convertRemToPixels } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 import { useTheme } from '../../contexts/Themes';
 import { defaultThemes } from '../../theme/default';
+import { ReactComponent as WalletSVG } from '../../img/wallet.svg';
 
 export const Account = (props: any) => {
 
@@ -20,7 +21,7 @@ export const Account = (props: any) => {
   let { format }: any = props;
   let filled = props.filled ?? false;
   let fontSize = props.fontSize ?? '1rem';
-  let padding = props.padding ?? '0 0.35rem';
+  let padding = props.padding ?? '0 1rem';
 
   // functional props
   let { canClick }: { canClick: boolean } = props;
@@ -49,22 +50,29 @@ export const Account = (props: any) => {
       fontSize={fontSize}
       padding={padding}
     >
-      {unassigned &&
-        <span className='title unassigned'>Not Set</span>
+      {label !== undefined &&
+        <div className='label'>
+          {label}
+        </div>
       }
-      {unassigned !== true &&
+
+      {unassigned
+        ? <span className='title unassigned'>Not Set</span>
+        :
         <>
-          <Identicon
-            value={value}
-            size={convertRemToPixels(fontSize) * 1.4}
-          />
+          <span className='identicon'>
+            <Identicon
+              value={value}
+              size={convertRemToPixels(fontSize) * 1.45}
+            />
+          </span>
           <span className='title'>{displayValue}</span>
         </>
       }
-      {
-        label !== undefined &&
-        <div className='label'>
-          {label}
+
+      {label === 'Stash' &&
+        <div className='wallet'>
+          <WalletSVG />
         </div>
       }
     </Wrapper>

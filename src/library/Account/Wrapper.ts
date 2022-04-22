@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textPrimary, textSecondary, tagBackground } from '../../theme';
+import { textPrimary, textSecondary, borderSecondary } from '../../theme';
 
 export const Wrapper = styled(motion.button) <any>`
     padding: ${props => props.padding};
@@ -20,9 +20,25 @@ export const Wrapper = styled(motion.button) <any>`
     font-size: ${props => props.fontSize};
     width: 100%;
     flex: 1;
+
+    .identicon {
+      margin: 0.15rem 0.25rem 0 0;
+    }
+
+    .label {
+      color: ${textSecondary};
+      font-size: 0.8em;
+      font-variation-settings: 'wght' 535;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      margin: 0 0.5rem;
+      padding: 0 0.5rem;
+      border-right: 1px solid ${borderSecondary};
+    }
     
     .title {
-      margin: 0 0.75rem 0 0;
+      margin-left: 0.25rem;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -34,26 +50,16 @@ export const Wrapper = styled(motion.button) <any>`
       color: ${textPrimary};
 
       &.unassigned {
-        margin-left: 1rem;
         color: ${textSecondary};
       }
     }
 
-    .label {
-      background: ${tagBackground};
-      border-radius: 0.75rem;
-      color: ${textPrimary};
-      font-size: 0.8em;
-      font-variation-settings: 'wght' 535;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      padding: 0.2rem 0.75rem;
+    .wallet {
+      width: 1em;
+      height: 1em;
+      margin-left: 0.8rem;
+      opacity: 0.8;
     }
-
-  > div:first-child {
-    padding: 0.15rem 0.6rem;
-  }
 `;
 
 export default Wrapper;

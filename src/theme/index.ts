@@ -77,6 +77,9 @@ export const gridColor: theme.ThemeSet = theme(v, defaultThemes.graphs.grid);
 
 export const borderPrimary: theme.ThemeSet = theme(v, defaultThemes.border.primary);
 
+export const borderSecondary: theme.ThemeSet = theme(v, defaultThemes.border.secondary);
+
+
 // modal
 
 export const modalOverlayBackground: theme.ThemeSet = theme(v, defaultThemes.modal.overlay);
