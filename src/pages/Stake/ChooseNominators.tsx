@@ -9,14 +9,12 @@ import { MotionContainer } from './MotionContainer';
 export const ChooseNominators = (props: any) => {
 
   // functional props
-  const { setup, setSetup, activeSection, setActiveSection } = props;
-
-  const thisSection = 4;
+  const { setup, setSetup, activeSection, setActiveSection, section } = props;
 
   return (
     <>
       <Header
-        thisSection={thisSection}
+        thisSection={section}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         complete={setup.nominations.length > 0}
@@ -25,7 +23,7 @@ export const ChooseNominators = (props: any) => {
         assistantKey='Nominating'
       />
       <MotionContainer
-        thisSection={thisSection}
+        thisSection={section}
         activeSection={activeSection}
       >
         <GenerateNominations />

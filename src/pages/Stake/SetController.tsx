@@ -17,7 +17,7 @@ import { MotionContainer } from './MotionContainer';
 export const SetController = (props: any) => {
 
   // functional props
-  const { setup, setSetup, activeSection, setActiveSection } = props;
+  const { setup, setSetup, activeSection, setActiveSection, section } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
@@ -41,8 +41,6 @@ export const SetController = (props: any) => {
     })
   }
 
-  const thisSection = 1;
-
   return (
     <>
       {/* TODO: integrate this into the below section.
@@ -62,7 +60,7 @@ export const SetController = (props: any) => {
       {controllerNotImported === null &&
         <SectionWrapper transparent>
           <Header
-            thisSection={thisSection}
+            thisSection={section}
             activeSection={activeSection}
             setActiveSection={setActiveSection}
             title='Set Controller Account'
@@ -71,7 +69,7 @@ export const SetController = (props: any) => {
             complete={setup.controller !== null}
           />
           <MotionContainer
-            thisSection={thisSection}
+            thisSection={section}
             activeSection={activeSection}
           >
             <Spacer />

@@ -22,7 +22,7 @@ const RESERVE_AMOUNT = 0.1 ** 10;
 export const Bond = (props: any) => {
 
   // functional props
-  const { setup, setSetup, activeSection, setActiveSection } = props;
+  const { setup, setSetup, activeSection, setActiveSection, section } = props;
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
@@ -88,14 +88,13 @@ export const Bond = (props: any) => {
     errors.push(`Bond amount is more than your free balance.`);
   }
 
-  const thisSection = 2;
   const gtMinNominatorBond = bond >= planckToDot(minNominatorBond);
   const gtMinActiveBond = bond >= minActiveBond;
 
   return (
     <SectionWrapper transparent>
       <Header
-        thisSection={thisSection}
+        thisSection={section}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         complete={setup.bond !== 0}
@@ -105,7 +104,7 @@ export const Bond = (props: any) => {
       />
 
       <MotionContainer
-        thisSection={thisSection}
+        thisSection={section}
         activeSection={activeSection}
       >
         {errors.map((err: any, index: any) =>
@@ -118,7 +117,6 @@ export const Bond = (props: any) => {
         {!errors.length &&
           <h4>Available: {planckToDot(freeAfterReserve)} {network.unit}</h4>
         }
-
         <Spacer />
 
         <BondInputWrapper>

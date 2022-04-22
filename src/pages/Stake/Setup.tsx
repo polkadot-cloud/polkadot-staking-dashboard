@@ -39,9 +39,9 @@ export const Setup = (props: any) => {
   // this state to partly fill the form.
   const [setup, setSetup] = useState({
     controller: null,
-    bond: 0,
     payee: null,
-    nominations: []
+    nominations: [],
+    bond: 0,
   });
 
   const [activeSection, setActiveSection] = useState(1);
@@ -55,30 +55,26 @@ export const Setup = (props: any) => {
         {!hasController() &&
           <SectionWrapper>
             <Element name="controller" style={{ position: 'absolute' }} />
-            <SetController {...setupProps} />
+            <SetController {...setupProps} section={1} />
           </SectionWrapper>
         }
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          <Element name="bond" style={{ position: 'absolute' }} />
-          <Bond
-            {...setupProps}
-          />
-        </SectionWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
-        <SectionWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
-          <Payee
-            {...setupProps}
-          />
+          <Payee {...setupProps} section={2} />
         </SectionWrapper>
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <ChooseNominators {...setupProps} />
+          <ChooseNominators {...setupProps} section={3} />
+        </SectionWrapper>
+      </PageRowWrapper>
+      <PageRowWrapper noVerticalSpacer>
+        <SectionWrapper>
+          <Element name="bond" style={{ position: 'absolute' }} />
+          <Bond {...setupProps} section={4} />
         </SectionWrapper>
       </PageRowWrapper>
       <PageRowWrapper>
