@@ -65,7 +65,7 @@ export const Announcements = () => {
   // minimum nomination bond
   announcements.push({
     class: 'neutral',
-    title: `The minimum nominator bond is now at ${planckToDot(minNominatorBond)} ${network.unit}.`,
+    title: `The minimum nominator bond is now ${planckToDot(minNominatorBond)} ${network.unit}.`,
     subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToDot(minNominatorBond)} ${network.unit}.`,
   });
 

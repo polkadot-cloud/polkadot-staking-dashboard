@@ -19,6 +19,7 @@ import { PageTitle } from '../../library/PageTitle';
 import { planckToDot, defaultIfNaN } from '../../Utils';
 import moment from 'moment';
 import { GRAPH_HEIGHT } from '../../constants';
+import { ActiveAccount } from './ActiveAccount';
 
 export const Overview = (props: PageProps) => {
 
@@ -51,7 +52,6 @@ export const Overview = (props: PageProps) => {
         key: 'Supply Staked',
       },
     },
-
     {
       label: "Total Nominators",
       value: totalNominators,
@@ -95,7 +95,10 @@ export const Overview = (props: PageProps) => {
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper style={{ flexBasis: '40%', maxWidth: '40%' }}>
-          <BalanceGraph network={network} />
+          <GraphWrapper flex>
+            <ActiveAccount />
+            <BalanceGraph network={network} />
+          </GraphWrapper>
         </SecondaryWrapper>
         <MainWrapper paddingLeft>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>

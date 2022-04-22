@@ -63,7 +63,7 @@ export const defaultThemes: any = {
     assistant: { background: v('#ececec', '#242424') },
   },
   border: {
-    primary: v('#eaeaea', '#2a2a2a'),
+    primary: v('#e9e9e9', '#2a2a2a'),
     secondary: v('#ccc', '#444'),
   },
   modal: {

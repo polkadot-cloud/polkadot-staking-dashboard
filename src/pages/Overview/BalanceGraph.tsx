@@ -8,7 +8,6 @@ import { useApi, APIContext } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { planckToDot, fiatAmount, humanNumber } from '../../Utils';
-import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
@@ -97,25 +96,23 @@ export const BalanceGraphInner = (props: any) => {
 
   const ref: any = React.useRef();
   let size = useSize(ref.current);
-  let { width, height, minHeight } = formatSize(size, 322);
+  let { width, height, minHeight } = formatSize(size, 287);
 
   return (
     <>
-      <GraphWrapper flex>
-        <div className='head'>
-          <h4>Balance</h4>
-          <h2>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h2>
+      <div className='head' style={{ paddingTop: '0.5rem' }}>
+        <h2>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h2>
+      </div>
+      <div style={{ paddingTop: '20px' }}></div>
+      <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
+        <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
+          <Doughnut
+            options={options}
+            data={data}
+          />
         </div>
-        <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
-          <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
-            <Doughnut
-              options={options}
-              data={data}
-            />
-          </div>
-        </div>
-        <div style={{ paddingTop: '30px' }}></div>
-      </GraphWrapper>
+      </div>
+      <div style={{ paddingTop: '25px' }}></div>
     </>
   );
 }
