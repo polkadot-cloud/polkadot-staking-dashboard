@@ -106,7 +106,7 @@ export const ASSISTANT_CONFIG = [
       {
         title: 'Announcements',
         description: [
-          'Real time network statistics that may effect your staking positions.',
+          'Real time network statistics that may affect your staking positions.',
           'Keep up to date on the state of the network from your Overview.',
         ],
       },
