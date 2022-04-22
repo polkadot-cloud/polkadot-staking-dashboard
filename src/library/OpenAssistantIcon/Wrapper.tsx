@@ -2,17 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, primary } from '../../theme';
+import { textSecondary, primary, buttonAssistantBackground } from '../../theme';
 
 export const Wrapper = styled.button`
+  background: ${buttonAssistantBackground};
   color: ${textSecondary};
+  fill: ${textSecondary};
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  opacity: 0.6;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0.05rem;
+  transition: all 0.15s;
+
   &:hover {
-    color: ${primary};
-    opacity: 1;
+    fill: ${primary};
   }
 `;
 

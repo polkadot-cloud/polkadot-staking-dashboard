@@ -59,6 +59,9 @@ export const buttonSecondaryBackground: theme.ThemeSet = theme(v, defaultThemes.
 
 export const backgroundToggle: theme.ThemeSet = theme(v, defaultThemes.buttons.toggle.background);
 
+export const buttonAssistantBackground: theme.ThemeSet = theme(v, defaultThemes.buttons.assistant.background);
+
+
 // labels
 
 export const tagBackground: theme.ThemeSet = theme(v, defaultThemes.background.tag);

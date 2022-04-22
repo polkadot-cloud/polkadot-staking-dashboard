@@ -60,6 +60,7 @@ export const defaultThemes: any = {
     primary: { background: v('#f8f8f8', '#0f0f0f') },
     secondary: { background: v('#ebebeb', '#111') },
     toggle: { background: v('#f4f4f4', '#1a1a1a') },
+    assistant: { background: v('#ececec', '#242424') },
   },
   border: {
     primary: v('#eaeaea', '#2a2a2a'),

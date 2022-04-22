@@ -33,10 +33,8 @@ export const SectionWrapper = styled.div<any>`
     flex-flow: row wrap;
     align-items: center;
 
-    > button {
-      svg {
-        margin-left: 0.4rem;
-      }
+    .assistant-icon {
+      margin-left: 0.6rem;
     }
   }
 

@@ -1,10 +1,9 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useAssistant } from '../../contexts/Assistant';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper } from './Wrapper';
+import { useAssistant } from '../../contexts/Assistant';
+import { ReactComponent as IconSVG } from '../../img/assistant.svg';
 
 export const OpenAssistantIcon = (props: any) => {
 
@@ -12,11 +11,17 @@ export const OpenAssistantIcon = (props: any) => {
 
   const { page, title } = props;
 
+  let size = props.width ?? '1.25rem';
+
   return (
-    <Wrapper onClick={() => {
-      goToDefinition(page, title);
-    }}>
-      <FontAwesomeIcon transform='grow-3' icon={faInfoCircle} />
+    <Wrapper
+      className='assistant-icon'
+      onClick={() => {
+        goToDefinition(page, title);
+      }}
+      style={{ width: size, height: size }}
+    >
+      <IconSVG />
     </Wrapper>
   )
 }
