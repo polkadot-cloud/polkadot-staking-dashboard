@@ -47,7 +47,7 @@ export const AccountWrapper = styled.div`
         cursor: pointer;
         transition: opacity 0.1s;
         &:hover {
-          opacity: 1;
+          opacity: 0.8;
         }
       }
     }

@@ -56,6 +56,10 @@ export const Wrapper = styled(motion.button) <any>`
       height: 1em;
       margin-left: 0.8rem;
       opacity: 0.8;
+      
+      path {
+        fill: ${textPrimary};
+      }
     }
 `;
 
