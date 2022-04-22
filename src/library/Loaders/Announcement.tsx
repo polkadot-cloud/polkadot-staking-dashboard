@@ -15,7 +15,7 @@ export const Announcement = () => {
       width='100%'
       backgroundColor={defaultThemes.loader.background[mode]}
       foregroundColor={defaultThemes.loader.foreground[mode]}
-      opacity={0.7}
+      opacity={0.2}
     >
       <rect x="0" y="0" rx="0.5rem" ry="0.5rem" width="100%" height="100%" />
     </ContentLoader>

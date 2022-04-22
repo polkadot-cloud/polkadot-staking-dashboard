@@ -11,6 +11,8 @@ import { useUi } from '../../../contexts/UI';
 import { humanNumber, planckToDot } from '../../../Utils';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from '../../../library/Loaders/Announcement';
+import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
+
 export const Announcements = () => {
 
   const { isSyncing } = useUi();
@@ -68,12 +70,13 @@ export const Announcements = () => {
   })
 
   return (
-    <SectionWrapper transparent>
+    <SectionWrapper>
+      <h2>
+        Announcements
+        <OpenAssistantIcon page='overview' title='Announcements' />
+      </h2>
       <Wrapper>
         <motion.div variants={container} initial="hidden" animate="show" style={{ width: '100%' }}>
-          <motion.div variants={listItem}>
-            <h3 style={{ marginTop: '1.75rem' }}>Announcements</h3>
-          </motion.div>
 
           {isSyncing()
             ? <AnnouncementLoader />

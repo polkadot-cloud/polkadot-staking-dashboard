@@ -3,28 +3,24 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundLabel, backgroundSecondary, textSecondary } from '../../../theme';
+import { textSecondary, borderPrimary } from '../../../theme';
 
 export const Wrapper = styled.div`
   flex: 1;
   display: flex;
   flex-flow: column wrap;
   width: 100%;
-
-  h3 {
-    margin-bottom: 1.2rem;
-  }
 `;
+
 export const Item = styled(motion.div)`
   list-style: none;
   flex: 1;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1rem 0;
-  padding: 1.2rem 1rem;
-  background: ${backgroundSecondary};
-  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid ${borderPrimary};
 
   h3 {
     display: flex;
