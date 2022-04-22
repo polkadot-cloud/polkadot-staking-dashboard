@@ -96,11 +96,12 @@ export const BalanceGraphInner = (props: any) => {
 
   const ref: any = React.useRef();
   let size = useSize(ref.current);
-  let { width, height, minHeight } = formatSize(size, 287);
+  let { width, height, minHeight } = formatSize(size, 251);
 
   return (
     <>
       <div className='head' style={{ paddingTop: '0.5rem' }}>
+        <h4>Balance</h4>
         <h2>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h2>
       </div>
       <div style={{ paddingTop: '20px' }}></div>
