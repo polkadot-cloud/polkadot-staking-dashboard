@@ -118,13 +118,16 @@ export const PageTitleWrapper = styled.header<any>`
      font-size: ${props => props.isSticky ? '1.4rem ' : '1.8rem'};
      transition: font 0.5s;
      font-variation-settings: 'wght' 600;
+     
+     /* page padding */
      padding-left: 1.5rem;
-     padding-right: 4.5rem;
-
-     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
+     padding-right: 1.5rem;
+       @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+        padding: 0 3rem 0 1rem;
+      }
+      @media(min-width: 1500px) {
+        padding: 0 5rem 0 1.5rem;
+      }
     }
 `;
 
@@ -137,13 +140,17 @@ export const PageRowWrapper = styled.div<any>`
     flex-shrink: 0;
     flex-flow: row nowrap;
     width: 100%;
+    
+    /* page padding */
     padding-left: 1.5rem;
-    padding-right: 4.5rem;
-
-    @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-        padding-left: 2rem;
-        padding-right: 2rem;
+    padding-right: 1.5rem;
+    @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+        padding: 0 3rem 0 1rem;
     }
+    @media(min-width: 1500px) {
+        padding: 0 5rem 0 1.5rem;
+    }
+
     * {
         box-sizing: border-box;
     }

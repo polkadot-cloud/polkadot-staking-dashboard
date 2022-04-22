@@ -10,11 +10,15 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  padding: 0 4.5rem 0 1.5rem;
-
-  @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+  
+  /* page padding */
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    padding: 0 3rem 0 1rem;
+  }
+  @media(min-width: 1500px) {
+    padding: 0 5rem 0 1.5rem;
   }
 `;
 
