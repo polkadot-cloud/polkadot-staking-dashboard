@@ -40,7 +40,7 @@ export const Bond = (props: any) => {
   let freeAfterReserve: any = free - RESERVE_AMOUNT;
   freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
 
-  const [bond, setBond] = useState(freeAfterReserve);
+  const [bond, setBond] = useState(planckToDot(freeAfterReserve));
 
   const handleChangeBond = (e: any) => {
     let { value } = e.target;
