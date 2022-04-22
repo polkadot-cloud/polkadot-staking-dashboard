@@ -42,9 +42,9 @@ export const Wrapper = styled.div`
       padding-top: 0.5rem;
       
       button {
-        transition: color 0.2s;
-        margin-right: 0.45rem;
         color: ${textSecondary};
+        transition: color 0.2s;
+        margin-right: 0.1rem;
         opacity: 0.75;
 
         path {
