@@ -21,7 +21,7 @@ export const Account = (props: any) => {
   let { format }: any = props;
   let filled = props.filled ?? false;
   let fontSize = props.fontSize ?? '1rem';
-  let padding = props.padding ?? '0 1rem';
+  let wallet = props.wallet ?? false;
 
   // functional props
   let { canClick }: { canClick: boolean } = props;
@@ -43,12 +43,10 @@ export const Account = (props: any) => {
   return (
     <Wrapper
       whileHover={{ scale: 1.01 }}
-      style={{ paddingLeft: 0 }}
       onClick={props.onClick}
       cursor={canClick ? `pointer` : `default`}
       fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
       fontSize={fontSize}
-      padding={padding}
     >
       {label !== undefined &&
         <div className='label'>
@@ -70,7 +68,7 @@ export const Account = (props: any) => {
         </>
       }
 
-      {label === 'Stash' &&
+      {wallet &&
         <div className='wallet'>
           <WalletSVG />
         </div>

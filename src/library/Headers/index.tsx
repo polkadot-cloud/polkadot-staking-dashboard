@@ -21,7 +21,7 @@ export const Headers = () => {
   const assistant = useAssistant();
   const connect = useConnect();
   const { openModalWith } = useModal();
-  const { validators } = useStaking();
+  const { validators, isNominating } = useStaking();
   const { setSideMenu, sideMenuOpen, isSyncing }: any = useUi();
 
   // subscribe to web3 accounts
@@ -64,9 +64,10 @@ export const Headers = () => {
               canClick={true}
               onClick={() => openModalWith('ConnectAccounts', {}, 'small')}
               value={connect.activeAccount}
-              label='Stash'
+              label={isNominating() ? 'Stash' : undefined}
               format='name'
               filled
+              wallet
             />
           </HeadingWrapper>
           <HeadingWrapper>
