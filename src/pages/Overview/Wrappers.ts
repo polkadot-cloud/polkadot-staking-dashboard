@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { borderPrimary } from "../../theme";
+import { borderPrimary, textSecondary } from "../../theme";
 
 export const AccountWrapper = styled.div`
   padding: 0 1.25rem 0rem 1.25rem;
@@ -41,6 +41,7 @@ export const AccountWrapper = styled.div`
       flex-flow: row-reverse wrap;
 
       > .copy {
+        color: ${textSecondary};
         opacity: 0.5;
         cursor: pointer;
         transition: opacity 0.1s;
