@@ -96,7 +96,7 @@ export const BalanceGraphInner = (props: any) => {
 
   const ref: any = React.useRef();
   let size = useSize(ref.current);
-  let { width, height, minHeight } = formatSize(size, 251);
+  let { width, height, minHeight } = formatSize(size, 252);
 
   return (
     <>
