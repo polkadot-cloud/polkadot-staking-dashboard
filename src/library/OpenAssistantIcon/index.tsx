@@ -11,7 +11,7 @@ export const OpenAssistantIcon = (props: any) => {
 
   const { page, title } = props;
 
-  let size = props.width ?? '1.25rem';
+  let size = props.size ?? '1.3em';
 
   return (
     <Wrapper

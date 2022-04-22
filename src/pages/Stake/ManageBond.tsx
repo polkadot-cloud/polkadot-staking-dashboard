@@ -8,6 +8,7 @@ import { useConnect } from '../../contexts/Connect';
 import { useBalances } from '../../contexts/Balances';
 import { Button } from '../../library/Button';
 import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const ManageBond = () => {
 
@@ -31,7 +32,10 @@ export const ManageBond = () => {
   return (
     <SectionWrapper transparent>
       <div className='head'>
-        <h4>Bonded Funds</h4>
+        <h4>
+          Bonded Funds
+          <OpenAssistantIcon page='stake' title='Bonding' />
+        </h4>
         <h2>
           {planckToDot(active)} {network.unit} &nbsp;
           <div>

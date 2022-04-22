@@ -46,7 +46,12 @@ export const Overview = (props: PageProps) => {
       unit: network.unit,
       tooltip: `${supplyAsPercent}%`,
       format: "chart-pie",
+      assistant: {
+        page: 'overview',
+        key: 'Supply Staked',
+      },
     },
+
     {
       label: "Total Nominators",
       value: totalNominators,
@@ -55,6 +60,10 @@ export const Overview = (props: PageProps) => {
       unit: "",
       tooltip: `${totalNominatorsAsPercent}%`,
       format: "chart-pie",
+      assistant: {
+        page: 'overview',
+        key: 'Nominators',
+      },
     },
     {
       label: "Active Nominators",
@@ -64,6 +73,10 @@ export const Overview = (props: PageProps) => {
       unit: "",
       tooltip: `${activeNominatorsAsPercent}%`,
       format: "chart-pie",
+      assistant: {
+        page: 'overview',
+        key: 'Active Nominators',
+      },
     },
   ];
 

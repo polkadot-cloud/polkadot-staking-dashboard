@@ -36,6 +36,10 @@ export const Browse = (props: PageProps) => {
       unit: "",
       tooltip: `${totalValidatorsAsPercent}%`,
       format: "chart-pie",
+      assistant: {
+        page: 'validators',
+        key: 'Validator'
+      }
     },
     {
       label: "Active Validators",
@@ -45,12 +49,20 @@ export const Browse = (props: PageProps) => {
       unit: "",
       tooltip: `${activeValidatorsAsPercent}%`,
       format: "chart-pie",
+      assistant: {
+        page: 'validators',
+        key: 'Active Validator'
+      }
     },
     {
       label: "Active Era",
       value: metrics.activeEra.index,
       unit: "",
       format: "number",
+      assistant: {
+        page: 'validators',
+        key: 'Era',
+      }
     }
   ];
 

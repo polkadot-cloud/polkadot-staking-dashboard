@@ -4,10 +4,16 @@
 import { StatBoxWrapper } from './Wrapper';
 import NumberEasing from 'che-react-number-easing';
 import { StatBoxPie } from '../../library/Graphs/StatBoxPie';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const Item = (props: any) => {
 
-  const { label, value, value2, total, unit, format, tooltip } = props;
+  const { label, value, value2, total, unit, format, tooltip, assistant } = props;
+
+  let assist = assistant !== undefined;
+  let page = assistant?.page ?? '';
+  let key = assistant?.key ?? '';
+
   let currency = props.currency ?? '';
 
   let showValue = !(value === 0 && total !== 0);
@@ -48,13 +54,19 @@ export const Item = (props: any) => {
                 />
                 &nbsp;{unit}
               </h2>
-              <h4>{label}</h4>
+              <h4>
+                {label}
+                {assist && <OpenAssistantIcon page={page} title={key} />}
+              </h4>
             </>
           }
           {format === 'text' &&
             <>
               <h1>{value}</h1>
-              <h4>{label}</h4>
+              <h4>
+                {label}
+                {assist && <OpenAssistantIcon page={page} title={key} />}
+              </h4>
             </>
           }
           {(format === 'chart-pie' || format === 'chart-bar') &&
@@ -88,7 +100,11 @@ export const Item = (props: any) => {
                   : <>0</>
                 }
               </h2>
-              <h4>{label}</h4>
+              <h4>
+                {label}
+                {assist && <OpenAssistantIcon page={page} title={key} />}
+              </h4>
+
             </>
           }
         </div>

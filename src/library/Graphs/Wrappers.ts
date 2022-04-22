@@ -40,6 +40,14 @@ export const SectionWrapper = styled.div<any>`
 
   h4 {
     margin: 0.75rem 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    .assistant-icon {
+      margin-left: 0.5rem;
+    }
   }
   .head {
     padding: 0.25rem;
@@ -118,6 +126,10 @@ export const GraphWrapper = styled.div<any>`
   }
   h4 {
     margin-top: 0.4rem;
+
+    .assistant-icon {
+      margin-left: 0.4rem;
+    }
   }
   .small_button {
     background: #f1f1f1;

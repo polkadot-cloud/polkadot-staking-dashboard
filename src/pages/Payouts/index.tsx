@@ -16,6 +16,7 @@ import moment from 'moment';
 import { PageTitle } from '../../library/PageTitle';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { StatusLabel } from '../../library/Graphs/StatusLabel';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const Payouts = (props: PageProps) => {
 
@@ -36,6 +37,10 @@ export const Payouts = (props: PageProps) => {
       value: staking.lastReward,
       unit: network.unit,
       format: "number",
+      assistant: {
+        page: 'payouts',
+        key: 'Last Era Payout'
+      }
     },
   ];
 
@@ -47,7 +52,10 @@ export const Payouts = (props: PageProps) => {
         <GraphWrapper>
           <SubscanButton />
           <div className='head'>
-            <h4>Payout History</h4>
+            <h4>
+              Payout History
+              <OpenAssistantIcon page='payouts' title='Payout History' />
+            </h4>
             <h2>
               {(payouts.length) ?
                 <>

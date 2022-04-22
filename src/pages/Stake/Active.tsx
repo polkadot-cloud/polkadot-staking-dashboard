@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from './Wrappers';
 import { PageTitle } from '../../library/PageTitle';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const Active = (props: any) => {
 
@@ -89,18 +90,30 @@ export const Active = (props: any) => {
       unit: '',
       tooltip: `${nominationsStatus.active ? `Active` : `Inactive`}`,
       format: "chart-pie",
+      assistant: {
+        page: 'stake',
+        key: 'Nominations',
+      }
     },
     {
       label: "Minimum Active Bond",
       value: minActiveBond,
       unit: network.unit,
       format: "number",
+      assistant: {
+        page: 'stake',
+        key: 'Bonding',
+      }
     },
     {
       label: "Active Era",
       value: metrics.activeEra.index,
       unit: "",
       format: "number",
+      assistant: {
+        page: 'validators',
+        key: 'Era',
+      }
     }
   ];
 
@@ -112,10 +125,16 @@ export const Active = (props: any) => {
         <MainWrapper paddingRight style={{ flex: 1 }}>
           <SectionWrapper style={{ height: 290 }} >
             <div className='head'>
-              <h4>Status</h4>
+              <h4>
+                Status
+                <OpenAssistantIcon page='stake' title='Staking Status' />
+              </h4>
               <h2>{nominationsStatus.active ? 'Active and Earning Rewards' : 'Waiting for Active Nominations'}</h2>
               <Separator />
-              <h4>Reward Destination</h4>
+              <h4>
+                Reward Destination
+                <OpenAssistantIcon page='stake' title='Reward Destination' />
+              </h4>
               <h2>
                 <FontAwesomeIcon
                   icon={faRedoAlt}
