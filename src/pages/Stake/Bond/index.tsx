@@ -17,7 +17,6 @@ import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 import { BondInputWrapper, Warning, BondStatus } from './Wrappers';
 
-
 const RESERVE_AMOUNT = 0.1 ** 10;
 
 export const Bond = (props: any) => {

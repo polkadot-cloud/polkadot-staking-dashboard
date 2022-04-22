@@ -24,10 +24,11 @@ export const Active = (props: any) => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus, staking } = useStaking();
   const { metrics } = useNetworkMetrics();
+  const { getNominationsStatus, staking, eraStakers } = useStaking();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
 
+  const { minActiveBond } = eraStakers;
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const nominations = getAccountNominations(activeAccount);
@@ -90,8 +91,8 @@ export const Active = (props: any) => {
       format: "chart-pie",
     },
     {
-      label: "Bonded",
-      value: planckToDot(active),
+      label: "Minimum Active Bond",
+      value: minActiveBond,
       unit: network.unit,
       format: "number",
     },

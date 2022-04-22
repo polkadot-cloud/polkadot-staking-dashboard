@@ -3,7 +3,10 @@
 
 import React from 'react';
 import { PageProps } from '../types';
+import { StatBoxList } from '../../library/StatBoxList';
 import { useSubscan } from '../../contexts/Subscan';
+import { useStaking } from '../../contexts/Staking';
+import { useApi } from '../../contexts/Api';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
@@ -16,6 +19,8 @@ import { StatusLabel } from '../../library/Graphs/StatusLabel';
 
 export const Payouts = (props: PageProps) => {
 
+  const { network }: any = useApi();
+  const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
 
   const { page } = props;
@@ -25,11 +30,19 @@ export const Payouts = (props: PageProps) => {
   let size = useSize(ref.current);
   let { width, height, minHeight } = formatSize(size, 250);
 
+  let items = [
+    {
+      label: "Last Era Payout",
+      value: staking.lastReward,
+      unit: network.unit,
+      format: "number",
+    },
+  ];
 
   return (
     <>
       <PageTitle title={title} />
-
+      <StatBoxList title="Staking Metrics" items={items} />
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />

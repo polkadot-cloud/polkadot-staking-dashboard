@@ -5,6 +5,7 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useStaking } from '../../contexts/Staking';
+import { useNetworkMetrics } from '../../contexts/Network';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
@@ -16,7 +17,8 @@ export const Browse = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { isReady, network }: any = useApi();
+  const { isReady }: any = useApi();
+  const { metrics } = useNetworkMetrics();
   const { validators, staking, eraStakers }: any = useStaking();
 
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
@@ -45,11 +47,11 @@ export const Browse = (props: PageProps) => {
       format: "chart-pie",
     },
     {
-      label: "Last Era Payout",
-      value: staking.lastReward,
-      unit: network.unit,
+      label: "Active Era",
+      value: metrics.activeEra.index,
+      unit: "",
       format: "number",
-    },
+    }
   ];
 
   return (

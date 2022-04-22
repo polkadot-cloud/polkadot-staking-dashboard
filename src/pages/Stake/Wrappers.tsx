@@ -63,6 +63,10 @@ export const HeaderWrapper = styled.div`
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
+
+    .assistant-icon {
+      margin-left: 0.6rem;
+    }
   }
 `;
 
