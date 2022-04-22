@@ -103,6 +103,13 @@ export const ASSISTANT_CONFIG = [
           'The amount of nominators in the network who are actively earning rewards.',
         ],
       },
+      {
+        title: 'Announcements',
+        description: [
+          'Real time network statistics that may effect your staking positions.',
+          'Keep up to date on the state of the network from your Overview.',
+        ],
+      },
     ],
     external: [
       {
