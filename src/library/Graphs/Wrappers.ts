@@ -101,7 +101,7 @@ export const GraphWrapper = styled.div<any>`
 
   h2, h4 {
     margin: 0;
-    padding: 0.3rem 0;
+    padding: 0.25rem 0;
     display: flex;
     flex-flow: row wrap;
     align-content: flex-end;
