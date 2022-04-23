@@ -1,59 +1,37 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CloseButton } from "./CloseButton";
-import { add, remove } from "./array-utils";
+import { useNotifications } from "../../contexts/Notifications";
 import Wrapper from './Wrapper';
-
-// Experimental component for quick notifications
 
 export const Notifications = () => {
 
-  const [notifications, _setNotifications]: any = useState([]);
-
-  const notificationsRef = useRef(notifications);
-
-  const setNotifications = (val: any) => {
-    notificationsRef.current = val;
-    _setNotifications(val);
-  }
-
-  // useEffect(() => {
-  //   // listen for D key to toggle demo bar
-  //   window.onkeydown = (e: KeyboardEvent): any => {
-  //     if (e.code === 'KeyN') {
-  //       setNotifications(add(notificationsRef.current));
-  //     }
-  //   }
-  // }, []);
+  const { notifications, removeNotification } = useNotifications();
 
   return (
     <Wrapper>
       <AnimatePresence initial={false}>
-
         {notifications.length > 0 &&
-          notifications.map((id: any) => (
-            <motion.li
-              key={id}
-              layout
-              initial={{ opacity: 0, y: 50, scale: 0.3 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5, y: 50, transition: { duration: 0.2 } }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setNotifications(remove(notificationsRef.current, id))}
-            >
-              <div>
-                <h3>Welcome to Polkadot Staking!</h3>
-                <h4>Connect your accounts to get started.</h4>
-                <CloseButton
-                  close={() => setNotifications(remove(notificationsRef.current, id))}
-                />
-              </div>
-            </motion.li>
-          ))
+          notifications.map((_n: any, i: number) => {
+            const { item } = _n;
+
+            return (
+              <motion.li
+                key={`notification_${i}`}
+                layout
+                initial={{ opacity: 0, y: 50, scale: 0.3 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5, y: 50, transition: { duration: 0.2 } }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => removeNotification(item)}
+              >
+                {item.title && <h3>{item.title}</h3>}
+                {item.subtitle && <h5>{item.subtitle}</h5>}
+              </motion.li>
+            );
+          })
         }
       </AnimatePresence>
     </Wrapper>

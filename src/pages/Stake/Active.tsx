@@ -26,14 +26,13 @@ export const Active = (props: any) => {
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
-  const { getNominationsStatus, staking, eraStakers } = useStaking();
+  const { getNominationsStatus, eraStakers } = useStaking();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
 
   const { minActiveBond } = eraStakers;
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const nominations = getAccountNominations(activeAccount);
-  const { minNominatorBond } = staking;
 
   // handle nomination statuses
   const [nominationsStatus, setNominationsStatus]: any = useState({

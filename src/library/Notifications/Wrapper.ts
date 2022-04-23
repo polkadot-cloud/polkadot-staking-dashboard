@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { primary, backgroundPrimary, textSecondary } from '../../theme';
 
 export const Wrapper = styled.ul`
   position: fixed;
@@ -14,48 +15,36 @@ export const Wrapper = styled.ul`
   z-index: 10;
 
   li {
+    background: ${backgroundPrimary};
     width: 360px;
-    background: white;
     margin: 0.4rem 1.2rem;
-    min-height: 100px;
     position: relative;
     border-radius: 10px;
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1.5rem;
     box-sizing: border-box;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
     cursor: pointer;
+    overflow: hidden;
 
     h3 {
-      margin: 0.5rem 0 0.75rem; 
+      color: ${primary};
+      box-sizing: border-box;
+      margin: 0.5rem 0; 
       font-variation-settings: 'wght' 500;
-      color: #C0236A;
+      flex: 1;
     }
-
-    h4 {
-      margin: 0 0 0.5rem;
-      color: #444;
+    h5 {
+      color: ${textSecondary};
+      box-sizing: border-box;
+      margin: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      flex: 1;
+      max-width: 100%;
     }
-    p { 
-      font-size: 0.9rem;
-    }
-
-    &:hover {
-      button.close {
-        opacity: 0.6;
-      }
-    }
-  }
-
-  button.close {
-    position: absolute;
-    top: 10px;
-    right: 5px;
-    background: none;
-    border: none;
-    opacity: 0.2;
-    transition: opacity 0.2s;
   }
 `;
 

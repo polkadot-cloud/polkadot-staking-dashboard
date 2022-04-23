@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { borderPrimary, textSecondary } from "../../theme";
+import { borderPrimary, textPrimary, textSecondary } from "../../theme";
 
 export const AccountWrapper = styled.div`
   padding: 0 1.25rem 0rem 1.25rem;
@@ -16,6 +16,10 @@ export const AccountWrapper = styled.div`
     align-items: center;
     padding: 0;
     margin-top: 1.25rem;
+
+    button {
+      color: ${textPrimary};
+    }
 
     .icon {
       position: relative;

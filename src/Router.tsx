@@ -9,6 +9,7 @@ import { PAGES_CONFIG } from './pages';
 import { StakingContextWrapper } from './contexts/Staking';
 import { MessagesContextWrapper } from './contexts/Messages';
 import { SubscanContextWrapper } from './contexts/Subscan';
+import { NotificationsContextWrapper } from './contexts/Notifications';
 import { UIContextWrapper } from './contexts/UI';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './library/Modal';
@@ -62,85 +63,84 @@ export const RouterInner = () => {
       <MessagesContextWrapper>
         {/* Subscan communication */}
         <SubscanContextWrapper>
+          {/* Notifications control */}
+          <NotificationsContextWrapper>
 
-          {/* Modal: closed by default */}
-          <Modal />
-          <BodyInterfaceWrapper>
+            {/* Modal: closed by default */}
+            <Modal />
+            <BodyInterfaceWrapper>
 
-            {/* Assistant: closed by default */}
-            <Assistant />
+              {/* Assistant: closed by default */}
+              <Assistant />
 
-            {/* Left side menu */}
-            <SideInterfaceWrapper open={sideMenuOpen}>
-              <SideMenu />
-            </SideInterfaceWrapper>
+              {/* Left side menu */}
+              <SideInterfaceWrapper open={sideMenuOpen}>
+                <SideMenu />
+              </SideInterfaceWrapper>
 
-            {/* Main Content Window */}
-            <MainInterfaceWrapper>
-              <Headers />
+              {/* Main content window */}
+              <MainInterfaceWrapper>
 
-              <AnimatePresence>
-                <Routes>
-                  {PAGES_CONFIG.map((page, pageIndex) => {
-                    const { Entry } = page;
-                    return (
-                      <Route
-                        key={`main_interface_page_${pageIndex}`}
-                        path={page.uri}
-                        element={
+                {/* Fixed headers */}
+                <Headers />
 
-                          <PageWrapper
-                            key={`main_interface_key__${pageIndex}`}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            transition={{
-                              duration: 0.2,
-                              // type: "spring",
-                              // bounce: 0.4
-                            }}
-                          >
-                            <Helmet>
-                              <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
-                            </Helmet>
-                            <Entry page={page} />
-                          </PageWrapper>
-                        }
-                      />
-                    )
-                  })}
-                  <Route
-                    path='/'
-                    element={
-                      <PageWrapper
-                        key={`main_interface_key__default`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{
-                          duration: 0.8,
-                          type: "spring",
-                          bounce: 0.4
-                        }}
-                      >
-                        <Overview page={PAGES_CONFIG[0]} />
-                      </PageWrapper>
-                    }
-                  />
-                </Routes>
-              </AnimatePresence>
-            </MainInterfaceWrapper>
-          </BodyInterfaceWrapper>
+                <AnimatePresence>
+                  <Routes>
+                    {PAGES_CONFIG.map((page, pageIndex) => {
+                      const { Entry } = page;
+                      return (
+                        <Route
+                          key={`main_interface_page_${pageIndex}`}
+                          path={page.uri}
+                          element={
+                            <PageWrapper
+                              key={`main_interface_key__${pageIndex}`}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: 10 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <Helmet>
+                                <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
+                              </Helmet>
+                              <Entry page={page} />
+                            </PageWrapper>
+                          }
+                        />
+                      )
+                    })}
+                    <Route
+                      path='/'
+                      element={
+                        <PageWrapper
+                          key={`main_interface_key__default`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 20 }}
+                          transition={{
+                            duration: 0.8,
+                            type: "spring",
+                            bounce: 0.4
+                          }}
+                        >
+                          <Overview page={PAGES_CONFIG[0]} />
+                        </PageWrapper>
+                      }
+                    />
+                  </Routes>
+                </AnimatePresence>
+              </MainInterfaceWrapper>
+            </BodyInterfaceWrapper>
+
+            {/* Network status and network details */}
+            <NetworkBar />
+
+            {/* Notification popups */}
+            <Notifications />
+          </NotificationsContextWrapper>
         </SubscanContextWrapper>
       </MessagesContextWrapper>
-
-      {/* Network status and network details */}
-      <NetworkBar />
-
-      {/* Testing notification popup */}
-      <Notifications />
     </>
-
   );
 }
 
