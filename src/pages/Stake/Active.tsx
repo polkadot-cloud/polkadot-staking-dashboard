@@ -16,7 +16,7 @@ import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { Button } from '../../library/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import { faRedoAlt, faWallet, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from './Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
@@ -118,12 +118,18 @@ export const Active = (props: any) => {
                 <OpenAssistantIcon page='stake' title='Reward Destination' />
               </h4>
               <h2>
+                <FontAwesomeIcon
+                  icon={payee === 'Staked' ? faRedoAlt : payee === 'None' ? faCircle : faWallet}
+                  transform='shrink-4'
+                />
+                &nbsp;
                 {payee === 'Staked' && 'Back to Staking'}
                 {payee === 'Stash' && 'To Stash'}
                 {payee === 'Controller' && 'To Controller'}
                 {payee === 'Account' && 'To Account'}
                 {payee === 'None' && 'Not Set'}
-                &nbsp;&nbsp;<div><Button small inline primary title='Update' /></div>
+                &nbsp;&nbsp;
+                <div><Button small inline primary title='Update' /></div>
               </h2>
             </div>
           </SectionWrapper>
