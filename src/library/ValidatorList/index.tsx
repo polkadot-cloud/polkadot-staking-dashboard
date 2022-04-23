@@ -103,7 +103,9 @@ export const ValidatorListInner = (props: any) => {
   const handleValidatorsFilterUpdate = () => {
     if (allowFilters) {
       let filteredValidators = Object.assign(validatorsDefault);
-      filteredValidators = applyValidatorOrder(filteredValidators, validatorsUi.order);
+      if (validatorsUi.order !== 'default') {
+        filteredValidators = applyValidatorOrder(filteredValidators, validatorsUi.order);
+      }
       filteredValidators = applyValidatorFilters(filteredValidators, props.batchKey);
       setValidators(filteredValidators);
       setPage(1);
