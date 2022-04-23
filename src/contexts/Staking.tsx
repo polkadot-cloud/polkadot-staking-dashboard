@@ -132,7 +132,19 @@ export const StakingContextWrapper = (props: any) => {
         [api.query.staking.erasTotalStake, previousEra],
         api.query.staking.minNominatorBond,
         api.query.staking.historyDepth,
-      ], ([_totalNominators, _totalValidators, _maxNominatorsCount, _maxValidatorsCount, _validatorCount, _lastReward, _lastTotalStake, _minNominatorBond, _historyDepth]: any) => {
+        [api.query.staking.payee, activeAccount]
+      ], ([
+        _totalNominators,
+        _totalValidators,
+        _maxNominatorsCount,
+        _maxValidatorsCount,
+        _validatorCount,
+        _lastReward,
+        _lastTotalStake,
+        _minNominatorBond,
+        _historyDepth,
+        _payee
+      ]: any) => {
 
         // format lastReward DOT unit
         _lastReward = _lastReward.unwrapOrDefault(0);
@@ -154,6 +166,7 @@ export const StakingContextWrapper = (props: any) => {
           maxValidatorsCount: Number(_maxValidatorsCount.toString()),
           minNominatorBond: _minNominatorBond.toNumber(),
           historyDepth: _historyDepth.toNumber(),
+          payee: _payee.toHuman(),
         });
       });
 

@@ -26,8 +26,9 @@ export const Active = (props: any) => {
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
-  const { getNominationsStatus, eraStakers } = useStaking();
+  const { getNominationsStatus, eraStakers, staking } = useStaking();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
+  const { payee } = staking;
 
   const { minActiveBond } = eraStakers;
   const controller = getBondedAccount(activeAccount);
@@ -117,11 +118,12 @@ export const Active = (props: any) => {
                 <OpenAssistantIcon page='stake' title='Reward Destination' />
               </h4>
               <h2>
-                <FontAwesomeIcon
-                  icon={faRedoAlt}
-                  transform='shrink-4'
-                />
-                &nbsp;Back to Staking &nbsp;<div><Button small inline primary title='Update' /></div>
+                {payee === 'Staked' && 'Back to Staking'}
+                {payee === 'Stash' && 'To Stash'}
+                {payee === 'Controller' && 'To Controller'}
+                {payee === 'Account' && 'To Account'}
+                {payee === 'None' && 'Not Set'}
+                &nbsp;&nbsp;<div><Button small inline primary title='Update' /></div>
               </h2>
             </div>
           </SectionWrapper>
