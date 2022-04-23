@@ -56,29 +56,11 @@ export const Active = (props: any) => {
     });
   }, [nominationStatuses]);
 
-  // handle bonded funds 
-  const { active } = ledger;
-
   let { unlocking } = ledger;
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
     unlocking[i] = planckToDot(unlocking[i]);
     totalUnlocking += unlocking[i];
-  }
-
-  let activeBonded = planckToDot(active);
-  let minBond = planckToDot(minNominatorBond);
-
-  let label = activeBonded > minBond
-    ? "Intending to Nominate"
-    : "Below Minimum Intention";
-
-  let chart1, chart2;
-  if (activeBonded > minBond) {
-    chart1 = 1;
-    chart2 = 0;
-  } else {
-
   }
 
   const items = [
