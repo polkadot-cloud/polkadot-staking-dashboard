@@ -9,11 +9,21 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useConnect } from '../../contexts/Connect';
 import { motion } from 'framer-motion';
+import { useNotifications } from '../../contexts/Notifications';
 
 export const ActiveAccount = () => {
 
+  const { addNotification } = useNotifications();
   const { activeAccount, getAccount }: any = useConnect();
   const accountData = getAccount(activeAccount);
+
+  let notification = {};
+  if (accountData !== null) {
+    notification = {
+      title: 'Address Copied to Clipboard',
+      subtitle: accountData.address,
+    };
+  }
 
   return (
     <AccountWrapper>
@@ -33,13 +43,20 @@ export const ActiveAccount = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <CopyToClipboard text={accountData.address}>
-                  <FontAwesomeIcon icon={faCopy} />
-                </CopyToClipboard>
+                <button onClick={() => addNotification(notification)}>
+                  <CopyToClipboard text={accountData.address}>
+                    <FontAwesomeIcon icon={faCopy} transform="grow-1" />
+                  </CopyToClipboard>
+                </button>
               </motion.div>
             </div>
           </>
         }
+        {accountData === null &&
+          <>
+            <h4 style={{ marginLeft: 0 }}>Account Not Connected</h4>
+            <div></div>
+          </>}
       </div>
       <Separator />
     </AccountWrapper>
