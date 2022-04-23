@@ -6,7 +6,7 @@ import { primary, backgroundPrimary, textSecondary } from '../../theme';
 
 export const Wrapper = styled.ul`
   position: fixed;
-  bottom: 30px;
+  bottom: 20px;
   right: 0;
   display: flex;
   flex-direction: column;
