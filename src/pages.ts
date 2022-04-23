@@ -112,18 +112,12 @@ export const ASSISTANT_CONFIG = [
       },
     ],
     external: [
-      {
-        label: 'Tutorials',
-        title: 'What is Polkadot Staking?',
-        subtitle: '',
-        url: 'https://polkadot.network/'
-      },
-      {
-        label: 'Tutorials',
-        title: 'Validators and Nominators',
-        subtitle: '',
-        url: 'https://polkadot.network/'
-      },
+      // {
+      //   label: 'Tutorials',
+      //   title: 'What is Polkadot Staking?',
+      //   subtitle: '',
+      //   url: 'https://polkadot.network/'
+      // },
     ]
   },
   {
@@ -177,33 +171,13 @@ export const ASSISTANT_CONFIG = [
         ],
       },
     ],
-    external: [
-      {
-        label: 'Tutorials',
-        title: 'Bonding and Unbonding',
-        subtitle: '',
-        url: 'https://polkadot.network/'
-      },
-      {
-        label: 'Tutorials',
-        title: 'Slashing and Staking',
-        subtitle: '',
-        url: 'https://polkadot.network/'
-      },
-    ],
+    external: [],
   },
   {
     key: 'pools',
     definitions: [
     ],
-    external: [
-      {
-        label: 'Tutorials',
-        title: 'What are Staking Pools?',
-        subtitle: 'The new way to stake on Polkadot',
-        url: 'https://polkadot.network/'
-      },
-    ],
+    external: [],
   },
   {
     key: 'validators',
@@ -273,14 +247,7 @@ export const ASSISTANT_CONFIG = [
         ],
       },
     ],
-    external: [
-      {
-        label: 'Tutorials',
-        title: 'Choosing Validators: What to Know?',
-        subtitle: '',
-        url: 'https://polkadot.network/'
-      },
-    ],
+    external: [],
   },
   {
     key: 'payouts',
@@ -310,27 +277,13 @@ export const ASSISTANT_CONFIG = [
         ],
       },
     ],
-    external: [
-      {
-        label: 'Tutorials',
-        title: 'Understanding Payouts',
-        subtitle: 'Read about receiving staking rewards and initiating payouts',
-        url: 'https://polkadot.network/'
-      },
-    ],
+    external: [],
   },
   {
     key: 'community',
     definitions: [
     ],
-    external: [
-      {
-        label: 'Be Featured',
-        title: 'Be Featured on Staking Dashboard',
-        subtitle: 'Get in touch to get your project featured on this page.',
-        url: 'https://polkadot.network/'
-      },
-    ],
+    external: [],
   },
 ];
 
