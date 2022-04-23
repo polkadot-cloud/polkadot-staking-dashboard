@@ -16,7 +16,7 @@ import { useExtrinsics } from '../../contexts/Extrinsics';
 export const ChangeController = () => {
 
   const modal = useModal();
-  const { addNotification, removeNotification } = useNotifications();
+  const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { accounts, activeAccount, getAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
@@ -44,7 +44,7 @@ export const ChangeController = () => {
     addPending(tx);
 
     // trigger pending tx notification
-    let nIndex = addNotification({
+    addNotification({
       title: 'Transaction Submitted',
       subtitle: 'Updating controller account.',
     });
@@ -54,8 +54,6 @@ export const ChangeController = () => {
 
       // remove pending extrinsic
       removePending(tx);
-
-      removeNotification(nIndex);
 
       // trigger completed tx notification
       addNotification({
