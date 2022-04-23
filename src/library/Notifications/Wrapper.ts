@@ -20,7 +20,7 @@ export const Wrapper = styled.ul`
     margin: 0.4rem 1.2rem;
     position: relative;
     border-radius: 10px;
-    padding: 0.5rem 1.5rem;
+    padding: 1rem 1.5rem;
     box-sizing: border-box;
     display: flex;
     flex-flow: column wrap;
@@ -31,7 +31,7 @@ export const Wrapper = styled.ul`
     h3 {
       color: ${primary};
       box-sizing: border-box;
-      margin: 0.5rem 0; 
+      margin: 0 0 0.5rem; 
       font-variation-settings: 'wght' 500;
       flex: 1;
     }
