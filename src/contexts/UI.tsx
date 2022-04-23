@@ -76,12 +76,9 @@ export const UIContextWrapper = (props: any) => {
   }
 
   const setValidatorsOrder = (by: string) => {
-    setState({
-      ...state, validators: {
-        ...state.validators,
-        order: by,
-      }
-    });
+    let _state: any = Object.assign({}, state);
+    _state['validators']['order'] = by;
+    setState(_state);
   }
 
   const setValidatorsFilter = (filter: any) => {
@@ -175,11 +172,7 @@ export const UIContextWrapper = (props: any) => {
   // Validator list ordering functions
 
   const orderValidators = (by: string) => {
-    let action = state.validators.order === by
-      ? 'revert'
-      : 'apply';
-
-    let order = action === 'revert'
+    let order = state.validators.order === by
       ? 'default'
       : by;
 

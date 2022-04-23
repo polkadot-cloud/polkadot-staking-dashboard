@@ -98,7 +98,7 @@ export const ValidatorListInner = (props: any) => {
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     handleValidatorsFilterUpdate();
-  }, [validatorsUi, synced.stake])
+  }, [validatorsUi.order, validatorsUi, synced.stake])
 
   const handleValidatorsFilterUpdate = () => {
     if (allowFilters) {
