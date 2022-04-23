@@ -99,15 +99,16 @@ export const ItemWrapper = styled.div<any>`
 
     .active {
       position: absolute;
-      right: -4px;
+      right: 6px;
+      top: 4px;
       width: 20px;
       height: 20px;
       z-index: 2;
       border-radius: 50%;
-      background: white;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: white;
     }
   }   
 `;
