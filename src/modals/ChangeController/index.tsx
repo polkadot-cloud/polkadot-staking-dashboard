@@ -9,9 +9,15 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { AccountDropdown } from '../../library/Form/AccountDropdown';
 import { useBalances } from '../../contexts/Balances';
+import { useModal } from '../../contexts/Modal';
+import { useNotifications } from '../../contexts/Notifications';
+import { useExtrinsics } from '../../contexts/Extrinsics';
 
 export const ChangeController = () => {
 
+  const modal = useModal();
+  const { addNotification, removeNotification } = useNotifications();
+  const { addPending, removePending } = useExtrinsics();
   const { accounts, activeAccount, getAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
@@ -21,6 +27,42 @@ export const ChangeController = () => {
 
   const handleOnChange = (selected: any) => {
     setSelected(selected);
+  }
+
+  // dummy method for submitting transactions
+  // TODO: make live
+  const submitTx = () => {
+    // close modal
+    modal.setStatus(0);
+
+    // tx object
+    let tx = {
+      name: 'set_controller'
+    };
+
+    // add to pending transactions context
+    addPending(tx);
+
+    // trigger pending tx notification
+    let nIndex = addNotification({
+      title: 'Transaction Submitted',
+      subtitle: 'Updating controller account.',
+    });
+
+    // complete transaction after 2 seconds
+    setTimeout(() => {
+
+      // remove pending extrinsic
+      removePending(tx);
+
+      removeNotification(nIndex);
+
+      // trigger completed tx notification
+      addNotification({
+        title: 'Transaction Successful',
+        subtitle: 'Controller account updated.',
+      });
+    }, 2000);
   }
 
   return (
@@ -38,7 +80,7 @@ export const ChangeController = () => {
       />
       <div className='foot'>
         <div>
-          <button className='submit'>
+          <button className='submit' onClick={() => submitTx()}>
             <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
             Submit
           </button>

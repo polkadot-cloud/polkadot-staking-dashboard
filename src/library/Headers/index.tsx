@@ -5,6 +5,7 @@ import { Wrapper, HeadingWrapper, Item } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
+import { useExtrinsics } from '../../contexts/Extrinsics';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { Account } from '../Account';
@@ -22,6 +23,7 @@ export const Headers = () => {
   const connect = useConnect();
   const { openModalWith } = useModal();
   const { validators, isNominating } = useStaking();
+  const { pending } = useExtrinsics();
   const { setSideMenu, sideMenuOpen, isSyncing }: any = useUi();
 
   // subscribe to web3 accounts
@@ -54,7 +56,7 @@ export const Headers = () => {
         </Item>
       </div>
 
-      {syncing && <Spinner />}
+      {(syncing || pending.length > 0) ? <Spinner /> : <></>}
 
       {/* connected, display stash and controller */}
       {connect.status === 1 &&
