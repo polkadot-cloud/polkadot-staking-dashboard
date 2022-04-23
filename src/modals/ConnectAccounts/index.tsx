@@ -16,7 +16,7 @@ export const ConnectAccounts = () => {
 
   return (
     <Wrapper>
-      <h2>Choose Stash Account</h2>
+      <h2>Switch Account</h2>
 
       <button onClick={() => {
         modal.setStatus(2);
