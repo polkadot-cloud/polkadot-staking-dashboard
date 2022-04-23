@@ -4,7 +4,7 @@
 import React, { useState, useRef } from "react";
 
 export interface NotificationsContextState {
-  addNotification: (n: any) => void;
+  addNotification: (n: any) => any;
   removeNotification: (n: any) => void;
   notifications: any;
 }
@@ -18,7 +18,6 @@ export const NotificationsContext: React.Context<NotificationsContextState> = Re
 export const useNotifications = () => React.useContext(NotificationsContext);
 
 export const NotificationsContextWrapper = (props: any) => {
-
 
   const [index, _setIndex] = useState(0);
   const [notifications, _setNotifications]: any = useState([]);
@@ -51,13 +50,13 @@ export const NotificationsContextWrapper = (props: any) => {
 
     setIndex(newIndex);
     setNotifications(_notifications);
-    setTimeout(() => { remove(item); }, 3000);
+    setTimeout(() => { remove(newIndex); }, 3000);
+
+    return newIndex;
   };
 
-  const remove = (_item: any) => {
-    let _notifications = notificationsRef.current.filter((item: any) => {
-      return item.index !== _item.index;
-    });
+  const remove = (index: any) => {
+    let _notifications = notificationsRef.current.filter((item: any) => item.index !== index);
     setNotifications(_notifications);
   };
 
