@@ -30,7 +30,7 @@ export const ManageBond = () => {
   const remaining = total - active - totalUnlocking;
 
   return (
-    <SectionWrapper transparent>
+    <>
       <div className='head'>
         <h4>
           Bonded Funds
@@ -46,7 +46,7 @@ export const ManageBond = () => {
       </div>
 
       <GraphWrapper transparent noMargin>
-        <div className='graph' style={{ flex: 0, paddingRight: '1rem' }}>
+        <div className='graph' style={{ flex: 0, paddingRight: '1rem', height: 160 }}>
           <BondedGraph
             active={planckToDot(active)}
             unlocking={planckToDot(totalUnlocking)}
@@ -55,8 +55,7 @@ export const ManageBond = () => {
           />
         </div>
       </GraphWrapper>
-
-    </SectionWrapper>
+    </>
   )
 }
 
