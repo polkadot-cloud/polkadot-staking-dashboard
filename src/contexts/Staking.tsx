@@ -71,7 +71,7 @@ export const StakingContextWrapper = (props: any) => {
   const { isReady, api, consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
-  const { getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
+  const { accounts, getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
 
   const [stakingMetrics, setStakingMetrics]: any = useState({
     totalNominators: 0,
@@ -514,6 +514,7 @@ export const StakingContextWrapper = (props: any) => {
 
   // calculates minimum bond of the user's chosen nominated validators.
   useEffect(() => {
+
     let _stakingMinActiveBond = new BN(0);
     const stakers = eraStakers?.stakers ?? null;
     const nominations = getAccountNominations(activeAccount);
@@ -548,7 +549,7 @@ export const StakingContextWrapper = (props: any) => {
       minStakingActiveBond: stakingMinActiveBond
     });
 
-  }, [isReady, validators, activeAccount, eraStakers?.stakers]);
+  }, [isReady, validators, accounts, activeAccount, eraStakers?.stakers]);
 
 
   const removeValidatorMetaBatch = (key: string) => {
