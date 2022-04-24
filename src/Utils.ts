@@ -24,6 +24,10 @@ export const humanNumber: any = (val: any) => {
   return str.join(".");
 }
 
+export const rmCommas: any = (val: any) => {
+  return val.replace(/,/g, '');
+}
+
 export const sleep = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }

@@ -30,7 +30,7 @@ export const Active = (props: any) => {
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
   const { payee } = staking;
 
-  const { minActiveBond } = eraStakers;
+  const { minStakingActiveBond } = eraStakers;
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const nominations = getAccountNominations(activeAccount);
@@ -79,7 +79,7 @@ export const Active = (props: any) => {
     },
     {
       label: "Minimum Active Bond",
-      value: minActiveBond,
+      value: minStakingActiveBond,
       unit: network.unit,
       format: "number",
       assistant: {

@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef, } from 'react';
 import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
 import BN from "bn.js";
-import { sleep, removePercentage } from '../Utils';
+import { sleep, removePercentage, rmCommas } from '../Utils';
 import { useBalances } from './Balances';
 import { useConnect } from './Connect';
 
@@ -108,6 +108,7 @@ export const StakingContextWrapper = (props: any) => {
     activeNominators: 0,
     activeValidators: 0,
     minActiveBond: 0,
+    minStakingActiveBond: 0,
   })
 
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
@@ -234,7 +235,11 @@ export const StakingContextWrapper = (props: any) => {
 
       let others = val?.others ?? [];
       let _nominators = others.length ?? 0;
-      others = others.sort((a: any, b: any) => a.vlaue - b.vlaue);
+      others = others.sort((a: any, b: any) => {
+        let x = new BN(rmCommas(a.value));
+        let y = new BN(rmCommas(b.value));
+        return x.sub(y);
+      });
 
       // accumilate active nominators
       if (_nominators > maxNominatorRewardedPerValidator) {
@@ -245,7 +250,7 @@ export const StakingContextWrapper = (props: any) => {
 
       // accumulate min active bond threshold
       if (others.length) {
-        let _min = new BN(others[0].value.toString().replace(/,/g, '')); // remove commas
+        let _min = new BN(rmCommas(others[0].value.toString()));
         if ((_min.lt(_minActiveBond)) || _minActiveBond.toNumber() === 0) {
           _minActiveBond = _min;
         }
@@ -505,6 +510,46 @@ export const StakingContextWrapper = (props: any) => {
       fetchValidatorMetaBatch('validators_browse', validators);
     }
   }, [isReady, validators]);
+
+
+  // calculates minimum bond of the user's chosen nominated validators.
+  useEffect(() => {
+    let _stakingMinActiveBond = new BN(0);
+    const stakers = eraStakers?.stakers ?? null;
+    const nominations = getAccountNominations(activeAccount);
+
+    if (nominations.length && stakers !== null) {
+      for (let n of nominations) {
+        let staker = stakers.find((item: any) => item.address === n);
+
+        if (staker !== undefined) {
+          let { others } = staker;
+          others = others.sort((a: any, b: any) => {
+            let x = new BN(rmCommas(a.value));
+            let y = new BN(rmCommas(b.value));
+            return x.sub(y);
+          });
+
+          if (others.length) {
+            let _min = new BN(rmCommas(others[0].value.toString()));
+            if ((_min.lt(_stakingMinActiveBond)) || _stakingMinActiveBond.toNumber() === 0) {
+              _stakingMinActiveBond = _min;
+            }
+          }
+        }
+      }
+    }
+
+    // convert _stakingMinActiveBond to DOT value
+    let stakingMinActiveBond = _stakingMinActiveBond.div(new BN(10 ** 10)).toNumber();
+
+    setEraStakers({
+      ...eraStakers,
+      minStakingActiveBond: stakingMinActiveBond
+    });
+
+  }, [isReady, validators, activeAccount, eraStakers?.stakers]);
+
 
   const removeValidatorMetaBatch = (key: string) => {
 
