@@ -24,6 +24,7 @@ export const Wrapper = styled(motion.div) <any>`
     max-width: 100%;
 
     .identity {
+      position: relative;
       display: flex;
       margin-left: 0.75rem;
       margin-right: 0.5rem;
@@ -32,17 +33,31 @@ export const Wrapper = styled(motion.div) <any>`
       align-content: center;
       overflow: hidden;
       flex: 1;
+      
+      h4 {
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
     .labels {
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-end;
       align-items: center;
-      flex: 1;
+      flex-grow: 1;
 
       label {
         margin-left: 0.5rem;
         color: #aaa;
+
+        &.warning {
+          color: #d2545d;
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+        }
         button {
           color: #aaa;
           &:hover {
@@ -56,13 +71,6 @@ export const Wrapper = styled(motion.div) <any>`
     }
 
     svg { margin: 0; }
-    h4 {
-      margin: 0;
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
   }
 `;
 

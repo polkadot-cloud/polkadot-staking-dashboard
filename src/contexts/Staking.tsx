@@ -434,10 +434,22 @@ export const StakingContextWrapper = (props: any) => {
         // account for yourself being an additional nominator
         let total_nominations = others.length + 1;
 
+        // get lowest stake for the validator
+        others = others.sort((a: any, b: any) => {
+          let x = new BN(rmCommas(a.value));
+          let y = new BN(rmCommas(b.value));
+          return x.sub(y);
+        });
+
+        let lowest = others.length > 0
+          ? new BN(rmCommas(others[0].value)).div(new BN(10 ** 10)).toNumber()
+          : 0;
+
         stake.push({
           total: v.total,
           own: v.own,
           total_nominations: total_nominations,
+          lowest: lowest,
         });
       }
 

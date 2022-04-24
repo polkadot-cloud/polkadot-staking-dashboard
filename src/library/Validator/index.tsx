@@ -15,7 +15,7 @@ import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@f
 
 export const ValidatorInner = (props: any) => {
 
-  const { consts }: any = useApi();
+  const { consts, network }: any = useApi();
   const { openModalWith } = useModal();
   const { addFavourite, removeFavourite, favourites } = useStaking();
   const { initial, validator, synced, identity, superIdentity, stake, toggleFavourites } = props;
@@ -27,6 +27,7 @@ export const ValidatorInner = (props: any) => {
   let blocked = prefs?.blocked ?? null;
 
   let total_nominations = stake?.total_nominations ?? 0;
+  let lowest = stake?.lowest ?? 0;
 
   return (
     <Wrapper>
@@ -78,11 +79,23 @@ export const ValidatorInner = (props: any) => {
         }
 
         <div className='labels'>
+          {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+            >
+              <label className='warning'>
+                <FontAwesomeIcon
+                  icon={faExclamationTriangle}
+                  transform="shrink-2"
+                />
+                &nbsp;{lowest} {network.unit}
+              </label>
+            </motion.div>
+          }
           {prefs !== undefined &&
             <>
-              <label>
-                {commission}%
-              </label>
               {blocked &&
                 <label>
                   <FontAwesomeIcon
@@ -92,22 +105,10 @@ export const ValidatorInner = (props: any) => {
                   />
                 </label>
               }
-            </>
-          }
-          {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2, delay: 0.1 }}
-            >
               <label>
-                <FontAwesomeIcon
-                  icon={faExclamationTriangle}
-                  color='#d2545d'
-                  transform="grow-0"
-                />
+                {commission}%
               </label>
-            </motion.div>
+            </>
           }
           <label>
             <button onClick={() => openModalWith('EraPoints', {
