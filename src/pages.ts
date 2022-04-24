@@ -145,7 +145,7 @@ export const ASSISTANT_CONFIG = [
         title: 'Bonding',
         description: [
           'Bonding funds is the process of "locking" (or staking) DOT. Bonded DOT will then be automatically allocated to one or more of your nominated validators.',
-          'The minimum active bond statistic is the minimum DOT being staked by throughout your nominations for the currently active Era.',
+          'The minimum active bond statistic is the minimum DOT being staked through your active nominations for the currently active Era.',
         ],
       },
       {
