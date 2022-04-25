@@ -8,6 +8,7 @@ import Browse from './pages/validators/Browse';
 import Favourites from './pages/validators/Favourites';
 import Payouts from './pages/Payouts';
 import Projects from './pages/explore/Projects';
+import Feedback from './pages/explore/Feedback';
 import {
   faUserFriends,
   faBraille,
@@ -15,7 +16,8 @@ import {
   faChartLine,
   faStar,
   faUsers,
-  faThumbtack
+  faThumbtack,
+  faComment,
 } from '@fortawesome/free-solid-svg-icons';
 import { URI_PREFIX } from './constants';
 
@@ -31,6 +33,9 @@ export const PAGE_CATEGORIES = [{
 }, {
   _id: 4,
   title: 'Explore',
+}, {
+  _id: 5,
+  title: 'Pre-release',
 }];
 
 export const PAGES_CONFIG = [
@@ -76,6 +81,12 @@ export const PAGES_CONFIG = [
     uri: URI_PREFIX + '/community',
     Entry: Projects,
     icon: faUserFriends,
+  }, {
+    category: 5,
+    title: 'Feedback',
+    uri: URI_PREFIX + '/feedback',
+    Entry: Feedback,
+    icon: faComment,
   },
 ];
 
