@@ -57,45 +57,46 @@ export const UIContextWrapper = (props: any) => {
     _services = JSON.parse(_services);
   }
 
-  const [state, setState]: any = useState({
-    sideMenuOpen: 0,
-    listFormat: 'col',
-    validators: {
-      order: 'default',
-      filter: [],
-    },
-    services: _services,
+  // side menu control
+  const [sideMenuOpen, setSideMenuOpen] = useState(0);
+
+  // global list format
+  const [listFormat, _setListFormat] = useState('col');
+
+  // services
+  const [services, setServices] = useState(_services);
+
+  const [validators, setValidators]: any = useState({
+    order: 'default',
+    filter: [],
   });
 
   const setSideMenu = (v: number) => {
-    setState({ ...state, sideMenuOpen: v });
+    setSideMenuOpen(v);
   }
 
   const setListFormat = (v: string) => {
-    setState({ ...state, listFormat: v });
+    _setListFormat(v);
   }
 
   const setValidatorsOrder = (by: string) => {
-    let _state: any = Object.assign({}, state);
-    _state['validators']['order'] = by;
-    setState(_state);
+    let _validators: any = Object.assign({}, validators);
+    _validators.order = by;
+    setValidators(_validators);
   }
 
   const setValidatorsFilter = (filter: any) => {
-    setState({
-      ...state,
-      validators: {
-        ...state.validators,
-        filter: filter,
-      }
+    setValidators({
+      ...validators,
+      filter: filter,
     });
   }
 
   // Validator list filtering functions
 
   const toggleFilterValidators = (f: string) => {
-    let filter = Object.assign(state.validators.filter);
-    let action = state.validators.filter.includes(f) ? 'remove' : 'push';
+    let filter = Object.assign(validators.filter);
+    let action = validators.filter.includes(f) ? 'remove' : 'push';
 
     if (action === 'remove') {
       let index = filter.indexOf(f);
@@ -106,7 +107,7 @@ export const UIContextWrapper = (props: any) => {
     setValidatorsFilter(filter);
   }
 
-  const applyValidatorFilters = (list: any, batchKey: string, filter: any = state.validators.filter) => {
+  const applyValidatorFilters = (list: any, batchKey: string, filter: any = validators.filter) => {
 
     if (filter.includes('all_commission')) {
       list = filterAllCommission(list);
@@ -172,7 +173,7 @@ export const UIContextWrapper = (props: any) => {
   // Validator list ordering functions
 
   const orderValidators = (by: string) => {
-    let order = state.validators.order === by
+    let order = validators.order === by
       ? 'default'
       : by;
 
@@ -226,17 +227,15 @@ export const UIContextWrapper = (props: any) => {
   }
 
   // service toggling
-
   const toggleService = (key: string) => {
-    let services = Object.assign(state.services);
-    if (state.services.find((item: any) => item === key)) {
-      services = services.filter((service: any) => service !== key);
+    let _services: any = Object.assign(services);
+    if (_services.find((item: any) => item === key)) {
+      _services = _services.filter((_s: any) => _s !== key);
     } else {
-      services.push(key);
+      _services.push(key);
     }
-
-    localStorage.setItem('services', JSON.stringify(services));
-    setState({ ...state, services: services, })
+    localStorage.setItem('services', JSON.stringify(_services));
+    setServices(_services);
   }
 
   return (
@@ -249,10 +248,10 @@ export const UIContextWrapper = (props: any) => {
       toggleFilterValidators: toggleFilterValidators,
       isSyncing: isSyncing,
       toggleService: toggleService,
-      sideMenuOpen: state.sideMenuOpen,
-      listFormat: state.listFormat,
-      validators: state.validators,
-      services: state.services,
+      sideMenuOpen: sideMenuOpen,
+      listFormat: listFormat,
+      validators: validators,
+      services: services,
     }}>
       {props.children}
     </UIContext.Provider>
