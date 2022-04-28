@@ -2,21 +2,38 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { Wrapper, ContentWrapper, SectionsWrapper, FixedContentWrapper } from './Wrapper';
+import { Wrapper, ContentWrapper, SectionsWrapper, FixedContentWrapper, Separator } from './Wrapper';
 import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { useModal } from '../../contexts/Modal';
+import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
+import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { planckToDot } from '../../Utils';
+import { BondInput } from '../../library/Form/BondInput';
+import { RESERVE_AMOUNT_DOT } from '../../constants';
 
 export const UpdateBond = () => {
 
   const { network }: any = useApi();
   const { config }: any = useModal();
+  const { activeAccount } = useConnect();
+  const { getAccountBalance, getBondedAccount, getAccountLedger }: any = useBalances();
+  const balance = getAccountBalance(activeAccount);
+  const controller = getBondedAccount(activeAccount);
+  const ledger = getAccountLedger(controller);
+  const { active } = ledger;
+  let { free, miscFrozen } = balance;
   const { fn } = config;
 
   const [section, setSection] = useState(0);
+  const [task, setTask]: any = useState(null);
+
+  let availableToBond = planckToDot(free - miscFrozen);
+  let totalPossibleBond = planckToDot(active + availableToBond);
+  let unbondAllAmount = planckToDot(active);
 
   // TODO: submit extrinsic
   const submitTx = () => {
@@ -58,6 +75,7 @@ export const UpdateBond = () => {
               <>
                 <button onClick={() => {
                   setSection(1);
+                  setTask('bond_some');
                 }}>
                   <div>
                     <h3>Bond Extra</h3>
@@ -69,6 +87,7 @@ export const UpdateBond = () => {
                 </button>
                 <button onClick={() => {
                   setSection(1);
+                  setTask('bond_all');
                 }}>
                   <div>
                     <h3>Bond All</h3>
@@ -84,6 +103,7 @@ export const UpdateBond = () => {
               <>
                 <button onClick={() => {
                   setSection(1);
+                  setTask('unbond_some');
                 }}>
                   <div>
                     <h3>Unbond</h3>
@@ -95,6 +115,7 @@ export const UpdateBond = () => {
                 </button>
                 <button onClick={() => {
                   setSection(1);
+                  setTask('unbond_all');
                 }}>
                   <div>
                     <h3>Unbond All</h3>
@@ -110,6 +131,43 @@ export const UpdateBond = () => {
         </ContentWrapper>
         <ContentWrapper>
           <div className='items'>
+            {task === 'bond_some' &&
+              <>
+                <BondInput
+                  disabled={false}
+                />
+                <p>Total amount available to bond after deducting a reserve amount of {RESERVE_AMOUNT_DOT} {network.unit}.</p>
+              </>
+            }
+
+            {task === 'bond_all' &&
+              <>
+                <h4>Amount to bond:</h4>
+                <h2>{availableToBond} {network.unit}</h2>
+                <p>This amount of {network.unit} will be added to your current bonded funds.</p>
+                <Separator />
+                <h4>New total bond:</h4>
+                <h2>{totalPossibleBond} {network.unit}</h2>
+              </>
+            }
+
+            {task === 'unbond_some' &&
+              <>
+                <BondInput
+                  disabled={false}
+                  task='unbond'
+                />
+                <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+              </>
+            }
+
+            {task === 'unbond_all' &&
+              <>
+                <h4>Amount to unbond:</h4>
+                <h2>{unbondAllAmount} {network.unit}</h2>
+                <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+              </>
+            }
 
           </div>
           <FooterWrapper>

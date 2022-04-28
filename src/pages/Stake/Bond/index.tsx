@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { planckToDot, isNumeric } from '../../../Utils';
+import { planckToDot } from '../../../Utils';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
@@ -15,9 +15,9 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
-import { BondInputWrapper, Warning, BondStatus } from './Wrappers';
-
-const RESERVE_AMOUNT = 0.1 ** 10;
+import { Warning, BondStatus } from './Wrappers';
+import { RESERVE_AMOUNT_PLANCK } from '../../../constants';
+import { BondInput } from '../../../library/Form/BondInput';
 
 export const Bond = (props: any) => {
 
@@ -37,29 +37,10 @@ export const Bond = (props: any) => {
   const ledger = getAccountLedger(controller);
   const { total } = ledger;
 
-  let freeAfterReserve: any = free - RESERVE_AMOUNT;
+  let freeAfterReserve: any = free - RESERVE_AMOUNT_PLANCK;
   freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
 
   const [bond, setBond] = useState(planckToDot(freeAfterReserve));
-
-  const handleChangeBond = (e: any) => {
-    let { value } = e.target;
-
-    // not numeric
-    if (!isNumeric(value) && value !== '') {
-      return;
-    }
-    // set local value to update input element
-    setBond(value);
-
-    // set setup value if valid amount
-    if (value < freeAfterReserve && value !== '') {
-      setSetup({
-        ...setup,
-        bond: value,
-      });
-    }
-  }
 
   // handle errors
 
@@ -118,22 +99,21 @@ export const Bond = (props: any) => {
           <h4>Available: {planckToDot(freeAfterReserve)} {network.unit}</h4>
         }
         <Spacer />
+        <BondInput
+          parentState={setup}
+          setParentState={setSetup}
+          disabled={bondDisabled}
+          setters={[
+            {
+              set: setSetup,
+              current: setup
+            }, {
+              set: setBond,
+              current: bond,
+            }
+          ]}
+        />
 
-        <BondInputWrapper>
-          <section style={{ opacity: bondDisabled ? 0.5 : 1 }}>
-            <h3>Bond Amount</h3>
-            <input
-              type="text"
-              placeholder={`0 ${network.unit}`}
-              value={bond}
-              onChange={(e) => handleChangeBond(e)}
-              disabled={bondDisabled}
-            />
-          </section>
-          <section>
-
-          </section>
-        </BondInputWrapper>
         <BondStatus>
           <div className='bars'>
             <section className={gtMinNominatorBond ? `invert` : ``}>

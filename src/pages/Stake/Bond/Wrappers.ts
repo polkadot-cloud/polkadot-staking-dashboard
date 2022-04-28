@@ -1,29 +1,5 @@
 import styled from "styled-components";
-import { backgroundLabel, textSecondary, primary, secondary, textInvert } from "../../../theme";
-
-export const BondInputWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-
-  > section {
-    &:first-child {
-      flex-basis: 30%;
-      flex: 1;
-      min-width: 300px;
-      max-width: 400px;
-
-      input {
-        width: 100%;
-        margin-top: 0.5rem;
-      }
-    }
-    &:last-child {
-      flex-basis: 70%;
-      flex-grow: 1;
-    }
-  }
-`;
+import { backgroundLabel, textSecondary, primary, secondary } from "../../../theme";
 
 export const Warning = styled.div`
   background: ${backgroundLabel};

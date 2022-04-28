@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textPrimary, buttonPrimaryBackground, backgroundToggle } from '../../theme';
+import { textPrimary, textSecondary, buttonPrimaryBackground, backgroundToggle } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -48,7 +48,14 @@ export const ContentWrapper = styled.div`
     z-index: 1;
     flex-grow: 1;
     width: 100%;
-    
+
+    h4 {
+      margin: 0.2rem 0;
+    }
+    h2 {
+      margin: 0.75rem 0;
+    }
+  
     button {
       background: ${buttonPrimaryBackground};
       box-sizing: border-box;
@@ -94,4 +101,9 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export default Wrapper;
+export const Separator = styled.div`
+  border-top: 1px solid ${textSecondary};
+  width: 100%;
+  opacity: 0.1;
+  margin: 0.75rem 0rem;
+`;
