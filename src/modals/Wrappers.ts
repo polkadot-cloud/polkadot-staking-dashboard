@@ -65,6 +65,7 @@ export const HeadingWrapper = styled.h3`
   align-items: center;
   width: 100%;
   margin-top: 0.25rem;
+  padding: 0 1rem;
   color: ${textSecondary};
   flex: 1;
 
@@ -78,10 +79,14 @@ export const FooterWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
+  align-items: center;
   width: 100%;
   flex: 1;
   margin-top: 1rem;
 
+  > div {
+    margin-left: 1rem;
+  }
   .submit {
     padding: 0.5rem 0.75rem;
     border-radius: 0.7rem;
@@ -93,6 +98,9 @@ export const FooterWrapper = styled.div`
     color: rgba(211, 48, 121, 0.85);
     border: 1px solid rgba(211, 48, 121, 0.85);
 
+    &:disabled {
+      opacity: 0.25;
+    }
     svg {
       margin-right: 0.5rem;
     }

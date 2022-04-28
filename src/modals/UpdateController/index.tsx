@@ -79,7 +79,7 @@ export const UpdateController = () => {
       />
       <FooterWrapper>
         <div>
-          <button className='submit' onClick={() => submitTx()}>
+          <button className='submit' onClick={() => submitTx()} disabled={selected === null}>
             <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
             Submit
           </button>
