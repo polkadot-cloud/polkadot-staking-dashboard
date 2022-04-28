@@ -4,11 +4,12 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  padding: 1rem;
+  padding: 1rem 0;
 
   .form {
     width: 100%;

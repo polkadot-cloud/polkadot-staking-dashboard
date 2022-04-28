@@ -70,13 +70,15 @@ export const UpdateController = () => {
         <FontAwesomeIcon transform='grow-2' icon={faExchangeAlt} />
         Change Controller Account
       </HeadingWrapper>
-      <AccountDropdown
-        items={accounts.filter((acc: any) => acc.address !== activeAccount)}
-        onChange={handleOnChange}
-        placeholder='Select Account'
-        value={selected}
-        height='17rem'
-      />
+      <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
+        <AccountDropdown
+          items={accounts.filter((acc: any) => acc.address !== activeAccount)}
+          onChange={handleOnChange}
+          placeholder='Select Account'
+          value={selected}
+          height='17rem'
+        />
+      </div>
       <FooterWrapper>
         <div>
           <button className='submit' onClick={() => submitTx()} disabled={selected === null}>
