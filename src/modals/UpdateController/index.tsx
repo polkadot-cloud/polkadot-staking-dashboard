@@ -12,8 +12,9 @@ import { useBalances } from '../../contexts/Balances';
 import { useModal } from '../../contexts/Modal';
 import { useNotifications } from '../../contexts/Notifications';
 import { useExtrinsics } from '../../contexts/Extrinsics';
+import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 
-export const ChangeController = () => {
+export const UpdateController = () => {
 
   const modal = useModal();
   const { addNotification } = useNotifications();
@@ -65,10 +66,10 @@ export const ChangeController = () => {
 
   return (
     <Wrapper>
-      <h3>
+      <HeadingWrapper>
         <FontAwesomeIcon transform='grow-2' icon={faExchangeAlt} />
         Change Controller Account
-      </h3>
+      </HeadingWrapper>
       <AccountDropdown
         items={accounts.filter((acc: any) => acc.address !== activeAccount)}
         onChange={handleOnChange}
@@ -76,16 +77,16 @@ export const ChangeController = () => {
         value={selected}
         height='17rem'
       />
-      <div className='foot'>
+      <FooterWrapper>
         <div>
           <button className='submit' onClick={() => submitTx()}>
             <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
             Submit
           </button>
         </div>
-      </div>
+      </FooterWrapper>
     </Wrapper>
   )
 }
 
-export default ChangeController;
+export default UpdateController;

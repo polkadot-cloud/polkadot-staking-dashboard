@@ -7,12 +7,14 @@ import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useBalances } from '../../contexts/Balances';
 import { Button } from '../../library/Button';
-import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
+import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { useModal } from '../../contexts/Modal';
 
 export const ManageBond = () => {
 
   const { network }: any = useApi();
+  const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { getAccountLedger, getBondedAccount }: any = useBalances();
 
@@ -39,8 +41,8 @@ export const ManageBond = () => {
         <h2>
           {planckToDot(active)} {network.unit} &nbsp;
           <div>
-            <Button small primary inline title='+' />
-            <Button small primary title='-' />
+            <Button small primary inline title='+' onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')} />
+            <Button small primary title='-' onClick={() => openModalWith('UpdateBond', { fn: 'remove' }, 'small')} />
           </div>
         </h2>
       </div>

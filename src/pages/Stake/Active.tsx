@@ -20,10 +20,12 @@ import { faRedoAlt, faWallet, faCircle } from '@fortawesome/free-solid-svg-icons
 import { Separator } from './Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { useModal } from '../../contexts/Modal';
 
 export const Active = (props: any) => {
 
   const { network }: any = useApi();
+  const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
   const { getNominationsStatus, eraStakers, staking } = useStaking();
@@ -129,7 +131,15 @@ export const Active = (props: any) => {
                 {payee === 'Account' && 'To Account'}
                 {payee === 'None' && 'Not Set'}
                 &nbsp;&nbsp;
-                <div><Button small inline primary title='Update' /></div>
+                <div>
+                  <Button
+                    small
+                    inline
+                    primary
+                    title='Update'
+                    onClick={() => openModalWith('UpdatePayee', {}, 'small')}
+                  />
+                </div>
               </h2>
             </div>
           </SectionWrapper>

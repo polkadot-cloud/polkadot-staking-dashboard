@@ -40,7 +40,7 @@ export const Controller = () => {
         <Button
           primary
           title='Change Controller'
-          onClick={() => openModalWith('ChangeController', {}, 'small')}
+          onClick={() => openModalWith('UpdateController', {}, 'small')}
         />
       </StakingAccount>
     </SectionWrapper>

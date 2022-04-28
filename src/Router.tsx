@@ -13,7 +13,7 @@ import { NotificationsContextWrapper } from './contexts/Notifications';
 import { ExtrinsicsContextWrapper } from './contexts/Extrinsics';
 import { UIContextWrapper } from './contexts/UI';
 import { NetworkBar } from './library/NetworkBar';
-import { Modal } from './library/Modal';
+import { Modal } from './modals';
 import { Headers } from './library/Headers';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';

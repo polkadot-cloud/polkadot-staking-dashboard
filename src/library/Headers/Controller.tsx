@@ -24,7 +24,7 @@ export const Controller = () => {
         format='name'
         label='Controller'
         canClick={hasController()}
-        onClick={() => { hasController() && openModalWith('ChangeController', {}, 'small') }}
+        onClick={() => { hasController() && openModalWith('UpdateController', {}, 'small') }}
         filled
       />
     </>

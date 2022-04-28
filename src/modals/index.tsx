@@ -2,13 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect } from 'react';
-import { Wrapper, ContentWrapper } from './Wrapper';
-import { useModal } from '../../contexts/Modal';
+import { ModalWrapper, ContentWrapper } from './Wrappers';
+import { useModal } from '../contexts/Modal';
 import { useAnimation } from 'framer-motion';
-import { ConnectAccounts } from '../../modals/ConnectAccounts';
-import { EraPoints } from '../../modals/EraPoints';
-import { ChangeController } from '../../modals/ChangeController';
-import { Settings } from '../../modals/Settings';
+import { ConnectAccounts } from './ConnectAccounts';
+import { EraPoints } from './EraPoints';
+import { UpdateController } from './UpdateController';
+import { Settings } from './Settings';
+import { UpdateBond } from './UpdateBond';
+import { UpdatePayee } from './UpdatePayee';
 
 export const Modal = () => {
 
@@ -49,7 +51,7 @@ export const Modal = () => {
   }
 
   return (
-    <Wrapper
+    <ModalWrapper
       initial={{
         opacity: 0
       }}
@@ -64,12 +66,14 @@ export const Modal = () => {
           {modal === 'ConnectAccounts' && <ConnectAccounts />}
           {modal === 'EraPoints' && <EraPoints />}
           {modal === 'Settings' && <Settings />}
-          {modal === 'ChangeController' && <ChangeController />}
+          {modal === 'UpdateController' && <UpdateController />}
+          {modal === 'UpdateBond' && <UpdateBond />}
+          {modal === 'UpdatePayee' && <UpdatePayee />}
         </ContentWrapper>
         <button className='close' onClick={() => { onFadeOut() }}>
         </button>
       </div>
-    </Wrapper>
+    </ModalWrapper>
   )
 
 }
