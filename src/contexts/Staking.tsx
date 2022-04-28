@@ -336,14 +336,16 @@ export const StakingContextWrapper = (props: any) => {
 
     if (!refetch) {
       // if already exists, do not re-fetch
-      if (validatorMetaBatches.meta[key] !== undefined) {
+      if (validatorMetaBatchesRef.current.meta[key] !== undefined) {
         return;
       }
     } else {
       // tidy up if existing batch exists
       delete validatorMetaBatches[key];
-      if (validatorMetaBatches.unsubs[key] !== undefined) {
-        for (let unsub of validatorMetaBatches.unsubs[key]) {
+      delete validatorMetaBatchesRef.current[key];
+
+      if (validatorMetaBatchesRef.current.unsubs[key] !== undefined) {
+        for (let unsub of validatorMetaBatchesRef.current.unsubs[key]) {
           unsub();
         }
       }
@@ -355,7 +357,7 @@ export const StakingContextWrapper = (props: any) => {
     }
 
     // store batch addresses
-    let batchesUpdated = Object.assign(validatorMetaBatches);
+    let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
     batchesUpdated.meta[key] = {};
     batchesUpdated.meta[key].addresses = addresses;
     setValidatorMetaBatch({ ...batchesUpdated });
@@ -367,7 +369,7 @@ export const StakingContextWrapper = (props: any) => {
         for (let i = 0; i < _identities.length; i++) {
           identities.push(_identities[i].toHuman());
         }
-        let batchesUpdated = Object.assign(validatorMetaBatches);
+        let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
         batchesUpdated.meta[key].identities = identities;
         setValidatorMetaBatch({ ...batchesUpdated });
       });
@@ -401,7 +403,7 @@ export const StakingContextWrapper = (props: any) => {
         });
         temp();
 
-        let batchesUpdated = Object.assign(validatorMetaBatches);
+        let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
         batchesUpdated.meta[key].supers = supers;
         setValidatorMetaBatch({ ...batchesUpdated });
       });
@@ -454,7 +456,7 @@ export const StakingContextWrapper = (props: any) => {
       }
 
       // commit update
-      let batchesUpdated = Object.assign(validatorMetaBatches);
+      let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
       batchesUpdated.meta[key].stake = stake;
       setValidatorMetaBatch({ ...batchesUpdated });
     });
@@ -508,7 +510,7 @@ export const StakingContextWrapper = (props: any) => {
         stakingMetrics.unsub();
       }
       // unsubscribe from any validator meta batches
-      Object.values(validatorMetaBatches.unsubs).map((batch: any, index: number) => {
+      Object.values(validatorMetaBatchesRef.current.unsubs).map((batch: any, index: number) => {
         return Object.entries(batch).map(([k, v]: any) => {
           return v();
         });
@@ -566,26 +568,27 @@ export const StakingContextWrapper = (props: any) => {
 
   const removeValidatorMetaBatch = (key: string) => {
 
-    if (validatorMetaBatches.meta[key] !== undefined) {
+    if (validatorMetaBatchesRef.current.meta[key] !== undefined) {
       // ubsubscribe from updates
-      for (let unsub of validatorMetaBatches.unsubs[key]) {
+      for (let unsub of validatorMetaBatchesRef.current.unsubs[key]) {
         unsub();
       }
       // wipe data
       delete validatorMetaBatches.meta[key];
+      delete validatorMetaBatchesRef.current[key];
     }
   }
 
   const getValidatorMetaBatch = (key: string) => {
-    if (validatorMetaBatches.meta[key] === undefined) {
+    if (validatorMetaBatchesRef.current.meta[key] === undefined) {
       return null;
     }
-    return validatorMetaBatches.meta[key];
+    return validatorMetaBatchesRef.current.meta[key];
   }
 
   const removeIndexFromBatch = (key: string, index: number) => {
 
-    let batchesUpdated = Object.assign(validatorMetaBatches, {});
+    let batchesUpdated = Object.assign(validatorMetaBatchesRef.current, {});
     batchesUpdated.meta[key].addresses.splice(index, 1);
 
     if (batchesUpdated.meta[key].stake !== undefined) {
@@ -664,14 +667,14 @@ export const StakingContextWrapper = (props: any) => {
    */
   const addMetaBatchUnsubs = (key: string, unsubs: any) => {
 
-    let _unsubs = validatorMetaBatches.unsubs;
+    let _unsubs = validatorMetaBatchesRef.current.unsubs;
     let _keyUnsubs = _unsubs[key] ?? [];
 
     _keyUnsubs.push(...unsubs)
     _unsubs[key] = _keyUnsubs;
 
     setValidatorMetaBatch({
-      ...validatorMetaBatches,
+      ...validatorMetaBatchesRef.current,
       unsubs: _unsubs,
     });
   }
