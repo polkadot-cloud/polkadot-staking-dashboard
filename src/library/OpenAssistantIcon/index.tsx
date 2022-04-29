@@ -15,13 +15,13 @@ export const OpenAssistantIcon = (props: any) => {
 
   return (
     <Wrapper
-      className='assistant-icon'
+      className='assistant-icon ignore-assistant-outside-alerter'
       onClick={() => {
         goToDefinition(page, title);
       }}
       style={{ width: size, height: size }}
     >
-      <IconSVG />
+      <IconSVG className='ignore-assistant-outside-alerter' />
     </Wrapper>
   )
 }

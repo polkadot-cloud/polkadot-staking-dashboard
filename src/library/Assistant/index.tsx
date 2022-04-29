@@ -59,7 +59,7 @@ export const Assistant = () => {
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {
     assistant.closeAssistant();
-  });
+  }, ['ignore-assistant-outside-alerter']);
 
   return (
     <Wrapper
