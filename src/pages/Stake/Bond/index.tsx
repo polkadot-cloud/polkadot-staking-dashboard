@@ -40,7 +40,9 @@ export const Bond = (props: any) => {
   let freeAfterReserve: any = free - RESERVE_AMOUNT_PLANCK;
   freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
 
-  const [bond, setBond] = useState(planckToDot(freeAfterReserve));
+  const [bond, setBond] = useState(planckToDot({
+    bond: freeAfterReserve
+  }));
 
   // handle errors
 
@@ -69,8 +71,8 @@ export const Bond = (props: any) => {
     errors.push(`Bond amount is more than your free balance.`);
   }
 
-  const gtMinNominatorBond = bond >= planckToDot(minNominatorBond);
-  const gtMinActiveBond = bond >= minActiveBond;
+  const gtMinNominatorBond = bond.bond >= planckToDot(minNominatorBond);
+  const gtMinActiveBond = bond.bond >= minActiveBond;
 
   return (
     <SectionWrapper transparent>

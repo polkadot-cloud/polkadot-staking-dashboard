@@ -78,15 +78,15 @@ export const UpdateController = () => {
           value={selected}
           height='17rem'
         />
+        <FooterWrapper>
+          <div>
+            <button className='submit' onClick={() => submitTx()} disabled={selected === null}>
+              <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
+              Submit
+            </button>
+          </div>
+        </FooterWrapper>
       </div>
-      <FooterWrapper>
-        <div>
-          <button className='submit' onClick={() => submitTx()} disabled={selected === null}>
-            <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
-            Submit
-          </button>
-        </div>
-      </FooterWrapper>
     </Wrapper>
   )
 }

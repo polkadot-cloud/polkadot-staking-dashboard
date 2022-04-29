@@ -60,7 +60,7 @@ export const Nominations = () => {
         <>
           {isReady &&
             <>
-              {nominations.length > 0 &&
+              {nominationsWithPrefs.length > 0 &&
                 <div style={{ marginTop: '1rem' }}>
                   <ValidatorList
                     validators={nominationsWithPrefs}

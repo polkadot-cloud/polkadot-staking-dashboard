@@ -46,6 +46,8 @@ export const ValidatorListInner = (props: any) => {
   const [validators, setValidators]: any = useState(props.validators ?? []);
   // is this the initial render
   const [initial, setInitial] = useState(true);
+  // is this the initial fetch
+  const [fetched, setFetched] = useState(false);
 
   // pagination
   let totalPages = Math.ceil(validators.length / ITEMS_PER_PAGE);
@@ -58,11 +60,6 @@ export const ValidatorListInner = (props: any) => {
     renderIterationRef.current = iter;
     _setRenderIteration(iter);
   }
-
-  // fetch validators when ready if not done so already
-  useEffect(() => {
-    fetchValidatorMetaBatch(props.batchKey, validators, refetchOnListUpdate);
-  }, [isReady, validatorsDefault]);
 
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
   let pageEnd = (page * ITEMS_PER_PAGE) - 1;
@@ -81,10 +78,14 @@ export const ValidatorListInner = (props: any) => {
   };
 
   useEffect(() => {
-    setValidatorsDefault(props.validators);
-    setValidators(props.validators);
-    setInitial(true);
-  }, [props.validators]);
+    if (isReady && !fetched) {
+      setValidatorsDefault(props.validators);
+      setValidators(props.validators);
+      setInitial(true);
+      setFetched(true);
+      fetchValidatorMetaBatch(props.batchKey, props.validators, refetchOnListUpdate);
+    }
+  }, [isReady, props.validators]);
 
   useEffect(() => {
     if (batchEnd >= pageEnd) {
@@ -98,7 +99,7 @@ export const ValidatorListInner = (props: any) => {
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     handleValidatorsFilterUpdate();
-  }, [validatorsUi.order, validatorsUi, synced.stake])
+  }, [validatorsUi.order, validatorsUi, synced.stake]);
 
   const handleValidatorsFilterUpdate = () => {
     if (allowFilters) {

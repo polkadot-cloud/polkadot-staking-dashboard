@@ -74,13 +74,12 @@ export const Favourites = (props: PageProps) => {
         <SectionWrapper>
           {isReady &&
             <>
-              {nominations.length === 0 &&
+              {nominationsWithPrefs.length === 0 &&
                 <div className='item'>
                   <h4>No favourite validators saved.</h4>
                 </div>
               }
-
-              {nominations.length > 0 &&
+              {nominationsWithPrefs.length > 0 &&
                 <ValidatorList
                   validators={nominationsWithPrefs}
                   batchKey={batchKey}
