@@ -661,7 +661,6 @@ export const StakingContextWrapper = (props: any) => {
     return (!hasController || !isBonding() || !isNominating());
   }
 
-
   /*
    * Helper function to add mataBatch unsubs by key.
    */
