@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
@@ -18,6 +18,8 @@ export interface UIContextState {
   toggleFilterValidators: (v: string, l: any) => void;
   isSyncing: () => any;
   toggleService: (k: string) => void;
+  getSetup: (a: string) => any;
+  setActiveAccountSetup: (p: any) => any;
   sideMenuOpen: number;
   listFormat: string;
   validators: any;
@@ -33,6 +35,8 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   toggleFilterValidators: (v: string, l: any) => { },
   isSyncing: () => false,
   toggleService: (k: string) => { },
+  getSetup: (a: string) => { },
+  setActiveAccountSetup: (p: any) => { },
   sideMenuOpen: 0,
   listFormat: 'col',
   validators: {},
@@ -43,7 +47,7 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIContextWrapper = (props: any) => {
 
-  const { accounts: connectAccounts } = useConnect();
+  const { accounts: connectAccounts, activeAccount } = useConnect();
   const { meta, session, staking, eraStakers }: any = useStaking();
   const { isReady, consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
@@ -66,10 +70,21 @@ export const UIContextWrapper = (props: any) => {
   // services
   const [services, setServices] = useState(_services);
 
+  // validator filtering
   const [validators, setValidators]: any = useState({
     order: 'default',
     filter: [],
   });
+
+  // staking setup persist
+  const [setup, setSetup]: any = useState([]);
+
+  // update setup state when activeAccount changes
+  useEffect(() => {
+    const _setup = setupDefault();
+    setSetup(_setup);
+  }, [activeAccount]);
+
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
@@ -176,7 +191,6 @@ export const UIContextWrapper = (props: any) => {
     let order = validators.order === by
       ? 'default'
       : by;
-
     setValidatorsOrder(order);
   }
 
@@ -226,6 +240,69 @@ export const UIContextWrapper = (props: any) => {
     return false;
   }
 
+  // Setup helper functions
+
+  /* 
+   * Generates the default setup objects or the currently
+   * connected accounts.
+   */
+  const setupDefault = () => {
+
+    // generate setup objects from connected accounts
+    const _setup = connectAccounts.map((item: any) => {
+
+      // if there is existing config for an account, use that.
+      // otherwise use the default values.
+      const existing = setup.find((acc: any) => acc.address === item.address);
+
+      const progress = existing !== undefined
+        ? existing.progress
+        : {
+          controller: null,
+          payee: null,
+          nominations: [],
+          bond: 0
+        };
+
+      return {
+        address: item.address,
+        progress: progress,
+      }
+    });
+
+    return _setup;
+  }
+
+  /*
+   * Gets the setup progress for a connected account.
+   */
+  const getSetup = (address: string) => {
+
+    // find the current setup progress from `setup`.
+    const _setup = setup.find((item: any) => item.address === address);
+
+    if (_setup === undefined) {
+      return null;
+    }
+
+    return _setup;
+  }
+
+  /*
+   * Sets setup progress for an address
+   */
+  const setActiveAccountSetup = (progress: any) => {
+
+    const _setup = setup.map((obj: any) =>
+      obj.address === activeAccount ? {
+        ...obj,
+        progress: progress
+      } : obj
+    );
+    setSetup(_setup);
+  }
+
+
   // service toggling
   const toggleService = (key: string) => {
     let _services: any = Object.assign(services);
@@ -248,6 +325,8 @@ export const UIContextWrapper = (props: any) => {
       toggleFilterValidators: toggleFilterValidators,
       isSyncing: isSyncing,
       toggleService: toggleService,
+      getSetup: getSetup,
+      setActiveAccountSetup: setActiveAccountSetup,
       sideMenuOpen: sideMenuOpen,
       listFormat: listFormat,
       validators: validators,

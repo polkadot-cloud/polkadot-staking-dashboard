@@ -1,13 +1,14 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PageRowWrapper } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { useBalances } from '../../contexts/Balances';
 import { planckToDot } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 import { useStaking } from '../../contexts/Staking';
+import { useUi } from '../../contexts/UI';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
@@ -18,10 +19,10 @@ import { PageTitle } from '../../library/PageTitle';
 
 export const Setup = (props: any) => {
 
-  // monitor page title sticky
-  const [stickyTitle, setStickyTitle] = useState(false);
+  const [activeSection, setActiveSection] = useState(1);
 
   const { activeAccount } = useConnect();
+  const { getSetup, setActiveAccountSetup } = useUi();
   const { getAccountLedger, getBondedAccount }: any = useBalances();
   const { hasController } = useStaking();
 
@@ -35,22 +36,26 @@ export const Setup = (props: any) => {
     totalUnlocking += unlocking[i];
   }
 
-  // TODO: if account already has had some staking setup, plug in into
-  // this state to partly fill the form.
-  const [setup, setSetup] = useState({
-    controller: null,
-    payee: null,
-    nominations: [],
-    bond: 0,
-  });
+  // get existing setup from context and plug into local state.
+  const _setup = getSetup(activeAccount);
+  const [setup, setSetup] = useState(_setup.progress);
 
-  const [activeSection, setActiveSection] = useState(1);
+  // update context setup state when local state updates
+  useEffect(() => {
+    setActiveAccountSetup(setup);
+  }, [setup]);
 
-  const setupProps = { setup, setSetup, activeSection, setActiveSection };
+  // aggregate props that each section needs
+  const setupProps = {
+    setup,
+    setSetup,
+    activeSection,
+    setActiveSection
+  };
 
   return (
     <>
-      <PageTitle title={`${props.title} Setup`} setStickyTitle={setStickyTitle} />
+      <PageTitle title={`${props.title} Setup`} />
       <PageRowWrapper noVerticalSpacer>
         {!hasController() &&
           <SectionWrapper>
