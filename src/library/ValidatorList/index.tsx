@@ -35,6 +35,8 @@ export const ValidatorListInner = (props: any) => {
 
   const { allowMoreCols, allowFilters, toggleFavourites, pagination }: any = props;
 
+  const disableThrottle = props.disableThrottle ?? false;
+
   let refetchOnListUpdate = props.refetchOnListUpdate !== undefined
     ? props.refetchOnListUpdate
     : false;
@@ -95,9 +97,9 @@ export const ValidatorListInner = (props: any) => {
     }
   }, [isReady, fetched]);
 
-  // handle throttle animations
+  // handle throttle animations if enabled
   useEffect(() => {
-    if (batchEnd >= pageEnd) {
+    if (batchEnd >= pageEnd || disableThrottle) {
       return;
     }
     setTimeout(() => {
@@ -149,9 +151,15 @@ export const ValidatorListInner = (props: any) => {
     }
   };
 
-  // first batch of validators
-  const _listValidators = validators.slice(pageStart);
-  const listValidators = _listValidators.slice(0, ITEMS_PER_PAGE);
+  // get validators to render
+  let listValidators = [];
+
+  // if throttling, get subset of validators. Else, display validators in one render.
+  if (!disableThrottle) {
+    listValidators = validators.slice(pageStart).slice(0, ITEMS_PER_PAGE);
+  } else {
+    listValidators = validators
+  }
 
   return (
     <ListWrapper>
