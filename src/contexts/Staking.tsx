@@ -91,6 +91,9 @@ export const StakingContextWrapper = (props: any) => {
     ? []
     : JSON.parse(_favourites);
 
+  //track whether the validator list has been fetched yet
+  const [fetchedValidators, setFetchedValidators] = useState(false);
+
   const [validators, setValidators]: any = useState([]);
   const [favourites, setFavourites]: any = useState(_favourites);
   const [sessionValidators, setSessionValidators] = useState({
@@ -109,7 +112,7 @@ export const StakingContextWrapper = (props: any) => {
     activeValidators: 0,
     minActiveBond: 0,
     minStakingActiveBond: 0,
-  })
+  });
 
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
@@ -184,6 +187,7 @@ export const StakingContextWrapper = (props: any) => {
    */
   const fetchValidators = async () => {
     if (!isReady) { return }
+    if (fetchedValidators) { return }
 
     // fetch validator set
     let validators: any = [];
@@ -202,6 +206,8 @@ export const StakingContextWrapper = (props: any) => {
         }
       });
     });
+
+    setFetchedValidators(true);
     setValidators(validators);
   }
 
@@ -499,10 +505,13 @@ export const StakingContextWrapper = (props: any) => {
   }
 
   useEffect(() => {
-    fetchValidators();
-    fetchEraStakers();
-    subscribeToStakingkMetrics(api);
-    subscribeSessionValidators(api);
+
+    if (isReady) {
+      fetchValidators();
+      fetchEraStakers();
+      subscribeToStakingkMetrics(api);
+      subscribeSessionValidators(api);
+    }
 
     return (() => {
       // unsubscribe from staking metrics
