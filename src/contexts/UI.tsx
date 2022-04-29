@@ -25,7 +25,6 @@ export interface UIContextState {
   listFormat: string;
   validators: any;
   services: any;
-  setup: any;
 }
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
