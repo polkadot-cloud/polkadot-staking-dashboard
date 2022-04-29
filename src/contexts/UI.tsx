@@ -252,11 +252,11 @@ export const UIContextWrapper = (props: any) => {
     const _setup = connectAccounts.map((item: any) => {
 
       // if there is existing config for an account, use that.
-      // otherwise use the default values.
-      const existing = setup.find((acc: any) => acc.address === item.address);
+      const localSetup = localStorage.getItem(`stake_setup_${item.address}`);
 
-      const progress = existing !== undefined
-        ? existing.progress
+      // otherwise use the default values.
+      const progress = localSetup !== null
+        ? JSON.parse(localSetup)
         : {
           controller: null,
           payee: null,
@@ -269,7 +269,6 @@ export const UIContextWrapper = (props: any) => {
         progress: progress,
       }
     });
-
     return _setup;
   }
 
@@ -284,7 +283,6 @@ export const UIContextWrapper = (props: any) => {
     if (_setup === undefined) {
       return null;
     }
-
     return _setup;
   }
 
@@ -293,6 +291,10 @@ export const UIContextWrapper = (props: any) => {
    */
   const setActiveAccountSetup = (progress: any) => {
 
+    // update local storage setup
+    localStorage.setItem(`stake_setup_${activeAccount}`, JSON.stringify(progress));
+
+    // update context setup
     const _setup = setup.map((obj: any) =>
       obj.address === activeAccount ? {
         ...obj,
@@ -301,7 +303,6 @@ export const UIContextWrapper = (props: any) => {
     );
     setSetup(_setup);
   }
-
 
   // service toggling
   const toggleService = (key: string) => {
