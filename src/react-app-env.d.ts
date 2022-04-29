@@ -2,5 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /// <reference types="react-scripts" />
+declare module "react-dom/client"
 declare module 'che-react-number-easing';
-declare module 'faler';
+declare module "faler";

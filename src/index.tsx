@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -10,7 +10,7 @@ import App from './App';
 // https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
-const root = ReactDOM.createRoot(rootElement);
+const root = createRoot(rootElement);
 
 root.render(<App />);
 
