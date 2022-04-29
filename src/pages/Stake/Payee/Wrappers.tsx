@@ -19,7 +19,7 @@ export const Items = styled.div`
 
 export const Item = styled.button<any>`
   background: ${backgroundToggle};
-  border: 1px solid ${props => props.selected ? primary : backgroundToggle};
+  border: 2px solid ${props => props.selected ? primary : backgroundToggle};
   box-sizing: border-box;
   width: 240px;
   height: 120px;

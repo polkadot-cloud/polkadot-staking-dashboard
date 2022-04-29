@@ -18,7 +18,7 @@ export const AccountDropdown = (props: any) => {
   const DropdownItem = (c: any, item: any, index: number) => {
 
     const color = c.selectedItem === item ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
-    const border = c.selectedItem === item ? `1px solid ${defaultThemes.primary[mode]}` : `1px solid ${defaultThemes.transparent[mode]}`;
+    const border = c.selectedItem === item ? `2px solid ${defaultThemes.primary[mode]}` : `2px solid ${defaultThemes.transparent[mode]}`;
 
     return (
       <div
