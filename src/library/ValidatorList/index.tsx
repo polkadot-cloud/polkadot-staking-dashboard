@@ -77,6 +77,13 @@ export const ValidatorListInner = (props: any) => {
     stake: (stake.length > 0) ?? false,
   };
 
+  // refetch when validator list changes.
+  useEffect(() => {
+    setFetched(false);
+  }, [props.validators]);
+
+  // configure validator list.
+  // should only be done once for each list change.
   useEffect(() => {
     if (isReady && !fetched) {
       setValidatorsDefault(props.validators);
@@ -85,8 +92,9 @@ export const ValidatorListInner = (props: any) => {
       setFetched(true);
       fetchValidatorMetaBatch(props.batchKey, props.validators, refetchOnListUpdate);
     }
-  }, [isReady, props.validators]);
+  }, [isReady, fetched]);
 
+  // handle throttle animations
   useEffect(() => {
     if (batchEnd >= pageEnd) {
       return;
@@ -99,8 +107,9 @@ export const ValidatorListInner = (props: any) => {
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     handleValidatorsFilterUpdate();
-  }, [validatorsUi.order, validatorsUi, synced.stake]);
+  }, [validatorsUi.order, validatorsUi]);
 
+  // handle filter / order update
   const handleValidatorsFilterUpdate = () => {
     if (allowFilters) {
       let filteredValidators = Object.assign(validatorsDefault);
