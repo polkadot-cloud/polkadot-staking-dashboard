@@ -1,13 +1,14 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useAssistant } from '../../contexts/Assistant';
 import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
 import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../pages';
 import { pageFromUri } from '../../Utils';
+import { useOutsideAlerter } from '../../library/Hooks';
 
 export const Assistant = () => {
 
@@ -55,8 +56,14 @@ export const Assistant = () => {
     item.key === assistant.page
   );
 
+  const ref = useRef(null);
+  useOutsideAlerter(ref, () => {
+    assistant.closeAssistant();
+  });
+
   return (
     <Wrapper
+      ref={ref}
       initial={false}
       animate={animateContainer}
       transition={{
