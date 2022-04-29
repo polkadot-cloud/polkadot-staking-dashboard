@@ -19,10 +19,8 @@ import { PageTitle } from '../../library/PageTitle';
 
 export const Setup = (props: any) => {
 
-  const [activeSection, setActiveSection] = useState(1);
-
   const { activeAccount } = useConnect();
-  const { getSetup, setActiveAccountSetup } = useUi();
+  const { getSetup, setActiveAccountSetup, setActiveAccountSetupSection } = useUi();
   const { getAccountLedger, getBondedAccount }: any = useBalances();
   const { hasController } = useStaking();
 
@@ -40,10 +38,18 @@ export const Setup = (props: any) => {
   const _setup = getSetup(activeAccount);
   const [setup, setSetup] = useState(_setup.progress);
 
-  // update context setup state when local state updates
+  // update context setup progress when local state updates
   useEffect(() => {
     setActiveAccountSetup(setup);
   }, [setup]);
+
+  // set active section as local state
+  const [activeSection, setActiveSection] = useState(setup.section);
+
+  // update context setup secton when local state updates
+  useEffect(() => {
+    setActiveAccountSetupSection(activeSection);
+  }, [activeSection]);
 
   // aggregate props that each section needs
   const setupProps = {

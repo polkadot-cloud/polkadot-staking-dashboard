@@ -20,6 +20,7 @@ export interface UIContextState {
   toggleService: (k: string) => void;
   getSetup: (a: string) => any;
   setActiveAccountSetup: (p: any) => any;
+  setActiveAccountSetupSection: (s: number) => void;
   sideMenuOpen: number;
   listFormat: string;
   validators: any;
@@ -37,6 +38,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   toggleService: (k: string) => { },
   getSetup: (a: string) => { },
   setActiveAccountSetup: (p: any) => { },
+  setActiveAccountSetupSection: (s: number) => { },
   sideMenuOpen: 0,
   listFormat: 'col',
   validators: {},
@@ -261,7 +263,8 @@ export const UIContextWrapper = (props: any) => {
           controller: null,
           payee: null,
           nominations: [],
-          bond: 0
+          bond: 0,
+          section: 1,
         };
 
       return {
@@ -304,14 +307,44 @@ export const UIContextWrapper = (props: any) => {
     setSetup(_setup);
   }
 
-  // service toggling
+  /*
+   * Sets active setup section for an address
+   */
+  const setActiveAccountSetupSection = (section: number) => {
+
+    // get current progress
+    const _accountSetup = [...setup].find((item: any) => item.address === activeAccount);
+
+    // abort if setup does not exist
+    if (_accountSetup === null) {
+      return;
+    }
+    // amend section
+    _accountSetup.progress.section = section;
+
+    // update context setup
+    const _setup = setup.map((obj: any) => obj.address === activeAccount ? _accountSetup : obj);
+
+    // update local storage
+    localStorage.setItem(`stake_setup_${activeAccount}`, JSON.stringify(_accountSetup.progress));
+
+    // update context
+    setSetup(_setup);
+  }
+
+  /*
+   * Service toggling 
+   */
   const toggleService = (key: string) => {
+
     let _services: any = Object.assign(services);
+
     if (_services.find((item: any) => item === key)) {
       _services = _services.filter((_s: any) => _s !== key);
     } else {
       _services.push(key);
     }
+
     localStorage.setItem('services', JSON.stringify(_services));
     setServices(_services);
   }
@@ -328,6 +361,7 @@ export const UIContextWrapper = (props: any) => {
       toggleService: toggleService,
       getSetup: getSetup,
       setActiveAccountSetup: setActiveAccountSetup,
+      setActiveAccountSetupSection: setActiveAccountSetupSection,
       sideMenuOpen: sideMenuOpen,
       listFormat: listFormat,
       validators: validators,
