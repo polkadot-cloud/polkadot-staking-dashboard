@@ -97,9 +97,10 @@ export const UIContextWrapper = (props: any) => {
   }
 
   const setValidatorsOrder = (by: string) => {
-    let _validators: any = Object.assign({}, validators);
-    _validators.order = by;
-    setValidators(_validators);
+    setValidators({
+      ...validators,
+      order: by,
+    });
   }
 
   const setValidatorsFilter = (filter: any) => {

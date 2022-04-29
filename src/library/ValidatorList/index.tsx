@@ -107,7 +107,7 @@ export const ValidatorListInner = (props: any) => {
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     handleValidatorsFilterUpdate();
-  }, [validatorsUi.order, validatorsUi]);
+  }, [validatorsUi.order, validatorsUi.filter]);
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = () => {
