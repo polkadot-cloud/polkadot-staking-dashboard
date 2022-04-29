@@ -23,8 +23,9 @@ export interface UIContextState {
   setActiveAccountSetupSection: (s: number) => void;
   sideMenuOpen: number;
   listFormat: string;
-  validators: any;
   services: any;
+  validatorFilters: any;
+  validatorOrder: string;
 }
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
@@ -41,8 +42,9 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   setActiveAccountSetupSection: (s: number) => { },
   sideMenuOpen: 0,
   listFormat: 'col',
-  validators: {},
   services: SERVICES,
+  validatorFilters: [],
+  validatorOrder: 'default',
 });
 
 export const useUi = () => React.useContext(UIContext);
@@ -73,10 +75,10 @@ export const UIContextWrapper = (props: any) => {
   const [services, setServices] = useState(_services);
 
   // validator filtering
-  const [validators, setValidators]: any = useState({
-    order: 'default',
-    filter: [],
-  });
+  const [validatorFilters, setValidatorFilters]: any = useState([]);
+
+  // validator ordering
+  const [validatorOrder, setValidatorOrder]: any = useState('default');
 
   // staking setup persist
   const [setup, setSetup]: any = useState([]);
@@ -87,7 +89,6 @@ export const UIContextWrapper = (props: any) => {
     setSetup(_setup);
   }, [activeAccount]);
 
-
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
   }
@@ -97,24 +98,18 @@ export const UIContextWrapper = (props: any) => {
   }
 
   const setValidatorsOrder = (by: string) => {
-    setValidators({
-      ...validators,
-      order: by,
-    });
+    setValidatorOrder(by);
   }
 
   const setValidatorsFilter = (filter: any) => {
-    setValidators({
-      ...validators,
-      filter: filter,
-    });
+    setValidatorFilters(filter);
   }
 
   // Validator list filtering functions
 
   const toggleFilterValidators = (f: string) => {
-    let filter = Object.assign(validators.filter);
-    let action = validators.filter.includes(f) ? 'remove' : 'push';
+    let filter = [...validatorFilters];
+    let action = filter.includes(f) ? 'remove' : 'push';
 
     if (action === 'remove') {
       let index = filter.indexOf(f);
@@ -125,7 +120,7 @@ export const UIContextWrapper = (props: any) => {
     setValidatorsFilter(filter);
   }
 
-  const applyValidatorFilters = (list: any, batchKey: string, filter: any = validators.filter) => {
+  const applyValidatorFilters = (list: any, batchKey: string, filter: any = validatorFilters) => {
 
     if (filter.includes('all_commission')) {
       list = filterAllCommission(list);
@@ -191,7 +186,7 @@ export const UIContextWrapper = (props: any) => {
   // Validator list ordering functions
 
   const orderValidators = (by: string) => {
-    let order = validators.order === by
+    let order = validatorOrder === by
       ? 'default'
       : by;
     setValidatorsOrder(order);
@@ -368,7 +363,8 @@ export const UIContextWrapper = (props: any) => {
       setActiveAccountSetupSection: setActiveAccountSetupSection,
       sideMenuOpen: sideMenuOpen,
       listFormat: listFormat,
-      validators: validators,
+      validatorFilters: validatorFilters,
+      validatorOrder: validatorOrder,
       services: services,
     }}>
       {props.children}

@@ -19,7 +19,8 @@ export const ValidatorListInner = (props: any) => {
   const {
     setListFormat,
     listFormat,
-    validators: validatorsUi,
+    validatorFilters,
+    validatorOrder,
     applyValidatorFilters,
     applyValidatorOrder
   }: any = useUi();
@@ -107,14 +108,14 @@ export const ValidatorListInner = (props: any) => {
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     handleValidatorsFilterUpdate();
-  }, [validatorsUi.order, validatorsUi.filter]);
+  }, [validatorFilters, validatorOrder]);
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = () => {
     if (allowFilters) {
       let filteredValidators = Object.assign(validatorsDefault);
-      if (validatorsUi.order !== 'default') {
-        filteredValidators = applyValidatorOrder(filteredValidators, validatorsUi.order);
+      if (validatorOrder !== 'default') {
+        filteredValidators = applyValidatorOrder(filteredValidators, validatorOrder);
       }
       filteredValidators = applyValidatorFilters(filteredValidators, props.batchKey);
       setValidators(filteredValidators);

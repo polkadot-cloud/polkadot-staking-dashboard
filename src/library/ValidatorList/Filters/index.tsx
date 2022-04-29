@@ -9,7 +9,7 @@ import { useUi } from '../../../contexts/UI';
 export const Filters = (props: any) => {
 
   const { setInitial } = props;
-  const { validators: validatorsUi, orderValidators, toggleFilterValidators }: any = useUi();
+  const { validatorOrder, validatorFilters, orderValidators, toggleFilterValidators }: any = useUi();
 
   const handleFilter = (fn: any, filter: string) => {
     setInitial(true);
@@ -25,7 +25,7 @@ export const Filters = (props: any) => {
             label='lowest commission'
             icon={faPercentage}
             transform='grow-12'
-            active={validatorsUi.order === 'commission'}
+            active={validatorOrder === 'commission'}
             onClick={() => handleFilter(orderValidators, 'commission')}
           />
         </div>
@@ -39,7 +39,7 @@ export const Filters = (props: any) => {
             label='inactive validators'
             icon={faClock}
             transform='grow-10'
-            active={validatorsUi.filter?.includes('inactive') ?? false}
+            active={validatorFilters?.includes('inactive') ?? false}
             onClick={() => {
               handleFilter(toggleFilterValidators, 'inactive');
             }}
@@ -48,7 +48,7 @@ export const Filters = (props: any) => {
             label='over subscribed'
             icon={faExclamationTriangle}
             transform='grow-10'
-            active={validatorsUi.filter?.includes('over_subscribed') ?? false}
+            active={validatorFilters?.includes('over_subscribed') ?? false}
             onClick={() => {
               handleFilter(toggleFilterValidators, 'over_subscribed');
             }}
@@ -57,7 +57,7 @@ export const Filters = (props: any) => {
             label='100% commission'
             icon={faBalanceScaleLeft}
             transform='grow-6'
-            active={validatorsUi.filter?.includes('all_commission') ?? false}
+            active={validatorFilters?.includes('all_commission') ?? false}
             onClick={() => {
               handleFilter(toggleFilterValidators, 'all_commission');
             }}
@@ -66,7 +66,7 @@ export const Filters = (props: any) => {
             label='blocked nominations'
             icon={faUserSlash}
             transform='grow-9'
-            active={validatorsUi.filter?.includes('blocked_nominations') ?? false}
+            active={validatorFilters?.includes('blocked_nominations') ?? false}
             onClick={() => {
               handleFilter(toggleFilterValidators, 'blocked_nominations');
             }}
