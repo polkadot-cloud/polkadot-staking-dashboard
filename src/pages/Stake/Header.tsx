@@ -4,10 +4,16 @@
 import { HeaderWrapper } from './Wrappers';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { Button } from '../../library/Button';
+import { useConnect } from '../../contexts/Connect';
+import { useUi } from '../../contexts/UI';
 
 export const Header = (props: any) => {
 
-  const { title, assistantPage, assistantKey, complete, thisSection, activeSection, setActiveSection } = props;
+  const { activeAccount } = useConnect();
+  const { getSetupProgress, setActiveAccountSetupSection } = useUi();
+  const setup = getSetupProgress(activeAccount);
+
+  const { title, assistantPage, assistantKey, complete, thisSection } = props;
 
   return (
     <HeaderWrapper>
@@ -20,8 +26,8 @@ export const Header = (props: any) => {
       <section>
         {complete
           && <>
-            {(activeSection !== thisSection && thisSection < activeSection) &&
-              <span><Button inline small title="Update" onClick={() => { setActiveSection(thisSection) }} /></span>
+            {(setup.section !== thisSection && thisSection < setup.section) &&
+              <span><Button inline small title="Update" onClick={() => { setActiveAccountSetupSection(thisSection) }} /></span>
             }
             <h4 className='complete'>Complete</h4>
           </>

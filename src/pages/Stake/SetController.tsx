@@ -7,6 +7,7 @@ import { Button, ButtonRow } from '../../library/Button';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { useMessages } from '../../contexts/Messages';
+import { useUi } from '../../contexts/UI';
 import { GLOBAL_MESSGE_KEYS } from '../../constants';
 import { AccountSelect } from '../../library/Form/AccountSelect';
 import { Header } from './Header';
@@ -16,17 +17,24 @@ import { MotionContainer } from './MotionContainer';
 
 export const SetController = (props: any) => {
 
-  // functional props
-  const { setup, setSetup, activeSection, setActiveSection, section } = props;
+  const { section } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
   const { getMessage }: any = useMessages();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
+
   const controller = getBondedAccount(activeAccount);
-  const account = getAccount(controller);
+  const setup = getSetupProgress(activeAccount);
+
+  const initialValue = setup.controller !== null
+    ? setup.controller
+    : controller;
+
+  const initialAccount = getAccount(initialValue);
 
   const [controllerNotImported, setControllerNotImported] = useState(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
-  const [selected, setSelected] = useState(account);
+  const [selected, setSelected] = useState(initialAccount);
 
   useEffect(() => {
     setControllerNotImported(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
@@ -35,7 +43,7 @@ export const SetController = (props: any) => {
   const handleOnChange = (selected: any) => {
     setSelected(selected);
 
-    setSetup({
+    setActiveAccountSetup({
       ...setup,
       controller: selected?.address ?? null
     })
@@ -61,8 +69,6 @@ export const SetController = (props: any) => {
         <SectionWrapper transparent>
           <Header
             thisSection={section}
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
             title='Set Controller Account'
             assistantPage='stake'
             assistantKey='Stash and Controller Accounts'
@@ -70,7 +76,7 @@ export const SetController = (props: any) => {
           />
           <MotionContainer
             thisSection={section}
-            activeSection={activeSection}
+            activeSection={setup.section}
           >
             <Spacer />
             <AccountSelect
@@ -79,11 +85,7 @@ export const SetController = (props: any) => {
               placeholder='Search Account'
               value={selected}
             />
-            <Footer
-              complete={setup.controller !== null}
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-            />
+            <Footer complete={setup.controller !== null} />
           </MotionContainer>
 
         </SectionWrapper>

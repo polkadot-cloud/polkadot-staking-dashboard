@@ -7,6 +7,7 @@ import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
+import { useUi } from '../../../contexts/UI';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { Spacer } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,13 +22,13 @@ import { BondInput } from '../../../library/Form/BondInput';
 
 export const Bond = (props: any) => {
 
-  // functional props
-  const { setup, setSetup, activeSection, setActiveSection, section } = props;
+  const { section } = props;
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { staking, eraStakers } = useStaking();
   const { getAccountLedger, getBondedAccount, getAccountBalance }: any = useBalances();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
 
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
@@ -36,12 +37,17 @@ export const Bond = (props: any) => {
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { total } = ledger;
+  const setup = getSetupProgress(activeAccount);
 
   let freeAfterReserve: any = free - RESERVE_AMOUNT_PLANCK;
   freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
 
+  const initialBondValue = setup.bond === 0
+    ? freeAfterReserve
+    : setup.bond;
+
   const [bond, setBond] = useState(planckToDot({
-    bond: freeAfterReserve
+    bond: initialBondValue
   }));
 
   // handle errors
@@ -78,8 +84,6 @@ export const Bond = (props: any) => {
     <SectionWrapper transparent>
       <Header
         thisSection={section}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
         complete={setup.bond !== 0}
         title={`Bond${total > 0 ? `ed` : ``} ${network.unit}`}
         assistantPage='stake'
@@ -88,7 +92,7 @@ export const Bond = (props: any) => {
 
       <MotionContainer
         thisSection={section}
-        activeSection={activeSection}
+        activeSection={setup.section}
       >
         {errors.map((err: any, index: any) =>
           <Warning key={`setup_error_${index}`}>
@@ -103,11 +107,11 @@ export const Bond = (props: any) => {
         <Spacer />
         <BondInput
           parentState={setup}
-          setParentState={setSetup}
+          setParentState={setActiveAccountSetup}
           disabled={bondDisabled}
           setters={[
             {
-              set: setSetup,
+              set: setActiveAccountSetup,
               current: setup
             }, {
               set: setBond,
@@ -146,11 +150,7 @@ export const Bond = (props: any) => {
             </section>
           </div>
         </BondStatus>
-        <Footer
-          complete={setup.bond !== 0}
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-        />
+        <Footer complete={setup.bond !== 0} />
       </MotionContainer>
     </SectionWrapper>
   )

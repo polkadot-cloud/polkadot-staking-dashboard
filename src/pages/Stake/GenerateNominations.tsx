@@ -26,7 +26,7 @@ export const GenerateNominations = (props: any) => {
 
   const [method, setMethod]: any = useState(null);
   const [fetching, setFetching] = useState(false);
-  const [nominations, setNominations] = useState([]);
+  const [nominations, setNominations] = useState(setup.nominations);
 
   const rawBatchKey = 'validators_browse';
   const batchKey = 'generated_nominations';

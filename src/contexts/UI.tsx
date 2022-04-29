@@ -18,13 +18,14 @@ export interface UIContextState {
   toggleFilterValidators: (v: string, l: any) => void;
   isSyncing: () => any;
   toggleService: (k: string) => void;
-  getSetup: (a: string) => any;
+  getSetupProgress: (a: string) => any;
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
   sideMenuOpen: number;
   listFormat: string;
   validators: any;
   services: any;
+  setup: any;
 }
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
@@ -36,7 +37,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   toggleFilterValidators: (v: string, l: any) => { },
   isSyncing: () => false,
   toggleService: (k: string) => { },
-  getSetup: (a: string) => { },
+  getSetupProgress: (a: string) => { },
   setActiveAccountSetup: (p: any) => { },
   setActiveAccountSetupSection: (s: number) => { },
   sideMenuOpen: 0,
@@ -244,6 +245,14 @@ export const UIContextWrapper = (props: any) => {
 
   // Setup helper functions
 
+  const PROGRESS_DEFAULT = {
+    controller: null,
+    payee: null,
+    nominations: [],
+    bond: 0,
+    section: 1,
+  };
+
   /* 
    * Generates the default setup objects or the currently
    * connected accounts.
@@ -255,17 +264,12 @@ export const UIContextWrapper = (props: any) => {
 
       // if there is existing config for an account, use that.
       const localSetup = localStorage.getItem(`stake_setup_${item.address}`);
+      // const localSetup = null;
 
       // otherwise use the default values.
       const progress = localSetup !== null
         ? JSON.parse(localSetup)
-        : {
-          controller: null,
-          payee: null,
-          nominations: [],
-          bond: 0,
-          section: 1,
-        };
+        : PROGRESS_DEFAULT;
 
       return {
         address: item.address,
@@ -278,15 +282,15 @@ export const UIContextWrapper = (props: any) => {
   /*
    * Gets the setup progress for a connected account.
    */
-  const getSetup = (address: string) => {
+  const getSetupProgress = (address: string) => {
 
     // find the current setup progress from `setup`.
     const _setup = setup.find((item: any) => item.address === address);
 
     if (_setup === undefined) {
-      return null;
+      return PROGRESS_DEFAULT;
     }
-    return _setup;
+    return _setup.progress;
   }
 
   /*
@@ -359,7 +363,7 @@ export const UIContextWrapper = (props: any) => {
       toggleFilterValidators: toggleFilterValidators,
       isSyncing: isSyncing,
       toggleService: toggleService,
-      getSetup: getSetup,
+      getSetupProgress: getSetupProgress,
       setActiveAccountSetup: setActiveAccountSetup,
       setActiveAccountSetupSection: setActiveAccountSetupSection,
       sideMenuOpen: sideMenuOpen,

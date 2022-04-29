@@ -5,18 +5,21 @@ import { GenerateNominations } from './GenerateNominations';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
+import { useConnect } from '../../contexts/Connect';
+import { useUi } from '../../contexts/UI';
 
 export const ChooseNominators = (props: any) => {
 
-  // functional props
-  const { setup, setSetup, activeSection, setActiveSection, section } = props;
+  const { section } = props;
+  const { activeAccount } = useConnect();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
+
+  const setup = getSetupProgress(activeAccount);
 
   return (
     <>
       <Header
         thisSection={section}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
         complete={setup.nominations.length > 0}
         title='Nominate'
         assistantPage='stake'
@@ -24,17 +27,13 @@ export const ChooseNominators = (props: any) => {
       />
       <MotionContainer
         thisSection={section}
-        activeSection={activeSection}
+        activeSection={setup.section}
       >
         <GenerateNominations
           setup={setup}
-          setSetup={setSetup}
+          setSetup={setActiveAccountSetup}
         />
-        <Footer
-          complete={setup.nominations.length > 0}
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-        />
+        <Footer complete={setup.nominations.length > 0} />
       </MotionContainer>
     </>
   )

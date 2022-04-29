@@ -9,11 +9,16 @@ import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 import { Items, Item } from './Wrappers';
 import { isNumeric } from '../../../Utils';
+import { useUi } from '../../../contexts/UI';
+import { useConnect } from '../../../contexts/Connect';
 
 export const Payee = (props: any) => {
 
-  // functional props
-  const { setup, setSetup, activeSection, setActiveSection, section } = props;
+  const { section } = props;
+
+  const { activeAccount } = useConnect();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const setup = getSetupProgress(activeAccount);
 
   const options = ['stake', 'stash', 'controller'];
   const buttons = [
@@ -32,7 +37,7 @@ export const Payee = (props: any) => {
     },
   ];
 
-  const [payee, setPayee]: any = useState(null);
+  const [payee, setPayee]: any = useState(setup.payee);
 
   const handleChangePayee = (i: number) => {
 
@@ -47,7 +52,7 @@ export const Payee = (props: any) => {
     // set local value to update input element
     setPayee(options[i]);
     // set setup payee
-    setSetup({
+    setActiveAccountSetup({
       ...setup,
       payee: options[i],
     });
@@ -57,8 +62,6 @@ export const Payee = (props: any) => {
     <SectionWrapper transparent>
       <Header
         thisSection={section}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
         complete={setup.payee !== null}
         title='Reward Destination'
         assistantPage='stake'
@@ -66,7 +69,7 @@ export const Payee = (props: any) => {
       />
       <MotionContainer
         thisSection={section}
-        activeSection={activeSection}
+        activeSection={setup.section}
       >
         <Spacer />
         <Items>
@@ -83,11 +86,7 @@ export const Payee = (props: any) => {
             </Item>
           )}
         </Items>
-        <Footer
-          complete={setup.payee !== null}
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-        />
+        <Footer complete={setup.payee !== null} />
       </MotionContainer>
 
     </SectionWrapper>

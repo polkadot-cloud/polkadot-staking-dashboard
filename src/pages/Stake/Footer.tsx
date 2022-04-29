@@ -3,16 +3,22 @@
 
 import { FooterWrapper } from './Wrappers';
 import { Button } from '../../library/Button';
+import { useConnect } from '../../contexts/Connect';
+import { useUi } from '../../contexts/UI';
 
 export const Footer = (props: any) => {
 
-  const { complete, setActiveSection, activeSection } = props;
+  const { activeAccount } = useConnect();
+  const { getSetupProgress, setActiveAccountSetupSection } = useUi();
+  const setup = getSetupProgress(activeAccount);
+
+  const { complete } = props;
 
   return (
     <FooterWrapper>
       <section>
         {complete
-          ? <Button inline primary title="Continue" onClick={() => setActiveSection(activeSection + 1)} />
+          ? <Button inline primary title="Continue" onClick={() => setActiveAccountSetupSection(setup.section + 1)} />
           : <div style={{ opacity: 0.5 }}><Button inline title="Continue" disabled /></div>
         }
       </section>
