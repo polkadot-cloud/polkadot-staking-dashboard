@@ -52,7 +52,7 @@ export const Item = (props: any) => {
                   useLocaleString={true}
                   currency={currency}
                 />
-                &nbsp;{unit}
+                &nbsp;{unit && <>&nbsp;{unit}</>}
               </h2>
               <h4>
                 {label}
@@ -104,7 +104,6 @@ export const Item = (props: any) => {
                 {label}
                 {assist && <OpenAssistantIcon page={page} title={key} />}
               </h4>
-
             </>
           }
         </div>
