@@ -207,7 +207,6 @@ export const BalancesContextWrapper = (props: any) => {
     return bonded;
   }
 
-
   // get an account's nominations
   const getAccountNominations = (address: string) => {
     const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
