@@ -27,6 +27,7 @@ export interface ValidatorsContextState {
   session: any;
   favourites: any;
   nominated: any;
+  favouritesList: any;
 }
 
 // context definition
@@ -44,6 +45,7 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> = React.cr
   session: [],
   favourites: [],
   nominated: [],
+  favouritesList: [],
 });
 
 export const useValidators = () => React.useContext(ValidatorsContext);
@@ -90,8 +92,11 @@ export const ValidatorsContextWrapper = (props: any) => {
   // stores the user's favourite validators
   const [favourites, setFavourites]: any = useState(_favourites);
 
-  // stores the user's nominated validators
+  // stores the user's nominated validators as list
   const [nominated, setNominated]: any = useState(null);
+
+  // stores the user's favourites validators as list
+  const [favouritesList, setFavouritesList]: any = useState(null);
 
   useEffect(() => {
     if (isReady) {
@@ -110,32 +115,49 @@ export const ValidatorsContextWrapper = (props: any) => {
   }, [isReady, metrics.activeEra]);
 
   useEffect(() => {
+    // pre-populating validator meta batches
     if (validators.length > 0) {
-      // pre-populating validator meta batches
       fetchValidatorMetaBatch('validators_browse', validators);
     }
   }, [isReady, validators]);
 
   // fetch active account's nominations in validator list format
   useEffect(() => {
-    fetchNominatedList();
-  }, [activeAccount, getAccountNominations(activeAccount)]);
+    if (isReady) {
+      fetchNominatedList();
+    }
+  }, [isReady, activeAccount, getAccountNominations(activeAccount)]);
 
   const fetchNominatedList = async () => {
-
     // get raw nominations list
     let nominated = getAccountNominations(activeAccount);
-
     // format to list format
     nominated = nominated.map((item: any, index: any) => { return ({ address: item }) });
-
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(nominated);
-
     if (nominationsWithPrefs) {
       setNominated(nominationsWithPrefs);
     } else {
       setNominated([]);
+    }
+  }
+
+  // fetch favourites in validator list format
+  useEffect(() => {
+    if (isReady) {
+      fetchFavouriteList();
+    }
+  }, [isReady, favourites]);
+
+  const fetchFavouriteList = async () => {
+    // format to list format
+    const _favourites = [...favourites].map((item: any, index: any) => { return ({ address: item }) });
+    // // fetch preferences
+    const favouritesWithPrefs = await fetchValidatorPrefs(_favourites);
+    if (favouritesWithPrefs) {
+      setFavouritesList(favouritesWithPrefs);
+    } else {
+      setFavouritesList([]);
     }
   }
 
@@ -324,7 +346,6 @@ export const ValidatorsContextWrapper = (props: any) => {
         addMetaBatchUnsubs(key, unsubs);
       });
 
-
     // intentional throttle to prevent slow render updates.
     await sleep(750);
 
@@ -460,6 +481,7 @@ export const ValidatorsContextWrapper = (props: any) => {
       session: sessionValidators,
       favourites: favourites,
       nominated: nominated,
+      favouritesList: favouritesList,
     }}>
       {props.children}
     </ValidatorsContext.Provider>
