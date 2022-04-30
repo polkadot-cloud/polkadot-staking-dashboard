@@ -11,13 +11,15 @@ import { useValidators } from '../../contexts/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
+import { useNetworkMetrics } from '../../contexts/Network';
 import { Filters } from './Filters';
 import { ITEMS_PER_PAGE } from '../../constants';
 
 export const ValidatorListInner = (props: any) => {
 
   const { isReady }: any = useApi();
-  const { VALIDATORS_PER_BATCH_MUTLI, fetchValidatorMetaBatch, getValidatorMetaBatch } = useValidators();
+  const { metrics }: any = useNetworkMetrics();
+  const { VALIDATORS_PER_BATCH_MUTLI, fetchValidatorMetaBatch, meta } = useValidators();
   const {
     setListFormat,
     listFormat,
@@ -28,6 +30,7 @@ export const ValidatorListInner = (props: any) => {
   }: any = useUi();
 
   const {
+    batchKey,
     allowMoreCols,
     allowFilters,
     toggleFavourites,
@@ -74,27 +77,25 @@ export const ValidatorListInner = (props: any) => {
   // render batch
   let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
 
-  // format component display data
-  const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
-  const identities = meta.identities ?? [];
-  const supers = meta.supers ?? [];
-  const stake = meta.stake ?? [];
+  const identities = meta[batchKey]?.identities ?? [];
+  const supers = meta[batchKey]?.supers ?? [];
+  const stake = meta[batchKey]?.stake ?? [];
 
   // refetch list when validator list changes
   useEffect(() => {
     setFetched(false);
   }, [props.validators]);
 
-  // configure validator list when ready to fetch
+  // configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !fetched) {
+    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
       setValidatorsDefault(props.validators);
       setValidators(props.validators);
       setInitial(true);
       setFetched(true);
-      fetchValidatorMetaBatch(props.batchKey, props.validators, refetchOnListUpdate);
+      fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
     }
-  }, [isReady, fetched]);
+  }, [isReady, fetched, metrics.activeEra.index]);
 
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
@@ -108,7 +109,7 @@ export const ValidatorListInner = (props: any) => {
       if (validatorOrder !== 'default') {
         filteredValidators = applyValidatorOrder(filteredValidators, validatorOrder);
       }
-      filteredValidators = applyValidatorFilters(filteredValidators, props.batchKey);
+      filteredValidators = applyValidatorFilters(filteredValidators, batchKey);
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);

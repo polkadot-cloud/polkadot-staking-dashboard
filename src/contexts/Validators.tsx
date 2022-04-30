@@ -16,7 +16,6 @@ const VALIDATORS_PER_BATCH_MUTLI = 20;
 export interface ValidatorsContextState {
   VALIDATORS_PER_BATCH_MUTLI: number;
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
-  getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
   removeIndexFromBatch: (k: string, i: number) => void;
@@ -34,7 +33,6 @@ export interface ValidatorsContextState {
 export const ValidatorsContext: React.Context<ValidatorsContextState> = React.createContext({
   VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => { },
-  getValidatorMetaBatch: (k: string) => { },
   removeValidatorMetaBatch: (k: string) => { },
   fetchValidatorPrefs: (v: any) => { },
   removeIndexFromBatch: (k: string, i: number) => { },
@@ -119,8 +117,9 @@ export const ValidatorsContextWrapper = (props: any) => {
     })
   }, [isReady, metrics.activeEra]);
 
+
+  // pre-populating validator meta batches. Needed for generating nominations
   useEffect(() => {
-    // pre-populating validator meta batches
     if (validators.length > 0) {
       fetchValidatorMetaBatch('validators_browse', validators);
     }
@@ -365,6 +364,7 @@ export const ValidatorsContextWrapper = (props: any) => {
 
       for (let _v of _validators) {
         let v = _v.toHuman();
+
         let others = v.others ?? [];
 
         // account for yourself being an additional nominator
@@ -425,13 +425,6 @@ export const ValidatorsContextWrapper = (props: any) => {
     }
   }
 
-  const getValidatorMetaBatch = (key: string) => {
-    if (validatorMetaBatchesRef.current[key] === undefined) {
-      return null;
-    }
-    return validatorMetaBatchesRef.current[key];
-  }
-
   const removeIndexFromBatch = (key: string, index: number) => {
 
     let batchesUpdated = Object.assign(validatorMetaBatchesRef.current, {});
@@ -472,7 +465,6 @@ export const ValidatorsContextWrapper = (props: any) => {
     <ValidatorsContext.Provider value={{
       VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
       fetchValidatorMetaBatch: fetchValidatorMetaBatch,
-      getValidatorMetaBatch: getValidatorMetaBatch,
       removeValidatorMetaBatch: removeValidatorMetaBatch,
       fetchValidatorPrefs: fetchValidatorPrefs,
       removeIndexFromBatch: removeIndexFromBatch,

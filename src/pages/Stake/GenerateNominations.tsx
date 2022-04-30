@@ -8,7 +8,6 @@ import { useValidators } from '../../contexts/Validators';
 import { ValidatorList } from '../../library/ValidatorList';
 import { useUi } from '../../contexts/UI';
 import { Button } from '../../library/Button';
-// import { shuffle } from '../../Utils';
 
 export const GenerateNominations = (props: any) => {
 
@@ -16,7 +15,7 @@ export const GenerateNominations = (props: any) => {
   const { setup, setSetup } = props;
 
   const { isReady }: any = useApi();
-  const { getValidatorMetaBatch, removeValidatorMetaBatch, validators, favourites } = useValidators();
+  const { removeValidatorMetaBatch, validators, favourites, meta } = useValidators();
 
   const {
     listFormat,
@@ -67,8 +66,8 @@ export const GenerateNominations = (props: any) => {
     }
 
     // wait for validator meta data to be fetched
-    let batch = getValidatorMetaBatch(rawBatchKey);
-    if (batch === null) {
+    let batch = meta[rawBatchKey];
+    if (batch === undefined) {
       return;
     } else {
       if (batch.stake === undefined) {
@@ -142,7 +141,6 @@ export const GenerateNominations = (props: any) => {
           }
         </>
       }
-
     </Wrapper>
   );
 }
