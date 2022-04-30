@@ -8,7 +8,6 @@ import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
-import { useStaking } from '../../contexts/Staking';
 import { useValidators } from '../../contexts/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getIdentityDisplay } from './Utils';
@@ -65,7 +64,7 @@ export const ValidatorInner = (props: any) => {
                   className='identity'
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <h4>{clipAddress(address)}</h4>
                 </motion.div>
@@ -84,7 +83,7 @@ export const ValidatorInner = (props: any) => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.1, delay: 0.1 }}
+              transition={{ duration: 0.1 }}
             >
               <label className='warning'>
                 <FontAwesomeIcon

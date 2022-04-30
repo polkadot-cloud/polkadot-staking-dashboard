@@ -4,7 +4,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import BN from "bn.js";
 import { useApi } from './Api';
+import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
+import { useBalances } from './Balances';
 import { sleep, removePercentage, rmCommas } from '../Utils';
 
 // validators per batch in multi-batch fetching
@@ -24,6 +26,7 @@ export interface ValidatorsContextState {
   meta: any;
   session: any;
   favourites: any;
+  nominated: any;
 }
 
 // context definition
@@ -40,6 +43,7 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> = React.cr
   meta: {},
   session: [],
   favourites: [],
+  nominated: [],
 });
 
 export const useValidators = () => React.useContext(ValidatorsContext);
@@ -48,7 +52,9 @@ export const useValidators = () => React.useContext(ValidatorsContext);
 export const ValidatorsContextWrapper = (props: any) => {
 
   const { isReady, api }: any = useApi();
+  const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
+  const { getAccountNominations }: any = useBalances();
 
   // stores the total validator entries
   const [validators, setValidators]: any = useState([]);
@@ -84,6 +90,9 @@ export const ValidatorsContextWrapper = (props: any) => {
   // stores the user's favourite validators
   const [favourites, setFavourites]: any = useState(_favourites);
 
+  // stores the user's nominated validators
+  const [nominated, setNominated]: any = useState(null);
+
   useEffect(() => {
     if (isReady) {
       fetchValidators();
@@ -106,6 +115,29 @@ export const ValidatorsContextWrapper = (props: any) => {
       fetchValidatorMetaBatch('validators_browse', validators);
     }
   }, [isReady, validators]);
+
+  // fetch active account's nominations in validator list format
+  useEffect(() => {
+    fetchNominatedList();
+  }, [activeAccount, getAccountNominations(activeAccount)]);
+
+  const fetchNominatedList = async () => {
+
+    // get raw nominations list
+    let nominated = getAccountNominations(activeAccount);
+
+    // format to list format
+    nominated = nominated.map((item: any, index: any) => { return ({ address: item }) });
+
+    // fetch preferences
+    const nominationsWithPrefs = await fetchValidatorPrefs(nominated);
+
+    if (nominationsWithPrefs) {
+      setNominated(nominationsWithPrefs);
+    } else {
+      setNominated([]);
+    }
+  }
 
   /* 
    * Fetches the active validator set.
@@ -427,6 +459,7 @@ export const ValidatorsContextWrapper = (props: any) => {
       meta: validatorMetaBatchesRef.current.meta,
       session: sessionValidators,
       favourites: favourites,
+      nominated: nominated,
     }}>
       {props.children}
     </ValidatorsContext.Provider>
