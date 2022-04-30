@@ -295,7 +295,7 @@ export const ValidatorsContextWrapper = (props: any) => {
     let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
-    setValidatorMetaBatch(batchesUpdated);
+    setValidatorMetaBatch({ ...batchesUpdated });
 
     const subscribeToIdentities = async (addresses: any) => {
 
@@ -306,7 +306,7 @@ export const ValidatorsContextWrapper = (props: any) => {
         }
         let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
         batchesUpdated[key].identities = identities;
-        setValidatorMetaBatch(batchesUpdated);
+        setValidatorMetaBatch({ ...batchesUpdated });
       });
       return unsub;
     }
@@ -340,7 +340,7 @@ export const ValidatorsContextWrapper = (props: any) => {
 
         let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
         batchesUpdated[key].supers = supers;
-        setValidatorMetaBatch(batchesUpdated);
+        setValidatorMetaBatch({ ...batchesUpdated });
       });
       return unsub;
     }
@@ -392,7 +392,7 @@ export const ValidatorsContextWrapper = (props: any) => {
       // commit update
       let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
       batchesUpdated[key].stake = stake;
-      setValidatorMetaBatch(batchesUpdated);
+      setValidatorMetaBatch({ ...batchesUpdated });
     });
 
     addMetaBatchUnsubs(key, [unsub3]);
@@ -443,7 +443,7 @@ export const ValidatorsContextWrapper = (props: any) => {
     if (batchesUpdated[key].stake !== undefined) {
       batchesUpdated[key].stake.splice(index, 1);
     }
-    setValidatorMetaBatch(batchesUpdated);
+    setValidatorMetaBatch({ ...batchesUpdated });
   }
 
   /*
