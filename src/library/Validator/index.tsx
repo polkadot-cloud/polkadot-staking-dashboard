@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
 import { useStaking } from '../../contexts/Staking';
+import { useValidators } from '../../contexts/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getIdentityDisplay } from './Utils';
 import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +18,7 @@ export const ValidatorInner = (props: any) => {
 
   const { consts, network }: any = useApi();
   const { openModalWith } = useModal();
-  const { addFavourite, removeFavourite, favourites } = useStaking();
+  const { favourites, addFavourite, removeFavourite } = useValidators();
   const { initial, validator, synced, identity, superIdentity, stake, toggleFavourites } = props;
 
   let { address, prefs } = validator;

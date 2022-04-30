@@ -1,64 +1,34 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef, } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
-import BN from "bn.js";
-import { sleep, removePercentage, rmCommas } from '../Utils';
 import { useBalances } from './Balances';
 import { useConnect } from './Connect';
-
-// validators per batch in multi-batch fetching
-const VALIDATORS_PER_BATCH_MUTLI = 20;
-const THROTTLE_VALIDATOR_RENDER = 250;
+import BN from "bn.js";
+import { rmCommas } from '../Utils';
 
 // context type
 export interface StakingContextState {
-  VALIDATORS_PER_BATCH_MUTLI: number;
-  THROTTLE_VALIDATOR_RENDER: number;
-  fetchValidatorMetaBatch: (k: string, v: []) => void;
-  getValidatorMetaBatch: (k: string) => any;
-  removeValidatorMetaBatch: (k: string) => void;
-  fetchValidatorPrefs: (v: any) => any;
-  removeIndexFromBatch: (k: string, i: number) => void;
   getNominationsStatus: () => any;
-  addFavourite: (a: string) => any;
-  removeFavourite: (a: string) => any;
   hasController: () => any;
   isBonding: () => any;
   isNominating: () => any;
   inSetup: () => any;
   staking: any;
-  validators: any;
   eraStakers: any;
-  favourites: any;
-  meta: any;
-  session: any;
 }
 
 // context definition
 export const StakingContext: React.Context<StakingContextState> = React.createContext({
-  VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
-  THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
-  fetchValidatorMetaBatch: (k: string, v: []) => { },
-  getValidatorMetaBatch: (k: string) => { },
-  removeValidatorMetaBatch: (k: string) => { },
-  fetchValidatorPrefs: (v: any) => { },
-  removeIndexFromBatch: (k: string, i: number) => { },
   getNominationsStatus: () => { },
-  addFavourite: (a: string) => { },
-  removeFavourite: (a: string) => { },
   hasController: () => false,
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => false,
   staking: {},
-  validators: [],
   eraStakers: {},
-  favourites: [],
-  meta: {},
-  session: {},
 });
 
 // useStaking
@@ -86,26 +56,6 @@ export const StakingContextWrapper = (props: any) => {
     unsub: null,
   });
 
-  let _favourites: any = localStorage.getItem('favourites');
-  _favourites = _favourites === null
-    ? []
-    : JSON.parse(_favourites);
-
-  //track whether the validator list has been fetched yet
-  const [fetchedValidators, setFetchedValidators] = useState(false);
-
-  const [validators, setValidators]: any = useState([]);
-  const [favourites, setFavourites]: any = useState(_favourites);
-  const [sessionValidators, setSessionValidators] = useState({
-    list: [],
-    unsub: null,
-  });
-
-  const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({
-    meta: {},
-    unsubs: {},
-  });
-
   const [eraStakers, setEraStakers]: any = useState({
     stakers: [],
     activeNominators: 0,
@@ -113,13 +63,6 @@ export const StakingContextWrapper = (props: any) => {
     minActiveBond: 0,
     minStakingActiveBond: 0,
   });
-
-  const validatorMetaBatchesRef = useRef(validatorMetaBatches);
-
-  const setValidatorMetaBatch = (val: any) => {
-    validatorMetaBatchesRef.current = val;
-    _setValidatorMetaBatch(val);
-  }
 
   const subscribeToStakingkMetrics = async (api: any) => {
     if (isReady && metrics.activeEra.index !== 0) {
@@ -179,36 +122,6 @@ export const StakingContextWrapper = (props: any) => {
         unsub: unsub,
       });
     }
-  }
-
-  /* 
-   * Fetches the active validator set.
-   * Validator meta batches are derived from this initial list.
-   */
-  const fetchValidators = async () => {
-    if (!isReady) { return }
-    if (fetchedValidators) { return }
-
-    // fetch validator set
-    let validators: any = [];
-    const exposures = await api.query.staking.validators.entries();
-    exposures.forEach(([_args, _prefs]: any) => {
-      let address = _args.args[0].toHuman();
-      let prefs = _prefs.toHuman();
-
-      let _commission = removePercentage(prefs.commission);
-
-      validators.push({
-        address: address,
-        prefs: {
-          commission: parseFloat(_commission.toFixed(2)),
-          blocked: prefs.blocked
-        }
-      });
-    });
-
-    setFetchedValidators(true);
-    setValidators(validators);
   }
 
   /* 
@@ -301,216 +214,11 @@ export const StakingContextWrapper = (props: any) => {
     return statuses;
   }
 
-  /*
-   * subscribe to active session
-  */
-  const subscribeSessionValidators = async (api: any) => {
-
-    if (isReady) {
-      const unsub = await api.query.session.validators((_validators: any) => {
-        setSessionValidators({
-          ...sessionValidators,
-          list: _validators.toHuman()
-        });
-      });
-      setSessionValidators({
-        ...sessionValidators,
-        unsub: unsub
-      });
-    }
-  }
-
-  /*
-    Fetches a new batch of subscribed validator metadata. Stores the returning
-    metadata alongside the unsubscribe function in state.
-    structure:
-    {
-      key: {
-        [
-          {
-          addresses [],
-          identities: [],
-        }
-      ]
-    },
-  };
-  */
-  const fetchValidatorMetaBatch = async (key: string, validators: any, refetch: boolean = false) => {
-    if (!isReady) { return }
-
-    if (!validators.length) { return; }
-
-    if (!refetch) {
-      // if already exists, do not re-fetch
-      if (validatorMetaBatchesRef.current.meta[key] !== undefined) {
-        return;
-      }
-    } else {
-      // tidy up if existing batch exists
-      delete validatorMetaBatches[key];
-      delete validatorMetaBatchesRef.current[key];
-
-      if (validatorMetaBatchesRef.current.unsubs[key] !== undefined) {
-        for (let unsub of validatorMetaBatchesRef.current.unsubs[key]) {
-          unsub();
-        }
-      }
-    }
-
-    let addresses = [];
-    for (let v of validators) {
-      addresses.push(v.address);
-    }
-
-    // store batch addresses
-    let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-    batchesUpdated.meta[key] = {};
-    batchesUpdated.meta[key].addresses = addresses;
-    setValidatorMetaBatch({ ...batchesUpdated });
-
-    const subscribeToIdentities = async (addresses: any) => {
-
-      const unsub = await api.query.identity.identityOf.multi(addresses, (_identities: any) => {
-        let identities = [];
-        for (let i = 0; i < _identities.length; i++) {
-          identities.push(_identities[i].toHuman());
-        }
-        let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated.meta[key].identities = identities;
-        setValidatorMetaBatch({ ...batchesUpdated });
-      });
-      return unsub;
-    }
-
-    const subscribeToSuperIdentities = async (addresses: any) => {
-      const unsub = await api.query.identity.superOf.multi(addresses, async (_supers: any) => {
-
-        // determine where supers exist
-        let supers: any = [];
-        let supersWithIdentity: any = [];
-
-        for (let i = 0; i < _supers.length; i++) {
-          let _super = _supers[i].toHuman();
-          supers.push(_super);
-          if (_super !== null) {
-            supersWithIdentity.push(i);
-          }
-        }
-
-        // get supers one-off multi query
-        let query = supers.filter((s: any) => s !== null).map((s: any) => s[0]);
-
-        let temp = await api.query.identity.identityOf.multi(query, (_identities: any) => {
-          for (let j = 0; j < _identities.length; j++) {
-            let _identity = _identities[j].toHuman();
-            // inject identity into super array
-            supers[supersWithIdentity[j]].identity = _identity;
-          }
-        });
-        temp();
-
-        let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated.meta[key].supers = supers;
-        setValidatorMetaBatch({ ...batchesUpdated });
-      });
-      return unsub;
-    }
-
-    await Promise.all(
-      [subscribeToIdentities(addresses),
-      subscribeToSuperIdentities(addresses)]).then((unsubs: any) => {
-        addMetaBatchUnsubs(key, unsubs);
-      });
-
-
-    // intentional throttle to prevent slow render updates.
-    await sleep(750);
-
-    // subscribe to validator nominators
-    let args: any = [];
-    for (let i = 0; i < validators.length; i++) {
-      args.push([metrics.activeEra.index, validators[i].address]);
-    }
-
-    const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
-      let stake = [];
-
-      for (let _v of _validators) {
-        let v = _v.toHuman();
-        let others = v.others ?? [];
-
-        // account for yourself being an additional nominator
-        let total_nominations = others.length + 1;
-
-        // get lowest stake for the validator
-        others = others.sort((a: any, b: any) => {
-          let x = new BN(rmCommas(a.value));
-          let y = new BN(rmCommas(b.value));
-          return x.sub(y);
-        });
-
-        let lowest = others.length > 0
-          ? new BN(rmCommas(others[0].value)).div(new BN(10 ** 10)).toNumber()
-          : 0;
-
-        stake.push({
-          total: v.total,
-          own: v.own,
-          total_nominations: total_nominations,
-          lowest: lowest,
-        });
-      }
-
-      // commit update
-      let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-      batchesUpdated.meta[key].stake = stake;
-      setValidatorMetaBatch({ ...batchesUpdated });
-    });
-
-    addMetaBatchUnsubs(key, [unsub3]);
-  }
-
-  /*
-   * fetches prefs for a list of validators
-   */
-  const fetchValidatorPrefs = async (_validators: any) => {
-
-    if (!_validators.length) {
-      return false;
-    }
-
-    let validators: any = [];
-    for (let v of _validators) {
-      validators.push(v.address);
-    }
-
-    const prefsAll = await api.query.staking.validators.multi(validators);
-
-    let validatorsWithPrefs = [];
-    let i = 0;
-    for (let _prefs of prefsAll) {
-      let prefs = _prefs.toHuman();
-      let commission = removePercentage(prefs.commission);
-
-      validatorsWithPrefs.push({
-        address: validators[i],
-        prefs: {
-          commission: commission,
-          blocked: prefs.blocked,
-        }
-      });
-      i++;
-    }
-    return validatorsWithPrefs;
-  }
-
   useEffect(() => {
 
     if (isReady) {
-      fetchValidators();
       fetchEraStakers();
       subscribeToStakingkMetrics(api);
-      subscribeSessionValidators(api);
     }
 
     return (() => {
@@ -518,21 +226,8 @@ export const StakingContextWrapper = (props: any) => {
       if (stakingMetrics.unsub !== null) {
         stakingMetrics.unsub();
       }
-      // unsubscribe from any validator meta batches
-      Object.values(validatorMetaBatchesRef.current.unsubs).map((batch: any, index: number) => {
-        return Object.entries(batch).map(([k, v]: any) => {
-          return v();
-        });
-      });
     })
   }, [isReady, metrics.activeEra]);
-
-  useEffect(() => {
-    if (validators.length > 0) {
-      // pre-populating validator meta batches
-      fetchValidatorMetaBatch('validators_browse', validators);
-    }
-  }, [isReady, validators]);
 
 
   // calculates minimum bond of the user's chosen nominated validators.
@@ -572,66 +267,8 @@ export const StakingContextWrapper = (props: any) => {
       minStakingActiveBond: stakingMinActiveBond
     });
 
-  }, [isReady, validators, accounts, activeAccount, eraStakers?.stakers]);
+  }, [isReady, accounts, activeAccount, eraStakers?.stakers]);
 
-
-  const removeValidatorMetaBatch = (key: string) => {
-
-    if (validatorMetaBatchesRef.current.meta[key] !== undefined) {
-      // ubsubscribe from updates
-      for (let unsub of validatorMetaBatchesRef.current.unsubs[key]) {
-        unsub();
-      }
-      // wipe data
-      delete validatorMetaBatches.meta[key];
-      delete validatorMetaBatchesRef.current[key];
-    }
-  }
-
-  const getValidatorMetaBatch = (key: string) => {
-    if (validatorMetaBatchesRef.current.meta[key] === undefined) {
-      return null;
-    }
-    return validatorMetaBatchesRef.current.meta[key];
-  }
-
-  const removeIndexFromBatch = (key: string, index: number) => {
-
-    let batchesUpdated = Object.assign(validatorMetaBatchesRef.current, {});
-    batchesUpdated.meta[key].addresses.splice(index, 1);
-
-    if (batchesUpdated.meta[key].stake !== undefined) {
-      batchesUpdated.meta[key].identities.splice(index, 1);
-    }
-
-    if (batchesUpdated.meta[key].stake !== undefined) {
-      batchesUpdated.meta[key].stake.splice(index, 1);
-    }
-
-    setValidatorMetaBatch({ ...batchesUpdated });
-  }
-
-  /*
-   * Adds a favourite validator.
-   */
-  const addFavourite = (address: string) => {
-    let _favourites: any = Object.assign(favourites);
-    if (!_favourites.includes(address)) {
-      _favourites.push(address);
-    }
-    localStorage.setItem('favourites', JSON.stringify(_favourites));
-    setFavourites([..._favourites]);
-  }
-
-  /*
-   * Removes a favourite validator if they exist.
-   */
-  const removeFavourite = (address: string) => {
-    let _favourites = Object.assign(favourites);
-    _favourites = _favourites.filter((validator: any) => validator !== address);
-    localStorage.setItem('favourites', JSON.stringify(_favourites));
-    setFavourites([..._favourites]);
-  }
 
   /*
    * Helper function to determine whether the active account
@@ -670,46 +307,16 @@ export const StakingContextWrapper = (props: any) => {
     return (!hasController || !isBonding() || !isNominating());
   }
 
-  /*
-   * Helper function to add mataBatch unsubs by key.
-   */
-  const addMetaBatchUnsubs = (key: string, unsubs: any) => {
-
-    let _unsubs = validatorMetaBatchesRef.current.unsubs;
-    let _keyUnsubs = _unsubs[key] ?? [];
-
-    _keyUnsubs.push(...unsubs)
-    _unsubs[key] = _keyUnsubs;
-
-    setValidatorMetaBatch({
-      ...validatorMetaBatchesRef.current,
-      unsubs: _unsubs,
-    });
-  }
-
   return (
     <StakingContext.Provider
       value={{
-        VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
-        THROTTLE_VALIDATOR_RENDER: THROTTLE_VALIDATOR_RENDER,
-        fetchValidatorMetaBatch: fetchValidatorMetaBatch,
-        getValidatorMetaBatch: getValidatorMetaBatch,
-        removeValidatorMetaBatch: removeValidatorMetaBatch,
-        fetchValidatorPrefs: fetchValidatorPrefs,
-        removeIndexFromBatch: removeIndexFromBatch,
         getNominationsStatus: getNominationsStatus,
-        addFavourite: addFavourite,
-        removeFavourite: removeFavourite,
         hasController: hasController,
         isBonding: isBonding,
         isNominating: isNominating,
         inSetup: inSetup,
         staking: stakingMetrics,
-        validators: validators,
         eraStakers: eraStakers,
-        favourites: favourites,
-        meta: validatorMetaBatchesRef.current.meta,
-        session: sessionValidators,
       }}>
       {props.children}
     </StakingContext.Provider>

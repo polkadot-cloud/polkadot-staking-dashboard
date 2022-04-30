@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
+import { useValidators } from './Validators';
 import { useBalances } from './Balances';
 import { useApi } from './Api';
 import { SERVICES } from '../constants';
@@ -52,7 +53,8 @@ export const useUi = () => React.useContext(UIContext);
 export const UIContextWrapper = (props: any) => {
 
   const { accounts: connectAccounts, activeAccount } = useConnect();
-  const { meta, session, staking, eraStakers }: any = useStaking();
+  const {staking, eraStakers }: any = useStaking();
+  const { meta, session } = useValidators();
   const { isReady, consts }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();

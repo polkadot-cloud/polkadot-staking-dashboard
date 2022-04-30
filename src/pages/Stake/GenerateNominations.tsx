@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 import { useApi } from '../../contexts/Api';
-import { useStaking } from '../../contexts/Staking';
+import { useValidators } from '../../contexts/Validators';
 import { ValidatorList } from '../../library/ValidatorList';
 import { useUi } from '../../contexts/UI';
 import { Button } from '../../library/Button';
@@ -16,7 +16,7 @@ export const GenerateNominations = (props: any) => {
   const { setup, setSetup } = props;
 
   const { isReady }: any = useApi();
-  const { getValidatorMetaBatch, validators, favourites, removeValidatorMetaBatch }: any = useStaking();
+  const { getValidatorMetaBatch, removeValidatorMetaBatch, validators, favourites } = useValidators();
 
   const {
     listFormat,

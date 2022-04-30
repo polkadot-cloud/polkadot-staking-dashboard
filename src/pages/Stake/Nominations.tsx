@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
-import { useStaking } from '../../contexts/Staking';
+import { useValidators } from '../../contexts/Validators';
 import { useBalances } from '../../contexts/Balances';
 import { ValidatorList } from '../../library/ValidatorList';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
@@ -13,7 +13,7 @@ import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 export const Nominations = () => {
 
   const { isReady }: any = useApi();
-  const { fetchValidatorPrefs }: any = useStaking();
+  const { fetchValidatorPrefs }: any = useValidators();
   const { accounts, getAccountNominations }: any = useBalances();
   const { activeAccount } = useConnect();
 

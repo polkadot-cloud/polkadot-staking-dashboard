@@ -15,6 +15,7 @@ import { Spinner } from './Spinner';
 import { pageFromUri } from '../../Utils';
 import { useLocation } from 'react-router-dom';
 import { useStaking } from '../../contexts/Staking';
+import { useValidators } from '../../contexts/Validators';
 
 export const Headers = () => {
 
@@ -22,7 +23,8 @@ export const Headers = () => {
   const assistant = useAssistant();
   const connect = useConnect();
   const { openModalWith } = useModal();
-  const { validators, isNominating } = useStaking();
+  const { isNominating } = useStaking();
+  const { validators } = useValidators();
   const { pending } = useExtrinsics();
   const { setSideMenu, sideMenuOpen, isSyncing }: any = useUi();
 

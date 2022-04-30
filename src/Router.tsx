@@ -9,6 +9,7 @@ import { PAGES_CONFIG } from './pages';
 import { StakingContextWrapper } from './contexts/Staking';
 import { MessagesContextWrapper } from './contexts/Messages';
 import { SubscanContextWrapper } from './contexts/Subscan';
+import { ValidatorsContextWrapper } from './contexts/Validators';
 import { NotificationsContextWrapper } from './contexts/Notifications';
 import { ExtrinsicsContextWrapper } from './contexts/Extrinsics';
 import { UIContextWrapper } from './contexts/UI';
@@ -149,26 +150,23 @@ export const RouterInner = () => {
 }
 
 // We wrap UI Context around `RouterInner` to give it access to the context.
-export const RouterWithUIContext = () => {
+export const RouterWithValidatorsContext = () =>
+  <ValidatorsContextWrapper>
+    <RouterWithUIContext />
+  </ValidatorsContextWrapper>
 
-  return (
-    <UIContextWrapper>
-      <RouterInner />
-    </UIContextWrapper>
-  );
-}
+// We wrap UI Context around `RouterInner` to give it access to the context.
+export const RouterWithUIContext = () =>
+  <UIContextWrapper>
+    <RouterInner />
+  </UIContextWrapper>
 
 // We wrap the main router component to make staking metrics available.
-// to child contexts.
-export const Router = () => {
-
-  return (
-    <StakingContextWrapper>
-      <BrowserRouter>
-        <RouterWithUIContext />
-      </BrowserRouter>
-    </StakingContextWrapper>
-  );
-}
+export const Router = () =>
+  <StakingContextWrapper>
+    <BrowserRouter>
+      <RouterWithValidatorsContext />
+    </BrowserRouter>
+  </StakingContextWrapper>
 
 export default Router;

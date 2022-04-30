@@ -5,6 +5,7 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useStaking } from '../../contexts/Staking';
+import { useValidators } from '../../contexts/Validators';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
@@ -19,7 +20,8 @@ export const Browse = (props: PageProps) => {
 
   const { isReady }: any = useApi();
   const { metrics } = useNetworkMetrics();
-  const { validators, staking, eraStakers }: any = useStaking();
+  const { staking, eraStakers }: any = useStaking();
+  const { validators } = useValidators();
 
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
   const { activeValidators } = eraStakers;

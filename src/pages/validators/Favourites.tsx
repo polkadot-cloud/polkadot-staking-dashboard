@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { PageProps } from '../types';
 import { useApi } from '../../contexts/Api';
-import { useStaking } from '../../contexts/Staking';
+import { useValidators } from '../../contexts/Validators';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
@@ -19,7 +19,7 @@ export const Favourites = (props: PageProps) => {
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { accounts }: any = useBalances();
-  const { favourites, fetchValidatorPrefs, fetchValidatorMetaBatch }: any = useStaking();
+  const { fetchValidatorMetaBatch, fetchValidatorPrefs, favourites } = useValidators();
 
   // TODO: can move this to context to prevent re-fetching on page visit
   const [nominations, setNominations]: any = useState([]);

@@ -6,7 +6,8 @@ import { List, Header, Wrapper as ListWrapper, Pagination } from '../../library/
 import { motion } from 'framer-motion';
 import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
-import { StakingContext, useStaking } from '../../contexts/Staking';
+import { StakingContext } from '../../contexts/Staking';
+import { useValidators } from '../../contexts/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
@@ -27,11 +28,7 @@ export const ValidatorListInner = (props: any) => {
 
   const { isReady }: any = useApi();
 
-  const {
-    fetchValidatorMetaBatch,
-    getValidatorMetaBatch,
-    VALIDATORS_PER_BATCH_MUTLI,
-  }: any = useStaking();
+  const { VALIDATORS_PER_BATCH_MUTLI, fetchValidatorMetaBatch, getValidatorMetaBatch } = useValidators();
 
   const { allowMoreCols, allowFilters, toggleFavourites, pagination }: any = props;
 
