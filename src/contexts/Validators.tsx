@@ -71,16 +71,21 @@ export const ValidatorsContextWrapper = (props: any) => {
   });
 
   // stores the meta data batches for validator lists
-  const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({
-    meta: {},
-    unsubs: {},
-  });
+  const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({});
 
-  // uses ref for subscriptions to have access to real meta batches
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
   const setValidatorMetaBatch = (val: any) => {
     validatorMetaBatchesRef.current = val;
     _setValidatorMetaBatch(val);
+  }
+
+  // stores the meta batch subscriptions for validator lists
+  const [validatorSubs, _setValidatorSubs]: any = useState({});
+
+  const validatorSubsRef = useRef(validatorSubs);
+  const setValidatorSubs = (val: any) => {
+    validatorSubsRef.current = val;
+    _setValidatorSubs(val);
   }
 
   // collect favourites from local storage if they exist
@@ -106,7 +111,7 @@ export const ValidatorsContextWrapper = (props: any) => {
 
     return (() => {
       // unsubscribe from any validator meta batches
-      Object.values(validatorMetaBatchesRef.current.unsubs).map((batch: any, index: number) => {
+      Object.values(validatorSubsRef.current).map((batch: any, index: number) => {
         return Object.entries(batch).map(([k, v]: any) => {
           return v();
         });
@@ -266,7 +271,7 @@ export const ValidatorsContextWrapper = (props: any) => {
 
     if (!refetch) {
       // if already exists, do not re-fetch
-      if (validatorMetaBatchesRef.current.meta[key] !== undefined) {
+      if (validatorMetaBatchesRef.current[key] !== undefined) {
         return;
       }
     } else {
@@ -274,8 +279,8 @@ export const ValidatorsContextWrapper = (props: any) => {
       delete validatorMetaBatches[key];
       delete validatorMetaBatchesRef.current[key];
 
-      if (validatorMetaBatchesRef.current.unsubs[key] !== undefined) {
-        for (let unsub of validatorMetaBatchesRef.current.unsubs[key]) {
+      if (validatorSubsRef.current[key] !== undefined) {
+        for (let unsub of validatorSubsRef.current[key]) {
           unsub();
         }
       }
@@ -288,9 +293,9 @@ export const ValidatorsContextWrapper = (props: any) => {
 
     // store batch addresses
     let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-    batchesUpdated.meta[key] = {};
-    batchesUpdated.meta[key].addresses = addresses;
-    setValidatorMetaBatch({ ...batchesUpdated });
+    batchesUpdated[key] = {};
+    batchesUpdated[key].addresses = addresses;
+    setValidatorMetaBatch(batchesUpdated);
 
     const subscribeToIdentities = async (addresses: any) => {
 
@@ -300,8 +305,8 @@ export const ValidatorsContextWrapper = (props: any) => {
           identities.push(_identities[i].toHuman());
         }
         let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated.meta[key].identities = identities;
-        setValidatorMetaBatch({ ...batchesUpdated });
+        batchesUpdated[key].identities = identities;
+        setValidatorMetaBatch(batchesUpdated);
       });
       return unsub;
     }
@@ -334,8 +339,8 @@ export const ValidatorsContextWrapper = (props: any) => {
         temp();
 
         let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated.meta[key].supers = supers;
-        setValidatorMetaBatch({ ...batchesUpdated });
+        batchesUpdated[key].supers = supers;
+        setValidatorMetaBatch(batchesUpdated);
       });
       return unsub;
     }
@@ -386,8 +391,8 @@ export const ValidatorsContextWrapper = (props: any) => {
 
       // commit update
       let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-      batchesUpdated.meta[key].stake = stake;
-      setValidatorMetaBatch({ ...batchesUpdated });
+      batchesUpdated[key].stake = stake;
+      setValidatorMetaBatch(batchesUpdated);
     });
 
     addMetaBatchUnsubs(key, [unsub3]);
@@ -398,50 +403,47 @@ export const ValidatorsContextWrapper = (props: any) => {
    */
   const addMetaBatchUnsubs = (key: string, unsubs: any) => {
 
-    let _unsubs = validatorMetaBatchesRef.current.unsubs;
+    let _unsubs = validatorSubsRef.current;
     let _keyUnsubs = _unsubs[key] ?? [];
 
     _keyUnsubs.push(...unsubs)
     _unsubs[key] = _keyUnsubs;
 
-    setValidatorMetaBatch({
-      ...validatorMetaBatchesRef.current,
-      unsubs: _unsubs,
-    });
+    setValidatorSubs(_unsubs);
   }
 
   const removeValidatorMetaBatch = (key: string) => {
 
-    if (validatorMetaBatchesRef.current.meta[key] !== undefined) {
+    if (validatorMetaBatchesRef.current[key] !== undefined) {
       // ubsubscribe from updates
-      for (let unsub of validatorMetaBatchesRef.current.unsubs[key]) {
+      for (let unsub of validatorSubsRef.current[key]) {
         unsub();
       }
       // wipe data
-      delete validatorMetaBatches.meta[key];
+      delete validatorMetaBatches[key];
       delete validatorMetaBatchesRef.current[key];
     }
   }
 
   const getValidatorMetaBatch = (key: string) => {
-    if (validatorMetaBatchesRef.current.meta[key] === undefined) {
+    if (validatorMetaBatchesRef.current[key] === undefined) {
       return null;
     }
-    return validatorMetaBatchesRef.current.meta[key];
+    return validatorMetaBatchesRef.current[key];
   }
 
   const removeIndexFromBatch = (key: string, index: number) => {
 
     let batchesUpdated = Object.assign(validatorMetaBatchesRef.current, {});
-    batchesUpdated.meta[key].addresses.splice(index, 1);
+    batchesUpdated[key].addresses.splice(index, 1);
 
-    if (batchesUpdated.meta[key].stake !== undefined) {
-      batchesUpdated.meta[key].identities.splice(index, 1);
+    if (batchesUpdated[key].stake !== undefined) {
+      batchesUpdated[key].identities.splice(index, 1);
     }
-    if (batchesUpdated.meta[key].stake !== undefined) {
-      batchesUpdated.meta[key].stake.splice(index, 1);
+    if (batchesUpdated[key].stake !== undefined) {
+      batchesUpdated[key].stake.splice(index, 1);
     }
-    setValidatorMetaBatch({ ...batchesUpdated });
+    setValidatorMetaBatch(batchesUpdated);
   }
 
   /*
@@ -477,7 +479,7 @@ export const ValidatorsContextWrapper = (props: any) => {
       addFavourite: addFavourite,
       removeFavourite: removeFavourite,
       validators: validators,
-      meta: validatorMetaBatchesRef.current.meta,
+      meta: validatorMetaBatchesRef.current,
       session: sessionValidators,
       favourites: favourites,
       nominated: nominated,
