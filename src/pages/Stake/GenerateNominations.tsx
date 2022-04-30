@@ -13,9 +13,8 @@ export const GenerateNominations = (props: any) => {
 
   // functional props
   const { setup, setSetup } = props;
-
   const { isReady }: any = useApi();
-  const { removeValidatorMetaBatch, validators, favourites, meta } = useValidators();
+  const { removeValidatorMetaBatch, validators, favouritesList, meta } = useValidators();
 
   const {
     listFormat,
@@ -32,14 +31,9 @@ export const GenerateNominations = (props: any) => {
 
   const fetchFavourites = () => {
     let _favs = [];
-    for (let i = 0; i < favourites.length; i++) {
-      _favs.push({
-        address: favourites[i],
-      });
-    }
-    // choose subset of validators
-    if (_favs.length) {
-      _favs = _favs.slice(0, 16);
+    if (favouritesList.length) {
+      // take subset of up to 16 favourites
+      _favs = favouritesList.slice(0, 16);
     }
     return _favs;
   }
@@ -109,7 +103,7 @@ export const GenerateNominations = (props: any) => {
             setFetching(true);
           }}
           />
-          {!favourites.length ? <></> :
+          {favouritesList === null ? <></> :
             <Button title="Get Favourites" onClick={() => {
               setMethod('Favourites');
               removeValidatorMetaBatch(batchKey);
