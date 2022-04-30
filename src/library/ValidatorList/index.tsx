@@ -43,12 +43,16 @@ export const ValidatorListInner = (props: any) => {
 
   const [page, setPage]: any = useState(1);
   const [renderIteration, _setRenderIteration]: any = useState(1);
+
   // default list of validators
   const [validatorsDefault, setValidatorsDefault] = useState(props.validators);
+
   // manipulated list (ordering, filtering) of validators
-  const [validators, setValidators]: any = useState(props.validators ?? []);
+  const [validators, setValidators]: any = useState(props.validators);
+
   // is this the initial render
   const [initial, setInitial] = useState(true);
+
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
 
@@ -135,14 +139,14 @@ export const ValidatorListInner = (props: any) => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.025,
+        staggerChildren: 0.01,
       }
     }
   };
 
   const listItem = {
     hidden: {
-      y: 25,
+      y: 15,
       opacity: 0
     },
     show: {
@@ -222,7 +226,6 @@ export const ValidatorListInner = (props: any) => {
     </ListWrapper>
   );
 }
-
 
 export class ValidatorList extends React.Component<any, any> {
 
