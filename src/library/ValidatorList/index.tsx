@@ -12,11 +12,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
 import { Filters } from './Filters';
-
-const ITEMS_PER_PAGE = 50;
+import { ITEMS_PER_PAGE } from '../../constants';
 
 export const ValidatorListInner = (props: any) => {
 
+  const { isReady }: any = useApi();
+  const { VALIDATORS_PER_BATCH_MUTLI, fetchValidatorMetaBatch, getValidatorMetaBatch } = useValidators();
   const {
     setListFormat,
     listFormat,
@@ -26,19 +27,22 @@ export const ValidatorListInner = (props: any) => {
     applyValidatorOrder
   }: any = useUi();
 
-  const { isReady }: any = useApi();
-
-  const { VALIDATORS_PER_BATCH_MUTLI, fetchValidatorMetaBatch, getValidatorMetaBatch } = useValidators();
-
-  const { allowMoreCols, allowFilters, toggleFavourites, pagination }: any = props;
+  const {
+    allowMoreCols,
+    allowFilters,
+    toggleFavourites,
+    pagination
+  }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
-
   let refetchOnListUpdate = props.refetchOnListUpdate !== undefined
     ? props.refetchOnListUpdate
     : false;
 
+  // current page
   const [page, setPage]: any = useState(1);
+
+  // current render iteration
   const [renderIteration, _setRenderIteration]: any = useState(1);
 
   // default list of validators
@@ -53,11 +57,6 @@ export const ValidatorListInner = (props: any) => {
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
 
-  // pagination
-  let totalPages = Math.ceil(validators.length / ITEMS_PER_PAGE);
-  let nextPage = page + 1 > totalPages ? totalPages : page + 1;
-  let prevPage = page - 1 < 1 ? 1 : page - 1;
-
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
   const setRenderIteration = (iter: number) => {
@@ -65,9 +64,15 @@ export const ValidatorListInner = (props: any) => {
     _setRenderIteration(iter);
   }
 
-  let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
+  // pagination
+  let totalPages = Math.ceil(validators.length / ITEMS_PER_PAGE);
+  let nextPage = page + 1 > totalPages ? totalPages : page + 1;
+  let prevPage = page - 1 < 1 ? 1 : page - 1;
   let pageEnd = (page * ITEMS_PER_PAGE) - 1;
   let pageStart = pageEnd - (ITEMS_PER_PAGE - 1);
+
+  // render batch
+  let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
 
   // format component display data
   const meta: any = getValidatorMetaBatch(props.batchKey) ?? [];
@@ -75,19 +80,12 @@ export const ValidatorListInner = (props: any) => {
   const supers = meta.supers ?? [];
   const stake = meta.stake ?? [];
 
-  const synced = {
-    identities: (identities.length > 0) ?? false,
-    supers: (supers.length > 0) ?? false,
-    stake: (stake.length > 0) ?? false,
-  };
-
-  // refetch when validator list changes.
+  // refetch list when validator list changes
   useEffect(() => {
     setFetched(false);
   }, [props.validators]);
 
-  // configure validator list.
-  // should only be done once for each list change.
+  // configure validator list when ready to fetch
   useEffect(() => {
     if (isReady && !fetched) {
       setValidatorsDefault(props.validators);
@@ -97,16 +95,6 @@ export const ValidatorListInner = (props: any) => {
       fetchValidatorMetaBatch(props.batchKey, props.validators, refetchOnListUpdate);
     }
   }, [isReady, fetched]);
-
-  // handle throttle animations if enabled
-  useEffect(() => {
-    if (batchEnd >= pageEnd || disableThrottle) {
-      return;
-    }
-    setTimeout(() => {
-      setRenderIteration(renderIterationRef.current + 1)
-    }, 500);
-  }, [renderIterationRef.current]);
 
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
@@ -127,39 +115,34 @@ export const ValidatorListInner = (props: any) => {
     }
   }
 
-  if (!validators.length) {
-    return (<></>);
-  }
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.01,
-      }
+  // render throttle
+  useEffect(() => {
+    if (!(batchEnd >= pageEnd || disableThrottle)) {
+      setTimeout(() => {
+        setRenderIteration(renderIterationRef.current + 1)
+      }, 500);
     }
-  };
-
-  const listItem = {
-    hidden: {
-      y: 15,
-      opacity: 0
-    },
-    show: {
-      y: 0,
-      opacity: 1,
-    }
-  };
+  }, [renderIterationRef.current]);
 
   // get validators to render
   let listValidators = [];
 
-  // if throttling, get subset of validators. Else, display validators in one render.
+  // get throttled subset or entire list
   if (!disableThrottle) {
     listValidators = validators.slice(pageStart).slice(0, ITEMS_PER_PAGE);
   } else {
     listValidators = validators
+  }
+
+  // aggregate synced status
+  const synced = {
+    identities: (identities.length > 0) ?? false,
+    supers: (supers.length > 0) ?? false,
+    stake: (stake.length > 0) ?? false,
+  };
+
+  if (!validators.length) {
+    return (<></>);
   }
 
   return (
@@ -195,17 +178,37 @@ export const ValidatorListInner = (props: any) => {
 
         <motion.div
           className='transition'
-          variants={container}
           initial="hidden"
           animate="show"
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.01,
+              }
+            }
+          }}
         >
           {listValidators.map((validator: any, index: number) => {
-
             // fetch batch data by referring to default list index.
             let batchIndex = validatorsDefault.indexOf(validator);
 
             return (
-              <motion.div className={`item ${listFormat === 'row' ? `row` : `col`}`} key={`nomination_${index}`} variants={listItem}>
+              <motion.div
+                className={`item ${listFormat === 'row' ? `row` : `col`}`}
+                key={`nomination_${index}`}
+                variants={{
+                  hidden: {
+                    y: 15,
+                    opacity: 0
+                  },
+                  show: {
+                    y: 0,
+                    opacity: 1,
+                  }
+                }}
+              >
                 <Validator
                   initial={initial}
                   validator={validator}

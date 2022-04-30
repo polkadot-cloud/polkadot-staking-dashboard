@@ -90,6 +90,7 @@ export const VOTER_SNAPSHOT_PER_BLOCK = 22500;
  */
 export const RESERVE_AMOUNT_DOT = 0.1;
 export const RESERVE_AMOUNT_PLANCK = RESERVE_AMOUNT_DOT ** 10;
+export const ITEMS_PER_PAGE = 50;
 
 /*
  * Third party API keys and endpoints
