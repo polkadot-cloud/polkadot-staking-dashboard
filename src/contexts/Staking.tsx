@@ -15,8 +15,8 @@ const THROTTLE_VALIDATOR_RENDER = 250;
 
 // context type
 export interface StakingContextState {
-  VALIDATORS_PER_BATCH_MUTLI: number,
-  THROTTLE_VALIDATOR_RENDER: number,
+  VALIDATORS_PER_BATCH_MUTLI: number;
+  THROTTLE_VALIDATOR_RENDER: number;
   fetchValidatorMetaBatch: (k: string, v: []) => void;
   getValidatorMetaBatch: (k: string) => any;
   removeValidatorMetaBatch: (k: string) => void;
