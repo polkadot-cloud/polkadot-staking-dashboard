@@ -17,7 +17,7 @@ export interface ModalContextState {
 const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';
 
 // context definition
-export const AssistantContext: React.Context<ModalContextState> = React.createContext({
+export const ModalContext: React.Context<ModalContextState> = React.createContext({
   status: 0,
   setStatus: (status) => { },
   openModalWith: (modal: string, config?: any, size?: string) => { },
@@ -26,7 +26,7 @@ export const AssistantContext: React.Context<ModalContextState> = React.createCo
   size: 'large',
 });
 
-export const useModal = () => React.useContext(AssistantContext);
+export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
 export class ModalContextWrapper extends React.Component {
@@ -55,7 +55,7 @@ export class ModalContextWrapper extends React.Component {
 
   render () {
     return (
-      <AssistantContext.Provider value={{
+      <ModalContext.Provider value={{
         status: this.state.status,
         setStatus: this.setStatus,
         openModalWith: this.openModalWith,
@@ -64,7 +64,7 @@ export class ModalContextWrapper extends React.Component {
         size: this.state.size,
       }}>
         {this.props.children}
-      </AssistantContext.Provider>
+      </ModalContext.Provider>
     );
   }
 }
