@@ -21,10 +21,10 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Validator filtering initialisation and favourite validators
 - [x] Theming support
 - [x] Integrate Intention / Active Bond Thresholds
-- [ ] Initial Nomination management tooling
-- [ ] Extrinsics
-- [ ] Recent Payouts as list
+- [x] Recent Payouts as list
 - [ ] Node only / External API toggles
+- [ ] Extrinsics
+- [ ] Initial Nomination management tooling
 - [ ] Screen size support 
 
 Features coming soon:
