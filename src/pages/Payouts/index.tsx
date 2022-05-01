@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import moment from 'moment';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useSubscan } from '../../contexts/Subscan';
@@ -12,11 +13,12 @@ import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
-import moment from 'moment';
 import { PageTitle } from '../../library/PageTitle';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { StatusLabel } from '../../library/Graphs/StatusLabel';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { PayoutList } from './PayoutList';
+import { SectionWrapper } from '../../library/Graphs/Wrappers';
 
 export const Payouts = (props: PageProps) => {
 
@@ -43,6 +45,8 @@ export const Payouts = (props: PageProps) => {
       }
     },
   ];
+
+  const payoutsList = [...payouts].reverse().slice(0, 60);
 
   return (
     <>
@@ -80,6 +84,17 @@ export const Payouts = (props: PageProps) => {
           </div>
         </GraphWrapper>
       </PageRowWrapper>
+      {!payoutsList.length ? <></> :
+        <PageRowWrapper noVerticalSpacer>
+          <SectionWrapper>
+            <PayoutList
+              title="Recent Payouts"
+              payouts={payoutsList}
+              pagination
+            />
+          </SectionWrapper>
+        </PageRowWrapper>
+      }
     </>
   );
 }
