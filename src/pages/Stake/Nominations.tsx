@@ -33,7 +33,6 @@ export const Nominations = () => {
                   <ValidatorList
                     validators={nominated}
                     batchKey={batchKey}
-                    layout='col'
                     title='Your Nominations'
                     refetchOnListUpdate
                     allowMoreCols

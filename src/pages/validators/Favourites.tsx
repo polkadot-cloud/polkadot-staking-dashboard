@@ -34,7 +34,6 @@ export const Favourites = (props: PageProps) => {
                     <ValidatorList
                       validators={favouritesList}
                       batchKey={batchKey}
-                      layout='col'
                       title='Favourite Validators'
                       refetchOnListUpdate
                       allowMoreCols

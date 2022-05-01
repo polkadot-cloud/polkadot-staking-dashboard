@@ -13,13 +13,13 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { Filters } from './Filters';
-import { ITEMS_PER_PAGE } from '../../constants';
+import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 
 export const ValidatorListInner = (props: any) => {
 
   const { isReady }: any = useApi();
   const { metrics }: any = useNetworkMetrics();
-  const { VALIDATORS_PER_BATCH_MUTLI, fetchValidatorMetaBatch, meta } = useValidators();
+  const { fetchValidatorMetaBatch, meta } = useValidators();
   const {
     setListFormat,
     listFormat,
@@ -68,14 +68,14 @@ export const ValidatorListInner = (props: any) => {
   }
 
   // pagination
-  let totalPages = Math.ceil(validators.length / ITEMS_PER_PAGE);
+  let totalPages = Math.ceil(validators.length / LIST_ITEMS_PER_PAGE);
   let nextPage = page + 1 > totalPages ? totalPages : page + 1;
   let prevPage = page - 1 < 1 ? 1 : page - 1;
-  let pageEnd = (page * ITEMS_PER_PAGE) - 1;
-  let pageStart = pageEnd - (ITEMS_PER_PAGE - 1);
+  let pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
+  let pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
   // render batch
-  let batchEnd = (renderIteration * VALIDATORS_PER_BATCH_MUTLI) - 1;
+  let batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -130,7 +130,7 @@ export const ValidatorListInner = (props: any) => {
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listValidators = validators.slice(pageStart).slice(0, ITEMS_PER_PAGE);
+    listValidators = validators.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
   } else {
     listValidators = validators
   }

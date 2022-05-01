@@ -86,7 +86,6 @@ export const Browse = (props: PageProps) => {
                 <ValidatorList
                   validators={validators}
                   batchKey='validators_browse'
-                  layout='col'
                   title='Validators'
                   allowMoreCols
                   allowFilters

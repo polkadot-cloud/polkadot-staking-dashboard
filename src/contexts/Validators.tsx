@@ -9,12 +9,8 @@ import { useNetworkMetrics } from './Network';
 import { useBalances } from './Balances';
 import { sleep, removePercentage, rmCommas } from '../Utils';
 
-// validators per batch in multi-batch fetching
-const VALIDATORS_PER_BATCH_MUTLI = 20;
-
 // context type
 export interface ValidatorsContextState {
-  VALIDATORS_PER_BATCH_MUTLI: number;
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
@@ -31,7 +27,6 @@ export interface ValidatorsContextState {
 
 // context definition
 export const ValidatorsContext: React.Context<ValidatorsContextState> = React.createContext({
-  VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => { },
   removeValidatorMetaBatch: (k: string) => { },
   fetchValidatorPrefs: (v: any) => { },
@@ -463,7 +458,6 @@ export const ValidatorsContextWrapper = (props: any) => {
 
   return (
     <ValidatorsContext.Provider value={{
-      VALIDATORS_PER_BATCH_MUTLI: VALIDATORS_PER_BATCH_MUTLI,
       fetchValidatorMetaBatch: fetchValidatorMetaBatch,
       removeValidatorMetaBatch: removeValidatorMetaBatch,
       fetchValidatorPrefs: fetchValidatorPrefs,

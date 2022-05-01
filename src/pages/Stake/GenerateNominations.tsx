@@ -17,7 +17,6 @@ export const GenerateNominations = (props: any) => {
   const { removeValidatorMetaBatch, validators, favouritesList, meta } = useValidators();
 
   const {
-    listFormat,
     applyValidatorOrder,
     applyValidatorFilters,
   }: any = useUi();
@@ -127,7 +126,6 @@ export const GenerateNominations = (props: any) => {
               <ValidatorList
                 validators={nominations}
                 batchKey={batchKey}
-                layout={listFormat}
                 title={method}
                 allowMoreCols
               />
