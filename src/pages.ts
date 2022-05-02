@@ -35,7 +35,7 @@ export const PAGE_CATEGORIES = [{
   title: 'Explore',
 }, {
   _id: 5,
-  title: 'Pre-release',
+  title: 'Feedback',
 }];
 
 export const PAGES_CONFIG = [
