@@ -19,7 +19,7 @@ export class Entry extends React.Component {
     this.context.connect(network);
   }
 
-  // wrap entire router with network metrics: required for making staking calls
+  // wrap entire router with network metrics: provides activeEra
   render () {
     return (
       <NetworkMetricsContextWrapper>

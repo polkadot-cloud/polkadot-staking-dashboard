@@ -16,13 +16,21 @@ export class App extends React.Component<any> {
   render () {
     return (
       <ThemeContextWrapper>
-        <AppInner />
+        <AppAPI />
       </ThemeContextWrapper>
     )
   }
 }
 
-const AppInner = () => {
+const AppAPI = () => {
+  return (
+    <APIContextWrapper>
+      <AppEntry />
+    </APIContextWrapper>
+  )
+}
+
+const AppEntry = () => {
 
   // get theme
   const { mode } = useTheme();
@@ -35,20 +43,16 @@ const AppInner = () => {
   }
 
   return (
-    <ThemeProvider
-      theme={{
-        mode: mode
-      }}
-    >
-      <ConnectContextWrapper>
-        <APIContextWrapper>
+    <ThemeProvider theme={{ mode: mode }}>
+      <APIContextWrapper>
+        <ConnectContextWrapper>
           <AssistantContextWrapper>
             <ModalContextWrapper>
               <Entry />
             </ModalContextWrapper>
           </AssistantContextWrapper>
-        </APIContextWrapper>
-      </ConnectContextWrapper>
+        </ConnectContextWrapper>
+      </APIContextWrapper>
     </ThemeProvider>
   );
 }

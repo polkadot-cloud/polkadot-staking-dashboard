@@ -31,7 +31,7 @@ export class APIContextWrapper extends React.Component {
   defaultState = () => {
     return {
       api: null,
-      status: consts.CONNECTION_STATUS[1],
+      status: consts.CONNECTION_STATUS[0],
       consts: {
         bondDuration: 0,
         maxNominations: 0,

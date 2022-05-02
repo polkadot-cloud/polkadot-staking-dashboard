@@ -48,7 +48,7 @@ export const useValidators = () => React.useContext(ValidatorsContext);
 // wrapper component to provide components with context
 export const ValidatorsContextWrapper = (props: any) => {
 
-  const { isReady, api }: any = useApi();
+  const { isReady, api, network }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
   const { getAccountNominations }: any = useBalances();
@@ -84,7 +84,7 @@ export const ValidatorsContextWrapper = (props: any) => {
   }
 
   // collect favourites from local storage if they exist
-  let _favourites: any = localStorage.getItem('favourites');
+  let _favourites: any = localStorage.getItem(`${network.name.toLowerCase()}_favourites`);
   _favourites = _favourites !== null
     ? JSON.parse(_favourites)
     : [];
@@ -444,7 +444,8 @@ export const ValidatorsContextWrapper = (props: any) => {
     if (!_favourites.includes(address)) {
       _favourites.push(address);
     }
-    localStorage.setItem('favourites', JSON.stringify(_favourites));
+
+    localStorage.setItem(`${network.name.toLowerCase()}_favourites`, JSON.stringify(_favourites));
     setFavourites([..._favourites]);
   }
 
@@ -454,7 +455,7 @@ export const ValidatorsContextWrapper = (props: any) => {
   const removeFavourite = (address: string) => {
     let _favourites = Object.assign(favourites);
     _favourites = _favourites.filter((validator: any) => validator !== address);
-    localStorage.setItem('favourites', JSON.stringify(_favourites));
+    localStorage.setItem(`${network.name.toLowerCase()}_favourites`, JSON.stringify(_favourites));
     setFavourites([..._favourites]);
   }
 

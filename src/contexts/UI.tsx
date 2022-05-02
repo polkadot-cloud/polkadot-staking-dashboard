@@ -53,9 +53,9 @@ export const useUi = () => React.useContext(UIContext);
 export const UIContextWrapper = (props: any) => {
 
   const { accounts: connectAccounts, activeAccount } = useConnect();
-  const {staking, eraStakers }: any = useStaking();
+  const { staking, eraStakers }: any = useStaking();
   const { meta, session } = useValidators();
-  const { isReady, consts }: any = useApi();
+  const { isReady, consts, network }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { accounts }: any = useBalances();
@@ -260,8 +260,7 @@ export const UIContextWrapper = (props: any) => {
     const _setup = connectAccounts.map((item: any) => {
 
       // if there is existing config for an account, use that.
-      const localSetup = localStorage.getItem(`stake_setup_${item.address}`);
-      // const localSetup = null;
+      const localSetup = localStorage.getItem(`${network.name.toLowerCase()}_stake_setup_${item.address}`);
 
       // otherwise use the default values.
       const progress = localSetup !== null
@@ -296,7 +295,7 @@ export const UIContextWrapper = (props: any) => {
   const setActiveAccountSetup = (progress: any) => {
 
     // update local storage setup
-    localStorage.setItem(`stake_setup_${activeAccount}`, JSON.stringify(progress));
+    localStorage.setItem(`${network.name.toLowerCase()}_stake_setup_${activeAccount}`, JSON.stringify(progress));
 
     // update context setup
     const _setup = setup.map((obj: any) =>
@@ -327,7 +326,7 @@ export const UIContextWrapper = (props: any) => {
     const _setup = setup.map((obj: any) => obj.address === activeAccount ? _accountSetup : obj);
 
     // update local storage
-    localStorage.setItem(`stake_setup_${activeAccount}`, JSON.stringify(_accountSetup.progress));
+    localStorage.setItem(`${network.name.toLowerCase()}_stake_setup_${activeAccount}`, JSON.stringify(_accountSetup.progress));
 
     // update context
     setSetup(_setup);

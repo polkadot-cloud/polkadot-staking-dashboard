@@ -6,6 +6,7 @@ import {
   web3Enable,
   web3AccountsSubscribe,
 } from '@polkadot/extension-dapp';
+import { APIContext } from './Api';
 
 // context type
 export interface ConnectContextState {
@@ -37,6 +38,8 @@ export const useConnect = () => React.useContext(ConnectContext);
 // wrapper component to provide components with context
 export class ConnectContextWrapper extends React.Component {
 
+  static contextType = APIContext;
+
   state = {
     status: 0,
     accounts: [],
@@ -45,15 +48,14 @@ export class ConnectContextWrapper extends React.Component {
     messages: [],
   };
 
-  // automatically connect to web3 (will work if already authorized)
-  // 'auto connect' should be a toggle stored in localStorage for user-set auto connect.
+  // automatically connect to accounts
   componentDidMount () {
     this.subscribeWeb3Accounts();
   }
 
   subscribeWeb3Accounts = async () => {
     // attempt to connect to Polkadot JS extension
-    const extensions = await web3Enable('rb_polkadot_staking');
+    const extensions = await web3Enable('polkadot_staking_dashboard');
 
     // no extension found
     if (extensions.length === 0) {
@@ -142,19 +144,18 @@ export class ConnectContextWrapper extends React.Component {
   // manage localStorage for active account
 
   setLocalStorageActiveAccount = (addr: string) => {
-    localStorage.setItem('active_acount', addr);
+    localStorage.setItem(`${this.context.network.name.toLowerCase()}_active_acount`, addr);
   }
 
   getLocalStorageActiveAccount = () => {
-    const account = localStorage.getItem('active_acount') === null
+    const account = localStorage.getItem(`${this.context.network.name.toLowerCase()}_active_acount`) === null
       ? ''
-      : localStorage.getItem('active_acount');
-
+      : localStorage.getItem(`${this.context.network.name.toLowerCase()}_active_acount`);
     return account;
   }
 
   removeLocalStorageActiveAccount = () => {
-    localStorage.removeItem('active_account');
+    localStorage.removeItem(`${this.context.network.name.toLowerCase()}_active_acount`);
   }
 
   render () {
