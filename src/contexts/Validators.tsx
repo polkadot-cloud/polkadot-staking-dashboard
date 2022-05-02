@@ -17,6 +17,7 @@ export interface ValidatorsContextState {
   removeIndexFromBatch: (k: string, i: number) => void;
   addFavourite: (a: string) => any;
   removeFavourite: (a: string) => any;
+  getMinRewardBond: (v: any) => any;
   validators: any;
   meta: any;
   session: any;
@@ -33,6 +34,7 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> = React.cr
   removeIndexFromBatch: (k: string, i: number) => { },
   addFavourite: (a: string) => { },
   removeFavourite: (a: string) => { },
+  getMinRewardBond: (v: any) => { },
   validators: [],
   meta: {},
   session: [],
@@ -456,6 +458,30 @@ export const ValidatorsContextWrapper = (props: any) => {
     setFavourites([..._favourites]);
   }
 
+  /*
+   * Gets the minimum bond of a group of validators needed for rewards.
+   */
+  const getMinRewardBond = (_addresses: any) => {
+
+    const batch = validatorMetaBatchesRef.current['validators_browse'];
+
+    let lowest = null;
+    for (let a of _addresses) {
+      const batchIndex = batch.addresses.indexOf(a);
+      const stake = batch.stake[batchIndex];
+
+      if (lowest === null) {
+        lowest = stake.lowest;
+      }
+      else {
+        if (stake.lowest < lowest) {
+          lowest = stake.lowest;
+        }
+      }
+    }
+    return lowest;
+  }
+
   return (
     <ValidatorsContext.Provider value={{
       fetchValidatorMetaBatch: fetchValidatorMetaBatch,
@@ -464,6 +490,7 @@ export const ValidatorsContextWrapper = (props: any) => {
       removeIndexFromBatch: removeIndexFromBatch,
       addFavourite: addFavourite,
       removeFavourite: removeFavourite,
+      getMinRewardBond: getMinRewardBond,
       validators: validators,
       meta: validatorMetaBatchesRef.current,
       session: sessionValidators,
