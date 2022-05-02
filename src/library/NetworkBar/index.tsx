@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import { motion } from "framer-motion";
 import { Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator } from './Wrappers';
 import { useApi, APIContext } from '../../contexts/Api';
 import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ENDPOINT_PRICE, NODE_ENDPOINTS } from '../../constants';
-import BlockNumber from './BlockNumber';
+import { BlockNumber } from './BlockNumber';
+import { ConnectionStatus } from './ConnectionStatus';
 
 export const NetworkBarInner = (props: any) => {
 
@@ -29,7 +29,7 @@ export const NetworkBarInner = (props: any) => {
       height: '2.5rem',
     },
     maximised: {
-      height: '275px',
+      height: '295px',
     },
   };
 
@@ -50,36 +50,8 @@ export const NetworkBarInner = (props: any) => {
         <section>
           <network.icon className='network_icon' />
           <p>{network.name}</p>
-
           <Separator />
-
-          {status === CONNECTION_STATUS[0] &&
-            <motion.p
-              animate={{ opacity: [0, 1] }}
-              transition={{ duration: 0.3 }}
-            >
-              Disconnected
-            </motion.p>
-          }
-
-          {status === CONNECTION_STATUS[1] &&
-            <motion.p
-              animate={{ opacity: [0, 1] }}
-              transition={{ duration: 0.3 }}
-            >
-              Connecting...
-            </motion.p>
-          }
-
-          {status === CONNECTION_STATUS[2] &&
-            <motion.p
-              animate={{ opacity: [0, 1] }}
-              transition={{ duration: 0.3 }}
-            >
-              Connected to Network
-            </motion.p>
-          }
-
+          <ConnectionStatus />
         </section>
         <section>
           <button onClick={() => { setOpen(!open) }}>
@@ -91,9 +63,7 @@ export const NetworkBarInner = (props: any) => {
             }
             <ConnectionSymbol color={symbolColor} />
           </div>
-
           <Separator />
-
           <div className='stat'>
             <span className={`change${prices.change < 0 ? ` neg` : prices.change > 0 ? ` pos` : ``}`}>
               {prices.change < 0 ? `` : prices.change > 0 ? `+` : ``}{prices.change}%
@@ -109,18 +79,19 @@ export const NetworkBarInner = (props: any) => {
         <div className='row'>
           <h3>Network</h3>
         </div>
-
         <div className='row'>
           {Object.entries(NODE_ENDPOINTS).map(([key, item]: any, index: any) => (
             <button
               key={`switch_network_${index}`}
-              onClick={() => switchNetwork(key)}
+              onClick={() => {
+                switchNetwork(key);
+                setOpen(false);
+              }}
             >
               <p>{item.name}</p>
             </button>
           ))}
         </div>
-
         <div className='row'>
           <h3>Endpoints</h3>
         </div>

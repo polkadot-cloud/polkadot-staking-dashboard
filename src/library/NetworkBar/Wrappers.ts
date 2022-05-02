@@ -87,7 +87,7 @@ export const NetworkInfo = styled(motion.div)`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-content: flex-start;
-  padding: 0.25rem 1rem 1.25rem 1rem;
+  padding: 0.25rem 1rem 1rem 1rem;
   overflow: auto;
 
   > .row {
