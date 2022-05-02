@@ -99,7 +99,7 @@ export const Bond = (props: any) => {
       const minRewardBond = getMinRewardBond(setup.nominations.map((item: any) => item.address));
       setMinRewardBond(minRewardBond);
     }
-  }, [activeEra, meta['validators_browse']?.stake]);
+  });
 
   return (
     <SectionWrapper transparent>
