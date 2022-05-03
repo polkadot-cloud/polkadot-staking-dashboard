@@ -33,36 +33,33 @@ export const useApi = () => React.useContext(APIContext);
 // wrapper component to provide app with api
 export const APIContextWrapper = (props: any) => {
 
-  /*
-   * The default state to fall back to when disconnect happens
-   */
-  const defaultState = () => {
-    return {
-      api: null,
-      status: CONNECTION_STATUS[0],
-      activeNetwork: localStorage.getItem('network'),
-      network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
-    };
-  }
+  // default state
+  const defaultState: any = {
+    api: null,
+    status: CONNECTION_STATUS[0],
+    activeNetwork: localStorage.getItem('network'),
+    network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
+  };
 
-  // initiate component state
-  const [state, _setState] = useState({ ...defaultState() });
+  // default consts
+  const defaultConsts = {
+    bondDuration: 0,
+    maxNominations: 0,
+    sessionsPerEra: 0,
+    maxNominatorRewardedPerValidator: 0,
+    voterSnapshotPerBlock: 0,
+  };
 
+  // context state
+  const [state, _setState] = useState(defaultState);
   const stateRef = useRef(state);
   const setState = (val: any) => {
     stateRef.current = val;
     _setState(val);
   }
 
-  // network constants state
-  const [consts, _setConsts] = useState({
-    bondDuration: 0,
-    maxNominations: 0,
-    sessionsPerEra: 0,
-    maxNominatorRewardedPerValidator: 0,
-    voterSnapshotPerBlock: 0,
-  });
-
+  // constants state
+  const [consts, _setConsts] = useState(defaultConsts);
   const constsRef = useRef(consts);
   const setConsts = (val: any) => {
     constsRef.current = val;
@@ -99,13 +96,14 @@ export const APIContextWrapper = (props: any) => {
       });
     });
 
-    // api disconnect handler
-    wsProvider.on('disconnected', () => {
-      setState(defaultState());
-    });
-
     // wsProvider.on('ready', () => {});
     // wsProvider.on('error', () => {});
+
+    // api disconnect handler
+    wsProvider.on('disconnected', () => {
+      setState(defaultState);
+      setConsts(defaultConsts);
+    });
 
     // wait for instance to connect, then assign instance to context state
     const apiInstance = await ApiPromise.create({ provider: wsProvider });
@@ -159,7 +157,7 @@ export const APIContextWrapper = (props: any) => {
     localStorage.setItem('network', String(newNetwork));
 
     const _state: any = {
-      ...defaultState(),
+      ...defaultState,
       status: CONNECTION_STATUS[0],
       activeNetwork: newNetwork,
       network: NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
