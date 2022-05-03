@@ -13,30 +13,26 @@ import {
   NODE_ENDPOINTS,
 } from '../constants';
 
-// interface for endpoint options
 type NetworkOptions = 'polkadot' | 'westend';
 
-// api context definition
 export const APIContext: any = React.createContext({
-  api: null,
   connect: () => { },
-  switchNetwork: () => { },
-  status: CONNECTION_STATUS[0],
-  isReady: false,
-  consts: {},
   fetchDotPrice: () => { },
+  switchNetwork: () => { },
+  api: null,
+  consts: {},
+  isReady: false,
+  status: CONNECTION_STATUS[0],
 });
 
-// import context as a hook
 export const useApi = () => React.useContext(APIContext);
 
-// wrapper component to provide app with api
 export const APIContextWrapper = (props: any) => {
 
   // default state
-  const defaultState: any = {
-    network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
-    activeNetwork: localStorage.getItem('network'),
+  const defaultNetwork: any = {
+    name: localStorage.getItem('network'),
+    meta: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
   };
 
   // default consts
@@ -51,13 +47,8 @@ export const APIContextWrapper = (props: any) => {
   // api instance state
   const [api, setApi]: any = useState(null);
 
-  // context state
-  const [state, _setState] = useState(defaultState);
-  const stateRef = useRef(state);
-  const setState = (val: any) => {
-    stateRef.current = val;
-    _setState(val);
-  }
+  // network state
+  const [network, setNetwork]: any = useState(defaultNetwork);
 
   // constants state
   const [consts, _setConsts] = useState(defaultConsts);
@@ -80,13 +71,13 @@ export const APIContextWrapper = (props: any) => {
   const isReady = (connectionStatus === CONNECTION_STATUS[2] && api !== null);
 
   // connect to websocket and return api into context
-  const connect = async (network: keyof NetworkOptions) => {
+  const connect = async (_network: keyof NetworkOptions) => {
 
     // set connection status to 'connecting'
     setConnectionStatus(CONNECTION_STATUS[1]);
 
     // connect to network
-    const wsProvider = new WsProvider(NODE_ENDPOINTS[network].endpoint);
+    const wsProvider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
 
     // new connection event
     wsProvider.on('connected', () => {
@@ -99,7 +90,7 @@ export const APIContextWrapper = (props: any) => {
     // api disconnect handler
     wsProvider.on('disconnected', () => {
       setApi(null);
-      setState(defaultState);
+      setNetwork(defaultNetwork);
       setConsts(defaultConsts);
       setConnectionStatus(CONNECTION_STATUS[0]);
     });
@@ -127,13 +118,12 @@ export const APIContextWrapper = (props: any) => {
     voterSnapshotPerBlock = voterSnapshotPerBlock?.toNumber() ?? 0;
 
     // update local storage
-    localStorage.setItem('network', String(network));
+    localStorage.setItem('network', String(_network));
 
     // update state
-    setState({
-      ...defaultState,
-      network: NODE_ENDPOINTS[network as keyof NetworkOptions],
-      activeNetwork: network,
+    setNetwork({
+      name: _network,
+      meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
     });
     setApi(apiInstance);
     setConsts({
@@ -146,19 +136,19 @@ export const APIContextWrapper = (props: any) => {
     setConnectionStatus(CONNECTION_STATUS[2]);
   }
 
-  const switchNetwork = async (network: keyof NetworkOptions) => {
+  const switchNetwork = async (_network: keyof NetworkOptions) => {
     // return if different network
-    if (network === state.activeNetwork) {
+    if (_network === network.name) {
       return;
     }
     // reconnect to new network
-    connect(network);
+    connect(_network);
   }
 
   // handles fetching of DOT price and updates context state.
   const fetchDotPrice = async () => {
     const urls = [
-      `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
+      `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[network.name as keyof NetworkOptions].api.priceTicker}`,
     ];
     let responses = await Promise.all(urls.map(u => fetch(u, { method: 'GET' })))
     let texts = await Promise.all(responses.map(res => res.json()));
@@ -178,13 +168,13 @@ export const APIContextWrapper = (props: any) => {
   return (
     <APIContext.Provider value={{
       connect: connect,
-      switchNetwork: switchNetwork,
       fetchDotPrice: fetchDotPrice,
-      isReady: isReady,
+      switchNetwork: switchNetwork,
       api: api,
-      status: connectionStatus,
       consts: constsRef.current,
-      network: stateRef.current.network,
+      isReady: isReady,
+      network: network.meta,
+      status: connectionStatus,
     }}>
       {props.children}
     </APIContext.Provider>
