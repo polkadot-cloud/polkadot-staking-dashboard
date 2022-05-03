@@ -5,19 +5,19 @@ import { EntryWrapper as Wrapper } from './Wrappers';
 import Router from './Router';
 import { ThemeProvider } from 'styled-components';
 import { withProviders } from './library/Hooks';
-import { StakingContextWrapper } from './contexts/Staking';
-import { MessagesContextWrapper } from './contexts/Messages';
-import { SubscanContextWrapper } from './contexts/Subscan';
-import { ValidatorsContextWrapper } from './contexts/Validators';
-import { NotificationsContextWrapper } from './contexts/Notifications';
-import { ExtrinsicsContextWrapper } from './contexts/Extrinsics';
-import { UIContextWrapper } from './contexts/UI';
-import { NetworkMetricsContextWrapper } from './contexts/Network';
-import { BalancesContextWrapper } from './contexts/Balances';
-import { ConnectContextWrapper } from './contexts/Connect';
-import { AssistantContextWrapper } from './contexts/Assistant';
-import { ModalContextWrapper } from './contexts/Modal';
-import { APIContextWrapper } from './contexts/Api';
+import { StakingProvider } from './contexts/Staking';
+import { MessagesProvider } from './contexts/Messages';
+import { SubscanProvider } from './contexts/Subscan';
+import { ValidatorsProvider } from './contexts/Validators';
+import { NotificationsProvider } from './contexts/Notifications';
+import { ExtrinsicsProvider } from './contexts/Extrinsics';
+import { UIProvider } from './contexts/UI';
+import { NetworkMetricsProvider } from './contexts/Network';
+import { BalancesProvider } from './contexts/Balances';
+import { ConnectProvider } from './contexts/Connect';
+import { AssistantProvider } from './contexts/Assistant';
+import { ModalProvider } from './contexts/Modal';
+import { APIProvider } from './contexts/Api';
 import { BrowserRouter } from "react-router-dom";
 import { useTheme } from './contexts/Themes';
 
@@ -35,20 +35,20 @@ export const ProvidersInner = () => {
 }
 
 export const Providers = withProviders(
-  APIContextWrapper,
-  ConnectContextWrapper,
-  AssistantContextWrapper,
-  ModalContextWrapper,
-  NetworkMetricsContextWrapper,
-  BalancesContextWrapper,
+  APIProvider,
+  ConnectProvider,
+  AssistantProvider,
+  ModalProvider,
+  NetworkMetricsProvider,
+  BalancesProvider,
   BrowserRouter,
-  StakingContextWrapper,
-  ValidatorsContextWrapper,
-  UIContextWrapper,
-  MessagesContextWrapper,
-  SubscanContextWrapper,
-  NotificationsContextWrapper,
-  ExtrinsicsContextWrapper,
+  StakingProvider,
+  ValidatorsProvider,
+  UIProvider,
+  MessagesProvider,
+  SubscanProvider,
+  NotificationsProvider,
+  ExtrinsicsProvider,
 )(
   ProvidersInner
 );

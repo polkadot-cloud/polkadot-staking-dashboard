@@ -50,7 +50,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
 
 export const useUi = () => React.useContext(UIContext);
 
-export const UIContextWrapper = (props: any) => {
+export const UIProvider = (props: any) => {
 
   const { accounts: connectAccounts, activeAccount } = useConnect();
   const { staking, eraStakers }: any = useStaking();

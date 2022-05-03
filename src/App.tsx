@@ -3,7 +3,7 @@
 
 import { Providers } from './Providers';
 import { DEFAULT_NETWORK } from './constants';
-import { ThemeContextWrapper } from './contexts/Themes';
+import { ThemesProvider } from './contexts/Themes';
 
 const App = () => {
 
@@ -15,9 +15,9 @@ const App = () => {
   }
 
   return (
-    <ThemeContextWrapper>
+    <ThemesProvider>
       <Providers />
-    </ThemeContextWrapper>
+    </ThemesProvider>
   );
 }
 

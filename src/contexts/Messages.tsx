@@ -24,7 +24,7 @@ export const MessagesContext: React.Context<MessagesContextState> = React.create
 
 export const useMessages = () => React.useContext(MessagesContext);
 
-export const MessagesContextWrapper = (props: any) => {
+export const MessagesProvider = (props: any) => {
 
   const { activeAccount, status: connectStatus, accountExists }: any = useConnect();
   const { accounts: balanceAccounts, getBondedAccount }: any = useBalances();

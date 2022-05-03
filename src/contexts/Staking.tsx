@@ -39,7 +39,7 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
 export const useStaking = () => React.useContext(StakingContext);
 
 // wrapper component to provide components with context
-export const StakingContextWrapper = (props: any) => {
+export const StakingProvider = (props: any) => {
 
   const { activeAccount } = useConnect();
   const { isReady, api, consts }: any = useApi();

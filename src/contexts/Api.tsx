@@ -27,7 +27,7 @@ export const APIContext: any = React.createContext({
 
 export const useApi = () => React.useContext(APIContext);
 
-export const APIContextWrapper = (props: any) => {
+export const APIProvider = (props: any) => {
 
   // default state
   const defaultNetwork: any = {
@@ -184,5 +184,3 @@ export const APIContextWrapper = (props: any) => {
     </APIContext.Provider>
   );
 }
-
-export default APIContextWrapper;

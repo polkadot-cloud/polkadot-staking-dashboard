@@ -10,7 +10,7 @@ export const ThemeContext: React.Context<any> = React.createContext({
 
 export const useTheme = () => React.useContext(ThemeContext);
 
-export const ThemeContextWrapper: React.FC = ({ children }) => {
+export const ThemesProvider: React.FC = ({ children }) => {
 
   // get the current theme, or provide default theme if not set.
   const currentTheme = () => {

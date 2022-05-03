@@ -17,7 +17,7 @@ export const NotificationsContext: React.Context<NotificationsContextState> = Re
 
 export const useNotifications = () => React.useContext(NotificationsContext);
 
-export const NotificationsContextWrapper = (props: any) => {
+export const NotificationsProvider = (props: any) => {
 
   const [index, _setIndex] = useState(0);
   const [notifications, _setNotifications]: any = useState([]);

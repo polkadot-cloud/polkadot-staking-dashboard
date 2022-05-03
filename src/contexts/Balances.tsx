@@ -15,7 +15,7 @@ export const BalancesContext: any = React.createContext({
 });
 export const useBalances = () => React.useContext(BalancesContext);
 
-export const BalancesContextWrapper = (props: any) => {
+export const BalancesProvider = (props: any) => {
 
   const { api, isReady, network }: any = useApi();
   const { accounts }: any = useConnect();
@@ -238,5 +238,3 @@ export const BalancesContextWrapper = (props: any) => {
     </BalancesContext.Provider>
   )
 }
-
-export default BalancesContextWrapper;

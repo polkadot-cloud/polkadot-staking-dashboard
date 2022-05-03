@@ -19,7 +19,7 @@ export const SubscanContext: React.Context<SubscanContextState> = React.createCo
 
 export const useSubscan = () => React.useContext(SubscanContext);
 
-export const SubscanContextWrapper = (props: any) => {
+export const SubscanProvider = (props: any) => {
 
   const { network }: any = useApi();
   const { services }: any = useUi();

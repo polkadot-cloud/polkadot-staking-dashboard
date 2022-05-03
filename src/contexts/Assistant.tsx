@@ -40,7 +40,7 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
 export const useAssistant = () => React.useContext(AssistantContext);
 
 // wrapper component to provide components with context
-export class AssistantContextWrapper extends React.Component {
+export class AssistantProvider extends React.Component {
 
   state = {
     open: 0,

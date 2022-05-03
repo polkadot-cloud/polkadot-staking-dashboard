@@ -36,7 +36,7 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
 export const useConnect = () => React.useContext(ConnectContext);
 
 // wrapper component to provide components with context
-export class ConnectContextWrapper extends React.Component {
+export class ConnectProvider extends React.Component {
 
   static contextType = APIContext;
 

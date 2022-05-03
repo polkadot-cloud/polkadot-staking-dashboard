@@ -29,7 +29,7 @@ export const ModalContext: React.Context<ModalContextState> = React.createContex
 export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
-export class ModalContextWrapper extends React.Component {
+export class ModalProvider extends React.Component {
 
   state = {
     status: 0,

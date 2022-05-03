@@ -19,7 +19,7 @@ export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
 // wrapper component to provide components with context
-export const NetworkMetricsContextWrapper = (props: any) => {
+export const NetworkMetricsProvider = (props: any) => {
 
   const { isReady, api }: any = useApi();
 

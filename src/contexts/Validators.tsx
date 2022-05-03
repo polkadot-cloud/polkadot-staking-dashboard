@@ -46,7 +46,7 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> = React.cr
 export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
-export const ValidatorsContextWrapper = (props: any) => {
+export const ValidatorsProvider = (props: any) => {
 
   const { isReady, api, network }: any = useApi();
   const { activeAccount }: any = useConnect();

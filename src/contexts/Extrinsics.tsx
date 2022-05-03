@@ -17,7 +17,7 @@ export const ExtrinsicsContext: React.Context<ExtrinsicsContextState> = React.cr
 
 export const useExtrinsics = () => React.useContext(ExtrinsicsContext);
 
-export const ExtrinsicsContextWrapper = (props: any) => {
+export const ExtrinsicsProvider = (props: any) => {
 
   const [pending, _setPending] = useState([]);
   const pendingRef = useRef(pending);
