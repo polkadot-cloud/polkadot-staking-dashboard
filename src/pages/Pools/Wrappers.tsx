@@ -2,13 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from "styled-components";
-import { textPrimary, textSecondary } from "../../theme";
+import { textPrimary, textSecondary, borderPrimary } from "../../theme";
 
 export const AccountWrapper = styled.div`
   box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
+  border-bottom: 1px solid ${borderPrimary};
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
 
   .account {
     width: 100%;

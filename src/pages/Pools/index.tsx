@@ -13,6 +13,7 @@ import { useApi } from '../../contexts/Api';
 import { PoolAccount } from './PoolAccount';
 import { Separator } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
+import { Button } from '../../library/Button';
 
 export const Pools = (props: PageProps) => {
 
@@ -82,7 +83,7 @@ export const Pools = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={title} />
+      <PageTitle title={`Nomination ${title}`} />
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>
@@ -98,7 +99,13 @@ export const Pools = (props: PageProps) => {
                 Bonded in Pool
                 <OpenAssistantIcon page='stake' title='Staking Status' />
               </h4>
-              <h2>32.622931 {network.unit}</h2>
+              <h2>
+                32.622931 {network.unit} &nbsp;
+                <div>
+                  <Button small primary inline title='+' onClick={() => { }} />
+                  <Button small primary title='-' onClick={() => { }} />
+                </div>
+              </h2>
             </div>
           </SectionWrapper>
         </MainWrapper>
@@ -106,10 +113,21 @@ export const Pools = (props: PageProps) => {
           <SectionWrapper style={{ height: 200 }}>
             <div className='head'>
               <h4>
-                Active Pool
+                Joined Pool
                 <OpenAssistantIcon page='stake' title='Staking Status' />
               </h4>
               <PoolAccount address='133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3' />
+              <h2>
+                <div>
+                  <Button
+                    small
+                    inline
+                    primary
+                    title='Leave'
+                    onClick={() => { }}
+                  />
+                </div>
+              </h2>
             </div>
           </SectionWrapper>
         </SecondaryWrapper>
