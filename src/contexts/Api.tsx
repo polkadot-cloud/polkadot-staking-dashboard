@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as consts from '../constants';
 
@@ -23,12 +23,12 @@ export const APIContext: any = React.createContext({
 export const useApi = () => React.useContext(APIContext);
 
 // wrapper component to provide app with api
-export class APIContextWrapper extends React.Component {
+export const APIContextWrapper = (props: any) => {
 
   /*
    * The default state to fall back to when disconnect happens
    */
-  defaultState = () => {
+  const defaultState = () => {
     return {
       api: null,
       status: consts.CONNECTION_STATUS[0],
@@ -43,19 +43,29 @@ export class APIContextWrapper extends React.Component {
   }
 
   // initiate component state
-  state = { ...this.defaultState() };
+  const [state, _setState] = useState({ ...defaultState() });
+  const stateRef = useRef(state);
+  const setState = (val: any) => {
+    stateRef.current = val;
+    _setState(val);
+  }
+
+  // initial connection
+  useEffect(() => {
+    const network: any = localStorage.getItem('network');
+    connect(network);
+  }, []);
 
   // returns whether api is ready to be used
-  isReady = () => {
-    return (this.state.status === consts.CONNECTION_STATUS[2] && this.state.api !== null);
+  const isReady = () => {
+    return (state.status === consts.CONNECTION_STATUS[2] && state.api !== null);
   }
 
   // connect to websocket and return api into context
-  connect = async (network: keyof NetworkOptions) => {
-
+  const connect = async (network: keyof NetworkOptions) => {
     // set connection status to 'connecting'
-    this.setState({
-      ...this.state,
+    setState({
+      ...state,
       status: consts.CONNECTION_STATUS[1]
     });
 
@@ -64,15 +74,15 @@ export class APIContextWrapper extends React.Component {
 
     // new connection event
     wsProvider.on('connected', () => {
-      this.setState({
-        ...this.state,
+      setState({
+        ...state,
         status: consts.CONNECTION_STATUS[2]
       });
     });
 
     // api disconnect handler
     wsProvider.on('disconnected', () => {
-      this.setState(this.defaultState());
+      setState(defaultState());
     });
 
     // wsProvider.on('ready', () => {});
@@ -100,8 +110,9 @@ export class APIContextWrapper extends React.Component {
     // some networks do not have this setting, default to zero if so
     voterSnapshotPerBlock = voterSnapshotPerBlock?.toNumber() ?? 0;
 
-    this.setState({
-      ...this.state,
+    // updatd state
+    const _state: any = {
+      ...state,
       api: apiInstance,
       status: consts.CONNECTION_STATUS[2],
       consts: {
@@ -111,20 +122,21 @@ export class APIContextWrapper extends React.Component {
         maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
         voterSnapshotPerBlock: Number(voterSnapshotPerBlock),
       }
-    });
+    };
+    setState(_state);
   }
 
-  disconnect = async () => {
+  const disconnect = async () => {
     // disconnect from api
-    const { api }: any = this.state;
+    const { api }: any = state;
     await api.disconnect();
   }
 
-  switchNetwork = async (newNetwork: keyof NetworkOptions) => {
-    const { api }: any = this.state;
+  const switchNetwork = async (newNetwork: keyof NetworkOptions) => {
+    const { api }: any = state;
 
     // return if different network
-    if (newNetwork === this.state.activeNetwork) {
+    if (newNetwork === state.activeNetwork) {
       return;
     }
     // disconnect from current network and stop tickers
@@ -133,22 +145,26 @@ export class APIContextWrapper extends React.Component {
     // update local storage network
     localStorage.setItem('network', String(newNetwork));
 
-    // update app state
-    this.setState({
-      ...this.defaultState(),
+    const _state: any = {
+      ...defaultState(),
       status: consts.CONNECTION_STATUS[0],
       activeNetwork: newNetwork,
       network: consts.NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
-    });
+    }
+
+    // update app state
+    setState(_state);
 
     // reconnect to new network
-    this.connect(newNetwork);
+    connect(newNetwork);
   }
 
+
+
   // handles fetching of DOT price and updates context state.
-  fetchDotPrice = async () => {
+  const fetchDotPrice = async () => {
     const urls = [
-      `${consts.API_ENDPOINTS.priceChange}${consts.NODE_ENDPOINTS[this.state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
+      `${consts.API_ENDPOINTS.priceChange}${consts.NODE_ENDPOINTS[state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
     ];
     let responses = await Promise.all(urls.map(u => fetch(u, { method: 'GET' })))
     let texts = await Promise.all(responses.map(res => res.json()));
@@ -166,22 +182,20 @@ export class APIContextWrapper extends React.Component {
     }
   }
 
-  render () {
-    return (
-      <APIContext.Provider value={{
-        connect: this.connect,
-        switchNetwork: this.switchNetwork,
-        fetchDotPrice: this.fetchDotPrice,
-        isReady: this.isReady(),
-        api: this.state.api,
-        status: this.state.status,
-        consts: this.state.consts,
-        network: this.state.network,
-      }}>
-        {this.props.children}
-      </APIContext.Provider>
-    );
-  }
+  return (
+    <APIContext.Provider value={{
+      connect: connect,
+      switchNetwork: switchNetwork,
+      fetchDotPrice: fetchDotPrice,
+      isReady: isReady(),
+      api: state.api,
+      status: state.status,
+      consts: state.consts,
+      network: state.network,
+    }}>
+      {props.children}
+    </APIContext.Provider>
+  );
 }
 
 export default APIContextWrapper;
