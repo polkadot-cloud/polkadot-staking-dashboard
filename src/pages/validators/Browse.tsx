@@ -71,7 +71,7 @@ export const Browse = (props: PageProps) => {
   return (
     <>
       <PageTitle title={title} />
-      <StatBoxList title="Staking Metrics" items={items} />
+      <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
           {isReady &&

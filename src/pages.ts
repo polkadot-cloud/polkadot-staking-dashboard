@@ -156,7 +156,7 @@ export const ASSISTANT_CONFIG = [
         title: 'Bonding',
         description: [
           'Bonding funds is the process of "locking" (or staking) DOT. Bonded DOT will then be automatically allocated to one or more of your nominated validators.',
-          'The minimum active bond statistic is the minimum DOT being staked through your active nominations for the currently active Era.',
+          'The minimum active bond statistic is the minimum DOT being bonded by a nominator for the current era.',
         ],
       },
       {
@@ -187,6 +187,18 @@ export const ASSISTANT_CONFIG = [
   {
     key: 'pools',
     definitions: [
+      {
+        title: 'Active Pools',
+        description: ['The current amount of active nomination pools.'],
+      },
+      {
+        title: 'Minimum Pool Join Bond',
+        description: ['The minimum amount of DOT needed to bond in order to join a pool.'],
+      },
+      {
+        title: 'Minimum Pool Create Bond',
+        description: ['The minimum amount of DOT needed to bond for a creator  of a pool.'],
+      },
     ],
     external: [],
   },

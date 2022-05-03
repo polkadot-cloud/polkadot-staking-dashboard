@@ -51,7 +51,7 @@ export const Payouts = (props: PageProps) => {
   return (
     <>
       <PageTitle title={title} />
-      <StatBoxList title="Staking Metrics" items={items} />
+      <StatBoxList items={items} />
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />

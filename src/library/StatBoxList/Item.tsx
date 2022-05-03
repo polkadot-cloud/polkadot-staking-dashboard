@@ -52,7 +52,7 @@ export const Item = (props: any) => {
                   useLocaleString={true}
                   currency={currency}
                 />
-                &nbsp;{unit && <>&nbsp;{unit}</>}
+                {unit && <>&nbsp;{unit}</>}
               </h2>
               <h4>
                 {label}
