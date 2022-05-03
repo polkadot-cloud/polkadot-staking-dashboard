@@ -1,25 +1,36 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useState } from 'react';
 import { PageProps } from '../types';
 import { PageRowWrapper } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { StatBoxList } from '../../library/StatBoxList';
+import { defaultIfNaN } from '../../Utils';
 
 export const Pools = (props: PageProps) => {
 
   const { page } = props;
   const { title } = page;
 
+  const [state] = useState({
+    activePools: 5,
+    totalPools: 10,
+    minJoinBond: 10,
+    minCreateBond: 10,
+  });
+
+  let activePoolsAsPercent = defaultIfNaN(((state.activePools ?? 0) / (state.totalPools * 0.01)).toFixed(2), 0);
+
   const items: any = [
     {
       label: "Active Pools",
-      value: 5,
-      value2: 5,
-      total: 10,
+      value: state.activePools,
+      value2: state.totalPools - state.activePools,
+      total: state.totalPools,
       unit: "",
-      tooltip: `50%`,
+      tooltip: `${activePoolsAsPercent}%`,
       format: "chart-pie",
       assistant: {
         page: 'pools',
@@ -28,7 +39,7 @@ export const Pools = (props: PageProps) => {
     },
     {
       label: "Minimum Join Bond",
-      value: 10,
+      value: state.minJoinBond,
       unit: "DOT",
       format: "number",
       assistant: {
@@ -37,7 +48,7 @@ export const Pools = (props: PageProps) => {
       }
     }, {
       label: "Minimum Create Bond",
-      value: 10,
+      value: state.minCreateBond,
       unit: "DOT",
       format: "number",
       assistant: {
