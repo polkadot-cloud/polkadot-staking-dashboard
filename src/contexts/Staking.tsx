@@ -9,7 +9,7 @@ import { useConnect } from './Connect';
 import BN from "bn.js";
 import { rmCommas } from '../Utils';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import Worker from "worker-loader!../workers/fibo.worker";
+import Worker from "worker-loader!../workers/stakers";
 
 const worker = new Worker();
 
