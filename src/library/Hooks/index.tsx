@@ -3,8 +3,8 @@
 
 import { useEffect } from "react";
 
-/**
- * Hook that alerts clicks outside of the passed ref
+/*
+ * A hook that alerts clicks outside of the passed ref.
  */
 export const useOutsideAlerter = (ref: any, callback: any, ignore: any = []) => {
   useEffect(() => {
@@ -20,3 +20,17 @@ export const useOutsideAlerter = (ref: any, callback: any, ignore: any = []) => 
     };
   }, [ref]);
 }
+
+/*
+ * A hook that wraps multiple context providers to a component and makes each parent context accessible.
+ */
+export const withProviders = (...providers: any) => (WrappedComponent: any) => (props: any) =>
+  providers.reduceRight((acc: any, prov: any) => {
+    let Provider = prov;
+    if (Array.isArray(prov)) {
+      Provider = prov[0];
+      return <Provider {...prov[1]}>{acc}</Provider>;
+    }
+
+    return <Provider>{acc}</Provider>;
+  }, <WrappedComponent {...props} />);
