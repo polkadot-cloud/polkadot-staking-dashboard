@@ -167,7 +167,6 @@ export const BalancesContextWrapper = (props: any) => {
       });
   }
 
-
   // get an account's balance metadata
   const getAccountBalance = (address: string) => {
     const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);

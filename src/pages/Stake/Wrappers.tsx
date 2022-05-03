@@ -99,12 +99,6 @@ export const Section = styled.div`
   }
 `;
 
-export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
-  width: 100%;
-  margin: 1.5rem 0;
-`;
-
 export const Spacer = styled.div`
   width: 100%;
   height: 1px;

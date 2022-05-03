@@ -17,7 +17,7 @@ import { ManageBond } from './ManageBond';
 import { Button } from '../../library/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt, faWallet, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { Separator } from './Wrappers';
+import { Separator } from '../../Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { useModal } from '../../contexts/Modal';
@@ -107,7 +107,7 @@ export const Active = (props: any) => {
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>
-          <SectionWrapper style={{ height: 260 }} >
+          <SectionWrapper style={{ height: 260 }}>
             <div className='head'>
               <h4>
                 Status

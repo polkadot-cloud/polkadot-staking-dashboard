@@ -36,7 +36,10 @@ export const ActiveAccount = () => {
                 size='1.6rem'
               />
             </div>
-            <h4>{clipAddress(accountData.address)}<div className='sep'></div> <span className='addr'>{accountData.name}</span></h4>
+            <h4>
+              {clipAddress(accountData.address)}
+              <div className='sep'></div> <span className='addr'>{accountData.name}</span>
+            </h4>
             <div>
               <motion.div
                 className='copy'

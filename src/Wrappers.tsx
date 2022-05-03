@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MAXIMUM_WIDTH, SIDE_MENU_STICKY_THRESHOLD } from './constants';
-import { textPrimary, backgroundGradient, backgroundPrimary } from './theme';
+import { textPrimary, backgroundGradient, backgroundPrimary, borderPrimary } from './theme';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
@@ -159,4 +159,10 @@ export const PageRowWrapper = styled.div<any>`
     h1, h2, h3, h4 {
         margin-top: 0;
     }
+`;
+
+export const Separator = styled.div`
+  border-bottom: 1px solid ${borderPrimary};
+  width: 100%;
+  margin: 1.5rem 0;
 `;

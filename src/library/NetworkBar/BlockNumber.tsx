@@ -38,7 +38,6 @@ export class BlockNumber extends React.Component<any, any> {
   }
 
   initiateBlockSubscription = async () => {
-
     const { api, isReady } = this.context;
 
     if (isReady) {
