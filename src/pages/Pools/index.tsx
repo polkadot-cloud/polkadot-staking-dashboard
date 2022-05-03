@@ -25,7 +25,7 @@ export const Pools = (props: PageProps) => {
 
   const { network }: any = useApi();
 
-  const totalPools = meta.counterForBondedPool + meta.counterForRewardPools;
+  const totalPools = meta.counterForBondedPools + meta.counterForRewardPools;
 
   const [state] = useState({
     pools: [
