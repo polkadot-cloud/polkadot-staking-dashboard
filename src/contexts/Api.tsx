@@ -85,7 +85,11 @@ export const APIContextWrapper = (props: any) => {
     });
 
     // wsProvider.on('ready', () => {});
-    // wsProvider.on('error', () => {});
+
+    // attempt to reconnect on an error
+    wsProvider.on('error', () => {
+      connect(network);
+    });
 
     // api disconnect handler
     wsProvider.on('disconnected', () => {
