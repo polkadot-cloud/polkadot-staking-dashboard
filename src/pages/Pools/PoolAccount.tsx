@@ -15,32 +15,44 @@ export const PoolAccount = (props: any) => {
   const { address } = props;
   const { addNotification } = useNotifications();
 
-  const notification = {
-    title: 'Address Copied to Clipboard',
-    subtitle: address,
-  };
+  let notification = {};
+
+  if (address !== null) {
+    notification = {
+      title: 'Address Copied to Clipboard',
+      subtitle: address,
+    };
+  }
 
   return (
     <AccountWrapper>
       <div className='account'>
-        <div className='icon'>
-          <Identicon
-            value={address}
-            size='1.6rem'
-          />
-        </div>
-        <h4>{clipAddress(address)}</h4>
+        {address === null
+          ? <h4>Not in a Pool</h4>
+          : <>
+            <div className='icon'>
+              <Identicon
+                value={address}
+                size='1.6rem'
+              />
+            </div>
+            <h4>{clipAddress(address)}</h4>
+          </>
+        }
         <div>
           <motion.div
             className='copy'
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
           >
-            <button onClick={() => addNotification(notification)}>
-              <CopyToClipboard text={address}>
-                <FontAwesomeIcon icon={faCopy} transform="grow-1" />
-              </CopyToClipboard>
-            </button>
+
+            {address !== null &&
+              <button onClick={() => addNotification(notification)}>
+                <CopyToClipboard text={address}>
+                  <FontAwesomeIcon icon={faCopy} transform="grow-1" />
+                </CopyToClipboard>
+              </button>
+            }
           </motion.div>
         </div>
       </div>

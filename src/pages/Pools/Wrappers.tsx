@@ -28,9 +28,10 @@ export const AccountWrapper = styled.div`
     .icon {
       position: relative;
       top: 0.1rem;
+      margin-right: 0.5rem;
     }
     h4 {
-      margin: 0rem 0.5rem;
+      margin: 0;
       padding: 0;
 
       > .addr {

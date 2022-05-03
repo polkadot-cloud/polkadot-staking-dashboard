@@ -65,7 +65,8 @@ export const Pools = (props: PageProps) => {
     activePool: 1,
   });
 
-  let activePoolsAsPercent = defaultIfNaN(((state.activePools ?? 0) / (state.totalPools * 0.01)).toFixed(2), 0);
+  const activePoolsAsPercent = defaultIfNaN(((state.activePools ?? 0) / (state.totalPools * 0.01)).toFixed(2), 0);
+  const activePool = state.pools.find((item: any) => item.id === state.activePool);
 
   const items: any = [
     {
@@ -144,19 +145,16 @@ export const Pools = (props: PageProps) => {
           <SectionWrapper style={{ height: 310 }}>
             <div className='head'>
               <h4>
-                Joined Pool
+                Joined
                 <OpenAssistantIcon page='stake' title='Staking Status' />
               </h4>
-              <PoolAccount address='133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3' />
+              <PoolAccount address={activePool?.addresses?.stash ?? null} />
               <h2>
                 <div>
-                  <Button
-                    small
-                    inline
-                    primary
-                    title='Leave'
-                    onClick={() => { }}
-                  />
+                  {activePool === undefined
+                    ? <Button small inline primary title='Create Pool' onClick={() => { }} />
+                    : <Button small inline primary title='Leave' onClick={() => { }} />
+                  }
                 </div>
               </h2>
             </div>
