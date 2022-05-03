@@ -15,19 +15,19 @@ import { Separator } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
 import { Button } from '../../library/Button';
 import { PoolList } from '../../library/PoolList';
+import { usePools } from '../../contexts/Pools';
 
 export const Pools = (props: PageProps) => {
 
   const { page } = props;
   const { title } = page;
+  const { meta } = usePools();
 
   const { network }: any = useApi();
 
+  const totalPools = meta.counterForBondedPool + meta.counterForRewardPools;
+
   const [state] = useState({
-    activePools: 5,
-    totalPools: 10,
-    minJoinBond: 10,
-    minCreateBond: 10,
     pools: [
       {
         id: 1,
@@ -65,15 +65,15 @@ export const Pools = (props: PageProps) => {
     activePool: 1,
   });
 
-  const activePoolsAsPercent = defaultIfNaN(((state.activePools ?? 0) / (state.totalPools * 0.01)).toFixed(2), 0);
-  const activePool = state.pools.find((item: any) => item.id === state.activePool);
+  const activePoolsAsPercent = defaultIfNaN(((meta.counterForRewardPools ?? 0) / (totalPools * 0.01)).toFixed(2), 0);
+  const activePool = state.pools.find((item: any) => item.id === meta.counterForRewardPools);
 
   const items: any = [
     {
       label: "Active Pools",
-      value: state.activePools,
-      value2: state.totalPools - state.activePools,
-      total: state.totalPools,
+      value: meta.counterForRewardPools,
+      value2: totalPools - meta.counterForRewardPools,
+      total: totalPools,
       unit: "",
       tooltip: `${activePoolsAsPercent}%`,
       format: "chart-pie",
@@ -83,7 +83,7 @@ export const Pools = (props: PageProps) => {
       }
     }, {
       label: "Minimum Join Bond",
-      value: state.minJoinBond,
+      value: meta.minJoinBond,
       unit: "DOT",
       format: "number",
       assistant: {
@@ -92,7 +92,7 @@ export const Pools = (props: PageProps) => {
       }
     }, {
       label: "Minimum Create Bond",
-      value: state.minCreateBond,
+      value: meta.minCreateBond,
       unit: "DOT",
       format: "number",
       assistant: {

@@ -6,6 +6,7 @@ import Router from './Router';
 import { ThemeProvider } from 'styled-components';
 import { withProviders } from './library/Hooks';
 import { StakingProvider } from './contexts/Staking';
+import { PoolsProvider } from './contexts/Pools';
 import { MessagesProvider } from './contexts/Messages';
 import { SubscanProvider } from './contexts/Subscan';
 import { ValidatorsProvider } from './contexts/Validators';
@@ -44,6 +45,7 @@ export const Providers = withProviders(
   BrowserRouter,
   StakingProvider,
   ValidatorsProvider,
+  PoolsProvider,
   UIProvider,
   MessagesProvider,
   SubscanProvider,
