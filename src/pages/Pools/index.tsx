@@ -14,6 +14,7 @@ import { PoolAccount } from './PoolAccount';
 import { Separator } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
 import { Button } from '../../library/Button';
+import { PoolList } from '../../library/PoolList';
 
 export const Pools = (props: PageProps) => {
 
@@ -29,6 +30,7 @@ export const Pools = (props: PageProps) => {
     minCreateBond: 10,
     pools: [
       {
+        id: 1,
         points: '20,100,000,000,000,000',
         state: 'Open',
         memberCounter: 2,
@@ -37,12 +39,30 @@ export const Pools = (props: PageProps) => {
           root: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
           nominator: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
           stateToggler: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
+        },
+        addresses: {
+          stash: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
+          reward: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
+        }
+      },
+      {
+        id: 2,
+        points: '10,100,000,000,000,000',
+        state: 'Open',
+        memberCounter: 20,
+        roles: {
+          depositor: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+          root: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+          nominator: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+          stateToggler: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+        },
+        addresses: {
+          stash: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+          reward: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
         }
       }
     ],
-    activePool: {
-      address: ''
-    }
+    activePool: 1,
   });
 
   let activePoolsAsPercent = defaultIfNaN(((state.activePools ?? 0) / (state.totalPools * 0.01)).toFixed(2), 0);
@@ -134,8 +154,16 @@ export const Pools = (props: PageProps) => {
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          <h2>Active Pools</h2>
-          <h4>In progress.</h4>
+          <h2>
+            Pools
+            <OpenAssistantIcon page="stake" title="Nominations" />
+          </h2>
+          <PoolList
+            pools={state.pools}
+            title='Active Pools'
+            allowMoreCols
+            pagination
+          />
         </SectionWrapper>
       </PageRowWrapper>
     </>
