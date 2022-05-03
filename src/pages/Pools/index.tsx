@@ -34,9 +34,9 @@ export const Pools = (props: PageProps) => {
         memberCounter: 2,
         roles: {
           depositor: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
-          root: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
+          root: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
           nominator: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
-          stateToggler: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
+          stateToggler: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
         },
         addresses: {
           stash: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
@@ -107,13 +107,21 @@ export const Pools = (props: PageProps) => {
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>
-          <SectionWrapper style={{ height: 310 }}>
+          <SectionWrapper style={{ height: 375 }}>
             <div className='head'>
               <h4>
                 Status
                 <OpenAssistantIcon page='pools' title='Pool Status' />
               </h4>
-              <h2>Actively in Pool and Earning Rewards</h2>
+              <h2>
+                Actively in Pool and Earning Rewards &nbsp;
+                <div>
+                  {activePool === undefined
+                    ? <Button small inline primary title='Create Pool' onClick={() => { }} />
+                    : <Button small inline primary title='Leave' onClick={() => { }} />
+                  }
+                </div>
+              </h2>
               <Separator />
               <h4>
                 Bonded in Pool
@@ -141,21 +149,21 @@ export const Pools = (props: PageProps) => {
           </SectionWrapper>
         </MainWrapper>
         <SecondaryWrapper>
-          <SectionWrapper style={{ height: 310 }}>
+          <SectionWrapper style={{ height: 375 }}>
+
             <div className='head'>
-              <h4>
-                Joined
-                <OpenAssistantIcon page='pools' title='Joined Pool' />
-              </h4>
-              <PoolAccount address={activePool?.addresses?.stash ?? null} />
-              <h2>
-                <div>
-                  {activePool === undefined
-                    ? <Button small inline primary title='Create Pool' onClick={() => { }} />
-                    : <Button small inline primary title='Leave' onClick={() => { }} />
-                  }
-                </div>
-              </h2>
+              <h2>Pool Roles</h2>
+              <h4> Root <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
+              <PoolAccount address={activePool?.roles?.root ?? null} />
+
+              <h4> Depositor <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
+              <PoolAccount address={activePool?.roles?.depositor ?? null} />
+
+              <h4> Nominator <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
+              <PoolAccount address={activePool?.roles?.nominator ?? null} />
+
+              <h4> State Toggler <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
+              <PoolAccount address={activePool?.roles?.stateToggler ?? null} last={true} />
             </div>
           </SectionWrapper>
         </SecondaryWrapper>

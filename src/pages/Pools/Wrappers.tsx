@@ -4,13 +4,13 @@
 import styled from "styled-components";
 import { textPrimary, textSecondary, borderPrimary } from "../../theme";
 
-export const AccountWrapper = styled.div`
+export const AccountWrapper = styled.div<any>`
   box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  border-bottom: 1px solid ${borderPrimary};
-  padding-bottom: 0.75rem;
+  border-bottom: ${props => !props.last ? `1px solid ` : '0px solid'} ${borderPrimary};
+  padding-bottom: ${props => !props.last ? '0.5rem' : 0};
   margin-bottom: 1rem;
 
   .account {

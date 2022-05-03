@@ -12,7 +12,7 @@ import { useNotifications } from '../../contexts/Notifications';
 
 export const PoolAccount = (props: any) => {
 
-  const { address } = props;
+  const { address, last } = props;
   const { addNotification } = useNotifications();
 
   let notification = {};
@@ -25,7 +25,7 @@ export const PoolAccount = (props: any) => {
   }
 
   return (
-    <AccountWrapper>
+    <AccountWrapper last={last}>
       <div className='account'>
         {address === null
           ? <h4>Not in a Pool</h4>
