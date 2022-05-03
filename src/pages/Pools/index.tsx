@@ -21,11 +21,9 @@ export const Pools = (props: PageProps) => {
 
   const { page } = props;
   const { title } = page;
+
   const { meta } = usePools();
-
   const { network }: any = useApi();
-
-  const totalPools = meta.counterForBondedPools + meta.counterForRewardPools;
 
   const [state] = useState({
     pools: [
@@ -65,6 +63,7 @@ export const Pools = (props: PageProps) => {
     activePool: 1,
   });
 
+  const totalPools = meta.counterForBondedPools + meta.counterForRewardPools;
   const activePoolsAsPercent = defaultIfNaN(((meta.counterForRewardPools ?? 0) / (totalPools * 0.01)).toFixed(2), 0);
   const activePool = state.pools.find((item: any) => item.id === meta.counterForRewardPools);
 
@@ -112,13 +111,13 @@ export const Pools = (props: PageProps) => {
             <div className='head'>
               <h4>
                 Status
-                <OpenAssistantIcon page='stake' title='Staking Status' />
+                <OpenAssistantIcon page='pools' title='Pool Status' />
               </h4>
               <h2>Actively in Pool and Earning Rewards</h2>
               <Separator />
               <h4>
                 Bonded in Pool
-                <OpenAssistantIcon page='stake' title='Staking Status' />
+                <OpenAssistantIcon page='pools' title='Bonded in Pool' />
               </h4>
               <h2>
                 32.622931 {network.unit} &nbsp;
@@ -130,7 +129,7 @@ export const Pools = (props: PageProps) => {
               <Separator />
               <h4>
                 Unclaimed Rewards
-                <OpenAssistantIcon page='stake' title='Staking Status' />
+                <OpenAssistantIcon page='pools' title='Pool Rewards' />
               </h4>
               <h2>
                 0.82 {network.unit} &nbsp;
@@ -146,7 +145,7 @@ export const Pools = (props: PageProps) => {
             <div className='head'>
               <h4>
                 Joined
-                <OpenAssistantIcon page='stake' title='Staking Status' />
+                <OpenAssistantIcon page='pools' title='Joined Pool' />
               </h4>
               <PoolAccount address={activePool?.addresses?.stash ?? null} />
               <h2>
@@ -165,7 +164,7 @@ export const Pools = (props: PageProps) => {
         <SectionWrapper>
           <h2>
             Pools
-            <OpenAssistantIcon page="stake" title="Nominations" />
+            <OpenAssistantIcon page="pools" title="Nomination Pools" />
           </h2>
           <PoolList
             pools={state.pools}
