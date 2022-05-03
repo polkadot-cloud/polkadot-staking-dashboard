@@ -3,7 +3,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import * as consts from '../constants';
+import {
+  CONNECTION_STATUS,
+  BONDING_DURATION,
+  SESSIONS_PER_ERA,
+  MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
+  MAX_NOMINATIONS,
+  API_ENDPOINTS,
+  NODE_ENDPOINTS,
+} from '../constants';
 
 // interface for endpoint options
 type NetworkOptions = 'polkadot' | 'westend';
@@ -13,7 +21,7 @@ export const APIContext: any = React.createContext({
   api: null,
   connect: () => { },
   switchNetwork: () => { },
-  status: consts.CONNECTION_STATUS[0],
+  status: CONNECTION_STATUS[0],
   isReady: () => { },
   consts: {},
   fetchDotPrice: () => { },
@@ -31,23 +39,34 @@ export const APIContextWrapper = (props: any) => {
   const defaultState = () => {
     return {
       api: null,
-      status: consts.CONNECTION_STATUS[0],
-      consts: {
-        bondDuration: 0,
-        maxNominations: 0,
-        sessionsPerEra: 0,
-      },
+      status: CONNECTION_STATUS[0],
       activeNetwork: localStorage.getItem('network'),
-      network: consts.NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
+      network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
     };
   }
 
   // initiate component state
   const [state, _setState] = useState({ ...defaultState() });
+
   const stateRef = useRef(state);
   const setState = (val: any) => {
     stateRef.current = val;
     _setState(val);
+  }
+
+  // network constants state
+  const [consts, _setConsts] = useState({
+    bondDuration: 0,
+    maxNominations: 0,
+    sessionsPerEra: 0,
+    maxNominatorRewardedPerValidator: 0,
+    voterSnapshotPerBlock: 0,
+  });
+
+  const constsRef = useRef(consts);
+  const setConsts = (val: any) => {
+    constsRef.current = val;
+    _setConsts(val);
   }
 
   // initial connection
@@ -58,7 +77,7 @@ export const APIContextWrapper = (props: any) => {
 
   // returns whether api is ready to be used
   const isReady = () => {
-    return (state.status === consts.CONNECTION_STATUS[2] && state.api !== null);
+    return (state.status === CONNECTION_STATUS[2] && state.api !== null);
   }
 
   // connect to websocket and return api into context
@@ -66,17 +85,17 @@ export const APIContextWrapper = (props: any) => {
     // set connection status to 'connecting'
     setState({
       ...state,
-      status: consts.CONNECTION_STATUS[1]
+      status: CONNECTION_STATUS[1]
     });
 
     // connect to network
-    const wsProvider = new WsProvider(consts.NODE_ENDPOINTS[network].endpoint);
+    const wsProvider = new WsProvider(NODE_ENDPOINTS[network].endpoint);
 
     // new connection event
     wsProvider.on('connected', () => {
       setState({
         ...state,
-        status: consts.CONNECTION_STATUS[2]
+        status: CONNECTION_STATUS[2]
       });
     });
 
@@ -101,12 +120,11 @@ export const APIContextWrapper = (props: any) => {
     ]);
 
     // fallback to default values
-    const bondDuration = _metrics[0] ? _metrics[0].toHuman() : consts.BONDING_DURATION;
-    const sessionsPerEra = _metrics[2] ? _metrics[2].toHuman() : consts.SESSIONS_PER_ERA;
-    const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : consts.MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
-    const maxNominations = _metrics[1] ? _metrics[1].toHuman() : consts.MAX_NOMINATIONS;
+    const bondDuration = _metrics[0] ? _metrics[0].toHuman() : BONDING_DURATION;
+    const sessionsPerEra = _metrics[2] ? _metrics[2].toHuman() : SESSIONS_PER_ERA;
+    const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
+    const maxNominations = _metrics[1] ? _metrics[1].toHuman() : MAX_NOMINATIONS;
     let voterSnapshotPerBlock: any = _metrics[4];
-
     // some networks do not have this setting, default to zero if so
     voterSnapshotPerBlock = voterSnapshotPerBlock?.toNumber() ?? 0;
 
@@ -114,22 +132,17 @@ export const APIContextWrapper = (props: any) => {
     const _state: any = {
       ...state,
       api: apiInstance,
-      status: consts.CONNECTION_STATUS[2],
-      consts: {
-        bondDuration: bondDuration,
-        maxNominations: maxNominations,
-        sessionsPerEra: sessionsPerEra,
-        maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
-        voterSnapshotPerBlock: Number(voterSnapshotPerBlock),
-      }
+      status: CONNECTION_STATUS[2],
     };
-    setState(_state);
-  }
 
-  const disconnect = async () => {
-    // disconnect from api
-    const { api }: any = state;
-    await api.disconnect();
+    setState(_state);
+    setConsts({
+      bondDuration: bondDuration,
+      maxNominations: maxNominations,
+      sessionsPerEra: sessionsPerEra,
+      maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
+      voterSnapshotPerBlock: Number(voterSnapshotPerBlock),
+    });
   }
 
   const switchNetwork = async (newNetwork: keyof NetworkOptions) => {
@@ -147,9 +160,9 @@ export const APIContextWrapper = (props: any) => {
 
     const _state: any = {
       ...defaultState(),
-      status: consts.CONNECTION_STATUS[0],
+      status: CONNECTION_STATUS[0],
       activeNetwork: newNetwork,
-      network: consts.NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
+      network: NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
     }
 
     // update app state
@@ -159,12 +172,10 @@ export const APIContextWrapper = (props: any) => {
     connect(newNetwork);
   }
 
-
-
   // handles fetching of DOT price and updates context state.
   const fetchDotPrice = async () => {
     const urls = [
-      `${consts.API_ENDPOINTS.priceChange}${consts.NODE_ENDPOINTS[state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
+      `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[state.activeNetwork as keyof NetworkOptions].api.priceTicker}`,
     ];
     let responses = await Promise.all(urls.map(u => fetch(u, { method: 'GET' })))
     let texts = await Promise.all(responses.map(res => res.json()));
@@ -188,10 +199,10 @@ export const APIContextWrapper = (props: any) => {
       switchNetwork: switchNetwork,
       fetchDotPrice: fetchDotPrice,
       isReady: isReady(),
-      api: state.api,
-      status: state.status,
-      consts: state.consts,
-      network: state.network,
+      api: stateRef.current.api,
+      status: stateRef.current.status,
+      consts: constsRef.current,
+      network: stateRef.current.network,
     }}>
       {props.children}
     </APIContext.Provider>
