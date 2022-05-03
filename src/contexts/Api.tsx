@@ -22,7 +22,7 @@ export const APIContext: any = React.createContext({
   connect: () => { },
   switchNetwork: () => { },
   status: CONNECTION_STATUS[0],
-  isReady: () => { },
+  isReady: false,
   consts: {},
   fetchDotPrice: () => { },
 });
@@ -36,7 +36,6 @@ export const APIContextWrapper = (props: any) => {
   // default state
   const defaultState: any = {
     api: null,
-    status: CONNECTION_STATUS[0],
     activeNetwork: localStorage.getItem('network'),
     network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
   };
@@ -66,6 +65,9 @@ export const APIContextWrapper = (props: any) => {
     _setConsts(val);
   }
 
+  // connection status state
+  const [connectionStatus, setConnectionStatus]: any = useState(CONNECTION_STATUS[0]);
+
   // initial connection
   useEffect(() => {
     const network: any = localStorage.getItem('network');
@@ -73,27 +75,20 @@ export const APIContextWrapper = (props: any) => {
   }, []);
 
   // returns whether api is ready to be used
-  const isReady = () => {
-    return (state.status === CONNECTION_STATUS[2] && state.api !== null);
-  }
+  const isReady = (connectionStatus === CONNECTION_STATUS[2] && state.api !== null);
 
   // connect to websocket and return api into context
   const connect = async (network: keyof NetworkOptions) => {
+
     // set connection status to 'connecting'
-    setState({
-      ...state,
-      status: CONNECTION_STATUS[1]
-    });
+    setConnectionStatus(CONNECTION_STATUS[1]);
 
     // connect to network
     const wsProvider = new WsProvider(NODE_ENDPOINTS[network].endpoint);
 
     // new connection event
     wsProvider.on('connected', () => {
-      setState({
-        ...state,
-        status: CONNECTION_STATUS[2]
-      });
+      setConnectionStatus(CONNECTION_STATUS[2]);
     });
 
     // wsProvider.on('ready', () => {});
@@ -103,6 +98,7 @@ export const APIContextWrapper = (props: any) => {
     wsProvider.on('disconnected', () => {
       setState(defaultState);
       setConsts(defaultConsts);
+      setConnectionStatus(CONNECTION_STATUS[0]);
     });
 
     // wait for instance to connect, then assign instance to context state
@@ -123,17 +119,12 @@ export const APIContextWrapper = (props: any) => {
     const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
     const maxNominations = _metrics[1] ? _metrics[1].toHuman() : MAX_NOMINATIONS;
     let voterSnapshotPerBlock: any = _metrics[4];
+
     // some networks do not have this setting, default to zero if so
     voterSnapshotPerBlock = voterSnapshotPerBlock?.toNumber() ?? 0;
 
-    // updatd state
-    const _state: any = {
-      ...state,
-      api: apiInstance,
-      status: CONNECTION_STATUS[2],
-    };
-
-    setState(_state);
+    // update state
+    setState({ ...state, api: apiInstance });
     setConsts({
       bondDuration: bondDuration,
       maxNominations: maxNominations,
@@ -141,6 +132,7 @@ export const APIContextWrapper = (props: any) => {
       maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
       voterSnapshotPerBlock: Number(voterSnapshotPerBlock),
     });
+    setConnectionStatus(CONNECTION_STATUS[2]);
   }
 
   const switchNetwork = async (newNetwork: keyof NetworkOptions) => {
@@ -156,15 +148,12 @@ export const APIContextWrapper = (props: any) => {
     // update local storage network
     localStorage.setItem('network', String(newNetwork));
 
-    const _state: any = {
+    setState({
       ...defaultState,
-      status: CONNECTION_STATUS[0],
       activeNetwork: newNetwork,
       network: NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
-    }
-
-    // update app state
-    setState(_state);
+    });
+    setConnectionStatus(CONNECTION_STATUS[0]);
 
     // reconnect to new network
     connect(newNetwork);
@@ -196,9 +185,9 @@ export const APIContextWrapper = (props: any) => {
       connect: connect,
       switchNetwork: switchNetwork,
       fetchDotPrice: fetchDotPrice,
-      isReady: isReady(),
+      isReady: isReady,
       api: stateRef.current.api,
-      status: stateRef.current.status,
+      status: connectionStatus,
       consts: constsRef.current,
       network: stateRef.current.network,
     }}>
