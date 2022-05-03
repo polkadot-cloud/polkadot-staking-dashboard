@@ -62,7 +62,7 @@ export const Announcements = () => {
     });
   }
 
-  // minimum nomination bond
+  // minimum nominator bond
   announcements.push({
     class: 'neutral',
     title: `The minimum nominator bond is now ${planckToDot(minNominatorBond)} ${network.unit}.`,
