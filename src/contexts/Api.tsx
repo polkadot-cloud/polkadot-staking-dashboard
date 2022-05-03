@@ -35,9 +35,8 @@ export const APIContextWrapper = (props: any) => {
 
   // default state
   const defaultState: any = {
-    api: null,
-    activeNetwork: localStorage.getItem('network'),
     network: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
+    activeNetwork: localStorage.getItem('network'),
   };
 
   // default consts
@@ -48,6 +47,9 @@ export const APIContextWrapper = (props: any) => {
     maxNominatorRewardedPerValidator: 0,
     voterSnapshotPerBlock: 0,
   };
+
+  // api instance state
+  const [api, setApi]: any = useState(null);
 
   // context state
   const [state, _setState] = useState(defaultState);
@@ -75,7 +77,7 @@ export const APIContextWrapper = (props: any) => {
   }, []);
 
   // returns whether api is ready to be used
-  const isReady = (connectionStatus === CONNECTION_STATUS[2] && state.api !== null);
+  const isReady = (connectionStatus === CONNECTION_STATUS[2] && api !== null);
 
   // connect to websocket and return api into context
   const connect = async (network: keyof NetworkOptions) => {
@@ -96,6 +98,7 @@ export const APIContextWrapper = (props: any) => {
 
     // api disconnect handler
     wsProvider.on('disconnected', () => {
+      setApi(null);
       setState(defaultState);
       setConsts(defaultConsts);
       setConnectionStatus(CONNECTION_STATUS[0]);
@@ -124,7 +127,7 @@ export const APIContextWrapper = (props: any) => {
     voterSnapshotPerBlock = voterSnapshotPerBlock?.toNumber() ?? 0;
 
     // update state
-    setState({ ...state, api: apiInstance });
+    setApi(apiInstance);
     setConsts({
       bondDuration: bondDuration,
       maxNominations: maxNominations,
@@ -135,8 +138,8 @@ export const APIContextWrapper = (props: any) => {
     setConnectionStatus(CONNECTION_STATUS[2]);
   }
 
+  
   const switchNetwork = async (newNetwork: keyof NetworkOptions) => {
-    const { api }: any = state;
 
     // return if different network
     if (newNetwork === state.activeNetwork) {
@@ -150,8 +153,8 @@ export const APIContextWrapper = (props: any) => {
 
     setState({
       ...defaultState,
-      activeNetwork: newNetwork,
       network: NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
+      activeNetwork: newNetwork,
     });
     setConnectionStatus(CONNECTION_STATUS[0]);
 
@@ -186,7 +189,7 @@ export const APIContextWrapper = (props: any) => {
       switchNetwork: switchNetwork,
       fetchDotPrice: fetchDotPrice,
       isReady: isReady,
-      api: stateRef.current.api,
+      api: api,
       status: connectionStatus,
       consts: constsRef.current,
       network: stateRef.current.network,
