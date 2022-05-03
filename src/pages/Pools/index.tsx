@@ -107,7 +107,7 @@ export const Pools = (props: PageProps) => {
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>
-          <SectionWrapper style={{ height: 200 }}>
+          <SectionWrapper style={{ height: 310 }}>
             <div className='head'>
               <h4>
                 Status
@@ -126,11 +126,22 @@ export const Pools = (props: PageProps) => {
                   <Button small primary title='-' onClick={() => { }} />
                 </div>
               </h2>
+              <Separator />
+              <h4>
+                Unclaimed Rewards
+                <OpenAssistantIcon page='stake' title='Staking Status' />
+              </h4>
+              <h2>
+                0.82 {network.unit} &nbsp;
+                <div>
+                  <Button small primary inline title='Claim' onClick={() => { }} />
+                </div>
+              </h2>
             </div>
           </SectionWrapper>
         </MainWrapper>
         <SecondaryWrapper>
-          <SectionWrapper style={{ height: 200 }}>
+          <SectionWrapper style={{ height: 310 }}>
             <div className='head'>
               <h4>
                 Joined Pool
