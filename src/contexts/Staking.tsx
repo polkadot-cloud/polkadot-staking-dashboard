@@ -1,13 +1,17 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from './Api';
 import { useNetworkMetrics } from './Network';
 import { useBalances } from './Balances';
 import { useConnect } from './Connect';
 import BN from "bn.js";
 import { rmCommas } from '../Utils';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Worker from "worker-loader!../workers/fibo.worker";
+
+const worker = new Worker();
 
 // context type
 export interface StakingContextState {
@@ -56,13 +60,19 @@ export const StakingContextWrapper = (props: any) => {
     unsub: null,
   });
 
-  const [eraStakers, setEraStakers]: any = useState({
+  const [eraStakers, _setEraStakers]: any = useState({
     stakers: [],
     activeNominators: 0,
     activeValidators: 0,
     minActiveBond: 0,
     minStakingActiveBond: 0,
   });
+
+  const eraStakersRef = useRef(eraStakers);
+  const setEraStakers = (val: any) => {
+    eraStakersRef.current = val;
+    _setEraStakers(val);
+  }
 
   const subscribeToStakingkMetrics = async (api: any) => {
     if (isReady && metrics.activeEra.index !== 0) {
@@ -125,66 +135,26 @@ export const StakingContextWrapper = (props: any) => {
   }
 
   /* 
-   * Fetches the active nominator count.
-   * The top 256 nominators of each validator get rewarded.
-   * This function uses the above assumption to calculate active nominator count,
-   * As well as the minimum bond needed to be in the active set for the era.
+   * Fetches the active nominator set.
+   * The top 256 nominators get rewarded. Nominators may have their bond  spread
+   * among multiple nominees.
+   * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
     if (!isReady || metrics.activeEra.index === 0) { return }
 
-    const exposures = await api.query.staking.erasStakersClipped.entries(metrics.activeEra.index);
+    const _exposures = await api.query.staking.erasStakers.entries(metrics.activeEra.index);
 
-    // calculate total active nominators
-    let _stakers: any = [];
-    let _activeNominators = 0;
-    let _activeValidators = 0;
-    let _minActiveBond = new BN(0);
+    // humanise exposures to send to worker
+    let exposures = _exposures.map(([_keys, _val]: any) => ({
+      keys: _keys.toHuman(),
+      val: _val.toHuman(),
+    }));
 
-    exposures.forEach(([_keys, _val]: any) => {
-
-      let address = _keys.toHuman()[1];
-
-      _activeValidators++;
-      let val = _val.toHuman();
-      _stakers.push({
-        address: address,
-        ...val
-      });
-
-      let others = val?.others ?? [];
-      let _nominators = others.length ?? 0;
-      others = others.sort((a: any, b: any) => {
-        let x = new BN(rmCommas(a.value));
-        let y = new BN(rmCommas(b.value));
-        return x.sub(y);
-      });
-
-      // accumilate active nominators
-      if (_nominators > maxNominatorRewardedPerValidator) {
-        _activeNominators += maxNominatorRewardedPerValidator;
-      } else {
-        _activeNominators += _nominators;
-      }
-
-      // accumulate min active bond threshold
-      if (others.length) {
-        let _min = new BN(rmCommas(others[0].value.toString()));
-        if ((_min.lt(_minActiveBond)) || _minActiveBond.toNumber() === 0) {
-          _minActiveBond = _min;
-        }
-      }
-    });
-
-    // convert _minActiveBond to DOT value
-    let minActiveBond = _minActiveBond.div(new BN(10 ** 10)).toNumber();
-
-    setEraStakers({
-      ...eraStakers,
-      stakers: _stakers,
-      activeNominators: _activeNominators,
-      activeValidators: _activeValidators,
-      minActiveBond: minActiveBond,
+    // worker to calculate stats
+    worker.postMessage({
+      exposures: exposures,
+      maxNominatorRewardedPerValidator: maxNominatorRewardedPerValidator,
     });
   }
 
@@ -197,7 +167,7 @@ export const StakingContextWrapper = (props: any) => {
     let statuses: any = {};
 
     for (let nomination of nominations) {
-      let status = eraStakers.stakers.find((_n: any) => _n.address === nomination);
+      let status = eraStakersRef.current.stakers.find((_n: any) => _n.address === nomination);
 
       if (status === undefined) {
         statuses[nomination] = 'waiting';
@@ -215,12 +185,10 @@ export const StakingContextWrapper = (props: any) => {
   }
 
   useEffect(() => {
-
     if (isReady) {
       fetchEraStakers();
       subscribeToStakingkMetrics(api);
     }
-
     return (() => {
       // unsubscribe from staking metrics
       if (stakingMetrics.unsub !== null) {
@@ -229,12 +197,34 @@ export const StakingContextWrapper = (props: any) => {
     })
   }, [isReady, metrics.activeEra]);
 
+  useEffect(() => {
+    worker.onmessage = (message: any) => {
+      if (message) {
+        const { data } = message;
+
+        const {
+          stakers,
+          activeNominators,
+          activeValidators,
+          minActiveBond
+        } = data;
+
+        setEraStakers({
+          ...eraStakersRef.current,
+          stakers: stakers,
+          activeNominators: activeNominators,
+          activeValidators: activeValidators,
+          minActiveBond: minActiveBond,
+        });
+      }
+    };
+  }, []);
 
   // calculates minimum bond of the user's chosen nominated validators.
   useEffect(() => {
 
     let _stakingMinActiveBond = new BN(0);
-    const stakers = eraStakers?.stakers ?? null;
+    const stakers = eraStakersRef.current?.stakers ?? null;
     const nominations = getAccountNominations(activeAccount);
 
     if (nominations.length && stakers !== null) {
@@ -263,11 +253,11 @@ export const StakingContextWrapper = (props: any) => {
     let stakingMinActiveBond = _stakingMinActiveBond.div(new BN(10 ** 10)).toNumber();
 
     setEraStakers({
-      ...eraStakers,
+      ...eraStakersRef.current,
       minStakingActiveBond: stakingMinActiveBond
     });
 
-  }, [isReady, accounts, activeAccount, eraStakers?.stakers]);
+  }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
 
   /*
@@ -316,7 +306,7 @@ export const StakingContextWrapper = (props: any) => {
         isNominating: isNominating,
         inSetup: inSetup,
         staking: stakingMetrics,
-        eraStakers: eraStakers,
+        eraStakers: eraStakersRef.current,
       }}>
       {props.children}
     </StakingContext.Provider>

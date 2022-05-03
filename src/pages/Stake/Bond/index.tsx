@@ -1,14 +1,12 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { planckToDot } from '../../../Utils';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
-import { useNetworkMetrics } from '../../../contexts/Network';
 import { useStaking } from '../../../contexts/Staking';
-import { useValidators } from '../../../contexts/Validators';
 import { useUi } from '../../../contexts/UI';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { Spacer } from '../Wrappers';
@@ -27,16 +25,13 @@ export const Bond = (props: any) => {
   const { section } = props;
 
   const { network }: any = useApi();
-  const { metrics }: any = useNetworkMetrics();
   const { activeAccount } = useConnect();
-  const { getMinRewardBond, meta } = useValidators();
   const { staking, eraStakers } = useStaking();
   const { getAccountLedger, getBondedAccount, getAccountBalance }: any = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
 
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
-  const { activeEra } = metrics;
   const balance = getAccountBalance(activeAccount);
   let { free } = balance;
   const controller = getBondedAccount(activeAccount);
@@ -55,9 +50,6 @@ export const Bond = (props: any) => {
   const [bond, setBond] = useState(planckToDot({
     bond: initialBondValue
   }));
-
-  // store minimum reward bond
-  const [minRewardBond, setMinRewardBond] = useState(null);
 
   // handle errors
 
@@ -89,17 +81,28 @@ export const Bond = (props: any) => {
   const gtMinNominatorBond = bond.bond >= planckToDot(minNominatorBond);
   const gtMinActiveBond = bond.bond >= minActiveBond;
 
-  // get minimum bond for rewards for chosen validators
+  /*
+  // Experimental
+  // Get minimum bond for rewards for chosen validators.
+
+  import { useEffect } from 'react';
+  import { useNetworkMetrics } from '../../../contexts/Network';
+  import { useValidators } from '../../../contexts/Validators';
+
+  const { metrics }: any = useNetworkMetrics();
+  const { getMinRewardBond, meta } = useValidators();
+
+  const [minRewardBond, setMinRewardBond] = useState(null);
 
   useEffect(() => {
     // validator stake batch must be present to continue
     const _stakeExists = meta['validators_browse']?.stake ?? false;
-
     if (_stakeExists) {
       const minRewardBond = getMinRewardBond(setup.nominations.map((item: any) => item.address));
       setMinRewardBond(minRewardBond);
     }
   });
+  */
 
   return (
     <SectionWrapper transparent>
@@ -163,10 +166,10 @@ export const Bond = (props: any) => {
               <h4>
                 <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
                 &nbsp;
-                Receive Rewards
+                Active
               </h4>
               <div className='bar'>
-                <h5>~{minRewardBond === null ? 'Calculating...' : minRewardBond < gtMinActiveBond ? gtMinActiveBond : minRewardBond} {minRewardBond !== null ? network.unit : ``}</h5>
+                <h5>{minActiveBond} {network.unit}</h5>
               </div>
             </section>
           </div>
