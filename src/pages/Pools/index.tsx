@@ -103,11 +103,11 @@ export const Pools = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={`Nomination ${title}`} />
+      <PageTitle title={title} />
       <StatBoxList items={items} />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>
-          <SectionWrapper style={{ height: 375 }}>
+          <SectionWrapper style={{ height: 360 }}>
             <div className='head'>
               <h4>
                 Status
@@ -149,7 +149,7 @@ export const Pools = (props: PageProps) => {
           </SectionWrapper>
         </MainWrapper>
         <SecondaryWrapper>
-          <SectionWrapper style={{ height: 375 }}>
+          <SectionWrapper style={{ height: 360 }}>
 
             <div className='head'>
               <h2>Pool Roles</h2>
