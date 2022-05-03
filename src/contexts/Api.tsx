@@ -126,7 +126,15 @@ export const APIContextWrapper = (props: any) => {
     // some networks do not have this setting, default to zero if so
     voterSnapshotPerBlock = voterSnapshotPerBlock?.toNumber() ?? 0;
 
+    // update local storage
+    localStorage.setItem('network', String(network));
+
     // update state
+    setState({
+      ...defaultState,
+      network: NODE_ENDPOINTS[network as keyof NetworkOptions],
+      activeNetwork: network,
+    });
     setApi(apiInstance);
     setConsts({
       bondDuration: bondDuration,
@@ -138,28 +146,13 @@ export const APIContextWrapper = (props: any) => {
     setConnectionStatus(CONNECTION_STATUS[2]);
   }
 
-  
-  const switchNetwork = async (newNetwork: keyof NetworkOptions) => {
-
+  const switchNetwork = async (network: keyof NetworkOptions) => {
     // return if different network
-    if (newNetwork === state.activeNetwork) {
+    if (network === state.activeNetwork) {
       return;
     }
-    // disconnect from current network and stop tickers
-    await api.disconnect();
-
-    // update local storage network
-    localStorage.setItem('network', String(newNetwork));
-
-    setState({
-      ...defaultState,
-      network: NODE_ENDPOINTS[newNetwork as keyof NetworkOptions],
-      activeNetwork: newNetwork,
-    });
-    setConnectionStatus(CONNECTION_STATUS[0]);
-
     // reconnect to new network
-    connect(newNetwork);
+    connect(network);
   }
 
   // handles fetching of DOT price and updates context state.
@@ -169,7 +162,6 @@ export const APIContextWrapper = (props: any) => {
     ];
     let responses = await Promise.all(urls.map(u => fetch(u, { method: 'GET' })))
     let texts = await Promise.all(responses.map(res => res.json()));
-
     const _change = texts[0];
 
     if (_change.lastPrice !== undefined && _change.priceChangePercent !== undefined) {

@@ -59,7 +59,7 @@ ctx.addEventListener('message', (event: any) => {
     return a.value.sub(b.value);
   }).splice(0, (maxNominatorRewardedPerValidator));
 
-  let _minActiveBond = _getMinBonds[0]?.value ?? 0;
+  let _minActiveBond = _getMinBonds[0]?.value ?? new BN(0);
 
   // convert _minActiveBond to DOT value
   _minActiveBond = _minActiveBond.div(new BN(10 ** 10)).toNumber();
