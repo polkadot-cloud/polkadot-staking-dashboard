@@ -24,7 +24,6 @@ export const NetworkMetricsProvider = (props: any) => {
   const { isReady, api }: any = useApi();
 
   const [state, setState]: any = useState({
-    now: 0,
     activeEra: {
       index: 0,
       start: 0,
@@ -82,7 +81,6 @@ export const NetworkMetricsProvider = (props: any) => {
   return (
     <NetworkMetricsContext.Provider value={{
       metrics: {
-        now: state.now,
         activeEra: state.activeEra,
         totalIssuance: state.totalIssuance,
       }

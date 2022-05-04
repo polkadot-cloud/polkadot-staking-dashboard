@@ -86,14 +86,15 @@ export class ConnectProvider extends React.Component {
       }
 
       this.setState({
-        ...this.state,
         status: 1,
         accounts: accounts,
         activeAccount: _activeAccount,
       });
     }, { ss58Format: 0 });
 
-    this.setState({ ...this.state, unsubscribe: unsubscribe, });
+    this.setState({
+      unsubscribe: unsubscribe,
+    });
   }
 
   componentWillUnmount () {
@@ -101,7 +102,9 @@ export class ConnectProvider extends React.Component {
   }
 
   connect = () => {
-    this.setState({ ...this.state, status: 1 });
+    this.setState({
+      status: 1
+    });
   }
 
   disconnect = () => {
@@ -122,7 +125,6 @@ export class ConnectProvider extends React.Component {
   setActiveAccount = (address: string) => {
     this.setLocalStorageActiveAccount(address);
     this.setState({
-      ...this.state,
       activeAccount: address,
     });
   }
