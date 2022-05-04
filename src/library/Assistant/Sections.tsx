@@ -1,12 +1,13 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useRef, useEffect } from 'react';
 import { pageTitleFromUri } from '../../pages';
 import Heading from './Heading';
 import Definition from './Items/Definition';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft as faBack } from '@fortawesome/free-solid-svg-icons';
-import { ContentWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
+import { SectionWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useLocation } from 'react-router-dom';
@@ -52,9 +53,22 @@ export const Sections = (props: any) => {
     innerDefinition.description = _innerDefinition.description;
   }
 
+  const homeRef: any = useRef(null);
+  const itemRef: any = useRef(null);
+
+  useEffect(() => {
+    assistant.setAssistantHeight(
+      assistant.activeSection === 0
+        ? homeRef.current.clientHeight
+        : itemRef.current.clientHeight
+    );
+  }, [assistant.activeSection, assistant.open]);
+
   return (
     <>
-      <ContentWrapper>
+      <SectionWrapper
+        ref={homeRef}
+        style={{ height: assistant.activeSection === 0 ? 'auto' : 0 }}>
         <HeaderWrapper>
           <div className='hold'>
             <h3>{pageTitleFromUri(pathname)} Resources</h3>
@@ -120,9 +134,12 @@ export const Sections = (props: any) => {
             </>
           }
         </ListWrapper>
-      </ContentWrapper>
+      </SectionWrapper>
 
-      <ContentWrapper>
+      <SectionWrapper
+        ref={itemRef}
+        style={{ height: assistant.activeSection === 1 ? 'auto' : 0 }}
+      >
         <HeaderWrapper>
           <div className='hold'>
             <button onClick={() => assistant.setActiveSection(0)}>
@@ -146,7 +163,7 @@ export const Sections = (props: any) => {
             </p>
           )}
         </ListWrapper>
-      </ContentWrapper>
+      </SectionWrapper>
     </>
   )
 }

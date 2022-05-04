@@ -14,10 +14,12 @@ export interface AssistantContextState {
   closeAssistant: () => any,
   setActiveSection: (i: number) => void;
   goToDefinition: (k: string, t: string) => void;
+  setAssistantHeight: (v: any) => void;
   activeSection: number,
   open: number;
   page: string,
   innerDefinition: any,
+  height: any,
 }
 
 // context definition
@@ -30,10 +32,12 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
   closeAssistant: () => { },
   setActiveSection: (i: number) => { },
   goToDefinition: (k: string, t: string) => { },
+  setAssistantHeight: (v: any) => { },
   activeSection: 0,
   open: 0,
   page: 'overview',
   innerDefinition: {},
+  height: 0,
 });
 
 // useAssistant
@@ -47,6 +51,7 @@ export class AssistantProvider extends React.Component {
     page: 'overview',
     innerDefinition: [],
     activeSection: 0,
+    height: 0,
   };
 
   setPage = (newPage: string) => {
@@ -93,6 +98,13 @@ export class AssistantProvider extends React.Component {
     setTimeout(() => this.openAssistant(), 60);
   }
 
+  setAssistantHeight = (v: any) => {
+    this.setState({
+      ...this.state,
+      height: v
+    });
+  }
+
   render () {
     return (
       <AssistantContext.Provider value={{
@@ -104,10 +116,12 @@ export class AssistantProvider extends React.Component {
         closeAssistant: this.closeAssistant,
         setActiveSection: this.setActiveSection,
         goToDefinition: this.goToDefinition,
+        setAssistantHeight: this.setAssistantHeight,
         activeSection: this.state.activeSection,
         open: this.state.open,
         page: this.state.page,
         innerDefinition: this.state.innerDefinition,
+        height: this.state.height,
       }}>
         {this.props.children}
       </AssistantContext.Provider>

@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from '../../constants';
-import { textPrimary, textSecondary, assistantLink, assistantButton, assistantBackground, textInvert } from '../../theme';
+import { textPrimary, textSecondary, assistantButton, assistantBackground } from '../../theme';
 
 export const Wrapper = styled(motion.div) <any>`
   position: fixed;
@@ -12,7 +12,7 @@ export const Wrapper = styled(motion.div) <any>`
   top: 0;
   width: 100%;
   max-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px;
-  height: 100%;
+  height: auto;
   z-index: 8;
   display: flex;
   flex-flow: column nowrap;
@@ -33,18 +33,25 @@ export const SectionsWrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div`
+  background: ${assistantBackground};
+  backdrop-filter: blur(4px);
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
-  flex-basis: 50%;
-  background: ${assistantBackground};
-  backdrop-filter: blur(4px);
+  flex-basis: 100%;
   margin: 0.75rem;
+  overflow: hidden;
+`;
+
+export const SectionWrapper = styled(motion.div)`
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 100%;
+  transition: max-height 0.5s;
 `;
 
 export const HeaderWrapper = styled.div`
   width: 100%;
-
   .hold {
     display: flex;
     flex-flow: row wrap;
@@ -54,7 +61,6 @@ export const HeaderWrapper = styled.div`
     flex-shrink: 0;
     margin: 0;
   }
-
   button {
     color: ${textPrimary};
     font-size: 1rem;
