@@ -29,43 +29,39 @@ export const MessagesProvider = (props: any) => {
   const { activeAccount, status: connectStatus, accountExists }: any = useConnect();
   const { accounts: balanceAccounts, getBondedAccount }: any = useBalances();
 
-  const [state, setState]: any = useState({
-    messages: [],
-  });
+  const [messages, _setMessages]: any = useState([]);
 
   useEffect(() => {
-    let messages = [];
+    let _messages = [];
 
     // is controller missing from imported accounts? (check once balanceAccounts are fetched)
     if (balanceAccounts.length) {
       let controller = getBondedAccount(activeAccount);
       if (controller !== null) {
         if (!accountExists(controller)) {
-          messages.push({
+          _messages.push({
             key: GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED,
             msg: true
           });
         }
       }
     }
-    setMessages(messages);
+    setMessages(_messages);
 
   }, [activeAccount, connectStatus, getBondedAccount(activeAccount), balanceAccounts.length])
 
 
   const setMessage = (key: string, msg: any) => {
-    let filtered = state.messages.filter((message: any) => message.key !== key);
+    let filtered = messages.filter((message: any) => message.key !== key);
     filtered.push({
       key: key,
       msg: msg
     });
-    setState({
-      messages: filtered
-    });
+    _setMessages(filtered);
   }
 
   const setMessages = (msgs: any) => {
-    let _messages = state.messages;
+    let _messages = messages;
     let filtered: any = [];
     for (let i = 0; i < msgs.length; i++) {
 
@@ -76,25 +72,22 @@ export const MessagesProvider = (props: any) => {
         msg: msgs[i].msg,
       });
     }
-
-    setState({
-      messages: filtered,
-    });
+    _setMessages(filtered);
   }
 
   const removeMessage = (key: string) => {
-    const _messages = state.messages.filter((message: any) => message.key !== key);
-    setState({ messages: _messages });
+    const _messages = messages.filter((message: any) => message.key !== key);
+    _setMessages(_messages);
   }
 
   const getMessage = (key: string) => {
-    const _message = state.messages.filter((message: any) => message.key === key);
+    const _message = messages.filter((message: any) => message.key === key);
     return _message.length === 0 ? null : _message[0].msg;
   }
 
   return (
     <MessagesContext.Provider value={{
-      messages: state.messages,
+      messages: messages,
       setMessage: setMessage,
       setMessages: setMessages,
       removeMessage: removeMessage,
