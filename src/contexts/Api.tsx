@@ -117,8 +117,6 @@ export const APIProvider = (props: any) => {
     const maxNominations = _metrics[1] ? _metrics[1].toHuman() : MAX_NOMINATIONS;
     let maxElectingVoters: any = _metrics[4];
 
-    console.log(maxElectingVoters);
-
     // some networks do not have this setting, default to zero if so
     maxElectingVoters = maxElectingVoters?.toNumber() ?? 0;
 
