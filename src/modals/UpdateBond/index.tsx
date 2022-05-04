@@ -25,7 +25,7 @@ export const UpdateBond = () => {
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active } = ledger;
-  let { free, miscFrozen } = balance;
+  const { free, miscFrozen } = balance;
   const { fn } = config;
 
   const [section, setSection] = useState(0);
