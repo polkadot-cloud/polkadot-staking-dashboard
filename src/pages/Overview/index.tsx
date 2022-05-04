@@ -24,7 +24,7 @@ import { ActiveAccount } from './ActiveAccount';
 export const Overview = (props: PageProps) => {
 
   const { network, consts }: any = useApi();
-  const { voterSnapshotPerBlock } = consts;
+  const { maxElectingVoters } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { totalIssuance } = metrics;
   const { activeAccount }: any = useConnect();
@@ -36,7 +36,7 @@ export const Overview = (props: PageProps) => {
 
   let supplyAsPercent = defaultIfNaN(((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2), 0);
   let totalNominatorsAsPercent = defaultIfNaN(((totalNominators ?? 0) / (maxNominatorsCount * 0.01)).toFixed(2), 0);
-  let activeNominatorsAsPercent = defaultIfNaN(((activeNominators ?? 0) / (voterSnapshotPerBlock * 0.01)).toFixed(2), 0);
+  let activeNominatorsAsPercent = defaultIfNaN(((activeNominators ?? 0) / (maxElectingVoters * 0.01)).toFixed(2), 0);
 
   // stats
   const items = [
@@ -68,8 +68,8 @@ export const Overview = (props: PageProps) => {
     {
       label: "Active Nominators",
       value: activeNominators,
-      value2: voterSnapshotPerBlock - activeNominators ?? 0,
-      total: voterSnapshotPerBlock,
+      value2: maxElectingVoters - activeNominators ?? 0,
+      total: maxElectingVoters,
       unit: "",
       tooltip: `${activeNominatorsAsPercent}%`,
       format: "chart-pie",

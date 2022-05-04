@@ -41,7 +41,7 @@ export const APIProvider = (props: any) => {
     maxNominations: 0,
     sessionsPerEra: 0,
     maxNominatorRewardedPerValidator: 0,
-    voterSnapshotPerBlock: 0,
+    maxElectingVoters: 0,
   };
 
   // api instance state
@@ -86,17 +86,16 @@ export const APIProvider = (props: any) => {
 
     // wsProvider.on('ready', () => {});
 
-    // attempt to reconnect on an error
     wsProvider.on('error', () => {
       connect(network);
     });
 
-    // api disconnect handler
     wsProvider.on('disconnected', () => {
       setApi(null);
       setNetwork(defaultNetwork);
       setConsts(defaultConsts);
       setConnectionStatus(CONNECTION_STATUS[0]);
+      connect(network);
     });
 
     // wait for instance to connect, then assign instance to context state
@@ -108,7 +107,7 @@ export const APIProvider = (props: any) => {
       apiInstance.consts.staking.maxNominations,
       apiInstance.consts.staking.sessionsPerEra,
       apiInstance.consts.staking.maxNominatorRewardedPerValidator,
-      apiInstance.consts.electionProviderMultiPhase.voterSnapshotPerBlock,
+      apiInstance.consts.electionProviderMultiPhase.maxElectingVoters,
     ]);
 
     // fallback to default values
@@ -116,10 +115,12 @@ export const APIProvider = (props: any) => {
     const sessionsPerEra = _metrics[2] ? _metrics[2].toHuman() : SESSIONS_PER_ERA;
     const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
     const maxNominations = _metrics[1] ? _metrics[1].toHuman() : MAX_NOMINATIONS;
-    let voterSnapshotPerBlock: any = _metrics[4];
+    let maxElectingVoters: any = _metrics[4];
+
+    console.log(maxElectingVoters);
 
     // some networks do not have this setting, default to zero if so
-    voterSnapshotPerBlock = voterSnapshotPerBlock?.toNumber() ?? 0;
+    maxElectingVoters = maxElectingVoters?.toNumber() ?? 0;
 
     // update local storage
     localStorage.setItem('network', String(_network));
@@ -135,7 +136,7 @@ export const APIProvider = (props: any) => {
       maxNominations: maxNominations,
       sessionsPerEra: sessionsPerEra,
       maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
-      voterSnapshotPerBlock: Number(voterSnapshotPerBlock),
+      maxElectingVoters: Number(maxElectingVoters),
     });
     setConnectionStatus(CONNECTION_STATUS[2]);
   }
