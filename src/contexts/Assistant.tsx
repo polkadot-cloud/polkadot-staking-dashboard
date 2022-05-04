@@ -81,6 +81,9 @@ export class AssistantProvider extends React.Component {
 
   closeAssistant = () => {
     this.setState({ open: 0 });
+
+    // short timeout to hide back to list
+    setTimeout(() => this.setState({ activeSection: 0 }), 100);
   }
 
   setActiveSection = (index: number) => {
