@@ -13,6 +13,7 @@ export const Wrapper = styled(motion.div) <any>`
   width: 100%;
   max-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px;
   height: auto;
+  max-height: 100%;
   z-index: 8;
   display: flex;
   flex-flow: column nowrap;
@@ -41,13 +42,21 @@ export const ContentWrapper = styled.div`
   flex-basis: 100%;
   margin: 0.75rem;
   overflow: hidden;
+  max-height: 100%;
+`;
+
+export const HeightWrapper = styled.div`
+  transition: height 0.15s ease-out;
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
 `;
 
 export const SectionWrapper = styled(motion.div)`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 100%;
-  transition: max-height 0.5s;
 `;
 
 export const HeaderWrapper = styled.div`

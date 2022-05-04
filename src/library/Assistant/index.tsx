@@ -3,7 +3,7 @@
 
 import { useEffect, useCallback, useRef } from 'react';
 import { useAssistant } from '../../contexts/Assistant';
-import { Wrapper, SectionsWrapper, ContentWrapper } from './Wrappers';
+import { Wrapper, SectionsWrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
 import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../pages';
@@ -75,17 +75,19 @@ export const Assistant = () => {
       variants={containerVariants}
     >
       <ContentWrapper>
-        <SectionsWrapper
-          animate={animateSections}
-          transition={{
-            duration: 0.5,
-            type: "spring",
-            bounce: 0.22
-          }}
-          variants={sectionVariants}
-        >
-          <Sections pageMeta={pageMeta} />
-        </SectionsWrapper>
+        <HeightWrapper style={{ height: assistant.height }}>
+          <SectionsWrapper
+            animate={animateSections}
+            transition={{
+              duration: 0.5,
+              type: "spring",
+              bounce: 0.22
+            }}
+            variants={sectionVariants}
+          >
+            <Sections pageMeta={pageMeta} />
+          </SectionsWrapper>
+        </HeightWrapper>
       </ContentWrapper>
     </Wrapper>
   );
