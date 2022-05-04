@@ -70,7 +70,7 @@ export const Assistant = () => {
       transition={{
         duration: 0.5,
         type: "spring",
-        bounce: 0.22
+        bounce: 0.2
       }}
       variants={containerVariants}
     >
@@ -81,7 +81,7 @@ export const Assistant = () => {
             transition={{
               duration: 0.5,
               type: "spring",
-              bounce: 0.22
+              bounce: 0.1
             }}
             variants={sectionVariants}
           >

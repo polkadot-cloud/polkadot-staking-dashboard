@@ -46,7 +46,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const HeightWrapper = styled.div`
-  transition: height 0.15s ease-out;
+  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
   max-height: 100%;
   overflow: auto;
