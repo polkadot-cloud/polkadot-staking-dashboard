@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import { useAssistant } from '../../contexts/Assistant';
 import External from './Items/External';
 import Action from './Items/Action';
+import { pageFromUri } from '../../Utils';
 
 export const Sections = (props: any) => {
 
@@ -73,7 +74,7 @@ export const Sections = (props: any) => {
           <div className='hold'>
             <h3>{pageTitleFromUri(pathname)} Resources</h3>
             <span>
-              <button className='close' onClick={() => { assistant.toggle() }}>
+              <button className='close' onClick={() => { assistant.closeAssistant(pageFromUri(pathname)) }}>
                 Close
               </button>
             </span>
@@ -149,9 +150,8 @@ export const Sections = (props: any) => {
                 style={{ cursor: 'pointer', marginRight: '0.3rem' }}
               /> Back
             </button>
-
             <span>
-              <button className='close' onClick={() => { assistant.toggle() }}>Close</button>
+              <button className='close' onClick={() => { assistant.closeAssistant(pageFromUri(pathname)) }}>Close</button>
             </span>
           </div>
         </HeaderWrapper>

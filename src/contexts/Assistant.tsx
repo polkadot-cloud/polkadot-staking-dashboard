@@ -11,7 +11,7 @@ export interface AssistantContextState {
   setInnerDefinition: (meta: any) => void;
   getDefinition: (k: string, t: string) => any;
   openAssistant: () => any,
-  closeAssistant: () => any,
+  closeAssistant: (p: any) => any,
   setActiveSection: (i: number) => void;
   goToDefinition: (k: string, t: string) => void;
   setAssistantHeight: (v: any) => void;
@@ -29,7 +29,7 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
   setInnerDefinition: (m: any) => { },
   getDefinition: (k: string, t: string) => { },
   openAssistant: () => { },
-  closeAssistant: () => { },
+  closeAssistant: (p: any) => { },
   setActiveSection: (i: number) => { },
   goToDefinition: (k: string, t: string) => { },
   setAssistantHeight: (v: any) => { },
@@ -56,7 +56,6 @@ export class AssistantProvider extends React.Component {
 
   setPage = (newPage: string) => {
     this.setState({
-      ...this.state,
       page: newPage,
     })
   }
@@ -79,11 +78,18 @@ export class AssistantProvider extends React.Component {
     this.setState({ open: 1 });
   }
 
-  closeAssistant = () => {
+  closeAssistant = (page: any) => {
+
     this.setState({ open: 0 });
 
     // short timeout to hide back to list
-    setTimeout(() => this.setState({ activeSection: 0 }), 100);
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        // page: pageFromUri(pathname),
+        activeSection: 0,
+      });
+    }, 100);
   }
 
   setActiveSection = (index: number) => {
