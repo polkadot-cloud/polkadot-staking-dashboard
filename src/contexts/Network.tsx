@@ -21,16 +21,25 @@ export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 // wrapper component to provide components with context
 export const NetworkMetricsProvider = (props: any) => {
 
-  const { isReady, api }: any = useApi();
+  const { isReady, api, status }: any = useApi();
 
-  const [state, setState]: any = useState({
+  const defaultState = {
     activeEra: {
       index: 0,
       start: 0,
     },
     totalIssuance: 0,
     unsub: undefined,
-  });
+  };
+
+  useEffect(() => {
+    if (status === 'connecting') {
+      setState(defaultState);
+    }
+  }, [status]);
+
+  // store network metrics in state
+  const [state, setState]: any = useState(defaultState);
 
   // manage unsubscribe
   useEffect(() => {

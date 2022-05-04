@@ -42,12 +42,20 @@ export const useStaking = () => React.useContext(StakingContext);
 export const StakingProvider = (props: any) => {
 
   const { activeAccount } = useConnect();
-  const { isReady, api, consts }: any = useApi();
+  const { isReady, api, consts, status }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
 
-  const [stakingMetrics, setStakingMetrics]: any = useState({
+  const defaultEraStakers = {
+    stakers: [],
+    activeNominators: 0,
+    activeValidators: 0,
+    minActiveBond: 0,
+    minStakingActiveBond: 0,
+  };
+
+  const defaultStakingMetrics = {
     totalNominators: 0,
     totalValidators: 0,
     lastReward: 0,
@@ -58,15 +66,20 @@ export const StakingProvider = (props: any) => {
     minNominatorBond: 0,
     historyDepth: 0,
     unsub: null,
-  });
+  };
 
-  const [eraStakers, _setEraStakers]: any = useState({
-    stakers: [],
-    activeNominators: 0,
-    activeValidators: 0,
-    minActiveBond: 0,
-    minStakingActiveBond: 0,
-  });
+  useEffect(() => {
+    if (status === 'connecting') {
+      setEraStakers(defaultEraStakers);
+      setStakingMetrics(defaultStakingMetrics);
+    }
+  }, [status]);
+
+  // store staking metrics in state
+  const [stakingMetrics, setStakingMetrics]: any = useState(defaultStakingMetrics);
+
+  // store stakers metadata in state
+  const [eraStakers, _setEraStakers]: any = useState(defaultEraStakers);
 
   const eraStakersRef = useRef(eraStakers);
   const setEraStakers = (val: any) => {
