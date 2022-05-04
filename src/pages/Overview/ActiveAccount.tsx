@@ -17,6 +17,7 @@ export const ActiveAccount = () => {
   const { activeAccount, getAccount }: any = useConnect();
   const accountData = getAccount(activeAccount);
 
+  // click to copy notification
   let notification = {};
   if (accountData !== null) {
     notification = {

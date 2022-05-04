@@ -49,7 +49,7 @@ export const Wrapper = styled(motion.div) <any>`
       flex-grow: 1;
 
       label {
-        margin-left: 0.5rem;
+        margin-left: 0.35rem;
         color: #aaa;
 
         &.warning {

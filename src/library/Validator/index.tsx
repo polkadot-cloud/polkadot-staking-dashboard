@@ -12,11 +12,15 @@ import { useValidators } from '../../contexts/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getIdentityDisplay } from './Utils';
 import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { useNotifications } from '../../contexts/Notifications';
 
 export const ValidatorInner = (props: any) => {
 
   const { consts, network }: any = useApi();
   const { openModalWith } = useModal();
+  const { addNotification } = useNotifications();
   const { favourites, addFavourite, removeFavourite } = useValidators();
   const { initial, validator, synced, identity, superIdentity, stake, toggleFavourites } = props;
 
@@ -28,6 +32,15 @@ export const ValidatorInner = (props: any) => {
 
   let total_nominations = stake?.total_nominations ?? 0;
   let lowest = stake?.lowest ?? 0;
+
+  // click to copy notification
+  let notification = {};
+  if (address !== null) {
+    notification = {
+      title: 'Address Copied to Clipboard',
+      subtitle: address,
+    };
+  }
 
   return (
     <Wrapper>
@@ -118,7 +131,13 @@ export const ValidatorInner = (props: any) => {
               <FontAwesomeIcon icon={faChartLine} />
             </button>
           </label>
-
+          <label>
+            <button onClick={() => addNotification(notification)}>
+              <CopyToClipboard text={address}>
+                <FontAwesomeIcon icon={faCopy} />
+              </CopyToClipboard>
+            </button>
+          </label>
           {toggleFavourites &&
             <label>
               <button
