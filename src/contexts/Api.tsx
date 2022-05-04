@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import {
   CONNECTION_STATUS,
@@ -44,6 +44,9 @@ export const APIProvider = (props: any) => {
     maxElectingVoters: 0,
   };
 
+  // provider instance state
+  const [provider, setProvider]: any = useState(null);
+
   // api instance state
   const [api, setApi]: any = useState(null);
 
@@ -51,101 +54,85 @@ export const APIProvider = (props: any) => {
   const [network, setNetwork]: any = useState(defaultNetwork);
 
   // constants state
-  const [consts, _setConsts] = useState(defaultConsts);
-  const constsRef = useRef(consts);
-  const setConsts = (val: any) => {
-    constsRef.current = val;
-    _setConsts(val);
-  }
+  const [consts, setConsts]: any = useState(defaultConsts);
 
   // connection status state
   const [connectionStatus, setConnectionStatus]: any = useState(CONNECTION_STATUS[0]);
 
-  // initial connection
   useEffect(() => {
     const network: any = localStorage.getItem('network');
     connect(network);
   }, []);
 
-  // returns whether api is ready to be used
-  const isReady = (connectionStatus === CONNECTION_STATUS[2] && api !== null);
+  useEffect(() => {
+    if (provider !== null) {
+      // provider.on('connected', () => {});
+      // provider.on('ready', () => {});
+      // provider.on('error', () => {});
+      // provider.on('disconnected', () => {});
+    }
+  }, [provider]);
 
   // connect to websocket and return api into context
   const connect = async (_network: keyof NetworkOptions) => {
+    {
+      setConnectionStatus(CONNECTION_STATUS[1]);
+      setNetwork({
+        name: _network,
+        meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
+      });
+    }
 
-    // set connection status to 'connecting'
-    setConnectionStatus(CONNECTION_STATUS[1]);
+    const _provider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
+    const api = await ApiPromise.create({ provider: _provider });
 
-    // connect to network
-    const wsProvider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
-
-    // new connection event
-    wsProvider.on('connected', () => {
-      setConnectionStatus(CONNECTION_STATUS[2]);
-    });
-
-    // wsProvider.on('ready', () => {});
-
-    wsProvider.on('error', () => {
-      connect(network);
-    });
-
-    wsProvider.on('disconnected', () => {
-      setApi(null);
-      setNetwork(defaultNetwork);
-      setConsts(defaultConsts);
-      setConnectionStatus(CONNECTION_STATUS[0]);
-      connect(network);
-    });
-
-    // wait for instance to connect, then assign instance to context state
-    const apiInstance = await ApiPromise.create({ provider: wsProvider });
-
-    // get network consts
     const _metrics = await Promise.all([
-      apiInstance.consts.staking.bondingDuration,
-      apiInstance.consts.staking.maxNominations,
-      apiInstance.consts.staking.sessionsPerEra,
-      apiInstance.consts.staking.maxNominatorRewardedPerValidator,
-      apiInstance.consts.electionProviderMultiPhase.maxElectingVoters,
+      api.consts.staking.bondingDuration,
+      api.consts.staking.maxNominations,
+      api.consts.staking.sessionsPerEra,
+      api.consts.staking.maxNominatorRewardedPerValidator,
+      api.consts.electionProviderMultiPhase.maxElectingVoters,
     ]);
 
-    // fallback to default values
     const bondDuration = _metrics[0] ? _metrics[0].toHuman() : BONDING_DURATION;
     const sessionsPerEra = _metrics[2] ? _metrics[2].toHuman() : SESSIONS_PER_ERA;
     const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
     const maxNominations = _metrics[1] ? _metrics[1].toHuman() : MAX_NOMINATIONS;
     let maxElectingVoters: any = _metrics[4];
+    maxElectingVoters = maxElectingVoters?.toNumber();
 
-    // some networks do not have this setting, default to zero if so
-    maxElectingVoters = maxElectingVoters?.toNumber() ?? 0;
-
-    // update local storage
     localStorage.setItem('network', String(_network));
 
-    // update state
-    setNetwork({
-      name: _network,
-      meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
-    });
-    setApi(apiInstance);
-    setConsts({
-      bondDuration: bondDuration,
-      maxNominations: maxNominations,
-      sessionsPerEra: sessionsPerEra,
-      maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
-      maxElectingVoters: Number(maxElectingVoters),
-    });
-    setConnectionStatus(CONNECTION_STATUS[2]);
+    {
+      setProvider(_provider);
+      setApi(api);
+      setNetwork({
+        name: _network,
+        meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
+      });
+      setConsts({
+        bondDuration: bondDuration,
+        maxNominations: maxNominations,
+        sessionsPerEra: sessionsPerEra,
+        maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
+        maxElectingVoters: Number(maxElectingVoters),
+      });
+      setConnectionStatus(CONNECTION_STATUS[2]);
+    }
   }
 
+  // handle network switching
   const switchNetwork = async (_network: keyof NetworkOptions) => {
-    // return if different network
-    if (_network === network.name) {
-      return;
+    if (_network !== network.name) {
+      {
+        setApi(null);
+        setProvider(null);
+        setNetwork(defaultNetwork);
+        setConsts(defaultConsts);
+        setConnectionStatus(CONNECTION_STATUS[0]);
+      }
+      connect(_network);
     }
-    // reconnect to new network
-    connect(_network);
   }
 
   // handles fetching of DOT price and updates context state.
@@ -174,8 +161,8 @@ export const APIProvider = (props: any) => {
       fetchDotPrice: fetchDotPrice,
       switchNetwork: switchNetwork,
       api: api,
-      consts: constsRef.current,
-      isReady: isReady,
+      consts: consts,
+      isReady: (connectionStatus === CONNECTION_STATUS[2] && api !== null),
       network: network.meta,
       status: connectionStatus,
     }}>
