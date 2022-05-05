@@ -22,11 +22,11 @@ export const AccountSelect = (props: any) => {
       ? c.getItemProps({ index, item })
       : {};
 
-    const color = c.selectedItem.address === item.address
+    const color = c.selectedItem?.address === item?.address
       ? defaultThemes.primary[mode]
       : defaultThemes.text.primary[mode];
 
-    const border = c.selectedItem.address === item.address
+    const border = c.selectedItem?.address === item?.address
       ? `2px solid ${defaultThemes.primary[mode]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 

@@ -7,7 +7,6 @@ import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { isNumeric, planckToDot } from '../../../Utils';
-import { RESERVE_AMOUNT_PLANCK } from '../../../constants';
 
 export const BondInput = (props: any) => {
 
@@ -22,7 +21,7 @@ export const BondInput = (props: any) => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getBondedAccount, getAccountLedger }: any = useBalances();
+  const { getAccountBalance, getBondedAccount, getAccountLedger, minReserve }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
 
@@ -30,7 +29,7 @@ export const BondInput = (props: any) => {
   const balance = getAccountBalance(activeAccount);
   let { free } = balance;
 
-  let freeToBond: any = free - RESERVE_AMOUNT_PLANCK - active;
+  let freeToBond: any = free - minReserve - active;
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   // default value will either be available to bond, or total bonded

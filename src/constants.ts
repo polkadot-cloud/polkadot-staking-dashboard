@@ -89,7 +89,6 @@ export const VOTER_SNAPSHOT_PER_BLOCK = 22500;
  * Misc values 
  */
 export const RESERVE_AMOUNT_DOT = 0.1;
-export const RESERVE_AMOUNT_PLANCK = RESERVE_AMOUNT_DOT ** 10;
 export const LIST_ITEMS_PER_PAGE = 50;
 export const LIST_ITEMS_PER_BATCH = 20;
 

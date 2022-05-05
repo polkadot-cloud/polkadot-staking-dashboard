@@ -17,7 +17,6 @@ import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 import { Warning, BondStatus } from './Wrappers';
-import { RESERVE_AMOUNT_PLANCK } from '../../../../constants';
 import { BondInput } from '../../../../library/Form/BondInput';
 import { OpenAssistantIcon } from '../../../../library/OpenAssistantIcon';
 
@@ -28,7 +27,7 @@ export const Bond = (props: any) => {
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { staking, eraStakers } = useStaking();
-  const { getAccountBalance }: any = useBalances();
+  const { getAccountBalance, minReserve }: any = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
 
   const { minNominatorBond } = staking;
@@ -37,7 +36,7 @@ export const Bond = (props: any) => {
   let { free } = balance;
   const setup = getSetupProgress(activeAccount);
 
-  let freeAfterReserve: any = free - RESERVE_AMOUNT_PLANCK;
+  let freeAfterReserve: any = free - minReserve;
   freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
 
   const initialBondValue = setup.bond === 0
