@@ -20,7 +20,9 @@ export const Header = (props: any) => {
       <section>
         <h2>
           {title}
-          <OpenAssistantIcon page={assistantPage} title={assistantKey} />
+          {(assistantPage !== undefined && assistantKey !== undefined) &&
+            <OpenAssistantIcon page={assistantPage} title={assistantKey} />
+          }
         </h2>
       </section>
       <section>

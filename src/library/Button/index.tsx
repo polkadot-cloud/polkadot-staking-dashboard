@@ -25,7 +25,7 @@ export const Wrapper = styled(motion.button) <any>`
   flex-grow: 1;
   padding: ${props => props.padding};
   border-radius:  0.75rem;
-  font-size: 0.95rem;
+  font-size:${props => props.fontSize ? props.fontSize : '0.95rem'};
   font-variation-settings: 'wght' 560;
 `;
 
