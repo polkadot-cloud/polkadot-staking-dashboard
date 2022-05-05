@@ -88,7 +88,6 @@ export const Payee = (props: any) => {
         </Items>
         <Footer complete={setup.payee !== null} />
       </MotionContainer>
-
     </SectionWrapper>
   )
 }

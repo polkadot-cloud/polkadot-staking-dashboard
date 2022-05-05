@@ -7,13 +7,13 @@ import { useBalances } from '../../../contexts/Balances';
 import { planckToDot } from '../../../Utils';
 import { useConnect } from '../../../contexts/Connect';
 import { useStaking } from '../../../contexts/Staking';
+import { Element } from 'react-scroll';
+import { PageTitle } from '../../../library/PageTitle';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
-import { Element } from 'react-scroll';
-import { Wrapper as ButtonWrapper } from '../../../library/Button';
-import { PageTitle } from '../../../library/PageTitle';
+import { Summary } from './Summary';
 
 export const Setup = (props: any) => {
 
@@ -60,13 +60,11 @@ export const Setup = (props: any) => {
           <Bond section={4} />
         </SectionWrapper>
       </PageRowWrapper>
-      <PageRowWrapper>
-        <ButtonWrapper
-          margin={'0 0.5rem'}
-          padding={'0.75rem 1.2rem'}
-        >
-          Start Staking
-        </ButtonWrapper>
+      <PageRowWrapper noVerticalSpacer>
+        <SectionWrapper>
+          <Element name="summary" style={{ position: 'absolute' }} />
+          <Summary section={5} />
+        </SectionWrapper>
       </PageRowWrapper>
     </>
   );
