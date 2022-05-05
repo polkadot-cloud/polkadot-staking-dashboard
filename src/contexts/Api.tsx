@@ -78,21 +78,13 @@ export const APIProvider = (props: any) => {
 
   // reconnect attempts upon error or disconnect
   useEffect(() => {
-    let reconnectInterval: any = null;
-    if (!needsReconnect) {
-      if (reconnectInterval !== null) {
-        clearInterval(reconnectInterval);
-      }
-    } else {
-      if (connectionStatus !== CONNECTION_STATUS[1]) {
-        setInterval(() => {
-          console.log('interval loop, try reconnect');
-          switchNetwork(network.name);
-        }, 3000);
+    if (needsReconnect) {
+      if (!reconnectingRef.current) {
+        setReconnecting(true);
+        switchNetwork(network.name);
       }
     }
   }, [needsReconnect]);
-
 
   useEffect(() => {
     if (provider !== null) {
@@ -116,7 +108,6 @@ export const APIProvider = (props: any) => {
 
   const initiateReconnect = () => {
     if (!reconnectingRef.current) {
-      setReconnecting(true);
       setNeedsReconnect(true);
     }
   }
@@ -152,12 +143,12 @@ export const APIProvider = (props: any) => {
         maxElectingVoters: Number(maxElectingVoters),
       });
       setConnectionStatus(CONNECTION_STATUS[2]);
+      setReconnecting(false);
     }
   }
 
   // connect to websocket and return api into context
   const connect = async (_network: keyof NetworkOptions) => {
-
     const _provider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
 
     // set intended network and set to connecting
