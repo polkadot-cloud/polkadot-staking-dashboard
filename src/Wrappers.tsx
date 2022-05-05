@@ -65,12 +65,12 @@ export const SideInterfaceWrapper = styled.div<any>`
     z-index: 6;
     flex: 0;
     overflow: hidden;
-    min-width: ${SIDE_MENU_INTERFACE_WIDTH}px;
-    max-width: ${SIDE_MENU_INTERFACE_WIDTH}px;
-    transition: all 0.15s ease-in-out;
+    min-width: ${props => props.minimised ? `75px` : `${SIDE_MENU_INTERFACE_WIDTH}px`};
+    max-width: ${props => props.minimised ? `75px` : `${SIDE_MENU_INTERFACE_WIDTH}px`};
 
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
         position: fixed;
+        transition: all 0.15s ease-in-out;
         top: 0;
         left: ${props => props.open ? 0 : `-${SIDE_MENU_INTERFACE_WIDTH}px`};
     }

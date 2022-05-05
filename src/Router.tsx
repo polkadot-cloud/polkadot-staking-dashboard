@@ -29,7 +29,7 @@ import {
 export const Router = () => {
 
   const { pathname } = useLocation();
-  const { sideMenuOpen, setSideMenu } = useUi();
+  const { sideMenuOpen, setSideMenu, sideMenuMinimised } = useUi();
 
   // scroll to top on page change
   useEffect(() => {
@@ -62,7 +62,7 @@ export const Router = () => {
         <Assistant />
 
         {/* Left side menu */}
-        <SideInterfaceWrapper open={sideMenuOpen}>
+        <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>
           <SideMenu />
         </SideInterfaceWrapper>
 

@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
-import { textPrimary, textSecondary, highlightPrimary, highlightSecondary, backgroundOverlay } from '../../theme';
+import { textPrimary, textSecondary, highlightPrimary, highlightSecondary, backgroundOverlay, primary } from '../../theme';
 
 export const Wrapper = styled.div`
   background: none;
@@ -13,13 +13,13 @@ export const Wrapper = styled.div`
   overflow: auto;
   flex-grow: 1;
   margin: 0.75rem 0 3.35rem 1rem;
-  transition: all 0.2s;
   display: flex;
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
 
   @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     background: ${backgroundOverlay};
+    transition:  all 0.2s;
   }
 
   .close-menu {
@@ -59,14 +59,18 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const LogoWrapper = styled(motion.button)`
+export const LogoWrapper = styled(motion.button) <any>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
+  justify-content: ${props => props.minimised ? 'center' : 'flex-start'};
   width: 100%;
   height: 2.1rem;
-  padding: 0.4rem 0.5rem;
-  margin-bottom: 1rem;
+  padding: ${props => props.minimised ? '0' : '0.4rem 0.5rem'};
+  margin-bottom: ${props => props.minimised ? '1.5rem' : '1rem'};
+
+  ellipse {
+    fill: ${primary};
+  }
 `;
 
 export const ItemWrapper = styled(motion.div) <any>`
@@ -99,7 +103,8 @@ export const ItemWrapper = styled(motion.div) <any>`
 export const HeadingWrapper = styled.div<any>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
+  justify-content: ${props => props.minimised ? 'center' : 'flex-start'};
+  opacity: ${props => props.minimised ? 0.5 : 1};
   align-items: center;
 
   h5 {
@@ -107,6 +112,27 @@ export const HeadingWrapper = styled.div<any>`
     margin: 1.1rem 0 0.2rem 0;
     padding: 0 0.5rem;
     opacity: 0.7;
+  }
+`;
+
+export const MinimisedItemWrapper = styled(motion.div)`
+  border-radius: 0.5rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0.9rem 0rem;
+  margin: 0.3rem 0;
+  font-size: 1.04rem;
+
+  &.active {
+    background: ${highlightPrimary};
+  }
+  &.inactive:hover {
+    background: ${highlightSecondary};
+  }
+  .icon {
+    margin: 0;
   }
 `;
 

@@ -12,6 +12,7 @@ import { SERVICES } from '../constants';
 
 export interface UIContextState {
   setSideMenu: (v: number) => void;
+  setSideMenuMinimised: (v: number) => void;
   setListFormat: (v: string) => void;
   orderValidators: (v: string) => void;
   applyValidatorOrder: (l: any, o: string) => any;
@@ -23,6 +24,7 @@ export interface UIContextState {
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
   sideMenuOpen: number;
+  sideMenuMinimised: number;
   listFormat: string;
   services: any;
   validatorFilters: any;
@@ -31,6 +33,7 @@ export interface UIContextState {
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
   setSideMenu: (v: number) => { },
+  setSideMenuMinimised: (v: number) => { },
   setListFormat: (v: string) => { },
   orderValidators: (v: string) => { },
   applyValidatorOrder: (l: any, o: string) => { },
@@ -42,6 +45,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   setActiveAccountSetup: (p: any) => { },
   setActiveAccountSetupSection: (s: number) => { },
   sideMenuOpen: 0,
+  sideMenuMinimised: 0,
   listFormat: 'col',
   services: SERVICES,
   validatorFilters: [],
@@ -70,6 +74,9 @@ export const UIProvider = (props: any) => {
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(0);
 
+  // side menu minimised
+  const [sideMenuMinimised, _setSideMenuMinimised] = useState(0);
+
   // global list format
   const [listFormat, _setListFormat] = useState('col');
 
@@ -93,6 +100,10 @@ export const UIProvider = (props: any) => {
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
+  }
+
+  const setSideMenuMinimised = (v: number) => {
+    _setSideMenuMinimised(v);
   }
 
   const setListFormat = (v: string) => {
@@ -352,6 +363,7 @@ export const UIProvider = (props: any) => {
   return (
     <UIContext.Provider value={{
       setSideMenu: setSideMenu,
+      setSideMenuMinimised: setSideMenuMinimised,
       setListFormat: setListFormat,
       orderValidators: orderValidators,
       applyValidatorOrder: applyValidatorOrder,
@@ -363,6 +375,7 @@ export const UIProvider = (props: any) => {
       setActiveAccountSetup: setActiveAccountSetup,
       setActiveAccountSetupSection: setActiveAccountSetupSection,
       sideMenuOpen: sideMenuOpen,
+      sideMenuMinimised: sideMenuMinimised,
       listFormat: listFormat,
       validatorFilters: validatorFilters,
       validatorOrder: validatorOrder,

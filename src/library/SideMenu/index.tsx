@@ -10,6 +10,7 @@ import { useConnect } from '../../contexts/Connect'
 import { useLocation } from 'react-router-dom';
 import { useMessages } from '../../contexts/Messages';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
+import { ReactComponent as PolkadotIconSVG } from '../../img/polkadot_icon.svg';
 import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
 import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../../library/Hooks';
@@ -27,6 +28,7 @@ export const SideMenu = () => {
   const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
   const { setSideMenu, sideMenuOpen }: any = useUi();
+  let { sideMenuMinimised } = useUi();
 
   const [pageConfig, setPageConfig]: any = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -79,8 +81,12 @@ export const SideMenu = () => {
           onClick={() => { window.open(POLKADOT_URL, '_blank') }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          minimised={sideMenuMinimised}
         >
-          <PolkadotLogoSVG style={{ maxHeight: '100%' }} />
+          {sideMenuMinimised
+            ? <PolkadotIconSVG style={{ maxHeight: '100%' }} />
+            : <PolkadotLogoSVG style={{ maxHeight: '100%' }} />
+          }
         </LogoWrapper>
 
         {pageConfig.categories.map((category: any, categoryIndex: number) =>
@@ -97,7 +103,7 @@ export const SideMenu = () => {
                     name={page.title}
                     to={page.uri}
                     active={page.uri === pathname}
-                    icon={<FontAwesomeIcon icon={page.icon} transform='shrink-1' />}
+                    icon={<FontAwesomeIcon icon={page.icon} />}
                     action={page.action}
                   />
                 }
@@ -108,18 +114,22 @@ export const SideMenu = () => {
       </section>
 
       <section>
-        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
-          <LogoGithub width='1.45rem' height='1.45rem' />
-        </button>
-        <button onClick={() => openModalWith('Settings', {}, 'small')}>
-          <Cog width='1.65rem' height='1.65rem' />
-        </button>
-        <button onClick={() => toggleTheme()}>
-          {mode === 'light'
-            ? <SunnyOutline width='1.65rem' height='1.65rem' />
-            : <Moon width='1.45rem' height='1.45rem' />
-          }
-        </button>
+        {!sideMenuMinimised &&
+          <>
+            <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
+              <LogoGithub width='1.45rem' height='1.45rem' />
+            </button>
+            <button onClick={() => openModalWith('Settings', {}, 'small')}>
+              <Cog width='1.65rem' height='1.65rem' />
+            </button>
+            <button onClick={() => toggleTheme()}>
+              {mode === 'light'
+                ? <SunnyOutline width='1.65rem' height='1.65rem' />
+                : <Moon width='1.45rem' height='1.45rem' />
+              }
+            </button>
+          </>
+        }
       </section>
     </Wrapper>
   );
