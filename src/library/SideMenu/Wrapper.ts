@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 import { textPrimary, textSecondary, highlightPrimary, highlightSecondary, backgroundOverlay, primary } from '../../theme';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<any>`
   background: none;
   border-radius: 0.7rem;
   padding: 1rem 0.5rem;
@@ -37,20 +37,20 @@ export const Wrapper = styled.div`
     /* Footer */
     &:last-child {
       display: flex;
-      flex-flow: row wrap;
+      flex-flow: ${props => props.minimised ? 'column wrap' : 'row wrap'};
       align-items: center;
       padding-top: 0.5rem;
       
       button {
         color: ${textSecondary};
         transition: color 0.2s;
-        margin-right: 0.1rem;
+        margin-right: ${props => props.minimised ? 0 : '0.1rem'};
+        margin-top: ${props => props.minimised ? '1rem' : 0};
         opacity: 0.75;
 
         path {
           fill: ${textSecondary};
         }
-
         &:hover {
           opacity: 1;
         }

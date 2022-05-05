@@ -6,13 +6,11 @@ import { HeadingWrapper as Wrapper } from './Wrapper';
 
 export const Heading = (props: any) => {
 
-  const { title } = props;
-
-  const { sideMenuMinimised } = useUi();
+  const { title, minimised } = props;
 
   return (
-    <Wrapper minimised={sideMenuMinimised}>
-      {sideMenuMinimised
+    <Wrapper minimised={minimised}>
+      {minimised
         ? <h5>&bull;</h5>
         : <h5>{title}</h5>
       }

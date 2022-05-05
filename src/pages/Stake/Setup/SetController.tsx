@@ -20,7 +20,7 @@ export const SetController = (props: any) => {
   const { section } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
-  const { getBondedAccount }: any = useBalances();
+  const { getBondedAccount, getAccountBalance }: any = useBalances();
   const { getMessage }: any = useMessages();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
 
@@ -48,6 +48,12 @@ export const SetController = (props: any) => {
       controller: selected?.address ?? null
     })
   }
+
+  let items = accounts.filter((acc: any) => acc.address !== activeAccount);
+  items = items.map((acc: any) => ({
+    ...acc,
+    balance: getAccountBalance(acc.address),
+  }));
 
   return (
     <>
@@ -80,7 +86,7 @@ export const SetController = (props: any) => {
           >
             <Spacer />
             <AccountSelect
-              items={accounts.filter((acc: any) => acc.address !== activeAccount)}
+              items={items}
               onChange={handleOnChange}
               placeholder='Search Account'
               value={selected}

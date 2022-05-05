@@ -1,18 +1,18 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
 import { useValidators } from './Validators';
 import { useBalances } from './Balances';
 import { useApi } from './Api';
-import { SERVICES } from '../constants';
+import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from '../constants';
 
 export interface UIContextState {
   setSideMenu: (v: number) => void;
-  setSideMenuMinimised: (v: number) => void;
+  setUserSideMenuMinimised: (v: number) => void;
   setListFormat: (v: string) => void;
   orderValidators: (v: string) => void;
   applyValidatorOrder: (l: any, o: string) => any;
@@ -24,6 +24,7 @@ export interface UIContextState {
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
   sideMenuOpen: number;
+  userSideMenuMinimised: number;
   sideMenuMinimised: number;
   listFormat: string;
   services: any;
@@ -33,7 +34,7 @@ export interface UIContextState {
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
   setSideMenu: (v: number) => { },
-  setSideMenuMinimised: (v: number) => { },
+  setUserSideMenuMinimised: (v: number) => { },
   setListFormat: (v: string) => { },
   orderValidators: (v: string) => { },
   applyValidatorOrder: (l: any, o: string) => { },
@@ -45,6 +46,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   setActiveAccountSetup: (p: any) => { },
   setActiveAccountSetupSection: (s: number) => { },
   sideMenuOpen: 0,
+  userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
   listFormat: 'col',
   services: SERVICES,
@@ -71,11 +73,29 @@ export const UIProvider = (props: any) => {
     _services = JSON.parse(_services);
   }
 
+  let _userSideMenuMinimised: any = localStorage.getItem('side_menu_minimised');
+  if (_userSideMenuMinimised === null) {
+    _userSideMenuMinimised = 0;
+  } else {
+    _userSideMenuMinimised = Number(_userSideMenuMinimised);
+  }
+
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(0);
 
   // side menu minimised
-  const [sideMenuMinimised, _setSideMenuMinimised] = useState(0);
+  const [userSideMenuMinimised, _setUserSideMenuMinimised] = useState(_userSideMenuMinimised);
+  const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
+  const setUserSideMenuMinimised = (v: number) => {
+    localStorage.setItem('side_menu_minimised', String(v));
+    userSideMenuMinimisedRef.current = v;
+    _setUserSideMenuMinimised(v);
+  }
+
+  // automatic side menu minimised
+  const [sideMenuMinimised, setSideMenuMinimised] = useState(
+    window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD ? 1 : userSideMenuMinimisedRef.current
+  );
 
   // global list format
   const [listFormat, _setListFormat] = useState('col');
@@ -92,6 +112,28 @@ export const UIProvider = (props: any) => {
   // staking setup persist
   const [setup, setSetup]: any = useState([]);
 
+  // resize side menu callback
+  const resizeCallback = () => {
+    if (window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD) {
+      setSideMenuMinimised(0);
+    } else {
+      setSideMenuMinimised(userSideMenuMinimisedRef.current);
+    }
+  }
+
+  // resize event listener
+  useEffect(() => {
+    window.addEventListener('resize', resizeCallback);
+    return (() => {
+      window.removeEventListener("resize", resizeCallback);
+    })
+  }, []);
+
+  // re-configure minimised on user change
+  useEffect(() => {
+    resizeCallback();
+  }, [userSideMenuMinimised]);
+
   // update setup state when activeAccount changes
   useEffect(() => {
     const _setup = setupDefault();
@@ -100,10 +142,6 @@ export const UIProvider = (props: any) => {
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
-  }
-
-  const setSideMenuMinimised = (v: number) => {
-    _setSideMenuMinimised(v);
   }
 
   const setListFormat = (v: string) => {
@@ -363,7 +401,7 @@ export const UIProvider = (props: any) => {
   return (
     <UIContext.Provider value={{
       setSideMenu: setSideMenu,
-      setSideMenuMinimised: setSideMenuMinimised,
+      setUserSideMenuMinimised: setUserSideMenuMinimised,
       setListFormat: setListFormat,
       orderValidators: orderValidators,
       applyValidatorOrder: applyValidatorOrder,
@@ -375,6 +413,7 @@ export const UIProvider = (props: any) => {
       setActiveAccountSetup: setActiveAccountSetup,
       setActiveAccountSetupSection: setActiveAccountSetupSection,
       sideMenuOpen: sideMenuOpen,
+      userSideMenuMinimised: userSideMenuMinimisedRef.current,
       sideMenuMinimised: sideMenuMinimised,
       listFormat: listFormat,
       validatorFilters: validatorFilters,

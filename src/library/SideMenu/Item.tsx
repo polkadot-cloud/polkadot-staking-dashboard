@@ -8,11 +8,11 @@ import { useUi } from '../../contexts/UI';
 
 export const Item = (props: any) => {
 
-  const { setSideMenu, sideMenuMinimised }: any = useUi();
+  const { setSideMenu }: any = useUi();
 
-  const { name, active, to, icon, action } = props;
+  const { name, active, to, icon, action, minimised } = props;
 
-  const StyledWrapper = sideMenuMinimised ? MinimisedItemWrapper : ItemWrapper;
+  const StyledWrapper = minimised ? MinimisedItemWrapper : ItemWrapper;
 
   return (
     <Link to={to} onClick={() => setSideMenu(0)}>
@@ -27,7 +27,7 @@ export const Item = (props: any) => {
         <div className='icon'>
           {icon}
         </div>
-        {!sideMenuMinimised &&
+        {!minimised &&
           <>
             <div className='name'>
               {name}

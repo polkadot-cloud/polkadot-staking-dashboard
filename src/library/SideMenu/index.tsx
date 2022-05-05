@@ -15,7 +15,7 @@ import { POLKADOT_URL, GLOBAL_MESSGE_KEYS } from '../../constants';
 import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../../library/Hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '../../contexts/Themes';
 import { SunnyOutline, Moon, LogoGithub, Cog } from 'react-ionicons'
 import { useModal } from '../../contexts/Modal';
@@ -27,8 +27,7 @@ export const SideMenu = () => {
   const { activeAccount, status: connectStatus }: any = useConnect();
   const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
-  const { setSideMenu, sideMenuOpen }: any = useUi();
-  let { sideMenuMinimised } = useUi();
+  const { setSideMenu, sideMenuOpen, sideMenuMinimised, userSideMenuMinimised, setUserSideMenuMinimised }: any = useUi();
 
   const [pageConfig, setPageConfig]: any = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -67,7 +66,10 @@ export const SideMenu = () => {
   });
 
   return (
-    <Wrapper ref={ref}>
+    <Wrapper
+      ref={ref}
+      minimised={sideMenuMinimised}
+    >
       <section>
         <button
           className='close-menu'
@@ -93,7 +95,7 @@ export const SideMenu = () => {
           <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
 
             {/* display heading if not `default` (used for top links) */}
-            {category.title !== 'default' && <Heading title={category.title} />}
+            {category.title !== 'default' && <Heading title={category.title} minimised={sideMenuMinimised} />}
 
             {/* display category links*/}
             {pageConfig.pages.map((page: any, pageIndex: number) =>
@@ -105,6 +107,7 @@ export const SideMenu = () => {
                     active={page.uri === pathname}
                     icon={<FontAwesomeIcon icon={page.icon} />}
                     action={page.action}
+                    minimised={sideMenuMinimised}
                   />
                 }
               </React.Fragment>
@@ -114,22 +117,21 @@ export const SideMenu = () => {
       </section>
 
       <section>
-        {!sideMenuMinimised &&
-          <>
-            <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
-              <LogoGithub width='1.45rem' height='1.45rem' />
-            </button>
-            <button onClick={() => openModalWith('Settings', {}, 'small')}>
-              <Cog width='1.65rem' height='1.65rem' />
-            </button>
-            <button onClick={() => toggleTheme()}>
-              {mode === 'light'
-                ? <SunnyOutline width='1.65rem' height='1.65rem' />
-                : <Moon width='1.45rem' height='1.45rem' />
-              }
-            </button>
-          </>
-        }
+        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
+          <LogoGithub width='1.45rem' height='1.45rem' />
+        </button>
+        <button onClick={() => openModalWith('Settings', {}, 'small')}>
+          <Cog width='1.65rem' height='1.65rem' />
+        </button>
+        <button onClick={() => toggleTheme()}>
+          {mode === 'light'
+            ? <SunnyOutline width='1.65rem' height='1.65rem' />
+            : <Moon width='1.45rem' height='1.45rem' />
+          }
+        </button>
+        <button onClick={() => setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)}>
+          <FontAwesomeIcon icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt} transform="grow-3" />
+        </button>
       </section>
     </Wrapper>
   );
