@@ -160,6 +160,15 @@ export const ASSISTANT_CONFIG = [
         ],
       },
       {
+        title: 'Active Bond Threshold',
+        description: [
+          'The amount of DOT needed to be actively nominating in an era. ',
+          'Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.',
+          'Only the top 256 nominators are rewarded per validator. Ensuring your active bond is above this threshold will increase your chances of rewards.',
+          'You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded DOT or changing your nominations.',
+        ],
+      },
+      {
         title: 'Reward Destination',
         description: [
           'Your reward destination is where your rewards are sent to.',

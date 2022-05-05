@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useState } from 'react';
 import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
 import { Header } from '../Header';
 import { MotionContainer } from '../MotionContainer';
@@ -11,6 +12,8 @@ import { Wrapper as ButtonWrapper } from '../../../../library/Button';
 import { SummaryWrapper } from './Wrapper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { useNotifications } from '../../../../contexts/Notifications';
+import { useExtrinsics } from '../../../../contexts/Extrinsics';
 
 export const Summary = (props: any) => {
 
@@ -20,8 +23,49 @@ export const Summary = (props: any) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
+  const { addNotification } = useNotifications();
+  const { addPending, removePending } = useExtrinsics();
+
+  const [submitting, setSubmitting] = useState(false);
 
   const { controller, bond, nominations, payee } = setup;
+
+  // transaction dummy
+  const submitTx = () => {
+
+    // tx object
+    let tx = {
+      name: 'set_controller'
+    };
+
+    setSubmitting(true);
+
+    // add to pending transactions context
+    addPending(tx);
+
+    // trigger pending tx notification
+    addNotification({
+      title: 'Transaction Submitted',
+      subtitle: 'Initiating staking setup.',
+    });
+
+    // complete transaction after 2 seconds
+    setTimeout(() => {
+
+      // callback state updates
+
+      setSubmitting(false);
+
+      // remove pending extrinsic
+      removePending(tx);
+
+      // trigger completed tx notification
+      addNotification({
+        title: 'Transaction Successful',
+        subtitle: 'Staking setup successful',
+      });
+    }, 2000);
+  }
 
   return (
     <SectionWrapper transparent>
@@ -65,6 +109,8 @@ export const Summary = (props: any) => {
             margin={'0'}
             padding={'0.75rem 1.2rem'}
             fontSize='1.1rem'
+            onClick={() => submitTx()}
+            disabled={submitting}
           >
             Start Staking
           </ButtonWrapper>

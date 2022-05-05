@@ -19,6 +19,7 @@ import { MotionContainer } from '../MotionContainer';
 import { Warning, BondStatus } from './Wrappers';
 import { RESERVE_AMOUNT_PLANCK } from '../../../../constants';
 import { BondInput } from '../../../../library/Form/BondInput';
+import { OpenAssistantIcon } from '../../../../library/OpenAssistantIcon';
 
 export const Bond = (props: any) => {
 
@@ -44,9 +45,9 @@ export const Bond = (props: any) => {
     : setup.bond;
 
   // store local bond amount for form control
-  const [bond, setBond] = useState(planckToDot({
+  const [bond, setBond] = useState({
     bond: initialBondValue
-  }));
+  });
 
   // handle errors
 
@@ -67,7 +68,7 @@ export const Bond = (props: any) => {
 
   // bond input errors
 
-  if (bond < minNominatorBond && bond !== '' && bond !== 0) {
+  if (bond < minNominatorBond && bond.bond !== '' && bond.bond !== 0) {
     errors.push(`Bond amount must be at least ${planckToDot(minNominatorBond)} ${network.unit}.`);
   }
 
@@ -87,7 +88,6 @@ export const Bond = (props: any) => {
         assistantPage='stake'
         assistantKey='Bonding'
       />
-
       <MotionContainer
         thisSection={section}
         activeSection={setup.section}
@@ -117,7 +117,6 @@ export const Bond = (props: any) => {
             }
           ]}
         />
-
         <BondStatus>
           <div className='bars'>
             <section className={gtMinNominatorBond ? `invert` : ``}>
@@ -131,6 +130,7 @@ export const Bond = (props: any) => {
                 <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
                 &nbsp;
                 Nominate
+                <OpenAssistantIcon page='stake' title='Nominating' />
               </h4>
               <div className='bar'>
                 <h5>{planckToDot(minNominatorBond)} {network.unit}</h5>
@@ -141,6 +141,7 @@ export const Bond = (props: any) => {
                 <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
                 &nbsp;
                 Active
+                <OpenAssistantIcon page='stake' title='Active Bond Threshold' />
               </h4>
               <div className='bar'>
                 <h5>{minActiveBond} {network.unit}</h5>

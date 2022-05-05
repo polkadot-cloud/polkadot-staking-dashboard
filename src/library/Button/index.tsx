@@ -27,6 +27,11 @@ export const Wrapper = styled(motion.button) <any>`
   border-radius:  0.75rem;
   font-size:${props => props.fontSize ? props.fontSize : '0.95rem'};
   font-variation-settings: 'wght' 560;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.75;
+  }
 `;
 
 export const Button = (props: any) => {
