@@ -20,7 +20,7 @@ export const SetController = (props: any) => {
   const { section } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
-  const { getBondedAccount, getAccountBalance }: any = useBalances();
+  const { getBondedAccount, getAccountBalance, minReserve }: any = useBalances();
   const { getMessage }: any = useMessages();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
 
@@ -49,11 +49,21 @@ export const SetController = (props: any) => {
     })
   }
 
+  // inject balances and wheteher account can be an active item
   let items = accounts.filter((acc: any) => acc.address !== activeAccount);
-  items = items.map((acc: any) => ({
-    ...acc,
-    balance: getAccountBalance(acc.address),
-  }));
+  items = items.map((acc: any) => {
+    let balance = getAccountBalance(acc.address);
+    return ({
+      ...acc,
+      balance: balance,
+      active: balance.free >= minReserve,
+    })
+  });
+
+  // sort accounts with at least minReserve free balance first
+  items = items.sort((a: any, b: any) => {
+    return b.balance.free - a.balance.free
+  });
 
   return (
     <>

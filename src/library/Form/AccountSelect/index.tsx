@@ -7,23 +7,40 @@ import Identicon from '../../Identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { clipAddress, convertRemToPixels } from '../../../Utils';
-import { useTheme } from '../../../contexts/Themes'
+import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
 
 export const AccountSelect = (props: any) => {
   const { mode } = useTheme();
+
   const { items, onChange, placeholder, value }: any = props;
 
   const DropdownItem = (c: any, item: any, index: number) => {
-    const color = c.selectedItem === item ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
-    const border = c.selectedItem === item ? `2px solid ${defaultThemes.primary[mode]}` : `2px solid ${defaultThemes.transparent[mode]}`;
+
+    // disable item in list if account doesn't satisfy controller budget.
+    let itemProps = item.active
+      ? c.getItemProps({ index, item })
+      : {};
+
+    const color = c.selectedItem.address === item.address
+      ? defaultThemes.primary[mode]
+      : defaultThemes.text.primary[mode];
+
+    const border = c.selectedItem.address === item.address
+      ? `2px solid ${defaultThemes.primary[mode]}`
+      : `2px solid ${defaultThemes.transparent[mode]}`;
+
+    const opacity = item.active ? 1 : 0.25;
+
     return (
       <div
         className="item"
-        {...c.getItemProps({ key: item.name, index, item })}
+        key={item.name}
+        {...itemProps}
         style={{
-          color: color,
-          border: border,
+          color,
+          border,
+          opacity
         }}>
         <div className='icon'>
           <Identicon

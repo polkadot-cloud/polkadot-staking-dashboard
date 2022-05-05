@@ -12,6 +12,9 @@ export const BalancesContext: any = React.createContext({
   getBondedAccount: (a: string) => { },
   getAccountNominations: (a: string) => { },
   accounts: [],
+  reserveAmount: 0.1,
+  existentialAmount: 1,
+  minReserve: 1.1,
 });
 export const useBalances = () => React.useContext(BalancesContext);
 
@@ -24,6 +27,15 @@ export const BalancesProvider = (props: any) => {
     accounts: [],
     unsub: [],
   });
+
+  // the amount of whole unit to reserve when submitting extrinsics
+  const [reserveAmount] = useState(0.1);
+
+  // the existential amount of unit for an account
+  const [existentialAmount] = useState(1);
+
+  // the minimum reserve for submitting extrinsics on staking dashboard
+  const [minReserve] = useState(reserveAmount + existentialAmount);
 
   const stateRef = useRef(state);
 
@@ -232,6 +244,9 @@ export const BalancesProvider = (props: any) => {
       getBondedAccount: getBondedAccount,
       getAccountNominations: getAccountNominations,
       accounts: stateRef.current.accounts,
+      reserveAmount: reserveAmount,
+      existentialAmount: existentialAmount,
+      minReserve: minReserve,
     }}>
       {props.children}
     </BalancesContext.Provider>
