@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary, primary } from '../../theme';
+import { textSecondary, primary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
