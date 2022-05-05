@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import {
   CONNECTION_STATUS,
@@ -59,39 +59,79 @@ export const APIProvider = (props: any) => {
   // connection status state
   const [connectionStatus, setConnectionStatus]: any = useState(CONNECTION_STATUS[0]);
 
+  // flag whether to try re-connect
+  const [needsReconnect, setNeedsReconnect] = useState(false);
+
+  // flag whether a reconnect is in progress
+  const [reconnecting, _setReconnecting] = useState(false);
+  const reconnectingRef = useRef(reconnecting);
+  const setReconnecting = (v: any) => {
+    reconnectingRef.current = v;
+    _setReconnecting(v);
+  }
+
+  // initial network connection
   useEffect(() => {
     const network: any = localStorage.getItem('network');
     connect(network);
   }, []);
 
+  // reconnect attempts upon error or disconnect
+  useEffect(() => {
+    let reconnectInterval: any = null;
+    if (!needsReconnect) {
+      if (reconnectInterval !== null) {
+        clearInterval(reconnectInterval);
+      }
+    } else {
+      if (connectionStatus !== CONNECTION_STATUS[1]) {
+        setInterval(() => {
+          console.log('interval loop, try reconnect');
+          switchNetwork(network.name);
+        }, 3000);
+      }
+    }
+  }, [needsReconnect]);
+
+
   useEffect(() => {
     if (provider !== null) {
-      // provider.on('connected', () => {});
-      // provider.on('ready', () => {});
-      // provider.on('error', () => {});
-      // provider.on('disconnected', () => {});
+
+      provider.on('connected', () => {
+        connectedCallback();
+      });
+
+      provider.on('error', () => {
+        initiateReconnect();
+      });
+
+      provider.on('disconnected', () => {
+        initiateReconnect();
+      });
+
+      // provider.on('ready', () => {
+      // });
     }
   }, [provider]);
 
-  // connect to websocket and return api into context
-  const connect = async (_network: keyof NetworkOptions) => {
-    {
-      setConnectionStatus(CONNECTION_STATUS[1]);
-      setNetwork({
-        name: _network,
-        meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
-      });
+  const initiateReconnect = () => {
+    if (!reconnectingRef.current) {
+      setReconnecting(true);
+      setNeedsReconnect(true);
     }
+  }
 
-    const _provider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
-    const api = await ApiPromise.create({ provider: _provider });
+  const connectedCallback = async () => {
+
+    const { name } = network;
+    const _api: any = await ApiPromise.create({ provider: provider });
 
     const _metrics = await Promise.all([
-      api.consts.staking.bondingDuration,
-      api.consts.staking.maxNominations,
-      api.consts.staking.sessionsPerEra,
-      api.consts.staking.maxNominatorRewardedPerValidator,
-      api.consts.electionProviderMultiPhase.maxElectingVoters,
+      _api.consts.staking.bondingDuration,
+      _api.consts.staking.maxNominations,
+      _api.consts.staking.sessionsPerEra,
+      _api.consts.staking.maxNominatorRewardedPerValidator,
+      _api.consts.electionProviderMultiPhase.maxElectingVoters,
     ]);
 
     const bondDuration = _metrics[0] ? _metrics[0].toHuman() : BONDING_DURATION;
@@ -101,15 +141,9 @@ export const APIProvider = (props: any) => {
     let maxElectingVoters: any = _metrics[4];
     maxElectingVoters = maxElectingVoters?.toNumber();
 
-    localStorage.setItem('network', String(_network));
-
+    localStorage.setItem('network', String(name));
     {
-      setProvider(_provider);
-      setApi(api);
-      setNetwork({
-        name: _network,
-        meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
-      });
+      setApi(_api);
       setConsts({
         bondDuration: bondDuration,
         maxNominations: maxNominations,
@@ -121,18 +155,33 @@ export const APIProvider = (props: any) => {
     }
   }
 
+  // connect to websocket and return api into context
+  const connect = async (_network: keyof NetworkOptions) => {
+
+    const _provider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
+
+    // set intended network and set to connecting
+    {
+      setConnectionStatus(CONNECTION_STATUS[1]);
+      setNetwork({
+        name: _network,
+        meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
+      });
+      setProvider(_provider);
+    }
+  }
+
   // handle network switching
   const switchNetwork = async (_network: keyof NetworkOptions) => {
-    if (_network !== network.name) {
-      {
-        setApi(null);
-        setProvider(null);
-        setNetwork(defaultNetwork);
-        setConsts(defaultConsts);
-        setConnectionStatus(CONNECTION_STATUS[0]);
-      }
-      connect(_network);
+    {
+      setApi(null);
+      setProvider(null);
+      setNetwork(defaultNetwork);
+      setConsts(defaultConsts);
+      setNeedsReconnect(false);
+      setConnectionStatus(CONNECTION_STATUS[0]);
     }
+    connect(_network);
   }
 
   // handles fetching of DOT price and updates context state.

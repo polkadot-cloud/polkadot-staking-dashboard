@@ -84,8 +84,10 @@ export const NetworkBarInner = (props: any) => {
             <button
               key={`switch_network_${index}`}
               onClick={() => {
-                switchNetwork(key);
-                setOpen(false);
+                if (network.name.toLowerCase() !== key) {
+                  switchNetwork(key);
+                  setOpen(false);
+                }
               }}
             >
               <p>{item.name}</p>
