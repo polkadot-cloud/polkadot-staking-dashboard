@@ -3,9 +3,9 @@
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { defaultThemes } from '../../theme/default';
-import { useApi } from '../../contexts/Api';
-import { useTheme } from '../../contexts/Themes';
+import { defaultThemes } from '../../../theme/default';
+import { useApi } from '../../../contexts/Api';
+import { useTheme } from '../../../contexts/Themes';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

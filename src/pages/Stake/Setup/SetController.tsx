@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { Button, ButtonRow } from '../../library/Button';
-import { useBalances } from '../../contexts/Balances';
-import { useConnect } from '../../contexts/Connect';
-import { useMessages } from '../../contexts/Messages';
-import { useUi } from '../../contexts/UI';
-import { GLOBAL_MESSGE_KEYS } from '../../constants';
-import { AccountSelect } from '../../library/Form/AccountSelect';
+import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import { Button, ButtonRow } from '../../../library/Button';
+import { useBalances } from '../../../contexts/Balances';
+import { useConnect } from '../../../contexts/Connect';
+import { useMessages } from '../../../contexts/Messages';
+import { useUi } from '../../../contexts/UI';
+import { GLOBAL_MESSGE_KEYS } from '../../../constants';
+import { AccountSelect } from '../../../library/Form/AccountSelect';
 import { Header } from './Header';
 import { Footer } from './Footer';
-import { Spacer } from './Wrappers';
+import { Spacer } from '../Wrappers';
 import { MotionContainer } from './MotionContainer';
 
 export const SetController = (props: any) => {

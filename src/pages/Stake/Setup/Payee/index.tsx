@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { Spacer } from '../Wrappers';
+import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
+import { Spacer } from '../../Wrappers';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 import { Items, Item } from './Wrappers';
-import { isNumeric } from '../../../Utils';
-import { useUi } from '../../../contexts/UI';
-import { useConnect } from '../../../contexts/Connect';
+import { isNumeric } from '../../../../Utils';
+import { useUi } from '../../../../contexts/UI';
+import { useConnect } from '../../../../contexts/Connect';
 
 export const Payee = (props: any) => {
 

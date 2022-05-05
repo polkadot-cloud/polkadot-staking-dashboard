@@ -5,8 +5,8 @@ import { GenerateNominations } from './GenerateNominations';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
-import { useConnect } from '../../contexts/Connect';
-import { useUi } from '../../contexts/UI';
+import { useConnect } from '../../../contexts/Connect';
+import { useUi } from '../../../contexts/UI';
 
 export const ChooseNominators = (props: any) => {
 

@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { planckToDot } from '../../../Utils';
-import { useApi } from '../../../contexts/Api';
-import { useConnect } from '../../../contexts/Connect';
-import { useBalances } from '../../../contexts/Balances';
-import { useStaking } from '../../../contexts/Staking';
-import { useUi } from '../../../contexts/UI';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { Spacer } from '../Wrappers';
+import { planckToDot } from '../../../../Utils';
+import { useApi } from '../../../../contexts/Api';
+import { useConnect } from '../../../../contexts/Connect';
+import { useBalances } from '../../../../contexts/Balances';
+import { useStaking } from '../../../../contexts/Staking';
+import { useUi } from '../../../../contexts/UI';
+import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
+import { Spacer } from '../../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -17,8 +17,8 @@ import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 import { Warning, BondStatus } from './Wrappers';
-import { RESERVE_AMOUNT_PLANCK } from '../../../constants';
-import { BondInput } from '../../../library/Form/BondInput';
+import { RESERVE_AMOUNT_PLANCK } from '../../../../constants';
+import { BondInput } from '../../../../library/Form/BondInput';
 
 export const Bond = (props: any) => {
 
@@ -27,16 +27,13 @@ export const Bond = (props: any) => {
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { staking, eraStakers } = useStaking();
-  const { getAccountLedger, getBondedAccount, getAccountBalance }: any = useBalances();
+  const { getAccountBalance }: any = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
 
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
   const balance = getAccountBalance(activeAccount);
   let { free } = balance;
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
-  const { total } = ledger;
   const setup = getSetupProgress(activeAccount);
 
   let freeAfterReserve: any = free - RESERVE_AMOUNT_PLANCK;
@@ -81,35 +78,12 @@ export const Bond = (props: any) => {
   const gtMinNominatorBond = bond.bond >= planckToDot(minNominatorBond);
   const gtMinActiveBond = bond.bond >= minActiveBond;
 
-  /*
-  // Experimental
-  // Get minimum bond for rewards for chosen validators.
-
-  import { useEffect } from 'react';
-  import { useNetworkMetrics } from '../../../contexts/Network';
-  import { useValidators } from '../../../contexts/Validators';
-
-  const { metrics }: any = useNetworkMetrics();
-  const { getMinRewardBond, meta } = useValidators();
-
-  const [minRewardBond, setMinRewardBond] = useState(null);
-
-  useEffect(() => {
-    // validator stake batch must be present to continue
-    const _stakeExists = meta['validators_browse']?.stake ?? false;
-    if (_stakeExists) {
-      const minRewardBond = getMinRewardBond(setup.nominations.map((item: any) => item.address));
-      setMinRewardBond(minRewardBond);
-    }
-  });
-  */
-
   return (
     <SectionWrapper transparent>
       <Header
         thisSection={section}
         complete={setup.bond !== 0}
-        title={`Bond${total > 0 ? `ed` : ``} ${network.unit}`}
+        title='Bond'
         assistantPage='stake'
         assistantKey='Bonding'
       />

@@ -1,19 +1,19 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRowWrapper } from '../../Wrappers';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { useBalances } from '../../contexts/Balances';
-import { planckToDot } from '../../Utils';
-import { useConnect } from '../../contexts/Connect';
-import { useStaking } from '../../contexts/Staking';
+import { PageRowWrapper } from '../../../Wrappers';
+import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import { useBalances } from '../../../contexts/Balances';
+import { planckToDot } from '../../../Utils';
+import { useConnect } from '../../../contexts/Connect';
+import { useStaking } from '../../../contexts/Staking';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Element } from 'react-scroll';
-import { Wrapper as ButtonWrapper } from '../../library/Button';
-import { PageTitle } from '../../library/PageTitle';
+import { Wrapper as ButtonWrapper } from '../../../library/Button';
+import { PageTitle } from '../../../library/PageTitle';
 
 export const Setup = (props: any) => {
 

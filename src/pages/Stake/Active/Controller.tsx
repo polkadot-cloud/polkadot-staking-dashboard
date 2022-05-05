@@ -1,16 +1,16 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { Button } from '../../library/Button';
-import { useBalances } from '../../contexts/Balances';
-import { useConnect } from '../../contexts/Connect';
-import { StakingAccount } from './Wrappers';
-import Account from '../../library/Account';
-import { useAssistant } from '../../contexts/Assistant';
+import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import { Button } from '../../../library/Button';
+import { useBalances } from '../../../contexts/Balances';
+import { useConnect } from '../../../contexts/Connect';
+import { StakingAccount } from '../Wrappers';
+import Account from '../../../library/Account';
+import { useAssistant } from '../../../contexts/Assistant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { useModal } from '../../contexts/Modal';
+import { useModal } from '../../../contexts/Modal';
 
 export const Controller = () => {
 

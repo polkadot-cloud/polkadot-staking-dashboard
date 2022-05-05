@@ -1,11 +1,11 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Wrapper } from '../Overview/Announcements/Wrappers';
-import { useApi } from '../../contexts/Api';
-import { useValidators } from '../../contexts/Validators';
-import { ValidatorList } from '../../library/ValidatorList';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { Wrapper } from '../../Overview/Announcements/Wrappers';
+import { useApi } from '../../../contexts/Api';
+import { useValidators } from '../../../contexts/Validators';
+import { ValidatorList } from '../../../library/ValidatorList';
+import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 
 export const Nominations = () => {
 

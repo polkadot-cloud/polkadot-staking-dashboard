@@ -1,10 +1,10 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FooterWrapper } from './Wrappers';
-import { Button } from '../../library/Button';
-import { useConnect } from '../../contexts/Connect';
-import { useUi } from '../../contexts/UI';
+import { FooterWrapper } from '../Wrappers';
+import { Button } from '../../../library/Button';
+import { useConnect } from '../../../contexts/Connect';
+import { useUi } from '../../../contexts/UI';
 
 export const Footer = (props: any) => {
 

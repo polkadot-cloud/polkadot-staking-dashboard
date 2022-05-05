@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect, useState } from 'react';
-import { Wrapper } from '../Overview/Announcements/Wrappers';
-import { useApi } from '../../contexts/Api';
-import { useValidators } from '../../contexts/Validators';
-import { ValidatorList } from '../../library/ValidatorList';
-import { useUi } from '../../contexts/UI';
-import { Button } from '../../library/Button';
+import { Wrapper } from '../../Overview/Announcements/Wrappers';
+import { useApi } from '../../../contexts/Api';
+import { useValidators } from '../../../contexts/Validators';
+import { ValidatorList } from '../../../library/ValidatorList';
+import { useUi } from '../../../contexts/UI';
+import { Button } from '../../../library/Button';
 
 export const GenerateNominations = (props: any) => {
 

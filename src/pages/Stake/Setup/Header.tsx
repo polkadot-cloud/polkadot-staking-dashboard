@@ -1,11 +1,11 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { HeaderWrapper } from './Wrappers';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
-import { Button } from '../../library/Button';
-import { useConnect } from '../../contexts/Connect';
-import { useUi } from '../../contexts/UI';
+import { HeaderWrapper } from '../Wrappers';
+import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
+import { Button } from '../../../library/Button';
+import { useConnect } from '../../../contexts/Connect';
+import { useUi } from '../../../contexts/UI';
 
 export const Header = (props: any) => {
 

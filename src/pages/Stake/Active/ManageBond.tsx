@@ -1,15 +1,15 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { planckToDot } from '../../Utils';
+import { planckToDot } from '../../../Utils';
 import BondedGraph from './BondedGraph';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
-import { useBalances } from '../../contexts/Balances';
-import { Button } from '../../library/Button';
-import { GraphWrapper } from '../../library/Graphs/Wrappers';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
-import { useModal } from '../../contexts/Modal';
+import { useApi } from '../../../contexts/Api';
+import { useConnect } from '../../../contexts/Connect';
+import { useBalances } from '../../../contexts/Balances';
+import { Button } from '../../../library/Button';
+import { GraphWrapper } from '../../../library/Graphs/Wrappers';
+import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
+import { useModal } from '../../../contexts/Modal';
 
 export const ManageBond = () => {
 

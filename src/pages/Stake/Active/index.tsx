@@ -2,25 +2,25 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, useMemo } from 'react';
-import { PageRowWrapper } from '../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { StatBoxList } from '../../library/StatBoxList';
-import { useApi } from '../../contexts/Api';
-import { useStaking } from '../../contexts/Staking';
-import { useNetworkMetrics } from '../../contexts/Network';
-import { useBalances } from '../../contexts/Balances';
-import { planckToDot } from '../../Utils';
-import { useConnect } from '../../contexts/Connect';
+import { PageRowWrapper } from '../../../Wrappers';
+import { MainWrapper, SecondaryWrapper } from '../../../library/Layout';
+import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import { StatBoxList } from '../../../library/StatBoxList';
+import { useApi } from '../../../contexts/Api';
+import { useStaking } from '../../../contexts/Staking';
+import { useNetworkMetrics } from '../../../contexts/Network';
+import { useBalances } from '../../../contexts/Balances';
+import { planckToDot } from '../../../Utils';
+import { useConnect } from '../../../contexts/Connect';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
-import { Button } from '../../library/Button';
+import { Button } from '../../../library/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedoAlt, faWallet, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { Separator } from '../../Wrappers';
-import { PageTitle } from '../../library/PageTitle';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
-import { useModal } from '../../contexts/Modal';
+import { Separator } from '../../../Wrappers';
+import { PageTitle } from '../../../library/PageTitle';
+import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
+import { useModal } from '../../../contexts/Modal';
 
 export const Active = (props: any) => {
 
