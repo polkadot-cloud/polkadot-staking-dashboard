@@ -156,7 +156,6 @@ export const BalancesProvider = (props: any) => {
   }
 
   // get active account balances. Should be called when an account switches
-  // TODO: tidy-up accounts that no longer exist 
   const getBalances = async () => {
     Promise.all(
       accounts.map((a: any) => subscribeToBalances(a.address))).then((unsubs: any) => {
