@@ -75,7 +75,10 @@ export const Assistant = () => {
       variants={containerVariants}
     >
       <ContentWrapper>
-        <HeightWrapper style={{ height: assistant.height }}>
+        <HeightWrapper
+          style={{ height: assistant.height }}
+          transition={assistant.transition}
+        >
           <SectionsWrapper
             animate={animateSections}
             transition={{

@@ -20,6 +20,7 @@ export interface AssistantContextState {
   page: string,
   innerDefinition: any,
   height: any,
+  transition: number;
 }
 
 // context definition
@@ -38,6 +39,7 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
   page: 'overview',
   innerDefinition: {},
   height: 0,
+  transition: 1,
 });
 
 // useAssistant
@@ -52,6 +54,7 @@ export class AssistantProvider extends React.Component {
     innerDefinition: [],
     activeSection: 0,
     height: 0,
+    transition: 0,
   };
 
   setPage = (newPage: string) => {
@@ -71,16 +74,25 @@ export class AssistantProvider extends React.Component {
   }
 
   toggle = () => {
-    this.setState({ open: this.state.open === 1 ? 0 : 1 })
+    this.setState({
+      open: this.state.open === 1 ? 0 : 1,
+      transition: 0,
+    })
   }
 
   openAssistant = () => {
-    this.setState({ open: 1 });
+    this.setState({
+      open: 1,
+      transition: 0,
+    });
   }
 
   closeAssistant = (page: any) => {
 
-    this.setState({ open: 0 });
+    this.setState({
+      open: 0,
+      transition: 0,
+    });
 
     // short timeout to hide back to list
     setTimeout(() => {
@@ -95,6 +107,7 @@ export class AssistantProvider extends React.Component {
   setActiveSection = (index: number) => {
     this.setState({
       activeSection: index,
+      transition: 1,
     })
   }
 
@@ -131,6 +144,7 @@ export class AssistantProvider extends React.Component {
         page: this.state.page,
         innerDefinition: this.state.innerDefinition,
         height: this.state.height,
+        transition: this.state.transition,
       }}>
         {this.props.children}
       </AssistantContext.Provider>

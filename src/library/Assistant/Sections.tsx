@@ -58,10 +58,9 @@ export const Sections = (props: any) => {
   const itemRef: any = useRef(null);
 
   useEffect(() => {
-    assistant.setAssistantHeight(
-      assistant.activeSection === 0
-        ? homeRef.current.clientHeight
-        : itemRef.current.clientHeight
+    assistant.setAssistantHeight(assistant.activeSection === 0
+      ? homeRef.current.clientHeight
+      : itemRef.current.clientHeight
     );
   }, [assistant.activeSection, assistant.open]);
 

@@ -45,8 +45,8 @@ export const ContentWrapper = styled.div`
   max-height: 100%;
 `;
 
-export const HeightWrapper = styled.div`
-  transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+export const HeightWrapper = styled.div<any>`
+  transition: ${props => props.transition ? 'height 0.6s cubic-bezier(0.16, 1, 0.3, 1)' : 'none'};
   width: 100%;
   max-height: 100%;
   overflow: auto;
