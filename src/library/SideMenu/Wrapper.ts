@@ -37,7 +37,7 @@ export const Wrapper = styled.div<any>`
     /* Footer */
     &:last-child {
       display: flex;
-      flex-flow: ${props => props.minimised ? 'column wrap' : 'row wrap'};
+      flex-flow: ${props => props.minimised ? 'column-reverse wrap' : 'row wrap'};
       align-items: center;
       padding-top: 0.5rem;
       
