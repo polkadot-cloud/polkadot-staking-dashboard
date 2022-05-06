@@ -40,7 +40,7 @@ ctx.addEventListener('message', (event: any) => {
     if (others.length) {
       for (let o of others) {
         let _value = new BN(rmCommas(o.value));
-        var index = _nominators.findIndex((_o: any) => _o.who == o.who);
+        var index = _nominators.findIndex((_o: any) => _o.who === o.who);
 
         if (index === -1) {
           _nominators.push({
