@@ -37,9 +37,9 @@ export const ProvidersInner = () => {
 
 export const Providers = withProviders(
   APIProvider,
+  ModalProvider,
   ConnectProvider,
   AssistantProvider,
-  ModalProvider,
   NetworkMetricsProvider,
   BalancesProvider,
   BrowserRouter,

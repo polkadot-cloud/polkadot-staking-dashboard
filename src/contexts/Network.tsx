@@ -43,7 +43,7 @@ export const NetworkMetricsProvider = (props: any) => {
 
   // manage unsubscribe
   useEffect(() => {
-    subscribeToNetworkMetrics(api);
+    subscribeToNetworkMetrics();
     return (() => {
       if (state.unsub !== undefined) {
         state.unsub();
@@ -52,7 +52,7 @@ export const NetworkMetricsProvider = (props: any) => {
   }, [isReady]);
 
   // active subscription
-  const subscribeToNetworkMetrics = async (api: any) => {
+  const subscribeToNetworkMetrics = async () => {
     if (isReady) {
 
       const unsub = await api.queryMulti([

@@ -68,13 +68,6 @@ export const StakingProvider = (props: any) => {
     unsub: null,
   };
 
-  useEffect(() => {
-    if (status === 'connecting') {
-      setEraStakers(defaultEraStakers);
-      setStakingMetrics(defaultStakingMetrics);
-    }
-  }, [status]);
-
   // store staking metrics in state
   const [stakingMetrics, setStakingMetrics]: any = useState(defaultStakingMetrics);
 
@@ -198,6 +191,13 @@ export const StakingProvider = (props: any) => {
   }
 
   useEffect(() => {
+    if (status === 'connecting') {
+      setEraStakers(defaultEraStakers);
+      setStakingMetrics(defaultStakingMetrics);
+    }
+  }, [status]);
+
+  useEffect(() => {
     if (isReady) {
       fetchEraStakers();
       subscribeToStakingkMetrics(api);
@@ -307,7 +307,7 @@ export const StakingProvider = (props: any) => {
    * is nominating, or is yet to start.
    */
   const inSetup = () => {
-    return (!hasController || !isBonding() || !isNominating());
+    return (!hasController() || !isBonding() || !isNominating());
   }
 
   return (

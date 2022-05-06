@@ -1,141 +1,197 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
-import {
-  web3Enable,
-  web3AccountsSubscribe,
-} from '@polkadot/extension-dapp';
-import { APIContext } from './Api';
+import React, { useState, useEffect, useRef } from 'react';
+import { useApi } from './Api';
+import { localStorageOrDefault } from '../Utils';
+import { getWalletBySource } from '@talisman-connect/wallets';
+import { useModal } from './Modal';
+import Keyring from '@polkadot/keyring';
 
-// context type
+const DAPP_NAME = 'polkadot_staking_dashboard';
+
 export interface ConnectContextState {
-  connect: () => void,
   disconnect: () => void;
-  setAccounts: () => void;
+  initialise: () => void;
   setActiveAccount: (a: string) => void;
   accountExists: (a: string) => number;
+  connectToWallet: (w: string) => void;
   getAccount: (a: string) => any;
-  status: number,
+  activeWallet: any;
+  connected: number;
   accounts: any;
   activeAccount: string;
 }
 
-// context definition
 export const ConnectContext: React.Context<ConnectContextState> = React.createContext({
-  status: 0,
-  connect: () => { },
   disconnect: () => { },
-  setAccounts: () => { },
+  initialise: () => { },
   setActiveAccount: (a: string) => { },
   accountExists: (a: string) => 0,
+  connectToWallet: (w: string) => { },
   getAccount: (a: string) => { },
+  connected: 0,
+  activeWallet: null,
   accounts: [],
   activeAccount: '',
 });
+
 export const useConnect = () => React.useContext(ConnectContext);
 
-// wrapper component to provide components with context
-export class ConnectProvider extends React.Component {
+export const ConnectProvider = (props: any) => {
 
-  static contextType = APIContext;
+  const { network }: any = useApi();
+  const { openModalWith } = useModal();
 
-  state = {
-    status: 0,
-    accounts: [],
-    activeAccount: '',
-    unsubscribe: () => { },
-    messages: [],
-  };
-
-  // automatically connect to accounts
-  componentDidMount () {
-    this.subscribeWeb3Accounts();
+  const setLocalStorageActiveAccount = (addr: string) => {
+    localStorage.setItem(`${network.name.toLowerCase()}_active_account`, addr);
   }
 
-  subscribeWeb3Accounts = async () => {
-    // attempt to connect to Polkadot JS extension
-    const extensions = await web3Enable('polkadot_staking_dashboard');
-
-    // no extension found
-    if (extensions.length === 0) {
-      return;
+  const getLocalStorageActiveAccount = () => {
+    const account = localStorage.getItem(`${network.name.toLowerCase()}_active_account`);
+    if (account === null) {
+      return '';
+    } else {
+      return account;
     }
-    // fetch accounts and subscribe to account changes
-    const unsubscribe = await web3AccountsSubscribe(async (injectedAccounts) => {
-      let accounts: any = [];
+  }
 
-      injectedAccounts.map(async (account, i) => {
-        const { address, meta } = account;
-        const { name, source } = meta;
-        // format accounts into standard app format
-        accounts.push({
-          address: address,
-          name: name,
-          source: source
-        });
-        return false;
-      });
+  const removeLocalStorageActiveAccount = () => {
+    localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
+  }
 
+  // store the currently active wallet
+  const [activeWallet, _setActiveWallet] = useState(
+    localStorageOrDefault('active_wallet', null)
+  );
+  const setActiveWallet = (wallet: any) => {
 
-      // manage localStorage active account
-      let _activeAccount = this.getLocalStorageActiveAccount();
-      if (_activeAccount === '') {
-        this.setLocalStorageActiveAccount(accounts[0].address);
-        _activeAccount = accounts[0].address;
+    let _name = wallet?.extensionName ?? null;
+    if (_name !== null) {
+      localStorage.setItem('active_wallet', _name);
+    }
+    _setActiveWallet(wallet);
+  }
+
+  // stores whether connected to an extension
+  const [connected, _setConnected] = useState(0);
+  const connectedRef = useRef(connected);
+  const setConnected = (v: any) => {
+    connectedRef.current = v;
+    _setConnected(v);
+  }
+
+  // store the currently active account
+  const [activeAccount, __setActiveAccount] = useState('');
+
+  const activeAccountRef = useRef(activeAccount);
+  const _setActiveAccount = (v: any) => {
+    activeAccountRef.current = v;
+    __setActiveAccount(v);
+  }
+
+  // store accounts list
+  const [accounts, _setAccounts] = useState([]);
+  const accountsRef = useRef(accounts);
+  const setAccounts = (v: any) => {
+    accountsRef.current = v;
+    _setAccounts(v);
+  }
+
+  // store unsubscribe handler for connected wallet
+  const [unsubscribe, setUnsubscribe]: any = useState(null);
+
+  // automatic connect from active wallet
+  useEffect(() => {
+
+    if (activeWallet !== null) {
+      connectToWallet(activeWallet);
+    }
+    return (() => {
+      if (unsubscribe !== null) {
+        unsubscribe();
       }
+    })
+  }, []);
 
-      this.setState({
-        status: 1,
-        accounts: accounts,
-        activeAccount: _activeAccount,
+  const connectToWallet = async (_wallet: any) => {
+    try {
+      const keyring = new Keyring();
+      keyring.setSS58Format(0);
+      const wallet: any = getWalletBySource(_wallet);
+
+      // summons extension popup for app to be enabled
+      await wallet.enable(DAPP_NAME);
+
+      // subscribe to account changes
+      const unsubscribe = await wallet.subscribeAccounts((injected: any) => {
+        let _accounts: any = [];
+
+        injected.map(async (account: any, i: number) => {
+          // we need ss58 format 0
+          const { address } = keyring.addFromAddress(account.address);
+
+          // take subset of injected account
+          const { name, source, type, signer } = account;
+          _accounts.push({ address, name, source, type, signer });
+          return false;
+        });
+
+        // active account is first in list if none presently persisted
+        let _activeAccount: any = getLocalStorageActiveAccount();
+        if (_activeAccount === '') {
+          _activeAccount = _accounts[0].address;
+        }
+        {
+          setActiveWallet(wallet);
+          setConnected(1);
+          setActiveAccount(_activeAccount);
+          setAccounts(_accounts);
+        }
+        // retreive accounts data...
       });
-    }, { ss58Format: 0 });
 
-    this.setState({
-      unsubscribe: unsubscribe,
-    });
+      // update context state
+      setUnsubscribe(unsubscribe);
+
+    } catch (err) {
+      // user did not enable extension for app
+    }
   }
 
-  componentWillUnmount () {
-    this.state.unsubscribe();
+  const disconnect = () => {
+    removeLocalStorageActiveAccount();
+    localStorage.removeItem('active_wallet');
+
+    setActiveWallet(null);
+    setActiveAccount('');
+    setAccounts([]);
+    setConnected(0);
+    setUnsubscribe(null);
   }
 
-  connect = () => {
-    this.setState({
-      status: 1
-    });
+  const initialise = () => {
+    if (activeWallet !== null) {
+      // connect to active wallet
+      connectToWallet(activeWallet);
+    } else {
+      // open modal for connection
+      openModalWith('ConnectAccounts', {}, 'small');
+    }
   }
 
-  disconnect = () => {
-    this.removeLocalStorageActiveAccount();
-    this.setState({
-      status: 0,
-      accounts: [],
-      unsubscribe: () => { },
-      messages: [],
-    });
+  const setActiveAccount = (address: string) => {
+    setLocalStorageActiveAccount(address);
+    _setActiveAccount(address);
   }
 
-  setAccounts = () => {
-    // subscribe to accounts via polkadot.js extension
-    this.subscribeWeb3Accounts();
-  }
-
-  setActiveAccount = (address: string) => {
-    this.setLocalStorageActiveAccount(address);
-    this.setState({
-      activeAccount: address,
-    });
-  }
-
-  accountExists = (addr: string) => {
-    const account = this.state.accounts.filter((acc: any) => acc.address === addr);
+  const accountExists = (addr: string) => {
+    const account = accounts.filter((acc: any) => acc.address === addr);
     return account.length;
   }
 
-  getAccount = (addr: string) => {
-    const accs = this.state.accounts.filter((acc: any) => acc.address === addr);
+  const getAccount = (addr: string) => {
+    const accs = accounts.filter((acc: any) => acc.address === addr);
     if (accs.length) {
       return accs[0];
     } else {
@@ -143,38 +199,20 @@ export class ConnectProvider extends React.Component {
     }
   }
 
-  // manage localStorage for active account
-
-  setLocalStorageActiveAccount = (addr: string) => {
-    localStorage.setItem(`${this.context.network.name.toLowerCase()}_active_acount`, addr);
-  }
-
-  getLocalStorageActiveAccount = () => {
-    const account = localStorage.getItem(`${this.context.network.name.toLowerCase()}_active_acount`) === null
-      ? ''
-      : localStorage.getItem(`${this.context.network.name.toLowerCase()}_active_acount`);
-    return account;
-  }
-
-  removeLocalStorageActiveAccount = () => {
-    localStorage.removeItem(`${this.context.network.name.toLowerCase()}_active_acount`);
-  }
-
-  render () {
-    return (
-      <ConnectContext.Provider value={{
-        status: this.state.status,
-        accounts: this.state.accounts,
-        activeAccount: this.state.activeAccount,
-        accountExists: this.accountExists,
-        connect: this.connect,
-        disconnect: this.disconnect,
-        setAccounts: this.setAccounts,
-        setActiveAccount: this.setActiveAccount,
-        getAccount: this.getAccount,
-      }}>
-        {this.props.children}
-      </ConnectContext.Provider>
-    );
-  }
+  return (
+    <ConnectContext.Provider value={{
+      activeWallet: activeWallet,
+      connected: connectedRef.current,
+      accounts: accountsRef.current,
+      activeAccount: activeAccountRef.current,
+      accountExists: accountExists,
+      connectToWallet: connectToWallet,
+      disconnect: disconnect,
+      initialise: initialise,
+      setActiveAccount: setActiveAccount,
+      getAccount: getAccount,
+    }}>
+      {props.children}
+    </ConnectContext.Provider>
+  );
 }

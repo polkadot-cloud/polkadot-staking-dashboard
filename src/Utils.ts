@@ -64,3 +64,11 @@ export const defaultIfNaN = (val: any, _default: any) => {
     return val;
   }
 }
+
+export const localStorageOrDefault = (key: string, _default: any) => {
+  let val: any = localStorage.getItem(key);
+  if (val === null) {
+    val = _default;
+  }
+  return val;
+}

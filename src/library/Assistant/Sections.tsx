@@ -21,7 +21,7 @@ export const Sections = (props: any) => {
   const { network }: any = useApi();
   const { pageMeta } = props;
 
-  const connect = useConnect();
+  const { initialise, connected }: any = useConnect();
   const { pathname } = useLocation();
   const assistant = useAssistant();
 
@@ -29,12 +29,11 @@ export const Sections = (props: any) => {
   const connectOnClick = () => {
     // close assistant
     assistant.toggle();
-    // open connect
-    connect.setAccounts();
+    // initialise connect
+    initialise();
   }
 
   // resources to display
-
   const definitions = pageMeta?.definitions ?? [];
   const external = pageMeta?.external ?? [];
 
@@ -82,7 +81,7 @@ export const Sections = (props: any) => {
         <ListWrapper>
 
           {/* only display if accounts not yet connected */}
-          {connect.status === 0 &&
+          {connected === 0 &&
             <Action
               height="120px"
               label='next step'

@@ -21,17 +21,12 @@ export const Headers = () => {
 
   const { pathname } = useLocation();
   const assistant = useAssistant();
-  const connect = useConnect();
+  const { connected, activeAccount, initialise }: any = useConnect();
   const { openModalWith } = useModal();
   const { isNominating } = useStaking();
   const { validators } = useValidators();
   const { pending } = useExtrinsics();
   const { setSideMenu, sideMenuOpen, isSyncing }: any = useUi();
-
-  // subscribe to web3 accounts
-  const connectWeb3 = async () => {
-    connect.setAccounts();
-  }
 
   let syncing = isSyncing();
 
@@ -61,13 +56,13 @@ export const Headers = () => {
       {(syncing || pending.length > 0) ? <Spinner /> : <></>}
 
       {/* connected, display stash and controller */}
-      {connect.status === 1 &&
+      {connected === 1 &&
         <>
           <HeadingWrapper>
             <Account
               canClick={true}
               onClick={() => openModalWith('ConnectAccounts', {}, 'small')}
-              value={connect.activeAccount}
+              value={activeAccount}
               label={isNominating() ? 'Stash' : undefined}
               format='name'
               filled
@@ -80,11 +75,13 @@ export const Headers = () => {
         </>
       }
       {/* not connected, display connect accounts */}
-      {connect.status === 0 &&
+      {connected === 0 &&
         <HeadingWrapper>
           <Item
             className='connect'
-            onClick={() => connectWeb3()}
+            onClick={() => {
+              initialise();
+            }}
             whileHover={{ scale: 1.02 }}
           >
             <span>Connect Accounts</span>
@@ -97,7 +94,7 @@ export const Headers = () => {
           onClick={() => { assistant.toggle() }}
           whileHover={{ scale: 1.02 }}
         >
-          {connect.status === 0 && <div className='label'>1</div>}
+          {connected === 0 && <div className='label'>1</div>}
           <span>Assistant</span>
         </Item>
       </HeadingWrapper>

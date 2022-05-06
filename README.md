@@ -22,14 +22,14 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Theming support
 - [x] Integrate Intention / Active Bond Thresholds
 - [x] Recent Payouts as list
+- [x] Multi-wallet support
+- [ ] Screen size support
 - [ ] Node only / External API toggles
 - [ ] Extrinsics
 - [ ] Initial Nomination management tooling
-- [ ] Screen size support 
 
 Features coming soon:
 - [ ] Nomination Pools
-- [ ] Talisman support
 
 Additional features that are being considered:
 - [ ] Validator Lists

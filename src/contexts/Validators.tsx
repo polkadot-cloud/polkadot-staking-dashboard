@@ -126,7 +126,7 @@ export const ValidatorsProvider = (props: any) => {
     if (isReady && activeAccount !== '') {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount, getAccountNominations(activeAccount)]);
+  }, [isReady, activeAccount]);
 
   const fetchNominatedList = async () => {
     // get raw nominations list

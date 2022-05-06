@@ -21,7 +21,7 @@ export const useBalances = () => React.useContext(BalancesContext);
 export const BalancesProvider = (props: any) => {
 
   const { api, isReady, network }: any = useApi();
-  const { accounts }: any = useConnect();
+  const { accounts, activeWallet }: any = useConnect();
 
   const [state, _setState]: any = useState({
     accounts: [],
@@ -78,7 +78,7 @@ export const BalancesProvider = (props: any) => {
     return (() => {
       unsubscribeAll(false);
     });
-  }, [accounts, network, isReady]);
+  }, [accounts, network, isReady, activeWallet]);
 
 
   // unsubscribe from all activeAccount subscriptions
@@ -93,7 +93,6 @@ export const BalancesProvider = (props: any) => {
       getBalances();
     }
   }
-
 
   // make a balance subscription
   const subscribeToBalances = async (address: string) => {
@@ -161,7 +160,10 @@ export const BalancesProvider = (props: any) => {
       _accounts.push(_account);
 
       // update state
-      setState({ ...stateRef.current, accounts: _accounts });
+      setState({
+        ...stateRef.current,
+        accounts: _accounts
+      });
     });
 
     return unsub;

@@ -9,6 +9,7 @@ import { useValidators } from './Validators';
 import { useBalances } from './Balances';
 import { useApi } from './Api';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from '../constants';
+import { localStorageOrDefault } from '../Utils';
 
 export interface UIContextState {
   setSideMenu: (v: number) => void;
@@ -66,19 +67,11 @@ export const UIProvider = (props: any) => {
   const { metrics }: any = useNetworkMetrics();
   const { accounts }: any = useBalances();
 
-  let _services: any = localStorage.getItem('services');
-  if (_services === null) {
-    _services = SERVICES;
-  } else {
-    _services = JSON.parse(_services);
-  }
+  // get services config from local storage
+  let _services: any = localStorageOrDefault('services', SERVICES);
 
-  let _userSideMenuMinimised: any = localStorage.getItem('side_menu_minimised');
-  if (_userSideMenuMinimised === null) {
-    _userSideMenuMinimised = 0;
-  } else {
-    _userSideMenuMinimised = Number(_userSideMenuMinimised);
-  }
+  // get side menu minimised state from local storage, default to not
+  let _userSideMenuMinimised: any = Number(localStorageOrDefault('side_menu_minimised', 0));
 
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(0);

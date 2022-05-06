@@ -24,7 +24,7 @@ export const SideMenu = () => {
 
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
-  const { activeAccount, status: connectStatus }: any = useConnect();
+  const { activeAccount, connected: connectStatus }: any = useConnect();
   const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
   const { setSideMenu, sideMenuOpen, sideMenuMinimised, userSideMenuMinimised, setUserSideMenuMinimised }: any = useUi();
