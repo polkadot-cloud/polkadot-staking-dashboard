@@ -114,7 +114,6 @@ export const ValidatorsProvider = (props: any) => {
     })
   }, [isReady, metrics.activeEra]);
 
-
   // pre-populating validator meta batches. Needed for generating nominations
   useEffect(() => {
     if (validators.length > 0) {
@@ -124,7 +123,7 @@ export const ValidatorsProvider = (props: any) => {
 
   // fetch active account's nominations in validator list format
   useEffect(() => {
-    if (isReady) {
+    if (isReady && activeAccount !== '') {
       fetchNominatedList();
     }
   }, [isReady, activeAccount, getAccountNominations(activeAccount)]);
