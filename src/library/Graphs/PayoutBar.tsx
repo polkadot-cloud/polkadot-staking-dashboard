@@ -67,6 +67,7 @@ export const PayoutBar = (props: any) => {
     responsive: true,
     maintainAspectRatio: false,
     barPercentage: 0.28,
+    maxBarThickness: 14,
     scales: {
       x: {
         grid: {

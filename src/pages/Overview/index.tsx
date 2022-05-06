@@ -109,7 +109,10 @@ export const Overview = (props: PageProps) => {
                 {lastPayout === null ? 0 : lastPayout.amount} {network.unit}&nbsp;<span className='fiat'>{lastPayout === null ? `` : moment.unix(lastPayout['block_timestamp']).fromNow()}</span>
               </h2>
             </div>
-            <Payouts account={activeAccount} payouts={payouts.slice(50, 60)} />
+            <Payouts
+              account={activeAccount}
+              payouts={payouts.slice(payouts.length - 10, payouts.length)}
+            />
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>
