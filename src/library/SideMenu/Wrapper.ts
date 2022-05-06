@@ -45,7 +45,7 @@ export const Wrapper = styled.div<any>`
         color: ${textSecondary};
         transition: color 0.2s;
         margin-right: ${props => props.minimised ? 0 : '0.1rem'};
-        margin-top: ${props => props.minimised ? '1rem' : 0};
+        margin-top: ${props => props.minimised ? '1.25rem' : 0};
         opacity: 0.75;
 
         path {

@@ -21,6 +21,7 @@ export interface ConnectContextState {
   connected: number;
   accounts: any;
   activeAccount: string;
+  walletErrors: any;
 }
 
 export const ConnectContext: React.Context<ConnectContextState> = React.createContext({
@@ -34,6 +35,7 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
   activeWallet: null,
   accounts: [],
   activeAccount: '',
+  walletErrors: {},
 });
 
 export const useConnect = () => React.useContext(ConnectContext);
@@ -83,7 +85,6 @@ export const ConnectProvider = (props: any) => {
 
   // store the currently active account
   const [activeAccount, __setActiveAccount] = useState('');
-
   const activeAccountRef = useRef(activeAccount);
   const _setActiveAccount = (v: any) => {
     activeAccountRef.current = v;
@@ -98,12 +99,23 @@ export const ConnectProvider = (props: any) => {
     _setAccounts(v);
   }
 
+  // store wallet errors
+  const [walletErrors, _setWalletErrors] = useState({});
+  const walletErrorsRef: any = useRef(walletErrors);
+
+  const setWalletErrors = (key: string, value: string) => {
+    let _errors: any = { ...walletErrorsRef.current };
+    _errors[key] = value;
+
+    walletErrorsRef.current = _errors;
+    _setWalletErrors(_errors);
+  }
+
   // store unsubscribe handler for connected wallet
   const [unsubscribe, setUnsubscribe]: any = useState(null);
 
   // automatic connect from active wallet
   useEffect(() => {
-
     if (activeWallet !== null) {
       connectToWallet(activeWallet);
     }
@@ -118,6 +130,7 @@ export const ConnectProvider = (props: any) => {
     try {
       const keyring = new Keyring();
       keyring.setSS58Format(0);
+
       const wallet: any = getWalletBySource(_wallet);
 
       // summons extension popup for app to be enabled
@@ -127,35 +140,48 @@ export const ConnectProvider = (props: any) => {
       const unsubscribe = await wallet.subscribeAccounts((injected: any) => {
         let _accounts: any = [];
 
-        injected.map(async (account: any, i: number) => {
-          // we need ss58 format 0
-          const { address } = keyring.addFromAddress(account.address);
+        // abort if no accounts
+        if (!injected.length) {
+          setWalletErrors(_wallet, 'No accounts');
 
-          // take subset of injected account
-          const { name, source, type, signer } = account;
-          _accounts.push({ address, name, source, type, signer });
-          return false;
-        });
+        } else {
 
-        // active account is first in list if none presently persisted
-        let _activeAccount: any = getLocalStorageActiveAccount();
-        if (_activeAccount === '') {
-          _activeAccount = _accounts[0].address;
+          injected.map(async (account: any, i: number) => {
+            // we need ss58 format 0
+            const { address } = keyring.addFromAddress(account.address);
+
+            // take subset of injected account
+            const { name, source, type, signer } = account;
+            _accounts.push({ address, name, source, type, signer });
+            return false;
+          });
+
+          // active account is first in list if none presently persisted
+          let _activeAccount: any = getLocalStorageActiveAccount();
+          if (_activeAccount === '') {
+            _activeAccount = _accounts[0].address;
+          }
+          {
+            setActiveWallet(wallet);
+            setConnected(1);
+            setActiveAccount(_activeAccount);
+            setAccounts(_accounts);
+          }
         }
-        {
-          setActiveWallet(wallet);
-          setConnected(1);
-          setActiveAccount(_activeAccount);
-          setAccounts(_accounts);
-        }
-        // retreive accounts data...
       });
+
+      // unsubscribe if errors exist
+      let _hasError = walletErrorsRef.current?._wallet ?? null;
+      if (_hasError !== null) {
+        disconnect();
+      }
 
       // update context state
       setUnsubscribe(unsubscribe);
 
     } catch (err) {
-      // user did not enable extension for app
+      // wallet not found.
+      setWalletErrors(_wallet, 'Wallet not found');
     }
   }
 
@@ -205,6 +231,7 @@ export const ConnectProvider = (props: any) => {
       connected: connectedRef.current,
       accounts: accountsRef.current,
       activeAccount: activeAccountRef.current,
+      walletErrors: walletErrors,
       accountExists: accountExists,
       connectToWallet: connectToWallet,
       disconnect: disconnect,

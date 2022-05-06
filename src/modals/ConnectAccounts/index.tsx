@@ -20,7 +20,7 @@ export const ConnectAccounts = () => {
     activeAccount,
   } = useConnect();
 
-  let { accounts, connectToWallet } = useConnect();
+  let { accounts, walletErrors, connectToWallet }: any = useConnect();
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
 
   const activeAcc = getAccount(activeAccount);
@@ -34,6 +34,8 @@ export const ConnectAccounts = () => {
         <>
           <h2>Select Wallet</h2>
           {supportedWallets.map((wallet: any) => {
+            const error = walletErrors[wallet.extensionName] ?? null;
+
             return (
               <button
                 key={wallet.extensionName}
@@ -42,7 +44,7 @@ export const ConnectAccounts = () => {
                 <div>
                   {wallet.title === 'Talisman' && <TalismanSVG width='1.5rem' height='1.5rem' />}
                   {wallet.title === 'Polkadot.js' && <PolkadotJSSVG width='1.5rem' height='1.5rem' />}
-                  &nbsp; {wallet.title}
+                  &nbsp; {error ? error : wallet.title}
                 </div>
                 <div></div>
               </button>
