@@ -51,7 +51,7 @@ export const ValidatorsProvider = (props: any) => {
   const { isReady, api, network }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
-  const { getAccountNominations }: any = useBalances();
+  const { accounts, getAccountNominations }: any = useBalances();
 
   // stores the total validator entries
   const [validators, setValidators]: any = useState([]);
@@ -126,7 +126,7 @@ export const ValidatorsProvider = (props: any) => {
     if (isReady && activeAccount !== '') {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount]);
+  }, [isReady, activeAccount, accounts]);
 
   const fetchNominatedList = async () => {
     // get raw nominations list

@@ -211,21 +211,26 @@ export const BalancesProvider = (props: any) => {
 
   //get an account's bonded (controller) account)
   const getBondedAccount = (address: string) => {
-    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
-    if (!account.length) {
-      return null;
+    const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
+
+    if (account === undefined) {
+      return [];
     }
-    const { bonded } = account[0];
+
+    const { bonded } = account;
     return bonded;
   }
 
   // get an account's nominations
   const getAccountNominations = (address: string) => {
-    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
-    if (!account.length) {
+    let _accounts = stateRef.current.accounts;
+    const account = _accounts.find((acc: any) => acc.address === address);
+
+    if (account === undefined) {
       return [];
     }
-    const { nominations } = account[0];
+
+    const { nominations } = account;
     return nominations.targets;
   }
 

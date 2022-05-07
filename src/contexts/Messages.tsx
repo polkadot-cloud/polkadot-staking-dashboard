@@ -48,7 +48,7 @@ export const MessagesProvider = (props: any) => {
     }
     setMessages(_messages);
 
-  }, [activeAccount, connectStatus, getBondedAccount(activeAccount), balanceAccounts.length])
+  }, [activeAccount, connectStatus, balanceAccounts]);
 
 
   const setMessage = (key: string, msg: any) => {
