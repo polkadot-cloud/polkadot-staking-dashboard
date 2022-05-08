@@ -19,6 +19,8 @@ import { faExclamationTriangle, faExpandAlt, faCompressAlt } from '@fortawesome/
 import { useTheme } from '../../contexts/Themes';
 import { SunnyOutline, Moon, LogoGithub, Cog } from 'react-ionicons'
 import { useModal } from '../../contexts/Modal';
+import throttle from 'lodash.throttle';
+import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const SideMenu = () => {
 
@@ -33,6 +35,22 @@ export const SideMenu = () => {
     categories: Object.assign(PAGE_CATEGORIES),
     pages: Object.assign(PAGES_CONFIG),
   });
+
+
+  // listen to window resize to hide SideMenu
+  useEffect(() => {
+    window.addEventListener('resize', windowThrottle);
+    return (() => {
+      window.removeEventListener("resize", windowThrottle);
+    })
+  }, []);
+
+  const throttleCallback = () => {
+    if (window.innerWidth >= SIDE_MENU_STICKY_THRESHOLD) {
+      setSideMenu(0);
+    }
+  }
+  const windowThrottle = throttle(throttleCallback, 200, { trailing: true, leading: false });
 
   useEffect(() => {
 

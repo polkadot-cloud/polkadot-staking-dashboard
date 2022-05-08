@@ -17,40 +17,21 @@ import { useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import { TITLE_DEFAULT } from './constants';
 import { useUi } from './contexts/UI';
-import throttle from 'lodash.throttle';
-import { SIDE_MENU_STICKY_THRESHOLD } from './constants';
 import {
   SideInterfaceWrapper,
   MainInterfaceWrapper,
   BodyInterfaceWrapper,
 } from './Wrappers';
 
-
 export const Router = () => {
 
   const { pathname } = useLocation();
-  const { sideMenuOpen, setSideMenu, sideMenuMinimised } = useUi();
+  const { sideMenuOpen, sideMenuMinimised } = useUi();
 
-  // scroll to top on page change
+  // scroll to top of the window on every page change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
-
-  // listen to window resize to hide SideMenu
-  useEffect(() => {
-    window.addEventListener('resize', windowThrottle);
-    return (() => {
-      window.removeEventListener("resize", windowThrottle);
-    })
-  }, []);
-
-  const throttleCallback = () => {
-    if (window.innerWidth >= SIDE_MENU_STICKY_THRESHOLD) {
-      setSideMenu(0);
-    }
-  }
-  const windowThrottle = throttle(throttleCallback, 200, { trailing: true, leading: false });
 
   return (
     <>
