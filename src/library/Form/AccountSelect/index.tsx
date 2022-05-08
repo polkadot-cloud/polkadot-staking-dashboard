@@ -9,6 +9,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { clipAddress, convertRemToPixels } from '../../../Utils';
 import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
+import { StatusLabel } from '../../StatusLabel';
 
 export const AccountSelect = (props: any) => {
   const { mode } = useTheme();
@@ -30,26 +31,31 @@ export const AccountSelect = (props: any) => {
       ? `2px solid ${defaultThemes.primary[mode]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 
-    const opacity = item.active ? 1 : 0.25;
+    const opacity = item.active ? 1 : 0.1;
 
     return (
       <div
-        className="item"
+        className='wrapper'
         key={item.name}
         {...itemProps}
-        style={{
-          color,
-          border,
-          opacity
-        }}>
-        <div className='icon'>
-          <Identicon
-            value={item.address}
-            size={40}
-          />
+      >
+        {!item.active && <StatusLabel title={item.alert} topOffset='40%' />}
+        <div
+          className="item"
+          style={{
+            color,
+            border,
+            opacity,
+          }}>
+          <div className='icon'>
+            <Identicon
+              value={item.address}
+              size={40}
+            />
+          </div>
+          <h3 style={{ color: color }}>{item.name}</h3>
+          <p>{clipAddress(item.address)}</p>
         </div>
-        <h3 style={{ color: color }}>{item.name}</h3>
-        <p>{clipAddress(item.address)}</p>
       </div>
     )
   }

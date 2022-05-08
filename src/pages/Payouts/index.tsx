@@ -15,7 +15,7 @@ import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import { PageTitle } from '../../library/PageTitle';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
-import { StatusLabel } from '../../library/Graphs/StatusLabel';
+import { StatusLabel } from '../../library/StatusLabel';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PayoutList } from './PayoutList';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
@@ -70,7 +70,7 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </div>
           <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
-            <StatusLabel topOffset="30%" />
+            <StatusLabel topOffset="30%" title="Not Yet Staking" />
             <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
               <PayoutBar
                 payouts={payouts.slice(0, 60)}

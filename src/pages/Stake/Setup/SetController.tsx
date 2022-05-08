@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { Button, ButtonRow } from '../../../library/Button';
+import { useApi } from '../../../contexts/Api';
 import { useBalances } from '../../../contexts/Balances';
 import { useConnect } from '../../../contexts/Connect';
 import { useMessages } from '../../../contexts/Messages';
@@ -19,6 +20,7 @@ export const SetController = (props: any) => {
 
   const { section } = props;
 
+  const { network }: any = useApi();
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount, getAccountBalance, minReserve }: any = useBalances();
   const { getMessage }: any = useMessages();
@@ -57,6 +59,7 @@ export const SetController = (props: any) => {
       ...acc,
       balance: balance,
       active: balance.free >= minReserve,
+      alert: `Not Enough ${network.unit}`
     })
   });
 

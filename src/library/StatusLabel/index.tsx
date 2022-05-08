@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { StatusLabelWrapper } from './Wrappers';
+import { Wrapper } from './Wrapper';
 import { useUi } from '../../contexts/UI';
 import { useStaking } from '../../contexts/Staking';
 
@@ -16,17 +16,18 @@ export const StatusLabel = (props: any) => {
     return (<></>);
   }
 
+  const { title } = props;
   const topOffset = props.topOffset ?? '40%';
 
   return (
-    <StatusLabelWrapper topOffset={topOffset}>
+    <Wrapper topOffset={topOffset}>
       <div>
         <h3>
           <FontAwesomeIcon icon={faExclamationTriangle} transform="grow-1" />&nbsp;
-          Not Yet Staking
+          {title}
         </h3>
       </div>
-    </StatusLabelWrapper>
+    </Wrapper>
   )
 }
 

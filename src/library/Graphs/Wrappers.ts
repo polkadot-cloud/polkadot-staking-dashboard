@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, backgroundLabel, backgroundSecondary } from '../../theme';
+import { textSecondary, backgroundSecondary } from '../../theme';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
@@ -183,32 +183,6 @@ export const GraphWrapper = styled.div<any>`
     }
     &.neg {
       background: #d2545d;
-    }
-  }
-`;
-
-export const StatusLabelWrapper = styled.div<any>`
-  position: absolute;
-  top: ${props => props.topOffset};
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  z-index:2;
-
-  > div {
-    background: ${backgroundLabel};
-    opacity: 0.75;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.75rem;
-
-    h3 {
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
     }
   }
 `;
