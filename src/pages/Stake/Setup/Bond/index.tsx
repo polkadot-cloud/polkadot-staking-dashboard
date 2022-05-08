@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { planckToUnit, humanNumber } from '../../../../Utils';
 import { useApi } from '../../../../contexts/Api';
 import { useConnect } from '../../../../contexts/Connect';
@@ -51,31 +51,53 @@ export const Bond = (props: any) => {
     bond: initialBondValue
   });
 
-  // handle errors
+  // store errors
+  const [errors, setErrors]: any = useState([]);
 
-  let errors = [];
-  let bondDisabled = false;
+  // whether bond is disabled
+  const [bondDisabled, setBondDisabled] = useState(false);
 
-  // pre-bond input errors
+  // account change - update to latest setup value
+  useEffect(() => {
+    setBond({
+      bond: setup.bond
+    });
+  }, [activeAccount]);
 
-  if (freeAfterReserve === 0) {
-    bondDisabled = true;
-    errors.push(`You have no free ${network.unit} to bond.`);
-  }
+  useEffect(() => {
+    handleErrors();
+  }, [bond.bond]);
 
-  if (freeAfterReserve < planckToUnit(minNominatorBond)) {
-    bondDisabled = true;
-    errors.push(`You do not meet the minimum nominator bond of ${planckToUnit(minNominatorBond)} ${network.unit}.`);
-  }
 
-  // bond input errors
+  const handleErrors = () => {
 
-  if (bond.bond < planckToUnit(minNominatorBond) && bond.bond !== '' && bond.bond !== 0) {
-    errors.push(`Bond amount must be at least ${planckToUnit(minNominatorBond)} ${network.unit}.`);
-  }
+    let _bondDisabled = false;
+    let _errors = [];
 
-  if (bond.bond > freeToBond) {
-    errors.push(`Bond amount is more than your free balance.`);
+    // pre-bond input errors
+
+    if (freeAfterReserve === 0) {
+      _bondDisabled = true;
+      _errors.push(`You have no free ${network.unit} to bond.`);
+    }
+
+    if (freeAfterReserve < planckToUnit(minNominatorBond)) {
+      _bondDisabled = true;
+      _errors.push(`You do not meet the minimum nominator bond of ${planckToUnit(minNominatorBond)} ${network.unit}.`);
+    }
+
+    // bond input errors
+
+    if (bond.bond < planckToUnit(minNominatorBond) && bond.bond !== '' && bond.bond !== 0) {
+      _errors.push(`Bond amount must be at least ${planckToUnit(minNominatorBond)} ${network.unit}.`);
+    }
+
+    if (bond.bond > freeToBond) {
+      _errors.push(`Bond amount is more than your free balance.`);
+    }
+
+    setBondDisabled(_bondDisabled);
+    setErrors(_errors);
   }
 
   const gtMinNominatorBond = bond.bond >= planckToUnit(minNominatorBond);
@@ -106,7 +128,8 @@ export const Bond = (props: any) => {
         )}
         <Spacer />
         <BondInput
-          value={initialBondValue}
+          value={bond.bond}
+          defaultValue={setup.bond}
           setParentState={setActiveAccountSetup}
           disabled={bondDisabled}
           setters={[
@@ -151,7 +174,7 @@ export const Bond = (props: any) => {
             </section>
           </div>
         </BondStatus>
-        <Footer complete={!errors.length} />
+        <Footer complete={!errors.length && bond.bond !== ''} />
       </MotionContainer>
     </SectionWrapper>
   )
