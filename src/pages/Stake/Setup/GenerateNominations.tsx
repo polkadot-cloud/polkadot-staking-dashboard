@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { Wrapper } from '../../Overview/Announcements/Wrappers';
 import { useApi } from '../../../contexts/Api';
+import { useConnect } from '../../../contexts/Connect';
 import { useValidators } from '../../../contexts/Validators';
 import { ValidatorList } from '../../../library/ValidatorList';
 import { useUi } from '../../../contexts/UI';
@@ -14,6 +15,7 @@ export const GenerateNominations = (props: any) => {
   // functional props
   const { setup, setSetup } = props;
   const { isReady }: any = useApi();
+  const { activeAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, favouritesList, meta } = useValidators();
 
   const {
@@ -27,6 +29,11 @@ export const GenerateNominations = (props: any) => {
 
   const rawBatchKey = 'validators_browse';
   const batchKey = 'generated_nominations';
+
+  // update selected value on account switch
+  useEffect(() => {
+    setNominations(setup.nominations);
+  }, [activeAccount]);
 
   const fetchFavourites = () => {
     let _favs = [];

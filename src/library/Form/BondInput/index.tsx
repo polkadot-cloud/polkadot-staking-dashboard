@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { InputWrapper, RowWrapper } from './Wrapper';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
@@ -39,6 +39,7 @@ export const BondInput = (props: any) => {
   // default value will either be available to bond, or total bonded
   let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToUnit(active);
 
+  // the current local bond value
   const [bond, setBond] = useState(_bond);
 
   // handle change for bonding
@@ -63,15 +64,18 @@ export const BondInput = (props: any) => {
 
   // apply bond to parent setters
   const updateParentState = (value: any) => {
-    if (value !== '') {
-      for (let s of setters) {
-        s.set({
-          ...s.current,
-          bond: value
-        });
-      }
+    for (let s of setters) {
+      s.set({
+        ...s.current,
+        bond: value
+      });
     }
   }
+
+  // reset value to default when changing account
+  useEffect(() => {
+    setBond(props.defaultValue ?? 0);
+  }, [activeAccount]);
 
   return (
     <RowWrapper>

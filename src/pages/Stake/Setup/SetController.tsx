@@ -38,13 +38,21 @@ export const SetController = (props: any) => {
   const [controllerNotImported, setControllerNotImported] = useState(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
   const [selected, setSelected] = useState(initialAccount);
 
+  // update selected value on account switch
+  useEffect(() => {
+    let _selected = setup.controller !== null
+      ? setup.controller
+      : controller;
+    let _initial = getAccount(_selected);
+    setSelected(_initial);
+  }, [activeAccount]);
+
   useEffect(() => {
     setControllerNotImported(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
   }, [getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
   const handleOnChange = (selected: any) => {
     setSelected(selected);
-
     setActiveAccountSetup({
       ...setup,
       controller: selected?.address ?? null

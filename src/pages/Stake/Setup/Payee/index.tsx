@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
 import { Spacer } from '../../Wrappers';
 import { Header } from '../Header';
@@ -38,6 +38,11 @@ export const Payee = (props: any) => {
   ];
 
   const [payee, setPayee]: any = useState(setup.payee);
+
+  // update selected value on account switch
+  useEffect(() => {
+    setPayee(setup.payee);
+  }, [activeAccount]);
 
   const handleChangePayee = (i: number) => {
 
