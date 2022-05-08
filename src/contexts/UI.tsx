@@ -175,10 +175,39 @@ export const UIProvider = (props: any) => {
     if (filter.includes('over_subscribed')) {
       list = filterOverSubscribed(list, batchKey);
     }
+    if (filter.includes('missing_identity')) {
+      list = filterMissingIdentity(list, batchKey);
+    }
     if (filter.includes('inactive')) {
       list = filterInactive(list);
     }
     return list;
+  }
+
+  const filterMissingIdentity = (list: any, batchKey: string) => {
+    if (meta[batchKey] === undefined) {
+      return list;
+    }
+    let filteredList: any = [];
+    for (let validator of list) {
+      let addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+
+      // if we cannot derive data, fallback to include validator in filtered list
+      if (addressBatchIndex === -1) {
+        filteredList.push(validator);
+        continue;
+      }
+
+      let identities = meta[batchKey]?.identities ?? null;
+      let supers = meta[batchKey]?.supers ?? null;
+
+      // validator included if identity or super identity has been set
+      if (identities[addressBatchIndex] !== null || supers[addressBatchIndex] !== null) {
+        filteredList.push(validator);
+        continue;
+      }
+    }
+    return filteredList;
   }
 
   const filterOverSubscribed = (list: any, batchKey: string) => {

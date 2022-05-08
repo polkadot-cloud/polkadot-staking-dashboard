@@ -3,8 +3,15 @@
 
 import { Wrapper } from './Wrapper';
 import { Item } from './Item';
-import { faPercentage, faExclamationTriangle, faUserSlash, faBalanceScaleLeft, faClock } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../../contexts/UI';
+import {
+  faPercentage,
+  faExclamationTriangle,
+  faUserSlash,
+  faBalanceScaleLeft,
+  faClock,
+  faUserTag
+} from '@fortawesome/free-solid-svg-icons';
 
 export const Filters = (props: any) => {
 
@@ -69,6 +76,15 @@ export const Filters = (props: any) => {
             active={validatorFilters?.includes('blocked_nominations') ?? false}
             onClick={() => {
               handleFilter(toggleFilterValidators, 'blocked_nominations');
+            }}
+          />
+          <Item
+            label='missing identity'
+            icon={faUserTag}
+            transform='grow-9'
+            active={validatorFilters?.includes('missing_identity') ?? false}
+            onClick={() => {
+              handleFilter(toggleFilterValidators, 'missing_identity');
             }}
           />
         </div>

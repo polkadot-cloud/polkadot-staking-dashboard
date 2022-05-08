@@ -48,7 +48,7 @@ export const GenerateNominations = (props: any) => {
     // generate nominations from validator list
     let _nominations = Object.assign(validators);
     // filter validators to find profitable candidates
-    _nominations = applyValidatorFilters(_nominations, rawBatchKey, ['all_commission', 'blocked_nominations', 'over_subscribed', 'inactive']);
+    _nominations = applyValidatorFilters(_nominations, rawBatchKey, ['all_commission', 'blocked_nominations', 'over_subscribed', 'inactive', 'missing_identity']);
     // order validators to find profitable candidates
     _nominations = applyValidatorOrder(_nominations, 'commission');
     // TODO: unbiased shuffle resulting validators
