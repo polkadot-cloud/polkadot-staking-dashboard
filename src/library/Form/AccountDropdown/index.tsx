@@ -12,36 +12,16 @@ import { convertRemToPixels } from '../../../Utils';
 
 export const AccountDropdown = (props: any) => {
 
-  const { mode } = useTheme();
   const { items, onChange, label, placeholder, value }: any = props;
-
-  const DropdownItem = (c: any, item: any, index: number) => {
-
-    const color = c.selectedItem === item ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
-    const border = c.selectedItem === item ? `2px solid ${defaultThemes.primary[mode]}` : `2px solid ${defaultThemes.transparent[mode]}`;
-
-    return (
-      <div
-        className="item"
-        {...c.getItemProps({ key: item.name, index, item })}
-        style={{
-          color: color,
-          border: border,
-        }}>
-        <div className='icon'>
-          <Identicon
-            value={item.address}
-            size={26}
-          />
-        </div>
-        <p>{item.name}</p>
-      </div>
-    )
-  }
 
   return (
     <StyledDownshift>
-      <Downshift onChange={onChange} itemToString={items => (items ? items.name : '')} initialSelectedItem={value}>
+      <Downshift
+        onChange={onChange}
+        itemToString={items => (items ? items.name : '')}
+        selectedItem={value}
+        initialSelectedItem={value}
+      >
         {(c: any) => (
           <div>
             {label && <label className='label' {...c.getLabelProps()}>
@@ -72,17 +52,17 @@ export const AccountDropdown = (props: any) => {
                   c?.inputValue === value?.name
                     ?
                     items
-                      .map((item: any, index: number) => {
-                        return (DropdownItem(c, item, index));
-                      })
+                      .map((item: any, index: number) =>
+                        <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
+                      )
                     :
                     items
                       .filter((item: any) => !c.inputValue || item.name
                         .toLowerCase()
                         .includes(c.inputValue.toLowerCase()))
-                      .map((item: any, index: number) => {
-                        return (DropdownItem(c, item, index));
-                      })
+                      .map((item: any, index: number) =>
+                        <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
+                      )
                 }
               </StyledDropdown>
             </div>
@@ -90,6 +70,33 @@ export const AccountDropdown = (props: any) => {
         )}
       </Downshift>
     </StyledDownshift>
+  )
+}
+
+
+const DropdownItem = ({ c, item, index }: any) => {
+
+  const { mode } = useTheme();
+
+  const color = c.selectedItem === item ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
+  const border = c.selectedItem === item ? `2px solid ${defaultThemes.primary[mode]}` : `2px solid ${defaultThemes.transparent[mode]}`;
+
+  return (
+    <div
+      className="item"
+      {...c.getItemProps({ key: item.name, index, item })}
+      style={{
+        color: color,
+        border: border,
+      }}>
+      <div className='icon'>
+        <Identicon
+          value={item.address}
+          size={26}
+        />
+      </div>
+      <p>{item.name}</p>
+    </div>
   )
 }
 

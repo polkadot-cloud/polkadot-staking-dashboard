@@ -12,59 +12,15 @@ import { defaultThemes } from '../../../theme/default';
 import { StatusLabel } from '../../StatusLabel';
 
 export const AccountSelect = (props: any) => {
-  const { mode } = useTheme();
 
   const { items, onChange, placeholder, value }: any = props;
-
-  const DropdownItem = (c: any, item: any, index: number) => {
-
-    // disable item in list if account doesn't satisfy controller budget.
-    let itemProps = item.active
-      ? c.getItemProps({ index, item })
-      : {};
-
-    const color = c.selectedItem?.address === item?.address
-      ? defaultThemes.primary[mode]
-      : defaultThemes.text.primary[mode];
-
-    const border = c.selectedItem?.address === item?.address
-      ? `2px solid ${defaultThemes.primary[mode]}`
-      : `2px solid ${defaultThemes.transparent[mode]}`;
-
-    const opacity = item.active ? 1 : 0.1;
-
-    return (
-      <div
-        className='wrapper'
-        key={item.name}
-        {...itemProps}
-      >
-        {!item.active && <StatusLabel title={item.alert} topOffset='40%' />}
-        <div
-          className="item"
-          style={{
-            color,
-            border,
-            opacity,
-          }}>
-          <div className='icon'>
-            <Identicon
-              value={item.address}
-              size={40}
-            />
-          </div>
-          <h3 style={{ color: color }}>{item.name}</h3>
-          <p>{clipAddress(item.address)}</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <StyledDownshift>
       <Downshift
         onChange={onChange}
         itemToString={items => (items ? items.name : '')}
+        selectedItem={value}
         initialSelectedItem={value}
       >
         {(c: any) => (
@@ -90,20 +46,10 @@ export const AccountSelect = (props: any) => {
               )}
               <StyledSelect>
                 {
-                  c?.inputValue === value?.name
-                    ?
-                    items
-                      .map((item: any, index: number) => {
-                        return (DropdownItem(c, item, index));
-                      })
-                    :
-                    items
-                      .filter((item: any) => !c.inputValue || item.name
-                        .toLowerCase()
-                        .includes(c.inputValue.toLowerCase()))
-                      .map((item: any, index: number) => {
-                        return (DropdownItem(c, item, index));
-                      })
+                  items
+                    .map((item: any, index: number) =>
+                      <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
+                    )
                 }
               </StyledSelect>
             </div>
@@ -111,6 +57,52 @@ export const AccountSelect = (props: any) => {
         )}
       </Downshift>
     </StyledDownshift>
+  )
+}
+
+const DropdownItem = ({ c, item, index }: any) => {
+
+  const { mode } = useTheme();
+
+  // disable item in list if account doesn't satisfy controller budget.
+  let itemProps = item.active
+    ? c.getItemProps({ index, item })
+    : {};
+
+  const color = c.selectedItem?.address === item?.address
+    ? defaultThemes.primary[mode]
+    : defaultThemes.text.primary[mode];
+
+  const border = c.selectedItem?.address === item?.address
+    ? `2px solid ${defaultThemes.primary[mode]}`
+    : `2px solid ${defaultThemes.transparent[mode]}`;
+
+  const opacity = item.active ? 1 : 0.1;
+
+  return (
+    <div
+      className='wrapper'
+      key={item.name}
+      {...itemProps}
+    >
+      {!item.active && <StatusLabel title={item.alert} topOffset='40%' />}
+      <div
+        className="item"
+        style={{
+          color,
+          border,
+          opacity,
+        }}>
+        <div className='icon'>
+          <Identicon
+            value={item.address}
+            size={40}
+          />
+        </div>
+        <h3 style={{ color: color }}>{item.name}</h3>
+        <p>{clipAddress(item.address)}</p>
+      </div>
+    </div>
   )
 }
 
