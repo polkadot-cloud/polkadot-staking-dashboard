@@ -13,7 +13,7 @@ import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 import { ItemWrapper } from './Wrappers';
-import { planckToDot } from '../../Utils';
+import { planckToUnit } from '../../Utils';
 
 export const PayoutListInner = (props: any) => {
 
@@ -166,7 +166,7 @@ export const PayoutListInner = (props: any) => {
                         <h4>{event_id}</h4>
                       </span>
                       <h4 className={event_id.toLowerCase()}>
-                        {event_id === 'Reward' ? '+' : '-'}{planckToDot(amount)} {network.unit}
+                        {event_id === 'Reward' ? '+' : '-'}{planckToUnit(amount)} {network.unit}
                       </h4>
                     </div>
                     <div>

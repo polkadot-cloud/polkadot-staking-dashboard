@@ -16,7 +16,7 @@ import { useConnect } from '../../contexts/Connect';
 import { useSubscan } from '../../contexts/Subscan';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PageTitle } from '../../library/PageTitle';
-import { planckToDot, defaultIfNaN } from '../../Utils';
+import { planckToUnit, defaultIfNaN } from '../../Utils';
 import moment from 'moment';
 import { GRAPH_HEIGHT } from '../../constants';
 import { ActiveAccount } from './ActiveAccount';
@@ -84,7 +84,7 @@ export const Overview = (props: PageProps) => {
   if (payouts.length > 0) {
     let _last = payouts[payouts.length - 1];
     lastPayout = {
-      amount: planckToDot(_last['amount']),
+      amount: planckToUnit(_last['amount']),
       block_timestamp: _last['block_timestamp'] + "",
     };
   }

@@ -14,7 +14,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { planckToDot } from '../../Utils';
+import { planckToUnit } from '../../Utils';
 import { useApi } from '../../contexts/Api';
 import { getGradient } from './Utils';
 import { defaultThemes } from '../../theme/default';
@@ -46,7 +46,7 @@ export const PayoutBar = (props: any) => {
         label: 'Price',
         // data: empty_data,
         data: payouts.map((item: any, index: number) => {
-          return planckToDot(item.amount);
+          return planckToUnit(item.amount);
         }),
         borderColor: defaultThemes.graphs.colors[0][mode],
         backgroundColor: (context: any) => {

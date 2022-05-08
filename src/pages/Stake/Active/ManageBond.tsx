@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { planckToDot } from '../../../Utils';
+import { planckToUnit } from '../../../Utils';
 import BondedGraph from './BondedGraph';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
@@ -25,7 +25,7 @@ export const ManageBond = () => {
   let { unlocking } = ledger;
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToDot(unlocking[i]);
+    unlocking[i] = planckToUnit(unlocking[i]);
     totalUnlocking += unlocking[i];
   }
 
@@ -39,7 +39,7 @@ export const ManageBond = () => {
           <OpenAssistantIcon page='stake' title='Bonding' />
         </h4>
         <h2>
-          {planckToDot(active)} {network.unit} &nbsp;
+          {planckToUnit(active)} {network.unit} &nbsp;
           <div>
             <Button small primary inline title='+' onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')} />
             <Button small primary title='-' onClick={() => openModalWith('UpdateBond', { fn: 'remove' }, 'small')} />
@@ -50,9 +50,9 @@ export const ManageBond = () => {
       <GraphWrapper transparent noMargin>
         <div className='graph' style={{ flex: 0, paddingRight: '1rem', height: 160 }}>
           <BondedGraph
-            active={planckToDot(active)}
-            unlocking={planckToDot(totalUnlocking)}
-            remaining={planckToDot(remaining)}
+            active={planckToUnit(active)}
+            unlocking={planckToUnit(totalUnlocking)}
+            remaining={planckToUnit(remaining)}
             total={total}
           />
         </div>

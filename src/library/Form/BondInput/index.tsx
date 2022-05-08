@@ -6,7 +6,7 @@ import { InputWrapper, RowWrapper } from './Wrapper';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
-import { isNumeric, planckToDot } from '../../../Utils';
+import { isNumeric, planckToUnit } from '../../../Utils';
 import { Button } from '../../Button';
 
 export const BondInput = (props: any) => {
@@ -33,11 +33,11 @@ export const BondInput = (props: any) => {
   const balance = getAccountBalance(activeAccount);
   let { freeAfterReserve } = balance;
 
-  let freeToBond: any = freeAfterReserve - planckToDot(active);
+  let freeToBond: any = freeAfterReserve - planckToUnit(active);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   // default value will either be available to bond, or total bonded
-  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToDot(active);
+  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToUnit(active);
 
   const [bond, setBond] = useState(_bond);
 

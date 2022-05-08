@@ -4,7 +4,7 @@
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
 import { useBalances } from '../../contexts/Balances';
-import { planckToDot } from '../../Utils';
+import { planckToUnit } from '../../Utils';
 import { useConnect } from '../../contexts/Connect';
 import { useUi } from '../../contexts/UI';
 import { useStaking } from '../../contexts/Staking';
@@ -26,7 +26,7 @@ export const Stake = (props: PageProps) => {
   let { unlocking } = ledger;
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToDot(unlocking[i]);
+    unlocking[i] = planckToUnit(unlocking[i]);
     totalUnlocking += unlocking[i];
   }
 

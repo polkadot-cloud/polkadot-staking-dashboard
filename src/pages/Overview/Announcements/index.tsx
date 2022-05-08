@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
 import { useUi } from '../../../contexts/UI';
-import { humanNumber, planckToDot } from '../../../Utils';
+import { humanNumber, planckToUnit } from '../../../Utils';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from '../../../library/Loaders/Announcement';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
@@ -65,8 +65,8 @@ export const Announcements = () => {
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `The minimum nominator bond is now ${planckToDot(minNominatorBond)} ${network.unit}.`,
-    subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToDot(minNominatorBond)} ${network.unit}.`,
+    title: `The minimum nominator bond is now ${planckToUnit(minNominatorBond)} ${network.unit}.`,
+    subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToUnit(minNominatorBond)} ${network.unit}.`,
   });
 
   // maximum nominators

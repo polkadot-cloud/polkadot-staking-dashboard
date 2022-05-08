@@ -11,7 +11,7 @@ import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { planckToDot } from '../../Utils';
+import { planckToUnit } from '../../Utils';
 import { BondInput } from '../../library/Form/BondInput';
 import { RESERVE_AMOUNT_DOT } from '../../constants';
 
@@ -31,9 +31,9 @@ export const UpdateBond = () => {
   const [section, setSection] = useState(0);
   const [task, setTask]: any = useState(null);
 
-  let availableToBond = planckToDot(free - miscFrozen);
-  let totalPossibleBond = planckToDot(active + availableToBond);
-  let unbondAllAmount = planckToDot(active);
+  let availableToBond = planckToUnit(free - miscFrozen);
+  let totalPossibleBond = planckToUnit(active + availableToBond);
+  let unbondAllAmount = planckToUnit(active);
 
   // TODO: submit extrinsic
   const submitTx = () => {

@@ -7,7 +7,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { useApi, APIContext } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
-import { planckToDot, fiatAmount, humanNumber } from '../../Utils';
+import { planckToUnit, fiatAmount, humanNumber } from '../../Utils';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
@@ -26,15 +26,15 @@ export const BalanceGraphInner = (props: any) => {
   let { free, miscFrozen } = balance;
 
   // get user's total DOT balance
-  let freeDot = planckToDot(free);
+  let freeDot = planckToUnit(free);
   // convert balance to fiat value
   let freeBalance = fiatAmount(freeDot * prices.lastPrice);
 
 
   // convert to DOT unit
-  free = planckToDot(free);
+  free = planckToUnit(free);
 
-  let graphFrozen = planckToDot(miscFrozen);
+  let graphFrozen = planckToUnit(miscFrozen);
   let graphFree = free - graphFrozen;
 
   let zeroBalance = false;
