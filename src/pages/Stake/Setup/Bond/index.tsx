@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { planckToDot } from '../../../../Utils';
+import { planckToDot, humanNumber } from '../../../../Utils';
 import { useApi } from '../../../../contexts/Api';
 import { useConnect } from '../../../../contexts/Connect';
 import { useBalances } from '../../../../contexts/Balances';
@@ -27,17 +27,20 @@ export const Bond = (props: any) => {
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { staking, eraStakers } = useStaking();
-  const { getAccountBalance, minReserve }: any = useBalances();
+  const { getAccountBalance, getAccountLedger, getBondedAccount }: any = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const controller = getBondedAccount(activeAccount);
+  const ledger = getAccountLedger(controller);
+  const { active } = ledger;
 
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
   const balance = getAccountBalance(activeAccount);
-  let { free } = balance;
   const setup = getSetupProgress(activeAccount);
 
-  let freeAfterReserve: any = free - minReserve;
-  freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
+  let { freeAfterReserve } = balance;
+  let freeToBond: any = freeAfterReserve - planckToDot(active);
+  freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   const initialBondValue = setup.bond === 0
     ? freeAfterReserve
@@ -60,18 +63,18 @@ export const Bond = (props: any) => {
     errors.push(`You have no free ${network.unit} to bond.`);
   }
 
-  if (freeAfterReserve < minNominatorBond) {
+  if (freeAfterReserve < planckToDot(minNominatorBond)) {
     bondDisabled = true;
     errors.push(`You do not meet the minimum nominator bond of ${planckToDot(minNominatorBond)} ${network.unit}.`);
   }
 
   // bond input errors
 
-  if (bond < minNominatorBond && bond.bond !== '' && bond.bond !== 0) {
+  if (bond.bond < planckToDot(minNominatorBond) && bond.bond !== '' && bond.bond !== 0) {
     errors.push(`Bond amount must be at least ${planckToDot(minNominatorBond)} ${network.unit}.`);
   }
 
-  if (bond > freeAfterReserve) {
+  if (bond.bond > freeToBond) {
     errors.push(`Bond amount is more than your free balance.`);
   }
 
@@ -91,19 +94,19 @@ export const Bond = (props: any) => {
         thisSection={section}
         activeSection={setup.section}
       >
+        <div className='head'>
+          <h4>Available: {humanNumber(freeAfterReserve)} {network.unit}</h4>
+        </div>
+
         {errors.map((err: any, index: any) =>
           <Warning key={`setup_error_${index}`}>
             <FontAwesomeIcon icon={faExclamationTriangle} transform="shrink-2" />
             <h4>{err}</h4>
           </Warning>
         )}
-
-        {!errors.length &&
-          <h4>Available: {planckToDot(freeAfterReserve)} {network.unit}</h4>
-        }
         <Spacer />
         <BondInput
-          parentState={setup}
+          value={initialBondValue}
           setParentState={setActiveAccountSetup}
           disabled={bondDisabled}
           setters={[
@@ -148,7 +151,7 @@ export const Bond = (props: any) => {
             </section>
           </div>
         </BondStatus>
-        <Footer complete={setup.bond !== 0} />
+        <Footer complete={!errors.length} />
       </MotionContainer>
     </SectionWrapper>
   )

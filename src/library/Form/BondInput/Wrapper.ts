@@ -1,31 +1,41 @@
 import styled from "styled-components";
+import { backgroundLabel } from '../../../theme';
 
-export const Wrapper = styled.div`
+export const RowWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+
+  > div:last-child {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    padding: 0.5rem 1rem;
+  }
+`;
+
+export const InputWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: row wrap;
 
   > section {
-    &:first-child {
-      flex-basis: 30%;
-      flex: 1;
-      min-width: 200px;
-      max-width: 250px;
+    flex: 1;
 
-      h3 {
-        margin: 0;
-      }
-
-      input {
-        width: 100%;
-        margin-top: 0.25rem;
-      }
+    h3 {
+      margin: 0;
     }
-    &:last-child {
-      flex-basis: 70%;
-      flex-grow: 1;
+
+    input {
+      max-width: 100%;
+      margin-top: 0.5rem;
+      border: none;
+      background: ${backgroundLabel};
+      border-radius: 0.75rem;
+      padding: 0.75rem;
     }
   }
 `;
-
-export default Wrapper;

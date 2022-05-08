@@ -73,10 +73,12 @@ export const UpdateBond = () => {
           <div className='items'>
             {fn === 'add' &&
               <>
-                <button onClick={() => {
-                  setSection(1);
-                  setTask('bond_some');
-                }}>
+                <button
+                  className='action-button'
+                  onClick={() => {
+                    setSection(1);
+                    setTask('bond_some');
+                  }}>
                   <div>
                     <h3>Bond Extra</h3>
                     <p>Bond more {network.unit}.</p>
@@ -85,10 +87,12 @@ export const UpdateBond = () => {
                     <FontAwesomeIcon transform='shrink-2' icon={faChevronRight} />
                   </div>
                 </button>
-                <button onClick={() => {
-                  setSection(1);
-                  setTask('bond_all');
-                }}>
+                <button
+                  className='action-button'
+                  onClick={() => {
+                    setSection(1);
+                    setTask('bond_all');
+                  }}>
                   <div>
                     <h3>Bond All</h3>
                     <p>Bond all available {network.unit}.</p>
@@ -101,10 +105,12 @@ export const UpdateBond = () => {
             }
             {fn === 'remove' &&
               <>
-                <button onClick={() => {
-                  setSection(1);
-                  setTask('unbond_some');
-                }}>
+                <button
+                  className='action-button'
+                  onClick={() => {
+                    setSection(1);
+                    setTask('unbond_some');
+                  }}>
                   <div>
                     <h3>Unbond</h3>
                     <p>Unbond some of your {network.unit}.</p>
@@ -113,10 +119,12 @@ export const UpdateBond = () => {
                     <FontAwesomeIcon transform='shrink-2' icon={faChevronRight} />
                   </div>
                 </button>
-                <button onClick={() => {
-                  setSection(1);
-                  setTask('unbond_all');
-                }}>
+                <button
+                  className='action-button'
+                  onClick={() => {
+                    setSection(1);
+                    setTask('unbond_all');
+                  }}>
                   <div>
                     <h3>Unbond All</h3>
                     <p>Exit your staking position.</p>

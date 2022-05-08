@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { Wrapper } from './Wrapper';
+import { InputWrapper, RowWrapper } from './Wrapper';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { isNumeric, planckToDot } from '../../../Utils';
+import { Button } from '../../Button';
 
 export const BondInput = (props: any) => {
 
@@ -19,22 +20,26 @@ export const BondInput = (props: any) => {
   // whether to bond or unbond
   const task = props.task ?? 'bond';
 
+  // whether a value has been provided already
+  const _value = props.value ?? null;
+
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getBondedAccount, getAccountLedger, minReserve }: any = useBalances();
+  const { getAccountBalance, getBondedAccount, getAccountLedger }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
 
   const { active } = ledger;
   const balance = getAccountBalance(activeAccount);
-  let { free } = balance;
+  let { freeAfterReserve } = balance;
 
-  let freeToBond: any = free - minReserve - active;
+  let freeToBond: any = freeAfterReserve - planckToDot(active);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   // default value will either be available to bond, or total bonded
-  let _bond = task === 'bond' ? freeToBond : active;
-  const [bond, setBond] = useState(planckToDot(_bond));
+  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToDot(active);
+
+  const [bond, setBond] = useState(_bond);
 
   // handle change for bonding
   const handleChangeBond = (e: any) => {
@@ -43,16 +48,7 @@ export const BondInput = (props: any) => {
       return;
     }
     setBond(value);
-
-    // set parent setters with bond value if supplied
-    if (value < freeToBond && value !== '') {
-      for (let s of setters) {
-        s.set({
-          ...s.current,
-          bond: value
-        });
-      }
-    }
+    updateParentState(value);
   }
 
   // handle change for unbonding
@@ -62,9 +58,12 @@ export const BondInput = (props: any) => {
       return;
     }
     setBond(value);
+    updateParentState(value);
+  }
 
-    // set parent setters with bond value if supplied
-    if (value <= active && value !== '') {
+  // apply bond to parent setters
+  const updateParentState = (value: any) => {
+    if (value !== '') {
       for (let s of setters) {
         s.set({
           ...s.current,
@@ -75,27 +74,38 @@ export const BondInput = (props: any) => {
   }
 
   return (
-    <Wrapper>
-      <section style={{ opacity: disabled ? 0.5 : 1 }}>
-        <h3>{task === 'unbond' ? 'Unbond' : 'Bond'} {network.unit}:</h3>
-        <input
-          type="text"
-          placeholder={`0 ${network.unit}`}
-          value={bond}
-          onChange={(e) => {
-            if (task === 'bond') {
-              handleChangeBond(e);
-            } else {
-              handleChangeUnbond(e);
-            }
+    <RowWrapper>
+      <div>
+        <InputWrapper>
+          <section style={{ opacity: disabled ? 0.5 : 1 }}>
+            <h3>{task === 'unbond' ? 'Unbond' : 'Bond'} {network.unit}:</h3>
+            <input
+              type="text"
+              placeholder={`0 ${network.unit}`}
+              value={bond}
+              onChange={(e) => {
+                if (task === 'bond') {
+                  handleChangeBond(e);
+                } else {
+                  handleChangeUnbond(e);
+                }
+              }}
+              disabled={disabled}
+            />
+          </section>
+        </InputWrapper>
+      </div>
+      <div>
+        <div>
+          <Button inline small title="Max" onClick={() => {
+            const value = task === 'bond' ? freeToBond : bond;
+            setBond(value);
+            updateParentState(value);
           }}
-          disabled={disabled}
-        />
-      </section>
-      <section>
-
-      </section>
-    </Wrapper>
+          />
+        </div>
+      </div>
+    </RowWrapper>
   )
 }
 

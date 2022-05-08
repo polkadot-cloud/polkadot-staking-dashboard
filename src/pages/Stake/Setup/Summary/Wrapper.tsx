@@ -14,13 +14,16 @@ export const SummaryWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: flex-end;
     border-bottom: 1px solid ${borderPrimary};
     margin-top: 1rem;
     padding: 0.5rem 0 0.75rem 0;
 
     > div:first-child {
       width: 200px;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-end;
 
       svg {
         color: ${primary};
@@ -29,6 +32,9 @@ export const SummaryWrapper = styled.div`
 
     > div:last-child {
       flex-grow: 1;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
     }
   }
 `;

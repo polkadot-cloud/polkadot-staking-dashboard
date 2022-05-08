@@ -72,6 +72,7 @@ export const StyledSelect = styled.div`
       position: relative;
       width: 240px;
       height: 130px;
+      margin: 0.25rem;
 
     .item {
       background: ${backgroundToggle};
@@ -80,7 +81,6 @@ export const StyledSelect = styled.div`
       height: 100%;
       padding: 0.65rem 1rem;
       cursor: pointer;
-      margin: 0.25rem;
       border-radius: 0.75rem;
       display: flex;
       flex-flow: column wrap;

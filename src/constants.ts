@@ -24,6 +24,7 @@ export const NODE_ENDPOINTS: any = {
     endpoint: 'wss://rpc.polkadot.io',
     subscanEndpoint: 'https://polkadot.api.subscan.io',
     unit: 'DOT',
+    units: 10,
     icon: PolkadotLogoSVG,
     api: {
       unit: 'DOT',
@@ -35,6 +36,7 @@ export const NODE_ENDPOINTS: any = {
     endpoint: 'wss://westend-rpc.polkadot.io',
     subscanEndpoint: 'https://westend.api.subscan.io',
     unit: 'WND',
+    units: 10,
     icon: WestendLogoSVG,
     api: {
       unit: 'DOT',

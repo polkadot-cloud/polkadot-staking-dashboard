@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
+import BN from "bn.js";
 import { useApi } from './Api';
 import { useConnect } from './Connect';
 
@@ -50,6 +51,7 @@ export const BalancesProvider = (props: any) => {
       reserved: 0,
       miscFrozen: 0,
       feeFrozen: 0,
+      freeAfterReserve: 0,
     };
   }
 
@@ -110,13 +112,21 @@ export const BalancesProvider = (props: any) => {
         address: address,
       };
 
-      // set account balance
+      // get account balances
       let { free, reserved, miscFrozen, feeFrozen } = balance;
+
+      // calculate free balance after app reserve
+
+      let freeAfterReserve = new BN(free).div(new BN(10 ** 10)).toNumber();
+      freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
+
+      // set account balances to context
       _account['balance'] = {
         free: parseInt(free.toString()),
         reserved: parseInt(reserved.toString()),
         miscFrozen: parseInt(miscFrozen.toString()),
         feeFrozen: parseInt(feeFrozen.toString()),
+        freeAfterReserve: freeAfterReserve,
       };
 
       // set account ledger

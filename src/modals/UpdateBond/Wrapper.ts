@@ -56,7 +56,7 @@ export const ContentWrapper = styled.div`
       margin: 0.75rem 0;
     }
   
-    button {
+    .action-button {
       background: ${buttonPrimaryBackground};
       box-sizing: border-box;
       padding: 1rem;

@@ -16,7 +16,6 @@ export const Warning = styled.div`
   }
 `;
 
-
 export const BondStatus = styled.div<any>`
   width: 100%;
   display: flex;
