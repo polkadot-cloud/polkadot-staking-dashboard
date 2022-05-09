@@ -20,7 +20,7 @@ export const Payee = (props: any) => {
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(activeAccount);
 
-  const options = ['stake', 'stash', 'controller'];
+  const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
     {
       title: 'Back to Staking',
