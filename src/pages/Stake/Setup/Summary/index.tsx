@@ -41,13 +41,11 @@ export const Summary = (props: any) => {
     Id: activeAccount
   };
   let bondToSubmit = bond * (10 ** units);
-
   let targetsToSubmit = nominations.map((item: any,) => {
     return ({
       Id: item.address
     });
   });
-
   let controllerToSubmit = {
     Id: controller
   };
@@ -90,28 +88,28 @@ export const Summary = (props: any) => {
       subtitle: 'Initiating staking setup.',
     });
 
-    // construct the batch and send the transactions
-    const unsub = await api.tx.utility
-      .batch(txs)
-      .signAndSend(activeAccount, ({ status, nonce, events = [] }: any) => {
-        if (status.isFinalized) {
-          // loop through events to determine success or fail
-          events.forEach(({ phase, event: { data, method, section } }: any) => {
-
-            console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
-
-            // post-submission state updates
-
-            // setSubmitting(false);
-            // removePending(nonce);
-            // addNotification({
-            //   title: 'Transaction Successful',
-            //   subtitle: 'Staking setup successful',
-            // });
-          });
-          unsub();
-        }
+    setTimeout(() => {
+      // post-submission state updates
+      setSubmitting(false);
+      removePending(nonce);
+      addNotification({
+        title: 'Transaction Successful',
+        subtitle: 'Staking setup successful',
       });
+    }, 1000);
+
+    // construct the batch and send the transactions
+    // const unsub = await api.tx.utility
+    //   .batch(txs)
+    //   .signAndSend(activeAccount, ({ status, nonce, events = [] }: any) => {
+    //     if (status.isFinalized) {
+    //       // loop through events to determine success or fail
+    //       events.forEach(({ phase, event: { data, method, section } }: any) => {
+    //         console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+    //       });
+    //       unsub();
+    //     }
+    //   });
   }
 
   return (
