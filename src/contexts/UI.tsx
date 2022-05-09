@@ -59,10 +59,10 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = (props: any) => {
 
+  const { isReady, consts, network }: any = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
   const { staking, eraStakers }: any = useStaking();
   const { meta, session } = useValidators();
-  const { isReady, consts, network }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { accounts }: any = useBalances();
@@ -131,7 +131,7 @@ export const UIProvider = (props: any) => {
   useEffect(() => {
     const _setup = setupDefault();
     setSetup(_setup);
-  }, [activeAccount]);
+  }, [activeAccount, network]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
@@ -353,6 +353,9 @@ export const UIProvider = (props: any) => {
 
     // find the current setup progress from `setup`.
     const _setup = setup.find((item: any) => item.address === address);
+
+    // TODO: get setup for the correct network
+
 
     if (_setup === undefined) {
       return PROGRESS_DEFAULT;
