@@ -198,11 +198,19 @@ export const UIProvider = (props: any) => {
         continue;
       }
 
-      let identities = meta[batchKey]?.identities ?? null;
-      let supers = meta[batchKey]?.supers ?? null;
+      let identities = meta[batchKey]?.identities ?? [];
+      let supers = meta[batchKey]?.supers ?? [];
+
+      // push validator if sync has not completed
+      if (!identities.length || !supers.length) {
+        filteredList.push(validator);
+      }
+
+      let identityExists = identities[addressBatchIndex] ?? null;
+      let superExists = supers[addressBatchIndex] ?? null;
 
       // validator included if identity or super identity has been set
-      if (identities[addressBatchIndex] !== null || supers[addressBatchIndex] !== null) {
+      if (identityExists !== null || superExists !== null) {
         filteredList.push(validator);
         continue;
       }
