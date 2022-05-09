@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
 import { Header } from '../Header';
 import { MotionContainer } from '../MotionContainer';
@@ -20,52 +20,98 @@ export const Summary = (props: any) => {
 
   const { section } = props;
 
-  const { network }: any = useApi();
+  const { api, network }: any = useApi();
+  const { units } = network;
   const { activeAccount } = useConnect();
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
 
-  const [submitting, setSubmitting] = useState(false);
-
   const { controller, bond, nominations, payee } = setup;
 
-  // transaction dummy
-  const submitTx = () => {
+  // whether the transaction is in progress
+  const [submitting, setSubmitting] = useState(false);
 
-    // tx object
-    let tx = {
-      name: 'set_controller'
-    };
+  // get the estimated fee for submitting the transaction
+  const [estimatedFee, setEstimatedFee] = useState(null);
 
+  // format metadata to submit
+  let stashToSubmit = {
+    Id: activeAccount
+  };
+  let bondToSubmit = bond * (10 ** units);
+
+  let targetsToSubmit = nominations.map((item: any,) => {
+    return ({
+      Id: item.address
+    });
+  });
+
+  let controllerToSubmit = {
+    Id: controller
+  };
+
+  // construct a batch of transactions 
+  const txs = [
+    api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
+    api.tx.staking.nominate(targetsToSubmit),
+    api.tx.staking.setController(controllerToSubmit)
+  ];
+
+  // calculate fee upon setup changes and initial render
+  useEffect(() => {
+    calculateEstimatedFee();
+  }, []);
+
+  useEffect(() => {
+    calculateEstimatedFee();
+  }, [setup]);
+
+  const calculateEstimatedFee = async () => {
+    // get payment info
+    const info = await api.tx.utility
+      .batch(txs)
+      .paymentInfo(activeAccount);
+
+    // convert fee to unit
+    setEstimatedFee(info.partialFee.toHuman());
+  }
+
+  // submit transaction
+  const submitTx = async () => {
+    const nonce = await api.rpc.system.accountNextIndex(activeAccount);
+
+    // pre-submission state update
     setSubmitting(true);
-
-    // add to pending transactions context
-    addPending(tx);
-
-    // trigger pending tx notification
+    addPending(nonce);
     addNotification({
       title: 'Transaction Submitted',
       subtitle: 'Initiating staking setup.',
     });
 
-    // complete transaction after 2 seconds
-    setTimeout(() => {
+    // construct the batch and send the transactions
+    const unsub = await api.tx.utility
+      .batch(txs)
+      .signAndSend(activeAccount, ({ status, nonce, events = [] }: any) => {
+        if (status.isFinalized) {
+          // loop through events to determine success or fail
+          events.forEach(({ phase, event: { data, method, section } }: any) => {
 
-      // callback state updates
+            console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
 
-      setSubmitting(false);
+            // post-submission state updates
 
-      // remove pending extrinsic
-      removePending(tx);
-
-      // trigger completed tx notification
-      addNotification({
-        title: 'Transaction Successful',
-        subtitle: 'Staking setup successful',
+            // setSubmitting(false);
+            // removePending(nonce);
+            // addNotification({
+            //   title: 'Transaction Successful',
+            //   subtitle: 'Staking setup successful',
+            // });
+          });
+          unsub();
+        }
       });
-    }, 2000);
   }
 
   return (
@@ -104,6 +150,13 @@ export const Summary = (props: any) => {
               {humanNumber(bond)} {network.unit}
             </div>
           </section>
+          <section>
+            <div>Estimated Tx Fee:</div>
+            <div>
+              {estimatedFee === null ? '...' : `${estimatedFee}`}
+            </div>
+          </section>
+
         </SummaryWrapper>
         <div style={{ flex: 1, width: '100%', display: 'flex' }}>
           <ButtonWrapper
