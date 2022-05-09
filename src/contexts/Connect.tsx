@@ -112,24 +112,46 @@ export const ConnectProvider = (props: any) => {
   }
 
   // store unsubscribe handler for connected wallet
-  const [unsubscribe, setUnsubscribe]: any = useState(null);
+  const [unsubscribe, _setUnsubscribe]: any = useState(null);
+  const unsubscribeRef: any = useRef(unsubscribe);
+  const setUnsubscribe = (v: any) => {
+    unsubscribeRef.current = v;
+    _setUnsubscribe(v);
+  }
 
   // automatic connect from active wallet
   useEffect(() => {
-    if (activeWallet !== null) {
-      connectToWallet(activeWallet);
-    }
+    connectToWallet();
     return (() => {
       if (unsubscribe !== null) {
-        unsubscribe();
+        unsubscribeRef.current();
       }
     })
   }, []);
 
-  const connectToWallet = async (_wallet: any) => {
+  // re-import addresses with network switch
+  useEffect(() => {
+    // unsubscribe to current account
+    handleReconnect();
+  }, [network]);
+
+  const handleReconnect = async () => {
+    if (unsubscribeRef.current !== null) {
+      await unsubscribeRef.current();
+    }
+    importNetworkAddresses(accounts);
+  }
+
+  const connectToWallet = async (_wallet: any = null) => {
     try {
-      const keyring = new Keyring();
-      keyring.setSS58Format(0);
+
+      // determine wallet or abort if none selected
+      if (_wallet === null) {
+        if (activeWallet === null) {
+          return;
+        }
+        _wallet = activeWallet;
+      }
 
       const wallet: any = getWalletBySource(_wallet);
 
@@ -137,36 +159,19 @@ export const ConnectProvider = (props: any) => {
       await wallet.enable(DAPP_NAME);
 
       // subscribe to account changes
-      const unsubscribe = await wallet.subscribeAccounts((injected: any) => {
-        let _accounts: any = [];
+      const _unsubscribe = await wallet.subscribeAccounts((injected: any) => {
 
         // abort if no accounts
         if (!injected.length) {
           setWalletErrors(_wallet, 'No accounts');
 
         } else {
+          // import addresses with correct format
+          importNetworkAddresses(injected);
 
-          injected.map(async (account: any, i: number) => {
-            // we need ss58 format 0
-            const { address } = keyring.addFromAddress(account.address);
-
-            // take subset of injected account
-            const { name, source, type, signer } = account;
-            _accounts.push({ address, name, source, type, signer });
-            return false;
-          });
-
-          // active account is first in list if none presently persisted
-          let _activeAccount: any = getLocalStorageActiveAccount();
-          if (_activeAccount === '') {
-            _activeAccount = _accounts[0].address;
-          }
-          {
-            setActiveWallet(wallet);
-            setConnected(1);
-            setActiveAccount(_activeAccount);
-            setAccounts(_accounts);
-          }
+          // set active wallet and connected status
+          setActiveWallet(wallet);
+          setConnected(1);
         }
       });
 
@@ -177,12 +182,40 @@ export const ConnectProvider = (props: any) => {
       }
 
       // update context state
-      setUnsubscribe(unsubscribe);
+      setUnsubscribe(_unsubscribe);
 
     } catch (err) {
       // wallet not found.
       setWalletErrors(_wallet, 'Wallet not found');
     }
+  }
+
+  const importNetworkAddresses = (accounts: any) => {
+    let _accounts: any = [];
+
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+
+    accounts.map(async (account: any, i: number) => {
+
+      // get account address in the correct format
+      const { address } = keyring.addFromAddress(account.address);
+
+      // take subset of injected account
+      const { name, source, type, signer } = account;
+      _accounts.push({ address, name, source, type, signer });
+      return false;
+    });
+
+    // active account is first in list if none presently persisted
+    let _activeAccount: any = getLocalStorageActiveAccount();
+    if (_activeAccount === '') {
+      _activeAccount = _accounts[0].address;
+    }
+
+    setActiveAccount(_activeAccount);
+    setAccounts(_accounts);
+
   }
 
   const disconnect = () => {
