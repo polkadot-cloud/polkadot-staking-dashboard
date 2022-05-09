@@ -1,5 +1,4 @@
 
-import { useEffect } from 'react';
 import { Account } from '../Account';
 import { useConnect } from '../../contexts/Connect';
 import { useStaking } from '../../contexts/Staking';
@@ -13,9 +12,6 @@ export const Controller = () => {
   const { activeAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
-
-  useEffect(() => {
-  }, [controller, activeAccount]);
 
   return (
     <>

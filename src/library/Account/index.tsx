@@ -26,13 +26,17 @@ export const Account = (props: any) => {
   // functional props
   let { canClick }: { canClick: boolean } = props;
 
-  let unassigned = value === null || value === undefined;
+  let unassigned = value === null || value === undefined || !value.length;
 
   // format value based on `format` prop
   let displayValue;
   switch (format) {
     case 'name':
-      displayValue = getAccount(value)?.name;
+      if (value !== '') {
+        displayValue = getAccount(value)?.name;
+      } else {
+        displayValue = clipAddress(value);
+      }
       break;
     default:
       if (value) {

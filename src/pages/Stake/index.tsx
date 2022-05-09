@@ -10,6 +10,8 @@ import { useUi } from '../../contexts/UI';
 import { useStaking } from '../../contexts/Staking';
 import { Active } from './Active';
 import { Setup } from './Setup';
+import { Stake as Loader } from '../../library/Loaders/Stake';
+import { PageTitle } from '../../library/PageTitle';
 
 export const Stake = (props: PageProps) => {
 
@@ -37,7 +39,10 @@ export const Stake = (props: PageProps) => {
     <>
       <Wrapper>
         {_isSyncing
-          ? <></>
+          ? <>
+            <PageTitle title={`${title}`} />
+            <Loader />
+          </>
           : <>
             {_inSetup
               ? <Setup title={title} />
