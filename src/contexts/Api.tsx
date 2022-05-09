@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import {
   CONNECTION_STATUS,
@@ -29,21 +29,6 @@ export const useApi = () => React.useContext(APIContext);
 
 export const APIProvider = (props: any) => {
 
-  // default state
-  const defaultNetwork: any = {
-    name: localStorage.getItem('network'),
-    meta: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
-  };
-
-  // default consts
-  const defaultConsts = {
-    bondDuration: 0,
-    maxNominations: 0,
-    sessionsPerEra: 0,
-    maxNominatorRewardedPerValidator: 0,
-    maxElectingVoters: 0,
-  };
-
   // provider instance state
   const [provider, setProvider]: any = useState(null);
 
@@ -51,24 +36,22 @@ export const APIProvider = (props: any) => {
   const [api, setApi]: any = useState(null);
 
   // network state
-  const [network, setNetwork]: any = useState(defaultNetwork);
+  const [network, setNetwork]: any = useState({
+    name: localStorage.getItem('network'),
+    meta: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
+  });
 
   // constants state
-  const [consts, setConsts]: any = useState(defaultConsts);
+  const [consts, setConsts]: any = useState({
+    bondDuration: 0,
+    maxNominations: 0,
+    sessionsPerEra: 0,
+    maxNominatorRewardedPerValidator: 0,
+    maxElectingVoters: 0,
+  });
 
   // connection status state
   const [connectionStatus, setConnectionStatus]: any = useState(CONNECTION_STATUS[0]);
-
-  // flag whether to try re-connect
-  const [needsReconnect, setNeedsReconnect] = useState(false);
-
-  // flag whether a reconnect is in progress
-  const [reconnecting, _setReconnecting] = useState(false);
-  const reconnectingRef = useRef(reconnecting);
-  const setReconnecting = (v: any) => {
-    reconnectingRef.current = v;
-    _setReconnecting(v);
-  }
 
   // initial network connection
   useEffect(() => {
@@ -76,46 +59,27 @@ export const APIProvider = (props: any) => {
     connect(network);
   }, []);
 
-  // reconnect attempts upon error or disconnect
-  useEffect(() => {
-    if (needsReconnect) {
-      if (!reconnectingRef.current) {
-        setReconnecting(true);
-        switchNetwork(network.name);
-      }
-    }
-  }, [needsReconnect]);
-
+  // define provider event handlers and connect callback on provider change
   useEffect(() => {
     if (provider !== null) {
-
       provider.on('connected', () => {
-        connectedCallback();
+        setConnectionStatus(CONNECTION_STATUS[2]);
       });
-
       provider.on('error', () => {
-        initiateReconnect();
+        setConnectionStatus(CONNECTION_STATUS[0]);
       });
-
-      provider.on('disconnected', () => {
-        initiateReconnect();
-      });
-
-      // provider.on('ready', () => {
-      // });
+      connectedCallback(provider);
     }
   }, [provider]);
 
-  const initiateReconnect = () => {
-    if (!reconnectingRef.current) {
-      setNeedsReconnect(true);
-    }
-  }
-
-  const connectedCallback = async () => {
+  // connection callback function fetches initial network metadata and makes api
+  // available in context
+  const connectedCallback = async (_provider: any) => {
 
     const { name } = network;
-    const _api: any = await ApiPromise.create({ provider: provider });
+
+    const _api = new ApiPromise({ provider: _provider });
+    await _api.isReady;
 
     const _metrics = await Promise.all([
       _api.consts.staking.bondingDuration,
@@ -133,45 +97,33 @@ export const APIProvider = (props: any) => {
     maxElectingVoters = maxElectingVoters?.toNumber();
 
     localStorage.setItem('network', String(name));
-    {
-      setApi(_api);
-      setConsts({
-        bondDuration: bondDuration,
-        maxNominations: maxNominations,
-        sessionsPerEra: sessionsPerEra,
-        maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
-        maxElectingVoters: Number(maxElectingVoters),
-      });
-      setConnectionStatus(CONNECTION_STATUS[2]);
-      setReconnecting(false);
-    }
+
+    setApi(_api);
+    setConsts({
+      bondDuration: bondDuration,
+      maxNominations: maxNominations,
+      sessionsPerEra: sessionsPerEra,
+      maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
+      maxElectingVoters: Number(maxElectingVoters),
+    });
   }
 
-  // connect to websocket and return api into context
+  // connect function sets provider and updates active network.
   const connect = async (_network: keyof NetworkOptions) => {
     const _provider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
 
-    // set intended network and set to connecting
-    {
-      setConnectionStatus(CONNECTION_STATUS[1]);
-      setNetwork({
-        name: _network,
-        meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
-      });
-      setProvider(_provider);
-    }
+    setNetwork({
+      name: _network,
+      meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
+    });
+    setProvider(_provider);
   }
 
   // handle network switching
   const switchNetwork = async (_network: keyof NetworkOptions) => {
-    {
-      setApi(null);
-      setProvider(null);
-      setNetwork(defaultNetwork);
-      setConsts(defaultConsts);
-      setNeedsReconnect(false);
-      setConnectionStatus(CONNECTION_STATUS[0]);
-    }
+    await api.disconnect();
+    setApi(null);
+    setConnectionStatus(CONNECTION_STATUS[1]);
     connect(_network);
   }
 
