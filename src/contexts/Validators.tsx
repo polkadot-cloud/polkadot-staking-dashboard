@@ -112,7 +112,7 @@ export const ValidatorsProvider = (props: any) => {
         });
       });
     })
-  }, [isReady, metrics.activeEra]);
+  }, [isReady, network, metrics.activeEra]);
 
   // pre-populating validator meta batches. Needed for generating nominations
   useEffect(() => {
