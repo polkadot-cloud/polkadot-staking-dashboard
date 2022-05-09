@@ -18,6 +18,7 @@ import { planckToUnit } from '../../Utils';
 export const PayoutListInner = (props: any) => {
 
   const { isReady, network }: any = useApi();
+  const { units } = network;
   const { metrics }: any = useNetworkMetrics();
 
   const { setListFormat, listFormat }: any = useUi();
@@ -166,7 +167,7 @@ export const PayoutListInner = (props: any) => {
                         <h4>{event_id}</h4>
                       </span>
                       <h4 className={event_id.toLowerCase()}>
-                        {event_id === 'Reward' ? '+' : '-'}{planckToUnit(amount)} {network.unit}
+                        {event_id === 'Reward' ? '+' : '-'}{planckToUnit(amount, units)} {network.unit}
                       </h4>
                     </div>
                     <div>

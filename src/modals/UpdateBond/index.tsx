@@ -18,6 +18,7 @@ import { RESERVE_AMOUNT_DOT } from '../../constants';
 export const UpdateBond = () => {
 
   const { network }: any = useApi();
+  const { units } = network;
   const { config }: any = useModal();
   const { activeAccount } = useConnect();
   const { getAccountBalance, getBondedAccount, getAccountLedger }: any = useBalances();
@@ -31,9 +32,9 @@ export const UpdateBond = () => {
   const [section, setSection] = useState(0);
   const [task, setTask]: any = useState(null);
 
-  let availableToBond = planckToUnit(free - miscFrozen);
-  let totalPossibleBond = planckToUnit(active + availableToBond);
-  let unbondAllAmount = planckToUnit(active);
+  let availableToBond = planckToUnit(free - miscFrozen, units);
+  let totalPossibleBond = planckToUnit(active + availableToBond, units);
+  let unbondAllAmount = planckToUnit(active, units);
 
   // TODO: submit extrinsic
   const submitTx = () => {

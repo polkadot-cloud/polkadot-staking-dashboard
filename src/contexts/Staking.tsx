@@ -42,7 +42,7 @@ export const useStaking = () => React.useContext(StakingContext);
 export const StakingProvider = (props: any) => {
 
   const { activeAccount } = useConnect();
-  const { isReady, api, consts, status }: any = useApi();
+  const { isReady, api, consts, status, network }: any = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
@@ -113,10 +113,10 @@ export const StakingProvider = (props: any) => {
         _lastReward = _lastReward.unwrapOrDefault(0);
         _lastReward = _lastReward === 0
           ? 0
-          : new BN(_lastReward.toNumber() / (10 ** 10));
+          : new BN(_lastReward.toNumber() / (10 ** network.units));
 
         // format lastTotalState DOT unit
-        _lastTotalStake = new BN(_lastTotalStake / (10 ** 10)).toNumber();
+        _lastTotalStake = new BN(_lastTotalStake / (10 ** network.units)).toNumber();
 
         setStakingMetrics({
           ...stakingMetrics,
@@ -159,6 +159,7 @@ export const StakingProvider = (props: any) => {
 
     // worker to calculate stats
     worker.postMessage({
+      units: network.units,
       exposures: exposures,
       maxNominatorRewardedPerValidator: maxNominatorRewardedPerValidator,
     });
@@ -263,7 +264,7 @@ export const StakingProvider = (props: any) => {
     }
 
     // convert _stakingMinActiveBond to DOT value
-    let stakingMinActiveBond = _stakingMinActiveBond.div(new BN(10 ** 10)).toNumber();
+    let stakingMinActiveBond = _stakingMinActiveBond.div(new BN(10 ** network.units)).toNumber();
 
     setEraStakers({
       ...eraStakersRef.current,

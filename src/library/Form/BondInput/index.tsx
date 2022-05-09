@@ -24,20 +24,22 @@ export const BondInput = (props: any) => {
   const _value = props.value ?? null;
 
   const { network }: any = useApi();
+  const { units } = network;
   const { activeAccount } = useConnect();
   const { getAccountBalance, getBondedAccount, getAccountLedger }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
 
+
   const { active } = ledger;
   const balance = getAccountBalance(activeAccount);
   let { freeAfterReserve } = balance;
 
-  let freeToBond: any = freeAfterReserve - planckToUnit(active);
+  let freeToBond: any = freeAfterReserve - planckToUnit(active, units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   // default value will either be available to bond, or total bonded
-  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToUnit(active);
+  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToUnit(active, units);
 
   // the current local bond value
   const [bond, setBond] = useState(_bond);

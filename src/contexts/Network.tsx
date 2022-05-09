@@ -21,7 +21,7 @@ export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 // wrapper component to provide components with context
 export const NetworkMetricsProvider = (props: any) => {
 
-  const { isReady, api, status }: any = useApi();
+  const { isReady, api, status, network }: any = useApi();
 
   const defaultState = {
     activeEra: {
@@ -72,7 +72,7 @@ export const NetworkMetricsProvider = (props: any) => {
         _activeEra = JSON.parse(_activeEra);
 
         // get total issuance
-        _totalIssuance = _totalIssuance.toBn().div((new BN(10 ** 10))).toNumber();
+        _totalIssuance = _totalIssuance.toBn().div((new BN(10 ** network.units))).toNumber();
 
         _state = {
           ..._state,

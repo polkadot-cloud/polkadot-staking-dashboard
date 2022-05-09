@@ -24,6 +24,7 @@ import { ActiveAccount } from './ActiveAccount';
 export const Overview = (props: PageProps) => {
 
   const { network, consts }: any = useApi();
+  const { units } = network;
   const { maxElectingVoters } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { totalIssuance } = metrics;
@@ -84,7 +85,7 @@ export const Overview = (props: PageProps) => {
   if (payouts.length > 0) {
     let _last = payouts[payouts.length - 1];
     lastPayout = {
-      amount: planckToUnit(_last['amount']),
+      amount: planckToUnit(_last['amount'], units),
       block_timestamp: _last['block_timestamp'] + "",
     };
   }

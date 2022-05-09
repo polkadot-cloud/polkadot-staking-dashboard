@@ -10,8 +10,8 @@ export const convertRemToPixels = (rem: any) => {
   return remAsNumber * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
 
-export const planckToUnit: any = (val: any) => {
-  return val / (10 ** 10);
+export const planckToUnit: any = (val: any, units: number) => {
+  return val / (10 ** units);
 }
 
 export const fiatAmount: any = (val: any) => {

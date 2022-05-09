@@ -117,7 +117,7 @@ export const BalancesProvider = (props: any) => {
 
       // calculate free balance after app reserve
 
-      let freeAfterReserve = new BN(free).div(new BN(10 ** 10)).toNumber();
+      let freeAfterReserve = new BN(free).div(new BN(10 ** network.units)).toNumber();
       freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
 
       // set account balances to context

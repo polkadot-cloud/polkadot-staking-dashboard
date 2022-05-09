@@ -17,6 +17,7 @@ export const Announcements = () => {
 
   const { isSyncing } = useUi();
   const { network }: any = useApi();
+  const { units } = network;
   const { staking }: any = useStaking();
   const { minNominatorBond, maxNominatorsCount } = staking;
 
@@ -65,8 +66,8 @@ export const Announcements = () => {
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `The minimum nominator bond is now ${planckToUnit(minNominatorBond)} ${network.unit}.`,
-    subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToUnit(minNominatorBond)} ${network.unit}.`,
+    title: `The minimum nominator bond is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
+    subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // maximum nominators

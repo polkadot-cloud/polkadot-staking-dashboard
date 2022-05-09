@@ -129,9 +129,11 @@ export const UIProvider = (props: any) => {
 
   // update setup state when activeAccount changes
   useEffect(() => {
-    const _setup = setupDefault();
-    setSetup(_setup);
-  }, [activeAccount, network]);
+    if (connectAccounts.length) {
+      const _setup = setupDefault();
+      setSetup(_setup);
+    }
+  }, [activeAccount, network, connectAccounts]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
@@ -386,6 +388,7 @@ export const UIProvider = (props: any) => {
         progress: progress
       } : obj
     );
+
     setSetup(_setup);
   }
 

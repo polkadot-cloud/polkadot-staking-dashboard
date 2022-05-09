@@ -374,7 +374,7 @@ export const ValidatorsProvider = (props: any) => {
         });
 
         let lowest = others.length > 0
-          ? new BN(rmCommas(others[0].value)).div(new BN(10 ** 10)).toNumber()
+          ? new BN(rmCommas(others[0].value)).div(new BN(10 ** network.units)).toNumber()
           : 0;
 
         stake.push({

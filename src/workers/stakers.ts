@@ -12,6 +12,7 @@ ctx.addEventListener('message', (event: any) => {
   const { data } = event;
 
   const {
+    units,
     exposures,
     maxNominatorRewardedPerValidator,
   } = data;
@@ -62,7 +63,7 @@ ctx.addEventListener('message', (event: any) => {
   let _minActiveBond = _getMinBonds[0]?.value ?? new BN(0);
 
   // convert _minActiveBond to DOT value
-  _minActiveBond = _minActiveBond.div(new BN(10 ** 10)).toNumber();
+  _minActiveBond = _minActiveBond.div(new BN(10 ** units)).toNumber();
 
   postMessage({
     stakers: _stakers,

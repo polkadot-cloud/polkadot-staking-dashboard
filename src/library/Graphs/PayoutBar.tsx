@@ -34,6 +34,7 @@ ChartJS.register(
 export const PayoutBar = (props: any) => {
 
   const { network }: any = useApi();
+  const { units } = network;
   const { mode } = useTheme();
   const { payouts, height } = props;
 
@@ -46,7 +47,7 @@ export const PayoutBar = (props: any) => {
         label: 'Price',
         // data: empty_data,
         data: payouts.map((item: any, index: number) => {
-          return planckToUnit(item.amount);
+          return planckToUnit(item.amount, units);
         }),
         borderColor: defaultThemes.graphs.colors[0][mode],
         backgroundColor: (context: any) => {

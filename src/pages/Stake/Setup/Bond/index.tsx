@@ -25,6 +25,7 @@ export const Bond = (props: any) => {
   const { section } = props;
 
   const { network }: any = useApi();
+  const { units } = network;
   const { activeAccount } = useConnect();
   const { staking, eraStakers } = useStaking();
   const { getAccountBalance, getAccountLedger, getBondedAccount }: any = useBalances();
@@ -39,7 +40,7 @@ export const Bond = (props: any) => {
   const setup = getSetupProgress(activeAccount);
 
   let { freeAfterReserve } = balance;
-  let freeToBond: any = freeAfterReserve - planckToUnit(active);
+  let freeToBond: any = freeAfterReserve - planckToUnit(active, units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   const initialBondValue = setup.bond === 0
@@ -81,15 +82,15 @@ export const Bond = (props: any) => {
       _errors.push(`You have no free ${network.unit} to bond.`);
     }
 
-    if (freeAfterReserve < planckToUnit(minNominatorBond)) {
+    if (freeAfterReserve < planckToUnit(minNominatorBond, units)) {
       _bondDisabled = true;
-      _errors.push(`You do not meet the minimum nominator bond of ${planckToUnit(minNominatorBond)} ${network.unit}.`);
+      _errors.push(`You do not meet the minimum nominator bond of ${planckToUnit(minNominatorBond, units)} ${network.unit}.`);
     }
 
     // bond input errors
 
-    if (bond.bond < planckToUnit(minNominatorBond) && bond.bond !== '' && bond.bond !== 0) {
-      _errors.push(`Bond amount must be at least ${planckToUnit(minNominatorBond)} ${network.unit}.`);
+    if (bond.bond < planckToUnit(minNominatorBond, units) && bond.bond !== '' && bond.bond !== 0) {
+      _errors.push(`Bond amount must be at least ${planckToUnit(minNominatorBond, units)} ${network.unit}.`);
     }
 
     if (bond.bond > freeToBond) {
@@ -100,7 +101,7 @@ export const Bond = (props: any) => {
     setErrors(_errors);
   }
 
-  const gtMinNominatorBond = bond.bond >= planckToUnit(minNominatorBond);
+  const gtMinNominatorBond = bond.bond >= planckToUnit(minNominatorBond, units);
   const gtMinActiveBond = bond.bond >= minActiveBond;
 
   return (
@@ -158,7 +159,7 @@ export const Bond = (props: any) => {
                 <OpenAssistantIcon page='stake' title='Nominating' />
               </h4>
               <div className='bar'>
-                <h5>{planckToUnit(minNominatorBond)} {network.unit}</h5>
+                <h5>{planckToUnit(minNominatorBond, units)} {network.unit}</h5>
               </div>
             </section>
             <section className={gtMinActiveBond ? `invert` : ``}>

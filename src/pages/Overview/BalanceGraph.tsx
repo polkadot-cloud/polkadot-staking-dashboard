@@ -18,6 +18,7 @@ export const BalanceGraphInner = (props: any) => {
 
   const { mode } = useTheme();
   const { network }: any = useApi();
+  const { units } = network;
   const { activeAccount }: any = useConnect();
   const { getAccountBalance }: any = useBalances();
   const balance = getAccountBalance(activeAccount);
@@ -26,15 +27,15 @@ export const BalanceGraphInner = (props: any) => {
   let { free, miscFrozen } = balance;
 
   // get user's total DOT balance
-  let freeDot = planckToUnit(free);
+  let freeDot = planckToUnit(free, units);
   // convert balance to fiat value
   let freeBalance = fiatAmount(freeDot * prices.lastPrice);
 
 
-  // convert to DOT unit
-  free = planckToUnit(free);
+  // convert to currency unit
+  free = planckToUnit(free, units);
 
-  let graphFrozen = planckToUnit(miscFrozen);
+  let graphFrozen = planckToUnit(miscFrozen, units);
   let graphFree = free - graphFrozen;
 
   let zeroBalance = false;

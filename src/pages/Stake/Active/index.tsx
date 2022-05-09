@@ -25,6 +25,7 @@ import { useModal } from '../../../contexts/Modal';
 export const Active = (props: any) => {
 
   const { network }: any = useApi();
+  const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
@@ -61,7 +62,7 @@ export const Active = (props: any) => {
   let { unlocking } = ledger;
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i]);
+    unlocking[i] = planckToUnit(unlocking[i], units);
     totalUnlocking += unlocking[i];
   }
 

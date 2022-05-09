@@ -5,6 +5,7 @@ import { PageRowWrapper } from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { useBalances } from '../../../contexts/Balances';
 import { planckToUnit } from '../../../Utils';
+import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useStaking } from '../../../contexts/Staking';
 import { Element } from 'react-scroll';
@@ -17,6 +18,8 @@ import { Summary } from './Summary';
 
 export const Setup = (props: any) => {
 
+  const { network }: any = useApi();
+  const { units } = network;
   const { activeAccount } = useConnect();
   const { getAccountLedger, getBondedAccount }: any = useBalances();
   const { hasController } = useStaking();
@@ -27,7 +30,7 @@ export const Setup = (props: any) => {
   let { unlocking } = ledger;
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i]);
+    unlocking[i] = planckToUnit(unlocking[i], units);
     totalUnlocking += unlocking[i];
   }
 

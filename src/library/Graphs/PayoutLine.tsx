@@ -32,6 +32,7 @@ export const PayoutLine = (props: any) => {
 
   const { mode } = useTheme();
   const { network }: any = useApi();
+  const { units } = network;
   const { payouts, height, background } = props;
 
   const options = {
@@ -98,7 +99,7 @@ export const PayoutLine = (props: any) => {
         label: 'Price',
         // data: empty_data,
         data: payouts.map((item: any, index: number) => {
-          return planckToUnit(item.amount);
+          return planckToUnit(item.amount, units);
         }),
         borderColor: (context: any) => {
           const chart = context.chart;

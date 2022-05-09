@@ -15,12 +15,14 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { Spacer } from '../Wrappers';
 import { MotionContainer } from './MotionContainer';
+import { planckToUnit } from '../../../Utils';
 
 export const SetController = (props: any) => {
 
   const { section } = props;
 
   const { network }: any = useApi();
+  const { units } = network;
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount, getAccountBalance, minReserve }: any = useBalances();
   const { getMessage }: any = useMessages();
@@ -63,10 +65,11 @@ export const SetController = (props: any) => {
   let items = accounts.filter((acc: any) => acc.address !== activeAccount);
   items = items.map((acc: any) => {
     let balance = getAccountBalance(acc.address);
+
     return ({
       ...acc,
       balance: balance,
-      active: balance.free >= minReserve,
+      active: planckToUnit(balance.free, units) >= minReserve,
       alert: `Not Enough ${network.unit}`
     })
   });
