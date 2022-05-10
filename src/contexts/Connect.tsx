@@ -4,11 +4,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from './Api';
 import { localStorageOrDefault } from '../Utils';
-import { getWalletBySource } from '@talisman-connect/wallets';
 import { useModal } from './Modal';
 import Keyring from '@polkadot/keyring';
-
-const DAPP_NAME = 'polkadot_staking_dashboard';
+import { web3AccountsSubscribe, web3Enable } from '@polkadot/extension-dapp';
+import { DAPP_NAME } from '../constants';
 
 export interface ConnectContextState {
   disconnect: () => void;
@@ -139,7 +138,7 @@ export const ConnectProvider = (props: any) => {
     if (unsubscribeRef.current !== null) {
       await unsubscribeRef.current();
     }
-    importNetworkAddresses(accounts);
+    importNetworkAddresses(accounts, activeWallet);
   }
 
   const connectToWallet = async (_wallet: any = null) => {
@@ -153,13 +152,17 @@ export const ConnectProvider = (props: any) => {
         _wallet = activeWallet;
       }
 
-      const wallet: any = getWalletBySource(_wallet);
+      // get extensions
+      const extensions = await web3Enable(DAPP_NAME);
 
-      // summons extension popup for app to be enabled
-      await wallet.enable(DAPP_NAME);
+      // return if no extensions enabled or found
+      if (extensions.length === 0) {
+        setActiveWallet(null);
+        return;
+      }
 
-      // subscribe to account changes
-      const _unsubscribe = await wallet.subscribeAccounts((injected: any) => {
+      // subscribe to accounts
+      const _unsubscribe = await web3AccountsSubscribe((injected) => {
 
         // abort if no accounts
         if (!injected.length) {
@@ -167,10 +170,9 @@ export const ConnectProvider = (props: any) => {
 
         } else {
           // import addresses with correct format
-          importNetworkAddresses(injected);
-
+          importNetworkAddresses(injected, _wallet);
           // set active wallet and connected status
-          setActiveWallet(wallet);
+          setActiveWallet(_wallet);
           setConnected(1);
         }
       });
@@ -190,32 +192,35 @@ export const ConnectProvider = (props: any) => {
     }
   }
 
-  const importNetworkAddresses = (accounts: any) => {
+  const importNetworkAddresses = (accounts: any, wallet: any) => {
     let _accounts: any = [];
 
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
     accounts.map(async (account: any, i: number) => {
-
       // get account address in the correct format
       const { address } = keyring.addFromAddress(account.address);
+      account.address = address;
 
-      // take subset of injected account
-      const { name, source, type, signer } = account;
-      _accounts.push({ address, name, source, type, signer });
+      // check source is active wallet
+      let { meta } = account;
+      const { source } = meta;
+
+      if (source === wallet) {
+        _accounts.push(account);
+      }
       return false;
     });
 
+
     // active account is first in list if none presently persisted
     let _activeAccount: any = getLocalStorageActiveAccount();
-    if (_activeAccount === '') {
+    if (_activeAccount === '' && _accounts.length) {
       _activeAccount = _accounts[0].address;
     }
-
     setActiveAccount(_activeAccount);
     setAccounts(_accounts);
-
   }
 
   const disconnect = () => {

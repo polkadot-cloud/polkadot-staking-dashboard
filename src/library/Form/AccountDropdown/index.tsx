@@ -18,7 +18,7 @@ export const AccountDropdown = (props: any) => {
     <StyledDownshift>
       <Downshift
         onChange={onChange}
-        itemToString={items => (items ? items.name : '')}
+        itemToString={item => (item ? item.meta.name : '')}
         selectedItem={value}
         initialSelectedItem={value}
       >
@@ -49,7 +49,7 @@ export const AccountDropdown = (props: any) => {
               )}
               <StyledDropdown>
                 {
-                  c?.inputValue === value?.name
+                  c?.inputValue === value?.meta.name
                     ?
                     items
                       .map((item: any, index: number) =>
@@ -57,7 +57,7 @@ export const AccountDropdown = (props: any) => {
                       )
                     :
                     items
-                      .filter((item: any) => !c.inputValue || item.name
+                      .filter((item: any) => !c.inputValue || item.meta.name
                         .toLowerCase()
                         .includes(c.inputValue.toLowerCase()))
                       .map((item: any, index: number) =>
@@ -84,7 +84,7 @@ const DropdownItem = ({ c, item, index }: any) => {
   return (
     <div
       className="item"
-      {...c.getItemProps({ key: item.name, index, item })}
+      {...c.getItemProps({ key: item.meta.name, index, item })}
       style={{
         color: color,
         border: border,
@@ -95,7 +95,7 @@ const DropdownItem = ({ c, item, index }: any) => {
           size={26}
         />
       </div>
-      <p>{item.name}</p>
+      <p>{item.meta.name}</p>
     </div>
   )
 }

@@ -19,7 +19,7 @@ export const AccountSelect = (props: any) => {
     <StyledDownshift>
       <Downshift
         onChange={onChange}
-        itemToString={items => (items ? items.name : '')}
+        itemToString={item => (item ? item.meta.name : '')}
         selectedItem={value}
         initialSelectedItem={value}
       >
@@ -82,7 +82,7 @@ const DropdownItem = ({ c, item, index }: any) => {
   return (
     <div
       className='wrapper'
-      key={item.name}
+      key={item.meta.name}
       {...itemProps}
     >
       {!item.active && <StatusLabel title={item.alert} topOffset='40%' />}
@@ -99,7 +99,7 @@ const DropdownItem = ({ c, item, index }: any) => {
             size={40}
           />
         </div>
-        <h3 style={{ color: color }}>{item.name}</h3>
+        <h3 style={{ color: color }}>{item.meta.name}</h3>
         <p>{clipAddress(item.address)}</p>
       </div>
     </div>
