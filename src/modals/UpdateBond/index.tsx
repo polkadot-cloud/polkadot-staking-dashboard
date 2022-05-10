@@ -32,9 +32,9 @@ export const UpdateBond = () => {
   const [section, setSection] = useState(0);
   const [task, setTask]: any = useState(null);
 
-  let availableToBond = planckToUnit(free - miscFrozen, units);
-  let totalPossibleBond = planckToUnit(active + availableToBond, units);
-  let unbondAllAmount = planckToUnit(active, units);
+  let availableToBond = planckToUnit(free.sub(miscFrozen).toNumber(), units);
+  let totalPossibleBond = planckToUnit(active.toNumber() + availableToBond, units);
+  let unbondAllAmount = planckToUnit(active.toNumber(), units);
 
   // TODO: submit extrinsic
   const submitTx = () => {

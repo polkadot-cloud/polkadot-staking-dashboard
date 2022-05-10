@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
@@ -299,7 +300,7 @@ export const UIProvider = (props: any) => {
     }
 
     // staking metrics have synced
-    if (staking.lastReward === 0) {
+    if (staking.lastReward === new BN(0)) {
       return true;
     }
 
@@ -363,9 +364,6 @@ export const UIProvider = (props: any) => {
 
     // find the current setup progress from `setup`.
     const _setup = setup.find((item: any) => item.address === address);
-
-    // TODO: get setup for the correct network
-
 
     if (_setup === undefined) {
       return PROGRESS_DEFAULT;

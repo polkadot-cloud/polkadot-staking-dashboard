@@ -27,15 +27,15 @@ export const BalanceGraphInner = (props: any) => {
   let { free, miscFrozen } = balance;
 
   // get user's total DOT balance
-  let freeDot = planckToUnit(free, units);
+  let freeDot = planckToUnit(free.toNumber(), units);
   // convert balance to fiat value
   let freeBalance = fiatAmount(freeDot * prices.lastPrice);
 
 
   // convert to currency unit
-  free = planckToUnit(free, units);
+  free = planckToUnit(free.toNumber(), units);
+  let graphFrozen = planckToUnit(miscFrozen.toNumber(), units);
 
-  let graphFrozen = planckToUnit(miscFrozen, units);
   let graphFree = free - graphFrozen;
 
   let zeroBalance = false;

@@ -1,10 +1,11 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import BN from "bn.js";
-import { useApi } from './Api';
-import { useConnect } from './Connect';
+import { useApi } from '../Api';
+import { useConnect } from '../Connect';
+import * as defaults from './defaults';
 
 export const BalancesContext: any = React.createContext({
   getAccount: (a: string) => { },
@@ -13,9 +14,9 @@ export const BalancesContext: any = React.createContext({
   getBondedAccount: (a: string) => { },
   getAccountNominations: (a: string) => { },
   accounts: [],
-  reserveAmount: 0.1,
-  existentialAmount: 1,
-  minReserve: 1.1,
+  reserveAmount: 0,
+  existentialAmount: 0,
+  minReserve: 0,
 });
 export const useBalances = () => React.useContext(BalancesContext);
 
@@ -23,65 +24,42 @@ export const BalancesProvider = (props: any) => {
 
   const { api, isReady, network }: any = useApi();
   const { accounts, activeWallet }: any = useConnect();
+  const { units } = network;
 
+  // balance accounts context state
   const [state, _setState]: any = useState({
     accounts: [],
     unsub: [],
   });
 
-  // the amount of whole unit to reserve when submitting extrinsics
-  const [reserveAmount] = useState(0.1);
-
-  // the existential amount of unit for an account
-  const [existentialAmount] = useState(1);
-
-  // the minimum reserve for submitting extrinsics on staking dashboard
-  const [minReserve] = useState(reserveAmount + existentialAmount);
-
   const stateRef = useRef(state);
-
   const setState = (val: any) => {
     stateRef.current = val;
     _setState(val);
   }
 
-  const defaultBalance = () => {
-    return {
-      free: 0,
-      reserved: 0,
-      miscFrozen: 0,
-      feeFrozen: 0,
-      freeAfterReserve: 0,
-    };
-  }
+  // existential amount of unit for an account
+  const [existentialAmount] = useState(
+    new BN(10 ** units)
+  );
 
-  const defaultLedger = () => {
-    return {
-      stash: null,
-      active: 0,
-      total: 0,
-      unlocking: [],
-    };
-  }
+  // amount of compulsary reserve balance
+  const [reserveAmount] = useState(
+    existentialAmount.div(new BN(10))
+  );
 
-  const defaultNominations = () => {
-    return {
-      targets: [],
-      submittedIn: 0,
-    };
-  }
+  // minimum reserve for submitting extrinsics
+  const [minReserve] = useState(
+    reserveAmount.add(existentialAmount)
+  );
 
-  // unsub and resubscribe to newly active account
+  // unsubscribe and refetch active account
   useEffect(() => {
-    if (isReady) {
-      // unsubscribe and refetch active account
-      unsubscribeAll(true);
-    }
+    if (isReady) { unsubscribeAll(true); }
     return (() => {
       unsubscribeAll(false);
     });
   }, [accounts, network, isReady, activeWallet]);
-
 
   // unsubscribe from all activeAccount subscriptions
   const unsubscribeAll = async (refetch: boolean) => {
@@ -96,16 +74,15 @@ export const BalancesProvider = (props: any) => {
     }
   }
 
-  // make a balance subscription
+  // subscribe to account balances, ledger, bonded and nominators
   const subscribeToBalances = async (address: string) => {
 
-    // Subscribe to account balances and ledger
     const unsub = await api.queryMulti([
       [api.query.system.account, address],
       [api.query.staking.ledger, address],
       [api.query.staking.bonded, address],
       [api.query.staking.nominators, address],
-    ], ([{ nonce, data: balance }, ledger, bonded, nominations]: any) => {
+    ], ([{ data: balance }, ledger, bonded, nominations]: any) => {
 
       // account state update
       let _account: any = {
@@ -116,30 +93,32 @@ export const BalancesProvider = (props: any) => {
       let { free, reserved, miscFrozen, feeFrozen } = balance;
 
       // calculate free balance after app reserve
-
-      let freeAfterReserve = new BN(free).div(new BN(10 ** network.units)).toNumber();
-      freeAfterReserve = freeAfterReserve < 0 ? 0 : freeAfterReserve;
+      let freeAfterReserve = new BN(free).sub(minReserve);
+      freeAfterReserve = freeAfterReserve.lt(new BN(0))
+        ? new BN(0)
+        : freeAfterReserve;
 
       // set account balances to context
       _account['balance'] = {
-        free: parseInt(free.toString()),
-        reserved: parseInt(reserved.toString()),
-        miscFrozen: parseInt(miscFrozen.toString()),
-        feeFrozen: parseInt(feeFrozen.toString()),
+        free: free.toBn(),
+        reserved: reserved.toBn(),
+        miscFrozen: miscFrozen.toBn(),
+        feeFrozen: feeFrozen.toBn(),
         freeAfterReserve: freeAfterReserve,
       };
 
       // set account ledger
       let _ledger = ledger.unwrapOr(null);
       if (_ledger === null) {
-        _account['ledger'] = defaultLedger();
+        _account['ledger'] = defaults.ledger;
       } else {
 
         const { stash, total, active, unlocking } = _ledger;
+
         _account['ledger'] = {
           stash: stash.toHuman(),
-          active: active.toNumber(),
-          total: total.toNumber(),
+          active: active.toBn(),
+          total: total.toBn(),
           unlocking: unlocking.toHuman(),
         };
       }
@@ -154,7 +133,7 @@ export const BalancesProvider = (props: any) => {
       // set account nominations
       let _nominations = nominations.unwrapOr(null);
       if (_nominations === null) {
-        _nominations = defaultNominations();
+        _nominations = defaults.nominations;
       } else {
         _nominations = {
           targets: _nominations.targets.toHuman(),
@@ -179,28 +158,26 @@ export const BalancesProvider = (props: any) => {
     return unsub;
   }
 
-  // get active account balances. Should be called when an account switches
+  // get active account balances
   const getBalances = async () => {
-    Promise.all(
-      accounts.map((a: any) => subscribeToBalances(a.address))).then((unsubs: any) => {
-        setState({
-          ...stateRef.current,
-          unsub: unsubs
-        });
-      });
+    const unsubs = await Promise.all(
+      accounts.map((a: any) => subscribeToBalances(a.address))
+    );
+    setState({
+      ...stateRef.current,
+      unsub: unsubs
+    });
   }
 
   // get an account's balance metadata
   const getAccountBalance = (address: string) => {
-    const account = stateRef.current.accounts.filter((acc: any) => acc.address === address);
-
-    if (!account.length) {
-      return defaultBalance();
+    const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
+    if (account === undefined) {
+      return defaults.balance;
     }
-    const { balance } = account[0];
-
+    const { balance } = account;
     if (balance.free === undefined) {
-      return defaultBalance();
+      return defaults.balance;
     }
     return balance;
   }
@@ -209,12 +186,11 @@ export const BalancesProvider = (props: any) => {
   const getAccountLedger = (address: string) => {
     const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
     if (account === undefined) {
-      return defaultLedger();
+      return defaults.ledger;
     }
     const { ledger } = account;
-
     if (ledger.stash === undefined) {
-      return defaultLedger();
+      return defaults.ledger;
     }
     return ledger;
   }
@@ -222,11 +198,9 @@ export const BalancesProvider = (props: any) => {
   //get an account's bonded (controller) account)
   const getBondedAccount = (address: string) => {
     const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
-
     if (account === undefined) {
       return [];
     }
-
     const { bonded } = account;
     return bonded;
   }
@@ -235,11 +209,9 @@ export const BalancesProvider = (props: any) => {
   const getAccountNominations = (address: string) => {
     let _accounts = stateRef.current.accounts;
     const account = _accounts.find((acc: any) => acc.address === address);
-
     if (account === undefined) {
       return [];
     }
-
     const { nominations } = account;
     return nominations.targets;
   }
@@ -261,8 +233,6 @@ export const BalancesProvider = (props: any) => {
       getBondedAccount: getBondedAccount,
       getAccountNominations: getAccountNominations,
       accounts: stateRef.current.accounts,
-      reserveAmount: reserveAmount,
-      existentialAmount: existentialAmount,
       minReserve: minReserve,
     }}>
       {props.children}

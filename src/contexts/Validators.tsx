@@ -1,8 +1,8 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
 import BN from "bn.js";
+import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from './Api';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';

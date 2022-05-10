@@ -69,14 +69,14 @@ export const SetController = (props: any) => {
     return ({
       ...acc,
       balance: balance,
-      active: planckToUnit(balance.free, units) >= minReserve,
+      active: planckToUnit(balance.free.toNumber(), units) >= planckToUnit(minReserve.toNumber(), units),
       alert: `Not Enough ${network.unit}`
     })
   });
 
-  // sort accounts with at least minReserve free balance first
+  // sort accounts with at least free balance first
   items = items.sort((a: any, b: any) => {
-    return b.balance.free - a.balance.free
+    return b.balance.free.sub(a.balance.free).toNumber()
   });
 
   return (

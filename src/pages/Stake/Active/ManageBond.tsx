@@ -26,11 +26,11 @@ export const ManageBond = () => {
   let { unlocking } = ledger;
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i], units);
+    unlocking[i] = planckToUnit(unlocking[i].toNumber(), units);
     totalUnlocking += unlocking[i];
   }
 
-  const remaining = total - active - totalUnlocking;
+  const remaining = total.sub(active).toNumber() - totalUnlocking;
 
   return (
     <>
@@ -40,7 +40,7 @@ export const ManageBond = () => {
           <OpenAssistantIcon page='stake' title='Bonding' />
         </h4>
         <h2>
-          {planckToUnit(active, units)} {network.unit} &nbsp;
+          {planckToUnit(active.toNumber(), units)} {network.unit} &nbsp;
           <div>
             <Button small primary inline title='+' onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')} />
             <Button small primary title='-' onClick={() => openModalWith('UpdateBond', { fn: 'remove' }, 'small')} />
@@ -51,10 +51,10 @@ export const ManageBond = () => {
       <GraphWrapper transparent noMargin>
         <div className='graph' style={{ flex: 0, paddingRight: '1rem', height: 160 }}>
           <BondedGraph
-            active={planckToUnit(active, units)}
+            active={planckToUnit(active.toNumber(), units)}
             unlocking={planckToUnit(totalUnlocking, units)}
             remaining={planckToUnit(remaining, units)}
-            total={total}
+            total={total.toNumber()}
           />
         </div>
       </GraphWrapper>

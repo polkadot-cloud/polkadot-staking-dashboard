@@ -11,6 +11,7 @@ import {
   MAX_NOMINATIONS,
   API_ENDPOINTS,
   NODE_ENDPOINTS,
+  MAX_ELECTING_VOTERS,
 } from '../constants';
 
 type NetworkOptions = 'polkadot' | 'westend';
@@ -53,35 +54,37 @@ export const APIProvider = (props: any) => {
   // connection status state
   const [connectionStatus, setConnectionStatus]: any = useState(CONNECTION_STATUS[0]);
 
-  // initial network connection
+  // initial connection
   useEffect(() => {
     const network: any = localStorage.getItem('network');
     connect(network);
   }, []);
 
-  // define provider event handlers and connect callback on provider change
+  // provider event handlers
   useEffect(() => {
     if (provider !== null) {
+
       provider.on('connected', () => {
         setConnectionStatus(CONNECTION_STATUS[2]);
       });
+
       provider.on('error', () => {
         setConnectionStatus(CONNECTION_STATUS[0]);
       });
+
       connectedCallback(provider);
     }
   }, [provider]);
 
-  // connection callback function fetches initial network metadata and makes api
-  // available in context
+  // connection callback
   const connectedCallback = async (_provider: any) => {
-
-    const { name } = network;
 
     const _api = new ApiPromise({ provider: _provider });
     await _api.isReady;
 
-    const _metrics = await Promise.all([
+    localStorage.setItem('network', String(network.name));
+
+    const _metrics: any = await Promise.all([
       _api.consts.staking.bondingDuration,
       _api.consts.staking.maxNominations,
       _api.consts.staking.sessionsPerEra,
@@ -89,22 +92,13 @@ export const APIProvider = (props: any) => {
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
     ]);
 
-    const bondDuration = _metrics[0] ? _metrics[0].toHuman() : BONDING_DURATION;
-    const sessionsPerEra = _metrics[2] ? _metrics[2].toHuman() : SESSIONS_PER_ERA;
-    const maxNominatorRewardedPerValidator = _metrics[3] ? _metrics[3].toHuman() : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
-    const maxNominations = _metrics[1] ? _metrics[1].toHuman() : MAX_NOMINATIONS;
-    let maxElectingVoters: any = _metrics[4];
-    maxElectingVoters = maxElectingVoters?.toNumber();
-
-    localStorage.setItem('network', String(name));
-
     setApi(_api);
     setConsts({
-      bondDuration: bondDuration,
-      maxNominations: maxNominations,
-      sessionsPerEra: sessionsPerEra,
-      maxNominatorRewardedPerValidator: Number(maxNominatorRewardedPerValidator),
-      maxElectingVoters: Number(maxElectingVoters),
+      bondDuration: _metrics[0]?.toNumber() ?? BONDING_DURATION,
+      maxNominations: _metrics[1]?.toNumber() ?? MAX_NOMINATIONS,
+      sessionsPerEra: _metrics[2]?.toNumber() ?? SESSIONS_PER_ERA,
+      maxNominatorRewardedPerValidator: _metrics[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
+      maxElectingVoters: _metrics[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
     });
   }
 

@@ -62,7 +62,7 @@ ctx.addEventListener('message', (event: any) => {
 
   let _minActiveBond = _getMinBonds[0]?.value ?? new BN(0);
 
-  // convert _minActiveBond to DOT value
+  // convert _minActiveBond to base value
   _minActiveBond = _minActiveBond.div(new BN(10 ** units)).toNumber();
 
   postMessage({

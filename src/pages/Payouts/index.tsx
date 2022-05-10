@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import React from 'react';
 import moment from 'moment';
 import { PageProps } from '../types';
@@ -25,6 +26,8 @@ export const Payouts = (props: PageProps) => {
   const { network }: any = useApi();
   const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
+  const { unit, units } = network;
+  const { lastReward } = staking;
 
   const { page } = props;
   const { title } = page;
@@ -33,11 +36,13 @@ export const Payouts = (props: PageProps) => {
   let size = useSize(ref.current);
   let { width, height, minHeight } = formatSize(size, 250);
 
+  let lastRewardBase = lastReward.div(new BN(10 ** units)).toNumber();
+
   let items = [
     {
       label: "Last Era Payout",
-      value: staking.lastReward,
-      unit: network.unit,
+      value: lastRewardBase,
+      unit: unit,
       format: "number",
       assistant: {
         page: 'payouts',

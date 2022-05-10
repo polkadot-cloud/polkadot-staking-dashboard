@@ -31,7 +31,7 @@ export const Stake = (props: PageProps) => {
   let { unlocking } = ledger;
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i], units);
+    unlocking[i] = planckToUnit(unlocking[i].toNumber(), units);
     totalUnlocking += unlocking[i];
   }
 

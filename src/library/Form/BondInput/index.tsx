@@ -35,11 +35,11 @@ export const BondInput = (props: any) => {
   const balance = getAccountBalance(activeAccount);
   let { freeAfterReserve } = balance;
 
-  let freeToBond: any = freeAfterReserve - planckToUnit(active, units);
+  let freeToBond: any = planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   // default value will either be available to bond, or total bonded
-  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToUnit(active, units);
+  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToUnit(active.toNumber(), units);
 
   // the current local bond value
   const [bond, setBond] = useState(_bond);

@@ -3,7 +3,6 @@
 
 import React from 'react';
 
-// context type
 export interface ModalContextState {
   status: number;
   setStatus: (status: number) => void;
@@ -16,7 +15,6 @@ export interface ModalContextState {
 // default modal content
 const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';
 
-// context definition
 export const ModalContext: React.Context<ModalContextState> = React.createContext({
   status: 0,
   setStatus: (status) => { },

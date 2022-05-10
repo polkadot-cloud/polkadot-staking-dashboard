@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
@@ -11,7 +12,6 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
-import { defaultIfNaN } from '../../Utils';
 
 export const Browse = (props: PageProps) => {
 
@@ -26,17 +26,26 @@ export const Browse = (props: PageProps) => {
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
   const { activeValidators } = eraStakers;
 
-  let totalValidatorsAsPercent = defaultIfNaN(((totalValidators ?? 0) / (maxValidatorsCount * 0.01)).toFixed(2), 0);
-  let activeValidatorsAsPercent = defaultIfNaN(((activeValidators ?? 0) / (validatorCount * 0.01)).toFixed(2), 0);
+  // total validators as percent
+  let totalValidatorsAsPercent = 0;
+  if (maxValidatorsCount.gt(new BN(0))) {
+    totalValidatorsAsPercent = totalValidators.div(maxValidatorsCount.div(new BN(100))).toNumber();
+  }
+
+  // active validators as percent
+  let activeValidatorsAsPercent = 0;
+  if (validatorCount.gt(new BN(0))) {
+    activeValidatorsAsPercent = activeValidators / (validatorCount.toNumber() * 0.01);
+  }
 
   const items = [
     {
       label: "Total Validators",
-      value: totalValidators,
-      value2: maxValidatorsCount - totalValidators ?? 0,
-      total: maxValidatorsCount,
+      value: totalValidators.toNumber(),
+      value2: maxValidatorsCount.sub(totalValidators).toNumber(),
+      total: maxValidatorsCount.toNumber(),
       unit: "",
-      tooltip: `${totalValidatorsAsPercent}%`,
+      tooltip: `${totalValidatorsAsPercent.toFixed(2)}%`,
       format: "chart-pie",
       assistant: {
         page: 'validators',
@@ -46,10 +55,10 @@ export const Browse = (props: PageProps) => {
     {
       label: "Active Validators",
       value: activeValidators,
-      value2: validatorCount - activeValidators ?? 0,
-      total: validatorCount,
+      value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
+      total: validatorCount.toNumber(),
       unit: "",
-      tooltip: `${activeValidatorsAsPercent}%`,
+      tooltip: `${activeValidatorsAsPercent.toFixed(2)}%`,
       format: "chart-pie",
       assistant: {
         page: 'validators',

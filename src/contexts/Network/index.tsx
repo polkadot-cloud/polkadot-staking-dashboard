@@ -1,45 +1,32 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
-import { useApi } from './Api';
+import { useApi } from '../Api';
+import * as defaults from './defaults';
 
-// context type
 export interface NetworkMetricsContextState {
   metrics: any;
 }
 
-// context definition
 export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = React.createContext({
   metrics: {},
 });
 
-// useNetworkMetrics
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
-// wrapper component to provide components with context
 export const NetworkMetricsProvider = (props: any) => {
 
-  const { isReady, api, status, network }: any = useApi();
-
-  const defaultState = {
-    activeEra: {
-      index: 0,
-      start: 0,
-    },
-    totalIssuance: 0,
-    unsub: undefined,
-  };
+  const { isReady, api, status }: any = useApi();
 
   useEffect(() => {
     if (status === 'connecting') {
-      setState(defaultState);
+      setState(defaults.state);
     }
   }, [status]);
 
   // store network metrics in state
-  const [state, setState]: any = useState(defaultState);
+  const [state, setState]: any = useState(defaults.state);
 
   // manage unsubscribe
   useEffect(() => {
@@ -71,13 +58,10 @@ export const NetworkMetricsProvider = (props: any) => {
         // convert JSON string to object
         _activeEra = JSON.parse(_activeEra);
 
-        // get total issuance
-        _totalIssuance = _totalIssuance.toBn().div((new BN(10 ** network.units))).toNumber();
-
         _state = {
           ..._state,
           activeEra: _activeEra,
-          totalIssuance: _totalIssuance,
+          totalIssuance: _totalIssuance.toBn(),
         };
         setState(_state);
       });

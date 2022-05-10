@@ -1,7 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageProps } from '../types';
+import BN from 'bn.js';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useStaking } from '../../contexts/Staking';
 import { PageRowWrapper } from '../../Wrappers';
@@ -21,7 +21,7 @@ import moment from 'moment';
 import { GRAPH_HEIGHT } from '../../constants';
 import { ActiveAccount } from './ActiveAccount';
 
-export const Overview = (props: PageProps) => {
+export const Overview = () => {
 
   const { network, consts }: any = useApi();
   const { units } = network;
@@ -32,21 +32,44 @@ export const Overview = (props: PageProps) => {
   const { staking, eraStakers }: any = useStaking();
   const { payouts }: any = useSubscan();
 
-  const { totalNominators, maxNominatorsCount } = staking;
+  const {
+    totalNominators,
+    maxNominatorsCount,
+    lastTotalStake
+  } = staking;
+
   const { activeNominators } = eraStakers;
 
-  let supplyAsPercent = defaultIfNaN(((staking.lastTotalStake ?? 0) / (totalIssuance * 0.01)).toFixed(2), 0);
-  let totalNominatorsAsPercent = defaultIfNaN(((totalNominators ?? 0) / (maxNominatorsCount * 0.01)).toFixed(2), 0);
-  let activeNominatorsAsPercent = defaultIfNaN(((activeNominators ?? 0) / (maxElectingVoters * 0.01)).toFixed(2), 0);
+  // total supply as percent
+  let supplyAsPercent = 0;
+  if (totalIssuance.gt(new BN(0))) {
+    supplyAsPercent = lastTotalStake.div(totalIssuance.div(new BN(100))).toNumber();
+  }
+
+  // total active nominators as percent
+  let totalNominatorsAsPercent = 0;
+  if (maxNominatorsCount.gt(new BN(0))) {
+    totalNominatorsAsPercent = totalNominators.div(maxNominatorsCount.div(new BN(100))).toNumber();
+  }
+
+  // active nominators as percent
+  let activeNominatorsAsPercent = 0;
+  if (maxElectingVoters > 0) {
+    activeNominatorsAsPercent = activeNominators / (new BN(maxElectingVoters)).div(new BN(100)).toNumber();
+  }
+
+  // base values
+  let lastTotalStakeBase = lastTotalStake.div(new BN(10 ** units));
+  let totalIssuanceBase = totalIssuance.div(new BN(10 ** units));
 
   // stats
   const items = [
     {
       label: "Supply Staked",
-      value: staking.lastTotalStake,
-      value2: totalIssuance - staking.lastTotalStake,
+      value: lastTotalStakeBase.toNumber(),
+      value2: totalIssuanceBase.sub(lastTotalStakeBase).toNumber(),
       unit: network.unit,
-      tooltip: `${supplyAsPercent}%`,
+      tooltip: `${supplyAsPercent.toFixed(2)}%`,
       format: "chart-pie",
       assistant: {
         page: 'overview',
@@ -55,11 +78,11 @@ export const Overview = (props: PageProps) => {
     },
     {
       label: "Total Nominators",
-      value: totalNominators,
-      value2: maxNominatorsCount - totalNominators ?? 0,
+      value: totalNominators.toNumber(),
+      value2: maxNominatorsCount.sub(totalNominators).toNumber(),
       total: maxNominatorsCount,
       unit: "",
-      tooltip: `${totalNominatorsAsPercent}%`,
+      tooltip: `${totalNominatorsAsPercent.toFixed(2)}%`,
       format: "chart-pie",
       assistant: {
         page: 'overview',
@@ -69,10 +92,10 @@ export const Overview = (props: PageProps) => {
     {
       label: "Active Nominators",
       value: activeNominators,
-      value2: maxElectingVoters - activeNominators ?? 0,
+      value2: maxElectingVoters - activeNominators,
       total: maxElectingVoters,
       unit: "",
-      tooltip: `${activeNominatorsAsPercent}%`,
+      tooltip: `${activeNominatorsAsPercent.toFixed(2)}%`,
       format: "chart-pie",
       assistant: {
         page: 'overview',

@@ -4,7 +4,6 @@
 import React from 'react';
 import { ASSISTANT_CONFIG } from '../pages';
 
-// context type
 export interface AssistantContextState {
   toggle: () => void;
   setPage: (page: string) => void;
@@ -23,7 +22,6 @@ export interface AssistantContextState {
   transition: number;
 }
 
-// context definition
 export const AssistantContext: React.Context<AssistantContextState> = React.createContext({
   toggle: () => { },
   setPage: (p: string) => { },
@@ -42,10 +40,8 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
   transition: 1,
 });
 
-// useAssistant
 export const useAssistant = () => React.useContext(AssistantContext);
 
-// wrapper component to provide components with context
 export class AssistantProvider extends React.Component {
 
   state = {

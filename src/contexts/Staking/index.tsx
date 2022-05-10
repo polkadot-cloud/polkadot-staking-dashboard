@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useApi } from './Api';
-import { useNetworkMetrics } from './Network';
-import { useBalances } from './Balances';
-import { useConnect } from './Connect';
+import { useApi } from '../Api';
+import { useNetworkMetrics } from '../Network';
+import { useBalances } from '../Balances';
+import { useConnect } from '../Connect';
 import BN from "bn.js";
-import { rmCommas } from '../Utils';
+import { rmCommas } from '../../Utils';
+import * as defaults from './defaults';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import Worker from "worker-loader!../workers/stakers";
+import Worker from "worker-loader!../../workers/stakers";
 
 const worker = new Worker();
 
-// context type
 export interface StakingContextState {
   getNominationsStatus: () => any;
   hasController: () => any;
@@ -24,7 +24,6 @@ export interface StakingContextState {
   eraStakers: any;
 }
 
-// context definition
 export const StakingContext: React.Context<StakingContextState> = React.createContext({
   getNominationsStatus: () => { },
   hasController: () => false,
@@ -35,44 +34,21 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
   eraStakers: {},
 });
 
-// useStaking
 export const useStaking = () => React.useContext(StakingContext);
 
-// wrapper component to provide components with context
 export const StakingProvider = (props: any) => {
 
   const { activeAccount } = useConnect();
   const { isReady, api, consts, status, network }: any = useApi();
-  const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getBondedAccount, getAccountLedger, getAccountNominations }: any = useBalances();
-
-  const defaultEraStakers = {
-    stakers: [],
-    activeNominators: 0,
-    activeValidators: 0,
-    minActiveBond: 0,
-    minStakingActiveBond: 0,
-  };
-
-  const defaultStakingMetrics = {
-    totalNominators: 0,
-    totalValidators: 0,
-    lastReward: 0,
-    lastTotalStake: 0,
-    validatorCount: 0,
-    maxNominatorsCount: 0,
-    maxValidatorsCount: 0,
-    minNominatorBond: 0,
-    historyDepth: 0,
-    unsub: null,
-  };
+  const { maxNominatorRewardedPerValidator } = consts;
 
   // store staking metrics in state
-  const [stakingMetrics, setStakingMetrics]: any = useState(defaultStakingMetrics);
+  const [stakingMetrics, setStakingMetrics]: any = useState(defaults.stakingMetrics);
 
   // store stakers metadata in state
-  const [eraStakers, _setEraStakers]: any = useState(defaultEraStakers);
+  const [eraStakers, _setEraStakers]: any = useState(defaults.eraStakers);
 
   const eraStakersRef = useRef(eraStakers);
   const setEraStakers = (val: any) => {
@@ -109,27 +85,18 @@ export const StakingProvider = (props: any) => {
         _payee
       ]: any) => {
 
-        // format lastReward DOT unit
-        _lastReward = _lastReward.unwrapOrDefault(0);
-        _lastReward = _lastReward === 0
-          ? 0
-          : new BN(_lastReward.toNumber() / (10 ** network.units));
-
-        // format lastTotalState DOT unit
-        _lastTotalStake = new BN(_lastTotalStake / (10 ** network.units)).toNumber();
-
         setStakingMetrics({
           ...stakingMetrics,
-          totalNominators: _totalNominators.toNumber(),
-          totalValidators: _totalValidators.toNumber(),
-          lastReward: _lastReward,
-          lastTotalStake: _lastTotalStake,
-          validatorCount: _validatorCount.toNumber(),
-          maxNominatorsCount: Number(_maxNominatorsCount.toString()),
-          maxValidatorsCount: Number(_maxValidatorsCount.toString()),
-          minNominatorBond: _minNominatorBond.toNumber(),
-          historyDepth: _historyDepth.toNumber(),
           payee: _payee.toHuman(),
+          historyDepth: _historyDepth.toBn(),
+          lastTotalStake: _lastTotalStake.toBn(),
+          validatorCount: _validatorCount.toBn(),
+          totalNominators: _totalNominators.toBn(),
+          totalValidators: _totalValidators.toBn(),
+          minNominatorBond: _minNominatorBond.toBn(),
+          lastReward: _lastReward.unwrapOrDefault(new BN(0)),
+          maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
+          maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
         });
       });
 
@@ -193,8 +160,8 @@ export const StakingProvider = (props: any) => {
 
   useEffect(() => {
     if (status === 'connecting') {
-      setEraStakers(defaultEraStakers);
-      setStakingMetrics(defaultStakingMetrics);
+      setEraStakers(defaults.eraStakers);
+      setStakingMetrics(defaults.stakingMetrics);
     }
   }, [status]);
 
@@ -291,7 +258,7 @@ export const StakingProvider = (props: any) => {
       return false;
     }
     const ledger = getAccountLedger(getBondedAccount(activeAccount));
-    return ledger.active > 0;
+    return ledger.active.gt(0);
   }
 
   /*

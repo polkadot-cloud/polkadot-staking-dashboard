@@ -1,6 +1,7 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { Wrapper, Item } from './Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +20,7 @@ export const Announcements = () => {
   const { network }: any = useApi();
   const { units } = network;
   const { staking }: any = useStaking();
-  const { minNominatorBond, maxNominatorsCount } = staking;
+  const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
 
   const container = {
     hidden: { opacity: 0 },
@@ -40,8 +41,14 @@ export const Announcements = () => {
     }
   };
 
-  const nominatorCapReached = parseInt(staking.totalNominators) === parseInt(staking.maxNominatorsCount);
-  const nominatorReachedPercentage = parseInt(staking.totalNominators) / (parseInt(staking.maxNominatorsCount) * 0.01);
+  let nominatorCapReached = maxNominatorsCount.eq(totalNominators);
+
+  let nominatorReachedPercentage = 0;
+  if (maxNominatorsCount.gt(new BN(0)) && totalNominators.gt(new BN(0))) {
+    nominatorReachedPercentage = totalNominators.div(maxNominatorsCount.div(new BN(100)));
+  }
+
+  let minNominatorBondBase = minNominatorBond.div(new BN(10 ** units));
 
   let announcements = [];
 
@@ -59,22 +66,22 @@ export const Announcements = () => {
     announcements.push({
       class: 'warning',
       title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached.`,
-      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(staking.maxNominatorsCount)}.`,
+      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(maxNominatorsCount.toNumber())}.`,
     });
   }
 
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `The minimum nominator bond is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
+    title: `The minimum nominator bond is now ${minNominatorBondBase} ${network.unit}.`,
     subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // maximum nominators
   announcements.push({
     class: 'neutral',
-    title: `The maximum nominator cap is now ${humanNumber(maxNominatorsCount)}.`,
-    subtitle: `A total of ${humanNumber(maxNominatorsCount)} nominators can now join the ${network.name} network.`,
+    title: `The maximum nominator cap is now ${humanNumber(maxNominatorsCount.toNumber())}.`,
+    subtitle: `A total of ${humanNumber(maxNominatorsCount.toNumber())} nominators can now join the ${network.name} network.`,
   })
 
   return (
