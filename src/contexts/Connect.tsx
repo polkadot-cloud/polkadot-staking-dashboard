@@ -65,12 +65,9 @@ export const ConnectProvider = (props: any) => {
   const [activeWallet, _setActiveWallet] = useState(
     localStorageOrDefault('active_wallet', null)
   );
-  const setActiveWallet = (wallet: any) => {
 
-    let _name = wallet?.extensionName ?? null;
-    if (_name !== null) {
-      localStorage.setItem('active_wallet', _name);
-    }
+  const setActiveWallet = (wallet: any) => {
+    localStorage.setItem('active_wallet', wallet);
     _setActiveWallet(wallet);
   }
 
@@ -143,15 +140,6 @@ export const ConnectProvider = (props: any) => {
 
   const connectToWallet = async (_wallet: any = null) => {
     try {
-
-      // determine wallet or abort if none selected
-      if (_wallet === null) {
-        if (activeWallet === null) {
-          return;
-        }
-        _wallet = activeWallet;
-      }
-
       // get extensions
       const extensions = await web3Enable(DAPP_NAME);
 
@@ -161,13 +149,21 @@ export const ConnectProvider = (props: any) => {
         return;
       }
 
+      // determine wallet or abort if none selected
+      if (_wallet === null) {
+        if (activeWallet !== null) {
+          _wallet = activeWallet;
+        } else {
+          _wallet = extensions[0].name;
+        }
+      }
+
       // subscribe to accounts
       const _unsubscribe = await web3AccountsSubscribe((injected) => {
 
         // abort if no accounts
         if (!injected.length) {
           setWalletErrors(_wallet, 'No accounts');
-
         } else {
           // import addresses with correct format
           importNetworkAddresses(injected, _wallet);
@@ -255,12 +251,12 @@ export const ConnectProvider = (props: any) => {
   }
 
   const accountExists = (addr: string) => {
-    const account = accounts.filter((acc: any) => acc.address === addr);
+    const account = accountsRef.current.filter((acc: any) => acc.address === addr);
     return account.length;
   }
 
   const getAccount = (addr: string) => {
-    const accs = accounts.filter((acc: any) => acc.address === addr);
+    const accs = accountsRef.current.filter((acc: any) => acc.address === addr);
     if (accs.length) {
       return accs[0];
     } else {
