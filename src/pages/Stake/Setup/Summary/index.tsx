@@ -36,40 +36,48 @@ export const Summary = (props: any) => {
   // get the estimated fee for submitting the transaction
   const [estimatedFee, setEstimatedFee] = useState(null);
 
-  // format metadata to submit
-  let stashToSubmit = {
-    Id: activeAccount
-  };
-  let bondToSubmit = bond * (10 ** units);
-  let targetsToSubmit = nominations.map((item: any,) => {
-    return ({
-      Id: item.address
-    });
-  });
-  let controllerToSubmit = {
-    Id: controller
-  };
-
-  // construct a batch of transactions 
-  const txs = [
-    api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
-    api.tx.staking.nominate(targetsToSubmit),
-    api.tx.staking.setController(controllerToSubmit)
-  ];
-
   // calculate fee upon setup changes and initial render
   useEffect(() => {
     calculateEstimatedFee();
   }, []);
 
   useEffect(() => {
-    calculateEstimatedFee();
+    // only update fee if successfully land on Summary
+    if (setup.section === 5) {
+      calculateEstimatedFee();
+    }
   }, [setup]);
 
+  const txs = () => {
+
+    // format metadata to submit
+    let stashToSubmit = {
+      Id: activeAccount
+    };
+    let bondToSubmit = bond * (10 ** units);
+    let targetsToSubmit = nominations.map((item: any,) => {
+      return ({
+        Id: item.address
+      });
+    });
+    let controllerToSubmit = {
+      Id: controller
+    };
+
+    // construct a batch of transactions 
+    const txs = [
+      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
+      api.tx.staking.nominate(targetsToSubmit),
+      api.tx.staking.setController(controllerToSubmit)
+    ];
+    return txs;
+  }
+
   const calculateEstimatedFee = async () => {
+
     // get payment info
     const info = await api.tx.utility
-      .batch(txs)
+      .batch(txs())
       .paymentInfo(activeAccount);
 
     // convert fee to unit
@@ -100,7 +108,7 @@ export const Summary = (props: any) => {
 
     // construct the batch and send the transactions
     // const unsub = await api.tx.utility
-    //   .batch(txs)
+    //   .batch(txs())
     //   .signAndSend(activeAccount, ({ status, nonce, events = [] }: any) => {
     //     if (status.isFinalized) {
     //       // loop through events to determine success or fail
