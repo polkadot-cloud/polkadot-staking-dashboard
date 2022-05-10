@@ -19,7 +19,6 @@ import { ConnectProvider } from './contexts/Connect';
 import { AssistantProvider } from './contexts/Assistant';
 import { ModalProvider } from './contexts/Modal';
 import { APIProvider } from './contexts/Api';
-import { BrowserRouter } from "react-router-dom";
 import { useTheme } from './contexts/Themes';
 
 export const ProvidersInner = () => {
@@ -42,7 +41,6 @@ export const Providers = withProviders(
   AssistantProvider,
   NetworkMetricsProvider,
   BalancesProvider,
-  BrowserRouter,
   StakingProvider,
   ValidatorsProvider,
   PoolsProvider,

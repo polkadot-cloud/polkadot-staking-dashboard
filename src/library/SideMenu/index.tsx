@@ -121,8 +121,8 @@ export const SideMenu = () => {
                 {page.category === category._id &&
                   <Item
                     name={page.title}
-                    to={page.uri}
-                    active={page.uri === pathname}
+                    to={page.hash}
+                    active={page.hash === pathname}
                     icon={<FontAwesomeIcon icon={page.icon} />}
                     action={page.action}
                     minimised={sideMenuMinimised}

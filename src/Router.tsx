@@ -3,7 +3,7 @@
 
 import { useEffect } from 'react';
 import { PageWrapper } from './Wrappers';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"
 import { PAGES_CONFIG } from './pages';
 import { NetworkBar } from './library/NetworkBar';
@@ -12,8 +12,7 @@ import { Headers } from './library/Headers';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
 import Notifications from './library/Notifications';
-import { Overview } from './pages/Overview';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Navigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import { TITLE_DEFAULT } from './constants';
 import { useUi } from './contexts/UI';
@@ -23,7 +22,7 @@ import {
   BodyInterfaceWrapper,
 } from './Wrappers';
 
-export const Router = () => {
+export const RouterInner = () => {
 
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised } = useUi();
@@ -57,10 +56,11 @@ export const Router = () => {
             <Routes>
               {PAGES_CONFIG.map((page, pageIndex) => {
                 const { Entry } = page;
+
                 return (
                   <Route
                     key={`main_interface_page_${pageIndex}`}
-                    path={page.uri}
+                    path={page.hash}
                     element={
                       <PageWrapper
                         key={`main_interface_key__${pageIndex}`}
@@ -79,22 +79,9 @@ export const Router = () => {
                 )
               })}
               <Route
-                path='/'
-                element={
-                  <PageWrapper
-                    key={`main_interface_key__default`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{
-                      duration: 0.8,
-                      type: "spring",
-                      bounce: 0.4
-                    }}
-                  >
-                    <Overview page={PAGES_CONFIG[0]} />
-                  </PageWrapper>
-                }
+                key={`main_interface_navigate`}
+                path="*"
+                element={<Navigate to='/overview' />}
               />
             </Routes>
           </AnimatePresence>
@@ -110,4 +97,11 @@ export const Router = () => {
   );
 }
 
+export const Router = () => {
+  return (
+    <HashRouter basename="/">
+      <RouterInner />
+    </HashRouter>
+  )
+}
 export default Router;
