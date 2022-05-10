@@ -213,12 +213,17 @@ export const ConnectProvider = (props: any) => {
       return false;
     });
 
-
     // active account is first in list if none presently persisted
     let _activeAccount: any = getLocalStorageActiveAccount();
-    if (_activeAccount === '' && _accounts.length) {
+
+    // check active account is in the currently selected wallet
+    let activeAccountInWallet = _accounts.find((item: any) => item.address === _activeAccount);
+
+    // if active account is not within wallet accounts, default to first wallet account
+    if ((_activeAccount === '' || !activeAccountInWallet) && _accounts.length) {
       _activeAccount = _accounts[0].address;
     }
+
     setActiveAccount(_activeAccount);
     setAccounts(_accounts);
   }
