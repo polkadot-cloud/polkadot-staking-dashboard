@@ -14,6 +14,15 @@ export const planckToUnit: any = (val: any, units: number) => {
   return val / (10 ** units);
 }
 
+export const getTotalUnlocking: any = (unlocking: any, units:any):number => {
+  let totalUnlocking = 0;
+  for (let i = 0; i < unlocking.length; i++) {
+    const unlockingVal = planckToUnit(unlocking[i].val?.toNumber() || 0, units);
+    totalUnlocking += unlockingVal;
+  }
+  return totalUnlocking;
+}
+
 export const fiatAmount: any = (val: any) => {
   return val.toFixed(2);
 }

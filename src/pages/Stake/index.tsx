@@ -4,7 +4,7 @@
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
 import { useBalances } from '../../contexts/Balances';
-import { planckToUnit } from '../../Utils';
+import { getTotalUnlocking } from '../../Utils';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { useUi } from '../../contexts/UI';
@@ -29,11 +29,7 @@ export const Stake = (props: PageProps) => {
   const ledger = getAccountLedger(controller);
 
   let { unlocking } = ledger;
-  let totalUnlocking = 0;
-  for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i].toNumber(), units);
-    totalUnlocking += unlocking[i];
-  }
+  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   let _inSetup: boolean = inSetup();
   let _isSyncing = isSyncing();

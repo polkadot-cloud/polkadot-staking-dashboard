@@ -10,7 +10,7 @@ import { useApi } from '../../../contexts/Api';
 import { useStaking } from '../../../contexts/Staking';
 import { useNetworkMetrics } from '../../../contexts/Network';
 import { useBalances } from '../../../contexts/Balances';
-import { planckToUnit } from '../../../Utils';
+import { getTotalUnlocking } from '../../../Utils';
 import { useConnect } from '../../../contexts/Connect';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
@@ -60,11 +60,7 @@ export const Active = (props: any) => {
   }, [nominationStatuses]);
 
   let { unlocking } = ledger;
-  let totalUnlocking = 0;
-  for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i].toNumber(), units);
-    totalUnlocking += unlocking[i];
-  }
+  let totalUnlocking = getTotalUnlocking(unlocking, units)
 
   const items = [
     {
