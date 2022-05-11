@@ -41,7 +41,7 @@ export const UpdateBond = () => {
   // bond stats
   let freeToBond: any = planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
-  let totalPossibleBond = planckToUnit(active.toNumber() + freeToBond, units);
+  let totalPossibleBond = planckToUnit(active.toNumber(), units) + freeToBond;
   let unbondAllAmount = planckToUnit(active.toNumber(), units);
 
   // default value will either be available to bond, or total bonded
