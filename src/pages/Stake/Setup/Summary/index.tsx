@@ -23,7 +23,7 @@ export const Summary = (props: any) => {
 
   const { api, network }: any = useApi();
   const { units } = network;
-  const { activeAccount, getAccount } = useConnect();
+  const { activeAccount } = useConnect();
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
   const { addNotification } = useNotifications();
