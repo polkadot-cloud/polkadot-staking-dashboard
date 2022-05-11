@@ -1,22 +1,7 @@
 import styled from "styled-components";
-import { backgroundLabel, textSecondary, primary, secondary } from "../../../../theme";
+import { backgroundLabel, textSecondary, primary, secondary } from "../../../theme";
 
-export const Warning = styled.div`
-  background: ${backgroundLabel};
-  margin: 0.6rem 0;
-  padding: 0.5rem 0.75rem;
-  color: rgba(255, 144, 0, 1);
-  border-radius: 0.75rem;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-
-  h4 {
-    margin: 0 0 0 0.75rem;
-  }
-`;
-
-export const BondStatus = styled.div<any>`
+export const Wrapper = styled.div<any>`
   width: 100%;
   display: flex;
   flex-flow: row wrap;

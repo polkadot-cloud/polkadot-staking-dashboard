@@ -12,8 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { planckToUnit } from '../../Utils';
-import { BondInput } from '../../library/Form/BondInput';
 import { RESERVE_AMOUNT_DOT } from '../../constants';
+import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
 
 export const UpdateBond = () => {
 
@@ -26,32 +26,38 @@ export const UpdateBond = () => {
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active } = ledger;
-  const { free, miscFrozen } = balance;
+  const { freeAfterReserve } = balance;
   const { fn } = config;
 
+  // active section of modal
   const [section, setSection] = useState(0);
+
+  // task - whether to bond or unbond
   const [task, setTask]: any = useState(null);
 
-  let availableToBond = planckToUnit(free.sub(miscFrozen).toNumber(), units);
-  let totalPossibleBond = planckToUnit(active.toNumber() + availableToBond, units);
+  // bond valid
+  const [bondValid, setBondValid]: any = useState(false);
+
+  // bond stats
+  let freeToBond: any = planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units);
+  freeToBond = freeToBond < 0 ? 0 : freeToBond;
+  let totalPossibleBond = planckToUnit(active.toNumber() + freeToBond, units);
   let unbondAllAmount = planckToUnit(active.toNumber(), units);
+
+  // default value will either be available to bond, or total bonded
+  let _bond = task === 'bond' ? freeToBond : planckToUnit(active.toNumber(), units);
+
+  // set local bond value
+  const [bond, setBond] = useState({
+    bond: _bond
+  });
 
   // TODO: submit extrinsic
   const submitTx = () => {
+    if (!bondValid) {
+      return;
+    }
   }
-
-  // section variants
-  const sectionVariants = {
-    home: {
-      left: 0,
-    },
-    next: {
-      left: '-100%',
-    },
-  };
-
-  // animate assistant container default
-  const animateSections = section === 0 ? `home` : `next`;
 
   return (
     <Wrapper>
@@ -62,13 +68,20 @@ export const UpdateBond = () => {
         </HeadingWrapper>
       </FixedContentWrapper>
       <SectionsWrapper
-        animate={animateSections}
+        animate={section === 0 ? `home` : `next`}
         transition={{
           duration: 0.5,
           type: "spring",
           bounce: 0.22
         }}
-        variants={sectionVariants}
+        variants={{
+          home: {
+            left: 0,
+          },
+          next: {
+            left: '-100%',
+          },
+        }}
       >
         <ContentWrapper>
           <div className='items'>
@@ -142,34 +155,42 @@ export const UpdateBond = () => {
           <div className='items'>
             {task === 'bond_some' &&
               <>
-                <BondInput
-                  disabled={false}
+                <BondInputWithFeedback
+                  unbond={false}
+                  listenIsValid={setBondValid}
+                  defaultBond={freeToBond}
+                  setters={[{
+                    set: setBond,
+                    current: bond
+                  }]}
                 />
                 <p>Total amount available to bond after deducting a reserve amount of {RESERVE_AMOUNT_DOT} {network.unit}.</p>
               </>
             }
-
             {task === 'bond_all' &&
               <>
                 <h4>Amount to bond:</h4>
-                <h2>{availableToBond} {network.unit}</h2>
+                <h2>{freeToBond} {network.unit}</h2>
                 <p>This amount of {network.unit} will be added to your current bonded funds.</p>
                 <Separator />
                 <h4>New total bond:</h4>
                 <h2>{totalPossibleBond} {network.unit}</h2>
               </>
             }
-
             {task === 'unbond_some' &&
               <>
-                <BondInput
-                  disabled={false}
-                  task='unbond'
+                <BondInputWithFeedback
+                  unbond={true}
+                  listenIsValid={setBondValid}
+                  defaultBond={unbondAllAmount}
+                  setters={[{
+                    set: setBond,
+                    current: bond
+                  }]}
                 />
                 <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
               </>
             }
-
             {task === 'unbond_all' &&
               <>
                 <h4>Amount to unbond:</h4>
@@ -177,7 +198,6 @@ export const UpdateBond = () => {
                 <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
               </>
             }
-
           </div>
           <FooterWrapper>
             <div>

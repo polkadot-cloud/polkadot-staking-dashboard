@@ -1,25 +1,18 @@
 // Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { useState, useEffect } from 'react';
-import { planckToUnit, humanNumber } from '../../../../Utils';
+import { planckToUnit } from '../../../../Utils';
 import { useApi } from '../../../../contexts/Api';
 import { useConnect } from '../../../../contexts/Connect';
 import { useBalances } from '../../../../contexts/Balances';
-import { useStaking } from '../../../../contexts/Staking';
 import { useUi } from '../../../../contexts/UI';
 import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
-import { Spacer } from '../../Wrappers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlag } from '@fortawesome/free-regular-svg-icons';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
-import { Warning, BondStatus } from './Wrappers';
-import { BondInput } from '../../../../library/Form/BondInput';
-import { OpenAssistantIcon } from '../../../../library/OpenAssistantIcon';
+import { BondInputWithFeedback } from '../../../../library/Form/BondInputWithFeedback';
+import { BondStatusBar } from '../../../../library/Form/BondStatusBar';
 
 export const Bond = (props: any) => {
 
@@ -28,15 +21,12 @@ export const Bond = (props: any) => {
   const { network }: any = useApi();
   const { units } = network;
   const { activeAccount } = useConnect();
-  const { staking, eraStakers } = useStaking();
   const { getAccountBalance, getAccountLedger, getBondedAccount }: any = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active } = ledger;
 
-  const { minNominatorBond } = staking;
-  const { minActiveBond } = eraStakers;
   const balance = getAccountBalance(activeAccount);
   const setup = getSetupProgress(activeAccount);
 
@@ -53,60 +43,15 @@ export const Bond = (props: any) => {
     bond: initialBondValue
   });
 
-  // store errors
-  const [errors, setErrors]: any = useState([]);
+  // bond valid
+  const [bondValid, setBondValid]: any = useState(false);
 
-  // whether bond is disabled
-  const [bondDisabled, setBondDisabled] = useState(false);
-
-  // minimum nominator bond base value
-  let minNominatorBondBase = minNominatorBond.div(new BN(10 ** units)).toNumber();
-
-  // account change - update to latest setup value
+  // update bond on account change
   useEffect(() => {
     setBond({
       bond: setup.bond
     });
   }, [activeAccount]);
-
-  useEffect(() => {
-    handleErrors();
-  }, [bond.bond]);
-
-
-  const handleErrors = () => {
-
-    let _bondDisabled = false;
-    let _errors = [];
-
-    // pre-bond input errors
-
-    if (freeToBond === 0) {
-      _bondDisabled = true;
-      _errors.push(`You have no free ${network.unit} to bond.`);
-    }
-
-    if (freeToBond < minNominatorBondBase) {
-      _bondDisabled = true;
-      _errors.push(`You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}.`);
-    }
-
-    // bond input errors
-
-    if (bond.bond < minNominatorBondBase && bond.bond !== '' && bond.bond !== 0) {
-      _errors.push(`Bond amount must be at least ${minNominatorBondBase} ${network.unit}.`);
-    }
-
-    if (bond.bond > freeToBond) {
-      _errors.push(`Bond amount is more than your free balance.`);
-    }
-
-    setBondDisabled(_bondDisabled);
-    setErrors(_errors);
-  }
-
-  const gtMinNominatorBond = bond.bond >= minNominatorBondBase;
-  const gtMinActiveBond = bond.bond >= minActiveBond;
 
   return (
     <SectionWrapper transparent>
@@ -121,65 +66,21 @@ export const Bond = (props: any) => {
         thisSection={section}
         activeSection={setup.section}
       >
-        <div className='head'>
-          <h4>Available: {humanNumber(freeToBond)} {network.unit}</h4>
-        </div>
-
-        {errors.map((err: any, index: any) =>
-          <Warning key={`setup_error_${index}`}>
-            <FontAwesomeIcon icon={faExclamationTriangle} transform="shrink-2" />
-            <h4>{err}</h4>
-          </Warning>
-        )}
-        <Spacer />
-        <BondInput
-          value={bond.bond}
-          defaultValue={setup.bond}
-          setParentState={setActiveAccountSetup}
-          disabled={bondDisabled}
-          setters={[
-            {
-              set: setActiveAccountSetup,
-              current: setup
-            }, {
-              set: setBond,
-              current: bond,
-            }
-          ]}
+        <BondInputWithFeedback
+          nominating
+          unbond={false}
+          listenIsValid={setBondValid}
+          defaultBond={initialBondValue}
+          setters={[{
+            set: setActiveAccountSetup,
+            current: setup
+          }, {
+            set: setBond,
+            current: bond
+          }]}
         />
-        <BondStatus>
-          <div className='bars'>
-            <section className={gtMinNominatorBond ? `invert` : ``}>
-              <h4>&nbsp;</h4>
-              <div className='bar'>
-                <h5>Inactive</h5>
-              </div>
-            </section>
-            <section className={gtMinNominatorBond ? `invert` : ``}>
-              <h4>
-                <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
-                &nbsp;
-                Nominate
-                <OpenAssistantIcon page='stake' title='Nominating' />
-              </h4>
-              <div className='bar'>
-                <h5>{minNominatorBondBase} {network.unit}</h5>
-              </div>
-            </section>
-            <section className={gtMinActiveBond ? `invert` : ``}>
-              <h4>
-                <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
-                &nbsp;
-                Active
-                <OpenAssistantIcon page='stake' title='Active Bond Threshold' />
-              </h4>
-              <div className='bar'>
-                <h5>{minActiveBond} {network.unit}</h5>
-              </div>
-            </section>
-          </div>
-        </BondStatus>
-        <Footer complete={!errors.length && bond.bond !== ''} />
+        <BondStatusBar value={bond.bond} />
+        <Footer complete={bondValid} />
       </MotionContainer>
     </SectionWrapper>
   )

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { InputWrapper, RowWrapper } from './Wrapper';
+import { InputWrapper, RowWrapper } from './Wrappers';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
@@ -30,19 +30,17 @@ export const BondInput = (props: any) => {
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
 
-
   const { active } = ledger;
   const balance = getAccountBalance(activeAccount);
   let { freeAfterReserve } = balance;
 
-  let freeToBond: any = planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units);
+  let freeToBond: any = planckToUnit(freeAfterReserve.sub(active).toNumber(), units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
-  // default value will either be available to bond, or total bonded
-  let _bond = _value !== null ? _value : task === 'bond' ? freeToBond : planckToUnit(active.toNumber(), units);
+  let activeBase = planckToUnit(active.toNumber(), units);
 
   // the current local bond value
-  const [bond, setBond] = useState(_bond);
+  const [bond, setBond] = useState(_value);
 
   // handle change for bonding
   const handleChangeBond = (e: any) => {
@@ -104,7 +102,7 @@ export const BondInput = (props: any) => {
       <div>
         <div>
           <Button inline small title="Max" onClick={() => {
-            const value = task === 'bond' ? freeToBond : bond;
+            const value = task === 'bond' ? freeToBond : activeBase;
             setBond(value);
             updateParentState(value);
           }}
