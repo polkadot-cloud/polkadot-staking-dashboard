@@ -1,4 +1,4 @@
-// Copyright 2022 @rossbulat/polkadot-staking-experience authors & contributors
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { EntryWrapper as Wrapper } from './Wrappers';

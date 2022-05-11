@@ -4,7 +4,7 @@
 
 ## Demo
 
-[https://rossbulat.github.io/polkadot-staking-dashboard/](https://rossbulat.github.io/polkadot-staking-dashboard/)
+[https://paritytech.github.io/polkadot-staking-dashboard/](https://paritytech.github.io/polkadot-staking-dashboard/)
 
 <img width="1569" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/163815633-df567f72-f285-4d31-b266-0a9836ea042b.png">
 
@@ -114,5 +114,5 @@ Integration tests make sense for the app itself, ensuring the page layout, assis
 # Project Updates
 
 - 08/04/2022: [[Video] Polkadot Staking Dashboard April 2022 Update](https://www.youtube.com/watch?v=y6AJ6RhKMH0)
-- 09/03/2022: [Representing the Stash and Controller Account](https://medium.com/@rossbulat/polkadot-staking-experience-representing-the-stack-and-controller-account-2ea76bb54b47)
+- 09/03/2022: [Representing the Stash and Controller Account](https://medium.com/@paritytech/polkadot-staking-dashboard-representing-the-stack-and-controller-account-2ea76bb54b47)
 - 28/02/2022: [Defining the Polkadot Staking Experience: Phase 0](https://rossbulat.medium.com/defining-the-polkadot-staking-experience-phase-0-211cb2bc113c)
