@@ -15,6 +15,7 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { useNotifications } from '../../../../contexts/Notifications';
 import { useExtrinsics } from '../../../../contexts/Extrinsics';
 import { humanNumber } from '../../../../Utils';
+import { web3FromAddress } from '@polkadot/extension-dapp';
 
 export const Summary = (props: any) => {
 
@@ -22,7 +23,7 @@ export const Summary = (props: any) => {
 
   const { api, network }: any = useApi();
   const { units } = network;
-  const { activeAccount } = useConnect();
+  const { activeAccount, getAccount } = useConnect();
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
   const { addNotification } = useNotifications();
@@ -86,38 +87,54 @@ export const Summary = (props: any) => {
 
   // submit transaction
   const submitTx = async () => {
-    const nonce = await api.rpc.system.accountNextIndex(activeAccount);
+
+    const accountNonce = await api.rpc.system.accountNextIndex(activeAccount);
+    const injector = await web3FromAddress(activeAccount);
 
     // pre-submission state update
     setSubmitting(true);
-    addPending(nonce);
+    addPending(accountNonce);
     addNotification({
       title: 'Transaction Submitted',
       subtitle: 'Initiating staking setup.',
     });
 
-    setTimeout(() => {
-      // post-submission state updates
-      setSubmitting(false);
-      removePending(nonce);
-      addNotification({
-        title: 'Transaction Successful',
-        subtitle: 'Staking setup successful',
-      });
-    }, 1000);
+    try {
+      // construct the batch and send the transactions
+      const unsub = await api.tx.utility
+        .batch(txs())
+        .signAndSend(activeAccount, { signer: injector.signer }, ({ status, nonce: accountNonce, events = [] }: any) => {
+          if (status.isFinalized) {
+            // loop through events to determine success or fail
+            events.forEach(({ phase, event: { data, method, section } }: any) => {
 
-    // construct the batch and send the transactions
-    // const unsub = await api.tx.utility
-    //   .batch(txs())
-    //   .signAndSend(activeAccount, ({ status, nonce, events = [] }: any) => {
-    //     if (status.isFinalized) {
-    //       // loop through events to determine success or fail
-    //       events.forEach(({ phase, event: { data, method, section } }: any) => {
-    //         console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
-    //       });
-    //       unsub();
-    //     }
-    //   });
+              if (method === 'ExtrinsicSuccess') {
+                addNotification({
+                  title: 'Transaction Successful',
+                  subtitle: 'Staking setup successful',
+                });
+              }
+              else if (method === 'ExtrinsicFailed') {
+                addNotification({
+                  title: 'Transaction Failed',
+                  subtitle: 'Staking setup failed',
+                });
+              }
+            });
+            // post-submission state update.
+            setSubmitting(false);
+            removePending(accountNonce);
+            unsub();
+          }
+        });
+    } catch (e) {
+      setSubmitting(false);
+      removePending(accountNonce);
+      addNotification({
+        title: 'Transaction Cancelled',
+        subtitle: 'Staking setup was cancelled',
+      });
+    }
   }
 
   return (

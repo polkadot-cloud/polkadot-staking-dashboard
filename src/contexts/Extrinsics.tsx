@@ -34,10 +34,7 @@ export const ExtrinsicsProvider = (props: any) => {
   }
 
   const removePending = (tx: any) => {
-
-    let _pending = pendingRef.current.filter((item: any) => {
-      return item.name !== tx.name;
-    });
+    let _pending = pendingRef.current.filter((item: any) => item !== tx);
     setPending(_pending);
   }
 
