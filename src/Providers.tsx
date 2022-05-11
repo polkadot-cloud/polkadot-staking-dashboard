@@ -21,15 +21,17 @@ import { ModalProvider } from './contexts/Modal';
 import { APIProvider } from './contexts/Api';
 import { useTheme } from './contexts/Themes';
 
-export const ProvidersInner = () => {
+export const WrappedRouter = () =>
+  <Wrapper>
+    <Router />
+  </Wrapper>;
 
+export const ThemedRouter = () => {
   const { mode } = useTheme();
 
   return (
     <ThemeProvider theme={{ mode: mode }}>
-      <Wrapper>
-        <Router />
-      </Wrapper>
+      <WrappedRouter />
     </ThemeProvider>
   );
 }
@@ -50,7 +52,7 @@ export const Providers = withProviders(
   NotificationsProvider,
   ExtrinsicsProvider,
 )(
-  ProvidersInner
+  ThemedRouter
 );
 
 export default Providers;

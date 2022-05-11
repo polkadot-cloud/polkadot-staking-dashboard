@@ -12,25 +12,24 @@ export const useTheme = () => React.useContext(ThemeContext);
 
 export const ThemesProvider: React.FC = ({ children }) => {
 
-  // get the current theme, or provide default theme if not set.
-  const currentTheme = () => {
-    let _theme = localStorage.getItem('theme');
-    if (_theme === null) {
-      _theme = 'light';
-      localStorage.setItem('theme', _theme);
-    }
-    return _theme;
+  // get the current theme
+  let _theme = localStorage.getItem('theme');
+
+  // provide default theme if not set
+  if (_theme !== 'light' && _theme !== 'dark') {
+    _theme = 'light';
+    localStorage.setItem('theme', _theme);
   }
 
   // the theme state
   const [state, setState] = React.useState({
-    mode: currentTheme(),
+    mode: _theme,
   });
 
   const toggleTheme = (_theme: string | null = null): void => {
 
     if (_theme === null) {
-      _theme = (state.mode === 'dark' ? 'light' : `dark`);
+      _theme = (state.mode === 'dark' ? 'light' : 'dark');
     }
 
     localStorage.setItem('theme', _theme);
