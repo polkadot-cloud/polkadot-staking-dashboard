@@ -65,10 +65,13 @@ export const defaultIfNaN = (val: any, _default: any) => {
   }
 }
 
-export const localStorageOrDefault = (key: string, _default: any) => {
+export const localStorageOrDefault = (key: string, _default: any, parse: boolean = false) => {
   let val: any = localStorage.getItem(key);
   if (val === null) {
     val = _default;
+  }
+  if (parse) {
+    val = JSON.parse(val);
   }
   return val;
 }
