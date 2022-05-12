@@ -21,25 +21,29 @@ export const useSubscan = () => React.useContext(SubscanContext);
 
 export const SubscanProvider = (props: any) => {
 
-  const { network }: any = useApi();
+  const { network, isReady }: any = useApi();
   const { services }: any = useUi();
   const { activeAccount }: any = useConnect();
 
   const [payouts, setPayouts]: any = useState([]);
 
+  // reset payouts on network switch
+  useEffect(() => {
+    setPayouts([]);
+  }, [network]);
+
   // fetch payouts as soon as network is ready
   useEffect(() => {
-    fetchPayouts();
-  }, [activeAccount, network]);
+    if (isReady) {
+      fetchPayouts();
+    }
+  }, [isReady, network, activeAccount]);
 
   const fetchPayouts = () => {
     if (activeAccount === '' || !services.includes('subscan')) {
       setPayouts([]);
       return;
     }
-
-    // reset payouts immediately
-    setPayouts([]);
 
     fetch(network.subscanEndpoint + API_ENDPOINTS['subscanRewardSlash'], {
       headers: {
