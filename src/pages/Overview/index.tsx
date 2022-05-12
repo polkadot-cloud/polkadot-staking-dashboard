@@ -104,6 +104,7 @@ export const Overview = () => {
     },
   ];
 
+  // get last payout
   let lastPayout: any = null;
   if (payouts.length > 0) {
     let _last = payouts[payouts.length - 1];
@@ -112,6 +113,10 @@ export const Overview = () => {
       block_timestamp: _last['block_timestamp'] + "",
     };
   }
+
+  // get payout start item
+  let payoutsStart = payouts.legth;
+  payoutsStart = payoutsStart < 0 ? 0 : payoutsStart;
 
   return (
     <>
@@ -135,7 +140,7 @@ export const Overview = () => {
             </div>
             <Payouts
               account={activeAccount}
-              payouts={payouts.slice(payouts.length - 10, payouts.length)}
+              payouts={payouts.slice(payoutsStart, payouts.length)}
             />
           </GraphWrapper>
         </MainWrapper>
