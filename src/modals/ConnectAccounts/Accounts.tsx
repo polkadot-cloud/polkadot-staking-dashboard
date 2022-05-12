@@ -19,7 +19,6 @@ export const Accounts = (props: any) => {
     getAccount,
     connectToAccount,
     disconnectFromAccount,
-    activeWallet,
     activeAccount,
   }: any = useConnect();
 
@@ -29,13 +28,6 @@ export const Accounts = (props: any) => {
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
-
-  // back to wallet section if none active
-  useEffect(() => {
-    if (activeWallet === null) {
-      setSection(0);
-    }
-  }, [activeWallet]);
 
   return (
     <>

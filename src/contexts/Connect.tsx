@@ -74,7 +74,8 @@ export const ConnectProvider = (props: any) => {
   }
 
   // store the currently active account
-  const [activeAccount, __setActiveAccount] = useState('');
+  const [activeAccount, __setActiveAccount] = useState(getLocalStorageActiveAccount());
+
   const activeAccountRef = useRef(activeAccount);
   const _setActiveAccount = (v: any) => {
     activeAccountRef.current = v;
@@ -82,7 +83,7 @@ export const ConnectProvider = (props: any) => {
   }
 
   // store the currently active account metadata
-  const [activeAccountMeta, _setActiveAccountMeta] = useState('');
+  const [activeAccountMeta, _setActiveAccountMeta] = useState(null);
   const activeAccountMetaRef = useRef(activeAccountMeta);
   const setActiveAccountMeta = (v: any) => {
     activeAccountMetaRef.current = v;
@@ -117,9 +118,11 @@ export const ConnectProvider = (props: any) => {
     _setUnsubscribe(v);
   }
 
-  // automatic connect from active wallet
+  const [extensions, setExtensions] = useState([]);
+
+  // initialise extensions
   useEffect(() => {
-    connectToWallet();
+    initExtensions();
     return (() => {
       if (unsubscribe !== null) {
         unsubscribeRef.current();
@@ -127,10 +130,26 @@ export const ConnectProvider = (props: any) => {
     })
   }, []);
 
+  // give web page time to initiate extensions
+  const initExtensions = async () => {
+    setTimeout(async () => {
+      const extensions: any = await web3Enable(DAPP_NAME);
+      setExtensions(extensions);
+    }, 200);
+  }
+
+  // automatic connect from active wallet
+  useEffect(() => {
+    if (extensions.length) {
+      connectToWallet();
+    }
+  }, [extensions]);
+
   // re-import addresses with network switch
   useEffect(() => {
-    // unsubscribe to current account
-    handleReconnect();
+    if (accountsRef.current.length) {
+      handleReconnect();
+    }
   }, [network]);
 
   const handleReconnect = async () => {
@@ -142,16 +161,12 @@ export const ConnectProvider = (props: any) => {
 
   const connectToWallet = async (_wallet: any = null) => {
     try {
-      // get extensions
-      const extensions = await web3Enable(DAPP_NAME);
 
-      // return if no extensions enabled or found
       if (extensions.length === 0) {
         setActiveWallet(null);
         return;
       }
 
-      // determine wallet or abort if none selected
       if (_wallet === null) {
         if (activeWallet !== null) {
           _wallet = activeWallet;
@@ -159,7 +174,6 @@ export const ConnectProvider = (props: any) => {
           _wallet = _wallet
         }
       }
-
       // subscribe to accounts
       const _unsubscribe = await web3AccountsSubscribe((injected) => {
 
@@ -212,6 +226,7 @@ export const ConnectProvider = (props: any) => {
 
     // active account is first in list if none presently persisted
     let _activeAccount: any = getLocalStorageActiveAccount();
+
     if (_activeAccount !== '') {
       _activeAccount = keyring.addFromAddress(_activeAccount).address;
     }
@@ -246,7 +261,7 @@ export const ConnectProvider = (props: any) => {
   }
 
   const initialise = () => {
-    if (activeWallet === null || activeAccount === '') {
+    if (activeWallet === null || activeAccountRef.current === '') {
       openModalWith('ConnectAccounts', {
         section: 0,
       }, 'small');
