@@ -6,7 +6,7 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useStaking } from '../../contexts/Staking';
-import { useValidators } from '../../contexts/Validators';
+import { useValidators } from '../../contexts/Validators/Validators';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';

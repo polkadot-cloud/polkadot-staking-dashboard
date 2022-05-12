@@ -9,7 +9,7 @@ import { StakingProvider } from './contexts/Staking';
 import { PoolsProvider } from './contexts/Pools';
 import { MessagesProvider } from './contexts/Messages';
 import { SubscanProvider } from './contexts/Subscan';
-import { ValidatorsProvider } from './contexts/Validators';
+import { ValidatorsProvider } from './contexts/Validators/Validators';
 import { NotificationsProvider } from './contexts/Notifications';
 import { ExtrinsicsProvider } from './contexts/Extrinsics';
 import { UIProvider } from './contexts/UI';

@@ -3,11 +3,12 @@
 
 import BN from "bn.js";
 import React, { useState, useEffect, useRef } from 'react';
-import { useApi } from './Api';
-import { useConnect } from './Connect';
-import { useNetworkMetrics } from './Network';
-import { useBalances } from './Balances';
-import { sleep, removePercentage, rmCommas } from '../Utils';
+import { useApi } from '../Api';
+import { useConnect } from '../Connect';
+import { useNetworkMetrics } from '../Network';
+import { useBalances } from '../Balances';
+import { sleep, removePercentage, rmCommas } from '../../Utils';
+import * as defaults from './defaults';
 
 // context type
 export interface ValidatorsContextState {
@@ -60,10 +61,7 @@ export const ValidatorsProvider = (props: any) => {
   const [fetchedValidators, setFetchedValidators] = useState(false);
 
   // stores the currently active validator set
-  const [sessionValidators, setSessionValidators] = useState({
-    list: [],
-    unsub: null,
-  });
+  const [sessionValidators, setSessionValidators] = useState(defaults.sessionValidators);
 
   // stores the meta data batches for validator lists
   const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({});
@@ -100,6 +98,14 @@ export const ValidatorsProvider = (props: any) => {
   // stores the user's favourites validators as list
   const [favouritesList, setFavouritesList]: any = useState(null);
 
+  // reset validators list on network change
+  useEffect(() => {
+    setFetchedValidators(false);
+    setSessionValidators(defaults.sessionValidators);
+    removeValidatorMetaBatch('validators_browse');
+    setValidators([]);
+  }, [network]);
+
   useEffect(() => {
     if (isReady) {
       fetchValidators();
@@ -114,12 +120,12 @@ export const ValidatorsProvider = (props: any) => {
         });
       });
     })
-  }, [isReady, network, metrics.activeEra]);
+  }, [isReady, metrics.activeEra]);
 
   // pre-populating validator meta batches. Needed for generating nominations
   useEffect(() => {
     if (validators.length > 0) {
-      fetchValidatorMetaBatch('validators_browse', validators);
+      fetchValidatorMetaBatch('validators_browse', validators, true);
     }
   }, [isReady, validators]);
 

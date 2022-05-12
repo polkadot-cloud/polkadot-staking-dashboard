@@ -3,7 +3,7 @@
 
 import { Wrapper } from '../../Overview/Announcements/Wrappers';
 import { useApi } from '../../../contexts/Api';
-import { useValidators } from '../../../contexts/Validators';
+import { useValidators } from '../../../contexts/Validators/Validators';
 import { ValidatorList } from '../../../library/ValidatorList';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 

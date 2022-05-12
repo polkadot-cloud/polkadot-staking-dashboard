@@ -3,7 +3,7 @@
 
 import { PageProps } from '../types';
 import { useApi } from '../../contexts/Api';
-import { useValidators } from '../../contexts/Validators';
+import { useValidators } from '../../contexts/Validators/Validators';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';

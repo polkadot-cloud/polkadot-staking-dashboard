@@ -15,7 +15,7 @@ import { Spinner } from './Spinner';
 import { pageFromUri } from '../../Utils';
 import { useLocation } from 'react-router-dom';
 import { useStaking } from '../../contexts/Staking';
-import { useValidators } from '../../contexts/Validators';
+import { useValidators } from '../../contexts/Validators/Validators';
 
 export const Headers = () => {
 

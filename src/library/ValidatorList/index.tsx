@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
 import { StakingContext } from '../../contexts/Staking';
-import { useValidators } from '../../contexts/Validators';
+import { useValidators } from '../../contexts/Validators/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';

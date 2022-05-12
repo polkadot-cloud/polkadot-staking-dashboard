@@ -8,7 +8,7 @@ import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
-import { useValidators } from '../../contexts/Validators';
+import { useValidators } from '../../contexts/Validators/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getIdentityDisplay } from './Utils';
 import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@fortawesome/free-solid-svg-icons';

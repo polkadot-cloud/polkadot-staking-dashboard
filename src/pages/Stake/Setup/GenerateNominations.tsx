@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Wrapper } from '../../Overview/Announcements/Wrappers';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
-import { useValidators } from '../../../contexts/Validators';
+import { useValidators } from '../../../contexts/Validators/Validators';
 import { ValidatorList } from '../../../library/ValidatorList';
 import { useUi } from '../../../contexts/UI';
 import { Button } from '../../../library/Button';
