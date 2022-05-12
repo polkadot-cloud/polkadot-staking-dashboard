@@ -33,14 +33,22 @@ export const ValidatorInner = (props: any) => {
   let total_nominations = stake?.total_nominations ?? 0;
   let lowest = stake?.lowest ?? 0;
 
-  // click to copy notification
-  let notification = {};
-  if (address !== null) {
-    notification = {
+  // copy address notification
+  let notificationCopyAddress = address == null
+    ? {} : {
       title: 'Address Copied to Clipboard',
       subtitle: address,
     };
-  }
+
+  // favourite toggle notification
+  let notificationFavourite = !favourites.includes(address)
+    ? {
+      title: 'Favourite Validator Added',
+      subtitle: address,
+    } : {
+      title: 'Favourite Validator Removed',
+      subtitle: address,
+    };
 
   return (
     <Wrapper>
@@ -132,7 +140,7 @@ export const ValidatorInner = (props: any) => {
             </button>
           </label>
           <label>
-            <button onClick={() => addNotification(notification)}>
+            <button onClick={() => addNotification(notificationCopyAddress)}>
               <CopyToClipboard text={address}>
                 <FontAwesomeIcon icon={faCopy} />
               </CopyToClipboard>
@@ -146,6 +154,8 @@ export const ValidatorInner = (props: any) => {
                   favourites.includes(address)
                     ? removeFavourite(address)
                     : addFavourite(address);
+
+                  addNotification(notificationFavourite);
                 }}>
                 <FontAwesomeIcon icon={faThumbtack} />
               </button>
@@ -153,7 +163,7 @@ export const ValidatorInner = (props: any) => {
           }
         </div>
       </div>
-    </Wrapper>
+    </Wrapper >
   )
 }
 
