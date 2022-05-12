@@ -1,14 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator } from './Wrappers';
 import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
-import { CONNECTION_SYMBOL_COLORS, CONNECTION_STATUS, ENDPOINT_PRICE, NODE_ENDPOINTS } from '../../constants';
 import { BlockNumber } from './BlockNumber';
 import { ConnectionStatus } from './ConnectionStatus';
 import { usePrices } from '../../library/Hooks/usePrices';
+import { useOutsideAlerter } from '../../library/Hooks';
+import {
+  CONNECTION_SYMBOL_COLORS,
+  CONNECTION_STATUS,
+  NODE_ENDPOINTS
+} from '../../constants';
 
 export const NetworkBar = () => {
 
@@ -32,14 +37,21 @@ export const NetworkBar = () => {
       height: '2.5rem',
     },
     maximised: {
-      height: '295px',
+      height: '150px',
     },
   };
 
   const animate = open ? `maximised` : `minimised`;
 
+  const ref = useRef(null);
+
+  useOutsideAlerter(ref, () => {
+    setOpen(false);
+  }, ['igignore-network-info-toggle']);
+
   return (
     <Wrapper
+      ref={ref}
       initial={false}
       animate={animate}
       transition={{
@@ -57,8 +69,11 @@ export const NetworkBar = () => {
           <ConnectionStatus />
         </section>
         <section>
-          <button onClick={() => { setOpen(!open) }}>
-            {open ? `Collapse Info` : `Network Info`}
+          <button
+            className='ignore-network-info-toggle'
+            onClick={() => { setOpen(!open) }}
+          >
+            {open ? `Collapse` : `Network`}
           </button>
           <div className='stat' style={{ marginRight: 0 }}>
             {status === CONNECTION_STATUS[2] &&
@@ -84,7 +99,7 @@ export const NetworkBar = () => {
 
       <NetworkInfo>
         <div className='row'>
-          <h3>Network</h3>
+          <h3> Choose Network:</h3>
         </div>
         <div className='row'>
           {Object.entries(NODE_ENDPOINTS).map(([key, item]: any, index: any) => (
@@ -100,23 +115,6 @@ export const NetworkBar = () => {
               <p>{item.name}</p>
             </button>
           ))}
-        </div>
-        <div className='row'>
-          <h3>Endpoints</h3>
-        </div>
-        <div className='row'>
-          <div>
-            <p>Node Endpoint:</p>
-            <p className='val'>{network.endpoint}</p>
-          </div>
-          <div>
-            <p>Subscan Endpoint:</p>
-            <p className='val'>{network.subscanEndpoint}</p>
-          </div>
-          <div>
-            <p>Price Tracker:</p>
-            <p className='val'>{ENDPOINT_PRICE}</p>
-          </div>
         </div>
       </NetworkInfo>
     </Wrapper>
