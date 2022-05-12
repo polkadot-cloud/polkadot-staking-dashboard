@@ -16,21 +16,26 @@ import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { Button } from '../../../library/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRedoAlt, faWallet, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faRedoAlt,
+  faWallet,
+  faCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { Separator } from '../../../Wrappers';
 import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
+import StatBoxListItem from '../../../library/StatBoxList/Item';
 
 export const Active = (props: any) => {
-
   const { network }: any = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
   const { getNominationsStatus, eraStakers, staking } = useStaking();
-  const { getAccountLedger, getBondedAccount, getAccountNominations }: any = useBalances();
+  const { getAccountLedger, getBondedAccount, getAccountNominations }: any =
+    useBalances();
   const { payee } = staking;
 
   const { minActiveBond } = eraStakers;
@@ -45,12 +50,17 @@ export const Active = (props: any) => {
     active: 0,
   });
 
-  const nominationStatuses = useMemo(() => getNominationsStatus(), [nominations]);
+  const nominationStatuses = useMemo(
+    () => getNominationsStatus(),
+    [nominations]
+  );
 
   useEffect(() => {
     let statuses = nominationStatuses;
     let total = Object.values(statuses).length;
-    let _active: any = Object.values(statuses).filter((_v: any) => _v === 'active').length;
+    let _active: any = Object.values(statuses).filter(
+      (_v: any) => _v === 'active'
+    ).length;
 
     setNominationsStatus({
       total: total,
@@ -60,66 +70,86 @@ export const Active = (props: any) => {
   }, [nominationStatuses]);
 
   let { unlocking } = ledger;
-  let totalUnlocking = getTotalUnlocking(unlocking, units)
+  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   const items = [
     {
-      label: "Active Nominations",
-      value: nominationsStatus.active,
-      value2: nominationsStatus.active ? 0 : 1,
-      total: nominationsStatus.total,
-      unit: '',
-      tooltip: `${nominationsStatus.active ? `Active` : `Inactive`}`,
-      format: "chart-pie",
-      assistant: {
-        page: 'stake',
-        key: 'Nominations',
-      }
+      format: 'chart-pie',
+      params: {
+        label: 'Active Nominations',
+        value: nominationsStatus.active,
+        value2: nominationsStatus.active ? 0 : 1,
+        total: nominationsStatus.total,
+        unit: '',
+        tooltip: `${nominationsStatus.active ? `Active` : `Inactive`}`,
+        assistant: {
+          page: 'stake',
+          key: 'Nominations',
+        },
+      },
     },
     {
-      label: "Minimum Active Bond",
-      value: minActiveBond,
-      unit: network.unit,
-      format: "number",
-      assistant: {
-        page: 'stake',
-        key: 'Bonding',
-      }
+      format: 'number',
+      params: {
+        label: 'Minimum Active Bond',
+        value: minActiveBond,
+        unit: network.unit,
+        assistant: {
+          page: 'stake',
+          key: 'Bonding',
+        },
+      },
     },
     {
-      label: "Active Era",
-      value: metrics.activeEra.index,
-      unit: "",
-      format: "number",
-      assistant: {
-        page: 'validators',
-        key: 'Era',
-      }
-    }
+      format: 'number',
+      params: {
+        label: 'Active Era',
+        value: metrics.activeEra.index,
+        unit: '',
+        assistant: {
+          page: 'validators',
+          key: 'Era',
+        },
+      },
+    },
   ];
 
   return (
     <>
       <PageTitle title={props.title} />
-      <StatBoxList items={items} />
+      <StatBoxList>
+        {items.map((item: any, index: number) => (
+          <StatBoxListItem {...item} key={index} />
+        ))}
+      </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>
           <SectionWrapper style={{ height: 260 }}>
-            <div className='head'>
+            <div className="head">
               <h4>
                 Status
-                <OpenAssistantIcon page='stake' title='Staking Status' />
+                <OpenAssistantIcon page="stake" title="Staking Status" />
               </h4>
-              <h2>{nominationsStatus.active ? 'Active and Earning Rewards' : 'Waiting for Active Nominations'}</h2>
+              <h2>
+                {nominationsStatus.active
+                  ? 'Active and Earning Rewards'
+                  : 'Waiting for Active Nominations'}
+              </h2>
               <Separator />
               <h4>
                 Reward Destination
-                <OpenAssistantIcon page='stake' title='Reward Destination' />
+                <OpenAssistantIcon page="stake" title="Reward Destination" />
               </h4>
               <h2>
                 <FontAwesomeIcon
-                  icon={payee === 'Staked' ? faRedoAlt : payee === 'None' ? faCircle : faWallet}
-                  transform='shrink-4'
+                  icon={
+                    payee === 'Staked'
+                      ? faRedoAlt
+                      : payee === 'None'
+                      ? faCircle
+                      : faWallet
+                  }
+                  transform="shrink-4"
                 />
                 &nbsp;
                 {payee === 'Staked' && 'Back to Staking'}
@@ -133,7 +163,7 @@ export const Active = (props: any) => {
                     small
                     inline
                     primary
-                    title='Update'
+                    title="Update"
                     onClick={() => openModalWith('UpdatePayee', {}, 'small')}
                   />
                 </div>
@@ -154,6 +184,6 @@ export const Active = (props: any) => {
       </PageRowWrapper>
     </>
   );
-}
+};
 
 export default Active;
