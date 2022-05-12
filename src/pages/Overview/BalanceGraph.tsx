@@ -122,11 +122,12 @@ export const BalanceGraphInner = (props: any) => {
 export class BalanceGraph extends React.Component<any, any> {
   static contextType = APIContext;
 
-  state = {
+  state: any = {
     prices: {
       lastPrice: 0,
       change: 0,
     },
+    network: null,
   }
 
   stateRef: any;
@@ -138,17 +139,23 @@ export class BalanceGraph extends React.Component<any, any> {
 
   _setState (_state: any) {
     this.stateRef.current = _state;
-    this.setState(_state);
+    this.setState({
+      ..._state,
+    });
   }
 
   // subscribe to price data
   priceHandle: any;
+
   initiatePriceInterval = async () => {
     const prices = await this.context.fetchDotPrice();
     this._setState({
       prices: prices
     });
+    this.setPriceInterval();
+  }
 
+  setPriceInterval = async () => {
     this.priceHandle = setInterval(async () => {
       const prices = await this.context.fetchDotPrice();
       this._setState({
@@ -161,12 +168,31 @@ export class BalanceGraph extends React.Component<any, any> {
   componentDidMount () {
     this.initiatePriceInterval();
   }
+
   componentWillUnmount () {
     clearInterval(this.priceHandle);
   }
 
+  componentDidUpdate () {
+    clearInterval(this.priceHandle);
+    this.setPriceInterval();
+
+    this._setState({
+      ...this.state,
+      network: this.context?.network?.name ?? null
+    })
+  }
+
   shouldComponentUpdate (nextProps: any, nextState: any) {
-    return ((nextProps.balances !== this.props.balances) || this.state.prices !== nextState.prices);
+    let update = false;
+    if (this.state.prices !== nextState.prices) {
+      update = true;
+    }
+    let network = this.context?.network?.name ?? null;
+    if (network !== this.state.network) {
+      update = true;
+    }
+    return (update);
   }
 
   render () {
