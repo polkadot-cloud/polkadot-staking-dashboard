@@ -28,7 +28,7 @@ export const Setup = (props: any) => {
   const ledger = getAccountLedger(controller);
 
   let { unlocking } = ledger;
-  let totalUnlocking = getTotalUnlocking(unlocking, units)
+  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   return (
     <>

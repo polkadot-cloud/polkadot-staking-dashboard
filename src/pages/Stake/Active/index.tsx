@@ -60,7 +60,7 @@ export const Active = (props: any) => {
   }, [nominationStatuses]);
 
   let { unlocking } = ledger;
-  let totalUnlocking = getTotalUnlocking(unlocking, units)
+  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   const items = [
     {
