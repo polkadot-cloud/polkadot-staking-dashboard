@@ -4,7 +4,7 @@
 import { PageRowWrapper } from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { useBalances } from '../../../contexts/Balances';
-import { planckToUnit } from '../../../Utils';
+import { getTotalUnlocking } from '../../../Utils';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useStaking } from '../../../contexts/Staking';
@@ -28,11 +28,7 @@ export const Setup = (props: any) => {
   const ledger = getAccountLedger(controller);
 
   let { unlocking } = ledger;
-  let totalUnlocking = 0;
-  for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i].toNumber(), units);
-    totalUnlocking += unlocking[i];
-  }
+  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   return (
     <>

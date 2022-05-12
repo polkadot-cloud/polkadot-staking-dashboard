@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { planckToUnit } from '../../../Utils';
+import { getTotalUnlocking, planckToUnit } from '../../../Utils';
 import BondedGraph from './BondedGraph';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
@@ -24,11 +24,7 @@ export const ManageBond = () => {
   const { active, total } = ledger;
 
   let { unlocking } = ledger;
-  let totalUnlocking = 0;
-  for (let i = 0; i < unlocking.length; i++) {
-    unlocking[i] = planckToUnit(unlocking[i].toNumber(), units);
-    totalUnlocking += unlocking[i];
-  }
+  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   const remaining = total.sub(active).toNumber() - totalUnlocking;
 
