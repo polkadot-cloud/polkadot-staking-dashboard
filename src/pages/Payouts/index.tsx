@@ -8,6 +8,7 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useSubscan } from '../../contexts/Subscan';
 import { useStaking } from '../../contexts/Staking';
+import { useUi } from '../../contexts/UI';
 import { useApi } from '../../contexts/Api';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
@@ -24,6 +25,7 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 export const Payouts = (props: PageProps) => {
 
   const { network }: any = useApi();
+  const { services } = useUi();
   const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
   const { unit, units } = network;
@@ -75,7 +77,12 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </div>
           <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
-            <StatusLabel topOffset="30%" title="Not Yet Staking" />
+
+            {!services.includes('subscan')
+              ? <StatusLabel status="active_service" statusFor='subscan' title="Subscan Disabled" />
+              : <StatusLabel status="sync_or_setup" title="Not Yet Staking" />
+            }
+
             <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
               <PayoutBar
                 payouts={payouts.slice(0, 60)}

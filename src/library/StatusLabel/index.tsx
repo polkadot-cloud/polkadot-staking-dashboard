@@ -9,11 +9,22 @@ import { useStaking } from '../../contexts/Staking';
 
 export const StatusLabel = (props: any) => {
 
-  const { isSyncing } = useUi();
+  const status = props.status ?? 'sync_or_setup';
+  const statusFor = props.statusFor ?? false;
+
+  const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
 
-  if (isSyncing() || !inSetup()) {
-    return (<></>);
+  if (status === 'sync_or_setup') {
+    if (isSyncing() || !inSetup()) {
+      return (<></>);
+    }
+  }
+
+  if (status === 'active_service') {
+    if (services.includes(statusFor)) {
+      return (<></>);
+    }
   }
 
   const { title } = props;

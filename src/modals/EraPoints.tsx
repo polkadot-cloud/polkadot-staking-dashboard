@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
+import { useUi } from '../contexts/UI';
 import { useModal } from '../contexts/Modal';
 import { useSubscan } from '../contexts/Subscan';
 import { EraPoints as EraPointsGraph } from '../library/Graphs/EraPoints';
@@ -11,6 +12,7 @@ import { useSize, formatSize } from '../library/Graphs/Utils';
 import Identicon from '../library/Identicon';
 import { clipAddress } from '../Utils';
 import { useNetworkMetrics } from '../contexts/Network';
+import { StatusLabel } from '../library/StatusLabel';
 
 export const EraPoints = () => {
 
@@ -53,6 +55,7 @@ export const EraPoints = () => {
           </div>
 
           <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
+            <StatusLabel status="active_service" statusFor='subscan' title="Subscan Disabled" />
             <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute', left: '-1rem' }}>
               <EraPointsGraph
                 items={list}

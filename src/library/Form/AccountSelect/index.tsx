@@ -85,7 +85,7 @@ const DropdownItem = ({ c, item, index }: any) => {
       key={item.meta.name}
       {...itemProps}
     >
-      {!item.active && <StatusLabel title={item.alert} topOffset='40%' />}
+      {!item.active && <StatusLabel status="sync_or_setup" title={item.alert} topOffset='40%' />}
       <div
         className="item"
         style={{

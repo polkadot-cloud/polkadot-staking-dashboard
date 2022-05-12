@@ -25,6 +25,7 @@ export interface UIContextState {
   getSetupProgress: (a: string) => any;
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
+  getServices: () => void;
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;
@@ -47,6 +48,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   getSetupProgress: (a: string) => { },
   setActiveAccountSetup: (p: any) => { },
   setActiveAccountSetupSection: (s: number) => { },
+  getServices: () => { },
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
@@ -69,7 +71,7 @@ export const UIProvider = (props: any) => {
   const { accounts }: any = useBalances();
 
   // get services config from local storage
-  let _services: any = localStorageOrDefault('services', SERVICES);
+  let _services: any = localStorageOrDefault('services', SERVICES, true);
 
   // get side menu minimised state from local storage, default to not
   let _userSideMenuMinimised: any = Number(localStorageOrDefault('side_menu_minimised', 0));
@@ -95,7 +97,12 @@ export const UIProvider = (props: any) => {
   const [listFormat, _setListFormat] = useState('col');
 
   // services
-  const [services, setServices] = useState(_services);
+  const [services, _setServices] = useState(_services);
+  const servicesRef = useRef(services);
+  const setServices = (v: any) => {
+    servicesRef.current = v;
+    _setServices(v);
+  }
 
   // validator filtering
   const [validatorFilters, setValidatorFilters]: any = useState([]);
@@ -420,9 +427,10 @@ export const UIProvider = (props: any) => {
    */
   const toggleService = (key: string) => {
 
-    let _services: any = Object.assign(services);
+    let _services: any = [...services];
+    let found = _services.find((item: any) => item === key);
 
-    if (_services.find((item: any) => item === key)) {
+    if (found) {
       _services = _services.filter((_s: any) => _s !== key);
     } else {
       _services.push(key);
@@ -430,6 +438,10 @@ export const UIProvider = (props: any) => {
 
     localStorage.setItem('services', JSON.stringify(_services));
     setServices(_services);
+  }
+
+  const getServices = () => {
+    return servicesRef.current;
   }
 
   return (
@@ -446,13 +458,14 @@ export const UIProvider = (props: any) => {
       getSetupProgress: getSetupProgress,
       setActiveAccountSetup: setActiveAccountSetup,
       setActiveAccountSetupSection: setActiveAccountSetupSection,
+      getServices: getServices,
       sideMenuOpen: sideMenuOpen,
       userSideMenuMinimised: userSideMenuMinimisedRef.current,
       sideMenuMinimised: sideMenuMinimised,
       listFormat: listFormat,
       validatorFilters: validatorFilters,
       validatorOrder: validatorOrder,
-      services: services,
+      services: servicesRef.current,
     }}>
       {props.children}
     </UIContext.Provider>

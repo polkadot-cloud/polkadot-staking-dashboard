@@ -22,7 +22,7 @@ export const useSubscan = () => React.useContext(SubscanContext);
 export const SubscanProvider = (props: any) => {
 
   const { network, isReady }: any = useApi();
-  const { services }: any = useUi();
+  const { services, getServices }: any = useUi();
   const { activeAccount }: any = useConnect();
 
   const [payouts, setPayouts]: any = useState([]);
@@ -39,13 +39,18 @@ export const SubscanProvider = (props: any) => {
     }
   }, [isReady, network, activeAccount]);
 
-  const fetchPayouts = () => {
+  // fetch payouts on services toggle
+  useEffect(() => {
+    fetchPayouts();
+  }, [services]);
+
+  const fetchPayouts = async () => {
     if (activeAccount === '' || !services.includes('subscan')) {
       setPayouts([]);
       return;
     }
 
-    fetch(network.subscanEndpoint + API_ENDPOINTS['subscanRewardSlash'], {
+    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS['subscanRewardSlash'], {
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': API_SUBSCAN_KEY,
@@ -56,17 +61,18 @@ export const SubscanProvider = (props: any) => {
         address: activeAccount,
       }),
       method: "POST"
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message === 'Success') {
-          if (res.data.list !== null) {
-            setPayouts(res.data.list.reverse());
-          } else {
-            setPayouts([]);
-          }
+    });
+
+    res = await res.json();
+    if (res.message === 'Success') {
+      if (getServices().includes('subscan')) {
+        if (res.data.list !== null) {
+          setPayouts(res.data.list.reverse());
+        } else {
+          setPayouts([]);
         }
-      });
+      }
+    }
   }
 
   const fetchEraPoints = async (address: string, era: number) => {
@@ -88,18 +94,21 @@ export const SubscanProvider = (props: any) => {
 
     res = await res.json();
     if (res.message === 'Success') {
-      if (res.data?.list !== null) {
-        let list = [];
-        for (let i = era; i > (era - 60); i--) {
-          list.push({
-            era: i,
-            reward_point: res.data.list.find((item: any) => item.era === i)?.reward_point ?? 0
-          });
-        }
+      if (getServices().includes('subscan')) {
+        if (res.data?.list !== null) {
+          let list = [];
+          for (let i = era; i > (era - 60); i--) {
+            list.push({
+              era: i,
+              reward_point: res.data.list.find((item: any) => item.era === i)?.reward_point ?? 0
+            });
+          }
 
-        return list;
-      } else {
-        return [];
+
+          return list;
+        } else {
+          return [];
+        }
       }
     }
     return [];

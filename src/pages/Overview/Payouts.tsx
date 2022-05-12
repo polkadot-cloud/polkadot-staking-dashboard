@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import { useUi } from '../../contexts/UI';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
@@ -11,6 +12,8 @@ export const PayoutsInner = (props: any) => {
 
   const { payouts } = props;
 
+  const { services } = useUi();
+
   const ref: any = React.useRef();
   let size = useSize(ref.current);
   let { width, height, minHeight } = formatSize(size, 352);
@@ -18,7 +21,12 @@ export const PayoutsInner = (props: any) => {
   return (
     <>
       <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
-        <StatusLabel title="Not Yet Staking" />
+
+        {!services.includes('subscan')
+          ? <StatusLabel status="active_service" statusFor='subscan' title="Subscan Disabled" />
+          : <StatusLabel status="sync_or_setup" title="Not Yet Staking" />
+        }
+
         <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
           <PayoutBar
             payouts={payouts}
