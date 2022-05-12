@@ -29,9 +29,9 @@ export const Item = (props: any) => {
         </div>
         {!minimised &&
           <>
-            <div className='name'>
+            <h3 className='name'>
               {name}
-            </div>
+            </h3>
 
             {action &&
               <div className='action'>

@@ -9,7 +9,8 @@
 }
 
 html {
-  font-size: 15px; /* global font size */
+  font-size: 15px;
+  /* global font size */
 }
 
 body {
@@ -25,7 +26,7 @@ h1 {
   font-size: 1.4rem;
   font-variation-settings: 'wght' 600;
   margin: 0 0 0.4rem 0;
-  }
+}
 
 h2 {
   font-variation-settings: 'wght' 570;
@@ -34,7 +35,7 @@ h2 {
 }
 
 h3 {
-  font-variation-settings: 'wght' 530;
+  font-variation-settings: 'wght' 540;
   font-weight: normal;
   font-size: 1.02rem;
   line-height: 1.45rem;
@@ -60,6 +61,7 @@ p {
   line-height: 1.4rem;
   margin: 0.5rem 0;
 }
+
 a {
   text-decoration: none;
   cursor: pointer;
@@ -96,7 +98,10 @@ input {
 input::placeholder {
   color: #bbb;
 }
-input:focus, textarea:focus, select:focus{
+
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-bottom: 1px solid rgba(211, 48, 121, 0.6);
 }

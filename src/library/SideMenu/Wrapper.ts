@@ -90,7 +90,11 @@ export const ItemWrapper = styled(motion.div) <any>`
     background: ${highlightSecondary};
   }
   .icon {
-    margin-right: 0.8rem;
+    margin-right: 0.7rem;
+  }
+  .name {
+    margin: 0;
+    padding: 0;
   }
   .action {
     flex: 1;
