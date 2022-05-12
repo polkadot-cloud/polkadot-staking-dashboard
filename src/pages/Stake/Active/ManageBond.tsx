@@ -24,7 +24,7 @@ export const ManageBond = () => {
   const { active, total } = ledger;
 
   let { unlocking } = ledger;
-  let totalUnlocking = getTotalUnlocking(unlocking, units)
+  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   const remaining = total.sub(active).toNumber() - totalUnlocking;
 
