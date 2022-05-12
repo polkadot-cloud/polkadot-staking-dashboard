@@ -4,17 +4,19 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { useApi, APIContext } from '../../contexts/Api';
+import { useApi } from '../../contexts/Api';
+import { useUi } from '../../contexts/UI';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { planckToUnit, fiatAmount, humanNumber } from '../../Utils';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
+import { usePrices } from '../../library/Hooks/usePrices';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const BalanceGraphInner = (props: any) => {
+export const BalanceGraph = () => {
 
   const { mode } = useTheme();
   const { network }: any = useApi();
@@ -22,8 +24,9 @@ export const BalanceGraphInner = (props: any) => {
   const { activeAccount }: any = useConnect();
   const { getAccountBalance }: any = useBalances();
   const balance = getAccountBalance(activeAccount);
+  const { services } = useUi();
+  const prices = usePrices();
 
-  const { prices } = props;
   let { free, miscFrozen } = balance;
 
   // get user's total DOT balance
@@ -103,7 +106,7 @@ export const BalanceGraphInner = (props: any) => {
     <>
       <div className='head' style={{ paddingTop: '0.5rem' }}>
         <h4>Balance</h4>
-        <h2>{freeDot} {network.unit}&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></h2>
+        <h2>{freeDot} {network.unit}{services.includes('binance_spot') && <>&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></>}</h2>
       </div>
       <div style={{ paddingTop: '20px' }}></div>
       <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
@@ -117,89 +120,6 @@ export const BalanceGraphInner = (props: any) => {
       <div style={{ paddingTop: '25px' }}></div>
     </>
   );
-}
-
-export class BalanceGraph extends React.Component<any, any> {
-  static contextType = APIContext;
-
-  state: any = {
-    prices: {
-      lastPrice: 0,
-      change: 0,
-    },
-    network: null,
-  }
-
-  stateRef: any;
-  constructor (props: any) {
-    super(props);
-    this.stateRef = React.createRef();
-    this.stateRef.current = this.state;
-  }
-
-  _setState (_state: any) {
-    this.stateRef.current = _state;
-    this.setState({
-      ..._state,
-    });
-  }
-
-  // subscribe to price data
-  priceHandle: any;
-
-  initiatePriceInterval = async () => {
-    const prices = await this.context.fetchDotPrice();
-    this._setState({
-      prices: prices
-    });
-    this.setPriceInterval();
-  }
-
-  setPriceInterval = async () => {
-    this.priceHandle = setInterval(async () => {
-      const prices = await this.context.fetchDotPrice();
-      this._setState({
-        prices: prices
-      });
-    }, 1000 * 60);
-  }
-
-  // set up price feed interval
-  componentDidMount () {
-    this.initiatePriceInterval();
-  }
-
-  componentWillUnmount () {
-    clearInterval(this.priceHandle);
-  }
-
-  componentDidUpdate () {
-    clearInterval(this.priceHandle);
-    this.setPriceInterval();
-
-    this._setState({
-      ...this.state,
-      network: this.context?.network?.name ?? null
-    })
-  }
-
-  shouldComponentUpdate (nextProps: any, nextState: any) {
-    let update = false;
-    if (this.state.prices !== nextState.prices) {
-      update = true;
-    }
-    let network = this.context?.network?.name ?? null;
-    if (network !== this.state.network) {
-      update = true;
-    }
-    return (update);
-  }
-
-  render () {
-    return (
-      <BalanceGraphInner {...this.props} prices={this.stateRef.current.prices} />
-    )
-  }
 }
 
 export default BalanceGraph;

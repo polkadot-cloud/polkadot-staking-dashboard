@@ -16,7 +16,7 @@ import { useConnect } from '../../contexts/Connect';
 import { useSubscan } from '../../contexts/Subscan';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PageTitle } from '../../library/PageTitle';
-import { planckToUnit, defaultIfNaN } from '../../Utils';
+import { planckToUnit } from '../../Utils';
 import moment from 'moment';
 import { GRAPH_HEIGHT } from '../../constants';
 import { ActiveAccount } from './ActiveAccount';
@@ -121,7 +121,7 @@ export const Overview = () => {
         <SecondaryWrapper style={{ flexBasis: '40%', maxWidth: '40%' }}>
           <GraphWrapper flex>
             <ActiveAccount />
-            <BalanceGraph network={network} />
+            <BalanceGraph />
           </GraphWrapper>
         </SecondaryWrapper>
         <MainWrapper paddingLeft>

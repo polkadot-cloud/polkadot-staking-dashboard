@@ -24,8 +24,8 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Integrate Intention / Active Bond Thresholds
 - [x] Recent Payouts as list
 - [x] Multi-wallet support
+- [x] Node only / External API toggles
 - [ ] Screen size support
-- [ ] Node only / External API toggles
 - [ ] Extrinsics
 - [ ] Initial Nomination management tooling
 - [ ] Nomination Pools

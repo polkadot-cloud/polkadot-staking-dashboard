@@ -17,7 +17,7 @@ export const StatusButton = (props: any) => {
       }
     }}>
       <section className={checked ? 'checked' : undefined}>
-        <FontAwesomeIcon icon={checked ? faCheck : faCircle} />
+        <FontAwesomeIcon icon={checked ? faCheck : faCircle} transform="shrink-3" />
       </section>
       <section>{label}</section>
     </Wrapper>
