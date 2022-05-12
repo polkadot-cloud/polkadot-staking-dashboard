@@ -83,14 +83,16 @@ export const ValidatorsProvider = (props: any) => {
     _setValidatorSubs(val);
   }
 
-  // collect favourites from local storage if they exist
-  let _favourites: any = localStorage.getItem(`${network.name.toLowerCase()}_favourites`);
-  _favourites = _favourites !== null
-    ? JSON.parse(_favourites)
-    : [];
+  // get favourites from local storage
+  const getFavourites = () => {
+    let _favourites: any = localStorage.getItem(`${network.name.toLowerCase()}_favourites`);
+    return _favourites !== null
+      ? JSON.parse(_favourites)
+      : [];
+  }
 
   // stores the user's favourite validators
-  const [favourites, setFavourites]: any = useState(_favourites);
+  const [favourites, setFavourites]: any = useState(getFavourites());
 
   // stores the user's nominated validators as list
   const [nominated, setNominated]: any = useState(null);
@@ -141,6 +143,11 @@ export const ValidatorsProvider = (props: any) => {
       setNominated([]);
     }
   }
+
+  // re-fetch favourites upon network change
+  useEffect(() => {
+    setFavourites(getFavourites());
+  }, [network]);
 
   // fetch favourites in validator list format
   useEffect(() => {
