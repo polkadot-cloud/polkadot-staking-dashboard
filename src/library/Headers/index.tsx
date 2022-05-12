@@ -21,7 +21,7 @@ export const Headers = () => {
 
   const { pathname } = useLocation();
   const assistant = useAssistant();
-  const { connected, activeAccount, initialise }: any = useConnect();
+  const { activeAccount, initialise }: any = useConnect();
   const { openModalWith } = useModal();
   const { isNominating } = useStaking();
   const { validators } = useValidators();
@@ -56,12 +56,14 @@ export const Headers = () => {
       {(syncing || pending.length > 0) ? <Spinner /> : <></>}
 
       {/* connected, display stash and controller */}
-      {connected === 1 &&
+      {activeAccount !== '' &&
         <>
           <HeadingWrapper>
             <Account
               canClick={true}
-              onClick={() => openModalWith('ConnectAccounts', {}, 'small')}
+              onClick={() => {
+                openModalWith('ConnectAccounts', {}, 'small');
+              }}
               value={activeAccount}
               label={isNominating() ? 'Stash' : undefined}
               format='name'
@@ -75,7 +77,7 @@ export const Headers = () => {
         </>
       }
       {/* not connected, display connect accounts */}
-      {connected === 0 &&
+      {activeAccount === '' &&
         <HeadingWrapper>
           <Item
             className='connect'
@@ -94,7 +96,7 @@ export const Headers = () => {
           onClick={() => { assistant.toggle() }}
           whileHover={{ scale: 1.02 }}
         >
-          {connected === 0 && <div className='label'>1</div>}
+          {activeAccount === '' && <div className='label'>1</div>}
           <span>Assistant</span>
         </Item>
       </HeadingWrapper>

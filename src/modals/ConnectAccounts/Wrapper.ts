@@ -16,47 +16,77 @@ export const Wrapper = styled.div`
     color: ${textPrimary};
   }
 
-  button {
+  .head {
     width: 100%;
-    margin: 0.4rem 0;
-    padding: 0.75rem 0.5rem;
-    border-radius: 1rem;
-    font-size: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  button {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    background: ${buttonPrimaryBackground};
-    transition: background 0.15s;
-    color: ${textPrimary};
+    font-size: 1.1rem;
 
-    &:hover {
-      background: ${backgroundToggle};
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
     }
+    
+    &.item {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 3.5rem;
+      margin: 0.4rem 0;
+      padding: 0.75rem 0.25rem;
+      border-radius: 1rem;
+      font-size: 1rem;
+      background: ${buttonPrimaryBackground};
+      transition: background 0.15s;
+      color: ${textPrimary};
 
-    > div {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      flex: 1;
-      padding: 0 1rem;
-
-      &:last-child {
-        justify-content: flex-end;
-        color: ${textDanger};
+      &:hover {
+        background: ${backgroundToggle};
       }
 
-      /* svg theming */
-      svg {
-        .light {
-          fill: ${textInvert};
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex: 1;
+        padding: 0 1rem;
+
+        &:last-child {
+          justify-content: flex-end;
+
+          &.neutral {
+            color: ${textSecondary};
+            opacity: 0.75;
+          }
+          &.danger {
+            color: ${textDanger};
+          }
+
+          .icon {
+            margin-left: 1rem;
+          }
         }
-        .dark {
-          fill: ${textSecondary};
+
+        /* svg theming */
+        svg {
+          .light {
+            fill: ${textInvert};
+          }
+          .dark {
+            fill: ${textSecondary};
+          }
         }
       }
     }
-  }
+}
 `;
 
 export const Separator = styled.div`

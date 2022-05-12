@@ -26,7 +26,7 @@ export const SideMenu = () => {
 
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
-  const { activeAccount, connected: connectStatus }: any = useConnect();
+  const { activeAccount, accounts }: any = useConnect();
   const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
   const { setSideMenu, sideMenuOpen, sideMenuMinimised, userSideMenuMinimised, setUserSideMenuMinimised }: any = useUi();
@@ -55,7 +55,7 @@ export const SideMenu = () => {
   useEffect(() => {
 
     // only process account messages and warnings once accounts are connected
-    if (connectStatus === 1) {
+    if (accounts.length) {
       let _pageConfigWithMessages: any = Object.assign(pageConfig.pages);
 
       for (let i = 0; i < _pageConfigWithMessages.length; i++) {
@@ -76,7 +76,7 @@ export const SideMenu = () => {
         pages: _pageConfigWithMessages,
       });
     }
-  }, [activeAccount, connectStatus, getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
+  }, [activeAccount, accounts, getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {

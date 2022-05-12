@@ -21,7 +21,7 @@ export const Sections = (props: any) => {
   const { network }: any = useApi();
   const { pageMeta } = props;
 
-  const { initialise, connected }: any = useConnect();
+  const { initialise, activeAccount }: any = useConnect();
   const { pathname } = useLocation();
   const assistant = useAssistant();
 
@@ -81,7 +81,7 @@ export const Sections = (props: any) => {
         <ListWrapper>
 
           {/* only display if accounts not yet connected */}
-          {connected === 0 &&
+          {activeAccount === '' &&
             <Action
               height="120px"
               label='next step'
