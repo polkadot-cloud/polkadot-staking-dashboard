@@ -10,7 +10,6 @@ import { useSubscan } from '../../contexts/Subscan';
 import { useStaking } from '../../contexts/Staking';
 import { useUi } from '../../contexts/UI';
 import { useApi } from '../../contexts/Api';
-import { useUi } from '../../contexts/UI';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
@@ -26,7 +25,6 @@ import StatBoxListItem from '../../library/StatBoxList/Item';
 
 export const Payouts = (props: PageProps) => {
   const { network }: any = useApi();
-  const { services } = useUi();
   const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
   const { services }: any = useUi();
