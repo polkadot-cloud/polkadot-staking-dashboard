@@ -46,10 +46,15 @@ export const Browse = (props: PageProps) => {
       format: 'chart-pie',
       params: {
         label: 'Total Validators',
-        value: totalValidators.toNumber(),
-        value2: maxValidatorsCount.sub(totalValidators).toNumber(),
-        total: maxValidatorsCount.toNumber(),
-        unit: '',
+        stat: {
+          value: totalValidators.toNumber(),
+          total: maxValidatorsCount.toNumber(),
+          unit: '',
+        },
+        graph: {
+          value1: totalValidators.toNumber(),
+          value2: maxValidatorsCount.sub(totalValidators).toNumber(),
+        },
         tooltip: `${totalValidatorsAsPercent.toFixed(2)}%`,
         assistant: {
           page: 'validators',
@@ -61,10 +66,15 @@ export const Browse = (props: PageProps) => {
       format: 'chart-pie',
       params: {
         label: 'Active Validators',
-        value: activeValidators,
-        value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
-        total: validatorCount.toNumber(),
-        unit: '',
+        stat: {
+          value: activeValidators,
+          total: validatorCount.toNumber(),
+          unit: '',
+        },
+        graph: {
+          value1: activeValidators,
+          value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
+        },
         tooltip: `${activeValidatorsAsPercent.toFixed(2)}%`,
         assistant: {
           page: 'validators',

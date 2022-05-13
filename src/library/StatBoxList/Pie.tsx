@@ -8,18 +8,18 @@ import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 export const Pie = (props: any) => {
 
-  const { label, value, value2, total, unit, tooltip, assistant } = props;
+  const { label, stat, graph, tooltip, assistant } = props;
   let assist = assistant !== undefined;
   let page = assistant?.page ?? '';
   let key = assistant?.key ?? '';
 
-  let showValue = !(value === 0 && total !== 0);
-  let showTotal = !(total === undefined || !total);
+  let showValue = stat?.value !== 0 || stat?.total === 0;
+  let showTotal = !!stat?.total;
   return (
     <StatBox>
       <div className="content chart">
         <div className="chart">
-          <StatPie value={value} value2={value2} />
+          <StatPie value={graph?.value1} value2={graph?.value2} />
           {tooltip && (
             <div className="tooltip">
               <p>{tooltip}</p>
@@ -36,10 +36,10 @@ export const Pie = (props: any) => {
                   precision={2}
                   speed={250}
                   trail={false}
-                  value={value}
+                  value={stat?.value}
                   useLocaleString={true}
                 />
-                {unit && <>&nbsp;{unit}</>}
+                {stat?.unit && <>&nbsp;{stat?.unit}</>}
 
                 {showTotal && (
                   <span className="total">
@@ -49,10 +49,10 @@ export const Pie = (props: any) => {
                       precision={2}
                       speed={250}
                       trail={false}
-                      value={total}
+                      value={stat?.total}
                       useLocaleString={true}
                     />
-                    {unit && <>&nbsp;{unit}</>}
+                    {stat?.unit && <>&nbsp;{stat?.unit}</>}
                   </span>
                 )}
               </>

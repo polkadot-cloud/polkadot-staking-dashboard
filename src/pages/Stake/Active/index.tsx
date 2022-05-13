@@ -77,10 +77,15 @@ export const Active = (props: any) => {
       format: 'chart-pie',
       params: {
         label: 'Active Nominations',
-        value: nominationsStatus.active,
-        value2: nominationsStatus.active ? 0 : 1,
-        total: nominationsStatus.total,
-        unit: '',
+        stat: {
+          value: nominationsStatus.active,
+          total: nominationsStatus.total,
+          unit: '',
+        },
+        graph: {
+          value1: nominationsStatus.active,
+          value2: nominationsStatus.active ? 0 : 1,
+        },
         tooltip: `${nominationsStatus.active ? `Active` : `Inactive`}`,
         assistant: {
           page: 'stake',
