@@ -6,7 +6,6 @@ import { DEFAULT_NETWORK } from './constants';
 import { ThemesProvider } from './contexts/Themes';
 
 const App = () => {
-
   let network = localStorage.getItem('network');
 
   if (network === null) {
@@ -19,6 +18,6 @@ const App = () => {
       <Providers />
     </ThemesProvider>
   );
-}
+};
 
 export default App;
