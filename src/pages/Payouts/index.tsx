@@ -68,46 +68,41 @@ export const Payouts = (props: PageProps) => {
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />
-          <div className="head">
+          <div className='head'>
             <h4>
               Payout History
-              <OpenAssistantIcon page="payouts" title="Payout History" />
+              <OpenAssistantIcon page='payouts' title='Payout History' />
             </h4>
             <h2>
-              {payouts.length ? (
+              {(payouts.length) ?
                 <>
-                  {moment.unix(payouts[0].block_timestamp).format('Do MMMM')} -{' '}
-                  {moment
-                    .unix(payouts[payouts.length - 1].block_timestamp)
-                    .format('Do MMMM')}
+                  {moment.unix(payouts[0].block_timestamp).format('Do MMMM')} - {moment.unix(payouts[payouts.length - 1].block_timestamp).format('Do MMMM')}
                 </>
-              ) : (
-                <span className="fiat">None</span>
-              )}
+                : <span className='fiat'>None</span>
+              }
             </h2>
           </div>
-          <div className="inner" ref={ref} style={{ minHeight: minHeight }}>
+          <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
+
             {!services.includes('subscan')
               ? <StatusLabel status="active_service" statusFor='subscan' title="Subscan Disabled" />
               : <StatusLabel status="sync_or_setup" title="Not Yet Staking" />
             }
-            <div
-              className="graph"
-              style={{
-                height: `${height}px`,
-                width: `${width}px`,
-                position: 'absolute',
-              }}
-            >
-              <PayoutBar payouts={payouts.slice(0, 60)} height="120px" />
-              <PayoutLine payouts={payouts.slice(0, 60)} height="70px" />
+
+            <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
+              <PayoutBar
+                payouts={payouts.slice(0, 60)}
+                height='120px'
+              />
+              <PayoutLine
+                payouts={payouts.slice(0, 60)}
+                height='70px'
+              />
             </div>
           </div>
         </GraphWrapper>
       </PageRowWrapper>
-      {!payoutsList.length ? (
-        <></>
-      ) : (
+      {!payoutsList.length ? <></> :
         <PageRowWrapper noVerticalSpacer>
           <SectionWrapper>
             <PayoutList
@@ -117,7 +112,7 @@ export const Payouts = (props: PageProps) => {
             />
           </SectionWrapper>
         </PageRowWrapper>
-      )}
+      }
     </>
   );
 };
