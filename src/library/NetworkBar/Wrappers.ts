@@ -30,6 +30,19 @@ export const Summary = styled.div`
   align-items: center;
   align-content: center;
 
+  /* hide connection status text on small screens */
+  .hide-small {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+
+    @media(max-width: 600px) {
+      display: none;
+    }
+  }
+
   p {
     margin: 0 0.25rem;
     font-size: 0.75rem;

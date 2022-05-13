@@ -64,9 +64,11 @@ export const NetworkBar = () => {
       <Summary>
         <section>
           <network.icon className='network_icon' />
-          <p>{network.name}</p>
-          <Separator />
-          <ConnectionStatus />
+          <div className='hide-small'>
+            <p>{network.name}</p>
+            <Separator />
+            <ConnectionStatus />
+          </div>
         </section>
         <section>
           <button
