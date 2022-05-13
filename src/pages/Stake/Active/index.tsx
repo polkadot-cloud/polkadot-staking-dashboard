@@ -123,7 +123,7 @@ export const Active = (props: any) => {
         ))}
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
-        <MainWrapper paddingRight style={{ flex: 1 }}>
+        <MainWrapper paddingLeft>
           <SectionWrapper style={{ height: 260 }}>
             <div className="head">
               <h4>
@@ -146,8 +146,8 @@ export const Active = (props: any) => {
                     payee === 'Staked'
                       ? faRedoAlt
                       : payee === 'None'
-                      ? faCircle
-                      : faWallet
+                        ? faCircle
+                        : faWallet
                   }
                   transform="shrink-4"
                 />

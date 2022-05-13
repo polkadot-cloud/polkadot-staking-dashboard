@@ -6,35 +6,43 @@ import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const MainWrapper = styled.div<any>`
   box-sizing: border-box;
-  flex-basis: 60%;
-
-  @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    flex-basis: 66%;
-    max-width: 66%;
-  }
   overflow: hidden;
   flex: 1;
-  ${props => props.paddingLeft && `
-  padding-left: 1rem;`
-  }
-  ${props => props.paddingRight && `
-  padding-right: 1rem;`
+  flex-basis: 100%;
+  max-width: 100%;
+  order: 0;
+
+  @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+    flex-basis: 62%;
+    width: 62%;
+    order: 1;
+    flex: 1;
+    ${props => props.paddingLeft && `padding-left: 1rem;`}
+    ${props => props.paddingRight && ` padding-right: 1rem;`}
   }
 `;
 
 export const SecondaryWrapper = styled.div`
   box-sizing: border-box;
-  flex-basis: 40%;
-  max-width: 40%;
+  overflow: hidden;
+  flex-basis: 100%;
+  width:100%;  
   border-radius: 1rem;
-  flex: 1;
+  order: 1;
+
+  @media(min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+    flex-basis: 38%;
+    max-width: 38%;
+    flex-grow: 1;
+    order: 0;
+  }
 `;
 
 export const StickyWrapper = styled.div`
   position: sticky;
   top: 80px;
 
-  @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
     top: 100px;
   }
 `;

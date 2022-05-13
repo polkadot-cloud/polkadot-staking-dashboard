@@ -123,7 +123,7 @@ export const Pools = (props: PageProps) => {
         ))}
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
-        <MainWrapper paddingRight style={{ flex: 1 }}>
+        <MainWrapper paddingLeft>
           <SectionWrapper style={{ height: 360 }}>
             <div className="head">
               <h4>
@@ -139,7 +139,7 @@ export const Pools = (props: PageProps) => {
                       inline
                       primary
                       title="Create Pool"
-                      onClick={() => {}}
+                      onClick={() => { }}
                     />
                   ) : (
                     <Button
@@ -147,7 +147,7 @@ export const Pools = (props: PageProps) => {
                       inline
                       primary
                       title="Leave"
-                      onClick={() => {}}
+                      onClick={() => { }}
                     />
                   )}
                 </div>
@@ -160,8 +160,8 @@ export const Pools = (props: PageProps) => {
               <h2>
                 32.622931 {network.unit} &nbsp;
                 <div>
-                  <Button small primary inline title="+" onClick={() => {}} />
-                  <Button small primary title="-" onClick={() => {}} />
+                  <Button small primary inline title="+" onClick={() => { }} />
+                  <Button small primary title="-" onClick={() => { }} />
                 </div>
               </h2>
               <Separator />
@@ -177,7 +177,7 @@ export const Pools = (props: PageProps) => {
                     primary
                     inline
                     title="Claim"
-                    onClick={() => {}}
+                    onClick={() => { }}
                   />
                 </div>
               </h2>

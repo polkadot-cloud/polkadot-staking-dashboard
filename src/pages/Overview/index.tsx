@@ -134,7 +134,7 @@ export const Overview = () => {
         ))}
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
-        <SecondaryWrapper style={{ flexBasis: '40%', maxWidth: '40%' }}>
+        <SecondaryWrapper>
           <GraphWrapper flex>
             <ActiveAccount />
             <BalanceGraph />

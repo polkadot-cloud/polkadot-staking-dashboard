@@ -138,7 +138,7 @@ export const PageRowWrapper = styled.div<any>`
     margin-bottom: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
     display: flex;
     flex-shrink: 0;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     width: 100%;
     
     /* page padding */
