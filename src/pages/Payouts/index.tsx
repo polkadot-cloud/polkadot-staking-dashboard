@@ -9,6 +9,7 @@ import { StatBoxList } from '../../library/StatBoxList';
 import { useSubscan } from '../../contexts/Subscan';
 import { useStaking } from '../../contexts/Staking';
 import { useApi } from '../../contexts/Api';
+import { useUi } from '../../contexts/UI';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
@@ -26,6 +27,7 @@ export const Payouts = (props: PageProps) => {
   const { network }: any = useApi();
   const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
+  const { services }: any = useUi();
   const { unit, units } = network;
   const { lastReward } = staking;
 
@@ -85,7 +87,10 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </div>
           <div className="inner" ref={ref} style={{ minHeight: minHeight }}>
-            <StatusLabel topOffset="30%" title="Not Yet Staking" />
+            {!services.includes('subscan')
+              ? <StatusLabel status="active_service" statusFor='subscan' title="Subscan Disabled" />
+              : <StatusLabel status="sync_or_setup" title="Not Yet Staking" />
+            }
             <div
               className="graph"
               style={{
