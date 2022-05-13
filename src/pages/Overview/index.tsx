@@ -121,8 +121,12 @@ export const Overview = () => {
     };
   }
 
-  // get payout start item
-  let payoutsStart = payouts.legth;
+
+  // payouts thresholds
+  let payoutsEnd = payouts.length;
+  payoutsEnd = payoutsEnd < 0 ? 0 : payoutsEnd;
+
+  let payoutsStart = payoutsEnd - 10;
   payoutsStart = payoutsStart < 0 ? 0 : payoutsStart;
 
   return (
@@ -157,7 +161,7 @@ export const Overview = () => {
             </div>
             <Payouts
               account={activeAccount}
-              payouts={payouts.slice(payoutsStart, payouts.length)}
+              payouts={payouts.slice(payoutsStart, payoutsEnd)}
             />
           </GraphWrapper>
         </MainWrapper>
