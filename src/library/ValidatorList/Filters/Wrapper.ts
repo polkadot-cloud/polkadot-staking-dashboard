@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, textSecondary, borderPrimary } from '../../../theme';
+import { backgroundToggle, textSecondary } from '../../../theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -11,31 +11,41 @@ export const Wrapper = styled.div`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-end;
+  position: relative;
+  overflow: hidden;
 
-  > .separator {
-    border-right: 2px solid ${borderPrimary};
-    width: 1px;
-    height: 80px;
-    margin: 0 1.2rem;
-  }
+  > .hide-scrollbar {
+    width: 100%;
+    overflow: hidden;
+    height: 115px;
 
-  > .section {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: flex-start;
-
-    > .head {
-      flex: 1;
-      padding-bottom: 0.6rem;
-      font-size: 0.8rem;
-      color: ${textSecondary};
-    }
-
-    > .items {
-      flex: 1;
+    > section {
       display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-start;
+      flex-wrap: nowrap;
+      overflow: auto;
+      width: 100%;
+      min-width: 100%;
+      max-width: 500px;
+      padding-bottom: 2rem;
+
+      > .category {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+
+        > .head {
+          flex: 1;
+          padding-bottom: 0.6rem;
+          font-size: 0.8rem;
+          color: ${textSecondary};
+        }
+        > .items {
+          flex: 1;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: flex-start;
+        }
+      }
     }
   }
 `;

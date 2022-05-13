@@ -25,69 +25,71 @@ export const Filters = (props: any) => {
 
   return (
     <Wrapper>
-      <div className='section'>
-        <div className='head'>Order</div>
-        <div className='items'>
-          <Item
-            label='lowest commission'
-            icon={faPercentage}
-            transform='grow-12'
-            active={validatorOrder === 'commission'}
-            onClick={() => handleFilter(orderValidators, 'commission')}
-          />
-        </div>
-      </div>
-
-      <div className='separator'></div>
-      <div className='section'>
-        <div className='head'>Exclude</div>
-        <div className='items'>
-          <Item
-            label='inactive validators'
-            icon={faClock}
-            transform='grow-10'
-            active={validatorFilters?.includes('inactive') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'inactive');
-            }}
-          />
-          <Item
-            label='over subscribed'
-            icon={faExclamationTriangle}
-            transform='grow-10'
-            active={validatorFilters?.includes('over_subscribed') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'over_subscribed');
-            }}
-          />
-          <Item
-            label='100% commission'
-            icon={faBalanceScaleLeft}
-            transform='grow-6'
-            active={validatorFilters?.includes('all_commission') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'all_commission');
-            }}
-          />
-          <Item
-            label='blocked nominations'
-            icon={faUserSlash}
-            transform='grow-9'
-            active={validatorFilters?.includes('blocked_nominations') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'blocked_nominations');
-            }}
-          />
-          <Item
-            label='missing identity'
-            icon={faUserTag}
-            transform='grow-9'
-            active={validatorFilters?.includes('missing_identity') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'missing_identity');
-            }}
-          />
-        </div>
+      <div className='hide-scrollbar'>
+        <section>
+          <div className='category'>
+            <div className='head'>Order</div>
+            <div className='items'>
+              <Item
+                label='lowest commission'
+                icon={faPercentage}
+                transform='grow-12'
+                active={validatorOrder === 'commission'}
+                onClick={() => handleFilter(orderValidators, 'commission')}
+              />
+            </div>
+          </div>
+          <div className='category'>
+            <div className='head'>Exclude</div>
+            <div className='items'>
+              <Item
+                label='inactive validators'
+                icon={faClock}
+                transform='grow-10'
+                active={validatorFilters?.includes('inactive') ?? false}
+                onClick={() => {
+                  handleFilter(toggleFilterValidators, 'inactive');
+                }}
+              />
+              <Item
+                label='over subscribed'
+                icon={faExclamationTriangle}
+                transform='grow-10'
+                active={validatorFilters?.includes('over_subscribed') ?? false}
+                onClick={() => {
+                  handleFilter(toggleFilterValidators, 'over_subscribed');
+                }}
+              />
+              <Item
+                label='100% commission'
+                icon={faBalanceScaleLeft}
+                transform='grow-6'
+                active={validatorFilters?.includes('all_commission') ?? false}
+                onClick={() => {
+                  handleFilter(toggleFilterValidators, 'all_commission');
+                }}
+              />
+              <Item
+                label='blocked nominations'
+                icon={faUserSlash}
+                transform='grow-9'
+                active={validatorFilters?.includes('blocked_nominations') ?? false}
+                onClick={() => {
+                  handleFilter(toggleFilterValidators, 'blocked_nominations');
+                }}
+              />
+              <Item
+                label='missing identity'
+                icon={faUserTag}
+                transform='grow-9'
+                active={validatorFilters?.includes('missing_identity') ?? false}
+                onClick={() => {
+                  handleFilter(toggleFilterValidators, 'missing_identity');
+                }}
+              />
+            </div>
+          </div>
+        </section>
       </div>
     </Wrapper>
   )
