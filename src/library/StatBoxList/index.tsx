@@ -2,21 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Wrapper, ListWrapper } from './Wrapper';
-import Item from './Item';
 
-export const StatBoxList = (props: any) => {
-
-  const { items } = props;
-
+export const StatBoxList = ({ children }: any) => {
   return (
     <Wrapper>
-      <ListWrapper>
-        {items.map((item: any, index: number) =>
-          <Item {...item} key={index} />
-        )}
-      </ListWrapper>
+      <ListWrapper>{children}</ListWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default StatBoxList;

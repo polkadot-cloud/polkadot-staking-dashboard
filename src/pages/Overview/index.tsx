@@ -20,9 +20,9 @@ import { planckToUnit } from '../../Utils';
 import moment from 'moment';
 import { GRAPH_HEIGHT } from '../../constants';
 import { ActiveAccount } from './ActiveAccount';
+import StatBoxListItem from '../../library/StatBoxList/Item';
 
 export const Overview = () => {
-
   const { network, consts }: any = useApi();
   const { units } = network;
   const { maxElectingVoters } = consts;
@@ -32,30 +32,31 @@ export const Overview = () => {
   const { staking, eraStakers }: any = useStaking();
   const { payouts }: any = useSubscan();
 
-  const {
-    totalNominators,
-    maxNominatorsCount,
-    lastTotalStake
-  } = staking;
+  const { totalNominators, maxNominatorsCount, lastTotalStake } = staking;
 
   const { activeNominators } = eraStakers;
 
   // total supply as percent
   let supplyAsPercent = 0;
   if (totalIssuance.gt(new BN(0))) {
-    supplyAsPercent = lastTotalStake.div(totalIssuance.div(new BN(100))).toNumber();
+    supplyAsPercent = lastTotalStake
+      .div(totalIssuance.div(new BN(100)))
+      .toNumber();
   }
 
   // total active nominators as percent
   let totalNominatorsAsPercent = 0;
   if (maxNominatorsCount.gt(new BN(0))) {
-    totalNominatorsAsPercent = totalNominators.div(maxNominatorsCount.div(new BN(100))).toNumber();
+    totalNominatorsAsPercent = totalNominators
+      .div(maxNominatorsCount.div(new BN(100)))
+      .toNumber();
   }
 
   // active nominators as percent
   let activeNominatorsAsPercent = 0;
   if (maxElectingVoters > 0) {
-    activeNominatorsAsPercent = activeNominators / (new BN(maxElectingVoters)).div(new BN(100)).toNumber();
+    activeNominatorsAsPercent =
+      activeNominators / new BN(maxElectingVoters).div(new BN(100)).toNumber();
   }
 
   // base values
@@ -65,41 +66,47 @@ export const Overview = () => {
   // stats
   const items = [
     {
-      label: "Supply Staked",
-      value: lastTotalStakeBase.toNumber(),
-      value2: totalIssuanceBase.sub(lastTotalStakeBase).toNumber(),
-      unit: network.unit,
-      tooltip: `${supplyAsPercent.toFixed(2)}%`,
-      format: "chart-pie",
-      assistant: {
-        page: 'overview',
-        key: 'Supply Staked',
+      format: 'chart-pie',
+      params: {
+        label: 'Supply Staked',
+        value: lastTotalStakeBase.toNumber(),
+        value2: totalIssuanceBase.sub(lastTotalStakeBase).toNumber(),
+        unit: network.unit,
+        tooltip: `${supplyAsPercent.toFixed(2)}%`,
+        assistant: {
+          page: 'overview',
+          key: 'Supply Staked',
+        },
       },
     },
     {
-      label: "Total Nominators",
-      value: totalNominators.toNumber(),
-      value2: maxNominatorsCount.sub(totalNominators).toNumber(),
-      total: maxNominatorsCount,
-      unit: "",
-      tooltip: `${totalNominatorsAsPercent.toFixed(2)}%`,
-      format: "chart-pie",
-      assistant: {
-        page: 'overview',
-        key: 'Nominators',
+      format: 'chart-pie',
+      params: {
+        label: 'Total Nominators',
+        value: totalNominators.toNumber(),
+        value2: maxNominatorsCount.sub(totalNominators).toNumber(),
+        total: maxNominatorsCount,
+        unit: '',
+        tooltip: `${totalNominatorsAsPercent.toFixed(2)}%`,
+        assistant: {
+          page: 'overview',
+          key: 'Nominators',
+        },
       },
     },
     {
-      label: "Active Nominators",
-      value: activeNominators,
-      value2: maxElectingVoters - activeNominators,
-      total: maxElectingVoters,
-      unit: "",
-      tooltip: `${activeNominatorsAsPercent.toFixed(2)}%`,
-      format: "chart-pie",
-      assistant: {
-        page: 'overview',
-        key: 'Active Nominators',
+      format: 'chart-pie',
+      params: {
+        label: 'Active Nominators',
+        value: activeNominators,
+        value2: maxElectingVoters - activeNominators,
+        total: maxElectingVoters,
+        unit: '',
+        tooltip: `${activeNominatorsAsPercent.toFixed(2)}%`,
+        assistant: {
+          page: 'overview',
+          key: 'Active Nominators',
+        },
       },
     },
   ];
@@ -110,7 +117,7 @@ export const Overview = () => {
     let _last = payouts[payouts.length - 1];
     lastPayout = {
       amount: planckToUnit(_last['amount'], units),
-      block_timestamp: _last['block_timestamp'] + "",
+      block_timestamp: _last['block_timestamp'] + '',
     };
   }
 
@@ -121,7 +128,11 @@ export const Overview = () => {
   return (
     <>
       <PageTitle title="What's Happening" />
-      <StatBoxList items={items} />
+      <StatBoxList>
+        {items.map((item: any, index: number) => (
+          <StatBoxListItem {...item} key={index} />
+        ))}
+      </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper style={{ flexBasis: '40%', maxWidth: '40%' }}>
           <GraphWrapper flex>
@@ -132,10 +143,16 @@ export const Overview = () => {
         <MainWrapper paddingLeft>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <SubscanButton />
-            <div className='head'>
+            <div className="head">
               <h4>Recent Payouts</h4>
               <h2>
-                {lastPayout === null ? 0 : lastPayout.amount} {network.unit}&nbsp;<span className='fiat'>{lastPayout === null ? `` : moment.unix(lastPayout['block_timestamp']).fromNow()}</span>
+                {lastPayout === null ? 0 : lastPayout.amount} {network.unit}
+                &nbsp;
+                <span className="fiat">
+                  {lastPayout === null
+                    ? ``
+                    : moment.unix(lastPayout['block_timestamp']).fromNow()}
+                </span>
               </h2>
             </div>
             <Payouts
@@ -150,6 +167,6 @@ export const Overview = () => {
       </PageRowWrapper>
     </>
   );
-}
+};
 
 export default Overview;

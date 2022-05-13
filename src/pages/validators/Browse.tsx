@@ -12,9 +12,9 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
+import StatBoxListItem from '../../library/StatBoxList/Item';
 
 export const Browse = (props: PageProps) => {
-
   const { page } = props;
   const { title } = page;
 
@@ -29,85 +29,98 @@ export const Browse = (props: PageProps) => {
   // total validators as percent
   let totalValidatorsAsPercent = 0;
   if (maxValidatorsCount.gt(new BN(0))) {
-    totalValidatorsAsPercent = totalValidators.div(maxValidatorsCount.div(new BN(100))).toNumber();
+    totalValidatorsAsPercent = totalValidators
+      .div(maxValidatorsCount.div(new BN(100)))
+      .toNumber();
   }
 
   // active validators as percent
   let activeValidatorsAsPercent = 0;
   if (validatorCount.gt(new BN(0))) {
-    activeValidatorsAsPercent = activeValidators / (validatorCount.toNumber() * 0.01);
+    activeValidatorsAsPercent =
+      activeValidators / (validatorCount.toNumber() * 0.01);
   }
 
   const items = [
     {
-      label: "Total Validators",
-      value: totalValidators.toNumber(),
-      value2: maxValidatorsCount.sub(totalValidators).toNumber(),
-      total: maxValidatorsCount.toNumber(),
-      unit: "",
-      tooltip: `${totalValidatorsAsPercent.toFixed(2)}%`,
-      format: "chart-pie",
-      assistant: {
-        page: 'validators',
-        key: 'Validator'
-      }
+      format: 'chart-pie',
+      params: {
+        label: 'Total Validators',
+        value: totalValidators.toNumber(),
+        value2: maxValidatorsCount.sub(totalValidators).toNumber(),
+        total: maxValidatorsCount.toNumber(),
+        unit: '',
+        tooltip: `${totalValidatorsAsPercent.toFixed(2)}%`,
+        assistant: {
+          page: 'validators',
+          key: 'Validator',
+        },
+      },
     },
     {
-      label: "Active Validators",
-      value: activeValidators,
-      value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
-      total: validatorCount.toNumber(),
-      unit: "",
-      tooltip: `${activeValidatorsAsPercent.toFixed(2)}%`,
-      format: "chart-pie",
-      assistant: {
-        page: 'validators',
-        key: 'Active Validator'
-      }
+      format: 'chart-pie',
+      params: {
+        label: 'Active Validators',
+        value: activeValidators,
+        value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
+        total: validatorCount.toNumber(),
+        unit: '',
+        tooltip: `${activeValidatorsAsPercent.toFixed(2)}%`,
+        assistant: {
+          page: 'validators',
+          key: 'Active Validator',
+        },
+      },
     },
     {
-      label: "Active Era",
-      value: metrics.activeEra.index,
-      unit: "",
-      format: "number",
-      assistant: {
-        page: 'validators',
-        key: 'Era',
-      }
-    }
+      format: 'number',
+      params: {
+        label: 'Active Era',
+        value: metrics.activeEra.index,
+        unit: '',
+        assistant: {
+          page: 'validators',
+          key: 'Era',
+        },
+      },
+    },
   ];
 
   return (
     <>
       <PageTitle title={title} />
-      <StatBoxList items={items} />
+      <StatBoxList>
+        {items.map((item: any, index: number) => (
+          <StatBoxListItem {...item} key={index} />
+        ))}
+      </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          {isReady &&
+          {isReady && (
             <>
-              {validators.length === 0 &&
-                <div className='item'>
+              {validators.length === 0 && (
+                <div className="item">
                   <h4>Fetching validators...</h4>
                 </div>
-              }
+              )}
 
-              {validators.length > 0 &&
+              {validators.length > 0 && (
                 <ValidatorList
                   validators={validators}
-                  batchKey='validators_browse'
-                  title='Validators'
+                  batchKey="validators_browse"
+                  title="Validators"
                   allowMoreCols
                   allowFilters
                   pagination
                   toggleFavourites
                 />
-              }
+              )}
             </>
-          }
+          )}
         </SectionWrapper>
       </PageRowWrapper>
     </>
   );
-}
+};
 
 export default Browse;

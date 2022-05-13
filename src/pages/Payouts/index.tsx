@@ -10,6 +10,7 @@ import { useSubscan } from '../../contexts/Subscan';
 import { useStaking } from '../../contexts/Staking';
 import { useUi } from '../../contexts/UI';
 import { useApi } from '../../contexts/Api';
+import { useUi } from '../../contexts/UI';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
@@ -21,13 +22,14 @@ import { StatusLabel } from '../../library/StatusLabel';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PayoutList } from './PayoutList';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
+import StatBoxListItem from '../../library/StatBoxList/Item';
 
 export const Payouts = (props: PageProps) => {
-
   const { network }: any = useApi();
   const { services } = useUi();
   const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
+  const { services }: any = useUi();
   const { unit, units } = network;
   const { lastReward } = staking;
 
@@ -42,14 +44,16 @@ export const Payouts = (props: PageProps) => {
 
   let items = [
     {
-      label: "Last Era Payout",
-      value: lastRewardBase,
-      unit: unit,
-      format: "number",
-      assistant: {
-        page: 'payouts',
-        key: 'Last Era Payout'
-      }
+      format: 'number',
+      params: {
+        label: 'Last Era Payout',
+        value: lastRewardBase,
+        unit: unit,
+        assistant: {
+          page: 'payouts',
+          key: 'Last Era Payout',
+        },
+      },
     },
   ];
 
@@ -58,7 +62,11 @@ export const Payouts = (props: PageProps) => {
   return (
     <>
       <PageTitle title={title} />
-      <StatBoxList items={items} />
+      <StatBoxList>
+        {items.map((item: any, index: number) => (
+          <StatBoxListItem {...item} key={index} />
+        ))}
+      </StatBoxList>
       <PageRowWrapper>
         <GraphWrapper>
           <SubscanButton />
@@ -109,6 +117,6 @@ export const Payouts = (props: PageProps) => {
       }
     </>
   );
-}
+};
 
 export default Payouts;

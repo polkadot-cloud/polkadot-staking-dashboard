@@ -16,9 +16,9 @@ import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
 import { Button } from '../../library/Button';
 import { PoolList } from '../../library/PoolList';
 import { usePools } from '../../contexts/Pools';
+import StatBoxListItem from '../../library/StatBoxList/Item';
 
 export const Pools = (props: PageProps) => {
-
   const { page } = props;
   const { title } = page;
 
@@ -41,7 +41,7 @@ export const Pools = (props: PageProps) => {
         addresses: {
           stash: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
           reward: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
-        }
+        },
       },
       {
         id: 2,
@@ -57,92 +57,128 @@ export const Pools = (props: PageProps) => {
         addresses: {
           stash: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
           reward: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-        }
-      }
+        },
+      },
     ],
     activePool: 1,
   });
 
   const totalPools = meta.counterForBondedPools + meta.counterForRewardPools;
-  const activePoolsAsPercent = defaultIfNaN(((meta.counterForRewardPools ?? 0) / (totalPools * 0.01)).toFixed(2), 0);
-  const activePool = state.pools.find((item: any) => item.id === meta.counterForRewardPools);
+  const activePoolsAsPercent = defaultIfNaN(
+    ((meta.counterForRewardPools ?? 0) / (totalPools * 0.01)).toFixed(2),
+    0
+  );
+  const activePool = state.pools.find(
+    (item: any) => item.id === meta.counterForRewardPools
+  );
 
   const items: any = [
     {
-      label: "Active Pools",
-      value: meta.counterForRewardPools,
-      value2: totalPools - meta.counterForRewardPools,
-      total: totalPools,
-      unit: "",
-      tooltip: `${activePoolsAsPercent}%`,
-      format: "chart-pie",
-      assistant: {
-        page: 'pools',
-        key: 'Active Pools'
-      }
-    }, {
-      label: "Minimum Join Bond",
-      value: meta.minJoinBond,
-      unit: "DOT",
-      format: "number",
-      assistant: {
-        page: 'pools',
-        key: 'Era',
-      }
-    }, {
-      label: "Minimum Create Bond",
-      value: meta.minCreateBond,
-      unit: "DOT",
-      format: "number",
-      assistant: {
-        page: 'pools',
-        key: 'Era',
-      }
-    }
+      format: 'chart-pie',
+      params: {
+        label: 'Active Pools',
+        value: meta.counterForRewardPools,
+        value2: totalPools - meta.counterForRewardPools,
+        total: totalPools,
+        unit: '',
+        tooltip: `${activePoolsAsPercent}%`,
+        assistant: {
+          page: 'pools',
+          key: 'Active Pools',
+        },
+      },
+    },
+    {
+      format: 'number',
+      params: {
+        label: 'Minimum Join Bond',
+        value: meta.minJoinBond,
+        unit: 'DOT',
+        assistant: {
+          page: 'pools',
+          key: 'Era',
+        },
+      },
+    },
+    {
+      format: 'number',
+      params: {
+        label: 'Minimum Create Bond',
+        value: meta.minCreateBond,
+        unit: 'DOT',
+        assistant: {
+          page: 'pools',
+          key: 'Era',
+        },
+      },
+    },
   ];
 
   return (
     <>
       <PageTitle title={title} />
-      <StatBoxList items={items} />
+      <StatBoxList>
+        {items.map((item: any, index: number) => (
+          <StatBoxListItem {...item} key={index} />
+        ))}
+      </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingRight style={{ flex: 1 }}>
           <SectionWrapper style={{ height: 360 }}>
-            <div className='head'>
+            <div className="head">
               <h4>
                 Status
-                <OpenAssistantIcon page='pools' title='Pool Status' />
+                <OpenAssistantIcon page="pools" title="Pool Status" />
               </h4>
               <h2>
                 Actively in Pool and Earning Rewards &nbsp;
                 <div>
-                  {activePool === undefined
-                    ? <Button small inline primary title='Create Pool' onClick={() => { }} />
-                    : <Button small inline primary title='Leave' onClick={() => { }} />
-                  }
+                  {activePool === undefined ? (
+                    <Button
+                      small
+                      inline
+                      primary
+                      title="Create Pool"
+                      onClick={() => {}}
+                    />
+                  ) : (
+                    <Button
+                      small
+                      inline
+                      primary
+                      title="Leave"
+                      onClick={() => {}}
+                    />
+                  )}
                 </div>
               </h2>
               <Separator />
               <h4>
                 Bonded in Pool
-                <OpenAssistantIcon page='pools' title='Bonded in Pool' />
+                <OpenAssistantIcon page="pools" title="Bonded in Pool" />
               </h4>
               <h2>
                 32.622931 {network.unit} &nbsp;
                 <div>
-                  <Button small primary inline title='+' onClick={() => { }} />
-                  <Button small primary title='-' onClick={() => { }} />
+                  <Button small primary inline title="+" onClick={() => {}} />
+                  <Button small primary title="-" onClick={() => {}} />
                 </div>
               </h2>
               <Separator />
               <h4>
                 Unclaimed Rewards
-                <OpenAssistantIcon page='pools' title='Pool Rewards' />
+                <OpenAssistantIcon page="pools" title="Pool Rewards" />
               </h4>
               <h2>
                 0.82 {network.unit} &nbsp;
                 <div>
-                  <Button small primary inline title='Claim' onClick={() => { }} />
+                  <Button
+                    small
+                    primary
+                    inline
+                    title="Claim"
+                    onClick={() => {}}
+                  />
                 </div>
               </h2>
             </div>
@@ -150,20 +186,31 @@ export const Pools = (props: PageProps) => {
         </MainWrapper>
         <SecondaryWrapper>
           <SectionWrapper style={{ height: 360 }}>
-
-            <div className='head'>
+            <div className="head">
               <h2>Pool Roles</h2>
-              <h4> Root <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
+              <h4>
+                Root <OpenAssistantIcon page="pools" title="Joined Pool" />
+              </h4>
               <PoolAccount address={activePool?.roles?.root ?? null} />
 
-              <h4> Depositor <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
+              <h4>
+                Depositor <OpenAssistantIcon page="pools" title="Joined Pool" />
+              </h4>
               <PoolAccount address={activePool?.roles?.depositor ?? null} />
 
-              <h4> Nominator <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
+              <h4>
+                Nominator <OpenAssistantIcon page="pools" title="Joined Pool" />
+              </h4>
               <PoolAccount address={activePool?.roles?.nominator ?? null} />
 
-              <h4> State Toggler <OpenAssistantIcon page='pools' title='Joined Pool' /></h4>
-              <PoolAccount address={activePool?.roles?.stateToggler ?? null} last={true} />
+              <h4>
+                State Toggler
+                <OpenAssistantIcon page="pools" title="Joined Pool" />
+              </h4>
+              <PoolAccount
+                address={activePool?.roles?.stateToggler ?? null}
+                last={true}
+              />
             </div>
           </SectionWrapper>
         </SecondaryWrapper>
@@ -176,7 +223,7 @@ export const Pools = (props: PageProps) => {
           </h2>
           <PoolList
             pools={state.pools}
-            title='Active Pools'
+            title="Active Pools"
             allowMoreCols
             pagination
           />
@@ -184,6 +231,6 @@ export const Pools = (props: PageProps) => {
       </PageRowWrapper>
     </>
   );
-}
+};
 
 export default Pools;

@@ -8,8 +8,7 @@ import { useTheme } from '../../contexts/Themes';
 
 ChartJS.register(ArcElement, Tooltip);
 
-export const StatBoxPie = (props: any) => {
-
+export const StatPie = (props: any) => {
   let { value, value2 } = props;
 
   // format zero value graph
@@ -68,6 +67,6 @@ export const StatBoxPie = (props: any) => {
       />
     </div>
   );
-}
+};
 
-export default StatBoxPie;
+export default StatPie;
