@@ -5,18 +5,21 @@ import { Item } from '../Wrappers';
 import { ToggleWrapper } from './Wrappers';
 import { ReactComponent as WalletSVG } from '../../../img/wallet.svg';
 import { useSideBar } from '../../../contexts/SideBar';
+import { useConnect } from '../../../contexts/Connect';
 
 export const Toggle = () => {
 
+  const { activeAccount } = useConnect();
   const { openSideBar, open } = useSideBar();
 
-  const style = { width: '50px', flex: 0 };
+  const style = { flex: 0 };
 
   const svg =
     <div style={{
-      width: '1.2rem',
-      height: '1.2rem',
-      padding: '0.45rem 0'
+      width: '1rem',
+      height: '1rem',
+      padding: '0.6rem 0',
+      marginRight: '0.75rem',
     }}
     >
       <WalletSVG />
@@ -24,17 +27,17 @@ export const Toggle = () => {
 
   return (
     <ToggleWrapper>
-      {!open &&
+      {(!open && activeAccount !== '') &&
         <Item
           style={style}
           onClick={() => { openSideBar() }}
           whileHover={{ scale: '1.01' }}
         >
-          {svg}
+          {svg} Wallet
         </Item>
       }
       {open
-        ? <Item style={style}>{svg}</Item>
+        ? <Item style={style}>{svg} Wallet</Item>
         : <></>
       }
     </ToggleWrapper>

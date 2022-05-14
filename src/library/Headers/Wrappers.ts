@@ -84,6 +84,16 @@ export const Item = styled(motion.button)`
     font-variation-settings: 'wght' 540;
     font-size: 1rem;
 
+    .label {
+      border: 0.125rem solid #d33079;
+      border-radius: 0.8rem;
+      color: #d33079;
+      font-size: 0.85rem;
+      font-variation-settings: 'wght' 525;
+      margin-right: 0.6rem;
+      padding: 0.1rem 0.5rem;
+    }
+
     > span {
       color: ${textPrimary};
       line-height: 2.2rem;

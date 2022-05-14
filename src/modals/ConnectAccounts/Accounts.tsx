@@ -31,7 +31,7 @@ export const Accounts = (props: any) => {
 
   return (
     <>
-      <h2>{activeAccount === '' ? 'Connect' : 'Switch'} Account</h2>
+      <h2>{activeAccount === '' ? 'Select' : 'Switch'} Account</h2>
       <div className='head'>
         <button onClick={() => setSection(0)}>
           <FontAwesomeIcon icon={faChevronLeft} transform="shrink-5" />

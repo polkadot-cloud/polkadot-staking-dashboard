@@ -18,7 +18,7 @@ export const Connect = () => {
             }}
             whileHover={{ scale: 1.02 }}
           >
-            <span>Connect Accounts</span>
+            <span>Connect Wallet</span>
           </Item>
         </HeadingWrapper>
       }

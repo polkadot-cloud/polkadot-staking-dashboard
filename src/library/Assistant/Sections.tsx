@@ -85,7 +85,7 @@ export const Sections = (props: any) => {
             <Action
               height="120px"
               label='next step'
-              title='Connect Your Accounts'
+              title='Connect Wallet'
               subtitle={`Connect your ${network.name} accounts to start staking.`}
               onClick={connectOnClick}
             />
