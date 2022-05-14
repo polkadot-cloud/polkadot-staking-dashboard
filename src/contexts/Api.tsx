@@ -12,6 +12,7 @@ import {
   API_ENDPOINTS,
   NODE_ENDPOINTS,
   MAX_ELECTING_VOTERS,
+  EXPECTED_BLOCK_TIME,
 } from '../constants';
 
 type NetworkOptions = 'polkadot' | 'westend';
@@ -49,6 +50,7 @@ export const APIProvider = (props: any) => {
     sessionsPerEra: 0,
     maxNominatorRewardedPerValidator: 0,
     maxElectingVoters: 0,
+    expectedBlockTime: 0,
   });
 
   // connection status state
@@ -90,6 +92,7 @@ export const APIProvider = (props: any) => {
       _api.consts.staking.sessionsPerEra,
       _api.consts.staking.maxNominatorRewardedPerValidator,
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
+      _api.consts.babe.expectedBlockTime,
     ]);
 
     setApi(_api);
@@ -99,6 +102,7 @@ export const APIProvider = (props: any) => {
       sessionsPerEra: _metrics[2]?.toNumber() ?? SESSIONS_PER_ERA,
       maxNominatorRewardedPerValidator: _metrics[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
       maxElectingVoters: _metrics[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
+      expectedBlockTime: _metrics[5]?.toNumber() ?? EXPECTED_BLOCK_TIME,
     });
   }
 
