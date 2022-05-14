@@ -77,10 +77,15 @@ export const Pools = (props: PageProps) => {
       format: 'chart-pie',
       params: {
         label: 'Active Pools',
-        value: meta.counterForRewardPools,
-        value2: totalPools - meta.counterForRewardPools,
-        total: totalPools,
-        unit: '',
+        stat: {
+          value: meta.counterForRewardPools,
+          total: totalPools,
+          unit: '',
+        },
+        graph: {
+          value1: meta.counterForRewardPools,
+          value2: totalPools - meta.counterForRewardPools,
+        },
         tooltip: `${activePoolsAsPercent}%`,
         assistant: {
           page: 'pools',

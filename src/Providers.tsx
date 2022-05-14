@@ -21,11 +21,13 @@ import { SubscanProvider } from './contexts/Subscan';
 import { ValidatorsProvider } from './contexts/Validators/Validators';
 import { UIProvider } from './contexts/UI';
 import { useTheme } from './contexts/Themes';
+import { SessionEraProvider } from './contexts/SessionEra';
 
-export const WrappedRouter = () =>
+export const WrappedRouter = () => (
   <Wrapper>
     <Router />
-  </Wrapper>;
+  </Wrapper>
+);
 
 export const ThemedRouter = () => {
   const { mode } = useTheme();
@@ -35,7 +37,7 @@ export const ThemedRouter = () => {
       <WrappedRouter />
     </ThemeProvider>
   );
-}
+};
 
 export const Providers = withProviders(
   APIProvider,
@@ -53,8 +55,7 @@ export const Providers = withProviders(
   SubscanProvider,
   NotificationsProvider,
   ExtrinsicsProvider,
-)(
-  ThemedRouter
-);
+  SessionEraProvider
+)(ThemedRouter);
 
 export default Providers;

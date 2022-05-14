@@ -69,9 +69,15 @@ export const Overview = () => {
       format: 'chart-pie',
       params: {
         label: 'Supply Staked',
-        value: lastTotalStakeBase.toNumber(),
-        value2: totalIssuanceBase.sub(lastTotalStakeBase).toNumber(),
-        unit: network.unit,
+        stat: {
+          value: lastTotalStakeBase.toNumber(),
+          unit: network.unit,
+        },
+        graph: {
+          value1: lastTotalStakeBase.toNumber(),
+          value2: totalIssuanceBase.sub(lastTotalStakeBase).toNumber(),
+        },
+
         tooltip: `${supplyAsPercent.toFixed(2)}%`,
         assistant: {
           page: 'overview',
@@ -83,10 +89,16 @@ export const Overview = () => {
       format: 'chart-pie',
       params: {
         label: 'Total Nominators',
-        value: totalNominators.toNumber(),
-        value2: maxNominatorsCount.sub(totalNominators).toNumber(),
-        total: maxNominatorsCount,
-        unit: '',
+        stat: {
+          value: totalNominators.toNumber(),
+          total: maxNominatorsCount,
+          unit: '',
+        },
+        graph: {
+          value1: totalNominators.toNumber(),
+          value2: maxNominatorsCount.sub(totalNominators).toNumber(),
+        },
+
         tooltip: `${totalNominatorsAsPercent.toFixed(2)}%`,
         assistant: {
           page: 'overview',
@@ -98,10 +110,15 @@ export const Overview = () => {
       format: 'chart-pie',
       params: {
         label: 'Active Nominators',
-        value: activeNominators,
-        value2: maxElectingVoters - activeNominators,
-        total: maxElectingVoters,
-        unit: '',
+        stat: {
+          value: activeNominators,
+          total: maxElectingVoters,
+          unit: '',
+        },
+        graph: {
+          value1: activeNominators,
+          value2: maxElectingVoters - activeNominators,
+        },
         tooltip: `${activeNominatorsAsPercent.toFixed(2)}%`,
         assistant: {
           page: 'overview',

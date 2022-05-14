@@ -2,12 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import moment from 'moment';
+import { useState, useEffect, useRef } from 'react';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
 import { useStaking } from '../../contexts/Staking';
 import { useValidators } from '../../contexts/Validators/Validators';
 import { useNetworkMetrics } from '../../contexts/Network';
+import { useSessionEra } from '../../contexts/SessionEra';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
@@ -18,11 +21,13 @@ export const Browse = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { isReady }: any = useApi();
+  const { isReady, consts }: any = useApi();
   const { metrics } = useNetworkMetrics();
   const { staking, eraStakers }: any = useStaking();
   const { validators } = useValidators();
+  const { sessionEra } = useSessionEra();
 
+  const { expectedBlockTime } = consts;
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
   const { activeValidators } = eraStakers;
 
@@ -41,15 +46,55 @@ export const Browse = (props: PageProps) => {
       activeValidators / (validatorCount.toNumber() * 0.01);
   }
 
+  // era progress time left
+  const getEraTimeLeft = () => {
+    let eraBlocksLeft = (sessionEra.eraLength - sessionEra.eraProgress);
+    let eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
+    let eventTime = moment().unix() + eraTimeLeftSeconds;
+    let diffTime = eventTime - moment().unix();
+    return diffTime;
+  }
+
+  // store era time left as state object
+  const [eraTimeLeft, _setEraTimeLeft]: any = useState(0);
+  const eraTimeLeftRef = useRef(eraTimeLeft);
+  const setEraTimeLeft = (_timeleft: number) => {
+    _setEraTimeLeft(_timeleft);
+    eraTimeLeftRef.current = _timeleft;
+  }
+
+  // update time left every second
+  // clears and resets interval on `eraProgress` update.
+  let timeleftInterval: any;
+  useEffect(() => {
+    setEraTimeLeft(getEraTimeLeft());
+
+    timeleftInterval = setInterval(() => {
+      setEraTimeLeft(eraTimeLeftRef.current - 1);
+    }, 1000);
+    return (() => {
+      clearInterval(timeleftInterval);
+    })
+  }, [sessionEra]);
+
+  // format era time left
+  let _timeleft = moment.duration(eraTimeLeftRef.current * 1000, 'milliseconds');
+  let timeleft = _timeleft.hours() + ":" + _timeleft.minutes() + ":" + _timeleft.seconds();
+
   const items = [
     {
       format: 'chart-pie',
       params: {
         label: 'Total Validators',
-        value: totalValidators.toNumber(),
-        value2: maxValidatorsCount.sub(totalValidators).toNumber(),
-        total: maxValidatorsCount.toNumber(),
-        unit: '',
+        stat: {
+          value: totalValidators.toNumber(),
+          total: maxValidatorsCount.toNumber(),
+          unit: '',
+        },
+        graph: {
+          value1: totalValidators.toNumber(),
+          value2: maxValidatorsCount.sub(totalValidators).toNumber(),
+        },
         tooltip: `${totalValidatorsAsPercent.toFixed(2)}%`,
         assistant: {
           page: 'validators',
@@ -61,10 +106,15 @@ export const Browse = (props: PageProps) => {
       format: 'chart-pie',
       params: {
         label: 'Active Validators',
-        value: activeValidators,
-        value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
-        total: validatorCount.toNumber(),
-        unit: '',
+        stat: {
+          value: activeValidators,
+          total: validatorCount.toNumber(),
+          unit: '',
+        },
+        graph: {
+          value1: activeValidators,
+          value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
+        },
         tooltip: `${activeValidatorsAsPercent.toFixed(2)}%`,
         assistant: {
           page: 'validators',
@@ -73,11 +123,18 @@ export const Browse = (props: PageProps) => {
       },
     },
     {
-      format: 'number',
+      format: 'chart-pie',
       params: {
         label: 'Active Era',
-        value: metrics.activeEra.index,
-        unit: '',
+        stat: {
+          value: metrics.activeEra.index,
+          unit: '',
+        },
+        graph: {
+          value1: sessionEra.eraProgress,
+          value2: sessionEra.eraLength - sessionEra.eraProgress,
+        },
+        tooltip: timeleft,
         assistant: {
           page: 'validators',
           key: 'Era',
