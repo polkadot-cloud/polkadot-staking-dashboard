@@ -20,11 +20,13 @@ import { AssistantProvider } from './contexts/Assistant';
 import { ModalProvider } from './contexts/Modal';
 import { APIProvider } from './contexts/Api';
 import { useTheme } from './contexts/Themes';
+import { SessionEraProvider } from './contexts/SessionEra';
 
-export const WrappedRouter = () =>
+export const WrappedRouter = () => (
   <Wrapper>
     <Router />
-  </Wrapper>;
+  </Wrapper>
+);
 
 export const ThemedRouter = () => {
   const { mode } = useTheme();
@@ -34,7 +36,7 @@ export const ThemedRouter = () => {
       <WrappedRouter />
     </ThemeProvider>
   );
-}
+};
 
 export const Providers = withProviders(
   APIProvider,
@@ -51,8 +53,7 @@ export const Providers = withProviders(
   SubscanProvider,
   NotificationsProvider,
   ExtrinsicsProvider,
-)(
-  ThemedRouter
-);
+  SessionEraProvider
+)(ThemedRouter);
 
 export default Providers;

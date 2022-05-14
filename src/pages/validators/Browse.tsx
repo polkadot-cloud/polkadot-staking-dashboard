@@ -8,6 +8,7 @@ import { useApi } from '../../contexts/Api';
 import { useStaking } from '../../contexts/Staking';
 import { useValidators } from '../../contexts/Validators/Validators';
 import { useNetworkMetrics } from '../../contexts/Network';
+import { useSessionEra } from '../../contexts/SessionEra';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
@@ -22,6 +23,7 @@ export const Browse = (props: PageProps) => {
   const { metrics } = useNetworkMetrics();
   const { staking, eraStakers }: any = useStaking();
   const { validators } = useValidators();
+  const { sessionEra } = useSessionEra();
 
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
   const { activeValidators } = eraStakers;
@@ -83,11 +85,17 @@ export const Browse = (props: PageProps) => {
       },
     },
     {
-      format: 'number',
+      format: 'chart-pie',
       params: {
         label: 'Active Era',
-        value: metrics.activeEra.index,
-        unit: '',
+        stat: {
+          value: metrics.activeEra.index,
+          unit: '',
+        },
+        graph: {
+          value1: sessionEra.eraProgress,
+          value2: sessionEra.eraLength - sessionEra.eraProgress,
+        },
         assistant: {
           page: 'validators',
           key: 'Era',
