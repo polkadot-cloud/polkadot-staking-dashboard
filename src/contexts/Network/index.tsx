@@ -9,14 +9,14 @@ export interface NetworkMetricsContextState {
   metrics: any;
 }
 
-export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = React.createContext({
-  metrics: {},
-});
+export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> =
+  React.createContext({
+    metrics: {},
+  });
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
 export const NetworkMetricsProvider = (props: any) => {
-
   const { isReady, api, status }: any = useApi();
 
   useEffect(() => {
@@ -31,54 +31,54 @@ export const NetworkMetricsProvider = (props: any) => {
   // manage unsubscribe
   useEffect(() => {
     subscribeToNetworkMetrics();
-    return (() => {
+    return () => {
       if (state.unsub !== undefined) {
         state.unsub();
       }
-    })
+    };
   }, [isReady]);
 
   // active subscription
   const subscribeToNetworkMetrics = async () => {
     if (isReady) {
+      const unsub = await api.queryMulti(
+        [api.query.staking.activeEra, api.query.balances.totalIssuance],
+        ([activeEra, _totalIssuance]: any) => {
+          // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
+          let _activeEra = activeEra
+            .unwrapOrDefault({
+              index: 0,
+              start: 0,
+            })
+            .toString();
 
-      const unsub = await api.queryMulti([
-        api.query.staking.activeEra,
-        api.query.balances.totalIssuance,
-      ], ([activeEra, _totalIssuance]: any) => {
+          // convert JSON string to object
+          _activeEra = JSON.parse(_activeEra);
 
-        let _state = {};
-
-        // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
-        let _activeEra = activeEra.unwrapOrDefault({
-          index: 0,
-          start: 0
-        }).toString();
-
-        // convert JSON string to object
-        _activeEra = JSON.parse(_activeEra);
-
-        _state = {
-          ..._state,
-          activeEra: _activeEra,
-          totalIssuance: _totalIssuance.toBn(),
-        };
-        setState(_state);
-      });
+          let _state = {
+            activeEra: _activeEra,
+            totalIssuance: _totalIssuance.toBn(),
+            unsub,
+          };
+          setState(_state);
+        }
+      );
 
       return unsub;
     }
     return undefined;
-  }
+  };
 
   return (
-    <NetworkMetricsContext.Provider value={{
-      metrics: {
-        activeEra: state.activeEra,
-        totalIssuance: state.totalIssuance,
-      }
-    }}>
+    <NetworkMetricsContext.Provider
+      value={{
+        metrics: {
+          activeEra: state.activeEra,
+          totalIssuance: state.totalIssuance,
+        },
+      }}
+    >
       {props.children}
     </NetworkMetricsContext.Provider>
   );
-}
+};
