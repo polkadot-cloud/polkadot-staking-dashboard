@@ -3,7 +3,6 @@
 
 import BN from 'bn.js';
 import moment from 'moment';
-import { useState, useEffect, useRef } from 'react';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
@@ -16,18 +15,20 @@ import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
 import StatBoxListItem from '../../library/StatBoxList/Item';
+import { useEraTimeLeft } from '../../library/Hooks/useEraTimeleft';
 
 export const Browse = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { isReady, consts }: any = useApi();
+  const { isReady }: any = useApi();
   const { metrics } = useNetworkMetrics();
   const { staking, eraStakers }: any = useStaking();
   const { validators } = useValidators();
   const { sessionEra } = useSessionEra();
 
-  const { expectedBlockTime } = consts;
+  const eraTimeLeft = useEraTimeLeft();
+
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
   const { activeValidators } = eraStakers;
 
@@ -46,39 +47,8 @@ export const Browse = (props: PageProps) => {
       activeValidators / (validatorCount.toNumber() * 0.01);
   }
 
-  // era progress time left
-  const getEraTimeLeft = () => {
-    let eraBlocksLeft = (sessionEra.eraLength - sessionEra.eraProgress);
-    let eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
-    let eventTime = moment().unix() + eraTimeLeftSeconds;
-    let diffTime = eventTime - moment().unix();
-    return diffTime;
-  }
-
-  // store era time left as state object
-  const [eraTimeLeft, _setEraTimeLeft]: any = useState(0);
-  const eraTimeLeftRef = useRef(eraTimeLeft);
-  const setEraTimeLeft = (_timeleft: number) => {
-    _setEraTimeLeft(_timeleft);
-    eraTimeLeftRef.current = _timeleft;
-  }
-
-  // update time left every second
-  // clears and resets interval on `eraProgress` update.
-  let timeleftInterval: any;
-  useEffect(() => {
-    setEraTimeLeft(getEraTimeLeft());
-
-    timeleftInterval = setInterval(() => {
-      setEraTimeLeft(eraTimeLeftRef.current - 1);
-    }, 1000);
-    return (() => {
-      clearInterval(timeleftInterval);
-    })
-  }, [sessionEra]);
-
   // format era time left
-  let _timeleft = moment.duration(eraTimeLeftRef.current * 1000, 'milliseconds');
+  let _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
   let timeleft = _timeleft.hours() + ":" + _timeleft.minutes() + ":" + _timeleft.seconds();
 
   const items = [
