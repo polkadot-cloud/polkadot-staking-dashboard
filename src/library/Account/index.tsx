@@ -53,7 +53,7 @@ export const Account = (props: any) => {
       fontSize={fontSize}
     >
       {label !== undefined &&
-        <div className='label'>
+        <div className='account-label'>
           {label}
         </div>
       }

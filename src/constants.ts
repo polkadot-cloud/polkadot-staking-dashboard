@@ -66,9 +66,10 @@ export const INTERFACE_MAXIMUM_WIDTH: number = 1800;
 export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
 export const SIDE_MENU_STICKY_THRESHOLD: number = 1175;
 export const SECTION_FULL_WIDTH_THRESHOLD: number = 1000;
+export const SHOW_SIDE_BAR_WIDTH_THRESHOLD: number = 800;
 export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
+export const MAX_SIDE_BAR_INTERFACE_WIDTH: number = 400;
 export const GRAPH_HEIGHT = 430;
-
 
 /*
  * Toggle-able services

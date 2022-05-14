@@ -5,20 +5,21 @@ import { EntryWrapper as Wrapper } from './Wrappers';
 import Router from './Router';
 import { ThemeProvider } from 'styled-components';
 import { withProviders } from './library/Hooks';
-import { StakingProvider } from './contexts/Staking';
-import { PoolsProvider } from './contexts/Pools';
-import { MessagesProvider } from './contexts/Messages';
-import { SubscanProvider } from './contexts/Subscan';
-import { ValidatorsProvider } from './contexts/Validators/Validators';
-import { NotificationsProvider } from './contexts/Notifications';
-import { ExtrinsicsProvider } from './contexts/Extrinsics';
-import { UIProvider } from './contexts/UI';
-import { NetworkMetricsProvider } from './contexts/Network';
+import { APIProvider } from './contexts/Api';
+import { AssistantProvider } from './contexts/Assistant';
 import { BalancesProvider } from './contexts/Balances';
 import { ConnectProvider } from './contexts/Connect';
-import { AssistantProvider } from './contexts/Assistant';
+import { ExtrinsicsProvider } from './contexts/Extrinsics';
+import { MessagesProvider } from './contexts/Messages';
 import { ModalProvider } from './contexts/Modal';
-import { APIProvider } from './contexts/Api';
+import { NetworkMetricsProvider } from './contexts/Network';
+import { NotificationsProvider } from './contexts/Notifications';
+import { PoolsProvider } from './contexts/Pools';
+import { SideBarProvider } from './contexts/SideBar';
+import { StakingProvider } from './contexts/Staking';
+import { SubscanProvider } from './contexts/Subscan';
+import { ValidatorsProvider } from './contexts/Validators/Validators';
+import { UIProvider } from './contexts/UI';
 import { useTheme } from './contexts/Themes';
 
 export const WrappedRouter = () =>
@@ -41,6 +42,7 @@ export const Providers = withProviders(
   ModalProvider,
   ConnectProvider,
   AssistantProvider,
+  SideBarProvider,
   NetworkMetricsProvider,
   BalancesProvider,
   StakingProvider,

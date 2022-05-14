@@ -1,32 +1,29 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Wrapper, HeadingWrapper, Item } from './Wrapper';
+import { Wrapper, HeadingWrapper, Item, SmallScreensOnly } from './Wrappers';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
-import { useModal } from '../../contexts/Modal';
+import { SideBar } from '../../library/Headers/SideBar';
 import { useExtrinsics } from '../../contexts/Extrinsics';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { Account } from '../Account';
-import { Controller } from './Controller';
 import { useUi } from '../../contexts/UI';
 import { Spinner } from './Spinner';
 import { pageFromUri } from '../../Utils';
 import { useLocation } from 'react-router-dom';
-import { useStaking } from '../../contexts/Staking';
 import { useValidators } from '../../contexts/Validators/Validators';
+import { Toggle as SideBarToggle } from './SideBar/Toggle';
+import { Connect } from './Connect';
+import { Connected } from './Connected';
+import { SideMenuToggle } from './SideMenuToggle';
 
 export const Headers = () => {
 
   const { pathname } = useLocation();
   const assistant = useAssistant();
-  const { activeAccount, initialise }: any = useConnect();
-  const { openModalWith } = useModal();
-  const { isNominating } = useStaking();
+  const { activeAccount }: any = useConnect();
   const { validators } = useValidators();
   const { pending } = useExtrinsics();
-  const { setSideMenu, sideMenuOpen, isSyncing }: any = useUi();
+  const { isSyncing }: any = useUi();
 
   let syncing = isSyncing();
 
@@ -38,69 +35,42 @@ export const Headers = () => {
   }
 
   return (
-    <Wrapper>
-      <div className='menu'>
-        <Item
-          style={{ width: '50px', flex: 0 }}
-          onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
-        >
-          <span>
-            <FontAwesomeIcon
-              icon={faBars}
-              style={{ cursor: 'pointer' }}
-            />
-          </span>
-        </Item>
-      </div>
+    <>
+      {/* side bar: closed by default, available on smaller screens */}
+      <SideBar>
+        <Connected />
+      </SideBar>
 
-      {(syncing || pending.length > 0) ? <Spinner /> : <></>}
+      <Wrapper>
+        {/* side menu toggle: shows on small screens */}
+        <SideMenuToggle />
 
-      {/* connected, display stash and controller */}
-      {activeAccount !== '' &&
-        <>
-          <HeadingWrapper>
-            <Account
-              canClick={true}
-              onClick={() => {
-                openModalWith('ConnectAccounts', {}, 'small');
-              }}
-              value={activeAccount}
-              label={isNominating() ? 'Stash' : undefined}
-              format='name'
-              filled
-              wallet
-            />
-          </HeadingWrapper>
-          <HeadingWrapper>
-            <Controller />
-          </HeadingWrapper>
-        </>
-      }
-      {/* not connected, display connect accounts */}
-      {activeAccount === '' &&
+        {/* spinner to show app syncing */}
+        {(syncing || pending.length > 0) ? <Spinner /> : <></>}
+
+        {/* side bar toggle: shows on small screens */}
+        <SideBarToggle />
+
+        {/* connected accounts */}
+        <SmallScreensOnly>
+          <Connected />
+        </SmallScreensOnly>
+
+        {/* not connected */}
+        <Connect />
+
+        {/* always display assistant */}
         <HeadingWrapper>
           <Item
-            className='connect'
-            onClick={() => {
-              initialise();
-            }}
+            onClick={() => { assistant.toggle() }}
             whileHover={{ scale: 1.02 }}
           >
-            <span>Connect Accounts</span>
+            {activeAccount === '' && <div className='label'>1</div>}
+            <span>Assistant</span>
           </Item>
         </HeadingWrapper>
-      }
-      {/* always display assistant */}
-      <HeadingWrapper>
-        <Item
-          onClick={() => { assistant.toggle() }}
-          whileHover={{ scale: 1.02 }}
-        >
-          {activeAccount === '' && <div className='label'>1</div>}
-          <span>Assistant</span>
-        </Item>
-      </HeadingWrapper>
-    </Wrapper>
+      </Wrapper>
+    </>
   );
 }
 

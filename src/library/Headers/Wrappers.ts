@@ -3,7 +3,10 @@
 
 import { motion } from "framer-motion";
 import styled from 'styled-components';
-import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import {
+  SIDE_MENU_STICKY_THRESHOLD,
+  SHOW_SIDE_BAR_WIDTH_THRESHOLD
+} from '../../constants';
 import {
   backgroundDropdown,
   textPrimary,
@@ -43,11 +46,6 @@ export const HeadingWrapper = styled.div`
   flex-flow: row wrap;
   justify-content: flex-end;
   margin-left: 0.75rem;
-  position: relative;
-
-  &:first-child {
-    margin-left: 0;
-  }
 
   /* accounts dropdown */
   .accounts {
@@ -90,22 +88,14 @@ export const Item = styled(motion.button)`
       color: ${textPrimary};
       line-height: 2.2rem;
     }
-
     &.connect {
       background: #d33079;
       > span {
         color: ${textInvert};
       }
     }
-
-    .label {
-      border: 0.125rem solid #d33079;
-      border-radius: 0.8rem;
-      color: #d33079;
-      font-size: 0.85rem;
-      font-variation-settings: 'wght' 525;
-      margin-right: 0.6rem;
-      padding: 0.1rem 0.5rem;
+    path {
+      fill: ${textPrimary};
     }
 `;
 
@@ -127,4 +117,9 @@ export const ItemInactive = styled(motion.div)`
     }
 `;
 
-export default Wrapper;
+export const SmallScreensOnly = styled.div`
+  display: flex;
+  @media(max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
+    display: none;
+  }
+`;

@@ -17,18 +17,20 @@ export const Wrapper = styled(motion.button) <any>`
     background: ${props => props.fill};
     font-size: ${props => props.fontSize};
     padding: 0 1rem;
+    flex:1;
 
     .identicon {
       margin: 0.15rem 0.25rem 0 0;
     }
 
-    .label {
+    .account-label {
       color: ${textSecondary};
       font-size: 0.8em;
       font-variation-settings: 'wght' 535;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
+      justify-content: flex-end;
       margin-right: 0.5rem;
       padding-right: 0.5rem;
       border-right: 1px solid ${borderSecondary};
