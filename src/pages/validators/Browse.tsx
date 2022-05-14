@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import moment from 'moment';
+import { useState, useEffect, useRef } from 'react';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
@@ -19,12 +21,13 @@ export const Browse = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { isReady }: any = useApi();
+  const { isReady, consts }: any = useApi();
   const { metrics } = useNetworkMetrics();
   const { staking, eraStakers }: any = useStaking();
   const { validators } = useValidators();
   const { sessionEra } = useSessionEra();
 
+  const { expectedBlockTime } = consts;
   const { totalValidators, maxValidatorsCount, validatorCount } = staking;
   const { activeValidators } = eraStakers;
 
@@ -42,6 +45,38 @@ export const Browse = (props: PageProps) => {
     activeValidatorsAsPercent =
       activeValidators / (validatorCount.toNumber() * 0.01);
   }
+
+  // era progress time left
+  const getEraTimeLeft = () => {
+    let eraBlocksLeft = (sessionEra.eraLength - sessionEra.eraProgress);
+    let eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
+    let eventTime = moment().unix() + eraTimeLeftSeconds;
+    let diffTime = eventTime - moment().unix();
+    return diffTime;
+  }
+
+  const [eraTimeLeft, _setEraTimeLeft]: any = useState(0);
+  const eraTimeLeftRef = useRef(eraTimeLeft);
+  const setEraTimeLeft = (_timeleft: number) => {
+    _setEraTimeLeft(_timeleft);
+    eraTimeLeftRef.current = _timeleft;
+  }
+
+  let timeleftInterval: any;
+  useEffect(() => {
+    setEraTimeLeft(getEraTimeLeft());
+
+    timeleftInterval = setInterval(() => {
+      setEraTimeLeft(eraTimeLeftRef.current - 1);
+    }, 1000);
+
+    return (() => {
+      clearInterval(timeleftInterval);
+    })
+  }, [sessionEra]);
+
+  let _timeleft = moment.duration(eraTimeLeftRef.current * 1000, 'milliseconds');
+  let timeleft = _timeleft.hours() + ":" + _timeleft.minutes() + ":" + _timeleft.seconds();
 
   const items = [
     {
@@ -96,6 +131,7 @@ export const Browse = (props: PageProps) => {
           value1: sessionEra.eraProgress,
           value2: sessionEra.eraLength - sessionEra.eraProgress,
         },
+        tooltip: timeleft,
         assistant: {
           page: 'validators',
           key: 'Era',
