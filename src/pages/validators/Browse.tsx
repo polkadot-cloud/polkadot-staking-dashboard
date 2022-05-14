@@ -55,6 +55,7 @@ export const Browse = (props: PageProps) => {
     return diffTime;
   }
 
+  // store era time left as state object
   const [eraTimeLeft, _setEraTimeLeft]: any = useState(0);
   const eraTimeLeftRef = useRef(eraTimeLeft);
   const setEraTimeLeft = (_timeleft: number) => {
@@ -62,6 +63,8 @@ export const Browse = (props: PageProps) => {
     eraTimeLeftRef.current = _timeleft;
   }
 
+  // update time left every second
+  // clears and resets interval on `eraProgress` update.
   let timeleftInterval: any;
   useEffect(() => {
     setEraTimeLeft(getEraTimeLeft());
@@ -69,12 +72,12 @@ export const Browse = (props: PageProps) => {
     timeleftInterval = setInterval(() => {
       setEraTimeLeft(eraTimeLeftRef.current - 1);
     }, 1000);
-
     return (() => {
       clearInterval(timeleftInterval);
     })
   }, [sessionEra]);
 
+  // format era time left
   let _timeleft = moment.duration(eraTimeLeftRef.current * 1000, 'milliseconds');
   let timeleft = _timeleft.hours() + ":" + _timeleft.minutes() + ":" + _timeleft.seconds();
 
