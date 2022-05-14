@@ -14,11 +14,11 @@ export interface AssistantContextState {
   setActiveSection: (i: number) => void;
   goToDefinition: (k: string, t: string) => void;
   setAssistantHeight: (v: any) => void;
-  activeSection: number,
+  activeSection: number;
   open: number;
-  page: string,
-  innerDefinition: any,
-  height: any,
+  page: string;
+  innerDefinition: any;
+  height: any;
   transition: number;
 }
 
