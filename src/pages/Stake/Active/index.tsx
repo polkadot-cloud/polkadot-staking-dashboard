@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import moment from 'moment';
 import { useState, useEffect, useMemo } from 'react';
 import { PageRowWrapper } from '../../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../../library/Layout';
@@ -26,6 +27,8 @@ import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import StatBoxListItem from '../../../library/StatBoxList/Item';
+import { useEraTimeLeft } from '../../../library/Hooks/useEraTimeleft';
+import { useSessionEra } from '../../../contexts/SessionEra';
 
 export const Active = (props: any) => {
   const { network }: any = useApi();
@@ -36,8 +39,11 @@ export const Active = (props: any) => {
   const { getNominationsStatus, eraStakers, staking } = useStaking();
   const { getAccountLedger, getBondedAccount, getAccountNominations }: any =
     useBalances();
-  const { payee } = staking;
+  const { sessionEra } = useSessionEra();
 
+  const eraTimeLeft = useEraTimeLeft();
+
+  const { payee } = staking;
   const { minActiveBond } = eraStakers;
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
@@ -71,6 +77,10 @@ export const Active = (props: any) => {
 
   let { unlocking } = ledger;
   let totalUnlocking = getTotalUnlocking(unlocking, units);
+
+  // format era time left
+  let _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
+  let timeleft = _timeleft.hours() + ":" + _timeleft.minutes() + ":" + _timeleft.seconds();
 
   const items = [
     {
@@ -106,11 +116,18 @@ export const Active = (props: any) => {
       },
     },
     {
-      format: 'number',
+      format: 'chart-pie',
       params: {
         label: 'Active Era',
-        value: metrics.activeEra.index,
-        unit: '',
+        stat: {
+          value: metrics.activeEra.index,
+          unit: '',
+        },
+        graph: {
+          value1: sessionEra.eraProgress,
+          value2: sessionEra.eraLength - sessionEra.eraProgress,
+        },
+        tooltip: timeleft,
         assistant: {
           page: 'validators',
           key: 'Era',
