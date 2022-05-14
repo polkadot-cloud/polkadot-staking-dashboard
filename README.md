@@ -25,7 +25,7 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Recent Payouts as list
 - [x] Multi-wallet support
 - [x] Node only / External API toggles
-- [ ] Screen size support
+- [x] Screen size support
 - [ ] Extrinsics
 - [ ] Initial Nomination management tooling
 - [ ] Nomination Pools
