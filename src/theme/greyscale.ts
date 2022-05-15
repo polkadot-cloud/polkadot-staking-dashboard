@@ -6,7 +6,7 @@ const v = (light: string, dark: string) => ({
   dark: dark,
 });
 
-export const defaultThemes: any = {
+export const greyscaleThemes: any = {
   transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
   primary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
   secondary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
@@ -17,20 +17,20 @@ export const defaultThemes: any = {
     danger: v('#ae2324', '#d14445'),
   },
   background: {
-    primary: v('rgba(251,248,247,1)', 'rgba(27,27,27,1)'),
+    primary: v('rgba(245,245,245,1)', 'rgba(27,27,27,1)'),
     gradient: v(
-      'linear-gradient(180deg, rgba(251,248,247,1) 0%, rgba(251,248,247,1) 100px, rgba(234,231,231, 1) 85%, rgba(252,242,241,1) 100%)',
+      'linear-gradient(180deg, rgba(245,245,245,1) 0%, rgba(245,245,245,1) 100px, rgba(229,229,229,1) 100%)',
       'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
-    secondary: v('rgba(255,255,255,0.52)', 'rgba(0,0,0,0.16)'),
-    network: v('rgba(238,225,225,0.75)', 'rgba(27,27,27,0.75)'),
+    secondary: v('rgba(255,255,255,0.5)', 'rgba(0,0,0,0.16)'),
+    network: v('rgba(229,229,229,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     validator: v(
-      'linear-gradient(90deg, rgba(240,237,236,0.95) 0%, rgba(240,237,236,0.7) 100%)',
+      'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
       'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)'
     ),
     label: v(
-      'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.7) 100%)',
+      'linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(240,240,240,0.7) 100%)',
       'linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.5) 100%)'
     ),
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
@@ -57,9 +57,9 @@ export const defaultThemes: any = {
     grid: v('#eee', '#222'),
   },
   buttons: {
-    primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
-    secondary: { background: v('rgba(242, 238, 238, 0.95)', '#111') },
-    toggle: { background: v('rgba(242,240,239,0.8)', '#1a1a1a') },
+    primary: { background: v('#f8f8f8', '#0f0f0f') },
+    secondary: { background: v('#ebebeb', '#111') },
+    toggle: { background: v('#f4f4f4', '#1a1a1a') },
     assistant: { background: v('#ececec', '#242424') },
   },
   border: {
@@ -67,7 +67,7 @@ export const defaultThemes: any = {
     secondary: v('#ccc', '#444'),
   },
   modal: {
-    overlay: v('rgba(245,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
+    overlay: v('rgba(240,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
     background: v('#fff', '#000'),
   },
   assistant: {
@@ -83,4 +83,4 @@ export const defaultThemes: any = {
   }
 };
 
-export default defaultThemes;
+export default greyscaleThemes;

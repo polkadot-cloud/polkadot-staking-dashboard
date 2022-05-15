@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, textSecondary } from '../../../theme';
+import { textSecondary, buttonSecondaryBackground } from '../../../theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -54,7 +54,7 @@ export const ItemWrapper = styled.div<any>`
     width: 110px;
     height: 80px;
     border-radius: 0.75rem;
-    background: ${props => props.active ? 'rgba(211, 48, 121, 0.85)' : backgroundToggle};
+    background: ${props => props.active ? 'rgba(211, 48, 121, 0.85)' : buttonSecondaryBackground};
     display: flex;
     flex-flow: column nowrap;
     margin-right: 1rem;
