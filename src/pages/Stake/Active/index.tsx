@@ -6,10 +6,8 @@ import { PageRowWrapper } from '../../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../../library/Layout';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../../library/StatBoxList';
-import { useApi } from '../../../contexts/Api';
 import { useStaking } from '../../../contexts/Staking';
 import { useBalances } from '../../../contexts/Balances';
-import { getTotalUnlocking } from '../../../Utils';
 import { useConnect } from '../../../contexts/Connect';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
@@ -28,18 +26,14 @@ import StatBoxListItem from '../../../library/StatBoxList/Item';
 import { useStats } from './stats';
 
 export const Active = (props: any) => {
-  const { network }: any = useApi();
-  const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { getNominationsStatus, staking } = useStaking();
-  const { getAccountLedger, getBondedAccount, getAccountNominations }: any =
+  const { getAccountNominations }: any =
     useBalances();
   const stats = useStats();
 
   const { payee } = staking;
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
   const nominations = getAccountNominations(activeAccount);
 
   // handle nomination statuses
@@ -67,9 +61,6 @@ export const Active = (props: any) => {
       active: _active,
     });
   }, [nominationStatuses]);
-
-  let { unlocking } = ledger;
-  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   return (
     <>

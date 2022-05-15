@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { getTotalUnlocking, planckToUnit } from '../../../Utils';
+import { planckBnToUnit } from '../../../Utils';
 import BondedGraph from './BondedGraph';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
@@ -17,16 +17,12 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { getAccountLedger, getBondedAccount }: any = useBalances();
+  const { getAccountLedger, getBondedAccount, getBondOptions }: any = useBalances();
 
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active, total } = ledger;
-
-  let { unlocking } = ledger;
-  let totalUnlocking = getTotalUnlocking(unlocking, units);
-
-  const remaining = total.sub(active).toNumber() - totalUnlocking;
+  const { freeToBond, totalUnlocking } = getBondOptions(activeAccount);
 
   return (
     <>
@@ -36,7 +32,7 @@ export const ManageBond = () => {
           <OpenAssistantIcon page='stake' title='Bonding' />
         </h4>
         <h2>
-          {planckToUnit(active.toNumber(), units)} {network.unit} &nbsp;
+          {planckBnToUnit(active, units)} {network.unit} &nbsp;
           <div>
             <Button small primary inline title='+' onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')} />
             <Button small primary title='-' onClick={() => openModalWith('UpdateBond', { fn: 'remove' }, 'small')} />
@@ -47,9 +43,9 @@ export const ManageBond = () => {
       <GraphWrapper transparent noMargin>
         <div className='graph' style={{ flex: 0, paddingRight: '1rem', height: 160 }}>
           <BondedGraph
-            active={planckToUnit(active.toNumber(), units)}
-            unlocking={planckToUnit(totalUnlocking, units)}
-            remaining={planckToUnit(remaining, units)}
+            active={planckBnToUnit(active, units)}
+            unlocking={totalUnlocking}
+            remaining={freeToBond}
             total={total.toNumber()}
           />
         </div>

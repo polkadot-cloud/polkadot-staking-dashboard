@@ -3,10 +3,6 @@
 
 import { PageRowWrapper } from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { useBalances } from '../../../contexts/Balances';
-import { getTotalUnlocking } from '../../../Utils';
-import { useApi } from '../../../contexts/Api';
-import { useConnect } from '../../../contexts/Connect';
 import { useStaking } from '../../../contexts/Staking';
 import { Element } from 'react-scroll';
 import { PageTitle } from '../../../library/PageTitle';
@@ -17,18 +13,7 @@ import { Payee } from './Payee';
 import { Summary } from './Summary';
 
 export const Setup = (props: any) => {
-
-  const { network }: any = useApi();
-  const { units } = network;
-  const { activeAccount } = useConnect();
-  const { getAccountLedger, getBondedAccount }: any = useBalances();
   const { hasController } = useStaking();
-
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
-
-  let { unlocking } = ledger;
-  let totalUnlocking = getTotalUnlocking(unlocking, units);
 
   return (
     <>
