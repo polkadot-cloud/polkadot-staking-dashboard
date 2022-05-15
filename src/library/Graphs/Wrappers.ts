@@ -6,7 +6,7 @@ import { textSecondary, backgroundSecondary } from '../../theme';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
-  padding: ${props => props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1rem'};
+  padding: ${props => props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
   border-radius: 1rem;
   background: ${props => props.transparent ? 'none' : backgroundSecondary};
   display: flex;
