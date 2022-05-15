@@ -50,8 +50,6 @@ export const Summary = (props: any) => {
   }, [setup]);
 
   const txs = () => {
-
-    // format metadata to submit
     let stashToSubmit = {
       Id: activeAccount
     };
@@ -75,19 +73,19 @@ export const Summary = (props: any) => {
   }
 
   const calculateEstimatedFee = async () => {
-
     // get payment info
     const info = await api.tx.utility
       .batch(txs())
       .paymentInfo(activeAccount);
-
     // convert fee to unit
     setEstimatedFee(info.partialFee.toHuman());
   }
 
   // submit transaction
   const submitTx = async () => {
-
+    if (submitting) {
+      return;
+    }
     const accountNonce = await api.rpc.system.accountNextIndex(activeAccount);
     const injector = await web3FromAddress(activeAccount);
 
@@ -103,28 +101,35 @@ export const Summary = (props: any) => {
       // construct the batch and send the transactions
       const unsub = await api.tx.utility
         .batch(txs())
-        .signAndSend(activeAccount, { signer: injector.signer }, ({ status, nonce: accountNonce, events = [] }: any) => {
+        .signAndSend(activeAccount, { signer: injector.signer }, ({ status, nonce, events = [] }: any) => {
+          if (status.isInBlock) {
+            setSubmitting(false);
+            removePending(accountNonce);
+            addNotification({
+              title: 'Transaction In Block',
+              subtitle: 'Staking transaction in block',
+            });
+          }
           if (status.isFinalized) {
             // loop through events to determine success or fail
             events.forEach(({ phase, event: { data, method, section } }: any) => {
-
               if (method === 'ExtrinsicSuccess') {
                 addNotification({
-                  title: 'Transaction Successful',
+                  title: 'Transaction Finalized',
                   subtitle: 'Staking setup successful',
                 });
+                unsub();
               }
               else if (method === 'ExtrinsicFailed') {
                 addNotification({
                   title: 'Transaction Failed',
                   subtitle: 'Staking setup failed',
                 });
+                setSubmitting(false);
+                removePending(accountNonce);
+                unsub();
               }
             });
-            // post-submission state update.
-            setSubmitting(false);
-            removePending(accountNonce);
-            unsub();
           }
         });
     } catch (e) {
