@@ -11,7 +11,7 @@ import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { planckToUnit } from '../../Utils';
+import { planckToUnit, toFixedIfNecessary } from '../../Utils';
 import { RESERVE_AMOUNT_DOT } from '../../constants';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
 
@@ -39,13 +39,15 @@ export const UpdateBond = () => {
   const [bondValid, setBondValid]: any = useState(false);
 
   // bond stats
-  let freeToBond: any = planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units);
+  let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
+
   let totalPossibleBond = planckToUnit(active.toNumber(), units) + freeToBond;
   let unbondAllAmount = planckToUnit(active.toNumber(), units);
 
   // default value will either be available to bond, or total bonded
   let _bond = task === 'bond' ? freeToBond : planckToUnit(active.toNumber(), units);
+
 
   // set local bond value
   const [bond, setBond] = useState({

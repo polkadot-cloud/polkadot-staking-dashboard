@@ -10,11 +10,16 @@ export const convertRemToPixels = (rem: any) => {
   return remAsNumber * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
 
-export const planckToUnit: any = (val: any, units: number) => {
-  return val / (10 ** units);
+export const toFixedIfNecessary = (value: any, dp: any) => {
+  return +parseFloat(value).toFixed(dp);
 }
 
-export const getTotalUnlocking: any = (unlocking: any, units:any):number => {
+export const planckToUnit: any = (val: any, units: number) => {
+  let value = val / (10 ** units);
+  return value;
+}
+
+export const getTotalUnlocking: any = (unlocking: any, units: any): number => {
   let totalUnlocking = 0;
   for (let i = 0; i < unlocking.length; i++) {
     const unlockingVal = planckToUnit(unlocking[i].val?.toNumber() || 0, units);

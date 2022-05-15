@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { planckToUnit } from '../../../../Utils';
+import { planckToUnit, toFixedIfNecessary } from '../../../../Utils';
 import { useApi } from '../../../../contexts/Api';
 import { useConnect } from '../../../../contexts/Connect';
 import { useBalances } from '../../../../contexts/Balances';
@@ -31,7 +31,7 @@ export const Bond = (props: any) => {
   const setup = getSetupProgress(activeAccount);
 
   let { freeAfterReserve } = balance;
-  let freeToBond: any = planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units);
+  let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   const initialBondValue = setup.bond === 0

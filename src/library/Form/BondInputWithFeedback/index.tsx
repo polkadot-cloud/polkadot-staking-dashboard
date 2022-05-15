@@ -8,7 +8,7 @@ import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
 import { BondInput } from '../BondInput';
-import { planckToUnit, humanNumber } from '../../../Utils';
+import { planckToUnit, humanNumber, toFixedIfNecessary } from '../../../Utils';
 import { Warning, Spacer } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -37,7 +37,7 @@ export const BondInputWithFeedback = (props: any) => {
   const { minNominatorBond } = staking;
   let { freeAfterReserve } = balance;
 
-  let freeToBond: any = planckToUnit(freeAfterReserve.sub(active).toNumber(), units);
+  let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.sub(active).toNumber(), units), units);
   freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   let activeBase = planckToUnit(active.toNumber(), units);
