@@ -1,15 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import React from 'react';
 import moment from 'moment';
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useSubscan } from '../../contexts/Subscan';
-import { useStaking } from '../../contexts/Staking';
 import { useUi } from '../../contexts/UI';
-import { useApi } from '../../contexts/Api';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
@@ -22,14 +19,12 @@ import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PayoutList } from './PayoutList';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import StatBoxListItem from '../../library/StatBoxList/Item';
+import { useStats } from './stats';
 
 export const Payouts = (props: PageProps) => {
-  const { network }: any = useApi();
-  const { staking }: any = useStaking();
   const { payouts }: any = useSubscan();
   const { services }: any = useUi();
-  const { unit, units } = network;
-  const { lastReward } = staking;
+  const stats = useStats();
 
   const { page } = props;
   const { title } = page;
@@ -38,31 +33,14 @@ export const Payouts = (props: PageProps) => {
   let size = useSize(ref.current);
   let { width, height, minHeight } = formatSize(size, 250);
 
-  let lastRewardBase = lastReward.div(new BN(10 ** units)).toNumber();
-
-  let items = [
-    {
-      format: 'number',
-      params: {
-        label: 'Last Era Payout',
-        value: lastRewardBase,
-        unit: unit,
-        assistant: {
-          page: 'payouts',
-          key: 'Last Era Payout',
-        },
-      },
-    },
-  ];
-
   const payoutsList = [...payouts].reverse().slice(0, 60);
 
   return (
     <>
       <PageTitle title={title} />
       <StatBoxList>
-        {items.map((item: any, index: number) => (
-          <StatBoxListItem {...item} key={index} />
+        {stats.map((stat: any, index: number) => (
+          <StatBoxListItem {...stat} key={index} />
         ))}
       </StatBoxList>
       <PageRowWrapper>

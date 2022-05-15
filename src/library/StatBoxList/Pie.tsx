@@ -15,6 +15,7 @@ export const Pie = (props: any) => {
 
   let showValue = stat?.value !== 0 || stat?.total === 0;
   let showTotal = !!stat?.total;
+
   return (
     <StatBox>
       <div className="content chart">

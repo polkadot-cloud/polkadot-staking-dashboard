@@ -14,6 +14,7 @@ export const Number = (props: any) => {
   let key = assistant?.key ?? '';
 
   let currency = props.currency ?? '';
+
   return (
     <StatBox>
       <div className="content chart">
