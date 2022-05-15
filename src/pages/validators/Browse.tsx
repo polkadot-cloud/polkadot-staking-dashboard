@@ -15,7 +15,7 @@ import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
 import StatBoxListItem from '../../library/StatBoxList/Item';
-import { useEraTimeLeft } from '../../library/Hooks/useEraTimeleft';
+import { useEraTimeLeft } from '../../library/Hooks/useEraTimeLeft';
 
 export const Browse = (props: PageProps) => {
   const { page } = props;

@@ -27,7 +27,7 @@ import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import StatBoxListItem from '../../../library/StatBoxList/Item';
-import { useEraTimeLeft } from '../../../library/Hooks/useEraTimeleft';
+import { useEraTimeLeft } from '../../../library/Hooks/useEraTimeLeft';
 import { useSessionEra } from '../../../contexts/SessionEra';
 
 export const Active = (props: any) => {
