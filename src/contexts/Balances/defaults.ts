@@ -22,3 +22,10 @@ export const nominations = {
   targets: [],
   submittedIn: 0,
 }
+
+export const bondOptions = {
+  freeToBond: 0,
+  freeToUnbond: 0,
+  totalUnlocking: 0,
+  totalPossibleBond: 0,
+}

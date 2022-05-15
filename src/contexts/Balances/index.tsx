@@ -14,12 +14,7 @@ export const BalancesContext: any = React.createContext({
   getAccountLedger: (a: string) => { },
   getBondedAccount: (a: string) => { },
   getAccountNominations: (a: string) => { },
-  getBondOptions: () => ({
-    freeToBond: 0,
-    freeToUnbond: 0,
-    totalUnlocking: 0,
-    totalPossibleBond: 0,
-  }),
+  getBondOptions: () => defaults.bondOptions,
   accounts: [],
   reserveAmount: 0,
   existentialAmount: 0,
@@ -245,10 +240,7 @@ export const BalancesProvider = (props: any) => {
   const getBondOptions = (address: string) => {
     const account = getAccount(address);
     if (account === null) {
-      return {
-        freeToBond: 0,
-        freeToUnbond: 0
-      };
+      return defaults.bondOptions;
     }
     const controller = getBondedAccount(address);
     const balance = getAccountBalance(address);
