@@ -11,23 +11,21 @@ import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { planckToUnit, toFixedIfNecessary } from '../../Utils';
 import { RESERVE_AMOUNT_DOT } from '../../constants';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
 
 export const UpdateBond = () => {
 
   const { network }: any = useApi();
-  const { units } = network;
   const { config }: any = useModal();
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getBondedAccount, getAccountLedger }: any = useBalances();
-  const balance = getAccountBalance(activeAccount);
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
-  const { active } = ledger;
-  const { freeAfterReserve } = balance;
+  const { getBondOptions }: any = useBalances();
   const { fn } = config;
+  const {
+    freeToBond,
+    freeToUnbond,
+    totalPossibleBond
+  } = getBondOptions(activeAccount);
 
   // active section of modal
   const [section, setSection] = useState(0);
@@ -38,16 +36,8 @@ export const UpdateBond = () => {
   // bond valid
   const [bondValid, setBondValid]: any = useState(false);
 
-  // bond stats
-  let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units);
-  freeToBond = freeToBond < 0 ? 0 : freeToBond;
-
-  let totalPossibleBond = planckToUnit(active.toNumber(), units) + freeToBond;
-  let unbondAllAmount = planckToUnit(active.toNumber(), units);
-
   // default value will either be available to bond, or total bonded
-  let _bond = task === 'bond' ? freeToBond : planckToUnit(active.toNumber(), units);
-
+  let _bond = task === 'bond' ? freeToBond : freeToUnbond;
 
   // set local bond value
   const [bond, setBond] = useState({
@@ -184,7 +174,7 @@ export const UpdateBond = () => {
                 <BondInputWithFeedback
                   unbond={true}
                   listenIsValid={setBondValid}
-                  defaultBond={unbondAllAmount}
+                  defaultBond={freeToUnbond}
                   setters={[{
                     set: setBond,
                     current: bond
@@ -196,7 +186,7 @@ export const UpdateBond = () => {
             {task === 'unbond_all' &&
               <>
                 <h4>Amount to unbond:</h4>
-                <h2>{unbondAllAmount} {network.unit}</h2>
+                <h2>{freeToUnbond} {network.unit}</h2>
                 <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
               </>
             }

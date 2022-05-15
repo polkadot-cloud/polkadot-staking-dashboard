@@ -6,7 +6,7 @@ import { InputWrapper, RowWrapper } from './Wrappers';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
-import { isNumeric, planckToUnit, toFixedIfNecessary } from '../../../Utils';
+import { isNumeric } from '../../../Utils';
 import { Button } from '../../Button';
 
 export const BondInput = (props: any) => {
@@ -24,20 +24,9 @@ export const BondInput = (props: any) => {
   const _value = props.value ?? null;
 
   const { network }: any = useApi();
-  const { units } = network;
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getBondedAccount, getAccountLedger }: any = useBalances();
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
-
-  const { active } = ledger;
-  const balance = getAccountBalance(activeAccount);
-  let { freeAfterReserve } = balance;
-
-  let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.sub(active).toNumber(), units), units);
-  freeToBond = freeToBond < 0 ? 0 : freeToBond;
-
-  let activeBase = planckToUnit(active.toNumber(), units);
+  const { getBondOptions }: any = useBalances();
+  const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
 
   // the current local bond value
   const [bond, setBond] = useState(_value);
@@ -102,7 +91,7 @@ export const BondInput = (props: any) => {
       <div>
         <div>
           <Button inline small title="Max" onClick={() => {
-            const value = task === 'bond' ? freeToBond : activeBase;
+            const value = task === 'bond' ? freeToBond : freeToUnbond;
             setBond(value);
             updateParentState(value);
           }}

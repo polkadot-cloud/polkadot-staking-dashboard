@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
+import { toFixedIfNecessary, planckToUnit } from '../../Utils';
 
 export const BalancesContext: any = React.createContext({
   getAccount: (a: string) => { },
@@ -13,6 +14,11 @@ export const BalancesContext: any = React.createContext({
   getAccountLedger: (a: string) => { },
   getBondedAccount: (a: string) => { },
   getAccountNominations: (a: string) => { },
+  getBondOptions: () => ({
+    freeToBond: 0,
+    freeToUnbond: 0,
+    totalPossibleBond: 0,
+  }),
   accounts: [],
   reserveAmount: 0,
   existentialAmount: 0,
@@ -225,6 +231,40 @@ export const BalancesProvider = (props: any) => {
     return account;
   }
 
+  // get the bond and unbond amounts available to the user
+  const getBondOptions = (address: string) => {
+    const account = getAccount(address);
+    if (account === null) {
+      return {
+        freeToBond: 0,
+        freeToUnbond: 0
+      };
+    }
+    const controller = getBondedAccount(address);
+    const balance = getAccountBalance(address);
+    const ledger = getAccountLedger(controller);
+    const { freeAfterReserve } = balance;
+    const { active } = ledger;
+
+    // free to bond balance
+    let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units);
+    freeToBond = freeToBond < 0 ? 0 : freeToBond;
+
+    // free to unbond balance
+    let freeToUnbond = toFixedIfNecessary(planckToUnit(active.toNumber(), units), units);
+
+    // total possible balance that can be bonded
+    let totalPossibleBond = toFixedIfNecessary(
+      planckToUnit(active.toNumber(), units) - (planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units)
+      , units);
+
+    return {
+      freeToBond: freeToBond,
+      freeToUnbond: freeToUnbond,
+      totalPossibleBond: totalPossibleBond,
+    }
+  }
+
   return (
     <BalancesContext.Provider value={{
       getAccount: getAccount,
@@ -232,6 +272,7 @@ export const BalancesProvider = (props: any) => {
       getAccountLedger: getAccountLedger,
       getBondedAccount: getBondedAccount,
       getAccountNominations: getAccountNominations,
+      getBondOptions: getBondOptions,
       accounts: stateRef.current.accounts,
       minReserve: minReserve,
     }}>

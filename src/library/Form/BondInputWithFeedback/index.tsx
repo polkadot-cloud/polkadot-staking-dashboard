@@ -8,7 +8,7 @@ import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
 import { BondInput } from '../BondInput';
-import { planckToUnit, humanNumber, toFixedIfNecessary } from '../../../Utils';
+import { planckToUnit, humanNumber } from '../../../Utils';
 import { Warning, Spacer } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
@@ -26,19 +26,15 @@ export const BondInputWithFeedback = (props: any) => {
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
-  const { getAccountBalance, getAccountLedger, getBondedAccount }: any = useBalances();
+  const { getAccountLedger, getBondedAccount, getBondOptions }: any = useBalances();
+  const { freeToBond } = getBondOptions(activeAccount);
 
-  const balance = getAccountBalance(activeAccount);
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
 
   const { units } = network;
   const { active } = ledger;
   const { minNominatorBond } = staking;
-  let { freeAfterReserve } = balance;
-
-  let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.sub(active).toNumber(), units), units);
-  freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
   let activeBase = planckToUnit(active.toNumber(), units);
   let minNominatorBondBase = minNominatorBond.div(new BN(10 ** units)).toNumber();

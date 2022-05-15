@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { planckToUnit, toFixedIfNecessary } from '../../../../Utils';
-import { useApi } from '../../../../contexts/Api';
 import { useConnect } from '../../../../contexts/Connect';
 import { useBalances } from '../../../../contexts/Balances';
 import { useUi } from '../../../../contexts/UI';
@@ -17,26 +15,15 @@ import { BondStatusBar } from '../../../../library/Form/BondStatusBar';
 export const Bond = (props: any) => {
 
   const { section } = props;
-
-  const { network }: any = useApi();
-  const { units } = network;
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getAccountLedger, getBondedAccount }: any = useBalances();
+  const { getBondOptions }: any = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
-  const { active } = ledger;
-
-  const balance = getAccountBalance(activeAccount);
+  const { freeToBond } = getBondOptions(activeAccount);
   const setup = getSetupProgress(activeAccount);
 
-  let { freeAfterReserve } = balance;
-  let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units);
-  freeToBond = freeToBond < 0 ? 0 : freeToBond;
-
+  // either free to bond or existing setup value
   const initialBondValue = setup.bond === 0
-    ? planckToUnit(freeToBond, units)
-    : setup.bond;
+    ? freeToBond : setup.bond;
 
   // store local bond amount for form control
   const [bond, setBond] = useState({
