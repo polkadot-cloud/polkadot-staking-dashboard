@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
-import { toFixedIfNecessary, planckToUnit } from '../../Utils';
+import { toFixedIfNecessary, planckToUnit, rmCommas } from '../../Utils';
 
 export const BalancesContext: any = React.createContext({
   getAccount: (a: string) => { },
@@ -17,6 +17,7 @@ export const BalancesContext: any = React.createContext({
   getBondOptions: () => ({
     freeToBond: 0,
     freeToUnbond: 0,
+    totalUnlocking: 0,
     totalPossibleBond: 0,
   }),
   accounts: [],
@@ -118,14 +119,23 @@ export const BalancesProvider = (props: any) => {
       if (_ledger === null) {
         _account['ledger'] = defaults.ledger;
       } else {
-
         const { stash, total, active, unlocking } = _ledger;
 
+        // format unlocking chunks
+        let _unlocking = [];
+        for (let u of unlocking.toHuman()) {
+          let era = rmCommas(u.era);
+          let value = rmCommas(u.value);
+          _unlocking.push({
+            era: Number(era),
+            value: new BN(value)
+          });
+        }
         _account['ledger'] = {
           stash: stash.toHuman(),
           active: active.toBn(),
           total: total.toBn(),
-          unlocking: unlocking.toHuman(),
+          unlocking: _unlocking,
         };
       }
 
@@ -244,7 +254,7 @@ export const BalancesProvider = (props: any) => {
     const balance = getAccountBalance(address);
     const ledger = getAccountLedger(controller);
     const { freeAfterReserve } = balance;
-    const { active } = ledger;
+    const { active, unlocking } = ledger;
 
     // free to bond balance
     let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units);
@@ -258,9 +268,18 @@ export const BalancesProvider = (props: any) => {
       planckToUnit(active.toNumber(), units) - (planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units)
       , units);
 
+    // total amount actively unlocking
+    let totalUnlocking = new BN(0);
+    for (let u of unlocking) {
+      const { value } = u;
+      totalUnlocking = totalUnlocking.add(value);
+    }
+    totalUnlocking = planckToUnit(totalUnlocking.toNumber(), units);
+
     return {
       freeToBond: freeToBond,
       freeToUnbond: freeToUnbond,
+      totalUnlocking: totalUnlocking,
       totalPossibleBond: totalPossibleBond,
     }
   }
