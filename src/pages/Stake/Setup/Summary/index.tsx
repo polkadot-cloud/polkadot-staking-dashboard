@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
 import { Header } from '../Header';
 import { MotionContainer } from '../MotionContainer';
@@ -12,13 +11,10 @@ import { Wrapper as ButtonWrapper } from '../../../../library/Button';
 import { SummaryWrapper } from './Wrapper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { useNotifications } from '../../../../contexts/Notifications';
-import { useExtrinsics } from '../../../../contexts/Extrinsics';
 import { humanNumber } from '../../../../Utils';
-import { web3FromAddress } from '@polkadot/extension-dapp';
+import { useSubmitExtrinsic } from '../../../../library/Hooks/useSubmitExtrinsic';
 
 export const Summary = (props: any) => {
-
   const { section } = props;
 
   const { api, network }: any = useApi();
@@ -26,28 +22,8 @@ export const Summary = (props: any) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
-  const { addNotification } = useNotifications();
-  const { addPending, removePending } = useExtrinsics();
 
   const { controller, bond, nominations, payee } = setup;
-
-  // whether the transaction is in progress
-  const [submitting, setSubmitting] = useState(false);
-
-  // get the estimated fee for submitting the transaction
-  const [estimatedFee, setEstimatedFee] = useState(null);
-
-  // calculate fee upon setup changes and initial render
-  useEffect(() => {
-    calculateEstimatedFee();
-  }, []);
-
-  useEffect(() => {
-    // only update fee if successfully land on Summary
-    if (setup.section === 5) {
-      calculateEstimatedFee();
-    }
-  }, [setup]);
 
   const txs = () => {
     let stashToSubmit = {
@@ -69,78 +45,18 @@ export const Summary = (props: any) => {
       api.tx.staking.nominate(targetsToSubmit),
       api.tx.staking.setController(controllerToSubmit)
     ];
-    return txs;
+    return api.tx.utility.batch(txs);
   }
 
-  const calculateEstimatedFee = async () => {
-    // get payment info
-    const info = await api.tx.utility
-      .batch(txs())
-      .paymentInfo(activeAccount);
-    // convert fee to unit
-    setEstimatedFee(info.partialFee.toHuman());
-  }
-
-  // submit transaction
-  const submitTx = async () => {
-    if (submitting) {
-      return;
+  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+    tx: txs(),
+    from: activeAccount,
+    shouldSubmit: true,
+    callbackSubmit: () => {
+    },
+    callbackInBlock: () => {
     }
-    const accountNonce = await api.rpc.system.accountNextIndex(activeAccount);
-    const injector = await web3FromAddress(activeAccount);
-
-    // pre-submission state update
-    setSubmitting(true);
-    addPending(accountNonce);
-    addNotification({
-      title: 'Transaction Submitted',
-      subtitle: 'Initiating staking setup.',
-    });
-
-    try {
-      // construct the batch and send the transactions
-      const unsub = await api.tx.utility
-        .batch(txs())
-        .signAndSend(activeAccount, { signer: injector.signer }, ({ status, nonce, events = [] }: any) => {
-          if (status.isInBlock) {
-            setSubmitting(false);
-            removePending(accountNonce);
-            addNotification({
-              title: 'Transaction In Block',
-              subtitle: 'Staking transaction in block',
-            });
-          }
-          if (status.isFinalized) {
-            // loop through events to determine success or fail
-            events.forEach(({ phase, event: { data, method, section } }: any) => {
-              if (method === 'ExtrinsicSuccess') {
-                addNotification({
-                  title: 'Transaction Finalized',
-                  subtitle: 'Staking setup successful',
-                });
-                unsub();
-              }
-              else if (method === 'ExtrinsicFailed') {
-                addNotification({
-                  title: 'Transaction Failed',
-                  subtitle: 'Staking setup failed',
-                });
-                setSubmitting(false);
-                removePending(accountNonce);
-                unsub();
-              }
-            });
-          }
-        });
-    } catch (e) {
-      setSubmitting(false);
-      removePending(accountNonce);
-      addNotification({
-        title: 'Transaction Cancelled',
-        subtitle: 'Staking setup was cancelled',
-      });
-    }
-  }
+  });
 
   return (
     <SectionWrapper transparent>

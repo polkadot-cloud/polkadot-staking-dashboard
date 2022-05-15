@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { Wrapper, ContentWrapper, SectionsWrapper, FixedContentWrapper, Separator } from './Wrapper';
 import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { useModal } from '../../contexts/Modal';
 import { useBalances } from '../../contexts/Balances';
@@ -12,36 +11,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { web3FromAddress } from '@polkadot/extension-dapp';
-import { useNotifications } from '../../contexts/Notifications';
-import { useExtrinsics } from '../../contexts/Extrinsics';
+import {
+  Wrapper,
+  ContentWrapper,
+  SectionsWrapper,
+  FixedContentWrapper,
+  Separator
+} from './Wrapper';
+import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 
 export const UpdateBond = () => {
 
   const { api, network }: any = useApi();
   const { config, setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect();
-  const { getBondOptions, getBondedAccount }: any = useBalances();
+  const { getBondOptions }: any = useBalances();
   const { fn } = config;
-  const {
-    freeToBond,
-    freeToUnbond,
-    totalPossibleBond
-  } = getBondOptions(activeAccount);
-  const controller = getBondedAccount(activeAccount);
-  const { addNotification } = useNotifications();
-  const { addPending, removePending } = useExtrinsics();
-
+  const { freeToBond, freeToUnbond, totalPossibleBond } = getBondOptions(activeAccount);
   const { units } = network;
 
-  // task - whether to bond or unbond
+  // modal task
   const [task, setTask]: any = useState(null);
 
-  // active section of modal
+  // active modal section
   const [section, setSection] = useState(0);
 
-  // set local bond value
+  // local bond value
   const [bond, setBond] = useState(freeToBond);
+
+  // bond valid
+  const [bondValid, setBondValid]: any = useState(false);
 
   // update bond value on task change
   useEffect(() => {
@@ -53,106 +52,30 @@ export const UpdateBond = () => {
     });
   }, [task]);
 
-  // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
-
-  // whether the transaction is in progress
-  const [submitting, setSubmitting] = useState(false);
-
-  // get the estimated fee for submitting the transaction
-  const [estimatedFee, setEstimatedFee] = useState(null);
-
-  // calculate fee upon setup changes and initial render
-  useEffect(() => {
-    calculateEstimatedFee();
-  }, [bond]);
-
-  const calculateEstimatedFee = async () => {
-    if (task === null) {
-      return;
-    }
-    // get payment info
-    const info = await tx()
-      .paymentInfo(activeAccount);
-    // convert fee to unit
-    setEstimatedFee(info.partialFee.toHuman());
-  }
-
-  // extrinsic to submit
+  // tx to submit
   const tx = () => {
-    let tx;
+    let tx = null;
+
     let bondToSubmit = bond.bond * (10 ** units);
     if (task === 'bond_some' || task === 'bond_all') {
-      tx =
-        api.tx.staking.bondExtra(bondToSubmit);
+      tx = api.tx.staking.bondExtra(bondToSubmit);
+
     } else if (task === 'unbond_some' || task === 'unbond_all') {
-      tx =
-        api.tx.staking.unbond(bondToSubmit);
+      tx = api.tx.staking.unbond(bondToSubmit);
     }
     return tx;
   }
 
-  // submit extrinsic
-  const submitTx = async () => {
-    if (!bondValid || submitting) {
-      return;
+  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+    tx: tx(),
+    from: activeAccount,
+    shouldSubmit: bondValid,
+    callbackSubmit: () => {
+      setModalStatus(0);
+    },
+    callbackInBlock: () => {
     }
-    const accountNonce = await api.rpc.system.accountNextIndex(activeAccount);
-    const injector = await web3FromAddress(activeAccount);
-
-    // pre-submission state update
-    setSubmitting(true);
-    addPending(accountNonce);
-    addNotification({
-      title: 'Transaction Submitted',
-      subtitle: 'Bonding transaction was initiated.',
-    });
-    setModalStatus(0);
-
-    try {
-      const _tx = tx();
-      const unsub = await _tx
-        .signAndSend(activeAccount, { signer: injector.signer }, ({ status, nonce, events = [] }: any) => {
-          if (status.isInBlock) {
-            setSubmitting(false);
-            removePending(accountNonce);
-            addNotification({
-              title: 'Transaction In Block',
-              subtitle: 'Bonding transaction in block',
-            });
-          }
-          if (status.isFinalized) {
-            // loop through events to determine success or fail
-            events.forEach(({ phase, event: { data, method, section } }: any) => {
-
-              if (method === 'ExtrinsicSuccess') {
-                addNotification({
-                  title: 'Transaction Finalized',
-                  subtitle: 'Bonding transaction successful',
-                });
-                unsub();
-              }
-              else if (method === 'ExtrinsicFailed') {
-                addNotification({
-                  title: 'Transaction Failed',
-                  subtitle: 'Bonding transaction failed',
-                });
-                setSubmitting(false);
-                removePending(accountNonce);
-                unsub();
-              }
-            });
-          }
-        });
-    } catch (e) {
-      setSubmitting(false);
-      removePending(accountNonce);
-      addNotification({
-        title: 'Transaction Cancelled',
-        subtitle: 'Bonding transaction was cancelled',
-      });
-    }
-  }
+  });
 
   return (
     <Wrapper>
