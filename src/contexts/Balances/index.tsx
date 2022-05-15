@@ -248,31 +248,31 @@ export const BalancesProvider = (props: any) => {
     const { freeAfterReserve } = balance;
     const { active, unlocking } = ledger;
 
-    // free to bond balance
-    let freeToBond: any = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units),
-      units
-    );
-    freeToBond = freeToBond < 0 ? 0 : freeToBond;
-
     // free to unbond balance
     let freeToUnbond = toFixedIfNecessary(
       planckBnToUnit(active, units),
       units
     );
 
-    // total possible balance that can be bonded
-    let totalPossibleBond = toFixedIfNecessary(
-      planckBnToUnit(active, units) - (planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units), units)
-      , units);
-
     // total amount actively unlocking
-    let totalUnlocking = new BN(0);
+    let totalUnlockingBn = new BN(0);
     for (let u of unlocking) {
       const { value } = u;
-      totalUnlocking = totalUnlocking.add(value);
+      totalUnlockingBn = totalUnlockingBn.add(value);
     }
-    totalUnlocking = planckBnToUnit(totalUnlocking, units);
+    let totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
+
+    // free to bond balance
+    let freeToBond: any = toFixedIfNecessary(
+      planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units) - totalUnlocking,
+      units
+    );
+    freeToBond = freeToBond < 0 ? 0 : freeToBond;
+
+    // total possible balance that can be bonded
+    let totalPossibleBond = toFixedIfNecessary(
+      (planckBnToUnit(freeAfterReserve, units) - totalUnlocking)
+      , units);
 
     return {
       freeToBond: freeToBond,

@@ -22,8 +22,8 @@ export const planckToUnit: any = (val: any, units: number) => {
 }
 
 export const planckBnToUnit: any = (val: BN, units: number) => {
-  let value = val.div(new BN(10 ** units));
-  return value.toNumber();
+  let value = val.toNumber() / (10 ** units)
+  return value;
 }
 
 export const fiatAmount: any = (val: any) => {
