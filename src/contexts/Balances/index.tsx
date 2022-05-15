@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
-import { toFixedIfNecessary, planckToUnit, rmCommas } from '../../Utils';
+import { toFixedIfNecessary, planckBnToUnit, rmCommas } from '../../Utils';
 
 export const BalancesContext: any = React.createContext({
   getAccount: (a: string) => { },
@@ -257,15 +257,15 @@ export const BalancesProvider = (props: any) => {
     const { active, unlocking } = ledger;
 
     // free to bond balance
-    let freeToBond: any = toFixedIfNecessary(planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units);
+    let freeToBond: any = toFixedIfNecessary(planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units), units);
     freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
     // free to unbond balance
-    let freeToUnbond = toFixedIfNecessary(planckToUnit(active.toNumber(), units), units);
+    let freeToUnbond = toFixedIfNecessary(planckBnToUnit(active, units), units);
 
     // total possible balance that can be bonded
     let totalPossibleBond = toFixedIfNecessary(
-      planckToUnit(active.toNumber(), units) - (planckToUnit(freeAfterReserve.toNumber(), units) - planckToUnit(active.toNumber(), units), units)
+      planckBnToUnit(active, units) - (planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units), units)
       , units);
 
     // total amount actively unlocking
@@ -274,7 +274,7 @@ export const BalancesProvider = (props: any) => {
       const { value } = u;
       totalUnlocking = totalUnlocking.add(value);
     }
-    totalUnlocking = planckToUnit(totalUnlocking.toNumber(), units);
+    totalUnlocking = planckBnToUnit(totalUnlocking, units);
 
     return {
       freeToBond: freeToBond,

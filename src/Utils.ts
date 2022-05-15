@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from "bn.js";
+
 export const clipAddress = (val: string) => {
   return val.substring(0, 6) + '...' + val.substring(val.length - 6, val.length);
 }
@@ -17,6 +19,11 @@ export const toFixedIfNecessary = (value: any, dp: any) => {
 export const planckToUnit: any = (val: any, units: number) => {
   let value = val / (10 ** units);
   return value;
+}
+
+export const planckBnToUnit: any = (val: BN, units: number) => {
+  let value = val.div(new BN(10 ** units));
+  return value.toNumber();
 }
 
 export const getTotalUnlocking: any = (unlocking: any, units: any): number => {
