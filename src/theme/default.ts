@@ -22,7 +22,7 @@ export const defaultThemes: any = {
       'linear-gradient(180deg, rgba(251,248,247,1) 0%, rgba(251,248,247,1) 100px, rgba(238,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
       'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
-    secondary: v('rgba(255,255,255,0.52)', 'rgba(0,0,0,0.16)'),
+    secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.16)'),
     network: v('rgba(242,225,225,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     validator: v(
