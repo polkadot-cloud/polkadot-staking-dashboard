@@ -33,7 +33,7 @@ export const Filters = (props: any) => {
               <Item
                 label='lowest commission'
                 icon={faPercentage}
-                transform='grow-12'
+                transform='grow-10'
                 active={validatorOrder === 'commission'}
                 onClick={() => handleFilter(orderValidators, 'commission')}
               />
@@ -45,7 +45,7 @@ export const Filters = (props: any) => {
               <Item
                 label='inactive validators'
                 icon={faClock}
-                transform='grow-10'
+                transform='grow-8'
                 active={validatorFilters?.includes('inactive') ?? false}
                 onClick={() => {
                   handleFilter(toggleFilterValidators, 'inactive');
@@ -54,7 +54,7 @@ export const Filters = (props: any) => {
               <Item
                 label='over subscribed'
                 icon={faExclamationTriangle}
-                transform='grow-10'
+                transform='grow-8'
                 active={validatorFilters?.includes('over_subscribed') ?? false}
                 onClick={() => {
                   handleFilter(toggleFilterValidators, 'over_subscribed');
@@ -63,7 +63,7 @@ export const Filters = (props: any) => {
               <Item
                 label='100% commission'
                 icon={faBalanceScaleLeft}
-                transform='grow-6'
+                transform='grow-4'
                 active={validatorFilters?.includes('all_commission') ?? false}
                 onClick={() => {
                   handleFilter(toggleFilterValidators, 'all_commission');
@@ -72,7 +72,7 @@ export const Filters = (props: any) => {
               <Item
                 label='blocked nominations'
                 icon={faUserSlash}
-                transform='grow-9'
+                transform='grow-7'
                 active={validatorFilters?.includes('blocked_nominations') ?? false}
                 onClick={() => {
                   handleFilter(toggleFilterValidators, 'blocked_nominations');
@@ -81,7 +81,7 @@ export const Filters = (props: any) => {
               <Item
                 label='missing identity'
                 icon={faUserTag}
-                transform='grow-9'
+                transform='grow-7'
                 active={validatorFilters?.includes('missing_identity') ?? false}
                 onClick={() => {
                   handleFilter(toggleFilterValidators, 'missing_identity');

@@ -6,9 +6,12 @@ import { ItemWrapper } from './Wrapper'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
+import defaultThemes from '../../../theme/default';
+import { useTheme } from 'styled-components';
 
 export const Item = (props: any) => {
 
+  const { mode }: any = useTheme();
   const { icon, label, transform, onClick } = props;
 
   const [active, setActive] = useState(props.active);
@@ -33,9 +36,11 @@ export const Item = (props: any) => {
             </div>
           }
           <div className='icon'>
-            <FontAwesomeIcon icon={icon}
-              color={active ? 'white' : '#aaa'}
+            <FontAwesomeIcon
+              icon={icon}
+              color={active ? 'white' : defaultThemes.text.secondary[mode]}
               transform={transform}
+              opacity={active ? 1 : 0.7}
             />
           </div>
         </section>

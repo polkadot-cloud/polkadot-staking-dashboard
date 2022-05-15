@@ -53,7 +53,7 @@ export const Wrapper = styled.div`
 export const ItemWrapper = styled.div<any>`
     width: 110px;
     height: 80px;
-    border-radius: 0.75rem;
+    border-radius: 0.7rem;
     background: ${props => props.active ? 'rgba(211, 48, 121, 0.85)' : buttonSecondaryBackground};
     display: flex;
     flex-flow: column nowrap;
@@ -97,11 +97,10 @@ export const ItemWrapper = styled.div<any>`
       justify-content: flex-start;
 
       p {
-        color: ${props => props.active ? 'white' : '#999'};
+        color: ${props => props.active ? 'white' : textSecondary};
         font-size: 0.85rem;
         margin: 0;
         text-align: left;
-        font-variation-settings: 'wght' 550;
         padding-top: 0.15rem;
         line-height: 0.9rem;
       }
