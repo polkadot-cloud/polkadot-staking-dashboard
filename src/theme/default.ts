@@ -19,11 +19,11 @@ export const defaultThemes: any = {
   background: {
     primary: v('rgba(251,248,247,1)', 'rgba(27,27,27,1)'),
     gradient: v(
-      'linear-gradient(180deg, rgba(251,248,247,1) 0%, rgba(251,248,247,1) 100px, rgba(234,231,231, 1) 85%, rgba(252,242,241,1) 100%)',
+      'linear-gradient(180deg, rgba(251,248,247,1) 0%, rgba(251,248,247,1) 100px, rgba(238,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
       'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
     secondary: v('rgba(255,255,255,0.52)', 'rgba(0,0,0,0.16)'),
-    network: v('rgba(238,225,225,0.75)', 'rgba(27,27,27,0.75)'),
+    network: v('rgba(242,225,225,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,237,236,0.95) 0%, rgba(240,237,236,0.7) 100%)',
@@ -36,7 +36,7 @@ export const defaultThemes: any = {
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),
     overlay: v(
-      'linear-gradient(180deg, rgba(242,242,242,0.93) 0%, rgba(225,225,225,0.93) 100%)',
+      'linear-gradient(180deg, rgba(249,242,242,0.93) 0%, rgba(233,225,225,0.93) 100%)',
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
   },
@@ -58,7 +58,7 @@ export const defaultThemes: any = {
   },
   buttons: {
     primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
-    secondary: { background: v('rgba(242, 238, 238, 0.95)', '#111') },
+    secondary: { background: v('rgba(242, 238, 238, 0.9)', '#111') },
     toggle: { background: v('rgba(242,240,239,0.8)', '#1a1a1a') },
     assistant: { background: v('#ececec', '#242424') },
   },
@@ -71,10 +71,10 @@ export const defaultThemes: any = {
     background: v('#fff', '#000'),
   },
   assistant: {
-    background: v('rgba(228,228,228,0.93)', 'rgba(18,18,18,0.93)'),
+    background: v('rgba(238,230,230,0.93)', 'rgba(18,18,18,0.93)'),
     link: v('#d33079', '#d33079'),
     button: {
-      background: v('rgba(255,255,255,0.65)', 'rgba(0,0,0,0.4)'),
+      background: v('rgba(255,255,255,0.60)', 'rgba(0,0,0,0.4)'),
     }
   },
   loader: {
