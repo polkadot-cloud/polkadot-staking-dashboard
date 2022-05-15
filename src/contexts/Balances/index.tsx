@@ -257,11 +257,17 @@ export const BalancesProvider = (props: any) => {
     const { active, unlocking } = ledger;
 
     // free to bond balance
-    let freeToBond: any = toFixedIfNecessary(planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units), units);
+    let freeToBond: any = toFixedIfNecessary(
+      planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units),
+      units
+    );
     freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
     // free to unbond balance
-    let freeToUnbond = toFixedIfNecessary(planckBnToUnit(active, units), units);
+    let freeToUnbond = toFixedIfNecessary(
+      planckBnToUnit(active, units),
+      units
+    );
 
     // total possible balance that can be bonded
     let totalPossibleBond = toFixedIfNecessary(
