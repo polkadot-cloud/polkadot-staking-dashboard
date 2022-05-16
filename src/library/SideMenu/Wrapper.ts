@@ -85,7 +85,7 @@ export const ItemWrapper = styled(motion.div) <any>`
 
   .icon {
     margin-left: ${props => props.minimised ? 0 : '0.25rem'};
-    margin-right: 0.7rem;
+    margin-right: 0.65rem;
   }
   .name {
     margin: 0;

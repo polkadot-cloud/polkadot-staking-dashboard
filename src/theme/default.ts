@@ -11,22 +11,22 @@ export const defaultThemes: any = {
   primary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
   secondary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
   text: {
-    primary: v('#333', '#ccc'),
+    primary: v('#330022', '#ccc'),
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
     danger: v('#ae2324', '#d14445'),
   },
   background: {
-    primary: v('rgba(249,248,248,1)', 'rgba(27,27,27,1)'),
+    primary: v('rgba(248,247,247,1)', 'rgba(27,27,27,1)'),
     gradient: v(
-      'linear-gradient(180deg, rgba(249,248,248,1) 0%, rgba(249,248,248,1) 100px, rgba(235,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
+      'linear-gradient(180deg, rgba(248,247,247,1) 0%, rgba(248,247,247,1) 100px, rgba(233,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
       'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
     secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.16)'),
     network: v('rgba(244,225,225,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     validator: v(
-      'linear-gradient(90deg, rgba(242,240,239,0.95) 0%, rgba(242,240,239,0.7) 100%)',
+      'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
       'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)'
     ),
     label: v(
@@ -36,7 +36,7 @@ export const defaultThemes: any = {
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),
     overlay: v(
-      'linear-gradient(180deg, rgba(246,242,242,0.93) 0%, rgba(230,225,225,0.93) 100%)',
+      'linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%)',
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
   },
