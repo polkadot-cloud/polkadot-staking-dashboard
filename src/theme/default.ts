@@ -17,9 +17,9 @@ export const defaultThemes: any = {
     danger: v('#ae2324', '#d14445'),
   },
   background: {
-    primary: v('rgba(249,248,247,1)', 'rgba(27,27,27,1)'),
+    primary: v('rgba(249,248,248,1)', 'rgba(27,27,27,1)'),
     gradient: v(
-      'linear-gradient(180deg, rgba(249,248,247,1) 0%, rgba(249,248,247,1) 100px, rgba(235,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
+      'linear-gradient(180deg, rgba(249,248,248,1) 0%, rgba(249,248,248,1) 100px, rgba(235,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
       'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
     ),
     secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.16)'),

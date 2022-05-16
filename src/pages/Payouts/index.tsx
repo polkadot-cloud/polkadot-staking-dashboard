@@ -47,7 +47,7 @@ export const Payouts = (props: PageProps) => {
           <StatBoxListItem {...stat} key={index} />
         ))}
       </StatBoxList>
-      <PageRowWrapper>
+      <PageRowWrapper noVerticalSpacer>
         <GraphWrapper>
           <SubscanButton />
           <div className='head'>

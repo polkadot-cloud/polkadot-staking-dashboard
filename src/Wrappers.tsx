@@ -133,8 +133,8 @@ export const PageTitleWrapper = styled.header<any>`
 // Page Row wrapper
 export const PageRowWrapper = styled.div<any>`
     box-sizing: border-box;
-    margin-top: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
-    margin-bottom: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
+    margin-top: ${props => props.noVerticalSpacer === true ? `0` : `1.1rem`};
+    margin-bottom: ${props => props.noVerticalSpacer === true ? `0` : `1.1rem`};
     display: flex;
     flex-shrink: 0;
     flex-flow: row wrap;

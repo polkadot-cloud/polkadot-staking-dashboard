@@ -15,7 +15,7 @@ export const SectionWrapper = styled.div<any>`
   align-items: flex-start;
   flex: 1;
   width: 100%;
-  margin-top: ${props => props.transparent ? '0rem' : '1rem'};
+  margin-top: ${props => props.transparent ? '0rem' : '1.1rem'};
   position: relative;
 
   .inner {
