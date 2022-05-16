@@ -140,7 +140,8 @@ export const ConnectProvider = (props: any) => {
 
   // automatic connect from active wallet
   useEffect(() => {
-    if (extensions.length) {
+    // only auto connect if active wallet exists in localstorage
+    if (extensions.length && activeWallet !== null) {
       connectToWallet();
     }
   }, [extensions]);
@@ -161,7 +162,6 @@ export const ConnectProvider = (props: any) => {
 
   const connectToWallet = async (_wallet: any = null) => {
     try {
-
       if (extensions.length === 0) {
         setActiveWallet(null);
         return;
@@ -242,8 +242,10 @@ export const ConnectProvider = (props: any) => {
   }
 
   const connectToAccount = (account: any = null) => {
-    setActiveAccount(account == null ? '' : account.address);
-    setActiveAccountMeta(account);
+    if (account !== null) {
+      setActiveAccount(account.address);
+      setActiveAccountMeta(account);
+    }
   }
 
   const disconnectFromWallet = () => {
