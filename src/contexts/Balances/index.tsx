@@ -23,7 +23,6 @@ export const BalancesContext: any = React.createContext({
 export const useBalances = () => React.useContext(BalancesContext);
 
 export const BalancesProvider = (props: any) => {
-
   const { api, isReady, network }: any = useApi();
   const { accounts, activeWallet }: any = useConnect();
   const { units } = network;
@@ -38,21 +37,21 @@ export const BalancesProvider = (props: any) => {
   const setState = (val: any) => {
     stateRef.current = val;
     _setState(val);
-  }
+  };
 
   // existential amount of unit for an account
   const [existentialAmount] = useState(
-    new BN(10 ** units)
+    new BN(10 ** units),
   );
 
   // amount of compulsary reserve balance
   const [reserveAmount] = useState(
-    existentialAmount.div(new BN(10))
+    existentialAmount.div(new BN(10)),
   );
 
   // minimum reserve for submitting extrinsics
   const [minReserve] = useState(
-    reserveAmount.add(existentialAmount)
+    reserveAmount.add(existentialAmount),
   );
 
   // unsubscribe and refetch active account
@@ -66,33 +65,33 @@ export const BalancesProvider = (props: any) => {
   // unsubscribe from all activeAccount subscriptions
   const unsubscribeAll = async (refetch: boolean) => {
     // unsubscribe from accounts
-    let { unsub } = stateRef.current;
-    for (let unsubscribe of unsub) {
+    const { unsub } = stateRef.current;
+    for (const unsubscribe of unsub) {
       await unsubscribe();
     }
     // refetch balances
     if (refetch) {
       getBalances();
     }
-  }
+  };
 
   // subscribe to account balances, ledger, bonded and nominators
   const subscribeToBalances = async (address: string) => {
-
     const unsub = await api.queryMulti([
       [api.query.system.account, address],
       [api.query.staking.ledger, address],
       [api.query.staking.bonded, address],
       [api.query.staking.nominators, address],
     ], ([{ data: balance }, ledger, bonded, nominations]: any) => {
-
       // account state update
-      let _account: any = {
-        address: address,
+      const _account: any = {
+        address,
       };
 
       // get account balances
-      let { free, reserved, miscFrozen, feeFrozen } = balance;
+      const {
+        free, reserved, miscFrozen, feeFrozen,
+      } = balance;
 
       // calculate free balance after app reserve
       let freeAfterReserve = new BN(free).sub(minReserve);
@@ -101,32 +100,34 @@ export const BalancesProvider = (props: any) => {
         : freeAfterReserve;
 
       // set account balances to context
-      _account['balance'] = {
+      _account.balance = {
         free: free.toBn(),
         reserved: reserved.toBn(),
         miscFrozen: miscFrozen.toBn(),
         feeFrozen: feeFrozen.toBn(),
-        freeAfterReserve: freeAfterReserve,
+        freeAfterReserve,
       };
 
       // set account ledger
-      let _ledger = ledger.unwrapOr(null);
+      const _ledger = ledger.unwrapOr(null);
       if (_ledger === null) {
-        _account['ledger'] = defaults.ledger;
+        _account.ledger = defaults.ledger;
       } else {
-        const { stash, total, active, unlocking } = _ledger;
+        const {
+          stash, total, active, unlocking,
+        } = _ledger;
 
         // format unlocking chunks
-        let _unlocking = [];
-        for (let u of unlocking.toHuman()) {
-          let era = rmCommas(u.era);
-          let value = rmCommas(u.value);
+        const _unlocking = [];
+        for (const u of unlocking.toHuman()) {
+          const era = rmCommas(u.era);
+          const value = rmCommas(u.value);
           _unlocking.push({
             era: Number(era),
-            value: new BN(value)
+            value: new BN(value),
           });
         }
-        _account['ledger'] = {
+        _account.ledger = {
           stash: stash.toHuman(),
           active: active.toBn(),
           total: total.toBn(),
@@ -139,7 +140,7 @@ export const BalancesProvider = (props: any) => {
       _bonded = _bonded === null
         ? null
         : _bonded.toHuman();
-      _account['bonded'] = _bonded;
+      _account.bonded = _bonded;
 
       // set account nominations
       let _nominations = nominations.unwrapOr(null);
@@ -152,7 +153,7 @@ export const BalancesProvider = (props: any) => {
         };
       }
 
-      _account['nominations'] = _nominations;
+      _account.nominations = _nominations;
 
       // update account in context state
       let _accounts = Object.values(stateRef.current.accounts);
@@ -162,23 +163,23 @@ export const BalancesProvider = (props: any) => {
       // update state
       setState({
         ...stateRef.current,
-        accounts: _accounts
+        accounts: _accounts,
       });
     });
 
     return unsub;
-  }
+  };
 
   // get active account balances
   const getBalances = async () => {
     const unsubs = await Promise.all(
-      accounts.map((a: any) => subscribeToBalances(a.address))
+      accounts.map((a: any) => subscribeToBalances(a.address)),
     );
     setState({
       ...stateRef.current,
-      unsub: unsubs
+      unsub: unsubs,
     });
-  }
+  };
 
   // get an account's balance metadata
   const getAccountBalance = (address: string) => {
@@ -191,9 +192,9 @@ export const BalancesProvider = (props: any) => {
       return defaults.balance;
     }
     return balance;
-  }
+  };
 
-  //get an account's ledger metadata
+  // get an account's ledger metadata
   const getAccountLedger = (address: string) => {
     const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
     if (account === undefined) {
@@ -204,9 +205,9 @@ export const BalancesProvider = (props: any) => {
       return defaults.ledger;
     }
     return ledger;
-  }
+  };
 
-  //get an account's bonded (controller) account)
+  // get an account's bonded (controller) account)
   const getBondedAccount = (address: string) => {
     const account = stateRef.current.accounts.find((acc: any) => acc.address === address);
     if (account === undefined) {
@@ -214,18 +215,18 @@ export const BalancesProvider = (props: any) => {
     }
     const { bonded } = account;
     return bonded;
-  }
+  };
 
   // get an account's nominations
   const getAccountNominations = (address: string) => {
-    let _accounts = stateRef.current.accounts;
+    const _accounts = stateRef.current.accounts;
     const account = _accounts.find((acc: any) => acc.address === address);
     if (account === undefined) {
       return [];
     }
     const { nominations } = account;
     return nominations.targets;
-  }
+  };
 
   // get an account
   const getAccount = (address: string) => {
@@ -234,7 +235,7 @@ export const BalancesProvider = (props: any) => {
       return null;
     }
     return account;
-  }
+  };
 
   // get the bond and unbond amounts available to the user
   const getBondOptions = (address: string) => {
@@ -249,51 +250,53 @@ export const BalancesProvider = (props: any) => {
     const { active, unlocking } = ledger;
 
     // free to unbond balance
-    let freeToUnbond = toFixedIfNecessary(
+    const freeToUnbond = toFixedIfNecessary(
       planckBnToUnit(active, units),
-      units
+      units,
     );
 
     // total amount actively unlocking
     let totalUnlockingBn = new BN(0);
-    for (let u of unlocking) {
+    for (const u of unlocking) {
       const { value } = u;
       totalUnlockingBn = totalUnlockingBn.add(value);
     }
-    let totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
+    const totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
 
     // free to bond balance
     let freeToBond: any = toFixedIfNecessary(
       planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units) - totalUnlocking,
-      units
+      units,
     );
     freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
     // total possible balance that can be bonded
-    let totalPossibleBond = toFixedIfNecessary(
-      (planckBnToUnit(freeAfterReserve, units) - totalUnlocking)
-      , units);
+    const totalPossibleBond = toFixedIfNecessary(
+      (planckBnToUnit(freeAfterReserve, units) - totalUnlocking),
+      units,
+    );
 
     return {
-      freeToBond: freeToBond,
-      freeToUnbond: freeToUnbond,
-      totalUnlocking: totalUnlocking,
-      totalPossibleBond: totalPossibleBond,
-    }
-  }
+      freeToBond,
+      freeToUnbond,
+      totalUnlocking,
+      totalPossibleBond,
+    };
+  };
 
   return (
     <BalancesContext.Provider value={{
-      getAccount: getAccount,
-      getAccountBalance: getAccountBalance,
-      getAccountLedger: getAccountLedger,
-      getBondedAccount: getBondedAccount,
-      getAccountNominations: getAccountNominations,
-      getBondOptions: getBondOptions,
+      getAccount,
+      getAccountBalance,
+      getAccountLedger,
+      getBondedAccount,
+      getAccountNominations,
+      getBondOptions,
       accounts: stateRef.current.accounts,
-      minReserve: minReserve,
-    }}>
+      minReserve,
+    }}
+    >
       {props.children}
     </BalancesContext.Provider>
-  )
-}
+  );
+};
