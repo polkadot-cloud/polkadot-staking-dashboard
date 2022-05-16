@@ -13,6 +13,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
 import { ContentWrapper, Separator } from './Wrapper';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
+import { Warning } from '../../library/Form/Warning';
 
 export const Forms = (props: any) => {
   const { setSection, task } = props;
@@ -20,8 +21,9 @@ export const Forms = (props: any) => {
   const { api, network }: any = useApi();
   const { setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect();
-  const { getBondOptions }: any = useBalances();
+  const { getBondOptions, getBondedAccount }: any = useBalances();
   const { freeToBond, freeToUnbond, totalPossibleBond } = getBondOptions(activeAccount);
+  const controller = getBondedAccount(activeAccount);
   const { units } = network;
 
   // local bond value
@@ -38,13 +40,25 @@ export const Forms = (props: any) => {
     setBond({
       bond: _bond
     });
+    if (task === 'bond_all' && freeToBond > 0) {
+      setBondValid(true);
+    }
+    if (task === 'unbond_all' && freeToUnbond > 0) {
+      setBondValid(true);
+    }
   }, [task]);
 
   // tx to submit
   const tx = () => {
     let tx = null;
 
-    let bondToSubmit = bond.bond * (10 ** units);
+    if (!bondValid) {
+      return tx;
+    }
+
+    // remove decimal errors
+    let bondToSubmit = Math.floor(bond.bond * (10 ** units));
+
     if (task === 'bond_some' || task === 'bond_all') {
       tx = api.tx.staking.bondExtra(bondToSubmit);
 
@@ -56,7 +70,7 @@ export const Forms = (props: any) => {
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from: activeAccount,
+    from: (task === 'bond_some' || task === 'bond_all') ? activeAccount : controller,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
@@ -83,6 +97,9 @@ export const Forms = (props: any) => {
         }
         {task === 'bond_all' &&
           <>
+            {freeToBond === 0 &&
+              <Warning text="You have no free WND to bond." />
+            }
             <h4>Amount to bond:</h4>
             <h2>{freeToBond} {network.unit}</h2>
             <p>This amount of {network.unit} will be added to your current bonded funds.</p>
