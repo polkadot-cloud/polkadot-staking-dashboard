@@ -40,7 +40,7 @@ Additional features that are being considered:
 # Contribution Guide
 
 ## Introduction
-This section aims to familiarise developers to the Polkadot Staking Dashboard [GitHub, Demo] for the purpose of contributing to the project.
+This section aims to familiarise developers to the Polkadot Staking Dashboard [[GitHub](https://github.com/paritytech/polkadot-staking-dashboard), [Demo](https://paritytech.github.io/polkadot-staking-dashboard/#/overview)] for the purpose of contributing to the project.
 
 Reach out to ross@parity.io for clarification of any content within this document.
 
