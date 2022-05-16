@@ -29,6 +29,7 @@ Features are being implemented in an incremental fashion. We are considering the
 - [ ] Extrinsics
 - [ ] Initial Nomination management tooling
 - [ ] Nomination Pools
+- [ ] Chain API Integration
 
 Additional features that are being considered:
 
