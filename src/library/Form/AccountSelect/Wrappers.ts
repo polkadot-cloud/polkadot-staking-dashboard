@@ -76,6 +76,7 @@ export const StyledSelect = styled.div`
 
     .item {
       background: ${backgroundToggle};
+      position: relative;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
@@ -87,6 +88,21 @@ export const StyledSelect = styled.div`
       justify-content: center;
       align-items: flex-start;
       flex-grow: 1;
+      overflow: hidden;
+
+      > .title {
+        box-sizing: border-box;
+        display: flex;
+        flex-flow: row wrap;
+        max-width: 100%;
+        h3 {
+          box-sizing: border-box;
+          display: inline-block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
 
       &:first-child {
         margin-left: 0rem;
@@ -97,6 +113,10 @@ export const StyledSelect = styled.div`
       p {
         color: ${textPrimary};
         margin: 0.15rem 0 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 1;
       }
       .icon {
         margin-bottom: 0.7rem;

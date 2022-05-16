@@ -34,6 +34,7 @@ export const StyledDownshift = styled.div<any>`
     border: none;
     box-sizing: border-box;
     padding-left: 0.75rem;
+    flex: 1;
   }
 `;
 
@@ -83,6 +84,10 @@ export const StyledDropdown = styled.div`
     p {
       font-size: 1rem;
       color: ${textPrimary};
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      flex: 1;
     }
   }
 `;
