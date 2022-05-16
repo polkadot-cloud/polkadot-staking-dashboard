@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import Downshift from 'downshift';
+import { useState } from 'react';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
 import Identicon from '../../Identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,52 +10,61 @@ import { clipAddress, convertRemToPixels } from '../../../Utils';
 import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
 import { StatusLabel } from '../../StatusLabel';
+import { useCombobox } from 'downshift'
 
 export const AccountSelect = (props: any) => {
-
   const { items, onChange, placeholder, value }: any = props;
+
+  const itemToString = (item: any) => (item ? item.meta.name : '');
+
+  const [inputItems, setInputItems] = useState(items);
+
+  const c: any = useCombobox({
+    items: inputItems,
+    itemToString: itemToString,
+    onSelectedItemChange: onChange,
+    initialSelectedItem: value,
+    onInputValueChange: ({ inputValue }: any) => {
+      setInputItems(
+        items.filter((item: any) =>
+          item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase()),
+        ),
+      )
+    },
+  });
 
   return (
     <StyledDownshift>
-      <Downshift
-        onChange={onChange}
-        itemToString={item => (item ? item.meta.name : '')}
-        selectedItem={value}
-        initialSelectedItem={value}
-      >
-        {(c: any) => (
-          <div>
-            <div style={{ position: 'relative' }}>
-              <div className='input-wrap'>
-                {value !== null &&
-                  <Identicon
-                    value={value?.address ?? ''}
-                    size={convertRemToPixels('2rem')}
-                  />
-                }
-                <input {...c.getInputProps({ placeholder: placeholder })} className='input' />
-              </div>
-
-              {c.selectedItem && (
-                <StyledController
-                  onClick={c.clearSelection}
-                  aria-label="clear selection"
-                >
-                  <FontAwesomeIcon transform='grow-2' icon={faTimes} />
-                </StyledController>
-              )}
-              <StyledSelect>
-                {
-                  items
-                    .map((item: any, index: number) =>
-                      <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
-                    )
-                }
-              </StyledSelect>
-            </div>
+      <div>
+        <div style={{ position: 'relative' }}>
+          <div className='input-wrap' {...c.getComboboxProps()}>
+            {value !== null &&
+              <Identicon
+                value={value?.address ?? ''}
+                size={convertRemToPixels('2rem')}
+              />
+            }
+            <input {...c.getInputProps({ placeholder: placeholder })} className='input' />
           </div>
-        )}
-      </Downshift>
+
+          {c.selectedItem && (
+            <StyledController
+              onClick={() => c.selectItem(null)}
+              aria-label="clear selection"
+            >
+              <FontAwesomeIcon transform='grow-2' icon={faTimes} />
+            </StyledController>
+          )}
+          <StyledSelect {...c.getMenuProps()}>
+            {
+              inputItems
+                .map((item: any, index: number) =>
+                  <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
+                )
+            }
+          </StyledSelect>
+        </div>
+      </div>
     </StyledDownshift>
   )
 }

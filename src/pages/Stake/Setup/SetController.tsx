@@ -53,11 +53,11 @@ export const SetController = (props: any) => {
     setControllerNotImported(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
   }, [getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
-  const handleOnChange = (selected: any) => {
-    setSelected(selected);
+  const handleOnChange = ({ selectedItem }: any) => {
+    setSelected(selectedItem);
     setActiveAccountSetup({
       ...setup,
-      controller: selected?.address ?? null
+      controller: selectedItem?.address ?? null
     })
   }
 

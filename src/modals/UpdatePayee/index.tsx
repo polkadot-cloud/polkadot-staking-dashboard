@@ -7,6 +7,7 @@ import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Dropdown } from '../../library/Form/Dropdown';
 import { useStaking } from '../../contexts/Staking';
 
@@ -29,8 +30,8 @@ export const UpdatePayee = () => {
   const _selected = items.find((item: any) => item.key === payee);
   const [selected, setSelected] = useState(_selected ?? null);
 
-  const handleOnChange = (selected: any) => {
-    setSelected(selected);
+  const handleOnChange = ({ selectedItem }: any) => {
+    setSelected(selectedItem);
   }
 
   // TODO: submit extrinsic
@@ -54,7 +55,7 @@ export const UpdatePayee = () => {
         <FooterWrapper>
           <div>
             <button className='submit' onClick={() => submitTx()} disabled={selected === null}>
-              <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
+              <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp as IconProp} />
               Submit
             </button>
           </div>
