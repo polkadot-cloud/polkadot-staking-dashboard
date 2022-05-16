@@ -6,6 +6,7 @@ import { Identicon } from '../../library/Identicon';
 import { AccountWrapper } from './Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
 import { useNotifications } from '../../contexts/Notifications';
@@ -49,7 +50,7 @@ export const PoolAccount = (props: any) => {
             {address !== null &&
               <button onClick={() => addNotification(notification)}>
                 <CopyToClipboard text={address}>
-                  <FontAwesomeIcon icon={faCopy} transform="grow-1" />
+                  <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />
                 </CopyToClipboard>
               </button>
             }

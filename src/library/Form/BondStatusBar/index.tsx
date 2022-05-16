@@ -7,6 +7,7 @@ import { useApi } from "../../../contexts/Api";
 import { useStaking } from "../../../contexts/Staking";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 
 export const BondStatusBar = (props: any) => {
@@ -35,7 +36,7 @@ export const BondStatusBar = (props: any) => {
         </section>
         <section className={gtMinNominatorBond ? `invert` : ``}>
           <h4>
-            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
+            <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp;
             Nominate
             <OpenAssistantIcon page='stake' title='Nominating' />
@@ -46,7 +47,7 @@ export const BondStatusBar = (props: any) => {
         </section>
         <section className={gtMinActiveBond ? `invert` : ``}>
           <h4>
-            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
+            <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp;
             Active
             <OpenAssistantIcon page='stake' title='Active Bond Threshold' />

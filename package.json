@@ -4,11 +4,10 @@
   "license": "apache-2.0",
   "private": false,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/fontawesome-svg-core": "6.1.0",
+    "@fortawesome/free-solid-svg-icons": "6.1.0",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@fortawesome/react-fontawesome": "^0.1.17",
     "@polkadot/api": "^7.7.1",
     "@polkadot/extension-dapp": "^0.42.7",
     "@polkadot/keyring": "^9.1.1",
@@ -84,6 +83,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier-format": "prettier --config .prettierrc --write"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

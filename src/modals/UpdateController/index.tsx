@@ -6,6 +6,7 @@ import Wrapper from './Wrapper';
 import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { AccountDropdown } from '../../library/Form/AccountDropdown';
 import { useBalances } from '../../contexts/Balances';
@@ -26,8 +27,8 @@ export const UpdateController = () => {
 
   const [selected, setSelected] = useState(account);
 
-  const handleOnChange = (selected: any) => {
-    setSelected(selected);
+  const handleOnChange = ({ selectedItem }: any) => {
+    setSelected(selectedItem);
   }
 
   // dummy method for submitting transactions
@@ -81,7 +82,7 @@ export const UpdateController = () => {
         <FooterWrapper>
           <div>
             <button className='submit' onClick={() => submitTx()} disabled={selected === null}>
-              <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
+              <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp as IconProp} />
               Submit
             </button>
           </div>

@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getIdentityDisplay } from './Utils';
 import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useNotifications } from '../../contexts/Notifications';
 
@@ -142,7 +143,7 @@ export const ValidatorInner = (props: any) => {
           <label>
             <button onClick={() => addNotification(notificationCopyAddress)}>
               <CopyToClipboard text={address}>
-                <FontAwesomeIcon icon={faCopy} />
+                <FontAwesomeIcon icon={faCopy as IconProp} />
               </CopyToClipboard>
             </button>
           </label>

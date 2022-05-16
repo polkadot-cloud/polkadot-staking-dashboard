@@ -11,6 +11,7 @@ import { Wrapper as ButtonWrapper } from '../../../../library/Button';
 import { SummaryWrapper } from './Wrapper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { humanNumber } from '../../../../Utils';
 import { useSubmitExtrinsic } from '../../../../library/Hooks/useSubmitExtrinsic';
 
@@ -71,25 +72,25 @@ export const Summary = (props: any) => {
       >
         <SummaryWrapper>
           <section>
-            <div><FontAwesomeIcon icon={faCheckCircle} transform='grow-1' /> &nbsp; Controller:</div>
+            <div><FontAwesomeIcon icon={faCheckCircle as IconProp} transform='grow-1' /> &nbsp; Controller:</div>
             <div>
               {controller}
             </div>
           </section>
           <section>
-            <div><FontAwesomeIcon icon={faCheckCircle} transform='grow-1' /> &nbsp; Reward Destination:</div>
+            <div><FontAwesomeIcon icon={faCheckCircle as IconProp} transform='grow-1' /> &nbsp; Reward Destination:</div>
             <div>
               {payee}
             </div>
           </section>
           <section>
-            <div><FontAwesomeIcon icon={faCheckCircle} transform='grow-1' /> &nbsp; Nominations:</div>
+            <div><FontAwesomeIcon icon={faCheckCircle as IconProp} transform='grow-1' /> &nbsp; Nominations:</div>
             <div>
               {nominations.length}
             </div>
           </section>
           <section>
-            <div><FontAwesomeIcon icon={faCheckCircle} transform='grow-1' /> &nbsp; Bond Amount:</div>
+            <div><FontAwesomeIcon icon={faCheckCircle as IconProp} transform='grow-1' /> &nbsp; Bond Amount:</div>
             <div>
               {humanNumber(bond)} {network.unit}
             </div>

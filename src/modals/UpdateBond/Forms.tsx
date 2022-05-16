@@ -10,6 +10,7 @@ import { useConnect } from '../../contexts/Connect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
 import { ContentWrapper, Separator } from './Wrapper';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
@@ -145,7 +146,7 @@ export const Forms = (props: any) => {
         </div>
         <div>
           <button className='submit' onClick={() => submitTx()} disabled={submitting || !bondValid}>
-            <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp} />
+            <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp as IconProp} />
             Submit{submitting && 'ting'}
           </button>
         </div>
