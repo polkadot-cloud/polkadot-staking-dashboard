@@ -57,3 +57,26 @@ export const getGradient = (ctx: any, chartArea: any) => {
   }
   return gradient;
 }
+
+export const prefillPayoutGraph = (list: any, maxLength: number) => {
+
+  if (list.length === 0) {
+    return list;
+  }
+
+  list = list.reverse().slice(0, maxLength);
+
+  // get last timestamp to iterate daily
+  let lastTimestamp = list[list.length - 1].block_timestamp;
+
+  for (let i = list.length; i < maxLength; i++) {
+    lastTimestamp -= (1 * 60 * 60 * 24);
+    list.push({
+      event_id: "Reward",
+      amount: 0,
+      block_timestamp: lastTimestamp,
+    });
+  }
+  // move most recent last
+  return list.reverse();
+}

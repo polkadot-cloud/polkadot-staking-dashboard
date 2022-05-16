@@ -7,6 +7,7 @@ import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { StatusLabel } from '../../library/StatusLabel';
+import { prefillPayoutGraph } from '../../library/Graphs/Utils';
 
 export const PayoutsInner = (props: any) => {
 
@@ -17,6 +18,9 @@ export const PayoutsInner = (props: any) => {
   const ref: any = React.useRef();
   let size = useSize(ref.current);
   let { width, height, minHeight } = formatSize(size, 352);
+
+  // pre-fill missing items if payouts < 60
+  let payoutsGraph = prefillPayoutGraph([...payouts], 10);
 
   return (
     <>
@@ -29,12 +33,12 @@ export const PayoutsInner = (props: any) => {
 
         <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
           <PayoutBar
-            payouts={payouts}
+            payouts={payoutsGraph}
             height='200px'
           />
           <div style={{ marginTop: '1rem' }}>
             <PayoutLine
-              payouts={payouts}
+              payouts={payoutsGraph}
               height='80px'
             />
           </div>

@@ -13,7 +13,7 @@ import { SubscanButton } from '../../library/SubscanButton';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import { PageTitle } from '../../library/PageTitle';
-import { useSize, formatSize } from '../../library/Graphs/Utils';
+import { useSize, formatSize, prefillPayoutGraph } from '../../library/Graphs/Utils';
 import { StatusLabel } from '../../library/StatusLabel';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PayoutList } from './PayoutList';
@@ -33,6 +33,10 @@ export const Payouts = (props: PageProps) => {
   let size = useSize(ref.current);
   let { width, height, minHeight } = formatSize(size, 250);
 
+  // pre-fill missing items if payouts < 60
+  let payoutsGraph = prefillPayoutGraph([...payouts], 60);
+
+  // take payouts in most-recent order
   const payoutsList = [...payouts].reverse().slice(0, 60);
 
   return (
@@ -69,11 +73,11 @@ export const Payouts = (props: PageProps) => {
 
             <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
               <PayoutBar
-                payouts={payouts.slice(0, 60)}
+                payouts={payoutsGraph}
                 height='120px'
               />
               <PayoutLine
-                payouts={payouts.slice(0, 60)}
+                payouts={payoutsGraph}
                 height='70px'
               />
             </div>
