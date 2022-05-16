@@ -29,20 +29,20 @@ h1 {
 }
 
 h2 {
-  font-variation-settings: 'wght' 570;
+  font-variation-settings: 'wght' 580;
   font-weight: normal;
   font-size: 1.35rem;
 }
 
 h3 {
-  font-variation-settings: 'wght' 540;
+  font-variation-settings: 'wght' 570;
   font-weight: normal;
-  font-size: 1.02rem;
+  font-size: 1.05rem;
   line-height: 1.45rem;
 }
 
 h4 {
-  font-variation-settings: 'wght' 520;
+  font-variation-settings: 'wght' 540;
   font-weight: normal;
   font-size: 0.95rem;
   line-height: 1.4rem;
@@ -50,7 +50,7 @@ h4 {
 
 h5 {
   color: #333;
-  font-variation-settings: 'wght' 520;
+  font-variation-settings: 'wght' 540;
   font-weight: normal;
   font-size: 0.88rem;
   margin: 1rem 0;

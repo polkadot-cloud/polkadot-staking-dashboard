@@ -5,6 +5,7 @@ import { ItemWrapper, MinimisedItemWrapper } from './Wrapper';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from '../../contexts/UI';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export const Item = (props: any) => {
 
@@ -35,7 +36,7 @@ export const Item = (props: any) => {
 
             {action &&
               <div className='action'>
-                <FontAwesomeIcon icon={action} color="rgba(242, 185, 27,0.5)" />
+                <FontAwesomeIcon icon={action as IconProp} color="rgba(242, 185, 27,0.5)" />
               </div>
             }
           </>

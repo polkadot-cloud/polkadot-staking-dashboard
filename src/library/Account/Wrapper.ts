@@ -17,7 +17,7 @@ export const Wrapper = styled(motion.button) <any>`
     background: ${props => props.fill};
     font-size: ${props => props.fontSize};
     padding: 0 1rem;
-    flex:1;
+    flex: 1;
 
     .identicon {
       margin: 0.15rem 0.25rem 0 0;

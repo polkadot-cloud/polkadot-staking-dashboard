@@ -11,13 +11,13 @@ import Projects from './pages/explore/Projects';
 import Feedback from './pages/explore/Feedback';
 import {
   faUserFriends,
-  faBraille,
   faServer,
   faChartLine,
   faStar,
   faUsers,
   faThumbtack,
   faComment,
+  faBraille
 } from '@fortawesome/free-solid-svg-icons';
 import { URI_PREFIX } from './constants';
 
