@@ -54,17 +54,20 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
 
     // pre-submission state update
     setSubmitting(true);
-    addPending(accountNonce);
-    addNotification({
-      title: 'Pending',
-      subtitle: 'Transaction was initiated.',
-    });
-
-    callbackSubmit();
 
     try {
       const unsub = await tx
         .signAndSend(from, { signer: injector.signer }, ({ status, nonce, events = [] }: any) => {
+
+          // extrinsic is ready ( has been signed), add to pending
+          if (status.isReady) {
+            addPending(accountNonce);
+            addNotification({
+              title: 'Pending',
+              subtitle: 'Transaction was initiated.',
+            });
+            callbackSubmit();
+          }
 
           // extrinsic is in block, assume tx completed
           if (status.isInBlock) {
