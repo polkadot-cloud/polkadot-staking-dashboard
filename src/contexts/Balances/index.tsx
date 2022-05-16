@@ -173,7 +173,7 @@ export const BalancesProvider = (props: any) => {
   // get active account balances
   const getBalances = async () => {
     const unsubs = await Promise.all(
-      accounts.map((a: any) => subscribeToBalances(a.address)),
+      accounts.map((a: any) => subscribeToBalances(a.address))
     );
     setState({
       ...stateRef.current,
@@ -272,15 +272,22 @@ export const BalancesProvider = (props: any) => {
 
     // total possible balance that can be bonded
     const totalPossibleBond = toFixedIfNecessary(
-      (planckBnToUnit(freeAfterReserve, units) - totalUnlocking),
-      units,
+      planckBnToUnit(freeAfterReserve, units) - totalUnlocking,
+      units
     );
+
+    let freeToStake = toFixedIfNecessary(
+      planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units),
+      units
+    );
+    freeToStake = freeToStake < 0 ? 0 : freeToStake;
 
     return {
       freeToBond,
       freeToUnbond,
       totalUnlocking,
       totalPossibleBond,
+      freeToStake,
     };
   };
 
