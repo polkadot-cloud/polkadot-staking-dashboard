@@ -9,9 +9,8 @@ import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
 import { BondInput } from '../BondInput';
 import { planckToUnit, humanNumber } from '../../../Utils';
-import { Warning, Spacer } from '../Wrappers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Spacer } from '../Wrappers';
+import { Warning } from '../Warning';
 
 export const BondInputWithFeedback = (props: any) => {
 
@@ -120,10 +119,7 @@ export const BondInputWithFeedback = (props: any) => {
         <h4>{unbond ? 'Bonded' : 'Available'}: {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)} {network.unit}</h4>
       </div>
       {errors.map((err: any, index: any) =>
-        <Warning key={`setup_error_${index}`}>
-          <FontAwesomeIcon icon={faExclamationTriangle} transform="shrink-2" />
-          <h4>{err}</h4>
-        </Warning>
+        <Warning key={`setup_error_${index}`} text={err} />
       )}
       <Spacer />
       <BondInput
