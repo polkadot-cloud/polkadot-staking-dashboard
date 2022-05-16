@@ -104,8 +104,8 @@ export const SubscanProvider = (props: any) => {
             });
           }
 
-
-          return list;
+          // removes last zero item
+          return list.reverse().splice(0, list.length - 1);
         } else {
           return [];
         }
