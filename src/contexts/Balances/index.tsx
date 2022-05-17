@@ -15,6 +15,7 @@ export const BalancesContext: any = React.createContext({
   getBondedAccount: (a: string) => { },
   getAccountNominations: (a: string) => { },
   getBondOptions: () => defaults.bondOptions,
+  isController: () => { },
   accounts: [],
   reserveAmount: 0,
   existentialAmount: 0,
@@ -237,6 +238,12 @@ export const BalancesProvider = (props: any) => {
     return account;
   };
 
+  // check if an account is a controller account
+  const isController = (address: string) => {
+    const existsAsController = stateRef.current.accounts.filter((account: any) => account?.bonded === address);
+    return existsAsController.length > 0;
+  }
+
   // get the bond and unbond amounts available to the user
   const getBondOptions = (address: string) => {
     const account = getAccount(address);
@@ -292,6 +299,7 @@ export const BalancesProvider = (props: any) => {
       getBondedAccount,
       getAccountNominations,
       getBondOptions,
+      isController,
       accounts: stateRef.current.accounts,
       minReserve,
     }}
