@@ -9,8 +9,10 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
-import StatBoxListItem from '../../library/StatBoxList/Item';
-import { useStats } from './stats';
+
+import ActiveEraStatBox from '../../library/StatBoxList/StatBox/AvtiveEra';
+import TotalValidatorsStatBox from '../../library/StatBoxList/StatBox/TotalValidators';
+import ActiveValidatorsStatBox from '../../library/StatBoxList/StatBox/ActiveValidators';
 
 export const Validators = (props: PageProps) => {
   const { page } = props;
@@ -18,15 +20,13 @@ export const Validators = (props: PageProps) => {
 
   const { isReady }: any = useApi();
   const { validators } = useValidators();
-  const stats = useStats();
-
   return (
     <>
       <PageTitle title={title} />
       <StatBoxList>
-        {stats.map((stat: any, index: number) => (
-          <StatBoxListItem {...stat} key={index} />
-        ))}
+        <TotalValidatorsStatBox />
+        <ActiveValidatorsStatBox />
+        <ActiveEraStatBox />
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
