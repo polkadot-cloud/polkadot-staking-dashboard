@@ -67,7 +67,7 @@ export const StopNominating = () => {
         <h2>You Have {nominations.length} Nomination{nominations.length === 1 ? `` : `s`}</h2>
         <Separator />
         <div className='notes'>
-          <p>Once submitted, you will stop nominating from the start of the next era.</p>
+          <p>Once submitted, your nominations will be removed immediately and will stop nominating from the start of the next era.</p>
           <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
         </div>
         <FooterWrapper>

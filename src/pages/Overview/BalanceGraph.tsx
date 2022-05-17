@@ -29,11 +29,10 @@ export const BalanceGraph = () => {
 
   let { free, miscFrozen } = balance;
 
-  // get user's total DOT balance
-  let freeDot = planckToUnit(free.toNumber(), units);
+  // get user's total free balance
+  let freeBase = planckToUnit(free.toNumber(), units);
   // convert balance to fiat value
-  let freeBalance = fiatAmount(freeDot * prices.lastPrice);
-
+  let freeBalance = fiatAmount(freeBase * prices.lastPrice);
 
   // convert to currency unit
   free = planckToUnit(free.toNumber(), units);
@@ -106,7 +105,7 @@ export const BalanceGraph = () => {
     <>
       <div className='head' style={{ paddingTop: '0.5rem' }}>
         <h4>Balance</h4>
-        <h2>{freeDot} {network.unit}{services.includes('binance_spot') && <>&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></>}</h2>
+        <h2>{freeBase} {network.unit}{services.includes('binance_spot') && <>&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></>}</h2>
       </div>
       <div style={{ paddingTop: '20px' }}></div>
       <div className='inner' ref={ref} style={{ minHeight: minHeight }}>

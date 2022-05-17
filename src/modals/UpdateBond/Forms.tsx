@@ -123,7 +123,7 @@ export const Forms = (props: any) => {
         {task === 'bond_all' &&
           <>
             {freeToBond === 0 &&
-              <Warning text="You have no free WND to bond." />
+              <Warning text={`You have no free ${network.unit} to bond.`} />
             }
             <h4>Amount to bond:</h4>
             <h2>{freeToBond} {network.unit}</h2>

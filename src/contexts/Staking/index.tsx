@@ -237,7 +237,7 @@ export const StakingProvider = (props: any) => {
       }
     }
 
-    // convert _stakingMinActiveBond to DOT value
+    // convert _stakingMinActiveBond to base  value
     let stakingMinActiveBond = _stakingMinActiveBond.div(new BN(10 ** network.units)).toNumber();
 
     // set account's targets
