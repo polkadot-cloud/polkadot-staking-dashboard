@@ -10,8 +10,10 @@ export const Warning = (props: any) => {
 
   return (
     <Wrapper>
-      <FontAwesomeIcon icon={faExclamationTriangle} transform="shrink-2" className='icon' />
-      <h4>{text}</h4>
+      <h4>
+        <FontAwesomeIcon icon={faExclamationTriangle} transform="shrink-2" className='icon' />
+        {text}
+      </h4>
     </Wrapper>
   )
 }
