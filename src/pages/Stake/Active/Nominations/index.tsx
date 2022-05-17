@@ -7,11 +7,19 @@ import { useValidators } from '../../../../contexts/Validators/Validators';
 import { ValidatorList } from '../../../../library/ValidatorList';
 import { OpenAssistantIcon } from '../../../../library/OpenAssistantIcon';
 import { Button } from '../../../../library/Button';
+import { useModal } from '../../../../contexts/Modal';
+import { useBalances } from '../../../../contexts/Balances';
+import { useConnect } from '../../../../contexts/Connect';
 
 export const Nominations = () => {
 
+  const { openModalWith } = useModal();
   const { isReady }: any = useApi();
+  const { activeAccount } = useConnect();
   const { nominated }: any = useValidators();
+  const { getAccountNominations }: any = useBalances();
+  const nominations = getAccountNominations(activeAccount);
+
   const batchKey = 'stake_nominations';
 
   return (
@@ -22,15 +30,18 @@ export const Nominations = () => {
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h2>
         <div>
-          <div>
-            <Button
-              small
-              inline
-              primary
-              title="Stop"
-              onClick={() => { }}
-            />
-          </div>
+          {nominations.length
+            ? <div>
+              <Button
+                small
+                inline
+                primary
+                title="Stop"
+                onClick={() => openModalWith('StopNominating', {}, 'small')}
+              />
+            </div>
+            : <></>
+          }
         </div>
       </div>
       {nominated === null
@@ -42,7 +53,7 @@ export const Nominations = () => {
         <>
           {isReady &&
             <>
-              {nominated.length > 0 &&
+              {nominated.length > 0 ?
                 <div style={{ marginTop: '1rem' }}>
                   <ValidatorList
                     validators={nominated}
@@ -53,6 +64,7 @@ export const Nominations = () => {
                     disableThrottle
                   />
                 </div>
+                : <h3>Not Nominating.</h3>
               }
             </>
           }

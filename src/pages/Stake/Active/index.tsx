@@ -81,9 +81,11 @@ export const Active = (props: any) => {
                 <OpenAssistantIcon page="stake" title="Staking Status" />
               </h4>
               <h2>
-                {nominationsStatus.active
-                  ? 'Active and Earning Rewards'
-                  : 'Waiting for Active Nominations'}
+                {!nominations.length
+                  ? 'Inactive: Not Nominating'
+                  : nominationsStatus.active
+                    ? 'Active and Earning Rewards'
+                    : 'Waiting for Active Nominations'}
               </h2>
               <Separator />
               <h4>

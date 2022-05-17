@@ -12,7 +12,8 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { ContentWrapper, Separator } from './Wrapper';
+import { ContentWrapper } from './Wrapper';
+import { Separator } from '../Wrappers';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
@@ -154,14 +155,13 @@ export const Forms = (props: any) => {
         }
         {task === 'unbond_all' &&
           <>
-            {nominations.length &&
-              <Warning text="Stop nominating before unbonding all funds." />
-            }
+            {nominations.length ? <Warning text="Stop nominating before unbonding all funds." /> : <></>}
             <h4>Amount to unbond:</h4>
             <h2>{freeToUnbond} {network.unit}</h2>
+            <Separator />
             <div className='notes'>
               <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
-              {TxFee}
+              {bondValid && TxFee}
             </div>
           </>
         }

@@ -263,6 +263,18 @@ export const StakingProvider = (props: any) => {
 
   /*
    * Helper function to determine whether the active account
+   * has funds unlocking.
+   */
+  const isUnlocking = () => {
+    if (!hasController()) {
+      return false;
+    }
+    const ledger = getAccountLedger(getBondedAccount(activeAccount));
+    return ledger.unlocking.length;
+  }
+
+  /*
+   * Helper function to determine whether the active account
    * is nominating, or is yet to start.
    */
   const isNominating = () => {
@@ -275,7 +287,7 @@ export const StakingProvider = (props: any) => {
    * is nominating, or is yet to start.
    */
   const inSetup = () => {
-    return (!hasController() || !isBonding() || !isNominating());
+    return (!hasController() || (!isBonding() && !isNominating() && !isUnlocking()));
   }
 
   return (

@@ -99,13 +99,6 @@ export const ContentWrapper = styled.div`
     }
   }
   .notes {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
-`;
-
-export const Separator = styled.div`
-  border-top: 1px solid ${textSecondary};
-  width: 100%;
-  opacity: 0.1;
-  margin: 0.75rem 0rem;
 `;
