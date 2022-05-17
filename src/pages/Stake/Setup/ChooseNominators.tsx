@@ -9,11 +9,9 @@ import { useConnect } from '../../../contexts/Connect';
 import { useUi } from '../../../contexts/UI';
 
 export const ChooseNominators = (props: any) => {
-
   const { section } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-
   const setup = getSetupProgress(activeAccount);
 
   return (
@@ -30,7 +28,13 @@ export const ChooseNominators = (props: any) => {
         activeSection={setup.section}
       >
         <GenerateNominations
-          setup={setup}
+          setters={[
+            {
+              set: setActiveAccountSetup,
+              current: setup
+            },
+          ]}
+          nominations={setup.nominations}
           setSetup={setActiveAccountSetup}
         />
         <Footer complete={setup.nominations.length > 0} />

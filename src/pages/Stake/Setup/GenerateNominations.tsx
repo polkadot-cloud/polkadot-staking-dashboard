@@ -13,11 +13,12 @@ import { Button } from '../../../library/Button';
 export const GenerateNominations = (props: any) => {
 
   // functional props
-  const { setup, setSetup } = props;
+  const setters = props.setters ?? [];
+  const defaultNominations = props.nominations;
+
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, favouritesList, meta } = useValidators();
-
   const {
     applyValidatorOrder,
     applyValidatorFilters,
@@ -25,14 +26,14 @@ export const GenerateNominations = (props: any) => {
 
   const [method, setMethod]: any = useState(null);
   const [fetching, setFetching] = useState(false);
-  const [nominations, setNominations] = useState(setup.nominations);
+  const [nominations, setNominations] = useState(defaultNominations);
 
   const rawBatchKey = 'validators_browse';
   const batchKey = 'generated_nominations';
 
   // update selected value on account switch
   useEffect(() => {
-    setNominations(setup.nominations);
+    setNominations(defaultNominations);
   }, [activeAccount]);
 
   const fetchFavourites = () => {
@@ -90,11 +91,13 @@ export const GenerateNominations = (props: any) => {
       setNominations(_nominations);
       setFetching(false);
 
-      // update setup state
-      setSetup({
-        ...setup,
-        nominations: _nominations,
-      });
+      // apply update to setters
+      for (let s of setters) {
+        s.set({
+          ...s.current,
+          nominations: _nominations,
+        });
+      }
     }
   });
 
