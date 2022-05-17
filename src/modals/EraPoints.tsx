@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
-import { useUi } from '../contexts/UI';
 import { useModal } from '../contexts/Modal';
 import { useSubscan } from '../contexts/Subscan';
 import { EraPoints as EraPointsGraph } from '../library/Graphs/EraPoints';
@@ -20,7 +19,6 @@ export const EraPoints = () => {
   const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
   const { metrics } = useNetworkMetrics();
-
 
   const [list, setList] = useState([]);
 
