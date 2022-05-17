@@ -15,6 +15,7 @@ import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
+import { PAYEE_STATUS } from '../../constants';
 
 export const UpdatePayee = () => {
 
@@ -26,23 +27,12 @@ export const UpdatePayee = () => {
   const { staking } = useStaking();
   const { payee } = staking;
 
-  const items = [{
-    key: 'Staked',
-    name: 'Back to Staking'
-  }, {
-    key: 'Stash',
-    name: 'To Stash Account'
-  }, {
-    key: 'Controller',
-    name: 'To Controller Account'
-  }];
-
-  const _selected: any = items.find((item: any) => item.key === payee);
+  const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);
   const [selected, setSelected] = useState(_selected ?? null);
 
   // ensure selected key is valid
   useEffect(() => {
-    const exists: any = items.find((item: any) => item.key === selected?.key);
+    const exists: any = PAYEE_STATUS.find((item: any) => item.key === selected?.key);
     setValid(exists !== undefined)
   }, [selected]);
 
@@ -86,7 +76,7 @@ export const UpdatePayee = () => {
           <h4>Currently Selected: {_selected?.name ?? 'None'}</h4>
         </div>
         <Dropdown
-          items={items}
+          items={PAYEE_STATUS}
           onChange={handleOnChange}
           placeholder='Reward Destination'
           value={selected}

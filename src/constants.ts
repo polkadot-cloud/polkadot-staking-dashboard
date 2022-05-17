@@ -62,6 +62,19 @@ export const CONNECTION_SYMBOL_COLORS: any = {
   connected: 'green',
 }
 
+export const PAYEE_STATUS = [
+  {
+    key: 'Staked',
+    name: 'Back to Staking'
+  }, {
+    key: 'Stash',
+    name: 'To Stash Account'
+  }, {
+    key: 'Controller',
+    name: 'To Controller Account'
+  }
+];
+
 export const INTERFACE_MAXIMUM_WIDTH: number = 1800;
 export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
 export const SIDE_MENU_STICKY_THRESHOLD: number = 1175;

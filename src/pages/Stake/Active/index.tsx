@@ -24,6 +24,7 @@ import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import StatBoxListItem from '../../../library/StatBoxList/Item';
 import { useStats } from './stats';
+import { PAYEE_STATUS } from '../../../constants';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
@@ -35,6 +36,7 @@ export const Active = (props: any) => {
 
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
+  const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
 
   // handle nomination statuses
   const [nominationsStatus, setNominationsStatus]: any = useState({
@@ -100,11 +102,7 @@ export const Active = (props: any) => {
                   transform="shrink-4"
                 />
                 &nbsp;
-                {payee === 'Staked' && 'Back to Staking'}
-                {payee === 'Stash' && 'To Stash'}
-                {payee === 'Controller' && 'To Controller'}
-                {payee === 'Account' && 'To Account'}
-                {payee === 'None' && 'Not Set'}
+                {payeeStatus.name}
                 &nbsp;&nbsp;
                 <div>
                   <Button
