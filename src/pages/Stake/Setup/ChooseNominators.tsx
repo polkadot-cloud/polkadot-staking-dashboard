@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { GenerateNominations } from './GenerateNominations';
+import { GenerateNominations } from '../GenerateNominations';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
@@ -27,16 +27,16 @@ export const ChooseNominators = (props: any) => {
         thisSection={section}
         activeSection={setup.section}
       >
-        <GenerateNominations
-          setters={[
-            {
+        <div style={{ marginTop: '1rem' }}>
+          <GenerateNominations
+            setters={[{
               set: setActiveAccountSetup,
               current: setup
-            },
-          ]}
-          nominations={setup.nominations}
-          setSetup={setActiveAccountSetup}
-        />
+            }]}
+            nominations={setup.nominations}
+            setSetup={setActiveAccountSetup}
+          />
+        </div>
         <Footer complete={setup.nominations.length > 0} />
       </MotionContainer>
     </>

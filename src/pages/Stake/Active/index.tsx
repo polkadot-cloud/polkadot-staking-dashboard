@@ -12,12 +12,7 @@ import { useConnect } from '../../../contexts/Connect';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { Button } from '../../../library/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faRedoAlt,
-  faWallet,
-  faCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import { GenerateNominations } from '../GenerateNominations';
 import { Separator } from '../../../Wrappers';
 import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
@@ -25,6 +20,12 @@ import { useModal } from '../../../contexts/Modal';
 import StatBoxListItem from '../../../library/StatBoxList/Item';
 import { useStats } from './stats';
 import { PAYEE_STATUS } from '../../../constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faRedoAlt,
+  faWallet,
+  faCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
@@ -43,6 +44,11 @@ export const Active = (props: any) => {
     total: 0,
     inactive: 0,
     active: 0,
+  });
+
+  // generated nominations for nominating again
+  const [generatedNominations, setGeneratedNominations] = useState({
+    nominations: [],
   });
 
   const nominationStatuses = useMemo(
@@ -127,7 +133,34 @@ export const Active = (props: any) => {
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          <Nominations />
+          {nominations.length
+            ? <Nominations />
+            : <>
+              <div className='head with-action'>
+                <h2>
+                  Generate Nominations
+                  <OpenAssistantIcon page="stake" title="Nominations" />
+                </h2>
+                <div>
+                  <Button
+                    small
+                    inline
+                    primary
+                    title="Nominate"
+                    disabled={generatedNominations.nominations.length === 0}
+                    onClick={() => openModalWith('StopNominating', {}, 'small')}
+                  />
+                </div>
+              </div>
+              <GenerateNominations
+                setters={[{
+                  set: setGeneratedNominations,
+                  current: generatedNominations
+                }]}
+                nominations={generatedNominations.nominations}
+              />
+            </>
+          }
         </SectionWrapper>
       </PageRowWrapper>
     </>

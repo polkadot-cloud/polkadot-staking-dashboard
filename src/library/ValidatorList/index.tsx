@@ -6,6 +6,7 @@ import { List, Header, Wrapper as ListWrapper, Pagination } from '../../library/
 import { motion } from 'framer-motion';
 import { Validator } from '../../library/Validator';
 import { useApi } from '../../contexts/Api';
+import { useConnect } from '../../contexts/Connect';
 import { StakingContext } from '../../contexts/Staking';
 import { useValidators } from '../../contexts/Validators/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +19,7 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 export const ValidatorListInner = (props: any) => {
 
   const { isReady }: any = useApi();
+  const { activeAccount } = useConnect();
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch, meta } = useValidators();
   const {
@@ -34,7 +36,8 @@ export const ValidatorListInner = (props: any) => {
     allowMoreCols,
     allowFilters,
     toggleFavourites,
-    pagination
+    pagination,
+    title,
   }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
@@ -85,6 +88,11 @@ export const ValidatorListInner = (props: any) => {
   useEffect(() => {
     setFetched(false);
   }, [props.validators]);
+
+  // refetch list when active account changes
+  useEffect(() => {
+    setFetched(false);
+  }, [activeAccount]);
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
@@ -150,7 +158,10 @@ export const ValidatorListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
-          <h3>{props.title}</h3>
+          <h4>{title
+            ? title
+            : `Dispalying ${validators.length} Validator${validators.length === 1 ? '' : 's'}`
+          }</h4>
         </div>
         <div>
           <button onClick={() => setListFormat('row')}><FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} /></button>
