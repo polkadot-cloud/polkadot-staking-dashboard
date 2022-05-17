@@ -85,7 +85,7 @@ export const BalanceGraph = () => {
   };
 
   const data = {
-    labels: ['Staked', 'Free to stake'],
+    labels: ['Staked', 'Available to stake'],
     datasets: [
       {
         label: network.unit,
