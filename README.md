@@ -26,7 +26,7 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Multi-wallet support
 - [x] Node only / External API toggles
 - [x] Screen size support
-- [ ] Extrinsics
+- [x] Extrinsics
 - [ ] Initial Nomination management tooling
 - [ ] Nomination Pools
 - [ ] Chain API Integration
