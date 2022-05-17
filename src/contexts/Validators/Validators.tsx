@@ -417,13 +417,12 @@ export const ValidatorsProvider = (props: any) => {
 
     _keyUnsubs.push(...unsubs)
     _unsubs[key] = _keyUnsubs;
-
     setValidatorSubs(_unsubs);
   }
 
   const removeValidatorMetaBatch = (key: string) => {
 
-    if (validatorMetaBatchesRef.current[key] !== undefined) {
+    if (validatorSubsRef.current[key] !== undefined) {
       // ubsubscribe from updates
       for (let unsub of validatorSubsRef.current[key]) {
         unsub();
