@@ -85,7 +85,7 @@ export const Active = (props: any) => {
                 {!nominations.length
                   ? 'Inactive: Not Nominating'
                   : nominationsStatus.active
-                    ? 'Active and Earning Rewards'
+                    ? 'Actively Nominating with Bonded Funds'
                     : 'Waiting for Active Nominations'}
               </h2>
               <Separator />
