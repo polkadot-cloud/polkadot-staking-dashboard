@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
@@ -11,6 +10,7 @@ import { BondInput } from '../BondInput';
 import { planckToUnit, humanNumber } from '../../../Utils';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
+import { planckBnToUnit } from '../../../Utils';
 
 export const BondInputWithFeedback = (props: any) => {
 
@@ -26,17 +26,18 @@ export const BondInputWithFeedback = (props: any) => {
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any = useBalances();
-  const { freeToBond } = getBondOptions(activeAccount);
-
+  const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
-
   const { units } = network;
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
   let activeBase = planckToUnit(active.toNumber(), units);
-  let minNominatorBondBase = minNominatorBond.div(new BN(10 ** units)).toNumber();
+  let minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
+
+  // unbond amount to `minNominatorBond` threshold
+  const freeToUnbondToMinNominatorBond = freeToUnbond - planckBnToUnit(minNominatorBond, units);
 
   // store errors
   const [errors, setErrors]: any = useState([]);
@@ -103,9 +104,14 @@ export const BondInputWithFeedback = (props: any) => {
 
       if (bond.bond !== '' && bond.bond > activeBase) {
         _errors.push(`Unbond amount is more than your bonded balance.`);
+
+      } else {
+        if (bond.bond !== '' && bond.bond > freeToUnbondToMinNominatorBond) {
+          const remainingAfterUnbond = (bond.bond - freeToUnbondToMinNominatorBond).toFixed(2);
+          _errors.push(`A minimum bond of ${minNominatorBondBase} ${network.unit} is required when actively nominating. Removing this amount will result in ~${remainingAfterUnbond} ${network.unit} remaining bond.`);
+        }
       }
     }
-
     let bondValid = !_errors.length && bond.bond !== '';
 
     setBondDisabled(_bondDisabled);
