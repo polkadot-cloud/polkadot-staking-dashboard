@@ -60,7 +60,7 @@ export const Forms = (props: any) => {
       }
     }
     if (task === 'unbond_all') {
-      if (freeToUnbondToMinNominatorBond > 0 && nominations.length === 0) {
+      if (freeToUnbond > 0 && nominations.length === 0) {
         setBondValid(true);
       } else {
         setBondValid(false);
