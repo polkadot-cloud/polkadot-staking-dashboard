@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from "framer-motion";
-import { textPrimary, buttonSecondaryBackground } from '../../theme';
+import { textSecondary, buttonSecondaryBackground } from '../../theme';
 
 export const ButtonRow = styled.div`
   flex: 1;
@@ -20,7 +20,7 @@ export const ButtonRow = styled.div`
 
 export const Wrapper = styled(motion.button) <any>`
   background: ${props => props.type === 'default' ? buttonSecondaryBackground : 'rgba(211, 48, 121, 0.9)'};
-  color: ${props => props.type === 'default' ? textPrimary : 'white'};
+  color: ${props => props.type === 'default' ? textSecondary : 'white'};
   margin: ${props => props.margin};
   flex-grow: 1;
   padding: ${props => props.padding};
@@ -30,7 +30,7 @@ export const Wrapper = styled(motion.button) <any>`
 
   &:disabled {
     cursor: default;
-    opacity: 0.75;
+    opacity: 0.5;
   }
 `;
 
