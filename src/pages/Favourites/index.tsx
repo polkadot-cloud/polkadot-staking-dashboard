@@ -30,8 +30,8 @@ export const Favourites = (props: PageProps) => {
             <>
               {isReady &&
                 <>
-                  {favouritesList.length > 0 &&
-                    <ValidatorList
+                  {favouritesList.length > 0
+                    ? <ValidatorList
                       validators={favouritesList}
                       batchKey={batchKey}
                       title='Favourite Validators'
@@ -39,6 +39,7 @@ export const Favourites = (props: PageProps) => {
                       allowMoreCols
                       toggleFavourites
                     />
+                    : <h3>No Favourites.</h3>
                   }
                 </>
               }
