@@ -107,7 +107,7 @@ export const PoolListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
-          <h3>{props.title}</h3>
+          <h4>{props.title}</h4>
         </div>
         <div>
           <button onClick={() => setListFormat('row')}><FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} /></button>
