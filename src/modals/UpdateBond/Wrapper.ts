@@ -98,6 +98,9 @@ export const ContentWrapper = styled.div`
       }
     }
   }
+  .notes {
+    margin-top: 1.5rem;
+  }
 `;
 
 export const Separator = styled.div`
