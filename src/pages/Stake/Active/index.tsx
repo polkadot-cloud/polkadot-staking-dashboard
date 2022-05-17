@@ -30,7 +30,7 @@ import {
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus, staking } = useStaking();
+  const { getNominationsStatus, staking, targets, setTargets } = useStaking();
   const { getAccountNominations }: any =
     useBalances();
   const stats = useStats();
@@ -44,11 +44,6 @@ export const Active = (props: any) => {
     total: 0,
     inactive: 0,
     active: 0,
-  });
-
-  // generated nominations for nominating again
-  const [generatedNominations, setGeneratedNominations] = useState({
-    nominations: [],
   });
 
   const nominationStatuses = useMemo(
@@ -147,17 +142,17 @@ export const Active = (props: any) => {
                     inline
                     primary
                     title="Nominate"
-                    disabled={generatedNominations.nominations.length === 0}
-                    onClick={() => openModalWith('StopNominating', {}, 'small')}
+                    disabled={targets.length === 0}
+                    onClick={() => openModalWith('Nominate', {}, 'small')}
                   />
                 </div>
               </div>
               <GenerateNominations
                 setters={[{
-                  set: setGeneratedNominations,
-                  current: generatedNominations
+                  set: setTargets,
+                  current: targets
                 }]}
-                nominations={generatedNominations.nominations}
+                nominations={targets.nominations}
               />
             </>
           }

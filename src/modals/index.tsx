@@ -12,6 +12,7 @@ import { Settings } from './Settings';
 import { UpdateBond } from './UpdateBond';
 import { UpdatePayee } from './UpdatePayee';
 import { StopNominating } from './StopNominating';
+import { Nominate } from './Nominate';
 
 export const Modal = () => {
 
@@ -71,6 +72,7 @@ export const Modal = () => {
           {modal === 'UpdateBond' && <UpdateBond />}
           {modal === 'UpdatePayee' && <UpdatePayee />}
           {modal === 'StopNominating' && <StopNominating />}
+          {modal === 'Nominate' && <Nominate />}
         </ContentWrapper>
         <button className='close' onClick={() => { onFadeOut() }}>
         </button>

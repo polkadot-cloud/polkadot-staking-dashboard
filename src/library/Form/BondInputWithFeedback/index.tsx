@@ -33,7 +33,7 @@ export const BondInputWithFeedback = (props: any) => {
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
-  let activeBase = planckToUnit(active.toNumber(), units);
+  let activeBase = planckBnToUnit(active, units);
   let minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
   // unbond amount to `minNominatorBond` threshold

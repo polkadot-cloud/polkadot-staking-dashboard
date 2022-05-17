@@ -34,7 +34,7 @@ export const GenerateNominations = (props: any) => {
   // update selected value on account switch
   useEffect(() => {
     setNominations(defaultNominations);
-  }, [activeAccount]);
+  }, [activeAccount, defaultNominations]);
 
   const fetchFavourites = () => {
     let _favs = [];

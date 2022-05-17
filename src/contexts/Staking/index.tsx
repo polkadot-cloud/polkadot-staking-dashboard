@@ -7,7 +7,7 @@ import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import BN from "bn.js";
-import { rmCommas } from '../../Utils';
+import { rmCommas, localStorageOrDefault } from '../../Utils';
 import * as defaults from './defaults';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Worker from "worker-loader!../../workers/stakers";
@@ -16,22 +16,26 @@ const worker = new Worker();
 
 export interface StakingContextState {
   getNominationsStatus: () => any;
+  setTargets: (t: any) => any;
   hasController: () => any;
   isBonding: () => any;
   isNominating: () => any;
   inSetup: () => any;
   staking: any;
   eraStakers: any;
+  targets: any;
 }
 
 export const StakingContext: React.Context<StakingContextState> = React.createContext({
   getNominationsStatus: () => { },
+  setTargets: (t: any) => false,
   hasController: () => false,
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => false,
   staking: {},
   eraStakers: {},
+  targets: [],
 });
 
 export const useStaking = () => React.useContext(StakingContext);
@@ -49,6 +53,9 @@ export const StakingProvider = (props: any) => {
 
   // store stakers metadata in state
   const [eraStakers, _setEraStakers]: any = useState(defaults.eraStakers);
+
+  // store account target validators
+  const [targets, _setTargets]: any = useState(localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true));
 
   const eraStakersRef = useRef(eraStakers);
   const setEraStakers = (val: any) => {
@@ -201,9 +208,9 @@ export const StakingProvider = (props: any) => {
     };
   }, []);
 
-  // calculates minimum bond of the user's chosen nominated validators.
   useEffect(() => {
 
+    // calculates minimum bond of the user's chosen nominated validators.
     let _stakingMinActiveBond = new BN(0);
     const stakers = eraStakersRef.current?.stakers ?? null;
     const nominations = getAccountNominations(activeAccount);
@@ -233,6 +240,9 @@ export const StakingProvider = (props: any) => {
     // convert _stakingMinActiveBond to DOT value
     let stakingMinActiveBond = _stakingMinActiveBond.div(new BN(10 ** network.units)).toNumber();
 
+    // set account's targets
+    _setTargets(localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true));
+
     setEraStakers({
       ...eraStakersRef.current,
       minStakingActiveBond: stakingMinActiveBond
@@ -240,6 +250,12 @@ export const StakingProvider = (props: any) => {
 
   }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
+  /* Gets an account's stored target validators */
+  const setTargets = (_targets: any) => {
+    localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(_targets));
+    _setTargets(_targets);
+    return [];
+  }
 
   /*
    * Helper function to determine whether the active account
@@ -294,12 +310,14 @@ export const StakingProvider = (props: any) => {
     <StakingContext.Provider
       value={{
         getNominationsStatus: getNominationsStatus,
+        setTargets: setTargets,
         hasController: hasController,
         isBonding: isBonding,
         isNominating: isNominating,
         inSetup: inSetup,
         staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
+        targets: targets,
       }}>
       {props.children}
     </StakingContext.Provider>
