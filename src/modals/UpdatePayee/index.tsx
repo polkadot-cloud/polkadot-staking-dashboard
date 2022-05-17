@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Wrapper } from './Wrapper';
 import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,9 +10,19 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Dropdown } from '../../library/Form/Dropdown';
 import { useStaking } from '../../contexts/Staking';
+import { useBalances } from '../../contexts/Balances';
+import { useApi } from '../../contexts/Api';
+import { useModal } from '../../contexts/Modal';
+import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
+import { useConnect } from '../../contexts/Connect';
 
 export const UpdatePayee = () => {
 
+  const { api }: any = useApi();
+  const { activeAccount } = useConnect();
+  const { getBondedAccount }: any = useBalances();
+  const { setStatus: setModalStatus }: any = useModal();
+  const controller = getBondedAccount(activeAccount);
   const { staking } = useStaking();
   const { payee } = staking;
 
@@ -27,16 +37,43 @@ export const UpdatePayee = () => {
     name: 'To Controller Account'
   }];
 
-  const _selected = items.find((item: any) => item.key === payee);
+  const _selected: any = items.find((item: any) => item.key === payee);
   const [selected, setSelected] = useState(_selected ?? null);
+
+  // ensure selected key is valid
+  useEffect(() => {
+    const exists: any = items.find((item: any) => item.key === selected?.key);
+    setValid(exists !== undefined)
+  }, [selected]);
 
   const handleOnChange = ({ selectedItem }: any) => {
     setSelected(selectedItem);
   }
 
-  // TODO: submit extrinsic
-  const submitTx = () => {
+  // bond valid
+  const [valid, setValid]: any = useState(false);
+
+  // tx to submit
+  const tx = () => {
+    let tx = null;
+
+    if (!valid) {
+      return tx;
+    }
+    tx = api.tx.staking.setPayee(selected.key);
+    return tx;
   }
+
+  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+    tx: tx(),
+    from: controller,
+    shouldSubmit: valid,
+    callbackSubmit: () => {
+      setModalStatus(0);
+    },
+    callbackInBlock: () => {
+    }
+  });
 
   return (
     <Wrapper>
@@ -45,6 +82,9 @@ export const UpdatePayee = () => {
         Update Reward Destination
       </HeadingWrapper>
       <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
+        <div className='head'>
+          <h4>Currently Selected: {_selected?.name ?? 'None'}</h4>
+        </div>
         <Dropdown
           items={items}
           onChange={handleOnChange}
@@ -52,9 +92,12 @@ export const UpdatePayee = () => {
           value={selected}
           height='17rem'
         />
+        <div>
+          <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
+        </div>
         <FooterWrapper>
           <div>
-            <button className='submit' onClick={() => submitTx()} disabled={selected === null}>
+            <button className='submit' onClick={() => submitTx()} disabled={!valid || submitting}>
               <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp as IconProp} />
               Submit
             </button>
