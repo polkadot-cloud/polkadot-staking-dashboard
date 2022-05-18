@@ -36,8 +36,9 @@ export const Wrapper = styled(motion.button) <any>`
 
 export const Button = (props: any) => {
   let {
-    title, primary, inline, onClick, small, disabled,
+    primary, inline, small, disabled,
   } = props;
+  const { title, onClick } = props;
   primary = primary ?? false;
   inline = inline ?? false;
   small = small ?? false;

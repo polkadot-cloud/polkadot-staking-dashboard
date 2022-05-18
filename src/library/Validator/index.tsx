@@ -116,7 +116,7 @@ export const ValidatorInner = (props: any) => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.1 }}
             >
-              <label className="warning">
+              <div className="label warning">
                 <FontAwesomeIcon
                   icon={faExclamationTriangle}
                   transform="shrink-2"
@@ -125,7 +125,7 @@ export const ValidatorInner = (props: any) => {
                 {lowest}
                 {' '}
                 {network.unit}
-              </label>
+              </div>
             </motion.div>
             )}
           {prefs !== undefined
@@ -133,52 +133,59 @@ export const ValidatorInner = (props: any) => {
             <>
               {blocked
                 && (
-                <label>
+                <div className="label">
                   <FontAwesomeIcon
                     icon={faUserSlash}
                     color="#d2545d"
                     transform="shrink-1"
                   />
-                </label>
+                </div>
                 )}
-              <label>
+              <div className="label">
                 {commission}
                 %
-              </label>
+              </div>
             </>
             )}
-          <label>
-            <button onClick={() => openModalWith('EraPoints', {
-              address,
-              identity: display,
-            })}
+          <div className="label">
+            <button
+              type="button"
+              onClick={() => openModalWith('EraPoints', {
+                address,
+                identity: display,
+              })}
             >
               <FontAwesomeIcon icon={faChartLine} />
             </button>
-          </label>
-          <label>
-            <button onClick={() => addNotification(notificationCopyAddress)}>
+          </div>
+          <div className="label">
+            <button
+              type="button"
+              onClick={() => addNotification(notificationCopyAddress)}
+            >
               <CopyToClipboard text={address}>
                 <FontAwesomeIcon icon={faCopy as IconProp} />
               </CopyToClipboard>
             </button>
-          </label>
+          </div>
           {toggleFavourites
             && (
-            <label>
+            <div className="label">
               <button
+                type="button"
                 className={favourites.includes(address) ? 'active' : undefined}
                 onClick={() => {
-                  favourites.includes(address)
-                    ? removeFavourite(address)
-                    : addFavourite(address);
-
+                  if (favourites.includes(address)) {
+                    removeFavourite(address);
+                  } else {
+                    addFavourite(address);
+                  }
                   addNotification(notificationFavourite);
                 }}
               >
                 <FontAwesomeIcon icon={faThumbtack} />
               </button>
-            </label>
+            </div>
             )}
         </div>
       </div>

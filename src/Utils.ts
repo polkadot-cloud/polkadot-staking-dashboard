@@ -67,11 +67,11 @@ export const pageFromUri = (pathname: string) => {
 };
 
 export const isNumeric = (str: any) => {
-  return !isNaN(str) && !isNaN(parseFloat(str));
+  return !Number.isNaN(str) && !Number.isNaN(parseFloat(str));
 };
 
 export const defaultIfNaN = (val: any, _default: any) => {
-  if (isNaN(val)) {
+  if (Number.isNaN(val)) {
     return _default;
   }
   return val;

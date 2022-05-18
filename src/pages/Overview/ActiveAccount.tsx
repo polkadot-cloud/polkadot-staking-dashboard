@@ -50,7 +50,7 @@ export const ActiveAccount = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <button onClick={() => addNotification(notification)}>
+                <button type="button" onClick={() => addNotification(notification)}>
                   <CopyToClipboard text={accountData.address}>
                     <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />
                   </CopyToClipboard>

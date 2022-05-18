@@ -36,7 +36,10 @@ export const Accounts = (props: any) => {
         Account
       </h2>
       <div className="head">
-        <button onClick={() => setSection(0)}>
+        <button
+          type="button"
+          onClick={() => setSection(0)}
+        >
           <FontAwesomeIcon icon={faChevronLeft} transform="shrink-5" />
           &nbsp;Back to Wallets
         </button>
@@ -44,7 +47,11 @@ export const Accounts = (props: any) => {
 
       {activeAccount !== ''
         ? (
-          <button className="item" onClick={() => { disconnectFromAccount(); }}>
+          <button
+            type="button"
+            className="item"
+            onClick={() => { disconnectFromAccount(); }}
+          >
             <div>
               <Identicon value={activeAccountMeta?.address} size={26} />
             &nbsp;
@@ -55,7 +62,11 @@ export const Accounts = (props: any) => {
           </button>
         )
         : (
-          <button className="item" disabled>
+          <button
+            type="button"
+            className="item"
+            disabled
+          >
             <div>No Account Connected</div>
             <div />
           </button>
@@ -68,6 +79,7 @@ export const Accounts = (props: any) => {
 
         return (
           <button
+            type="button"
             className="item"
             key={`switch_acnt_${index}`}
             onClick={() => {

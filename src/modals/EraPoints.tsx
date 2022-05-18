@@ -26,8 +26,8 @@ export const EraPoints = () => {
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
-    const list = await fetchEraPoints(address, metrics.activeEra.index);
-    setList(list);
+    const _list = await fetchEraPoints(address, metrics.activeEra.index);
+    setList(_list);
   };
 
   useEffect(() => {

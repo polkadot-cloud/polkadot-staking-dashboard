@@ -43,17 +43,17 @@ export const Nominate = () => {
 
   // tx to submit
   const tx = () => {
-    let tx = null;
+    let _tx = null;
     if (!valid) {
-      return tx;
+      return _tx;
     }
     const targetsToSubmit = nominations.map((item: any) => {
       return ({
         Id: item.address,
       });
     });
-    tx = api.tx.staking.nominate(targetsToSubmit);
-    return tx;
+    _tx = api.tx.staking.nominate(targetsToSubmit);
+    return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
@@ -101,7 +101,12 @@ export const Nominate = () => {
         </div>
         <FooterWrapper>
           <div>
-            <button className="submit" onClick={() => submitTx()} disabled={!valid || submitting}>
+            <button
+              type="button"
+              className="submit"
+              onClick={() => submitTx()}
+              disabled={!valid || submitting}
+            >
               <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
               Submit
             </button>

@@ -57,7 +57,11 @@ export const Wallets = (props: any) => {
 
       {activeWallet !== null
         && (
-        <button className="item" onClick={() => disconnectFromWallet()}>
+        <button
+          type="button"
+          className="item"
+          onClick={() => disconnectFromWallet()}
+        >
           <div>
             {activeWallet === 'talisman' && <TalismanSVG width="1.5rem" height="1.5rem" />}
             {activeWallet === 'polkadot-js' && <PolkadotJSSVG width="1.5rem" height="1.5rem" />}
@@ -73,6 +77,7 @@ export const Wallets = (props: any) => {
       {activeExtension !== null
         && (
         <button
+          type="button"
           className="item"
           key={`wallet_${activeExtension.name}`}
           onClick={() => handleWalletConnect(activeExtension.name)}
@@ -97,6 +102,7 @@ export const Wallets = (props: any) => {
 
         return (
           <button
+            type="button"
             className="item"
             key={`wallet_${wallet.name}`}
             disabled={disabled}

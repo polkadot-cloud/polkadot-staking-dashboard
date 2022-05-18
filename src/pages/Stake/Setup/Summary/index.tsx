@@ -43,12 +43,12 @@ export const Summary = (props: any) => {
     };
 
     // construct a batch of transactions
-    const txs = [
+    const _txs = [
       api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
       api.tx.staking.nominate(targetsToSubmit),
       api.tx.staking.setController(controllerToSubmit),
     ];
-    return api.tx.utility.batch(txs);
+    return api.tx.utility.batch(_txs);
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({

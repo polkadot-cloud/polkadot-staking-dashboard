@@ -9,29 +9,30 @@ export const usePrices = () => {
   const { network, fetchDotPrice }: any = useApi();
   const { services }: any = useUi();
 
-  let _prices = localStorage.getItem(`${network.name}_prices`);
-  _prices = _prices === null
+  let pricesLocal = localStorage.getItem(`${network.name}_prices`);
+  pricesLocal = pricesLocal === null
     ? {
       lastPrice: 0,
       change: 0,
     }
-    : JSON.parse(_prices);
+    : JSON.parse(pricesLocal);
 
-  const [prices, _setPrices]: any = useState(_prices);
+  const [prices, _setPrices]: any = useState(pricesLocal);
 
   const pricesRef = useRef(prices);
-  const setPrices = (_prices: any) => {
-    localStorage.setItem(`${network.name}_prices`, JSON.stringify(_prices));
+
+  const setPrices = (p: any) => {
+    localStorage.setItem(`${network.name}_prices`, JSON.stringify(p));
     pricesRef.current = prices;
     _setPrices({
       ...pricesRef.current,
-      ..._prices,
+      ...p,
     });
   };
 
   const initiatePriceInterval = async () => {
-    const prices = await fetchDotPrice();
-    setPrices(prices);
+    const _prices = await fetchDotPrice();
+    setPrices(_prices);
     if (priceHandle === null) {
       setPriceInterval();
     }
@@ -40,8 +41,8 @@ export const usePrices = () => {
   let priceHandle: any = null;
   const setPriceInterval = async () => {
     priceHandle = setInterval(async () => {
-      const prices = await fetchDotPrice();
-      setPrices(prices);
+      const _prices = await fetchDotPrice();
+      setPrices(_prices);
     }, 1000 * 30);
   };
 

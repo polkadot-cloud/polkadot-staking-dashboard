@@ -25,7 +25,7 @@ export const UpdateBond = () => {
       <FixedContentWrapper>
         <HeadingWrapper>
           <FontAwesomeIcon transform="grow-2" icon={fn === 'add' ? faPlus : faMinus} />
-          {fn == 'add' ? 'Add To' : 'Remove'}
+          {fn === 'add' ? 'Add To' : 'Remove'}
           {' '}
           Bond
         </HeadingWrapper>

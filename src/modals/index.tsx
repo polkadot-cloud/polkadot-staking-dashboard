@@ -75,7 +75,7 @@ export const Modal = () => {
           {modal === 'StopNominating' && <StopNominating />}
           {modal === 'Nominate' && <Nominate />}
         </ContentWrapper>
-        <button className="close" onClick={() => { onFadeOut(); }} />
+        <button type="button" className="close" onClick={() => { onFadeOut(); }}>&nbsp;</button>
       </div>
     </ModalWrapper>
   );

@@ -21,6 +21,7 @@ export const Tasks = (props: any) => {
           && (
           <>
             <button
+              type="button"
               className="action-button"
               onClick={() => {
                 setSection(1);
@@ -40,6 +41,7 @@ export const Tasks = (props: any) => {
               </div>
             </button>
             <button
+              type="button"
               className="action-button"
               onClick={() => {
                 setSection(1);
@@ -64,6 +66,7 @@ export const Tasks = (props: any) => {
           && (
           <>
             <button
+              type="button"
               className="action-button"
               onClick={() => {
                 setSection(1);
@@ -83,6 +86,7 @@ export const Tasks = (props: any) => {
               </div>
             </button>
             <button
+              type="button"
               className="action-button"
               onClick={() => {
                 setSection(1);

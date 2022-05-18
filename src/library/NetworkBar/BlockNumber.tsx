@@ -19,26 +19,38 @@ export const BlockNumberInner = (props: any) => {
 export class BlockNumber extends React.Component<any, any> {
   static contextType = APIContext;
 
-  state = {
-    block: 0,
-    unsub: null,
-  };
-
   stateRef: any;
 
   constructor(props: any) {
     super(props);
+    this.state = {
+      block: 0,
+      unsub: null,
+    };
+
     this.stateRef = React.createRef();
     this.stateRef.current = this.state;
   }
 
-  _setState(_state: any) {
-    this.stateRef.current = _state;
-    this.setState(_state);
+  componentDidMount() {
+    this.initiateBlockSubscription();
+  }
+
+  componentDidUpdate() {
+    if (this.state.unsub === null) {
+      this.initiateBlockSubscription();
+    }
+  }
+
+  componentWillUnmount() {
+    const { unsub }: any = this.state;
+    if (unsub !== null) {
+      unsub();
+    }
   }
 
   initiateBlockSubscription = async () => {
-    const { api, isReady } = this.context;
+    const { api, isReady }: any = this.context;
 
     if (isReady) {
       const unsub = await api.rpc.chain.subscribeNewHeads((block: any) => {
@@ -57,21 +69,9 @@ export class BlockNumber extends React.Component<any, any> {
     }
   };
 
-  componentDidMount() {
-    this.initiateBlockSubscription();
-  }
-
-  componentDidUpdate() {
-    if (this.state.unsub === null) {
-      this.initiateBlockSubscription();
-    }
-  }
-
-  componentWillUnmount() {
-    const { unsub }: any = this.state;
-    if (unsub !== null) {
-      unsub();
-    }
+  _setState(_state: any) {
+    this.stateRef.current = _state;
+    this.setState(_state);
   }
 
   render() {

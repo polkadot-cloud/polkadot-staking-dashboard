@@ -107,8 +107,18 @@ export const PayoutListInner = (props: any) => {
           <h3>{props.title}</h3>
         </div>
         <div>
-          <button onClick={() => setListFormat('row')}><FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} /></button>
-          <button onClick={() => setListFormat('col')}><FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : 'inherit'} /></button>
+          <button
+            type="button"
+            onClick={() => setListFormat('row')}
+          >
+            <FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setListFormat('col')}
+          >
+            <FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : 'inherit'} />
+          </button>
         </div>
       </Header>
       <List
@@ -130,8 +140,8 @@ export const PayoutListInner = (props: any) => {
               </h4>
             </div>
             <div>
-              <button className="prev" onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
-              <button className="next" onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
+              <button type="button" className="prev" onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
+              <button type="button" className="next" onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
             </div>
           </Pagination>
           )}

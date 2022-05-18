@@ -49,7 +49,10 @@ export const PoolAccount = (props: any) => {
 
             {address !== null
               && (
-              <button onClick={() => addNotification(notification)}>
+              <button
+                type="button"
+                onClick={() => addNotification(notification)}
+              >
                 <CopyToClipboard text={address}>
                   <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />
                 </CopyToClipboard>

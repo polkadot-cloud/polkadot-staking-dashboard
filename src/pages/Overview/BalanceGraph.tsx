@@ -29,7 +29,8 @@ export const BalanceGraph = () => {
   const prices = usePrices();
   const { freeToStake, freeToUnbond: staked }: any = getBondOptions(activeAccount) || {};
 
-  let { free, miscFrozen } = balance;
+  let { free } = balance;
+  const { miscFrozen } = balance;
 
   // get user's total free balance
   const freeBase = planckToUnit(free.toNumber(), units);

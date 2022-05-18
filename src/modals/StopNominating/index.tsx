@@ -33,12 +33,12 @@ export const StopNominating = () => {
 
   // tx to submit
   const tx = () => {
-    let tx = null;
+    let _tx = null;
     if (!valid) {
-      return tx;
+      return _tx;
     }
-    tx = api.tx.staking.chill();
-    return tx;
+    _tx = api.tx.staking.chill();
+    return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
@@ -78,7 +78,12 @@ export const StopNominating = () => {
         </div>
         <FooterWrapper>
           <div>
-            <button className="submit" onClick={() => submitTx()} disabled={!valid || submitting}>
+            <button
+              type="button"
+              className="submit"
+              onClick={() => submitTx()}
+              disabled={!valid || submitting}
+            >
               <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
               Submit
             </button>

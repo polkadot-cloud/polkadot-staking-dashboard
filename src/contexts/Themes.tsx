@@ -10,7 +10,7 @@ export const ThemeContext: React.Context<any> = React.createContext({
 
 export const useTheme = () => React.useContext(ThemeContext);
 
-export const ThemesProvider: React.FC = ({ children }: any) => {
+export const ThemesProvider = ({ children }: any) => {
   // get the current theme
   let localTheme = localStorage.getItem('theme');
 

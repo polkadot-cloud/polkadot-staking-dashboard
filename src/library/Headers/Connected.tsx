@@ -39,7 +39,11 @@ export const Connected = (props: any) => {
               format="name"
               label="Controller"
               canClick={hasController()}
-              onClick={() => { hasController() && openModalWith('UpdateController', {}, 'small'); }}
+              onClick={() => {
+                if (hasController()) {
+                  openModalWith('UpdateController', {}, 'small');
+                }
+              }}
               filled
             />
           </HeadingWrapper>

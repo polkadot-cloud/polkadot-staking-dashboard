@@ -28,7 +28,8 @@ ChartJS.register(
 
 export const EraPoints = (props: any) => {
   const { mode } = useTheme();
-  let { items, height } = props;
+  let { items } = props;
+  const { height } = props;
 
   items = items === undefined ? [] : items;
 

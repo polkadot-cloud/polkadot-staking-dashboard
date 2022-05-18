@@ -42,12 +42,12 @@ export const PoolInner = (props: any) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.1 }}
           >
-            <label>
+            <div className="label">
               <FontAwesomeIcon icon={faUsers} />
               &nbsp;
               {' '}
               {memberCounter}
-            </label>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -55,10 +55,6 @@ export const PoolInner = (props: any) => {
   );
 };
 
-export class Pool extends React.Component<any, any> {
-  render() {
-    return (<PoolInner {...this.props} />);
-  }
-}
+export const Pool = (props: any) => <PoolInner {...props} />;
 
 export default Pool;

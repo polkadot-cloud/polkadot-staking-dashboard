@@ -90,6 +90,7 @@ export const SideMenu = () => {
     >
       <section>
         <button
+          type="button"
           className="close-menu"
           style={{ fontVariationSettings: "'wght' 450", margin: '0.2rem 0 1rem 0', opacity: 0.7 }}
           onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
@@ -135,18 +136,30 @@ export const SideMenu = () => {
       </section>
 
       <section>
-        <button onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}>
+        <button
+          type="button"
+          onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}
+        >
           <LogoGithub width="1.45rem" height="1.45rem" />
         </button>
-        <button onClick={() => openModalWith('Settings', {}, 'small')}>
+        <button
+          type="button"
+          onClick={() => openModalWith('Settings', {}, 'small')}
+        >
           <Cog width="1.65rem" height="1.65rem" />
         </button>
-        <button onClick={() => toggleTheme()}>
+        <button
+          type="button"
+          onClick={() => toggleTheme()}
+        >
           {mode === 'light'
             ? <SunnyOutline width="1.65rem" height="1.65rem" />
             : <Moon width="1.45rem" height="1.45rem" />}
         </button>
-        <button onClick={() => setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)}>
+        <button
+          type="button"
+          onClick={() => setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)}
+        >
           <FontAwesomeIcon icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt} transform="grow-3" />
         </button>
       </section>

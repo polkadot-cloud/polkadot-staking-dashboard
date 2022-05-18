@@ -75,7 +75,7 @@ export const Sections = (props: any) => {
               Resources
             </h3>
             <span>
-              <button className="close" onClick={() => { assistant.closeAssistant(pageFromUri(pathname)); }}>
+              <button type="button" className="close" onClick={() => { assistant.closeAssistant(pageFromUri(pathname)); }}>
                 Close
               </button>
             </span>
@@ -148,7 +148,7 @@ export const Sections = (props: any) => {
       >
         <HeaderWrapper>
           <div className="hold">
-            <button onClick={() => assistant.setActiveSection(0)}>
+            <button type="button" onClick={() => assistant.setActiveSection(0)}>
               <FontAwesomeIcon
                 icon={faBack}
                 transform="shrink-4"
@@ -158,7 +158,7 @@ export const Sections = (props: any) => {
               Back
             </button>
             <span>
-              <button className="close" onClick={() => { assistant.closeAssistant(pageFromUri(pathname)); }}>Close</button>
+              <button type="button" className="close" onClick={() => { assistant.closeAssistant(pageFromUri(pathname)); }}>Close</button>
             </span>
           </div>
         </HeaderWrapper>

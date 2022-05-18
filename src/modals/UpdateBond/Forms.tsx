@@ -69,21 +69,20 @@ export const Forms = (props: any) => {
 
   // tx to submit
   const tx = () => {
-    let tx = null;
-
+    let _tx = null;
     if (!bondValid) {
-      return tx;
+      return _tx;
     }
 
     // remove decimal errors
     const bondToSubmit = Math.floor(bond.bond * (10 ** units)).toString();
 
     if (task === 'bond_some' || task === 'bond_all') {
-      tx = api.tx.staking.bondExtra(bondToSubmit);
+      _tx = api.tx.staking.bondExtra(bondToSubmit);
     } else if (task === 'unbond_some' || task === 'unbond_all') {
-      tx = api.tx.staking.unbond(bondToSubmit);
+      _tx = api.tx.staking.unbond(bondToSubmit);
     }
-    return tx;
+    return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
@@ -192,6 +191,7 @@ export const Forms = (props: any) => {
       <FooterWrapper>
         <div>
           <button
+            type="button"
             className="submit"
             onClick={() => setSection(0)}
           >
@@ -200,7 +200,12 @@ export const Forms = (props: any) => {
           </button>
         </div>
         <div>
-          <button className="submit" onClick={() => submitTx()} disabled={submitting || !bondValid}>
+          <button
+            type="button"
+            className="submit"
+            onClick={() => submitTx()}
+            disabled={submitting || !bondValid}
+          >
             <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
             Submit
             {submitting && 'ting'}

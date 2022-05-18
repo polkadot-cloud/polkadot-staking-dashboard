@@ -36,9 +36,9 @@ export const AccountDropdown = (props: any) => {
     <StyledDownshift>
       <div>
         {label && (
-        <label className="label" {...c.getLabelProps()}>
+        <div className="label" {...c.getLabelProps()}>
           {label}
-        </label>
+        </div>
         )}
         <div style={{ position: 'relative' }}>
           <div className="input-wrap" {...c.getComboboxProps()}>

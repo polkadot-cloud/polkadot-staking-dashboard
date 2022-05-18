@@ -72,6 +72,7 @@ export const NetworkBar = () => {
         </section>
         <section>
           <button
+            type="button"
             className="ignore-network-info-toggle"
             onClick={() => { setOpen(!open); }}
           >
@@ -116,6 +117,7 @@ export const NetworkBar = () => {
         <div className="row">
           {Object.entries(NODE_ENDPOINTS).map(([key, item]: any, index: any) => (
             <button
+              type="button"
               key={`switch_network_${index}`}
               onClick={() => {
                 if (network.name.toLowerCase() !== key) {

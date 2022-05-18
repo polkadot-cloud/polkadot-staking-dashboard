@@ -37,17 +37,17 @@ export const UpdateController = () => {
 
   // tx to submit
   const tx = () => {
-    let tx = null;
+    let _tx = null;
     if (!selected) {
-      return tx;
+      return _tx;
     }
     const controllerToSubmit = {
       Id: selected.address,
     };
 
     // console.log(controllerToSubmit);
-    tx = api.tx.staking.setController(controllerToSubmit);
-    return tx;
+    _tx = api.tx.staking.setController(controllerToSubmit);
+    return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
@@ -87,7 +87,7 @@ export const UpdateController = () => {
         </div>
         <FooterWrapper>
           <div>
-            <button className="submit" onClick={() => submitTx()} disabled={selected === null || submitting}>
+            <button type="button" className="submit" onClick={() => submitTx()} disabled={selected === null || submitting}>
               <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
               Submit
             </button>

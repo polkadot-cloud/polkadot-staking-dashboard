@@ -2,10 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useCombobox } from 'downshift';
-import { StyledDownshift, StyledDropdown, StyledController } from '../AccountDropdown/Wrappers';
+import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
 
@@ -32,9 +30,9 @@ export const Dropdown = (props: any) => {
     <StyledDownshift>
       <div>
         {label && (
-        <label className="label" {...c.getLabelProps()}>
+        <div className="label" {...c.getLabelProps()}>
           {label}
-        </label>
+        </div>
         )}
         <div style={{ position: 'relative' }}>
           <div className="input-wrap" {...c.getComboboxProps()}>

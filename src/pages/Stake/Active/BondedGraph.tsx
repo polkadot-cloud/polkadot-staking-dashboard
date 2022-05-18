@@ -15,9 +15,10 @@ export const BondedGraph = (props: any) => {
   const { mode } = useTheme();
   const { network }: any = useApi();
 
-  let {
-    active, unlocking, remaining, total,
+  const {
+    active, unlocking, total,
   } = props;
+  let { remaining } = props;
 
   let zeroBalance = false;
   if (total === 0 || total === undefined) {
