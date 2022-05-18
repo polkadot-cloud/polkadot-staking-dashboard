@@ -17,27 +17,27 @@ export const Stake = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  let _inSetup: boolean = inSetup();
-  let _isSyncing = isSyncing();
+  const _inSetup: boolean = inSetup();
+  const _isSyncing = isSyncing();
 
   return (
-    <>
-      <Wrapper>
-        {_isSyncing
-          ? <>
+    <Wrapper>
+      {_isSyncing
+        ? (
+          <>
             <PageTitle title={`${title}`} />
             <Loader />
           </>
-          : <>
+        )
+        : (
+          <>
             {_inSetup
               ? <Setup title={title} />
-              : <Active title={title} />
-            }
+              : <Active title={title} />}
           </>
-        }
-      </Wrapper>
-    </>
+        )}
+    </Wrapper>
   );
-}
+};
 
 export default Stake;

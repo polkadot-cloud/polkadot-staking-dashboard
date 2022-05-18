@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect, useCallback, useRef } from 'react';
-import { useAssistant } from '../../contexts/Assistant';
-import { Wrapper, SectionsWrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import { useLocation } from 'react-router-dom';
+import { useAssistant } from '../../contexts/Assistant';
+import {
+  Wrapper, SectionsWrapper, ContentWrapper, HeightWrapper,
+} from './Wrappers';
 import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../pages';
 import { pageFromUri } from '../../Utils';
-import { useOutsideAlerter } from '../../library/Hooks';
+import { useOutsideAlerter } from '../Hooks';
 
 export const Assistant = () => {
-
   const assistant = useAssistant();
   const { pathname } = useLocation();
 
@@ -43,18 +44,17 @@ export const Assistant = () => {
 
   useEffect(
     () => setPageOnPathname(),
-    [setPageOnPathname]);
+    [setPageOnPathname],
+  );
 
   // animate assistant container default
-  const animateContainer = assistant.open ? `visible` : `hidden`;
+  const animateContainer = assistant.open ? 'visible' : 'hidden';
 
   // animate assistant container default
-  const animateSections = assistant.activeSection === 0 ? `home` : `item`;
+  const animateSections = assistant.activeSection === 0 ? 'home' : 'item';
 
   // get page meta from active page
-  const pageMeta = Object.values(ASSISTANT_CONFIG).find((item: any) =>
-    item.key === assistant.page
-  );
+  const pageMeta = Object.values(ASSISTANT_CONFIG).find((item: any) => item.key === assistant.page);
 
   const ref = useRef(null);
 
@@ -69,8 +69,8 @@ export const Assistant = () => {
       animate={animateContainer}
       transition={{
         duration: 0.5,
-        type: "spring",
-        bounce: 0.2
+        type: 'spring',
+        bounce: 0.2,
       }}
       variants={containerVariants}
     >
@@ -83,8 +83,8 @@ export const Assistant = () => {
             animate={animateSections}
             transition={{
               duration: 0.5,
-              type: "spring",
-              bounce: 0.1
+              type: 'spring',
+              bounce: 0.1,
             }}
             variants={sectionVariants}
           >
@@ -94,6 +94,6 @@ export const Assistant = () => {
       </ContentWrapper>
     </Wrapper>
   );
-}
+};
 
 export default Assistant;

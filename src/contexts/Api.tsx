@@ -29,8 +29,7 @@ export const APIContext: any = React.createContext({
 
 export const useApi = () => React.useContext(APIContext);
 
-export const APIProvider = (props: any) => {
-
+export const APIProvider = ({ children }: any) => {
   // provider instance state
   const [provider, setProvider]: any = useState(null);
 
@@ -58,14 +57,13 @@ export const APIProvider = (props: any) => {
 
   // initial connection
   useEffect(() => {
-    const network: any = localStorage.getItem('network');
-    connect(network);
+    const _network: any = localStorage.getItem('network');
+    connect(_network);
   }, []);
 
   // provider event handlers
   useEffect(() => {
     if (provider !== null) {
-
       provider.on('connected', () => {
         setConnectionStatus(CONNECTION_STATUS[2]);
       });
@@ -80,7 +78,6 @@ export const APIProvider = (props: any) => {
 
   // connection callback
   const connectedCallback = async (_provider: any) => {
-
     const _api = new ApiPromise({ provider: _provider });
     await _api.isReady;
 
@@ -104,7 +101,7 @@ export const APIProvider = (props: any) => {
       maxElectingVoters: _metrics[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
       expectedBlockTime: _metrics[5]?.toNumber() ?? EXPECTED_BLOCK_TIME,
     });
-  }
+  };
 
   // connect function sets provider and updates active network.
   const connect = async (_network: keyof NetworkOptions) => {
@@ -115,7 +112,7 @@ export const APIProvider = (props: any) => {
       meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
     });
     setProvider(_provider);
-  }
+  };
 
   // handle network switching
   const switchNetwork = async (_network: keyof NetworkOptions) => {
@@ -123,40 +120,42 @@ export const APIProvider = (props: any) => {
     setApi(null);
     setConnectionStatus(CONNECTION_STATUS[1]);
     connect(_network);
-  }
+  };
 
   // handles fetching of DOT price and updates context state.
   const fetchDotPrice = async () => {
     const urls = [
       `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[network.name as keyof NetworkOptions].api.priceTicker}`,
     ];
-    let responses = await Promise.all(urls.map(u => fetch(u, { method: 'GET' })))
-    let texts = await Promise.all(responses.map(res => res.json()));
+    const responses = await Promise.all(urls.map((u) => fetch(u, { method: 'GET' })));
+    const texts = await Promise.all(responses.map((res) => res.json()));
     const _change = texts[0];
 
     if (_change.lastPrice !== undefined && _change.priceChangePercent !== undefined) {
-      let price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(2);
-      let change: string = (Math.round(_change.priceChangePercent * 100) / 100).toFixed(2);
+      const price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(2);
+      const change: string = (Math.round(_change.priceChangePercent * 100) / 100).toFixed(2);
 
       return {
         lastPrice: price,
-        change: change,
+        change,
       };
     }
-  }
+    return null;
+  };
 
   return (
     <APIContext.Provider value={{
-      connect: connect,
-      fetchDotPrice: fetchDotPrice,
-      switchNetwork: switchNetwork,
-      api: api,
-      consts: consts,
+      connect,
+      fetchDotPrice,
+      switchNetwork,
+      api,
+      consts,
       isReady: (connectionStatus === CONNECTION_STATUS[2] && api !== null),
       network: network.meta,
       status: connectionStatus,
-    }}>
-      {props.children}
+    }}
+    >
+      {children}
     </APIContext.Provider>
   );
-}
+};

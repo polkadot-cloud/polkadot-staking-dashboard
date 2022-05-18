@@ -42,49 +42,52 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
 
 export const useAssistant = () => React.useContext(AssistantContext);
 
-export class AssistantProvider extends React.Component {
-
-  state = {
-    open: 0,
-    page: 'overview',
-    innerDefinition: [],
-    activeSection: 0,
-    height: 0,
-    transition: 0,
-  };
+export class AssistantProvider extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      open: 0,
+      page: 'overview',
+      innerDefinition: [],
+      activeSection: 0,
+      height: 0,
+      transition: 0,
+    };
+  }
 
   setPage = (newPage: string) => {
     this.setState({
       page: newPage,
-    })
-  }
+    });
+  };
 
-  getDefinition = (key: string, title: string) => {
+  static getDefinition = (key: string, title: string) => {
     return ASSISTANT_CONFIG.find((item: any) => item.key === key)?.definitions.find((item: any) => item.title === title);
-  }
+  };
 
   setInnerDefinition = (meta: any) => {
     this.setState({
       innerDefinition: meta,
     });
-  }
+  };
 
   toggle = () => {
+    const { open } = this.state;
+    const _open = open === 1 ? 0 : 1;
     this.setState({
-      open: this.state.open === 1 ? 0 : 1,
+      open: _open,
       transition: 0,
-    })
-  }
+    });
+  };
 
   openAssistant = () => {
     this.setState({
       open: 1,
       transition: 0,
     });
-  }
+  };
 
   closeAssistant = (page: any) => {
-
     this.setState({
       open: 0,
       transition: 0,
@@ -98,38 +101,38 @@ export class AssistantProvider extends React.Component {
         activeSection: 0,
       });
     }, 100);
-  }
+  };
 
   setActiveSection = (index: number) => {
     this.setState({
       activeSection: index,
       transition: 1,
-    })
-  }
+    });
+  };
 
   goToDefinition = (page: string, title: string) => {
     this.setPage(page);
-    this.setInnerDefinition(this.getDefinition(page, title));
+    this.setInnerDefinition(AssistantProvider.getDefinition(page, title));
     this.setActiveSection(1);
 
     // short timeout to hide inner transition
     setTimeout(() => this.openAssistant(), 60);
-  }
+  };
 
   setAssistantHeight = (v: any) => {
     this.setState({
       ...this.state,
-      height: v
+      height: v,
     });
-  }
+  };
 
-  render () {
+  render() {
     return (
       <AssistantContext.Provider value={{
         toggle: this.toggle,
         setPage: this.setPage,
         setInnerDefinition: this.setInnerDefinition,
-        getDefinition: this.getDefinition,
+        getDefinition: AssistantProvider.getDefinition,
         openAssistant: this.openAssistant,
         closeAssistant: this.closeAssistant,
         setActiveSection: this.setActiveSection,
@@ -141,7 +144,8 @@ export class AssistantProvider extends React.Component {
         innerDefinition: this.state.innerDefinition,
         height: this.state.height,
         transition: this.state.transition,
-      }}>
+      }}
+      >
         {this.props.children}
       </AssistantContext.Provider>
     );

@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from "styled-components";
-import { textSecondary, borderPrimary } from "../../theme";
+import styled from 'styled-components';
+import { textSecondary, borderPrimary } from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -74,12 +74,12 @@ export const Pagination = styled.div<any>`
     button {
       margin-left: 0.5rem;
       &.next {
-        color: ${props => props.next ? 'rgb(211, 48, 121)' : textSecondary};
-        cursor: ${props => props.next ? 'pointer' : 'default'};
+        color: ${(props) => (props.next ? 'rgb(211, 48, 121)' : textSecondary)};
+        cursor: ${(props) => (props.next ? 'pointer' : 'default')};
       }
       &.prev {
-        color: ${props => props.prev ? 'rgb(211, 48, 121)' : textSecondary};
-        cursor: ${props => props.prev ? 'pointer' : 'default'};
+        color: ${(props) => (props.prev ? 'rgb(211, 48, 121)' : textSecondary)};
+        cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
       }
     }
   }
@@ -113,8 +113,8 @@ export const List = styled.div<any>`
           max-width: 50%;
         }
         @media(min-width: 1250px) {
-          flex-basis: ${props => props.flexBasisLarge};
-          max-width: ${props => props.flexBasisLarge};
+          flex-basis: ${(props) => props.flexBasisLarge};
+          max-width: ${(props) => props.flexBasisLarge};
         }
       }
     }

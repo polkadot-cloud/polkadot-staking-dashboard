@@ -48,7 +48,7 @@ export const Wrapper = styled(motion.div) <any>`
       align-items: center;
       flex-grow: 1;
 
-      label {
+      .label {
         margin-left: 0.35rem;
         color: #aaa;
 

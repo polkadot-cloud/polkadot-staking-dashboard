@@ -13,7 +13,6 @@ import { useUi } from '../../../../contexts/UI';
 import { useConnect } from '../../../../contexts/Connect';
 
 export const Payee = (props: any) => {
-
   const { section } = props;
 
   const { activeAccount } = useConnect();
@@ -45,7 +44,6 @@ export const Payee = (props: any) => {
   }, [activeAccount]);
 
   const handleChangePayee = (i: number) => {
-
     // not in options
     if (!isNumeric(i)) {
       return;
@@ -61,16 +59,16 @@ export const Payee = (props: any) => {
       ...setup,
       payee: options[i],
     });
-  }
+  };
 
   return (
     <SectionWrapper transparent>
       <Header
         thisSection={section}
         complete={setup.payee !== null}
-        title='Reward Destination'
-        assistantPage='stake'
-        assistantKey='Reward Destination'
+        title="Reward Destination"
+        assistantPage="stake"
+        assistantKey="Reward Destination"
       />
       <MotionContainer
         thisSection={section}
@@ -78,7 +76,7 @@ export const Payee = (props: any) => {
       >
         <Spacer />
         <Items>
-          {buttons.map((item: any, index: number) =>
+          {buttons.map((item: any, index: number) => (
             <Item
               key={`payee_option_${index}`}
               selected={payee === options[item.index]}
@@ -89,12 +87,12 @@ export const Payee = (props: any) => {
                 <p>{item.subtitle}</p>
               </div>
             </Item>
-          )}
+          ))}
         </Items>
         <Footer complete={setup.payee !== null} />
       </MotionContainer>
     </SectionWrapper>
-  )
-}
+  );
+};
 
 export default Payee;

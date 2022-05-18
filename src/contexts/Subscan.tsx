@@ -20,7 +20,6 @@ export const SubscanContext: React.Context<SubscanContextState> = React.createCo
 export const useSubscan = () => React.useContext(SubscanContext);
 
 export const SubscanProvider = (props: any) => {
-
   const { network, isReady }: any = useApi();
   const { services, getServices }: any = useUi();
   const { activeAccount }: any = useConnect();
@@ -50,7 +49,7 @@ export const SubscanProvider = (props: any) => {
       return;
     }
 
-    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS['subscanRewardSlash'], {
+    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS.subscanRewardSlash, {
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': API_SUBSCAN_KEY,
@@ -60,7 +59,7 @@ export const SubscanProvider = (props: any) => {
         page: 0,
         address: activeAccount,
       }),
-      method: "POST"
+      method: 'POST',
     });
 
     res = await res.json();
@@ -73,13 +72,13 @@ export const SubscanProvider = (props: any) => {
         }
       }
     }
-  }
+  };
 
   const fetchEraPoints = async (address: string, era: number) => {
     if (address === '' || !services.includes('subscan')) {
       return [];
     }
-    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS['subscanEraStat'], {
+    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS.subscanEraStat, {
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': API_SUBSCAN_KEY,
@@ -87,39 +86,39 @@ export const SubscanProvider = (props: any) => {
       body: JSON.stringify({
         row: 60,
         page: 0,
-        address: address,
+        address,
       }),
-      method: "POST"
+      method: 'POST',
     });
 
     res = await res.json();
     if (res.message === 'Success') {
       if (getServices().includes('subscan')) {
         if (res.data?.list !== null) {
-          let list = [];
+          const list = [];
           for (let i = era; i > (era - 60); i--) {
             list.push({
               era: i,
-              reward_point: res.data.list.find((item: any) => item.era === i)?.reward_point ?? 0
+              reward_point: res.data.list.find((item: any) => item.era === i)?.reward_point ?? 0,
             });
           }
 
           // removes last zero item
           return list.reverse().splice(0, list.length - 1);
-        } else {
-          return [];
         }
+        return [];
       }
     }
     return [];
-  }
+  };
 
   return (
     <SubscanContext.Provider value={{
-      fetchEraPoints: fetchEraPoints,
-      payouts: payouts,
-    }}>
+      fetchEraPoints,
+      payouts,
+    }}
+    >
       {props.children}
     </SubscanContext.Provider>
   );
-}
+};

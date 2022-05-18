@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import { textSecondary, buttonSecondaryBackground } from '../../theme';
 
 export const ButtonRow = styled.div`
@@ -19,13 +19,13 @@ export const ButtonRow = styled.div`
 `;
 
 export const Wrapper = styled(motion.button) <any>`
-  background: ${props => props.type === 'default' ? buttonSecondaryBackground : 'rgba(211, 48, 121, 0.9)'};
-  color: ${props => props.type === 'default' ? textSecondary : 'white'};
-  margin: ${props => props.margin};
+  background: ${(props) => (props.type === 'default' ? buttonSecondaryBackground : 'rgba(211, 48, 121, 0.9)')};
+  color: ${(props) => (props.type === 'default' ? textSecondary : 'white')};
+  margin: ${(props) => props.margin};
   flex-grow: 1;
-  padding: ${props => props.padding};
+  padding: ${(props) => props.padding};
   border-radius:  0.75rem;
-  font-size:${props => props.fontSize ? props.fontSize : '0.95rem'};
+  font-size:${(props) => (props.fontSize ? props.fontSize : '0.95rem')};
   font-variation-settings: 'wght' 560;
 
   &:disabled {
@@ -35,8 +35,10 @@ export const Wrapper = styled(motion.button) <any>`
 `;
 
 export const Button = (props: any) => {
-
-  let { title, primary, inline, onClick, small, disabled } = props;
+  let {
+    primary, inline, small, disabled,
+  } = props;
+  const { title, onClick } = props;
   primary = primary ?? false;
   inline = inline ?? false;
   small = small ?? false;
@@ -54,7 +56,7 @@ export const Button = (props: any) => {
     >
       {title}
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Button;

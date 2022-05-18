@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { Element } from 'react-scroll';
 import { PageRowWrapper } from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { useStaking } from '../../../contexts/Staking';
-import { Element } from 'react-scroll';
 import { PageTitle } from '../../../library/PageTitle';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
@@ -19,12 +19,13 @@ export const Setup = (props: any) => {
     <>
       <PageTitle title={`${props.title} Setup`} />
       <PageRowWrapper noVerticalSpacer>
-        {!hasController() &&
+        {!hasController()
+          && (
           <SectionWrapper>
             <Element name="controller" style={{ position: 'absolute' }} />
             <SetController section={1} />
           </SectionWrapper>
-        }
+          )}
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
@@ -52,6 +53,6 @@ export const Setup = (props: any) => {
       </PageRowWrapper>
     </>
   );
-}
+};
 
 export default Setup;

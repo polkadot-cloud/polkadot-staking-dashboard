@@ -2,17 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
+import { web3Enable } from '@polkadot/extension-dapp';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from '../../contexts/Connect';
 import { ReactComponent as TalismanSVG } from '../../img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from '../../img/dot_icon.svg';
-import { web3Enable } from '@polkadot/extension-dapp';
 import { DAPP_NAME } from '../../constants';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from './Wrapper';
 
 export const Wallets = (props: any) => {
-
   const { setSection } = props;
 
   const {
@@ -39,14 +38,14 @@ export const Wallets = (props: any) => {
   const fetchExtensions = async () => {
     const allInjected = await web3Enable(DAPP_NAME);
     setExtensions(allInjected);
-  }
+  };
 
   const handleWalletConnect = async (name: string) => {
     if (activeWallet !== name) {
       await connectToWallet(name);
     }
     setSection(1);
-  }
+  };
 
   // remove active wallet from extensions list
   const activeExtension = extensions.find((wallet: any) => wallet.name === activeWallet) ?? null;
@@ -56,56 +55,72 @@ export const Wallets = (props: any) => {
     <>
       <h2>Select Wallet</h2>
 
-      {activeWallet !== null &&
-        <button className='item' onClick={() => disconnectFromWallet()}>
+      {activeWallet !== null
+        && (
+        <button
+          type="button"
+          className="item"
+          onClick={() => disconnectFromWallet()}
+        >
           <div>
-            {activeWallet === 'talisman' && <TalismanSVG width='1.5rem' height='1.5rem' />}
-            {activeWallet === 'polkadot-js' && <PolkadotJSSVG width='1.5rem' height='1.5rem' />}
-            &nbsp; {activeWallet}
+            {activeWallet === 'talisman' && <TalismanSVG width="1.5rem" height="1.5rem" />}
+            {activeWallet === 'polkadot-js' && <PolkadotJSSVG width="1.5rem" height="1.5rem" />}
+            &nbsp;
+            {' '}
+            {activeWallet}
           </div>
-          <div className='danger'>Disconnect</div>
+          <div className="danger">Disconnect</div>
         </button>
-      }
+        )}
       <Separator />
 
-      {activeExtension !== null &&
-        <button className='item'
+      {activeExtension !== null
+        && (
+        <button
+          type="button"
+          className="item"
           key={`wallet_${activeExtension.name}`}
           onClick={() => handleWalletConnect(activeExtension.name)}
         >
           <div>
-            {activeExtension.name === 'talisman' && <TalismanSVG width='1.5rem' height='1.5rem' />}
-            {activeExtension.name === 'polkadot-js' && <PolkadotJSSVG width='1.5rem' height='1.5rem' />}
-            &nbsp; {activeExtension.name}
+            {activeExtension.name === 'talisman' && <TalismanSVG width="1.5rem" height="1.5rem" />}
+            {activeExtension.name === 'polkadot-js' && <PolkadotJSSVG width="1.5rem" height="1.5rem" />}
+            &nbsp;
+            {' '}
+            {activeExtension.name}
           </div>
-          <div className='neutral'>
+          <div className="neutral">
             {activeWallet === activeExtension.name && 'Accounts'}
-            <FontAwesomeIcon icon={faChevronRight} transform="shrink-5" className='icon' />
+            <FontAwesomeIcon icon={faChevronRight} transform="shrink-5" className="icon" />
           </div>
         </button>
-      }
+        )}
 
       {extensionsList.map((wallet: any) => {
         const error = walletErrors[wallet.name] ?? null;
         const disabled = activeWallet !== wallet.name && activeWallet !== null;
 
         return (
-          <button className='item'
+          <button
+            type="button"
+            className="item"
             key={`wallet_${wallet.name}`}
             disabled={disabled}
             onClick={() => handleWalletConnect(wallet.name)}
           >
             <div>
-              {wallet.name === 'talisman' && <TalismanSVG width='1.5rem' height='1.5rem' />}
-              {wallet.name === 'polkadot-js' && <PolkadotJSSVG width='1.5rem' height='1.5rem' />}
-              &nbsp; {error ? error : wallet.name}
+              {wallet.name === 'talisman' && <TalismanSVG width="1.5rem" height="1.5rem" />}
+              {wallet.name === 'polkadot-js' && <PolkadotJSSVG width="1.5rem" height="1.5rem" />}
+              &nbsp;
+              {' '}
+              {error || wallet.name}
             </div>
-            <div className='neutral'>
-              <FontAwesomeIcon icon={faChevronRight} transform="shrink-5" className='icon' />
+            <div className="neutral">
+              <FontAwesomeIcon icon={faChevronRight} transform="shrink-5" className="icon" />
             </div>
           </button>
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};

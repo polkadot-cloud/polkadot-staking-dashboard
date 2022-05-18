@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 const v = (light: string, dark: string) => ({
-  light: light,
-  dark: dark,
+  light,
+  dark,
 });
 
 export const defaultThemes: any = {
@@ -20,34 +20,34 @@ export const defaultThemes: any = {
     primary: v('rgba(248,247,247,1)', 'rgba(27,27,27,1)'),
     gradient: v(
       'linear-gradient(180deg, rgba(248,247,247,1) 0%, rgba(248,247,247,1) 100px, rgba(233,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
-      'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
+      'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)',
     ),
     secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.16)'),
     network: v('rgba(244,225,225,0.75)', 'rgba(27,27,27,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
-      'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)'
+      'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)',
     ),
     label: v(
       'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.7) 100%)',
-      'linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.5) 100%)'
+      'linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.5) 100%)',
     ),
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),
     overlay: v(
       'linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%)',
-      'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
+      'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)',
     ),
   },
   highlight: {
     primary: v(
       'linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.03) 100%)',
-      'linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.04) 100%)'
+      'linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.04) 100%)',
     ),
     secondary: v(
       'linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%)',
-      'linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)'
+      'linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
     ),
   },
   graphs: {
@@ -75,12 +75,12 @@ export const defaultThemes: any = {
     link: v('#d33079', '#d33079'),
     button: {
       background: v('rgba(255,255,255,0.60)', 'rgba(0,0,0,0.4)'),
-    }
+    },
   },
   loader: {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
-  }
+  },
 };
 
 export default defaultThemes;

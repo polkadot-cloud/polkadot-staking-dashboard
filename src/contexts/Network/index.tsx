@@ -9,14 +9,13 @@ export interface NetworkMetricsContextState {
   metrics: any;
 }
 
-export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> =
-  React.createContext({
-    metrics: {},
-  });
+export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = React.createContext({
+  metrics: {},
+});
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
-export const NetworkMetricsProvider = (props: any) => {
+export const NetworkMetricsProvider = ({ children }: any) => {
   const { isReady, api, status }: any = useApi();
 
   useEffect(() => {
@@ -55,13 +54,13 @@ export const NetworkMetricsProvider = (props: any) => {
           // convert JSON string to object
           _activeEra = JSON.parse(_activeEra);
 
-          let _state = {
+          const _state = {
             activeEra: _activeEra,
             totalIssuance: _totalIssuance.toBn(),
             unsub,
           };
           setState(_state);
-        }
+        },
       );
 
       return unsub;
@@ -78,7 +77,7 @@ export const NetworkMetricsProvider = (props: any) => {
         },
       }}
     >
-      {props.children}
+      {children}
     </NetworkMetricsContext.Provider>
   );
 };

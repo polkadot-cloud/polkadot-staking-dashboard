@@ -1,10 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from '../../constants';
-import { textPrimary, textSecondary, assistantButton, assistantBackground } from '../../theme';
+import {
+  textPrimary, textSecondary, assistantButton, assistantBackground,
+} from '../../theme';
 
 export const Wrapper = styled(motion.div) <any>`
   position: fixed;
@@ -46,7 +48,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const HeightWrapper = styled.div<any>`
-  transition: ${props => props.transition ? 'height 0.4s cubic-bezier(0.1, 1, 0.2, 1)' : 'none'};
+  transition: ${(props) => (props.transition ? 'height 0.4s cubic-bezier(0.1, 1, 0.2, 1)' : 'none')};
   width: 100%;
   max-height: 100%;
   overflow: auto;
@@ -190,8 +192,8 @@ export const DefinitionWrapper = styled(motion.div) <any>`
 
 export const ItemWrapper = styled(motion.div) <any>`
   display: flex;
-  width: ${props => props.width};
-  height: ${props => props.height === undefined ? `160px` : props.height};
+  width: ${(props) => props.width};
+  height: ${(props) => (props.height === undefined ? '160px' : props.height)};
   overflow: auto;
   flex-flow: row wrap;
   justify-content: flex-start;

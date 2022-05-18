@@ -11,18 +11,19 @@ export interface SessionEraContextState {
   sessionEra: any;
 }
 
-export const SessionEraContext: React.Context<SessionEraContextState> =
-  React.createContext({
-    getEraTimeLeft: () => 0,
-    sessionEra: {},
-  });
+export const SessionEraContext: React.Context<SessionEraContextState> = React.createContext({
+  getEraTimeLeft: () => 0,
+  sessionEra: {},
+});
 
 // Warning: Do not use this hook in heavy components.
 // Using this hook in a component makes the component rerender per each new block.
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
-export const SessionEraProvider = (props: any) => {
-  const { isReady, api, status, consts }: any = useApi();
+export const SessionEraProvider = ({ children }: any) => {
+  const {
+    isReady, api, status, consts,
+  }: any = useApi();
   const { expectedBlockTime } = consts;
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export const SessionEraProvider = (props: any) => {
   const subscribeToSessionProgress = async () => {
     if (isReady) {
       const unsub = await api.derive.session.progress((session: any) => {
-        let _state = {
+        const _state = {
           eraLength: session.eraLength.toNumber(),
           eraProgress: session.eraProgress.toNumber(),
           sessionLength: session.sessionLength.toNumber(),
@@ -64,17 +65,17 @@ export const SessionEraProvider = (props: any) => {
   };
 
   const getEraTimeLeft = () => {
-    let eraBlocksLeft = state.eraLength - state.eraProgress;
-    let eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
-    let eventTime = moment().unix() + eraTimeLeftSeconds;
-    let diffTime = eventTime - moment().unix();
+    const eraBlocksLeft = state.eraLength - state.eraProgress;
+    const eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
+    const eventTime = moment().unix() + eraTimeLeftSeconds;
+    const diffTime = eventTime - moment().unix();
     return diffTime;
   };
 
   return (
     <SessionEraContext.Provider
       value={{
-        getEraTimeLeft: getEraTimeLeft,
+        getEraTimeLeft,
         sessionEra: {
           eraLength: state.eraLength,
           eraProgress: state.eraProgress,
@@ -84,7 +85,7 @@ export const SessionEraProvider = (props: any) => {
         },
       }}
     >
-      {props.children}
+      {children}
     </SessionEraContext.Provider>
   );
 };

@@ -11,14 +11,15 @@ import { useUi } from '../../contexts/UI';
 import { Button } from '../../library/Button';
 
 export const GenerateNominations = (props: any) => {
-
   // functional props
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
 
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
-  const { removeValidatorMetaBatch, validators, favouritesList, meta } = useValidators();
+  const {
+    removeValidatorMetaBatch, validators, favouritesList, meta,
+  } = useValidators();
   const {
     applyValidatorOrder,
     applyValidatorFilters,
@@ -43,7 +44,7 @@ export const GenerateNominations = (props: any) => {
       _favs = favouritesList.slice(0, 16);
     }
     return _favs;
-  }
+  };
 
   const fetchMostProfitable = () => {
     // generate nominations from validator list
@@ -59,7 +60,7 @@ export const GenerateNominations = (props: any) => {
       _nominations = _nominations.slice(0, 16);
     }
     return _nominations;
-  }
+  };
 
   useEffect(() => {
     if (!isReady || !validators.length) {
@@ -67,13 +68,12 @@ export const GenerateNominations = (props: any) => {
     }
 
     // wait for validator meta data to be fetched
-    let batch = meta[rawBatchKey];
+    const batch = meta[rawBatchKey];
     if (batch === undefined) {
       return;
-    } else {
-      if (batch.stake === undefined) {
-        return;
-      }
+    }
+    if (batch.stake === undefined) {
+      return;
     }
 
     // fetch nominations based on method
@@ -92,7 +92,7 @@ export const GenerateNominations = (props: any) => {
       setFetching(false);
 
       // apply update to setters
-      for (let s of setters) {
+      for (const s of setters) {
         s.set({
           ...s.current,
           nominations: _nominations,
@@ -104,9 +104,9 @@ export const GenerateNominations = (props: any) => {
   return (
     <Wrapper style={{ minHeight: 200 }}>
       <div>
-        <>
-          {nominations.length
-            ? <Button
+        {nominations.length
+          ? (
+            <Button
               inline
               small
               title="Clear Nominations"
@@ -114,7 +114,7 @@ export const GenerateNominations = (props: any) => {
                 setMethod(null);
                 removeValidatorMetaBatch(batchKey);
                 setNominations([]);
-                for (let s of setters) {
+                for (const s of setters) {
                   s.set({
                     ...s.current,
                     nominations: [],
@@ -122,7 +122,9 @@ export const GenerateNominations = (props: any) => {
                 }
               }}
             />
-            : <>
+          )
+          : (
+            <>
               <Button
                 inline
                 small
@@ -134,26 +136,28 @@ export const GenerateNominations = (props: any) => {
                   setFetching(true);
                 }}
               />
-              {favouritesList === null ? <></> :
-                <Button
-                  small
-                  title="Get Favourites"
-                  onClick={() => {
-                    setMethod('Favourites');
-                    removeValidatorMetaBatch(batchKey);
-                    setNominations([]);
-                    setFetching(true);
-                  }}
-                />
-              }
+              {favouritesList === null ? <></>
+                : (
+                  <Button
+                    small
+                    title="Get Favourites"
+                    onClick={() => {
+                      setMethod('Favourites');
+                      removeValidatorMetaBatch(batchKey);
+                      setNominations([]);
+                      setFetching(true);
+                    }}
+                  />
+                )}
             </>
-          }
-        </>
+          )}
       </div>
       {fetching ? <></>
-        : <>
-          {isReady &&
-            nominations.length > 0 &&
+        : (
+          <>
+            {isReady
+            && nominations.length > 0
+            && (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
                 validators={nominations}
@@ -161,11 +165,11 @@ export const GenerateNominations = (props: any) => {
                 allowMoreCols
               />
             </div>
-          }
-        </>
-      }
+            )}
+          </>
+        )}
     </Wrapper>
   );
-}
+};
 
 export default GenerateNominations;

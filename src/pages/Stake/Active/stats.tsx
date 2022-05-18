@@ -32,26 +32,26 @@ export const useStats = () => {
 
   const nominationStatuses = useMemo(
     () => getNominationsStatus(),
-    [nominations]
+    [nominations],
   );
 
   useEffect(() => {
-    let statuses = nominationStatuses;
-    let total = Object.values(statuses).length;
-    let _active: any = Object.values(statuses).filter(
-      (_v: any) => _v === 'active'
+    const statuses = nominationStatuses;
+    const total = Object.values(statuses).length;
+    const _active: any = Object.values(statuses).filter(
+      (_v: any) => _v === 'active',
     ).length;
 
     setNominationsStatus({
-      total: total,
+      total,
       inactive: total - _active,
       active: _active,
     });
   }, [nominationStatuses]);
 
   // format era time left
-  let _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
-  let timeleft = _timeleft.hours() + ":" + _timeleft.minutes() + ":" + _timeleft.seconds();
+  const _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
+  const timeleft = `${_timeleft.hours()}:${_timeleft.minutes()}:${_timeleft.seconds()}`;
 
   return [
     {
@@ -67,7 +67,7 @@ export const useStats = () => {
           value1: nominationsStatus.active,
           value2: nominationsStatus.active ? 0 : 1,
         },
-        tooltip: `${nominationsStatus.active ? `Active` : `Inactive`}`,
+        tooltip: `${nominationsStatus.active ? 'Active' : 'Inactive'}`,
         assistant: {
           page: 'stake',
           key: 'Nominations',
@@ -106,4 +106,4 @@ export const useStats = () => {
       },
     },
   ];
-}
+};

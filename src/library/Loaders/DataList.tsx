@@ -4,7 +4,6 @@
 import ContentLoader from 'react-content-loader';
 
 export const DataList = () => {
-
   return (
     <ContentLoader
       height={304}
@@ -27,7 +26,7 @@ export const DataList = () => {
       <rect x="356" y="274" rx="0" ry="0" width="31" height="28" />
       <rect x="396" y="274" rx="0" ry="0" width="31" height="28" />
     </ContentLoader>
-  )
-}
+  );
+};
 
-export default DataList
+export default DataList;

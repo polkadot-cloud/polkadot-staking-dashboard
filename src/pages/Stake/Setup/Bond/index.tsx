@@ -13,7 +13,6 @@ import { BondInputWithFeedback } from '../../../../library/Form/BondInputWithFee
 import { BondStatusBar } from '../../../../library/Form/BondStatusBar';
 
 export const Bond = (props: any) => {
-
   const { section } = props;
   const { activeAccount } = useConnect();
   const { getBondOptions }: any = useBalances();
@@ -27,7 +26,7 @@ export const Bond = (props: any) => {
 
   // store local bond amount for form control
   const [bond, setBond] = useState({
-    bond: initialBondValue
+    bond: initialBondValue,
   });
 
   // bond valid
@@ -36,7 +35,7 @@ export const Bond = (props: any) => {
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: setup.bond
+      bond: setup.bond,
     });
   }, [activeAccount]);
 
@@ -45,9 +44,9 @@ export const Bond = (props: any) => {
       <Header
         thisSection={section}
         complete={setup.bond !== 0}
-        title='Bond'
-        assistantPage='stake'
-        assistantKey='Bonding'
+        title="Bond"
+        assistantPage="stake"
+        assistantKey="Bonding"
       />
       <MotionContainer
         thisSection={section}
@@ -60,17 +59,17 @@ export const Bond = (props: any) => {
           defaultBond={initialBondValue}
           setters={[{
             set: setActiveAccountSetup,
-            current: setup
+            current: setup,
           }, {
             set: setBond,
-            current: bond
+            current: bond,
           }]}
         />
         <BondStatusBar value={bond.bond} />
         <Footer complete={bondValid} />
       </MotionContainer>
     </SectionWrapper>
-  )
-}
+  );
+};
 
 export default Bond;

@@ -2,22 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
-import { List, Header, Wrapper as ListWrapper, Pagination } from '../../library/List';
 import { motion } from 'framer-motion';
-import { Validator } from '../../library/Validator';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import {
+  List, Header, Wrapper as ListWrapper, Pagination,
+} from '../List';
+import { Validator } from '../Validator';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { StakingContext } from '../../contexts/Staking';
 import { useValidators } from '../../contexts/Validators/Validators';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { Filters } from './Filters';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 
 export const ValidatorListInner = (props: any) => {
-
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { metrics }: any = useNetworkMetrics();
@@ -28,7 +29,7 @@ export const ValidatorListInner = (props: any) => {
     validatorFilters,
     validatorOrder,
     applyValidatorFilters,
-    applyValidatorOrder
+    applyValidatorOrder,
   }: any = useUi();
 
   const {
@@ -41,7 +42,7 @@ export const ValidatorListInner = (props: any) => {
   }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
-  let refetchOnListUpdate = props.refetchOnListUpdate !== undefined
+  const refetchOnListUpdate = props.refetchOnListUpdate !== undefined
     ? props.refetchOnListUpdate
     : false;
 
@@ -68,17 +69,17 @@ export const ValidatorListInner = (props: any) => {
   const setRenderIteration = (iter: number) => {
     renderIterationRef.current = iter;
     _setRenderIteration(iter);
-  }
+  };
 
   // pagination
-  let totalPages = Math.ceil(validators.length / LIST_ITEMS_PER_PAGE);
-  let nextPage = page + 1 > totalPages ? totalPages : page + 1;
-  let prevPage = page - 1 < 1 ? 1 : page - 1;
-  let pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
-  let pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
+  const totalPages = Math.ceil(validators.length / LIST_ITEMS_PER_PAGE);
+  const nextPage = page + 1 > totalPages ? totalPages : page + 1;
+  const prevPage = page - 1 < 1 ? 1 : page - 1;
+  const pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
+  const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
   // render batch
-  let batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
+  const batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -122,13 +123,13 @@ export const ValidatorListInner = (props: any) => {
       setPage(1);
       setRenderIteration(1);
     }
-  }
+  };
 
   // render throttle
   useEffect(() => {
     if (!(batchEnd >= pageEnd || disableThrottle)) {
       setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1)
+        setRenderIteration(renderIterationRef.current + 1);
       }, 500);
     }
   }, [renderIterationRef.current]);
@@ -140,7 +141,7 @@ export const ValidatorListInner = (props: any) => {
   if (!disableThrottle) {
     listValidators = validators.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
   } else {
-    listValidators = validators
+    listValidators = validators;
   }
 
   // aggregate synced status
@@ -158,14 +159,23 @@ export const ValidatorListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
-          <h4>{title
-            ? title
-            : `Dispalying ${validators.length} Validator${validators.length === 1 ? '' : 's'}`
-          }</h4>
+          <h4>
+            {title || `Dispalying ${validators.length} Validator${validators.length === 1 ? '' : 's'}`}
+          </h4>
         </div>
         <div>
-          <button onClick={() => setListFormat('row')}><FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} /></button>
-          <button onClick={() => setListFormat('col')}><FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : 'inherit'} /></button>
+          <button
+            type="button"
+            onClick={() => setListFormat('row')}
+          >
+            <FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} />
+          </button>
+          <button
+            type="button"
+            onClick={() => setListFormat('col')}
+          >
+            <FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : 'inherit'} />
+          </button>
         </div>
       </Header>
       <List
@@ -173,23 +183,42 @@ export const ValidatorListInner = (props: any) => {
       >
         {allowFilters && <Filters setInitial={setInitial} />}
 
-        {pagination &&
+        {pagination
+          && (
           <Pagination
             prev={page !== 1}
             next={page !== totalPages}
           >
             <div>
-              <h4>Page {page} of {totalPages}</h4>
+              <h4>
+                Page
+                {page}
+                {' '}
+                of
+                {totalPages}
+              </h4>
             </div>
             <div>
-              <button className='prev' onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
-              <button className='next' onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
+              <button
+                type="button"
+                className="prev"
+                onClick={() => { setPage(prevPage); setInitial(false); }}
+              >
+                Prev
+              </button>
+              <button
+                type="button"
+                className="next"
+                onClick={() => { setPage(nextPage); setInitial(false); }}
+              >
+                Next
+              </button>
             </div>
           </Pagination>
-        }
+          )}
 
         <motion.div
-          className='transition'
+          className="transition"
           initial="hidden"
           animate="show"
           variants={{
@@ -198,27 +227,27 @@ export const ValidatorListInner = (props: any) => {
               opacity: 1,
               transition: {
                 staggerChildren: 0.01,
-              }
-            }
+              },
+            },
           }}
         >
           {listValidators.map((validator: any, index: number) => {
             // fetch batch data by referring to default list index.
-            let batchIndex = validatorsDefault.indexOf(validator);
+            const batchIndex = validatorsDefault.indexOf(validator);
 
             return (
               <motion.div
-                className={`item ${listFormat === 'row' ? `row` : `col`}`}
+                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
                 key={`nomination_${index}`}
                 variants={{
                   hidden: {
                     y: 15,
-                    opacity: 0
+                    opacity: 0,
                   },
                   show: {
                     y: 0,
                     opacity: 1,
-                  }
+                  },
                 }}
               >
                 <Validator
@@ -231,29 +260,28 @@ export const ValidatorListInner = (props: any) => {
                   toggleFavourites={toggleFavourites}
                 />
               </motion.div>
-            )
+            );
           })}
         </motion.div>
       </List>
     </ListWrapper>
   );
-}
+};
 
 export class ValidatorList extends React.Component<any, any> {
-
   static contextType = StakingContext;
 
-  shouldComponentUpdate (nextProps: any, nextState: any) {
+  shouldComponentUpdate(nextProps: any, nextState: any) {
     return (this.props.validators !== nextProps.validators);
   }
 
-  render () {
+  render() {
     return (
       <ValidatorListInner
         {...this.props}
       />
-    )
+    );
   }
 }
 
-export default ValidatorList
+export default ValidatorList;

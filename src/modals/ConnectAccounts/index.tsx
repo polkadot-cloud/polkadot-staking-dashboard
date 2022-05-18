@@ -9,7 +9,6 @@ import { Wallets } from './Wallets';
 import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
-
   const modal = useModal();
 
   const { config } = modal;
@@ -24,7 +23,7 @@ export const ConnectAccounts = () => {
 
   // active section of modal
   const [section, setSection] = useState(
-    _section !== null ? _section : activeAccount !== null ? 1 : 0
+    _section !== null ? _section : activeAccount !== null ? 1 : 0,
   );
 
   // remove active account from connect list
@@ -42,7 +41,7 @@ export const ConnectAccounts = () => {
       {section === 0 && <Wallets setSection={setSection} />}
       {section === 1 && <Accounts setSection={setSection} />}
     </Wrapper>
-  )
-}
+  );
+};
 
 export default ConnectAccounts;

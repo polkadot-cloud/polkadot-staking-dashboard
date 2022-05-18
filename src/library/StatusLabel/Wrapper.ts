@@ -6,7 +6,7 @@ import { backgroundLabel } from '../../theme';
 
 export const Wrapper = styled.div<any>`
   position: absolute;
-  top: ${props => props.topOffset ? props.topOffset : '50%'};
+  top: ${(props) => (props.topOffset ? props.topOffset : '50%')};
   left: 0;
   width: 100%;
   display: flex;

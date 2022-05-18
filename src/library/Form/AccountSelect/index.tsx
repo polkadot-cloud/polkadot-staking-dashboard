@@ -2,18 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
-import Identicon from '../../Identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useCombobox } from 'downshift';
+import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
+import Identicon from '../../Identicon';
 import { clipAddress, convertRemToPixels } from '../../../Utils';
 import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
 import { StatusLabel } from '../../StatusLabel';
-import { useCombobox } from 'downshift'
 
 export const AccountSelect = (props: any) => {
-  const { items, onChange, placeholder, value }: any = props;
+  const {
+    items, onChange, placeholder, value,
+  }: any = props;
 
   const itemToString = (item: any) => (item ? item.meta.name : '');
 
@@ -21,15 +23,13 @@ export const AccountSelect = (props: any) => {
 
   const c: any = useCombobox({
     items: inputItems,
-    itemToString: itemToString,
+    itemToString,
     onSelectedItemChange: onChange,
     initialSelectedItem: value,
     onInputValueChange: ({ inputValue }: any) => {
       setInputItems(
-        items.filter((item: any) =>
-          item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase()),
-        ),
-      )
+        items.filter((item: any) => item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())),
+      );
     },
   });
 
@@ -37,14 +37,15 @@ export const AccountSelect = (props: any) => {
     <StyledDownshift>
       <div>
         <div style={{ position: 'relative' }}>
-          <div className='input-wrap' {...c.getComboboxProps()}>
-            {value !== null &&
+          <div className="input-wrap" {...c.getComboboxProps()}>
+            {value !== null
+              && (
               <Identicon
                 value={value?.address ?? ''}
                 size={convertRemToPixels('2rem')}
               />
-            }
-            <input {...c.getInputProps({ placeholder: placeholder })} className='input' />
+              )}
+            <input {...c.getInputProps({ placeholder })} className="input" />
           </div>
 
           {c.selectedItem && (
@@ -52,29 +53,26 @@ export const AccountSelect = (props: any) => {
               onClick={() => c.selectItem(null)}
               aria-label="clear selection"
             >
-              <FontAwesomeIcon transform='grow-2' icon={faTimes} />
+              <FontAwesomeIcon transform="grow-2" icon={faTimes} />
             </StyledController>
           )}
           <StyledSelect {...c.getMenuProps()}>
             {
               inputItems
-                .map((item: any, index: number) =>
-                  <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
-                )
+                .map((item: any, index: number) => <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />)
             }
           </StyledSelect>
         </div>
       </div>
     </StyledDownshift>
-  )
-}
+  );
+};
 
 const DropdownItem = ({ c, item, index }: any) => {
-
   const { mode } = useTheme();
 
   // disable item in list if account doesn't satisfy controller budget.
-  let itemProps = item.active
+  const itemProps = item.active
     ? c.getItemProps({ index, item })
     : {};
 
@@ -90,29 +88,30 @@ const DropdownItem = ({ c, item, index }: any) => {
 
   return (
     <div
-      className='wrapper'
+      className="wrapper"
       key={item.meta.name}
       {...itemProps}
     >
-      {!item.active && <StatusLabel status="sync_or_setup" title={item.alert} topOffset='40%' />}
+      {!item.active && <StatusLabel status="sync_or_setup" title={item.alert} topOffset="40%" />}
       <div
         className="item"
         style={{
           color,
           border,
           opacity,
-        }}>
-        <div className='icon'>
+        }}
+      >
+        <div className="icon">
           <Identicon
             value={item.address}
             size={40}
           />
         </div>
-        <h3 style={{ color: color }}>{item.meta.name}</h3>
+        <h3 style={{ color }}>{item.meta.name}</h3>
         <p>{clipAddress(item.address)}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AccountSelect;

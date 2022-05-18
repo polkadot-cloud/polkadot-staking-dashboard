@@ -1,15 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Wrapper, HeadingWrapper, Item, SmallScreensOnly } from './Wrappers';
+import { useLocation } from 'react-router-dom';
+import {
+  Wrapper, HeadingWrapper, Item, SmallScreensOnly,
+} from './Wrappers';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
-import { SideBar } from '../../library/Headers/SideBar';
+import { SideBar } from './SideBar';
 import { useExtrinsics } from '../../contexts/Extrinsics';
 import { useUi } from '../../contexts/UI';
 import { Spinner } from './Spinner';
 import { pageFromUri } from '../../Utils';
-import { useLocation } from 'react-router-dom';
 import { useValidators } from '../../contexts/Validators/Validators';
 import { Toggle as SideBarToggle } from './SideBar/Toggle';
 import { Connect } from './Connect';
@@ -17,7 +19,6 @@ import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
 
 export const Headers = () => {
-
   const { pathname } = useLocation();
   const assistant = useAssistant();
   const { activeAccount }: any = useConnect();
@@ -62,16 +63,16 @@ export const Headers = () => {
         {/* always display assistant */}
         <HeadingWrapper>
           <Item
-            onClick={() => { assistant.toggle() }}
+            onClick={() => { assistant.toggle(); }}
             whileHover={{ scale: 1.02 }}
           >
-            {activeAccount === '' && <div className='label'>1</div>}
+            {activeAccount === '' && <div className="label">1</div>}
             <span>Assistant</span>
           </Item>
         </HeadingWrapper>
       </Wrapper>
     </>
   );
-}
+};
 
 export default Headers;

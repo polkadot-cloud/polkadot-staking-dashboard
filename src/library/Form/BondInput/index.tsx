@@ -6,13 +6,11 @@ import { InputWrapper, RowWrapper } from './Wrappers';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
-import { isNumeric } from '../../../Utils';
+import { isNumeric, planckBnToUnit } from '../../../Utils';
 import { Button } from '../../Button';
-import { planckBnToUnit } from '../../../Utils';
 import { useStaking } from '../../../contexts/Staking';
 
 export const BondInput = (props: any) => {
-
   // functional props
   const setters = props.setters ?? [];
 
@@ -41,33 +39,33 @@ export const BondInput = (props: any) => {
 
   // handle change for bonding
   const handleChangeBond = (e: any) => {
-    let { value } = e.target;
+    const { value } = e.target;
     if (!isNumeric(value) && value !== '') {
       return;
     }
     setBond(value);
     updateParentState(value);
-  }
+  };
 
   // handle change for unbonding
   const handleChangeUnbond = (e: any) => {
-    let { value } = e.target;
+    const { value } = e.target;
     if (!isNumeric(value) && value !== '') {
       return;
     }
     setBond(value);
     updateParentState(value);
-  }
+  };
 
   // apply bond to parent setters
   const updateParentState = (value: any) => {
-    for (let s of setters) {
+    for (const s of setters) {
       s.set({
         ...s.current,
-        bond: value
+        bond: value,
       });
     }
-  }
+  };
 
   // reset value to default when changing account
   useEffect(() => {
@@ -79,7 +77,12 @@ export const BondInput = (props: any) => {
       <div>
         <InputWrapper>
           <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>{task === 'unbond' ? 'Unbond' : 'Bond'} {network.unit}:</h3>
+            <h3>
+              {task === 'unbond' ? 'Unbond' : 'Bond'}
+              {' '}
+              {network.unit}
+              :
+            </h3>
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
@@ -98,16 +101,20 @@ export const BondInput = (props: any) => {
       </div>
       <div>
         <div>
-          <Button inline small title="Max" onClick={() => {
-            const value = task === 'bond' ? freeToBond : freeToUnbondToMinNominatorBond;
-            setBond(value);
-            updateParentState(value);
-          }}
+          <Button
+            inline
+            small
+            title="Max"
+            onClick={() => {
+              const value = task === 'bond' ? freeToBond : freeToUnbondToMinNominatorBond;
+              setBond(value);
+              updateParentState(value);
+            }}
           />
         </div>
       </div>
     </RowWrapper>
-  )
-}
+  );
+};
 
 export default BondInput;

@@ -37,13 +37,12 @@ export const useStats = () => {
   // active nominators as percent
   let activeNominatorsAsPercent = 0;
   if (maxElectingVoters > 0) {
-    activeNominatorsAsPercent =
-      activeNominators / new BN(maxElectingVoters).div(new BN(100)).toNumber();
+    activeNominatorsAsPercent = activeNominators / new BN(maxElectingVoters).div(new BN(100)).toNumber();
   }
 
   // base values
-  let lastTotalStakeBase = lastTotalStake.div(new BN(10 ** units));
-  let totalIssuanceBase = totalIssuance.div(new BN(10 ** units));
+  const lastTotalStakeBase = lastTotalStake.div(new BN(10 ** units));
+  const totalIssuanceBase = totalIssuance.div(new BN(10 ** units));
 
   return [
     {
@@ -108,4 +107,4 @@ export const useStats = () => {
       },
     },
   ];
-}
+};

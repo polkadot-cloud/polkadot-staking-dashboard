@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 `;
 
 export const StakingAccount = styled.div<any>`
-  margin-bottom: ${props => props.last === true ? `none` : '1rem'};
+  margin-bottom: ${(props) => (props.last === true ? 'none' : '1rem')};
   display: flex;
   flex-flow: row wrap;
   h4 {
@@ -79,7 +79,6 @@ export const FooterWrapper = styled.div`
   padding: 0 0.25rem;
   margin-top: 1rem;
 `;
-
 
 export const Section = styled.div`
   flex: 1;

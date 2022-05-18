@@ -20,11 +20,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
-      "react/next",
-      "react-dom/next"
+      "react",
+      "react-dom"
     ],
   },
   "include": [
     "src"
-  ]
+  ],
 }

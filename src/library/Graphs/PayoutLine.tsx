@@ -25,11 +25,10 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export const PayoutLine = (props: any) => {
-
   const { mode } = useTheme();
   const { network }: any = useApi();
   const { units } = network;
@@ -48,7 +47,7 @@ export const PayoutLine = (props: any) => {
           display: false,
           maxTicksLimit: 30,
           autoSkip: true,
-        }
+        },
       },
       y: {
         ticks: {
@@ -86,7 +85,7 @@ export const PayoutLine = (props: any) => {
         interaction: {
           mode: 'nearest',
         },
-      }
+      },
     },
   };
 
@@ -102,7 +101,7 @@ export const PayoutLine = (props: any) => {
           return planckToUnit(item.amount, units);
         }),
         borderColor: (context: any) => {
-          const chart = context.chart;
+          const { chart } = context;
           const { ctx, chartArea } = chart;
           if (!chartArea) {
             return;
@@ -113,19 +112,21 @@ export const PayoutLine = (props: any) => {
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,
-      }
+      },
     ],
   };
 
   return (
-    <div className='graph_line'
+    <div
+      className="graph_line"
       style={{
         height: height === undefined ? 'auto' : height,
         background: background === undefined ? 'none' : background,
-      }}>
+      }}
+    >
       <Line options={options} data={data} />
     </div>
-  )
-}
+  );
+};
 
 export default PayoutLine;

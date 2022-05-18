@@ -17,8 +17,8 @@ export const MainWrapper = styled.div<any>`
     width: 62%;
     order: 1;
     flex: 1;
-    ${props => props.paddingLeft && `padding-left: 1rem;`}
-    ${props => props.paddingRight && ` padding-right: 1rem;`}
+    ${(props) => props.paddingLeft && 'padding-left: 1rem;'}
+    ${(props) => props.paddingRight && ' padding-right: 1rem;'}
   }
 `;
 

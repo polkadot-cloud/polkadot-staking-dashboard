@@ -6,21 +6,21 @@ module.exports = {
     rules: [
       {
         test: /\.worker\.ts$/,
-        loader: "worker-loader",
+        loader: 'worker-loader',
         options: {
-          inline: true
-        }
+          inline: true,
+        },
       },
       {
         test: /\.ts$/,
-        loader: "ts-loader",
+        loader: 'ts-loader',
         options: {
-          inline: true
-        }
+          inline: true,
+        },
       },
     ],
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: ['.ts', '.js'],
   },
 };

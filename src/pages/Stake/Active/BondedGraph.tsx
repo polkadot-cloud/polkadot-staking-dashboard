@@ -1,7 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS, ArcElement, Tooltip, Legend,
+} from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { defaultThemes } from '../../../theme/default';
 import { useApi } from '../../../contexts/Api';
@@ -10,11 +12,13 @@ import { useTheme } from '../../../contexts/Themes';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BondedGraph = (props: any) => {
-
   const { mode } = useTheme();
   const { network }: any = useApi();
 
-  let { active, unlocking, remaining, total } = props;
+  const {
+    active, unlocking, total,
+  } = props;
+  let { remaining } = props;
 
   let zeroBalance = false;
   if (total === 0 || total === undefined) {
@@ -51,8 +55,8 @@ export const BondedGraph = (props: any) => {
           label: (context: any) => {
             return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
           },
-        }
-      }
+        },
+      },
     },
     cutout: '70%',
   };
@@ -79,6 +83,6 @@ export const BondedGraph = (props: any) => {
       data={data}
     />
   );
-}
+};
 
 export default BondedGraph;

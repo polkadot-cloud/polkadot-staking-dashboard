@@ -14,7 +14,6 @@ import { useNetworkMetrics } from '../contexts/Network';
 import { StatusLabel } from '../library/StatusLabel';
 
 export const EraPoints = () => {
-
   const { config } = useModal();
   const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
@@ -23,13 +22,13 @@ export const EraPoints = () => {
   const [list, setList] = useState([]);
 
   const ref: any = React.useRef();
-  let size = useSize(ref.current);
-  let { width, height, minHeight } = formatSize(size, 300);
+  const size = useSize(ref.current);
+  const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
-    const list = await fetchEraPoints(address, metrics.activeEra.index);
-    setList(list);
-  }
+    const _list = await fetchEraPoints(address, metrics.activeEra.index);
+    setList(_list);
+  };
 
   useEffect(() => {
     handleEraPoints();
@@ -38,23 +37,31 @@ export const EraPoints = () => {
   return (
     <>
       <SubscanButton />
-      <div className='header'>
+      <div className="header">
         <Identicon
           value={address}
           size={40}
         />
-        <h1>&nbsp; {identity === null ? clipAddress(address) : identity}</h1>
+        <h1>
+&nbsp;
+          {identity === null ? clipAddress(address) : identity}
+        </h1>
       </div>
-      <div className='body'>
+      <div className="body">
         <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>
 
-          <div className='head' style={{ padding: 0 }}>
+          <div className="head" style={{ padding: 0 }}>
             <h4>Recent Era Points</h4>
           </div>
 
-          <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
-            <StatusLabel status="active_service" statusFor='subscan' title="Subscan Disabled" />
-            <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute', left: '-1rem' }}>
+          <div className="inner" ref={ref} style={{ minHeight }}>
+            <StatusLabel status="active_service" statusFor="subscan" title="Subscan Disabled" />
+            <div
+              className="graph"
+              style={{
+                height: `${height}px`, width: `${width}px`, position: 'absolute', left: '-1rem',
+              }}
+            >
               <EraPointsGraph
                 items={list}
                 height={200}
@@ -64,7 +71,7 @@ export const EraPoints = () => {
         </GraphWrapper>
       </div>
     </>
-  )
-}
+  );
+};
 
 export default EraPoints;

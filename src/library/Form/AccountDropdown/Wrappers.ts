@@ -8,7 +8,7 @@ export const StyledDownshift = styled.div<any>`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: ${props => props.height ? props.height : 'auto'};
+  height: ${(props) => (props.height ? props.height : 'auto')};
   overflow: hidden;
 
   /* title of dropdown */ 

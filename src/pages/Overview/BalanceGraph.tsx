@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS, ArcElement, Tooltip, Legend,
+} from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
@@ -17,7 +19,6 @@ import { usePrices } from '../../library/Hooks/usePrices';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BalanceGraph = () => {
-
   const { mode } = useTheme();
   const { network }: any = useApi();
   const { units } = network;
@@ -26,19 +27,18 @@ export const BalanceGraph = () => {
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
-  const { freeToStake, freeToUnbond: staked }: any =
-    getBondOptions(activeAccount) || {};
+  const { freeToStake, freeToUnbond: staked }: any = getBondOptions(activeAccount) || {};
 
-  let { free, miscFrozen } = balance;
+  let { free } = balance;
+  const { miscFrozen } = balance;
 
   // get user's total free balance
-  let freeBase = planckToUnit(free.toNumber(), units);
+  const freeBase = planckToUnit(free.toNumber(), units);
   // convert balance to fiat value
-  let freeBalance = fiatAmount(freeBase * prices.lastPrice);
+  const freeBalance = fiatAmount(freeBase * prices.lastPrice);
 
   // convert to currency unit
   free = planckToUnit(free.toNumber(), units);
-
 
   // graph data
   let graphStaked = staked;
@@ -80,8 +80,8 @@ export const BalanceGraph = () => {
           label: (context: any) => {
             return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
           },
-        }
-      }
+        },
+      },
     },
     cutout: '75%',
   };
@@ -104,17 +104,30 @@ export const BalanceGraph = () => {
   };
 
   const ref: any = React.useRef();
-  let size = useSize(ref.current);
-  let { width, height, minHeight } = formatSize(size, 252);
+  const size = useSize(ref.current);
+  const { width, height, minHeight } = formatSize(size, 252);
 
   return (
     <>
       <div className="head" style={{ paddingTop: '0.5rem' }}>
         <h4>Balance</h4>
-        <h2>{freeBase} {network.unit}{services.includes('binance_spot') && <>&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></>}</h2>
+        <h2>
+          {freeBase}
+          {' '}
+          {network.unit}
+          {services.includes('binance_spot') && (
+          <>
+&nbsp;
+            <span className="fiat">
+              $
+              {humanNumber(freeBalance)}
+            </span>
+          </>
+          )}
+        </h2>
       </div>
-      <div style={{ paddingTop: '20px' }}></div>
-      <div className="inner" ref={ref} style={{ minHeight: minHeight }}>
+      <div style={{ paddingTop: '20px' }} />
+      <div className="inner" ref={ref} style={{ minHeight }}>
         <div
           className="graph"
           style={{
@@ -126,7 +139,7 @@ export const BalanceGraph = () => {
           <Doughnut options={options} data={data} />
         </div>
       </div>
-      <div style={{ paddingTop: '25px' }}></div>
+      <div style={{ paddingTop: '25px' }} />
     </>
   );
 };

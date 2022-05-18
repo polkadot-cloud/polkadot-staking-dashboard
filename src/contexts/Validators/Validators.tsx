@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from "bn.js";
+import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -47,8 +47,7 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> = React.cr
 export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
-export const ValidatorsProvider = (props: any) => {
-
+export const ValidatorsProvider = ({ children }: any) => {
   const { isReady, api, network }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
@@ -70,7 +69,7 @@ export const ValidatorsProvider = (props: any) => {
   const setValidatorMetaBatch = (val: any) => {
     validatorMetaBatchesRef.current = val;
     _setValidatorMetaBatch(val);
-  }
+  };
 
   // stores the meta batch subscriptions for validator lists
   const [validatorSubs, _setValidatorSubs]: any = useState({});
@@ -79,15 +78,15 @@ export const ValidatorsProvider = (props: any) => {
   const setValidatorSubs = (val: any) => {
     validatorSubsRef.current = val;
     _setValidatorSubs(val);
-  }
+  };
 
   // get favourites from local storage
   const getFavourites = () => {
-    let _favourites: any = localStorage.getItem(`${network.name.toLowerCase()}_favourites`);
+    const _favourites: any = localStorage.getItem(`${network.name.toLowerCase()}_favourites`);
     return _favourites !== null
       ? JSON.parse(_favourites)
       : [];
-  }
+  };
 
   // stores the user's favourite validators
   const [favourites, setFavourites]: any = useState(getFavourites());
@@ -119,7 +118,7 @@ export const ValidatorsProvider = (props: any) => {
           return v();
         });
       });
-    })
+    });
   }, [isReady, metrics.activeEra]);
 
   // pre-populating validator meta batches. Needed for generating nominations
@@ -138,17 +137,19 @@ export const ValidatorsProvider = (props: any) => {
 
   const fetchNominatedList = async () => {
     // get raw nominations list
-    let nominated = getAccountNominations(activeAccount);
+    let n = getAccountNominations(activeAccount);
     // format to list format
-    nominated = nominated.map((item: any, index: any) => { return ({ address: item }) });
+    n = n.map((item: any, index: any) => { return ({ address: item }); });
     // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(nominated);
+
+    const nominationsWithPrefs = await fetchValidatorPrefs(n);
+
     if (nominationsWithPrefs) {
       setNominated(nominationsWithPrefs);
     } else {
       setNominated([]);
     }
-  }
+  };
 
   // re-fetch favourites upon network change
   useEffect(() => {
@@ -164,7 +165,7 @@ export const ValidatorsProvider = (props: any) => {
 
   const fetchFavouriteList = async () => {
     // format to list format
-    const _favourites = [...favourites].map((item: any, index: any) => { return ({ address: item }) });
+    const _favourites = [...favourites].map((item: any, index: any) => { return ({ address: item }); });
     // // fetch preferences
     const favouritesWithPrefs = await fetchValidatorPrefs(_favourites);
     if (favouritesWithPrefs) {
@@ -172,90 +173,88 @@ export const ValidatorsProvider = (props: any) => {
     } else {
       setFavouritesList([]);
     }
-  }
+  };
 
-  /* 
+  /*
    * Fetches the active validator set.
    * Validator meta batches are derived from this initial list.
    */
   const fetchValidators = async () => {
-    if (!isReady) { return }
-    if (fetchedValidators) { return }
+    if (!isReady) { return; }
+    if (fetchedValidators) { return; }
 
     // fetch validator set
-    let validators: any = [];
+    const v: any = [];
     const exposures = await api.query.staking.validators.entries();
     exposures.forEach(([_args, _prefs]: any) => {
-      let address = _args.args[0].toHuman();
-      let prefs = _prefs.toHuman();
+      const address = _args.args[0].toHuman();
+      const prefs = _prefs.toHuman();
 
-      let _commission = removePercentage(prefs.commission);
+      const _commission = removePercentage(prefs.commission);
 
-      validators.push({
-        address: address,
+      v.push({
+        address,
         prefs: {
           commission: parseFloat(_commission.toFixed(2)),
-          blocked: prefs.blocked
-        }
+          blocked: prefs.blocked,
+        },
       });
     });
 
     setFetchedValidators(true);
-    setValidators(validators);
-  }
+    setValidators(v);
+  };
 
   /*
    * subscribe to active session
   */
-  const subscribeSessionValidators = async (api: any) => {
-
+  const subscribeSessionValidators = async (_api: any) => {
     if (isReady) {
-      const unsub = await api.query.session.validators((_validators: any) => {
+      const unsub = await _api.query.session.validators((_validators: any) => {
         setSessionValidators({
           ...sessionValidators,
-          list: _validators.toHuman()
+          list: _validators.toHuman(),
         });
       });
       setSessionValidators({
         ...sessionValidators,
-        unsub: unsub
+        unsub,
       });
     }
-  }
+  };
 
   /*
    * fetches prefs for a list of validators
    */
   const fetchValidatorPrefs = async (_validators: any) => {
-
     if (!_validators.length) {
       return false;
     }
 
-    let validators: any = [];
-    for (let v of _validators) {
-      validators.push(v.address);
+    const v: any = [];
+    for (const _v of _validators) {
+      v.push(_v.address);
     }
 
-    const prefsAll = await api.query.staking.validators.multi(validators);
+    const prefsAll = await api.query.staking.validators.multi(v);
 
-    let validatorsWithPrefs = [];
+    const validatorsWithPrefs = [];
     let i = 0;
-    for (let _prefs of prefsAll) {
-      let prefs = _prefs.toHuman();
-      let commission = removePercentage(prefs.commission);
+    for (const _prefs of prefsAll) {
+      const prefs = _prefs.toHuman();
+      const commission = removePercentage(prefs.commission);
 
       validatorsWithPrefs.push({
-        address: validators[i],
+        address: v[i],
         prefs: {
-          commission: commission,
+          commission,
           blocked: prefs.blocked,
-        }
+        },
       });
       i++;
     }
     return validatorsWithPrefs;
-  }
+  };
 
   /*
     Fetches a new batch of subscribed validator metadata. Stores the returning
@@ -272,10 +271,10 @@ export const ValidatorsProvider = (props: any) => {
     },
   };
   */
-  const fetchValidatorMetaBatch = async (key: string, validators: any, refetch: boolean = false) => {
-    if (!isReady) { return }
+  const fetchValidatorMetaBatch = async (key: string, v: any, refetch = false) => {
+    if (!isReady) { return; }
 
-    if (!validators.length) { return; }
+    if (!v.length) { return; }
 
     if (!refetch) {
       // if already exists, do not re-fetch
@@ -288,46 +287,44 @@ export const ValidatorsProvider = (props: any) => {
       delete validatorMetaBatchesRef.current[key];
 
       if (validatorSubsRef.current[key] !== undefined) {
-        for (let unsub of validatorSubsRef.current[key]) {
+        for (const unsub of validatorSubsRef.current[key]) {
           unsub();
         }
       }
     }
 
-    let addresses = [];
-    for (let v of validators) {
-      addresses.push(v.address);
+    const addresses = [];
+    for (const _v of v) {
+      addresses.push(_v.address);
     }
 
     // store batch addresses
-    let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+    const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
     setValidatorMetaBatch({ ...batchesUpdated });
 
-    const subscribeToIdentities = async (addresses: any) => {
-
-      const unsub = await api.query.identity.identityOf.multi(addresses, (_identities: any) => {
-        let identities = [];
+    const subscribeToIdentities = async (addr: any) => {
+      const unsub = await api.query.identity.identityOf.multi(addr, (_identities: any) => {
+        const identities = [];
         for (let i = 0; i < _identities.length; i++) {
           identities.push(_identities[i].toHuman());
         }
-        let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated[key].identities = identities;
-        setValidatorMetaBatch({ ...batchesUpdated });
+        const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+        _batchesUpdated[key].identities = identities;
+        setValidatorMetaBatch({ ..._batchesUpdated });
       });
       return unsub;
-    }
+    };
 
-    const subscribeToSuperIdentities = async (addresses: any) => {
-      const unsub = await api.query.identity.superOf.multi(addresses, async (_supers: any) => {
-
+    const subscribeToSuperIdentities = async (addr: any) => {
+      const unsub = await api.query.identity.superOf.multi(addr, async (_supers: any) => {
         // determine where supers exist
-        let supers: any = [];
-        let supersWithIdentity: any = [];
+        const supers: any = [];
+        const supersWithIdentity: any = [];
 
         for (let i = 0; i < _supers.length; i++) {
-          let _super = _supers[i].toHuman();
+          const _super = _supers[i].toHuman();
           supers.push(_super);
           if (_super !== null) {
             supersWithIdentity.push(i);
@@ -335,107 +332,105 @@ export const ValidatorsProvider = (props: any) => {
         }
 
         // get supers one-off multi query
-        let query = supers.filter((s: any) => s !== null).map((s: any) => s[0]);
+        const query = supers.filter((s: any) => s !== null).map((s: any) => s[0]);
 
-        let temp = await api.query.identity.identityOf.multi(query, (_identities: any) => {
+        const temp = await api.query.identity.identityOf.multi(query, (_identities: any) => {
           for (let j = 0; j < _identities.length; j++) {
-            let _identity = _identities[j].toHuman();
+            const _identity = _identities[j].toHuman();
             // inject identity into super array
             supers[supersWithIdentity[j]].identity = _identity;
           }
         });
         temp();
 
-        let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated[key].supers = supers;
-        setValidatorMetaBatch({ ...batchesUpdated });
+        const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+        _batchesUpdated[key].supers = supers;
+        setValidatorMetaBatch({ ..._batchesUpdated });
       });
       return unsub;
-    }
+    };
 
     await Promise.all(
       [subscribeToIdentities(addresses),
-      subscribeToSuperIdentities(addresses)]).then((unsubs: any) => {
-        addMetaBatchUnsubs(key, unsubs);
-      });
+        subscribeToSuperIdentities(addresses)],
+    ).then((unsubs: any) => {
+      addMetaBatchUnsubs(key, unsubs);
+    });
 
     // intentional throttle to prevent slow render updates.
     await sleep(750);
 
     // subscribe to validator nominators
-    let args: any = [];
-    for (let i = 0; i < validators.length; i++) {
-      args.push([metrics.activeEra.index, validators[i].address]);
+    const args: any = [];
+
+    for (let i = 0; i < v.length; i++) {
+      args.push([metrics.activeEra.index, v[i].address]);
     }
 
     const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
-      let stake = [];
+      const stake = [];
 
-      for (let _v of _validators) {
-        let v = _v.toHuman();
-
-        let others = v.others ?? [];
+      for (let _validator of _validators) {
+        _validator = _validator.toHuman();
+        let others = _validator.others ?? [];
 
         // account for yourself being an additional nominator
-        let total_nominations = others.length + 1;
+        const totalNominations = others.length + 1;
 
         // get lowest stake for the validator
         others = others.sort((a: any, b: any) => {
-          let x = new BN(rmCommas(a.value));
-          let y = new BN(rmCommas(b.value));
+          const x = new BN(rmCommas(a.value));
+          const y = new BN(rmCommas(b.value));
           return x.sub(y);
         });
 
-        let lowest = others.length > 0
+        const lowest = others.length > 0
           ? new BN(rmCommas(others[0].value)).div(new BN(10 ** network.units)).toNumber()
           : 0;
 
         stake.push({
-          total: v.total,
-          own: v.own,
-          total_nominations: total_nominations,
-          lowest: lowest,
+          total: _validator.total,
+          own: _validator.own,
+          total_nominations: totalNominations,
+          lowest,
         });
       }
 
       // commit update
-      let batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-      batchesUpdated[key].stake = stake;
-      setValidatorMetaBatch({ ...batchesUpdated });
+      const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+      _batchesUpdated[key].stake = stake;
+      setValidatorMetaBatch({ ..._batchesUpdated });
     });
 
     addMetaBatchUnsubs(key, [unsub3]);
-  }
+  };
 
   /*
    * Helper function to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: any) => {
+    const _unsubs = validatorSubsRef.current;
+    const _keyUnsubs = _unsubs[key] ?? [];
 
-    let _unsubs = validatorSubsRef.current;
-    let _keyUnsubs = _unsubs[key] ?? [];
-
-    _keyUnsubs.push(...unsubs)
+    _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
     setValidatorSubs(_unsubs);
-  }
+  };
 
   const removeValidatorMetaBatch = (key: string) => {
-
     if (validatorSubsRef.current[key] !== undefined) {
       // ubsubscribe from updates
-      for (let unsub of validatorSubsRef.current[key]) {
+      for (const unsub of validatorSubsRef.current[key]) {
         unsub();
       }
       // wipe data
       delete validatorMetaBatches[key];
       delete validatorMetaBatchesRef.current[key];
     }
-  }
+  };
 
   const removeIndexFromBatch = (key: string, index: number) => {
-
-    let batchesUpdated = Object.assign(validatorMetaBatchesRef.current, {});
+    const batchesUpdated = Object.assign(validatorMetaBatchesRef.current, {});
     batchesUpdated[key].addresses.splice(index, 1);
 
     if (batchesUpdated[key].stake !== undefined) {
@@ -445,20 +440,20 @@ export const ValidatorsProvider = (props: any) => {
       batchesUpdated[key].stake.splice(index, 1);
     }
     setValidatorMetaBatch({ ...batchesUpdated });
-  }
+  };
 
   /*
    * Adds a favourite validator.
    */
   const addFavourite = (address: string) => {
-    let _favourites: any = Object.assign(favourites);
+    const _favourites: any = Object.assign(favourites);
     if (!_favourites.includes(address)) {
       _favourites.push(address);
     }
 
     localStorage.setItem(`${network.name.toLowerCase()}_favourites`, JSON.stringify(_favourites));
     setFavourites([..._favourites]);
-  }
+  };
 
   /*
    * Removes a favourite validator if they exist.
@@ -468,49 +463,46 @@ export const ValidatorsProvider = (props: any) => {
     _favourites = _favourites.filter((validator: any) => validator !== address);
     localStorage.setItem(`${network.name.toLowerCase()}_favourites`, JSON.stringify(_favourites));
     setFavourites([..._favourites]);
-  }
+  };
 
   /*
    * Gets the minimum bond of a group of validators needed for rewards.
    */
   const getMinRewardBond = (_addresses: any) => {
-
-    const batch = validatorMetaBatchesRef.current['validators_browse'];
+    const batch = validatorMetaBatchesRef.current.validators_browse;
 
     let lowest = null;
-    for (let a of _addresses) {
+    for (const a of _addresses) {
       const batchIndex = batch.addresses.indexOf(a);
       const stake = batch.stake[batchIndex];
 
       if (lowest === null) {
         lowest = stake.lowest;
-      }
-      else {
-        if (stake.lowest < lowest) {
-          lowest = stake.lowest;
-        }
+      } else if (stake.lowest < lowest) {
+        lowest = stake.lowest;
       }
     }
     return lowest;
-  }
+  };
 
   return (
     <ValidatorsContext.Provider value={{
-      fetchValidatorMetaBatch: fetchValidatorMetaBatch,
-      removeValidatorMetaBatch: removeValidatorMetaBatch,
-      fetchValidatorPrefs: fetchValidatorPrefs,
-      removeIndexFromBatch: removeIndexFromBatch,
-      addFavourite: addFavourite,
-      removeFavourite: removeFavourite,
-      getMinRewardBond: getMinRewardBond,
-      validators: validators,
+      fetchValidatorMetaBatch,
+      removeValidatorMetaBatch,
+      fetchValidatorPrefs,
+      removeIndexFromBatch,
+      addFavourite,
+      removeFavourite,
+      getMinRewardBond,
+      validators,
       meta: validatorMetaBatchesRef.current,
       session: sessionValidators,
-      favourites: favourites,
-      nominated: nominated,
-      favouritesList: favouritesList,
-    }}>
-      {props.children}
+      favourites,
+      nominated,
+      favouritesList,
+    }}
+    >
+      {children}
     </ValidatorsContext.Provider>
   );
-}
+};

@@ -34,12 +34,10 @@ export const PoolsContext: React.Context<PoolsContextState> = React.createContex
 export const usePools = () => React.useContext(PoolsContext);
 
 export const PoolsProvider = (props: any) => {
-
   const [meta, setMeta] = useState(defaultMeta);
   const [status, setStatus] = useState(defaultStatus);
 
   useEffect(() => {
-
     setMeta({
       counterForPoolMembers: 2,
       counterForBondedPools: 1,
@@ -57,15 +55,15 @@ export const PoolsProvider = (props: any) => {
       rewardPoolTotalEarnings: 0,
       unbondingEras: {},
     });
-
   }, []);
 
   return (
     <PoolsContext.Provider value={{
-      meta: meta,
-      status: status,
-    }}>
+      meta,
+      status,
+    }}
+    >
       {props.children}
     </PoolsContext.Provider>
   );
-}
+};

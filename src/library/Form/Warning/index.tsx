@@ -11,9 +11,9 @@ export const Warning = (props: any) => {
   return (
     <Wrapper>
       <h4>
-        <FontAwesomeIcon icon={faExclamationTriangle} transform="shrink-2" className='icon' />
+        <FontAwesomeIcon icon={faExclamationTriangle} transform="shrink-2" className="icon" />
         {text}
       </h4>
     </Wrapper>
-  )
-}
+  );
+};

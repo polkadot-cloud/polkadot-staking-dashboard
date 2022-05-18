@@ -10,7 +10,6 @@ import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
 
 export const Favourites = (props: PageProps) => {
-
   const { isReady }: any = useApi();
   const { page } = props;
   const { title } = page;
@@ -24,31 +23,32 @@ export const Favourites = (props: PageProps) => {
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
           {favouritesList === null
-            ?
-            <h4>Fetching favourite validators...</h4>
-            :
-            <>
-              {isReady &&
+            ? <h4>Fetching favourite validators...</h4>
+            : (
+              <>
+                {isReady
+                && (
                 <>
                   {favouritesList.length > 0
-                    ? <ValidatorList
-                      validators={favouritesList}
-                      batchKey={batchKey}
-                      title='Favourite Validators'
-                      refetchOnListUpdate
-                      allowMoreCols
-                      toggleFavourites
-                    />
-                    : <h3>No Favourites.</h3>
-                  }
+                    ? (
+                      <ValidatorList
+                        validators={favouritesList}
+                        batchKey={batchKey}
+                        title="Favourite Validators"
+                        refetchOnListUpdate
+                        allowMoreCols
+                        toggleFavourites
+                      />
+                    )
+                    : <h3>No Favourites.</h3>}
                 </>
-              }
-            </>
-          }
+                )}
+              </>
+            )}
         </SectionWrapper>
       </PageRowWrapper>
     </>
   );
-}
+};
 
 export default Favourites;

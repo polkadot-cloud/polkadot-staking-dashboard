@@ -6,16 +6,16 @@ import { textSecondary, backgroundSecondary } from '../../theme';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
-  padding: ${props => props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
+  padding: ${(props) => (props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem')};
   border-radius: 1rem;
-  background: ${props => props.transparent ? 'none' : backgroundSecondary};
+  background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
   align-items: flex-start;
   flex: 1;
   width: 100%;
-  margin-top: ${props => props.transparent ? '0rem' : '1rem'};
+  margin-top: ${(props) => (props.transparent ? '0rem' : '1rem')};
   position: relative;
 
   .inner {
@@ -77,13 +77,13 @@ export const SectionWrapper = styled.div<any>`
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;
   border-radius: 1rem;
-  background: ${props => props.transparent ? 'none' : backgroundSecondary};
+  background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
   align-items: flex-start;
   flex: 1;
-  margin-top: ${props => props.noMargin ? 0 : '1rem'};
+  margin-top: ${(props) => (props.noMargin ? 0 : '1rem')};
   position: relative;
   overflow: hidden;
 
@@ -147,7 +147,7 @@ export const GraphWrapper = styled.div<any>`
   }
   .graph {
     position: relative;
-    flex: ${props => props.flex ? 1 : 0};
+    flex: ${(props) => (props.flex ? 1 : 0)};
     flex-flow: row wrap;
     justify-content: center;
     width: 100%;
