@@ -24,6 +24,7 @@ export const nominations = {
 }
 
 export const bondOptions = {
+  
   freeToBond: 0,
   freeToUnbond: 0,
   totalUnlocking: 0,
