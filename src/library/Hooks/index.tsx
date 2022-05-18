@@ -11,7 +11,7 @@ export const useOutsideAlerter = (ref: any, callback: any, ignore: any = []) => 
     const handleClickOutside = (event: any) => {
       if (ref.current && !ref.current.contains(event.target)) {
         const invalid = ignore.find((i: any) => event.target.classList.contains(i));
-        if (invalid) {
+        if (invalid === undefined) {
           callback();
         }
       }

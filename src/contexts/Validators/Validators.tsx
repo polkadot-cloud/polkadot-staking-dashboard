@@ -141,7 +141,9 @@ export const ValidatorsProvider = ({ children }: any) => {
     // format to list format
     n = n.map((item: any, index: any) => { return ({ address: item }); });
     // fetch preferences
+
     const nominationsWithPrefs = await fetchValidatorPrefs(n);
+
     if (nominationsWithPrefs) {
       setNominated(nominationsWithPrefs);
     } else {
@@ -234,7 +236,7 @@ export const ValidatorsProvider = ({ children }: any) => {
       v.push(_v.address);
     }
 
-    const prefsAll = await api.query.staking.validators.multi(validators);
+    const prefsAll = await api.query.staking.validators.multi(v);
 
     const validatorsWithPrefs = [];
     let i = 0;
