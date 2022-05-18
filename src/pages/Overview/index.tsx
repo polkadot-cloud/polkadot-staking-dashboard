@@ -66,9 +66,7 @@ export const Overview = () => {
             <div className="head">
               <h4>Recent Payouts</h4>
               <h2>
-                {lastPayout === null ? 0 : lastPayout.amount}
-                {' '}
-                {network.unit}
+                {lastPayout === null ? 0 : lastPayout.amount} {network.unit}
                 &nbsp;
                 <span className="fiat">
                   {lastPayout === null

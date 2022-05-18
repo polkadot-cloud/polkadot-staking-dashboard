@@ -10,12 +10,13 @@ export const usePrices = () => {
   const { services }: any = useUi();
 
   let pricesLocal = localStorage.getItem(`${network.name}_prices`);
-  pricesLocal = pricesLocal === null
-    ? {
-      lastPrice: 0,
-      change: 0,
-    }
-    : JSON.parse(pricesLocal);
+  pricesLocal =
+    pricesLocal === null
+      ? {
+          lastPrice: 0,
+          change: 0,
+        }
+      : JSON.parse(pricesLocal);
 
   const [prices, _setPrices]: any = useState(pricesLocal);
 
@@ -49,11 +50,11 @@ export const usePrices = () => {
   // initial price subscribe
   useEffect(() => {
     initiatePriceInterval();
-    return (() => {
+    return () => {
       if (priceHandle !== null) {
         clearInterval(priceHandle);
       }
-    });
+    };
   }, []);
 
   // resubscribe on network toggle

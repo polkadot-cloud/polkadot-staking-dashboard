@@ -14,12 +14,16 @@ export const Settings = () => {
       <StatusButton
         checked={services.includes('subscan')}
         label="Subscan API"
-        onClick={() => { toggleService('subscan'); }}
+        onClick={() => {
+          toggleService('subscan');
+        }}
       />
       <StatusButton
         checked={services.includes('binance_spot')}
         label="Binance Spot API"
-        onClick={() => { toggleService('binance_spot'); }}
+        onClick={() => {
+          toggleService('binance_spot');
+        }}
       />
     </Wrapper>
   );

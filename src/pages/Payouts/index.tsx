@@ -13,7 +13,11 @@ import { SubscanButton } from '../../library/SubscanButton';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
 import { PayoutBar } from '../../library/Graphs/PayoutBar';
 import { PageTitle } from '../../library/PageTitle';
-import { useSize, formatSize, prefillPayoutGraph } from '../../library/Graphs/Utils';
+import {
+  useSize,
+  formatSize,
+  prefillPayoutGraph,
+} from '../../library/Graphs/Utils';
 import { StatusLabel } from '../../library/StatusLabel';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PayoutList } from './PayoutList';
@@ -55,49 +59,56 @@ export const Payouts = (props: PageProps) => {
               <OpenAssistantIcon page="payouts" title="Payout History" />
             </h4>
             <h2>
-              {(payouts.length)
-                ? (
-                  <>
-                    {moment.unix(payouts[0].block_timestamp).format('Do MMMM')}
-                    {' '}
-                    -
-                    {moment.unix(payouts[payouts.length - 1].block_timestamp).format('Do MMMM')}
-                  </>
-                )
-                : <span className="fiat">None</span>}
+              {payouts.length ? (
+                <>
+                  {moment.unix(payouts[0].block_timestamp).format('Do MMMM')} -
+                  {moment
+                    .unix(payouts[payouts.length - 1].block_timestamp)
+                    .format('Do MMMM')}
+                </>
+              ) : (
+                <span className="fiat">None</span>
+              )}
             </h2>
           </div>
           <div className="inner" ref={ref} style={{ minHeight }}>
-
-            {!services.includes('subscan')
-              ? <StatusLabel status="active_service" statusFor="subscan" title="Subscan Disabled" />
-              : <StatusLabel status="sync_or_setup" title="Not Yet Staking" />}
-
-            <div className="graph" style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
-              <PayoutBar
-                payouts={payoutsGraph}
-                height="120px"
+            {!services.includes('subscan') ? (
+              <StatusLabel
+                status="active_service"
+                statusFor="subscan"
+                title="Subscan Disabled"
               />
-              <PayoutLine
-                payouts={payoutsGraph}
-                height="70px"
-              />
+            ) : (
+              <StatusLabel status="sync_or_setup" title="Not Yet Staking" />
+            )}
+
+            <div
+              className="graph"
+              style={{
+                height: `${height}px`,
+                width: `${width}px`,
+                position: 'absolute',
+              }}
+            >
+              <PayoutBar payouts={payoutsGraph} height="120px" />
+              <PayoutLine payouts={payoutsGraph} height="70px" />
             </div>
           </div>
         </GraphWrapper>
       </PageRowWrapper>
-      {!payoutsList.length ? <></>
-        : (
-          <PageRowWrapper noVerticalSpacer>
-            <SectionWrapper>
-              <PayoutList
-                title="Recent Payouts"
-                payouts={payoutsList}
-                pagination
-              />
-            </SectionWrapper>
-          </PageRowWrapper>
-        )}
+      {!payoutsList.length ? (
+        <></>
+      ) : (
+        <PageRowWrapper noVerticalSpacer>
+          <SectionWrapper>
+            <PayoutList
+              title="Recent Payouts"
+              payouts={payoutsList}
+              pagination
+            />
+          </SectionWrapper>
+        </PageRowWrapper>
+      )}
     </>
   );
 };

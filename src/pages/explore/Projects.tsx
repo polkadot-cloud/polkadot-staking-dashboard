@@ -46,17 +46,29 @@ export const Projects = (props: PageProps) => {
         <div>
           <h2>Validator Programs</h2>
           <ItemsWrapper variants={container} initial="hidden" animate="show">
-            <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
+            <Item
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              variants={listItem}
+            >
               cool icon here
             </Item>
           </ItemsWrapper>
 
           <h2>Staking in the Polkadot Ecosystem</h2>
           <ItemsWrapper variants={container} initial="hidden" animate="show">
-            <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
+            <Item
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              variants={listItem}
+            >
               cool icon here
             </Item>
-            <Item whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} variants={listItem}>
+            <Item
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              variants={listItem}
+            >
               cool icon here
             </Item>
           </ItemsWrapper>

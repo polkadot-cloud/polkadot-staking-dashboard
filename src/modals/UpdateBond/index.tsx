@@ -24,10 +24,11 @@ export const UpdateBond = () => {
     <Wrapper>
       <FixedContentWrapper>
         <HeadingWrapper>
-          <FontAwesomeIcon transform="grow-2" icon={fn === 'add' ? faPlus : faMinus} />
-          {fn === 'add' ? 'Add To' : 'Remove'}
-          {' '}
-          Bond
+          <FontAwesomeIcon
+            transform="grow-2"
+            icon={fn === 'add' ? faPlus : faMinus}
+          />
+          {fn === 'add' ? 'Add To' : 'Remove'} Bond
         </HeadingWrapper>
       </FixedContentWrapper>
       <SectionsWrapper
@@ -46,14 +47,8 @@ export const UpdateBond = () => {
           },
         }}
       >
-        <Tasks
-          setSection={setSection}
-          setTask={setTask}
-        />
-        <Forms
-          setSection={setSection}
-          task={task}
-        />
+        <Tasks setSection={setSection} setTask={setTask} />
+        <Forms setSection={setSection} task={task} />
       </SectionsWrapper>
     </Wrapper>
   );

@@ -7,7 +7,10 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import {
-  List, Header, Wrapper as ListWrapper, Pagination,
+  List,
+  Header,
+  Wrapper as ListWrapper,
+  Pagination,
 } from '../../library/List';
 import { useApi } from '../../contexts/Api';
 import { StakingContext } from '../../contexts/Staking';
@@ -56,11 +59,11 @@ export const PayoutListInner = (props: any) => {
   const totalPages = Math.ceil(payouts.length / LIST_ITEMS_PER_PAGE);
   const nextPage = page + 1 > totalPages ? totalPages : page + 1;
   const prevPage = page - 1 < 1 ? 1 : page - 1;
-  const pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
+  const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
   // render batch
-  const batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
+  const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
 
   // refetch list when list changes
   useEffect(() => {
@@ -97,7 +100,7 @@ export const PayoutListInner = (props: any) => {
   }
 
   if (!payouts.length) {
-    return (<></>);
+    return <></>;
   }
 
   return (
@@ -107,44 +110,54 @@ export const PayoutListInner = (props: any) => {
           <h3>{props.title}</h3>
         </div>
         <div>
-          <button
-            type="button"
-            onClick={() => setListFormat('row')}
-          >
-            <FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} />
+          <button type="button" onClick={() => setListFormat('row')}>
+            <FontAwesomeIcon
+              icon={faBars}
+              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+            />
           </button>
-          <button
-            type="button"
-            onClick={() => setListFormat('col')}
-          >
-            <FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : 'inherit'} />
+          <button type="button" onClick={() => setListFormat('col')}>
+            <FontAwesomeIcon
+              icon={faGripVertical}
+              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+            />
           </button>
         </div>
       </Header>
-      <List
-        flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}
-      >
-        {pagination
-          && (
-          <Pagination
-            prev={page !== 1}
-            next={page !== totalPages}
-          >
+      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+        {pagination && (
+          <Pagination prev={page !== 1} next={page !== totalPages}>
             <div>
               <h4>
                 Page
-                {page}
-                {' '}
-                of
+                {page} of
                 {totalPages}
               </h4>
             </div>
             <div>
-              <button type="button" className="prev" onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
-              <button type="button" className="next" onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
+              <button
+                type="button"
+                className="prev"
+                onClick={() => {
+                  setPage(prevPage);
+                  setInitial(false);
+                }}
+              >
+                Prev
+              </button>
+              <button
+                type="button"
+                className="next"
+                onClick={() => {
+                  setPage(nextPage);
+                  setInitial(false);
+                }}
+              >
+                Next
+              </button>
             </div>
           </Pagination>
-          )}
+        )}
 
         <motion.div
           className="transition"
@@ -186,9 +199,7 @@ export const PayoutListInner = (props: any) => {
                       </span>
                       <h4 className={event_id.toLowerCase()}>
                         {event_id === 'Reward' ? '+' : '-'}
-                        {planckToUnit(amount, units)}
-                        {' '}
-                        {network.unit}
+                        {planckToUnit(amount, units)} {network.unit}
                       </h4>
                     </div>
                     <div>
@@ -209,11 +220,7 @@ export class PayoutList extends React.Component<any, any> {
   static contextType = StakingContext;
 
   render() {
-    return (
-      <PayoutListInner
-        {...this.props}
-      />
-    );
+    return <PayoutListInner {...this.props} />;
   }
 }
 

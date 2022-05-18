@@ -16,9 +16,18 @@ export const Footer = (props: any) => {
   return (
     <FooterWrapper>
       <section>
-        {complete
-          ? <Button inline primary title="Continue" onClick={() => setActiveAccountSetupSection(setup.section + 1)} />
-          : <div style={{ opacity: 0.5 }}><Button inline title="Continue" disabled /></div>}
+        {complete ? (
+          <Button
+            inline
+            primary
+            title="Continue"
+            onClick={() => setActiveAccountSetupSection(setup.section + 1)}
+          />
+        ) : (
+          <div style={{ opacity: 0.5 }}>
+            <Button inline title="Continue" disabled />
+          </div>
+        )}
       </section>
     </FooterWrapper>
   );

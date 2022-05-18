@@ -10,9 +10,7 @@ import { ItemWrapper, MinimisedItemWrapper } from './Wrapper';
 export const Item = (props: any) => {
   const { setSideMenu }: any = useUi();
 
-  const {
-    name, active, to, icon, action, minimised,
-  } = props;
+  const { name, active, to, icon, action, minimised } = props;
 
   const StyledWrapper = minimised ? MinimisedItemWrapper : ItemWrapper;
 
@@ -26,24 +24,21 @@ export const Item = (props: any) => {
           duration: 0.1,
         }}
       >
-        <div className="icon">
-          {icon}
-        </div>
-        {!minimised
-          && (
+        <div className="icon">{icon}</div>
+        {!minimised && (
           <>
-            <h3 className="name">
-              {name}
-            </h3>
+            <h3 className="name">{name}</h3>
 
-            {action
-              && (
+            {action && (
               <div className="action">
-                <FontAwesomeIcon icon={action as IconProp} color="rgba(242, 185, 27,0.5)" />
+                <FontAwesomeIcon
+                  icon={action as IconProp}
+                  color="rgba(242, 185, 27,0.5)"
+                />
               </div>
-              )}
+            )}
           </>
-          )}
+        )}
       </StyledWrapper>
     </Link>
   );

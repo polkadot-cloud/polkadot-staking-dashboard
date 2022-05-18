@@ -7,10 +7,7 @@ import { APIContext } from '../../contexts/Api';
 
 export const BlockNumberInner = (props: any) => {
   return (
-    <motion.div
-      animate={{ opacity: [0.5, 1] }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div animate={{ opacity: [0.5, 1] }} transition={{ duration: 0.5 }}>
       {props.block}
     </motion.div>
   );
@@ -75,9 +72,7 @@ export class BlockNumber extends React.Component<any, any> {
   }
 
   render() {
-    return (
-      <BlockNumberInner {...this.props} block={this.state.block} />
-    );
+    return <BlockNumberInner {...this.props} block={this.state.block} />;
   }
 }
 

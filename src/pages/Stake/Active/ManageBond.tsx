@@ -16,7 +16,8 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { getAccountLedger, getBondedAccount, getBondOptions }: any = useBalances();
+  const { getAccountLedger, getBondedAccount, getBondOptions }: any =
+    useBalances();
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active, total } = ledger;
@@ -30,20 +31,34 @@ export const ManageBond = () => {
           <OpenAssistantIcon page="stake" title="Bonding" />
         </h4>
         <h2>
-          {planckBnToUnit(active, units)}
-          {' '}
-          {network.unit}
-          {' '}
-&nbsp;
+          {planckBnToUnit(active, units)} {network.unit} &nbsp;
           <div>
-            <Button small primary inline title="+" onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')} />
-            <Button small primary title="-" onClick={() => openModalWith('UpdateBond', { fn: 'remove' }, 'small')} />
+            <Button
+              small
+              primary
+              inline
+              title="+"
+              onClick={() =>
+                openModalWith('UpdateBond', { fn: 'add' }, 'small')
+              }
+            />
+            <Button
+              small
+              primary
+              title="-"
+              onClick={() =>
+                openModalWith('UpdateBond', { fn: 'remove' }, 'small')
+              }
+            />
           </div>
         </h2>
       </div>
 
       <GraphWrapper transparent noMargin>
-        <div className="graph" style={{ flex: 0, paddingRight: '1rem', height: 160 }}>
+        <div
+          className="graph"
+          style={{ flex: 0, paddingRight: '1rem', height: 160 }}
+        >
           <BondedGraph
             active={planckBnToUnit(active, units)}
             unlocking={totalUnlocking}

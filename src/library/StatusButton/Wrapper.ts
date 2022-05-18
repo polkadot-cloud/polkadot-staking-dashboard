@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonPrimaryBackground, textPrimary, textSecondary } from '../../theme';
+import {
+  buttonPrimaryBackground,
+  textPrimary,
+  textSecondary,
+} from '../../theme';
 
 export const Wrapper = styled.button`
   width: 100%;

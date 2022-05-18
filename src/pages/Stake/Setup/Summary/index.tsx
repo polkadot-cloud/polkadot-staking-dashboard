@@ -24,19 +24,17 @@ export const Summary = (props: any) => {
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 
-  const {
-    controller, bond, nominations, payee,
-  } = setup;
+  const { controller, bond, nominations, payee } = setup;
 
   const txs = () => {
     const stashToSubmit = {
       Id: activeAccount,
     };
-    const bondToSubmit = bond * (10 ** units);
+    const bondToSubmit = bond * 10 ** units;
     const targetsToSubmit = nominations.map((item: any) => {
-      return ({
+      return {
         Id: item.address,
-      });
+      };
     });
     const controllerToSubmit = {
       Id: controller,
@@ -55,73 +53,61 @@ export const Summary = (props: any) => {
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
-    callbackSubmit: () => {
-    },
-    callbackInBlock: () => {
-    },
+    callbackSubmit: () => {},
+    callbackInBlock: () => {},
   });
 
   return (
     <SectionWrapper transparent>
-      <Header
-        thisSection={section}
-        complete={null}
-        title="Summary"
-      />
-      <MotionContainer
-        thisSection={section}
-        activeSection={setup.section}
-      >
+      <Header thisSection={section} complete={null} title="Summary" />
+      <MotionContainer thisSection={section} activeSection={setup.section}>
         <SummaryWrapper>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle as IconProp} transform="grow-1" />
-              {' '}
-&nbsp; Controller:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Controller:
             </div>
-            <div>
-              {controller}
-            </div>
+            <div>{controller}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle as IconProp} transform="grow-1" />
-              {' '}
-&nbsp; Reward Destination:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Reward Destination:
             </div>
-            <div>
-              {payee}
-            </div>
+            <div>{payee}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle as IconProp} transform="grow-1" />
-              {' '}
-&nbsp; Nominations:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Nominations:
             </div>
-            <div>
-              {nominations.length}
-            </div>
+            <div>{nominations.length}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle as IconProp} transform="grow-1" />
-              {' '}
-&nbsp; Bond Amount:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Bond Amount:
             </div>
             <div>
-              {humanNumber(bond)}
-              {' '}
-              {network.unit}
+              {humanNumber(bond)} {network.unit}
             </div>
           </section>
           <section>
             <div>Estimated Tx Fee:</div>
-            <div>
-              {estimatedFee === null ? '...' : `${estimatedFee}`}
-            </div>
+            <div>{estimatedFee === null ? '...' : `${estimatedFee}`}</div>
           </section>
-
         </SummaryWrapper>
         <div style={{ flex: 1, width: '100%', display: 'flex' }}>
           <ButtonWrapper

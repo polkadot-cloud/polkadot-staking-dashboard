@@ -51,44 +51,45 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.div<any>`
-    width: 110px;
-    height: 80px;
-    border-radius: 0.7rem;
-    background: ${(props) => (props.active ? 'rgba(211, 48, 121, 0.85)' : 'none')};
-    display: flex;
-    flex-flow: column nowrap;
-    margin-right: 1rem;
-    position: relative;
-    border: 1px solid ${borderPrimary};
+  width: 110px;
+  height: 80px;
+  border-radius: 0.7rem;
+  background: ${(props) =>
+    props.active ? 'rgba(211, 48, 121, 0.85)' : 'none'};
+  display: flex;
+  flex-flow: column nowrap;
+  margin-right: 1rem;
+  position: relative;
+  border: 1px solid ${borderPrimary};
 
-    &:last-child {
-      margin-right: 0;
+  &:last-child {
+    margin-right: 0;
+  }
+
+  section {
+    display: flex;
+    flex-flow: row wrap;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    width: 100%;
+
+    &:first-child {
+      flex-grow: 1;
+      flex-basis: 70%;
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding-bottom: 0.6rem;
+
+      .icon {
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 0 0.5rem;
+      }
     }
 
-    section {
-      display: flex;
-      flex-flow: row wrap;
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-      width: 100%;
-
-      &:first-child { 
-        flex-grow: 1;
-        flex-basis: 70%;
-        justify-content: flex-start;
-        align-items: flex-end;
-        padding-bottom: 0.6rem;
-        
-        .icon {
-          display: flex;
-          flex-flow: column wrap;
-          justify-content: center;
-          align-items: center;
-          padding: 0 0.5rem;
-        }
-      }
-
-      &:last-child {
+    &:last-child {
       justify-content: flex-start;
       padding-top: 0.2rem;
       flex-basis: 30%;
@@ -120,7 +121,7 @@ export const ItemWrapper = styled.div<any>`
       justify-content: center;
       color: white;
     }
-  }   
+  }
 `;
 
 export default Wrapper;

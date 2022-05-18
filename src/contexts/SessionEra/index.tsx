@@ -11,17 +11,16 @@ export interface SessionEraContextState {
   sessionEra: any;
 }
 
-export const SessionEraContext: React.Context<SessionEraContextState> = React.createContext({
-  getEraTimeLeft: () => 0,
-  sessionEra: {},
-});
+export const SessionEraContext: React.Context<SessionEraContextState> =
+  React.createContext({
+    getEraTimeLeft: () => 0,
+    sessionEra: {},
+  });
 
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
 export const SessionEraProvider = ({ children }: any) => {
-  const {
-    isReady, api, status, consts,
-  }: any = useApi();
+  const { isReady, api, status, consts }: any = useApi();
   const { expectedBlockTime } = consts;
 
   useEffect(() => {
@@ -63,7 +62,7 @@ export const SessionEraProvider = ({ children }: any) => {
   };
 
   const getEraTimeLeft = () => {
-    const eraBlocksLeft = (state.eraLength - state.eraProgress);
+    const eraBlocksLeft = state.eraLength - state.eraProgress;
     const eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
     const eventTime = moment().unix() + eraTimeLeftSeconds;
     const diffTime = eventTime - moment().unix();

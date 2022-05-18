@@ -51,33 +51,27 @@ export const Account = (props: any) => {
       fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
       fontSize={fontSize}
     >
-      {label !== undefined
-        && (
-        <div className="account-label">
-          {label}
-        </div>
-        )}
+      {label !== undefined && <div className="account-label">{label}</div>}
 
-      {unassigned
-        ? <span className="title unassigned">Not Set</span>
-        : (
-          <>
-            <span className="identicon">
-              <Identicon
-                value={value}
-                size={convertRemToPixels(fontSize) * 1.45}
-              />
-            </span>
-            <span className="title">{displayValue}</span>
-          </>
-        )}
+      {unassigned ? (
+        <span className="title unassigned">Not Set</span>
+      ) : (
+        <>
+          <span className="identicon">
+            <Identicon
+              value={value}
+              size={convertRemToPixels(fontSize) * 1.45}
+            />
+          </span>
+          <span className="title">{displayValue}</span>
+        </>
+      )}
 
-      {wallet
-        && (
+      {wallet && (
         <div className="wallet">
           <WalletSVG />
         </div>
-        )}
+      )}
     </Wrapper>
   );
 };

@@ -25,9 +25,9 @@ export const useEraTimeLeft = () => {
     timeleftInterval = setInterval(() => {
       setEraTimeLeft(eraTimeLeftRef.current - 1);
     }, 1000);
-    return (() => {
+    return () => {
       clearInterval(timeleftInterval);
-    });
+    };
   }, [sessionEra]);
 
   return eraTimeLeftRef.current;

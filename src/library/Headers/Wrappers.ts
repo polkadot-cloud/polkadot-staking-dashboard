@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   align-content: center;
-  padding: 1rem; 
+  padding: 1rem;
   transition: all 0.15s;
   z-index: 5;
   margin-bottom: 0.5rem;
@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
   /* no longer in use */
   .menu {
     display: none;
-    @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
@@ -71,65 +71,65 @@ export const HeadingWrapper = styled.div`
 `;
 
 export const Item = styled(motion.button)`
-    background: ${buttonSecondaryBackground};
-    flex-grow: 1;  
-    padding: 0 1rem;
-    border-radius: 1rem;
-    box-shadow: none;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-variation-settings: 'wght' 540;
-    font-size: 1rem;
+  background: ${buttonSecondaryBackground};
+  flex-grow: 1;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  box-shadow: none;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-variation-settings: 'wght' 540;
+  font-size: 1rem;
 
-    .label {
-      border: 0.125rem solid #d33079;
-      border-radius: 0.8rem;
-      color: #d33079;
-      font-size: 0.85rem;
-      font-variation-settings: 'wght' 525;
-      margin-right: 0.6rem;
-      padding: 0.1rem 0.5rem;
-    }
+  .label {
+    border: 0.125rem solid #d33079;
+    border-radius: 0.8rem;
+    color: #d33079;
+    font-size: 0.85rem;
+    font-variation-settings: 'wght' 525;
+    margin-right: 0.6rem;
+    padding: 0.1rem 0.5rem;
+  }
 
+  > span {
+    color: ${textPrimary};
+    line-height: 2.2rem;
+  }
+  &.connect {
+    background: #d33079;
     > span {
-      color: ${textPrimary};
-      line-height: 2.2rem;
+      color: ${textInvert};
     }
-    &.connect {
-      background: #d33079;
-      > span {
-        color: ${textInvert};
-      }
-    }
-    path {
-      fill: ${textPrimary};
-    }
+  }
+  path {
+    fill: ${textPrimary};
+  }
 `;
 
 export const ItemInactive = styled(motion.div)`
-    flex-grow: 1;  
-    padding: 0 1rem;
-    border-radius: 1rem;
-    background: ${buttonSecondaryBackground};
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    font-variation-settings: 'wght' 540;
-    font-size: 1rem;
+  flex-grow: 1;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  background: ${buttonSecondaryBackground};
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  font-variation-settings: 'wght' 540;
+  font-size: 1rem;
 
-    > span {
-      color: ${textPrimary};
-      line-height: 2.2rem;
-    }
+  > span {
+    color: ${textPrimary};
+    line-height: 2.2rem;
+  }
 `;
 
 export const SmallScreensOnly = styled.div`
   display: flex;
-  @media(max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
+  @media (max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
     display: none;
   }
 `;

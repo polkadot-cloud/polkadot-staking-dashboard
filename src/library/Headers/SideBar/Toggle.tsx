@@ -14,12 +14,13 @@ export const Toggle = () => {
   const style = { flex: 0 };
 
   const svg = (
-    <div style={{
-      width: '1rem',
-      height: '1rem',
-      padding: '0.6rem 0',
-      marginRight: '0.75rem',
-    }}
+    <div
+      style={{
+        width: '1rem',
+        height: '1rem',
+        padding: '0.6rem 0',
+        marginRight: '0.75rem',
+      }}
     >
       <WalletSVG />
     </div>
@@ -27,27 +28,18 @@ export const Toggle = () => {
 
   return (
     <ToggleWrapper>
-      {(!open && activeAccount !== '')
-        && (
+      {!open && activeAccount !== '' && (
         <Item
           style={style}
-          onClick={() => { openSideBar(); }}
+          onClick={() => {
+            openSideBar();
+          }}
           whileHover={{ scale: '1.01' }}
         >
-          {svg}
-          {' '}
-          Wallet
+          {svg} Wallet
         </Item>
-        )}
-      {open
-        ? (
-          <Item style={style}>
-            {svg}
-            {' '}
-            Wallet
-          </Item>
-        )
-        : <></>}
+      )}
+      {open ? <Item style={style}>{svg} Wallet</Item> : <></>}
     </ToggleWrapper>
   );
 };

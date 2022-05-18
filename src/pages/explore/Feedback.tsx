@@ -17,10 +17,30 @@ const Feedback = (props: PageProps) => {
   useEffect(() => {
     (function (w: any, d: any, i: any, s: any) {
       // eslint-disable-next-line
-      function l () { if (!d.getElementById(i)) { var f = d.getElementsByTagName(s)[0], e = d.createElement(s); e.type = "text/javascript", e.async = !0, e.src = "https://canny.io/sdk.js", f.parentNode.insertBefore(e, f) } }
+      function l() {
+        if (!d.getElementById(i)) {
+          var f = d.getElementsByTagName(s)[0],
+            e = d.createElement(s);
+          (e.type = 'text/javascript'),
+            (e.async = !0),
+            (e.src = 'https://canny.io/sdk.js'),
+            f.parentNode.insertBefore(e, f);
+        }
+      }
       // eslint-disable-next-line
-      if ("function" != typeof w.Canny) { var c: any = function () { c.q.push(arguments) }; c.q = [], w.Canny = c, "complete" === d.readyState ? l() : w.attachEvent ? w.attachEvent("onload", l) : w.addEventListener("load", l, !1) }
-    }(window, document, 'canny-jssdk', 'script'));
+      if ('function' != typeof w.Canny) {
+        var c: any = function () {
+          c.q.push(arguments);
+        };
+        (c.q = []),
+          (w.Canny = c),
+          'complete' === d.readyState
+            ? l()
+            : w.attachEvent
+            ? w.attachEvent('onload', l)
+            : w.addEventListener('load', l, !1);
+      }
+    })(window, document, 'canny-jssdk', 'script');
 
     // @ts-ignore
     Canny('render', {

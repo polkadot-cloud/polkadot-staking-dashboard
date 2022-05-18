@@ -25,7 +25,8 @@ export const useStats = () => {
   // active validators as percent
   let activeValidatorsAsPercent = 0;
   if (validatorCount.gt(new BN(0))) {
-    activeValidatorsAsPercent = activeValidators / (validatorCount.toNumber() * 0.01);
+    activeValidatorsAsPercent =
+      activeValidators / (validatorCount.toNumber() * 0.01);
   }
 
   return [

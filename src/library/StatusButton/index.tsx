@@ -11,14 +11,18 @@ export const StatusButton = (props: any) => {
   const { checked, label, onClick } = props;
 
   return (
-    <Wrapper onClick={() => {
-      if (onClick !== undefined) {
-        onClick();
-      }
-    }}
+    <Wrapper
+      onClick={() => {
+        if (onClick !== undefined) {
+          onClick();
+        }
+      }}
     >
       <section className={checked ? 'checked' : undefined}>
-        <FontAwesomeIcon icon={checked ? faCheck as IconProp : faCircle as IconProp} transform="shrink-3" />
+        <FontAwesomeIcon
+          icon={checked ? (faCheck as IconProp) : (faCircle as IconProp)}
+          transform="shrink-3"
+        />
       </section>
       <section>{label}</section>
     </Wrapper>

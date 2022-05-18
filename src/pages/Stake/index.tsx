@@ -22,20 +22,14 @@ export const Stake = (props: PageProps) => {
 
   return (
     <Wrapper>
-      {_isSyncing
-        ? (
-          <>
-            <PageTitle title={`${title}`} />
-            <Loader />
-          </>
-        )
-        : (
-          <>
-            {_inSetup
-              ? <Setup title={title} />
-              : <Active title={title} />}
-          </>
-        )}
+      {_isSyncing ? (
+        <>
+          <PageTitle title={`${title}`} />
+          <Loader />
+        </>
+      ) : (
+        <>{_inSetup ? <Setup title={title} /> : <Active title={title} />}</>
+      )}
     </Wrapper>
   );
 };

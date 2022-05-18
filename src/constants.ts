@@ -3,13 +3,13 @@
 
 /*
  * SVGs
-*/
+ */
 import { ReactComponent as PolkadotLogoSVG } from './img/polkadot_icon.svg';
 import { ReactComponent as WestendLogoSVG } from './img/westend_icon.svg';
 
 /*
  * Global Constants
-*/
+ */
 export const URI_PREFIX = '/polkadot-staking-dashboard';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
 export const DAPP_NAME = 'polkadot_staking_dashboard';
@@ -50,11 +50,7 @@ export const NODE_ENDPOINTS: any = {
 
 export const POLKADOT_URL = 'https://polkadot.network';
 
-export const CONNECTION_STATUS = [
-  'disconnected',
-  'connecting',
-  'connected',
-];
+export const CONNECTION_STATUS = ['disconnected', 'connecting', 'connected'];
 
 export const CONNECTION_SYMBOL_COLORS: any = {
   disconnected: 'red',
@@ -66,10 +62,12 @@ export const PAYEE_STATUS = [
   {
     key: 'Staked',
     name: 'Back to Staking',
-  }, {
+  },
+  {
     key: 'Stash',
     name: 'To Stash Account',
-  }, {
+  },
+  {
     key: 'Controller',
     name: 'To Controller Account',
   },
@@ -86,19 +84,19 @@ export const GRAPH_HEIGHT = 430;
 
 /*
  * Toggle-able services
-*/
+ */
 export const SERVICES = ['subscan', 'binance_spot'];
 
 /*
  * Global messages for app components
-*/
+ */
 export const GLOBAL_MESSGE_KEYS = {
   CONTROLLER_NOT_IMPORTED: 'controller_not_imported',
 };
 
 /*
  * Fallback config values
-*/
+ */
 export const MAX_NOMINATIONS = 16;
 export const BONDING_DURATION = 28;
 export const SESSIONS_PER_ERA = 6;
@@ -116,7 +114,7 @@ export const LIST_ITEMS_PER_BATCH = 20;
 
 /*
  * Third party API keys and endpoints
-*/
+ */
 
 // TODO: check with Subscan should API key be public
 export const API_SUBSCAN_KEY = 'd37149339f64775155a82a53f4253b27';

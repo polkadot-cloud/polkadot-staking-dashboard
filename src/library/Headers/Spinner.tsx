@@ -5,24 +5,28 @@ import styled from 'styled-components';
 import { backgroundPrimary } from '../../theme';
 
 const StyledSpinner = styled.div`
-    font-size: 10px;
-    margin: 0;
-    text-indent: -9999em;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    background: #ccc;
-    background: -moz-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-    background: -webkit-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-    background: -o-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-    background: -ms-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-    background: linear-gradient(to right, #ccc 10%, rgba(255, 255, 255, 0) 42%);
-    position: relative;
-    -webkit-animation: load3 0.7s infinite linear;
-    animation: load3 0.7s infinite linear;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
+  font-size: 10px;
+  margin: 0;
+  text-indent: -9999em;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #ccc;
+  background: -moz-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(
+    left,
+    #ccc 10%,
+    rgba(255, 255, 255, 0) 42%
+  );
+  background: -o-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, #ccc 10%, rgba(255, 255, 255, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 0.7s infinite linear;
+  animation: load3 0.7s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
   &:before {
     width: 50%;
     height: 50%;
@@ -69,9 +73,7 @@ const StyledSpinner = styled.div`
 `;
 
 export const Spinner = () => {
-  return (
-    <StyledSpinner />
-  );
+  return <StyledSpinner />;
 };
 
 export default Spinner;

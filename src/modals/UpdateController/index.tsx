@@ -57,8 +57,7 @@ export const UpdateController = () => {
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {
-    },
+    callbackInBlock: () => {},
   });
 
   const accountsList = accounts.filter((acc: any) => {
@@ -71,9 +70,13 @@ export const UpdateController = () => {
         <FontAwesomeIcon transform="grow-2" icon={faExchangeAlt} />
         Change Controller Account
       </HeadingWrapper>
-      <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
+      <div
+        style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
+      >
         <AccountDropdown
-          items={accountsList.filter((acc: any) => acc.address !== activeAccount)}
+          items={accountsList.filter(
+            (acc: any) => acc.address !== activeAccount
+          )}
           onChange={handleOnChange}
           placeholder="Select Account"
           value={selected}
@@ -87,8 +90,16 @@ export const UpdateController = () => {
         </div>
         <FooterWrapper>
           <div>
-            <button type="button" className="submit" onClick={() => submitTx()} disabled={selected === null || submitting}>
-              <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
+            <button
+              type="button"
+              className="submit"
+              onClick={() => submitTx()}
+              disabled={selected === null || submitting}
+            >
+              <FontAwesomeIcon
+                transform="grow-2"
+                icon={faArrowAltCircleUp as IconProp}
+              />
               Submit
             </button>
           </div>

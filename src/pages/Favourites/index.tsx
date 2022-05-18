@@ -22,29 +22,28 @@ export const Favourites = (props: PageProps) => {
       <PageTitle title={title} />
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          {favouritesList === null
-            ? <h4>Fetching favourite validators...</h4>
-            : (
-              <>
-                {isReady
-                && (
+          {favouritesList === null ? (
+            <h4>Fetching favourite validators...</h4>
+          ) : (
+            <>
+              {isReady && (
                 <>
-                  {favouritesList.length > 0
-                    ? (
-                      <ValidatorList
-                        validators={favouritesList}
-                        batchKey={batchKey}
-                        title="Favourite Validators"
-                        refetchOnListUpdate
-                        allowMoreCols
-                        toggleFavourites
-                      />
-                    )
-                    : <h3>No Favourites.</h3>}
+                  {favouritesList.length > 0 ? (
+                    <ValidatorList
+                      validators={favouritesList}
+                      batchKey={batchKey}
+                      title="Favourite Validators"
+                      refetchOnListUpdate
+                      allowMoreCols
+                      toggleFavourites
+                    />
+                  ) : (
+                    <h3>No Favourites.</h3>
+                  )}
                 </>
-                )}
-              </>
-            )}
+              )}
+            </>
+          )}
         </SectionWrapper>
       </PageRowWrapper>
     </>

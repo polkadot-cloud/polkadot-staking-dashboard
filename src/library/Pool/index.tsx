@@ -19,22 +19,20 @@ export const PoolInner = (props: any) => {
         <h3>{id}</h3>
         <Identicon value={addresses.stash} size={26} />
 
-        {initial
-          ? (
-            <motion.div
-              className="identity"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h4>{clipAddress(addresses.stash)}</h4>
-            </motion.div>
-          )
-          : (
-            <div className="identity">
-              <h4>{clipAddress(addresses.stash)}</h4>
-            </div>
-          )}
+        {initial ? (
+          <motion.div
+            className="identity"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h4>{clipAddress(addresses.stash)}</h4>
+          </motion.div>
+        ) : (
+          <div className="identity">
+            <h4>{clipAddress(addresses.stash)}</h4>
+          </div>
+        )}
 
         <div className="labels">
           <motion.div
@@ -44,9 +42,7 @@ export const PoolInner = (props: any) => {
           >
             <div className="label">
               <FontAwesomeIcon icon={faUsers} />
-              &nbsp;
-              {' '}
-              {memberCounter}
+              &nbsp; {memberCounter}
             </div>
           </motion.div>
         </div>

@@ -3,35 +3,39 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, modalOverlayBackground, modalBackground } from '../theme';
+import {
+  textSecondary,
+  modalOverlayBackground,
+  modalBackground,
+} from '../theme';
 
 // Blurred background modal wrapper
 export const ModalWrapper = styled(motion.div)`
-    background: ${modalOverlayBackground};
-    position: fixed;
-    width: 100%;
+  background: ${modalOverlayBackground};
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  backdrop-filter: blur(4px);
+
+  /* modal content wrapper */
+  .content_wrapper {
     height: 100%;
-    z-index: 9;
-    backdrop-filter: blur(4px);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
 
-    /* modal content wrapper */
-    .content_wrapper {
+    /* click anywhere behind modal content to close */
+    .close {
+      position: fixed;
+      width: 100%;
       height: 100%;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem 2rem;
-
-      /* click anywhere behind modal content to close */
-      .close {
-          position: fixed;
-          width: 100%;
-          height: 100%;
-          z-index: 8;
-          cursor: default;
-      }
+      z-index: 8;
+      cursor: default;
     }
+  }
 `;
 
 // Modal content wrapper
@@ -44,7 +48,7 @@ export const ContentWrapper = styled.div<any>`
   overflow: hidden;
   overflow-y: scroll;
   position: relative;
-  
+
   .header {
     width: 100%;
     display: flex;

@@ -9,11 +9,12 @@ export interface ExtrinsicsContextState {
   pending: any;
 }
 
-export const ExtrinsicsContext: React.Context<ExtrinsicsContextState> = React.createContext({
-  addPending: (t: any) => { },
-  removePending: (t: any) => { },
-  pending: [],
-});
+export const ExtrinsicsContext: React.Context<ExtrinsicsContextState> =
+  React.createContext({
+    addPending: (t: any) => {},
+    removePending: (t: any) => {},
+    pending: [],
+  });
 
 export const useExtrinsics = () => React.useContext(ExtrinsicsContext);
 
@@ -38,11 +39,12 @@ export const ExtrinsicsProvider = (props: any) => {
   };
 
   return (
-    <ExtrinsicsContext.Provider value={{
-      addPending,
-      removePending,
-      pending: pendingRef.current,
-    }}
+    <ExtrinsicsContext.Provider
+      value={{
+        addPending,
+        removePending,
+        pending: pendingRef.current,
+      }}
     >
       {props.children}
     </ExtrinsicsContext.Provider>

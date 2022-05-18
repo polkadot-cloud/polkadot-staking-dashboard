@@ -19,7 +19,9 @@ export const BondStatusBar = (props: any) => {
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
 
-  const minNominatorBondBase = minNominatorBond.div(new BN(10 ** units)).toNumber();
+  const minNominatorBondBase = minNominatorBond
+    .div(new BN(10 ** units))
+    .toNumber();
 
   const gtMinNominatorBond = value >= minNominatorBondBase;
   const gtMinActiveBond = value >= minActiveBond;
@@ -36,30 +38,24 @@ export const BondStatusBar = (props: any) => {
         <section className={gtMinNominatorBond ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp;
-            Nominate
+            &nbsp; Nominate
             <OpenAssistantIcon page="stake" title="Nominating" />
           </h4>
           <div className="bar">
             <h5>
-              {minNominatorBondBase}
-              {' '}
-              {unit}
+              {minNominatorBondBase} {unit}
             </h5>
           </div>
         </section>
         <section className={gtMinActiveBond ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp;
-            Active
+            &nbsp; Active
             <OpenAssistantIcon page="stake" title="Active Bond Threshold" />
           </h4>
           <div className="bar">
             <h5>
-              {minActiveBond}
-              {' '}
-              {unit}
+              {minActiveBond} {unit}
             </h5>
           </div>
         </section>

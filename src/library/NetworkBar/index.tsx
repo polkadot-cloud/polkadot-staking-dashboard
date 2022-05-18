@@ -3,7 +3,11 @@
 
 import { useState, useRef } from 'react';
 import {
-  Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator,
+  Wrapper,
+  Summary,
+  ConnectionSymbol,
+  NetworkInfo,
+  Separator,
 } from './Wrappers';
 import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
@@ -25,9 +29,10 @@ export const NetworkBar = () => {
   const [open, setOpen] = useState(false);
 
   // handle connection symbol
-  const symbolColor = status === CONNECTION_STATUS[1]
-    ? CONNECTION_SYMBOL_COLORS.connecting
-    : status === CONNECTION_STATUS[2]
+  const symbolColor =
+    status === CONNECTION_STATUS[1]
+      ? CONNECTION_SYMBOL_COLORS.connecting
+      : status === CONNECTION_STATUS[2]
       ? CONNECTION_SYMBOL_COLORS.connected
       : CONNECTION_SYMBOL_COLORS.disconnected;
 
@@ -45,9 +50,13 @@ export const NetworkBar = () => {
 
   const ref = useRef(null);
 
-  useOutsideAlerter(ref, () => {
-    setOpen(false);
-  }, ['igignore-network-info-toggle']);
+  useOutsideAlerter(
+    ref,
+    () => {
+      setOpen(false);
+    },
+    ['igignore-network-info-toggle']
+  );
 
   return (
     <Wrapper
@@ -74,39 +83,34 @@ export const NetworkBar = () => {
           <button
             type="button"
             className="ignore-network-info-toggle"
-            onClick={() => { setOpen(!open); }}
+            onClick={() => {
+              setOpen(!open);
+            }}
           >
             {open ? 'Collapse' : 'Network'}
           </button>
           <div className="stat" style={{ marginRight: 0 }}>
-            {status === CONNECTION_STATUS[2]
-              && <BlockNumber />}
+            {status === CONNECTION_STATUS[2] && <BlockNumber />}
             <ConnectionSymbol color={symbolColor} />
           </div>
-          {services.includes('binance_spot')
-            && (
+          {services.includes('binance_spot') && (
             <>
               <Separator />
               <div className="stat">
-                <span className={`change${prices.change < 0 ? ' neg' : prices.change > 0 ? ' pos' : ''}`}>
+                <span
+                  className={`change${
+                    prices.change < 0 ? ' neg' : prices.change > 0 ? ' pos' : ''
+                  }`}
+                >
                   {prices.change < 0 ? '' : prices.change > 0 ? '+' : ''}
-                  {prices.change}
-                  %
+                  {prices.change}%
                 </span>
               </div>
               <div className="stat">
-                1
-                {' '}
-                {network.api.unit}
-                {' '}
-                /
-                {' '}
-                {prices.lastPrice}
-                {' '}
-                USD
+                1 {network.api.unit} / {prices.lastPrice} USD
               </div>
             </>
-            )}
+          )}
         </section>
       </Summary>
 
@@ -115,20 +119,22 @@ export const NetworkBar = () => {
           <h3> Choose Network:</h3>
         </div>
         <div className="row">
-          {Object.entries(NODE_ENDPOINTS).map(([key, item]: any, index: any) => (
-            <button
-              type="button"
-              key={`switch_network_${index}`}
-              onClick={() => {
-                if (network.name.toLowerCase() !== key) {
-                  switchNetwork(key);
-                  setOpen(false);
-                }
-              }}
-            >
-              <p>{item.name}</p>
-            </button>
-          ))}
+          {Object.entries(NODE_ENDPOINTS).map(
+            ([key, item]: any, index: any) => (
+              <button
+                type="button"
+                key={`switch_network_${index}`}
+                onClick={() => {
+                  if (network.name.toLowerCase() !== key) {
+                    switchNetwork(key);
+                    setOpen(false);
+                  }
+                }}
+              >
+                <p>{item.name}</p>
+              </button>
+            )
+          )}
         </div>
       </NetworkInfo>
     </Wrapper>

@@ -13,9 +13,7 @@ import { defaultThemes } from '../../../theme/default';
 import { StatusLabel } from '../../StatusLabel';
 
 export const AccountSelect = (props: any) => {
-  const {
-    items, onChange, placeholder, value,
-  }: any = props;
+  const { items, onChange, placeholder, value }: any = props;
 
   const itemToString = (item: any) => (item ? item.meta.name : '');
 
@@ -28,7 +26,9 @@ export const AccountSelect = (props: any) => {
     initialSelectedItem: value,
     onInputValueChange: ({ inputValue }: any) => {
       setInputItems(
-        items.filter((item: any) => item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())),
+        items.filter((item: any) =>
+          item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())
+        )
       );
     },
   });
@@ -38,13 +38,12 @@ export const AccountSelect = (props: any) => {
       <div>
         <div style={{ position: 'relative' }}>
           <div className="input-wrap" {...c.getComboboxProps()}>
-            {value !== null
-              && (
+            {value !== null && (
               <Identicon
                 value={value?.address ?? ''}
                 size={convertRemToPixels('2rem')}
               />
-              )}
+            )}
             <input {...c.getInputProps({ placeholder })} className="input" />
           </div>
 
@@ -57,10 +56,14 @@ export const AccountSelect = (props: any) => {
             </StyledController>
           )}
           <StyledSelect {...c.getMenuProps()}>
-            {
-              inputItems
-                .map((item: any, index: number) => <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />)
-            }
+            {inputItems.map((item: any, index: number) => (
+              <DropdownItem
+                key={`controller_acc_${index}`}
+                c={c}
+                item={item}
+                index={index}
+              />
+            ))}
           </StyledSelect>
         </div>
       </div>
@@ -72,27 +75,29 @@ const DropdownItem = ({ c, item, index }: any) => {
   const { mode } = useTheme();
 
   // disable item in list if account doesn't satisfy controller budget.
-  const itemProps = item.active
-    ? c.getItemProps({ index, item })
-    : {};
+  const itemProps = item.active ? c.getItemProps({ index, item }) : {};
 
-  const color = c.selectedItem?.address === item?.address
-    ? defaultThemes.primary[mode]
-    : defaultThemes.text.primary[mode];
+  const color =
+    c.selectedItem?.address === item?.address
+      ? defaultThemes.primary[mode]
+      : defaultThemes.text.primary[mode];
 
-  const border = c.selectedItem?.address === item?.address
-    ? `2px solid ${defaultThemes.primary[mode]}`
-    : `2px solid ${defaultThemes.transparent[mode]}`;
+  const border =
+    c.selectedItem?.address === item?.address
+      ? `2px solid ${defaultThemes.primary[mode]}`
+      : `2px solid ${defaultThemes.transparent[mode]}`;
 
   const opacity = item.active ? 1 : 0.1;
 
   return (
-    <div
-      className="wrapper"
-      key={item.meta.name}
-      {...itemProps}
-    >
-      {!item.active && <StatusLabel status="sync_or_setup" title={item.alert} topOffset="40%" />}
+    <div className="wrapper" key={item.meta.name} {...itemProps}>
+      {!item.active && (
+        <StatusLabel
+          status="sync_or_setup"
+          title={item.alert}
+          topOffset="40%"
+        />
+      )}
       <div
         className="item"
         style={{
@@ -102,10 +107,7 @@ const DropdownItem = ({ c, item, index }: any) => {
         }}
       >
         <div className="icon">
-          <Identicon
-            value={item.address}
-            size={40}
-          />
+          <Identicon value={item.address} size={40} />
         </div>
         <h3 style={{ color }}>{item.meta.name}</h3>
         <p>{clipAddress(item.address)}</p>

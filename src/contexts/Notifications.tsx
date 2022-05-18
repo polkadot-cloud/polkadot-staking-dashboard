@@ -9,11 +9,12 @@ export interface NotificationsContextState {
   notifications: any;
 }
 
-export const NotificationsContext: React.Context<NotificationsContextState> = React.createContext({
-  addNotification: (n: any) => { },
-  removeNotification: (n: any) => { },
-  notifications: [],
-});
+export const NotificationsContext: React.Context<NotificationsContextState> =
+  React.createContext({
+    addNotification: (n: any) => {},
+    removeNotification: (n: any) => {},
+    notifications: [],
+  });
 
 export const useNotifications = () => React.useContext(NotificationsContext);
 
@@ -49,22 +50,27 @@ export const NotificationsProvider = (props: any) => {
 
     setIndex(newIndex);
     setNotifications(_notifications);
-    setTimeout(() => { remove(newIndex); }, 3000);
+    setTimeout(() => {
+      remove(newIndex);
+    }, 3000);
 
     return newIndex;
   };
 
   const remove = (_index: any) => {
-    const _notifications = notificationsRef.current.filter((item: any) => item.index !== _index);
+    const _notifications = notificationsRef.current.filter(
+      (item: any) => item.index !== _index
+    );
     setNotifications(_notifications);
   };
 
   return (
-    <NotificationsContext.Provider value={{
-      addNotification: add,
-      removeNotification: remove,
-      notifications: notificationsRef.current,
-    }}
+    <NotificationsContext.Provider
+      value={{
+        addNotification: add,
+        removeNotification: remove,
+        notifications: notificationsRef.current,
+      }}
     >
       {props.children}
     </NotificationsContext.Provider>

@@ -29,50 +29,47 @@ export const Nominations = () => {
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h2>
         <div>
-          {nominations.length
-            ? (
-              <div>
-                <Button
-                  small
-                  inline
-                  primary
-                  title="Stop"
-                  onClick={() => openModalWith('StopNominating', {}, 'small')}
-                />
-              </div>
-            )
-            : <></>}
+          {nominations.length ? (
+            <div>
+              <Button
+                small
+                inline
+                primary
+                title="Stop"
+                onClick={() => openModalWith('StopNominating', {}, 'small')}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
-      {nominated === null
-        ? (
-          <div style={{ marginTop: '1rem' }}>
-            <p>Fetching your nominations...</p>
-          </div>
-        )
-        : (
-          <>
-            {isReady
-            && (
+      {nominated === null ? (
+        <div style={{ marginTop: '1rem' }}>
+          <p>Fetching your nominations...</p>
+        </div>
+      ) : (
+        <>
+          {isReady && (
             <>
-              {nominated.length > 0
-                ? (
-                  <div style={{ marginTop: '1rem' }}>
-                    <ValidatorList
-                      validators={nominated}
-                      batchKey={batchKey}
-                      title="Your Nominations"
-                      refetchOnListUpdate
-                      allowMoreCols
-                      disableThrottle
-                    />
-                  </div>
-                )
-                : <h3>Not Nominating.</h3>}
+              {nominated.length > 0 ? (
+                <div style={{ marginTop: '1rem' }}>
+                  <ValidatorList
+                    validators={nominated}
+                    batchKey={batchKey}
+                    title="Your Nominations"
+                    refetchOnListUpdate
+                    allowMoreCols
+                    disableThrottle
+                  />
+                </div>
+              ) : (
+                <h3>Not Nominating.</h3>
+              )}
             </>
-            )}
-          </>
-        )}
+          )}
+        </>
+      )}
     </Wrapper>
   );
 };

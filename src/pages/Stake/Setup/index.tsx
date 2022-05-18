@@ -19,13 +19,12 @@ export const Setup = (props: any) => {
     <>
       <PageTitle title={`${props.title} Setup`} />
       <PageRowWrapper noVerticalSpacer>
-        {!hasController()
-          && (
+        {!hasController() && (
           <SectionWrapper>
             <Element name="controller" style={{ position: 'absolute' }} />
             <SetController section={1} />
           </SectionWrapper>
-          )}
+        )}
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>

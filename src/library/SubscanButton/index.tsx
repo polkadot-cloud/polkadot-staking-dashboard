@@ -8,7 +8,7 @@ import { useUi } from '../../contexts/UI';
 import { useTheme } from '../../contexts/Themes';
 import { defaultThemes } from '../../theme/default';
 
-const Wrapper = styled.div <any>`
+const Wrapper = styled.div<any>`
   position: absolute;
   right: 10px;
   top: 10px;
@@ -17,7 +17,7 @@ const Wrapper = styled.div <any>`
   background: ${(props) => props.background};
   border-radius: 0.3rem;
   padding: 0.25rem 0.4rem;
-  color: ${(props) => props.color};;
+  color: ${(props) => props.color};
   opacity: 0.8;
 `;
 

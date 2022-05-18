@@ -9,8 +9,7 @@ export const Connect = () => {
 
   return (
     <>
-      {activeAccount === ''
-        && (
+      {activeAccount === '' && (
         <HeadingWrapper>
           <Item
             className="connect"
@@ -22,7 +21,7 @@ export const Connect = () => {
             <span>Connect Wallet</span>
           </Item>
         </HeadingWrapper>
-        )}
+      )}
     </>
   );
 };

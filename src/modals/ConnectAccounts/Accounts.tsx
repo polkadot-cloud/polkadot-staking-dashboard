@@ -30,47 +30,34 @@ export const Accounts = (props: any) => {
 
   return (
     <>
-      <h2>
-        {activeAccount === '' ? 'Select' : 'Switch'}
-        {' '}
-        Account
-      </h2>
+      <h2>{activeAccount === '' ? 'Select' : 'Switch'} Account</h2>
       <div className="head">
-        <button
-          type="button"
-          onClick={() => setSection(0)}
-        >
+        <button type="button" onClick={() => setSection(0)}>
           <FontAwesomeIcon icon={faChevronLeft} transform="shrink-5" />
           &nbsp;Back to Wallets
         </button>
       </div>
 
-      {activeAccount !== ''
-        ? (
-          <button
-            type="button"
-            className="item"
-            onClick={() => { disconnectFromAccount(); }}
-          >
-            <div>
-              <Identicon value={activeAccountMeta?.address} size={26} />
-            &nbsp;
-              {' '}
-              {activeAccountMeta?.meta?.name}
-            </div>
-            <div className="danger">Disconnect </div>
-          </button>
-        )
-        : (
-          <button
-            type="button"
-            className="item"
-            disabled
-          >
-            <div>No Account Connected</div>
-            <div />
-          </button>
-        )}
+      {activeAccount !== '' ? (
+        <button
+          type="button"
+          className="item"
+          onClick={() => {
+            disconnectFromAccount();
+          }}
+        >
+          <div>
+            <Identicon value={activeAccountMeta?.address} size={26} />
+            &nbsp; {activeAccountMeta?.meta?.name}
+          </div>
+          <div className="danger">Disconnect </div>
+        </button>
+      ) : (
+        <button type="button" className="item" disabled>
+          <div>No Account Connected</div>
+          <div />
+        </button>
+      )}
       <Separator />
 
       {accounts.map((item: any, index: number) => {
@@ -89,9 +76,7 @@ export const Accounts = (props: any) => {
           >
             <div>
               <Identicon value={address} size={26} />
-              &nbsp;
-              {' '}
-              {name}
+              &nbsp; {name}
             </div>
             <div />
           </button>

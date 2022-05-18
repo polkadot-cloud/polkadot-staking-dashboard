@@ -48,8 +48,7 @@ export const StopNominating = () => {
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {
-    },
+    callbackInBlock: () => {},
   });
 
   return (
@@ -58,20 +57,24 @@ export const StopNominating = () => {
         <FontAwesomeIcon transform="grow-2" icon={faStopCircle} />
         Stop Nominating
       </HeadingWrapper>
-      <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
-        {!nominations.length
-          && <Warning text="You have no nominations set." />}
+      <div
+        style={{
+          padding: '0 1rem',
+          width: '100%',
+          boxSizing: 'border-box',
+        }}
+      >
+        {!nominations.length && <Warning text="You have no nominations set." />}
         <h2>
-          You Have
-          {' '}
-          {nominations.length}
-          {' '}
-          Nomination
+          You Have {nominations.length} Nomination
           {nominations.length === 1 ? '' : 's'}
         </h2>
         <Separator />
         <div className="notes">
-          <p>Once submitted, your nominations will be removed immediately and will stop nominating from the start of the next era.</p>
+          <p>
+            Once submitted, your nominations will be removed immediately and
+            will stop nominating from the start of the next era.
+          </p>
           <p>
             Estimated Tx Fee:
             {estimatedFee === null ? '...' : `${estimatedFee}`}
@@ -85,7 +88,10 @@ export const StopNominating = () => {
               onClick={() => submitTx()}
               disabled={!valid || submitting}
             >
-              <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
+              <FontAwesomeIcon
+                transform="grow-2"
+                icon={faArrowAltCircleUp as IconProp}
+              />
               Submit
             </button>
           </div>

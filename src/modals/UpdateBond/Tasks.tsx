@@ -17,8 +17,7 @@ export const Tasks = (props: any) => {
   return (
     <ContentWrapper>
       <div className="items">
-        {fn === 'add'
-          && (
+        {fn === 'add' && (
           <>
             <button
               type="button"
@@ -32,8 +31,7 @@ export const Tasks = (props: any) => {
                 <h3>Bond Extra</h3>
                 <p>
                   Bond more
-                  {network.unit}
-                  .
+                  {network.unit}.
                 </p>
               </div>
               <div>
@@ -52,8 +50,7 @@ export const Tasks = (props: any) => {
                 <h3>Bond All</h3>
                 <p>
                   Bond all available
-                  {network.unit}
-                  .
+                  {network.unit}.
                 </p>
               </div>
               <div>
@@ -61,9 +58,8 @@ export const Tasks = (props: any) => {
               </div>
             </button>
           </>
-          )}
-        {fn === 'remove'
-          && (
+        )}
+        {fn === 'remove' && (
           <>
             <button
               type="button"
@@ -77,8 +73,7 @@ export const Tasks = (props: any) => {
                 <h3>Unbond</h3>
                 <p>
                   Unbond some of your
-                  {network.unit}
-                  .
+                  {network.unit}.
                 </p>
               </div>
               <div>
@@ -102,7 +97,7 @@ export const Tasks = (props: any) => {
               </div>
             </button>
           </>
-          )}
+        )}
       </div>
     </ContentWrapper>
   );

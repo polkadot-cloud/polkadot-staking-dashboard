@@ -27,37 +27,35 @@ export const PoolAccount = (props: any) => {
   return (
     <AccountWrapper last={last}>
       <div className="account">
-        {address === null
-          ? <h4>Not in a Pool</h4>
-          : (
-            <>
-              <div className="icon">
-                <Identicon
-                  value={address}
-                  size="1.6rem"
-                />
-              </div>
-              <h4>{clipAddress(address)}</h4>
-            </>
-          )}
+        {address === null ? (
+          <h4>Not in a Pool</h4>
+        ) : (
+          <>
+            <div className="icon">
+              <Identicon value={address} size="1.6rem" />
+            </div>
+            <h4>{clipAddress(address)}</h4>
+          </>
+        )}
         <div>
           <motion.div
             className="copy"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
           >
-
-            {address !== null
-              && (
+            {address !== null && (
               <button
                 type="button"
                 onClick={() => addNotification(notification)}
               >
                 <CopyToClipboard text={address}>
-                  <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />
+                  <FontAwesomeIcon
+                    icon={faCopy as IconProp}
+                    transform="grow-1"
+                  />
                 </CopyToClipboard>
               </button>
-              )}
+            )}
           </motion.div>
         </div>
       </div>

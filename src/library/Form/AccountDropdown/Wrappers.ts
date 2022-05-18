@@ -11,16 +11,16 @@ export const StyledDownshift = styled.div<any>`
   height: ${(props) => (props.height ? props.height : 'auto')};
   overflow: hidden;
 
-  /* title of dropdown */ 
-   .label {
+  /* title of dropdown */
+  .label {
     margin: 1rem 0;
     display: block;
   }
-  
+
   /* input element of dropdown */
   .input-wrap {
     border: 1px solid ${borderPrimary};
-    display: flex; 
+    display: flex;
     flex-flow: row wrap;
     align-items: center;
     box-sizing: border-box;
@@ -77,7 +77,7 @@ export const StyledDropdown = styled.div`
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-     
+
     .icon {
       margin-right: 0.5rem;
     }

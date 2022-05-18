@@ -4,12 +4,18 @@
 import BN from 'bn.js';
 
 export const clipAddress = (val: string) => {
-  return `${val.substring(0, 6)}...${val.substring(val.length - 6, val.length)}`;
+  return `${val.substring(0, 6)}...${val.substring(
+    val.length - 6,
+    val.length
+  )}`;
 };
 
 export const convertRemToPixels = (rem: any) => {
-  const remAsNumber = (rem.substr(0, rem.length - 3));
-  return remAsNumber * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const remAsNumber = rem.substr(0, rem.length - 3);
+  return (
+    remAsNumber *
+    parseFloat(getComputedStyle(document.documentElement).fontSize)
+  );
 };
 
 export const toFixedIfNecessary = (value: any, dp: any) => {
@@ -17,12 +23,12 @@ export const toFixedIfNecessary = (value: any, dp: any) => {
 };
 
 export const planckToUnit: any = (val: any, units: number) => {
-  const value = val / (10 ** units);
+  const value = val / 10 ** units;
   return value;
 };
 
 export const planckBnToUnit: any = (val: BN, units: number) => {
-  const value = val.toNumber() / (10 ** units);
+  const value = val.toNumber() / 10 ** units;
   return value;
 };
 
@@ -49,13 +55,15 @@ export const removePercentage = (v: string) => {
 };
 
 export const shuffle = (array: any) => {
-  let currentIndex = array.length; let
-    randomIndex;
+  let currentIndex = array.length;
+  let randomIndex;
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
     [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+      array[randomIndex],
+      array[currentIndex],
+    ];
   }
   return array;
 };
@@ -77,7 +85,11 @@ export const defaultIfNaN = (val: any, _default: any) => {
   return val;
 };
 
-export const localStorageOrDefault = (key: string, _default: any, parse = false) => {
+export const localStorageOrDefault = (
+  key: string,
+  _default: any,
+  parse = false
+) => {
   let val: any = localStorage.getItem(key);
 
   if (val === null) {

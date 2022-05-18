@@ -9,9 +9,10 @@ export interface NetworkMetricsContextState {
   metrics: any;
 }
 
-export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = React.createContext({
-  metrics: {},
-});
+export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> =
+  React.createContext({
+    metrics: {},
+  });
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
@@ -60,7 +61,7 @@ export const NetworkMetricsProvider = ({ children }: any) => {
             unsub,
           };
           setState(_state);
-        },
+        }
       );
 
       return unsub;

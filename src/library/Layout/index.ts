@@ -12,7 +12,7 @@ export const MainWrapper = styled.div<any>`
   max-width: 100%;
   order: 0;
 
-  @media(min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
     flex-basis: 62%;
     width: 62%;
     order: 1;
@@ -26,11 +26,11 @@ export const SecondaryWrapper = styled.div`
   box-sizing: border-box;
   overflow: hidden;
   flex-basis: 100%;
-  width:100%;  
+  width: 100%;
   border-radius: 1rem;
   order: 1;
 
-  @media(min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
     flex-basis: 38%;
     max-width: 38%;
     flex-grow: 1;
@@ -42,7 +42,7 @@ export const StickyWrapper = styled.div`
   position: sticky;
   top: 80px;
 
-  @media(max-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+  @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
     top: 100px;
   }
 `;

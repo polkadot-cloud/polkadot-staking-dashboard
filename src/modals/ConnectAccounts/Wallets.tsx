@@ -48,34 +48,37 @@ export const Wallets = (props: any) => {
   };
 
   // remove active wallet from extensions list
-  const activeExtension = extensions.find((wallet: any) => wallet.name === activeWallet) ?? null;
-  const extensionsList = extensions.filter((wallet: any) => wallet.name !== activeWallet);
+  const activeExtension =
+    extensions.find((wallet: any) => wallet.name === activeWallet) ?? null;
+  const extensionsList = extensions.filter(
+    (wallet: any) => wallet.name !== activeWallet
+  );
 
   return (
     <>
       <h2>Select Wallet</h2>
 
-      {activeWallet !== null
-        && (
+      {activeWallet !== null && (
         <button
           type="button"
           className="item"
           onClick={() => disconnectFromWallet()}
         >
           <div>
-            {activeWallet === 'talisman' && <TalismanSVG width="1.5rem" height="1.5rem" />}
-            {activeWallet === 'polkadot-js' && <PolkadotJSSVG width="1.5rem" height="1.5rem" />}
-            &nbsp;
-            {' '}
-            {activeWallet}
+            {activeWallet === 'talisman' && (
+              <TalismanSVG width="1.5rem" height="1.5rem" />
+            )}
+            {activeWallet === 'polkadot-js' && (
+              <PolkadotJSSVG width="1.5rem" height="1.5rem" />
+            )}
+            &nbsp; {activeWallet}
           </div>
           <div className="danger">Disconnect</div>
         </button>
-        )}
+      )}
       <Separator />
 
-      {activeExtension !== null
-        && (
+      {activeExtension !== null && (
         <button
           type="button"
           className="item"
@@ -83,18 +86,24 @@ export const Wallets = (props: any) => {
           onClick={() => handleWalletConnect(activeExtension.name)}
         >
           <div>
-            {activeExtension.name === 'talisman' && <TalismanSVG width="1.5rem" height="1.5rem" />}
-            {activeExtension.name === 'polkadot-js' && <PolkadotJSSVG width="1.5rem" height="1.5rem" />}
-            &nbsp;
-            {' '}
-            {activeExtension.name}
+            {activeExtension.name === 'talisman' && (
+              <TalismanSVG width="1.5rem" height="1.5rem" />
+            )}
+            {activeExtension.name === 'polkadot-js' && (
+              <PolkadotJSSVG width="1.5rem" height="1.5rem" />
+            )}
+            &nbsp; {activeExtension.name}
           </div>
           <div className="neutral">
             {activeWallet === activeExtension.name && 'Accounts'}
-            <FontAwesomeIcon icon={faChevronRight} transform="shrink-5" className="icon" />
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              transform="shrink-5"
+              className="icon"
+            />
           </div>
         </button>
-        )}
+      )}
 
       {extensionsList.map((wallet: any) => {
         const error = walletErrors[wallet.name] ?? null;
@@ -109,14 +118,20 @@ export const Wallets = (props: any) => {
             onClick={() => handleWalletConnect(wallet.name)}
           >
             <div>
-              {wallet.name === 'talisman' && <TalismanSVG width="1.5rem" height="1.5rem" />}
-              {wallet.name === 'polkadot-js' && <PolkadotJSSVG width="1.5rem" height="1.5rem" />}
-              &nbsp;
-              {' '}
-              {error || wallet.name}
+              {wallet.name === 'talisman' && (
+                <TalismanSVG width="1.5rem" height="1.5rem" />
+              )}
+              {wallet.name === 'polkadot-js' && (
+                <PolkadotJSSVG width="1.5rem" height="1.5rem" />
+              )}
+              &nbsp; {error || wallet.name}
             </div>
             <div className="neutral">
-              <FontAwesomeIcon icon={faChevronRight} transform="shrink-5" className="icon" />
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                transform="shrink-5"
+                className="icon"
+              />
             </div>
           </button>
         );

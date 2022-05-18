@@ -23,35 +23,35 @@ export const SetController = (props: any) => {
   const { network }: any = useApi();
   const { units } = network;
   const { activeAccount, accounts, getAccount } = useConnect();
-  const {
-    getBondedAccount, getAccountBalance, minReserve, isController,
-  }: any = useBalances();
+  const { getBondedAccount, getAccountBalance, minReserve, isController }: any =
+    useBalances();
   const { getMessage }: any = useMessages();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
 
   const controller = getBondedAccount(activeAccount);
   const setup = getSetupProgress(activeAccount);
 
-  const initialValue = setup.controller !== null
-    ? setup.controller
-    : controller;
+  const initialValue =
+    setup.controller !== null ? setup.controller : controller;
 
   const initialAccount = getAccount(initialValue);
 
-  const [controllerNotImported, setControllerNotImported] = useState(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
+  const [controllerNotImported, setControllerNotImported] = useState(
+    getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)
+  );
   const [selected, setSelected] = useState(initialAccount);
 
   // update selected value on account switch
   useEffect(() => {
-    const _selected = setup.controller !== null
-      ? setup.controller
-      : controller;
+    const _selected = setup.controller !== null ? setup.controller : controller;
     const _initial = getAccount(_selected);
     setSelected(_initial);
   }, [activeAccount]);
 
   useEffect(() => {
-    setControllerNotImported(getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED));
+    setControllerNotImported(
+      getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)
+    );
   }, [getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
   const handleOnChange = ({ selectedItem }: any) => {
@@ -72,12 +72,14 @@ export const SetController = (props: any) => {
   items = items.map((acc: any) => {
     const balance = getAccountBalance(acc.address);
 
-    return ({
+    return {
       ...acc,
       balance,
-      active: planckToUnit(balance.free.toNumber(), units) >= planckToUnit(minReserve.toNumber(), units),
+      active:
+        planckToUnit(balance.free.toNumber(), units) >=
+        planckToUnit(minReserve.toNumber(), units),
       alert: `Not Enough ${network.unit}`,
-    });
+    };
   });
 
   // sort accounts with at least free balance first
@@ -89,21 +91,25 @@ export const SetController = (props: any) => {
     <>
       {/* TODO: integrate this into the below section.
       warning: controller account not present. unable to stake */}
-      {controllerNotImported !== null
-        && (
-        <SectionWrapper transparent style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
+      {controllerNotImported !== null && (
+        <SectionWrapper
+          transparent
+          style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}
+        >
           <h3>Import Your Controller Account</h3>
-          <p>You have not imported your Controller account. If you have lost access to your Controller account, set a new Controller now.</p>
+          <p>
+            You have not imported your Controller account. If you have lost
+            access to your Controller account, set a new Controller now.
+          </p>
 
           <ButtonRow style={{ width: '100%', padding: 0, marginTop: '1rem' }}>
             <Button inline title="Set New Controller" />
           </ButtonRow>
         </SectionWrapper>
-        )}
+      )}
 
       {/* controller management */}
-      {controllerNotImported === null
-        && (
+      {controllerNotImported === null && (
         <SectionWrapper transparent>
           <Header
             thisSection={section}
@@ -112,10 +118,7 @@ export const SetController = (props: any) => {
             assistantKey="Stash and Controller Accounts"
             complete={setup.controller !== null}
           />
-          <MotionContainer
-            thisSection={section}
-            activeSection={setup.section}
-          >
+          <MotionContainer thisSection={section} activeSection={setup.section}>
             <Spacer />
             <AccountSelect
               items={items}
@@ -125,9 +128,8 @@ export const SetController = (props: any) => {
             />
             <Footer complete={setup.controller !== null} />
           </MotionContainer>
-
         </SectionWrapper>
-        )}
+      )}
     </>
   );
 };

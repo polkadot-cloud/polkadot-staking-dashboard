@@ -12,9 +12,7 @@ import { defaultThemes } from '../../../theme/default';
 import { convertRemToPixels } from '../../../Utils';
 
 export const AccountDropdown = (props: any) => {
-  const {
-    items, onChange, label, placeholder, value,
-  }: any = props;
+  const { items, onChange, label, placeholder, value }: any = props;
 
   const itemToString = (item: any) => (item ? item.meta.name : '');
 
@@ -27,7 +25,9 @@ export const AccountDropdown = (props: any) => {
     initialSelectedItem: value,
     onInputValueChange: ({ inputValue }: any) => {
       setInputItems(
-        items.filter((item: any) => item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())),
+        items.filter((item: any) =>
+          item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())
+        )
       );
     },
   });
@@ -36,19 +36,18 @@ export const AccountDropdown = (props: any) => {
     <StyledDownshift>
       <div>
         {label && (
-        <div className="label" {...c.getLabelProps()}>
-          {label}
-        </div>
+          <div className="label" {...c.getLabelProps()}>
+            {label}
+          </div>
         )}
         <div style={{ position: 'relative' }}>
           <div className="input-wrap" {...c.getComboboxProps()}>
-            {value !== null
-              && (
+            {value !== null && (
               <Identicon
                 value={value?.address ?? ''}
                 size={convertRemToPixels('2rem')}
               />
-              )}
+            )}
             <input {...c.getInputProps({ placeholder })} className="input" />
           </div>
 
@@ -61,10 +60,14 @@ export const AccountDropdown = (props: any) => {
             </StyledController>
           )}
           <StyledDropdown {...c.getMenuProps()}>
-            {
-              inputItems
-                .map((item: any, index: number) => <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />)
-            }
+            {inputItems.map((item: any, index: number) => (
+              <DropdownItem
+                key={`controller_acc_${index}`}
+                c={c}
+                item={item}
+                index={index}
+              />
+            ))}
           </StyledDropdown>
         </div>
       </div>
@@ -74,8 +77,14 @@ export const AccountDropdown = (props: any) => {
 
 const DropdownItem = ({ c, item, index }: any) => {
   const { mode } = useTheme();
-  const color = c.selectedItem === item ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
-  const border = c.selectedItem === item ? `2px solid ${defaultThemes.primary[mode]}` : `2px solid ${defaultThemes.transparent[mode]}`;
+  const color =
+    c.selectedItem === item
+      ? defaultThemes.primary[mode]
+      : defaultThemes.text.primary[mode];
+  const border =
+    c.selectedItem === item
+      ? `2px solid ${defaultThemes.primary[mode]}`
+      : `2px solid ${defaultThemes.transparent[mode]}`;
 
   return (
     <div
@@ -87,10 +96,7 @@ const DropdownItem = ({ c, item, index }: any) => {
       }}
     >
       <div className="icon">
-        <Identicon
-          value={item.address}
-          size={26}
-        />
+        <Identicon value={item.address} size={26} />
       </div>
       <p>{item.meta.name}</p>
     </div>

@@ -15,14 +15,15 @@ export interface ModalContextState {
 // default modal content
 const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';
 
-export const ModalContext: React.Context<ModalContextState> = React.createContext({
-  status: 0,
-  setStatus: (status) => { },
-  openModalWith: (modal: string, config?: any, size?: string) => { },
-  modal: DEFAULT_MODAL_COMPONENT,
-  config: {},
-  size: 'large',
-});
+export const ModalContext: React.Context<ModalContextState> =
+  React.createContext({
+    status: 0,
+    setStatus: (status) => {},
+    openModalWith: (modal: string, config?: any, size?: string) => {},
+    modal: DEFAULT_MODAL_COMPONENT,
+    config: {},
+    size: 'large',
+  });
 
 export const useModal = () => React.useContext(ModalContext);
 
@@ -55,14 +56,15 @@ export class ModalProvider extends React.Component<any, any> {
 
   render() {
     return (
-      <ModalContext.Provider value={{
-        status: this.state.status,
-        setStatus: this.setStatus,
-        openModalWith: this.openModalWith,
-        modal: this.state.modal,
-        config: this.state.config,
-        size: this.state.size,
-      }}
+      <ModalContext.Provider
+        value={{
+          status: this.state.status,
+          setStatus: this.setStatus,
+          openModalWith: this.openModalWith,
+          modal: this.state.modal,
+          config: this.state.config,
+          size: this.state.size,
+        }}
       >
         {this.props.children}
       </ModalContext.Provider>

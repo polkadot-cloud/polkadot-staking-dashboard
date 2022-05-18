@@ -18,7 +18,7 @@ export const PageTitle = (props: any) => {
       {
         threshold: [1],
         rootMargin: '-1px 0px 0px 0px',
-      },
+      }
     );
     observer.observe(cachedRef);
     // unmount

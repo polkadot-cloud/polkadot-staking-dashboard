@@ -12,7 +12,7 @@ export const Wrapper = styled.div<any>`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  z-index:2;
+  z-index: 2;
 
   > div {
     background: ${backgroundLabel};

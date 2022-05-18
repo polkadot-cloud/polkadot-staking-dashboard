@@ -16,7 +16,10 @@ import { useUi } from '../../../contexts/UI';
 export const Filters = (props: any) => {
   const { setInitial } = props;
   const {
-    validatorOrder, validatorFilters, orderValidators, toggleFilterValidators,
+    validatorOrder,
+    validatorFilters,
+    orderValidators,
+    toggleFilterValidators,
   }: any = useUi();
 
   const handleFilter = (fn: any, filter: string) => {
@@ -74,7 +77,9 @@ export const Filters = (props: any) => {
                 label="blocked nominations"
                 icon={faUserSlash}
                 transform="grow-7"
-                active={validatorFilters?.includes('blocked_nominations') ?? false}
+                active={
+                  validatorFilters?.includes('blocked_nominations') ?? false
+                }
                 onClick={() => {
                   handleFilter(toggleFilterValidators, 'blocked_nominations');
                 }}

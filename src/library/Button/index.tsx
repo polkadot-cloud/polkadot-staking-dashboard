@@ -14,18 +14,21 @@ export const ButtonRow = styled.div`
   align-content: flex-end;
 
   > button {
-    margin-top :0.5rem;
+    margin-top: 0.5rem;
   }
 `;
 
-export const Wrapper = styled(motion.button) <any>`
-  background: ${(props) => (props.type === 'default' ? buttonSecondaryBackground : 'rgba(211, 48, 121, 0.9)')};
+export const Wrapper = styled(motion.button)<any>`
+  background: ${(props) =>
+    props.type === 'default'
+      ? buttonSecondaryBackground
+      : 'rgba(211, 48, 121, 0.9)'};
   color: ${(props) => (props.type === 'default' ? textSecondary : 'white')};
   margin: ${(props) => props.margin};
   flex-grow: 1;
   padding: ${(props) => props.padding};
-  border-radius:  0.75rem;
-  font-size:${(props) => (props.fontSize ? props.fontSize : '0.95rem')};
+  border-radius: 0.75rem;
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '0.95rem')};
   font-variation-settings: 'wght' 560;
 
   &:disabled {
@@ -35,9 +38,7 @@ export const Wrapper = styled(motion.button) <any>`
 `;
 
 export const Button = (props: any) => {
-  let {
-    primary, inline, small, disabled,
-  } = props;
+  let { primary, inline, small, disabled } = props;
   const { title, onClick } = props;
   primary = primary ?? false;
   inline = inline ?? false;

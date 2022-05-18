@@ -31,7 +31,7 @@ export const Wrapper = styled.ul`
     h3 {
       color: ${primary};
       box-sizing: border-box;
-      margin: 0 0 0.5rem; 
+      margin: 0 0 0.5rem;
       font-variation-settings: 'wght' 500;
       flex: 1;
     }

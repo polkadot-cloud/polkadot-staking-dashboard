@@ -12,10 +12,11 @@ export interface SubscanContextState {
   payouts: any;
 }
 
-export const SubscanContext: React.Context<SubscanContextState> = React.createContext({
-  fetchEraPoints: (v: string, e: number) => { },
-  payouts: [],
-});
+export const SubscanContext: React.Context<SubscanContextState> =
+  React.createContext({
+    fetchEraPoints: (v: string, e: number) => {},
+    payouts: [],
+  });
 
 export const useSubscan = () => React.useContext(SubscanContext);
 
@@ -49,18 +50,21 @@ export const SubscanProvider = (props: any) => {
       return;
     }
 
-    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS.subscanRewardSlash, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': API_SUBSCAN_KEY,
-      },
-      body: JSON.stringify({
-        row: 60,
-        page: 0,
-        address: activeAccount,
-      }),
-      method: 'POST',
-    });
+    let res: any = await fetch(
+      network.subscanEndpoint + API_ENDPOINTS.subscanRewardSlash,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': API_SUBSCAN_KEY,
+        },
+        body: JSON.stringify({
+          row: 60,
+          page: 0,
+          address: activeAccount,
+        }),
+        method: 'POST',
+      }
+    );
 
     res = await res.json();
     if (res.message === 'Success') {
@@ -78,28 +82,33 @@ export const SubscanProvider = (props: any) => {
     if (address === '' || !services.includes('subscan')) {
       return [];
     }
-    let res: any = await fetch(network.subscanEndpoint + API_ENDPOINTS.subscanEraStat, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': API_SUBSCAN_KEY,
-      },
-      body: JSON.stringify({
-        row: 60,
-        page: 0,
-        address,
-      }),
-      method: 'POST',
-    });
+    let res: any = await fetch(
+      network.subscanEndpoint + API_ENDPOINTS.subscanEraStat,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': API_SUBSCAN_KEY,
+        },
+        body: JSON.stringify({
+          row: 60,
+          page: 0,
+          address,
+        }),
+        method: 'POST',
+      }
+    );
 
     res = await res.json();
     if (res.message === 'Success') {
       if (getServices().includes('subscan')) {
         if (res.data?.list !== null) {
           const list = [];
-          for (let i = era; i > (era - 60); i--) {
+          for (let i = era; i > era - 60; i--) {
             list.push({
               era: i,
-              reward_point: res.data.list.find((item: any) => item.era === i)?.reward_point ?? 0,
+              reward_point:
+                res.data.list.find((item: any) => item.era === i)
+                  ?.reward_point ?? 0,
             });
           }
 
@@ -113,10 +122,11 @@ export const SubscanProvider = (props: any) => {
   };
 
   return (
-    <SubscanContext.Provider value={{
-      fetchEraPoints,
-      payouts,
-    }}
+    <SubscanContext.Provider
+      value={{
+        fetchEraPoints,
+        payouts,
+      }}
     >
       {props.children}
     </SubscanContext.Provider>

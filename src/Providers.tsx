@@ -55,7 +55,7 @@ export const Providers = withProviders(
   SubscanProvider,
   NotificationsProvider,
   ExtrinsicsProvider,
-  SessionEraProvider,
+  SessionEraProvider
 )(ThemedRouter);
 
 export default Providers;

@@ -8,9 +8,7 @@ import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
 
 export const Dropdown = (props: any) => {
-  const {
-    items, onChange, label, placeholder, value,
-  }: any = props;
+  const { items, onChange, label, placeholder, value }: any = props;
 
   const [inputItems, setInputItems] = useState(items);
 
@@ -30,19 +28,27 @@ export const Dropdown = (props: any) => {
     <StyledDownshift>
       <div>
         {label && (
-        <div className="label" {...c.getLabelProps()}>
-          {label}
-        </div>
+          <div className="label" {...c.getLabelProps()}>
+            {label}
+          </div>
         )}
         <div style={{ position: 'relative' }}>
           <div className="input-wrap" {...c.getComboboxProps()}>
-            <input {...c.getInputProps({ placeholder })} className="input" disabled />
+            <input
+              {...c.getInputProps({ placeholder })}
+              className="input"
+              disabled
+            />
           </div>
           <StyledDropdown {...c.getMenuProps()}>
-            {
-              inputItems
-                .map((item: any, index: number) => <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />)
-            }
+            {inputItems.map((item: any, index: number) => (
+              <DropdownItem
+                key={`controller_acc_${index}`}
+                c={c}
+                item={item}
+                index={index}
+              />
+            ))}
           </StyledDropdown>
         </div>
       </div>
@@ -52,8 +58,14 @@ export const Dropdown = (props: any) => {
 
 const DropdownItem = ({ c, item, index }: any) => {
   const { mode } = useTheme();
-  const color = c.selectedItem?.key === item.key ? defaultThemes.primary[mode] : defaultThemes.text.primary[mode];
-  const border = c.selectedItem?.key === item.key ? `2px solid ${defaultThemes.primary[mode]}` : `2px solid ${defaultThemes.transparent[mode]}`;
+  const color =
+    c.selectedItem?.key === item.key
+      ? defaultThemes.primary[mode]
+      : defaultThemes.text.primary[mode];
+  const border =
+    c.selectedItem?.key === item.key
+      ? `2px solid ${defaultThemes.primary[mode]}`
+      : `2px solid ${defaultThemes.transparent[mode]}`;
 
   return (
     <div

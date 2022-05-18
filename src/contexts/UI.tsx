@@ -36,19 +36,19 @@ export interface UIContextState {
 }
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
-  setSideMenu: (v: number) => { },
-  setUserSideMenuMinimised: (v: number) => { },
-  setListFormat: (v: string) => { },
-  orderValidators: (v: string) => { },
-  applyValidatorOrder: (l: any, o: string) => { },
-  applyValidatorFilters: (l: any, k: string, f?: any) => { },
-  toggleFilterValidators: (v: string, l: any) => { },
+  setSideMenu: (v: number) => {},
+  setUserSideMenuMinimised: (v: number) => {},
+  setListFormat: (v: string) => {},
+  orderValidators: (v: string) => {},
+  applyValidatorOrder: (l: any, o: string) => {},
+  applyValidatorFilters: (l: any, k: string, f?: any) => {},
+  toggleFilterValidators: (v: string, l: any) => {},
   isSyncing: () => false,
-  toggleService: (k: string) => { },
-  getSetupProgress: (a: string) => { },
-  setActiveAccountSetup: (p: any) => { },
-  setActiveAccountSetupSection: (s: number) => { },
-  getServices: () => { },
+  toggleService: (k: string) => {},
+  getSetupProgress: (a: string) => {},
+  setActiveAccountSetup: (p: any) => {},
+  setActiveAccountSetupSection: (s: number) => {},
+  getServices: () => {},
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
@@ -73,13 +73,17 @@ export const UIProvider = (props: any) => {
   const servicesLocal: any = localStorageOrDefault('services', SERVICES, true);
 
   // get side menu minimised state from local storage, default to not
-  const _userSideMenuMinimised: any = Number(localStorageOrDefault('side_menu_minimised', 0));
+  const _userSideMenuMinimised: any = Number(
+    localStorageOrDefault('side_menu_minimised', 0)
+  );
 
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(0);
 
   // side menu minimised
-  const [userSideMenuMinimised, _setUserSideMenuMinimised] = useState(_userSideMenuMinimised);
+  const [userSideMenuMinimised, _setUserSideMenuMinimised] = useState(
+    _userSideMenuMinimised
+  );
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
   const setUserSideMenuMinimised = (v: number) => {
     localStorage.setItem('side_menu_minimised', String(v));
@@ -89,7 +93,9 @@ export const UIProvider = (props: any) => {
 
   // automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState(
-    window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD ? 1 : userSideMenuMinimisedRef.current,
+    window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD
+      ? 1
+      : userSideMenuMinimisedRef.current
   );
 
   // global list format
@@ -124,9 +130,9 @@ export const UIProvider = (props: any) => {
   // resize event listener
   useEffect(() => {
     window.addEventListener('resize', resizeCallback);
-    return (() => {
+    return () => {
       window.removeEventListener('resize', resizeCallback);
-    });
+    };
   }, []);
 
   // re-configure minimised on user change
@@ -173,7 +179,11 @@ export const UIProvider = (props: any) => {
     setValidatorsFilter(filter);
   };
 
-  const applyValidatorFilters = (list: any, batchKey: string, filter: any = validatorFilters) => {
+  const applyValidatorFilters = (
+    list: any,
+    batchKey: string,
+    filter: any = validatorFilters
+  ) => {
     if (filter.includes('all_commission')) {
       list = filterAllCommission(list);
     }
@@ -198,7 +208,8 @@ export const UIProvider = (props: any) => {
     }
     const filteredList: any = [];
     for (const validator of list) {
-      const addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+      const addressBatchIndex =
+        meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
 
       // if we cannot derive data, fallback to include validator in filtered list
       if (addressBatchIndex === -1) {
@@ -232,7 +243,8 @@ export const UIProvider = (props: any) => {
     }
     const filteredList: any = [];
     for (const validator of list) {
-      const addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+      const addressBatchIndex =
+        meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
 
       // if we cannot derive data, fallback to include validator in filtered list
       if (addressBatchIndex === -1) {
@@ -254,7 +266,9 @@ export const UIProvider = (props: any) => {
   };
 
   const filterAllCommission = (list: any) => {
-    list = list.filter((validator: any) => validator?.prefs?.commission !== 100);
+    list = list.filter(
+      (validator: any) => validator?.prefs?.commission !== 100
+    );
     return list;
   };
 
@@ -268,16 +282,16 @@ export const UIProvider = (props: any) => {
     if (session.list.length === 0) {
       return list;
     }
-    list = list.filter((validator: any) => session.list.includes(validator.address));
+    list = list.filter((validator: any) =>
+      session.list.includes(validator.address)
+    );
     return list;
   };
 
   // Validator list ordering functions
 
   const orderValidators = (by: string) => {
-    const order = validatorOrder === by
-      ? 'default'
-      : by;
+    const order = validatorOrder === by ? 'default' : by;
     setValidatorsOrder(order);
   };
 
@@ -289,7 +303,9 @@ export const UIProvider = (props: any) => {
   };
 
   const orderLowestCommission = (list: any) => {
-    const orderedList = [...list].sort((a: any, b: any) => (a.prefs.commission - b.prefs.commission));
+    const orderedList = [...list].sort(
+      (a: any, b: any) => a.prefs.commission - b.prefs.commission
+    );
     return orderedList;
   };
 
@@ -344,12 +360,13 @@ export const UIProvider = (props: any) => {
     // generate setup objects from connected accounts
     const _setup = connectAccounts.map((item: any) => {
       // if there is existing config for an account, use that.
-      const localSetup = localStorage.getItem(`${network.name.toLowerCase()}_stake_setup_${item.address}`);
+      const localSetup = localStorage.getItem(
+        `${network.name.toLowerCase()}_stake_setup_${item.address}`
+      );
 
       // otherwise use the default values.
-      const progress = localSetup !== null
-        ? JSON.parse(localSetup)
-        : PROGRESS_DEFAULT;
+      const progress =
+        localSetup !== null ? JSON.parse(localSetup) : PROGRESS_DEFAULT;
 
       return {
         address: item.address,
@@ -377,13 +394,20 @@ export const UIProvider = (props: any) => {
    */
   const setActiveAccountSetup = (progress: any) => {
     // update local storage setup
-    localStorage.setItem(`${network.name.toLowerCase()}_stake_setup_${activeAccount}`, JSON.stringify(progress));
+    localStorage.setItem(
+      `${network.name.toLowerCase()}_stake_setup_${activeAccount}`,
+      JSON.stringify(progress)
+    );
 
     // update context setup
-    const _setup = setup.map((obj: any) => (obj.address === activeAccount ? {
-      ...obj,
-      progress,
-    } : obj));
+    const _setup = setup.map((obj: any) =>
+      obj.address === activeAccount
+        ? {
+            ...obj,
+            progress,
+          }
+        : obj
+    );
 
     setSetup(_setup);
   };
@@ -393,7 +417,9 @@ export const UIProvider = (props: any) => {
    */
   const setActiveAccountSetupSection = (section: number) => {
     // get current progress
-    const _accountSetup = [...setup].find((item: any) => item.address === activeAccount);
+    const _accountSetup = [...setup].find(
+      (item: any) => item.address === activeAccount
+    );
 
     // abort if setup does not exist
     if (_accountSetup === null) {
@@ -403,10 +429,15 @@ export const UIProvider = (props: any) => {
     _accountSetup.progress.section = section;
 
     // update context setup
-    const _setup = setup.map((obj: any) => (obj.address === activeAccount ? _accountSetup : obj));
+    const _setup = setup.map((obj: any) =>
+      obj.address === activeAccount ? _accountSetup : obj
+    );
 
     // update local storage
-    localStorage.setItem(`${network.name.toLowerCase()}_stake_setup_${activeAccount}`, JSON.stringify(_accountSetup.progress));
+    localStorage.setItem(
+      `${network.name.toLowerCase()}_stake_setup_${activeAccount}`,
+      JSON.stringify(_accountSetup.progress)
+    );
 
     // update context
     setSetup(_setup);
@@ -434,28 +465,29 @@ export const UIProvider = (props: any) => {
   };
 
   return (
-    <UIContext.Provider value={{
-      setSideMenu,
-      setUserSideMenuMinimised,
-      setListFormat,
-      orderValidators,
-      applyValidatorOrder,
-      applyValidatorFilters,
-      toggleFilterValidators,
-      isSyncing,
-      toggleService,
-      getSetupProgress,
-      setActiveAccountSetup,
-      setActiveAccountSetupSection,
-      getServices,
-      sideMenuOpen,
-      userSideMenuMinimised: userSideMenuMinimisedRef.current,
-      sideMenuMinimised,
-      listFormat,
-      validatorFilters,
-      validatorOrder,
-      services: servicesRef.current,
-    }}
+    <UIContext.Provider
+      value={{
+        setSideMenu,
+        setUserSideMenuMinimised,
+        setListFormat,
+        orderValidators,
+        applyValidatorOrder,
+        applyValidatorFilters,
+        toggleFilterValidators,
+        isSyncing,
+        toggleService,
+        getSetupProgress,
+        setActiveAccountSetup,
+        setActiveAccountSetupSection,
+        getServices,
+        sideMenuOpen,
+        userSideMenuMinimised: userSideMenuMinimisedRef.current,
+        sideMenuMinimised,
+        listFormat,
+        validatorFilters,
+        validatorOrder,
+        services: servicesRef.current,
+      }}
     >
       {props.children}
     </UIContext.Provider>

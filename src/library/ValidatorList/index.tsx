@@ -5,9 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import {
-  List, Header, Wrapper as ListWrapper, Pagination,
-} from '../List';
+import { List, Header, Wrapper as ListWrapper, Pagination } from '../List';
 import { Validator } from '../Validator';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
@@ -42,9 +40,8 @@ export const ValidatorListInner = (props: any) => {
   }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
-  const refetchOnListUpdate = props.refetchOnListUpdate !== undefined
-    ? props.refetchOnListUpdate
-    : false;
+  const refetchOnListUpdate =
+    props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
   // current page
   const [page, setPage]: any = useState(1);
@@ -75,11 +72,11 @@ export const ValidatorListInner = (props: any) => {
   const totalPages = Math.ceil(validators.length / LIST_ITEMS_PER_PAGE);
   const nextPage = page + 1 > totalPages ? totalPages : page + 1;
   const prevPage = page - 1 < 1 ? 1 : page - 1;
-  const pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
+  const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
   // render batch
-  const batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
+  const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -116,7 +113,10 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters) {
       let filteredValidators = Object.assign(validatorsDefault);
       if (validatorOrder !== 'default') {
-        filteredValidators = applyValidatorOrder(filteredValidators, validatorOrder);
+        filteredValidators = applyValidatorOrder(
+          filteredValidators,
+          validatorOrder
+        );
       }
       filteredValidators = applyValidatorFilters(filteredValidators, batchKey);
       setValidators(filteredValidators);
@@ -146,13 +146,13 @@ export const ValidatorListInner = (props: any) => {
 
   // aggregate synced status
   const synced = {
-    identities: (identities.length > 0) ?? false,
-    supers: (supers.length > 0) ?? false,
-    stake: (stake.length > 0) ?? false,
+    identities: identities.length > 0 ?? false,
+    supers: supers.length > 0 ?? false,
+    stake: stake.length > 0 ?? false,
   };
 
   if (!validators.length) {
-    return (<></>);
+    return <></>;
   }
 
   return (
@@ -160,41 +160,36 @@ export const ValidatorListInner = (props: any) => {
       <Header>
         <div>
           <h4>
-            {title || `Dispalying ${validators.length} Validator${validators.length === 1 ? '' : 's'}`}
+            {title ||
+              `Dispalying ${validators.length} Validator${
+                validators.length === 1 ? '' : 's'
+              }`}
           </h4>
         </div>
         <div>
-          <button
-            type="button"
-            onClick={() => setListFormat('row')}
-          >
-            <FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} />
+          <button type="button" onClick={() => setListFormat('row')}>
+            <FontAwesomeIcon
+              icon={faBars}
+              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+            />
           </button>
-          <button
-            type="button"
-            onClick={() => setListFormat('col')}
-          >
-            <FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : 'inherit'} />
+          <button type="button" onClick={() => setListFormat('col')}>
+            <FontAwesomeIcon
+              icon={faGripVertical}
+              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+            />
           </button>
         </div>
       </Header>
-      <List
-        flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}
-      >
+      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowFilters && <Filters setInitial={setInitial} />}
 
-        {pagination
-          && (
-          <Pagination
-            prev={page !== 1}
-            next={page !== totalPages}
-          >
+        {pagination && (
+          <Pagination prev={page !== 1} next={page !== totalPages}>
             <div>
               <h4>
                 Page
-                {page}
-                {' '}
-                of
+                {page} of
                 {totalPages}
               </h4>
             </div>
@@ -202,20 +197,26 @@ export const ValidatorListInner = (props: any) => {
               <button
                 type="button"
                 className="prev"
-                onClick={() => { setPage(prevPage); setInitial(false); }}
+                onClick={() => {
+                  setPage(prevPage);
+                  setInitial(false);
+                }}
               >
                 Prev
               </button>
               <button
                 type="button"
                 className="next"
-                onClick={() => { setPage(nextPage); setInitial(false); }}
+                onClick={() => {
+                  setPage(nextPage);
+                  setInitial(false);
+                }}
               >
                 Next
               </button>
             </div>
           </Pagination>
-          )}
+        )}
 
         <motion.div
           className="transition"
@@ -272,15 +273,11 @@ export class ValidatorList extends React.Component<any, any> {
   static contextType = StakingContext;
 
   shouldComponentUpdate(nextProps: any, nextState: any) {
-    return (this.props.validators !== nextProps.validators);
+    return this.props.validators !== nextProps.validators;
   }
 
   render() {
-    return (
-      <ValidatorListInner
-        {...this.props}
-      />
-    );
+    return <ValidatorListInner {...this.props} />;
   }
 }
 

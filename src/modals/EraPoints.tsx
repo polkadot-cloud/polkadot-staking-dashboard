@@ -38,34 +38,34 @@ export const EraPoints = () => {
     <>
       <SubscanButton />
       <div className="header">
-        <Identicon
-          value={address}
-          size={40}
-        />
+        <Identicon value={address} size={40} />
         <h1>
-&nbsp;
+          &nbsp;
           {identity === null ? clipAddress(address) : identity}
         </h1>
       </div>
       <div className="body">
         <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>
-
           <div className="head" style={{ padding: 0 }}>
             <h4>Recent Era Points</h4>
           </div>
 
           <div className="inner" ref={ref} style={{ minHeight }}>
-            <StatusLabel status="active_service" statusFor="subscan" title="Subscan Disabled" />
+            <StatusLabel
+              status="active_service"
+              statusFor="subscan"
+              title="Subscan Disabled"
+            />
             <div
               className="graph"
               style={{
-                height: `${height}px`, width: `${width}px`, position: 'absolute', left: '-1rem',
+                height: `${height}px`,
+                width: `${width}px`,
+                position: 'absolute',
+                left: '-1rem',
               }}
             >
-              <EraPointsGraph
-                items={list}
-                height={200}
-              />
+              <EraPointsGraph items={list} height={200} />
             </div>
           </div>
         </GraphWrapper>
