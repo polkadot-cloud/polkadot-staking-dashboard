@@ -87,16 +87,16 @@ export const BalanceGraph = () => {
   };
 
   const data = {
-    labels: ['Staked', 'Available to stake'],
+    labels: ['Available', 'Staking'],
     datasets: [
       {
         label: network.unit,
-        data: [graphStaked, graphFreeToStake],
+        data: [graphFreeToStake, graphStaked],
         backgroundColor: [
+          defaultThemes.graphs.colors[2][mode],
           zeroBalance
             ? defaultThemes.graphs.inactive[mode]
             : defaultThemes.graphs.colors[0][mode],
-          defaultThemes.graphs.colors[2][mode],
         ],
         borderWidth: 0,
       },
