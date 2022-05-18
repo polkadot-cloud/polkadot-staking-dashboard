@@ -44,10 +44,6 @@ export const BalanceGraph = () => {
   let graphStaked = staked;
   let graphFreeToStake = freeToStake;
 
-  console.log(graphStaked);
-  console.log(graphFreeToStake);
-
-
   let zeroBalance = false;
   if (graphStaked === 0 && graphFreeToStake === 0) {
     graphStaked = -1;
