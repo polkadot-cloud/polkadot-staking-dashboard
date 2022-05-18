@@ -18,7 +18,7 @@ import Identicon from '../Identicon';
 import { clipAddress } from '../../Utils';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
-import { useValidators } from '../../contexts/Validators/Validators';
+import { useValidators } from '../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
 import { useNotifications } from '../../contexts/Notifications';
 

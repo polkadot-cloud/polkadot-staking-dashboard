@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
-import { useValidators } from './Validators/Validators';
+import { useValidators } from './Validators';
 import { useBalances } from './Balances';
 import { useApi } from './Api';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from '../constants';

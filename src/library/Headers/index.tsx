@@ -10,7 +10,7 @@ import { useExtrinsics } from '../../contexts/Extrinsics';
 import { useUi } from '../../contexts/UI';
 import { Spinner } from './Spinner';
 import { pageFromUri } from '../../Utils';
-import { useValidators } from '../../contexts/Validators/Validators';
+import { useValidators } from '../../contexts/Validators';
 import { Toggle as SideBarToggle } from './SideBar/Toggle';
 import { Connect } from './Connect';
 import { Connected } from './Connected';

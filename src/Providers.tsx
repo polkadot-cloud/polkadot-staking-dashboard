@@ -18,7 +18,7 @@ import { PoolsProvider } from './contexts/Pools';
 import { SideBarProvider } from './contexts/SideBar';
 import { StakingProvider } from './contexts/Staking';
 import { SubscanProvider } from './contexts/Subscan';
-import { ValidatorsProvider } from './contexts/Validators/Validators';
+import { ValidatorsProvider } from './contexts/Validators';
 import { UIProvider } from './contexts/UI';
 import { useTheme } from './contexts/Themes';
 import { SessionEraProvider } from './contexts/SessionEra';

@@ -10,7 +10,7 @@ import { Validator } from '../Validator';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { StakingContext } from '../../contexts/Staking';
-import { useValidators } from '../../contexts/Validators/Validators';
+import { useValidators } from '../../contexts/Validators';
 import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { Filters } from './Filters';
