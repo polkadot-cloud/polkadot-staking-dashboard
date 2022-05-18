@@ -7,7 +7,7 @@ import { defaultThemes } from './default';
 /* Aggregates all theme configurations and serves the currently
  * active mode via the theming context.
  */
-let v = 'mode';
+const v = 'mode';
 
 // main theme colors
 
@@ -61,7 +61,6 @@ export const backgroundToggle: theme.ThemeSet = theme(v, defaultThemes.buttons.t
 
 export const buttonAssistantBackground: theme.ThemeSet = theme(v, defaultThemes.buttons.assistant.background);
 
-
 // labels
 
 export const tagBackground: theme.ThemeSet = theme(v, defaultThemes.background.tag);
@@ -72,13 +71,11 @@ export const tooltipBackground: theme.ThemeSet = theme(v, defaultThemes.graphs.t
 
 export const gridColor: theme.ThemeSet = theme(v, defaultThemes.graphs.grid);
 
-
 // borders
 
 export const borderPrimary: theme.ThemeSet = theme(v, defaultThemes.border.primary);
 
 export const borderSecondary: theme.ThemeSet = theme(v, defaultThemes.border.secondary);
-
 
 // modal
 

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { HeadingWrapper } from '../Wrappers';
-import { useModal } from '../../contexts/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { HeadingWrapper } from '../Wrappers';
+import { useModal } from '../../contexts/Modal';
 import { Wrapper, SectionsWrapper, FixedContentWrapper } from './Wrapper';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';
@@ -24,16 +24,18 @@ export const UpdateBond = () => {
     <Wrapper>
       <FixedContentWrapper>
         <HeadingWrapper>
-          <FontAwesomeIcon transform='grow-2' icon={fn === 'add' ? faPlus : faMinus} />
-          {fn == 'add' ? 'Add To' : 'Remove'} Bond
+          <FontAwesomeIcon transform="grow-2" icon={fn === 'add' ? faPlus : faMinus} />
+          {fn == 'add' ? 'Add To' : 'Remove'}
+          {' '}
+          Bond
         </HeadingWrapper>
       </FixedContentWrapper>
       <SectionsWrapper
-        animate={section === 0 ? `home` : `next`}
+        animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
-          type: "spring",
-          bounce: 0.22
+          type: 'spring',
+          bounce: 0.22,
         }}
         variants={{
           home: {
@@ -54,7 +56,7 @@ export const UpdateBond = () => {
         />
       </SectionsWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default UpdateBond;

@@ -38,7 +38,7 @@ export const ModalWrapper = styled(motion.div)`
 export const ContentWrapper = styled.div<any>`
   background: ${modalBackground};
   width: 100%;
-  max-width: ${props => props.size === 'large' ? '800px' : '600px'};
+  max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
   z-index: 9;
   border-radius: 0.75rem;
   overflow: hidden;

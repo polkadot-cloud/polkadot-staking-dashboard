@@ -1,0 +1,7 @@
+*.css
+*.svg
+*.json
+*.log
+*.lock
+*.md
+.eslintrc.json

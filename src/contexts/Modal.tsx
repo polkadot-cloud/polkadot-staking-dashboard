@@ -28,7 +28,6 @@ export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
 export class ModalProvider extends React.Component {
-
   state = {
     status: 0,
     modal: DEFAULT_MODAL_COMPONENT,
@@ -38,20 +37,20 @@ export class ModalProvider extends React.Component {
 
   setStatus = (newStatus: number) => {
     this.setState({
-      status: newStatus
-    })
-  }
-
-  openModalWith = (modal: string, config: any = {}, size: string = 'large') => {
-    this.setState({
-      modal: modal,
-      status: 1,
-      config: config,
-      size: size,
+      status: newStatus,
     });
-  }
+  };
 
-  render () {
+  openModalWith = (modal: string, config: any = {}, size = 'large') => {
+    this.setState({
+      modal,
+      status: 1,
+      config,
+      size,
+    });
+  };
+
+  render() {
     return (
       <ModalContext.Provider value={{
         status: this.state.status,
@@ -60,7 +59,8 @@ export class ModalProvider extends React.Component {
         modal: this.state.modal,
         config: this.state.config,
         size: this.state.size,
-      }}>
+      }}
+      >
         {this.props.children}
       </ModalContext.Provider>
     );

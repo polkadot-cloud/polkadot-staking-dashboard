@@ -11,7 +11,7 @@ export const useStats = () => {
   const { unit, units } = network;
   const { lastReward } = staking;
 
-  let lastRewardBase = lastReward.div(new BN(10 ** units)).toNumber();
+  const lastRewardBase = lastReward.div(new BN(10 ** units)).toNumber();
 
   return [
     {
@@ -19,7 +19,7 @@ export const useStats = () => {
       params: {
         label: 'Last Era Payout',
         value: lastRewardBase,
-        unit: unit,
+        unit,
         assistant: {
           page: 'payouts',
           key: 'Last Era Payout',
@@ -27,4 +27,4 @@ export const useStats = () => {
       },
     },
   ];
-}
+};

@@ -4,7 +4,9 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { SIDE_MENU_INTERFACE_WIDTH, INTERFACE_MAXIMUM_WIDTH, SIDE_MENU_STICKY_THRESHOLD } from './constants';
-import { textPrimary, backgroundGradient, backgroundPrimary, borderPrimary } from './theme';
+import {
+  textPrimary, backgroundGradient, backgroundPrimary, borderPrimary,
+} from './theme';
 
 // Highest level wrapper for Entry component
 export const EntryWrapper = styled.div`
@@ -65,14 +67,14 @@ export const SideInterfaceWrapper = styled.div<any>`
     z-index: 6;
     flex: 0;
     overflow: hidden;
-    min-width: ${props => props.minimised ? `75px` : `${SIDE_MENU_INTERFACE_WIDTH}px`};
-    max-width: ${props => props.minimised ? `75px` : `${SIDE_MENU_INTERFACE_WIDTH}px`};
+    min-width: ${(props) => (props.minimised ? '75px' : `${SIDE_MENU_INTERFACE_WIDTH}px`)};
+    max-width: ${(props) => (props.minimised ? '75px' : `${SIDE_MENU_INTERFACE_WIDTH}px`)};
 
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
         position: fixed;
         transition: all 0.15s ease-in-out;
         top: 0;
-        left: ${props => props.open ? 0 : `-${SIDE_MENU_INTERFACE_WIDTH}px`};
+        left: ${(props) => (props.open ? 0 : `-${SIDE_MENU_INTERFACE_WIDTH}px`)};
     }
 `;
 
@@ -100,22 +102,22 @@ export const PageTitleWrapper = styled.header<any>`
     box-sizing: border-box;
     position: sticky;
     top: 0px;
-    padding-top: ${props => props.isSticky ? '4.5vh ' : '1.4vh '};
+    padding-top: ${(props) => (props.isSticky ? '4.5vh ' : '1.4vh ')};
     @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-        padding-top: ${props => props.isSticky ? '7vh ' : '2vh '};
+        padding-top: ${(props) => (props.isSticky ? '7vh ' : '2vh ')};
     }
-    padding-bottom: ${props => props.isSticky ? '1rem ' : '0.25vh '};
+    padding-bottom: ${(props) => (props.isSticky ? '1rem ' : '0.25vh ')};
     width: 100%;
-    background: ${props => props.isSticky ? backgroundPrimary : 'none'};
+    background: ${(props) => (props.isSticky ? backgroundPrimary : 'none')};
     z-index: 4;
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-end;
-    min-height: ${props => props.isSticky ? '30px ' : 'none'};
+    min-height: ${(props) => (props.isSticky ? '30px ' : 'none')};
     transition: padding 0.3s ease-out;
 
     h1 {
-     font-size: ${props => props.isSticky ? '1.4rem ' : '1.85rem'};
+     font-size: ${(props) => (props.isSticky ? '1.4rem ' : '1.85rem')};
      transition: font 0.5s;
      
      /* page padding */
@@ -133,8 +135,8 @@ export const PageTitleWrapper = styled.header<any>`
 // Page Row wrapper
 export const PageRowWrapper = styled.div<any>`
     box-sizing: border-box;
-    margin-top: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
-    margin-bottom: ${props => props.noVerticalSpacer === true ? `0` : `1rem`};
+    margin-top: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
+    margin-bottom: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
     display: flex;
     flex-shrink: 0;
     flex-flow: row wrap;

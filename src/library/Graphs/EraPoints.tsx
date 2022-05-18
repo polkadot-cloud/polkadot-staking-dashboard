@@ -23,11 +23,10 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export const EraPoints = (props: any) => {
-
   const { mode } = useTheme();
   let { items, height } = props;
 
@@ -53,8 +52,8 @@ export const EraPoints = (props: any) => {
           text: 'Era',
           font: {
             size: 14,
-          }
-        }
+          },
+        },
       },
       y: {
         ticks: {
@@ -74,7 +73,7 @@ export const EraPoints = (props: any) => {
       },
       title: {
         display: false,
-        text: `Era Points`,
+        text: 'Era Points',
       },
       tooltip: {
         displayColors: false,
@@ -92,7 +91,7 @@ export const EraPoints = (props: any) => {
         interaction: {
           mode: 'nearest',
         },
-      }
+      },
     },
   };
 
@@ -108,7 +107,7 @@ export const EraPoints = (props: any) => {
           return item.reward_point;
         }),
         borderColor: (context: any) => {
-          const chart = context.chart;
+          const { chart } = context;
           const { ctx, chartArea } = chart;
           if (!chartArea) {
             return;
@@ -119,7 +118,7 @@ export const EraPoints = (props: any) => {
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,
-      }
+      },
     ],
   };
 
@@ -127,10 +126,11 @@ export const EraPoints = (props: any) => {
     <div
       style={{
         height: height === undefined ? 'auto' : height,
-      }}>
+      }}
+    >
       <Line options={options} data={data} />
     </div>
-  )
-}
+  );
+};
 
 export default EraPoints;

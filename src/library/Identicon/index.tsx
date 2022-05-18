@@ -11,7 +11,6 @@ const Wrapper = styled.div`
   }
 `;
 export const Identicon = (props: any) => {
-
   const { value, size } = props;
 
   return (
@@ -23,7 +22,7 @@ export const Identicon = (props: any) => {
         style={{ cursor: 'default' }}
       />
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Identicon;

@@ -7,7 +7,6 @@ import { useConnect } from '../../../contexts/Connect';
 import { useUi } from '../../../contexts/UI';
 
 export const Footer = (props: any) => {
-
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useUi();
   const setup = getSetupProgress(activeAccount);
@@ -19,11 +18,10 @@ export const Footer = (props: any) => {
       <section>
         {complete
           ? <Button inline primary title="Continue" onClick={() => setActiveAccountSetupSection(setup.section + 1)} />
-          : <div style={{ opacity: 0.5 }}><Button inline title="Continue" disabled /></div>
-        }
+          : <div style={{ opacity: 0.5 }}><Button inline title="Continue" disabled /></div>}
       </section>
     </FooterWrapper>
-  )
-}
+  );
+};
 
 export default Footer;

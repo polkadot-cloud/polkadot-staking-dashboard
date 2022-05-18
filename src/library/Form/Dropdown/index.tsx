@@ -2,15 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { StyledDownshift, StyledDropdown, StyledController } from '../AccountDropdown/Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useTheme } from '../../../contexts/Themes'
+import { useCombobox } from 'downshift';
+import { StyledDownshift, StyledDropdown, StyledController } from '../AccountDropdown/Wrappers';
+import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
-import { useCombobox } from 'downshift'
 
 export const Dropdown = (props: any) => {
-  const { items, onChange, label, placeholder, value }: any = props;
+  const {
+    items, onChange, label, placeholder, value,
+  }: any = props;
 
   const [inputItems, setInputItems] = useState(items);
 
@@ -18,7 +20,7 @@ export const Dropdown = (props: any) => {
 
   const c: any = useCombobox({
     items: inputItems,
-    itemToString: itemToString,
+    itemToString,
     onSelectedItemChange: onChange,
     initialSelectedItem: value,
     onInputValueChange: ({ inputValue }: any) => {
@@ -29,27 +31,26 @@ export const Dropdown = (props: any) => {
   return (
     <StyledDownshift>
       <div>
-        {label && <label className='label' {...c.getLabelProps()}>
+        {label && (
+        <label className="label" {...c.getLabelProps()}>
           {label}
         </label>
-        }
+        )}
         <div style={{ position: 'relative' }}>
-          <div className='input-wrap' {...c.getComboboxProps()}>
-            <input {...c.getInputProps({ placeholder: placeholder })} className='input' disabled={true} />
+          <div className="input-wrap" {...c.getComboboxProps()}>
+            <input {...c.getInputProps({ placeholder })} className="input" disabled />
           </div>
           <StyledDropdown {...c.getMenuProps()}>
             {
               inputItems
-                .map((item: any, index: number) =>
-                  <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
-                )
+                .map((item: any, index: number) => <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />)
             }
           </StyledDropdown>
         </div>
       </div>
     </StyledDownshift>
-  )
-}
+  );
+};
 
 const DropdownItem = ({ c, item, index }: any) => {
   const { mode } = useTheme();
@@ -61,13 +62,13 @@ const DropdownItem = ({ c, item, index }: any) => {
       className="item"
       {...c.getItemProps({ key: item.name, index, item })}
       style={{
-        color: color,
-        border: border,
-      }}>
+        color,
+        border,
+      }}
+    >
       <p>{item.name}</p>
     </div>
-  )
-}
-
+  );
+};
 
 export default Dropdown;

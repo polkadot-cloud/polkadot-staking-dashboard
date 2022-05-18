@@ -8,7 +8,7 @@ export const getSize = (element: any) => {
   const width = element?.offsetWidth;
   const height = element?.offsetHeight;
   return { height, width };
-}
+};
 
 export const useSize = (element: any) => {
   const [size, setSize] = React.useState(getSize(element));
@@ -16,32 +16,31 @@ export const useSize = (element: any) => {
   React.useEffect(() => {
     const throttleCallback = () => {
       setSize(getSize(element));
-    }
+    };
     const resizeThrottle = throttle(throttleCallback, 100, { trailing: true, leading: false });
 
     window.addEventListener('resize', resizeThrottle);
     return (() => {
-      window.removeEventListener("resize", resizeThrottle);
-    })
+      window.removeEventListener('resize', resizeThrottle);
+    });
   });
   return size;
-}
+};
 
 export const formatSize = (size: any, minHeight: number) => {
-
-  let width: any = size.width === undefined ? '100%' : size.width + 'px';
-  let height: any = size.height === undefined ? minHeight : size.height + 'px';
+  const width: any = size.width === undefined ? '100%' : `${size.width}px`;
+  const height: any = size.height === undefined ? minHeight : `${size.height}px`;
 
   return {
-    width: width,
-    height: height,
-    minHeight: minHeight,
-  }
-}
+    width,
+    height,
+    minHeight,
+  };
+};
 
 export const getGradient = (ctx: any, chartArea: any) => {
-
-  let width, height, gradient;
+  let width; let height; let
+    gradient;
 
   const chartWidth = chartArea.right - chartArea.left;
   const chartHeight = chartArea.bottom - chartArea.top;
@@ -56,10 +55,9 @@ export const getGradient = (ctx: any, chartArea: any) => {
     gradient.addColorStop(1, 'rgba(223, 81, 144, 0.7)');
   }
   return gradient;
-}
+};
 
 export const prefillPayoutGraph = (list: any, maxLength: number) => {
-
   if (list.length === 0) {
     return list;
   }
@@ -72,11 +70,11 @@ export const prefillPayoutGraph = (list: any, maxLength: number) => {
   for (let i = list.length; i < maxLength; i++) {
     lastTimestamp -= (60 * 60 * 24);
     list.push({
-      event_id: "Reward",
+      event_id: 'Reward',
       amount: 0,
       block_timestamp: lastTimestamp,
     });
   }
   // move most recent last
   return list.reverse();
-}
+};

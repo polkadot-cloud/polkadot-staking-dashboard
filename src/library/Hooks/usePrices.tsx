@@ -6,7 +6,6 @@ import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
 
 export const usePrices = () => {
-
   const { network, fetchDotPrice }: any = useApi();
   const { services }: any = useUi();
 
@@ -26,9 +25,9 @@ export const usePrices = () => {
     pricesRef.current = prices;
     _setPrices({
       ...pricesRef.current,
-      ..._prices
+      ..._prices,
     });
-  }
+  };
 
   const initiatePriceInterval = async () => {
     const prices = await fetchDotPrice();
@@ -36,7 +35,7 @@ export const usePrices = () => {
     if (priceHandle === null) {
       setPriceInterval();
     }
-  }
+  };
 
   let priceHandle: any = null;
   const setPriceInterval = async () => {
@@ -44,7 +43,7 @@ export const usePrices = () => {
       const prices = await fetchDotPrice();
       setPrices(prices);
     }, 1000 * 30);
-  }
+  };
 
   // initial price subscribe
   useEffect(() => {
@@ -53,7 +52,7 @@ export const usePrices = () => {
       if (priceHandle !== null) {
         clearInterval(priceHandle);
       }
-    })
+    });
   }, []);
 
   // resubscribe on network toggle
@@ -70,14 +69,12 @@ export const usePrices = () => {
       if (priceHandle === null) {
         initiatePriceInterval();
       }
-    } else {
-      if (priceHandle !== null) {
-        clearInterval(priceHandle);
-      }
+    } else if (priceHandle !== null) {
+      clearInterval(priceHandle);
     }
   }, [services]);
 
   return prices;
-}
+};
 
 export default usePrices;

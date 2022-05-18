@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { Wrapper } from './Wrapper';
-import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { HeadingWrapper, FooterWrapper } from '../Wrappers';
+import { Wrapper } from './Wrapper';
 import { Dropdown } from '../../library/Form/Dropdown';
 import { useStaking } from '../../contexts/Staking';
 import { useBalances } from '../../contexts/Balances';
@@ -18,7 +18,6 @@ import { useConnect } from '../../contexts/Connect';
 import { PAYEE_STATUS } from '../../constants';
 
 export const UpdatePayee = () => {
-
   const { api }: any = useApi();
   const { activeAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
@@ -33,12 +32,12 @@ export const UpdatePayee = () => {
   // ensure selected key is valid
   useEffect(() => {
     const exists: any = PAYEE_STATUS.find((item: any) => item.key === selected?.key);
-    setValid(exists !== undefined)
+    setValid(exists !== undefined);
   }, [selected]);
 
   const handleOnChange = ({ selectedItem }: any) => {
     setSelected(selectedItem);
-  }
+  };
 
   // bond valid
   const [valid, setValid]: any = useState(false);
@@ -52,7 +51,7 @@ export const UpdatePayee = () => {
     }
     tx = api.tx.staking.setPayee(selected.key);
     return tx;
-  }
+  };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
@@ -62,40 +61,46 @@ export const UpdatePayee = () => {
       setModalStatus(0);
     },
     callbackInBlock: () => {
-    }
+    },
   });
 
   return (
     <Wrapper>
       <HeadingWrapper>
-        <FontAwesomeIcon transform='grow-2' icon={faWallet} />
+        <FontAwesomeIcon transform="grow-2" icon={faWallet} />
         Update Reward Destination
       </HeadingWrapper>
       <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
-        <div className='head'>
-          <h4>Currently Selected: {_selected?.name ?? 'None'}</h4>
+        <div className="head">
+          <h4>
+            Currently Selected:
+            {_selected?.name ?? 'None'}
+          </h4>
         </div>
         <Dropdown
           items={PAYEE_STATUS}
           onChange={handleOnChange}
-          placeholder='Reward Destination'
+          placeholder="Reward Destination"
           value={selected}
-          height='17rem'
+          height="17rem"
         />
         <div>
-          <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
+          <p>
+            Estimated Tx Fee:
+            {estimatedFee === null ? '...' : `${estimatedFee}`}
+          </p>
         </div>
         <FooterWrapper>
           <div>
-            <button className='submit' onClick={() => submitTx()} disabled={!valid || submitting}>
-              <FontAwesomeIcon transform='grow-2' icon={faArrowAltCircleUp as IconProp} />
+            <button className="submit" onClick={() => submitTx()} disabled={!valid || submitting}>
+              <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
               Submit
             </button>
           </div>
         </FooterWrapper>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default UpdatePayee;

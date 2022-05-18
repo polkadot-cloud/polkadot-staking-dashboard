@@ -10,23 +10,22 @@ import { defaultThemes } from '../../theme/default';
 import { ReactComponent as WalletSVG } from '../../img/wallet.svg';
 
 export const Account = (props: any) => {
-
   const { mode } = useTheme();
   const { getAccount } = useConnect();
 
   // data props
-  let { value, label }: any = props;
+  const { value, label }: any = props;
 
   // presentational props
-  let { format }: any = props;
-  let filled = props.filled ?? false;
-  let fontSize = props.fontSize ?? '1rem';
-  let wallet = props.wallet ?? false;
+  const { format }: any = props;
+  const filled = props.filled ?? false;
+  const fontSize = props.fontSize ?? '1rem';
+  const wallet = props.wallet ?? false;
 
   // functional props
-  let { canClick }: { canClick: boolean } = props;
+  const { canClick }: { canClick: boolean } = props;
 
-  let unassigned = value === null || value === undefined || !value.length;
+  const unassigned = value === null || value === undefined || !value.length;
 
   // format value based on `format` prop
   let displayValue;
@@ -48,37 +47,39 @@ export const Account = (props: any) => {
     <Wrapper
       whileHover={{ scale: 1.01 }}
       onClick={props.onClick}
-      cursor={canClick ? `pointer` : `default`}
+      cursor={canClick ? 'pointer' : 'default'}
       fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
       fontSize={fontSize}
     >
-      {label !== undefined &&
-        <div className='account-label'>
+      {label !== undefined
+        && (
+        <div className="account-label">
           {label}
         </div>
-      }
+        )}
 
       {unassigned
-        ? <span className='title unassigned'>Not Set</span>
-        :
-        <>
-          <span className='identicon'>
-            <Identicon
-              value={value}
-              size={convertRemToPixels(fontSize) * 1.45}
-            />
-          </span>
-          <span className='title'>{displayValue}</span>
-        </>
-      }
+        ? <span className="title unassigned">Not Set</span>
+        : (
+          <>
+            <span className="identicon">
+              <Identicon
+                value={value}
+                size={convertRemToPixels(fontSize) * 1.45}
+              />
+            </span>
+            <span className="title">{displayValue}</span>
+          </>
+        )}
 
-      {wallet &&
-        <div className='wallet'>
+      {wallet
+        && (
+        <div className="wallet">
           <WalletSVG />
         </div>
-      }
+        )}
     </Wrapper>
   );
-}
+};
 
 export default Account;

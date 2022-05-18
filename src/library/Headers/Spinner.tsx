@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from "styled-components";
+import styled from 'styled-components';
 import { backgroundPrimary } from '../../theme';
 
 const StyledSpinner = styled.div`
@@ -69,10 +69,9 @@ const StyledSpinner = styled.div`
 `;
 
 export const Spinner = () => {
-
   return (
     <StyledSpinner />
   );
-}
+};
 
 export default Spinner;

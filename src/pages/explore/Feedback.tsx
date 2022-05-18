@@ -10,7 +10,6 @@ import { PageRowWrapper } from '../../Wrappers';
 const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 
 const Feedback = (props: PageProps) => {
-
   const { page } = props;
   const { title } = page;
 
@@ -20,7 +19,7 @@ const Feedback = (props: PageProps) => {
       function l () { if (!d.getElementById(i)) { var f = d.getElementsByTagName(s)[0], e = d.createElement(s); e.type = "text/javascript", e.async = !0, e.src = "https://canny.io/sdk.js", f.parentNode.insertBefore(e, f) } }
       // eslint-disable-next-line
       if ("function" != typeof w.Canny) { var c: any = function () { c.q.push(arguments) }; c.q = [], w.Canny = c, "complete" === d.readyState ? l() : w.attachEvent ? w.attachEvent("onload", l) : w.addEventListener("load", l, !1) }
-    })(window, document, "canny-jssdk", "script");
+    }(window, document, 'canny-jssdk', 'script'));
 
     // @ts-ignore
     Canny('render', {
@@ -35,10 +34,10 @@ const Feedback = (props: PageProps) => {
       <PageTitle title={title} />
 
       <PageRowWrapper>
-        <div data-canny style={{ width: '100%', }} />
+        <div data-canny style={{ width: '100%' }} />
       </PageRowWrapper>
     </Wrapper>
   );
-}
+};
 
 export default Feedback;

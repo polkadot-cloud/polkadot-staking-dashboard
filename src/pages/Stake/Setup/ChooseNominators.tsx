@@ -19,9 +19,9 @@ export const ChooseNominators = (props: any) => {
       <Header
         thisSection={section}
         complete={setup.nominations.length > 0}
-        title='Nominate'
-        assistantPage='stake'
-        assistantKey='Nominating'
+        title="Nominate"
+        assistantPage="stake"
+        assistantKey="Nominating"
       />
       <MotionContainer
         thisSection={section}
@@ -31,7 +31,7 @@ export const ChooseNominators = (props: any) => {
           <GenerateNominations
             setters={[{
               set: setActiveAccountSetup,
-              current: setup
+              current: setup,
             }]}
             nominations={setup.nominations}
             setSetup={setActiveAccountSetup}
@@ -40,7 +40,7 @@ export const ChooseNominators = (props: any) => {
         <Footer complete={setup.nominations.length > 0} />
       </MotionContainer>
     </>
-  )
-}
+  );
+};
 
 export default ChooseNominators;

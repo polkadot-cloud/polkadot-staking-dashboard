@@ -9,7 +9,6 @@ import { useStaking } from '../../contexts/Staking';
 import { useBalances } from '../../contexts/Balances';
 
 export const Connected = (props: any) => {
-
   const { activeAccount }: any = useConnect();
   const { openModalWith } = useModal();
   const { isNominating, hasController } = useStaking();
@@ -18,17 +17,18 @@ export const Connected = (props: any) => {
 
   return (
     <>
-      {activeAccount !== '' &&
+      {activeAccount !== ''
+        && (
         <>
           <HeadingWrapper>
             <Account
-              canClick={true}
+              canClick
               onClick={() => {
                 openModalWith('ConnectAccounts', {}, 'small');
               }}
               value={activeAccount}
               label={isNominating() ? 'Stash' : undefined}
-              format='name'
+              format="name"
               filled
               wallet
             />
@@ -36,15 +36,15 @@ export const Connected = (props: any) => {
           <HeadingWrapper>
             <Account
               value={controller}
-              format='name'
-              label='Controller'
+              format="name"
+              label="Controller"
               canClick={hasController()}
-              onClick={() => { hasController() && openModalWith('UpdateController', {}, 'small') }}
+              onClick={() => { hasController() && openModalWith('UpdateController', {}, 'small'); }}
               filled
             />
           </HeadingWrapper>
         </>
-      }
+        )}
     </>
-  )
-}
+  );
+};

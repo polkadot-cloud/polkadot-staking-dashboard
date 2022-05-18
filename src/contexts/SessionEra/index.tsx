@@ -11,16 +11,17 @@ export interface SessionEraContextState {
   sessionEra: any;
 }
 
-export const SessionEraContext: React.Context<SessionEraContextState> =
-  React.createContext({
-    getEraTimeLeft: () => 0,
-    sessionEra: {},
-  });
+export const SessionEraContext: React.Context<SessionEraContextState> = React.createContext({
+  getEraTimeLeft: () => 0,
+  sessionEra: {},
+});
 
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
 export const SessionEraProvider = (props: any) => {
-  const { isReady, api, status, consts }: any = useApi();
+  const {
+    isReady, api, status, consts,
+  }: any = useApi();
   const { expectedBlockTime } = consts;
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export const SessionEraProvider = (props: any) => {
   const subscribeToSessionProgress = async () => {
     if (isReady) {
       const unsub = await api.derive.session.progress((session: any) => {
-        let _state = {
+        const _state = {
           eraLength: session.eraLength.toNumber(),
           eraProgress: session.eraProgress.toNumber(),
           sessionLength: session.sessionLength.toNumber(),
@@ -62,18 +63,17 @@ export const SessionEraProvider = (props: any) => {
   };
 
   const getEraTimeLeft = () => {
-    let eraBlocksLeft = (state.eraLength - state.eraProgress);
-    let eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
-    let eventTime = moment().unix() + eraTimeLeftSeconds;
-    let diffTime = eventTime - moment().unix();
+    const eraBlocksLeft = (state.eraLength - state.eraProgress);
+    const eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
+    const eventTime = moment().unix() + eraTimeLeftSeconds;
+    const diffTime = eventTime - moment().unix();
     return diffTime;
-  }
-
+  };
 
   return (
     <SessionEraContext.Provider
       value={{
-        getEraTimeLeft: getEraTimeLeft,
+        getEraTimeLeft,
         sessionEra: {
           eraLength: state.eraLength,
           eraProgress: state.eraProgress,

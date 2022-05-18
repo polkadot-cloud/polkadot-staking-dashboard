@@ -3,12 +3,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import moment from 'moment';
-import { List, Header, Wrapper as ListWrapper, Pagination } from '../../library/List';
 import { motion } from 'framer-motion';
-import { useApi } from '../../contexts/Api';
-import { StakingContext } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import {
+  List, Header, Wrapper as ListWrapper, Pagination,
+} from '../../library/List';
+import { useApi } from '../../contexts/Api';
+import { StakingContext } from '../../contexts/Staking';
 import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
@@ -16,7 +18,6 @@ import { ItemWrapper } from './Wrappers';
 import { planckToUnit } from '../../Utils';
 
 export const PayoutListInner = (props: any) => {
-
   const { isReady, network }: any = useApi();
   const { units } = network;
   const { metrics }: any = useNetworkMetrics();
@@ -49,17 +50,17 @@ export const PayoutListInner = (props: any) => {
   const setRenderIteration = (iter: number) => {
     renderIterationRef.current = iter;
     _setRenderIteration(iter);
-  }
+  };
 
   // pagination
-  let totalPages = Math.ceil(payouts.length / LIST_ITEMS_PER_PAGE);
-  let nextPage = page + 1 > totalPages ? totalPages : page + 1;
-  let prevPage = page - 1 < 1 ? 1 : page - 1;
-  let pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
-  let pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
+  const totalPages = Math.ceil(payouts.length / LIST_ITEMS_PER_PAGE);
+  const nextPage = page + 1 > totalPages ? totalPages : page + 1;
+  const prevPage = page - 1 < 1 ? 1 : page - 1;
+  const pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
+  const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
   // render batch
-  let batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
+  const batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
 
   // refetch list when list changes
   useEffect(() => {
@@ -80,7 +81,7 @@ export const PayoutListInner = (props: any) => {
   useEffect(() => {
     if (!(batchEnd >= pageEnd || disableThrottle)) {
       setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1)
+        setRenderIteration(renderIterationRef.current + 1);
       }, 500);
     }
   }, [renderIterationRef.current]);
@@ -92,7 +93,7 @@ export const PayoutListInner = (props: any) => {
   if (!disableThrottle) {
     listPayouts = payouts.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
   } else {
-    listPayouts = payouts
+    listPayouts = payouts;
   }
 
   if (!payouts.length) {
@@ -113,23 +114,30 @@ export const PayoutListInner = (props: any) => {
       <List
         flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}
       >
-        {pagination &&
+        {pagination
+          && (
           <Pagination
             prev={page !== 1}
             next={page !== totalPages}
           >
             <div>
-              <h4>Page {page} of {totalPages}</h4>
+              <h4>
+                Page
+                {page}
+                {' '}
+                of
+                {totalPages}
+              </h4>
             </div>
             <div>
-              <button className='prev' onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
-              <button className='next' onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
+              <button className="prev" onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
+              <button className="next" onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
             </div>
           </Pagination>
-        }
+          )}
 
         <motion.div
-          className='transition'
+          className="transition"
           initial="hidden"
           animate="show"
           variants={{
@@ -138,8 +146,8 @@ export const PayoutListInner = (props: any) => {
               opacity: 1,
               transition: {
                 staggerChildren: 0.01,
-              }
-            }
+              },
+            },
           }}
         >
           {listPayouts.map((payout: any, index: number) => {
@@ -147,17 +155,17 @@ export const PayoutListInner = (props: any) => {
 
             return (
               <motion.div
-                className={`item ${listFormat === 'row' ? `row` : `col`}`}
+                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
                 key={`nomination_${index}`}
                 variants={{
                   hidden: {
                     y: 15,
-                    opacity: 0
+                    opacity: 0,
                   },
                   show: {
                     y: 0,
                     opacity: 1,
-                  }
+                  },
                 }}
               >
                 <ItemWrapper>
@@ -167,7 +175,10 @@ export const PayoutListInner = (props: any) => {
                         <h4>{event_id}</h4>
                       </span>
                       <h4 className={event_id.toLowerCase()}>
-                        {event_id === 'Reward' ? '+' : '-'}{planckToUnit(amount, units)} {network.unit}
+                        {event_id === 'Reward' ? '+' : '-'}
+                        {planckToUnit(amount, units)}
+                        {' '}
+                        {network.unit}
                       </h4>
                     </div>
                     <div>
@@ -176,25 +187,24 @@ export const PayoutListInner = (props: any) => {
                   </div>
                 </ItemWrapper>
               </motion.div>
-            )
+            );
           })}
         </motion.div>
       </List>
     </ListWrapper>
   );
-}
+};
 
 export class PayoutList extends React.Component<any, any> {
-
   static contextType = StakingContext;
 
-  render () {
+  render() {
     return (
       <PayoutListInner
         {...this.props}
       />
-    )
+    );
   }
 }
 
-export default PayoutList
+export default PayoutList;

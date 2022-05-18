@@ -2,17 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { HeadingWrapper, Item } from './Wrappers';
-import { useConnect } from '../../contexts/Connect';;
+import { useConnect } from '../../contexts/Connect';
 
 export const Connect = () => {
   const { activeAccount, initialise }: any = useConnect();
 
   return (
     <>
-      {activeAccount === '' &&
+      {activeAccount === ''
+        && (
         <HeadingWrapper>
           <Item
-            className='connect'
+            className="connect"
             onClick={() => {
               initialise();
             }}
@@ -21,7 +22,7 @@ export const Connect = () => {
             <span>Connect Wallet</span>
           </Item>
         </HeadingWrapper>
-      }
+        )}
     </>
-  )
-}
+  );
+};

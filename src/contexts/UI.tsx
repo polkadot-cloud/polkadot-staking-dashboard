@@ -61,7 +61,6 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
 export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = (props: any) => {
-
   const { isReady, consts, network }: any = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
   const { staking, eraStakers }: any = useStaking();
@@ -71,10 +70,10 @@ export const UIProvider = (props: any) => {
   const { accounts }: any = useBalances();
 
   // get services config from local storage
-  let _services: any = localStorageOrDefault('services', SERVICES, true);
+  const _services: any = localStorageOrDefault('services', SERVICES, true);
 
   // get side menu minimised state from local storage, default to not
-  let _userSideMenuMinimised: any = Number(localStorageOrDefault('side_menu_minimised', 0));
+  const _userSideMenuMinimised: any = Number(localStorageOrDefault('side_menu_minimised', 0));
 
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(0);
@@ -86,11 +85,11 @@ export const UIProvider = (props: any) => {
     localStorage.setItem('side_menu_minimised', String(v));
     userSideMenuMinimisedRef.current = v;
     _setUserSideMenuMinimised(v);
-  }
+  };
 
   // automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState(
-    window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD ? 1 : userSideMenuMinimisedRef.current
+    window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD ? 1 : userSideMenuMinimisedRef.current,
   );
 
   // global list format
@@ -102,7 +101,7 @@ export const UIProvider = (props: any) => {
   const setServices = (v: any) => {
     servicesRef.current = v;
     _setServices(v);
-  }
+  };
 
   // validator filtering
   const [validatorFilters, setValidatorFilters]: any = useState([]);
@@ -120,14 +119,14 @@ export const UIProvider = (props: any) => {
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);
     }
-  }
+  };
 
   // resize event listener
   useEffect(() => {
     window.addEventListener('resize', resizeCallback);
     return (() => {
-      window.removeEventListener("resize", resizeCallback);
-    })
+      window.removeEventListener('resize', resizeCallback);
+    });
   }, []);
 
   // re-configure minimised on user change
@@ -145,37 +144,36 @@ export const UIProvider = (props: any) => {
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
-  }
+  };
 
   const setListFormat = (v: string) => {
     _setListFormat(v);
-  }
+  };
 
   const setValidatorsOrder = (by: string) => {
     setValidatorOrder(by);
-  }
+  };
 
   const setValidatorsFilter = (filter: any) => {
     setValidatorFilters(filter);
-  }
+  };
 
   // Validator list filtering functions
 
   const toggleFilterValidators = (f: string) => {
-    let filter = [...validatorFilters];
-    let action = filter.includes(f) ? 'remove' : 'push';
+    const filter = [...validatorFilters];
+    const action = filter.includes(f) ? 'remove' : 'push';
 
     if (action === 'remove') {
-      let index = filter.indexOf(f);
+      const index = filter.indexOf(f);
       filter.splice(index, 1);
     } else {
       filter.push(f);
     }
     setValidatorsFilter(filter);
-  }
+  };
 
   const applyValidatorFilters = (list: any, batchKey: string, filter: any = validatorFilters) => {
-
     if (filter.includes('all_commission')) {
       list = filterAllCommission(list);
     }
@@ -192,15 +190,15 @@ export const UIProvider = (props: any) => {
       list = filterInactive(list);
     }
     return list;
-  }
+  };
 
   const filterMissingIdentity = (list: any, batchKey: string) => {
     if (meta[batchKey] === undefined) {
       return list;
     }
-    let filteredList: any = [];
-    for (let validator of list) {
-      let addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+    const filteredList: any = [];
+    for (const validator of list) {
+      const addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
 
       // if we cannot derive data, fallback to include validator in filtered list
       if (addressBatchIndex === -1) {
@@ -208,16 +206,16 @@ export const UIProvider = (props: any) => {
         continue;
       }
 
-      let identities = meta[batchKey]?.identities ?? [];
-      let supers = meta[batchKey]?.supers ?? [];
+      const identities = meta[batchKey]?.identities ?? [];
+      const supers = meta[batchKey]?.supers ?? [];
 
       // push validator if sync has not completed
       if (!identities.length || !supers.length) {
         filteredList.push(validator);
       }
 
-      let identityExists = identities[addressBatchIndex] ?? null;
-      let superExists = supers[addressBatchIndex] ?? null;
+      const identityExists = identities[addressBatchIndex] ?? null;
+      const superExists = supers[addressBatchIndex] ?? null;
 
       // validator included if identity or super identity has been set
       if (identityExists !== null || superExists !== null) {
@@ -226,44 +224,44 @@ export const UIProvider = (props: any) => {
       }
     }
     return filteredList;
-  }
+  };
 
   const filterOverSubscribed = (list: any, batchKey: string) => {
     if (meta[batchKey] === undefined) {
       return list;
     }
-    let filteredList: any = [];
-    for (let validator of list) {
-      let addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+    const filteredList: any = [];
+    for (const validator of list) {
+      const addressBatchIndex = meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
 
       // if we cannot derive data, fallback to include validator in filtered list
       if (addressBatchIndex === -1) {
         filteredList.push(validator);
         continue;
       }
-      let stake = meta[batchKey]?.stake ?? false;
+      const stake = meta[batchKey]?.stake ?? false;
       if (!stake) {
         filteredList.push(validator);
         continue;
       }
-      let totalNominations = stake[addressBatchIndex].total_nominations ?? 0;
+      const totalNominations = stake[addressBatchIndex].total_nominations ?? 0;
       if (totalNominations < maxNominatorRewardedPerValidator) {
         filteredList.push(validator);
         continue;
       }
     }
     return filteredList;
-  }
+  };
 
   const filterAllCommission = (list: any) => {
     list = list.filter((validator: any) => validator?.prefs?.commission !== 100);
     return list;
-  }
+  };
 
   const filterBlockedNominations = (list: any) => {
     list = list.filter((validator: any) => validator?.prefs?.blocked !== true);
     return list;
-  }
+  };
 
   const filterInactive = (list: any) => {
     // if list has not yet been populated, return original list
@@ -272,35 +270,34 @@ export const UIProvider = (props: any) => {
     }
     list = list.filter((validator: any) => session.list.includes(validator.address));
     return list;
-  }
+  };
 
   // Validator list ordering functions
 
   const orderValidators = (by: string) => {
-    let order = validatorOrder === by
+    const order = validatorOrder === by
       ? 'default'
       : by;
     setValidatorsOrder(order);
-  }
+  };
 
   const applyValidatorOrder = (list: any, order: string) => {
     if (order === 'commission') {
       return orderLowestCommission(list);
     }
     return list;
-  }
+  };
 
   const orderLowestCommission = (list: any) => {
-    let orderedList = [...list].sort((a: any, b: any) => (a.prefs.commission - b.prefs.commission));
+    const orderedList = [...list].sort((a: any, b: any) => (a.prefs.commission - b.prefs.commission));
     return orderedList;
-  }
+  };
 
   /*
    * Helper function to determine whether the dashboard is still
    * fetching remote data.
    */
   const isSyncing = () => {
-
     // api not ready
     if (!isReady) {
       return true;
@@ -327,7 +324,7 @@ export const UIProvider = (props: any) => {
     }
 
     return false;
-  }
+  };
 
   // Setup helper functions
 
@@ -339,15 +336,13 @@ export const UIProvider = (props: any) => {
     section: 1,
   };
 
-  /* 
+  /*
    * Generates the default setup objects or the currently
    * connected accounts.
    */
   const setupDefault = () => {
-
     // generate setup objects from connected accounts
     const _setup = connectAccounts.map((item: any) => {
-
       // if there is existing config for an account, use that.
       const localSetup = localStorage.getItem(`${network.name.toLowerCase()}_stake_setup_${item.address}`);
 
@@ -358,17 +353,16 @@ export const UIProvider = (props: any) => {
 
       return {
         address: item.address,
-        progress: progress,
-      }
+        progress,
+      };
     });
     return _setup;
-  }
+  };
 
   /*
    * Gets the setup progress for a connected account.
    */
   const getSetupProgress = (address: string) => {
-
     // find the current setup progress from `setup`.
     const _setup = setup.find((item: any) => item.address === address);
 
@@ -376,32 +370,28 @@ export const UIProvider = (props: any) => {
       return PROGRESS_DEFAULT;
     }
     return _setup.progress;
-  }
+  };
 
   /*
    * Sets setup progress for an address
    */
   const setActiveAccountSetup = (progress: any) => {
-
     // update local storage setup
     localStorage.setItem(`${network.name.toLowerCase()}_stake_setup_${activeAccount}`, JSON.stringify(progress));
 
     // update context setup
-    const _setup = setup.map((obj: any) =>
-      obj.address === activeAccount ? {
-        ...obj,
-        progress: progress
-      } : obj
-    );
+    const _setup = setup.map((obj: any) => (obj.address === activeAccount ? {
+      ...obj,
+      progress,
+    } : obj));
 
     setSetup(_setup);
-  }
+  };
 
   /*
    * Sets active setup section for an address
    */
   const setActiveAccountSetupSection = (section: number) => {
-
     // get current progress
     const _accountSetup = [...setup].find((item: any) => item.address === activeAccount);
 
@@ -413,22 +403,21 @@ export const UIProvider = (props: any) => {
     _accountSetup.progress.section = section;
 
     // update context setup
-    const _setup = setup.map((obj: any) => obj.address === activeAccount ? _accountSetup : obj);
+    const _setup = setup.map((obj: any) => (obj.address === activeAccount ? _accountSetup : obj));
 
     // update local storage
     localStorage.setItem(`${network.name.toLowerCase()}_stake_setup_${activeAccount}`, JSON.stringify(_accountSetup.progress));
 
     // update context
     setSetup(_setup);
-  }
+  };
 
   /*
-   * Service toggling 
+   * Service toggling
    */
   const toggleService = (key: string) => {
-
     let _services: any = [...services];
-    let found = _services.find((item: any) => item === key);
+    const found = _services.find((item: any) => item === key);
 
     if (found) {
       _services = _services.filter((_s: any) => _s !== key);
@@ -438,36 +427,37 @@ export const UIProvider = (props: any) => {
 
     localStorage.setItem('services', JSON.stringify(_services));
     setServices(_services);
-  }
+  };
 
   const getServices = () => {
     return servicesRef.current;
-  }
+  };
 
   return (
     <UIContext.Provider value={{
-      setSideMenu: setSideMenu,
-      setUserSideMenuMinimised: setUserSideMenuMinimised,
-      setListFormat: setListFormat,
-      orderValidators: orderValidators,
-      applyValidatorOrder: applyValidatorOrder,
-      applyValidatorFilters: applyValidatorFilters,
-      toggleFilterValidators: toggleFilterValidators,
-      isSyncing: isSyncing,
-      toggleService: toggleService,
-      getSetupProgress: getSetupProgress,
-      setActiveAccountSetup: setActiveAccountSetup,
-      setActiveAccountSetupSection: setActiveAccountSetupSection,
-      getServices: getServices,
-      sideMenuOpen: sideMenuOpen,
+      setSideMenu,
+      setUserSideMenuMinimised,
+      setListFormat,
+      orderValidators,
+      applyValidatorOrder,
+      applyValidatorFilters,
+      toggleFilterValidators,
+      isSyncing,
+      toggleService,
+      getSetupProgress,
+      setActiveAccountSetup,
+      setActiveAccountSetupSection,
+      getServices,
+      sideMenuOpen,
       userSideMenuMinimised: userSideMenuMinimisedRef.current,
-      sideMenuMinimised: sideMenuMinimised,
-      listFormat: listFormat,
-      validatorFilters: validatorFilters,
-      validatorOrder: validatorOrder,
+      sideMenuMinimised,
+      listFormat,
+      validatorFilters,
+      validatorOrder,
       services: servicesRef.current,
-    }}>
+    }}
+    >
       {props.children}
     </UIContext.Provider>
   );
-}
+};

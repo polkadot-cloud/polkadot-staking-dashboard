@@ -7,7 +7,6 @@ import { defaultThemes } from '../../theme/default';
 import { PageRowWrapper } from '../../Wrappers';
 
 export const Stake = () => {
-
   const { mode } = useTheme();
 
   return (
@@ -15,31 +14,31 @@ export const Stake = () => {
       <PageRowWrapper noVerticalSpacer style={{ marginTop: '1rem', marginBottom: '1rem' }}>
         <ContentLoader
           height={80}
-          width='100%'
+          width="100%"
           backgroundColor={defaultThemes.loader.background[mode]}
           foregroundColor={defaultThemes.loader.foreground[mode]}
           opacity={0.2}
-          style={{ maxWidth: 275, marginRight: '1rem', }}
+          style={{ maxWidth: 275, marginRight: '1rem' }}
         >
           <rect x="0" y="0" rx="0.75rem" ry="0.75rem" width="100%" height="100%" />
         </ContentLoader>
         <ContentLoader
           height={80}
-          width='100%'
+          width="100%"
           backgroundColor={defaultThemes.loader.background[mode]}
           foregroundColor={defaultThemes.loader.foreground[mode]}
           opacity={0.2}
-          style={{ maxWidth: 275, marginRight: '1rem', }}
+          style={{ maxWidth: 275, marginRight: '1rem' }}
         >
           <rect x="0" y="0" rx="0.75rem" ry="0.75rem" width="100%" height="100%" />
         </ContentLoader>
         <ContentLoader
           height={80}
-          width='100%'
+          width="100%"
           backgroundColor={defaultThemes.loader.background[mode]}
           foregroundColor={defaultThemes.loader.foreground[mode]}
           opacity={0.2}
-          style={{ maxWidth: 275, }}
+          style={{ maxWidth: 275 }}
         >
           <rect x="0" y="0" rx="0.75rem" ry="0.75rem" width="100%" height="100%" />
         </ContentLoader>
@@ -48,7 +47,7 @@ export const Stake = () => {
       <PageRowWrapper noVerticalSpacer style={{ marginBottom: '1rem' }}>
         <ContentLoader
           height={60}
-          width='100%'
+          width="100%"
           backgroundColor={defaultThemes.loader.background[mode]}
           foregroundColor={defaultThemes.loader.foreground[mode]}
           opacity={0.2}
@@ -59,7 +58,7 @@ export const Stake = () => {
       <PageRowWrapper noVerticalSpacer style={{ marginBottom: '1rem' }}>
         <ContentLoader
           height={60}
-          width='100%'
+          width="100%"
           backgroundColor={defaultThemes.loader.background[mode]}
           foregroundColor={defaultThemes.loader.foreground[mode]}
           opacity={0.2}
@@ -70,7 +69,7 @@ export const Stake = () => {
       <PageRowWrapper noVerticalSpacer>
         <ContentLoader
           height={60}
-          width='100%'
+          width="100%"
           backgroundColor={defaultThemes.loader.background[mode]}
           foregroundColor={defaultThemes.loader.foreground[mode]}
           opacity={0.2}
@@ -79,7 +78,7 @@ export const Stake = () => {
         </ContentLoader>
       </PageRowWrapper>
     </>
-  )
-}
+  );
+};
 
 export default Stake;

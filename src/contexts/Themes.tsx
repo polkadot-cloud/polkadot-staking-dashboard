@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from "react";
+import React from 'react';
 
 export const ThemeContext: React.Context<any> = React.createContext({
   toggleTheme: (str?: string) => { },
@@ -11,7 +11,6 @@ export const ThemeContext: React.Context<any> = React.createContext({
 export const useTheme = () => React.useContext(ThemeContext);
 
 export const ThemesProvider: React.FC = ({ children }) => {
-
   // get the current theme
   let _theme = localStorage.getItem('theme');
 
@@ -27,7 +26,6 @@ export const ThemesProvider: React.FC = ({ children }) => {
   });
 
   const toggleTheme = (_theme: string | null = null): void => {
-
     if (_theme === null) {
       _theme = (state.mode === 'dark' ? 'light' : 'dark');
     }
@@ -38,14 +36,15 @@ export const ThemesProvider: React.FC = ({ children }) => {
       ...state,
       mode: _theme,
     });
-  }
+  };
 
   return (
     <ThemeContext.Provider value={{
-      toggleTheme: toggleTheme,
+      toggleTheme,
       mode: state.mode,
-    }}>
+    }}
+    >
       {children}
     </ThemeContext.Provider>
   );
-}
+};

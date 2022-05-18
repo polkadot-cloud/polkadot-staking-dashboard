@@ -4,10 +4,9 @@
 import { useRef } from 'react';
 import { Wrapper, ContentWrapper } from './Wrappers';
 import { useSideBar } from '../../../contexts/SideBar';
-import { useOutsideAlerter } from '../../../library/Hooks';
+import { useOutsideAlerter } from '../../Hooks';
 
 export const SideBar = ({ children }: any) => {
-
   const { closeSideBar, open } = useSideBar();
 
   const ref = useRef(null);
@@ -36,8 +35,8 @@ export const SideBar = ({ children }: any) => {
       animate={animate}
       transition={{
         duration: 0.5,
-        type: "spring",
-        bounce: 0.2
+        type: 'spring',
+        bounce: 0.2,
       }}
       variants={variants}
     >
@@ -45,7 +44,7 @@ export const SideBar = ({ children }: any) => {
         {children}
       </ContentWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default SideBar;

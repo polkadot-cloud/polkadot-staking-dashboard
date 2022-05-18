@@ -2,21 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useRef } from 'react';
-import { Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator } from './Wrappers';
+import {
+  Wrapper, Summary, ConnectionSymbol, NetworkInfo, Separator,
+} from './Wrappers';
 import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
 import { BlockNumber } from './BlockNumber';
 import { ConnectionStatus } from './ConnectionStatus';
-import { usePrices } from '../../library/Hooks/usePrices';
-import { useOutsideAlerter } from '../../library/Hooks';
+import { usePrices } from '../Hooks/usePrices';
+import { useOutsideAlerter } from '../Hooks';
 import {
   CONNECTION_SYMBOL_COLORS,
   CONNECTION_STATUS,
-  NODE_ENDPOINTS
+  NODE_ENDPOINTS,
 } from '../../constants';
 
 export const NetworkBar = () => {
-
   const { services } = useUi();
   const { status, switchNetwork, network }: any = useApi();
   const prices = usePrices();
@@ -24,12 +25,11 @@ export const NetworkBar = () => {
   const [open, setOpen] = useState(false);
 
   // handle connection symbol
-  const symbolColor =
-    status === CONNECTION_STATUS[1]
-      ? CONNECTION_SYMBOL_COLORS['connecting']
-      : status === CONNECTION_STATUS[2] ?
-        CONNECTION_SYMBOL_COLORS['connected']
-        : CONNECTION_SYMBOL_COLORS['disconnected'];
+  const symbolColor = status === CONNECTION_STATUS[1]
+    ? CONNECTION_SYMBOL_COLORS.connecting
+    : status === CONNECTION_STATUS[2]
+      ? CONNECTION_SYMBOL_COLORS.connected
+      : CONNECTION_SYMBOL_COLORS.disconnected;
 
   // handle expand transitions
   const variants = {
@@ -41,7 +41,7 @@ export const NetworkBar = () => {
     },
   };
 
-  const animate = open ? `maximised` : `minimised`;
+  const animate = open ? 'maximised' : 'minimised';
 
   const ref = useRef(null);
 
@@ -56,15 +56,15 @@ export const NetworkBar = () => {
       animate={animate}
       transition={{
         duration: 0.4,
-        type: "spring",
-        bounce: 0.25
+        type: 'spring',
+        bounce: 0.25,
       }}
       variants={variants}
     >
       <Summary>
         <section>
-          <network.icon className='network_icon' />
-          <div className='hide-small'>
+          <network.icon className="network_icon" />
+          <div className="hide-small">
             <p>{network.name}</p>
             <Separator />
             <ConnectionStatus />
@@ -72,38 +72,48 @@ export const NetworkBar = () => {
         </section>
         <section>
           <button
-            className='ignore-network-info-toggle'
-            onClick={() => { setOpen(!open) }}
+            className="ignore-network-info-toggle"
+            onClick={() => { setOpen(!open); }}
           >
-            {open ? `Collapse` : `Network`}
+            {open ? 'Collapse' : 'Network'}
           </button>
-          <div className='stat' style={{ marginRight: 0 }}>
-            {status === CONNECTION_STATUS[2] &&
-              <BlockNumber />
-            }
+          <div className="stat" style={{ marginRight: 0 }}>
+            {status === CONNECTION_STATUS[2]
+              && <BlockNumber />}
             <ConnectionSymbol color={symbolColor} />
           </div>
-          {services.includes('binance_spot') &&
+          {services.includes('binance_spot')
+            && (
             <>
               <Separator />
-              <div className='stat'>
-                <span className={`change${prices.change < 0 ? ` neg` : prices.change > 0 ? ` pos` : ``}`}>
-                  {prices.change < 0 ? `` : prices.change > 0 ? `+` : ``}{prices.change}%
+              <div className="stat">
+                <span className={`change${prices.change < 0 ? ' neg' : prices.change > 0 ? ' pos' : ''}`}>
+                  {prices.change < 0 ? '' : prices.change > 0 ? '+' : ''}
+                  {prices.change}
+                  %
                 </span>
               </div>
-              <div className='stat'>
-                1 {network.api.unit} / {prices.lastPrice} USD
+              <div className="stat">
+                1
+                {' '}
+                {network.api.unit}
+                {' '}
+                /
+                {' '}
+                {prices.lastPrice}
+                {' '}
+                USD
               </div>
             </>
-          }
+            )}
         </section>
       </Summary>
 
       <NetworkInfo>
-        <div className='row'>
+        <div className="row">
           <h3> Choose Network:</h3>
         </div>
-        <div className='row'>
+        <div className="row">
           {Object.entries(NODE_ENDPOINTS).map(([key, item]: any, index: any) => (
             <button
               key={`switch_network_${index}`}
@@ -120,7 +130,7 @@ export const NetworkBar = () => {
         </div>
       </NetworkInfo>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default NetworkBar;

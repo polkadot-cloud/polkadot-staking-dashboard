@@ -2,20 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { useApi } from '../../contexts/Api';
 import { web3FromAddress } from '@polkadot/extension-dapp';
+import { useApi } from '../../contexts/Api';
 import { useNotifications } from '../../contexts/Notifications';
 import { useExtrinsics } from '../../contexts/Extrinsics';
 
 export const useSubmitExtrinsic = (extrinsic: any) => {
-
   // extract extrinsic info
   const {
     tx,
     from,
     shouldSubmit,
     callbackSubmit,
-    callbackInBlock
+    callbackInBlock,
   } = extrinsic;
 
   const { api }: any = useApi();
@@ -42,7 +41,7 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
       .paymentInfo(from);
     // convert fee to unit
     setEstimatedFee(info.partialFee.toHuman());
-  }
+  };
 
   // submit extrinsic
   const submitTx = async () => {
@@ -58,7 +57,6 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
     try {
       const unsub = await tx
         .signAndSend(from, { signer: injector.signer }, ({ status, nonce, events = [] }: any) => {
-
           // extrinsic is ready ( has been signed), add to pending
           if (status.isReady) {
             addPending(accountNonce);
@@ -83,15 +81,13 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
           // let user know outcome of transaction
           if (status.isFinalized) {
             events.forEach(({ phase, event: { data, method, section } }: any) => {
-
               if (method === 'ExtrinsicSuccess') {
                 addNotification({
                   title: 'Finalized',
                   subtitle: 'Transaction successful',
                 });
                 unsub();
-              }
-              else if (method === 'ExtrinsicFailed') {
+              } else if (method === 'ExtrinsicFailed') {
                 addNotification({
                   title: 'Failed',
                   subtitle: 'Error with transaction',
@@ -111,11 +107,11 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
         subtitle: 'Transaction was cancelled',
       });
     }
-  }
+  };
 
   return {
-    submitTx: submitTx,
-    estimatedFee: estimatedFee,
-    submitting: submitting,
-  }
-}
+    submitTx,
+    estimatedFee,
+    submitting,
+  };
+};

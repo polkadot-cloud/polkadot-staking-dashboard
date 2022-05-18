@@ -5,9 +5,9 @@
   "private": false,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.1.0",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "6.1.0",
     "@fortawesome/react-fontawesome": "^0.1.18",
-    "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@polkadot/api": "^7.7.1",
     "@polkadot/extension-dapp": "^0.42.7",
     "@polkadot/keyring": "^9.1.1",
@@ -56,12 +56,12 @@
     "@types/": "faker-js/faker",
     "@types/jest": "^27.4.0",
     "@types/node": "^16.11.22",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
     "@types/styled-components": "^5.1.21",
     "@types/window-or-global": "^1.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.23.0",
-    "@typescript-eslint/parser": "^5.23.0",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -83,12 +83,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier-format": "prettier --config .prettierrc --write"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

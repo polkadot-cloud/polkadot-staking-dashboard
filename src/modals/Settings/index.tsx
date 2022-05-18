@@ -4,9 +4,8 @@
 import Wrapper from './Wrapper';
 import { useUi } from '../../contexts/UI';
 import { StatusButton } from '../../library/StatusButton';
-;
-export const Settings = () => {
 
+export const Settings = () => {
   const { services, toggleService } = useUi();
 
   return (
@@ -14,16 +13,16 @@ export const Settings = () => {
       <h2>Toggle Services</h2>
       <StatusButton
         checked={services.includes('subscan')}
-        label='Subscan API'
-        onClick={() => { toggleService('subscan') }}
+        label="Subscan API"
+        onClick={() => { toggleService('subscan'); }}
       />
       <StatusButton
         checked={services.includes('binance_spot')}
-        label='Binance Spot API'
-        onClick={() => { toggleService('binance_spot') }}
+        label="Binance Spot API"
+        onClick={() => { toggleService('binance_spot'); }}
       />
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Settings;

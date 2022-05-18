@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, useMemo } from 'react';
-import { PageRowWrapper } from '../../../Wrappers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faRedoAlt,
+  faWallet,
+  faCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import { PageRowWrapper, Separator } from '../../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../../library/Layout';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../../library/StatBoxList';
@@ -13,26 +19,20 @@ import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { Button } from '../../../library/Button';
 import { GenerateNominations } from '../GenerateNominations';
-import { Separator } from '../../../Wrappers';
 import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import StatBoxListItem from '../../../library/StatBoxList/Item';
 import { useStats } from './stats';
 import { PAYEE_STATUS } from '../../../constants';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faRedoAlt,
-  faWallet,
-  faCircle,
-} from '@fortawesome/free-solid-svg-icons';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus, staking, targets, setTargets } = useStaking();
-  const { getAccountNominations }: any =
-    useBalances();
+  const {
+    getNominationsStatus, staking, targets, setTargets,
+  } = useStaking();
+  const { getAccountNominations }: any = useBalances();
   const stats = useStats();
 
   const { payee } = staking;
@@ -48,18 +48,18 @@ export const Active = (props: any) => {
 
   const nominationStatuses = useMemo(
     () => getNominationsStatus(),
-    [nominations]
+    [nominations],
   );
 
   useEffect(() => {
-    let statuses = nominationStatuses;
-    let total = Object.values(statuses).length;
-    let _active: any = Object.values(statuses).filter(
-      (_v: any) => _v === 'active'
+    const statuses = nominationStatuses;
+    const total = Object.values(statuses).length;
+    const _active: any = Object.values(statuses).filter(
+      (_v: any) => _v === 'active',
     ).length;
 
     setNominationsStatus({
-      total: total,
+      total,
       inactive: total - _active,
       active: _active,
     });
@@ -130,32 +130,33 @@ export const Active = (props: any) => {
         <SectionWrapper>
           {nominations.length
             ? <Nominations />
-            : <>
-              <div className='head with-action'>
-                <h2>
-                  Generate Nominations
-                  <OpenAssistantIcon page="stake" title="Nominations" />
-                </h2>
-                <div>
-                  <Button
-                    small
-                    inline
-                    primary
-                    title="Nominate"
-                    disabled={targets.length === 0}
-                    onClick={() => openModalWith('Nominate', {}, 'small')}
-                  />
+            : (
+              <>
+                <div className="head with-action">
+                  <h2>
+                    Generate Nominations
+                    <OpenAssistantIcon page="stake" title="Nominations" />
+                  </h2>
+                  <div>
+                    <Button
+                      small
+                      inline
+                      primary
+                      title="Nominate"
+                      disabled={targets.length === 0}
+                      onClick={() => openModalWith('Nominate', {}, 'small')}
+                    />
+                  </div>
                 </div>
-              </div>
-              <GenerateNominations
-                setters={[{
-                  set: setTargets,
-                  current: targets
-                }]}
-                nominations={targets.nominations}
-              />
-            </>
-          }
+                <GenerateNominations
+                  setters={[{
+                    set: setTargets,
+                    current: targets,
+                  }]}
+                  nominations={targets.nominations}
+                />
+              </>
+            )}
         </SectionWrapper>
       </PageRowWrapper>
     </>

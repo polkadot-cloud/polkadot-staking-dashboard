@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from './Wrappers';
 import Router from './Router';
-import { ThemeProvider } from 'styled-components';
 import { withProviders } from './library/Hooks';
 import { APIProvider } from './contexts/Api';
 import { AssistantProvider } from './contexts/Assistant';
@@ -33,7 +33,7 @@ export const ThemedRouter = () => {
   const { mode } = useTheme();
 
   return (
-    <ThemeProvider theme={{ mode: mode }}>
+    <ThemeProvider theme={{ mode }}>
       <WrappedRouter />
     </ThemeProvider>
   );
@@ -55,7 +55,7 @@ export const Providers = withProviders(
   SubscanProvider,
   NotificationsProvider,
   ExtrinsicsProvider,
-  SessionEraProvider
+  SessionEraProvider,
 )(ThemedRouter);
 
 export default Providers;

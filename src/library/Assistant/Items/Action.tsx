@@ -5,22 +5,23 @@ import { motion } from 'framer-motion';
 import { ItemWrapper as Wrapper } from '../Wrappers';
 
 export const Action = (props: any) => {
-
-  let { height, subtitle, label, title, onClick } = props;
+  const {
+    height, subtitle, label, title, onClick,
+  } = props;
 
   return (
     <Wrapper
-      width='100%'
+      width="100%"
       height={height}
-      border={`3px solid #d33079`}
+      border="3px solid #d33079"
     >
       <motion.button
-        className='item action'
+        className="item action"
         whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.99 }}
         transition={{
           duration: 0.5,
-          type: "spring",
+          type: 'spring',
           bounce: 0.4,
         }}
         onClick={onClick}
@@ -31,6 +32,6 @@ export const Action = (props: any) => {
       </motion.button>
     </Wrapper>
   );
-}
+};
 
 export default Action;

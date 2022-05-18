@@ -12,7 +12,7 @@ export const StatPie = (props: any) => {
   let { value, value2 } = props;
 
   // format zero value graph
-  let isZero = !value && !value;
+  const isZero = !value && !value;
   if (isZero) {
     value = 1;
     value2 = 0;
@@ -20,21 +20,21 @@ export const StatPie = (props: any) => {
 
   const { mode } = useTheme();
 
-  let borderColor: any = isZero
+  const borderColor: any = isZero
     ? defaultThemes.buttons.toggle.background[mode]
     : [
       defaultThemes.text.secondary[mode],
-      defaultThemes.transparent[mode]
+      defaultThemes.transparent[mode],
     ];
 
-  let backgroundColor: any = isZero
+  const backgroundColor: any = isZero
     ? defaultThemes.buttons.toggle.background[mode]
     : defaultThemes.transparent[mode];
 
   const options = {
-    borderColor: borderColor,
+    borderColor,
     hoverBorderColor: borderColor,
-    backgroundColor: backgroundColor,
+    backgroundColor,
     hoverBackgroundColor: backgroundColor,
     responsive: true,
     maintainAspectRatio: false,
@@ -45,22 +45,22 @@ export const StatPie = (props: any) => {
       },
       tooltip: {
         enabled: false,
-      }
-    }
+      },
+    },
   };
 
   const data = {
     datasets: [
       {
         data: [value, value2],
-        backgroundColor: backgroundColor,
+        backgroundColor,
         borderWidth: 1.25,
       },
     ],
   };
 
   return (
-    <div className='graph' style={{ width: 36, height: 36 }}>
+    <div className="graph" style={{ width: 36, height: 36 }}>
       <Pie
         options={options}
         data={data}

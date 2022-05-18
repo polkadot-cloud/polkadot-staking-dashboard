@@ -2,19 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
-import { List, Header, Wrapper as ListWrapper, Pagination } from '../../library/List';
 import { motion } from 'framer-motion';
-import { useApi } from '../../contexts/Api';
-import { StakingContext } from '../../contexts/Staking';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import {
+  List, Header, Wrapper as ListWrapper, Pagination,
+} from '../List';
+import { useApi } from '../../contexts/Api';
+import { StakingContext } from '../../contexts/Staking';
 import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 import { Pool } from '../Pool';
 
 export const PoolListInner = (props: any) => {
-
   const { isReady }: any = useApi();
   const { metrics }: any = useNetworkMetrics();
 
@@ -25,7 +26,7 @@ export const PoolListInner = (props: any) => {
 
   const {
     allowMoreCols,
-    pagination
+    pagination,
   }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
@@ -53,17 +54,17 @@ export const PoolListInner = (props: any) => {
   const setRenderIteration = (iter: number) => {
     renderIterationRef.current = iter;
     _setRenderIteration(iter);
-  }
+  };
 
   // pagination
-  let totalPages = Math.ceil(pools.length / LIST_ITEMS_PER_PAGE);
-  let nextPage = page + 1 > totalPages ? totalPages : page + 1;
-  let prevPage = page - 1 < 1 ? 1 : page - 1;
-  let pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
-  let pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
+  const totalPages = Math.ceil(pools.length / LIST_ITEMS_PER_PAGE);
+  const nextPage = page + 1 > totalPages ? totalPages : page + 1;
+  const prevPage = page - 1 < 1 ? 1 : page - 1;
+  const pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
+  const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
   // render batch
-  let batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
+  const batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
 
   // refetch list when pool list changes
   useEffect(() => {
@@ -84,7 +85,7 @@ export const PoolListInner = (props: any) => {
   useEffect(() => {
     if (!(batchEnd >= pageEnd || disableThrottle)) {
       setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1)
+        setRenderIteration(renderIterationRef.current + 1);
       }, 500);
     }
   }, [renderIterationRef.current]);
@@ -96,7 +97,7 @@ export const PoolListInner = (props: any) => {
   if (!disableThrottle) {
     listPools = pools.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
   } else {
-    listPools = pools
+    listPools = pools;
   }
 
   if (!pools.length) {
@@ -117,22 +118,29 @@ export const PoolListInner = (props: any) => {
       <List
         flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}
       >
-        {pagination &&
+        {pagination
+          && (
           <Pagination
             prev={page !== 1}
             next={page !== totalPages}
           >
             <div>
-              <h4>Page {page} of {totalPages}</h4>
+              <h4>
+                Page
+                {page}
+                {' '}
+                of
+                {totalPages}
+              </h4>
             </div>
             <div>
-              <button className='prev' onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
-              <button className='next' onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
+              <button className="prev" onClick={() => { setPage(prevPage); setInitial(false); }}>Prev</button>
+              <button className="next" onClick={() => { setPage(nextPage); setInitial(false); }}>Next</button>
             </div>
           </Pagination>
-        }
+          )}
         <motion.div
-          className='transition'
+          className="transition"
           initial="hidden"
           animate="show"
           variants={{
@@ -141,47 +149,46 @@ export const PoolListInner = (props: any) => {
               opacity: 1,
               transition: {
                 staggerChildren: 0.01,
-              }
-            }
+              },
+            },
           }}
         >
-          {listPools.map((pool: any, index: number) =>
+          {listPools.map((pool: any, index: number) => (
             <motion.div
-              className={`item ${listFormat === 'row' ? `row` : `col`}`}
+              className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
               key={`nomination_${index}`}
               variants={{
                 hidden: {
                   y: 15,
-                  opacity: 0
+                  opacity: 0,
                 },
                 show: {
                   y: 0,
                   opacity: 1,
-                }
+                },
               }}
             >
               <Pool pool={pool} initial={initial} />
             </motion.div>
-          )}
+          ))}
         </motion.div>
       </List>
     </ListWrapper>
   );
-}
+};
 
 export class PoolList extends React.Component<any, any> {
-
   static contextType = StakingContext;
 
-  shouldComponentUpdate (nextProps: any, nextState: any) {
+  shouldComponentUpdate(nextProps: any, nextState: any) {
     return (this.props.pools !== nextProps.pools);
   }
 
-  render () {
+  render() {
     return (
       <PoolListInner {...this.props} />
-    )
+    );
   }
 }
 
-export default PoolList
+export default PoolList;

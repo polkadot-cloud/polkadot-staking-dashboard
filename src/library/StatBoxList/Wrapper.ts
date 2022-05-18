@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
-import { textSecondary, textInvert, backgroundSecondary, tooltipBackground } from '../../theme';
+import {
+  textSecondary, textInvert, backgroundSecondary, tooltipBackground,
+} from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
