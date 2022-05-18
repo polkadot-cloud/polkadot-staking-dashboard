@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { useStaking } from '../../../contexts/Staking';
-import { Pie } from '../Pie';
+import { Pie } from '../../../library/StatBoxList/Pie';
 
 const TotalValidatorsStatBox = () => {
   const { staking }: any = useStaking();

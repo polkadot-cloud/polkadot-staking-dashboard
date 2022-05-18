@@ -3,11 +3,10 @@
 
 import BN from 'bn.js';
 import { useStaking } from '../../../contexts/Staking';
-import { Pie } from '../Pie';
+import { Pie } from '../../../library/StatBoxList/Pie';
 
 const ActiveValidatorsStatBox = () => {
   const { staking, eraStakers }: any = useStaking();
-
   const { validatorCount } = staking;
   const { activeValidators } = eraStakers;
 
