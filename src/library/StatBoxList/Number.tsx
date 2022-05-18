@@ -1,19 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { StatBox } from './Item';
 import NumberEasing from 'che-react-number-easing';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { StatBox } from './Item';
+import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Number = (props: any) => {
+  const {
+    label, value, unit, assistant,
+  } = props;
 
-  const { label, value, unit, assistant } = props;
+  const assist = assistant !== undefined;
+  const page = assistant?.page ?? '';
+  const key = assistant?.key ?? '';
 
-  let assist = assistant !== undefined;
-  let page = assistant?.page ?? '';
-  let key = assistant?.key ?? '';
-
-  let currency = props.currency ?? '';
+  const currency = props.currency ?? '';
 
   return (
     <StatBox>
@@ -26,10 +27,15 @@ export const Number = (props: any) => {
               speed={250}
               trail={false}
               value={value}
-              useLocaleString={true}
+              useLocaleString
               currency={currency}
             />
-            {unit && <>&nbsp;{unit}</>}
+            {unit && (
+            <>
+&nbsp;
+              {unit}
+            </>
+            )}
           </h2>
           <h4>
             {label}

@@ -2,9 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect } from 'react';
-import { PageWrapper } from './Wrappers';
-import { Routes, Route, HashRouter } from "react-router-dom";
-import { AnimatePresence } from "framer-motion"
+import {
+  Routes, Route, HashRouter, useLocation, Navigate,
+} from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet';
+import {
+  PageWrapper,
+  SideInterfaceWrapper,
+  MainInterfaceWrapper,
+  BodyInterfaceWrapper,
+} from './Wrappers';
 import { PAGES_CONFIG } from './pages';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './modals';
@@ -12,18 +20,10 @@ import { Headers } from './library/Headers';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
 import Notifications from './library/Notifications';
-import { useLocation, Navigate } from 'react-router-dom';
-import { Helmet } from "react-helmet";
 import { TITLE_DEFAULT } from './constants';
 import { useUi } from './contexts/UI';
-import {
-  SideInterfaceWrapper,
-  MainInterfaceWrapper,
-  BodyInterfaceWrapper,
-} from './Wrappers';
 
 export const RouterInner = () => {
-
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised } = useUi();
 
@@ -61,7 +61,7 @@ export const RouterInner = () => {
                   <Route
                     key={`main_interface_page_${pageIndex}`}
                     path={page.hash}
-                    element={
+                    element={(
                       <PageWrapper
                         key={`main_interface_key__${pageIndex}`}
                         initial={{ opacity: 0, y: 10 }}
@@ -74,14 +74,14 @@ export const RouterInner = () => {
                         </Helmet>
                         <Entry page={page} />
                       </PageWrapper>
-                    }
+                    )}
                   />
-                )
+                );
               })}
               <Route
-                key={`main_interface_navigate`}
+                key="main_interface_navigate"
                 path="*"
-                element={<Navigate to='/overview' />}
+                element={<Navigate to="/overview" />}
               />
             </Routes>
           </AnimatePresence>
@@ -95,13 +95,13 @@ export const RouterInner = () => {
       <Notifications />
     </>
   );
-}
+};
 
 export const Router = () => {
   return (
     <HashRouter basename="/">
       <RouterInner />
     </HashRouter>
-  )
-}
+  );
+};
 export default Router;

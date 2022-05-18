@@ -8,7 +8,6 @@ import { useUi } from '../../contexts/UI';
 import { useStaking } from '../../contexts/Staking';
 
 export const StatusLabel = (props: any) => {
-
   const status = props.status ?? 'sync_or_setup';
   const statusFor = props.statusFor ?? false;
 
@@ -34,12 +33,13 @@ export const StatusLabel = (props: any) => {
     <Wrapper topOffset={topOffset}>
       <div>
         <h3>
-          <FontAwesomeIcon icon={faExclamationTriangle} transform="grow-1" />&nbsp;
+          <FontAwesomeIcon icon={faExclamationTriangle} transform="grow-1" />
+&nbsp;
           {title}
         </h3>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 export default StatusLabel;

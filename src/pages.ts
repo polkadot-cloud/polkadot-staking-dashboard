@@ -1,14 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import Overview from './pages/Overview';
-import Stake from './pages/Stake';
-import Pools from './pages/Pools';
-import Browse from './pages/Validators';
-import Favourites from './pages/Favourites';
-import Payouts from './pages/Payouts';
-import Projects from './pages/explore/Projects';
-import Feedback from './pages/explore/Feedback';
 import {
   faUserFriends,
   faServer,
@@ -17,13 +9,21 @@ import {
   faUsers,
   faThumbtack,
   faComment,
-  faBraille
+  faBraille,
 } from '@fortawesome/free-solid-svg-icons';
+import Overview from './pages/Overview';
+import Stake from './pages/Stake';
+import Pools from './pages/Pools';
+import Browse from './pages/Validators';
+import Favourites from './pages/Favourites';
+import Payouts from './pages/Payouts';
+import Projects from './pages/explore/Projects';
+import Feedback from './pages/explore/Feedback';
 import { URI_PREFIX } from './constants';
 
 export const PAGE_CATEGORIES = [{
   _id: 1,
-  title: 'default'
+  title: 'default',
 }, {
   _id: 2,
   title: 'Staking',
@@ -42,56 +42,56 @@ export const PAGES_CONFIG = [
   {
     category: 1,
     title: 'Overview',
-    uri: URI_PREFIX + '/',
+    uri: `${URI_PREFIX}/`,
     hash: '/overview',
     Entry: Overview,
     icon: faBraille,
   }, {
     category: 2,
     title: 'Stake',
-    uri: URI_PREFIX + '/stake',
+    uri: `${URI_PREFIX}/stake`,
     hash: '/stake',
     Entry: Stake,
     icon: faChartLine,
   }, {
     category: 2,
     title: 'Pools',
-    uri: URI_PREFIX + '/pools',
+    uri: `${URI_PREFIX}/pools`,
     hash: '/pools',
     Entry: Pools,
     icon: faUsers,
   }, {
     category: 2,
     title: 'Payouts',
-    uri: URI_PREFIX + '/payouts',
+    uri: `${URI_PREFIX}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
     icon: faStar,
   }, {
     category: 3,
     title: 'Validators',
-    uri: URI_PREFIX + '/validators',
+    uri: `${URI_PREFIX}/validators`,
     hash: '/validators',
     Entry: Browse,
     icon: faServer,
   }, {
     category: 3,
     title: 'Favourites',
-    uri: URI_PREFIX + '/favourites',
+    uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
     Entry: Favourites,
     icon: faThumbtack,
   }, {
     category: 4,
     title: 'Community',
-    uri: URI_PREFIX + '/community',
+    uri: `${URI_PREFIX}/community`,
     hash: '/community',
     Entry: Projects,
     icon: faUserFriends,
   }, {
     category: 5,
     title: 'Feedback',
-    uri: URI_PREFIX + '/feedback',
+    uri: `${URI_PREFIX}/feedback`,
     hash: '/feedback',
     Entry: Feedback,
     icon: faComment,
@@ -113,7 +113,7 @@ export const ASSISTANT_CONFIG = [
         title: 'Nominators',
         description: [
           'Nominators are accounts who are staking in the network, regardless of whether they are active or earning rewards.',
-          'In order to stake DOT, you must be a nominator.'
+          'In order to stake DOT, you must be a nominator.',
         ],
       },
       {
@@ -137,7 +137,7 @@ export const ASSISTANT_CONFIG = [
       //   subtitle: '',
       //   url: 'https://polkadot.network/'
       // },
-    ]
+    ],
   },
   {
     key: 'stake',
@@ -187,7 +187,7 @@ export const ASSISTANT_CONFIG = [
         title: 'Nominating',
         description: [
           'Nominating is the process of selecting validators you wish to stake your DOT to. You can choose to nominate up to 16 validators for each of your accounts.',
-          'Once you have nominated your selected validators, they become your nominations.'
+          'Once you have nominated your selected validators, they become your nominations.',
         ],
       },
       {
@@ -195,7 +195,7 @@ export const ASSISTANT_CONFIG = [
         description: [
           'Your nominations are the validators you have chosen to nominate. You can nominate up to 16 validators.',
           'Your bonded funds are automatically distributed to nominations that are active in the staking era.',
-          'As long as at least one of your nominations is actively validating in a session, your funds will be staked with that validator and you will receive rewards.'
+          'As long as at least one of your nominations is actively validating in a session, your funds will be staked with that validator and you will receive rewards.',
         ],
       },
     ],
@@ -259,28 +259,28 @@ export const ASSISTANT_CONFIG = [
         description: [
           'A validator that is actively validating blocks. Rewards are accumulated based on the validator\'s activity.',
           'A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.',
-          'Polkadot allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.'
+          'Polkadot allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.',
         ],
       },
       {
         title: 'Era',
         description: [
           'At the end of each era, validators are rewarded DOT based on how many era points they accumulated in that era. This DOT reward is then distributed amongst the nominators of the validator via a payout.',
-          '1 era is currently 24 hours in Polkadot.'
+          '1 era is currently 24 hours in Polkadot.',
         ],
       },
       {
         title: 'Epoch',
         description: [
           'An epoch is another name for a session in Polkadot. A different set of validators are selected to validate blocks at the beginning of every epoch.',
-          '1 epoch is currently 4 hours in Polkadot.'
+          '1 epoch is currently 4 hours in Polkadot.',
         ],
       },
       {
         title: 'Era Points',
         description: [
           'Era Points are accumulated by validators during each era, and depend on a validator\'s performance.',
-          'As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards.'
+          'As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards.',
         ],
       },
       {
@@ -296,7 +296,7 @@ export const ASSISTANT_CONFIG = [
           'Nominating validators with low commissions mean you will receive a larger share of the rewards they generate.',
           'Many validators will have a commission rate of 100%, meaning you will receive no rewards by nominating these validators.',
           'Examples of such validators include those operating on behalf of exchanges, where nominating and reward distribution is done centrally on the exchange in question.',
-          'A validator can update their commission rates as and when they please, and such changes will have an impact on your profitability. Be sure to monitor your nominations on this dashboard to keep updated on their commission rates.'
+          'A validator can update their commission rates as and when they please, and such changes will have an impact on your profitability. Be sure to monitor your nominations on this dashboard to keep updated on their commission rates.',
         ],
       },
       {
@@ -353,11 +353,10 @@ export const ASSISTANT_CONFIG = [
 ];
 
 export const pageTitleFromUri = (pathname: string) => {
-  for (let page of PAGES_CONFIG) {
-    if (page.uri === pathname)
-      return page.title;
+  for (const page of PAGES_CONFIG) {
+    if (page.uri === pathname) return page.title;
   }
   return '';
-}
+};
 
 export default PAGES_CONFIG;

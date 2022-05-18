@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
+import Keyring from '@polkadot/keyring';
+import { web3AccountsSubscribe, web3Enable } from '@polkadot/extension-dapp';
 import { useApi } from './Api';
 import { localStorageOrDefault } from '../Utils';
 import { useModal } from './Modal';
-import Keyring from '@polkadot/keyring';
-import { web3AccountsSubscribe, web3Enable } from '@polkadot/extension-dapp';
 import { DAPP_NAME } from '../constants';
 
 export interface ConnectContextState {
@@ -42,26 +42,25 @@ export const ConnectContext: React.Context<ConnectContextState> = React.createCo
 export const useConnect = () => React.useContext(ConnectContext);
 
 export const ConnectProvider = (props: any) => {
-
   const { network }: any = useApi();
   const { openModalWith } = useModal();
 
   const setLocalStorageActiveAccount = (addr: string) => {
     localStorage.setItem(`${network.name.toLowerCase()}_active_account`, addr);
-  }
+  };
 
   const getLocalStorageActiveAccount = () => {
     const account = localStorage.getItem(`${network.name.toLowerCase()}_active_account`);
     return account === null ? '' : account;
-  }
+  };
 
   const removeLocalStorageActiveAccount = () => {
     localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
-  }
+  };
 
   // store the currently active wallet
   const [activeWallet, _setActiveWallet] = useState(
-    localStorageOrDefault('active_wallet', null)
+    localStorageOrDefault('active_wallet', null),
   );
 
   const setActiveWallet = (wallet: any) => {
@@ -71,7 +70,7 @@ export const ConnectProvider = (props: any) => {
       localStorage.setItem('active_wallet', wallet);
     }
     _setActiveWallet(wallet);
-  }
+  };
 
   // store the currently active account
   const [activeAccount, __setActiveAccount] = useState(getLocalStorageActiveAccount());
@@ -80,7 +79,7 @@ export const ConnectProvider = (props: any) => {
   const _setActiveAccount = (v: any) => {
     activeAccountRef.current = v;
     __setActiveAccount(v);
-  }
+  };
 
   // store the currently active account metadata
   const [activeAccountMeta, _setActiveAccountMeta] = useState(null);
@@ -88,7 +87,7 @@ export const ConnectProvider = (props: any) => {
   const setActiveAccountMeta = (v: any) => {
     activeAccountMetaRef.current = v;
     _setActiveAccountMeta(v);
-  }
+  };
 
   // store accounts list
   const [accounts, _setAccounts] = useState([]);
@@ -96,19 +95,19 @@ export const ConnectProvider = (props: any) => {
   const setAccounts = (v: any) => {
     accountsRef.current = v;
     _setAccounts(v);
-  }
+  };
 
   // store wallet errors
   const [walletErrors, _setWalletErrors] = useState({});
   const walletErrorsRef: any = useRef(walletErrors);
 
   const setWalletErrors = (key: string, value: string) => {
-    let _errors: any = { ...walletErrorsRef.current };
+    const _errors: any = { ...walletErrorsRef.current };
     _errors[key] = value;
 
     walletErrorsRef.current = _errors;
     _setWalletErrors(_errors);
-  }
+  };
 
   // store unsubscribe handler for connected wallet
   const [unsubscribe, _setUnsubscribe]: any = useState(null);
@@ -116,7 +115,7 @@ export const ConnectProvider = (props: any) => {
   const setUnsubscribe = (v: any) => {
     unsubscribeRef.current = v;
     _setUnsubscribe(v);
-  }
+  };
 
   const [extensions, setExtensions] = useState([]);
 
@@ -127,16 +126,16 @@ export const ConnectProvider = (props: any) => {
       if (unsubscribe !== null) {
         unsubscribeRef.current();
       }
-    })
+    });
   }, []);
 
   // give web page time to initiate extensions
   const initExtensions = async () => {
     setTimeout(async () => {
-      const extensions: any = await web3Enable(DAPP_NAME);
-      setExtensions(extensions);
+      const _extensions: any = await web3Enable(DAPP_NAME);
+      setExtensions(_extensions);
     }, 200);
-  }
+  };
 
   // automatic connect from active wallet
   useEffect(() => {
@@ -158,7 +157,7 @@ export const ConnectProvider = (props: any) => {
       await unsubscribeRef.current();
     }
     importNetworkAddresses(accounts, activeWallet);
-  }
+  };
 
   const connectToWallet = async (_wallet: any = null) => {
     try {
@@ -170,13 +169,10 @@ export const ConnectProvider = (props: any) => {
       if (_wallet === null) {
         if (activeWallet !== null) {
           _wallet = activeWallet;
-        } else {
-          _wallet = _wallet
         }
       }
       // subscribe to accounts
       const _unsubscribe = await web3AccountsSubscribe((injected) => {
-
         // abort if no accounts
         if (!injected.length) {
           setWalletErrors(_wallet, 'No accounts');
@@ -189,33 +185,32 @@ export const ConnectProvider = (props: any) => {
       });
 
       // unsubscribe if errors exist
-      let _hasError = walletErrorsRef.current?._wallet ?? null;
+      const _hasError = walletErrorsRef.current?._wallet ?? null;
       if (_hasError !== null) {
         disconnectFromAccount();
       }
 
       // update context state
       setUnsubscribe(_unsubscribe);
-
     } catch (err) {
       // wallet not found.
       setWalletErrors(_wallet, 'Wallet not found');
     }
-  }
+  };
 
-  const importNetworkAddresses = (accounts: any, wallet: any) => {
-    let _accounts: any = [];
+  const importNetworkAddresses = (accs: any, wallet: any) => {
+    const _accounts: any = [];
 
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
-    accounts.map(async (account: any, i: number) => {
+    accs.map(async (account: any, i: number) => {
       // get account address in the correct format
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;
 
       // check source is active wallet
-      let { meta } = account;
+      const { meta } = account;
       const { source } = meta;
 
       if (source === wallet) {
@@ -232,21 +227,21 @@ export const ConnectProvider = (props: any) => {
     }
 
     // check active account is in the currently selected wallet
-    let activeAccountInWallet = _accounts.find((item: any) => item.address === _activeAccount);
+    const activeAccountInWallet = _accounts.find((item: any) => item.address === _activeAccount);
 
     // auto connect to account
     connectToAccount(activeAccountInWallet);
 
     // set available accounts
     setAccounts(_accounts);
-  }
+  };
 
   const connectToAccount = (account: any = null) => {
     if (account !== null) {
       setActiveAccount(account.address);
       setActiveAccountMeta(account);
     }
-  }
+  };
 
   const disconnectFromWallet = () => {
     disconnectFromAccount();
@@ -254,13 +249,13 @@ export const ConnectProvider = (props: any) => {
     setActiveWallet(null);
     setAccounts([]);
     setUnsubscribe(null);
-  }
+  };
 
   const disconnectFromAccount = () => {
     removeLocalStorageActiveAccount();
     setActiveAccount('');
     setActiveAccountMeta(null);
-  }
+  };
 
   const initialise = () => {
     if (activeWallet === null || activeAccountRef.current === '') {
@@ -270,43 +265,43 @@ export const ConnectProvider = (props: any) => {
     } else {
       connectToWallet(activeWallet);
     }
-  }
+  };
 
   const setActiveAccount = (address: string) => {
     setLocalStorageActiveAccount(address);
     _setActiveAccount(address);
-  }
+  };
 
   const accountExists = (addr: string) => {
     const account = accountsRef.current.filter((acc: any) => acc.address === addr);
     return account.length;
-  }
+  };
 
   const getAccount = (addr: string) => {
     const accs = accountsRef.current.filter((acc: any) => acc.address === addr);
     if (accs.length) {
       return accs[0];
-    } else {
-      return null;
     }
-  }
+    return null;
+  };
 
   return (
     <ConnectContext.Provider value={{
-      activeWallet: activeWallet,
+      activeWallet,
       accounts: accountsRef.current,
       activeAccount: activeAccountRef.current,
       activeAccountMeta: activeAccountMetaRef.current,
-      walletErrors: walletErrors,
-      accountExists: accountExists,
-      connectToWallet: connectToWallet,
-      disconnectFromAccount: disconnectFromAccount,
-      disconnectFromWallet: disconnectFromWallet,
-      initialise: initialise,
-      getAccount: getAccount,
-      connectToAccount: connectToAccount,
-    }}>
+      walletErrors,
+      accountExists,
+      connectToWallet,
+      disconnectFromAccount,
+      disconnectFromWallet,
+      initialise,
+      getAccount,
+      connectToAccount,
+    }}
+    >
       {props.children}
     </ConnectContext.Provider>
   );
-}
+};

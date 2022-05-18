@@ -5,13 +5,12 @@ import { useState, useEffect, useRef } from 'react';
 import { PageTitleWrapper } from '../../Wrappers';
 
 export const PageTitle = (props: any) => {
-
   const { title, setStickyTitle } = props;
   const [isSticky, setIsSticky] = useState(false);
 
-  let ref: any = useRef();
+  const ref: any = useRef();
 
-  // mount 
+  // mount
   useEffect(() => {
     const cachedRef = ref.current;
     const observer = new IntersectionObserver(
@@ -19,17 +18,17 @@ export const PageTitle = (props: any) => {
       {
         threshold: [1],
         rootMargin: '-1px 0px 0px 0px',
-      }
-    )
+      },
+    );
     observer.observe(cachedRef);
     // unmount
-    return function () {
+    return () => {
       observer.unobserve(cachedRef);
-    }
-  }, [isSticky])
+    };
+  }, [isSticky]);
 
   useEffect(() => {
-    // if a parent component is monitoring sticky state, 
+    // if a parent component is monitoring sticky state,
     // update it here.
     if (setStickyTitle !== undefined) {
       setStickyTitle(isSticky);
@@ -40,7 +39,7 @@ export const PageTitle = (props: any) => {
     <PageTitleWrapper ref={ref} isSticky={isSticky}>
       <h1>{title}</h1>
     </PageTitleWrapper>
-  )
-}
+  );
+};
 
 export default PageTitle;

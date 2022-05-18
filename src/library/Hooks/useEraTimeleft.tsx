@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useSessionEra } from '../../contexts/SessionEra';
 
 export const useEraTimeLeft = () => {
-
   const { sessionEra, getEraTimeLeft } = useSessionEra();
 
   // store era time left as state object
@@ -15,7 +14,7 @@ export const useEraTimeLeft = () => {
   const setEraTimeLeft = (_timeleft: number) => {
     _setEraTimeLeft(_timeleft);
     eraTimeLeftRef.current = _timeleft;
-  }
+  };
 
   // update time left every second
   // clears and resets interval on `eraProgress` update.
@@ -28,10 +27,10 @@ export const useEraTimeLeft = () => {
     }, 1000);
     return (() => {
       clearInterval(timeleftInterval);
-    })
+    });
   }, [sessionEra]);
 
   return eraTimeLeftRef.current;
-}
+};
 
 export default useEraTimeLeft;

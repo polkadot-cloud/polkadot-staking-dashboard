@@ -77,7 +77,7 @@ button {
   font-variation-settings: 'wght' 525;
 }
 
-label {
+.label {
   font-size: 0.85rem;
   font-variation-settings: 'wght' 450;
   display: flex;

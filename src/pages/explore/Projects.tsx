@@ -7,7 +7,6 @@ import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
 
 export const Projects = (props: PageProps) => {
-
   const { page } = props;
   const { title } = page;
 
@@ -18,8 +17,8 @@ export const Projects = (props: PageProps) => {
       transition: {
         duration: 1,
         staggerChildren: 0.25,
-      }
-    }
+      },
+    },
   };
 
   const listItem = {
@@ -28,15 +27,15 @@ export const Projects = (props: PageProps) => {
       y: 50,
       transition: {
         duration: 0.5,
-      }
+      },
     },
     show: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
-      }
-    }
+      },
+    },
   };
 
   return (
@@ -65,6 +64,6 @@ export const Projects = (props: PageProps) => {
       </PageRowWrapper>
     </Wrapper>
   );
-}
+};
 
 export default Projects;

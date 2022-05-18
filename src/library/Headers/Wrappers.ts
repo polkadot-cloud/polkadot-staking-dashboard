@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   SIDE_MENU_STICKY_THRESHOLD,
-  SHOW_SIDE_BAR_WIDTH_THRESHOLD
+  SHOW_SIDE_BAR_WIDTH_THRESHOLD,
 } from '../../constants';
 import {
   backgroundDropdown,
   textPrimary,
   textInvert,
-  buttonSecondaryBackground
+  buttonSecondaryBackground,
 } from '../../theme';
 
 export const Wrapper = styled.div`

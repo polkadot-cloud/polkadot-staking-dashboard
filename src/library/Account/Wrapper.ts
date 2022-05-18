@@ -13,9 +13,9 @@ export const Wrapper = styled(motion.button) <any>`
     justify-content: flex-start;
     align-items: center;
     font-variation-settings: 'wght' 540;
-    cursor: ${props => props.cursor};
-    background: ${props => props.fill};
-    font-size: ${props => props.fontSize};
+    cursor: ${(props) => props.cursor};
+    background: ${(props) => props.fill};
+    font-size: ${(props) => props.fontSize};
     padding: 0 1rem;
     flex: 1;
 

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { Wrapper, Item } from './Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
+import { Wrapper, Item } from './Wrappers';
 import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
 import { useUi } from '../../../contexts/UI';
@@ -15,7 +15,6 @@ import { Announcement as AnnouncementLoader } from '../../../library/Loaders/Ann
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 
 export const Announcements = () => {
-
   const { isSyncing } = useUi();
   const { network }: any = useApi();
   const { units } = network;
@@ -28,29 +27,29 @@ export const Announcements = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.25,
-      }
-    }
+      },
+    },
   };
 
   const listItem = {
     hidden: {
-      opacity: 0
+      opacity: 0,
     },
     show: {
       opacity: 1,
-    }
+    },
   };
 
-  let nominatorCapReached = maxNominatorsCount.eq(totalNominators);
+  const nominatorCapReached = maxNominatorsCount.eq(totalNominators);
 
   let nominatorReachedPercentage = 0;
   if (maxNominatorsCount.gt(new BN(0)) && totalNominators.gt(new BN(0))) {
     nominatorReachedPercentage = totalNominators.div(maxNominatorsCount.div(new BN(100)));
   }
 
-  let minNominatorBondBase = minNominatorBond.div(new BN(10 ** units));
+  const minNominatorBondBase = minNominatorBond.div(new BN(10 ** units));
 
-  let announcements = [];
+  const announcements = [];
 
   // maximum nominators have been reached
   if (nominatorCapReached) {
@@ -82,20 +81,20 @@ export const Announcements = () => {
     class: 'neutral',
     title: `The maximum nominator cap is now ${humanNumber(maxNominatorsCount.toNumber())}.`,
     subtitle: `A total of ${humanNumber(maxNominatorsCount.toNumber())} nominators can now join the ${network.name} network.`,
-  })
+  });
 
   return (
     <SectionWrapper>
       <h2>
         Announcements
-        <OpenAssistantIcon page='overview' title='Announcements' />
+        <OpenAssistantIcon page="overview" title="Announcements" />
       </h2>
       <Wrapper>
         <motion.div variants={container} initial="hidden" animate="show" style={{ width: '100%' }}>
 
           {isSyncing()
             ? <AnnouncementLoader />
-            : announcements.map((item, index) =>
+            : announcements.map((item, index) => (
               <Item key={`announcement_${index}`} variants={listItem}>
                 <h3 className={item.class}>
                   <FontAwesomeIcon
@@ -106,12 +105,11 @@ export const Announcements = () => {
                 </h3>
                 <p>{item.subtitle}</p>
               </Item>
-            )
-          }
+            ))}
         </motion.div>
       </Wrapper>
     </SectionWrapper>
   );
-}
+};
 
 export default Announcements;

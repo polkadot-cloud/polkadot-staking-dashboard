@@ -5,3 +5,5 @@ export const sessionValidators = {
   list: [],
   unsub: null,
 };
+
+export default sessionValidators;

@@ -2,17 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
-import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
-import Identicon from '../../Identicon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useTheme } from '../../../contexts/Themes'
+import { useCombobox } from 'downshift';
+import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
+import Identicon from '../../Identicon';
+import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
 import { convertRemToPixels } from '../../../Utils';
-import { useCombobox } from 'downshift'
 
 export const AccountDropdown = (props: any) => {
-  const { items, onChange, label, placeholder, value }: any = props;
+  const {
+    items, onChange, label, placeholder, value,
+  }: any = props;
 
   const itemToString = (item: any) => (item ? item.meta.name : '');
 
@@ -20,34 +22,34 @@ export const AccountDropdown = (props: any) => {
 
   const c: any = useCombobox({
     items: inputItems,
-    itemToString: itemToString,
+    itemToString,
     onSelectedItemChange: onChange,
     initialSelectedItem: value,
     onInputValueChange: ({ inputValue }: any) => {
       setInputItems(
-        items.filter((item: any) =>
-          item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase()),
-        ),
-      )
+        items.filter((item: any) => item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())),
+      );
     },
   });
 
   return (
     <StyledDownshift>
       <div>
-        {label && <label className='label' {...c.getLabelProps()}>
+        {label && (
+        <div className="label" {...c.getLabelProps()}>
           {label}
-        </label>
-        }
+        </div>
+        )}
         <div style={{ position: 'relative' }}>
-          <div className='input-wrap' {...c.getComboboxProps()}>
-            {value !== null &&
+          <div className="input-wrap" {...c.getComboboxProps()}>
+            {value !== null
+              && (
               <Identicon
                 value={value?.address ?? ''}
                 size={convertRemToPixels('2rem')}
               />
-            }
-            <input {...c.getInputProps({ placeholder: placeholder })} className='input' />
+              )}
+            <input {...c.getInputProps({ placeholder })} className="input" />
           </div>
 
           {c.selectedItem && (
@@ -55,22 +57,20 @@ export const AccountDropdown = (props: any) => {
               onClick={() => c.selectItem(null)}
               aria-label="clear selection"
             >
-              <FontAwesomeIcon transform='grow-2' icon={faTimes} />
+              <FontAwesomeIcon transform="grow-2" icon={faTimes} />
             </StyledController>
           )}
           <StyledDropdown {...c.getMenuProps()}>
             {
               inputItems
-                .map((item: any, index: number) =>
-                  <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />
-                )
+                .map((item: any, index: number) => <DropdownItem key={`controller_acc_${index}`} c={c} item={item} index={index} />)
             }
           </StyledDropdown>
         </div>
       </div>
     </StyledDownshift>
-  )
-}
+  );
+};
 
 const DropdownItem = ({ c, item, index }: any) => {
   const { mode } = useTheme();
@@ -82,10 +82,11 @@ const DropdownItem = ({ c, item, index }: any) => {
       className="item"
       {...c.getItemProps({ key: item.meta.name, index, item })}
       style={{
-        color: color,
-        border: border,
-      }}>
-      <div className='icon'>
+        color,
+        border,
+      }}
+    >
+      <div className="icon">
         <Identicon
           value={item.address}
           size={26}
@@ -93,7 +94,7 @@ const DropdownItem = ({ c, item, index }: any) => {
       </div>
       <p>{item.meta.name}</p>
     </div>
-  )
-}
+  );
+};
 
 export default AccountDropdown;

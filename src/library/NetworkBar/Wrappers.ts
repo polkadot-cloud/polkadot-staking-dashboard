@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import { textSecondary, backgroundNetworkBar } from '../../theme';
 
 export const Wrapper = styled(motion.div) <any>`
@@ -163,7 +163,7 @@ export const Separator = styled.div`
 export const ConnectionSymbol = styled.div<any>`
   width: 10px;
   height: 10px;
-  background: ${props => props.color};
+  background: ${(props) => props.color};
   border-radius: 50%;
   margin: 0 0.7rem;
 `;

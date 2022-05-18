@@ -2,28 +2,31 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef,
+} from 'react';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 import { toFixedIfNecessary, planckBnToUnit, rmCommas } from '../../Utils';
 
 export const BalancesContext: any = React.createContext({
-  getAccount: (a: string) => { },
-  getAccountBalance: (a: string) => { },
-  getAccountLedger: (a: string) => { },
-  getBondedAccount: (a: string) => { },
-  getAccountNominations: (a: string) => { },
+  getAccount: () => true,
+  getAccountBalance: () => true,
+  getAccountLedger: () => true,
+  getBondedAccount: () => true,
+  getAccountNominations: () => true,
   getBondOptions: () => defaults.bondOptions,
-  isController: () => { },
+  isController: () => true,
   accounts: [],
   reserveAmount: 0,
   existentialAmount: 0,
   minReserve: 0,
 });
+
 export const useBalances = () => React.useContext(BalancesContext);
 
-export const BalancesProvider = (props: any) => {
+export const BalancesProvider = ({ children }: any) => {
   const { api, isReady, network }: any = useApi();
   const { accounts, activeWallet }: any = useConnect();
   const { units } = network;
@@ -68,7 +71,7 @@ export const BalancesProvider = (props: any) => {
     // unsubscribe from accounts
     const { unsub } = stateRef.current;
     for (const unsubscribe of unsub) {
-      await unsubscribe();
+      unsubscribe();
     }
     // refetch balances
     if (refetch) {
@@ -174,7 +177,7 @@ export const BalancesProvider = (props: any) => {
   // get active account balances
   const getBalances = async () => {
     const unsubs = await Promise.all(
-      accounts.map((a: any) => subscribeToBalances(a.address))
+      accounts.map((a: any) => subscribeToBalances(a.address)),
     );
     setState({
       ...stateRef.current,
@@ -242,7 +245,7 @@ export const BalancesProvider = (props: any) => {
   const isController = (address: string) => {
     const existsAsController = stateRef.current.accounts.filter((account: any) => account?.bonded === address);
     return existsAsController.length > 0;
-  }
+  };
 
   // get the bond and unbond amounts available to the user
   const getBondOptions = (address: string) => {
@@ -280,12 +283,12 @@ export const BalancesProvider = (props: any) => {
     // total possible balance that can be bonded
     const totalPossibleBond = toFixedIfNecessary(
       planckBnToUnit(freeAfterReserve, units) - totalUnlocking,
-      units
+      units,
     );
 
     let freeToStake = toFixedIfNecessary(
       planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units),
-      units
+      units,
     );
     freeToStake = freeToStake < 0 ? 0 : freeToStake;
 
@@ -311,7 +314,7 @@ export const BalancesProvider = (props: any) => {
       minReserve,
     }}
     >
-      {props.children}
+      {children}
     </BalancesContext.Provider>
   );
 };

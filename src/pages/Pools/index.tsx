@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { PageProps } from '../types';
-import { PageRowWrapper } from '../../Wrappers';
+import { PageRowWrapper, Separator } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { StatBoxList } from '../../library/StatBoxList';
@@ -11,7 +11,6 @@ import { defaultIfNaN } from '../../Utils';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { useApi } from '../../contexts/Api';
 import { PoolAccount } from './PoolAccount';
-import { Separator } from '../../Wrappers';
 import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
 import { Button } from '../../library/Button';
 import { PoolList } from '../../library/PoolList';
@@ -66,10 +65,10 @@ export const Pools = (props: PageProps) => {
   const totalPools = meta.counterForBondedPools + meta.counterForRewardPools;
   const activePoolsAsPercent = defaultIfNaN(
     ((meta.counterForRewardPools ?? 0) / (totalPools * 0.01)).toFixed(2),
-    0
+    0,
   );
   const activePool = state.pools.find(
-    (item: any) => item.id === meta.counterForRewardPools
+    (item: any) => item.id === meta.counterForRewardPools,
   );
 
   const items: any = [
@@ -163,7 +162,11 @@ export const Pools = (props: PageProps) => {
                 <OpenAssistantIcon page="pools" title="Bonded in Pool" />
               </h4>
               <h2>
-                32.622931 {network.unit} &nbsp;
+                32.622931
+                {' '}
+                {network.unit}
+                {' '}
+&nbsp;
                 <div>
                   <Button small primary inline title="+" onClick={() => { }} />
                   <Button small primary title="-" onClick={() => { }} />
@@ -175,7 +178,11 @@ export const Pools = (props: PageProps) => {
                 <OpenAssistantIcon page="pools" title="Pool Rewards" />
               </h4>
               <h2>
-                0.82 {network.unit} &nbsp;
+                0.82
+                {' '}
+                {network.unit}
+                {' '}
+&nbsp;
                 <div>
                   <Button
                     small
@@ -194,17 +201,23 @@ export const Pools = (props: PageProps) => {
             <div className="head">
               <h2>Pool Roles</h2>
               <h4>
-                Root <OpenAssistantIcon page="pools" title="Joined Pool" />
+                Root
+                {' '}
+                <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.root ?? null} />
 
               <h4>
-                Depositor <OpenAssistantIcon page="pools" title="Joined Pool" />
+                Depositor
+                {' '}
+                <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.depositor ?? null} />
 
               <h4>
-                Nominator <OpenAssistantIcon page="pools" title="Joined Pool" />
+                Nominator
+                {' '}
+                <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.nominator ?? null} />
 
@@ -214,7 +227,7 @@ export const Pools = (props: PageProps) => {
               </h4>
               <PoolAccount
                 address={activePool?.roles?.stateToggler ?? null}
-                last={true}
+                last
               />
             </div>
           </SectionWrapper>

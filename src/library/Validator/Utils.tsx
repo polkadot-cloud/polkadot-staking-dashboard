@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export const getIdentityDisplay = (identity: any, _superIdentity: any) => {
-
   // first check identity of validator
 
   // display.Raw
@@ -16,11 +15,11 @@ export const getIdentityDisplay = (identity: any, _superIdentity: any) => {
 
   // if still null, check super identity
 
-  let superIdentity = _superIdentity?.identity ?? null;
+  const superIdentity = _superIdentity?.identity ?? null;
 
   display = superIdentity?.info?.display?.Raw ?? null;
   // legal.Raw
   display = display === null ? superIdentity?.info?.legal.Raw ?? null : display;
 
   return display;
-}
+};

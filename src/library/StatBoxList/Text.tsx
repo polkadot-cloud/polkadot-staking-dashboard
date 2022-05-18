@@ -2,15 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { StatBox } from './Item';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Text = (props: any) => {
-
   const { label, value, assistant } = props;
 
-  let assist = assistant !== undefined;
-  let page = assistant?.page ?? '';
-  let key = assistant?.key ?? '';
+  const assist = assistant !== undefined;
+  const page = assistant?.page ?? '';
+  const key = assistant?.key ?? '';
   return (
     <StatBox>
       <div className="content chart">

@@ -1,19 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useNotifications } from "../../contexts/Notifications";
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNotifications } from '../../contexts/Notifications';
 import Wrapper from './Wrapper';
 
 export const Notifications = () => {
-
   const { notifications, removeNotification } = useNotifications();
 
   return (
     <Wrapper>
       <AnimatePresence initial={false}>
-        {notifications.length > 0 &&
-          notifications.map((_n: any, i: number) => {
+        {notifications.length > 0
+          && notifications.map((_n: any, i: number) => {
             const { item } = _n;
 
             return (
@@ -22,7 +21,9 @@ export const Notifications = () => {
                 layout
                 initial={{ opacity: 0, y: 50, scale: 0.3 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5, y: 50, transition: { duration: 0.2 } }}
+                exit={{
+                  opacity: 0, scale: 0.5, y: 50, transition: { duration: 0.2 },
+                }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => removeNotification(item)}
@@ -31,8 +32,7 @@ export const Notifications = () => {
                 {item.subtitle && <h5>{item.subtitle}</h5>}
               </motion.li>
             );
-          })
-        }
+          })}
       </AnimatePresence>
     </Wrapper>
   );

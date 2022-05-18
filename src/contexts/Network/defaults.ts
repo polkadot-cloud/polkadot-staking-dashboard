@@ -11,3 +11,5 @@ export const state = {
   totalIssuance: new BN(0),
   unsub: undefined,
 };
+
+export default state;

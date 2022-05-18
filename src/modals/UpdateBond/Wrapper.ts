@@ -3,7 +3,9 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textPrimary, textSecondary, buttonPrimaryBackground, backgroundToggle } from '../../theme';
+import {
+  textPrimary, textSecondary, buttonPrimaryBackground, backgroundToggle,
+} from '../../theme';
 
 export const Wrapper = styled.div`
   display: flex;

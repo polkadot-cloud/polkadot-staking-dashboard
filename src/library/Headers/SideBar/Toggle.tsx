@@ -8,13 +8,12 @@ import { useSideBar } from '../../../contexts/SideBar';
 import { useConnect } from '../../../contexts/Connect';
 
 export const Toggle = () => {
-
   const { activeAccount } = useConnect();
   const { openSideBar, open } = useSideBar();
 
   const style = { flex: 0 };
 
-  const svg =
+  const svg = (
     <div style={{
       width: '1rem',
       height: '1rem',
@@ -24,22 +23,31 @@ export const Toggle = () => {
     >
       <WalletSVG />
     </div>
+  );
 
   return (
     <ToggleWrapper>
-      {(!open && activeAccount !== '') &&
+      {(!open && activeAccount !== '')
+        && (
         <Item
           style={style}
-          onClick={() => { openSideBar() }}
+          onClick={() => { openSideBar(); }}
           whileHover={{ scale: '1.01' }}
         >
-          {svg} Wallet
+          {svg}
+          {' '}
+          Wallet
         </Item>
-      }
+        )}
       {open
-        ? <Item style={style}>{svg} Wallet</Item>
-        : <></>
-      }
+        ? (
+          <Item style={style}>
+            {svg}
+            {' '}
+            Wallet
+          </Item>
+        )
+        : <></>}
     </ToggleWrapper>
-  )
-}
+  );
+};

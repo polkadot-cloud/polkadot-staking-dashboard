@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { useUi } from '../../contexts/UI';
-import { useTheme } from '../../contexts/Themes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
+import { useUi } from '../../contexts/UI';
+import { useTheme } from '../../contexts/Themes';
 import { defaultThemes } from '../../theme/default';
 
 const Wrapper = styled.div <any>`
@@ -14,15 +14,14 @@ const Wrapper = styled.div <any>`
   top: 10px;
   font-size: 0.9rem;
   font-variation-settings: 'wght' 570;
-  background: ${props => props.background};
+  background: ${(props) => props.background};
   border-radius: 0.3rem;
   padding: 0.25rem 0.4rem;
-  color: ${props => props.color};;
+  color: ${(props) => props.color};;
   opacity: 0.8;
 `;
 
 export const SubscanButton = () => {
-
   const { mode } = useTheme();
   const { services } = useUi();
 
@@ -42,11 +41,11 @@ export const SubscanButton = () => {
       <FontAwesomeIcon
         icon={faProjectDiagram}
         transform="shrink-2"
-        style={{ marginRight: '0.3rem', }}
+        style={{ marginRight: '0.3rem' }}
       />
       Subscan
     </Wrapper>
-  )
-}
+  );
+};
 
 export default SubscanButton;

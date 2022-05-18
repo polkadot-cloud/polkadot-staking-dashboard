@@ -1,10 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
-import { textPrimary, textSecondary, highlightPrimary, highlightSecondary, backgroundOverlay, primary } from '../../theme';
+import {
+  textPrimary, textSecondary, highlightPrimary, highlightSecondary, backgroundOverlay, primary,
+} from '../../theme';
 
 export const Wrapper = styled.div<any>`
   background: none;
@@ -37,15 +39,15 @@ export const Wrapper = styled.div<any>`
     /* Footer */
     &:last-child {
       display: flex;
-      flex-flow: ${props => props.minimised ? 'column-reverse wrap' : 'row wrap'};
+      flex-flow: ${(props) => (props.minimised ? 'column-reverse wrap' : 'row wrap')};
       align-items: center;
       padding-top: 0.5rem;
       
       button {
         color: ${textSecondary};
         transition: color 0.2s;
-        margin-right: ${props => props.minimised ? 0 : '0.1rem'};
-        margin-top: ${props => props.minimised ? '1.25rem' : 0};
+        margin-right: ${(props) => (props.minimised ? 0 : '0.1rem')};
+        margin-top: ${(props) => (props.minimised ? '1.25rem' : 0)};
         opacity: 0.75;
 
         path {
@@ -62,11 +64,11 @@ export const Wrapper = styled.div<any>`
 export const LogoWrapper = styled(motion.button) <any>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: ${props => props.minimised ? 'center' : 'flex-start'};
+  justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
   width: 100%;
   height: 2.1rem;
-  padding: ${props => props.minimised ? '0' : '0.4rem 0.5rem'};
-  margin-bottom: ${props => props.minimised ? '1.5rem' : '1rem'};
+  padding: ${(props) => (props.minimised ? '0' : '0.4rem 0.5rem')};
+  margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
 
   ellipse {
     fill: ${primary};
@@ -84,7 +86,7 @@ export const ItemWrapper = styled(motion.div) <any>`
   font-size: 1.04rem;
 
   .icon {
-    margin-left: ${props => props.minimised ? 0 : '0.25rem'};
+    margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
     margin-right: 0.65rem;
   }
   .name {
@@ -109,8 +111,8 @@ export const ItemWrapper = styled(motion.div) <any>`
 export const HeadingWrapper = styled.div<any>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: ${props => props.minimised ? 'center' : 'flex-start'};
-  opacity: ${props => props.minimised ? 0.5 : 1};
+  justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
+  opacity: ${(props) => (props.minimised ? 0.5 : 1)};
   align-items: center;
 
   h5 {

@@ -18,26 +18,25 @@ export const SideBarContext: React.Context<SideBarContextState> = React.createCo
 export const useSideBar = () => React.useContext(SideBarContext);
 
 export const SideBarProvider = ({ children }: any) => {
-
   const [open, setOpen] = useState(0);
 
   const openSideBar = () => {
-    if (open)
-      return;
+    if (open) return;
     setOpen(1);
-  }
+  };
 
   const closeSideBar = () => {
     setOpen(0);
-  }
+  };
 
   return (
     <SideBarContext.Provider value={{
-      openSideBar: openSideBar,
-      closeSideBar: closeSideBar,
-      open: open,
-    }}>
+      openSideBar,
+      closeSideBar,
+      open,
+    }}
+    >
       {children}
     </SideBarContext.Provider>
   );
-}
+};

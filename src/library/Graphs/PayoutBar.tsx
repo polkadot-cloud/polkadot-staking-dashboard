@@ -28,11 +28,10 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export const PayoutBar = (props: any) => {
-
   const { network }: any = useApi();
   const { units } = network;
   const { mode } = useTheme();
@@ -51,7 +50,7 @@ export const PayoutBar = (props: any) => {
         }),
         borderColor: defaultThemes.graphs.colors[0][mode],
         backgroundColor: (context: any) => {
-          const chart = context.chart;
+          const { chart } = context;
           const { ctx, chartArea } = chart;
           if (!chartArea) {
             return;
@@ -80,7 +79,7 @@ export const PayoutBar = (props: any) => {
             size: 10,
           },
           autoSkip: true,
-        }
+        },
       },
       y: {
         ticks: {
@@ -125,7 +124,7 @@ export const PayoutBar = (props: any) => {
     >
       <Bar options={options} data={data} />
     </div>
-  )
-}
+  );
+};
 
 export default PayoutBar;

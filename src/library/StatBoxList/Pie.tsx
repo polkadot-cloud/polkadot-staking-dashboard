@@ -1,20 +1,21 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { StatBox } from './Item';
 import NumberEasing from 'che-react-number-easing';
-import { StatPie } from '../../library/Graphs/StatBoxPie';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { StatBox } from './Item';
+import { StatPie } from '../Graphs/StatBoxPie';
+import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Pie = (props: any) => {
+  const {
+    label, stat, graph, tooltip, assistant,
+  } = props;
+  const assist = assistant !== undefined;
+  const page = assistant?.page ?? '';
+  const key = assistant?.key ?? '';
 
-  const { label, stat, graph, tooltip, assistant } = props;
-  let assist = assistant !== undefined;
-  let page = assistant?.page ?? '';
-  let key = assistant?.key ?? '';
-
-  let showValue = stat?.value !== 0 || stat?.total === 0;
-  let showTotal = !!stat?.total;
+  const showValue = stat?.value !== 0 || stat?.total === 0;
+  const showTotal = !!stat?.total;
 
   return (
     <StatBox>
@@ -38,22 +39,33 @@ export const Pie = (props: any) => {
                   speed={250}
                   trail={false}
                   value={stat?.value}
-                  useLocaleString={true}
+                  useLocaleString
                 />
-                {stat?.unit && <>&nbsp;{stat?.unit}</>}
+                {stat?.unit && (
+                <>
+&nbsp;
+                  {stat?.unit}
+                </>
+                )}
 
                 {showTotal && (
                   <span className="total">
-                    /{' '}
+                    /
+                    {' '}
                     <NumberEasing
                       ease="quintInOut"
                       precision={2}
                       speed={250}
                       trail={false}
                       value={stat?.total}
-                      useLocaleString={true}
+                      useLocaleString
                     />
-                    {stat?.unit && <>&nbsp;{stat?.unit}</>}
+                    {stat?.unit && (
+                    <>
+&nbsp;
+                      {stat?.unit}
+                    </>
+                    )}
                   </span>
                 )}
               </>

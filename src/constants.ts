@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /*
- * SVGs 
+ * SVGs
 */
 import { ReactComponent as PolkadotLogoSVG } from './img/polkadot_icon.svg';
 import { ReactComponent as WestendLogoSVG } from './img/westend_icon.svg';
 
 /*
- * Global Constants 
+ * Global Constants
 */
 export const URI_PREFIX = '/polkadot-staking-dashboard';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
@@ -31,7 +31,7 @@ export const NODE_ENDPOINTS: any = {
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
-    }
+    },
   },
   westend: {
     name: 'Westend',
@@ -44,8 +44,8 @@ export const NODE_ENDPOINTS: any = {
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
-    }
-  }
+    },
+  },
 };
 
 export const POLKADOT_URL = 'https://polkadot.network';
@@ -60,28 +60,28 @@ export const CONNECTION_SYMBOL_COLORS: any = {
   disconnected: 'red',
   connecting: 'orange',
   connected: 'green',
-}
+};
 
 export const PAYEE_STATUS = [
   {
     key: 'Staked',
-    name: 'Back to Staking'
+    name: 'Back to Staking',
   }, {
     key: 'Stash',
-    name: 'To Stash Account'
+    name: 'To Stash Account',
   }, {
     key: 'Controller',
-    name: 'To Controller Account'
-  }
+    name: 'To Controller Account',
+  },
 ];
 
-export const INTERFACE_MAXIMUM_WIDTH: number = 1800;
-export const SIDE_MENU_INTERFACE_WIDTH: number = 200;
-export const SIDE_MENU_STICKY_THRESHOLD: number = 1175;
-export const SECTION_FULL_WIDTH_THRESHOLD: number = 1050;
-export const SHOW_SIDE_BAR_WIDTH_THRESHOLD: number = 800;
-export const MAX_ASSISTANT_INTERFACE_WIDTH: number = 500;
-export const MAX_SIDE_BAR_INTERFACE_WIDTH: number = 400;
+export const INTERFACE_MAXIMUM_WIDTH = 1800;
+export const SIDE_MENU_INTERFACE_WIDTH = 200;
+export const SIDE_MENU_STICKY_THRESHOLD = 1175;
+export const SECTION_FULL_WIDTH_THRESHOLD = 1050;
+export const SHOW_SIDE_BAR_WIDTH_THRESHOLD = 800;
+export const MAX_ASSISTANT_INTERFACE_WIDTH = 500;
+export const MAX_SIDE_BAR_INTERFACE_WIDTH = 400;
 export const GRAPH_HEIGHT = 430;
 
 /*
@@ -93,7 +93,7 @@ export const SERVICES = ['subscan', 'binance_spot'];
  * Global messages for app components
 */
 export const GLOBAL_MESSGE_KEYS = {
-  CONTROLLER_NOT_IMPORTED: 'controller_not_imported'
+  CONTROLLER_NOT_IMPORTED: 'controller_not_imported',
 };
 
 /*
@@ -108,7 +108,7 @@ export const MAX_ELECTING_VOTERS = 22500;
 export const EXPECTED_BLOCK_TIME = 6000;
 
 /*
- * Misc values 
+ * Misc values
  */
 export const RESERVE_AMOUNT_DOT = 0.1;
 export const LIST_ITEMS_PER_PAGE = 50;

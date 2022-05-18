@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef } from 'react';
 
 export interface NotificationsContextState {
   addNotification: (n: any) => any;
@@ -18,7 +18,6 @@ export const NotificationsContext: React.Context<NotificationsContextState> = Re
 export const useNotifications = () => React.useContext(NotificationsContext);
 
 export const NotificationsProvider = (props: any) => {
-
   const [index, _setIndex] = useState(0);
   const [notifications, _setNotifications]: any = useState([]);
   const indexRef = useRef(index);
@@ -27,25 +26,25 @@ export const NotificationsProvider = (props: any) => {
   const setIndex = (_index: any) => {
     indexRef.current = _index;
     _setIndex(_index);
-  }
+  };
 
   const setNotifications = (_notifications: any) => {
     notificationsRef.current = _notifications;
     _setNotifications(_notifications);
-  }
+  };
 
   const add = (_n: any) => {
-    let _notifications = [...notificationsRef.current];
+    const _notifications = [...notificationsRef.current];
 
-    let newIndex = indexRef.current + 1;
+    const newIndex = indexRef.current + 1;
 
-    let item = {
+    const item = {
       ..._n,
-      index: newIndex
+      index: newIndex,
     };
     _notifications.push({
       index: newIndex,
-      item: item,
+      item,
     });
 
     setIndex(newIndex);
@@ -55,8 +54,8 @@ export const NotificationsProvider = (props: any) => {
     return newIndex;
   };
 
-  const remove = (index: any) => {
-    let _notifications = notificationsRef.current.filter((item: any) => item.index !== index);
+  const remove = (_index: any) => {
+    const _notifications = notificationsRef.current.filter((item: any) => item.index !== _index);
     setNotifications(_notifications);
   };
 
@@ -65,8 +64,9 @@ export const NotificationsProvider = (props: any) => {
       addNotification: add,
       removeNotification: remove,
       notifications: notificationsRef.current,
-    }}>
+    }}
+    >
       {props.children}
     </NotificationsContext.Provider>
   );
-}
+};

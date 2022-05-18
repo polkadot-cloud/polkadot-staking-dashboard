@@ -2,47 +2,50 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { Wrapper } from './Wrapper';
-import Identicon from '../Identicon';
-import { clipAddress } from '../../Utils';
 import { motion } from 'framer-motion';
-import { useApi } from '../../contexts/Api';
-import { useModal } from '../../contexts/Modal';
-import { useValidators } from '../../contexts/Validators/Validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getIdentityDisplay } from './Utils';
-import { faExclamationTriangle, faUserSlash, faChartLine, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExclamationTriangle, faUserSlash, faChartLine, faThumbtack,
+} from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Wrapper } from './Wrapper';
+import Identicon from '../Identicon';
+import { clipAddress } from '../../Utils';
+import { useApi } from '../../contexts/Api';
+import { useModal } from '../../contexts/Modal';
+import { useValidators } from '../../contexts/Validators/Validators';
+import { getIdentityDisplay } from './Utils';
 import { useNotifications } from '../../contexts/Notifications';
 
 export const ValidatorInner = (props: any) => {
-
   const { consts, network }: any = useApi();
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
   const { favourites, addFavourite, removeFavourite } = useValidators();
-  const { initial, validator, synced, identity, superIdentity, stake, toggleFavourites } = props;
+  const {
+    initial, validator, synced, identity, superIdentity, stake, toggleFavourites,
+  } = props;
 
-  let { address, prefs } = validator;
+  const { address, prefs } = validator;
 
-  let display = getIdentityDisplay(identity, superIdentity);
-  let commission = prefs?.commission ?? null;
-  let blocked = prefs?.blocked ?? null;
+  const display = getIdentityDisplay(identity, superIdentity);
+  const commission = prefs?.commission ?? null;
+  const blocked = prefs?.blocked ?? null;
 
-  let total_nominations = stake?.total_nominations ?? 0;
-  let lowest = stake?.lowest ?? 0;
+  const total_nominations = stake?.total_nominations ?? 0;
+  const lowest = stake?.lowest ?? 0;
 
   // copy address notification
-  let notificationCopyAddress = address == null
+  const notificationCopyAddress = address == null
     ? {} : {
       title: 'Address Copied to Clipboard',
       subtitle: address,
     };
 
   // favourite toggle notification
-  let notificationFavourite = !favourites.includes(address)
+  const notificationFavourite = !favourites.includes(address)
     ? {
       title: 'Favourite Validator Added',
       subtitle: address,
@@ -59,129 +62,150 @@ export const ValidatorInner = (props: any) => {
           size={26}
         />
 
-        {synced.identities &&
+        {synced.identities
+          && (
           <>
-            {display !== null && <>
+            {display !== null && (
+            <>
               {initial
-                ?
-                <motion.div
-                  className='identity'
-                  initial={{ opacity: 0.5 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h4>{display}</h4>
-                </motion.div>
-                :
-                <div className='identity'>
-                  <h4>{display}</h4>
-                </div>
-              }
+                ? (
+                  <motion.div
+                    className="identity"
+                    initial={{ opacity: 0.5 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <h4>{display}</h4>
+                  </motion.div>
+                )
+                : (
+                  <div className="identity">
+                    <h4>{display}</h4>
+                  </div>
+                )}
             </>
-            }
-            {display === null && <>
+            )}
+            {display === null && (
+            <>
               {initial
-                ?
-                <motion.div
-                  className='identity'
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h4>{clipAddress(address)}</h4>
-                </motion.div>
-                :
-                <div className='identity'>
-                  <h4>{clipAddress(address)}</h4>
-                </div>
-              }
+                ? (
+                  <motion.div
+                    className="identity"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <h4>{clipAddress(address)}</h4>
+                  </motion.div>
+                )
+                : (
+                  <div className="identity">
+                    <h4>{clipAddress(address)}</h4>
+                  </div>
+                )}
             </>
-            }
+            )}
           </>
-        }
+          )}
 
-        <div className='labels'>
-          {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator) &&
+        <div className="labels">
+          {(synced.stake && total_nominations >= consts.maxNominatorRewardedPerValidator)
+            && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.1 }}
             >
-              <label className='warning'>
+              <div className="label warning">
                 <FontAwesomeIcon
                   icon={faExclamationTriangle}
                   transform="shrink-2"
                 />
-                &nbsp;{lowest} {network.unit}
-              </label>
+                &nbsp;
+                {lowest}
+                {' '}
+                {network.unit}
+              </div>
             </motion.div>
-          }
-          {prefs !== undefined &&
+            )}
+          {prefs !== undefined
+            && (
             <>
-              {blocked &&
-                <label>
+              {blocked
+                && (
+                <div className="label">
                   <FontAwesomeIcon
                     icon={faUserSlash}
-                    color='#d2545d'
+                    color="#d2545d"
                     transform="shrink-1"
                   />
-                </label>
-              }
-              <label>
-                {commission}%
-              </label>
+                </div>
+                )}
+              <div className="label">
+                {commission}
+                %
+              </div>
             </>
-          }
-          <label>
-            <button onClick={() => openModalWith('EraPoints', {
-              address: address,
-              identity: display,
-            })}>
+            )}
+          <div className="label">
+            <button
+              type="button"
+              onClick={() => openModalWith('EraPoints', {
+                address,
+                identity: display,
+              })}
+            >
               <FontAwesomeIcon icon={faChartLine} />
             </button>
-          </label>
-          <label>
-            <button onClick={() => addNotification(notificationCopyAddress)}>
+          </div>
+          <div className="label">
+            <button
+              type="button"
+              onClick={() => addNotification(notificationCopyAddress)}
+            >
               <CopyToClipboard text={address}>
                 <FontAwesomeIcon icon={faCopy as IconProp} />
               </CopyToClipboard>
             </button>
-          </label>
-          {toggleFavourites &&
-            <label>
+          </div>
+          {toggleFavourites
+            && (
+            <div className="label">
               <button
+                type="button"
                 className={favourites.includes(address) ? 'active' : undefined}
                 onClick={() => {
-                  favourites.includes(address)
-                    ? removeFavourite(address)
-                    : addFavourite(address);
-
+                  if (favourites.includes(address)) {
+                    removeFavourite(address);
+                  } else {
+                    addFavourite(address);
+                  }
                   addNotification(notificationFavourite);
-                }}>
+                }}
+              >
                 <FontAwesomeIcon icon={faThumbtack} />
               </button>
-            </label>
-          }
+            </div>
+            )}
         </div>
       </div>
-    </Wrapper >
-  )
-}
+    </Wrapper>
+  );
+};
 
 export class Validator extends React.Component<any, any> {
-
-  shouldComponentUpdate (nextProps: any, nextState: any) {
+  shouldComponentUpdate(nextProps: any, nextState: any) {
     return (
-      this.props.validator.address !== nextProps.validator.address ||
-      this.props.synced !== nextProps.synced ||
-      this.props.stake !== nextProps.stake
+      this.props.validator.address !== nextProps.validator.address
+      || this.props.synced !== nextProps.synced
+      || this.props.stake !== nextProps.stake
     );
   }
 
-  render () {
+  render() {
     return (
       <ValidatorInner {...this.props} />
-    )
+    );
   }
 }
 
