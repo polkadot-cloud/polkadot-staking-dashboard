@@ -9,4 +9,6 @@
 *.ttf
 *.xml
 *.txt
+*.html
 *.webmanifest
+LICENSE

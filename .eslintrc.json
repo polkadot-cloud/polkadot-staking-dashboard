@@ -43,7 +43,14 @@
         "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
         "import/prefer-default-export": "off",
+        "react/jsx-no-useless-fragment": "off",
+        "react/static-property-placement": "off",
+        "consistent-return": "off",
+        "no-promise-executor-return": "off",
+        "prefer-destructuring": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
         "camelcase": "off",
+        "no-nested-ternary": "off",
         "semi": [
             2,
             "always"
