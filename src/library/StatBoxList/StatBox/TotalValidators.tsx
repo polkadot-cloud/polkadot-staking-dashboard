@@ -7,7 +7,7 @@ import { Pie } from '../Pie';
 
 const TotalValidatorsStatBox = () => {
   const { staking }: any = useStaking();
-  const { totalValidators, maxValidatorsCount, validatorCount } = staking;
+  const { totalValidators, maxValidatorsCount } = staking;
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;
