@@ -39,6 +39,11 @@
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": "off",
         "react/jsx-no-constructed-context-values": "off",
+        "react/no-array-index-key": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-props-no-spreading": "off",
+        "import/prefer-default-export": "off",
+        "camelcase": "off",
         "semi": [
             2,
             "always"
