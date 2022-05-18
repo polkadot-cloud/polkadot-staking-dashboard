@@ -23,3 +23,7 @@ export const eraStakers = {
   minActiveBond: 0,
   minStakingActiveBond: 0,
 };
+
+export const targets = {
+  nominations: [],
+};

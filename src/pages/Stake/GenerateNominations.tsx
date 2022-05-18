@@ -2,22 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect, useState } from 'react';
-import { Wrapper } from '../../Overview/Announcements/Wrappers';
-import { useApi } from '../../../contexts/Api';
-import { useConnect } from '../../../contexts/Connect';
-import { useValidators } from '../../../contexts/Validators/Validators';
-import { ValidatorList } from '../../../library/ValidatorList';
-import { useUi } from '../../../contexts/UI';
-import { Button } from '../../../library/Button';
+import { Wrapper } from '../Overview/Announcements/Wrappers';
+import { useApi } from '../../contexts/Api';
+import { useConnect } from '../../contexts/Connect';
+import { useValidators } from '../../contexts/Validators/Validators';
+import { ValidatorList } from '../../library/ValidatorList';
+import { useUi } from '../../contexts/UI';
+import { Button } from '../../library/Button';
 
 export const GenerateNominations = (props: any) => {
 
   // functional props
-  const { setup, setSetup } = props;
+  const setters = props.setters ?? [];
+  const defaultNominations = props.nominations;
+
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, favouritesList, meta } = useValidators();
-
   const {
     applyValidatorOrder,
     applyValidatorFilters,
@@ -25,15 +26,15 @@ export const GenerateNominations = (props: any) => {
 
   const [method, setMethod]: any = useState(null);
   const [fetching, setFetching] = useState(false);
-  const [nominations, setNominations] = useState(setup.nominations);
+  const [nominations, setNominations] = useState(defaultNominations);
 
   const rawBatchKey = 'validators_browse';
   const batchKey = 'generated_nominations';
 
   // update selected value on account switch
   useEffect(() => {
-    setNominations(setup.nominations);
-  }, [activeAccount]);
+    setNominations(defaultNominations);
+  }, [activeAccount, defaultNominations]);
 
   const fetchFavourites = () => {
     let _favs = [];
@@ -90,50 +91,73 @@ export const GenerateNominations = (props: any) => {
       setNominations(_nominations);
       setFetching(false);
 
-      // update setup state
-      setSetup({
-        ...setup,
-        nominations: _nominations,
-      });
+      // apply update to setters
+      for (let s of setters) {
+        s.set({
+          ...s.current,
+          nominations: _nominations,
+        });
+      }
     }
   });
 
   return (
     <Wrapper style={{ minHeight: 200 }}>
-      <div style={{ margin: '1rem 0' }}>
+      <div>
         <>
-          <Button inline title="Get Most Profitable" onClick={() => {
-            setMethod('Most Profitable Validators');
-            removeValidatorMetaBatch(batchKey);
-            setNominations([]);
-            setFetching(true);
-          }}
-          />
-          {favouritesList === null ? <></> :
-            <Button title="Get Favourites" onClick={() => {
-              setMethod('Favourites');
-              removeValidatorMetaBatch(batchKey);
-              setNominations([]);
-              setFetching(true);
-            }}
+          {nominations.length
+            ? <Button
+              inline
+              small
+              title="Clear Nominations"
+              onClick={() => {
+                setMethod(null);
+                removeValidatorMetaBatch(batchKey);
+                setNominations([]);
+                for (let s of setters) {
+                  s.set({
+                    ...s.current,
+                    nominations: [],
+                  });
+                }
+              }}
             />
+            : <>
+              <Button
+                inline
+                small
+                title="Get Most Profitable"
+                onClick={() => {
+                  setMethod('Most Profitable');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
+                }}
+              />
+              {favouritesList === null ? <></> :
+                <Button
+                  small
+                  title="Get Favourites"
+                  onClick={() => {
+                    setMethod('Favourites');
+                    removeValidatorMetaBatch(batchKey);
+                    setNominations([]);
+                    setFetching(true);
+                  }}
+                />
+              }
+            </>
           }
         </>
       </div>
-      {fetching
-        ?
-        <div style={{ marginTop: '0.5rem' }}>
-          <h3>Fetching your nominations...</h3>
-        </div>
-        :
-        <>
+      {fetching ? <></>
+        : <>
           {isReady &&
             nominations.length > 0 &&
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
                 validators={nominations}
                 batchKey={batchKey}
-                title={method}
                 allowMoreCols
               />
             </div>

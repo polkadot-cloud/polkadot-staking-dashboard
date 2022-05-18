@@ -5,52 +5,56 @@ import { useState, useEffect } from 'react';
 import { Wrapper } from './Wrapper';
 import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Dropdown } from '../../library/Form/Dropdown';
-import { useStaking } from '../../contexts/Staking';
 import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
-import { PAYEE_STATUS } from '../../constants';
+import { Warning } from '../../library/Form/Warning';
+import { Separator } from '../Wrappers';
+import { useStaking } from '../../contexts/Staking';
+import { planckBnToUnit } from '../../Utils';
 
-export const UpdatePayee = () => {
+export const Nominate = () => {
 
-  const { api }: any = useApi();
+  const { api, network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getBondedAccount }: any = useBalances();
+  const { targets, staking } = useStaking();
+  const { getBondedAccount, getAccountLedger }: any = useBalances();
   const { setStatus: setModalStatus }: any = useModal();
+  const { units } = network;
+  const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
-  const { staking } = useStaking();
-  const { payee } = staking;
+  const { nominations } = targets;
+  const ledger = getAccountLedger(controller);
+  const { active } = ledger;
 
-  const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);
-  const [selected, setSelected] = useState(_selected ?? null);
+  let activeBase = planckBnToUnit(active, units);
+  let minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
+
+  // valid to submit transaction
+  const [valid, setValid]: any = useState(false);
 
   // ensure selected key is valid
   useEffect(() => {
-    const exists: any = PAYEE_STATUS.find((item: any) => item.key === selected?.key);
-    setValid(exists !== undefined)
-  }, [selected]);
-
-  const handleOnChange = ({ selectedItem }: any) => {
-    setSelected(selectedItem);
-  }
-
-  // bond valid
-  const [valid, setValid]: any = useState(false);
+    setValid(nominations.length > 0 && activeBase >= minNominatorBondBase)
+  }, [targets]);
 
   // tx to submit
   const tx = () => {
     let tx = null;
-
     if (!valid) {
       return tx;
     }
-    tx = api.tx.staking.setPayee(selected.key);
+    let targetsToSubmit = nominations.map((item: any,) => {
+      return ({
+        Id: item.address
+      });
+    });
+    tx = api.tx.staking.nominate(targetsToSubmit);
     return tx;
   }
 
@@ -65,24 +69,29 @@ export const UpdatePayee = () => {
     }
   });
 
+  // warnings
+  let warnings = [];
+  if (!nominations.length) {
+    warnings.push('You have no nominations set.');
+  }
+  if (activeBase < minNominatorBondBase) {
+    warnings.push(`You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}. Please bond some funds before nominating.`);
+  }
+
   return (
     <Wrapper>
       <HeadingWrapper>
-        <FontAwesomeIcon transform='grow-2' icon={faWallet} />
-        Update Reward Destination
+        <FontAwesomeIcon transform='grow-2' icon={faPlayCircle} />
+        Nominate
       </HeadingWrapper>
       <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
-        <div className='head'>
-          <h4>Currently Selected: {_selected?.name ?? 'None'}</h4>
-        </div>
-        <Dropdown
-          items={PAYEE_STATUS}
-          onChange={handleOnChange}
-          placeholder='Reward Destination'
-          value={selected}
-          height='17rem'
-        />
-        <div>
+        {warnings.map((text: any, index: number) =>
+          <Warning text={text} />
+        )}
+        <h2>You Have {nominations.length} Nomination{nominations.length === 1 ? `` : `s`}</h2>
+        <Separator />
+        <div className='notes'>
+          <p>Once submitted, you will start nominating your chosen validators.</p>
           <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
         </div>
         <FooterWrapper>
@@ -98,4 +107,4 @@ export const UpdatePayee = () => {
   )
 }
 
-export default UpdatePayee;
+export default Nominate;

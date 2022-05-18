@@ -42,7 +42,7 @@ export const Validators = (props: PageProps) => {
                 <ValidatorList
                   validators={validators}
                   batchKey="validators_browse"
-                  title="Validators"
+                  title="Network Validators"
                   allowMoreCols
                   allowFilters
                   pagination

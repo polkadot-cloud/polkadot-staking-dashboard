@@ -5,52 +5,41 @@ import { useState, useEffect } from 'react';
 import { Wrapper } from './Wrapper';
 import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Dropdown } from '../../library/Form/Dropdown';
-import { useStaking } from '../../contexts/Staking';
 import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
-import { PAYEE_STATUS } from '../../constants';
+import { Warning } from '../../library/Form/Warning';
+import { Separator } from '../Wrappers';
 
-export const UpdatePayee = () => {
+export const StopNominating = () => {
 
   const { api }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getBondedAccount }: any = useBalances();
+  const { getBondedAccount, getAccountNominations }: any = useBalances();
   const { setStatus: setModalStatus }: any = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking } = useStaking();
-  const { payee } = staking;
-
-  const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);
-  const [selected, setSelected] = useState(_selected ?? null);
+  const nominations = getAccountNominations(activeAccount);
 
   // ensure selected key is valid
   useEffect(() => {
-    const exists: any = PAYEE_STATUS.find((item: any) => item.key === selected?.key);
-    setValid(exists !== undefined)
-  }, [selected]);
+    setValid(nominations.length > 0)
+  }, [nominations]);
 
-  const handleOnChange = ({ selectedItem }: any) => {
-    setSelected(selectedItem);
-  }
-
-  // bond valid
-  const [valid, setValid]: any = useState(false);
+  // valid to submit transaction
+  const [valid, setValid]: any = useState(nominations.length > 0);
 
   // tx to submit
   const tx = () => {
     let tx = null;
-
     if (!valid) {
       return tx;
     }
-    tx = api.tx.staking.setPayee(selected.key);
+    tx = api.tx.staking.chill();
     return tx;
   }
 
@@ -68,21 +57,17 @@ export const UpdatePayee = () => {
   return (
     <Wrapper>
       <HeadingWrapper>
-        <FontAwesomeIcon transform='grow-2' icon={faWallet} />
-        Update Reward Destination
+        <FontAwesomeIcon transform='grow-2' icon={faStopCircle} />
+        Stop Nominating
       </HeadingWrapper>
       <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
-        <div className='head'>
-          <h4>Currently Selected: {_selected?.name ?? 'None'}</h4>
-        </div>
-        <Dropdown
-          items={PAYEE_STATUS}
-          onChange={handleOnChange}
-          placeholder='Reward Destination'
-          value={selected}
-          height='17rem'
-        />
-        <div>
+        {!nominations.length &&
+          <Warning text="You have no nominations set." />
+        }
+        <h2>You Have {nominations.length} Nomination{nominations.length === 1 ? `` : `s`}</h2>
+        <Separator />
+        <div className='notes'>
+          <p>Once submitted, your nominations will be removed immediately and will stop nominating from the start of the next era.</p>
           <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
         </div>
         <FooterWrapper>
@@ -98,4 +83,4 @@ export const UpdatePayee = () => {
   )
 }
 
-export default UpdatePayee;
+export default StopNominating;

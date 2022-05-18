@@ -115,9 +115,8 @@ export const PageTitleWrapper = styled.header<any>`
     transition: padding 0.3s ease-out;
 
     h1 {
-     font-size: ${props => props.isSticky ? '1.4rem ' : '1.8rem'};
+     font-size: ${props => props.isSticky ? '1.4rem ' : '1.85rem'};
      transition: font 0.5s;
-     font-variation-settings: 'wght' 600;
      
      /* page padding */
      padding-left: 1.5rem;

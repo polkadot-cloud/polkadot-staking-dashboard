@@ -24,7 +24,7 @@ export const SetController = (props: any) => {
   const { network }: any = useApi();
   const { units } = network;
   const { activeAccount, accounts, getAccount } = useConnect();
-  const { getBondedAccount, getAccountBalance, minReserve }: any = useBalances();
+  const { getBondedAccount, getAccountBalance, minReserve, isController }: any = useBalances();
   const { getMessage }: any = useMessages();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
 
@@ -61,8 +61,13 @@ export const SetController = (props: any) => {
     })
   }
 
+  // filter items that are already controller accounts
+  let items = accounts.filter((acc: any) => {
+    return !isController(acc.address);
+  });
+
   // inject balances and wheteher account can be an active item
-  let items = accounts.filter((acc: any) => acc.address !== activeAccount);
+  items = items.filter((acc: any) => acc.address !== activeAccount);
   items = items.map((acc: any) => {
     let balance = getAccountBalance(acc.address);
 

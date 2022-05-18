@@ -83,14 +83,9 @@ export const ItemWrapper = styled(motion.div) <any>`
   margin: 0.3rem 0;
   font-size: 1.04rem;
 
-  &.active {
-    background: ${highlightPrimary};
-  }
-  &.inactive:hover {
-    background: ${highlightSecondary};
-  }
   .icon {
-    margin-right: 0.7rem;
+    margin-left: ${props => props.minimised ? 0 : '0.25rem'};
+    margin-right: 0.65rem;
   }
   .name {
     margin: 0;
@@ -101,6 +96,13 @@ export const ItemWrapper = styled(motion.div) <any>`
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
+  }
+
+  &.active {
+    background: ${highlightPrimary};
+  }
+  &.inactive:hover {
+    background: ${highlightSecondary};
   }
 `;
 

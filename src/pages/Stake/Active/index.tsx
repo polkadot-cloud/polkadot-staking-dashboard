@@ -12,29 +12,32 @@ import { useConnect } from '../../../contexts/Connect';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { Button } from '../../../library/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faRedoAlt,
-  faWallet,
-  faCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import { GenerateNominations } from '../GenerateNominations';
 import { Separator } from '../../../Wrappers';
 import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import StatBoxListItem from '../../../library/StatBoxList/Item';
 import { useStats } from './stats';
+import { PAYEE_STATUS } from '../../../constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faRedoAlt,
+  faWallet,
+  faCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus, staking } = useStaking();
+  const { getNominationsStatus, staking, targets, setTargets } = useStaking();
   const { getAccountNominations }: any =
     useBalances();
   const stats = useStats();
 
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
+  const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
 
   // handle nomination statuses
   const [nominationsStatus, setNominationsStatus]: any = useState({
@@ -79,9 +82,11 @@ export const Active = (props: any) => {
                 <OpenAssistantIcon page="stake" title="Staking Status" />
               </h4>
               <h2>
-                {nominationsStatus.active
-                  ? 'Active and Earning Rewards'
-                  : 'Waiting for Active Nominations'}
+                {!nominations.length
+                  ? 'Inactive: Not Nominating'
+                  : nominationsStatus.active
+                    ? 'Actively Nominating with Bonded Funds'
+                    : 'Waiting for Active Nominations'}
               </h2>
               <Separator />
               <h4>
@@ -100,11 +105,7 @@ export const Active = (props: any) => {
                   transform="shrink-4"
                 />
                 &nbsp;
-                {payee === 'Staked' && 'Back to Staking'}
-                {payee === 'Stash' && 'To Stash'}
-                {payee === 'Controller' && 'To Controller'}
-                {payee === 'Account' && 'To Account'}
-                {payee === 'None' && 'Not Set'}
+                {payeeStatus.name}
                 &nbsp;&nbsp;
                 <div>
                   <Button
@@ -127,7 +128,34 @@ export const Active = (props: any) => {
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          <Nominations />
+          {nominations.length
+            ? <Nominations />
+            : <>
+              <div className='head with-action'>
+                <h2>
+                  Generate Nominations
+                  <OpenAssistantIcon page="stake" title="Nominations" />
+                </h2>
+                <div>
+                  <Button
+                    small
+                    inline
+                    primary
+                    title="Nominate"
+                    disabled={targets.length === 0}
+                    onClick={() => openModalWith('Nominate', {}, 'small')}
+                  />
+                </div>
+              </div>
+              <GenerateNominations
+                setters={[{
+                  set: setTargets,
+                  current: targets
+                }]}
+                nominations={targets.nominations}
+              />
+            </>
+          }
         </SectionWrapper>
       </PageRowWrapper>
     </>

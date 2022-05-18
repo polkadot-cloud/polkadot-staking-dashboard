@@ -17,9 +17,11 @@ export const Header = styled.div`
   padding: 0 0.25rem 0.5rem 0.25rem;
   flex: 1;
   border-bottom: 1px solid ${borderPrimary};
+  margin-top: 0.75rem;
 
-  h3 {
+  h4 {
     margin: 0;
+    color: ${textSecondary};
   }
   
   > div {

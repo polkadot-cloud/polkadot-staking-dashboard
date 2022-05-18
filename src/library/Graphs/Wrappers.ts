@@ -55,7 +55,16 @@ export const SectionWrapper = styled.div<any>`
     h4 {
       margin: 0 0 0.5rem 0;
     }
+
+    &.with-action {
+      display: flex;
+      flex-flow: row wrap;
+      > h2 {
+        flex-grow: 1;
+      }
+    }
   }
+
 
   .option {
     border-bottom: 1px solid #ddd;

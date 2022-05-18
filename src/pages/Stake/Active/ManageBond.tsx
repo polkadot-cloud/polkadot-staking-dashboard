@@ -18,7 +18,6 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any = useBalances();
-
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active, total } = ledger;

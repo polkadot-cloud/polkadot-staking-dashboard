@@ -12,20 +12,29 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { ContentWrapper, Separator } from './Wrapper';
+import { ContentWrapper } from './Wrapper';
+import { Separator } from '../Wrappers';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { Warning } from '../../library/Form/Warning';
+import { useStaking } from '../../contexts/Staking';
+import { planckBnToUnit } from '../../Utils';
 
 export const Forms = (props: any) => {
   const { setSection, task } = props;
 
   const { api, network }: any = useApi();
+  const { units } = network;
   const { setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect();
-  const { getBondOptions, getBondedAccount }: any = useBalances();
+  const { staking } = useStaking();
+  const { minNominatorBond } = staking;
+  const { getBondOptions, getBondedAccount, getAccountNominations }: any = useBalances();
   const { freeToBond, freeToUnbond, totalPossibleBond } = getBondOptions(activeAccount);
   const controller = getBondedAccount(activeAccount);
-  const { units } = network;
+  const nominations = getAccountNominations(activeAccount);
+
+  // unbond amount to `minNominatorBond` threshold
+  const freeToUnbondToMinNominatorBond = freeToUnbond - planckBnToUnit(minNominatorBond, units);
 
   // local bond value
   const [bond, setBond] = useState(freeToBond);
@@ -37,15 +46,25 @@ export const Forms = (props: any) => {
   useEffect(() => {
     let _bond = (task === 'bond_some' || task === 'bond_all')
       ? freeToBond
-      : freeToUnbond;
-    setBond({
-      bond: _bond
-    });
-    if (task === 'bond_all' && freeToBond > 0) {
-      setBondValid(true);
+      : task === 'unbond_some'
+        ? freeToUnbondToMinNominatorBond
+        : freeToUnbond;
+
+    setBond({ bond: _bond });
+
+    if (task === 'bond_all') {
+      if (freeToBond > 0) {
+        setBondValid(true);
+      } else {
+        setBondValid(false);
+      }
     }
-    if (task === 'unbond_all' && freeToUnbond > 0) {
-      setBondValid(true);
+    if (task === 'unbond_all') {
+      if (freeToUnbond > 0 && nominations.length === 0) {
+        setBondValid(true);
+      } else {
+        setBondValid(false);
+      }
     }
   }, [task]);
 
@@ -58,7 +77,7 @@ export const Forms = (props: any) => {
     }
 
     // remove decimal errors
-    let bondToSubmit = Math.floor(bond.bond * (10 ** units));
+    let bondToSubmit = Math.floor(bond.bond * (10 ** units)).toString();
 
     if (task === 'bond_some' || task === 'bond_all') {
       tx = api.tx.staking.bondExtra(bondToSubmit);
@@ -80,6 +99,8 @@ export const Forms = (props: any) => {
     }
   });
 
+  const TxFee = <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>;
+
   return (
     <ContentWrapper>
       <div className='items'>
@@ -94,12 +115,15 @@ export const Forms = (props: any) => {
                 current: bond
               }]}
             />
+            <div className='notes'>
+              {TxFee}
+            </div>
           </>
         }
         {task === 'bond_all' &&
           <>
             {freeToBond === 0 &&
-              <Warning text="You have no free WND to bond." />
+              <Warning text={`You have no free ${network.unit} to bond.`} />
             }
             <h4>Amount to bond:</h4>
             <h2>{freeToBond} {network.unit}</h2>
@@ -107,6 +131,9 @@ export const Forms = (props: any) => {
             <Separator />
             <h4>New total bond:</h4>
             <h2>{totalPossibleBond} {network.unit}</h2>
+            <div className='notes'>
+              {TxFee}
+            </div>
           </>
         }
         {task === 'unbond_some' &&
@@ -114,25 +141,30 @@ export const Forms = (props: any) => {
             <BondInputWithFeedback
               unbond={true}
               listenIsValid={setBondValid}
-              defaultBond={freeToUnbond}
+              defaultBond={freeToUnbondToMinNominatorBond}
               setters={[{
                 set: setBond,
                 current: bond
               }]}
             />
-            <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+            <div className='notes'>
+              <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+              {TxFee}
+            </div>
           </>
         }
         {task === 'unbond_all' &&
           <>
+            {nominations.length ? <Warning text="Stop nominating before unbonding all funds." /> : <></>}
             <h4>Amount to unbond:</h4>
             <h2>{freeToUnbond} {network.unit}</h2>
-            <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+            <Separator />
+            <div className='notes'>
+              <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+              {bondValid && TxFee}
+            </div>
           </>
         }
-        <div>
-          <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-        </div>
       </div>
       <FooterWrapper>
         <div>

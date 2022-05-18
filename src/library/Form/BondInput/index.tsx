@@ -8,6 +8,8 @@ import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { isNumeric } from '../../../Utils';
 import { Button } from '../../Button';
+import { planckBnToUnit } from '../../../Utils';
+import { useStaking } from '../../../contexts/Staking';
 
 export const BondInput = (props: any) => {
 
@@ -24,9 +26,15 @@ export const BondInput = (props: any) => {
   const _value = props.value ?? null;
 
   const { network }: any = useApi();
+  const { units } = network;
   const { activeAccount } = useConnect();
+  const { staking } = useStaking();
+  const { minNominatorBond } = staking;
   const { getBondOptions }: any = useBalances();
   const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
+
+  // unbond amount to `minNominatorBond` threshold
+  const freeToUnbondToMinNominatorBond = freeToUnbond - planckBnToUnit(minNominatorBond, units);
 
   // the current local bond value
   const [bond, setBond] = useState(_value);
@@ -91,7 +99,7 @@ export const BondInput = (props: any) => {
       <div>
         <div>
           <Button inline small title="Max" onClick={() => {
-            const value = task === 'bond' ? freeToBond : freeToUnbond;
+            const value = task === 'bond' ? freeToBond : freeToUnbondToMinNominatorBond;
             setBond(value);
             updateParentState(value);
           }}
