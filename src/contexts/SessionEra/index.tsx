@@ -17,6 +17,8 @@ export const SessionEraContext: React.Context<SessionEraContextState> =
     sessionEra: {},
   });
 
+// Warning: Do not use this hook in heavy components.
+// Using this hook in a component makes the component rerender per each new block.
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
 export const SessionEraProvider = (props: any) => {
@@ -62,13 +64,12 @@ export const SessionEraProvider = (props: any) => {
   };
 
   const getEraTimeLeft = () => {
-    let eraBlocksLeft = (state.eraLength - state.eraProgress);
+    let eraBlocksLeft = state.eraLength - state.eraProgress;
     let eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
     let eventTime = moment().unix() + eraTimeLeftSeconds;
     let diffTime = eventTime - moment().unix();
     return diffTime;
-  }
-
+  };
 
   return (
     <SessionEraContext.Provider
