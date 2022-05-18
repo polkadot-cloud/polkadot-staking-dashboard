@@ -23,17 +23,16 @@ import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import StatBoxListItem from '../../../library/StatBoxList/Item';
-import { useStats } from './stats';
 import { PAYEE_STATUS } from '../../../constants';
+import ActiveNominationsStatBox from './Stats/ActiveNominations';
+import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
+import ActiveEraStatBox from '../../Validators/Stats/ActiveEra';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const {
-    getNominationsStatus, staking, targets, setTargets,
-  } = useStaking();
+  const { getNominationsStatus, staking, targets, setTargets } = useStaking();
   const { getAccountNominations }: any = useBalances();
-  const stats = useStats();
 
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
@@ -48,14 +47,14 @@ export const Active = (props: any) => {
 
   const nominationStatuses = useMemo(
     () => getNominationsStatus(),
-    [nominations],
+    [nominations]
   );
 
   useEffect(() => {
     const statuses = nominationStatuses;
     const total = Object.values(statuses).length;
     const _active: any = Object.values(statuses).filter(
-      (_v: any) => _v === 'active',
+      (_v: any) => _v === 'active'
     ).length;
 
     setNominationsStatus({
@@ -69,9 +68,9 @@ export const Active = (props: any) => {
     <>
       <PageTitle title={props.title} />
       <StatBoxList>
-        {stats.map((stat: any, index: number) => (
-          <StatBoxListItem {...stat} key={index} />
-        ))}
+        <ActiveNominationsStatBox />
+        <MinimumActiveBondStatBox />
+        <ActiveEraStatBox />
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingLeft>
@@ -85,8 +84,8 @@ export const Active = (props: any) => {
                 {!nominations.length
                   ? 'Inactive: Not Nominating'
                   : nominationsStatus.active
-                    ? 'Actively Nominating with Bonded Funds'
-                    : 'Waiting for Active Nominations'}
+                  ? 'Actively Nominating with Bonded Funds'
+                  : 'Waiting for Active Nominations'}
               </h2>
               <Separator />
               <h4>
@@ -99,8 +98,8 @@ export const Active = (props: any) => {
                     payee === 'Staked'
                       ? faRedoAlt
                       : payee === 'None'
-                        ? faCircle
-                        : faWallet
+                      ? faCircle
+                      : faWallet
                   }
                   transform="shrink-4"
                 />
@@ -128,35 +127,37 @@ export const Active = (props: any) => {
       </PageRowWrapper>
       <PageRowWrapper noVerticalSpacer>
         <SectionWrapper>
-          {nominations.length
-            ? <Nominations />
-            : (
-              <>
-                <div className="head with-action">
-                  <h2>
-                    Generate Nominations
-                    <OpenAssistantIcon page="stake" title="Nominations" />
-                  </h2>
-                  <div>
-                    <Button
-                      small
-                      inline
-                      primary
-                      title="Nominate"
-                      disabled={targets.length === 0}
-                      onClick={() => openModalWith('Nominate', {}, 'small')}
-                    />
-                  </div>
+          {nominations.length ? (
+            <Nominations />
+          ) : (
+            <>
+              <div className="head with-action">
+                <h2>
+                  Generate Nominations
+                  <OpenAssistantIcon page="stake" title="Nominations" />
+                </h2>
+                <div>
+                  <Button
+                    small
+                    inline
+                    primary
+                    title="Nominate"
+                    disabled={targets.length === 0}
+                    onClick={() => openModalWith('Nominate', {}, 'small')}
+                  />
                 </div>
-                <GenerateNominations
-                  setters={[{
+              </div>
+              <GenerateNominations
+                setters={[
+                  {
                     set: setTargets,
                     current: targets,
-                  }]}
-                  nominations={targets.nominations}
-                />
-              </>
-            )}
+                  },
+                ]}
+                nominations={targets.nominations}
+              />
+            </>
+          )}
         </SectionWrapper>
       </PageRowWrapper>
     </>
