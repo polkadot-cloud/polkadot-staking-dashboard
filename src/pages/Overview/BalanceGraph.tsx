@@ -22,10 +22,12 @@ export const BalanceGraph = () => {
   const { network }: any = useApi();
   const { units } = network;
   const { activeAccount }: any = useConnect();
-  const { getAccountBalance }: any = useBalances();
+  const { getAccountBalance, getBondOptions }: any = useBalances();
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
+  const { freeToStake, freeToUnbond: staked }: any =
+    getBondOptions(activeAccount) || {};
 
   let { free, miscFrozen } = balance;
 
@@ -36,14 +38,16 @@ export const BalanceGraph = () => {
 
   // convert to currency unit
   free = planckToUnit(free.toNumber(), units);
-  let graphFrozen = planckToUnit(miscFrozen.toNumber(), units);
 
-  let graphFree = free - graphFrozen;
+
+  // graph data
+  let graphStaked = staked;
+  let graphFreeToStake = freeToStake;
 
   let zeroBalance = false;
-  if (graphFrozen === 0 && graphFree === 0) {
-    graphFrozen = -1;
-    graphFree = -1;
+  if (graphStaked === 0 && graphFreeToStake === 0) {
+    graphStaked = -1;
+    graphFreeToStake = -1;
     zeroBalance = true;
   }
 
@@ -83,14 +87,16 @@ export const BalanceGraph = () => {
   };
 
   const data = {
-    labels: ['Transferrable', 'Locked'],
+    labels: ['Available', 'Staking'],
     datasets: [
       {
         label: network.unit,
-        data: [graphFree, graphFrozen],
+        data: [graphFreeToStake, graphStaked],
         backgroundColor: [
-          zeroBalance ? defaultThemes.graphs.inactive[mode] : defaultThemes.graphs.colors[0][mode],
           defaultThemes.graphs.colors[2][mode],
+          zeroBalance
+            ? defaultThemes.graphs.inactive[mode]
+            : defaultThemes.graphs.colors[0][mode],
         ],
         borderWidth: 0,
       },
@@ -103,22 +109,26 @@ export const BalanceGraph = () => {
 
   return (
     <>
-      <div className='head' style={{ paddingTop: '0.5rem' }}>
+      <div className="head" style={{ paddingTop: '0.5rem' }}>
         <h4>Balance</h4>
         <h2>{freeBase} {network.unit}{services.includes('binance_spot') && <>&nbsp;<span className='fiat'>${humanNumber(freeBalance)}</span></>}</h2>
       </div>
       <div style={{ paddingTop: '20px' }}></div>
-      <div className='inner' ref={ref} style={{ minHeight: minHeight }}>
-        <div className='graph' style={{ height: `${height}px`, width: `${width}px`, position: 'absolute' }}>
-          <Doughnut
-            options={options}
-            data={data}
-          />
+      <div className="inner" ref={ref} style={{ minHeight: minHeight }}>
+        <div
+          className="graph"
+          style={{
+            height: `${height}px`,
+            width: `${width}px`,
+            position: 'absolute',
+          }}
+        >
+          <Doughnut options={options} data={data} />
         </div>
       </div>
       <div style={{ paddingTop: '25px' }}></div>
     </>
   );
-}
+};
 
 export default BalanceGraph;

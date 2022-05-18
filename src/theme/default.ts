@@ -11,7 +11,7 @@ export const defaultThemes: any = {
   primary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
   secondary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
   text: {
-    primary: v('#330022', '#ccc'),
+    primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
     danger: v('#ae2324', '#d14445'),
