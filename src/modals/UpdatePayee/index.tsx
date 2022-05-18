@@ -74,6 +74,7 @@ export const UpdatePayee = () => {
         <div className="head">
           <h4>
             Currently Selected:
+            {' '}
             {_selected?.name ?? 'None'}
           </h4>
         </div>

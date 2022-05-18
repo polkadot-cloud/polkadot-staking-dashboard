@@ -63,6 +63,7 @@ export const StopNominating = () => {
           && <Warning text="You have no nominations set." />}
         <h2>
           You Have
+          {' '}
           {nominations.length}
           {' '}
           Nomination
