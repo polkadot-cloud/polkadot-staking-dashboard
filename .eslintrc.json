@@ -24,19 +24,24 @@
         "prefer-arrow-functions"
     ],
     "rules": {
+        "no-unused-vars": "off",
+        "react/no-access-state-in-setstate": "off",
+        "no-param-reassign": "off",
         "no-plusplus": "off",
         "no-continue": "off",
-        "semi": [
-            2,
-            "always"
-        ],
+        "react/destructuring-assignment": "off",
+        "max-len": "off",
         "no-underscore-dangle": "off",
         "no-restricted-syntax": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "react/function-component-definition": "off",
         "arrow-body-style": "off",
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": [
-            "error"
+        "@typescript-eslint/no-use-before-define": "off",
+        "react/jsx-no-constructed-context-values": "off",
+        "semi": [
+            2,
+            "always"
         ],
         "react/jsx-filename-extension": [
             "warn",
