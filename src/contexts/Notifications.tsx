@@ -54,8 +54,8 @@ export const NotificationsProvider = (props: any) => {
     return newIndex;
   };
 
-  const remove = (index: any) => {
-    const _notifications = notificationsRef.current.filter((item: any) => item.index !== index);
+  const remove = (_index: any) => {
+    const _notifications = notificationsRef.current.filter((item: any) => item.index !== _index);
     setNotifications(_notifications);
   };
 

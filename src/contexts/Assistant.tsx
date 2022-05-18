@@ -42,15 +42,18 @@ export const AssistantContext: React.Context<AssistantContextState> = React.crea
 
 export const useAssistant = () => React.useContext(AssistantContext);
 
-export class AssistantProvider extends React.Component {
-  state = {
-    open: 0,
-    page: 'overview',
-    innerDefinition: [],
-    activeSection: 0,
-    height: 0,
-    transition: 0,
-  };
+export class AssistantProvider extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      open: 0,
+      page: 'overview',
+      innerDefinition: [],
+      activeSection: 0,
+      height: 0,
+      transition: 0,
+    };
+  }
 
   setPage = (newPage: string) => {
     this.setState({
@@ -58,7 +61,7 @@ export class AssistantProvider extends React.Component {
     });
   };
 
-  getDefinition = (key: string, title: string) => {
+  static getDefinition = (key: string, title: string) => {
     return ASSISTANT_CONFIG.find((item: any) => item.key === key)?.definitions.find((item: any) => item.title === title);
   };
 
@@ -69,8 +72,10 @@ export class AssistantProvider extends React.Component {
   };
 
   toggle = () => {
+    const { open } = this.state;
+    const _open = open === 1 ? 0 : 1;
     this.setState({
-      open: this.state.open === 1 ? 0 : 1,
+      open: _open,
       transition: 0,
     });
   };
@@ -107,7 +112,7 @@ export class AssistantProvider extends React.Component {
 
   goToDefinition = (page: string, title: string) => {
     this.setPage(page);
-    this.setInnerDefinition(this.getDefinition(page, title));
+    this.setInnerDefinition(AssistantProvider.getDefinition(page, title));
     this.setActiveSection(1);
 
     // short timeout to hide inner transition
@@ -127,7 +132,7 @@ export class AssistantProvider extends React.Component {
         toggle: this.toggle,
         setPage: this.setPage,
         setInnerDefinition: this.setInnerDefinition,
-        getDefinition: this.getDefinition,
+        getDefinition: AssistantProvider.getDefinition,
         openAssistant: this.openAssistant,
         closeAssistant: this.closeAssistant,
         setActiveSection: this.setActiveSection,

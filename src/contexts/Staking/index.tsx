@@ -40,7 +40,7 @@ export const StakingContext: React.Context<StakingContextState> = React.createCo
 
 export const useStaking = () => React.useContext(StakingContext);
 
-export const StakingProvider = (props: any) => {
+export const StakingProvider = ({ children }: any) => {
   const { activeAccount } = useConnect();
   const {
     isReady, api, consts, status, network,
@@ -320,7 +320,7 @@ export const StakingProvider = (props: any) => {
         targets,
       }}
     >
-      {props.children}
+      {children}
     </StakingContext.Provider>
   );
 };

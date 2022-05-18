@@ -2,20 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef,
+} from 'react';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 import { toFixedIfNecessary, planckBnToUnit, rmCommas } from '../../Utils';
 
 export const BalancesContext: any = React.createContext({
-  getAccount: (a: string) => { },
-  getAccountBalance: (a: string) => { },
-  getAccountLedger: (a: string) => { },
-  getBondedAccount: (a: string) => { },
-  getAccountNominations: (a: string) => { },
-  getBondOptions: () => { return defaults.bondOptions; },
-  isController: () => { },
+  getAccount: () => true,
+  getAccountBalance: () => true,
+  getAccountLedger: () => true,
+  getBondedAccount: () => true,
+  getAccountNominations: () => true,
+  getBondOptions: () => defaults.bondOptions,
+  isController: () => true,
   accounts: [],
   reserveAmount: 0,
   existentialAmount: 0,
@@ -24,7 +26,7 @@ export const BalancesContext: any = React.createContext({
 
 export const useBalances = () => React.useContext(BalancesContext);
 
-export const BalancesProvider = (props: any) => {
+export const BalancesProvider = ({ children }: any) => {
   const { api, isReady, network }: any = useApi();
   const { accounts, activeWallet }: any = useConnect();
   const { units } = network;
@@ -69,7 +71,7 @@ export const BalancesProvider = (props: any) => {
     // unsubscribe from accounts
     const { unsub } = stateRef.current;
     for (const unsubscribe of unsub) {
-      await unsubscribe();
+      unsubscribe();
     }
     // refetch balances
     if (refetch) {
@@ -312,7 +314,7 @@ export const BalancesProvider = (props: any) => {
       minReserve,
     }}
     >
-      {props.children}
+      {children}
     </BalancesContext.Provider>
   );
 };

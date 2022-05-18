@@ -58,10 +58,10 @@ export const MessagesProvider = (props: any) => {
   };
 
   const setMessages = (msgs: any) => {
-    let _messages = messages;
+    const _messages = messages;
     let filtered: any = [];
     for (let i = 0; i < msgs.length; i++) {
-      filtered = _messages = Object.values(_messages.filter((msg: any) => msgs[i].key !== msg.key));
+      filtered = Object.values(_messages.filter((msg: any) => msgs[i].key !== msg.key));
 
       filtered.push({
         key: msgs[i].key,

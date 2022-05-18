@@ -29,7 +29,7 @@ export const APIContext: any = React.createContext({
 
 export const useApi = () => React.useContext(APIContext);
 
-export const APIProvider = (props: any) => {
+export const APIProvider = ({ children }: any) => {
   // provider instance state
   const [provider, setProvider]: any = useState(null);
 
@@ -57,8 +57,8 @@ export const APIProvider = (props: any) => {
 
   // initial connection
   useEffect(() => {
-    const network: any = localStorage.getItem('network');
-    connect(network);
+    const _network: any = localStorage.getItem('network');
+    connect(_network);
   }, []);
 
   // provider event handlers
@@ -140,6 +140,7 @@ export const APIProvider = (props: any) => {
         change,
       };
     }
+    return null;
   };
 
   return (
@@ -154,7 +155,7 @@ export const APIProvider = (props: any) => {
       status: connectionStatus,
     }}
     >
-      {props.children}
+      {children}
     </APIContext.Provider>
   );
 };

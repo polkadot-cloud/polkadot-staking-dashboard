@@ -132,8 +132,8 @@ export const ConnectProvider = (props: any) => {
   // give web page time to initiate extensions
   const initExtensions = async () => {
     setTimeout(async () => {
-      const extensions: any = await web3Enable(DAPP_NAME);
-      setExtensions(extensions);
+      const _extensions: any = await web3Enable(DAPP_NAME);
+      setExtensions(_extensions);
     }, 200);
   };
 
@@ -169,8 +169,6 @@ export const ConnectProvider = (props: any) => {
       if (_wallet === null) {
         if (activeWallet !== null) {
           _wallet = activeWallet;
-        } else {
-          _wallet = _wallet;
         }
       }
       // subscribe to accounts
@@ -200,13 +198,13 @@ export const ConnectProvider = (props: any) => {
     }
   };
 
-  const importNetworkAddresses = (accounts: any, wallet: any) => {
+  const importNetworkAddresses = (accs: any, wallet: any) => {
     const _accounts: any = [];
 
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
-    accounts.map(async (account: any, i: number) => {
+    accs.map(async (account: any, i: number) => {
       // get account address in the correct format
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;

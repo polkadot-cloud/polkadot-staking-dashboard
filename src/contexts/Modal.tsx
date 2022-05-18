@@ -27,13 +27,16 @@ export const ModalContext: React.Context<ModalContextState> = React.createContex
 export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
-export class ModalProvider extends React.Component {
-  state = {
-    status: 0,
-    modal: DEFAULT_MODAL_COMPONENT,
-    config: {},
-    size: 'large',
-  };
+export class ModalProvider extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      status: 0,
+      modal: DEFAULT_MODAL_COMPONENT,
+      config: {},
+      size: 'large',
+    };
+  }
 
   setStatus = (newStatus: number) => {
     this.setState({

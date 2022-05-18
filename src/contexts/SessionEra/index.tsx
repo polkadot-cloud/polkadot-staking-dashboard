@@ -18,7 +18,7 @@ export const SessionEraContext: React.Context<SessionEraContextState> = React.cr
 
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
-export const SessionEraProvider = (props: any) => {
+export const SessionEraProvider = ({ children }: any) => {
   const {
     isReady, api, status, consts,
   }: any = useApi();
@@ -83,7 +83,7 @@ export const SessionEraProvider = (props: any) => {
         },
       }}
     >
-      {props.children}
+      {children}
     </SessionEraContext.Provider>
   );
 };

@@ -70,7 +70,7 @@ export const UIProvider = (props: any) => {
   const { accounts }: any = useBalances();
 
   // get services config from local storage
-  const _services: any = localStorageOrDefault('services', SERVICES, true);
+  const servicesLocal: any = localStorageOrDefault('services', SERVICES, true);
 
   // get side menu minimised state from local storage, default to not
   const _userSideMenuMinimised: any = Number(localStorageOrDefault('side_menu_minimised', 0));
@@ -96,7 +96,7 @@ export const UIProvider = (props: any) => {
   const [listFormat, _setListFormat] = useState('col');
 
   // services
-  const [services, _setServices] = useState(_services);
+  const [services, _setServices] = useState(servicesLocal);
   const servicesRef = useRef(services);
   const setServices = (v: any) => {
     servicesRef.current = v;

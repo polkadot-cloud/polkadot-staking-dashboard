@@ -47,7 +47,7 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> = React.cr
 export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
-export const ValidatorsProvider = (props: any) => {
+export const ValidatorsProvider = ({ children }: any) => {
   const { isReady, api, network }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
@@ -137,11 +137,11 @@ export const ValidatorsProvider = (props: any) => {
 
   const fetchNominatedList = async () => {
     // get raw nominations list
-    let nominated = getAccountNominations(activeAccount);
+    let n = getAccountNominations(activeAccount);
     // format to list format
-    nominated = nominated.map((item: any, index: any) => { return ({ address: item }); });
+    n = n.map((item: any, index: any) => { return ({ address: item }); });
     // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(nominated);
+    const nominationsWithPrefs = await fetchValidatorPrefs(n);
     if (nominationsWithPrefs) {
       setNominated(nominationsWithPrefs);
     } else {
@@ -182,7 +182,7 @@ export const ValidatorsProvider = (props: any) => {
     if (fetchedValidators) { return; }
 
     // fetch validator set
-    const validators: any = [];
+    const v: any = [];
     const exposures = await api.query.staking.validators.entries();
     exposures.forEach(([_args, _prefs]: any) => {
       const address = _args.args[0].toHuman();
@@ -190,7 +190,7 @@ export const ValidatorsProvider = (props: any) => {
 
       const _commission = removePercentage(prefs.commission);
 
-      validators.push({
+      v.push({
         address,
         prefs: {
           commission: parseFloat(_commission.toFixed(2)),
@@ -200,15 +200,15 @@ export const ValidatorsProvider = (props: any) => {
     });
 
     setFetchedValidators(true);
-    setValidators(validators);
+    setValidators(v);
   };
 
   /*
    * subscribe to active session
   */
-  const subscribeSessionValidators = async (api: any) => {
+  const subscribeSessionValidators = async (_api: any) => {
     if (isReady) {
-      const unsub = await api.query.session.validators((_validators: any) => {
+      const unsub = await _api.query.session.validators((_validators: any) => {
         setSessionValidators({
           ...sessionValidators,
           list: _validators.toHuman(),
@@ -229,9 +229,9 @@ export const ValidatorsProvider = (props: any) => {
       return false;
     }
 
-    const validators: any = [];
-    for (const v of _validators) {
-      validators.push(v.address);
+    const v: any = [];
+    for (const _v of _validators) {
+      v.push(_v.address);
     }
 
     const prefsAll = await api.query.staking.validators.multi(validators);
@@ -243,7 +243,7 @@ export const ValidatorsProvider = (props: any) => {
       const commission = removePercentage(prefs.commission);
 
       validatorsWithPrefs.push({
-        address: validators[i],
+        address: v[i],
         prefs: {
           commission,
           blocked: prefs.blocked,
@@ -269,10 +269,10 @@ export const ValidatorsProvider = (props: any) => {
     },
   };
   */
-  const fetchValidatorMetaBatch = async (key: string, validators: any, refetch = false) => {
+  const fetchValidatorMetaBatch = async (key: string, v: any, refetch = false) => {
     if (!isReady) { return; }
 
-    if (!validators.length) { return; }
+    if (!v.length) { return; }
 
     if (!refetch) {
       // if already exists, do not re-fetch
@@ -292,8 +292,8 @@ export const ValidatorsProvider = (props: any) => {
     }
 
     const addresses = [];
-    for (const v of validators) {
-      addresses.push(v.address);
+    for (const _v of v) {
+      addresses.push(_v.address);
     }
 
     // store batch addresses
@@ -302,21 +302,21 @@ export const ValidatorsProvider = (props: any) => {
     batchesUpdated[key].addresses = addresses;
     setValidatorMetaBatch({ ...batchesUpdated });
 
-    const subscribeToIdentities = async (addresses: any) => {
-      const unsub = await api.query.identity.identityOf.multi(addresses, (_identities: any) => {
+    const subscribeToIdentities = async (addr: any) => {
+      const unsub = await api.query.identity.identityOf.multi(addr, (_identities: any) => {
         const identities = [];
         for (let i = 0; i < _identities.length; i++) {
           identities.push(_identities[i].toHuman());
         }
-        const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated[key].identities = identities;
-        setValidatorMetaBatch({ ...batchesUpdated });
+        const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+        _batchesUpdated[key].identities = identities;
+        setValidatorMetaBatch({ ..._batchesUpdated });
       });
       return unsub;
     };
 
-    const subscribeToSuperIdentities = async (addresses: any) => {
-      const unsub = await api.query.identity.superOf.multi(addresses, async (_supers: any) => {
+    const subscribeToSuperIdentities = async (addr: any) => {
+      const unsub = await api.query.identity.superOf.multi(addr, async (_supers: any) => {
         // determine where supers exist
         const supers: any = [];
         const supersWithIdentity: any = [];
@@ -341,9 +341,9 @@ export const ValidatorsProvider = (props: any) => {
         });
         temp();
 
-        const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        batchesUpdated[key].supers = supers;
-        setValidatorMetaBatch({ ...batchesUpdated });
+        const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+        _batchesUpdated[key].supers = supers;
+        setValidatorMetaBatch({ ..._batchesUpdated });
       });
       return unsub;
     };
@@ -360,20 +360,20 @@ export const ValidatorsProvider = (props: any) => {
 
     // subscribe to validator nominators
     const args: any = [];
-    for (let i = 0; i < validators.length; i++) {
-      args.push([metrics.activeEra.index, validators[i].address]);
+
+    for (let i = 0; i < v.length; i++) {
+      args.push([metrics.activeEra.index, v[i].address]);
     }
 
     const unsub3 = await api.query.staking.erasStakers.multi(args, (_validators: any) => {
       const stake = [];
 
-      for (const _v of _validators) {
-        const v = _v.toHuman();
-
-        let others = v.others ?? [];
+      for (let _validator of _validators) {
+        _validator = _validator.toHuman();
+        let others = _validator.others ?? [];
 
         // account for yourself being an additional nominator
-        const total_nominations = others.length + 1;
+        const totalNominations = others.length + 1;
 
         // get lowest stake for the validator
         others = others.sort((a: any, b: any) => {
@@ -387,17 +387,17 @@ export const ValidatorsProvider = (props: any) => {
           : 0;
 
         stake.push({
-          total: v.total,
-          own: v.own,
-          total_nominations,
+          total: _validator.total,
+          own: _validator.own,
+          total_nominations: totalNominations,
           lowest,
         });
       }
 
       // commit update
-      const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-      batchesUpdated[key].stake = stake;
-      setValidatorMetaBatch({ ...batchesUpdated });
+      const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+      _batchesUpdated[key].stake = stake;
+      setValidatorMetaBatch({ ..._batchesUpdated });
     });
 
     addMetaBatchUnsubs(key, [unsub3]);
@@ -500,7 +500,7 @@ export const ValidatorsProvider = (props: any) => {
       favouritesList,
     }}
     >
-      {props.children}
+      {children}
     </ValidatorsContext.Provider>
   );
 };

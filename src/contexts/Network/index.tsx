@@ -15,7 +15,7 @@ export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> = 
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
-export const NetworkMetricsProvider = (props: any) => {
+export const NetworkMetricsProvider = ({ children }: any) => {
   const { isReady, api, status }: any = useApi();
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export const NetworkMetricsProvider = (props: any) => {
         },
       }}
     >
-      {props.children}
+      {children}
     </NetworkMetricsContext.Provider>
   );
 };
