@@ -1,7 +1,12 @@
 *.css
 *.svg
+*.png
 *.json
 *.log
 *.lock
 *.md
-.eslintrc.json
+*.ico
+*.ttf
+*.xml
+*.txt
+*.webmanifest
