@@ -18,6 +18,7 @@ export interface StakingContextState {
   getNominationsStatus: () => any;
   setTargets: (t: any) => any;
   hasController: () => any;
+  isControllerImported: (a: string) => any;
   isBonding: () => any;
   isNominating: () => any;
   inSetup: () => any;
@@ -31,6 +32,7 @@ export const StakingContext: React.Context<StakingContextState> =
     getNominationsStatus: () => true,
     setTargets: (t: any) => false,
     hasController: () => false,
+    isControllerImported: (a: string) => false,
     isBonding: () => false,
     isNominating: () => false,
     inSetup: () => false,
@@ -42,7 +44,7 @@ export const StakingContext: React.Context<StakingContextState> =
 export const useStaking = () => React.useContext(StakingContext);
 
 export const StakingProvider = ({ children }: any) => {
-  const { activeAccount } = useConnect();
+  const { activeAccount, accounts: connectAccounts } = useConnect();
   const { isReady, api, consts, status, network }: any = useApi();
   const { metrics }: any = useNetworkMetrics();
   const {
@@ -286,6 +288,14 @@ export const StakingProvider = ({ children }: any) => {
   };
 
   /*
+   * Helper function to determine whether the controller account
+   * has been imported.
+   */
+  const isControllerImported = (address: string) => {
+    return connectAccounts.find((acc: any) => acc.address === address) ?? false;
+  };
+
+  /*
    * Helper function to determine whether the active account
    * is bonding, or is yet to start.
    */
@@ -334,6 +344,7 @@ export const StakingProvider = ({ children }: any) => {
         getNominationsStatus,
         setTargets,
         hasController,
+        isControllerImported,
         isBonding,
         isNominating,
         inSetup,
