@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +15,7 @@ export const PoolInner = (props: any) => {
   return (
     <Wrapper>
       <div>
-        <h3>{id}</h3>
+        <h3>{id.toNumber()}</h3>
         <Identicon value={addresses.stash} size={26} />
 
         {initial ? (

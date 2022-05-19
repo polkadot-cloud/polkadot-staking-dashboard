@@ -1867,7 +1867,7 @@
     bn.js "^5.2.0"
     ip-regex "^4.3.0"
 
-"@polkadot/util@9.2.1":
+"@polkadot/util@9.2.1", "@polkadot/util@^9.2.1":
   version "9.2.1"
   resolved "https://registry.npmjs.org/@polkadot/util/-/util-9.2.1.tgz#cf1af36418ea6f351cceaac747162707c6a00a36"
   integrity sha512-6B+NWfibxKNlWv67dJygjxZsNtjp9nERYZ+EaulOST9/KrnGLyKEh5ZRxP9lTSXeo+kuZhEfQFl3VQk13xgmJg==

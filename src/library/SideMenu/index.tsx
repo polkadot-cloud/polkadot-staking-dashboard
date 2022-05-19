@@ -92,6 +92,15 @@ export const SideMenu = () => {
     setSideMenu(0);
   });
 
+  // remove pages that network does not support
+  let pagesToDisplay = Object.values(pageConfig.pages);
+  if (!network.features.pools) {
+    // remove pools
+    pagesToDisplay = pagesToDisplay.filter(
+      (page: any) => page.hash !== '/pools'
+    );
+  }
+
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
@@ -133,7 +142,7 @@ export const SideMenu = () => {
             )}
 
             {/* display category links */}
-            {pageConfig.pages.map((page: any, pageIndex: number) => (
+            {pagesToDisplay.map((page: any, pageIndex: number) => (
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id && (
                   <Item

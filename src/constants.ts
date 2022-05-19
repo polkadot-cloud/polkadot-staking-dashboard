@@ -32,6 +32,9 @@ export const NODE_ENDPOINTS: any = {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
     },
+    features: {
+      pools: false,
+    },
   },
   westend: {
     name: 'Westend',
@@ -44,6 +47,9 @@ export const NODE_ENDPOINTS: any = {
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
+    },
+    features: {
+      pools: true,
     },
   },
 };
