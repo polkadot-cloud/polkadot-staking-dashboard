@@ -84,7 +84,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier-format": "prettier --config .prettierrc --write"
+    "lint": "npx eslint ./src/*/** --fix"
   },
   "browserslist": {
     "production": [
