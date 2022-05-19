@@ -6,7 +6,7 @@ import { useAnimation } from 'framer-motion';
 import { ModalWrapper, ContentWrapper } from './Wrappers';
 import { useModal } from '../contexts/Modal';
 import { ConnectAccounts } from './ConnectAccounts';
-import { EraPoints } from './EraPoints';
+import { ValidatorMetrics } from './ValidatorMetrics';
 import { UpdateController } from './UpdateController';
 import { Settings } from './Settings';
 import { UpdateBond } from './UpdateBond';
@@ -65,7 +65,7 @@ export const Modal = () => {
       <div className="content_wrapper">
         <ContentWrapper size={size}>
           {modal === 'ConnectAccounts' && <ConnectAccounts />}
-          {modal === 'EraPoints' && <EraPoints />}
+          {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
           {modal === 'Settings' && <Settings />}
           {modal === 'UpdateController' && <UpdateController />}
           {modal === 'UpdateBond' && <UpdateBond />}

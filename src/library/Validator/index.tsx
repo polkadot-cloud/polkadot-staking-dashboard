@@ -148,7 +148,7 @@ export const ValidatorInner = (props: any) => {
             <button
               type="button"
               onClick={() =>
-                openModalWith('EraPoints', {
+                openModalWith('ValidatorMetrics', {
                   address,
                   identity: display,
                 })
