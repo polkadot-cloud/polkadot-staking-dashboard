@@ -59,7 +59,7 @@ export const Account = (props: any) => {
       {label !== undefined && <div className="account-label">{label}</div>}
 
       {unassigned ? (
-        <span className="title unassigned">Not Set</span>
+        <span className="title unassigned">Not Staking</span>
       ) : (
         <>
           <span className="identicon">

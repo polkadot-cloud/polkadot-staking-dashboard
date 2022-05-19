@@ -50,6 +50,7 @@ export const Wrapper = styled(motion.button)<any>`
 
     &.unassigned {
       color: ${textSecondary};
+      opacity: 0.45;
     }
   }
 
