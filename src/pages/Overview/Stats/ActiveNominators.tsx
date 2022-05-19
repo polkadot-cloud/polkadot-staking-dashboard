@@ -15,7 +15,8 @@ export const ActiveNominatorsStatBox = () => {
   // active nominators as percent
   let activeNominatorsAsPercent = 0;
   if (maxElectingVoters > 0) {
-    activeNominatorsAsPercent = activeNominators / new BN(maxElectingVoters).div(new BN(100)).toNumber();
+    activeNominatorsAsPercent =
+      activeNominators / new BN(maxElectingVoters).div(new BN(100)).toNumber();
   }
 
   const params = {
