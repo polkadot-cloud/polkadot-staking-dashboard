@@ -4,6 +4,10 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import {
+  faExclamationTriangle,
+  faCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { useUi } from '../../contexts/UI';
 import { ItemWrapper, MinimisedItemWrapper } from './Wrapper';
 
@@ -25,19 +29,16 @@ export const Item = (props: any) => {
         }}
       >
         <div className="icon">{icon}</div>
-        {!minimised && (
-          <>
-            <h3 className="name">{name}</h3>
+        {!minimised && <h3 className="name">{name}</h3>}
 
-            {action && (
-              <div className="action">
-                <FontAwesomeIcon
-                  icon={action as IconProp}
-                  color="rgba(242, 185, 27,0.5)"
-                />
-              </div>
-            )}
-          </>
+        {action && (
+          <div className={`action${minimised ? ` minimised` : ``}`}>
+            <FontAwesomeIcon
+              icon={(minimised ? faCircle : faExclamationTriangle) as IconProp}
+              color="rgba(242, 185, 27,0.75)"
+              transform={minimised ? 'shrink-2' : ''}
+            />
+          </div>
         )}
       </StyledWrapper>
     </Link>
