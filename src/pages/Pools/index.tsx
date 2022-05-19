@@ -1,7 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PageProps } from '../types';
 import { PageRowWrapper, Separator } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
@@ -20,9 +21,9 @@ import StatBoxListItem from '../../library/StatBoxList/Item';
 export const Pools = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
-
-  const { meta } = usePools();
   const { network }: any = useApi();
+  const { stats } = usePools();
+  const navigate = useNavigate();
 
   const [state] = useState({
     pools: [
@@ -62,13 +63,25 @@ export const Pools = (props: PageProps) => {
     activePool: 1,
   });
 
-  const totalPools = meta.counterForBondedPools + meta.counterForRewardPools;
+  // back to overview if pools are not supported on network
+  useEffect(() => {
+    if (!network.features.pools) {
+      navigate('/#/overview', { replace: true });
+    }
+  }, [network]);
+
+  const totalPools = stats.counterForBondedPools
+    .add(stats.counterForRewardPools)
+    .toNumber();
   const activePoolsAsPercent = defaultIfNaN(
-    ((meta.counterForRewardPools ?? 0) / (totalPools * 0.01)).toFixed(2),
+    (
+      (stats.counterForRewardPools.toNumber() ?? 0) /
+      (totalPools * 0.01)
+    ).toFixed(2),
     0
   );
   const activePool = state.pools.find(
-    (item: any) => item.id === meta.counterForRewardPools
+    (item: any) => item.id === stats.counterForRewardPools.toNumber()
   );
 
   const items: any = [
@@ -77,13 +90,13 @@ export const Pools = (props: PageProps) => {
       params: {
         label: 'Active Pools',
         stat: {
-          value: meta.counterForRewardPools,
+          value: stats.counterForRewardPools.toNumber(),
           total: totalPools,
           unit: '',
         },
         graph: {
-          value1: meta.counterForRewardPools,
-          value2: totalPools - meta.counterForRewardPools,
+          value1: stats.counterForRewardPools.toNumber(),
+          value2: totalPools - stats.counterForRewardPools.toNumber(),
         },
         tooltip: `${activePoolsAsPercent}%`,
         assistant: {
@@ -96,8 +109,8 @@ export const Pools = (props: PageProps) => {
       format: 'number',
       params: {
         label: 'Minimum Join Bond',
-        value: meta.minJoinBond,
-        unit: 'DOT',
+        value: stats.minJoinBond.toNumber(),
+        unit: network.unit,
         assistant: {
           page: 'pools',
           key: 'Era',
@@ -108,8 +121,8 @@ export const Pools = (props: PageProps) => {
       format: 'number',
       params: {
         label: 'Minimum Create Bond',
-        value: meta.minCreateBond,
-        unit: 'DOT',
+        value: stats.minCreateBond.toNumber(),
+        unit: network.unit,
         assistant: {
           page: 'pools',
           key: 'Era',
@@ -196,17 +209,14 @@ export const Pools = (props: PageProps) => {
                 Root <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.root ?? null} />
-
               <h4>
                 Depositor <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.depositor ?? null} />
-
               <h4>
                 Nominator <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.nominator ?? null} />
-
               <h4>
                 State Toggler
                 <OpenAssistantIcon page="pools" title="Joined Pool" />
