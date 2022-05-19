@@ -11,12 +11,14 @@ import { Wrapper } from './Wrapper';
 import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
+import { useStaking } from '../../contexts/Staking';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
 import { Warning } from '../../library/Form/Warning';
 
 export const StopNominating = () => {
   const { api }: any = useApi();
+  const { getControllerNotImported } = useStaking();
   const { activeAccount } = useConnect();
   const { getBondedAccount, getAccountNominations }: any = useBalances();
   const { setStatus: setModalStatus }: any = useModal();
@@ -65,6 +67,10 @@ export const StopNominating = () => {
         }}
       >
         {!nominations.length && <Warning text="You have no nominations set." />}
+        {getControllerNotImported(controller) && (
+          <Warning text="You must have your controller account imported to stop nominating." />
+        )}
+
         <h2>
           You Have {nominations.length} Nomination
           {nominations.length === 1 ? '' : 's'}
@@ -86,7 +92,9 @@ export const StopNominating = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting}
+              disabled={
+                !valid || submitting || getControllerNotImported(controller)
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"

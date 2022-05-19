@@ -7,7 +7,7 @@ import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
 import { BondInput } from '../BondInput';
-import { planckToUnit, humanNumber, planckBnToUnit } from '../../../Utils';
+import { humanNumber, planckBnToUnit } from '../../../Utils';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
 
@@ -22,7 +22,7 @@ export const BondInputWithFeedback = (props: any) => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { staking } = useStaking();
+  const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
   const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
@@ -36,8 +36,10 @@ export const BondInputWithFeedback = (props: any) => {
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond =
-    freeToUnbond - planckBnToUnit(minNominatorBond, units);
+  const freeToUnbondToMinNominatorBond = Math.max(
+    freeToUnbond - planckBnToUnit(minNominatorBond, units),
+    0
+  );
 
   // store errors
   const [errors, setErrors]: any = useState([]);
@@ -102,6 +104,11 @@ export const BondInputWithFeedback = (props: any) => {
 
     // unbond errors
     if (unbond) {
+      if (getControllerNotImported(controller)) {
+        _errors.push(
+          'You must have your controller account imported to unbond.'
+        );
+      }
       if (bond.bond !== '' && bond.bond > activeBase) {
         _errors.push('Unbond amount is more than your bonded balance.');
       } else if (

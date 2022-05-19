@@ -44,8 +44,6 @@ export const UpdateController = () => {
     const controllerToSubmit = {
       Id: selected.address,
     };
-
-    // console.log(controllerToSubmit);
     _tx = api.tx.staking.setController(controllerToSubmit);
     return _tx;
   };

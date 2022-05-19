@@ -81,6 +81,21 @@ export const LogoWrapper = styled(motion.button)<any>`
   }
 `;
 
+export const HeadingWrapper = styled.div<any>`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
+  opacity: ${(props) => (props.minimised ? 0.5 : 1)};
+  align-items: center;
+
+  h5 {
+    color: ${textSecondary};
+    margin: 1.1rem 0 0.2rem 0;
+    padding: 0 0.5rem;
+    opacity: 0.7;
+  }
+`;
+
 export const ItemWrapper = styled(motion.div)<any>`
   border-radius: 0.5rem;
   display: flex;
@@ -90,6 +105,7 @@ export const ItemWrapper = styled(motion.div)<any>`
   padding: 0.9rem 0.5rem;
   margin: 0.3rem 0;
   font-size: 1.04rem;
+  position: relative;
 
   .icon {
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
@@ -114,21 +130,6 @@ export const ItemWrapper = styled(motion.div)<any>`
   }
 `;
 
-export const HeadingWrapper = styled.div<any>`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
-  opacity: ${(props) => (props.minimised ? 0.5 : 1)};
-  align-items: center;
-
-  h5 {
-    color: ${textSecondary};
-    margin: 1.1rem 0 0.2rem 0;
-    padding: 0 0.5rem;
-    opacity: 0.7;
-  }
-`;
-
 export const MinimisedItemWrapper = styled(motion.div)`
   border-radius: 0.5rem;
   display: flex;
@@ -138,6 +139,7 @@ export const MinimisedItemWrapper = styled(motion.div)`
   padding: 0.9rem 0rem;
   margin: 0.3rem 0;
   font-size: 1.04rem;
+  position: relative;
 
   &.active {
     background: ${highlightPrimary};
@@ -147,6 +149,16 @@ export const MinimisedItemWrapper = styled(motion.div)`
   }
   .icon {
     margin: 0;
+  }
+  .action {
+    &.minimised {
+      > svg {
+        flex: 0;
+        position: absolute;
+        top: -4px;
+        right: -4px;
+      }
+    }
   }
 `;
 

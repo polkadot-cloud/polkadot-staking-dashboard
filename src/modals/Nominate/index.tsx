@@ -20,7 +20,7 @@ import { planckBnToUnit } from '../../Utils';
 export const Nominate = () => {
   const { api, network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { targets, staking } = useStaking();
+  const { targets, staking, getControllerNotImported } = useStaking();
   const { getBondedAccount, getAccountLedger }: any = useBalances();
   const { setStatus: setModalStatus }: any = useModal();
   const { units } = network;
@@ -68,6 +68,11 @@ export const Nominate = () => {
 
   // warnings
   const warnings = [];
+  if (getControllerNotImported(controller)) {
+    warnings.push(
+      'You must have your controller account imported to start nominating'
+    );
+  }
   if (!nominations.length) {
     warnings.push('You have no nominations set.');
   }
@@ -110,7 +115,7 @@ export const Nominate = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting}
+              disabled={!valid || submitting || warnings.length}
             >
               <FontAwesomeIcon
                 transform="grow-2"
