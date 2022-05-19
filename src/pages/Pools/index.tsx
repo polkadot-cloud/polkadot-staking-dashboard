@@ -53,7 +53,8 @@ export const Pools = (props: PageProps) => {
                 <OpenAssistantIcon page="pools" title="Pool Status" />
               </h4>
               <h2>
-                Actively in Pool and Earning Rewards &nbsp;
+                {activePool === undefined ? 'Not in a Pool' : 'Active in Pool'}{' '}
+                &nbsp;
                 <div>
                   {activePool === undefined ? (
                     <Button
@@ -80,11 +81,23 @@ export const Pools = (props: PageProps) => {
                 <OpenAssistantIcon page="pools" title="Bonded in Pool" />
               </h4>
               <h2>
-                32.622931 {network.unit} &nbsp;
-                <div>
-                  <Button small primary inline title="+" onClick={() => {}} />
-                  <Button small primary title="-" onClick={() => {}} />
-                </div>
+                {activePool === undefined ? (
+                  `0 ${network.unit}`
+                ) : (
+                  <>
+                    {activePool.bondedAmount} {network.unit} &nbsp;
+                    <div>
+                      <Button
+                        small
+                        primary
+                        inline
+                        title="+"
+                        onClick={() => {}}
+                      />
+                      <Button small primary title="-" onClick={() => {}} />
+                    </div>
+                  </>
+                )}
               </h2>
               <Separator />
               <h4>
@@ -92,16 +105,22 @@ export const Pools = (props: PageProps) => {
                 <OpenAssistantIcon page="pools" title="Pool Rewards" />
               </h4>
               <h2>
-                0.82 {network.unit} &nbsp;
-                <div>
-                  <Button
-                    small
-                    primary
-                    inline
-                    title="Claim"
-                    onClick={() => {}}
-                  />
-                </div>
+                {activePool === undefined ? (
+                  `0 ${network.unit}`
+                ) : (
+                  <>
+                    {activePool.unclaimedRewards} {network.unit} &nbsp;
+                    <div>
+                      <Button
+                        small
+                        primary
+                        inline
+                        title="Claim"
+                        onClick={() => {}}
+                      />
+                    </div>
+                  </>
+                )}
               </h2>
             </div>
           </SectionWrapper>
