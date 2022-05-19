@@ -22,7 +22,6 @@ import { GenerateNominations } from '../GenerateNominations';
 import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
-import StatBoxListItem from '../../../library/StatBoxList/Item';
 import { PAYEE_STATUS } from '../../../constants';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
