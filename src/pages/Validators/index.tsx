@@ -9,7 +9,7 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
-import ActiveEraStatBox from './Stats/ActiveEra';
+import ActiveEraStatBox from '../Stake/Active/Stats/ActiveEra';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
 

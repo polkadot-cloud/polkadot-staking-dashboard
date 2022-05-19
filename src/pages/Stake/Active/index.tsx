@@ -25,7 +25,7 @@ import { useModal } from '../../../contexts/Modal';
 import { PAYEE_STATUS } from '../../../constants';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
-import ActiveEraStatBox from '../../Validators/Stats/ActiveEra';
+import ActiveEraStatBox from './Stats/ActiveEra';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
