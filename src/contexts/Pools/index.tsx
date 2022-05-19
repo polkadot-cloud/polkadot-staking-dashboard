@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
+import { rmCommas } from '../../Utils';
 
 export interface PoolsContextState {
   enabled: number;
@@ -22,13 +23,16 @@ export const PoolsContext: React.Context<PoolsContextState> =
 export const usePools = () => React.useContext(PoolsContext);
 
 export const PoolsProvider = (props: any) => {
-  const { network }: any = useApi();
+  const { api, network, isReady }: any = useApi();
   const { features } = network;
 
   // whether pools are enabled
   const [enabled, setEnabled] = useState(0);
   // store pool metadata
-  const [stats, setStats] = useState(defaults.stats);
+  const [poolsConfig, setPoolsConfig]: any = useState({
+    stats: defaults.stats,
+    unsub: null,
+  });
   // store the account's active pool status
   const [activePool, setActivePool] = useState(defaults.activePool);
 
@@ -38,21 +42,28 @@ export const PoolsProvider = (props: any) => {
       setEnabled(1);
     } else {
       setEnabled(0);
+      unsubscribe();
     }
   }, [network]);
 
   useEffect(() => {
-    setStats({
-      counterForPoolMembers: new BN(2),
-      counterForBondedPools: new BN(1),
-      counterForRewardPools: new BN(1),
-      maxPoolMembers: new BN(512),
-      maxPoolMembersPerPool: new BN(32),
-      maxPools: new BN(0),
-      minCreateBond: new BN(1),
-      minJoinBond: new BN(1),
-    });
+    if (isReady && enabled) {
+      subscribeToPoolConfig();
+    }
+    return () => {
+      unsubscribe();
+    };
+  }, [network, isReady]);
 
+  const unsubscribe = async () => {
+    if (poolsConfig.unsub !== null) {
+      poolsConfig.unsub();
+    }
+  };
+
+  // dummy data for active pool
+  // TODO: replace with real data
+  useEffect(() => {
     setActivePool({
       poolId: 1,
       points: '100,000,000,000,000',
@@ -61,11 +72,70 @@ export const PoolsProvider = (props: any) => {
     });
   }, []);
 
+  // subscribe to pool chain state
+  const subscribeToPoolConfig = async () => {
+    const unsub = await api.queryMulti(
+      [
+        api.query.nominationPools.counterForPoolMembers,
+        api.query.nominationPools.counterForBondedPools,
+        api.query.nominationPools.counterForRewardPools,
+        api.query.nominationPools.maxPoolMembers,
+        api.query.nominationPools.maxPoolMembersPerPool,
+        api.query.nominationPools.maxPools,
+        api.query.nominationPools.minCreateBond,
+        api.query.nominationPools.minJoinBond,
+      ],
+      ([
+        _counterForPoolMembers,
+        _counterForBondedPools,
+        _counterForRewardPools,
+        _maxPoolMembers,
+        _maxPoolMembersPerPool,
+        _maxPools,
+        _minCreateBond,
+        _minJoinBond,
+      ]: any) => {
+        // format optional configs to BN or null
+        _maxPoolMembers = _maxPoolMembers.toHuman();
+        if (_maxPoolMembers !== null) {
+          _maxPoolMembers = new BN(rmCommas(_maxPoolMembers));
+        }
+        _maxPoolMembersPerPool = _maxPoolMembersPerPool.toHuman();
+        if (_maxPoolMembersPerPool !== null) {
+          _maxPoolMembersPerPool = new BN(rmCommas(_maxPoolMembersPerPool));
+        }
+        _maxPools = _maxPools.toHuman();
+        if (_maxPools !== null) {
+          _maxPools = new BN(rmCommas(_maxPools));
+        }
+
+        setPoolsConfig({
+          ...poolsConfig,
+          stats: {
+            counterForPoolMembers: _counterForPoolMembers.toBn(),
+            counterForBondedPools: _counterForBondedPools.toBn(),
+            counterForRewardPools: _counterForRewardPools.toBn(),
+            maxPoolMembers: _maxPoolMembers,
+            maxPoolMembersPerPool: _maxPoolMembersPerPool,
+            maxPools: _maxPools,
+            minCreateBond: _minCreateBond.toBn(),
+            minJoinBond: _minJoinBond.toBn(),
+          },
+        });
+      }
+    );
+
+    setPoolsConfig({
+      ...poolsConfig,
+      unsub,
+    });
+  };
+
   return (
     <PoolsContext.Provider
       value={{
         enabled,
-        stats,
+        stats: poolsConfig.stats,
         activePool,
       }}
     >

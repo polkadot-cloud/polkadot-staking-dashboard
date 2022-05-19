@@ -8,7 +8,7 @@ import { PageRowWrapper, Separator } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { StatBoxList } from '../../library/StatBoxList';
-import { defaultIfNaN } from '../../Utils';
+import { defaultIfNaN, planckBnToUnit } from '../../Utils';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { useApi } from '../../contexts/Api';
 import { PoolAccount } from './PoolAccount';
@@ -22,6 +22,7 @@ export const Pools = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network }: any = useApi();
+  const { units } = network;
   const { stats } = usePools();
   const navigate = useNavigate();
 
@@ -109,7 +110,7 @@ export const Pools = (props: PageProps) => {
       format: 'number',
       params: {
         label: 'Minimum Join Bond',
-        value: stats.minJoinBond.toNumber(),
+        value: planckBnToUnit(stats.minJoinBond, units),
         unit: network.unit,
         assistant: {
           page: 'pools',
@@ -121,7 +122,7 @@ export const Pools = (props: PageProps) => {
       format: 'number',
       params: {
         label: 'Minimum Create Bond',
-        value: stats.minCreateBond.toNumber(),
+        value: planckBnToUnit(stats.minCreateBond, units),
         unit: network.unit,
         assistant: {
           page: 'pools',
