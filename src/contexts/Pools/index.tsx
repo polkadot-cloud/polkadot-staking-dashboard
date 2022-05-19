@@ -13,18 +13,18 @@ const MOD_PREFIX = stringToU8a('modl');
 const U32_OPTS = { bitLength: 32, isLe: true };
 
 export interface PoolsContextState {
+  getAccountActivePool: (a: string) => any;
   enabled: number;
   stats: any;
   bondedPools: any;
-  activePool: any;
 }
 
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
+    getAccountActivePool: (a: string) => {},
     enabled: 0,
     stats: defaults.stats,
     bondedPools: [],
-    activePool: defaults.activePool,
   });
 
 export const usePools = () => React.useContext(PoolsContext);
@@ -44,10 +44,6 @@ export const PoolsProvider = (props: any) => {
   });
   // store bonded pools
   const [bondedPools, setBondedPools]: any = useState([]);
-
-  // store the account's active pool status
-  // TODO: replace with real data
-  const [activePool, setActivePool] = useState(defaults.activePool);
 
   // disable pools if network does not support them
   useEffect(() => {
@@ -75,17 +71,6 @@ export const PoolsProvider = (props: any) => {
     }
     setBondedPools([]);
   };
-
-  // dummy data for active pool
-  // TODO: replace with real data
-  useEffect(() => {
-    setActivePool({
-      poolId: 1,
-      points: '100,000,000,000,000',
-      rewardPoolTotalEarnings: new BN(0),
-      unbondingEras: {},
-    });
-  }, []);
 
   // subscribe to pool chain state
   const subscribeToPoolConfig = async () => {
@@ -180,13 +165,18 @@ export const PoolsProvider = (props: any) => {
       .toString();
   };
 
+  // TODO: iterate pool members to determine user active pool.
+  const getAccountActivePool = (address: string) => {
+    return undefined;
+  };
+
   return (
     <PoolsContext.Provider
       value={{
+        getAccountActivePool,
         enabled,
         stats: poolsConfig.stats,
         bondedPools,
-        activePool,
       }}
     >
       {props.children}

@@ -13,10 +13,3 @@ export const stats = {
   minCreateBond: new BN(0),
   minJoinBond: new BN(0),
 };
-
-export const activePool = {
-  poolId: 0,
-  points: '',
-  rewardPoolTotalEarnings: new BN(0),
-  unbondingEras: {},
-};
