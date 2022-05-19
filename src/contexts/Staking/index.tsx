@@ -324,7 +324,7 @@ export const StakingProvider = ({ children }: any) => {
    */
   const inSetup = () => {
     return (
-      !hasController() || (!isBonding() && !isNominating() && !isUnlocking())
+      !hasController() && !isBonding() && !isNominating() && !isUnlocking()
     );
   };
 
