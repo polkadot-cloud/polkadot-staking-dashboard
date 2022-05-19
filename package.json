@@ -85,7 +85,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "npx eslint ./src/*/** --fix"
+    "lint": "eslint ./src --fix"
   },
   "browserslist": {
     "production": [
