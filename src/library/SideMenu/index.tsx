@@ -4,11 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faExclamationTriangle,
-  faExpandAlt,
-  faCompressAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
 import { SunnyOutline, Moon, LogoGithub, Cog } from 'react-ionicons';
 import throttle from 'lodash.throttle';
 import { Wrapper, LogoWrapper } from './Wrapper';
@@ -20,6 +16,7 @@ import { useMessages } from '../../contexts/Messages';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from '../../img/polkadot_icon.svg';
 import {
+  URI_PREFIX,
   POLKADOT_URL,
   GLOBAL_MESSGE_KEYS,
   SIDE_MENU_STICKY_THRESHOLD,
@@ -28,8 +25,10 @@ import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../Hooks';
 import { useTheme } from '../../contexts/Themes';
 import { useModal } from '../../contexts/Modal';
+import { useApi } from '../../contexts/Api';
 
 export const SideMenu = () => {
+  const { network }: any = useApi();
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
   const { activeAccount, accounts }: any = useConnect();
@@ -70,28 +69,23 @@ export const SideMenu = () => {
     // only process account messages and warnings once accounts are connected
     if (accounts.length) {
       const _pageConfigWithMessages: any = Object.assign(pageConfig.pages);
-
       for (let i = 0; i < _pageConfigWithMessages.length; i++) {
         const { uri } = _pageConfigWithMessages[i];
 
-        if (uri === '/stake') {
-          const notImported = getMessage(
+        // on stake menu item, add warning for controller not imported
+        if (uri === `${URI_PREFIX}/stake`) {
+          _pageConfigWithMessages[i].action = getMessage(
             GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED
           );
-          if (notImported === true) {
-            _pageConfigWithMessages[i].action = faExclamationTriangle;
-          } else {
-            _pageConfigWithMessages[i].action = null;
-          }
         }
       }
-
       setPageConfig({
         categories: pageConfig.categories,
         pages: _pageConfigWithMessages,
       });
     }
   }, [
+    network,
     activeAccount,
     accounts,
     getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED),
