@@ -22,14 +22,14 @@ export const ActiveNominationsStatBox = () => {
 
   const nominationStatuses = useMemo(
     () => getNominationsStatus(),
-    [nominations]
+    [nominations],
   );
 
   useEffect(() => {
     const statuses = nominationStatuses;
     const total = Object.values(statuses).length;
     const _active: any = Object.values(statuses).filter(
-      (_v: any) => _v === 'active'
+      (_v: any) => _v === 'active',
     ).length;
 
     setNominationsStatus({

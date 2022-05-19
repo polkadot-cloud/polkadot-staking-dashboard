@@ -13,8 +13,8 @@ const ActiveEraStatBox = () => {
   const eraTimeLeft = useEraTimeLeft();
 
   // format era time left
-  let _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
-  let timeleft = _timeleft.hours() + ":" + _timeleft.minutes() + ":" + _timeleft.seconds();
+  const _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
+  const timeleft = `${_timeleft.hours()}:${_timeleft.minutes()}:${_timeleft.seconds()}`;
 
   const params = {
     label: 'Active Era',
