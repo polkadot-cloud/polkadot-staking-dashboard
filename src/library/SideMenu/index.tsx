@@ -12,13 +12,11 @@ import Heading from './Heading';
 import Item from './Item';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../pages';
 import { useConnect } from '../../contexts/Connect';
-import { useMessages } from '../../contexts/Messages';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from '../../img/polkadot_icon.svg';
 import {
   URI_PREFIX,
   POLKADOT_URL,
-  GLOBAL_MESSGE_KEYS,
   SIDE_MENU_STICKY_THRESHOLD,
 } from '../../constants';
 import { useUi } from '../../contexts/UI';
@@ -26,14 +24,18 @@ import { useOutsideAlerter } from '../Hooks';
 import { useTheme } from '../../contexts/Themes';
 import { useModal } from '../../contexts/Modal';
 import { useApi } from '../../contexts/Api';
+import { useBalances } from '../../contexts/Balances';
+import { useStaking } from '../../contexts/Staking';
 
 export const SideMenu = () => {
   const { network }: any = useApi();
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
   const { activeAccount, accounts }: any = useConnect();
-  const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
+  const { getBondedAccount }: any = useBalances();
+  const { isControllerImported } = useStaking();
+  const controller = getBondedAccount(activeAccount);
   const {
     setSideMenu,
     sideMenuOpen,
@@ -74,9 +76,7 @@ export const SideMenu = () => {
 
         // on stake menu item, add warning for controller not imported
         if (uri === `${URI_PREFIX}/stake`) {
-          _pageConfigWithMessages[i].action = getMessage(
-            GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED
-          );
+          _pageConfigWithMessages[i].action = !isControllerImported(controller);
         }
       }
       setPageConfig({
@@ -84,12 +84,7 @@ export const SideMenu = () => {
         pages: _pageConfigWithMessages,
       });
     }
-  }, [
-    network,
-    activeAccount,
-    accounts,
-    getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED),
-  ]);
+  }, [network, activeAccount, accounts, isControllerImported(controller)]);
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {

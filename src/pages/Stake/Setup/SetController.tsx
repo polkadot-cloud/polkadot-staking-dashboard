@@ -3,13 +3,10 @@
 
 import { useState, useEffect } from 'react';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { Button, ButtonRow } from '../../../library/Button';
 import { useApi } from '../../../contexts/Api';
 import { useBalances } from '../../../contexts/Balances';
 import { useConnect } from '../../../contexts/Connect';
-import { useMessages } from '../../../contexts/Messages';
 import { useUi } from '../../../contexts/UI';
-import { GLOBAL_MESSGE_KEYS } from '../../../constants';
 import { AccountSelect } from '../../../library/Form/AccountSelect';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -25,20 +22,14 @@ export const SetController = (props: any) => {
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount, getAccountBalance, minReserve, isController }: any =
     useBalances();
-  const { getMessage }: any = useMessages();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-
   const controller = getBondedAccount(activeAccount);
   const setup = getSetupProgress(activeAccount);
-
   const initialValue =
     setup.controller !== null ? setup.controller : controller;
-
   const initialAccount = getAccount(initialValue);
 
-  const [controllerNotImported, setControllerNotImported] = useState(
-    getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)
-  );
+  // store the currently selected controller account
   const [selected, setSelected] = useState(initialAccount);
 
   // update selected value on account switch
@@ -47,12 +38,6 @@ export const SetController = (props: any) => {
     const _initial = getAccount(_selected);
     setSelected(_initial);
   }, [activeAccount]);
-
-  useEffect(() => {
-    setControllerNotImported(
-      getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)
-    );
-  }, [getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
 
   const handleOnChange = ({ selectedItem }: any) => {
     setSelected(selectedItem);
@@ -67,7 +52,7 @@ export const SetController = (props: any) => {
     return !isController(acc.address);
   });
 
-  // inject balances and wheteher account can be an active item
+  // inject balances and whether account can be an active item
   items = items.filter((acc: any) => acc.address !== activeAccount);
   items = items.map((acc: any) => {
     const balance = getAccountBalance(acc.address);
@@ -89,47 +74,25 @@ export const SetController = (props: any) => {
 
   return (
     <>
-      {/* TODO: integrate this into the below section.
-      warning: controller account not present. unable to stake */}
-      {controllerNotImported !== null && (
-        <SectionWrapper
-          transparent
-          style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}
-        >
-          <h3>Import Your Controller Account</h3>
-          <p>
-            You have not imported your Controller account. If you have lost
-            access to your Controller account, set a new Controller now.
-          </p>
-
-          <ButtonRow style={{ width: '100%', padding: 0, marginTop: '1rem' }}>
-            <Button inline title="Set New Controller" />
-          </ButtonRow>
-        </SectionWrapper>
-      )}
-
-      {/* controller management */}
-      {controllerNotImported === null && (
-        <SectionWrapper transparent>
-          <Header
-            thisSection={section}
-            title="Set Controller Account"
-            assistantPage="stake"
-            assistantKey="Stash and Controller Accounts"
-            complete={setup.controller !== null}
+      <SectionWrapper transparent>
+        <Header
+          thisSection={section}
+          title="Set Controller Account"
+          assistantPage="stake"
+          assistantKey="Stash and Controller Accounts"
+          complete={setup.controller !== null}
+        />
+        <MotionContainer thisSection={section} activeSection={setup.section}>
+          <Spacer />
+          <AccountSelect
+            items={items}
+            onChange={handleOnChange}
+            placeholder="Search Account"
+            value={selected}
           />
-          <MotionContainer thisSection={section} activeSection={setup.section}>
-            <Spacer />
-            <AccountSelect
-              items={items}
-              onChange={handleOnChange}
-              placeholder="Search Account"
-              value={selected}
-            />
-            <Footer complete={setup.controller !== null} />
-          </MotionContainer>
-        </SectionWrapper>
-      )}
+          <Footer complete={setup.controller !== null} />
+        </MotionContainer>
+      </SectionWrapper>
     </>
   );
 };

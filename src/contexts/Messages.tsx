@@ -1,10 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
-import { useConnect } from './Connect';
-import { useBalances } from './Balances';
-import { GLOBAL_MESSGE_KEYS } from '../constants';
+import React, { useState } from 'react';
 
 export interface MessagesContextState {
   messages: any;
@@ -26,32 +23,7 @@ export const MessagesContext: React.Context<MessagesContextState> =
 export const useMessages = () => React.useContext(MessagesContext);
 
 export const MessagesProvider = (props: any) => {
-  const {
-    activeAccount,
-    status: connectStatus,
-    accountExists,
-  }: any = useConnect();
-  const { accounts: balanceAccounts, getBondedAccount }: any = useBalances();
-
   const [messages, _setMessages]: any = useState([]);
-
-  useEffect(() => {
-    const _messages = [];
-
-    // is controller missing from imported accounts? (check once balanceAccounts are fetched)
-    if (balanceAccounts.length) {
-      const controller = getBondedAccount(activeAccount);
-      if (controller !== null) {
-        if (!accountExists(controller)) {
-          _messages.push({
-            key: GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED,
-            msg: true,
-          });
-        }
-      }
-    }
-    setMessages(_messages);
-  }, [activeAccount, connectStatus, balanceAccounts]);
 
   const setMessage = (key: string, msg: any) => {
     const filtered = messages.filter((message: any) => message.key !== key);
