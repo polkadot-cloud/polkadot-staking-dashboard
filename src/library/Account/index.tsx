@@ -43,6 +43,11 @@ export const Account = (props: any) => {
       }
   }
 
+  // if title prop is provided, override `displayValue`
+  if (props.title !== undefined) {
+    displayValue = props.title;
+  }
+
   return (
     <Wrapper
       whileHover={{ scale: 1.01 }}

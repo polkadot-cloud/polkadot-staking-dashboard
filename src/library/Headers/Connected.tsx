@@ -8,12 +8,13 @@ import { Account } from '../Account';
 import { useStaking } from '../../contexts/Staking';
 import { useBalances } from '../../contexts/Balances';
 
-export const Connected = (props: any) => {
+export const Connected = () => {
   const { activeAccount }: any = useConnect();
   const { openModalWith } = useModal();
-  const { isNominating, hasController } = useStaking();
+  const { isNominating, hasController, isControllerImported } = useStaking();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
+  const controllerImported = isControllerImported(controller);
 
   return (
     <>
@@ -35,6 +36,7 @@ export const Connected = (props: any) => {
           <HeadingWrapper>
             <Account
               value={controller}
+              title={controllerImported ? undefined : 'Not Imported'}
               format="name"
               label="Controller"
               canClick={hasController()}
