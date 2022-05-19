@@ -26,13 +26,13 @@ import { PAYEE_STATUS } from '../../../constants';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import ActiveEraStatBox from './Stats/ActiveEra';
+import { ControllerNotImported } from './ControllerNotImported';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { getNominationsStatus, staking, targets, setTargets } = useStaking();
   const { getAccountNominations }: any = useBalances();
-
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
   const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
@@ -71,6 +71,7 @@ export const Active = (props: any) => {
         <MinimumActiveBondStatBox />
         <ActiveEraStatBox />
       </StatBoxList>
+      <ControllerNotImported />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingLeft>
           <SectionWrapper style={{ height: 260 }}>

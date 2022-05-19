@@ -16,6 +16,7 @@ import { useModal } from '../../contexts/Modal';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
 import { PAYEE_STATUS } from '../../constants';
+import { Warning } from '../../library/Form/Warning';
 
 export const UpdatePayee = () => {
   const { api }: any = useApi();
@@ -23,7 +24,7 @@ export const UpdatePayee = () => {
   const { getBondedAccount }: any = useBalances();
   const { setStatus: setModalStatus }: any = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking } = useStaking();
+  const { staking, getControllerNotImported } = useStaking();
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);
@@ -79,6 +80,9 @@ export const UpdatePayee = () => {
         }}
       >
         <div className="head">
+          {getControllerNotImported(controller) && (
+            <Warning text="You must have your controller account imported to update your reward destination" />
+          )}
           <h4>
             Currently Selected:
             {_selected?.name ?? 'None'}
@@ -103,7 +107,9 @@ export const UpdatePayee = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting}
+              disabled={
+                !valid || submitting || getControllerNotImported(controller)
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"
