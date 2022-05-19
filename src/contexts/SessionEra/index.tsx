@@ -17,6 +17,8 @@ export const SessionEraContext: React.Context<SessionEraContextState> =
     sessionEra: {},
   });
 
+// Warning: Do not use this hook in heavy components.
+// Using this hook in a component makes the component rerender per each new block.
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
 export const SessionEraProvider = ({ children }: any) => {

@@ -21,13 +21,11 @@ import {
 import { StatusLabel } from '../../library/StatusLabel';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PayoutList } from './PayoutList';
-import StatBoxListItem from '../../library/StatBoxList/Item';
-import { useStats } from './stats';
+import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { payouts }: any = useSubscan();
   const { services }: any = useUi();
-  const stats = useStats();
 
   const { page } = props;
   const { title } = page;
@@ -46,9 +44,7 @@ export const Payouts = (props: PageProps) => {
     <>
       <PageTitle title={title} />
       <StatBoxList>
-        {stats.map((stat: any, index: number) => (
-          <StatBoxListItem {...stat} key={index} />
-        ))}
+        <LastEraPayoutStatBox />
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <GraphWrapper>
@@ -61,7 +57,8 @@ export const Payouts = (props: PageProps) => {
             <h2>
               {payouts.length ? (
                 <>
-                  {moment.unix(payouts[0].block_timestamp).format('Do MMMM')} -
+                  {moment.unix(payouts[0].block_timestamp).format('Do MMMM')}
+                  &nbsp; -
                   {moment
                     .unix(payouts[payouts.length - 1].block_timestamp)
                     .format('Do MMMM')}

@@ -17,16 +17,15 @@ import { PageTitle } from '../../library/PageTitle';
 import { planckToUnit } from '../../Utils';
 import { GRAPH_HEIGHT } from '../../constants';
 import { ActiveAccount } from './ActiveAccount';
-import StatBoxListItem from '../../library/StatBoxList/Item';
-import { useStats } from './stats';
+import TotalNominatorsStatBox from './Stats/TotalNominators';
+import SupplyStakedStatBox from './Stats/SupplyStaked';
+import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
 
 export const Overview = () => {
   const { network }: any = useApi();
   const { units } = network;
   const { activeAccount }: any = useConnect();
   const { payouts }: any = useSubscan();
-
-  const stats = useStats();
 
   // get last payout
   let lastPayout: any = null;
@@ -49,9 +48,9 @@ export const Overview = () => {
     <>
       <PageTitle title="What's Happening" />
       <StatBoxList>
-        {stats.map((stat: any, index: number) => (
-          <StatBoxListItem {...stat} key={index} />
-        ))}
+        <SupplyStakedStatBox />
+        <TotalNominatorsStatBox />
+        <ActiveNominatorsStatBox />
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <SecondaryWrapper>
@@ -66,7 +65,9 @@ export const Overview = () => {
             <div className="head">
               <h4>Recent Payouts</h4>
               <h2>
-                {lastPayout === null ? 0 : lastPayout.amount} {network.unit}
+                {lastPayout === null ? 0 : lastPayout.amount}
+                &nbsp;
+                {network.unit}
                 &nbsp;
                 <span className="fiat">
                   {lastPayout === null

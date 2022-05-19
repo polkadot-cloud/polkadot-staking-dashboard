@@ -22,16 +22,16 @@ import { GenerateNominations } from '../GenerateNominations';
 import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
-import StatBoxListItem from '../../../library/StatBoxList/Item';
-import { useStats } from './stats';
 import { PAYEE_STATUS } from '../../../constants';
+import ActiveNominationsStatBox from './Stats/ActiveNominations';
+import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
+import ActiveEraStatBox from './Stats/ActiveEra';
 
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { getNominationsStatus, staking, targets, setTargets } = useStaking();
   const { getAccountNominations }: any = useBalances();
-  const stats = useStats();
 
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
@@ -67,9 +67,9 @@ export const Active = (props: any) => {
     <>
       <PageTitle title={props.title} />
       <StatBoxList>
-        {stats.map((stat: any, index: number) => (
-          <StatBoxListItem {...stat} key={index} />
-        ))}
+        <ActiveNominationsStatBox />
+        <MinimumActiveBondStatBox />
+        <ActiveEraStatBox />
       </StatBoxList>
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingLeft>
