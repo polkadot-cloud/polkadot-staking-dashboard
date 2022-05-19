@@ -28,8 +28,10 @@ import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../Hooks';
 import { useTheme } from '../../contexts/Themes';
 import { useModal } from '../../contexts/Modal';
+import { useApi } from '../../contexts/Api';
 
 export const SideMenu = () => {
+  const { network }: any = useApi();
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
   const { activeAccount, accounts }: any = useConnect();
@@ -102,6 +104,15 @@ export const SideMenu = () => {
     setSideMenu(0);
   });
 
+  // remove pages that network does not support
+  let pagesToDisplay = Object.values(pageConfig.pages);
+  if (!network.features.pools) {
+    // remove pools
+    pagesToDisplay = pagesToDisplay.filter(
+      (page: any) => page.hash !== '/pools'
+    );
+  }
+
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
@@ -143,7 +154,7 @@ export const SideMenu = () => {
             )}
 
             {/* display category links */}
-            {pageConfig.pages.map((page: any, pageIndex: number) => (
+            {pagesToDisplay.map((page: any, pageIndex: number) => (
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id && (
                   <Item
