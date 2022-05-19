@@ -3,13 +3,19 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
+import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { rmCommas } from '../../Utils';
 
+const EMPTY_H256 = new Uint8Array(32);
+const MOD_PREFIX = stringToU8a('modl');
+const U32_OPTS = { bitLength: 32, isLe: true };
+
 export interface PoolsContextState {
   enabled: number;
   stats: any;
+  bondedPools: any;
   activePool: any;
 }
 
@@ -17,23 +23,30 @@ export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
     enabled: 0,
     stats: defaults.stats,
+    bondedPools: [],
     activePool: defaults.activePool,
   });
 
 export const usePools = () => React.useContext(PoolsContext);
 
 export const PoolsProvider = (props: any) => {
-  const { api, network, isReady }: any = useApi();
+  const { api, network, isReady, consts }: any = useApi();
+  const { poolsPalletId } = consts;
   const { features } = network;
 
   // whether pools are enabled
   const [enabled, setEnabled] = useState(0);
+
   // store pool metadata
   const [poolsConfig, setPoolsConfig]: any = useState({
     stats: defaults.stats,
     unsub: null,
   });
+  // store bonded pools
+  const [bondedPools, setBondedPools]: any = useState([]);
+
   // store the account's active pool status
+  // TODO: replace with real data
   const [activePool, setActivePool] = useState(defaults.activePool);
 
   // disable pools if network does not support them
@@ -49,6 +62,7 @@ export const PoolsProvider = (props: any) => {
   useEffect(() => {
     if (isReady && enabled) {
       subscribeToPoolConfig();
+      fetchBondedPools();
     }
     return () => {
       unsubscribe();
@@ -59,6 +73,7 @@ export const PoolsProvider = (props: any) => {
     if (poolsConfig.unsub !== null) {
       poolsConfig.unsub();
     }
+    setBondedPools([]);
   };
 
   // dummy data for active pool
@@ -124,11 +139,45 @@ export const PoolsProvider = (props: any) => {
         });
       }
     );
-
     setPoolsConfig({
       ...poolsConfig,
       unsub,
     });
+  };
+
+  // fetch all bonded pool entries
+  const fetchBondedPools = async () => {
+    const _exposures = await api.query.nominationPools.bondedPools.entries();
+    // humanise exposures to send to worker
+    const exposures = _exposures.map(([_keys, _val]: any) => {
+      const id = new BN(_keys.toHuman()[0]);
+      return {
+        ..._val.toHuman(),
+        id,
+        addresses: {
+          stash: createAccount(id, 0),
+          reward: createAccount(id, 1),
+        },
+      };
+    });
+
+    setBondedPools(exposures);
+  };
+
+  // generates pool stash and reward accounts. assumes poolsPalletId is synced.
+  const createAccount = (poolId: BN, index: number): string => {
+    return api.registry
+      .createType(
+        'AccountId32',
+        u8aConcat(
+          MOD_PREFIX,
+          poolsPalletId,
+          new Uint8Array([index]),
+          bnToU8a(poolId, U32_OPTS),
+          EMPTY_H256
+        )
+      )
+      .toString();
   };
 
   return (
@@ -136,6 +185,7 @@ export const PoolsProvider = (props: any) => {
       value={{
         enabled,
         stats: poolsConfig.stats,
+        bondedPools,
         activePool,
       }}
     >

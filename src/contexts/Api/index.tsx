@@ -13,7 +13,8 @@ import {
   NODE_ENDPOINTS,
   MAX_ELECTING_VOTERS,
   EXPECTED_BLOCK_TIME,
-} from '../constants';
+} from '../../constants';
+import * as defaults from './defaults';
 
 type NetworkOptions = 'polkadot' | 'westend';
 
@@ -45,14 +46,7 @@ export const APIProvider = ({ children }: any) => {
   });
 
   // constants state
-  const [consts, setConsts]: any = useState({
-    bondDuration: 0,
-    maxNominations: 0,
-    sessionsPerEra: 0,
-    maxNominatorRewardedPerValidator: 0,
-    maxElectingVoters: 0,
-    expectedBlockTime: 0,
-  });
+  const [consts, setConsts]: any = useState(defaults.consts);
 
   // connection status state
   const [connectionStatus, setConnectionStatus]: any = useState(
@@ -87,15 +81,22 @@ export const APIProvider = ({ children }: any) => {
 
     localStorage.setItem('network', String(network.name));
 
-    const _metrics: any = await Promise.all([
+    // saking constants
+    const promises = [
       _api.consts.staking.bondingDuration,
       _api.consts.staking.maxNominations,
       _api.consts.staking.sessionsPerEra,
       _api.consts.staking.maxNominatorRewardedPerValidator,
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
       _api.consts.babe.expectedBlockTime,
-    ]);
+    ];
 
+    // pools constants
+    if (network.meta.features.pools) {
+      promises.push(_api.consts.nominationPools.palletId);
+    }
+
+    const _metrics: any = await Promise.all(promises);
     setApi(_api);
     setConsts({
       bondDuration: _metrics[0]?.toNumber() ?? BONDING_DURATION,
@@ -105,6 +106,7 @@ export const APIProvider = ({ children }: any) => {
         _metrics[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
       maxElectingVoters: _metrics[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
       expectedBlockTime: _metrics[5]?.toNumber() ?? EXPECTED_BLOCK_TIME,
+      poolsPalletId: _metrics[6] ? _metrics[6] : 0,
     });
   };
 

@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageProps } from '../types';
 import { PageRowWrapper, Separator } from '../../Wrappers';
@@ -23,46 +23,8 @@ export const Pools = (props: PageProps) => {
   const { title } = page;
   const { network }: any = useApi();
   const { units } = network;
-  const { stats } = usePools();
+  const { stats, bondedPools } = usePools();
   const navigate = useNavigate();
-
-  const [state] = useState({
-    pools: [
-      {
-        id: 1,
-        points: '20,100,000,000,000,000',
-        state: 'Open',
-        memberCounter: 2,
-        roles: {
-          depositor: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
-          root: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-          nominator: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
-          stateToggler: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-        },
-        addresses: {
-          stash: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
-          reward: '133YZZ6GvY8DGVjH2WExeGkahFQcw68N2MnVRieaURmqD3u3',
-        },
-      },
-      {
-        id: 2,
-        points: '10,100,000,000,000,000',
-        state: 'Open',
-        memberCounter: 20,
-        roles: {
-          depositor: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-          root: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-          nominator: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-          stateToggler: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-        },
-        addresses: {
-          stash: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-          reward: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
-        },
-      },
-    ],
-    activePool: 1,
-  });
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -81,8 +43,10 @@ export const Pools = (props: PageProps) => {
     ).toFixed(2),
     0
   );
-  const activePool = state.pools.find(
-    (item: any) => item.id === stats.counterForRewardPools.toNumber()
+
+  // TODO: replace with real active pool if user has joined one.
+  const activePool = bondedPools.find(
+    (item: any) => item.id === stats.counterForRewardPools
   );
 
   const items: any = [
@@ -237,7 +201,7 @@ export const Pools = (props: PageProps) => {
             <OpenAssistantIcon page="pools" title="Nomination Pools" />
           </h2>
           <PoolList
-            pools={state.pools}
+            pools={bondedPools}
             title="Active Pools"
             allowMoreCols
             pagination
