@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useLocation } from 'react-router-dom';
-import {
-  Wrapper, HeadingWrapper, Item, SmallScreensOnly,
-} from './Wrappers';
+import { Wrapper, HeadingWrapper, Item, SmallScreensOnly } from './Wrappers';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { SideBar } from './SideBar';
@@ -12,7 +10,7 @@ import { useExtrinsics } from '../../contexts/Extrinsics';
 import { useUi } from '../../contexts/UI';
 import { Spinner } from './Spinner';
 import { pageFromUri } from '../../Utils';
-import { useValidators } from '../../contexts/Validators/Validators';
+import { useValidators } from '../../contexts/Validators';
 import { Toggle as SideBarToggle } from './SideBar/Toggle';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
@@ -47,7 +45,7 @@ export const Headers = () => {
         <SideMenuToggle />
 
         {/* spinner to show app syncing */}
-        {(syncing || pending.length > 0) ? <Spinner /> : <></>}
+        {syncing || pending.length > 0 ? <Spinner /> : <></>}
 
         {/* side bar toggle: shows on small screens */}
         <SideBarToggle />
@@ -63,7 +61,9 @@ export const Headers = () => {
         {/* always display assistant */}
         <HeadingWrapper>
           <Item
-            onClick={() => { assistant.toggle(); }}
+            onClick={() => {
+              assistant.toggle();
+            }}
             whileHover={{ scale: 1.02 }}
           >
             {activeAccount === '' && <div className="label">1</div>}

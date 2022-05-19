@@ -23,16 +23,15 @@ export const ChooseNominators = (props: any) => {
         assistantPage="stake"
         assistantKey="Nominating"
       />
-      <MotionContainer
-        thisSection={section}
-        activeSection={setup.section}
-      >
+      <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '1rem' }}>
           <GenerateNominations
-            setters={[{
-              set: setActiveAccountSetup,
-              current: setup,
-            }]}
+            setters={[
+              {
+                set: setActiveAccountSetup,
+                current: setup,
+              },
+            ]}
             nominations={setup.nominations}
             setSetup={setActiveAccountSetup}
           />

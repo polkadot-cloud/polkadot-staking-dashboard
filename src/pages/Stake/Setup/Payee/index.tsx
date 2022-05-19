@@ -23,15 +23,19 @@ export const Payee = (props: any) => {
   const buttons = [
     {
       title: 'Back to Staking',
-      subtitle: 'Payouts are automatically bonded to your existing bonded balance.',
+      subtitle:
+        'Payouts are automatically bonded to your existing bonded balance.',
       index: 0,
-    }, {
+    },
+    {
       title: 'To Stash',
       subtitle: 'Payouts will be sent to your stash account as free balance.',
       index: 1,
-    }, {
+    },
+    {
       title: 'To Controller',
-      subtitle: 'Payouts will be sent to your controller account as free balance.',
+      subtitle:
+        'Payouts will be sent to your controller account as free balance.',
       index: 2,
     },
   ];
@@ -70,10 +74,7 @@ export const Payee = (props: any) => {
         assistantPage="stake"
         assistantKey="Reward Destination"
       />
-      <MotionContainer
-        thisSection={section}
-        activeSection={setup.section}
-      >
+      <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
         <Items>
           {buttons.map((item: any, index: number) => (

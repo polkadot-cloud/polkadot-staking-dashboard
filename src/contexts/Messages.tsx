@@ -14,18 +14,23 @@ export interface MessagesContextState {
   getMessage: (k: string) => any;
 }
 
-export const MessagesContext: React.Context<MessagesContextState> = React.createContext({
-  messages: [],
-  setMessage: (k: string, m: any) => { },
-  removeMessage: (k: string) => { },
-  setMessages: (msgs: any) => { },
-  getMessage: (k: string) => { },
-});
+export const MessagesContext: React.Context<MessagesContextState> =
+  React.createContext({
+    messages: [],
+    setMessage: (k: string, m: any) => {},
+    removeMessage: (k: string) => {},
+    setMessages: (msgs: any) => {},
+    getMessage: (k: string) => {},
+  });
 
 export const useMessages = () => React.useContext(MessagesContext);
 
 export const MessagesProvider = (props: any) => {
-  const { activeAccount, status: connectStatus, accountExists }: any = useConnect();
+  const {
+    activeAccount,
+    status: connectStatus,
+    accountExists,
+  }: any = useConnect();
   const { accounts: balanceAccounts, getBondedAccount }: any = useBalances();
 
   const [messages, _setMessages]: any = useState([]);
@@ -61,7 +66,9 @@ export const MessagesProvider = (props: any) => {
     const _messages = messages;
     let filtered: any = [];
     for (let i = 0; i < msgs.length; i++) {
-      filtered = Object.values(_messages.filter((msg: any) => msgs[i].key !== msg.key));
+      filtered = Object.values(
+        _messages.filter((msg: any) => msgs[i].key !== msg.key)
+      );
 
       filtered.push({
         key: msgs[i].key,
@@ -82,13 +89,14 @@ export const MessagesProvider = (props: any) => {
   };
 
   return (
-    <MessagesContext.Provider value={{
-      messages,
-      setMessage,
-      setMessages,
-      removeMessage,
-      getMessage,
-    }}
+    <MessagesContext.Provider
+      value={{
+        messages,
+        setMessage,
+        setMessages,
+        removeMessage,
+        getMessage,
+      }}
     >
       {props.children}
     </MessagesContext.Provider>

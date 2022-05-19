@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import {
-  Chart as ChartJS, ArcElement, Tooltip, Legend,
-} from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
@@ -27,7 +25,8 @@ export const BalanceGraph = () => {
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
-  const { freeToStake, freeToUnbond: staked }: any = getBondOptions(activeAccount) || {};
+  const { freeToStake, freeToUnbond: staked }: any =
+    getBondOptions(activeAccount) || {};
 
   let { free } = balance;
   const { miscFrozen } = balance;
@@ -78,7 +77,9 @@ export const BalanceGraph = () => {
         bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           label: (context: any) => {
-            return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed} ${network.unit}`;
+            return `${context.label}: ${
+              context.parsed === -1 ? 0 : context.parsed
+            } ${network.unit}`;
           },
         },
       },
@@ -112,17 +113,12 @@ export const BalanceGraph = () => {
       <div className="head" style={{ paddingTop: '0.5rem' }}>
         <h4>Balance</h4>
         <h2>
-          {freeBase}
-          {' '}
-          {network.unit}
+          {freeBase} {network.unit}
           {services.includes('binance_spot') && (
-          <>
-&nbsp;
-            <span className="fiat">
-              $
-              {humanNumber(freeBalance)}
-            </span>
-          </>
+            <>
+              &nbsp;
+              <span className="fiat">${humanNumber(freeBalance)}</span>
+            </>
           )}
         </h2>
       </div>

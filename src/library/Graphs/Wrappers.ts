@@ -6,7 +6,8 @@ import { textSecondary, backgroundSecondary } from '../../theme';
 
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
-  padding: ${(props) => (props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem')};
+  padding: ${(props) =>
+    props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
   border-radius: 1rem;
   background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
@@ -27,8 +28,9 @@ export const SectionWrapper = styled.div<any>`
     width: 100%;
     position: relative;
   }
-  
-  h2, h3 {
+
+  h2,
+  h3 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -64,7 +66,6 @@ export const SectionWrapper = styled.div<any>`
       }
     }
   }
-
 
   .option {
     border-bottom: 1px solid #ddd;
@@ -108,7 +109,8 @@ export const GraphWrapper = styled.div<any>`
     padding: 0.75rem 1.2rem 0.5rem 1.2rem;
   }
 
-  h2, h4 {
+  h2,
+  h4 {
     margin: 0;
     padding: 0.25rem 0;
     display: flex;
@@ -121,7 +123,7 @@ export const GraphWrapper = styled.div<any>`
       font-size: 1rem;
       color: ${textSecondary};
       margin-top: 0.2rem;
-      font-variation-settings: 'wght' 530;      
+      font-variation-settings: 'wght' 530;
     }
   }
   h2 {
@@ -152,7 +154,6 @@ export const GraphWrapper = styled.div<any>`
     justify-content: center;
     width: 100%;
     padding: 1rem 1.2rem;
-
   }
   .graph_line {
     margin-top: 1.5rem;

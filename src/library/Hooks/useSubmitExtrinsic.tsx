@@ -9,13 +9,7 @@ import { useExtrinsics } from '../../contexts/Extrinsics';
 
 export const useSubmitExtrinsic = (extrinsic: any) => {
   // extract extrinsic info
-  const {
-    tx,
-    from,
-    shouldSubmit,
-    callbackSubmit,
-    callbackInBlock,
-  } = extrinsic;
+  const { tx, from, shouldSubmit, callbackSubmit, callbackInBlock } = extrinsic;
 
   const { api }: any = useApi();
   const { addNotification } = useNotifications();
@@ -37,8 +31,7 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
       return;
     }
     // get payment info
-    const info = await tx
-      .paymentInfo(from);
+    const info = await tx.paymentInfo(from);
     // convert fee to unit
     setEstimatedFee(info.partialFee.toHuman());
   };
@@ -55,8 +48,10 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
     setSubmitting(true);
 
     try {
-      const unsub = await tx
-        .signAndSend(from, { signer: injector.signer }, ({ status, nonce, events = [] }: any) => {
+      const unsub = await tx.signAndSend(
+        from,
+        { signer: injector.signer },
+        ({ status, nonce, events = [] }: any) => {
           // extrinsic is ready ( has been signed), add to pending
           if (status.isReady) {
             addPending(accountNonce);
@@ -80,25 +75,28 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
 
           // let user know outcome of transaction
           if (status.isFinalized) {
-            events.forEach(({ phase, event: { data, method, section } }: any) => {
-              if (method === 'ExtrinsicSuccess') {
-                addNotification({
-                  title: 'Finalized',
-                  subtitle: 'Transaction successful',
-                });
-                unsub();
-              } else if (method === 'ExtrinsicFailed') {
-                addNotification({
-                  title: 'Failed',
-                  subtitle: 'Error with transaction',
-                });
-                setSubmitting(false);
-                removePending(accountNonce);
-                unsub();
+            events.forEach(
+              ({ phase, event: { data, method, section } }: any) => {
+                if (method === 'ExtrinsicSuccess') {
+                  addNotification({
+                    title: 'Finalized',
+                    subtitle: 'Transaction successful',
+                  });
+                  unsub();
+                } else if (method === 'ExtrinsicFailed') {
+                  addNotification({
+                    title: 'Failed',
+                    subtitle: 'Error with transaction',
+                  });
+                  setSubmitting(false);
+                  removePending(accountNonce);
+                  unsub();
+                }
               }
-            });
+            );
           }
-        });
+        }
+      );
     } catch (e) {
       setSubmitting(false);
       removePending(accountNonce);

@@ -5,10 +5,13 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from '../../constants';
 import {
-  textPrimary, textSecondary, assistantButton, assistantBackground,
+  textPrimary,
+  textSecondary,
+  assistantButton,
+  assistantBackground,
 } from '../../theme';
 
-export const Wrapper = styled(motion.div) <any>`
+export const Wrapper = styled(motion.div)<any>`
   position: fixed;
   right: -600px;
   top: 0;
@@ -21,7 +24,7 @@ export const Wrapper = styled(motion.div) <any>`
   flex-flow: column nowrap;
   overflow: hidden;
   box-sizing: border-box;
-  * { 
+  * {
     box-sizing: border-box;
   }
 `;
@@ -48,7 +51,8 @@ export const ContentWrapper = styled.div`
 `;
 
 export const HeightWrapper = styled.div<any>`
-  transition: ${(props) => (props.transition ? 'height 0.4s cubic-bezier(0.1, 1, 0.2, 1)' : 'none')};
+  transition: ${(props) =>
+    props.transition ? 'height 0.4s cubic-bezier(0.1, 1, 0.2, 1)' : 'none'};
   width: 100%;
   max-height: 100%;
   overflow: auto;
@@ -102,7 +106,7 @@ export const HeaderWrapper = styled.div`
   }
 
   h3 {
-    padding: 0 1rem;  
+    padding: 0 1rem;
   }
 `;
 
@@ -115,7 +119,7 @@ export const ListWrapper = styled(motion.div)`
   padding: 0.75rem 0.5rem;
 
   > button {
-    padding: 0.25rem; 
+    padding: 0.25rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -148,7 +152,7 @@ export const HeadingWrapper = styled.div`
   }
 `;
 
-export const DefinitionWrapper = styled(motion.div) <any>`
+export const DefinitionWrapper = styled(motion.div)<any>`
   width: 100%;
   display: flex;
 
@@ -190,7 +194,7 @@ export const DefinitionWrapper = styled(motion.div) <any>`
   }
 `;
 
-export const ItemWrapper = styled(motion.div) <any>`
+export const ItemWrapper = styled(motion.div)<any>`
   display: flex;
   width: ${(props) => props.width};
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};
@@ -199,7 +203,7 @@ export const ItemWrapper = styled(motion.div) <any>`
   justify-content: flex-start;
 
   p.icon {
-    opacity: 0.5
+    opacity: 0.5;
   }
 
   > * {

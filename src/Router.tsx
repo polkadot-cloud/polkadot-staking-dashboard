@@ -3,7 +3,11 @@
 
 import { useEffect } from 'react';
 import {
-  Routes, Route, HashRouter, useLocation, Navigate,
+  Routes,
+  Route,
+  HashRouter,
+  useLocation,
+  Navigate,
 } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
@@ -37,7 +41,6 @@ export const RouterInner = () => {
       {/* Modal: closed by default */}
       <Modal />
       <BodyInterfaceWrapper>
-
         {/* Assistant: closed by default */}
         <Assistant />
 
@@ -48,7 +51,6 @@ export const RouterInner = () => {
 
         {/* Main content window */}
         <MainInterfaceWrapper>
-
           {/* Fixed headers */}
           <Headers />
 
@@ -61,7 +63,7 @@ export const RouterInner = () => {
                   <Route
                     key={`main_interface_page_${pageIndex}`}
                     path={page.hash}
-                    element={(
+                    element={
                       <PageWrapper
                         key={`main_interface_key__${pageIndex}`}
                         initial={{ opacity: 0, y: 10 }}
@@ -74,7 +76,7 @@ export const RouterInner = () => {
                         </Helmet>
                         <Entry page={page} />
                       </PageWrapper>
-                    )}
+                    }
                   />
                 );
               })}

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { textSecondary, backgroundNetworkBar } from '../../theme';
 
-export const Wrapper = styled(motion.div) <any>`
+export const Wrapper = styled(motion.div)<any>`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -38,7 +38,7 @@ export const Summary = styled.div`
     align-items: center;
     align-content: center;
 
-    @media(max-width: 600px) {
+    @media (max-width: 600px) {
       display: none;
     }
   }
@@ -84,8 +84,12 @@ export const Summary = styled.div`
         color: ${textSecondary};
       }
       span {
-        &.pos { color: #3eb955; }
-        &.neg { color: #d2545d; }
+        &.pos {
+          color: #3eb955;
+        }
+        &.neg {
+          color: #d2545d;
+        }
       }
     }
   }
@@ -115,13 +119,14 @@ export const NetworkInfo = styled(motion.div)`
       font-size: 0.85rem;
       margin: 1.5rem 0 0.75rem 0;
       padding: 0.6rem 0.3rem 0rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
       width: 100%;
     }
 
-    > div, > button {
+    > div,
+    > button {
       padding: 0.25rem 1.5rem 0.25rem;
-      background: rgba(0,0,0,0.1);
+      background: rgba(0, 0, 0, 0.1);
       margin-right: 1rem;
       border-radius: 0.5rem;
       padding: 0.5rem 1.25rem;
@@ -147,9 +152,9 @@ export const NetworkInfo = styled(motion.div)`
   }
 
   > .row:first-child > h3 {
-      margin-top: 0.5rem;
-      border-top: 0;
-    }
+    margin-top: 0.5rem;
+    border-top: 0;
+  }
 `;
 
 export const Separator = styled.div`

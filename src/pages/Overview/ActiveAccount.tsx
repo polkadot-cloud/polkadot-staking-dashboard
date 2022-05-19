@@ -29,19 +29,14 @@ export const ActiveAccount = () => {
   return (
     <AccountWrapper>
       <div className="account">
-        {accountData !== null
-          && (
+        {accountData !== null && (
           <>
             <div className="icon">
-              <Identicon
-                value={accountData.address}
-                size="1.6rem"
-              />
+              <Identicon value={accountData.address} size="1.6rem" />
             </div>
             <h4>
               {clipAddress(accountData.address)}
-              <div className="sep" />
-              {' '}
+              <div className="sep" />{' '}
               <span className="addr">{accountData.meta.name}</span>
             </h4>
             <div>
@@ -50,22 +45,27 @@ export const ActiveAccount = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <button type="button" onClick={() => addNotification(notification)}>
+                <button
+                  type="button"
+                  onClick={() => addNotification(notification)}
+                >
                   <CopyToClipboard text={accountData.address}>
-                    <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />
+                    <FontAwesomeIcon
+                      icon={faCopy as IconProp}
+                      transform="grow-1"
+                    />
                   </CopyToClipboard>
                 </button>
               </motion.div>
             </div>
           </>
-          )}
-        {accountData === null
-          && (
+        )}
+        {accountData === null && (
           <>
             <h4 style={{ marginLeft: 0 }}>Account Not Connected</h4>
             <div />
           </>
-          )}
+        )}
       </div>
       <Separator />
     </AccountWrapper>

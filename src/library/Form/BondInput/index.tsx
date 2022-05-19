@@ -32,7 +32,8 @@ export const BondInput = (props: any) => {
   const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = freeToUnbond - planckBnToUnit(minNominatorBond, units);
+  const freeToUnbondToMinNominatorBond =
+    freeToUnbond - planckBnToUnit(minNominatorBond, units);
 
   // the current local bond value
   const [bond, setBond] = useState(_value);
@@ -78,10 +79,7 @@ export const BondInput = (props: any) => {
         <InputWrapper>
           <section style={{ opacity: disabled ? 0.5 : 1 }}>
             <h3>
-              {task === 'unbond' ? 'Unbond' : 'Bond'}
-              {' '}
-              {network.unit}
-              :
+              {task === 'unbond' ? 'Unbond' : 'Bond'} {network.unit}:
             </h3>
             <input
               type="text"
@@ -106,7 +104,8 @@ export const BondInput = (props: any) => {
             small
             title="Max"
             onClick={() => {
-              const value = task === 'bond' ? freeToBond : freeToUnbondToMinNominatorBond;
+              const value =
+                task === 'bond' ? freeToBond : freeToUnbondToMinNominatorBond;
               setBond(value);
               updateParentState(value);
             }}

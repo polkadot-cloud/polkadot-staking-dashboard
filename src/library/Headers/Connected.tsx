@@ -17,8 +17,7 @@ export const Connected = (props: any) => {
 
   return (
     <>
-      {activeAccount !== ''
-        && (
+      {activeAccount !== '' && (
         <>
           <HeadingWrapper>
             <Account
@@ -48,7 +47,7 @@ export const Connected = (props: any) => {
             />
           </HeadingWrapper>
         </>
-        )}
+      )}
     </>
   );
 };

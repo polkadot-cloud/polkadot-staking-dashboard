@@ -4,7 +4,7 @@
 import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useApi } from '../../contexts/Api';
-import { useValidators } from '../../contexts/Validators/Validators';
+import { useValidators } from '../../contexts/Validators';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';

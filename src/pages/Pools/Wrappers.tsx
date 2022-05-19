@@ -9,13 +9,14 @@ export const AccountWrapper = styled.div<any>`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  border-bottom: ${(props) => (!props.last ? '1px solid ' : '0px solid')} ${borderPrimary};
+  border-bottom: ${(props) => (!props.last ? '1px solid ' : '0px solid')}
+    ${borderPrimary};
   padding-bottom: ${(props) => (!props.last ? '0.5rem' : 0)};
   margin-bottom: 0.75rem;
 
   .account {
     width: 100%;
-    display: flex; 
+    display: flex;
     flex-flow: row wrap;
     align-items: center;
     padding: 0;

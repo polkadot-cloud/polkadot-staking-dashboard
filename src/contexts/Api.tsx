@@ -18,9 +18,9 @@ import {
 type NetworkOptions = 'polkadot' | 'westend';
 
 export const APIContext: any = React.createContext({
-  connect: () => { },
-  fetchDotPrice: () => { },
-  switchNetwork: () => { },
+  connect: () => {},
+  fetchDotPrice: () => {},
+  switchNetwork: () => {},
   api: null,
   consts: {},
   isReady: false,
@@ -39,7 +39,9 @@ export const APIProvider = ({ children }: any) => {
   // network state
   const [network, setNetwork]: any = useState({
     name: localStorage.getItem('network'),
-    meta: NODE_ENDPOINTS[localStorage.getItem('network') as keyof NetworkOptions],
+    meta: NODE_ENDPOINTS[
+      localStorage.getItem('network') as keyof NetworkOptions
+    ],
   });
 
   // constants state
@@ -53,7 +55,9 @@ export const APIProvider = ({ children }: any) => {
   });
 
   // connection status state
-  const [connectionStatus, setConnectionStatus]: any = useState(CONNECTION_STATUS[0]);
+  const [connectionStatus, setConnectionStatus]: any = useState(
+    CONNECTION_STATUS[0]
+  );
 
   // initial connection
   useEffect(() => {
@@ -97,7 +101,8 @@ export const APIProvider = ({ children }: any) => {
       bondDuration: _metrics[0]?.toNumber() ?? BONDING_DURATION,
       maxNominations: _metrics[1]?.toNumber() ?? MAX_NOMINATIONS,
       sessionsPerEra: _metrics[2]?.toNumber() ?? SESSIONS_PER_ERA,
-      maxNominatorRewardedPerValidator: _metrics[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
+      maxNominatorRewardedPerValidator:
+        _metrics[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
       maxElectingVoters: _metrics[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
       expectedBlockTime: _metrics[5]?.toNumber() ?? EXPECTED_BLOCK_TIME,
     });
@@ -125,15 +130,26 @@ export const APIProvider = ({ children }: any) => {
   // handles fetching of DOT price and updates context state.
   const fetchDotPrice = async () => {
     const urls = [
-      `${API_ENDPOINTS.priceChange}${NODE_ENDPOINTS[network.name as keyof NetworkOptions].api.priceTicker}`,
+      `${API_ENDPOINTS.priceChange}${
+        NODE_ENDPOINTS[network.name as keyof NetworkOptions].api.priceTicker
+      }`,
     ];
-    const responses = await Promise.all(urls.map((u) => fetch(u, { method: 'GET' })));
+    const responses = await Promise.all(
+      urls.map((u) => fetch(u, { method: 'GET' }))
+    );
     const texts = await Promise.all(responses.map((res) => res.json()));
     const _change = texts[0];
 
-    if (_change.lastPrice !== undefined && _change.priceChangePercent !== undefined) {
-      const price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(2);
-      const change: string = (Math.round(_change.priceChangePercent * 100) / 100).toFixed(2);
+    if (
+      _change.lastPrice !== undefined &&
+      _change.priceChangePercent !== undefined
+    ) {
+      const price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(
+        2
+      );
+      const change: string = (
+        Math.round(_change.priceChangePercent * 100) / 100
+      ).toFixed(2);
 
       return {
         lastPrice: price,
@@ -144,16 +160,17 @@ export const APIProvider = ({ children }: any) => {
   };
 
   return (
-    <APIContext.Provider value={{
-      connect,
-      fetchDotPrice,
-      switchNetwork,
-      api,
-      consts,
-      isReady: (connectionStatus === CONNECTION_STATUS[2] && api !== null),
-      network: network.meta,
-      status: connectionStatus,
-    }}
+    <APIContext.Provider
+      value={{
+        connect,
+        fetchDotPrice,
+        switchNetwork,
+        api,
+        consts,
+        isReady: connectionStatus === CONNECTION_STATUS[2] && api !== null,
+        network: network.meta,
+        status: connectionStatus,
+      }}
     >
       {children}
     </APIContext.Provider>

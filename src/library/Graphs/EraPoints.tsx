@@ -23,7 +23,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 );
 
 export const EraPoints = (props: any) => {

@@ -11,9 +11,13 @@ export const SideBar = ({ children }: any) => {
 
   const ref = useRef(null);
 
-  useOutsideAlerter(ref, () => {
-    closeSideBar();
-  }, ['ignore-toggle-side-bar']);
+  useOutsideAlerter(
+    ref,
+    () => {
+      closeSideBar();
+    },
+    ['ignore-toggle-side-bar']
+  );
 
   const variants = {
     hidden: {
@@ -40,9 +44,7 @@ export const SideBar = ({ children }: any) => {
       }}
       variants={variants}
     >
-      <ContentWrapper>
-        {children}
-      </ContentWrapper>
+      <ContentWrapper>{children}</ContentWrapper>
     </Wrapper>
   );
 };

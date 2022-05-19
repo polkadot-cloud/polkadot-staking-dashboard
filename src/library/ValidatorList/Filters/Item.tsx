@@ -11,9 +11,7 @@ import { ItemWrapper } from './Wrapper';
 
 export const Item = (props: any) => {
   const { mode }: any = useTheme();
-  const {
-    icon, label, transform, onClick,
-  } = props;
+  const { icon, label, transform, onClick } = props;
 
   const [active, setActive] = useState(props.active);
 
@@ -31,12 +29,11 @@ export const Item = (props: any) => {
     >
       <ItemWrapper active={active}>
         <section>
-          {active
-            && (
+          {active && (
             <div className="active">
               <FontAwesomeIcon icon={faCheck} transform="grow-0" />
             </div>
-            )}
+          )}
           <div className="icon">
             <FontAwesomeIcon
               icon={icon}

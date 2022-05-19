@@ -11,8 +11,8 @@ export const Notifications = () => {
   return (
     <Wrapper>
       <AnimatePresence initial={false}>
-        {notifications.length > 0
-          && notifications.map((_n: any, i: number) => {
+        {notifications.length > 0 &&
+          notifications.map((_n: any, i: number) => {
             const { item } = _n;
 
             return (
@@ -22,7 +22,10 @@ export const Notifications = () => {
                 initial={{ opacity: 0, y: 50, scale: 0.3 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{
-                  opacity: 0, scale: 0.5, y: 50, transition: { duration: 0.2 },
+                  opacity: 0,
+                  scale: 0.5,
+                  y: 50,
+                  transition: { duration: 0.2 },
                 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

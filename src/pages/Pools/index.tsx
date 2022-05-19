@@ -65,10 +65,10 @@ export const Pools = (props: PageProps) => {
   const totalPools = meta.counterForBondedPools + meta.counterForRewardPools;
   const activePoolsAsPercent = defaultIfNaN(
     ((meta.counterForRewardPools ?? 0) / (totalPools * 0.01)).toFixed(2),
-    0,
+    0
   );
   const activePool = state.pools.find(
-    (item: any) => item.id === meta.counterForRewardPools,
+    (item: any) => item.id === meta.counterForRewardPools
   );
 
   const items: any = [
@@ -143,7 +143,7 @@ export const Pools = (props: PageProps) => {
                       inline
                       primary
                       title="Create Pool"
-                      onClick={() => { }}
+                      onClick={() => {}}
                     />
                   ) : (
                     <Button
@@ -151,7 +151,7 @@ export const Pools = (props: PageProps) => {
                       inline
                       primary
                       title="Leave"
-                      onClick={() => { }}
+                      onClick={() => {}}
                     />
                   )}
                 </div>
@@ -162,14 +162,10 @@ export const Pools = (props: PageProps) => {
                 <OpenAssistantIcon page="pools" title="Bonded in Pool" />
               </h4>
               <h2>
-                32.622931
-                {' '}
-                {network.unit}
-                {' '}
-&nbsp;
+                32.622931 {network.unit} &nbsp;
                 <div>
-                  <Button small primary inline title="+" onClick={() => { }} />
-                  <Button small primary title="-" onClick={() => { }} />
+                  <Button small primary inline title="+" onClick={() => {}} />
+                  <Button small primary title="-" onClick={() => {}} />
                 </div>
               </h2>
               <Separator />
@@ -178,18 +174,14 @@ export const Pools = (props: PageProps) => {
                 <OpenAssistantIcon page="pools" title="Pool Rewards" />
               </h4>
               <h2>
-                0.82
-                {' '}
-                {network.unit}
-                {' '}
-&nbsp;
+                0.82 {network.unit} &nbsp;
                 <div>
                   <Button
                     small
                     primary
                     inline
                     title="Claim"
-                    onClick={() => { }}
+                    onClick={() => {}}
                   />
                 </div>
               </h2>
@@ -201,23 +193,17 @@ export const Pools = (props: PageProps) => {
             <div className="head">
               <h2>Pool Roles</h2>
               <h4>
-                Root
-                {' '}
-                <OpenAssistantIcon page="pools" title="Joined Pool" />
+                Root <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.root ?? null} />
 
               <h4>
-                Depositor
-                {' '}
-                <OpenAssistantIcon page="pools" title="Joined Pool" />
+                Depositor <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.depositor ?? null} />
 
               <h4>
-                Nominator
-                {' '}
-                <OpenAssistantIcon page="pools" title="Joined Pool" />
+                Nominator <OpenAssistantIcon page="pools" title="Joined Pool" />
               </h4>
               <PoolAccount address={activePool?.roles?.nominator ?? null} />
 

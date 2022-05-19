@@ -8,9 +8,7 @@ export const Heading = (props: any) => {
 
   return (
     <Wrapper minimised={minimised}>
-      {minimised
-        ? <h5>&bull;</h5>
-        : <h5>{title}</h5>}
+      {minimised ? <h5>&bull;</h5> : <h5>{title}</h5>}
     </Wrapper>
   );
 };

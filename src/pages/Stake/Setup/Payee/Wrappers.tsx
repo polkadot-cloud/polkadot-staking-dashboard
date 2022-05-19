@@ -3,7 +3,10 @@
 
 import styled from 'styled-components';
 import {
-  backgroundToggle, textPrimary, primary, textSecondary,
+  backgroundToggle,
+  textPrimary,
+  primary,
+  textSecondary,
 } from '../../../../theme';
 
 export const Items = styled.div`

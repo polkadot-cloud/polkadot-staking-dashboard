@@ -86,8 +86,8 @@ export const Section = styled.div`
   padding-right: 0.5rem;
 
   &:last-child {
-      padding-right: 0;
-    }
+    padding-right: 0;
+  }
 
   > div {
     flex: 1;

@@ -22,7 +22,7 @@ export const Wrapper = styled(motion.div)`
   flex-flow: column nowrap;
   overflow: hidden;
   box-sizing: border-box;
-  * { 
+  * {
     box-sizing: border-box;
   }
 `;
@@ -51,8 +51,8 @@ export const ContentWrapper = styled.div`
 export const ToggleWrapper = styled.div`
   display: flex;
   margin-left: 1rem;
-  
-  @media(min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
+
+  @media (min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
     display: none;
   }
 `;

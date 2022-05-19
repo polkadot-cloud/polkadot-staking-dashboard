@@ -56,9 +56,11 @@ export const Sections = (props: any) => {
   const itemRef: any = useRef(null);
 
   useEffect(() => {
-    assistant.setAssistantHeight(assistant.activeSection === 0
-      ? homeRef.current.clientHeight
-      : itemRef.current.clientHeight);
+    assistant.setAssistantHeight(
+      assistant.activeSection === 0
+        ? homeRef.current.clientHeight
+        : itemRef.current.clientHeight
+    );
   }, [assistant.activeSection, assistant.open]);
 
   return (
@@ -69,23 +71,23 @@ export const Sections = (props: any) => {
       >
         <HeaderWrapper>
           <div className="hold">
-            <h3>
-              {pageTitleFromUri(pathname)}
-              {' '}
-              Resources
-            </h3>
+            <h3>{pageTitleFromUri(pathname)} Resources</h3>
             <span>
-              <button type="button" className="close" onClick={() => { assistant.closeAssistant(pageFromUri(pathname)); }}>
+              <button
+                type="button"
+                className="close"
+                onClick={() => {
+                  assistant.closeAssistant(pageFromUri(pathname));
+                }}
+              >
                 Close
               </button>
             </span>
           </div>
         </HeaderWrapper>
         <ListWrapper>
-
           {/* only display if accounts not yet connected */}
-          {activeAccount === ''
-            && (
+          {activeAccount === '' && (
             <Action
               height="120px"
               label="next step"
@@ -93,11 +95,10 @@ export const Sections = (props: any) => {
               subtitle={`Connect your ${network.name} accounts to start staking.`}
               onClick={connectOnClick}
             />
-            )}
+          )}
 
           {/* Display definitions */}
-          {definitions.length > 0
-            && (
+          {definitions.length > 0 && (
             <>
               <Heading title="Definitions" />
               {definitions.map((item: any, index: number) => (
@@ -112,11 +113,10 @@ export const Sections = (props: any) => {
                 />
               ))}
             </>
-            )}
+          )}
 
           {/* Display external */}
-          {external.length > 0
-            && (
+          {external.length > 0 && (
             <>
               <Heading title="Articles" />
               {external.map((item: any, index: number) => {
@@ -131,14 +131,13 @@ export const Sections = (props: any) => {
                   />
                 );
 
-                curFlexWidth = curFlexWidth > (flexWidths.length - 1)
-                  ? 0
-                  : curFlexWidth + 1;
+                curFlexWidth =
+                  curFlexWidth > flexWidths.length - 1 ? 0 : curFlexWidth + 1;
 
                 return thisRteturn;
               })}
             </>
-            )}
+          )}
         </ListWrapper>
       </SectionWrapper>
 
@@ -153,12 +152,19 @@ export const Sections = (props: any) => {
                 icon={faBack}
                 transform="shrink-4"
                 style={{ cursor: 'pointer', marginRight: '0.3rem' }}
-              />
-              {' '}
+              />{' '}
               Back
             </button>
             <span>
-              <button type="button" className="close" onClick={() => { assistant.closeAssistant(pageFromUri(pathname)); }}>Close</button>
+              <button
+                type="button"
+                className="close"
+                onClick={() => {
+                  assistant.closeAssistant(pageFromUri(pathname));
+                }}
+              >
+                Close
+              </button>
             </span>
           </div>
         </HeaderWrapper>

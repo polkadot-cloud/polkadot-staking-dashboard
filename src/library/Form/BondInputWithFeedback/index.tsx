@@ -18,12 +18,13 @@ export const BondInputWithFeedback = (props: any) => {
 
   // functional props
   const setters = props.setters ?? [];
-  const listenIsValid: any = props.listenIsValid ?? (() => { });
+  const listenIsValid: any = props.listenIsValid ?? (() => {});
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
-  const { getAccountLedger, getBondedAccount, getBondOptions }: any = useBalances();
+  const { getAccountLedger, getBondedAccount, getBondOptions }: any =
+    useBalances();
   const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
@@ -35,7 +36,8 @@ export const BondInputWithFeedback = (props: any) => {
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = freeToUnbond - planckBnToUnit(minNominatorBond, units);
+  const freeToUnbondToMinNominatorBond =
+    freeToUnbond - planckBnToUnit(minNominatorBond, units);
 
   // store errors
   const [errors, setErrors]: any = useState([]);
@@ -85,11 +87,15 @@ export const BondInputWithFeedback = (props: any) => {
       if (nominating) {
         if (freeToBond < minNominatorBondBase) {
           _bondDisabled = true;
-          _errors.push(`You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}.`);
+          _errors.push(
+            `You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}.`
+          );
         }
 
         if (bond.bond !== '' && bond.bond < minNominatorBondBase) {
-          _errors.push(`Bond amount must be at least ${minNominatorBondBase} ${network.unit}.`);
+          _errors.push(
+            `Bond amount must be at least ${minNominatorBondBase} ${network.unit}.`
+          );
         }
       }
     }
@@ -98,9 +104,16 @@ export const BondInputWithFeedback = (props: any) => {
     if (unbond) {
       if (bond.bond !== '' && bond.bond > activeBase) {
         _errors.push('Unbond amount is more than your bonded balance.');
-      } else if (bond.bond !== '' && bond.bond > freeToUnbondToMinNominatorBond) {
-        const remainingAfterUnbond = (bond.bond - freeToUnbondToMinNominatorBond).toFixed(2);
-        _errors.push(`A minimum bond of ${minNominatorBondBase} ${network.unit} is required when actively nominating. Removing this amount will result in ~${remainingAfterUnbond} ${network.unit} remaining bond.`);
+      } else if (
+        bond.bond !== '' &&
+        bond.bond > freeToUnbondToMinNominatorBond
+      ) {
+        const remainingAfterUnbond = (
+          bond.bond - freeToUnbondToMinNominatorBond
+        ).toFixed(2);
+        _errors.push(
+          `A minimum bond of ${minNominatorBondBase} ${network.unit} is required when actively nominating. Removing this amount will result in ~${remainingAfterUnbond} ${network.unit} remaining bond.`
+        );
       }
     }
     const bondValid = !_errors.length && bond.bond !== '';
@@ -114,15 +127,14 @@ export const BondInputWithFeedback = (props: any) => {
     <>
       <div className="head">
         <h4>
-          {unbond ? 'Bonded' : 'Available'}
-          :
-          {' '}
-          {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)}
-          {' '}
+          {unbond ? 'Bonded' : 'Available'}:{' '}
+          {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)}{' '}
           {network.unit}
         </h4>
       </div>
-      {errors.map((err: any, index: any) => <Warning key={`setup_error_${index}`} text={err} />)}
+      {errors.map((err: any, index: any) => (
+        <Warning key={`setup_error_${index}`} text={err} />
+      ))}
       <Spacer />
       <BondInput
         task={unbond ? 'unbond' : 'bond'}

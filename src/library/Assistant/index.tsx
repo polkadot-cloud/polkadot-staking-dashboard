@@ -5,7 +5,10 @@ import { useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAssistant } from '../../contexts/Assistant';
 import {
-  Wrapper, SectionsWrapper, ContentWrapper, HeightWrapper,
+  Wrapper,
+  SectionsWrapper,
+  ContentWrapper,
+  HeightWrapper,
 } from './Wrappers';
 import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../pages';
@@ -42,10 +45,7 @@ export const Assistant = () => {
     assistant.setPage(pageFromUri(pathname));
   }, [pathname]);
 
-  useEffect(
-    () => setPageOnPathname(),
-    [setPageOnPathname],
-  );
+  useEffect(() => setPageOnPathname(), [setPageOnPathname]);
 
   // animate assistant container default
   const animateContainer = assistant.open ? 'visible' : 'hidden';
@@ -54,13 +54,19 @@ export const Assistant = () => {
   const animateSections = assistant.activeSection === 0 ? 'home' : 'item';
 
   // get page meta from active page
-  const pageMeta = Object.values(ASSISTANT_CONFIG).find((item: any) => item.key === assistant.page);
+  const pageMeta = Object.values(ASSISTANT_CONFIG).find(
+    (item: any) => item.key === assistant.page
+  );
 
   const ref = useRef(null);
 
-  useOutsideAlerter(ref, () => {
-    assistant.closeAssistant(pageFromUri(pathname));
-  }, ['ignore-assistant-outside-alerter']);
+  useOutsideAlerter(
+    ref,
+    () => {
+      assistant.closeAssistant(pageFromUri(pathname));
+    },
+    ['ignore-assistant-outside-alerter']
+  );
 
   return (
     <Wrapper

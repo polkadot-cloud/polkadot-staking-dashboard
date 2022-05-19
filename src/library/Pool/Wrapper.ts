@@ -3,9 +3,13 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundValidator, borderSecondary, textSecondary } from '../../theme';
+import {
+  backgroundValidator,
+  borderSecondary,
+  textSecondary,
+} from '../../theme';
 
-export const Wrapper = styled(motion.div) <any>`
+export const Wrapper = styled(motion.div)<any>`
   padding: 0.5rem;
   display: flex;
   flex-flow: row nowrap;
@@ -39,7 +43,7 @@ export const Wrapper = styled(motion.div) <any>`
       align-content: center;
       overflow: hidden;
       flex: 1;
-      
+
       h4 {
         margin: 0;
         overflow: hidden;
@@ -70,13 +74,15 @@ export const Wrapper = styled(motion.div) <any>`
             color: #666;
           }
           &.active {
-          color: rgba(211, 48, 121, 0.85);
-        }
+            color: rgba(211, 48, 121, 0.85);
+          }
         }
       }
     }
 
-    svg { margin: 0; }
+    svg {
+      margin: 0;
+    }
   }
 `;
 

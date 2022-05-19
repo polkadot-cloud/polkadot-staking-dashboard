@@ -30,9 +30,7 @@ import ActiveEraStatBox from '../../Validators/Stats/ActiveEra';
 export const Active = (props: any) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const {
-    getNominationsStatus, staking, targets, setTargets,
-  } = useStaking();
+  const { getNominationsStatus, staking, targets, setTargets } = useStaking();
   const { getAccountNominations }: any = useBalances();
 
   const { payee } = staking;
@@ -48,14 +46,14 @@ export const Active = (props: any) => {
 
   const nominationStatuses = useMemo(
     () => getNominationsStatus(),
-    [nominations],
+    [nominations]
   );
 
   useEffect(() => {
     const statuses = nominationStatuses;
     const total = Object.values(statuses).length;
     const _active: any = Object.values(statuses).filter(
-      (_v: any) => _v === 'active',
+      (_v: any) => _v === 'active'
     ).length;
 
     setNominationsStatus({
@@ -85,8 +83,8 @@ export const Active = (props: any) => {
                 {!nominations.length
                   ? 'Inactive: Not Nominating'
                   : nominationsStatus.active
-                    ? 'Actively Nominating with Bonded Funds'
-                    : 'Waiting for Active Nominations'}
+                  ? 'Actively Nominating with Bonded Funds'
+                  : 'Waiting for Active Nominations'}
               </h2>
               <Separator />
               <h4>
@@ -99,8 +97,8 @@ export const Active = (props: any) => {
                     payee === 'Staked'
                       ? faRedoAlt
                       : payee === 'None'
-                        ? faCircle
-                        : faWallet
+                      ? faCircle
+                      : faWallet
                   }
                   transform="shrink-4"
                 />

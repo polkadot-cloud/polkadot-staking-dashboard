@@ -9,11 +9,12 @@ export interface SideBarContextState {
   open: number;
 }
 
-export const SideBarContext: React.Context<SideBarContextState> = React.createContext({
-  openSideBar: () => { },
-  closeSideBar: () => { },
-  open: 0,
-});
+export const SideBarContext: React.Context<SideBarContextState> =
+  React.createContext({
+    openSideBar: () => {},
+    closeSideBar: () => {},
+    open: 0,
+  });
 
 export const useSideBar = () => React.useContext(SideBarContext);
 
@@ -30,11 +31,12 @@ export const SideBarProvider = ({ children }: any) => {
   };
 
   return (
-    <SideBarContext.Provider value={{
-      openSideBar,
-      closeSideBar,
-      open,
-    }}
+    <SideBarContext.Provider
+      value={{
+        openSideBar,
+        closeSideBar,
+        open,
+      }}
     >
       {children}
     </SideBarContext.Provider>

@@ -26,7 +26,7 @@ export const Item = styled(motion.div)`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin: 0 0 0.8rem;;
+    margin: 0 0 0.8rem;
     padding: 0.2rem 0;
 
     &.neutral {

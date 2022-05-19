@@ -10,11 +10,7 @@ export const ctx: Worker = self as any;
 ctx.addEventListener('message', (event: any) => {
   const { data } = event;
 
-  const {
-    units,
-    exposures,
-    maxNominatorRewardedPerValidator,
-  } = data;
+  const { units, exposures, maxNominatorRewardedPerValidator } = data;
 
   const _stakers: any = [];
   let _activeValidators: any = 0;
@@ -55,9 +51,11 @@ ctx.addEventListener('message', (event: any) => {
   });
 
   // order _nominators by bond size, largest first
-  const _getMinBonds = _nominators.sort((a: any, b: any) => {
-    return a.value.sub(b.value);
-  }).splice(0, (maxNominatorRewardedPerValidator));
+  const _getMinBonds = _nominators
+    .sort((a: any, b: any) => {
+      return a.value.sub(b.value);
+    })
+    .splice(0, maxNominatorRewardedPerValidator);
 
   let _minActiveBond = _getMinBonds[0]?.value ?? new BN(0);
 

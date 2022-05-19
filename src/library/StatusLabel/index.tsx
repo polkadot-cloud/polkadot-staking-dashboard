@@ -16,13 +16,13 @@ export const StatusLabel = (props: any) => {
 
   if (status === 'sync_or_setup') {
     if (isSyncing() || !inSetup()) {
-      return (<></>);
+      return <></>;
     }
   }
 
   if (status === 'active_service') {
     if (services.includes(statusFor)) {
-      return (<></>);
+      return <></>;
     }
   }
 
@@ -34,7 +34,7 @@ export const StatusLabel = (props: any) => {
       <div>
         <h3>
           <FontAwesomeIcon icon={faExclamationTriangle} transform="grow-1" />
-&nbsp;
+          &nbsp;
           {title}
         </h3>
       </div>

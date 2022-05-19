@@ -3,7 +3,12 @@
 
 import styled from 'styled-components';
 import {
-  buttonPrimaryBackground, backgroundToggle, textPrimary, textInvert, textSecondary, textDanger,
+  buttonPrimaryBackground,
+  backgroundToggle,
+  textPrimary,
+  textInvert,
+  textSecondary,
+  textDanger,
 } from '../../theme';
 
 export const Wrapper = styled.div`
@@ -37,7 +42,7 @@ export const Wrapper = styled.div`
       cursor: default;
       opacity: 0.5;
     }
-    
+
     &.item {
       box-sizing: border-box;
       width: 100%;
@@ -88,7 +93,7 @@ export const Wrapper = styled.div`
         }
       }
     }
-}
+  }
 `;
 
 export const Separator = styled.div`

@@ -48,9 +48,9 @@ export const Nominate = () => {
       return _tx;
     }
     const targetsToSubmit = nominations.map((item: any) => {
-      return ({
+      return {
         Id: item.address,
-      });
+      };
     });
     _tx = api.tx.staking.nominate(targetsToSubmit);
     return _tx;
@@ -63,8 +63,7 @@ export const Nominate = () => {
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {
-    },
+    callbackInBlock: () => {},
   });
 
   // warnings
@@ -73,7 +72,9 @@ export const Nominate = () => {
     warnings.push('You have no nominations set.');
   }
   if (activeBase < minNominatorBondBase) {
-    warnings.push(`You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}. Please bond some funds before nominating.`);
+    warnings.push(
+      `You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}. Please bond some funds before nominating.`
+    );
   }
 
   return (
@@ -82,18 +83,22 @@ export const Nominate = () => {
         <FontAwesomeIcon transform="grow-2" icon={faPlayCircle} />
         Nominate
       </HeadingWrapper>
-      <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
-        {warnings.map((text: any, index: number) => <Warning text={text} />)}
+      <div
+        style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
+      >
+        {warnings.map((text: any, index: number) => (
+          <Warning text={text} />
+        ))}
         <h2>
           You Have
-          {nominations.length}
-          {' '}
-          Nomination
+          {nominations.length} Nomination
           {nominations.length === 1 ? '' : 's'}
         </h2>
         <Separator />
         <div className="notes">
-          <p>Once submitted, you will start nominating your chosen validators.</p>
+          <p>
+            Once submitted, you will start nominating your chosen validators.
+          </p>
           <p>
             Estimated Tx Fee:
             {estimatedFee === null ? '...' : `${estimatedFee}`}
@@ -107,7 +112,10 @@ export const Nominate = () => {
               onClick={() => submitTx()}
               disabled={!valid || submitting}
             >
-              <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
+              <FontAwesomeIcon
+                transform="grow-2"
+                icon={faArrowAltCircleUp as IconProp}
+              />
               Submit
             </button>
           </div>

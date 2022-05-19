@@ -4,10 +4,13 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import {
-  backgroundValidator, borderSecondary, textSecondary, primary,
+  backgroundValidator,
+  borderSecondary,
+  textSecondary,
+  primary,
 } from '../../theme';
 
-export const ItemWrapper = styled(motion.div) <any>`
+export const ItemWrapper = styled(motion.div)<any>`
   padding: 0.5rem;
   display: flex;
   flex-flow: row nowrap;

@@ -31,7 +31,9 @@ export const UpdatePayee = () => {
 
   // ensure selected key is valid
   useEffect(() => {
-    const exists: any = PAYEE_STATUS.find((item: any) => item.key === selected?.key);
+    const exists: any = PAYEE_STATUS.find(
+      (item: any) => item.key === selected?.key
+    );
     setValid(exists !== undefined);
   }, [selected]);
 
@@ -60,8 +62,7 @@ export const UpdatePayee = () => {
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {
-    },
+    callbackInBlock: () => {},
   });
 
   return (
@@ -70,7 +71,13 @@ export const UpdatePayee = () => {
         <FontAwesomeIcon transform="grow-2" icon={faWallet} />
         Update Reward Destination
       </HeadingWrapper>
-      <div style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}>
+      <div
+        style={{
+          padding: '0 1rem',
+          width: '100%',
+          boxSizing: 'border-box',
+        }}
+      >
         <div className="head">
           <h4>
             Currently Selected:
@@ -92,8 +99,16 @@ export const UpdatePayee = () => {
         </div>
         <FooterWrapper>
           <div>
-            <button type="button" className="submit" onClick={() => submitTx()} disabled={!valid || submitting}>
-              <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
+            <button
+              type="button"
+              className="submit"
+              onClick={() => submitTx()}
+              disabled={!valid || submitting}
+            >
+              <FontAwesomeIcon
+                transform="grow-2"
+                icon={faArrowAltCircleUp as IconProp}
+              />
               Submit
             </button>
           </div>

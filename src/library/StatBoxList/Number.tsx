@@ -6,9 +6,7 @@ import { StatBox } from './Item';
 import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Number = (props: any) => {
-  const {
-    label, value, unit, assistant,
-  } = props;
+  const { label, value, unit, assistant } = props;
 
   const assist = assistant !== undefined;
   const page = assistant?.page ?? '';
@@ -31,10 +29,10 @@ export const Number = (props: any) => {
               currency={currency}
             />
             {unit && (
-            <>
-&nbsp;
-              {unit}
-            </>
+              <>
+                &nbsp;
+                {unit}
+              </>
             )}
           </h2>
           <h4>

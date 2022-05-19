@@ -23,9 +23,9 @@ export const Header = styled.div`
     margin: 0;
     color: ${textSecondary};
   }
-  
+
   > div {
-    display: flex; 
+    display: flex;
     flex-flow: row nowrap;
     align-items: center;
   }
@@ -36,7 +36,7 @@ export const Header = styled.div`
 
   > div:last-child {
     justify-content: flex-end;
-    flex: 1;    
+    flex: 1;
 
     button {
       font-size: 1.1rem;
@@ -46,7 +46,7 @@ export const Header = styled.div`
       color: ${textSecondary};
 
       &:hover {
-        opacity: 0.9
+        opacity: 0.9;
       }
     }
   }
@@ -61,7 +61,7 @@ export const Pagination = styled.div<any>`
   h4 {
     margin: 0;
   }
-  
+
   > div:first-child {
     display: flex;
     justify-content: flex-start;
@@ -108,11 +108,11 @@ export const List = styled.div<any>`
       &.col {
         flex-grow: 1;
         flex-basis: 100%;
-        @media(min-width: 650px) {
+        @media (min-width: 650px) {
           flex-basis: 50%;
           max-width: 50%;
         }
-        @media(min-width: 1250px) {
+        @media (min-width: 1250px) {
           flex-basis: ${(props) => props.flexBasisLarge};
           max-width: ${(props) => props.flexBasisLarge};
         }

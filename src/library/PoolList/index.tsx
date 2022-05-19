@@ -5,9 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import {
-  List, Header, Wrapper as ListWrapper, Pagination,
-} from '../List';
+import { List, Header, Wrapper as ListWrapper, Pagination } from '../List';
 import { useApi } from '../../contexts/Api';
 import { StakingContext } from '../../contexts/Staking';
 import { useUi } from '../../contexts/UI';
@@ -19,15 +17,9 @@ export const PoolListInner = (props: any) => {
   const { isReady }: any = useApi();
   const { metrics }: any = useNetworkMetrics();
 
-  const {
-    setListFormat,
-    listFormat,
-  }: any = useUi();
+  const { setListFormat, listFormat }: any = useUi();
 
-  const {
-    allowMoreCols,
-    pagination,
-  }: any = props;
+  const { allowMoreCols, pagination }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -60,11 +52,11 @@ export const PoolListInner = (props: any) => {
   const totalPages = Math.ceil(pools.length / LIST_ITEMS_PER_PAGE);
   const nextPage = page + 1 > totalPages ? totalPages : page + 1;
   const prevPage = page - 1 < 1 ? 1 : page - 1;
-  const pageEnd = (page * LIST_ITEMS_PER_PAGE) - 1;
+  const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
   // render batch
-  const batchEnd = (renderIteration * LIST_ITEMS_PER_BATCH) - 1;
+  const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
 
   // refetch list when pool list changes
   useEffect(() => {
@@ -101,7 +93,7 @@ export const PoolListInner = (props: any) => {
   }
 
   if (!pools.length) {
-    return (<></>);
+    return <></>;
   }
 
   return (
@@ -111,37 +103,27 @@ export const PoolListInner = (props: any) => {
           <h4>{props.title}</h4>
         </div>
         <div>
-          <button
-            type="button"
-            onClick={() => setListFormat('row')}
-          >
-            <FontAwesomeIcon icon={faBars} color={listFormat === 'row' ? '#d33079' : 'inherit'} />
-
+          <button type="button" onClick={() => setListFormat('row')}>
+            <FontAwesomeIcon
+              icon={faBars}
+              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+            />
           </button>
-          <button
-            type="button"
-            onClick={() => setListFormat('col')}
-          >
-            <FontAwesomeIcon icon={faGripVertical} color={listFormat === 'col' ? '#d33079' : 'inherit'} />
-
+          <button type="button" onClick={() => setListFormat('col')}>
+            <FontAwesomeIcon
+              icon={faGripVertical}
+              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+            />
           </button>
         </div>
       </Header>
-      <List
-        flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}
-      >
-        {pagination
-          && (
-          <Pagination
-            prev={page !== 1}
-            next={page !== totalPages}
-          >
+      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+        {pagination && (
+          <Pagination prev={page !== 1} next={page !== totalPages}>
             <div>
               <h4>
                 Page
-                {page}
-                {' '}
-                of
+                {page} of
                 {totalPages}
               </h4>
             </div>
@@ -149,20 +131,26 @@ export const PoolListInner = (props: any) => {
               <button
                 type="button"
                 className="prev"
-                onClick={() => { setPage(prevPage); setInitial(false); }}
+                onClick={() => {
+                  setPage(prevPage);
+                  setInitial(false);
+                }}
               >
                 Prev
               </button>
               <button
                 type="button"
                 className="next"
-                onClick={() => { setPage(nextPage); setInitial(false); }}
+                onClick={() => {
+                  setPage(nextPage);
+                  setInitial(false);
+                }}
               >
                 Next
               </button>
             </div>
           </Pagination>
-          )}
+        )}
         <motion.div
           className="transition"
           initial="hidden"
@@ -205,13 +193,11 @@ export class PoolList extends React.Component<any, any> {
   static contextType = StakingContext;
 
   shouldComponentUpdate(nextProps: any, nextState: any) {
-    return (this.props.pools !== nextProps.pools);
+    return this.props.pools !== nextProps.pools;
   }
 
   render() {
-    return (
-      <PoolListInner {...this.props} />
-    );
+    return <PoolListInner {...this.props} />;
   }
 }
 

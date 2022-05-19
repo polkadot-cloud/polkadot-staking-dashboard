@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import {
-  backgroundLabel, textSecondary, primary, secondary,
+  backgroundLabel,
+  textSecondary,
+  primary,
+  secondary,
 } from '../../../theme';
 
 export const Wrapper = styled.div<any>`
@@ -32,7 +35,8 @@ export const Wrapper = styled.div<any>`
       &:nth-child(3) {
         flex-basis: 45%;
       }
-      h4, h5 {
+      h4,
+      h5 {
         color: ${textSecondary};
       }
 

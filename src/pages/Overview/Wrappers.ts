@@ -14,7 +14,7 @@ export const AccountWrapper = styled.div`
   .account {
     width: 100%;
     height: 27px;
-    display: flex; 
+    display: flex;
     flex-flow: row wrap;
     align-items: center;
     padding: 0;

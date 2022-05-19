@@ -7,9 +7,7 @@ import { StatPie } from '../Graphs/StatBoxPie';
 import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Pie = (props: any) => {
-  const {
-    label, stat, graph, tooltip, assistant,
-  } = props;
+  const { label, stat, graph, tooltip, assistant } = props;
   const assist = assistant !== undefined;
   const page = assistant?.page ?? '';
   const key = assistant?.key ?? '';
@@ -42,16 +40,15 @@ export const Pie = (props: any) => {
                   useLocaleString
                 />
                 {stat?.unit && (
-                <>
-&nbsp;
-                  {stat?.unit}
-                </>
+                  <>
+                    &nbsp;
+                    {stat?.unit}
+                  </>
                 )}
 
                 {showTotal && (
                   <span className="total">
-                    /
-                    {' '}
+                    /{' '}
                     <NumberEasing
                       ease="quintInOut"
                       precision={2}
@@ -61,10 +58,10 @@ export const Pie = (props: any) => {
                       useLocaleString
                     />
                     {stat?.unit && (
-                    <>
-&nbsp;
-                      {stat?.unit}
-                    </>
+                      <>
+                        &nbsp;
+                        {stat?.unit}
+                      </>
                     )}
                   </span>
                 )}

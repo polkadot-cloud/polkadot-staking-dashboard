@@ -9,9 +9,10 @@ import { DefinitionWrapper as Wrapper } from '../Wrappers';
 export const Heading = (props: any) => {
   const { onClick, title, description } = props;
 
-  const subtitle = description[0].length > 50
-    ? `${description[0].substring(0, 50)}...`
-    : description[0];
+  const subtitle =
+    description[0].length > 50
+      ? `${description[0].substring(0, 50)}...`
+      : description[0];
 
   return (
     <Wrapper width="100%" height="100px">
@@ -31,7 +32,9 @@ export const Heading = (props: any) => {
           <p>{subtitle}</p>
         </div>
         <div>
-          <p className="icon"><FontAwesomeIcon icon={faChevronRight} /></p>
+          <p className="icon">
+            <FontAwesomeIcon icon={faChevronRight} />
+          </p>
         </div>
       </motion.button>
     </Wrapper>

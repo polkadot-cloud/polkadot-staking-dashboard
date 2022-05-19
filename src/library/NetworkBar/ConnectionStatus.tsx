@@ -10,33 +10,21 @@ export const ConnectionStatus = () => {
 
   return (
     <>
-      {status === CONNECTION_STATUS[0]
-        && (
-        <motion.p
-          animate={{ opacity: [0, 1] }}
-          transition={{ duration: 0.3 }}
-        >
+      {status === CONNECTION_STATUS[0] && (
+        <motion.p animate={{ opacity: [0, 1] }} transition={{ duration: 0.3 }}>
           Disconnected
         </motion.p>
-        )}
-      {status === CONNECTION_STATUS[1]
-        && (
-        <motion.p
-          animate={{ opacity: [0, 1] }}
-          transition={{ duration: 0.3 }}
-        >
+      )}
+      {status === CONNECTION_STATUS[1] && (
+        <motion.p animate={{ opacity: [0, 1] }} transition={{ duration: 0.3 }}>
           Connecting...
         </motion.p>
-        )}
-      {status === CONNECTION_STATUS[2]
-        && (
-        <motion.p
-          animate={{ opacity: [0, 1] }}
-          transition={{ duration: 0.3 }}
-        >
+      )}
+      {status === CONNECTION_STATUS[2] && (
+        <motion.p animate={{ opacity: [0, 1] }} transition={{ duration: 0.3 }}>
           Connected to Network
         </motion.p>
-        )}
+      )}
     </>
   );
 };

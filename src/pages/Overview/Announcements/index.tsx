@@ -44,7 +44,9 @@ export const Announcements = () => {
 
   let nominatorReachedPercentage = 0;
   if (maxNominatorsCount.gt(new BN(0)) && totalNominators.gt(new BN(0))) {
-    nominatorReachedPercentage = totalNominators.div(maxNominatorsCount.div(new BN(100)));
+    nominatorReachedPercentage = totalNominators.div(
+      maxNominatorsCount.div(new BN(100))
+    );
   }
 
   const minNominatorBondBase = minNominatorBond.div(new BN(10 ** units));
@@ -56,7 +58,8 @@ export const Announcements = () => {
     announcements.push({
       class: 'danger',
       title: 'Nominator Limit Has Been Reached.',
-      subtitle: 'The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.',
+      subtitle:
+        'The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.',
     });
   }
 
@@ -64,8 +67,12 @@ export const Announcements = () => {
   if (nominatorReachedPercentage >= 90) {
     announcements.push({
       class: 'warning',
-      title: `${nominatorReachedPercentage.toFixed(2)}% of Nominator Limit Reached.`,
-      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(maxNominatorsCount.toNumber())}.`,
+      title: `${nominatorReachedPercentage.toFixed(
+        2
+      )}% of Nominator Limit Reached.`,
+      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(
+        maxNominatorsCount.toNumber()
+      )}.`,
     });
   }
 
@@ -73,14 +80,20 @@ export const Announcements = () => {
   announcements.push({
     class: 'neutral',
     title: `The minimum nominator bond is now ${minNominatorBondBase} ${network.unit}.`,
-    subtitle: `The minimum bonding amount to start nominating on ${network.name} is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
+    subtitle: `The minimum bonding amount to start nominating on ${
+      network.name
+    } is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // maximum nominators
   announcements.push({
     class: 'neutral',
-    title: `The maximum nominator cap is now ${humanNumber(maxNominatorsCount.toNumber())}.`,
-    subtitle: `A total of ${humanNumber(maxNominatorsCount.toNumber())} nominators can now join the ${network.name} network.`,
+    title: `The maximum nominator cap is now ${humanNumber(
+      maxNominatorsCount.toNumber()
+    )}.`,
+    subtitle: `A total of ${humanNumber(
+      maxNominatorsCount.toNumber()
+    )} nominators can now join the ${network.name} network.`,
   });
 
   return (
@@ -90,11 +103,16 @@ export const Announcements = () => {
         <OpenAssistantIcon page="overview" title="Announcements" />
       </h2>
       <Wrapper>
-        <motion.div variants={container} initial="hidden" animate="show" style={{ width: '100%' }}>
-
-          {isSyncing()
-            ? <AnnouncementLoader />
-            : announcements.map((item, index) => (
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          style={{ width: '100%' }}
+        >
+          {isSyncing() ? (
+            <AnnouncementLoader />
+          ) : (
+            announcements.map((item, index) => (
               <Item key={`announcement_${index}`} variants={listItem}>
                 <h3 className={item.class}>
                   <FontAwesomeIcon
@@ -105,7 +123,8 @@ export const Announcements = () => {
                 </h3>
                 <p>{item.subtitle}</p>
               </Item>
-            ))}
+            ))
+          )}
         </motion.div>
       </Wrapper>
     </SectionWrapper>

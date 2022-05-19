@@ -4,7 +4,7 @@
 import React from 'react';
 
 export const ThemeContext: React.Context<any> = React.createContext({
-  toggleTheme: (str?: string) => { },
+  toggleTheme: (str?: string) => {},
   mode: 'light',
 });
 
@@ -27,7 +27,7 @@ export const ThemesProvider = ({ children }: any) => {
 
   const toggleTheme = (_theme: string | null = null): void => {
     if (_theme === null) {
-      _theme = (state.mode === 'dark' ? 'light' : 'dark');
+      _theme = state.mode === 'dark' ? 'light' : 'dark';
     }
 
     localStorage.setItem('theme', _theme);
@@ -39,10 +39,11 @@ export const ThemesProvider = ({ children }: any) => {
   };
 
   return (
-    <ThemeContext.Provider value={{
-      toggleTheme,
-      mode: state.mode,
-    }}
+    <ThemeContext.Provider
+      value={{
+        toggleTheme,
+        mode: state.mode,
+      }}
     >
       {children}
     </ThemeContext.Provider>

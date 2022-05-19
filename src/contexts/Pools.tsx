@@ -26,10 +26,11 @@ const defaultStatus = {
   unbondingEras: {},
 };
 
-export const PoolsContext: React.Context<PoolsContextState> = React.createContext({
-  meta: defaultMeta,
-  status: defaultStatus,
-});
+export const PoolsContext: React.Context<PoolsContextState> =
+  React.createContext({
+    meta: defaultMeta,
+    status: defaultStatus,
+  });
 
 export const usePools = () => React.useContext(PoolsContext);
 
@@ -58,10 +59,11 @@ export const PoolsProvider = (props: any) => {
   }, []);
 
   return (
-    <PoolsContext.Provider value={{
-      meta,
-      status,
-    }}
+    <PoolsContext.Provider
+      value={{
+        meta,
+        status,
+      }}
     >
       {props.children}
     </PoolsContext.Provider>

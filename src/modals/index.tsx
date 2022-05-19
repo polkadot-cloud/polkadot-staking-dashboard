@@ -15,9 +15,7 @@ import { StopNominating } from './StopNominating';
 import { Nominate } from './Nominate';
 
 export const Modal = () => {
-  const {
-    status, setStatus, modal, size,
-  } = useModal();
+  const { status, setStatus, modal, size } = useModal();
   const controls = useAnimation();
 
   const onFadeIn = async () => {
@@ -50,7 +48,7 @@ export const Modal = () => {
   }, [status]);
 
   if (status === 0) {
-    return (<></>);
+    return <></>;
   }
 
   return (
@@ -75,7 +73,15 @@ export const Modal = () => {
           {modal === 'StopNominating' && <StopNominating />}
           {modal === 'Nominate' && <Nominate />}
         </ContentWrapper>
-        <button type="button" className="close" onClick={() => { onFadeOut(); }}>&nbsp;</button>
+        <button
+          type="button"
+          className="close"
+          onClick={() => {
+            onFadeOut();
+          }}
+        >
+          &nbsp;
+        </button>
       </div>
     </ModalWrapper>
   );

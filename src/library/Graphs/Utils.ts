@@ -17,19 +17,23 @@ export const useSize = (element: any) => {
     const throttleCallback = () => {
       setSize(getSize(element));
     };
-    const resizeThrottle = throttle(throttleCallback, 100, { trailing: true, leading: false });
+    const resizeThrottle = throttle(throttleCallback, 100, {
+      trailing: true,
+      leading: false,
+    });
 
     window.addEventListener('resize', resizeThrottle);
-    return (() => {
+    return () => {
       window.removeEventListener('resize', resizeThrottle);
-    });
+    };
   });
   return size;
 };
 
 export const formatSize = (size: any, minHeight: number) => {
   const width: any = size.width === undefined ? '100%' : `${size.width}px`;
-  const height: any = size.height === undefined ? minHeight : `${size.height}px`;
+  const height: any =
+    size.height === undefined ? minHeight : `${size.height}px`;
 
   return {
     width,
@@ -39,8 +43,9 @@ export const formatSize = (size: any, minHeight: number) => {
 };
 
 export const getGradient = (ctx: any, chartArea: any) => {
-  let width; let height; let
-    gradient;
+  let width;
+  let height;
+  let gradient;
 
   const chartWidth = chartArea.right - chartArea.left;
   const chartHeight = chartArea.bottom - chartArea.top;
@@ -68,7 +73,7 @@ export const prefillPayoutGraph = (list: any, maxLength: number) => {
   let lastTimestamp = list[list.length - 1].block_timestamp;
 
   for (let i = list.length; i < maxLength; i++) {
-    lastTimestamp -= (60 * 60 * 24);
+    lastTimestamp -= 60 * 60 * 24;
     list.push({
       event_id: 'Reward',
       amount: 0,

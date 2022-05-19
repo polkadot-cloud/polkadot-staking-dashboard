@@ -24,20 +24,21 @@ export interface ConnectContextState {
   walletErrors: any;
 }
 
-export const ConnectContext: React.Context<ConnectContextState> = React.createContext({
-  disconnectFromAccount: () => { },
-  disconnectFromWallet: () => { },
-  initialise: () => { },
-  accountExists: (a: string) => 0,
-  connectToWallet: (w: string) => { },
-  getAccount: (a: string) => { },
-  connectToAccount: (a: any) => { },
-  activeWallet: null,
-  accounts: [],
-  activeAccount: '',
-  activeAccountMeta: {},
-  walletErrors: {},
-});
+export const ConnectContext: React.Context<ConnectContextState> =
+  React.createContext({
+    disconnectFromAccount: () => {},
+    disconnectFromWallet: () => {},
+    initialise: () => {},
+    accountExists: (a: string) => 0,
+    connectToWallet: (w: string) => {},
+    getAccount: (a: string) => {},
+    connectToAccount: (a: any) => {},
+    activeWallet: null,
+    accounts: [],
+    activeAccount: '',
+    activeAccountMeta: {},
+    walletErrors: {},
+  });
 
 export const useConnect = () => React.useContext(ConnectContext);
 
@@ -50,7 +51,9 @@ export const ConnectProvider = (props: any) => {
   };
 
   const getLocalStorageActiveAccount = () => {
-    const account = localStorage.getItem(`${network.name.toLowerCase()}_active_account`);
+    const account = localStorage.getItem(
+      `${network.name.toLowerCase()}_active_account`
+    );
     return account === null ? '' : account;
   };
 
@@ -60,7 +63,7 @@ export const ConnectProvider = (props: any) => {
 
   // store the currently active wallet
   const [activeWallet, _setActiveWallet] = useState(
-    localStorageOrDefault('active_wallet', null),
+    localStorageOrDefault('active_wallet', null)
   );
 
   const setActiveWallet = (wallet: any) => {
@@ -73,7 +76,9 @@ export const ConnectProvider = (props: any) => {
   };
 
   // store the currently active account
-  const [activeAccount, __setActiveAccount] = useState(getLocalStorageActiveAccount());
+  const [activeAccount, __setActiveAccount] = useState(
+    getLocalStorageActiveAccount()
+  );
 
   const activeAccountRef = useRef(activeAccount);
   const _setActiveAccount = (v: any) => {
@@ -122,11 +127,11 @@ export const ConnectProvider = (props: any) => {
   // initialise extensions
   useEffect(() => {
     initExtensions();
-    return (() => {
+    return () => {
       if (unsubscribe !== null) {
         unsubscribeRef.current();
       }
-    });
+    };
   }, []);
 
   // give web page time to initiate extensions
@@ -227,7 +232,9 @@ export const ConnectProvider = (props: any) => {
     }
 
     // check active account is in the currently selected wallet
-    const activeAccountInWallet = _accounts.find((item: any) => item.address === _activeAccount);
+    const activeAccountInWallet = _accounts.find(
+      (item: any) => item.address === _activeAccount
+    );
 
     // auto connect to account
     connectToAccount(activeAccountInWallet);
@@ -259,9 +266,13 @@ export const ConnectProvider = (props: any) => {
 
   const initialise = () => {
     if (activeWallet === null || activeAccountRef.current === '') {
-      openModalWith('ConnectAccounts', {
-        section: 0,
-      }, 'small');
+      openModalWith(
+        'ConnectAccounts',
+        {
+          section: 0,
+        },
+        'small'
+      );
     } else {
       connectToWallet(activeWallet);
     }
@@ -273,7 +284,9 @@ export const ConnectProvider = (props: any) => {
   };
 
   const accountExists = (addr: string) => {
-    const account = accountsRef.current.filter((acc: any) => acc.address === addr);
+    const account = accountsRef.current.filter(
+      (acc: any) => acc.address === addr
+    );
     return account.length;
   };
 
@@ -286,20 +299,21 @@ export const ConnectProvider = (props: any) => {
   };
 
   return (
-    <ConnectContext.Provider value={{
-      activeWallet,
-      accounts: accountsRef.current,
-      activeAccount: activeAccountRef.current,
-      activeAccountMeta: activeAccountMetaRef.current,
-      walletErrors,
-      accountExists,
-      connectToWallet,
-      disconnectFromAccount,
-      disconnectFromWallet,
-      initialise,
-      getAccount,
-      connectToAccount,
-    }}
+    <ConnectContext.Provider
+      value={{
+        activeWallet,
+        accounts: accountsRef.current,
+        activeAccount: activeAccountRef.current,
+        activeAccountMeta: activeAccountMetaRef.current,
+        walletErrors,
+        accountExists,
+        connectToWallet,
+        disconnectFromAccount,
+        disconnectFromWallet,
+        initialise,
+        getAccount,
+        connectToAccount,
+      }}
     >
       {props.children}
     </ConnectContext.Provider>

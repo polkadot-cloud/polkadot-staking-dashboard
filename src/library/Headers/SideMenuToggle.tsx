@@ -13,13 +13,12 @@ export const SideMenuToggle = () => {
     <div className="menu">
       <Item
         style={{ width: '50px', flex: 0 }}
-        onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
+        onClick={() => {
+          setSideMenu(sideMenuOpen ? 0 : 1);
+        }}
       >
         <span>
-          <FontAwesomeIcon
-            icon={faBars}
-            style={{ cursor: 'pointer' }}
-          />
+          <FontAwesomeIcon icon={faBars} style={{ cursor: 'pointer' }} />
         </span>
       </Item>
     </div>

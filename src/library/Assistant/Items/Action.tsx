@@ -5,16 +5,10 @@ import { motion } from 'framer-motion';
 import { ItemWrapper as Wrapper } from '../Wrappers';
 
 export const Action = (props: any) => {
-  const {
-    height, subtitle, label, title, onClick,
-  } = props;
+  const { height, subtitle, label, title, onClick } = props;
 
   return (
-    <Wrapper
-      width="100%"
-      height={height}
-      border="3px solid #d33079"
-    >
+    <Wrapper width="100%" height={height} border="3px solid #d33079">
       <motion.button
         className="item action"
         whileHover={{ scale: 1.015 }}

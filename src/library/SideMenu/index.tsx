@@ -4,10 +4,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
 import {
-  SunnyOutline, Moon, LogoGithub, Cog,
-} from 'react-ionicons';
+  faExclamationTriangle,
+  faExpandAlt,
+  faCompressAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { SunnyOutline, Moon, LogoGithub, Cog } from 'react-ionicons';
 import throttle from 'lodash.throttle';
 import { Wrapper, LogoWrapper } from './Wrapper';
 import Heading from './Heading';
@@ -17,7 +19,11 @@ import { useConnect } from '../../contexts/Connect';
 import { useMessages } from '../../contexts/Messages';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from '../../img/polkadot_icon.svg';
-import { POLKADOT_URL, GLOBAL_MESSGE_KEYS, SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import {
+  POLKADOT_URL,
+  GLOBAL_MESSGE_KEYS,
+  SIDE_MENU_STICKY_THRESHOLD,
+} from '../../constants';
 import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../Hooks';
 import { useTheme } from '../../contexts/Themes';
@@ -30,7 +36,11 @@ export const SideMenu = () => {
   const { getMessage }: any = useMessages();
   const { pathname }: any = useLocation();
   const {
-    setSideMenu, sideMenuOpen, sideMenuMinimised, userSideMenuMinimised, setUserSideMenuMinimised,
+    setSideMenu,
+    sideMenuOpen,
+    sideMenuMinimised,
+    userSideMenuMinimised,
+    setUserSideMenuMinimised,
   }: any = useUi();
 
   const [pageConfig, setPageConfig]: any = useState({
@@ -41,9 +51,9 @@ export const SideMenu = () => {
   // listen to window resize to hide SideMenu
   useEffect(() => {
     window.addEventListener('resize', windowThrottle);
-    return (() => {
+    return () => {
       window.removeEventListener('resize', windowThrottle);
-    });
+    };
   }, []);
 
   const throttleCallback = () => {
@@ -51,7 +61,10 @@ export const SideMenu = () => {
       setSideMenu(0);
     }
   };
-  const windowThrottle = throttle(throttleCallback, 200, { trailing: true, leading: false });
+  const windowThrottle = throttle(throttleCallback, 200, {
+    trailing: true,
+    leading: false,
+  });
 
   useEffect(() => {
     // only process account messages and warnings once accounts are connected
@@ -62,7 +75,9 @@ export const SideMenu = () => {
         const { uri } = _pageConfigWithMessages[i];
 
         if (uri === '/stake') {
-          const notImported = getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED);
+          const notImported = getMessage(
+            GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED
+          );
           if (notImported === true) {
             _pageConfigWithMessages[i].action = faExclamationTriangle;
           } else {
@@ -76,7 +91,11 @@ export const SideMenu = () => {
         pages: _pageConfigWithMessages,
       });
     }
-  }, [activeAccount, accounts, getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED)]);
+  }, [
+    activeAccount,
+    accounts,
+    getMessage(GLOBAL_MESSGE_KEYS.CONTROLLER_NOT_IMPORTED),
+  ]);
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {
@@ -84,42 +103,49 @@ export const SideMenu = () => {
   });
 
   return (
-    <Wrapper
-      ref={ref}
-      minimised={sideMenuMinimised}
-    >
+    <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
         <button
           type="button"
           className="close-menu"
-          style={{ fontVariationSettings: "'wght' 450", margin: '0.2rem 0 1rem 0', opacity: 0.7 }}
-          onClick={() => { setSideMenu(sideMenuOpen ? 0 : 1); }}
+          style={{
+            fontVariationSettings: "'wght' 450",
+            margin: '0.2rem 0 1rem 0',
+            opacity: 0.7,
+          }}
+          onClick={() => {
+            setSideMenu(sideMenuOpen ? 0 : 1);
+          }}
         >
           Close
         </button>
 
         <LogoWrapper
-          onClick={() => { window.open(POLKADOT_URL, '_blank'); }}
+          onClick={() => {
+            window.open(POLKADOT_URL, '_blank');
+          }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           minimised={sideMenuMinimised}
         >
-          {sideMenuMinimised
-            ? <PolkadotIconSVG style={{ maxHeight: '100%' }} />
-            : <PolkadotLogoSVG style={{ maxHeight: '100%' }} />}
+          {sideMenuMinimised ? (
+            <PolkadotIconSVG style={{ maxHeight: '100%' }} />
+          ) : (
+            <PolkadotLogoSVG style={{ maxHeight: '100%' }} />
+          )}
         </LogoWrapper>
 
         {pageConfig.categories.map((category: any, categoryIndex: number) => (
           <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
-
             {/* display heading if not `default` (used for top links) */}
-            {category.title !== 'default' && <Heading title={category.title} minimised={sideMenuMinimised} />}
+            {category.title !== 'default' && (
+              <Heading title={category.title} minimised={sideMenuMinimised} />
+            )}
 
             {/* display category links */}
             {pageConfig.pages.map((page: any, pageIndex: number) => (
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
-                {page.category === category._id
-                  && (
+                {page.category === category._id && (
                   <Item
                     name={page.title}
                     to={page.hash}
@@ -128,7 +154,7 @@ export const SideMenu = () => {
                     action={page.action}
                     minimised={sideMenuMinimised}
                   />
-                  )}
+                )}
               </React.Fragment>
             ))}
           </React.Fragment>
@@ -138,7 +164,12 @@ export const SideMenu = () => {
       <section>
         <button
           type="button"
-          onClick={() => window.open('https://github.com/rossbulat/polkadot-staking-experience', '_blank')}
+          onClick={() =>
+            window.open(
+              'https://github.com/rossbulat/polkadot-staking-experience',
+              '_blank'
+            )
+          }
         >
           <LogoGithub width="1.45rem" height="1.45rem" />
         </button>
@@ -148,19 +179,23 @@ export const SideMenu = () => {
         >
           <Cog width="1.65rem" height="1.65rem" />
         </button>
-        <button
-          type="button"
-          onClick={() => toggleTheme()}
-        >
-          {mode === 'light'
-            ? <SunnyOutline width="1.65rem" height="1.65rem" />
-            : <Moon width="1.45rem" height="1.45rem" />}
+        <button type="button" onClick={() => toggleTheme()}>
+          {mode === 'light' ? (
+            <SunnyOutline width="1.65rem" height="1.65rem" />
+          ) : (
+            <Moon width="1.45rem" height="1.45rem" />
+          )}
         </button>
         <button
           type="button"
-          onClick={() => setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)}
+          onClick={() =>
+            setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)
+          }
         >
-          <FontAwesomeIcon icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt} transform="grow-3" />
+          <FontAwesomeIcon
+            icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
+            transform="grow-3"
+          />
         </button>
       </section>
     </Wrapper>

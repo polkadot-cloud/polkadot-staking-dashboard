@@ -14,16 +14,13 @@ export const ConnectAccounts = () => {
   const { config } = modal;
   const _section = config?.section ?? null;
 
-  const {
-    activeWallet,
-    activeAccount,
-  }: any = useConnect();
+  const { activeWallet, activeAccount }: any = useConnect();
 
   let { accounts } = useConnect();
 
   // active section of modal
   const [section, setSection] = useState(
-    _section !== null ? _section : activeAccount !== null ? 1 : 0,
+    _section !== null ? _section : activeAccount !== null ? 1 : 0
   );
 
   // remove active account from connect list

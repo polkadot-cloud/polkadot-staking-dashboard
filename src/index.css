@@ -94,7 +94,6 @@ input {
   transition: all 0.2s;
 }
 
-
 input::placeholder {
   color: #bbb;
 }

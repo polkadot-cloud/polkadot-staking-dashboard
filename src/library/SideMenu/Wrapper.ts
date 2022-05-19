@@ -5,7 +5,12 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 import {
-  textPrimary, textSecondary, highlightPrimary, highlightSecondary, backgroundOverlay, primary,
+  textPrimary,
+  textSecondary,
+  highlightPrimary,
+  highlightSecondary,
+  backgroundOverlay,
+  primary,
 } from '../../theme';
 
 export const Wrapper = styled.div<any>`
@@ -19,15 +24,15 @@ export const Wrapper = styled.div<any>`
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
 
-  @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     background: ${backgroundOverlay};
-    transition:  all 0.2s;
+    transition: all 0.2s;
   }
 
   .close-menu {
     color: ${textPrimary};
     display: none;
-    @media(max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
       display: inline;
     }
   }
@@ -39,10 +44,11 @@ export const Wrapper = styled.div<any>`
     /* Footer */
     &:last-child {
       display: flex;
-      flex-flow: ${(props) => (props.minimised ? 'column-reverse wrap' : 'row wrap')};
+      flex-flow: ${(props) =>
+        props.minimised ? 'column-reverse wrap' : 'row wrap'};
       align-items: center;
       padding-top: 0.5rem;
-      
+
       button {
         color: ${textSecondary};
         transition: color 0.2s;
@@ -61,7 +67,7 @@ export const Wrapper = styled.div<any>`
   }
 `;
 
-export const LogoWrapper = styled(motion.button) <any>`
+export const LogoWrapper = styled(motion.button)<any>`
   display: flex;
   flex-flow: row wrap;
   justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
@@ -75,7 +81,7 @@ export const LogoWrapper = styled(motion.button) <any>`
   }
 `;
 
-export const ItemWrapper = styled(motion.div) <any>`
+export const ItemWrapper = styled(motion.div)<any>`
   border-radius: 0.5rem;
   display: flex;
   flex-flow: row wrap;

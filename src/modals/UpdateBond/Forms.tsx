@@ -27,13 +27,16 @@ export const Forms = (props: any) => {
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
   const { minNominatorBond } = staking;
-  const { getBondOptions, getBondedAccount, getAccountNominations }: any = useBalances();
-  const { freeToBond, freeToUnbond, totalPossibleBond } = getBondOptions(activeAccount);
+  const { getBondOptions, getBondedAccount, getAccountNominations }: any =
+    useBalances();
+  const { freeToBond, freeToUnbond, totalPossibleBond } =
+    getBondOptions(activeAccount);
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = freeToUnbond - planckBnToUnit(minNominatorBond, units);
+  const freeToUnbondToMinNominatorBond =
+    freeToUnbond - planckBnToUnit(minNominatorBond, units);
 
   // local bond value
   const [bond, setBond] = useState(freeToBond);
@@ -43,9 +46,10 @@ export const Forms = (props: any) => {
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = (task === 'bond_some' || task === 'bond_all')
-      ? freeToBond
-      : task === 'unbond_some'
+    const _bond =
+      task === 'bond_some' || task === 'bond_all'
+        ? freeToBond
+        : task === 'unbond_some'
         ? freeToUnbondToMinNominatorBond
         : freeToUnbond;
 
@@ -75,7 +79,7 @@ export const Forms = (props: any) => {
     }
 
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * (10 ** units)).toString();
+    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
 
     if (task === 'bond_some' || task === 'bond_all') {
       _tx = api.tx.staking.bondExtra(bondToSubmit);
@@ -87,13 +91,13 @@ export const Forms = (props: any) => {
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from: (task === 'bond_some' || task === 'bond_all') ? activeAccount : controller,
+    from:
+      task === 'bond_some' || task === 'bond_all' ? activeAccount : controller,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {
-    },
+    callbackInBlock: () => {},
   });
 
   const TxFee = (
@@ -106,87 +110,86 @@ export const Forms = (props: any) => {
   return (
     <ContentWrapper>
       <div className="items">
-        {task === 'bond_some'
-          && (
+        {task === 'bond_some' && (
           <>
             <BondInputWithFeedback
               unbond={false}
               listenIsValid={setBondValid}
               defaultBond={freeToBond}
-              setters={[{
-                set: setBond,
-                current: bond,
-              }]}
+              setters={[
+                {
+                  set: setBond,
+                  current: bond,
+                },
+              ]}
             />
-            <div className="notes">
-              {TxFee}
-            </div>
+            <div className="notes">{TxFee}</div>
           </>
-          )}
-        {task === 'bond_all'
-          && (
+        )}
+        {task === 'bond_all' && (
           <>
-            {freeToBond === 0
-              && <Warning text={`You have no free ${network.unit} to bond.`} />}
+            {freeToBond === 0 && (
+              <Warning text={`You have no free ${network.unit} to bond.`} />
+            )}
             <h4>Amount to bond:</h4>
             <h2>
-              {freeToBond}
-              {' '}
-              {network.unit}
+              {freeToBond} {network.unit}
             </h2>
             <p>
               This amount of
-              {network.unit}
-              {' '}
-              will be added to your current bonded funds.
+              {network.unit} will be added to your current bonded funds.
             </p>
             <Separator />
             <h4>New total bond:</h4>
             <h2>
-              {totalPossibleBond}
-              {' '}
-              {network.unit}
+              {totalPossibleBond} {network.unit}
             </h2>
-            <div className="notes">
-              {TxFee}
-            </div>
+            <div className="notes">{TxFee}</div>
           </>
-          )}
-        {task === 'unbond_some'
-          && (
+        )}
+        {task === 'unbond_some' && (
           <>
             <BondInputWithFeedback
               unbond
               listenIsValid={setBondValid}
               defaultBond={freeToUnbondToMinNominatorBond}
-              setters={[{
-                set: setBond,
-                current: bond,
-              }]}
+              setters={[
+                {
+                  set: setBond,
+                  current: bond,
+                },
+              ]}
             />
             <div className="notes">
-              <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+              <p>
+                Once unbonding, you must wait 28 days for your funds to become
+                available.
+              </p>
               {TxFee}
             </div>
           </>
-          )}
-        {task === 'unbond_all'
-          && (
+        )}
+        {task === 'unbond_all' && (
           <>
-            {nominations.length ? <Warning text="Stop nominating before unbonding all funds." /> : <></>}
+            {nominations.length ? (
+              <Warning text="Stop nominating before unbonding all funds." />
+            ) : (
+              <></>
+            )}
             <h4>Amount to unbond:</h4>
             <h2>
-              {freeToUnbond}
-              {' '}
-              {network.unit}
+              {freeToUnbond} {network.unit}
             </h2>
             <Separator />
             <div className="notes">
-              <p>Once unbonding, you must wait 28 days for your funds to become available.</p>
+              <p>
+                Once unbonding, you must wait 28 days for your funds to become
+                available.
+              </p>
               {bondValid && TxFee}
             </div>
           </>
-          )}
+        )}
       </div>
       <FooterWrapper>
         <div>
@@ -206,7 +209,10 @@ export const Forms = (props: any) => {
             onClick={() => submitTx()}
             disabled={submitting || !bondValid}
           >
-            <FontAwesomeIcon transform="grow-2" icon={faArrowAltCircleUp as IconProp} />
+            <FontAwesomeIcon
+              transform="grow-2"
+              icon={faArrowAltCircleUp as IconProp}
+            />
             Submit
             {submitting && 'ting'}
           </button>

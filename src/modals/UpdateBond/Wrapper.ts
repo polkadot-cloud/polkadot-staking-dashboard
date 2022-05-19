@@ -4,7 +4,10 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import {
-  textPrimary, textSecondary, buttonPrimaryBackground, backgroundToggle,
+  textPrimary,
+  textSecondary,
+  buttonPrimaryBackground,
+  backgroundToggle,
 } from '../../theme';
 
 export const Wrapper = styled.div`
@@ -56,7 +59,7 @@ export const ContentWrapper = styled.div`
     h2 {
       margin: 0.75rem 0;
     }
-  
+
     .action-button {
       background: ${buttonPrimaryBackground};
       box-sizing: border-box;
@@ -75,7 +78,8 @@ export const ContentWrapper = styled.div`
         margin-bottom: 0;
       }
 
-      h3 , p {
+      h3,
+      p {
         text-align: left;
         margin: 0;
       }

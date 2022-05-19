@@ -11,19 +11,18 @@ export interface SessionEraContextState {
   sessionEra: any;
 }
 
-export const SessionEraContext: React.Context<SessionEraContextState> = React.createContext({
-  getEraTimeLeft: () => 0,
-  sessionEra: {},
-});
+export const SessionEraContext: React.Context<SessionEraContextState> =
+  React.createContext({
+    getEraTimeLeft: () => 0,
+    sessionEra: {},
+  });
 
 // Warning: Do not use this hook in heavy components.
 // Using this hook in a component makes the component rerender per each new block.
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
 export const SessionEraProvider = ({ children }: any) => {
-  const {
-    isReady, api, status, consts,
-  }: any = useApi();
+  const { isReady, api, status, consts }: any = useApi();
   const { expectedBlockTime } = consts;
 
   useEffect(() => {

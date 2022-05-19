@@ -21,22 +21,28 @@ import Projects from './pages/explore/Projects';
 import Feedback from './pages/explore/Feedback';
 import { URI_PREFIX } from './constants';
 
-export const PAGE_CATEGORIES = [{
-  _id: 1,
-  title: 'default',
-}, {
-  _id: 2,
-  title: 'Staking',
-}, {
-  _id: 3,
-  title: 'Validators',
-}, {
-  _id: 4,
-  title: 'Explore',
-}, {
-  _id: 5,
-  title: 'Feedback',
-}];
+export const PAGE_CATEGORIES = [
+  {
+    _id: 1,
+    title: 'default',
+  },
+  {
+    _id: 2,
+    title: 'Staking',
+  },
+  {
+    _id: 3,
+    title: 'Validators',
+  },
+  {
+    _id: 4,
+    title: 'Explore',
+  },
+  {
+    _id: 5,
+    title: 'Feedback',
+  },
+];
 
 export const PAGES_CONFIG = [
   {
@@ -46,49 +52,56 @@ export const PAGES_CONFIG = [
     hash: '/overview',
     Entry: Overview,
     icon: faBraille,
-  }, {
+  },
+  {
     category: 2,
     title: 'Stake',
     uri: `${URI_PREFIX}/stake`,
     hash: '/stake',
     Entry: Stake,
     icon: faChartLine,
-  }, {
+  },
+  {
     category: 2,
     title: 'Pools',
     uri: `${URI_PREFIX}/pools`,
     hash: '/pools',
     Entry: Pools,
     icon: faUsers,
-  }, {
+  },
+  {
     category: 2,
     title: 'Payouts',
     uri: `${URI_PREFIX}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
     icon: faStar,
-  }, {
+  },
+  {
     category: 3,
     title: 'Validators',
     uri: `${URI_PREFIX}/validators`,
     hash: '/validators',
     Entry: Browse,
     icon: faServer,
-  }, {
+  },
+  {
     category: 3,
     title: 'Favourites',
     uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
     Entry: Favourites,
     icon: faThumbtack,
-  }, {
+  },
+  {
     category: 4,
     title: 'Community',
     uri: `${URI_PREFIX}/community`,
     hash: '/community',
     Entry: Projects,
     icon: faUserFriends,
-  }, {
+  },
+  {
     category: 5,
     title: 'Feedback',
     uri: `${URI_PREFIX}/feedback`,
@@ -154,7 +167,7 @@ export const ASSISTANT_CONFIG = [
         title: 'Stash and Controller Accounts',
         description: [
           'The Stash and Controller are simply Polkadot accounts that manage your staking activity.',
-          'Your Stash account is the account used to hold your staked funds, whereas the Controller account is used to carry out Staking actions on the Stash account\'s behalf.',
+          "Your Stash account is the account used to hold your staked funds, whereas the Controller account is used to carry out Staking actions on the Stash account's behalf.",
           'When you switch accounts in this app, you are actually switching your Stash account. Your Controller account is then automatically fetched for you.',
           'This app assumes you have both Stash and Controller accounts imported. If you do not, you will not be able to use all app functions.',
           'You can assign a different Controller account on the Stake page.',
@@ -206,7 +219,8 @@ export const ASSISTANT_CONFIG = [
     definitions: [
       {
         title: 'Nomination Pools',
-        description: ['Nomination pools allow users to contribute DOT and earn staking rewards.',
+        description: [
+          'Nomination pools allow users to contribute DOT and earn staking rewards.',
           'Unlike nominating, staking using pools requires a small amount of DOT, and the pool manages nominees on your behalf.',
         ],
       },
@@ -216,15 +230,21 @@ export const ASSISTANT_CONFIG = [
       },
       {
         title: 'Minimum Pool Join Bond',
-        description: ['The minimum amount of DOT needed to bond in order to join a pool.'],
+        description: [
+          'The minimum amount of DOT needed to bond in order to join a pool.',
+        ],
       },
       {
         title: 'Minimum Pool Create Bond',
-        description: ['The minimum amount of DOT needed to bond for a creator  of a pool.'],
+        description: [
+          'The minimum amount of DOT needed to bond for a creator  of a pool.',
+        ],
       },
       {
         title: 'Pool Status',
-        description: ['Your current pool status, summarising whether your account is actively in a pool and generating rewards.'],
+        description: [
+          'Your current pool status, summarising whether your account is actively in a pool and generating rewards.',
+        ],
       },
       {
         title: 'Bonded in Pool',
@@ -239,7 +259,9 @@ export const ASSISTANT_CONFIG = [
       },
       {
         title: 'Joined Pool',
-        description: ['The currently joined pool. Only one pool can be joined per account.'],
+        description: [
+          'The currently joined pool. Only one pool can be joined per account.',
+        ],
       },
     ],
     external: [],
@@ -257,7 +279,7 @@ export const ASSISTANT_CONFIG = [
       {
         title: 'Active Validator',
         description: [
-          'A validator that is actively validating blocks. Rewards are accumulated based on the validator\'s activity.',
+          "A validator that is actively validating blocks. Rewards are accumulated based on the validator's activity.",
           'A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.',
           'Polkadot allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.',
         ],
@@ -279,7 +301,7 @@ export const ASSISTANT_CONFIG = [
       {
         title: 'Era Points',
         description: [
-          'Era Points are accumulated by validators during each era, and depend on a validator\'s performance.',
+          "Era Points are accumulated by validators during each era, and depend on a validator's performance.",
           'As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards.',
         ],
       },
@@ -346,8 +368,7 @@ export const ASSISTANT_CONFIG = [
   },
   {
     key: 'community',
-    definitions: [
-    ],
+    definitions: [],
     external: [],
   },
 ];

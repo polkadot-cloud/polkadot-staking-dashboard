@@ -26,39 +26,45 @@ export interface StakingContextState {
   targets: any;
 }
 
-export const StakingContext: React.Context<StakingContextState> = React.createContext({
-  getNominationsStatus: () => true,
-  setTargets: (t: any) => false,
-  hasController: () => false,
-  isBonding: () => false,
-  isNominating: () => false,
-  inSetup: () => false,
-  staking: {},
-  eraStakers: {},
-  targets: [],
-});
+export const StakingContext: React.Context<StakingContextState> =
+  React.createContext({
+    getNominationsStatus: () => true,
+    setTargets: (t: any) => false,
+    hasController: () => false,
+    isBonding: () => false,
+    isNominating: () => false,
+    inSetup: () => false,
+    staking: {},
+    eraStakers: {},
+    targets: [],
+  });
 
 export const useStaking = () => React.useContext(StakingContext);
 
 export const StakingProvider = ({ children }: any) => {
   const { activeAccount } = useConnect();
-  const {
-    isReady, api, consts, status, network,
-  }: any = useApi();
+  const { isReady, api, consts, status, network }: any = useApi();
   const { metrics }: any = useNetworkMetrics();
   const {
-    accounts, getBondedAccount, getAccountLedger, getAccountNominations,
+    accounts,
+    getBondedAccount,
+    getAccountLedger,
+    getAccountNominations,
   }: any = useBalances();
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store staking metrics in state
-  const [stakingMetrics, setStakingMetrics]: any = useState(defaults.stakingMetrics);
+  const [stakingMetrics, setStakingMetrics]: any = useState(
+    defaults.stakingMetrics
+  );
 
   // store stakers metadata in state
   const [eraStakers, _setEraStakers]: any = useState(defaults.eraStakers);
 
   // store account target validators
-  const [targets, _setTargets]: any = useState(localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true));
+  const [targets, _setTargets]: any = useState(
+    localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true)
+  );
 
   const eraStakersRef = useRef(eraStakers);
   const setEraStakers = (val: any) => {
@@ -71,43 +77,46 @@ export const StakingProvider = ({ children }: any) => {
       const previousEra = metrics.activeEra.index - 1;
 
       // subscribe to staking metrics
-      const unsub = await _api.queryMulti([
-        _api.query.staking.counterForNominators,
-        _api.query.staking.counterForValidators,
-        _api.query.staking.maxNominatorsCount,
-        _api.query.staking.maxValidatorsCount,
-        _api.query.staking.validatorCount,
-        [_api.query.staking.erasValidatorReward, previousEra],
-        [_api.query.staking.erasTotalStake, previousEra],
-        _api.query.staking.minNominatorBond,
-        _api.query.staking.historyDepth,
-        [_api.query.staking.payee, activeAccount],
-      ], ([
-        _totalNominators,
-        _totalValidators,
-        _maxNominatorsCount,
-        _maxValidatorsCount,
-        _validatorCount,
-        _lastReward,
-        _lastTotalStake,
-        _minNominatorBond,
-        _historyDepth,
-        _payee,
-      ]: any) => {
-        setStakingMetrics({
-          ...stakingMetrics,
-          payee: _payee.toHuman(),
-          historyDepth: _historyDepth.toBn(),
-          lastTotalStake: _lastTotalStake.toBn(),
-          validatorCount: _validatorCount.toBn(),
-          totalNominators: _totalNominators.toBn(),
-          totalValidators: _totalValidators.toBn(),
-          minNominatorBond: _minNominatorBond.toBn(),
-          lastReward: _lastReward.unwrapOrDefault(new BN(0)),
-          maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
-          maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
-        });
-      });
+      const unsub = await _api.queryMulti(
+        [
+          _api.query.staking.counterForNominators,
+          _api.query.staking.counterForValidators,
+          _api.query.staking.maxNominatorsCount,
+          _api.query.staking.maxValidatorsCount,
+          _api.query.staking.validatorCount,
+          [_api.query.staking.erasValidatorReward, previousEra],
+          [_api.query.staking.erasTotalStake, previousEra],
+          _api.query.staking.minNominatorBond,
+          _api.query.staking.historyDepth,
+          [_api.query.staking.payee, activeAccount],
+        ],
+        ([
+          _totalNominators,
+          _totalValidators,
+          _maxNominatorsCount,
+          _maxValidatorsCount,
+          _validatorCount,
+          _lastReward,
+          _lastTotalStake,
+          _minNominatorBond,
+          _historyDepth,
+          _payee,
+        ]: any) => {
+          setStakingMetrics({
+            ...stakingMetrics,
+            payee: _payee.toHuman(),
+            historyDepth: _historyDepth.toBn(),
+            lastTotalStake: _lastTotalStake.toBn(),
+            validatorCount: _validatorCount.toBn(),
+            totalNominators: _totalNominators.toBn(),
+            totalValidators: _totalValidators.toBn(),
+            minNominatorBond: _minNominatorBond.toBn(),
+            lastReward: _lastReward.unwrapOrDefault(new BN(0)),
+            maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
+            maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
+          });
+        }
+      );
 
       setStakingMetrics({
         ...stakingMetrics,
@@ -123,9 +132,13 @@ export const StakingProvider = ({ children }: any) => {
    * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
-    if (!isReady || metrics.activeEra.index === 0) { return; }
+    if (!isReady || metrics.activeEra.index === 0) {
+      return;
+    }
 
-    const _exposures = await api.query.staking.erasStakers.entries(metrics.activeEra.index);
+    const _exposures = await api.query.staking.erasStakers.entries(
+      metrics.activeEra.index
+    );
 
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => ({
@@ -144,19 +157,23 @@ export const StakingProvider = ({ children }: any) => {
   /*
    * Get the status of nominations.
    * Possible statuses: waiting, inactive, active.
-  */
+   */
   const getNominationsStatus = () => {
     const nominations = getAccountNominations(activeAccount);
     const statuses: any = {};
 
     for (const nomination of nominations) {
-      const s = eraStakersRef.current.stakers.find((_n: any) => _n.address === nomination);
+      const s = eraStakersRef.current.stakers.find(
+        (_n: any) => _n.address === nomination
+      );
 
       if (s === undefined) {
         statuses[nomination] = 'waiting';
         continue;
       }
-      const exists = (s.others ?? []).find((_o: any) => _o.who === activeAccount);
+      const exists = (s.others ?? []).find(
+        (_o: any) => _o.who === activeAccount
+      );
       if (exists === undefined) {
         statuses[nomination] = 'inactive';
         continue;
@@ -179,12 +196,12 @@ export const StakingProvider = ({ children }: any) => {
       fetchEraStakers();
       subscribeToStakingkMetrics(api);
     }
-    return (() => {
+    return () => {
       // unsubscribe from staking metrics
       if (stakingMetrics.unsub !== null) {
         stakingMetrics.unsub();
       }
-    });
+    };
   }, [isReady, metrics.activeEra]);
 
   useEffect(() => {
@@ -192,12 +209,8 @@ export const StakingProvider = ({ children }: any) => {
       if (message) {
         const { data } = message;
 
-        const {
-          stakers,
-          activeNominators,
-          activeValidators,
-          minActiveBond,
-        } = data;
+        const { stakers, activeNominators, activeValidators, minActiveBond } =
+          data;
 
         setEraStakers({
           ...eraStakersRef.current,
@@ -230,7 +243,10 @@ export const StakingProvider = ({ children }: any) => {
 
           if (others.length) {
             const _min = new BN(rmCommas(others[0].value.toString()));
-            if ((_min.lt(_stakingMinActiveBond)) || _stakingMinActiveBond.toNumber() === 0) {
+            if (
+              _min.lt(_stakingMinActiveBond) ||
+              _stakingMinActiveBond.toNumber() === 0
+            ) {
               _stakingMinActiveBond = _min;
             }
           }
@@ -239,10 +255,14 @@ export const StakingProvider = ({ children }: any) => {
     }
 
     // convert _stakingMinActiveBond to base  value
-    const stakingMinActiveBond = _stakingMinActiveBond.div(new BN(10 ** network.units)).toNumber();
+    const stakingMinActiveBond = _stakingMinActiveBond
+      .div(new BN(10 ** network.units))
+      .toNumber();
 
     // set account's targets
-    _setTargets(localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true));
+    _setTargets(
+      localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true)
+    );
 
     setEraStakers({
       ...eraStakersRef.current,
@@ -303,7 +323,9 @@ export const StakingProvider = ({ children }: any) => {
    * is nominating, or is yet to start.
    */
   const inSetup = () => {
-    return (!hasController() || (!isBonding() && !isNominating() && !isUnlocking()));
+    return (
+      !hasController() || (!isBonding() && !isNominating() && !isUnlocking())
+    );
   };
 
   return (

@@ -21,8 +21,7 @@ export const Bond = (props: any) => {
   const setup = getSetupProgress(activeAccount);
 
   // either free to bond or existing setup value
-  const initialBondValue = setup.bond === 0
-    ? freeToBond : setup.bond;
+  const initialBondValue = setup.bond === 0 ? freeToBond : setup.bond;
 
   // store local bond amount for form control
   const [bond, setBond] = useState({
@@ -48,22 +47,22 @@ export const Bond = (props: any) => {
         assistantPage="stake"
         assistantKey="Bonding"
       />
-      <MotionContainer
-        thisSection={section}
-        activeSection={setup.section}
-      >
+      <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondInputWithFeedback
           nominating
           unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
-          setters={[{
-            set: setActiveAccountSetup,
-            current: setup,
-          }, {
-            set: setBond,
-            current: bond,
-          }]}
+          setters={[
+            {
+              set: setActiveAccountSetup,
+              current: setup,
+            },
+            {
+              set: setBond,
+              current: bond,
+            },
+          ]}
         />
         <BondStatusBar value={bond.bond} />
         <Footer complete={bondValid} />

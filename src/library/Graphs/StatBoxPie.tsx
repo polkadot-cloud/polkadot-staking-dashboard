@@ -22,10 +22,7 @@ export const StatPie = (props: any) => {
 
   const borderColor: any = isZero
     ? defaultThemes.buttons.toggle.background[mode]
-    : [
-      defaultThemes.text.secondary[mode],
-      defaultThemes.transparent[mode],
-    ];
+    : [defaultThemes.text.secondary[mode], defaultThemes.transparent[mode]];
 
   const backgroundColor: any = isZero
     ? defaultThemes.buttons.toggle.background[mode]
@@ -61,10 +58,7 @@ export const StatPie = (props: any) => {
 
   return (
     <div className="graph" style={{ width: 36, height: 36 }}>
-      <Pie
-        options={options}
-        data={data}
-      />
+      <Pie options={options} data={data} />
     </div>
   );
 };
