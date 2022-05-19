@@ -35,8 +35,10 @@ export const Forms = (props: any) => {
   const nominations = getAccountNominations(activeAccount);
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond =
-    freeToUnbond - planckBnToUnit(minNominatorBond, units);
+  const freeToUnbondToMinNominatorBond = Math.max(
+    freeToUnbond - planckBnToUnit(minNominatorBond, units),
+    0
+  );
 
   // local bond value
   const [bond, setBond] = useState(freeToBond);

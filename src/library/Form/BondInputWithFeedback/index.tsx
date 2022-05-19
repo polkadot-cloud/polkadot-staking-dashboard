@@ -7,7 +7,7 @@ import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
 import { BondInput } from '../BondInput';
-import { planckToUnit, humanNumber, planckBnToUnit } from '../../../Utils';
+import { humanNumber, planckBnToUnit } from '../../../Utils';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
 
@@ -36,8 +36,10 @@ export const BondInputWithFeedback = (props: any) => {
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond =
-    freeToUnbond - planckBnToUnit(minNominatorBond, units);
+  const freeToUnbondToMinNominatorBond = Math.max(
+    freeToUnbond - planckBnToUnit(minNominatorBond, units),
+    0
+  );
 
   // store errors
   const [errors, setErrors]: any = useState([]);

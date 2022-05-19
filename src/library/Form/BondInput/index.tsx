@@ -32,8 +32,10 @@ export const BondInput = (props: any) => {
   const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond =
-    freeToUnbond - planckBnToUnit(minNominatorBond, units);
+  const freeToUnbondToMinNominatorBond = Math.max(
+    freeToUnbond - planckBnToUnit(minNominatorBond, units),
+    0
+  );
 
   // the current local bond value
   const [bond, setBond] = useState(_value);
