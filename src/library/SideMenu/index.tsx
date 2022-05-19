@@ -34,7 +34,7 @@ export const SideMenu = () => {
   const { activeAccount, accounts }: any = useConnect();
   const { pathname }: any = useLocation();
   const { getBondedAccount }: any = useBalances();
-  const { isControllerImported } = useStaking();
+  const { getControllerNotImported } = useStaking();
   const controller = getBondedAccount(activeAccount);
   const {
     setSideMenu,
@@ -43,6 +43,7 @@ export const SideMenu = () => {
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: any = useUi();
+  const controllerNotImported = getControllerNotImported(controller);
 
   const [pageConfig, setPageConfig]: any = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -76,7 +77,7 @@ export const SideMenu = () => {
 
         // on stake menu item, add warning for controller not imported
         if (uri === `${URI_PREFIX}/stake`) {
-          _pageConfigWithMessages[i].action = !isControllerImported(controller);
+          _pageConfigWithMessages[i].action = controllerNotImported;
         }
       }
       setPageConfig({
@@ -84,7 +85,7 @@ export const SideMenu = () => {
         pages: _pageConfigWithMessages,
       });
     }
-  }, [network, activeAccount, accounts, isControllerImported(controller)]);
+  }, [network, activeAccount, accounts, controllerNotImported]);
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {

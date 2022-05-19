@@ -25,7 +25,7 @@ export const Forms = (props: any) => {
   const { units } = network;
   const { setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect();
-  const { staking } = useStaking();
+  const { staking, getControllerNotImported } = useStaking();
   const { minNominatorBond } = staking;
   const { getBondOptions, getBondedAccount, getAccountNominations }: any =
     useBalances();
@@ -33,6 +33,7 @@ export const Forms = (props: any) => {
     getBondOptions(activeAccount);
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
+  const controllerNotImported = getControllerNotImported(controller);
 
   // unbond amount to `minNominatorBond` threshold
   const freeToUnbondToMinNominatorBond = Math.max(
@@ -65,7 +66,18 @@ export const Forms = (props: any) => {
       }
     }
     if (task === 'unbond_all') {
-      if (freeToUnbond > 0 && nominations.length === 0) {
+      if (
+        freeToUnbond > 0 &&
+        nominations.length === 0 &&
+        !controllerNotImported
+      ) {
+        setBondValid(true);
+      } else {
+        setBondValid(false);
+      }
+    }
+    if (task === 'unbond_some') {
+      if (!controllerNotImported) {
         setBondValid(true);
       } else {
         setBondValid(false);
@@ -80,6 +92,13 @@ export const Forms = (props: any) => {
       return _tx;
     }
 
+    // controller must be imported
+    if (
+      (task === 'unbond_some' || task === 'unbond_all') &&
+      controllerNotImported
+    ) {
+      return _tx;
+    }
     // remove decimal errors
     const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
 
@@ -173,6 +192,11 @@ export const Forms = (props: any) => {
         )}
         {task === 'unbond_all' && (
           <>
+            {controllerNotImported ? (
+              <Warning text="You must have your controller account imported to unbond." />
+            ) : (
+              <></>
+            )}
             {nominations.length ? (
               <Warning text="Stop nominating before unbonding all funds." />
             ) : (

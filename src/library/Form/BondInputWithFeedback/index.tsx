@@ -22,7 +22,7 @@ export const BondInputWithFeedback = (props: any) => {
 
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { staking } = useStaking();
+  const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
   const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
@@ -104,6 +104,11 @@ export const BondInputWithFeedback = (props: any) => {
 
     // unbond errors
     if (unbond) {
+      if (getControllerNotImported(controller)) {
+        _errors.push(
+          'You must have your controller account imported to unbond.'
+        );
+      }
       if (bond.bond !== '' && bond.bond > activeBase) {
         _errors.push('Unbond amount is more than your bonded balance.');
       } else if (

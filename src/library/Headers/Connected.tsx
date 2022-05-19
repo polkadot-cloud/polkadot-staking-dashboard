@@ -11,10 +11,10 @@ import { useBalances } from '../../contexts/Balances';
 export const Connected = () => {
   const { activeAccount }: any = useConnect();
   const { openModalWith } = useModal();
-  const { isNominating, hasController, isControllerImported } = useStaking();
+  const { isNominating, hasController, getControllerNotImported } =
+    useStaking();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const controllerImported = isControllerImported(controller);
 
   return (
     <>
@@ -36,7 +36,11 @@ export const Connected = () => {
           <HeadingWrapper>
             <Account
               value={controller}
-              title={controllerImported ? undefined : 'Not Imported'}
+              title={
+                getControllerNotImported(controller)
+                  ? 'Not Imported'
+                  : undefined
+              }
               format="name"
               label="Controller"
               canClick={hasController()}

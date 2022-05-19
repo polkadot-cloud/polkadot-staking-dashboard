@@ -11,15 +11,14 @@ import { useModal } from '../../../contexts/Modal';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();
-  const { isControllerImported } = useStaking();
+  const { getControllerNotImported } = useStaking();
   const { activeAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const controllerImported = isControllerImported(controller);
 
   return (
     <>
-      {!controllerImported && (
+      {getControllerNotImported(controller) && (
         <PageRowWrapper noVerticalSpacer>
           <SectionWrapper
             style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}
