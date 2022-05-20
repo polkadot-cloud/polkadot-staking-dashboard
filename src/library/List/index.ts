@@ -108,11 +108,11 @@ export const List = styled.div<any>`
       &.col {
         flex-grow: 1;
         flex-basis: 100%;
-        @media (min-width: 650px) {
+        @media (min-width: 875px) {
           flex-basis: 50%;
           max-width: 50%;
         }
-        @media (min-width: 1250px) {
+        @media (min-width: 1500px) {
           flex-basis: ${(props) => props.flexBasisLarge};
           max-width: ${(props) => props.flexBasisLarge};
         }
