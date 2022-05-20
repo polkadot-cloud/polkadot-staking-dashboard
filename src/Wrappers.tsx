@@ -131,7 +131,7 @@ export const PageTitleWrapper = styled.header<any>`
   padding-bottom: 0.5rem;
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     top: 4rem;
-    padding-top: 1rem;
+    padding-top: 0;
   }
   width: 100%;
   z-index: 4;
