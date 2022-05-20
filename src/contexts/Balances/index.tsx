@@ -301,6 +301,7 @@ export const BalancesProvider = ({ children }: any) => {
       totalUnlocking,
       totalPossibleBond,
       freeToStake,
+      totalUnlockChuncks: unlocking.length,
     };
   };
 
