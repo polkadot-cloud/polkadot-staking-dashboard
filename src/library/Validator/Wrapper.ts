@@ -41,7 +41,7 @@ export const Wrapper = styled(motion.div)<any>`
       align-items: center;
       align-content: center;
       overflow: hidden;
-      flex: 1 1 60%;
+      flex: 1 1 100%;
 
       h4 {
         margin: 0;
