@@ -74,7 +74,7 @@ export const Active = (props: any) => {
       <ControllerNotImported />
       <PageRowWrapper noVerticalSpacer>
         <MainWrapper paddingLeft>
-          <SectionWrapper style={{ height: 260 }}>
+          <SectionWrapper style={{ height: 280 }}>
             <div className="head">
               <h4>
                 Status
@@ -120,7 +120,7 @@ export const Active = (props: any) => {
           </SectionWrapper>
         </MainWrapper>
         <SecondaryWrapper>
-          <SectionWrapper style={{ height: 260 }}>
+          <SectionWrapper style={{ height: 280 }}>
             <ManageBond />
           </SectionWrapper>
         </SecondaryWrapper>

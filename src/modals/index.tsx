@@ -13,6 +13,7 @@ import { UpdateBond } from './UpdateBond';
 import { UpdatePayee } from './UpdatePayee';
 import { StopNominating } from './StopNominating';
 import { Nominate } from './Nominate';
+import { UnlockChunks } from './UnlockChunks';
 
 export const Modal = () => {
   const { status, setStatus, modal, size } = useModal();
@@ -72,6 +73,7 @@ export const Modal = () => {
           {modal === 'UpdatePayee' && <UpdatePayee />}
           {modal === 'StopNominating' && <StopNominating />}
           {modal === 'Nominate' && <Nominate />}
+          {modal === 'UnlockChunks' && <UnlockChunks />}
         </ContentWrapper>
         <button
           type="button"

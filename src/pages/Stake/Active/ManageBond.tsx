@@ -21,7 +21,8 @@ export const ManageBond = () => {
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active, total } = ledger;
-  const { freeToBond, totalUnlocking } = getBondOptions(activeAccount);
+  const { freeToBond, totalUnlocking, totalUnlockChuncks } =
+    getBondOptions(activeAccount);
 
   return (
     <>
@@ -50,6 +51,17 @@ export const ManageBond = () => {
                 openModalWith('UpdateBond', { fn: 'remove' }, 'small')
               }
             />
+            {totalUnlockChuncks !== 0 && (
+              <Button
+                small
+                inline
+                primary
+                title={`${totalUnlockChuncks} Unlock${
+                  totalUnlockChuncks === 1 ? `` : `s`
+                }`}
+                onClick={() => openModalWith('UnlockChunks', {}, 'small')}
+              />
+            )}
           </div>
         </h2>
       </div>
