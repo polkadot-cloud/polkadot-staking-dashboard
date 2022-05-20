@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
+import { useConnect } from '../Connect';
 import { rmCommas } from '../../Utils';
 
 const EMPTY_H256 = new Uint8Array(32);
@@ -13,7 +14,7 @@ const MOD_PREFIX = stringToU8a('modl');
 const U32_OPTS = { bitLength: 32, isLe: true };
 
 export interface PoolsContextState {
-  getAccountActivePool: (a: string) => any;
+  membership: any;
   enabled: number;
   stats: any;
   bondedPools: any;
@@ -21,7 +22,7 @@ export interface PoolsContextState {
 
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
-    getAccountActivePool: (a: string) => {},
+    membership: undefined,
     enabled: 0,
     stats: defaults.stats,
     bondedPools: [],
@@ -34,6 +35,8 @@ export const PoolsProvider = (props: any) => {
   const { poolsPalletId } = consts;
   const { features } = network;
 
+  const { activeAccount } = useConnect();
+
   // whether pools are enabled
   const [enabled, setEnabled] = useState(0);
 
@@ -42,6 +45,12 @@ export const PoolsProvider = (props: any) => {
     stats: defaults.stats,
     unsub: null,
   });
+
+  const [poolMembership, setPoolMembership]: any = useState({
+    membership: undefined,
+    unsub: null,
+  });
+
   // store bonded pools
   const [bondedPools, setBondedPools]: any = useState([]);
 
@@ -65,11 +74,30 @@ export const PoolsProvider = (props: any) => {
     };
   }, [network, isReady]);
 
+  useEffect(() => {
+    if (isReady && enabled && activeAccount) {
+      subscribeToPoolMembership(activeAccount);
+    }
+    return () => {
+      unsubscribePoolMembership();
+    };
+  }, [network, isReady, activeAccount]);
+
   const unsubscribe = async () => {
     if (poolsConfig.unsub !== null) {
       poolsConfig.unsub();
     }
     setBondedPools([]);
+  };
+
+  const unsubscribePoolMembership = async () => {
+    if (poolMembership?.unsub) {
+      poolMembership.unsub();
+    }
+    setPoolMembership({
+      membership: undefined,
+      unsub: null,
+    });
   };
 
   // subscribe to pool chain state
@@ -130,6 +158,25 @@ export const PoolsProvider = (props: any) => {
     });
   };
 
+  // subscribe to accounts membership
+  const subscribeToPoolMembership = async (address: string) => {
+    const unsub = await api.query.nominationPools.poolMembers(
+      address,
+      async (result: any) => {
+        let membership = result?.unwrapOr(undefined)?.toJSON();
+        if (membership) {
+          let pool = await api.query.nominationPools.bondedPools(
+            membership.poolId
+          );
+          pool = pool?.unwrapOr(undefined)?.toJSON();
+          membership = { ...membership, pool };
+        }
+        setPoolMembership({ membership, unsub });
+      }
+    );
+    return unsub;
+  };
+
   // fetch all bonded pool entries
   const fetchBondedPools = async () => {
     const _exposures = await api.query.nominationPools.bondedPools.entries();
@@ -165,15 +212,10 @@ export const PoolsProvider = (props: any) => {
       .toString();
   };
 
-  // TODO: iterate pool members to determine user active pool.
-  const getAccountActivePool = (address: string) => {
-    return undefined;
-  };
-
   return (
     <PoolsContext.Provider
       value={{
-        getAccountActivePool,
+        membership: poolMembership?.membership,
         enabled,
         stats: poolsConfig.stats,
         bondedPools,

@@ -10,8 +10,9 @@ import { useConnect } from '../../contexts/Connect';
 
 export const Roles = () => {
   const { activeAccount } = useConnect();
-  const { getAccountActivePool } = usePools();
-  const activePool = getAccountActivePool(activeAccount);
+  const { membership } = usePools();
+  console.log(membership);
+  const activePool = membership?.pool;
 
   return (
     <SecondaryWrapper>
