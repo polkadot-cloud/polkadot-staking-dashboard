@@ -33,7 +33,7 @@ export const Item = (props: any) => {
             <FontAwesomeIcon
               icon={faCircle as IconProp}
               color="rgba(242, 185, 27,0.75)"
-              transform="shrink-2"
+              transform="shrink-3"
             />
           </div>
         )}
