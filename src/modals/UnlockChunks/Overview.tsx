@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { Separator } from '../Wrappers';
 import { ContentWrapper, ChunkWrapper } from './Wrappers';
 import { useBalances } from '../../contexts/Balances';
@@ -10,7 +11,7 @@ import { planckBnToUnit } from '../../Utils';
 import Button from '../../library/Button';
 import { useNetworkMetrics } from '../../contexts/Network';
 
-export const Overview = ({ setSection, setUnlock }: any) => {
+export const Overview = ({ setSection, setUnlock, setTask }: any) => {
   const { network, consts }: any = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
@@ -22,8 +23,53 @@ export const Overview = ({ setSection, setUnlock }: any) => {
   const ledger = getAccountLedger(controller);
   const { unlocking } = ledger;
 
+  // calculate total withdraw available
+  const withdrawAvailable = new BN(0);
+  for (const _chunk of unlocking) {
+    const { era, value } = _chunk;
+    const end = era + bondDuration + 1;
+    const left = end - activeEra.index;
+
+    if (left <= 0) {
+      withdrawAvailable.add(value);
+    }
+  }
+
   return (
     <ContentWrapper>
+      {withdrawAvailable.toNumber() > 0 && (
+        <>
+          <ChunkWrapper>
+            <h4>Withdraw Funds</h4>
+            <div>
+              <section>
+                <h2>
+                  {planckBnToUnit(withdrawAvailable, units)} {network.unit}
+                </h2>
+              </section>
+              <section>
+                <div>
+                  <Button
+                    small
+                    inline
+                    primary
+                    title="Withdraw"
+                    onClick={() => {
+                      setTask('withdraw');
+                      setUnlock({
+                        era: 0,
+                        value: withdrawAvailable,
+                      });
+                      setSection(1);
+                    }}
+                  />
+                </div>
+              </section>
+            </div>
+          </ChunkWrapper>
+          <Separator />
+        </>
+      )}
       {unlocking.map((chunk: any, index: number) => {
         const { era, value } = chunk;
         const end = era + bondDuration + 1;
@@ -32,7 +78,7 @@ export const Overview = ({ setSection, setUnlock }: any) => {
         return (
           <ChunkWrapper key={`unlock_chunk_${index}`}>
             <h4>
-              Submitted in era <b>{era}</b>
+              Unbond submitted in era <b>{era}</b>
             </h4>
             <div>
               <section>
@@ -55,6 +101,7 @@ export const Overview = ({ setSection, setUnlock }: any) => {
                     primary
                     title="Rebond"
                     onClick={() => {
+                      setTask('rebond');
                       setUnlock(chunk);
                       setSection(1);
                     }}
@@ -66,7 +113,6 @@ export const Overview = ({ setSection, setUnlock }: any) => {
           </ChunkWrapper>
         );
       })}
-
       <div className="notes">
         <p>
           Unlock chunks take {bondDuration} eras to unlock. You can rebond

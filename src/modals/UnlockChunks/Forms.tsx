@@ -18,12 +18,13 @@ import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
 import { planckBnToUnit } from '../../Utils';
 
-export const Rebond = ({ setSection, unlock }: any) => {
+export const Forms = ({ setSection, unlock, task }: any) => {
   const { api, network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getControllerNotImported } = useStaking();
+  const { getControllerNotImported, staking } = useStaking();
   const { setStatus: setModalStatus }: any = useModal();
   const { getBondedAccount }: any = useBalances();
+  const { historyDepth } = staking;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
 
@@ -43,7 +44,11 @@ export const Rebond = ({ setSection, unlock }: any) => {
     if (!valid) {
       return _tx;
     }
-    _tx = api.tx.staking.rebond(unlock.value.toNumber());
+    if (task === 'rebond') {
+      _tx = api.tx.staking.rebond(unlock.value.toNumber());
+    } else {
+      _tx = api.tx.staking.withdrawUnbonded(historyDepth);
+    }
     return _tx;
   };
 
@@ -65,9 +70,17 @@ export const Rebond = ({ setSection, unlock }: any) => {
         {getControllerNotImported(controller) && (
           <Warning text="You must have your controller account imported to stop nominating." />
         )}
-        <h2>
-          Rebond {planckBnToUnit(value, units)} {network.unit}
-        </h2>
+
+        {task === 'rebond' && (
+          <h2>
+            Rebond {planckBnToUnit(value, units)} {network.unit}
+          </h2>
+        )}
+        {task === 'withdraw' && (
+          <h2>
+            Withdraw {planckBnToUnit(value, units)} {network.unit}
+          </h2>
+        )}
         <Separator />
         <div className="notes">
           <p>

@@ -9,7 +9,7 @@ import { Wrapper, FixedContentWrapper, SectionsWrapper } from './Wrappers';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { Overview } from './Overview';
-import { Rebond } from './Rebond';
+import { Forms } from './Forms';
 
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
@@ -21,6 +21,9 @@ export const UnlockChunks = () => {
   // active modal section
   const [section, setSection] = useState(0);
 
+  // modal task
+  const [task, setTask]: any = useState(null);
+
   // unlock value of interest
   const [unlock, setUnlock] = useState(null);
 
@@ -29,7 +32,7 @@ export const UnlockChunks = () => {
       <FixedContentWrapper>
         <HeadingWrapper>
           <FontAwesomeIcon transform="grow-2" icon={faClock} />
-          {unlocking.length} Active Unlock Chunk
+          {unlocking.length} Unlock Chunk
           {unlocking.length === 1 ? '' : 's'}
         </HeadingWrapper>
       </FixedContentWrapper>
@@ -49,8 +52,12 @@ export const UnlockChunks = () => {
           },
         }}
       >
-        <Overview setSection={setSection} setUnlock={setUnlock} />
-        <Rebond setSection={setSection} unlock={unlock} />
+        <Overview
+          setSection={setSection}
+          setUnlock={setUnlock}
+          setTask={setTask}
+        />
+        <Forms setSection={setSection} unlock={unlock} task={task} />
       </SectionsWrapper>
     </Wrapper>
   );
