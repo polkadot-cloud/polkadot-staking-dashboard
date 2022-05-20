@@ -288,6 +288,9 @@ export const StakingProvider = ({ children }: any) => {
    * has set a controller account.
    */
   const hasController = () => {
+    if (activeAccount === '' || activeWallet === null) {
+      return false;
+    }
     return getBondedAccount(activeAccount) !== null;
   };
 
@@ -343,7 +346,9 @@ export const StakingProvider = ({ children }: any) => {
    */
   const inSetup = () => {
     return (
-      !hasController() && !isBonding() && !isNominating() && !isUnlocking()
+      activeAccount === '' ||
+      activeWallet === null ||
+      (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
     );
   };
 
