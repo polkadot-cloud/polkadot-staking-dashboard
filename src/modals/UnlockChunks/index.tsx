@@ -12,12 +12,17 @@ import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { planckBnToUnit } from '../../Utils';
+import Button from '../../library/Button';
+import { useNetworkMetrics } from '../../contexts/Network';
 
 export const UnlockChunks = () => {
-  const { network }: any = useApi();
+  const { network, consts }: any = useApi();
   const { activeAccount } = useConnect();
+  const { metrics } = useNetworkMetrics();
   const { getBondedAccount, getAccountLedger }: any = useBalances();
+  const { bondDuration } = consts;
   const { units } = network;
+  const { activeEra } = metrics;
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { unlocking } = ledger;
@@ -38,13 +43,37 @@ export const UnlockChunks = () => {
       >
         {unlocking.map((chunk: any, index: number) => {
           const { era, value } = chunk;
+          const end = era + bondDuration + 1;
+          const left = end - activeEra.index;
 
           return (
             <ChunkWrapper key={`unlock_chunk_${index}`}>
-              <h3>Submitted in Era {era}</h3>
-              <h2>
-                {planckBnToUnit(value, units)} {network.unit}
-              </h2>
+              <section>
+                <h3>
+                  Submitted in era <b>{era}</b>
+                </h3>
+                {left > 0 ? (
+                  <h3>
+                    {left} era{left !== 1 && 's'} remaining before withdraw.
+                  </h3>
+                ) : (
+                  <h3>Available to withdraw</h3>
+                )}
+                <h2>
+                  {planckBnToUnit(value, units)} {network.unit}
+                </h2>
+              </section>
+              <section>
+                <div>
+                  <Button
+                    small
+                    inline
+                    primary
+                    title="Rebond"
+                    onClick={() => {}}
+                  />
+                </div>
+              </section>
 
               <Separator />
             </ChunkWrapper>
@@ -53,9 +82,9 @@ export const UnlockChunks = () => {
 
         <div className="notes">
           <p>
-            Unlock chunks take 28 days to unlock. You can rebond chunks at any
-            time in this period, or withdraw them to your free balance
-            thereafter.
+            Unlock chunks take {bondDuration} eras to unlock. You can rebond
+            chunks at any time in this period, or withdraw them to your free
+            balance thereafter.
           </p>
           {/* <p>
             Estimated Tx Fee:
