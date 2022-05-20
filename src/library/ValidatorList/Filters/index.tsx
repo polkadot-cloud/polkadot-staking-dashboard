@@ -28,7 +28,7 @@ export const Filters = () => {
   return (
     <Wrapper>
       <div className="hide-scrollbar">
-        <section>
+        <div>
           <div className="category">
             <div className="head">Order</div>
             <div className="items">
@@ -93,7 +93,7 @@ export const Filters = () => {
               />
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </Wrapper>
   );
