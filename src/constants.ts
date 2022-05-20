@@ -109,7 +109,7 @@ export const EXPECTED_BLOCK_TIME = 6000;
  */
 export const RESERVE_AMOUNT_DOT = 0.1;
 export const LIST_ITEMS_PER_PAGE = 50;
-export const LIST_ITEMS_PER_BATCH = 20;
+export const LIST_ITEMS_PER_BATCH = 30;
 
 /*
  * Third party API keys and endpoints

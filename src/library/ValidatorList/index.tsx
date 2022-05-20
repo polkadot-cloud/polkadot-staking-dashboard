@@ -94,7 +94,7 @@ export const ValidatorListInner = (props: any) => {
     if (!(batchEnd >= pageEnd || disableThrottle)) {
       setTimeout(() => {
         setRenderIteration(renderIterationRef.current + 1);
-      }, 500);
+      }, 50);
     }
   }, [renderIterationRef.current]);
 
@@ -135,7 +135,7 @@ export const ValidatorListInner = (props: any) => {
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listValidators = validators.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listValidators = validators.slice(pageStart).slice(0, batchEnd);
   } else {
     listValidators = validators;
   }
