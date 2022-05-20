@@ -12,7 +12,7 @@ import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { ContentWrapper } from './Wrapper';
+import { ContentWrapper } from './Wrappers';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';

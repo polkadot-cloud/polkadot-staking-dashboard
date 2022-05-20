@@ -70,7 +70,6 @@ export const StopNominating = () => {
         {getControllerNotImported(controller) && (
           <Warning text="You must have your controller account imported to stop nominating." />
         )}
-
         <h2>
           You Have {nominations.length} Nomination
           {nominations.length === 1 ? '' : 's'}

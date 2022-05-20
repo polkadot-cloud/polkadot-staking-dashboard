@@ -85,7 +85,6 @@ export const FooterWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  flex: 1;
   margin-top: 1rem;
 
   > div {

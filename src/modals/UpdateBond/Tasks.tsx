@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from '../../contexts/Modal';
 import { useApi } from '../../contexts/Api';
-import { ContentWrapper } from './Wrapper';
+import { ContentWrapper } from './Wrappers';
 
 export const Tasks = (props: any) => {
   const { setSection, setTask } = props;

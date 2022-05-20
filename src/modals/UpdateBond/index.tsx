@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { HeadingWrapper } from '../Wrappers';
 import { useModal } from '../../contexts/Modal';
-import { Wrapper, SectionsWrapper, FixedContentWrapper } from './Wrapper';
+import { Wrapper, SectionsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';
 
