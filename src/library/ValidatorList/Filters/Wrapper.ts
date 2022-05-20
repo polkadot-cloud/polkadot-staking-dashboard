@@ -5,27 +5,28 @@ import styled from 'styled-components';
 import { textSecondary, borderPrimary } from '../../../theme';
 
 export const Wrapper = styled.div`
-  width: 100%;
+  box-sizing: border-box;
   padding: 0.25rem 0.5rem 1rem 0.5rem;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-end;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 125px;
 
   > .hide-scrollbar {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     overflow: hidden;
-    height: 115px;
 
-    > section {
+    > div {
+      box-sizing: border-box;
       display: flex;
       flex-wrap: nowrap;
       overflow: auto;
       width: 100%;
-      min-width: 100%;
-      max-width: 500px;
       padding-bottom: 2rem;
 
       > .category {

@@ -20,7 +20,7 @@ export const ValidatorListInner = (props: any) => {
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { metrics }: any = useNetworkMetrics();
-  const { fetchValidatorMetaBatch, meta } = useValidators();
+  const { fetchValidatorMetaBatch } = useValidators();
   const {
     setListFormat,
     listFormat,
@@ -55,9 +55,6 @@ export const ValidatorListInner = (props: any) => {
   // manipulated list (ordering, filtering) of validators
   const [validators, setValidators]: any = useState(props.validators);
 
-  // is this the initial render
-  const [initial, setInitial] = useState(true);
-
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
 
@@ -78,35 +75,43 @@ export const ValidatorListInner = (props: any) => {
   // render batch
   const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
 
-  const identities = meta[batchKey]?.identities ?? [];
-  const supers = meta[batchKey]?.supers ?? [];
-  const stake = meta[batchKey]?.stake ?? [];
-
   // refetch list when validator list changes
   useEffect(() => {
-    setFetched(false);
-  }, [props.validators]);
-
-  // refetch list when active account changes
-  useEffect(() => {
-    setFetched(false);
-  }, [activeAccount]);
+    if (props.validators !== validatorsDefault) {
+      setFetched(false);
+    }
+  }, [props.validators, activeAccount]);
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
-      setValidatorsDefault(props.validators);
-      setValidators(props.validators);
-      setInitial(true);
-      setFetched(true);
-      fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
+      setupValidatorList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, metrics.activeEra.index, fetched]);
+
+  // render throttle
+  useEffect(() => {
+    if (!(batchEnd >= pageEnd || disableThrottle)) {
+      setTimeout(() => {
+        setRenderIteration(renderIterationRef.current + 1);
+      }, 50);
+    }
+  }, [renderIterationRef.current]);
 
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
-    handleValidatorsFilterUpdate();
+    if (allowFilters && fetched) {
+      handleValidatorsFilterUpdate();
+    }
   }, [validatorFilters, validatorOrder]);
+
+  // handle validator list bootstrapping
+  const setupValidatorList = () => {
+    setValidatorsDefault(props.validators);
+    setValidators(props.validators);
+    setFetched(true);
+    fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
+  };
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = () => {
@@ -125,31 +130,15 @@ export const ValidatorListInner = (props: any) => {
     }
   };
 
-  // render throttle
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 500);
-    }
-  }, [renderIterationRef.current]);
-
   // get validators to render
   let listValidators = [];
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listValidators = validators.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listValidators = validators.slice(pageStart).slice(0, batchEnd);
   } else {
     listValidators = validators;
   }
-
-  // aggregate synced status
-  const synced = {
-    identities: identities.length > 0 ?? false,
-    supers: supers.length > 0 ?? false,
-    stake: stake.length > 0 ?? false,
-  };
 
   if (!validators.length) {
     return <></>;
@@ -182,7 +171,7 @@ export const ValidatorListInner = (props: any) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {allowFilters && <Filters setInitial={setInitial} />}
+        {allowFilters && <Filters />}
 
         {pagination && (
           <Pagination prev={page !== 1} next={page !== totalPages}>
@@ -197,7 +186,6 @@ export const ValidatorListInner = (props: any) => {
                 className="prev"
                 onClick={() => {
                   setPage(prevPage);
-                  setInitial(false);
                 }}
               >
                 Prev
@@ -207,7 +195,6 @@ export const ValidatorListInner = (props: any) => {
                 className="next"
                 onClick={() => {
                   setPage(nextPage);
-                  setInitial(false);
                 }}
               >
                 Next
@@ -250,13 +237,10 @@ export const ValidatorListInner = (props: any) => {
                 }}
               >
                 <Validator
-                  initial={initial}
                   validator={validator}
-                  identity={identities[batchIndex]}
-                  superIdentity={supers[batchIndex]}
-                  stake={stake[batchIndex]}
-                  synced={synced}
                   toggleFavourites={toggleFavourites}
+                  batchIndex={batchIndex}
+                  batchKey={batchKey}
                 />
               </motion.div>
             );

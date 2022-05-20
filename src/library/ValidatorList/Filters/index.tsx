@@ -13,8 +13,7 @@ import { Wrapper } from './Wrapper';
 import { Item } from './Item';
 import { useUi } from '../../../contexts/UI';
 
-export const Filters = (props: any) => {
-  const { setInitial } = props;
+export const Filters = () => {
   const {
     validatorOrder,
     validatorFilters,
@@ -23,14 +22,13 @@ export const Filters = (props: any) => {
   }: any = useUi();
 
   const handleFilter = (fn: any, filter: string) => {
-    setInitial(true);
     fn(filter);
   };
 
   return (
     <Wrapper>
       <div className="hide-scrollbar">
-        <section>
+        <div>
           <div className="category">
             <div className="head">Order</div>
             <div className="items">
@@ -95,7 +93,7 @@ export const Filters = (props: any) => {
               />
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </Wrapper>
   );

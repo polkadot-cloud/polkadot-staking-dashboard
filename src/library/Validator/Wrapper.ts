@@ -10,21 +10,30 @@ export const Wrapper = styled(motion.div)<any>`
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
+  height: 3.2rem;
+  position: relative;
+  margin: 0.5rem;
 
   > div {
+    background: ${backgroundValidator};
+    box-sizing: border-box;
     padding: 0.75rem 0.6rem;
     flex: 1;
-    background: ${backgroundValidator};
     border-radius: 0.75rem;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
     flex: 1;
-    max-width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
 
     .identity {
-      position: relative;
+      box-sizing: border-box;
       display: flex;
       margin-left: 0.75rem;
       margin-right: 0.5rem;
@@ -32,7 +41,7 @@ export const Wrapper = styled(motion.div)<any>`
       align-items: center;
       align-content: center;
       overflow: hidden;
-      flex: 1;
+      flex: 1 1 60%;
 
       h4 {
         margin: 0;
@@ -43,10 +52,11 @@ export const Wrapper = styled(motion.div)<any>`
     }
     .labels {
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: row wrap;
       justify-content: flex-end;
       align-items: center;
-      flex-grow: 1;
+      overflow: hidden;
+      flex: 1 1 100%;
 
       .label {
         margin-left: 0.35rem;
