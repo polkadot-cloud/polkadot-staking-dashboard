@@ -92,46 +92,65 @@ export const MainInterfaceWrapper = styled.div`
   flex: 1;
   display: flex;
   flex-flow: column nowrap;
+  position: relative;
 `;
 
 // Page wrapper
 export const PageWrapper = styled(motion.div)`
+  max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
   box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
   padding-bottom: 4.5rem;
   width: 100%;
-  max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
   margin: 0 auto;
+`;
+
+// Background filler for small screen size heading.
+export const MenuPaddingWrapper = styled.div`
+  background: ${backgroundPrimary};
+  box-sizing: border-box;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 4rem;
+  z-index: 4;
+  display: none;
+  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    display: block;
+  }
 `;
 
 // Sticky page title wrapper
 export const PageTitleWrapper = styled.header<any>`
   box-sizing: border-box;
+  background: ${backgroundPrimary};
   position: sticky;
   top: 0px;
-  padding-top: ${(props) => (props.isSticky ? '4.5vh ' : '1.4vh ')};
+  padding-top: 1.25rem;
+  padding-bottom: 0.5rem;
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    padding-top: ${(props) => (props.isSticky ? '7vh ' : '2vh ')};
+    top: 4rem;
+    padding-top: 1rem;
   }
-  padding-bottom: ${(props) => (props.isSticky ? '1rem ' : '0.25vh ')};
   width: 100%;
-  background: ${(props) => (props.isSticky ? backgroundPrimary : 'none')};
   z-index: 4;
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-end;
-  min-height: ${(props) => (props.isSticky ? '30px ' : 'none')};
   transition: padding 0.3s ease-out;
 
   h1 {
-    font-size: ${(props) => (props.isSticky ? '1.4rem ' : '1.85rem')};
+    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.8rem')};
+    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+      font-size: 1.5rem;
+    }
     transition: font 0.5s;
 
     /* page padding */
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
       padding: 0 3rem 0 1rem;
     }
     @media (min-width: 1500px) {
