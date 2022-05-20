@@ -123,8 +123,7 @@ export const PoolListInner = (props: any) => {
             <div>
               <h4>
                 Page
-                {page} of
-                {totalPages}
+                {page} of {totalPages}
               </h4>
             </div>
             <div>

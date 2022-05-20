@@ -188,9 +188,7 @@ export const ValidatorListInner = (props: any) => {
           <Pagination prev={page !== 1} next={page !== totalPages}>
             <div>
               <h4>
-                Page
-                {page} of
-                {totalPages}
+                Page {page} of {totalPages}
               </h4>
             </div>
             <div>
