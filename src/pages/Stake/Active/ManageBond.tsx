@@ -59,7 +59,7 @@ export const ManageBond = () => {
                 title={`${totalUnlockChuncks} Unlock${
                   totalUnlockChuncks === 1 ? `` : `s`
                 }`}
-                onClick={() => openModalWith('UnlockChunks', {}, 'small')}
+                onClick={() => openModalWith('UnlockChunks', {}, 'large')}
               />
             )}
           </div>

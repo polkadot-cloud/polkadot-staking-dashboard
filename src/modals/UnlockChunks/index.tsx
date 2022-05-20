@@ -48,33 +48,34 @@ export const UnlockChunks = () => {
 
           return (
             <ChunkWrapper key={`unlock_chunk_${index}`}>
-              <section>
-                <h3>
-                  Submitted in era <b>{era}</b>
-                </h3>
-                {left > 0 ? (
-                  <h3>
-                    {left} era{left !== 1 && 's'} remaining before withdraw.
-                  </h3>
-                ) : (
-                  <h3>Available to withdraw</h3>
-                )}
-                <h2>
-                  {planckBnToUnit(value, units)} {network.unit}
-                </h2>
-              </section>
-              <section>
-                <div>
-                  <Button
-                    small
-                    inline
-                    primary
-                    title="Rebond"
-                    onClick={() => {}}
-                  />
-                </div>
-              </section>
-
+              <h4>
+                Submitted in era <b>{era}</b>
+              </h4>
+              <div>
+                <section>
+                  <h2>
+                    {planckBnToUnit(value, units)} {network.unit}
+                  </h2>
+                  {left > 0 ? (
+                    <h3>
+                      {left} era{left !== 1 && 's'} remaining before withdraw.
+                    </h3>
+                  ) : (
+                    <h3>Available to withdraw</h3>
+                  )}
+                </section>
+                <section>
+                  <div>
+                    <Button
+                      small
+                      inline
+                      primary
+                      title="Rebond"
+                      onClick={() => {}}
+                    />
+                  </div>
+                </section>
+              </div>
               <Separator />
             </ChunkWrapper>
           );

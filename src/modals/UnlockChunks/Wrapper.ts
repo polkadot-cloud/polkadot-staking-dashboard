@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary } from '../../theme';
+import { textSecondary, buttonPrimaryBackground } from '../../theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
@@ -16,27 +16,42 @@ export const Wrapper = styled.div`
 export const ChunkWrapper = styled.div`
   flex: 1;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
+  margin: 1rem 0;
 
-  > section {
+  > div {
     display: flex;
-    flex-flow: column wrap;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 0.5rem 0;
+    flex-flow: row wrap;
+    width: 100%;
 
-    &:first-child {
-      flex-grow: 1;
+    > section {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 0.5rem 0;
+
+      &:first-child {
+        flex-grow: 1;
+      }
     }
-  }
-
-  h3 {
-    color: ${textSecondary};
-    margin: 0.25rem 0;
   }
 
   h2 {
     margin: 0.75rem 0 0 0;
+  }
+  h3 {
+    color: ${textSecondary};
+    margin: 1rem 0 0 0;
+  }
+  h4 {
+    background: ${buttonPrimaryBackground};
+    color: ${textSecondary};
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
   }
 `;
 
