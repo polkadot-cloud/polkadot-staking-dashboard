@@ -35,7 +35,7 @@ export const Status = () => {
                   inline
                   primary
                   title="Create Pool"
-                  onClick={() => openModalWith('CreatePool', {}, 'small')}
+                  onClick={() => {}}
                 />
               ) : (
                 <Button small inline primary title="Leave" onClick={() => {}} />
