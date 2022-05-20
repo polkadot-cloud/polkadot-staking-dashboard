@@ -13,7 +13,7 @@ const ActivePoolsStatBox = () => {
     unit: '',
     assistant: {
       page: 'pools',
-      key: 'Era',
+      key: 'Nomination Pools',
     },
   };
   return <Number {...params} />;

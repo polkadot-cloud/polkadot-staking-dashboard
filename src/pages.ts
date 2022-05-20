@@ -229,13 +229,13 @@ export const ASSISTANT_CONFIG = [
         description: ['The current amount of active nomination pools.'],
       },
       {
-        title: 'Minimum Pool Join Bond',
+        title: 'Minimum Join Bond',
         description: [
           'The minimum amount of DOT needed to bond in order to join a pool.',
         ],
       },
       {
-        title: 'Minimum Pool Create Bond',
+        title: 'Minimum Create Bond',
         description: [
           'The minimum amount of DOT needed to bond for a creator  of a pool.',
         ],

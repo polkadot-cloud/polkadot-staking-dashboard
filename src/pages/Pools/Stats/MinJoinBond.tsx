@@ -17,7 +17,7 @@ const MinJoinBondStatBox = () => {
     unit: network.unit,
     assistant: {
       page: 'pools',
-      key: 'Era',
+      key: 'Minimum Join Bond',
     },
   };
   return <Number {...params} />;

@@ -17,7 +17,7 @@ const MinCreateBondStatBox = () => {
     unit: network.unit,
     assistant: {
       page: 'pools',
-      key: 'Era',
+      key: 'Minimum Create Bond',
     },
   };
   return <Number {...params} />;
