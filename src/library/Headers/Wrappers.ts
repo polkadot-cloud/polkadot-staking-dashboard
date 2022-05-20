@@ -15,6 +15,7 @@ import {
 } from '../../theme';
 
 export const Wrapper = styled.div`
+  box-sizing: border-box;
   position: sticky;
   top: 0px;
   right: 0px;
@@ -27,6 +28,7 @@ export const Wrapper = styled.div`
   transition: all 0.15s;
   z-index: 5;
   margin-bottom: 0.5rem;
+  height: 4rem;
 
   /* no longer in use */
   .menu {
