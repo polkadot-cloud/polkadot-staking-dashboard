@@ -13,8 +13,7 @@ import { Wrapper } from './Wrapper';
 import { Item } from './Item';
 import { useUi } from '../../../contexts/UI';
 
-export const Filters = (props: any) => {
-  const { setInitial } = props;
+export const Filters = () => {
   const {
     validatorOrder,
     validatorFilters,
@@ -23,7 +22,6 @@ export const Filters = (props: any) => {
   }: any = useUi();
 
   const handleFilter = (fn: any, filter: string) => {
-    setInitial(true);
     fn(filter);
   };
 

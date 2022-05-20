@@ -26,25 +26,34 @@ export const ValidatorInner = (props: any) => {
   const { consts, network }: any = useApi();
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
-  const { favourites, addFavourite, removeFavourite } = useValidators();
-  const {
-    initial,
-    validator,
-    synced,
-    identity,
-    superIdentity,
-    stake,
-    toggleFavourites,
-  } = props;
+  const { favourites, addFavourite, removeFavourite, meta } = useValidators();
+  const { validator, toggleFavourites, batchIndex, batchKey } = props;
+
+  const identities = meta[batchKey]?.identities ?? [];
+  const supers = meta[batchKey]?.supers ?? [];
+  const stake = meta[batchKey]?.stake ?? [];
+
+  // aggregate synced status
+  const identitiesSynced = identities.length > 0 ?? false;
+  const supersSynced = supers.length > 0 ?? false;
+
+  const synced = {
+    identities: identitiesSynced && supersSynced,
+    stake: stake.length > 0 ?? false,
+  };
 
   const { address, prefs } = validator;
+  const eraStakers = stake[batchIndex];
 
-  const display = getIdentityDisplay(identity, superIdentity);
+  const display = getIdentityDisplay(
+    identities[batchIndex],
+    supers[batchIndex]
+  );
   const commission = prefs?.commission ?? null;
   const blocked = prefs?.blocked ?? null;
 
-  const total_nominations = stake?.total_nominations ?? 0;
-  const lowest = stake?.lowest ?? 0;
+  const total_nominations = eraStakers?.total_nominations ?? 0;
+  const lowest = eraStakers?.lowest ?? 0;
 
   // copy address notification
   const notificationCopyAddress =
@@ -71,47 +80,25 @@ export const ValidatorInner = (props: any) => {
       <div>
         <Identicon value={address} size={26} />
 
-        {synced.identities && (
-          <>
-            {display !== null && (
-              <>
-                {initial ? (
-                  <motion.div
-                    className="identity"
-                    initial={{ opacity: 0.5 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <h4>{display}</h4>
-                  </motion.div>
-                ) : (
-                  <div className="identity">
-                    <h4>{display}</h4>
-                  </div>
-                )}
-              </>
-            )}
-            {display === null && (
-              <>
-                {initial ? (
-                  <motion.div
-                    className="identity"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <h4>{clipAddress(address)}</h4>
-                  </motion.div>
-                ) : (
-                  <div className="identity">
-                    <h4>{clipAddress(address)}</h4>
-                  </div>
-                )}
-              </>
-            )}
-          </>
+        {synced.identities && display !== null ? (
+          <motion.div
+            className="identity"
+            initial={{ opacity: 0.5 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h4>{display}</h4>
+          </motion.div>
+        ) : (
+          <motion.div
+            className="identity"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h4>{clipAddress(address)}</h4>
+          </motion.div>
         )}
-
         <div className="labels">
           {synced.stake &&
             total_nominations >= consts.maxNominatorRewardedPerValidator && (
@@ -195,8 +182,8 @@ export class Validator extends React.Component<any, any> {
   shouldComponentUpdate(nextProps: any, nextState: any) {
     return (
       this.props.validator.address !== nextProps.validator.address ||
-      this.props.synced !== nextProps.synced ||
-      this.props.stake !== nextProps.stake
+      this.props.batchIndex !== nextProps.batchIndex ||
+      this.props.batchKey !== nextProps.batchKey
     );
   }
 
