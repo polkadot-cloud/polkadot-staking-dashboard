@@ -27,8 +27,7 @@ export const Overview = ({ setSection, setUnlock, setTask }: any) => {
   const withdrawAvailable = new BN(0);
   for (const _chunk of unlocking) {
     const { era, value } = _chunk;
-    const end = era + bondDuration + 1;
-    const left = end - activeEra.index;
+    const left = era - activeEra.index;
 
     if (left <= 0) {
       withdrawAvailable.add(value);
@@ -72,14 +71,11 @@ export const Overview = ({ setSection, setUnlock, setTask }: any) => {
       )}
       {unlocking.map((chunk: any, index: number) => {
         const { era, value } = chunk;
-        const end = era + bondDuration + 1;
-        const left = end - activeEra.index;
+        const left = era - activeEra.index;
 
         return (
           <ChunkWrapper key={`unlock_chunk_${index}`}>
-            <h4>
-              Unbond submitted in era <b>{era}</b>
-            </h4>
+            <h4>Unlocks after era {era}</h4>
             <div>
               <section>
                 <h2>
