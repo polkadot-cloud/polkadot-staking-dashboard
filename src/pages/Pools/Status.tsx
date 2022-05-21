@@ -16,7 +16,7 @@ export const Status = () => {
   const activePool = getAccountActivePool(activeAccount);
 
   return (
-    <RowPrimaryWrapper paddingLeft>
+    <RowPrimaryWrapper hOrder={0} vOrder={0}>
       <SectionWrapper style={{ height: 360 }}>
         <div className="head">
           <h4>

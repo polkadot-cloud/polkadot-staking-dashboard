@@ -234,20 +234,20 @@ export const PageRowWrapper = styled.div<any>`
  * The primary module in a PageRow.
  */
 export const RowPrimaryWrapper = styled.div<any>`
+  order: ${(props) => props.vOrder};
   box-sizing: border-box;
   overflow: hidden;
   flex: 1;
   flex-basis: 100%;
   max-width: 100%;
-  order: 0;
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+    ${(props) => props.hOrder === 0 && ' padding-right: 1rem;'}
+    ${(props) => props.hOrder === 1 && 'padding-left: 1rem;'}
+    order: ${(props) => props.hOrder};
     flex-basis: 62%;
     width: 62%;
-    order: 1;
     flex: 1;
-    ${(props) => props.paddingLeft && 'padding-left: 1rem;'}
-    ${(props) => props.paddingRight && ' padding-right: 1rem;'}
   }
 `;
 
@@ -255,19 +255,19 @@ export const RowPrimaryWrapper = styled.div<any>`
  *
  * The secondary module in a PageRow.
  */
-export const RowSecondaryWrapper = styled.div`
+export const RowSecondaryWrapper = styled.div<any>`
+  order: ${(props) => props.vOrder};
   box-sizing: border-box;
   overflow: hidden;
   flex-basis: 100%;
   width: 100%;
   border-radius: 1rem;
-  order: 1;
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+    order: ${(props) => props.hOrder};
     flex-basis: 38%;
     max-width: 38%;
     flex-grow: 1;
-    order: 0;
   }
 `;
 

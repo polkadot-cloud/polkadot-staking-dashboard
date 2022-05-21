@@ -56,13 +56,13 @@ export const Overview = () => {
         <ActiveNominatorsStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowSecondaryWrapper>
+        <RowSecondaryWrapper hOrder={0} vOrder={1}>
           <GraphWrapper flex>
             <ActiveAccount />
             <BalanceGraph />
           </GraphWrapper>
         </RowSecondaryWrapper>
-        <RowPrimaryWrapper paddingLeft>
+        <RowPrimaryWrapper hOrder={1} vOrder={0}>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">

@@ -14,7 +14,7 @@ export const Roles = () => {
   const activePool = getAccountActivePool(activeAccount);
 
   return (
-    <RowSecondaryWrapper>
+    <RowSecondaryWrapper hOrder={1} vOrder={1}>
       <SectionWrapper style={{ height: 360 }}>
         <div className="head">
           <h2>Pool Roles</h2>
