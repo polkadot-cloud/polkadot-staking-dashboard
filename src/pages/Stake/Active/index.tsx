@@ -109,7 +109,7 @@ export const Active = ({ title }: any) => {
                     <Button
                       primary
                       inline
-                      title="Setup Staking"
+                      title="Start Staking"
                       icon={faChevronCircleRight}
                       transform="grow-1"
                       disabled={!isReady}
