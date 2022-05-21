@@ -37,12 +37,3 @@ export const SecondaryWrapper = styled.div`
     order: 0;
   }
 `;
-
-export const StickyWrapper = styled.div`
-  position: sticky;
-  top: 80px;
-
-  @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
-    top: 100px;
-  }
-`;
