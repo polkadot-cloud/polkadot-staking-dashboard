@@ -62,7 +62,7 @@ export const ManageBond = () => {
             inline
             primary
             icon={faLockOpen}
-            title={String(totalUnlockChuncks)}
+            title={String(totalUnlockChuncks ?? 0)}
             disabled={inSetup() || isSyncing()}
             onClick={() => openModalWith('UnlockChunks', {}, 'small')}
           />
