@@ -20,7 +20,7 @@ export const ControllerNotImported = () => {
 
   return (
     <>
-      {getControllerNotImported(controller) && !isSyncing() && (
+      {getControllerNotImported(controller) && !isSyncing && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <SectionWrapper
             style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}

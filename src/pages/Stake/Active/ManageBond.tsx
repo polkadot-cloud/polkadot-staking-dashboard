@@ -45,14 +45,14 @@ export const ManageBond = () => {
             primary
             inline
             title="+"
-            disabled={inSetup() || isSyncing()}
+            disabled={inSetup() || isSyncing}
             onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')}
           />
           <Button
             small
             primary
             title="-"
-            disabled={inSetup() || isSyncing()}
+            disabled={inSetup() || isSyncing}
             onClick={() =>
               openModalWith('UpdateBond', { fn: 'remove' }, 'small')
             }
@@ -63,7 +63,7 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={inSetup() || isSyncing()}
+            disabled={inSetup() || isSyncing}
             onClick={() => openModalWith('UnlockChunks', {}, 'small')}
           />
         </ButtonRow>

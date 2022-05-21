@@ -96,7 +96,7 @@ export const Active = ({ title }: any) => {
                 <OpenAssistantIcon page="stake" title="Staking Status" />
               </h4>
               <h2>
-                {inSetup() || isSyncing()
+                {inSetup() || isSyncing
                   ? 'Not Staking'
                   : !nominations.length
                   ? 'Inactive: Not Nominating'
@@ -144,7 +144,7 @@ export const Active = ({ title }: any) => {
                     small
                     inline
                     primary
-                    disabled={inSetup() || isSyncing()}
+                    disabled={inSetup() || isSyncing}
                     title="Update"
                     onClick={() => openModalWith('UpdatePayee', {}, 'small')}
                   />
@@ -161,7 +161,7 @@ export const Active = ({ title }: any) => {
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
-          {nominations.length || inSetup() || isSyncing() ? (
+          {nominations.length || inSetup() || isSyncing ? (
             <Nominations />
           ) : (
             <>
@@ -176,7 +176,7 @@ export const Active = ({ title }: any) => {
                     inline
                     primary
                     title="Nominate"
-                    disabled={targets.length === 0 || inSetup() || isSyncing()}
+                    disabled={targets.length === 0 || inSetup() || isSyncing}
                     onClick={() => openModalWith('Nominate', {}, 'small')}
                   />
                 </div>

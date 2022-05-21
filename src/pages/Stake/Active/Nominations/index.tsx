@@ -40,7 +40,7 @@ export const Nominations = () => {
                 inline
                 primary
                 title="Stop"
-                disabled={inSetup() || isSyncing()}
+                disabled={inSetup() || isSyncing}
                 onClick={() => openModalWith('StopNominating', {}, 'small')}
               />
             </div>
@@ -49,7 +49,7 @@ export const Nominations = () => {
           )}
         </div>
       </div>
-      {nominated === null || isSyncing() ? (
+      {nominated === null || isSyncing ? (
         <div className="head">
           <h3>Syncing nominations...</h3>
         </div>

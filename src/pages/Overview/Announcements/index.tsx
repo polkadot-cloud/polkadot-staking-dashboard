@@ -109,7 +109,7 @@ export const Announcements = () => {
           animate="show"
           style={{ width: '100%' }}
         >
-          {isSyncing() ? (
+          {isSyncing ? (
             <AnnouncementLoader />
           ) : (
             announcements.map((item, index) => (
