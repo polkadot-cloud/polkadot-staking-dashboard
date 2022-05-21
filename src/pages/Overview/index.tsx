@@ -52,7 +52,7 @@ export const Overview = () => {
         <TotalNominatorsStatBox />
         <ActiveNominatorsStatBox />
       </StatBoxList>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SecondaryWrapper>
           <GraphWrapper flex>
             <ActiveAccount />
@@ -83,7 +83,7 @@ export const Overview = () => {
           </GraphWrapper>
         </MainWrapper>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <Announcements />
       </PageRowWrapper>
     </>

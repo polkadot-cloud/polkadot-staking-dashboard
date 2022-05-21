@@ -18,7 +18,7 @@ export const Setup = (props: any) => {
   return (
     <>
       <PageTitle title={`${props.title} Setup`} />
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         {!hasController() && (
           <SectionWrapper>
             <Element name="controller" style={{ position: 'absolute' }} />
@@ -26,25 +26,25 @@ export const Setup = (props: any) => {
           </SectionWrapper>
         )}
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
           <Payee section={2} />
         </SectionWrapper>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <ChooseNominators section={3} />
         </SectionWrapper>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond section={4} />
         </SectionWrapper>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
           <Summary section={5} />

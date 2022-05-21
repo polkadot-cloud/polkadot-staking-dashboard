@@ -7,6 +7,7 @@ import {
   SIDE_MENU_INTERFACE_WIDTH,
   INTERFACE_MAXIMUM_WIDTH,
   SIDE_MENU_STICKY_THRESHOLD,
+  SHOW_SIDE_BAR_WIDTH_THRESHOLD,
 } from './constants';
 import {
   textPrimary,
@@ -50,6 +51,26 @@ export const EntryWrapper = styled.div`
 
   path.primary {
     fill: ${textPrimary};
+  }
+  .xs-none {
+    @media (max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
+      display: none;
+    }
+  }
+  .page-padding {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+
+    @media (min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+      padding: 0 3rem 0 1rem;
+    }
+    @media (min-width: 1500px) {
+      padding: 0 5rem 0 1.5rem;
+    }
   }
 `;
 
@@ -131,7 +152,7 @@ export const PageTitleWrapper = styled.header<any>`
   padding-bottom: 0.5rem;
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     top: 4rem;
-    padding-top: 0;
+    padding-top: 0.25rem;
   }
   width: 100%;
   z-index: 4;
@@ -146,16 +167,6 @@ export const PageTitleWrapper = styled.header<any>`
       font-size: 1.5rem;
     }
     transition: font 0.5s;
-
-    /* page padding */
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-      padding: 0 3rem 0 1rem;
-    }
-    @media (min-width: 1500px) {
-      padding: 0 5rem 0 1.5rem;
-    }
   }
 `;
 
@@ -168,16 +179,6 @@ export const PageRowWrapper = styled.div<any>`
   flex-shrink: 0;
   flex-flow: row wrap;
   width: 100%;
-
-  /* page padding */
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    padding: 0 3rem 0 1rem;
-  }
-  @media (min-width: 1500px) {
-    padding: 0 5rem 0 1.5rem;
-  }
 
   * {
     box-sizing: border-box;

@@ -40,11 +40,11 @@ export const Pools = (props: PageProps) => {
         <MinJoinBondStatBox />
         <MinCreateBondStatBox />
       </StatBoxList>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <Status />
         <Roles />
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <h2>
             Pools

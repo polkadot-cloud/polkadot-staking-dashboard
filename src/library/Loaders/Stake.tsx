@@ -12,6 +12,7 @@ export const Stake = () => {
   return (
     <>
       <PageRowWrapper
+        className="page-padding"
         noVerticalSpacer
         style={{ marginTop: '1rem', marginBottom: '1rem' }}
       >
@@ -67,7 +68,11 @@ export const Stake = () => {
           />
         </ContentLoader>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer style={{ marginBottom: '1rem' }}>
+      <PageRowWrapper
+        className="page-padding"
+        noVerticalSpacer
+        style={{ marginBottom: '1rem' }}
+      >
         <ContentLoader
           height={60}
           width="100%"
@@ -85,7 +90,11 @@ export const Stake = () => {
           />
         </ContentLoader>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer style={{ marginBottom: '1rem' }}>
+      <PageRowWrapper
+        className="page-padding"
+        noVerticalSpacer
+        style={{ marginBottom: '1rem' }}
+      >
         <ContentLoader
           height={60}
           width="100%"
@@ -103,7 +112,7 @@ export const Stake = () => {
           />
         </ContentLoader>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <ContentLoader
           height={60}
           width="100%"

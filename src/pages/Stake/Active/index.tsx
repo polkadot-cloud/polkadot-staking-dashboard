@@ -72,7 +72,7 @@ export const Active = (props: any) => {
         <ActiveEraStatBox />
       </StatBoxList>
       <ControllerNotImported />
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <MainWrapper paddingLeft>
           <SectionWrapper style={{ height: 280 }}>
             <div className="head">
@@ -125,7 +125,7 @@ export const Active = (props: any) => {
           </SectionWrapper>
         </SecondaryWrapper>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           {nominations.length ? (
             <Nominations />

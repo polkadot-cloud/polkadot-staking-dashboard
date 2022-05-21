@@ -5,7 +5,7 @@ import { Wrapper, ListWrapper } from './Wrapper';
 
 export const StatBoxList = ({ children }: any) => {
   return (
-    <Wrapper>
+    <Wrapper className="page-padding">
       <ListWrapper>{children}</ListWrapper>
     </Wrapper>
   );
