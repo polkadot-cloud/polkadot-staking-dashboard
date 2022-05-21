@@ -8,6 +8,7 @@ import {
   INTERFACE_MAXIMUM_WIDTH,
   SIDE_MENU_STICKY_THRESHOLD,
   SHOW_SIDE_BAR_WIDTH_THRESHOLD,
+  SECTION_FULL_WIDTH_THRESHOLD,
 } from './constants';
 import {
   textPrimary,
@@ -197,4 +198,38 @@ export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   width: 100%;
   margin: 1.5rem 0;
+`;
+
+export const MainWrapper = styled.div<any>`
+  box-sizing: border-box;
+  overflow: hidden;
+  flex: 1;
+  flex-basis: 100%;
+  max-width: 100%;
+  order: 0;
+
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+    flex-basis: 62%;
+    width: 62%;
+    order: 1;
+    flex: 1;
+    ${(props) => props.paddingLeft && 'padding-left: 1rem;'}
+    ${(props) => props.paddingRight && ' padding-right: 1rem;'}
+  }
+`;
+
+export const SecondaryWrapper = styled.div`
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-basis: 100%;
+  width: 100%;
+  border-radius: 1rem;
+  order: 1;
+
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+    flex-basis: 38%;
+    max-width: 38%;
+    flex-grow: 1;
+    order: 0;
+  }
 `;

@@ -4,7 +4,7 @@
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PoolAccount } from './PoolAccount';
-import { SecondaryWrapper } from '../../library/Layout';
+import { SecondaryWrapper } from '../../Wrappers';
 import { usePools } from '../../contexts/Pools';
 import { useConnect } from '../../contexts/Connect';
 

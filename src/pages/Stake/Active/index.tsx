@@ -8,8 +8,12 @@ import {
   faWallet,
   faCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper, Separator } from '../../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../../library/Layout';
+import {
+  PageRowWrapper,
+  Separator,
+  MainWrapper,
+  SecondaryWrapper,
+} from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../../library/StatBoxList';
 import { useStaking } from '../../../contexts/Staking';

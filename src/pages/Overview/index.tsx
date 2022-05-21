@@ -3,8 +3,7 @@
 
 import moment from 'moment';
 import { StatBoxList } from '../../library/StatBoxList';
-import { PageRowWrapper } from '../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../library/Layout';
+import { PageRowWrapper, MainWrapper, SecondaryWrapper } from '../../Wrappers';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import Payouts from './Payouts';
 import BalanceGraph from './BalanceGraph';
