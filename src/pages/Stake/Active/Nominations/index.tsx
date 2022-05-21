@@ -48,7 +48,7 @@ export const Nominations = () => {
       </div>
       {nominated === null || isSyncing() ? (
         <div className="head">
-          <h3>Fetching your nominations...</h3>
+          <h3>Syncing nominations...</h3>
         </div>
       ) : (
         <>
