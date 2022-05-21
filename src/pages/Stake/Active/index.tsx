@@ -11,8 +11,8 @@ import {
 import {
   PageRowWrapper,
   Separator,
-  MainWrapper,
-  SecondaryWrapper,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
 } from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../../library/StatBoxList';
@@ -77,7 +77,7 @@ export const Active = (props: any) => {
       </StatBoxList>
       <ControllerNotImported />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <MainWrapper paddingLeft>
+        <RowPrimaryWrapper paddingLeft>
           <SectionWrapper style={{ height: 280 }}>
             <div className="head">
               <h4>
@@ -122,12 +122,12 @@ export const Active = (props: any) => {
               </h2>
             </div>
           </SectionWrapper>
-        </MainWrapper>
-        <SecondaryWrapper>
+        </RowPrimaryWrapper>
+        <RowSecondaryWrapper>
           <SectionWrapper style={{ height: 280 }}>
             <ManageBond />
           </SectionWrapper>
-        </SecondaryWrapper>
+        </RowSecondaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>

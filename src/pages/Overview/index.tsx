@@ -3,7 +3,11 @@
 
 import moment from 'moment';
 import { StatBoxList } from '../../library/StatBoxList';
-import { PageRowWrapper, MainWrapper, SecondaryWrapper } from '../../Wrappers';
+import {
+  PageRowWrapper,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
+} from '../../Wrappers';
 import { GraphWrapper } from '../../library/Graphs/Wrappers';
 import Payouts from './Payouts';
 import BalanceGraph from './BalanceGraph';
@@ -52,13 +56,13 @@ export const Overview = () => {
         <ActiveNominatorsStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SecondaryWrapper>
+        <RowSecondaryWrapper>
           <GraphWrapper flex>
             <ActiveAccount />
             <BalanceGraph />
           </GraphWrapper>
-        </SecondaryWrapper>
-        <MainWrapper paddingLeft>
+        </RowSecondaryWrapper>
+        <RowPrimaryWrapper paddingLeft>
           <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
@@ -80,7 +84,7 @@ export const Overview = () => {
               payouts={payouts.slice(payoutsStart, payoutsEnd)}
             />
           </GraphWrapper>
-        </MainWrapper>
+        </RowPrimaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <Announcements />

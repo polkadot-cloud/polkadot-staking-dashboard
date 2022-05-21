@@ -207,7 +207,7 @@ export const MenuPaddingWrapper = styled.div`
 /* PageRowWrapper
  *
  * Used to separate page content based on rows.
- * Commonly used with MainWrapper and SecondaryWrapper.
+ * Commonly used with RowPrimaryWrapper and RowSecondaryWrapper.
  */
 export const PageRowWrapper = styled.div<any>`
   box-sizing: border-box;
@@ -229,11 +229,11 @@ export const PageRowWrapper = styled.div<any>`
   }
 `;
 
-/* MainWrapper
+/* RowPrimaryWrapper
  *
  * The primary module in a PageRow.
  */
-export const MainWrapper = styled.div<any>`
+export const RowPrimaryWrapper = styled.div<any>`
   box-sizing: border-box;
   overflow: hidden;
   flex: 1;
@@ -251,11 +251,11 @@ export const MainWrapper = styled.div<any>`
   }
 `;
 
-/* SecondaryWrapper
+/* RowSecondaryWrapper
  *
  * The secondary module in a PageRow.
  */
-export const SecondaryWrapper = styled.div`
+export const RowSecondaryWrapper = styled.div`
   box-sizing: border-box;
   overflow: hidden;
   flex-basis: 100%;

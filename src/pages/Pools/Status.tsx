@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Separator, MainWrapper } from '../../Wrappers';
+import { Separator, RowPrimaryWrapper } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { useApi } from '../../contexts/Api';
@@ -16,7 +16,7 @@ export const Status = () => {
   const activePool = getAccountActivePool(activeAccount);
 
   return (
-    <MainWrapper paddingLeft>
+    <RowPrimaryWrapper paddingLeft>
       <SectionWrapper style={{ height: 360 }}>
         <div className="head">
           <h4>
@@ -83,7 +83,7 @@ export const Status = () => {
           </h2>
         </div>
       </SectionWrapper>
-    </MainWrapper>
+    </RowPrimaryWrapper>
   );
 };
 

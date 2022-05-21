@@ -4,7 +4,7 @@
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { PoolAccount } from './PoolAccount';
-import { SecondaryWrapper } from '../../Wrappers';
+import { RowSecondaryWrapper } from '../../Wrappers';
 import { usePools } from '../../contexts/Pools';
 import { useConnect } from '../../contexts/Connect';
 
@@ -14,7 +14,7 @@ export const Roles = () => {
   const activePool = getAccountActivePool(activeAccount);
 
   return (
-    <SecondaryWrapper>
+    <RowSecondaryWrapper>
       <SectionWrapper style={{ height: 360 }}>
         <div className="head">
           <h2>Pool Roles</h2>
@@ -37,7 +37,7 @@ export const Roles = () => {
           <PoolAccount address={activePool?.roles?.stateToggler ?? null} last />
         </div>
       </SectionWrapper>
-    </SecondaryWrapper>
+    </RowSecondaryWrapper>
   );
 };
 
