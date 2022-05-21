@@ -32,9 +32,10 @@ export const Wrapper = styled(motion.button)<any>`
   font-size: ${(props) => (props.fontSize ? props.fontSize : '0.95rem')};
   font-variation-settings: 'wght' 560;
 
-  .icon {
+  .space {
     margin-right: 0.5rem;
   }
+
   &:disabled {
     cursor: default;
     opacity: 0.5;
@@ -62,7 +63,11 @@ export const Button = (props: any) => {
       onClick={() => onClick()}
     >
       {icon && (
-        <FontAwesomeIcon icon={icon} className="icon" transform="shrink-1" />
+        <FontAwesomeIcon
+          icon={icon}
+          className={title ? 'space' : undefined}
+          transform="shrink-1"
+        />
       )}
       {title && title}
     </Wrapper>
