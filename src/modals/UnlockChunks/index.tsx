@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, SectionsWrapper } from './Wrappers';
 import { useBalances } from '../../contexts/Balances';
@@ -31,7 +31,7 @@ export const UnlockChunks = () => {
     <Wrapper>
       <FixedContentWrapper>
         <HeadingWrapper>
-          <FontAwesomeIcon transform="grow-2" icon={faClock} />
+          <FontAwesomeIcon transform="grow-2" icon={faLockOpen} />
           {unlocking.length} Unlock Chunk
           {unlocking.length === 1 ? '' : 's'}
         </HeadingWrapper>
