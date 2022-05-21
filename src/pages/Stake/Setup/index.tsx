@@ -4,7 +4,6 @@
 import { Element } from 'react-scroll';
 import { PageRowWrapper } from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { useStaking } from '../../../contexts/Staking';
 import { PageTitle } from '../../../library/PageTitle';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
@@ -13,18 +12,14 @@ import { Payee } from './Payee';
 import { Summary } from './Summary';
 
 export const Setup = (props: any) => {
-  const { hasController } = useStaking();
-
   return (
     <>
       <PageTitle title={`${props.title} Setup`} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        {!hasController() && (
-          <SectionWrapper>
-            <Element name="controller" style={{ position: 'absolute' }} />
-            <SetController section={1} />
-          </SectionWrapper>
-        )}
+        <SectionWrapper>
+          <Element name="controller" style={{ position: 'absolute' }} />
+          <SetController section={1} />
+        </SectionWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
