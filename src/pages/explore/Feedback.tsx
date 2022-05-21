@@ -54,7 +54,7 @@ const Feedback = (props: PageProps) => {
     <Wrapper>
       <PageTitle title={title} />
 
-      <PageRowWrapper>
+      <PageRowWrapper className='page-padding'>
         <div data-canny style={{ width: '100%' }} />
       </PageRowWrapper>
     </Wrapper>

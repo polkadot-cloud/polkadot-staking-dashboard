@@ -4,7 +4,11 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageProps } from '../types';
-import { PageRowWrapper } from '../../Wrappers';
+import {
+  PageRowWrapper,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
+} from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { StatBoxList } from '../../library/StatBoxList';
@@ -40,11 +44,15 @@ export const Pools = (props: PageProps) => {
         <MinJoinBondStatBox />
         <MinCreateBondStatBox />
       </StatBoxList>
-      <PageRowWrapper noVerticalSpacer>
-        <Status />
-        <Roles />
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <RowPrimaryWrapper hOrder={0} vOrder={0}>
+          <Status />
+        </RowPrimaryWrapper>
+        <RowSecondaryWrapper hOrder={1} vOrder={1}>
+          <Roles />
+        </RowSecondaryWrapper>
       </PageRowWrapper>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <h2>
             Pools

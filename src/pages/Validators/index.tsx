@@ -28,7 +28,7 @@ export const Validators = (props: PageProps) => {
         <ActiveValidatorsStatBox />
         <ActiveEraStatBox />
       </StatBoxList>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           {isReady && (
             <>

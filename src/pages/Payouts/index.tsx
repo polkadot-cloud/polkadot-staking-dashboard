@@ -46,7 +46,7 @@ export const Payouts = (props: PageProps) => {
       <StatBoxList>
         <LastEraPayoutStatBox />
       </StatBoxList>
-      <PageRowWrapper noVerticalSpacer>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
         <GraphWrapper>
           <SubscanButton />
           <div className="head">
@@ -96,7 +96,7 @@ export const Payouts = (props: PageProps) => {
       {!payoutsList.length ? (
         <></>
       ) : (
-        <PageRowWrapper noVerticalSpacer>
+        <PageRowWrapper className="page-padding" noVerticalSpacer>
           <SectionWrapper>
             <PayoutList
               title="Recent Payouts"

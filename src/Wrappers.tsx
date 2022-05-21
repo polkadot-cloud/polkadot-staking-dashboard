@@ -7,6 +7,8 @@ import {
   SIDE_MENU_INTERFACE_WIDTH,
   INTERFACE_MAXIMUM_WIDTH,
   SIDE_MENU_STICKY_THRESHOLD,
+  SHOW_SIDE_BAR_WIDTH_THRESHOLD,
+  SECTION_FULL_WIDTH_THRESHOLD,
 } from './constants';
 import {
   textPrimary,
@@ -15,7 +17,12 @@ import {
   borderPrimary,
 } from './theme';
 
-// Highest level wrapper for Entry component
+/* EntryWrapper
+ *
+ * Highest level app component.
+ * Provides global styling for headers and other global
+ * classes used throughout the app and possibly the library.
+ */
 export const EntryWrapper = styled.div`
   background: ${backgroundGradient};
   box-sizing: border-box;
@@ -51,9 +58,33 @@ export const EntryWrapper = styled.div`
   path.primary {
     fill: ${textPrimary};
   }
+  .xs-none {
+    @media (max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
+      display: none;
+    }
+  }
+  .page-padding {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+
+    @media (min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+      padding: 0 3rem 0 1rem;
+    }
+    @media (min-width: 1500px) {
+      padding: 0 5rem 0 1.5rem;
+    }
+  }
 `;
 
-// Body interface wrapper
+/* BodyInterfaceWrapper
+ *
+ * An element that houses SideInterface and MainInterface.
+ * Used once in Router.
+ */
 export const BodyInterfaceWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -62,7 +93,12 @@ export const BodyInterfaceWrapper = styled.div`
   flex-grow: 1;
 `;
 
-// Side interface wrapper
+/* SideInterfaceWrapper
+ *
+ * An element that houses the side menu and handles resizing
+ * on smaller screens.
+ * Used once in Router.
+ */
 export const SideInterfaceWrapper = styled.div<any>`
   box-sizing: border-box;
   height: 100vh;
@@ -86,7 +122,11 @@ export const SideInterfaceWrapper = styled.div<any>`
   }
 `;
 
-// Main interface wrapper
+/* MainInterfaceWrapper
+ *
+ * A column flex wrapper that hosts the main page content.
+ * Used once in Router.
+ */
 export const MainInterfaceWrapper = styled.div`
   box-sizing: border-box;
   flex: 1;
@@ -95,7 +135,12 @@ export const MainInterfaceWrapper = styled.div`
   position: relative;
 `;
 
-// Page wrapper
+/* PageWrapper
+ *
+ * A motion.div that wraps every page.
+ * Transitions can be applied to this wrapper that will
+ * affect the entire page.
+ */
 export const PageWrapper = styled(motion.div)`
   max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
   box-sizing: border-box;
@@ -106,22 +151,12 @@ export const PageWrapper = styled(motion.div)`
   margin: 0 auto;
 `;
 
-// Background filler for small screen size heading.
-export const MenuPaddingWrapper = styled.div`
-  background: ${backgroundPrimary};
-  box-sizing: border-box;
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  height: 4rem;
-  z-index: 4;
-  display: none;
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    display: block;
-  }
-`;
-
-// Sticky page title wrapper
+/* PageTitleWrapper
+ *
+ * The element that wraps a page title. Determines the padding
+ * and position relative to top of screen when the element
+ * is stuck.
+ */
 export const PageTitleWrapper = styled.header<any>`
   box-sizing: border-box;
   background: ${backgroundPrimary};
@@ -131,7 +166,7 @@ export const PageTitleWrapper = styled.header<any>`
   padding-bottom: 0.5rem;
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     top: 4rem;
-    padding-top: 0;
+    padding-top: 0.25rem;
   }
   width: 100%;
   z-index: 4;
@@ -146,20 +181,34 @@ export const PageTitleWrapper = styled.header<any>`
       font-size: 1.5rem;
     }
     transition: font 0.5s;
-
-    /* page padding */
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-      padding: 0 3rem 0 1rem;
-    }
-    @media (min-width: 1500px) {
-      padding: 0 5rem 0 1.5rem;
-    }
   }
 `;
 
-// Page Row wrapper
+/* MenuPaddingWrapper
+ *
+ * A fixed block that is used to hide scrollable content
+ * on smaller screens when a PageTitle is fixed.
+ * Purely cosmetic. Applied in Pagetitle.
+ */
+export const MenuPaddingWrapper = styled.div`
+  background: ${backgroundPrimary};
+  box-sizing: border-box;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 4rem;
+  z-index: 4;
+  display: none;
+  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    display: block;
+  }
+`;
+
+/* PageRowWrapper
+ *
+ * Used to separate page content based on rows.
+ * Commonly used with RowPrimaryWrapper and RowSecondaryWrapper.
+ */
 export const PageRowWrapper = styled.div<any>`
   box-sizing: border-box;
   margin-top: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
@@ -168,21 +217,9 @@ export const PageRowWrapper = styled.div<any>`
   flex-shrink: 0;
   flex-flow: row wrap;
   width: 100%;
-
-  /* page padding */
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-    padding: 0 3rem 0 1rem;
-  }
-  @media (min-width: 1500px) {
-    padding: 0 5rem 0 1.5rem;
-  }
-
   * {
     box-sizing: border-box;
   }
-
   /* kill heading padding, already applied to wrapper */
   h1,
   h2,
@@ -192,6 +229,53 @@ export const PageRowWrapper = styled.div<any>`
   }
 `;
 
+/* RowPrimaryWrapper
+ *
+ * The primary module in a PageRow.
+ */
+export const RowPrimaryWrapper = styled.div<any>`
+  order: ${(props) => props.vOrder};
+  box-sizing: border-box;
+  overflow: hidden;
+  flex: 1;
+  flex-basis: 100%;
+  max-width: 100%;
+
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+    ${(props) => props.hOrder === 0 && ' padding-right: 1rem;'}
+    ${(props) => props.hOrder === 1 && 'padding-left: 1rem;'}
+    order: ${(props) => props.hOrder};
+    flex-basis: 62%;
+    width: 62%;
+    flex: 1;
+  }
+`;
+
+/* RowSecondaryWrapper
+ *
+ * The secondary module in a PageRow.
+ */
+export const RowSecondaryWrapper = styled.div<any>`
+  order: ${(props) => props.vOrder};
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-basis: 100%;
+  width: 100%;
+  border-radius: 1rem;
+
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+    order: ${(props) => props.hOrder};
+    flex-basis: 38%;
+    max-width: 38%;
+    flex-grow: 1;
+  }
+`;
+
+/* Separator
+ *
+ * A horizontal spacer with a bottom border.
+ * General spacer for separating content by row.
+ */
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   width: 100%;

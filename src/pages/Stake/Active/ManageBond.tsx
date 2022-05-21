@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { planckBnToUnit } from '../../../Utils';
 import BondedGraph from './BondedGraph';
 import { useApi } from '../../../contexts/Api';
@@ -33,37 +34,32 @@ export const ManageBond = () => {
         </h4>
         <h2>
           {planckBnToUnit(active, units)} {network.unit} &nbsp;
-          <div>
-            <Button
-              small
-              primary
-              inline
-              title="+"
-              onClick={() =>
-                openModalWith('UpdateBond', { fn: 'add' }, 'small')
-              }
-            />
-            <Button
-              small
-              primary
-              title="-"
-              onClick={() =>
-                openModalWith('UpdateBond', { fn: 'remove' }, 'small')
-              }
-            />
-            {totalUnlockChuncks !== 0 && (
-              <Button
-                small
-                inline
-                primary
-                title={`${totalUnlockChuncks} Unlock${
-                  totalUnlockChuncks === 1 ? `` : `s`
-                }`}
-                onClick={() => openModalWith('UnlockChunks', {}, 'small')}
-              />
-            )}
-          </div>
         </h2>
+        <div>
+          <Button
+            small
+            primary
+            inline
+            title="+"
+            onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')}
+          />
+          <Button
+            small
+            primary
+            title="-"
+            onClick={() =>
+              openModalWith('UpdateBond', { fn: 'remove' }, 'small')
+            }
+          />
+          <Button
+            small
+            inline
+            primary
+            icon={faLockOpen}
+            title={String(totalUnlockChuncks)}
+            onClick={() => openModalWith('UnlockChunks', {}, 'small')}
+          />
+        </div>
       </div>
 
       <GraphWrapper transparent noMargin>

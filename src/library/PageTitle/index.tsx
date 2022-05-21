@@ -29,7 +29,7 @@ export const PageTitle = (props: any) => {
     <>
       <MenuPaddingWrapper />
       <PageTitleWrapper ref={ref} sticky={sticky}>
-        <h1>{title}</h1>
+        <h1 className="page-padding">{title}</h1>
       </PageTitleWrapper>
     </>
   );

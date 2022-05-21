@@ -42,7 +42,7 @@ export const Projects = (props: PageProps) => {
     <Wrapper>
       <PageTitle title={title} />
 
-      <PageRowWrapper>
+      <PageRowWrapper className="page-padding">
         <div>
           <h2>Validator Programs</h2>
           <ItemsWrapper variants={container} initial="hidden" animate="show">

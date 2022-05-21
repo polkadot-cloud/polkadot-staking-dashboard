@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { textSecondary, buttonSecondaryBackground } from '../../theme';
 
 export const ButtonRow = styled.div`
@@ -31,6 +32,10 @@ export const Wrapper = styled(motion.button)<any>`
   font-size: ${(props) => (props.fontSize ? props.fontSize : '0.95rem')};
   font-variation-settings: 'wght' 560;
 
+  .space {
+    margin-right: 0.5rem;
+  }
+
   &:disabled {
     cursor: default;
     opacity: 0.5;
@@ -38,12 +43,14 @@ export const Wrapper = styled(motion.button)<any>`
 `;
 
 export const Button = (props: any) => {
-  let { primary, inline, small, disabled } = props;
-  const { title, onClick } = props;
+  let { primary, inline, small, disabled, icon, title } = props;
+  const { onClick } = props;
+  title = title ?? false;
   primary = primary ?? false;
   inline = inline ?? false;
   small = small ?? false;
   disabled = disabled ?? false;
+  icon = icon ?? false;
 
   return (
     <Wrapper
@@ -55,7 +62,14 @@ export const Button = (props: any) => {
       padding={small ? '0.3rem 0.75rem' : '0.5rem 1.2rem'}
       onClick={() => onClick()}
     >
-      {title}
+      {icon && (
+        <FontAwesomeIcon
+          icon={icon}
+          className={title ? 'space' : undefined}
+          transform="shrink-1"
+        />
+      )}
+      {title && title}
     </Wrapper>
   );
 };
