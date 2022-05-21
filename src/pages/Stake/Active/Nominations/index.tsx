@@ -11,12 +11,14 @@ import { useModal } from '../../../../contexts/Modal';
 import { useBalances } from '../../../../contexts/Balances';
 import { useConnect } from '../../../../contexts/Connect';
 import { useUi } from '../../../../contexts/UI';
+import { useStaking } from '../../../../contexts/Staking';
 
 export const Nominations = () => {
   const { openModalWith } = useModal();
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { nominated }: any = useValidators();
+  const { inSetup } = useStaking();
   const { getAccountNominations }: any = useBalances();
   const { isSyncing } = useUi();
   const nominations = getAccountNominations(activeAccount);
@@ -38,6 +40,7 @@ export const Nominations = () => {
                 inline
                 primary
                 title="Stop"
+                disabled={inSetup() || isSyncing()}
                 onClick={() => openModalWith('StopNominating', {}, 'small')}
               />
             </div>
