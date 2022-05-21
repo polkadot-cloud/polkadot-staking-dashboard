@@ -23,7 +23,7 @@ export const Favourites = (props: PageProps) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           {favouritesList === null ? (
-            <h4>Fetching favourite validators...</h4>
+            <h3>Fetching favourite validators...</h3>
           ) : (
             <>
               {isReady && (

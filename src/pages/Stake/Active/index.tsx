@@ -7,6 +7,7 @@ import {
   faRedoAlt,
   faWallet,
   faCircle,
+  faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   PageRowWrapper,
@@ -31,14 +32,21 @@ import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import ActiveEraStatBox from './Stats/ActiveEra';
 import { ControllerNotImported } from './ControllerNotImported';
+import { useUi } from '../../../contexts/UI';
+import { useApi } from '../../../contexts/Api';
 
-export const Active = (props: any) => {
+export const Active = ({ title }: any) => {
+  const { isReady }: any = useApi();
+  const { setOnSetup }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus, staking, targets, setTargets } = useStaking();
+  const { isSyncing } = useUi();
+  const { getNominationsStatus, staking, targets, setTargets, inSetup } =
+    useStaking();
   const { getAccountNominations }: any = useBalances();
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
+
   const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
 
   // handle nomination statuses
@@ -48,28 +56,31 @@ export const Active = (props: any) => {
     active: 0,
   });
 
-  const nominationStatuses = useMemo(
-    () => getNominationsStatus(),
-    [nominations]
-  );
+  const nominationStatuses = useMemo(() => {
+    getNominationsStatus();
+  }, [nominations, inSetup()]);
 
   useEffect(() => {
-    const statuses = nominationStatuses;
-    const total = Object.values(statuses).length;
-    const _active: any = Object.values(statuses).filter(
-      (_v: any) => _v === 'active'
-    ).length;
+    if (!inSetup()) {
+      const statuses: any =
+        nominationStatuses === undefined ? [] : nominationStatuses;
+      const total = Object.values(statuses)?.length ?? 0;
 
-    setNominationsStatus({
-      total,
-      inactive: total - _active,
-      active: _active,
-    });
+      const _active: any = Object.values(statuses).filter(
+        (_v: any) => _v === 'active'
+      ).length;
+
+      setNominationsStatus({
+        total,
+        inactive: total - _active,
+        active: _active,
+      });
+    }
   }, [nominationStatuses]);
 
   return (
     <>
-      <PageTitle title={props.title} />
+      <PageTitle title={title} />
       <StatBoxList>
         <ActiveNominationsStatBox />
         <MinimumActiveBondStatBox />
@@ -85,11 +96,27 @@ export const Active = (props: any) => {
                 <OpenAssistantIcon page="stake" title="Staking Status" />
               </h4>
               <h2>
-                {!nominations.length
+                {inSetup() || isSyncing()
+                  ? 'Not Staking'
+                  : !nominations.length
                   ? 'Inactive: Not Nominating'
                   : nominationsStatus.active
                   ? 'Actively Nominating with Bonded Funds'
                   : 'Waiting for Active Nominations'}
+                {inSetup() && (
+                  <span>
+                    &nbsp;&nbsp;
+                    <Button
+                      primary
+                      inline
+                      title="Setup Staking"
+                      icon={faChevronCircleRight}
+                      transform="grow-1"
+                      disabled={!isReady}
+                      onClick={() => setOnSetup(true)}
+                    />
+                  </span>
+                )}
               </h2>
               <Separator />
               <h4>
@@ -108,13 +135,16 @@ export const Active = (props: any) => {
                   transform="shrink-4"
                 />
                 &nbsp;
-                {payeeStatus.name}
+                {inSetup()
+                  ? 'Not Assigned'
+                  : payeeStatus?.name ?? 'Not Assigned'}
                 &nbsp;&nbsp;
                 <div>
                   <Button
                     small
                     inline
                     primary
+                    disabled={inSetup() || isSyncing()}
                     title="Update"
                     onClick={() => openModalWith('UpdatePayee', {}, 'small')}
                   />
@@ -131,7 +161,7 @@ export const Active = (props: any) => {
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
-          {nominations.length ? (
+          {nominations.length || inSetup() || isSyncing() ? (
             <Nominations />
           ) : (
             <>
@@ -146,7 +176,7 @@ export const Active = (props: any) => {
                     inline
                     primary
                     title="Nominate"
-                    disabled={targets.length === 0}
+                    disabled={targets.length === 0 || inSetup() || isSyncing()}
                     onClick={() => openModalWith('Nominate', {}, 'small')}
                   />
                 </div>

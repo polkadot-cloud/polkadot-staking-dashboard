@@ -7,43 +7,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { textSecondary, buttonSecondaryBackground } from '../../theme';
 
 export const ButtonRow = styled.div`
-  flex: 1;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-end;
-  align-items: flex-end;
-  align-content: flex-end;
-
-  > button {
-    margin-top: 0.5rem;
-  }
+  align-items: center;
+  justify-content: flex-start;
 `;
 
-export const Wrapper = styled(motion.button)<any>`
-  background: ${(props) =>
-    props.type === 'default'
-      ? buttonSecondaryBackground
-      : 'rgba(211, 48, 121, 0.9)'};
-  color: ${(props) => (props.type === 'default' ? textSecondary : 'white')};
+export const Wrapper = styled(motion.div)<any>`
+  display: inline-block;
   margin: ${(props) => props.margin};
-  flex-grow: 1;
-  padding: ${(props) => props.padding};
-  border-radius: 0.75rem;
-  font-size: ${(props) => (props.fontSize ? props.fontSize : '0.95rem')};
-  font-variation-settings: 'wght' 560;
 
-  .space {
-    margin-right: 0.5rem;
-  }
+  > button {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    background: ${(props) =>
+      props.type === 'default'
+        ? buttonSecondaryBackground
+        : 'rgba(211, 48, 121, 0.9)'};
+    color: ${(props) => (props.type === 'default' ? textSecondary : 'white')};
 
-  &:disabled {
-    cursor: default;
-    opacity: 0.5;
+    padding: ${(props) => props.padding};
+    border-radius: 0.75rem;
+    font-size: ${(props) => props.fontSize};
+    font-variation-settings: 'wght' 560;
+    transition: opacity 0.2s;
+
+    .space {
+      margin-right: 0.6rem;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.25;
+    }
   }
 `;
 
 export const Button = (props: any) => {
-  let { primary, inline, small, disabled, icon, title } = props;
+  let { primary, inline, small, disabled, icon, transform, title } = props;
   const { onClick } = props;
   title = title ?? false;
   primary = primary ?? false;
@@ -51,25 +52,27 @@ export const Button = (props: any) => {
   small = small ?? false;
   disabled = disabled ?? false;
   icon = icon ?? false;
+  transform = transform ?? 'shrink-1';
 
   return (
     <Wrapper
-      disabled={disabled}
       whileHover={{ scale: !disabled ? 1.02 : 1 }}
       whileTap={{ scale: !disabled ? 0.98 : 1 }}
       type={primary === true ? 'invert' : 'default'}
       margin={inline ? '0' : '0 0.5rem'}
-      padding={small ? '0.3rem 0.75rem' : '0.5rem 1.2rem'}
-      onClick={() => onClick()}
+      padding={small ? '0.3rem 0.75rem' : '0.45rem 1.2rem'}
+      fontSize={small ? '0.95rem' : '1.05rem'}
     >
-      {icon && (
-        <FontAwesomeIcon
-          icon={icon}
-          className={title ? 'space' : undefined}
-          transform="shrink-1"
-        />
-      )}
-      {title && title}
+      <button type="button" disabled={disabled} onClick={() => onClick()}>
+        {icon && (
+          <FontAwesomeIcon
+            icon={icon}
+            className={title ? 'space' : undefined}
+            transform={transform}
+          />
+        )}
+        {title && title}
+      </button>
     </Wrapper>
   );
 };

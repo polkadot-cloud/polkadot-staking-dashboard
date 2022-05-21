@@ -10,6 +10,7 @@ import { Button } from '../../../../library/Button';
 import { useModal } from '../../../../contexts/Modal';
 import { useBalances } from '../../../../contexts/Balances';
 import { useConnect } from '../../../../contexts/Connect';
+import { useUi } from '../../../../contexts/UI';
 
 export const Nominations = () => {
   const { openModalWith } = useModal();
@@ -17,6 +18,7 @@ export const Nominations = () => {
   const { activeAccount } = useConnect();
   const { nominated }: any = useValidators();
   const { getAccountNominations }: any = useBalances();
+  const { isSyncing } = useUi();
   const nominations = getAccountNominations(activeAccount);
 
   const batchKey = 'stake_nominations';
@@ -44,9 +46,9 @@ export const Nominations = () => {
           )}
         </div>
       </div>
-      {nominated === null ? (
-        <div style={{ marginTop: '1rem' }}>
-          <p>Fetching your nominations...</p>
+      {nominated === null || isSyncing() ? (
+        <div className="head">
+          <h3>Fetching your nominations...</h3>
         </div>
       ) : (
         <>
@@ -64,7 +66,9 @@ export const Nominations = () => {
                   />
                 </div>
               ) : (
-                <h3>Not Nominating.</h3>
+                <div className="head">
+                  <h3>Not Nominating.</h3>
+                </div>
               )}
             </>
           )}

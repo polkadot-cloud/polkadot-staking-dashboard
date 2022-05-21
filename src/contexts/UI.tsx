@@ -26,6 +26,7 @@ export interface UIContextState {
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
   getServices: () => void;
+  setOnSetup: (v: any) => void;
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;
@@ -33,6 +34,7 @@ export interface UIContextState {
   services: any;
   validatorFilters: any;
   validatorOrder: string;
+  onSetup: number;
 }
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
@@ -49,6 +51,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   setActiveAccountSetup: (p: any) => {},
   setActiveAccountSetupSection: (s: number) => {},
   getServices: () => {},
+  setOnSetup: (v: any) => {},
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
@@ -56,6 +59,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   services: SERVICES,
   validatorFilters: [],
   validatorOrder: 'default',
+  onSetup: 0,
 });
 
 export const useUi = () => React.useContext(UIContext);
@@ -63,7 +67,7 @@ export const useUi = () => React.useContext(UIContext);
 export const UIProvider = (props: any) => {
   const { isReady, consts, network }: any = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
-  const { staking, eraStakers }: any = useStaking();
+  const { staking, eraStakers, inSetup }: any = useStaking();
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
@@ -101,6 +105,9 @@ export const UIProvider = (props: any) => {
   // global list format
   const [listFormat, _setListFormat] = useState('col');
 
+  // is the user actively on the setup page
+  const [onSetup, setOnSetup] = useState(0);
+
   // services
   const [services, _setServices] = useState(servicesLocal);
   const servicesRef = useRef(services);
@@ -126,6 +133,13 @@ export const UIProvider = (props: any) => {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);
     }
   };
+
+  // go to active page once staking setup completes / network change
+  useEffect(() => {
+    if (!inSetup()) {
+      setOnSetup(0);
+    }
+  }, [inSetup(), network]);
 
   // resize event listener
   useEffect(() => {
@@ -480,6 +494,7 @@ export const UIProvider = (props: any) => {
         setActiveAccountSetup,
         setActiveAccountSetupSection,
         getServices,
+        setOnSetup,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
@@ -487,6 +502,7 @@ export const UIProvider = (props: any) => {
         validatorFilters,
         validatorOrder,
         services: servicesRef.current,
+        onSetup,
       }}
     >
       {props.children}
