@@ -78,7 +78,7 @@ export const Active = (props: any) => {
       <ControllerNotImported />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowPrimaryWrapper hOrder={1} vOrder={0}>
-          <SectionWrapper style={{ height: 280 }}>
+          <SectionWrapper height={280}>
             <div className="head">
               <h4>
                 Status
@@ -124,7 +124,7 @@ export const Active = (props: any) => {
           </SectionWrapper>
         </RowPrimaryWrapper>
         <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <SectionWrapper style={{ height: 280 }}>
+          <SectionWrapper height={280}>
             <ManageBond />
           </SectionWrapper>
         </RowSecondaryWrapper>
