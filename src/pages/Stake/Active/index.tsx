@@ -8,8 +8,12 @@ import {
   faWallet,
   faCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper, Separator } from '../../../Wrappers';
-import { MainWrapper, SecondaryWrapper } from '../../../library/Layout';
+import {
+  PageRowWrapper,
+  Separator,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
+} from '../../../Wrappers';
 import { SectionWrapper } from '../../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../../library/StatBoxList';
 import { useStaking } from '../../../contexts/Staking';
@@ -73,7 +77,7 @@ export const Active = (props: any) => {
       </StatBoxList>
       <ControllerNotImported />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <MainWrapper paddingLeft>
+        <RowPrimaryWrapper hOrder={1} vOrder={0}>
           <SectionWrapper style={{ height: 280 }}>
             <div className="head">
               <h4>
@@ -118,12 +122,12 @@ export const Active = (props: any) => {
               </h2>
             </div>
           </SectionWrapper>
-        </MainWrapper>
-        <SecondaryWrapper>
+        </RowPrimaryWrapper>
+        <RowSecondaryWrapper hOrder={0} vOrder={1}>
           <SectionWrapper style={{ height: 280 }}>
             <ManageBond />
           </SectionWrapper>
-        </SecondaryWrapper>
+        </RowSecondaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>

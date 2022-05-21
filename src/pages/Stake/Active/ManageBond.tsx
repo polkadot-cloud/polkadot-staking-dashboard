@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { planckBnToUnit } from '../../../Utils';
 import BondedGraph from './BondedGraph';
 import { useApi } from '../../../contexts/Api';
@@ -56,9 +57,8 @@ export const ManageBond = () => {
                 small
                 inline
                 primary
-                title={`${totalUnlockChuncks} Unlock${
-                  totalUnlockChuncks === 1 ? `` : `s`
-                }`}
+                icon={faLockOpen}
+                title={totalUnlockChuncks}
                 onClick={() => openModalWith('UnlockChunks', {}, 'small')}
               />
             )}
