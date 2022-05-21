@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faRedoAlt,
   faWallet,
-  faCircle,
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   PageRowWrapper,
   Separator,
@@ -126,11 +127,13 @@ export const Active = ({ title }: any) => {
               <h2>
                 <FontAwesomeIcon
                   icon={
-                    payee === 'Staked'
+                    (payee === null
+                      ? faCircle
+                      : payee === 'Staked'
                       ? faRedoAlt
                       : payee === 'None'
                       ? faCircle
-                      : faWallet
+                      : faWallet) as IconProp
                   }
                   transform="shrink-4"
                 />
