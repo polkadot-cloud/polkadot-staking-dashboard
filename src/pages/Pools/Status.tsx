@@ -8,24 +8,25 @@ import { useApi } from '../../contexts/Api';
 import { Button } from '../../library/Button';
 import { usePools } from '../../contexts/Pools';
 import { useConnect } from '../../contexts/Connect';
+import { useModal } from '../../contexts/Modal';
 
 export const Status = () => {
   const { network }: any = useApi();
   const { activeAccount } = useConnect();
-  const { getAccountActivePool } = usePools();
-  const activePool = getAccountActivePool(activeAccount);
+  const { membership } = usePools();
+  const { openModalWith } = useModal();
 
   return (
-    <SectionWrapper height={360}>
+    <SectionWrapper style={{ height: 350 }}>
       <div className="head">
         <h4>
           Status
           <OpenAssistantIcon page="pools" title="Pool Status" />
         </h4>
         <h2>
-          {activePool === undefined ? 'Not in a Pool' : 'Active in Pool'} &nbsp;
+          {membership === undefined ? 'Not in a Pool' : 'Active in Pool'} &nbsp;
           <div>
-            {activePool === undefined ? (
+            {membership === undefined ? (
               <Button
                 small
                 inline
@@ -44,11 +45,11 @@ export const Status = () => {
           <OpenAssistantIcon page="pools" title="Bonded in Pool" />
         </h4>
         <h2>
-          {activePool === undefined ? (
+          {membership === undefined ? (
             `0 ${network.unit}`
           ) : (
             <>
-              {activePool.bondedAmount} {network.unit} &nbsp;
+              {membership.bondedAmount} {network.unit} &nbsp;
               <div>
                 <Button small primary inline title="+" onClick={() => {}} />
                 <Button small primary title="-" onClick={() => {}} />
@@ -62,11 +63,11 @@ export const Status = () => {
           <OpenAssistantIcon page="pools" title="Pool Rewards" />
         </h4>
         <h2>
-          {activePool === undefined ? (
+          {membership === undefined ? (
             `0 ${network.unit}`
           ) : (
             <>
-              {activePool.unclaimedRewards} {network.unit} &nbsp;
+              {membership.unclaimedRewards} {network.unit} &nbsp;
               <div>
                 <Button small primary inline title="Claim" onClick={() => {}} />
               </div>
