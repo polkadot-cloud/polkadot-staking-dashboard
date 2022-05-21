@@ -69,6 +69,7 @@ export const Overview = ({ setSection, setUnlock, setTask }: any) => {
           <Separator />
         </>
       )}
+      {unlocking.length === 0 && <h2>No Unlocks</h2>}
       {unlocking.map((chunk: any, index: number) => {
         const { era, value } = chunk;
         const left = era - activeEra.index;
