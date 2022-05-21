@@ -64,8 +64,8 @@ export const EntryWrapper = styled.div`
     }
   }
   .page-padding {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 
     @media (min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
       padding-left: 1.5rem;
