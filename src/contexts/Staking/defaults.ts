@@ -23,6 +23,7 @@ export const eraStakers = {
   activeValidators: 0,
   minActiveBond: 0,
   minStakingActiveBond: 0,
+  minStakingRewardBond: 0,
 };
 
 export const targets = {

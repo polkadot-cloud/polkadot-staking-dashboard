@@ -235,6 +235,8 @@ export const StakingProvider = ({ children }: any) => {
   useEffect(() => {
     // calculates minimum bond of the user's chosen nominated validators.
     let _stakingMinActiveBond = new BN(0);
+    let _stakingMinRewardBond = new BN(0);
+
     const stakers = eraStakersRef.current?.stakers ?? null;
     const nominations = getAccountNominations(activeAccount);
 
@@ -244,39 +246,68 @@ export const StakingProvider = ({ children }: any) => {
 
         if (staker !== undefined) {
           let { others } = staker;
+
+          // order others by bonded value, largest first.
           others = others.sort((a: any, b: any) => {
             const x = new BN(rmCommas(a.value));
             const y = new BN(rmCommas(b.value));
-            return x.sub(y);
+            return y.sub(x);
           });
 
           if (others.length) {
-            const _min = new BN(rmCommas(others[0].value.toString()));
+            const _minActive = new BN(rmCommas(others[0].value.toString()));
+
+            // take the min reward index or the highest index of others
+            const _minRewardIndex = Math.min(
+              maxNominatorRewardedPerValidator - 1,
+              others.length - 1
+            );
+
+            // get the minimum reward as string
+            const _minReward = new BN(
+              rmCommas(others[_minRewardIndex]?.value?.toString())
+            );
+
+            // set new minimum active bond if less than current value
             if (
-              _min.lt(_stakingMinActiveBond) ||
-              _stakingMinActiveBond.toNumber() === 0
+              _minActive.lt(_stakingMinActiveBond) ||
+              _stakingMinActiveBond !== new BN(0)
             ) {
-              _stakingMinActiveBond = _min;
+              _stakingMinActiveBond = _minActive;
+            }
+
+            // set new minimum reward bond if less than current value
+            if (
+              _minReward.lt(_stakingMinRewardBond) ||
+              _stakingMinRewardBond !== new BN(0)
+            ) {
+              _stakingMinRewardBond = _minReward;
             }
           }
         }
       }
     }
 
-    // convert _stakingMinActiveBond to base  value
+    // convert _stakingMinActiveBond to base value
     const stakingMinActiveBond = _stakingMinActiveBond
       .div(new BN(10 ** network.units))
       .toNumber();
+
+    // convert _stakingMinRewardBond to base value
+    const stakingMinRewardBond = _stakingMinRewardBond
+      .div(new BN(10 ** network.units))
+      .toNumber();
+
+    setEraStakers({
+      ...eraStakersRef.current,
+      minStakingActiveBond: stakingMinActiveBond,
+      minStakingRewardBond: stakingMinRewardBond,
+    });
 
     // set account's targets
     _setTargets(
       localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true)
     );
-
-    setEraStakers({
-      ...eraStakersRef.current,
-      minStakingActiveBond: stakingMinActiveBond,
-    });
   }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
   /* Gets an account's stored target validators */
