@@ -48,36 +48,16 @@ export const Active = ({ title }: any) => {
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
 
+  // get nomination status
+  const nominationStatuses = getNominationsStatus();
+  const statuses: any =
+    nominationStatuses === undefined ? [] : nominationStatuses;
+
+  const active: any = Object.values(statuses).filter(
+    (_v: any) => _v === 'active'
+  ).length;
+
   const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
-
-  // handle nomination statuses
-  const [nominationsStatus, setNominationsStatus]: any = useState({
-    total: 0,
-    inactive: 0,
-    active: 0,
-  });
-
-  const nominationStatuses = useMemo(() => {
-    getNominationsStatus();
-  }, [nominations, inSetup()]);
-
-  useEffect(() => {
-    if (!inSetup()) {
-      const statuses: any =
-        nominationStatuses === undefined ? [] : nominationStatuses;
-      const total = Object.values(statuses)?.length ?? 0;
-
-      const _active: any = Object.values(statuses).filter(
-        (_v: any) => _v === 'active'
-      ).length;
-
-      setNominationsStatus({
-        total,
-        inactive: total - _active,
-        active: _active,
-      });
-    }
-  }, [nominationStatuses]);
 
   return (
     <>
@@ -101,7 +81,7 @@ export const Active = ({ title }: any) => {
                   ? 'Not Staking'
                   : !nominations.length
                   ? 'Inactive: Not Nominating'
-                  : nominationsStatus.active
+                  : active
                   ? 'Actively Nominating with Bonded Funds'
                   : 'Waiting for Active Nominations'}
                 {inSetup() && (
