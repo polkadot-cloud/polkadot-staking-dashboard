@@ -11,7 +11,7 @@
 
 /* global font size */
 html {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 @media(min-width: 600px) {
