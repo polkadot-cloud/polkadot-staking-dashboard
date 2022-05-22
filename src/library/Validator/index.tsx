@@ -53,7 +53,7 @@ export const ValidatorInner = (props: any) => {
   const blocked = prefs?.blocked ?? null;
 
   const total_nominations = eraStakers?.total_nominations ?? 0;
-  const lowest = eraStakers?.lowest ?? 0;
+  const lowestReward = eraStakers?.lowestReward ?? 0;
 
   // copy address notification
   const notificationCopyAddress =
@@ -113,7 +113,7 @@ export const ValidatorInner = (props: any) => {
                     transform="shrink-2"
                   />
                   &nbsp;
-                  {lowest} {network.unit}
+                  {lowestReward} {network.unit}
                 </div>
               </motion.div>
             )}

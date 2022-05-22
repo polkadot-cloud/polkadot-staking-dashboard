@@ -49,10 +49,11 @@ export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
 export const ValidatorsProvider = ({ children }: any) => {
-  const { isReady, api, network }: any = useApi();
+  const { isReady, api, network, consts }: any = useApi();
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getAccountNominations }: any = useBalances();
+  const { maxNominatorRewardedPerValidator } = consts;
 
   // stores the total validator entries
   const [validators, setValidators]: any = useState([]);
@@ -394,7 +395,7 @@ export const ValidatorsProvider = ({ children }: any) => {
     });
 
     // intentional throttle to prevent slow render updates.
-    await sleep(750);
+    await sleep(250);
 
     // subscribe to validator nominators
     const args: any = [];
@@ -415,16 +416,31 @@ export const ValidatorsProvider = ({ children }: any) => {
           // account for yourself being an additional nominator
           const totalNominations = others.length + 1;
 
-          // get lowest stake for the validator
+          // get lowest active stake for the validator
           others = others.sort((a: any, b: any) => {
             const x = new BN(rmCommas(a.value));
             const y = new BN(rmCommas(b.value));
             return x.sub(y);
           });
 
-          const lowest =
+          const lowestActive =
             others.length > 0
               ? new BN(rmCommas(others[0].value))
+                  .div(new BN(10 ** network.units))
+                  .toNumber()
+              : 0;
+
+          // get the lowest reward stake of the validator, which is
+          // the largest index - `maxNominatorRewardedPerValidator`,
+          // or the first index if does not exist.
+          const lowestRewardIndex = Math.max(
+            others.length - 1 - maxNominatorRewardedPerValidator,
+            0
+          );
+
+          const lowestReward =
+            others.length > 0
+              ? new BN(rmCommas(others[lowestRewardIndex]?.value))
                   .div(new BN(10 ** network.units))
                   .toNumber()
               : 0;
@@ -433,7 +449,8 @@ export const ValidatorsProvider = ({ children }: any) => {
             total: _validator.total,
             own: _validator.own,
             total_nominations: totalNominations,
-            lowest,
+            lowest: lowestActive,
+            lowestReward,
           });
         }
 
