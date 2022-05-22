@@ -3,32 +3,21 @@
 
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
-import { useUi } from '../../contexts/UI';
-import { useStaking } from '../../contexts/Staking';
 import { Active } from './Active';
 import { Setup } from './Setup';
-import { Stake as Loader } from '../../library/Loaders/Stake';
-import { PageTitle } from '../../library/PageTitle';
+import { useUi } from '../../contexts/UI';
 
 export const Stake = (props: PageProps) => {
-  const { inSetup } = useStaking();
-  const { isSyncing } = useUi();
-
   const { page } = props;
   const { title } = page;
-
-  const _inSetup: boolean = inSetup();
-  const _isSyncing = isSyncing();
+  const { onSetup, setOnSetup } = useUi();
 
   return (
     <Wrapper>
-      {_isSyncing ? (
-        <>
-          <PageTitle title={`${title}`} />
-          <Loader />
-        </>
+      {onSetup ? (
+        <Setup title={title} setOnSetup={setOnSetup} />
       ) : (
-        <>{_inSetup ? <Setup title={title} /> : <Active title={title} />}</>
+        <Active title={title} setOnSetup={setOnSetup} />
       )}
     </Wrapper>
   );

@@ -15,7 +15,7 @@ export const StatusLabel = (props: any) => {
   const { inSetup } = useStaking();
 
   if (status === 'sync_or_setup') {
-    if (isSyncing() || !inSetup()) {
+    if (isSyncing || !inSetup()) {
       return <></>;
     }
   }

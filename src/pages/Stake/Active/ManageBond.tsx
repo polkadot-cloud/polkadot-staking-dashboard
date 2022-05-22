@@ -7,10 +7,12 @@ import BondedGraph from './BondedGraph';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
-import { Button } from '../../../library/Button';
+import { useStaking } from '../../../contexts/Staking';
+import { Button, ButtonRow } from '../../../library/Button';
 import { GraphWrapper } from '../../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
+import { useUi } from '../../../contexts/UI';
 
 export const ManageBond = () => {
   const { network }: any = useApi();
@@ -19,6 +21,8 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
+  const { inSetup } = useStaking();
+  const { isSyncing } = useUi();
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
   const { active, total } = ledger;
@@ -35,18 +39,20 @@ export const ManageBond = () => {
         <h2>
           {planckBnToUnit(active, units)} {network.unit} &nbsp;
         </h2>
-        <div>
+        <ButtonRow>
           <Button
             small
             primary
             inline
             title="+"
+            disabled={inSetup() || isSyncing}
             onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')}
           />
           <Button
             small
             primary
             title="-"
+            disabled={inSetup() || isSyncing}
             onClick={() =>
               openModalWith('UpdateBond', { fn: 'remove' }, 'small')
             }
@@ -56,10 +62,11 @@ export const ManageBond = () => {
             inline
             primary
             icon={faLockOpen}
-            title={String(totalUnlockChuncks)}
+            title={String(totalUnlockChuncks ?? 0)}
+            disabled={inSetup() || isSyncing}
             onClick={() => openModalWith('UnlockChunks', {}, 'small')}
           />
-        </div>
+        </ButtonRow>
       </div>
 
       <GraphWrapper transparent noMargin>
@@ -70,8 +77,9 @@ export const ManageBond = () => {
           <BondedGraph
             active={planckBnToUnit(active, units)}
             unlocking={totalUnlocking}
-            remaining={freeToBond}
+            free={freeToBond}
             total={total.toNumber()}
+            inactive={inSetup()}
           />
         </div>
       </GraphWrapper>

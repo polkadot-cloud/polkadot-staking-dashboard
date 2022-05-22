@@ -20,12 +20,12 @@ export interface UIContextState {
   applyValidatorOrder: (l: any, o: string) => any;
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
-  isSyncing: () => any;
   toggleService: (k: string) => void;
   getSetupProgress: (a: string) => any;
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
   getServices: () => void;
+  setOnSetup: (v: any) => void;
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;
@@ -33,6 +33,8 @@ export interface UIContextState {
   services: any;
   validatorFilters: any;
   validatorOrder: string;
+  onSetup: number;
+  isSyncing: any;
 }
 
 export const UIContext: React.Context<UIContextState> = React.createContext({
@@ -43,12 +45,12 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   applyValidatorOrder: (l: any, o: string) => {},
   applyValidatorFilters: (l: any, k: string, f?: any) => {},
   toggleFilterValidators: (v: string, l: any) => {},
-  isSyncing: () => false,
   toggleService: (k: string) => {},
   getSetupProgress: (a: string) => {},
   setActiveAccountSetup: (p: any) => {},
   setActiveAccountSetupSection: (s: number) => {},
   getServices: () => {},
+  setOnSetup: (v: any) => {},
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
@@ -56,6 +58,8 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   services: SERVICES,
   validatorFilters: [],
   validatorOrder: 'default',
+  onSetup: 0,
+  isSyncing: false,
 });
 
 export const useUi = () => React.useContext(UIContext);
@@ -63,11 +67,14 @@ export const useUi = () => React.useContext(UIContext);
 export const UIProvider = (props: any) => {
   const { isReady, consts, network }: any = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
-  const { staking, eraStakers }: any = useStaking();
+  const { staking, eraStakers, inSetup }: any = useStaking();
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
   const { accounts }: any = useBalances();
+
+  // set whether app is syncing
+  const [isSyncing, setIsSyncing] = useState(false);
 
   // get services config from local storage
   const servicesLocal: any = localStorageOrDefault('services', SERVICES, true);
@@ -101,6 +108,9 @@ export const UIProvider = (props: any) => {
   // global list format
   const [listFormat, _setListFormat] = useState('col');
 
+  // is the user actively on the setup page
+  const [onSetup, setOnSetup] = useState(0);
+
   // services
   const [services, _setServices] = useState(servicesLocal);
   const servicesRef = useRef(services);
@@ -127,6 +137,13 @@ export const UIProvider = (props: any) => {
     }
   };
 
+  // go to active page once staking setup completes / network change
+  useEffect(() => {
+    if (!inSetup()) {
+      setOnSetup(0);
+    }
+  }, [inSetup(), network]);
+
   // resize event listener
   useEffect(() => {
     window.addEventListener('resize', resizeCallback);
@@ -147,6 +164,36 @@ export const UIProvider = (props: any) => {
       setSetup(_setup);
     }
   }, [activeAccount, network, connectAccounts]);
+
+  // app syncing updates
+  useEffect(() => {
+    let syncing = false;
+
+    if (!isReady) {
+      syncing = true;
+    }
+    // staking metrics have synced
+    if (staking.lastReward === new BN(0)) {
+      syncing = true;
+    }
+
+    // era has synced from Network
+    if (metrics.activeEra.index === 0) {
+      syncing = true;
+    }
+
+    // all accounts have been synced
+    if (accounts.length < connectAccounts.length) {
+      syncing = true;
+    }
+
+    // eraStakers has synced
+    if (!eraStakers.activeNominators) {
+      syncing = true;
+    }
+
+    setIsSyncing(syncing);
+  }, [isReady, staking, metrics, accounts, eraStakers]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
@@ -309,39 +356,6 @@ export const UIProvider = (props: any) => {
     return orderedList;
   };
 
-  /*
-   * Helper function to determine whether the dashboard is still
-   * fetching remote data.
-   */
-  const isSyncing = () => {
-    // api not ready
-    if (!isReady) {
-      return true;
-    }
-
-    // staking metrics have synced
-    if (staking.lastReward === new BN(0)) {
-      return true;
-    }
-
-    // era has synced from Network
-    if (metrics.activeEra.index === 0) {
-      return true;
-    }
-
-    // all accounts have been synced
-    if (accounts.length < connectAccounts.length) {
-      return true;
-    }
-
-    // eraStakers has synced
-    if (!eraStakers.activeNominators) {
-      return true;
-    }
-
-    return false;
-  };
-
   // Setup helper functions
 
   const PROGRESS_DEFAULT = {
@@ -474,12 +488,12 @@ export const UIProvider = (props: any) => {
         applyValidatorOrder,
         applyValidatorFilters,
         toggleFilterValidators,
-        isSyncing,
         toggleService,
         getSetupProgress,
         setActiveAccountSetup,
         setActiveAccountSetupSection,
         getServices,
+        setOnSetup,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
@@ -487,6 +501,8 @@ export const UIProvider = (props: any) => {
         validatorFilters,
         validatorOrder,
         services: servicesRef.current,
+        onSetup,
+        isSyncing,
       }}
     >
       {props.children}

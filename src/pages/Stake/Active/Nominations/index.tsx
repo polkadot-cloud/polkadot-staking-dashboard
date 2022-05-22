@@ -10,13 +10,17 @@ import { Button } from '../../../../library/Button';
 import { useModal } from '../../../../contexts/Modal';
 import { useBalances } from '../../../../contexts/Balances';
 import { useConnect } from '../../../../contexts/Connect';
+import { useUi } from '../../../../contexts/UI';
+import { useStaking } from '../../../../contexts/Staking';
 
 export const Nominations = () => {
   const { openModalWith } = useModal();
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
   const { nominated }: any = useValidators();
+  const { inSetup } = useStaking();
   const { getAccountNominations }: any = useBalances();
+  const { isSyncing } = useUi();
   const nominations = getAccountNominations(activeAccount);
 
   const batchKey = 'stake_nominations';
@@ -36,6 +40,7 @@ export const Nominations = () => {
                 inline
                 primary
                 title="Stop"
+                disabled={inSetup() || isSyncing}
                 onClick={() => openModalWith('StopNominating', {}, 'small')}
               />
             </div>
@@ -44,9 +49,9 @@ export const Nominations = () => {
           )}
         </div>
       </div>
-      {nominated === null ? (
-        <div style={{ marginTop: '1rem' }}>
-          <p>Fetching your nominations...</p>
+      {nominated === null || isSyncing ? (
+        <div className="head">
+          <h3>Syncing nominations...</h3>
         </div>
       ) : (
         <>
@@ -64,7 +69,9 @@ export const Nominations = () => {
                   />
                 </div>
               ) : (
-                <h3>Not Nominating.</h3>
+                <div className="head">
+                  <h3>Not Nominating.</h3>
+                </div>
               )}
             </>
           )}

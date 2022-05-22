@@ -165,6 +165,9 @@ export const StakingProvider = ({ children }: any) => {
    * Possible statuses: waiting, inactive, active.
    */
   const getNominationsStatus = () => {
+    if (inSetup()) {
+      return defaults.nominationStatus;
+    }
     const nominations = getAccountNominations(activeAccount);
     const statuses: any = {};
 

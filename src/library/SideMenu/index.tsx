@@ -79,7 +79,7 @@ export const SideMenu = () => {
         // on stake menu item, add warning for controller not imported
         if (uri === `${URI_PREFIX}/stake`) {
           _pageConfigWithMessages[i].action =
-            !isSyncing() && controllerNotImported;
+            !isSyncing && controllerNotImported;
         }
       }
       setPageConfig({
@@ -87,7 +87,7 @@ export const SideMenu = () => {
         pages: _pageConfigWithMessages,
       });
     }
-  }, [network, activeAccount, accounts, controllerNotImported, isSyncing()]);
+  }, [network, activeAccount, accounts, controllerNotImported, isSyncing]);
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {

@@ -24,7 +24,7 @@ export const Headers = () => {
   const { pending } = useExtrinsics();
   const { isSyncing }: any = useUi();
 
-  let syncing = isSyncing();
+  let syncing = isSyncing;
 
   // keep syncing if on validators page and still fetching
   if (pageFromUri(pathname) === 'validators') {

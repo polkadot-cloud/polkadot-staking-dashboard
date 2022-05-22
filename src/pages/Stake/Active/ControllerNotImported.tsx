@@ -8,9 +8,11 @@ import { useConnect } from '../../../contexts/Connect';
 import { useStaking } from '../../../contexts/Staking';
 import { PageRowWrapper } from '../../../Wrappers';
 import { useModal } from '../../../contexts/Modal';
+import { useUi } from '../../../contexts/UI';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();
+  const { isSyncing } = useUi();
   const { getControllerNotImported } = useStaking();
   const { activeAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
@@ -18,7 +20,7 @@ export const ControllerNotImported = () => {
 
   return (
     <>
-      {getControllerNotImported(controller) && (
+      {getControllerNotImported(controller) && !isSyncing && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <SectionWrapper
             style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}

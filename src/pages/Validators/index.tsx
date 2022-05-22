@@ -30,11 +30,15 @@ export const Validators = (props: PageProps) => {
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
-          {isReady && (
+          {!isReady ? (
+            <div className="item">
+              <h3>Connecting...</h3>
+            </div>
+          ) : (
             <>
               {validators.length === 0 && (
                 <div className="item">
-                  <h4>Fetching validators...</h4>
+                  <h3>Fetching validators...</h3>
                 </div>
               )}
 

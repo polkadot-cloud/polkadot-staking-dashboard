@@ -13,12 +13,12 @@ export const BondedGraph = (props: any) => {
   const { mode } = useTheme();
   const { network }: any = useApi();
 
-  const { active, unlocking, total } = props;
-  let { remaining } = props;
+  const { active, unlocking, total, inactive } = props;
+  let { free } = props;
 
   let zeroBalance = false;
   if (total === 0 || total === undefined) {
-    remaining = -1;
+    free = -1;
     zeroBalance = true;
   }
 
@@ -49,6 +49,9 @@ export const BondedGraph = (props: any) => {
         bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           label: (context: any) => {
+            if (inactive) {
+              return 'Inactive';
+            }
             return `${context.label}: ${
               context.parsed === -1 ? 0 : context.parsed
             } ${network.unit}`;
@@ -64,7 +67,7 @@ export const BondedGraph = (props: any) => {
     datasets: [
       {
         label: network.unit,
-        data: [active, unlocking, remaining],
+        data: [active, unlocking, free],
         backgroundColor: [
           defaultThemes.graphs.colors[0][mode],
           defaultThemes.graphs.colors[1][mode],
