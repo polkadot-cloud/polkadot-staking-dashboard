@@ -8,9 +8,22 @@
   src: url('../public/fonts/WorkSans-VariableFont_wght.ttf');
 }
 
+
+/* global font size */
 html {
-  /* global font size */
-  font-size: 15px;
+  font-size: 13px;
+}
+
+@media(min-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media(min-width: 1100px) {
+  html {
+    font-size: 15px;
+  }
 }
 
 body {
