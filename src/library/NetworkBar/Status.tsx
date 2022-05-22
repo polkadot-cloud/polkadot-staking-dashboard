@@ -3,10 +3,10 @@
 
 import { motion } from 'framer-motion';
 import { useApi } from '../../contexts/Api';
-import { ConnectionStatus } from '../../types/api';
+import { ConnectionStatus, APIContextInterface } from '../../types/api';
 
 export const Status = () => {
-  const { status }: any = useApi();
+  const { status } = useApi() as APIContextInterface;
 
   return (
     <>
