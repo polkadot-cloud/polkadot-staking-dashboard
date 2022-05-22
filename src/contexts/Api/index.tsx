@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import {
-  CONNECTION_STATUS,
   BONDING_DURATION,
   SESSIONS_PER_ERA,
   MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
@@ -15,47 +14,47 @@ import {
   EXPECTED_BLOCK_TIME,
 } from '../../constants';
 import * as defaults from './defaults';
+import {
+  APIContextInterface,
+  NetworkState,
+  APIConstants,
+  ConnectionStatus,
+} from '../../types/api';
+import { NodeEndpoint, NetworkName } from '../../types';
 
-type NetworkOptions = 'polkadot' | 'westend';
-
-export const APIContext: any = React.createContext({
-  connect: () => {},
-  fetchDotPrice: () => {},
-  switchNetwork: () => {},
-  api: null,
-  consts: {},
-  isReady: false,
-  status: CONNECTION_STATUS[0],
-});
+export const APIContext = React.createContext<APIContextInterface | null>(null);
 
 export const useApi = () => React.useContext(APIContext);
 
-export const APIProvider = ({ children }: any) => {
+export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // provider instance state
-  const [provider, setProvider]: any = useState(null);
+  const [provider, setProvider] = useState<WsProvider | null>(null);
 
   // api instance state
-  const [api, setApi]: any = useState(null);
+  const [api, setApi] = useState<ApiPromise | null>(null);
 
   // network state
-  const [network, setNetwork]: any = useState({
-    name: localStorage.getItem('network'),
-    meta: NODE_ENDPOINTS[
-      localStorage.getItem('network') as keyof NetworkOptions
-    ],
+  const _name: NetworkName =
+    (localStorage.getItem('network') as NetworkName) ?? NetworkName.Polkadot;
+
+  const [network, setNetwork] = useState<NetworkState>({
+    name: _name,
+    meta: NODE_ENDPOINTS[localStorage.getItem('network') as NetworkName],
   });
 
   // constants state
-  const [consts, setConsts]: any = useState(defaults.consts);
+  const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
   // connection status state
-  const [connectionStatus, setConnectionStatus]: any = useState(
-    CONNECTION_STATUS[0]
+  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>(
+    ConnectionStatus.Disconnected
   );
 
   // initial connection
   useEffect(() => {
-    const _network: any = localStorage.getItem('network');
+    const _network: NetworkName = localStorage.getItem(
+      'network'
+    ) as NetworkName;
     connect(_network);
   }, []);
 
@@ -63,11 +62,11 @@ export const APIProvider = ({ children }: any) => {
   useEffect(() => {
     if (provider !== null) {
       provider.on('connected', () => {
-        setConnectionStatus(CONNECTION_STATUS[2]);
+        setConnectionStatus(ConnectionStatus.Connected);
       });
 
       provider.on('error', () => {
-        setConnectionStatus(CONNECTION_STATUS[0]);
+        setConnectionStatus(ConnectionStatus.Disconnected);
       });
 
       connectedCallback(provider);
@@ -75,13 +74,13 @@ export const APIProvider = ({ children }: any) => {
   }, [provider]);
 
   // connection callback
-  const connectedCallback = async (_provider: any) => {
+  const connectedCallback = async (_provider: WsProvider) => {
     const _api = new ApiPromise({ provider: _provider });
     await _api.isReady;
 
     localStorage.setItem('network', String(network.name));
 
-    // saking constants
+    // staking constants
     const promises = [
       _api.consts.staking.bondingDuration,
       _api.consts.staking.maxNominations,
@@ -96,44 +95,47 @@ export const APIProvider = ({ children }: any) => {
       promises.push(_api.consts.nominationPools.palletId);
     }
 
-    const _metrics: any = await Promise.all(promises);
+    const _consts: any = await Promise.all(promises);
     setApi(_api);
     setConsts({
-      bondDuration: _metrics[0]?.toNumber() ?? BONDING_DURATION,
-      maxNominations: _metrics[1]?.toNumber() ?? MAX_NOMINATIONS,
-      sessionsPerEra: _metrics[2]?.toNumber() ?? SESSIONS_PER_ERA,
+      bondDuration: _consts[0]?.toNumber() ?? BONDING_DURATION,
+      maxNominations: _consts[1]?.toNumber() ?? MAX_NOMINATIONS,
+      sessionsPerEra: _consts[2]?.toNumber() ?? SESSIONS_PER_ERA,
       maxNominatorRewardedPerValidator:
-        _metrics[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
-      maxElectingVoters: _metrics[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
-      expectedBlockTime: _metrics[5]?.toNumber() ?? EXPECTED_BLOCK_TIME,
-      poolsPalletId: _metrics[6] ? _metrics[6] : 0,
+        _consts[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
+      maxElectingVoters: _consts[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
+      expectedBlockTime: _consts[5]?.toNumber() ?? EXPECTED_BLOCK_TIME,
+      poolsPalletId: _consts[6] ? _consts[6] : 0,
     });
   };
 
   // connect function sets provider and updates active network.
-  const connect = async (_network: keyof NetworkOptions) => {
-    const _provider = new WsProvider(NODE_ENDPOINTS[_network].endpoint);
+  const connect = async (_network: NetworkName) => {
+    const nodeEndpoint: NodeEndpoint = NODE_ENDPOINTS[_network];
+    const _provider = new WsProvider(nodeEndpoint.endpoint);
 
     setNetwork({
       name: _network,
-      meta: NODE_ENDPOINTS[_network as keyof NetworkOptions],
+      meta: NODE_ENDPOINTS[_network],
     });
     setProvider(_provider);
   };
 
   // handle network switching
-  const switchNetwork = async (_network: keyof NetworkOptions) => {
-    await api.disconnect();
-    setApi(null);
-    setConnectionStatus(CONNECTION_STATUS[1]);
-    connect(_network);
+  const switchNetwork = async (_network: NetworkName) => {
+    if (api !== null) {
+      await api.disconnect();
+      setApi(null);
+      setConnectionStatus(ConnectionStatus.Connecting);
+      connect(_network);
+    }
   };
 
   // handles fetching of DOT price and updates context state.
   const fetchDotPrice = async () => {
     const urls = [
       `${API_ENDPOINTS.priceChange}${
-        NODE_ENDPOINTS[network.name as keyof NetworkOptions].api.priceTicker
+        NODE_ENDPOINTS[network.name].api.priceTicker
       }`,
     ];
     const responses = await Promise.all(
@@ -169,7 +171,8 @@ export const APIProvider = ({ children }: any) => {
         switchNetwork,
         api,
         consts,
-        isReady: connectionStatus === CONNECTION_STATUS[2] && api !== null,
+        isReady:
+          connectionStatus === ConnectionStatus.Connected && api !== null,
         network: network.meta,
         status: connectionStatus,
       }}
