@@ -32,7 +32,7 @@ export const UnlockChunks = () => {
       <FixedContentWrapper>
         <HeadingWrapper>
           <FontAwesomeIcon transform="grow-2" icon={faLockOpen} />
-          {unlocking.length > 0 && `${unlocking.length} `}Unlock Chunk
+          {unlocking.length > 0 && `${unlocking.length} `}Unlock
           {unlocking.length === 1 ? '' : 's'}
         </HeadingWrapper>
       </FixedContentWrapper>

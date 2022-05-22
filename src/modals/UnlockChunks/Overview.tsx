@@ -112,9 +112,9 @@ export const Overview = ({ setSection, setUnlock, setTask }: any) => {
       })}
       <div className="notes">
         <p>
-          Unlock chunks take {bondDuration} eras to unlock. You can rebond
-          chunks at any time in this period, or withdraw them to your free
-          balance thereafter.
+          Unlocks take {bondDuration} eras before they can be withdrawn. You can
+          rebond unlocks at any time in this period, or withdraw them to your
+          free balance thereafter.
         </p>
       </div>
     </ContentWrapper>
