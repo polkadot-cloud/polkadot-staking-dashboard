@@ -235,7 +235,6 @@ export const StakingProvider = ({ children }: any) => {
   useEffect(() => {
     // calculates minimum bond of the user's chosen nominated validators.
     let _stakingMinActiveBond = new BN(0);
-    let _stakingMinRewardBond = new BN(0);
 
     const stakers = eraStakersRef.current?.stakers ?? null;
     const nominations = getAccountNominations(activeAccount);
@@ -256,32 +255,12 @@ export const StakingProvider = ({ children }: any) => {
 
           if (others.length) {
             const _minActive = new BN(rmCommas(others[0].value.toString()));
-
-            // take the min reward index or the highest index of others
-            const _minRewardIndex = Math.min(
-              maxNominatorRewardedPerValidator - 1,
-              others.length - 1
-            );
-
-            // get the minimum reward as string
-            const _minReward = new BN(
-              rmCommas(others[_minRewardIndex]?.value?.toString())
-            );
-
             // set new minimum active bond if less than current value
             if (
               _minActive.lt(_stakingMinActiveBond) ||
               _stakingMinActiveBond !== new BN(0)
             ) {
               _stakingMinActiveBond = _minActive;
-            }
-
-            // set new minimum reward bond if less than current value
-            if (
-              _minReward.lt(_stakingMinRewardBond) ||
-              _stakingMinRewardBond !== new BN(0)
-            ) {
-              _stakingMinRewardBond = _minReward;
             }
           }
         }
@@ -293,15 +272,9 @@ export const StakingProvider = ({ children }: any) => {
       .div(new BN(10 ** network.units))
       .toNumber();
 
-    // convert _stakingMinRewardBond to base value
-    const stakingMinRewardBond = _stakingMinRewardBond
-      .div(new BN(10 ** network.units))
-      .toNumber();
-
     setEraStakers({
       ...eraStakersRef.current,
       minStakingActiveBond: stakingMinActiveBond,
-      minStakingRewardBond: stakingMinRewardBond,
     });
 
     // set account's targets
