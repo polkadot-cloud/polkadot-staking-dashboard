@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/polkadot-staking-dashboard/static/css/main.6a7eb3e6.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.5b163abf.js",
+    "main.css": "/polkadot-staking-dashboard/static/css/main.7bcaafd7.css",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.c653a23a.js",
     "static/js/787.0a38be7b.chunk.js": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js",
     "static/media/WorkSans-VariableFont_wght.ttf": "/polkadot-staking-dashboard/static/media/WorkSans-VariableFont_wght.bb6e3e8193f32a7fc502.ttf",
-    "static/js/stakers.b62314be.worker.js": "/polkadot-staking-dashboard/static/js/stakers.b62314be.worker.js",
+    "static/js/stakers.f95fe47d.worker.js": "/polkadot-staking-dashboard/static/js/stakers.f95fe47d.worker.js",
     "static/media/westend_icon.svg": "/polkadot-staking-dashboard/static/media/westend_icon.6c9cdb56012c5151652539e07932ca45.svg",
     "static/media/polkadot_logo.svg": "/polkadot-staking-dashboard/static/media/polkadot_logo.3672415fb852303e9822ebf07ee67a61.svg",
     "index.html": "/polkadot-staking-dashboard/index.html",
@@ -13,12 +13,12 @@
     "static/media/wallet.svg": "/polkadot-staking-dashboard/static/media/wallet.4db0a9cbed424cb6b196adf1eccc5efb.svg",
     "static/media/talisman_icon.svg": "/polkadot-staking-dashboard/static/media/talisman_icon.a472b7ba134a736739b6e2bef7b95f57.svg",
     "static/media/assistant.svg": "/polkadot-staking-dashboard/static/media/assistant.710ee0b66a632101a3e85de51b365ddb.svg",
-    "main.6a7eb3e6.css.map": "/polkadot-staking-dashboard/static/css/main.6a7eb3e6.css.map",
-    "main.5b163abf.js.map": "/polkadot-staking-dashboard/static/js/main.5b163abf.js.map",
+    "main.7bcaafd7.css.map": "/polkadot-staking-dashboard/static/css/main.7bcaafd7.css.map",
+    "main.c653a23a.js.map": "/polkadot-staking-dashboard/static/js/main.c653a23a.js.map",
     "787.0a38be7b.chunk.js.map": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6a7eb3e6.css",
-    "static/js/main.5b163abf.js"
+    "static/css/main.7bcaafd7.css",
+    "static/js/main.c653a23a.js"
   ]
 }
