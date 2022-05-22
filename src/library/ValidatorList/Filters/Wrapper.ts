@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
       flex-wrap: nowrap;
       overflow: auto;
       width: 100%;
-      padding-bottom: 2rem;
+      padding-bottom: 3rem;
 
       > .category {
         display: flex;
