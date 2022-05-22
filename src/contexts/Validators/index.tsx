@@ -434,7 +434,7 @@ export const ValidatorsProvider = ({ children }: any) => {
           // the largest index - `maxNominatorRewardedPerValidator`,
           // or the first index if does not exist.
           const lowestRewardIndex = Math.max(
-            others.length - 1 - maxNominatorRewardedPerValidator,
+            others.length - maxNominatorRewardedPerValidator,
             0
           );
 
