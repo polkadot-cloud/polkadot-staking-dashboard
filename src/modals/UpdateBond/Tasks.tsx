@@ -1,13 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from '../../contexts/Modal';
 import { useApi } from '../../contexts/Api';
 import { ContentWrapper } from './Wrappers';
 
-export const Tasks = (props: any) => {
+export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;
 
   const { network }: any = useApi();
@@ -16,7 +17,7 @@ export const Tasks = (props: any) => {
 
   return (
     <ContentWrapper>
-      <div className="items">
+      <div className="items" ref={ref}>
         {fn === 'add' && (
           <>
             <button
@@ -101,6 +102,6 @@ export const Tasks = (props: any) => {
       </div>
     </ContentWrapper>
   );
-};
+});
 
 export default Tasks;

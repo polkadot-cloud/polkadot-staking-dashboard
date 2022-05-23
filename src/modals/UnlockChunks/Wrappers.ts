@@ -11,10 +11,11 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 1rem 0;
 `;
 
 export const FixedContentWrapper = styled.div`
+  box-sizing: border-box;
+  padding-top: 1rem;
   flex-basis: 50%;
 `;
 

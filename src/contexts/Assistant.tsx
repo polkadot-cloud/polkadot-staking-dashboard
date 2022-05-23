@@ -18,7 +18,7 @@ export interface AssistantContextState {
   open: number;
   page: string;
   innerDefinition: any;
-  height: any;
+  height: number;
   transition: number;
 }
 

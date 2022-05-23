@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { web3Enable } from '@polkadot/extension-dapp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -10,10 +10,12 @@ import { ReactComponent as TalismanSVG } from '../../img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from '../../img/dot_icon.svg';
 import { DAPP_NAME } from '../../constants';
 import { Separator } from './Wrapper';
+import { useModal } from '../../contexts/Modal';
 
 export const Wallets = (props: any) => {
   const { setSection } = props;
 
+  const modal = useModal();
   const {
     activeWallet,
     activeAccount,
@@ -28,7 +30,12 @@ export const Wallets = (props: any) => {
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
 
   // store supported extensions
-  const [extensions, setExtensions]: any = useState([]);
+  const { extensions, setExtensions } = props;
+
+  // trigger modal resize on extensions change
+  useEffect(() => {
+    modal.setResize();
+  }, [extensions]);
 
   // load supported wallets
   useEffect(() => {
@@ -62,7 +69,9 @@ export const Wallets = (props: any) => {
         <button
           type="button"
           className="item"
-          onClick={() => disconnectFromWallet()}
+          onClick={() => {
+            disconnectFromWallet();
+          }}
         >
           <div>
             {activeWallet === 'talisman' && (
@@ -83,7 +92,9 @@ export const Wallets = (props: any) => {
           type="button"
           className="item"
           key={`wallet_${activeExtension.name}`}
-          onClick={() => handleWalletConnect(activeExtension.name)}
+          onClick={() => {
+            handleWalletConnect(activeExtension.name);
+          }}
         >
           <div>
             {activeExtension.name === 'talisman' && (
@@ -115,7 +126,9 @@ export const Wallets = (props: any) => {
             className="item"
             key={`wallet_${wallet.name}`}
             disabled={disabled}
-            onClick={() => handleWalletConnect(wallet.name)}
+            onClick={() => {
+              handleWalletConnect(wallet.name);
+            }}
           >
             <div>
               {wallet.name === 'talisman' && (

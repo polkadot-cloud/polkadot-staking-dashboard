@@ -14,10 +14,12 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 1rem 0;
+  padding: 0;
 `;
 
 export const FixedContentWrapper = styled.div`
+  padding-top: 1rem;
+  box-sizing: border-box;
   flex-basis: 50%;
 `;
 
@@ -26,9 +28,8 @@ export const SectionsWrapper = styled(motion.div)`
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
-  overflow: auto;
+  overflow: hidden;
   position: relative;
-  height: 100%;
 `;
 
 export const ContentWrapper = styled.div`
@@ -37,19 +38,19 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
-  flex: 1;
-  padding: 0 1rem;
+  height: auto;
+  padding: 0 1rem 1rem 1rem;
 
   .items {
+    box-sizing: border-box;
     position: relative;
     box-sizing: border-box;
-    margin: 0.5rem 0 0;
+    padding: 0.5rem 0 1.5rem 0;
     border-bottom: none;
     width: auto;
     border-radius: 0.75rem;
     overflow: auto;
     z-index: 1;
-    flex-grow: 1;
     width: 100%;
 
     h4 {

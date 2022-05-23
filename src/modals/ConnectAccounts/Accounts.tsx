@@ -1,18 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from './Wrapper';
 import { useConnect } from '../../contexts/Connect';
-import { useModal } from '../../contexts/Modal';
 import Identicon from '../../library/Identicon';
 
 export const Accounts = (props: any) => {
   const { setSection } = props;
-
-  const modal = useModal();
 
   const {
     getAccount,
@@ -32,7 +28,12 @@ export const Accounts = (props: any) => {
     <>
       <h2>{activeAccount === '' ? 'Select' : 'Switch'} Account</h2>
       <div className="head">
-        <button type="button" onClick={() => setSection(0)}>
+        <button
+          type="button"
+          onClick={() => {
+            setSection(0);
+          }}
+        >
           <FontAwesomeIcon icon={faChevronLeft} transform="shrink-5" />
           &nbsp;Back to Wallets
         </button>
@@ -71,7 +72,6 @@ export const Accounts = (props: any) => {
             key={`switch_acnt_${index}`}
             onClick={() => {
               connectToAccount(item);
-              modal.setStatus(2);
             }}
           >
             <div>

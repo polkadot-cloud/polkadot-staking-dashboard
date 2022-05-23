@@ -135,10 +135,14 @@ export const ValidatorInner = (props: any) => {
             <button
               type="button"
               onClick={() =>
-                openModalWith('ValidatorMetrics', {
-                  address,
-                  identity: display,
-                })
+                openModalWith(
+                  'ValidatorMetrics',
+                  {
+                    address,
+                    identity: display,
+                  },
+                  'large'
+                )
               }
             >
               <FontAwesomeIcon icon={faChartLine} />

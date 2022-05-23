@@ -20,6 +20,7 @@ export const ModalWrapper = styled(motion.div)`
 
   /* modal content wrapper */
   .content_wrapper {
+    box-sizing: border-box;
     height: 100%;
     display: flex;
     flex-flow: row wrap;
@@ -38,12 +39,21 @@ export const ModalWrapper = styled(motion.div)`
   }
 `;
 
+export const HeightWrapper = styled.div<any>`
+  transition: height 0.6s cubic-bezier(0.1, 1, 0.2, 1);
+  width: 100%;
+  max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
+  max-height: 100%;
+  overflow: hidden;
+  z-index: 9;
+  position: relative;
+`;
+
 // Modal content wrapper
 export const ContentWrapper = styled.div<any>`
   background: ${modalBackground};
   width: 100%;
-  max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
-  z-index: 9;
+  height: auto;
   border-radius: 0.75rem;
   overflow: hidden;
   overflow-y: scroll;

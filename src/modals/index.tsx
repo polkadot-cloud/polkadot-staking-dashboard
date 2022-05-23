@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useAnimation } from 'framer-motion';
-import { ModalWrapper, ContentWrapper } from './Wrappers';
+import { ModalWrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import { useModal } from '../contexts/Modal';
 import { ConnectAccounts } from './ConnectAccounts';
 import { ValidatorMetrics } from './ValidatorMetrics';
@@ -16,7 +16,8 @@ import { Nominate } from './Nominate';
 import { UnlockChunks } from './UnlockChunks';
 
 export const Modal = () => {
-  const { status, setStatus, modal, size } = useModal();
+  const { setModalHeight, setStatus, status, modal, size, height, resize } =
+    useModal();
   const controls = useAnimation();
 
   const onFadeIn = async () => {
@@ -48,6 +49,13 @@ export const Modal = () => {
     }
   }, [status]);
 
+  const modalRef: any = useRef(null);
+
+  // resize modal on status or resize change
+  useEffect(() => {
+    setModalHeight(modalRef.current?.clientHeight ?? 0);
+  }, [status, resize]);
+
   if (status === 0) {
     return <></>;
   }
@@ -64,17 +72,24 @@ export const Modal = () => {
       variants={variants}
     >
       <div className="content_wrapper">
-        <ContentWrapper size={size}>
-          {modal === 'ConnectAccounts' && <ConnectAccounts />}
-          {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
-          {modal === 'Settings' && <Settings />}
-          {modal === 'UpdateController' && <UpdateController />}
-          {modal === 'UpdateBond' && <UpdateBond />}
-          {modal === 'UpdatePayee' && <UpdatePayee />}
-          {modal === 'StopNominating' && <StopNominating />}
-          {modal === 'Nominate' && <Nominate />}
-          {modal === 'UnlockChunks' && <UnlockChunks />}
-        </ContentWrapper>
+        <HeightWrapper
+          size={size}
+          style={{
+            height,
+          }}
+        >
+          <ContentWrapper ref={modalRef}>
+            {modal === 'ConnectAccounts' && <ConnectAccounts />}
+            {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
+            {modal === 'Settings' && <Settings />}
+            {modal === 'UpdateController' && <UpdateController />}
+            {modal === 'UpdateBond' && <UpdateBond />}
+            {modal === 'UpdatePayee' && <UpdatePayee />}
+            {modal === 'StopNominating' && <StopNominating />}
+            {modal === 'Nominate' && <Nominate />}
+            {modal === 'UnlockChunks' && <UnlockChunks />}
+          </ContentWrapper>
+        </HeightWrapper>
         <button
           type="button"
           className="close"

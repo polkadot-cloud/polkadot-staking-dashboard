@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { HeadingWrapper } from '../Wrappers';
@@ -11,7 +11,7 @@ import { Tasks } from './Tasks';
 import { Forms } from './Forms';
 
 export const UpdateBond = () => {
-  const { config }: any = useModal();
+  const { config, setModalHeight }: any = useModal();
   const { fn } = config;
 
   // modal task
@@ -20,9 +20,25 @@ export const UpdateBond = () => {
   // active modal section
   const [section, setSection] = useState(0);
 
+  // refs for wrappers
+  const headerRef: any = useRef(null);
+  const tasksRef: any = useRef(null);
+  const formsRef: any = useRef(null);
+
+  // resize modal on state change
+  useEffect(() => {
+    let _height = headerRef.current?.clientHeight ?? 0;
+    if (section === 0) {
+      _height += tasksRef.current?.clientHeight ?? 0;
+    } else {
+      _height += formsRef.current?.clientHeight ?? 0;
+    }
+    setModalHeight(_height);
+  }, [section, task]);
+
   return (
     <Wrapper>
-      <FixedContentWrapper>
+      <FixedContentWrapper ref={headerRef}>
         <HeadingWrapper>
           <FontAwesomeIcon
             transform="grow-2"
@@ -47,8 +63,8 @@ export const UpdateBond = () => {
           },
         }}
       >
-        <Tasks setSection={setSection} setTask={setTask} />
-        <Forms setSection={setSection} task={task} />
+        <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
+        <Forms setSection={setSection} task={task} ref={formsRef} />
       </SectionsWrapper>
     </Wrapper>
   );
