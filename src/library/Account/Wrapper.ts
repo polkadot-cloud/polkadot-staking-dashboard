@@ -17,6 +17,7 @@ export const Wrapper = styled(motion.button)<any>`
   background: ${(props) => props.fill};
   font-size: ${(props) => props.fontSize};
   padding: 0 1rem;
+  max-width: 275px;
   flex: 1;
 
   .identicon {
@@ -24,29 +25,32 @@ export const Wrapper = styled(motion.button)<any>`
   }
 
   .account-label {
+    border-right: 1px solid ${borderSecondary};
     color: ${textSecondary};
     font-size: 0.8em;
     font-variation-settings: 'wght' 535;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-end;
     margin-right: 0.5rem;
     padding-right: 0.5rem;
-    border-right: 1px solid ${borderSecondary};
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    flex-shrink: 1;
   }
 
   .title {
+    color: ${textPrimary};
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     line-height: 2.2rem;
     flex: 1;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    color: ${textPrimary};
+    /* flex-grow: 1; */
+    /* flex-shrink: 1; */
 
     &.unassigned {
       color: ${textSecondary};

@@ -31,65 +31,72 @@ export const Wrapper = styled.div`
     margin-bottom: 1rem;
   }
 
-  button {
+  .item {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0.4rem 0;
+    padding: 0 0.75rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+    background: ${buttonPrimaryBackground};
+    transition: background 0.15s;
+    color: ${textPrimary};
     display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
+    flex-flow: row nowrap;
     align-items: center;
-    font-size: 1.1rem;
+    min-height: 3.5rem;
 
     &:disabled {
       cursor: default;
       opacity: 0.5;
     }
+    &:hover {
+      background: ${backgroundToggle};
+    }
 
-    &.item {
+    > div {
       box-sizing: border-box;
-      width: 100%;
-      min-height: 3.5rem;
-      margin: 0.4rem 0;
-      padding: 0.75rem 0.25rem;
-      border-radius: 1rem;
-      font-size: 1rem;
-      background: ${buttonPrimaryBackground};
-      transition: background 0.15s;
-      color: ${textPrimary};
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 1rem;
 
-      &:hover {
-        background: ${backgroundToggle};
+      &:first-child {
+        flex-shrink: 1;
+        overflow: hidden;
+
+        .name {
+          max-width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
       }
 
-      > div {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex: 1;
-        padding: 0 1rem;
+      &:last-child {
+        flex-grow: 1;
+        justify-content: flex-end;
 
-        &:last-child {
-          justify-content: flex-end;
-
-          &.neutral {
-            color: ${textSecondary};
-            opacity: 0.75;
-          }
-          &.danger {
-            color: ${textDanger};
-          }
-
-          .icon {
-            margin-left: 1rem;
-          }
+        &.neutral {
+          color: ${textSecondary};
+          opacity: 0.75;
         }
+        &.danger {
+          color: ${textDanger};
+        }
+        .icon {
+          margin-left: 1rem;
+        }
+      }
 
-        /* svg theming */
-        svg {
-          .light {
-            fill: ${textInvert};
-          }
-          .dark {
-            fill: ${textSecondary};
-          }
+      /* svg theming */
+      svg {
+        .light {
+          fill: ${textInvert};
+        }
+        .dark {
+          fill: ${textSecondary};
         }
       }
     }
