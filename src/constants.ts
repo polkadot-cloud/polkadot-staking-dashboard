@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { NodeEndpoints } from './types';
 /*
  * SVGs
  */
@@ -19,7 +20,7 @@ export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
 export const DEFAULT_NETWORK = 'polkadot';
 export const ACTIVE_NETWORK = 'polkadot';
 
-export const NODE_ENDPOINTS: any = {
+export const NODE_ENDPOINTS: NodeEndpoints = {
   polkadot: {
     name: 'Polkadot',
     endpoint: 'wss://rpc.polkadot.io',
@@ -55,8 +56,6 @@ export const NODE_ENDPOINTS: any = {
 };
 
 export const POLKADOT_URL = 'https://polkadot.network';
-
-export const CONNECTION_STATUS = ['disconnected', 'connecting', 'connected'];
 
 export const CONNECTION_SYMBOL_COLORS: any = {
   disconnected: 'red',

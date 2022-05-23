@@ -1,7 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export const consts = {
+import { APIConstants } from '../../types/api';
+
+export const consts: APIConstants = {
   bondDuration: 0,
   maxNominations: 0,
   sessionsPerEra: 0,

@@ -12,14 +12,11 @@ import {
 import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
 import { BlockNumber } from './BlockNumber';
-import { ConnectionStatus } from './ConnectionStatus';
+import { Status } from './Status';
 import { usePrices } from '../Hooks/usePrices';
 import { useOutsideAlerter } from '../Hooks';
-import {
-  CONNECTION_SYMBOL_COLORS,
-  CONNECTION_STATUS,
-  NODE_ENDPOINTS,
-} from '../../constants';
+import { CONNECTION_SYMBOL_COLORS, NODE_ENDPOINTS } from '../../constants';
+import { ConnectionStatus } from '../../types/api';
 
 export const NetworkBar = () => {
   const { services } = useUi();
@@ -30,9 +27,9 @@ export const NetworkBar = () => {
 
   // handle connection symbol
   const symbolColor =
-    status === CONNECTION_STATUS[1]
+    status === ConnectionStatus.Connecting
       ? CONNECTION_SYMBOL_COLORS.connecting
-      : status === CONNECTION_STATUS[2]
+      : status === ConnectionStatus.Connected
       ? CONNECTION_SYMBOL_COLORS.connected
       : CONNECTION_SYMBOL_COLORS.disconnected;
 
@@ -76,7 +73,7 @@ export const NetworkBar = () => {
           <div className="hide-small">
             <p>{network.name}</p>
             <Separator />
-            <ConnectionStatus />
+            <Status />
           </div>
         </section>
         <section>
@@ -90,7 +87,7 @@ export const NetworkBar = () => {
             {open ? 'Collapse' : 'Network'}
           </button>
           <div className="stat" style={{ marginRight: 0 }}>
-            {status === CONNECTION_STATUS[2] && <BlockNumber />}
+            {status === ConnectionStatus.Connected && <BlockNumber />}
             <ConnectionSymbol color={symbolColor} />
           </div>
           {services.includes('binance_spot') && (
