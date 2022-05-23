@@ -3,12 +3,14 @@
 
 import { useState } from 'react';
 import { useCombobox } from 'downshift';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 import { useTheme } from '../../../contexts/Themes';
 import { defaultThemes } from '../../../theme/default';
 
 export const Dropdown = (props: any) => {
-  const { items, onChange, label, placeholder, value }: any = props;
+  const { items, onChange, label, placeholder, value, current }: any = props;
 
   const [inputItems, setInputItems] = useState(items);
 
@@ -33,22 +35,34 @@ export const Dropdown = (props: any) => {
           </div>
         )}
         <div style={{ position: 'relative' }}>
-          <div className="input-wrap" {...c.getComboboxProps()}>
-            <input
-              {...c.getInputProps({ placeholder })}
-              className="input"
-              disabled
-            />
-          </div>
-          <StyledDropdown {...c.getMenuProps()}>
-            {inputItems.map((item: any, index: number) => (
-              <DropdownItem
-                key={`controller_acc_${index}`}
-                c={c}
-                item={item}
-                index={index}
+          <div className="current">
+            <div className="input-wrap selected">
+              <input className="input" disabled value={current?.name ?? ''} />
+            </div>
+            <span>
+              <FontAwesomeIcon icon={faAnglesRight} />
+            </span>
+            <div className="input-wrap selected" {...c.getComboboxProps()}>
+              <input
+                className="input"
+                disabled
+                {...c.getInputProps({ placeholder })}
+                value={value?.name ?? '...'}
               />
-            ))}
+            </div>
+          </div>
+
+          <StyledDropdown {...c.getMenuProps()}>
+            <div className="items">
+              {inputItems.map((item: any, index: number) => (
+                <DropdownItem
+                  key={`controller_acc_${index}`}
+                  c={c}
+                  item={item}
+                  index={index}
+                />
+              ))}
+            </div>
           </StyledDropdown>
         </div>
       </div>

@@ -23,14 +23,15 @@ export const UpdateController = () => {
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
-  const [selected, setSelected] = useState(account);
+  // the selected value in the form
+  const [selected, setSelected]: any = useState(null);
 
-  isController(activeAccount);
-
+  // reset selected value on account change
   useEffect(() => {
-    setSelected(account);
+    setSelected(null);
   }, [activeAccount]);
 
+  // handle account selection change
   const handleOnChange = ({ selectedItem }: any) => {
     setSelected(selectedItem);
   };
@@ -42,12 +43,13 @@ export const UpdateController = () => {
       return _tx;
     }
     const controllerToSubmit = {
-      Id: selected.address,
+      Id: selected?.address ?? '',
     };
     _tx = api.tx.staking.setController(controllerToSubmit);
     return _tx;
   };
 
+  // handle extrinsic
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
@@ -58,6 +60,7 @@ export const UpdateController = () => {
     callbackInBlock: () => {},
   });
 
+  // remove active controller from selectable items
   const accountsList = accounts.filter((acc: any) => {
     return acc.address !== activeAccount && !isController(acc.address);
   });
@@ -76,7 +79,8 @@ export const UpdateController = () => {
             (acc: any) => acc.address !== activeAccount
           )}
           onChange={handleOnChange}
-          placeholder="Select Account"
+          placeholder="Search Account"
+          current={account}
           value={selected}
           height="17rem"
         />

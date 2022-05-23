@@ -36,7 +36,7 @@ export const ControllerNotImported = () => {
               primary
               inline
               title="Set New Controller"
-              onClick={() => openModalWith('UpdateController', {}, 'small')}
+              onClick={() => openModalWith('UpdateController', {}, 'large')}
             />
           </SectionWrapper>
         </PageRowWrapper>

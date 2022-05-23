@@ -53,6 +53,7 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for horizontal scroll */
 export const StyledSelect = styled.div`
+  border: 1px solid ${borderPrimary};
   position: relative;
   box-sizing: border-box;
   margin: 0.75rem 0 0;
@@ -65,7 +66,6 @@ export const StyledSelect = styled.div`
   display: flex;
   flex-flow: row wrap;
   flex: 1;
-  border: 1px solid ${borderPrimary};
   border-radius: 1rem;
 
   .wrapper {
