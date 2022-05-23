@@ -113,7 +113,7 @@ export const BalanceGraph = () => {
       <div className="head" style={{ paddingTop: '0.5rem' }}>
         <h4>Balance</h4>
         <h2>
-          {freeBase} {network.unit}
+          <span className="amount">{freeBase}</span>&nbsp;{network.unit}
           {services.includes('binance_spot') && (
             <>
               &nbsp;

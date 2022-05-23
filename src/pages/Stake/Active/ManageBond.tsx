@@ -37,7 +37,8 @@ export const ManageBond = () => {
           <OpenAssistantIcon page="stake" title="Bonding" />
         </h4>
         <h2>
-          {planckBnToUnit(active, units)} {network.unit} &nbsp;
+          <span className="amount">{planckBnToUnit(active, units)}</span>&nbsp;
+          {network.unit} &nbsp;
         </h2>
         <ButtonRow>
           <Button
