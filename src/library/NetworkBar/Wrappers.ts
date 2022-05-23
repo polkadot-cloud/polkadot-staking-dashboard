@@ -4,6 +4,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { textSecondary, backgroundNetworkBar } from '../../theme';
+import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
 
 export const Wrapper = styled(motion.div)<any>`
   width: 100%;
@@ -13,13 +14,16 @@ export const Wrapper = styled(motion.div)<any>`
   align-items: center;
   font-size: 0.75rem;
   color: #444;
-  position: fixed;
   bottom: 0px;
   left: 0px;
   overflow: hidden;
   background: ${backgroundNetworkBar};
   z-index: 6;
   backdrop-filter: blur(4px);
+  position: relative;
+  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+    position: fixed;
+  }
 `;
 
 export const Summary = styled.div`
