@@ -58,7 +58,7 @@ export const Payouts = (props: PageProps) => {
               {payouts.length ? (
                 <>
                   {moment.unix(payouts[0].block_timestamp).format('Do MMMM')}
-                  &nbsp; -
+                  &nbsp;-&nbsp;
                   {moment
                     .unix(payouts[payouts.length - 1].block_timestamp)
                     .format('Do MMMM')}
