@@ -34,6 +34,14 @@ export const SectionWrapper = styled.div<any>`
     position: relative;
   }
 
+  h2 {
+    .amount {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
   h2,
   h3 {
     display: flex;
@@ -42,14 +50,6 @@ export const SectionWrapper = styled.div<any>`
 
     .assistant-icon {
       margin-left: 0.6rem;
-    }
-  }
-
-  h2 {
-    .amount {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
     }
   }
 
