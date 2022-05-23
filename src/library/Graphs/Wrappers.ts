@@ -45,6 +45,14 @@ export const SectionWrapper = styled.div<any>`
     }
   }
 
+  h2 {
+    .amount {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
   h4 {
     margin: 0.75rem 0;
     display: flex;
@@ -112,6 +120,15 @@ export const GraphWrapper = styled.div<any>`
   }
   .head {
     padding: 0.75rem 1.2rem 0.5rem 1.2rem;
+  }
+
+  h2 {
+    .amount {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      flex: 1;
+    }
   }
 
   h2,

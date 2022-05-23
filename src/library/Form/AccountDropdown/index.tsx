@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useCombobox } from 'downshift';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
 import Identicon from '../../Identicon';
@@ -12,10 +12,11 @@ import { defaultThemes } from '../../../theme/default';
 import { convertRemToPixels } from '../../../Utils';
 
 export const AccountDropdown = (props: any) => {
-  const { items, onChange, label, placeholder, value }: any = props;
+  const { items, onChange, placeholder, value, current, height }: any = props;
 
   const itemToString = (item: any) => (item ? item.meta.name : '');
 
+  // store input items
   const [inputItems, setInputItems] = useState(items);
 
   const c: any = useCombobox({
@@ -35,39 +36,66 @@ export const AccountDropdown = (props: any) => {
   return (
     <StyledDownshift>
       <div>
-        {label && (
-          <div className="label" {...c.getLabelProps()}>
-            {label}
-          </div>
-        )}
-        <div style={{ position: 'relative' }}>
-          <div className="input-wrap" {...c.getComboboxProps()}>
-            {value !== null && (
-              <Identicon
-                value={value?.address ?? ''}
-                size={convertRemToPixels('2rem')}
+        <div className="label" {...c.getLabelProps()}>
+          Currently Selected:
+        </div>
+        <div>
+          <div className="current">
+            <div className="input-wrap selected">
+              {current !== null && (
+                <Identicon
+                  value={current?.address ?? ''}
+                  size={convertRemToPixels('2rem')}
+                />
+              )}
+              <input
+                className="input"
+                disabled
+                value={current?.meta?.name ?? ''}
               />
-            )}
-            <input {...c.getInputProps({ placeholder })} className="input" />
+            </div>
+            <span>
+              <FontAwesomeIcon icon={faAnglesRight} />
+            </span>
+            <div className="input-wrap selected">
+              {value !== null && (
+                <Identicon
+                  value={value?.address ?? ''}
+                  size={convertRemToPixels('2rem')}
+                />
+              )}
+              <input
+                className="input"
+                disabled
+                value={value?.meta?.name ?? '...'}
+              />
+            </div>
           </div>
 
-          {c.selectedItem && (
-            <StyledController
-              onClick={() => c.selectItem(null)}
-              aria-label="clear selection"
-            >
-              <FontAwesomeIcon transform="grow-2" icon={faTimes} />
-            </StyledController>
-          )}
-          <StyledDropdown {...c.getMenuProps()}>
-            {inputItems.map((item: any, index: number) => (
-              <DropdownItem
-                key={`controller_acc_${index}`}
-                c={c}
-                item={item}
-                index={index}
-              />
-            ))}
+          <StyledDropdown {...c.getMenuProps()} height={height}>
+            <div className="input-wrap" {...c.getComboboxProps()}>
+              <input {...c.getInputProps({ placeholder })} className="input" />
+            </div>
+
+            <div className="items">
+              {c.selectedItem && (
+                <StyledController
+                  onClick={() => c.selectItem(null)}
+                  aria-label="clear selection"
+                >
+                  <FontAwesomeIcon transform="grow-2" icon={faTimes} />
+                </StyledController>
+              )}
+
+              {inputItems.map((item: any, index: number) => (
+                <DropdownItem
+                  key={`controller_acc_${index}`}
+                  c={c}
+                  item={item}
+                  index={index}
+                />
+              ))}
+            </div>
           </StyledDropdown>
         </div>
       </div>
@@ -77,23 +105,23 @@ export const AccountDropdown = (props: any) => {
 
 const DropdownItem = ({ c, item, index }: any) => {
   const { mode } = useTheme();
-  const color =
-    c.selectedItem === item
-      ? defaultThemes.primary[mode]
-      : defaultThemes.text.primary[mode];
-  const border =
-    c.selectedItem === item
-      ? `2px solid ${defaultThemes.primary[mode]}`
-      : `2px solid ${defaultThemes.transparent[mode]}`;
+
+  let color;
+  let border;
+
+  if (c.selectedItem === item) {
+    color = defaultThemes.primary[mode];
+    border = `2px solid ${defaultThemes.primary[mode]}`;
+  } else {
+    color = defaultThemes.text.primary[mode];
+    border = `2px solid ${defaultThemes.transparent[mode]}`;
+  }
 
   return (
     <div
       className="item"
       {...c.getItemProps({ key: item.meta.name, index, item })}
-      style={{
-        color,
-        border,
-      }}
+      style={{ color, border }}
     >
       <div className="icon">
         <Identicon value={item.address} size={26} />

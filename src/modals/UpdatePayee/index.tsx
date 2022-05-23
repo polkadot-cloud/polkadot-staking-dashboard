@@ -28,7 +28,12 @@ export const UpdatePayee = () => {
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);
-  const [selected, setSelected] = useState(_selected ?? null);
+  const [selected, setSelected]: any = useState(null);
+
+  // reset selected value on account change
+  useEffect(() => {
+    setSelected(null);
+  }, [activeAccount]);
 
   // ensure selected key is valid
   useEffect(() => {
@@ -66,6 +71,11 @@ export const UpdatePayee = () => {
     callbackInBlock: () => {},
   });
 
+  // remove active payee option from selectable items
+  const payeeItems = PAYEE_STATUS.filter((item: any) => {
+    return item.key !== _selected.key;
+  });
+
   return (
     <Wrapper>
       <HeadingWrapper>
@@ -83,16 +93,13 @@ export const UpdatePayee = () => {
           {getControllerNotImported(controller) && (
             <Warning text="You must have your controller account imported to update your reward destination" />
           )}
-          <h4>
-            Currently Selected:
-            {_selected?.name ?? 'None'}
-          </h4>
         </div>
         <Dropdown
-          items={PAYEE_STATUS}
+          items={payeeItems}
           onChange={handleOnChange}
           placeholder="Reward Destination"
           value={selected}
+          current={_selected}
           height="17rem"
         />
         <div>

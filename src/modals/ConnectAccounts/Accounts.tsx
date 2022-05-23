@@ -48,7 +48,7 @@ export const Accounts = (props: any) => {
         >
           <div>
             <Identicon value={activeAccountMeta?.address} size={26} />
-            &nbsp; {activeAccountMeta?.meta?.name}
+            <span className="name">&nbsp; {activeAccountMeta?.meta?.name}</span>
           </div>
           <div className="danger">Disconnect </div>
         </button>
@@ -76,7 +76,7 @@ export const Accounts = (props: any) => {
           >
             <div>
               <Identicon value={address} size={26} />
-              &nbsp; {name}
+              <span className="name">&nbsp; {name}</span>
             </div>
             <div />
           </button>

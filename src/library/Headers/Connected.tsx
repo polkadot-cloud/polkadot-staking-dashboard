@@ -46,7 +46,7 @@ export const Connected = () => {
               canClick={hasController()}
               onClick={() => {
                 if (hasController()) {
-                  openModalWith('UpdateController', {}, 'small');
+                  openModalWith('UpdateController', {}, 'large');
                 }
               }}
               filled

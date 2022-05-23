@@ -2,31 +2,53 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textPrimary, backgroundDropdown } from '../../../theme';
+import {
+  borderPrimary,
+  textPrimary,
+  backgroundDropdown,
+  textSecondary,
+} from '../../../theme';
 
-export const StyledDownshift = styled.div<any>`
+export const StyledDownshift = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: ${(props) => (props.height ? props.height : 'auto')};
+  height: auto;
   overflow: hidden;
 
-  /* title of dropdown */
   .label {
-    margin: 1rem 0;
-    display: block;
+    margin: 0.25rem 0 0.75rem 0;
+  }
+  .current {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    > span {
+      margin: 0 0.75rem;
+      color: ${textSecondary};
+      opacity: 0.5;
+    }
   }
 
   /* input element of dropdown */
   .input-wrap {
-    border: 1px solid ${borderPrimary};
+    border-bottom: 1px solid ${borderPrimary};
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     box-sizing: border-box;
-    border-radius: 1rem;
-    padding: 0.1rem 0.75rem;
-    margin: 0.25rem 0;
+    padding: 0.25rem 0 0 0;
+    margin: 0.25rem 0.7rem 0 0.7rem;
+    flex: 1;
+
+    &.selected {
+      border: 1px solid ${borderPrimary};
+      border-radius: 1rem;
+      margin: 0;
+      padding: 0.1rem 0.75rem;
+    }
   }
 
   /* input element of dropdown */
@@ -35,6 +57,9 @@ export const StyledDownshift = styled.div<any>`
     box-sizing: border-box;
     padding-left: 0.75rem;
     flex: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 `;
 
@@ -55,39 +80,43 @@ export const StyledController = styled.button<any>`
 `;
 
 /* dropdown box for vertical scroll */
-export const StyledDropdown = styled.div`
+export const StyledDropdown = styled.div<any>`
   background: ${backgroundDropdown};
   position: relative;
   box-sizing: border-box;
   margin: 0.5rem 0 0;
   border-bottom: none;
-  width: auto;
-  height: 14rem;
   border-radius: 0.75rem;
-  overflow: auto;
   z-index: 1;
 
-  .item {
+  .items {
     box-sizing: border-box;
-    padding: 0.5rem;
-    cursor: pointer;
-    margin: 0.25rem;
-    border-radius: 0.75rem;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: center;
+    width: auto;
+    height: ${(props) => (props.height ? props.height : 'auto')};
+    overflow: auto;
 
-    .icon {
-      margin-right: 0.5rem;
-    }
-    p {
-      font-size: 1rem;
-      color: ${textPrimary};
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      flex: 1;
+    .item {
+      box-sizing: border-box;
+      padding: 0.5rem;
+      cursor: pointer;
+      margin: 0.25rem;
+      border-radius: 0.75rem;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      .icon {
+        margin-right: 0.5rem;
+      }
+      p {
+        font-size: 1rem;
+        color: ${textPrimary};
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 1;
+      }
     }
   }
 `;

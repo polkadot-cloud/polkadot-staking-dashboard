@@ -12,10 +12,11 @@ export const AccountWrapper = styled.div`
   flex-flow: column wrap;
 
   .account {
+    box-sizing: border-box;
     width: 100%;
     height: 27px;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: center;
     padding: 0;
     margin-top: 1.25rem;
@@ -28,10 +29,15 @@ export const AccountWrapper = styled.div`
       position: relative;
       top: 0.1rem;
     }
+    .title {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0 0.5rem;
+      flex-grow: 1;
+      overflow: hidden;
+    }
     h4 {
-      margin: 0rem 0.5rem;
-      padding: 0;
-
+      margin: 0;
       > .sep {
         border-right: 1px solid ${borderPrimary};
         margin: 0 0.7rem;
@@ -39,6 +45,10 @@ export const AccountWrapper = styled.div`
         height: 1.25rem;
       }
       > .addr {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 1;
         opacity: 0.75;
       }
     }

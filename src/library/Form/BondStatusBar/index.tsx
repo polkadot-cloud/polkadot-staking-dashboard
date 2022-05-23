@@ -9,12 +9,14 @@ import { Wrapper } from './Wrapper';
 import { useApi } from '../../../contexts/Api';
 import { useStaking } from '../../../contexts/Staking';
 import { OpenAssistantIcon } from '../../OpenAssistantIcon';
+import { useUi } from '../../../contexts/UI';
 
 export const BondStatusBar = (props: any) => {
   const { value } = props;
 
   const { network }: any = useApi();
   const { staking, eraStakers } = useStaking();
+  const { isSyncing } = useUi();
   const { unit, units } = network;
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
@@ -29,13 +31,13 @@ export const BondStatusBar = (props: any) => {
   return (
     <Wrapper>
       <div className="bars">
-        <section className={gtMinNominatorBond ? 'invert' : ''}>
+        <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>&nbsp;</h4>
           <div className="bar">
             <h5>Inactive</h5>
           </div>
         </section>
-        <section className={gtMinNominatorBond ? 'invert' : ''}>
+        <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp; Nominate
@@ -47,16 +49,14 @@ export const BondStatusBar = (props: any) => {
             </h5>
           </div>
         </section>
-        <section className={gtMinActiveBond ? 'invert' : ''}>
+        <section className={gtMinActiveBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp; Active
             <OpenAssistantIcon page="stake" title="Active Bond Threshold" />
           </h4>
           <div className="bar">
-            <h5>
-              {minActiveBond} {unit}
-            </h5>
+            <h5>{isSyncing ? '...' : `${minActiveBond} ${unit}`}</h5>
           </div>
         </section>
       </div>
