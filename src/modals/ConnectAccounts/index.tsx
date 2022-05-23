@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Wrapper } from './Wrapper';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
@@ -23,9 +23,14 @@ export const ConnectAccounts = () => {
     _section !== null ? _section : activeAccount !== null ? 1 : 0
   );
 
+  // active extensions
+  const [extensions, setExtensions] = useState([]);
+
+  // resize modal on state change
+  const heightRef: any = useRef(null);
   useEffect(() => {
-    modal.setResize();
-  }, [section, activeAccount, activeAccount, accounts]);
+    modal.setModalHeight(heightRef.current?.clientHeight ?? 'auto');
+  }, [section, activeAccount, activeAccount, accounts, extensions]);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
@@ -38,8 +43,14 @@ export const ConnectAccounts = () => {
   }, [activeWallet]);
 
   return (
-    <Wrapper>
-      {section === 0 && <Wallets setSection={setSection} />}
+    <Wrapper ref={heightRef}>
+      {section === 0 && (
+        <Wallets
+          setSection={setSection}
+          extensions={extensions}
+          setExtensions={setExtensions}
+        />
+      )}
       {section === 1 && <Accounts setSection={setSection} />}
     </Wrapper>
   );

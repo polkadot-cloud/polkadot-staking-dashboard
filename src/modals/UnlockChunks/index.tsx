@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { HeadingWrapper } from '../Wrappers';
@@ -29,14 +29,26 @@ export const UnlockChunks = () => {
   // unlock value of interest
   const [unlock, setUnlock] = useState(null);
 
+  // refs for wrappers
+  const headerRef: any = useRef(null);
+  const overviewRef: any = useRef(null);
+  const formsRef: any = useRef(null);
+
   // resize modal on state change
   useEffect(() => {
-    modal.setResize();
-  }, [task, section, unlock]);
+    let _height = headerRef.current?.clientHeight ?? 0;
+
+    if (section === 0) {
+      _height += overviewRef.current?.clientHeight ?? 0;
+    } else {
+      _height += formsRef.current?.clientHeight ?? 0;
+    }
+    modal.setModalHeight(_height);
+  }, [task, section]);
 
   return (
     <Wrapper>
-      <FixedContentWrapper>
+      <FixedContentWrapper ref={headerRef}>
         <HeadingWrapper>
           <FontAwesomeIcon transform="grow-2" icon={faLockOpen} />
           {unlocking.length > 0 && `${unlocking.length} `}Unlock
@@ -63,8 +75,14 @@ export const UnlockChunks = () => {
           setSection={setSection}
           setUnlock={setUnlock}
           setTask={setTask}
+          ref={overviewRef}
         />
-        <Forms setSection={setSection} unlock={unlock} task={task} />
+        <Forms
+          setSection={setSection}
+          unlock={unlock}
+          task={task}
+          ref={formsRef}
+        />
       </SectionsWrapper>
     </Wrapper>
   );

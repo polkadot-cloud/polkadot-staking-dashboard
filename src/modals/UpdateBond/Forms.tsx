@@ -1,24 +1,24 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FooterWrapper, Separator } from '../Wrappers';
+import { ContentWrapper } from './Wrappers';
 import { useModal } from '../../contexts/Modal';
 import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { ContentWrapper } from './Wrappers';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
 import { planckBnToUnit } from '../../Utils';
 
-export const Forms = (props: any) => {
+export const Forms = forwardRef((props: any, ref: any) => {
   const { setSection, task } = props;
 
   const { api, network }: any = useApi();
@@ -129,7 +129,7 @@ export const Forms = (props: any) => {
   );
 
   return (
-    <ContentWrapper>
+    <ContentWrapper ref={ref}>
       <div className="items">
         {task === 'bond_some' && (
           <>
@@ -246,6 +246,6 @@ export const Forms = (props: any) => {
       </FooterWrapper>
     </ContentWrapper>
   );
-};
+});
 
 export default Forms;
