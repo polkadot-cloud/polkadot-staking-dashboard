@@ -6,6 +6,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { Separator } from './Wrapper';
 import { useConnect } from '../../contexts/Connect';
 import Identicon from '../../library/Identicon';
+import { useModal } from '../../contexts/Modal';
 
 export const Accounts = (props: any) => {
   const { setSection } = props;
@@ -16,7 +17,7 @@ export const Accounts = (props: any) => {
     disconnectFromAccount,
     activeAccount,
   }: any = useConnect();
-
+  const { setStatus } = useModal();
   let { accounts } = useConnect();
 
   const activeAccountMeta = getAccount(activeAccount);
@@ -72,6 +73,7 @@ export const Accounts = (props: any) => {
             key={`switch_acnt_${index}`}
             onClick={() => {
               connectToAccount(item);
+              setStatus(0);
             }}
           >
             <div>
