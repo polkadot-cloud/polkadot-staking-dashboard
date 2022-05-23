@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { HeadingWrapper } from '../Wrappers';
@@ -10,9 +10,11 @@ import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
 import { Overview } from './Overview';
 import { Forms } from './Forms';
+import { useModal } from '../../contexts/Modal';
 
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
+  const modal = useModal();
   const { getBondedAccount, getAccountLedger }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(controller);
@@ -26,6 +28,11 @@ export const UnlockChunks = () => {
 
   // unlock value of interest
   const [unlock, setUnlock] = useState(null);
+
+  // resize modal on state change
+  useEffect(() => {
+    modal.setResize();
+  }, [task, section, unlock]);
 
   return (
     <Wrapper>

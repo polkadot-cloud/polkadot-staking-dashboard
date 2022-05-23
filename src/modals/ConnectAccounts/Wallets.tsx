@@ -10,10 +10,12 @@ import { ReactComponent as TalismanSVG } from '../../img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from '../../img/dot_icon.svg';
 import { DAPP_NAME } from '../../constants';
 import { Separator } from './Wrapper';
+import { useModal } from '../../contexts/Modal';
 
 export const Wallets = (props: any) => {
   const { setSection } = props;
 
+  const modal = useModal();
   const {
     activeWallet,
     activeAccount,
@@ -29,6 +31,11 @@ export const Wallets = (props: any) => {
 
   // store supported extensions
   const [extensions, setExtensions]: any = useState([]);
+
+  // trigger modal resize on extensions change
+  useEffect(() => {
+    modal.setResize();
+  }, [extensions]);
 
   // load supported wallets
   useEffect(() => {
@@ -62,7 +69,9 @@ export const Wallets = (props: any) => {
         <button
           type="button"
           className="item"
-          onClick={() => disconnectFromWallet()}
+          onClick={() => {
+            disconnectFromWallet();
+          }}
         >
           <div>
             {activeWallet === 'talisman' && (
@@ -83,7 +92,9 @@ export const Wallets = (props: any) => {
           type="button"
           className="item"
           key={`wallet_${activeExtension.name}`}
-          onClick={() => handleWalletConnect(activeExtension.name)}
+          onClick={() => {
+            handleWalletConnect(activeExtension.name);
+          }}
         >
           <div>
             {activeExtension.name === 'talisman' && (
@@ -115,7 +126,9 @@ export const Wallets = (props: any) => {
             className="item"
             key={`wallet_${wallet.name}`}
             disabled={disabled}
-            onClick={() => handleWalletConnect(wallet.name)}
+            onClick={() => {
+              handleWalletConnect(wallet.name);
+            }}
           >
             <div>
               {wallet.name === 'talisman' && (

@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { HeadingWrapper } from '../Wrappers';
@@ -11,7 +11,7 @@ import { Tasks } from './Tasks';
 import { Forms } from './Forms';
 
 export const UpdateBond = () => {
-  const { config }: any = useModal();
+  const { config, setResize }: any = useModal();
   const { fn } = config;
 
   // modal task
@@ -19,6 +19,11 @@ export const UpdateBond = () => {
 
   // active modal section
   const [section, setSection] = useState(0);
+
+  // resize modal on state change
+  useEffect(() => {
+    setResize();
+  }, [task, section]);
 
   return (
     <Wrapper>

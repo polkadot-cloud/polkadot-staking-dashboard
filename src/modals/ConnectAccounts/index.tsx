@@ -23,6 +23,10 @@ export const ConnectAccounts = () => {
     _section !== null ? _section : activeAccount !== null ? 1 : 0
   );
 
+  useEffect(() => {
+    modal.setResize();
+  }, [section, activeAccount, activeAccount, accounts]);
+
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
 
