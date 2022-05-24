@@ -22,6 +22,7 @@ export interface ConnectContextState {
   activeAccount: string;
   activeAccountMeta: any;
   walletErrors: any;
+  extensions: any;
 }
 
 export const ConnectContext: React.Context<ConnectContextState> =
@@ -38,6 +39,7 @@ export const ConnectContext: React.Context<ConnectContextState> =
     activeAccount: '',
     activeAccountMeta: {},
     walletErrors: {},
+    extensions: [],
   });
 
 export const useConnect = () => React.useContext(ConnectContext);
@@ -301,11 +303,6 @@ export const ConnectProvider = (props: any) => {
   return (
     <ConnectContext.Provider
       value={{
-        activeWallet,
-        accounts: accountsRef.current,
-        activeAccount: activeAccountRef.current,
-        activeAccountMeta: activeAccountMetaRef.current,
-        walletErrors,
         accountExists,
         connectToWallet,
         disconnectFromAccount,
@@ -313,6 +310,12 @@ export const ConnectProvider = (props: any) => {
         initialise,
         getAccount,
         connectToAccount,
+        activeWallet,
+        accounts: accountsRef.current,
+        activeAccount: activeAccountRef.current,
+        activeAccountMeta: activeAccountMetaRef.current,
+        walletErrors,
+        extensions,
       }}
     >
       {props.children}

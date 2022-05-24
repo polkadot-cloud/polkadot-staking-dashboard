@@ -2,13 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect } from 'react';
-import { web3Enable } from '@polkadot/extension-dapp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from '../../contexts/Connect';
 import { ReactComponent as TalismanSVG } from '../../img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from '../../img/dot_icon.svg';
-import { DAPP_NAME } from '../../constants';
 import { Separator } from './Wrapper';
 import { useModal } from '../../contexts/Modal';
 
@@ -24,28 +22,16 @@ export const Wallets = (props: any) => {
     disconnectFromWallet,
   }: any = useConnect();
 
+  const { extensions } = useConnect();
   let { accounts } = useConnect();
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
 
-  // store supported extensions
-  const { extensions, setExtensions } = props;
-
   // trigger modal resize on extensions change
   useEffect(() => {
     modal.setResize();
   }, [extensions]);
-
-  // load supported wallets
-  useEffect(() => {
-    fetchExtensions();
-  }, [activeWallet]);
-
-  const fetchExtensions = async () => {
-    const allInjected = await web3Enable(DAPP_NAME);
-    setExtensions(allInjected);
-  };
 
   const handleWalletConnect = async (name: string) => {
     if (activeWallet !== name) {

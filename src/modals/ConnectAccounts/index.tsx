@@ -14,7 +14,7 @@ export const ConnectAccounts = () => {
   const { config } = modal;
   const _section = config?.section ?? null;
 
-  const { activeWallet, activeAccount }: any = useConnect();
+  const { activeWallet, activeAccount, extensions }: any = useConnect();
 
   let { accounts } = useConnect();
 
@@ -22,9 +22,6 @@ export const ConnectAccounts = () => {
   const [section, setSection] = useState(
     _section !== null ? _section : activeAccount !== null ? 1 : 0
   );
-
-  // active extensions
-  const [extensions, setExtensions] = useState([]);
 
   // resize modal on state change
   const heightRef: any = useRef(null);
@@ -44,13 +41,7 @@ export const ConnectAccounts = () => {
 
   return (
     <Wrapper ref={heightRef}>
-      {section === 0 && (
-        <Wallets
-          setSection={setSection}
-          extensions={extensions}
-          setExtensions={setExtensions}
-        />
-      )}
+      {section === 0 && <Wallets setSection={setSection} />}
       {section === 1 && <Accounts setSection={setSection} />}
     </Wrapper>
   );
