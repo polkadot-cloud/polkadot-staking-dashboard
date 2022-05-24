@@ -40,6 +40,7 @@ export const ManagePool = () => {
               </div>
             </div>
             <GenerateNominations
+              batchKey="generate_pool_nominations"
               nominations={[]}
               setters={[
                 {

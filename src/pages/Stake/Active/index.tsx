@@ -164,6 +164,7 @@ export const Active = ({ title }: any) => {
                 </div>
               </div>
               <GenerateNominations
+                batchKey="generate_nominations_active"
                 setters={[
                   {
                     set: setTargets,
