@@ -9,7 +9,10 @@ import {
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from '../../Wrappers';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
+import {
+  SectionWrapper,
+  SectionHeaderWrapper,
+} from '../../library/Graphs/Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { StatBoxList } from '../../library/StatBoxList';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
@@ -20,14 +23,15 @@ import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import MinCreateBondStatBox from './Stats/MinCreateBond';
 import { Status } from './Status';
-import { Roles } from './Roles';
+import { ManageBond } from './ManageBond';
+import { ManagePool } from './ManagePool';
 
 export const Pools = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network }: any = useApi();
   const navigate = useNavigate();
-  const { bondedPools } = usePools();
+  const { bondedPools, membership } = usePools();
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -45,19 +49,24 @@ export const Pools = (props: PageProps) => {
         <MinCreateBondStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowPrimaryWrapper hOrder={0} vOrder={0}>
+        <RowPrimaryWrapper hOrder={1} vOrder={0}>
           <Status />
         </RowPrimaryWrapper>
-        <RowSecondaryWrapper hOrder={1} vOrder={1}>
-          <Roles />
+        <RowSecondaryWrapper hOrder={0} vOrder={1}>
+          <SectionWrapper height={310}>
+            <ManageBond />
+          </SectionWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
+      <ManagePool />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
-          <h2>
-            Pools
-            <OpenAssistantIcon page="pools" title="Nomination Pools" />
-          </h2>
+          <SectionHeaderWrapper>
+            <h2>
+              Pools
+              <OpenAssistantIcon page="pools" title="Nomination Pools" />
+            </h2>
+          </SectionHeaderWrapper>
           <PoolList
             pools={bondedPools}
             title="Active Pools"

@@ -46,10 +46,7 @@ export const ValidatorMetrics = () => {
       </div>
       <div className="body">
         <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>
-          <div className="head" style={{ padding: 0 }}>
-            <h4>Recent Era Points</h4>
-          </div>
-
+          <h4>Recent Era Points</h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"

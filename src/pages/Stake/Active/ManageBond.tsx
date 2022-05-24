@@ -3,16 +3,16 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { planckBnToUnit } from '../../../Utils';
-import BondedGraph from './BondedGraph';
+import BondedGraph from '../../../library/Graphs/Bonded';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
 import { Button, ButtonRow } from '../../../library/Button';
-import { GraphWrapper } from '../../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import { useUi } from '../../../contexts/UI';
+import { SectionHeaderWrapper } from '../../../library/Graphs/Wrappers';
 
 export const ManageBond = () => {
   const { network }: any = useApi();
@@ -31,7 +31,7 @@ export const ManageBond = () => {
 
   return (
     <>
-      <div className="head">
+      <SectionHeaderWrapper>
         <h4>
           Bonded Funds
           <OpenAssistantIcon page="stake" title="Bonding" />
@@ -67,22 +67,14 @@ export const ManageBond = () => {
             onClick={() => openModalWith('UnlockChunks', {}, 'small')}
           />
         </ButtonRow>
-      </div>
-
-      <GraphWrapper transparent noMargin>
-        <div
-          className="graph"
-          style={{ flex: 0, paddingRight: '1rem', height: 160 }}
-        >
-          <BondedGraph
-            active={planckBnToUnit(active, units)}
-            unlocking={totalUnlocking}
-            free={freeToBond}
-            total={total.toNumber()}
-            inactive={inSetup()}
-          />
-        </div>
-      </GraphWrapper>
+      </SectionHeaderWrapper>
+      <BondedGraph
+        active={planckBnToUnit(active, units)}
+        unlocking={totalUnlocking}
+        free={freeToBond}
+        total={total.toNumber()}
+        inactive={inSetup()}
+      />
     </>
   );
 };

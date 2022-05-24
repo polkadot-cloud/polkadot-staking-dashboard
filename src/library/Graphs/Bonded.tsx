@@ -3,14 +3,14 @@
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { defaultThemes } from '../../../theme/default';
-import { useApi } from '../../../contexts/Api';
-import { useTheme } from '../../../contexts/Themes';
-import { GraphWrapper } from '../../../library/Graphs/Wrappers';
+import { defaultThemes } from '../../theme/default';
+import { useApi } from '../../contexts/Api';
+import { useTheme } from '../../contexts/Themes';
+import { GraphWrapper } from './Wrappers';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const BondedGraph = (props: any) => {
+export const Bonded = (props: any) => {
   const { mode } = useTheme();
   const { network }: any = useApi();
 
@@ -91,4 +91,4 @@ export const BondedGraph = (props: any) => {
   );
 };
 
-export default BondedGraph;
+export default Bonded;

@@ -110,7 +110,7 @@ export const BalanceGraph = () => {
 
   return (
     <>
-      <div className="head" style={{ paddingTop: '0.5rem' }}>
+      <div className="head" style={{ paddingTop: '0' }}>
         <h4>Balance</h4>
         <h2>
           <span className="amount">{freeBase}</span>&nbsp;{network.unit}

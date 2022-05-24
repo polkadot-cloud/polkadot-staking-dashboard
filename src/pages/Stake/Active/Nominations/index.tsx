@@ -12,6 +12,7 @@ import { useBalances } from '../../../../contexts/Balances';
 import { useConnect } from '../../../../contexts/Connect';
 import { useUi } from '../../../../contexts/UI';
 import { useStaking } from '../../../../contexts/Staking';
+import { SectionHeaderWrapper } from '../../../../library/Graphs/Wrappers';
 
 export const Nominations = () => {
   const { openModalWith } = useModal();
@@ -27,7 +28,7 @@ export const Nominations = () => {
 
   return (
     <Wrapper>
-      <div className="head">
+      <SectionHeaderWrapper withAction>
         <h2>
           Nominations
           <OpenAssistantIcon page="stake" title="Nominations" />
@@ -48,7 +49,7 @@ export const Nominations = () => {
             <></>
           )}
         </div>
-      </div>
+      </SectionHeaderWrapper>
       {nominated === null || isSyncing ? (
         <div className="head">
           <h3>Syncing nominations...</h3>

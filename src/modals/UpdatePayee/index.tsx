@@ -89,11 +89,9 @@ export const UpdatePayee = () => {
           boxSizing: 'border-box',
         }}
       >
-        <div className="head">
-          {getControllerNotImported(controller) && (
-            <Warning text="You must have your controller account imported to update your reward destination" />
-          )}
-        </div>
+        {getControllerNotImported(controller) && (
+          <Warning text="You must have your controller account imported to update your reward destination" />
+        )}
         <Dropdown
           items={payeeItems}
           onChange={handleOnChange}

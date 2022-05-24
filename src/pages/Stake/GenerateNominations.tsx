@@ -14,6 +14,7 @@ export const GenerateNominations = (props: any) => {
   // functional props
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
+  const { batchKey } = props;
 
   const { isReady }: any = useApi();
   const { activeAccount } = useConnect();
@@ -26,7 +27,6 @@ export const GenerateNominations = (props: any) => {
   const [nominations, setNominations] = useState(defaultNominations);
 
   const rawBatchKey = 'validators_browse';
-  const batchKey = 'generated_nominations';
 
   // update selected value on account switch
   useEffect(() => {

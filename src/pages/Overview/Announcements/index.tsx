@@ -10,7 +10,10 @@ import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
 import { useUi } from '../../../contexts/UI';
 import { humanNumber, planckToUnit } from '../../../Utils';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import {
+  SectionWrapper,
+  SectionHeaderWrapper,
+} from '../../../library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from '../../../library/Loaders/Announcement';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 
@@ -98,10 +101,12 @@ export const Announcements = () => {
 
   return (
     <SectionWrapper>
-      <h2>
-        Announcements
-        <OpenAssistantIcon page="overview" title="Announcements" />
-      </h2>
+      <SectionHeaderWrapper>
+        <h2>
+          Announcements
+          <OpenAssistantIcon page="overview" title="Announcements" />
+        </h2>
+      </SectionHeaderWrapper>
       <Wrapper>
         <motion.div
           variants={container}

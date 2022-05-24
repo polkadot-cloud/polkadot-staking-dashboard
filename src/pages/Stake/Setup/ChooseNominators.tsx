@@ -26,6 +26,7 @@ export const ChooseNominators = (props: any) => {
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '1rem' }}>
           <GenerateNominations
+            batchKey="generate_nominations_inactive"
             setters={[
               {
                 set: setActiveAccountSetup,
