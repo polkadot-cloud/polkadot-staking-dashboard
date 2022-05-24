@@ -9,7 +9,6 @@ import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
 import { useStaking } from '../../../contexts/Staking';
 import { Button, ButtonRow } from '../../../library/Button';
-import { GraphWrapper } from '../../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import { useUi } from '../../../contexts/UI';
@@ -68,21 +67,13 @@ export const ManageBond = () => {
           />
         </ButtonRow>
       </div>
-
-      <GraphWrapper transparent noMargin>
-        <div
-          className="graph"
-          style={{ flex: 0, paddingRight: '1rem', height: 160 }}
-        >
-          <BondedGraph
-            active={planckBnToUnit(active, units)}
-            unlocking={totalUnlocking}
-            free={freeToBond}
-            total={total.toNumber()}
-            inactive={inSetup()}
-          />
-        </div>
-      </GraphWrapper>
+      <BondedGraph
+        active={planckBnToUnit(active, units)}
+        unlocking={totalUnlocking}
+        free={freeToBond}
+        total={total.toNumber()}
+        inactive={inSetup()}
+      />
     </>
   );
 };

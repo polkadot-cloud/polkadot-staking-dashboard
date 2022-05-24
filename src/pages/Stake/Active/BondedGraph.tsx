@@ -6,6 +6,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { defaultThemes } from '../../../theme/default';
 import { useApi } from '../../../contexts/Api';
 import { useTheme } from '../../../contexts/Themes';
+import { GraphWrapper } from '../../../library/Graphs/Wrappers';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -78,7 +79,16 @@ export const BondedGraph = (props: any) => {
     ],
   };
 
-  return <Doughnut options={options} data={data} />;
+  return (
+    <GraphWrapper transparent noMargin>
+      <div
+        className="graph"
+        style={{ flex: 0, paddingRight: '1rem', height: 160 }}
+      >
+        <Doughnut options={options} data={data} />
+      </div>
+    </GraphWrapper>
+  );
 };
 
 export default BondedGraph;
