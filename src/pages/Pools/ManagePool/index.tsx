@@ -3,7 +3,10 @@
 
 import { useState } from 'react';
 import { PageRowWrapper } from '../../../Wrappers';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import {
+  SectionWrapper,
+  SectionHeaderWrapper,
+} from '../../../library/Graphs/Wrappers';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { Roles } from './Roles';
 import { GenerateNominations } from '../../Stake/GenerateNominations';
@@ -23,7 +26,7 @@ export const ManagePool = () => {
             <Roles />
           </div>
           <div>
-            <div className="head with-action">
+            <SectionHeaderWrapper withAction>
               <h3>
                 Generate Nominations
                 <OpenAssistantIcon page="stake" title="Nominations" />
@@ -40,7 +43,7 @@ export const ManagePool = () => {
                   }
                 />
               </div>
-            </div>
+            </SectionHeaderWrapper>
             <GenerateNominations
               batchKey="generate_pool_nominations"
               nominations={targets.nominations}

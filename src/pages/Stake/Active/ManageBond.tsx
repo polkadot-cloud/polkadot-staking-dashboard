@@ -12,6 +12,7 @@ import { Button, ButtonRow } from '../../../library/Button';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import { useUi } from '../../../contexts/UI';
+import { SectionHeaderWrapper } from '../../../library/Graphs/Wrappers';
 
 export const ManageBond = () => {
   const { network }: any = useApi();
@@ -30,7 +31,7 @@ export const ManageBond = () => {
 
   return (
     <>
-      <div className="head">
+      <SectionHeaderWrapper>
         <h4>
           Bonded Funds
           <OpenAssistantIcon page="stake" title="Bonding" />
@@ -66,7 +67,7 @@ export const ManageBond = () => {
             onClick={() => openModalWith('UnlockChunks', {}, 'small')}
           />
         </ButtonRow>
-      </div>
+      </SectionHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}
         unlocking={totalUnlocking}

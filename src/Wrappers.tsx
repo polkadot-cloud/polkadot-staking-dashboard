@@ -279,5 +279,5 @@ export const RowSecondaryWrapper = styled.div<any>`
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   width: 100%;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
 `;

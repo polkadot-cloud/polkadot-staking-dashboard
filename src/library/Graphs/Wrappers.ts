@@ -5,6 +5,47 @@ import styled from 'styled-components';
 import { SECTION_FULL_WIDTH_THRESHOLD } from '../../constants';
 import { textSecondary, backgroundSecondary } from '../../theme';
 
+/* SectionHeaderWrapper
+ *
+ * Used as headers for individual sections. Usually a h4 accompanied
+ * with a h2. withAction allows a full-width header with a right-side
+ * button.
+ */
+export const SectionHeaderWrapper = styled.div<any>`
+  display: flex;
+  flex-flow: ${(props) => (props.withAction ? 'row' : 'column')} wrap;
+  width: 100%;
+  padding: ${(props) =>
+    props.padded ? '0.75rem 1.2rem 0.5rem 1.2rem' : '0.25rem'};
+
+  h2,
+  h3 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    flex-grow: ${(props) => (props.withAction ? 1 : 0)};
+
+    .assistant-icon {
+      margin-left: 0.6rem;
+    }
+  }
+  h4 {
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+
+    .assistant-icon {
+      margin-left: 0.5rem;
+    }
+  }
+`;
+
+/* SectionWrapper
+ *
+ * Used to separate the main modules throughout the app.
+ */
 export const SectionWrapper = styled.div<any>`
   box-sizing: border-box;
   padding: ${(props) =>
@@ -34,53 +75,6 @@ export const SectionWrapper = styled.div<any>`
     position: relative;
   }
 
-  h2 {
-    .amount {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-  }
-
-  h2,
-  h3 {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-
-    .assistant-icon {
-      margin-left: 0.6rem;
-    }
-  }
-
-  h4 {
-    margin: 0.75rem 0;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: flex-start;
-
-    .assistant-icon {
-      margin-left: 0.5rem;
-    }
-  }
-  .head {
-    padding: 0.25rem;
-    width: 100%;
-    h4 {
-      margin: 0 0 0.5rem 0;
-    }
-
-    &.with-action {
-      display: flex;
-      flex-flow: row wrap;
-      > h2,
-      h3 {
-        flex-grow: 1;
-      }
-    }
-  }
-
   .option {
     border-bottom: 1px solid #ddd;
     padding: 0.75rem 1rem;
@@ -88,6 +82,11 @@ export const SectionWrapper = styled.div<any>`
     text-align: left;
   }
 `;
+
+/* SectionWrapper
+ *
+ * Acts as a module, but used to wrap graphs.
+ */
 
 export const GraphWrapper = styled.div<any>`
   box-sizing: border-box;

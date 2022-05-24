@@ -1,21 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faRedoAlt,
-  faWallet,
-  faChevronCircleRight,
-} from '@fortawesome/free-solid-svg-icons';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   PageRowWrapper,
-  Separator,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from '../../../Wrappers';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import {
+  SectionWrapper,
+  SectionHeaderWrapper,
+} from '../../../library/Graphs/Wrappers';
 import { StatBoxList } from '../../../library/StatBoxList';
 import { useStaking } from '../../../contexts/Staking';
 import { useBalances } from '../../../contexts/Balances';
@@ -27,36 +21,20 @@ import { GenerateNominations } from '../GenerateNominations';
 import { PageTitle } from '../../../library/PageTitle';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
-import { PAYEE_STATUS } from '../../../constants';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import ActiveEraStatBox from './Stats/ActiveEra';
 import { ControllerNotImported } from './ControllerNotImported';
 import { useUi } from '../../../contexts/UI';
-import { useApi } from '../../../contexts/Api';
+import { Status } from './Status';
 
 export const Active = ({ title }: any) => {
-  const { isReady }: any = useApi();
-  const { setOnSetup }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
-  const { getNominationsStatus, staking, targets, setTargets, inSetup } =
-    useStaking();
+  const { targets, setTargets, inSetup } = useStaking();
   const { getAccountNominations }: any = useBalances();
-  const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
-
-  // get nomination status
-  const nominationStatuses = getNominationsStatus();
-  const statuses: any =
-    nominationStatuses === undefined ? [] : nominationStatuses;
-
-  const active: any = Object.values(statuses).filter(
-    (_v: any) => _v === 'active'
-  ).length;
-
-  const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
 
   return (
     <>
@@ -69,71 +47,7 @@ export const Active = ({ title }: any) => {
       <ControllerNotImported />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowPrimaryWrapper hOrder={1} vOrder={0}>
-          <SectionWrapper height={310}>
-            <div className="head">
-              <h4>
-                Status
-                <OpenAssistantIcon page="stake" title="Staking Status" />
-              </h4>
-              <h2>
-                {inSetup() || isSyncing
-                  ? 'Not Staking'
-                  : !nominations.length
-                  ? 'Inactive: Not Nominating'
-                  : active
-                  ? 'Actively Nominating with Bonded Funds'
-                  : 'Waiting for Active Nominations'}
-                {inSetup() && (
-                  <span>
-                    &nbsp;&nbsp;
-                    <Button
-                      primary
-                      inline
-                      title="Start Staking"
-                      icon={faChevronCircleRight}
-                      transform="grow-1"
-                      disabled={!isReady}
-                      onClick={() => setOnSetup(true)}
-                    />
-                  </span>
-                )}
-              </h2>
-              <Separator />
-              <h4>
-                Reward Destination
-                <OpenAssistantIcon page="stake" title="Reward Destination" />
-              </h4>
-              <h2>
-                <FontAwesomeIcon
-                  icon={
-                    (payee === null
-                      ? faCircle
-                      : payee === 'Staked'
-                      ? faRedoAlt
-                      : payee === 'None'
-                      ? faCircle
-                      : faWallet) as IconProp
-                  }
-                  transform="shrink-4"
-                />
-                &nbsp;
-                {inSetup()
-                  ? 'Not Assigned'
-                  : payeeStatus?.name ?? 'Not Assigned'}
-                &nbsp;&nbsp;
-                <div>
-                  <Button
-                    small
-                    inline
-                    primary
-                    disabled={inSetup() || isSyncing}
-                    title="Update"
-                    onClick={() => openModalWith('UpdatePayee', {}, 'small')}
-                  />
-                </div>
-              </h2>
-            </div>
-          </SectionWrapper>
+          <Status />
         </RowPrimaryWrapper>
         <RowSecondaryWrapper hOrder={0} vOrder={1}>
           <SectionWrapper height={310}>
@@ -147,7 +61,7 @@ export const Active = ({ title }: any) => {
             <Nominations />
           ) : (
             <>
-              <div className="head with-action">
+              <SectionHeaderWrapper withAction>
                 <h2>
                   Generate Nominations
                   <OpenAssistantIcon page="stake" title="Nominations" />
@@ -162,7 +76,7 @@ export const Active = ({ title }: any) => {
                     onClick={() => openModalWith('Nominate', {}, 'small')}
                   />
                 </div>
-              </div>
+              </SectionHeaderWrapper>
               <GenerateNominations
                 batchKey="generate_nominations_active"
                 setters={[

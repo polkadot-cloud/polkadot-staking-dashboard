@@ -11,6 +11,7 @@ import { Button, ButtonRow } from '../../library/Button';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { useUi } from '../../contexts/UI';
 import { usePools } from '../../contexts/Pools';
+import { SectionHeaderWrapper } from '../../library/Graphs/Wrappers';
 
 export const ManageBond = () => {
   const { network }: any = useApi();
@@ -28,10 +29,10 @@ export const ManageBond = () => {
 
   return (
     <>
-      <div className="head">
+      <SectionHeaderWrapper>
         <h4>
           Bonded Funds
-          <OpenAssistantIcon page="stake" title="Bonding" />
+          <OpenAssistantIcon page="pools" title="Bonded in Pool" />
         </h4>
         <h2>
           {planckBnToUnit(active, units)}&nbsp;{network.unit}
@@ -62,7 +63,7 @@ export const ManageBond = () => {
             onClick={() => console.log('TODO: Manage Pool Unlocks')}
           />
         </ButtonRow>
-      </div>
+      </SectionHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}
         unlocking={totalUnlocking}

@@ -10,6 +10,7 @@ import { BondInput } from '../BondInput';
 import { humanNumber, planckBnToUnit } from '../../../Utils';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
+import { SectionHeaderWrapper } from '../../Graphs/Wrappers';
 
 export const BondInputWithFeedback = (props: any) => {
   // input props
@@ -132,13 +133,13 @@ export const BondInputWithFeedback = (props: any) => {
 
   return (
     <>
-      <div className="head">
+      <SectionHeaderWrapper>
         <h4>
           {unbond ? 'Bonded' : 'Available'}:{' '}
           {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)}{' '}
           {network.unit}
         </h4>
-      </div>
+      </SectionHeaderWrapper>
       {errors.map((err: any, index: any) => (
         <Warning key={`setup_error_${index}`} text={err} />
       ))}

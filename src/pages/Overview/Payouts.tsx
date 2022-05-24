@@ -19,7 +19,7 @@ export const PayoutsInner = (props: any) => {
 
   const ref: any = React.useRef();
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 352);
+  const { width, height, minHeight } = formatSize(size, 346);
 
   // pre-fill missing items if payouts < 60
   const payoutsGraph = prefillPayoutGraph([...payouts], 10);

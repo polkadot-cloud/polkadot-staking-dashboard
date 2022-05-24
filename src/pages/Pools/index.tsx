@@ -9,7 +9,10 @@ import {
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from '../../Wrappers';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
+import {
+  SectionWrapper,
+  SectionHeaderWrapper,
+} from '../../library/Graphs/Wrappers';
 import { PageTitle } from '../../library/PageTitle';
 import { StatBoxList } from '../../library/StatBoxList';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
@@ -58,10 +61,12 @@ export const Pools = (props: PageProps) => {
       <ManagePool />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
-          <h2>
-            Pools
-            <OpenAssistantIcon page="pools" title="Nomination Pools" />
-          </h2>
+          <SectionHeaderWrapper>
+            <h2>
+              Pools
+              <OpenAssistantIcon page="pools" title="Nomination Pools" />
+            </h2>
+          </SectionHeaderWrapper>
           <PoolList
             pools={bondedPools}
             title="Active Pools"

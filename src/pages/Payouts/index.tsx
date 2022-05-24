@@ -7,7 +7,11 @@ import { PageProps } from '../types';
 import { StatBoxList } from '../../library/StatBoxList';
 import { useSubscan } from '../../contexts/Subscan';
 import { useUi } from '../../contexts/UI';
-import { GraphWrapper, SectionWrapper } from '../../library/Graphs/Wrappers';
+import {
+  GraphWrapper,
+  SectionWrapper,
+  SectionHeaderWrapper,
+} from '../../library/Graphs/Wrappers';
 import { PageRowWrapper } from '../../Wrappers';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PayoutLine } from '../../library/Graphs/PayoutLine';
@@ -49,7 +53,7 @@ export const Payouts = (props: PageProps) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <GraphWrapper>
           <SubscanButton />
-          <div className="head">
+          <SectionHeaderWrapper padded>
             <h4>
               Payout History
               <OpenAssistantIcon page="payouts" title="Payout History" />
@@ -67,7 +71,7 @@ export const Payouts = (props: PageProps) => {
                 <span className="fiat">None</span>
               )}
             </h2>
-          </div>
+          </SectionHeaderWrapper>
           <div className="inner" ref={ref} style={{ minHeight }}>
             {!services.includes('subscan') ? (
               <StatusLabel
