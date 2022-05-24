@@ -3,7 +3,7 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { planckBnToUnit } from '../../../Utils';
-import BondedGraph from './BondedGraph';
+import BondedGraph from '../../../library/Graphs/Bonded';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
