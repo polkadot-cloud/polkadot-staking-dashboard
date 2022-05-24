@@ -68,7 +68,7 @@ export const Payouts = (props: PageProps) => {
                     .format('Do MMMM')}
                 </>
               ) : (
-                <span className="fiat">None</span>
+                'None'
               )}
             </h2>
           </SectionHeaderWrapper>
