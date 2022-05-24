@@ -17,7 +17,7 @@ export const Status = () => {
   const { openModalWith } = useModal();
 
   return (
-    <SectionWrapper style={{ height: 350 }}>
+    <SectionWrapper style={{ height: 310 }}>
       <div className="head">
         <h4>
           Status

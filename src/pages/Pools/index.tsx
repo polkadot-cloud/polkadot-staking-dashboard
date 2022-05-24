@@ -21,13 +21,14 @@ import MinJoinBondStatBox from './Stats/MinJoinBond';
 import MinCreateBondStatBox from './Stats/MinCreateBond';
 import { Status } from './Status';
 import { Roles } from './Roles';
+import { ManageBond } from './ManageBond';
 
 export const Pools = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network }: any = useApi();
   const navigate = useNavigate();
-  const { bondedPools } = usePools();
+  const { bondedPools, membership } = usePools();
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -45,13 +46,20 @@ export const Pools = (props: PageProps) => {
         <MinCreateBondStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowPrimaryWrapper hOrder={0} vOrder={0}>
+        <RowPrimaryWrapper hOrder={1} vOrder={0}>
           <Status />
         </RowPrimaryWrapper>
-        <RowSecondaryWrapper hOrder={1} vOrder={1}>
-          <Roles />
+        <RowSecondaryWrapper hOrder={0} vOrder={1}>
+          <SectionWrapper height={310}>
+            <ManageBond />
+          </SectionWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
+
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <Roles />
+      </PageRowWrapper>
+
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <h2>
