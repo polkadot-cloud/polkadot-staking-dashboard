@@ -49,7 +49,7 @@ export const ManageBond = () => {
             small
             primary
             title="-"
-            disabled={inSetup() || isSyncing}
+            disabled={!membership}
             onClick={() => console.log('TODO: Remove Funds To Pool')}
           />
           <Button
@@ -58,7 +58,7 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={inSetup() || isSyncing}
+            disabled={!membership}
             onClick={() => console.log('TODO: Manage Pool Unlocks')}
           />
         </ButtonRow>
