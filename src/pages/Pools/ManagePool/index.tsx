@@ -11,11 +11,13 @@ import { Button } from '../../../library/Button';
 import { ManageWrapper } from './Wrappers';
 
 export const ManagePool = () => {
-  const [targets, setTargets] = useState([]);
+  const [targets, setTargets] = useState({
+    nominations: [],
+  });
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
-      <SectionWrapper>
+      <SectionWrapper height={450}>
         <ManageWrapper>
           <div>
             <Roles />
@@ -41,7 +43,7 @@ export const ManagePool = () => {
             </div>
             <GenerateNominations
               batchKey="generate_pool_nominations"
-              nominations={[]}
+              nominations={targets.nominations}
               setters={[
                 {
                   set: setTargets,
