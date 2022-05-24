@@ -17,7 +17,7 @@ export const ManagePool = () => {
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
-      <SectionWrapper height={450}>
+      <SectionWrapper>
         <ManageWrapper>
           <div>
             <Roles />
