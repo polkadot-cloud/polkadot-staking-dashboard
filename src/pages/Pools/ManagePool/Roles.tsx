@@ -1,21 +1,22 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
-import { PoolAccount } from './PoolAccount';
-import { usePools } from '../../contexts/Pools';
-import { useConnect } from '../../contexts/Connect';
+import { SectionWrapper } from '../../../library/Graphs/Wrappers';
+import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
+import { PoolAccount } from '../PoolAccount';
+import { usePools } from '../../../contexts/Pools';
+import { RolesWrapper } from './Wrappers';
 
 export const Roles = () => {
-  const { activeAccount } = useConnect();
   const { membership } = usePools();
   const activePool = membership?.pool;
 
   return (
-    <SectionWrapper height={350}>
+    <SectionWrapper transparent>
       <div className="head">
-        <h2>Pool Roles</h2>
+        <h2>Manage Pool</h2>
+      </div>
+      <RolesWrapper>
         <h4>
           Root <OpenAssistantIcon page="pools" title="Joined Pool" />
         </h4>
@@ -33,7 +34,7 @@ export const Roles = () => {
           <OpenAssistantIcon page="pools" title="Joined Pool" />
         </h4>
         <PoolAccount address={activePool?.roles?.stateToggler ?? null} last />
-      </div>
+      </RolesWrapper>
     </SectionWrapper>
   );
 };

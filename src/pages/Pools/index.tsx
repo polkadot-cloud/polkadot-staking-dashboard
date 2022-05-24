@@ -20,8 +20,8 @@ import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import MinCreateBondStatBox from './Stats/MinCreateBond';
 import { Status } from './Status';
-import { Roles } from './Roles';
 import { ManageBond } from './ManageBond';
+import { ManagePool } from './ManagePool';
 
 export const Pools = (props: PageProps) => {
   const { page } = props;
@@ -55,11 +55,7 @@ export const Pools = (props: PageProps) => {
           </SectionWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
-
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <Roles />
-      </PageRowWrapper>
-
+      <ManagePool />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <h2>

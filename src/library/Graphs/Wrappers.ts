@@ -74,7 +74,8 @@ export const SectionWrapper = styled.div<any>`
     &.with-action {
       display: flex;
       flex-flow: row wrap;
-      > h2 {
+      > h2,
+      h3 {
         flex-grow: 1;
       }
     }
