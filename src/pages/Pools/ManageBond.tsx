@@ -20,7 +20,7 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const { getPoolBondOptions, isBonding: isBonding, membership } = usePools();
+  const { getPoolBondOptions, isBonding, membership } = usePools();
 
   // TODO: hook up to live data
   const total = new BN(0);

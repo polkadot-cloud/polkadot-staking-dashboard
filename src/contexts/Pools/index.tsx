@@ -16,6 +16,7 @@ const U32_OPTS = { bitLength: 32, isLe: true };
 
 export interface PoolsContextState {
   isBonding: () => any;
+  isNominator: () => any;
   getPoolBondOptions: () => any;
   membership: any;
   enabled: number;
@@ -26,6 +27,7 @@ export interface PoolsContextState {
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
     isBonding: () => false,
+    isNominator: () => false,
     getPoolBondOptions: () => defaults.poolBondOptions,
     membership: undefined,
     enabled: 0,
@@ -168,12 +170,12 @@ export const PoolsProvider = (props: any) => {
     const unsub = await api.query.nominationPools.poolMembers(
       address,
       async (result: any) => {
-        let membership = result?.unwrapOr(undefined)?.toJSON();
+        let membership = result?.unwrapOr(undefined)?.toHuman();
         if (membership) {
           let pool = await api.query.nominationPools.bondedPools(
             membership.poolId
           );
-          pool = pool?.unwrapOr(undefined)?.toJSON();
+          pool = pool?.unwrapOr(undefined)?.toHuman();
 
           // format pool's unlocking chunks
           const unbondingEras = membership.unbondingEras;
@@ -282,10 +284,22 @@ export const PoolsProvider = (props: any) => {
     return !!poolMembership?.membership;
   };
 
+  const isNominator = () => {
+    const roles = poolMembership?.membership?.pool?.roles;
+    if (!activeAccount || !roles) {
+      return false;
+    }
+
+    const result =
+      activeAccount === roles?.root || activeAccount === roles?.nominator;
+    return result;
+  };
+
   return (
     <PoolsContext.Provider
       value={{
-        isBonding: isBonding,
+        isNominator,
+        isBonding,
         getPoolBondOptions,
         membership: poolMembership?.membership,
         enabled,
