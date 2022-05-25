@@ -176,7 +176,9 @@ export const PoolsProvider = (props: any) => {
             membership.poolId
           );
           pool = pool?.unwrapOr(undefined)?.toHuman();
-
+          if (pool) {
+            pool = getPoolWithAddresses(membership.poolId, pool);
+          }
           // format pool's unlocking chunks
           const unbondingEras = membership.unbondingEras;
           const unlocking = [];
@@ -188,7 +190,9 @@ export const PoolsProvider = (props: any) => {
               value: new BN(value),
             });
           }
-
+          membership.points = membership.points
+            ? rmCommas(membership.points)
+            : '0';
           membership = { ...membership, unlocking, pool };
         }
         setPoolMembership({ membership, unsub });
@@ -197,26 +201,35 @@ export const PoolsProvider = (props: any) => {
     return unsub;
   };
 
+  const getPoolWithAddresses = (id: number, pool: any) => {
+    return {
+      ...pool,
+      id,
+      addresses: createAccounts(id),
+    };
+  };
+
   // fetch all bonded pool entries
   const fetchBondedPools = async () => {
     const _exposures = await api.query.nominationPools.bondedPools.entries();
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => {
-      const id = new BN(_keys.toHuman()[0]);
-      return {
-        ..._val.toHuman(),
-        id,
-        addresses: {
-          stash: createAccount(id, 0),
-          reward: createAccount(id, 1),
-        },
-      };
+      const id = _keys.toHuman()[0];
+      const pool = _val.toHuman();
+      return getPoolWithAddresses(id, pool);
     });
 
     setBondedPools(exposures);
   };
 
   // generates pool stash and reward accounts. assumes poolsPalletId is synced.
+  function createAccounts(poolId: number): any {
+    const poolIdBN = new BN(poolId);
+    return {
+      stash: createAccount(poolIdBN, 0),
+      reward: createAccount(poolIdBN, 1),
+    };
+  }
   const createAccount = (poolId: BN, index: number): string => {
     return api.registry
       .createType(

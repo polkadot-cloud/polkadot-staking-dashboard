@@ -15,7 +15,7 @@ export const PoolInner = (props: any) => {
   return (
     <Wrapper>
       <div>
-        <h3>{id.toNumber()}</h3>
+        <h3>{id}</h3>
         <Identicon value={addresses.stash} size={26} />
 
         {initial ? (

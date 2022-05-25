@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState } from 'react';
+import { usePools } from 'contexts/Pools';
 import { PageRowWrapper } from '../../../Wrappers';
 import {
   SectionWrapper,
@@ -17,6 +18,8 @@ export const ManagePool = () => {
   const [targets, setTargets] = useState({
     nominations: [],
   });
+
+  const { isNominator, membership } = usePools();
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -37,7 +40,6 @@ export const ManagePool = () => {
                   inline
                   primary
                   title="Nominate"
-                  disabled
                   onClick={() =>
                     console.log('TODO: Change nominations if Nominator role')
                   }

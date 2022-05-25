@@ -11,13 +11,13 @@ import { usePools } from '../../../contexts/Pools';
 import { RolesWrapper } from './Wrappers';
 
 export const Roles = () => {
-  const { membership } = usePools();
+  const { isNominator, membership } = usePools();
   const activePool = membership?.pool;
 
   return (
     <SectionWrapper transparent>
       <SectionHeaderWrapper>
-        <h2>Manage Pool</h2>
+        <h2>{isNominator() ? `Manage Pool` : `Pool`}</h2>
       </SectionHeaderWrapper>
       <RolesWrapper>
         <SectionHeaderWrapper>
