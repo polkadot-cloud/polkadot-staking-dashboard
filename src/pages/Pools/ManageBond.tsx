@@ -20,7 +20,7 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const { getPoolBondOptions, isPooling, membership } = usePools();
+  const { getPoolBondOptions, isBonding: isBonding, membership } = usePools();
 
   // TODO: hook up to live data
   const total = new BN(0);
@@ -44,7 +44,7 @@ export const ManageBond = () => {
             primary
             inline
             title="+"
-            disabled={isSyncing || !isPooling()}
+            disabled={isSyncing || !isBonding()}
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -57,7 +57,7 @@ export const ManageBond = () => {
             small
             primary
             title="-"
-            disabled={isSyncing || !isPooling()}
+            disabled={isSyncing || !isBonding()}
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -72,7 +72,7 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={isSyncing || !isPooling()}
+            disabled={isSyncing || !isBonding()}
             onClick={() => console.log('TODO: Manage Pool Unlocks')}
           />
         </ButtonRow>

@@ -15,7 +15,7 @@ const MOD_PREFIX = stringToU8a('modl');
 const U32_OPTS = { bitLength: 32, isLe: true };
 
 export interface PoolsContextState {
-  isPooling: () => any;
+  isBonding: () => any;
   getPoolBondOptions: () => any;
   membership: any;
   enabled: number;
@@ -25,7 +25,7 @@ export interface PoolsContextState {
 
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
-    isPooling: () => false,
+    isBonding: () => false,
     getPoolBondOptions: () => defaults.poolBondOptions,
     membership: undefined,
     enabled: 0,
@@ -278,14 +278,14 @@ export const PoolsProvider = (props: any) => {
     };
   };
 
-  const isPooling = () => {
+  const isBonding = () => {
     return !!poolMembership?.membership;
   };
 
   return (
     <PoolsContext.Provider
       value={{
-        isPooling,
+        isBonding: isBonding,
         getPoolBondOptions,
         membership: poolMembership?.membership,
         enabled,
