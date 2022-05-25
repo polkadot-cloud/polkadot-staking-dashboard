@@ -4,18 +4,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
-interface Props {
-  thisSection: string;
-  activeSection: string;
-}
-
-export const MotionContainer = ({
-  props,
-  children,
-}: {
-  props: Props;
-  children: ReactNode;
-}) => {
+export const MotionContainer = ({ props, children }: any) => {
   const { thisSection, activeSection } = props;
 
   // container variants
