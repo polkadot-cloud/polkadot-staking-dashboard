@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { web3FromAddress } from '@polkadot/extension-dapp';
 import { useApi } from '../../contexts/Api';
 import { useNotifications } from '../../contexts/Notifications';
 import { useExtrinsics } from '../../contexts/Extrinsics';
+import { useConnect } from '../../contexts/Connect';
 
 export const useSubmitExtrinsic = (extrinsic: any) => {
   // extract extrinsic info
@@ -14,6 +14,7 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
   const { api }: any = useApi();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
+  const { getAccount } = useConnect();
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
@@ -42,7 +43,7 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
       return;
     }
     const accountNonce = await api.rpc.system.accountNextIndex(from);
-    const injector = await web3FromAddress(from);
+    const { signer } = getAccount(from);
 
     // pre-submission state update
     setSubmitting(true);
@@ -50,7 +51,7 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
     try {
       const unsub = await tx.signAndSend(
         from,
-        { signer: injector.signer },
+        { signer },
         ({ status, nonce, events = [] }: any) => {
           // extrinsic is ready ( has been signed), add to pending
           if (status.isReady) {

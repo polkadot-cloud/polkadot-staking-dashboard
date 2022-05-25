@@ -3,7 +3,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Keyring from '@polkadot/keyring';
-import { web3AccountsSubscribe, web3Enable } from '@polkadot/extension-dapp';
+import {
+  getWalletBySource,
+  getWallets,
+  Wallet,
+} from '@talisman-connect/wallets';
 import { useApi } from './Api';
 import { localStorageOrDefault } from '../Utils';
 import { useModal } from './Modal';
@@ -124,7 +128,7 @@ export const ConnectProvider = (props: any) => {
     _setUnsubscribe(v);
   };
 
-  const [extensions, setExtensions] = useState([]);
+  const [extensions, setExtensions]: any = useState([]);
 
   // initialise extensions
   useEffect(() => {
@@ -138,10 +142,8 @@ export const ConnectProvider = (props: any) => {
 
   // give web page time to initiate extensions
   const initExtensions = async () => {
-    setTimeout(async () => {
-      const _extensions: any = await web3Enable(DAPP_NAME);
-      setExtensions(_extensions);
-    }, 200);
+    const _extensions = getWallets();
+    setExtensions(_extensions);
   };
 
   // automatic connect from active wallet
@@ -178,52 +180,53 @@ export const ConnectProvider = (props: any) => {
           _wallet = activeWallet;
         }
       }
-      // subscribe to accounts
-      const _unsubscribe = await web3AccountsSubscribe((injected) => {
-        // abort if no accounts
-        if (!injected.length) {
-          setWalletErrors(_wallet, 'No accounts');
-        } else {
-          // import addresses with correct format
-          importNetworkAddresses(injected, _wallet);
-          // set active wallet and connected status
-          setActiveWallet(_wallet);
+
+      // get wallet
+      const wallet: Wallet | undefined = getWalletBySource(_wallet);
+
+      if (wallet === undefined) {
+        throw new Error('wallet not found');
+      } else {
+        // summons extension popup
+        await wallet.enable(DAPP_NAME);
+
+        // subscribe to accounts
+        const _unsubscribe = await wallet.subscribeAccounts((injected: any) => {
+          // abort if no accounts
+          if (!injected.length) {
+            setWalletErrors(_wallet, 'No accounts');
+          } else {
+            // import addresses with correct format
+            importNetworkAddresses(injected, _wallet);
+            // set active wallet and connected status
+            setActiveWallet(_wallet);
+          }
+        });
+
+        // unsubscribe if errors exist
+        const _hasError = walletErrorsRef.current?._wallet ?? null;
+        if (_hasError !== null) {
+          disconnectFromAccount();
         }
-      });
 
-      // unsubscribe if errors exist
-      const _hasError = walletErrorsRef.current?._wallet ?? null;
-      if (_hasError !== null) {
-        disconnectFromAccount();
+        // update context state
+        setUnsubscribe(_unsubscribe);
       }
-
-      // update context state
-      setUnsubscribe(_unsubscribe);
     } catch (err) {
       // wallet not found.
       setWalletErrors(_wallet, 'Wallet not found');
     }
   };
 
-  const importNetworkAddresses = (accs: any, wallet: any) => {
-    const _accounts: any = [];
-
+  const importNetworkAddresses = (_accounts: any, wallet: any) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
-    accs.map(async (account: any, i: number) => {
+    _accounts.forEach(async (account: any) => {
       // get account address in the correct format
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;
-
-      // check source is active wallet
-      const { meta } = account;
-      const { source } = meta;
-
-      if (source === wallet) {
-        _accounts.push(account);
-      }
-      return false;
+      return account;
     });
 
     // active account is first in list if none presently persisted

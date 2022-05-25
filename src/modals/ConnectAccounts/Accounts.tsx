@@ -50,7 +50,7 @@ export const Accounts = (props: any) => {
         >
           <div>
             <Identicon value={activeAccountMeta?.address} size={26} />
-            <span className="name">&nbsp; {activeAccountMeta?.meta?.name}</span>
+            <span className="name">&nbsp; {activeAccountMeta?.name}</span>
           </div>
           <div className="danger">Disconnect </div>
         </button>
@@ -63,9 +63,7 @@ export const Accounts = (props: any) => {
       <Separator />
 
       {accounts.map((item: any, index: number) => {
-        const { address, meta } = item;
-        const { name } = meta;
-
+        const { address, name } = item;
         return (
           <button
             type="button"

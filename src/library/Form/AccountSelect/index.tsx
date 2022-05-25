@@ -15,7 +15,7 @@ import { StatusLabel } from '../../StatusLabel';
 export const AccountSelect = (props: any) => {
   const { items, onChange, placeholder, value }: any = props;
 
-  const itemToString = (item: any) => (item ? item.meta.name : '');
+  const itemToString = (item: any) => (item ? item.name : '');
 
   const [inputItems, setInputItems] = useState(items);
 
@@ -27,7 +27,7 @@ export const AccountSelect = (props: any) => {
     onInputValueChange: ({ inputValue }: any) => {
       setInputItems(
         items.filter((item: any) =>
-          item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())
+          item.name.toLowerCase().startsWith(inputValue.toLowerCase())
         )
       );
     },
@@ -90,7 +90,7 @@ const DropdownItem = ({ c, item, index }: any) => {
   const opacity = item.active ? 1 : 0.1;
 
   return (
-    <div className="wrapper" key={item.meta.name} {...itemProps}>
+    <div className="wrapper" key={item.name} {...itemProps}>
       {!item.active && (
         <StatusLabel
           status="sync_or_setup"
@@ -109,7 +109,7 @@ const DropdownItem = ({ c, item, index }: any) => {
         <div className="icon">
           <Identicon value={item.address} size={40} />
         </div>
-        <h3 style={{ color }}>{item.meta.name}</h3>
+        <h3 style={{ color }}>{item.name}</h3>
         <p>{clipAddress(item.address)}</p>
       </div>
     </div>

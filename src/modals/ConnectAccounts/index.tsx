@@ -10,13 +10,11 @@ import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
+  const { activeWallet, activeAccount, extensions }: any = useConnect();
+  let { accounts } = useConnect();
 
   const { config } = modal;
   const _section = config?.section ?? null;
-
-  const { activeWallet, activeAccount, extensions }: any = useConnect();
-
-  let { accounts } = useConnect();
 
   // active section of modal
   const [section, setSection] = useState(

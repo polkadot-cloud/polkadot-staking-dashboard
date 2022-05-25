@@ -14,7 +14,7 @@ import { convertRemToPixels } from '../../../Utils';
 export const AccountDropdown = (props: any) => {
   const { items, onChange, placeholder, value, current, height }: any = props;
 
-  const itemToString = (item: any) => (item ? item.meta.name : '');
+  const itemToString = (item: any) => (item ? item.name : '');
 
   // store input items
   const [inputItems, setInputItems] = useState(items);
@@ -27,7 +27,7 @@ export const AccountDropdown = (props: any) => {
     onInputValueChange: ({ inputValue }: any) => {
       setInputItems(
         items.filter((item: any) =>
-          item.meta.name.toLowerCase().startsWith(inputValue.toLowerCase())
+          item.name.toLowerCase().startsWith(inputValue.toLowerCase())
         )
       );
     },
@@ -48,11 +48,7 @@ export const AccountDropdown = (props: any) => {
                   size={convertRemToPixels('2rem')}
                 />
               )}
-              <input
-                className="input"
-                disabled
-                value={current?.meta?.name ?? ''}
-              />
+              <input className="input" disabled value={current?.name ?? ''} />
             </div>
             <span>
               <FontAwesomeIcon icon={faAnglesRight} />
@@ -64,11 +60,7 @@ export const AccountDropdown = (props: any) => {
                   size={convertRemToPixels('2rem')}
                 />
               )}
-              <input
-                className="input"
-                disabled
-                value={value?.meta?.name ?? '...'}
-              />
+              <input className="input" disabled value={value?.name ?? '...'} />
             </div>
           </div>
 
@@ -120,13 +112,13 @@ const DropdownItem = ({ c, item, index }: any) => {
   return (
     <div
       className="item"
-      {...c.getItemProps({ key: item.meta.name, index, item })}
+      {...c.getItemProps({ key: item.name, index, item })}
       style={{ color, border }}
     >
       <div className="icon">
         <Identicon value={item.address} size={26} />
       </div>
-      <p>{item.meta.name}</p>
+      <p>{item.name}</p>
     </div>
   );
 };

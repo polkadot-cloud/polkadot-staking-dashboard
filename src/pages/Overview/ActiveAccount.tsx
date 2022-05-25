@@ -38,7 +38,7 @@ export const ActiveAccount = () => {
               <h4>
                 {clipAddress(accountData.address)}
                 <div className="sep" />{' '}
-                <span className="addr">{accountData.meta.name}</span>
+                <span className="addr">{accountData.name}</span>
               </h4>
             </div>
             <div>

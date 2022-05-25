@@ -15,6 +15,7 @@ export const Wallets = (props: any) => {
 
   const modal = useModal();
   const {
+    extensions,
     activeWallet,
     activeAccount,
     walletErrors,
@@ -22,7 +23,6 @@ export const Wallets = (props: any) => {
     disconnectFromWallet,
   }: any = useConnect();
 
-  const { extensions } = useConnect();
   let { accounts } = useConnect();
 
   // remove active account from connect list
@@ -42,9 +42,10 @@ export const Wallets = (props: any) => {
 
   // remove active wallet from extensions list
   const activeExtension =
-    extensions.find((wallet: any) => wallet.name === activeWallet) ?? null;
+    extensions.find((wallet: any) => wallet.extensionName === activeWallet) ??
+    null;
   const extensionsList = extensions.filter(
-    (wallet: any) => wallet.name !== activeWallet
+    (wallet: any) => wallet.extensionName !== activeWallet
   );
 
   return (
@@ -77,22 +78,22 @@ export const Wallets = (props: any) => {
         <button
           type="button"
           className="item"
-          key={`wallet_${activeExtension.name}`}
+          key={`wallet_${activeExtension.extensionName}`}
           onClick={() => {
-            handleWalletConnect(activeExtension.name);
+            handleWalletConnect(activeExtension.extensionName);
           }}
         >
           <div>
-            {activeExtension.name === 'talisman' && (
+            {activeExtension.extensionName === 'talisman' && (
               <TalismanSVG width="1.5rem" height="1.5rem" />
             )}
-            {activeExtension.name === 'polkadot-js' && (
+            {activeExtension.extensionName === 'polkadot-js' && (
               <PolkadotJSSVG width="1.5rem" height="1.5rem" />
             )}
-            &nbsp; {activeExtension.name}
+            &nbsp; {activeExtension.extensionName}
           </div>
           <div className="neutral">
-            {activeWallet === activeExtension.name && 'Accounts'}
+            {activeWallet === activeExtension.extensionName && 'Accounts'}
             <FontAwesomeIcon
               icon={faChevronRight}
               transform="shrink-5"
@@ -103,6 +104,7 @@ export const Wallets = (props: any) => {
       )}
 
       {extensionsList.map((wallet: any) => {
+        const { extensionName, title } = wallet;
         const error = walletErrors[wallet.name] ?? null;
         const disabled = activeWallet !== wallet.name && activeWallet !== null;
 
@@ -110,20 +112,20 @@ export const Wallets = (props: any) => {
           <button
             type="button"
             className="item"
-            key={`wallet_${wallet.name}`}
+            key={`wallet_${extensionName}`}
             disabled={disabled}
             onClick={() => {
-              handleWalletConnect(wallet.name);
+              handleWalletConnect(extensionName);
             }}
           >
             <div>
-              {wallet.name === 'talisman' && (
+              {extensionName === 'talisman' && (
                 <TalismanSVG width="1.5rem" height="1.5rem" />
               )}
-              {wallet.name === 'polkadot-js' && (
+              {extensionName === 'polkadot-js' && (
                 <PolkadotJSSVG width="1.5rem" height="1.5rem" />
               )}
-              &nbsp; {error || wallet.name}
+              &nbsp; {error || title}
             </div>
             <div className="neutral">
               <FontAwesomeIcon
