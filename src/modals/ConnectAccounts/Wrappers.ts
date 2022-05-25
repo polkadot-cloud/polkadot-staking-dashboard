@@ -45,6 +45,7 @@ export const Wrapper = styled.div`
 
   h2 {
     margin-top: 0.5rem;
+    padding: 0 0.5rem;
     color: ${textPrimary};
   }
 
