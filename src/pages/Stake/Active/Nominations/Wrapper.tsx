@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
     flex: 1;
     display: flex;
     flex-flow: row wrap;
+    padding: 0 0.25rem;
 
     > h2 {
       flex: 1;

@@ -80,7 +80,7 @@ export const Payouts = (props: PageProps) => {
                 title="Subscan Disabled"
               />
             ) : (
-              <StatusLabel status="sync_or_setup" title="Not Yet Staking" />
+              <StatusLabel status="sync_or_setup" title="Not Staking" />
             )}
 
             <div

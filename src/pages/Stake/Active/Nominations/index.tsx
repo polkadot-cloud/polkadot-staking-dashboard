@@ -50,7 +50,11 @@ export const Nominations = () => {
           )}
         </div>
       </SectionHeaderWrapper>
-      {nominated === null || isSyncing ? (
+      {activeAccount === '' ? (
+        <div className="head">
+          <h3>Not Nominating.</h3>
+        </div>
+      ) : nominated === null || isSyncing ? (
         <div className="head">
           <h3>Syncing nominations...</h3>
         </div>
