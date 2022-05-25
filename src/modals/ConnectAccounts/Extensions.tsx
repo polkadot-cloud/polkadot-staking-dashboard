@@ -42,7 +42,7 @@ export const Extensions = forwardRef((props: any, ref: any) => {
 
         {activeExtensionMeta !== null && (
           <Extension
-            flag="Accounts"
+            flag="Disconnect"
             meta={activeExtensionMeta}
             disabled={false}
             error={false}
