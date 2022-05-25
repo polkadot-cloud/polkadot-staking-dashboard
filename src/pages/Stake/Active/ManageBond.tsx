@@ -46,7 +46,13 @@ export const ManageBond = () => {
             inline
             title="+"
             disabled={inSetup() || isSyncing}
-            onClick={() => openModalWith('UpdateBond', { fn: 'add' }, 'small')}
+            onClick={() =>
+              openModalWith(
+                'UpdateBond',
+                { fn: 'add', target: 'stake' },
+                'small'
+              )
+            }
           />
           <Button
             small
@@ -54,7 +60,11 @@ export const ManageBond = () => {
             title="-"
             disabled={inSetup() || isSyncing}
             onClick={() =>
-              openModalWith('UpdateBond', { fn: 'remove' }, 'small')
+              openModalWith(
+                'UpdateBond',
+                { fn: 'remove', target: 'stake' },
+                'small'
+              )
             }
           />
           <Button

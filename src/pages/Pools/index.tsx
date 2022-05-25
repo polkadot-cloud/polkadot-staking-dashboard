@@ -31,7 +31,7 @@ export const Pools = (props: PageProps) => {
   const { title } = page;
   const { network }: any = useApi();
   const navigate = useNavigate();
-  const { bondedPools, membership } = usePools();
+  const { bondedPools, isPooling } = usePools();
 
   // back to overview if pools are not supported on network
   useEffect(() => {
