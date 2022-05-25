@@ -14,6 +14,10 @@ export const stats = {
   minJoinBond: new BN(0),
 };
 
+export const targets = {
+  nominations: [],
+};
+
 export const poolBondOptions = {
   active: new BN(0),
   freeToBond: 0,

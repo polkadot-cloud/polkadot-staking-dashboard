@@ -8,7 +8,12 @@ import { useBalances } from 'contexts/Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
-import { rmCommas, toFixedIfNecessary, planckBnToUnit } from '../../Utils';
+import {
+  rmCommas,
+  toFixedIfNecessary,
+  planckBnToUnit,
+  localStorageOrDefault,
+} from '../../Utils';
 
 const EMPTY_H256 = new Uint8Array(32);
 const MOD_PREFIX = stringToU8a('modl');
@@ -17,22 +22,28 @@ const U32_OPTS = { bitLength: 32, isLe: true };
 export interface PoolsContextState {
   isBonding: () => any;
   isNominator: () => any;
+  getPoolBondedAccount: () => any;
   getPoolBondOptions: () => any;
+  setTargets: (targest: any) => void;
   membership: any;
   enabled: number;
   stats: any;
   bondedPools: any;
+  targets: any;
 }
 
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
     isBonding: () => false,
     isNominator: () => false,
+    getPoolBondedAccount: () => undefined,
     getPoolBondOptions: () => defaults.poolBondOptions,
+    setTargets: (targets: any) => {},
     membership: undefined,
     enabled: 0,
     stats: defaults.stats,
     bondedPools: [],
+    targets: [],
   });
 
 export const usePools = () => React.useContext(PoolsContext);
@@ -57,6 +68,9 @@ export const PoolsProvider = (props: any) => {
     membership: undefined,
     unsub: null,
   });
+
+  // store account target validators
+  const [targets, _setTargets]: any = useState(defaults.targets);
 
   // store bonded pools
   const [bondedPools, setBondedPools]: any = useState([]);
@@ -178,7 +192,20 @@ export const PoolsProvider = (props: any) => {
           pool = pool?.unwrapOr(undefined)?.toHuman();
           if (pool) {
             pool = getPoolWithAddresses(membership.poolId, pool);
+
+            const stashAddress = pool?.addresses?.stash;
+            if (stashAddress) {
+              // set pool staking targets
+              _setTargets(
+                localStorageOrDefault(
+                  `${stashAddress}_pool_targets`,
+                  defaults.targets,
+                  true
+                )
+              );
+            }
           }
+
           // format pool's unlocking chunks
           const unbondingEras = membership.unbondingEras;
           const unlocking = [];
@@ -207,6 +234,18 @@ export const PoolsProvider = (props: any) => {
       id,
       addresses: createAccounts(id),
     };
+  };
+
+  /* Sets pools target validators in storage */
+  const setTargets = (_targets: any) => {
+    const stashAddress = getPoolBondedAccount();
+    if (stashAddress) {
+      localStorage.setItem(
+        `${stashAddress}_pool_targets`,
+        JSON.stringify(_targets)
+      );
+      _setTargets(_targets);
+    }
   };
 
   // fetch all bonded pool entries
@@ -308,16 +347,23 @@ export const PoolsProvider = (props: any) => {
     return result;
   };
 
+  const getPoolBondedAccount = () => {
+    return poolMembership?.membership?.pool?.addresses?.stash;
+  };
+
   return (
     <PoolsContext.Provider
       value={{
         isNominator,
         isBonding,
+        getPoolBondedAccount,
         getPoolBondOptions,
+        setTargets,
         membership: poolMembership?.membership,
         enabled,
         stats: poolsConfig.stats,
         bondedPools,
+        targets,
       }}
     >
       {props.children}

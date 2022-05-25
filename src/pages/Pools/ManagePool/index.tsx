@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import { usePools } from 'contexts/Pools';
+import { useModal } from 'contexts/Modal';
 import { PageRowWrapper } from '../../../Wrappers';
 import {
   SectionWrapper,
@@ -15,12 +16,8 @@ import { Button } from '../../../library/Button';
 import { ManageWrapper } from './Wrappers';
 
 export const ManagePool = () => {
-  const [targets, setTargets] = useState({
-    nominations: [],
-  });
-
-  const { isNominator, membership } = usePools();
-
+  const { isNominator, membership, setTargets, targets } = usePools();
+  const { openModalWith } = useModal();
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <SectionWrapper>
@@ -40,9 +37,8 @@ export const ManagePool = () => {
                   inline
                   primary
                   title="Nominate"
-                  onClick={() =>
-                    console.log('TODO: Change nominations if Nominator role')
-                  }
+                  disabled={!isNominator()}
+                  onClick={() => openModalWith('NominatePool', {}, 'small')}
                 />
               </div>
             </SectionHeaderWrapper>
