@@ -5,13 +5,13 @@ import { useEffect } from 'react';
 import { useConnect } from '../../contexts/Connect';
 import { Separator } from './Wrapper';
 import { useModal } from '../../contexts/Modal';
-import { Wallet } from './Wallet';
+import { Extension } from './Extension';
 
-export const Wallets = (props: any) => {
+export const Extensions = (props: any) => {
   const { setSection } = props;
 
   const modal = useModal();
-  const { extensions, activeWallet, activeAccount, walletErrors }: any =
+  const { extensions, activeExtension, activeAccount, extensionErrors }: any =
     useConnect();
 
   let { accounts } = useConnect();
@@ -24,22 +24,25 @@ export const Wallets = (props: any) => {
     modal.setResize();
   }, [extensions]);
 
-  // remove active wallet from extensions list
-  const activeExtension =
-    extensions.find((wallet: any) => wallet.extensionName === activeWallet) ??
-    null;
+  // find active extension from extensions
+  const activeExtensionMeta =
+    extensions.find(
+      (extension: any) => extension.extensionName === activeExtension
+    ) ?? null;
+
+  // remove active extension from list
   const extensionsList = extensions.filter(
-    (wallet: any) => wallet.extensionName !== activeWallet
+    (extension: any) => extension.extensionName !== activeExtension
   );
 
   return (
     <>
       <h2>Select Wallet</h2>
 
-      {activeExtension !== null && (
-        <Wallet
+      {activeExtensionMeta !== null && (
+        <Extension
           flag="Accounts"
-          wallet={activeExtension}
+          meta={activeExtensionMeta}
           disabled={false}
           error={false}
           setSection={setSection}
@@ -48,22 +51,23 @@ export const Wallets = (props: any) => {
       )}
       <Separator />
 
-      {activeExtension !== null && (
-        <Wallet
+      {activeExtensionMeta !== null && (
+        <Extension
           flag="Accounts"
-          wallet={activeExtension}
+          meta={activeExtensionMeta}
           disabled={false}
           error={false}
           setSection={setSection}
         />
       )}
 
-      {extensionsList.map((wallet: any) => {
-        const error = walletErrors[wallet.name] ?? null;
-        const disabled = activeWallet !== wallet.name && activeWallet !== null;
+      {extensionsList.map((extension: any) => {
+        const error = extensionErrors[extension.name] ?? null;
+        const disabled =
+          activeExtension !== extension.name && activeExtension !== null;
         return (
-          <Wallet
-            wallet={wallet}
+          <Extension
+            meta={extension}
             disabled={disabled}
             error={error}
             setSection={setSection}

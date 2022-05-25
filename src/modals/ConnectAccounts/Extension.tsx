@@ -7,14 +7,14 @@ import { useConnect } from '../../contexts/Connect';
 import { ReactComponent as TalismanSVG } from '../../img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from '../../img/dot_icon.svg';
 
-export const Wallet = (props: any) => {
-  const { wallet, disabled, error, setSection, flag, disconnect } = props;
-  const { extensionName, title } = wallet;
-  const { activeWallet, connectToWallet, disconnectFromWallet }: any =
+export const Extension = (props: any) => {
+  const { meta, disabled, error, setSection, flag, disconnect } = props;
+  const { extensionName, title } = meta;
+  const { activeExtension, connectToWallet, disconnectFromWallet }: any =
     useConnect();
 
   const handleWalletConnect = async () => {
-    if (activeWallet !== extensionName) {
+    if (activeExtension !== extensionName) {
       await connectToWallet(extensionName);
     }
     setSection(1);

@@ -26,7 +26,7 @@ export const useBalances = () => React.useContext(BalancesContext);
 
 export const BalancesProvider = ({ children }: any) => {
   const { api, isReady, network }: any = useApi();
-  const { accounts, activeWallet }: any = useConnect();
+  const { accounts, activeExtension }: any = useConnect();
   const { units } = network;
 
   // balance accounts context state
@@ -58,7 +58,7 @@ export const BalancesProvider = ({ children }: any) => {
     return () => {
       unsubscribeAll(false);
     };
-  }, [accounts, network, isReady, activeWallet]);
+  }, [accounts, network, isReady, activeExtension]);
 
   // unsubscribe from all activeAccount subscriptions
   const unsubscribeAll = async (refetch: boolean) => {

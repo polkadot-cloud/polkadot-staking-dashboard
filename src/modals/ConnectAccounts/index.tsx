@@ -5,12 +5,12 @@ import { useState, useEffect, useRef } from 'react';
 import { Wrapper } from './Wrapper';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
-import { Wallets } from './Wallets';
+import { Extensions } from './Extensions';
 import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
-  const { activeWallet, activeAccount, extensions }: any = useConnect();
+  const { activeExtension, activeAccount, extensions }: any = useConnect();
   let { accounts } = useConnect();
 
   const { config } = modal;
@@ -32,14 +32,14 @@ export const ConnectAccounts = () => {
 
   // back to wallet section if none active
   useEffect(() => {
-    if (activeWallet === null) {
+    if (activeExtension === null) {
       setSection(0);
     }
-  }, [activeWallet]);
+  }, [activeExtension]);
 
   return (
     <Wrapper ref={heightRef}>
-      {section === 0 && <Wallets setSection={setSection} />}
+      {section === 0 && <Extensions setSection={setSection} />}
       {section === 1 && <Accounts setSection={setSection} />}
     </Wrapper>
   );
