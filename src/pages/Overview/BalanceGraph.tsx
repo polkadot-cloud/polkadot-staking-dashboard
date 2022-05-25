@@ -8,7 +8,7 @@ import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
-import { planckToUnit, fiatAmount, humanNumber } from '../../Utils';
+import { planckToUnit, humanNumber } from '../../Utils';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
@@ -30,12 +30,11 @@ export const BalanceGraph = () => {
     getBondOptions(activeAccount) || {};
 
   let { free } = balance;
-  const { miscFrozen } = balance;
 
   // get user's total free balance
   const freeBase = planckToUnit(free.toNumber(), units);
   // convert balance to fiat value
-  const freeBalance = fiatAmount(freeBase * prices.lastPrice);
+  const freeBalance = Number(freeBase * prices.lastPrice).toFixed(2);
 
   // convert to currency unit
   free = planckToUnit(free.toNumber(), units);
@@ -117,7 +116,7 @@ export const BalanceGraph = () => {
           <span className="amount">{freeBase}</span>&nbsp;{network.unit}
           <span className="fiat">
             {services.includes('binance_spot') && (
-              <>&nbsp;${humanNumber(freeBalance)}</>
+              <>&nbsp;${humanNumber(Number(freeBalance))}</>
             )}
           </span>
         </h2>

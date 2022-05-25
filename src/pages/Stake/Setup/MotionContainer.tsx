@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
 export const MotionContainer = ({ props, children }: any) => {
