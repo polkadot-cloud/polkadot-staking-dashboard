@@ -30,9 +30,10 @@ import { useModal } from '../../contexts/Modal';
 import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { useStaking } from '../../contexts/Staking';
+import { APIContextInterface } from '../../types/api';
 
 export const SideMenu = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
   const { activeAccount, accounts }: any = useConnect();

@@ -3,6 +3,7 @@
 
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import { APIContextInterface } from '../../types/api';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 
@@ -22,7 +23,7 @@ export const SessionEraContext: React.Context<SessionEraContextState> =
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
 export const SessionEraProvider = ({ children }: any) => {
-  const { isReady, api, status, consts }: any = useApi();
+  const { isReady, api, status, consts } = useApi() as APIContextInterface;
   const { expectedBlockTime } = consts;
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export const SessionEraProvider = ({ children }: any) => {
 
   // active subscription
   const subscribeToSessionProgress = async () => {
-    if (isReady) {
+    if (isReady && api !== null) {
       const unsub = await api.derive.session.progress((session: any) => {
         const _state = {
           eraLength: session.eraLength.toNumber(),

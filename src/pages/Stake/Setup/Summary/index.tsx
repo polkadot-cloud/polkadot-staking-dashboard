@@ -14,11 +14,12 @@ import { Wrapper as ButtonWrapper } from '../../../../library/Button';
 import { SummaryWrapper } from './Wrapper';
 import { humanNumber } from '../../../../Utils';
 import { useSubmitExtrinsic } from '../../../../library/Hooks/useSubmitExtrinsic';
+import { APIContextInterface } from '../../../../types/api';
 
 export const Summary = (props: any) => {
   const { section } = props;
 
-  const { api, network }: any = useApi();
+  const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { activeAccount, activeExtension } = useConnect();
   const { getSetupProgress } = useUi();
@@ -27,7 +28,7 @@ export const Summary = (props: any) => {
   const { controller, bond, nominations, payee } = setup;
 
   const txs = () => {
-    if (activeAccount === '' || activeExtension === null) {
+    if (activeAccount === '' || activeExtension === null || !api) {
       return null;
     }
     const stashToSubmit = {

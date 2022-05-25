@@ -13,11 +13,12 @@ import { Footer } from './Footer';
 import { Spacer } from '../Wrappers';
 import { MotionContainer } from './MotionContainer';
 import { planckToUnit } from '../../../Utils';
+import { APIContextInterface } from '../../../types/api';
 
 export const SetController = (props: any) => {
   const { section } = props;
 
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getBondedAccount, getAccountBalance, minReserve, isController }: any =

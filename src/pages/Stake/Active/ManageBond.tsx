@@ -13,9 +13,10 @@ import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { useModal } from '../../../contexts/Modal';
 import { useUi } from '../../../contexts/UI';
 import { SectionHeaderWrapper } from '../../../library/Graphs/Wrappers';
+import { APIContextInterface } from '../../../types/api';
 
 export const ManageBond = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();

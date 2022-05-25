@@ -11,6 +11,7 @@ import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { rmCommas, localStorageOrDefault } from '../../Utils';
 import * as defaults from './defaults';
+import { APIContextInterface } from '../../types/api';
 
 const worker = new Worker();
 
@@ -49,7 +50,8 @@ export const StakingProvider = ({ children }: any) => {
     activeExtension,
     accounts: connectAccounts,
   } = useConnect();
-  const { isReady, api, consts, status, network }: any = useApi();
+  const { isReady, api, consts, status, network } =
+    useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const {
     accounts,
@@ -138,7 +140,7 @@ export const StakingProvider = ({ children }: any) => {
    * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
-    if (!isReady || metrics.activeEra.index === 0) {
+    if (!isReady || metrics.activeEra.index === 0 || !api) {
       return;
     }
 

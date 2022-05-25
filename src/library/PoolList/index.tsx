@@ -12,9 +12,10 @@ import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 import { Pool } from '../Pool';
+import { APIContextInterface } from '../../types/api';
 
 export const PoolListInner = (props: any) => {
-  const { isReady }: any = useApi();
+  const { isReady } = useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
 
   const { setListFormat, listFormat }: any = useUi();

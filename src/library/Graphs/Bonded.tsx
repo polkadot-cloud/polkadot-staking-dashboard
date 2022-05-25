@@ -7,12 +7,13 @@ import { defaultThemes } from '../../theme/default';
 import { useApi } from '../../contexts/Api';
 import { useTheme } from '../../contexts/Themes';
 import { GraphWrapper } from './Wrappers';
+import { APIContextInterface } from '../../types/api';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const Bonded = (props: any) => {
   const { mode } = useTheme();
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
 
   const { active, unlocking, total, inactive } = props;
   let { free } = props;

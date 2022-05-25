@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
+import { APIContextInterface } from '../../types/api';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 
@@ -17,7 +18,7 @@ export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> =
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
 export const NetworkMetricsProvider = ({ children }: any) => {
-  const { isReady, api, status }: any = useApi();
+  const { isReady, api, status } = useApi() as APIContextInterface;
 
   useEffect(() => {
     if (status === 'connecting') {
@@ -40,6 +41,8 @@ export const NetworkMetricsProvider = ({ children }: any) => {
 
   // active subscription
   const subscribeToNetworkMetrics = async () => {
+    if (!api) return;
+
     if (isReady) {
       const unsub = await api.queryMulti(
         [api.query.staking.activeEra, api.query.balances.totalIssuance],

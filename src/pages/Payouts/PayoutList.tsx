@@ -19,9 +19,10 @@ import { useNetworkMetrics } from '../../contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 import { ItemWrapper } from './Wrappers';
 import { planckToUnit } from '../../Utils';
+import { APIContextInterface } from '../../types/api';
 
 export const PayoutListInner = (props: any) => {
-  const { isReady, network }: any = useApi();
+  const { isReady, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { metrics }: any = useNetworkMetrics();
 

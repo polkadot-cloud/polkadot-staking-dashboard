@@ -13,12 +13,13 @@ import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
 import { usePrices } from '../../library/Hooks/usePrices';
+import { APIContextInterface } from '../../types/api';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BalanceGraph = () => {
   const { mode } = useTheme();
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { activeAccount }: any = useConnect();
   const { getAccountBalance, getBondOptions }: any = useBalances();

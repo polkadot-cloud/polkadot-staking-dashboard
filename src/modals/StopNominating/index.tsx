@@ -15,9 +15,10 @@ import { useStaking } from '../../contexts/Staking';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
 import { Warning } from '../../library/Form/Warning';
+import { APIContextInterface } from '../../types/api';
 
 export const StopNominating = () => {
-  const { api }: any = useApi();
+  const { api } = useApi() as APIContextInterface;
   const { getControllerNotImported } = useStaking();
   const { activeAccount } = useConnect();
   const { getBondedAccount, getAccountNominations }: any = useBalances();
@@ -36,7 +37,7 @@ export const StopNominating = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!valid) {
+    if (!valid || !api) {
       return _tx;
     }
     _tx = api.tx.staking.chill();

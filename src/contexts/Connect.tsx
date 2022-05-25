@@ -12,6 +12,7 @@ import { useApi } from './Api';
 import { localStorageOrDefault } from '../Utils';
 import { useModal } from './Modal';
 import { DAPP_NAME } from '../constants';
+import { APIContextInterface } from '../types/api';
 
 export interface ConnectContextState {
   disconnectFromAccount: () => void;
@@ -49,7 +50,7 @@ export const ConnectContext: React.Context<ConnectContextState> =
 export const useConnect = () => React.useContext(ConnectContext);
 
 export const ConnectProvider = (props: any) => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { openModalWith } = useModal();
 
   const setLocalStorageActiveAccount = (addr: string) => {

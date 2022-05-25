@@ -25,11 +25,12 @@ import MinCreateBondStatBox from './Stats/MinCreateBond';
 import { Status } from './Status';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
+import { APIContextInterface } from '../../types/api';
 
 export const Pools = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
   const { bondedPools, membership } = usePools();
 

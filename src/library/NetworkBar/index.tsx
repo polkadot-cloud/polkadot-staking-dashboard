@@ -16,11 +16,11 @@ import { Status } from './Status';
 import { usePrices } from '../Hooks/usePrices';
 import { useOutsideAlerter } from '../Hooks';
 import { CONNECTION_SYMBOL_COLORS, NODE_ENDPOINTS } from '../../constants';
-import { ConnectionStatus } from '../../types/api';
+import { APIContextInterface, ConnectionStatus } from '../../types/api';
 
 export const NetworkBar = () => {
   const { services } = useUi();
-  const { status, switchNetwork, network }: any = useApi();
+  const { status, switchNetwork, network } = useApi() as APIContextInterface;
   const prices = usePrices();
 
   const [open, setOpen] = useState(false);

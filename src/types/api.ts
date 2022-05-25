@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ApiPromise } from '@polkadot/api';
+import { U8aLike } from '@polkadot/util/types';
 import { NodeEndpoint, NetworkName } from '.';
 
 export enum ConnectionStatus {
@@ -21,7 +22,7 @@ export interface APIConstants {
   maxNominatorRewardedPerValidator: number;
   maxElectingVoters: number;
   expectedBlockTime: number;
-  poolsPalletId: number;
+  poolsPalletId: U8aLike;
 }
 
 export interface APIContextInterface {

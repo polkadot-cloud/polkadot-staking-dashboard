@@ -23,9 +23,10 @@ import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominators';
 import SupplyStakedStatBox from './Stats/SupplyStaked';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
+import { APIContextInterface } from '../../types/api';
 
 export const Overview = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { activeAccount }: any = useConnect();
   const { payouts }: any = useSubscan();

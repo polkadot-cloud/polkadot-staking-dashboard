@@ -9,6 +9,7 @@ import { useBalances } from '../../../contexts/Balances';
 import { isNumeric, planckBnToUnit } from '../../../Utils';
 import { Button } from '../../Button';
 import { useStaking } from '../../../contexts/Staking';
+import { APIContextInterface } from '../../../types/api';
 
 export const BondInput = (props: any) => {
   // functional props
@@ -23,7 +24,7 @@ export const BondInput = (props: any) => {
   // whether a value has been provided already
   const _value = props.value ?? null;
 
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
