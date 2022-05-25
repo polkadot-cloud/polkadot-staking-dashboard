@@ -3,20 +3,17 @@
 
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FooterWrapper, Separator } from '../Wrappers';
+import { ContentWrapper } from './Wrapper';
 import { useModal } from '../../contexts/Modal';
 import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { ContentWrapper } from './Wrapper';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
-import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
-import { planckBnToUnit } from '../../Utils';
 
 export const Forms = (props: any) => {
   const { api, network }: any = useApi();
@@ -84,7 +81,7 @@ export const Forms = (props: any) => {
 
   return (
     <ContentWrapper>
-      <div className="items">
+      <div>
         <>
           <BondInputWithFeedback
             unbond={false}

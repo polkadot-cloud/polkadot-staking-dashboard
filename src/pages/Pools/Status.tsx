@@ -17,12 +17,13 @@ export const Status = () => {
 
   // Pool status `Stat` props
   const labelMembership = membership ? 'Active in Pool' : 'Not in a Pool';
-  const buttonsMembership = membership
+  const buttonsMembership = !membership
     ? [
         {
           title: 'Create Pool',
           small: true,
-          onClick: () => {},
+          onClick: () =>
+            openModalWith('CreatePool', { target: 'pool' }, 'small'),
         },
       ]
     : undefined;
