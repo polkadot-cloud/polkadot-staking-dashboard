@@ -13,3 +13,11 @@ export const stats = {
   minCreateBond: new BN(0),
   minJoinBond: new BN(0),
 };
+
+export const poolBondOptions = {
+  active: new BN(0),
+  freeToBond: 0,
+  freeToUnbond: 0,
+  totalUnlocking: 0,
+  totalUnlockChuncks: 0,
+};

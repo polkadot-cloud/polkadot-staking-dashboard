@@ -4,16 +4,19 @@
 import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
+import { useBalances } from 'contexts/Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
-import { rmCommas } from '../../Utils';
+import { rmCommas, toFixedIfNecessary, planckBnToUnit } from '../../Utils';
 
 const EMPTY_H256 = new Uint8Array(32);
 const MOD_PREFIX = stringToU8a('modl');
 const U32_OPTS = { bitLength: 32, isLe: true };
 
 export interface PoolsContextState {
+  isPooling: () => any;
+  getPoolBondOptions: () => any;
   membership: any;
   enabled: number;
   stats: any;
@@ -22,6 +25,8 @@ export interface PoolsContextState {
 
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
+    isPooling: () => false,
+    getPoolBondOptions: () => defaults.poolBondOptions,
     membership: undefined,
     enabled: 0,
     stats: defaults.stats,
@@ -33,10 +38,10 @@ export const usePools = () => React.useContext(PoolsContext);
 export const PoolsProvider = (props: any) => {
   const { api, network, isReady, consts }: any = useApi();
   const { poolsPalletId } = consts;
-  const { features } = network;
+  const { features, units } = network;
 
   const { activeAccount } = useConnect();
-
+  const { getAccountBalance }: any = useBalances();
   // whether pools are enabled
   const [enabled, setEnabled] = useState(0);
 
@@ -169,7 +174,20 @@ export const PoolsProvider = (props: any) => {
             membership.poolId
           );
           pool = pool?.unwrapOr(undefined)?.toJSON();
-          membership = { ...membership, pool };
+
+          // format pool's unlocking chunks
+          const unbondingEras = membership.unbondingEras;
+          const unlocking = [];
+          for (const [e, v] of Object.entries(unbondingEras || {})) {
+            const era = rmCommas(e);
+            const value = rmCommas(v);
+            unlocking.push({
+              era: Number(era),
+              value: new BN(value),
+            });
+          }
+
+          membership = { ...membership, unlocking, pool };
         }
         setPoolMembership({ membership, unsub });
       }
@@ -212,9 +230,63 @@ export const PoolsProvider = (props: any) => {
       .toString();
   };
 
+  // get the bond and unbond amounts available to the user
+  const getPoolBondOptions = () => {
+    if (!activeAccount) {
+      return defaults.poolBondOptions;
+    }
+    const { free, freeAfterReserve, miscFrozen } =
+      getAccountBalance(activeAccount);
+    const membership = poolMembership.membership;
+    const unlocking = membership?.unlocking || [];
+    const points = membership?.points;
+    let freeToUnbond = 0;
+    const active = points ? new BN(points) : new BN(0); // point to balance ratio is 1
+    if (membership) {
+      freeToUnbond = toFixedIfNecessary(planckBnToUnit(active, units), units);
+    }
+
+    // total amount actively unlocking
+    let totalUnlockingBn = new BN(0);
+    for (const u of unlocking) {
+      const { value } = u;
+      totalUnlockingBn = totalUnlockingBn.add(value);
+    }
+    const totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
+
+    // free transferrable balance that can be bonded in the pool
+    let freeToBond: any = toFixedIfNecessary(
+      planckBnToUnit(freeAfterReserve, units) -
+        planckBnToUnit(miscFrozen, units),
+      units
+    );
+    freeToBond = freeToBond < 0 ? 0 : freeToBond;
+
+    // total possible balance that can be bonded in the pool
+    const totalPossibleBond = toFixedIfNecessary(
+      planckBnToUnit(freeAfterReserve, units) - totalUnlocking,
+      units
+    );
+
+    return {
+      active,
+      freeToBond,
+      freeToUnbond,
+      totalUnlocking,
+      totalPossibleBond,
+      totalUnlockChuncks: unlocking.length,
+    };
+  };
+
+  const isPooling = () => {
+    return !!poolMembership?.membership;
+  };
+
   return (
     <PoolsContext.Provider
       value={{
+        isPooling,
+        getPoolBondOptions,
         membership: poolMembership?.membership,
         enabled,
         stats: poolsConfig.stats,

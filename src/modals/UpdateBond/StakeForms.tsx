@@ -18,7 +18,7 @@ import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
 import { planckBnToUnit } from '../../Utils';
 
-export const Forms = forwardRef((props: any, ref: any) => {
+export const StakeForms = forwardRef((props: any, ref: any) => {
   const { setSection, task } = props;
 
   const { api, network }: any = useApi();
@@ -248,4 +248,4 @@ export const Forms = forwardRef((props: any, ref: any) => {
   );
 });
 
-export default Forms;
+export default StakeForms;
