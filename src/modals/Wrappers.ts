@@ -41,6 +41,7 @@ export const ModalWrapper = styled(motion.div)`
 
 export const HeightWrapper = styled.div<any>`
   transition: height 0.6s cubic-bezier(0.1, 1, 0.2, 1);
+  box-sizing: border-box;
   width: 100%;
   max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
   max-height: 100%;
@@ -51,6 +52,7 @@ export const HeightWrapper = styled.div<any>`
 
 // Modal content wrapper
 export const ContentWrapper = styled.div<any>`
+  box-sizing: border-box;
   background: ${modalBackground};
   width: 100%;
   height: auto;

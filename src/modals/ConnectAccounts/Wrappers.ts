@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import {
   buttonPrimaryBackground,
   backgroundToggle,
@@ -11,15 +12,40 @@ import {
   textDanger,
 } from '../../theme';
 
+export const SectionsWrapper = styled(motion.div)`
+  box-sizing: border-box;
+  width: 200%;
+  display: flex;
+  flex-flow: row nowrap;
+  overflow: hidden;
+  position: relative;
+`;
+
+export const ContentWrapper = styled.div`
+  box-sizing: border-box;
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 50%;
+  height: auto;
+  padding: 0 1rem 1rem 1rem;
+`;
+
+export const PaddingWrapper = styled.div`
+  box-sizing: border-box;
+  padding: 1rem 0;
+`;
 export const Wrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
   justify-content: flex-start;
-  padding: 1rem;
+  padding: 0;
 
   h2 {
     margin-top: 0.5rem;
+    padding: 0 0.5rem;
     color: ${textPrimary};
   }
 
@@ -34,7 +60,7 @@ export const Wrapper = styled.div`
   .item {
     box-sizing: border-box;
     width: 100%;
-    margin: 0.4rem 0;
+    margin: 0.75rem 0;
     padding: 0 0.75rem;
     border-radius: 1rem;
     font-size: 1rem;

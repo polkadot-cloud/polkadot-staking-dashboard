@@ -2,21 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, useRef } from 'react';
-import { Wrapper } from './Wrapper';
+import { Wrapper, SectionsWrapper } from './Wrappers';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
-import { Wallets } from './Wallets';
+import { Extensions } from './Extensions';
 import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
-
+  const { activeExtension, activeAccount, extensions }: any = useConnect();
+  let { accounts } = useConnect();
   const { config } = modal;
   const _section = config?.section ?? null;
-
-  const { activeWallet, activeAccount, extensions }: any = useConnect();
-
-  let { accounts } = useConnect();
 
   // active section of modal
   const [section, setSection] = useState(
@@ -24,9 +21,17 @@ export const ConnectAccounts = () => {
   );
 
   // resize modal on state change
-  const heightRef: any = useRef(null);
+  const extensionsRef: any = useRef(null);
+  const accountsRef: any = useRef(null);
+
   useEffect(() => {
-    modal.setModalHeight(heightRef.current?.clientHeight ?? 'auto');
+    let _height = 0;
+    if (section === 0) {
+      _height = extensionsRef.current?.clientHeight ?? 0;
+    } else {
+      _height = accountsRef.current?.clientHeight ?? 0;
+    }
+    modal.setModalHeight(_height);
   }, [section, activeAccount, activeAccount, accounts, extensions]);
 
   // remove active account from connect list
@@ -34,15 +39,33 @@ export const ConnectAccounts = () => {
 
   // back to wallet section if none active
   useEffect(() => {
-    if (activeWallet === null) {
+    if (activeExtension === null) {
       setSection(0);
     }
-  }, [activeWallet]);
+  }, [activeExtension]);
 
   return (
-    <Wrapper ref={heightRef}>
-      {section === 0 && <Wallets setSection={setSection} />}
-      {section === 1 && <Accounts setSection={setSection} />}
+    <Wrapper>
+      <SectionsWrapper
+        animate={section === 0 ? 'home' : 'next'}
+        initial={false}
+        transition={{
+          duration: 0.5,
+          type: 'spring',
+          bounce: 0.22,
+        }}
+        variants={{
+          home: {
+            left: 0,
+          },
+          next: {
+            left: '-100%',
+          },
+        }}
+      >
+        <Extensions setSection={setSection} ref={extensionsRef} />
+        <Accounts setSection={setSection} ref={accountsRef} />
+      </SectionsWrapper>
     </Wrapper>
   );
 };

@@ -46,7 +46,7 @@ export const useStaking = () => React.useContext(StakingContext);
 export const StakingProvider = ({ children }: any) => {
   const {
     activeAccount,
-    activeWallet,
+    activeExtension,
     accounts: connectAccounts,
   } = useConnect();
   const { isReady, api, consts, status, network }: any = useApi();
@@ -295,7 +295,7 @@ export const StakingProvider = ({ children }: any) => {
    * has set a controller account.
    */
   const hasController = () => {
-    if (activeAccount === '' || activeWallet === null) {
+    if (activeAccount === '' || activeExtension === null) {
       return false;
     }
     return getBondedAccount(activeAccount) !== null;
@@ -306,7 +306,7 @@ export const StakingProvider = ({ children }: any) => {
    * has been imported.
    */
   const getControllerNotImported = (address: string) => {
-    if (address === null || activeAccount === '' || !activeWallet) {
+    if (address === null || activeAccount === '' || !activeExtension) {
       return false;
     }
     // check if controller is imported
@@ -354,7 +354,7 @@ export const StakingProvider = ({ children }: any) => {
   const inSetup = () => {
     return (
       activeAccount === '' ||
-      activeWallet === null ||
+      activeExtension === null ||
       (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
     );
   };

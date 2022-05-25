@@ -20,14 +20,14 @@ export const Summary = (props: any) => {
 
   const { api, network }: any = useApi();
   const { units } = network;
-  const { activeAccount, activeWallet } = useConnect();
+  const { activeAccount, activeExtension } = useConnect();
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
 
   const txs = () => {
-    if (activeAccount === '' || activeWallet === null) {
+    if (activeAccount === '' || activeExtension === null) {
       return null;
     }
     const stashToSubmit = {

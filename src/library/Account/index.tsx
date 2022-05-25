@@ -32,7 +32,7 @@ export const Account = (props: any) => {
   switch (format) {
     case 'name':
       if (value !== '') {
-        displayValue = getAccount(value)?.meta?.name;
+        displayValue = getAccount(value)?.name;
       } else {
         displayValue = clipAddress(value);
       }

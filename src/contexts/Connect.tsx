@@ -3,7 +3,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Keyring from '@polkadot/keyring';
-import { web3AccountsSubscribe, web3Enable } from '@polkadot/extension-dapp';
+import {
+  getWalletBySource,
+  getWallets,
+  Wallet,
+} from '@talisman-connect/wallets';
 import { useApi } from './Api';
 import { localStorageOrDefault } from '../Utils';
 import { useModal } from './Modal';
@@ -17,11 +21,11 @@ export interface ConnectContextState {
   connectToWallet: (w: string) => void;
   getAccount: (a: string) => any;
   connectToAccount: (a: any) => void;
-  activeWallet: any;
+  activeExtension: any;
   accounts: any;
   activeAccount: string;
   activeAccountMeta: any;
-  walletErrors: any;
+  extensionErrors: any;
   extensions: any;
 }
 
@@ -34,11 +38,11 @@ export const ConnectContext: React.Context<ConnectContextState> =
     connectToWallet: (w: string) => {},
     getAccount: (a: string) => {},
     connectToAccount: (a: any) => {},
-    activeWallet: null,
+    activeExtension: null,
     accounts: [],
     activeAccount: '',
     activeAccountMeta: {},
-    walletErrors: {},
+    extensionErrors: {},
     extensions: [],
   });
 
@@ -64,17 +68,17 @@ export const ConnectProvider = (props: any) => {
   };
 
   // store the currently active wallet
-  const [activeWallet, _setActiveWallet] = useState(
+  const [activeExtension, _setactiveExtension] = useState(
     localStorageOrDefault('active_wallet', null)
   );
 
-  const setActiveWallet = (wallet: any) => {
+  const setactiveExtension = (wallet: any) => {
     if (wallet === null) {
       localStorage.removeItem('active_wallet');
     } else {
       localStorage.setItem('active_wallet', wallet);
     }
-    _setActiveWallet(wallet);
+    _setactiveExtension(wallet);
   };
 
   // store the currently active account
@@ -105,15 +109,15 @@ export const ConnectProvider = (props: any) => {
   };
 
   // store wallet errors
-  const [walletErrors, _setWalletErrors] = useState({});
-  const walletErrorsRef: any = useRef(walletErrors);
+  const [extensionErrors, _setextensionErrors] = useState({});
+  const extensionErrorsRef: any = useRef(extensionErrors);
 
-  const setWalletErrors = (key: string, value: string) => {
-    const _errors: any = { ...walletErrorsRef.current };
+  const setextensionErrors = (key: string, value: string) => {
+    const _errors: any = { ...extensionErrorsRef.current };
     _errors[key] = value;
 
-    walletErrorsRef.current = _errors;
-    _setWalletErrors(_errors);
+    extensionErrorsRef.current = _errors;
+    _setextensionErrors(_errors);
   };
 
   // store unsubscribe handler for connected wallet
@@ -124,7 +128,7 @@ export const ConnectProvider = (props: any) => {
     _setUnsubscribe(v);
   };
 
-  const [extensions, setExtensions] = useState([]);
+  const [extensions, setExtensions]: any = useState([]);
 
   // initialise extensions
   useEffect(() => {
@@ -138,16 +142,14 @@ export const ConnectProvider = (props: any) => {
 
   // give web page time to initiate extensions
   const initExtensions = async () => {
-    setTimeout(async () => {
-      const _extensions: any = await web3Enable(DAPP_NAME);
-      setExtensions(_extensions);
-    }, 200);
+    const _extensions = getWallets();
+    setExtensions(_extensions);
   };
 
   // automatic connect from active wallet
   useEffect(() => {
     // only auto connect if active wallet exists in localstorage
-    if (extensions.length && activeWallet !== null) {
+    if (extensions.length && activeExtension !== null) {
       connectToWallet();
     }
   }, [extensions]);
@@ -163,67 +165,68 @@ export const ConnectProvider = (props: any) => {
     if (unsubscribeRef.current !== null) {
       await unsubscribeRef.current();
     }
-    importNetworkAddresses(accounts, activeWallet);
+    importNetworkAddresses(accounts, activeExtension);
   };
 
   const connectToWallet = async (_wallet: any = null) => {
     try {
       if (extensions.length === 0) {
-        setActiveWallet(null);
+        setactiveExtension(null);
         return;
       }
 
       if (_wallet === null) {
-        if (activeWallet !== null) {
-          _wallet = activeWallet;
+        if (activeExtension !== null) {
+          _wallet = activeExtension;
         }
       }
-      // subscribe to accounts
-      const _unsubscribe = await web3AccountsSubscribe((injected) => {
-        // abort if no accounts
-        if (!injected.length) {
-          setWalletErrors(_wallet, 'No accounts');
-        } else {
-          // import addresses with correct format
-          importNetworkAddresses(injected, _wallet);
-          // set active wallet and connected status
-          setActiveWallet(_wallet);
+
+      // get wallet
+      const wallet: Wallet | undefined = getWalletBySource(_wallet);
+
+      if (wallet === undefined) {
+        throw new Error('wallet not found');
+      } else {
+        // summons extension popup
+        await wallet.enable(DAPP_NAME);
+
+        // subscribe to accounts
+        const _unsubscribe = await wallet.subscribeAccounts((injected: any) => {
+          // abort if no accounts
+          if (!injected.length) {
+            setextensionErrors(_wallet, 'No accounts');
+          } else {
+            // import addresses with correct format
+            importNetworkAddresses(injected, _wallet);
+            // set active wallet and connected status
+            setactiveExtension(_wallet);
+          }
+        });
+
+        // unsubscribe if errors exist
+        const _hasError = extensionErrorsRef.current?._wallet ?? null;
+        if (_hasError !== null) {
+          disconnectFromAccount();
         }
-      });
 
-      // unsubscribe if errors exist
-      const _hasError = walletErrorsRef.current?._wallet ?? null;
-      if (_hasError !== null) {
-        disconnectFromAccount();
+        // update context state
+        setUnsubscribe(_unsubscribe);
       }
-
-      // update context state
-      setUnsubscribe(_unsubscribe);
     } catch (err) {
       // wallet not found.
-      setWalletErrors(_wallet, 'Wallet not found');
+      setextensionErrors(_wallet, 'Wallet not found');
     }
   };
 
-  const importNetworkAddresses = (accs: any, wallet: any) => {
-    const _accounts: any = [];
-
+  const importNetworkAddresses = (_accounts: any, wallet: any) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
-    accs.map(async (account: any, i: number) => {
+    _accounts.forEach(async (account: any) => {
       // get account address in the correct format
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;
-
-      // check source is active wallet
-      const { meta } = account;
-      const { source } = meta;
-
-      if (source === wallet) {
-        _accounts.push(account);
-      }
-      return false;
+      return account;
     });
 
     // active account is first in list if none presently persisted
@@ -255,7 +258,7 @@ export const ConnectProvider = (props: any) => {
   const disconnectFromWallet = () => {
     disconnectFromAccount();
     localStorage.removeItem('active_wallet');
-    setActiveWallet(null);
+    setactiveExtension(null);
     setAccounts([]);
     setUnsubscribe(null);
   };
@@ -267,7 +270,7 @@ export const ConnectProvider = (props: any) => {
   };
 
   const initialise = () => {
-    if (activeWallet === null || activeAccountRef.current === '') {
+    if (activeExtension === null || activeAccountRef.current === '') {
       openModalWith(
         'ConnectAccounts',
         {
@@ -276,7 +279,7 @@ export const ConnectProvider = (props: any) => {
         'small'
       );
     } else {
-      connectToWallet(activeWallet);
+      connectToWallet(activeExtension);
     }
   };
 
@@ -310,11 +313,11 @@ export const ConnectProvider = (props: any) => {
         initialise,
         getAccount,
         connectToAccount,
-        activeWallet,
+        activeExtension,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeAccountMeta: activeAccountMetaRef.current,
-        walletErrors,
+        extensionErrors,
         extensions,
       }}
     >
