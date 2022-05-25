@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/polkadot-staking-dashboard/static/css/main.7bcaafd7.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.b2d0ce25.js",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.4133abaa.js",
     "static/js/787.0a38be7b.chunk.js": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js",
     "static/media/WorkSans-VariableFont_wght.ttf": "/polkadot-staking-dashboard/static/media/WorkSans-VariableFont_wght.bb6e3e8193f32a7fc502.ttf",
     "static/js/stakers.f95fe47d.worker.js": "/polkadot-staking-dashboard/static/js/stakers.f95fe47d.worker.js",
     "static/media/westend_icon.svg": "/polkadot-staking-dashboard/static/media/westend_icon.6c9cdb56012c5151652539e07932ca45.svg",
-    "static/media/polkadot_logo.svg": "/polkadot-staking-dashboard/static/media/polkadot_logo.1debb43c9b9dc5d3934b5e64586467e9.svg",
+    "static/media/polkadot_logo.svg": "/polkadot-staking-dashboard/static/media/polkadot_logo.3672415fb852303e9822ebf07ee67a61.svg",
     "index.html": "/polkadot-staking-dashboard/index.html",
     "static/media/dot_icon.svg": "/polkadot-staking-dashboard/static/media/dot_icon.614ba2fd777d5f472430b1f9fcdb2e5b.svg",
     "static/media/polkadot_icon.svg": "/polkadot-staking-dashboard/static/media/polkadot_icon.ce6873f743b537d65e0001dc9b43a648.svg",
@@ -14,11 +14,11 @@
     "static/media/talisman_icon.svg": "/polkadot-staking-dashboard/static/media/talisman_icon.a472b7ba134a736739b6e2bef7b95f57.svg",
     "static/media/assistant.svg": "/polkadot-staking-dashboard/static/media/assistant.710ee0b66a632101a3e85de51b365ddb.svg",
     "main.7bcaafd7.css.map": "/polkadot-staking-dashboard/static/css/main.7bcaafd7.css.map",
-    "main.b2d0ce25.js.map": "/polkadot-staking-dashboard/static/js/main.b2d0ce25.js.map",
+    "main.4133abaa.js.map": "/polkadot-staking-dashboard/static/js/main.4133abaa.js.map",
     "787.0a38be7b.chunk.js.map": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7bcaafd7.css",
-    "static/js/main.b2d0ce25.js"
+    "static/js/main.4133abaa.js"
   ]
 }
