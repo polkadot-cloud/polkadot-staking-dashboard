@@ -49,7 +49,11 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> =
 export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
-export const ValidatorsProvider = ({ children }: any) => {
+export const ValidatorsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { isReady, api, network, consts } = useApi() as APIContextInterface;
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();

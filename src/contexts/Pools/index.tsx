@@ -31,7 +31,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
 
 export const usePools = () => React.useContext(PoolsContext);
 
-export const PoolsProvider = (props: any) => {
+export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { poolsPalletId } = consts;
   const { features } = network;
@@ -230,7 +230,7 @@ export const PoolsProvider = (props: any) => {
         bondedPools,
       }}
     >
-      {props.children}
+      {children}
     </PoolsContext.Provider>
   );
 };

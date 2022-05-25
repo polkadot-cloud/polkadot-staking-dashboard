@@ -49,7 +49,11 @@ export const ConnectContext: React.Context<ConnectContextState> =
 
 export const useConnect = () => React.useContext(ConnectContext);
 
-export const ConnectProvider = (props: any) => {
+export const ConnectProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { network } = useApi() as APIContextInterface;
   const { openModalWith } = useModal();
 
@@ -322,7 +326,7 @@ export const ConnectProvider = (props: any) => {
         extensions,
       }}
     >
-      {props.children}
+      {children}
     </ConnectContext.Provider>
   );
 };

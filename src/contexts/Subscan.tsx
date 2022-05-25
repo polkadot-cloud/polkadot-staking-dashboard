@@ -21,7 +21,11 @@ export const SubscanContext: React.Context<SubscanContextState> =
 
 export const useSubscan = () => React.useContext(SubscanContext);
 
-export const SubscanProvider = (props: any) => {
+export const SubscanProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { network, isReady } = useApi() as APIContextInterface;
   const { services, getServices }: any = useUi();
   const { activeAccount }: any = useConnect();
@@ -129,7 +133,7 @@ export const SubscanProvider = (props: any) => {
         payouts,
       }}
     >
-      {props.children}
+      {children}
     </SubscanContext.Provider>
   );
 };

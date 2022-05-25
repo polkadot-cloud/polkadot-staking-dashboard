@@ -1,9 +1,21 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
-export const MotionContainer = (props: any) => {
+interface Props {
+  thisSection: string;
+  activeSection: string;
+}
+
+export const MotionContainer = ({
+  props,
+  children,
+}: {
+  props: Props;
+  children: ReactNode;
+}) => {
   const { thisSection, activeSection } = props;
 
   // container variants
@@ -31,7 +43,7 @@ export const MotionContainer = (props: any) => {
         bounce: 0.2,
       }}
     >
-      {props.children}
+      {children}
     </motion.div>
   );
 };

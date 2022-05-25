@@ -17,7 +17,11 @@ export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> =
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
-export const NetworkMetricsProvider = ({ children }: any) => {
+export const NetworkMetricsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { isReady, api, status } = useApi() as APIContextInterface;
 
   useEffect(() => {

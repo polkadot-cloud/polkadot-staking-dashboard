@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { Wrapper, ContentWrapper } from './Wrappers';
 import { useSideBar } from '../../../contexts/SideBar';
 import { useOutsideAlerter } from '../../Hooks';
 
-export const SideBar = ({ children }: any) => {
+export const SideBar = ({ children }: { children: React.ReactNode }) => {
   const { closeSideBar, open } = useSideBar();
 
   const ref = useRef(null);

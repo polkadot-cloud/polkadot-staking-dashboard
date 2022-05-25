@@ -44,7 +44,11 @@ export const StakingContext: React.Context<StakingContextState> =
 
 export const useStaking = () => React.useContext(StakingContext);
 
-export const StakingProvider = ({ children }: any) => {
+export const StakingProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const {
     activeAccount,
     activeExtension,

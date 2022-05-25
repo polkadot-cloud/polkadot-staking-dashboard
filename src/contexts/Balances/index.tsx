@@ -25,7 +25,11 @@ export const BalancesContext: any = React.createContext({
 
 export const useBalances = () => React.useContext(BalancesContext);
 
-export const BalancesProvider = ({ children }: any) => {
+export const BalancesProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { api, isReady, network } = useApi() as APIContextInterface;
   const { accounts, activeExtension }: any = useConnect();
   const { units } = network;

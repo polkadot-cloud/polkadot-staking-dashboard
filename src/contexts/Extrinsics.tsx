@@ -18,7 +18,11 @@ export const ExtrinsicsContext: React.Context<ExtrinsicsContextState> =
 
 export const useExtrinsics = () => React.useContext(ExtrinsicsContext);
 
-export const ExtrinsicsProvider = (props: any) => {
+export const ExtrinsicsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [pending, _setPending] = useState([]);
   const pendingRef = useRef(pending);
 
@@ -46,7 +50,7 @@ export const ExtrinsicsProvider = (props: any) => {
         pending: pendingRef.current,
       }}
     >
-      {props.children}
+      {children}
     </ExtrinsicsContext.Provider>
   );
 };

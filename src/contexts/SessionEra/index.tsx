@@ -22,7 +22,11 @@ export const SessionEraContext: React.Context<SessionEraContextState> =
 // Using this hook in a component makes the component rerender per each new block.
 export const useSessionEra = () => React.useContext(SessionEraContext);
 
-export const SessionEraProvider = ({ children }: any) => {
+export const SessionEraProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { isReady, api, status, consts } = useApi() as APIContextInterface;
   const { expectedBlockTime } = consts;
 

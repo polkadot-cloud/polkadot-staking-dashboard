@@ -22,7 +22,11 @@ export const MessagesContext: React.Context<MessagesContextState> =
 
 export const useMessages = () => React.useContext(MessagesContext);
 
-export const MessagesProvider = (props: any) => {
+export const MessagesProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [messages, _setMessages]: any = useState([]);
 
   const setMessage = (key: string, msg: any) => {
@@ -70,7 +74,7 @@ export const MessagesProvider = (props: any) => {
         getMessage,
       }}
     >
-      {props.children}
+      {children}
     </MessagesContext.Provider>
   );
 };
