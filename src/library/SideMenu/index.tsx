@@ -130,9 +130,11 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
         >
           {sideMenuMinimised ? (
-            <PolkadotIconSVG style={{ maxHeight: '100%' }} />
+            <PolkadotIconSVG style={{ maxHeight: '100%', width: '2rem' }} />
           ) : (
-            <PolkadotLogoSVG style={{ maxHeight: '100%' }} />
+            <PolkadotLogoSVG
+              style={{ maxHeight: '100%', height: '100%', width: '6rem' }}
+            />
           )}
         </LogoWrapper>
 
