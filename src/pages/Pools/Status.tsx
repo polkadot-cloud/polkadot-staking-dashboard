@@ -27,7 +27,14 @@ export const Status = () => {
             openModalWith('CreatePool', { target: 'pool' }, 'small'),
         },
       ]
-    : undefined;
+    : [
+        {
+          title: 'Leave Pool',
+          small: true,
+          onClick: () =>
+            openModalWith('LeavePool', { target: 'pool' }, 'small'),
+        },
+      ];
 
   // Bonded in pool `Stat` props
   const labelBonded = membership

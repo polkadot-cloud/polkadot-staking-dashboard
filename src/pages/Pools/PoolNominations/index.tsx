@@ -19,11 +19,8 @@ import { usePools } from '../../../contexts/Pools';
 export const PoolNominations = () => {
   const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
-  const { poolNominations: nominations }: any = usePools();
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
-  console.log(nominations);
-  console.log(poolNominated);
   const batchKey = 'stake_nominations';
 
   return (
@@ -33,22 +30,6 @@ export const PoolNominations = () => {
           Pool Nominations
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h2>
-        <div>
-          {nominations.length ? (
-            <div>
-              <Button
-                small
-                inline
-                primary
-                title="Leave Pool"
-                disabled={isSyncing}
-                onClick={() => openModalWith('LeavePool', {}, 'small')}
-              />
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
       </SectionHeaderWrapper>
       {isSyncing ? (
         <div className="head">
