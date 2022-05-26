@@ -96,7 +96,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // fetch constants
-    const _consts = await Promise.all<Codec[]>(promises);
+    const _consts = await Promise.all(promises);
 
     // format constants
     const bondDuration = _consts[0]
