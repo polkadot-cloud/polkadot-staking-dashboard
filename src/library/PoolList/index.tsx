@@ -13,16 +13,19 @@ import { useNetworkMetrics } from '../../contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
 import { Pool } from '../Pool';
 import { APIContextInterface } from '../../types/api';
+import { usePools } from '../../contexts/Pools';
 
 export const PoolListInner = (props: any) => {
+  const { allowMoreCols, pagination, batchKey }: any = props;
+  const disableThrottle = props.disableThrottle ?? false;
+  const refetchOnListUpdate =
+    props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
+
   const { isReady } = useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
-
   const { setListFormat, listFormat }: any = useUi();
-
-  const { allowMoreCols, pagination }: any = props;
-
-  const disableThrottle = props.disableThrottle ?? false;
+  const { fetchPoolsMetaBatch }: any = usePools();
+  // ---
 
   // current page
   const [page, setPage]: any = useState(1);
@@ -35,9 +38,6 @@ export const PoolListInner = (props: any) => {
 
   // manipulated list (ordering, filtering) of pools
   const [pools, setPools]: any = useState(props.pools);
-
-  // is this the initial render
-  const [initial, setInitial] = useState(true);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -61,18 +61,26 @@ export const PoolListInner = (props: any) => {
 
   // refetch list when pool list changes
   useEffect(() => {
+    if (props.pools !== poolsDefault) {
+      setFetched(false);
+    }
     setFetched(false);
   }, [props.pools]);
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
-      setPoolsDefault(props.pools);
-      setPools(props.pools);
-      setInitial(true);
-      setFetched(true);
+      setupPoolList();
     }
   }, [isReady, fetched, metrics.activeEra.index]);
+
+  // handle pool list bootstrapping
+  const setupPoolList = () => {
+    setPoolsDefault(props.pools);
+    setPools(props.pools);
+    setFetched(true);
+    fetchPoolsMetaBatch(batchKey, props.pools, refetchOnListUpdate);
+  };
 
   // render throttle
   useEffect(() => {
@@ -133,7 +141,6 @@ export const PoolListInner = (props: any) => {
                 className="prev"
                 onClick={() => {
                   setPage(prevPage);
-                  setInitial(false);
                 }}
               >
                 Prev
@@ -143,7 +150,6 @@ export const PoolListInner = (props: any) => {
                 className="next"
                 onClick={() => {
                   setPage(nextPage);
-                  setInitial(false);
                 }}
               >
                 Next
@@ -165,24 +171,29 @@ export const PoolListInner = (props: any) => {
             },
           }}
         >
-          {listPools.map((pool: any, index: number) => (
-            <motion.div
-              className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-              key={`nomination_${index}`}
-              variants={{
-                hidden: {
-                  y: 15,
-                  opacity: 0,
-                },
-                show: {
-                  y: 0,
-                  opacity: 1,
-                },
-              }}
-            >
-              <Pool pool={pool} initial={initial} />
-            </motion.div>
-          ))}
+          {listPools.map((pool: any, index: number) => {
+            // fetch batch data by referring to default list index.
+            const batchIndex = poolsDefault.indexOf(pool);
+
+            return (
+              <motion.div
+                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                key={`nomination_${index}`}
+                variants={{
+                  hidden: {
+                    y: 15,
+                    opacity: 0,
+                  },
+                  show: {
+                    y: 0,
+                    opacity: 1,
+                  },
+                }}
+              >
+                <Pool pool={pool} batchKey={batchKey} batchIndex={batchIndex} />
+              </motion.div>
+            );
+          })}
         </motion.div>
       </List>
     </ListWrapper>

@@ -7,18 +7,33 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper } from './Wrapper';
 import Identicon from '../Identicon';
 import { clipAddress } from '../../Utils';
+import { usePools } from '../../contexts/Pools';
 
-export const PoolInner = (props: any) => {
-  const { initial, pool } = props;
+export const Pool = (props: any) => {
+  const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
+  const { meta } = usePools();
+
+  const metadata = meta[batchKey]?.metadata ?? [];
+
+  // aggregate synced status
+  const metadataSynced = metadata.length > 0 ?? false;
+
+  // display value
+  const defaultDisplay = clipAddress(addresses.stash);
+
+  // fallback to address on empty metadata string
+  let display = metadata[batchIndex] ?? defaultDisplay;
+  if (display === '') {
+    display = defaultDisplay;
+  }
 
   return (
     <Wrapper>
       <div>
         <h3>{id.toNumber()}</h3>
         <Identicon value={addresses.stash} size={26} />
-
-        {initial ? (
+        {!metadataSynced ? (
           <motion.div
             className="identity"
             initial={{ opacity: 0 }}
@@ -28,9 +43,14 @@ export const PoolInner = (props: any) => {
             <h4>{clipAddress(addresses.stash)}</h4>
           </motion.div>
         ) : (
-          <div className="identity">
-            <h4>{clipAddress(addresses.stash)}</h4>
-          </div>
+          <motion.div
+            className="identity"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h4>{display}</h4>
+          </motion.div>
         )}
 
         <div className="labels">
@@ -49,7 +69,5 @@ export const PoolInner = (props: any) => {
     </Wrapper>
   );
 };
-
-export const Pool = (props: any) => <PoolInner {...props} />;
 
 export default Pool;
