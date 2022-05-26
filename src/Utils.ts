@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { PagesConfig } from './types/index';
 
 export const clipAddress = (val: string) => {
   return `${val.substring(0, 6)}...${val.substring(
@@ -68,6 +69,13 @@ export const pageFromUri = (pathname: string) => {
   const lastUriItem = pathname.substring(pathname.lastIndexOf('/') + 1);
   const page = lastUriItem.trim() === '' ? 'overview' : lastUriItem;
   return page;
+};
+
+export const pageTitleFromUri = (pathname: string, pages: PagesConfig) => {
+  for (const page of pages) {
+    if (page.uri === pathname) return page.title;
+  }
+  return '';
 };
 
 export const isNumeric = (str: string | number) => {
