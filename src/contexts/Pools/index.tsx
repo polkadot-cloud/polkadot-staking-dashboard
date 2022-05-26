@@ -4,7 +4,7 @@
 import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
-import { useBalances } from 'contexts/Balances';
+import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -207,11 +207,11 @@ export const PoolsProvider = (props: any) => {
           }
 
           // format pool's unlocking chunks
-          const unbondingEras = membership.unbondingEras;
+          const unbondingEras: any = membership.unbondingEras;
           const unlocking = [];
           for (const [e, v] of Object.entries(unbondingEras || {})) {
-            const era = rmCommas(e);
-            const value = rmCommas(v);
+            const era = rmCommas(e as string);
+            const value = rmCommas(v as string);
             unlocking.push({
               era: Number(era),
               value: new BN(value),
@@ -262,13 +262,13 @@ export const PoolsProvider = (props: any) => {
   };
 
   // generates pool stash and reward accounts. assumes poolsPalletId is synced.
-  function createAccounts(poolId: number): any {
+  const createAccounts = (poolId: number): any => {
     const poolIdBN = new BN(poolId);
     return {
       stash: createAccount(poolIdBN, 0),
       reward: createAccount(poolIdBN, 1),
     };
-  }
+  };
   const createAccount = (poolId: BN, index: number): string => {
     return api.registry
       .createType(
