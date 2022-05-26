@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { ASSISTANT_CONFIG } from '../pages';
+import { ASSISTANT_CONFIG } from '../config/assistant';
 
 export interface AssistantContextState {
   toggle: () => void;
@@ -65,7 +65,7 @@ export class AssistantProvider extends React.Component<any, any> {
   static getDefinition = (key: string, title: string) => {
     return ASSISTANT_CONFIG.find(
       (item: any) => item.key === key
-    )?.definitions.find((item: any) => item.title === title);
+    )?.definitions?.find((item: any) => item.title === title);
   };
 
   setInnerDefinition = (meta: any) => {

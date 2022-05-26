@@ -11,7 +11,7 @@ import {
   HeightWrapper,
 } from './Wrappers';
 import { Sections } from './Sections';
-import { ASSISTANT_CONFIG } from '../../pages';
+import { ASSISTANT_CONFIG } from '../../config/assistant';
 import { pageFromUri } from '../../Utils';
 import { useOutsideAlerter } from '../Hooks';
 

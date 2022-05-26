@@ -5,7 +5,7 @@ import { useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft as faBack } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
-import { pageTitleFromUri } from '../../pages';
+import { pageTitleFromUri, pageFromUri } from '../../Utils';
 import Heading from './Heading';
 import Definition from './Items/Definition';
 import { SectionWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
@@ -14,7 +14,6 @@ import { useConnect } from '../../contexts/Connect';
 import { useAssistant } from '../../contexts/Assistant';
 import External from './Items/External';
 import Action from './Items/Action';
-import { pageFromUri } from '../../Utils';
 import { APIContextInterface } from '../../types/api';
 
 export const Sections = (props: any) => {

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { PAGES_CONFIG } from './config/pages';
 
 export const clipAddress = (val: string) => {
   return `${val.substring(0, 6)}...${val.substring(
@@ -95,4 +96,11 @@ export const localStorageOrDefault = <T>(
     val = JSON.parse(val);
   }
   return val;
+};
+
+export const pageTitleFromUri = (pathname: string) => {
+  for (const page of PAGES_CONFIG) {
+    if (page.uri === pathname) return page.title;
+  }
+  return '';
 };

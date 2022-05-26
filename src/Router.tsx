@@ -17,7 +17,7 @@ import {
   MainInterfaceWrapper,
   BodyInterfaceWrapper,
 } from './Wrappers';
-import { PAGES_CONFIG } from './pages';
+import { PAGES_CONFIG } from './config/pages';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './modals';
 import { Headers } from './library/Headers';
