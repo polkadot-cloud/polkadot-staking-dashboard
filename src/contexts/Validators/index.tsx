@@ -16,7 +16,6 @@ export interface ValidatorsContextState {
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
-  removeIndexFromBatch: (k: string, i: number) => void;
   addFavourite: (a: string) => any;
   removeFavourite: (a: string) => any;
   getMinRewardBond: (v: any) => any;
@@ -34,7 +33,6 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> =
     fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => {},
     removeValidatorMetaBatch: (k: string) => {},
     fetchValidatorPrefs: (v: any) => {},
-    removeIndexFromBatch: (k: string, i: number) => {},
     addFavourite: (a: string) => {},
     removeFavourite: (a: string) => {},
     getMinRewardBond: (v: any) => {},
@@ -546,7 +544,6 @@ export const ValidatorsProvider = ({
         fetchValidatorMetaBatch,
         removeValidatorMetaBatch,
         fetchValidatorPrefs,
-        removeIndexFromBatch,
         addFavourite,
         removeFavourite,
         getMinRewardBond,
