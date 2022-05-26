@@ -138,7 +138,7 @@ export const ASSISTANT_CONFIG = [
       {
         title: 'Your Balances',
         description: [
-          'Your balance is a total of the total amount you have staked, and the total amount you have bonded in a Pool.',
+          'Your balance represents total amount you have staked in addition to the total amount you have bonded in a Pool.',
           'Unlike your staked balance, your bonded pool balance is held and locked in the pool itself.',
         ],
       },
