@@ -10,6 +10,7 @@ import { useBalances } from '../Balances';
 import { sleep, removePercentage, rmCommas } from '../../Utils';
 import * as defaults from './defaults';
 import { APIContextInterface } from '../../types/api';
+import { usePools } from '../Pools';
 
 // context type
 export interface ValidatorsContextState {
@@ -24,6 +25,7 @@ export interface ValidatorsContextState {
   session: any;
   favourites: any;
   nominated: any;
+  poolNominated: any;
   favouritesList: any;
 }
 
@@ -41,6 +43,7 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> =
     session: [],
     favourites: [],
     nominated: [],
+    poolNominated: [],
     favouritesList: [],
   });
 
@@ -56,6 +59,9 @@ export const ValidatorsProvider = ({
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getAccountNominations }: any = useBalances();
+
+  const { poolNominations } = usePools();
+
   const { maxNominatorRewardedPerValidator } = consts;
 
   // stores the total validator entries
@@ -98,6 +104,9 @@ export const ValidatorsProvider = ({
 
   // stores the user's nominated validators as list
   const [nominated, setNominated]: any = useState(null);
+
+  // stores the nominated validators by the members pool's as list
+  const [poolNominated, setPoolNominated]: any = useState(null);
 
   // stores the user's favourites validators as list
   const [favouritesList, setFavouritesList]: any = useState(null);
@@ -157,6 +166,30 @@ export const ValidatorsProvider = ({
       setNominated(nominationsWithPrefs);
     } else {
       setNominated([]);
+    }
+  };
+
+  // fetch active account's pool nominations in validator list format
+  useEffect(() => {
+    if (isReady && poolNominations) {
+      fetchPoolNominatedList();
+    }
+  }, [isReady, poolNominations]);
+
+  const fetchPoolNominatedList = async () => {
+    // get raw nominations list
+    let n = poolNominations.targets;
+    // format to list format
+    n = n.map((item: any, index: any) => {
+      return { address: item };
+    });
+    // fetch preferences
+    const nominationsWithPrefs = await fetchValidatorPrefs(n);
+    console.log('fetching', n);
+    if (nominationsWithPrefs) {
+      setPoolNominated(nominationsWithPrefs);
+    } else {
+      setPoolNominated([]);
     }
   };
 
@@ -552,6 +585,7 @@ export const ValidatorsProvider = ({
         session: sessionValidators,
         favourites,
         nominated,
+        poolNominated,
         favouritesList,
       }}
     >

@@ -18,6 +18,11 @@ export const targets = {
   nominations: [],
 };
 
+export const poolNominations = {
+  targets: [],
+  submittedIn: 0,
+};
+
 export const poolBondOptions = {
   active: new BN(0),
   freeToBond: 0,

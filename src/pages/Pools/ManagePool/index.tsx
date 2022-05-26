@@ -11,7 +11,7 @@ import {
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
 import { Roles } from './Roles';
 import { GenerateNominations } from '../../Stake/GenerateNominations';
-import { Nominations } from '../../Stake/Active/Nominations';
+import { PoolNominations } from '../PoolNominations';
 import { Button } from '../../../library/Button';
 import { ManageWrapper } from './Wrappers';
 
@@ -56,7 +56,7 @@ export const ManagePool = () => {
                 />
               </>
             ) : (
-              <Nominations />
+              <PoolNominations />
             )}
           </div>
         </ManageWrapper>

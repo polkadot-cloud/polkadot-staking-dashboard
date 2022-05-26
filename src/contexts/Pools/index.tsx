@@ -33,6 +33,7 @@ export interface PoolsContextState {
   stats: any;
   bondedPools: any;
   targets: any;
+  poolNominations: any;
 }
 
 export const PoolsContext: React.Context<PoolsContextState> =
@@ -49,6 +50,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
     stats: defaults.stats,
     bondedPools: [],
     targets: [],
+    poolNominations: defaults.poolNominations,
   });
 
 export const usePools = () => React.useContext(PoolsContext);
@@ -72,6 +74,12 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   // stores pool membership
   const [poolMembership, setPoolMembership]: any = useState({
     membership: undefined,
+    unsub: null,
+  });
+
+  // stores pool nominations
+  const [poolNominations, setPoolNominations]: any = useState({
+    noominations: defaults.poolNominations,
     unsub: null,
   });
 
@@ -115,7 +123,14 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       unsubscribe();
     };
-  }, [network, isReady]);
+  }, [network, isReady, enabled]);
+
+  const unsubscribe = () => {
+    if (poolsConfig.unsub !== null) {
+      poolsConfig.unsub();
+    }
+    setBondedPools([]);
+  };
 
   useEffect(() => {
     if (isReady && enabled && activeAccount) {
@@ -124,7 +139,38 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       unsubscribePoolMembership();
     };
-  }, [network, isReady, activeAccount]);
+  }, [network, isReady, activeAccount, enabled]);
+
+  const unsubscribePoolMembership = () => {
+    if (poolMembership?.unsub) {
+      poolMembership.unsub();
+    }
+    setPoolMembership({
+      membership: undefined,
+      unsub: null,
+    });
+  };
+
+  // subscribe to pool nominations
+  const bondedAddress = poolMembership?.membership?.pool?.addresses?.stash;
+  useEffect(() => {
+    if (isReady && enabled && bondedAddress) {
+      subscribeToPoolNominations(bondedAddress);
+    }
+    return () => {
+      unsubscribePoolNominations();
+    };
+  }, [network, isReady, bondedAddress, enabled]);
+
+  const unsubscribePoolNominations = () => {
+    if (poolNominations?.unsub) {
+      poolNominations.unsub();
+    }
+    setPoolNominations({
+      nominations: defaults.poolNominations,
+      unsub: null,
+    });
+  };
 
   // unsubscribe from any meta batches upon network change
   useEffect(() => {
@@ -136,23 +182,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       });
     };
   }, [isReady, network]);
-
-  const unsubscribe = async () => {
-    if (poolsConfig.unsub !== null) {
-      poolsConfig.unsub();
-    }
-    setBondedPools([]);
-  };
-
-  const unsubscribePoolMembership = async () => {
-    if (poolMembership?.unsub) {
-      poolMembership.unsub();
-    }
-    setPoolMembership({
-      membership: undefined,
-      unsub: null,
-    });
-  };
 
   // subscribe to pool chain state
   const subscribeToPoolConfig = async () => {
@@ -265,6 +294,29 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return unsub;
   };
 
+  const subscribeToPoolNominations = async (poolBondAddress: string) => {
+    if (!api) return;
+    console.log(poolBondAddress);
+    const unsub = await api.query.staking.nominators(
+      poolBondAddress,
+      (nominations: any) => {
+        // set pool nominations
+        let _nominations = nominations.unwrapOr(null);
+        if (_nominations === null) {
+          _nominations = defaults.poolNominations;
+        } else {
+          _nominations = {
+            targets: _nominations.targets.toHuman(),
+            submittedIn: _nominations.submittedIn.toHuman(),
+          };
+        }
+        console.log(_nominations);
+        setPoolNominations({ nominations: _nominations, unsub });
+      }
+    );
+    return unsub;
+  };
+
   const getPoolWithAddresses = (id: number, pool: any) => {
     return {
       ...pool,
@@ -310,7 +362,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
   const createAccount = (poolId: BN, index: number): string => {
     if (!api) return '';
-
     return api.registry
       .createType(
         'AccountId32',
@@ -491,6 +542,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         meta: poolMetaBatchesRef.current,
         bondedPools,
         targets,
+        poolNominations: poolNominations.nominations,
       }}
     >
       {children}
