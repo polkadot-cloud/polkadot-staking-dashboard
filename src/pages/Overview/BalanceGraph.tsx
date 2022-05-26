@@ -89,7 +89,7 @@ export const BalanceGraph = () => {
   };
 
   // determine stats from network features
-  let _labels = ['Available', 'Staking', 'Pooling'];
+  let _labels = ['Available', 'Staking', 'In Pool'];
   let _data = zeroBalance ? [-1, -1, -1] : [graphFreeToStake, graphStaked, 0]; // TODO: inject pooling balance
   let _colors = zeroBalance
     ? [
