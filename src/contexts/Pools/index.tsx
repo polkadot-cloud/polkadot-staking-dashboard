@@ -293,7 +293,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
 
     const ids = [];
     for (const _p of p) {
-      ids.push(_p.id.toNumber());
+      ids.push(Number(_p.id));
     }
 
     // store batch ids
