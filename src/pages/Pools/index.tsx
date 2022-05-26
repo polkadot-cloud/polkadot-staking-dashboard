@@ -59,12 +59,12 @@ export const Pools = (props: PageProps) => {
           </SectionWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
-      <ManagePool />
+      {isBonding() && <ManagePool />}
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <SectionHeaderWrapper>
             <h2>
-              Pools
+              {isBonding() ? 'Pools' : 'Join a Pool'}
               <OpenAssistantIcon page="pools" title="Nomination Pools" />
             </h2>
           </SectionHeaderWrapper>
