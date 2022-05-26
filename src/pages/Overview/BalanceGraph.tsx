@@ -137,8 +137,8 @@ export const BalanceGraph = () => {
     <>
       <div className="head" style={{ paddingTop: '0' }}>
         <h4>
-          Balances
-          <OpenAssistantIcon page="overview" title="Your Balances" />
+          Balance
+          <OpenAssistantIcon page="overview" title="Your Balance" />
         </h4>
         <h2>
           <span className="amount">{freeBase}</span>&nbsp;{network.unit}
