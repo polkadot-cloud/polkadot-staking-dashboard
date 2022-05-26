@@ -15,7 +15,6 @@ import { Toggle as SideBarToggle } from './SideBar/Toggle';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
-import { usePools } from '../../contexts/Pools';
 
 export const Headers = () => {
   const { pathname } = useLocation();
@@ -24,9 +23,6 @@ export const Headers = () => {
   const { validators } = useValidators();
   const { pending } = useExtrinsics();
   const { isSyncing }: any = useUi();
-  const { membership } = usePools();
-
-  console.log(membership);
 
   let syncing = isSyncing;
 
