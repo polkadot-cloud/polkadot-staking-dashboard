@@ -51,8 +51,14 @@ export const defaultThemes: any = {
     ),
   },
   graphs: {
-    colors: [v('#d33079', '#d33079'), v('#ccc', '#555'), v('#eee', '#222')],
-    inactive: v('#ddd', '#333'),
+    colors: [
+      v('#E6007A', '#d33079'),
+      v('#ccc', '#555'),
+      v('#eee', '#222'),
+      v('#c25bc1', '#c25bc1'),
+    ],
+    inactive: v('#cfcfcf', '#1a1a1a'),
+    inactive2: v('#dadada', '#383838'),
     tooltip: v('#333', '#ddd'),
     grid: v('#eee', '#222'),
   },

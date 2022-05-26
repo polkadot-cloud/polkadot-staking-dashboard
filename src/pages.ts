@@ -136,6 +136,13 @@ export const ASSISTANT_CONFIG = [
         ],
       },
       {
+        title: 'Your Balances',
+        description: [
+          'Your balance is a total of the total amount you have staked, and the total amount you have bonded in a Pool.',
+          'Unlike your staked balance, your bonded pool balance is held and locked in the pool itself.',
+        ],
+      },
+      {
         title: 'Announcements',
         description: [
           'Real time network statistics that may affect your staking positions.',
