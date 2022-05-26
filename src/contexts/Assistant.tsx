@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { ASSISTANT_CONFIG } from '../config/assistant';
+import { Toggle } from '../types';
 import {
   AssistantContextInterface,
   AssistantDefinition,
@@ -19,7 +20,7 @@ interface Props {
 }
 
 interface State {
-  open: number;
+  open: Toggle;
   page: string;
   innerDefinition: AssistantDefinition;
   activeSection: number;
@@ -31,7 +32,7 @@ export class AssistantProvider extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      open: 0,
+      open: Toggle.Closed,
       page: 'overview',
       innerDefinition: {
         title: '',
@@ -63,23 +64,22 @@ export class AssistantProvider extends React.Component<Props, State> {
 
   toggle = () => {
     const { open } = this.state;
-    const _open = open === 1 ? 0 : 1;
     this.setState({
-      open: _open,
+      open: open === Toggle.Closed ? Toggle.Open : Toggle.Closed,
       transition: 0,
     });
   };
 
   openAssistant = () => {
     this.setState({
-      open: 1,
+      open: Toggle.Open,
       transition: 0,
     });
   };
 
   closeAssistant = () => {
     this.setState({
-      open: 0,
+      open: Toggle.Closed,
       transition: 0,
     });
 

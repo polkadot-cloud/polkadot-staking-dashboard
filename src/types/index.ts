@@ -10,6 +10,11 @@ export enum NetworkName {
   Westend = 'westend',
 }
 
+export enum Toggle {
+  Open = 'open',
+  Closed = 'closed',
+}
+
 export interface NodeEndpoint {
   name: string;
   endpoint: string;

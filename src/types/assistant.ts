@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { Toggle } from '.';
+
 export enum ConnectionStatus {
   Connecting = 'connecting',
   Connected = 'connected',
@@ -40,7 +42,7 @@ export interface AssistantContextInterface {
   goToDefinition: (k: string, t: string) => void;
   setAssistantHeight: (v: number) => void;
   activeSection: number;
-  open: number;
+  open: Toggle;
   page: string;
   innerDefinition: AssistantDefinition;
   height: number;

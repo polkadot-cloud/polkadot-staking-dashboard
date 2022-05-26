@@ -18,6 +18,7 @@ import {
   AssistantContextInterface,
   AssistantItem,
 } from '../../types/assistant';
+import { Toggle } from '../../types';
 
 export const Assistant = () => {
   const assistant = useAssistant() as AssistantContextInterface;
@@ -52,7 +53,8 @@ export const Assistant = () => {
   useEffect(() => setPageOnPathname(), [setPageOnPathname]);
 
   // animate assistant container default
-  const animateContainer = assistant.open ? 'visible' : 'hidden';
+  const animateContainer =
+    assistant.open === Toggle.Open ? 'visible' : 'hidden';
 
   // animate assistant container default
   const animateSections = assistant.activeSection === 0 ? 'home' : 'item';
