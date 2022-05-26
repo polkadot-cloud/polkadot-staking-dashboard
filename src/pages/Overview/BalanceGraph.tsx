@@ -14,13 +14,14 @@ import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
 import { usePrices } from '../../library/Hooks/usePrices';
 import { APIContextInterface } from '../../types/api';
+import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BalanceGraph = () => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
-  const { units } = network;
+  const { units, features } = network;
   const { activeAccount }: any = useConnect();
   const { getAccountBalance, getBondOptions }: any = useBalances();
   const balance = getAccountBalance(activeAccount);
@@ -87,31 +88,58 @@ export const BalanceGraph = () => {
     cutout: '75%',
   };
 
+  // determine stats from network features
+  let _labels = ['Available', 'Staking', 'In Pool'];
+  let _data = zeroBalance ? [-1, -1, -1] : [graphFreeToStake, graphStaked, 0]; // TODO: inject pooling balance
+  let _colors = zeroBalance
+    ? [
+        defaultThemes.graphs.colors[2][mode],
+        defaultThemes.graphs.inactive2[mode],
+        defaultThemes.graphs.inactive[mode],
+      ]
+    : [
+        defaultThemes.graphs.colors[2][mode],
+        defaultThemes.graphs.colors[0][mode],
+        defaultThemes.graphs.colors[3][mode],
+      ];
+  _data = features.pools ? _data : _data.slice(0, 2);
+  _colors = features.pools ? _colors : _colors.slice(0, 2);
+  _labels = features.pools ? _labels : _labels.slice(0, 2);
+
+  // default to a greyscale 50/50 donut on zero balance
+  let dataSet;
+  if (zeroBalance) {
+    dataSet = {
+      label: network.unit,
+      data: _data,
+      backgroundColor: _colors,
+      borderWidth: 0,
+    };
+  } else {
+    dataSet = {
+      label: network.unit,
+      data: _data,
+      backgroundColor: _colors,
+      borderWidth: 0,
+    };
+  }
+
   const data = {
-    labels: ['Available', 'Staking'],
-    datasets: [
-      {
-        label: network.unit,
-        data: [graphFreeToStake, graphStaked],
-        backgroundColor: [
-          defaultThemes.graphs.colors[2][mode],
-          zeroBalance
-            ? defaultThemes.graphs.inactive[mode]
-            : defaultThemes.graphs.colors[0][mode],
-        ],
-        borderWidth: 0,
-      },
-    ],
+    labels: _labels,
+    datasets: [dataSet],
   };
 
   const ref: any = React.useRef();
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 252);
+  const { width, height, minHeight } = formatSize(size, 253);
 
   return (
     <>
       <div className="head" style={{ paddingTop: '0' }}>
-        <h4>Balance</h4>
+        <h4>
+          Balance
+          <OpenAssistantIcon page="overview" title="Your Balance" />
+        </h4>
         <h2>
           <span className="amount">{freeBase}</span>&nbsp;{network.unit}
           <span className="fiat">
