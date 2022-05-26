@@ -14,9 +14,13 @@ import { Sections } from './Sections';
 import { ASSISTANT_CONFIG } from '../../config/assistant';
 import { pageFromUri } from '../../Utils';
 import { useOutsideAlerter } from '../Hooks';
+import {
+  AssistantContextInterface,
+  AssistantItem,
+} from '../../types/assistant';
 
 export const Assistant = () => {
-  const assistant = useAssistant();
+  const assistant = useAssistant() as AssistantContextInterface;
   const { pathname } = useLocation();
 
   // container variants
@@ -55,7 +59,7 @@ export const Assistant = () => {
 
   // get page meta from active page
   const pageMeta = Object.values(ASSISTANT_CONFIG).find(
-    (item: any) => item.key === assistant.page
+    (item: AssistantItem) => item.key === assistant.page
   );
 
   const ref = useRef(null);
@@ -63,7 +67,7 @@ export const Assistant = () => {
   useOutsideAlerter(
     ref,
     () => {
-      assistant.closeAssistant(pageFromUri(pathname));
+      assistant.closeAssistant();
     },
     ['ignore-assistant-outside-alerter']
   );

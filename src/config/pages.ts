@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import * as React from 'react';
 import {
   faUserFriends,
   faServer,
@@ -12,7 +11,6 @@ import {
   faComment,
   faBraille,
 } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import Overview from '../pages/Overview';
 import Stake from '../pages/Stake';
 import Pools from '../pages/Pools';
@@ -22,12 +20,7 @@ import Payouts from '../pages/Payouts';
 import Projects from '../pages/explore/Projects';
 import Feedback from '../pages/explore/Feedback';
 import { URI_PREFIX } from '../constants';
-import { PageProps } from '../pages/types';
-
-type PageCategories = Array<{
-  _id: number;
-  title: string;
-}>;
+import { PageCategories, PagesConfig } from '../types';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
@@ -51,15 +44,6 @@ export const PAGE_CATEGORIES: PageCategories = [
     title: 'Feedback',
   },
 ];
-
-type PagesConfig = Array<{
-  category: number;
-  title: string;
-  uri: string;
-  hash: string;
-  Entry: (props: PageProps) => React.ReactNode;
-  icon: IconDefinition;
-}>;
 
 export const PAGES_CONFIG: PagesConfig = [
   {

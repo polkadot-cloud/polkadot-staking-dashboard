@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { PAGES_CONFIG } from './config/pages';
+import { PagesConfig } from './types/index';
 
 export const clipAddress = (val: string) => {
   return `${val.substring(0, 6)}...${val.substring(
@@ -71,6 +71,13 @@ export const pageFromUri = (pathname: string) => {
   return page;
 };
 
+export const pageTitleFromUri = (pathname: string, pages: PagesConfig) => {
+  for (const page of pages) {
+    if (page.uri === pathname) return page.title;
+  }
+  return '';
+};
+
 export const isNumeric = (str: string | number) => {
   return !Number.isNaN(str) && !Number.isNaN(parseFloat(String(str)));
 };
@@ -96,11 +103,4 @@ export const localStorageOrDefault = <T>(
     val = JSON.parse(val);
   }
   return val;
-};
-
-export const pageTitleFromUri = (pathname: string) => {
-  for (const page of PAGES_CONFIG) {
-    if (page.uri === pathname) return page.title;
-  }
-  return '';
 };

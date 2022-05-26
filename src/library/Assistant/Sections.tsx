@@ -5,7 +5,8 @@ import { useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft as faBack } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
-import { pageTitleFromUri, pageFromUri } from '../../Utils';
+import { PAGES_CONFIG } from '../../config/pages';
+import { pageTitleFromUri } from '../../Utils';
 import Heading from './Heading';
 import Definition from './Items/Definition';
 import { SectionWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
@@ -15,6 +16,10 @@ import { useAssistant } from '../../contexts/Assistant';
 import External from './Items/External';
 import Action from './Items/Action';
 import { APIContextInterface } from '../../types/api';
+import {
+  AssistantContextInterface,
+  AssistantDefinition,
+} from '../../types/assistant';
 
 export const Sections = (props: any) => {
   const { network } = useApi() as APIContextInterface;
@@ -22,7 +27,7 @@ export const Sections = (props: any) => {
 
   const { initialise, activeAccount }: any = useConnect();
   const { pathname } = useLocation();
-  const assistant = useAssistant();
+  const assistant = useAssistant() as AssistantContextInterface;
 
   // connect handler
   const connectOnClick = () => {
@@ -41,16 +46,7 @@ export const Sections = (props: any) => {
   const flexWidths = [66, 34, 100, 50, 50];
 
   // get definition
-  const _innerDefinition = assistant.innerDefinition;
-  const innerDefinition = {
-    title: '',
-    description: [],
-  };
-
-  if (_innerDefinition.title !== undefined) {
-    innerDefinition.title = _innerDefinition.title;
-    innerDefinition.description = _innerDefinition.description;
-  }
+  const innerDefinition: AssistantDefinition = assistant.innerDefinition;
 
   const homeRef: any = useRef(null);
   const itemRef: any = useRef(null);
@@ -71,13 +67,13 @@ export const Sections = (props: any) => {
       >
         <HeaderWrapper>
           <div className="hold">
-            <h3>{pageTitleFromUri(pathname)} Resources</h3>
+            <h3>{pageTitleFromUri(pathname, PAGES_CONFIG)} Resources</h3>
             <span>
               <button
                 type="button"
                 className="close"
                 onClick={() => {
-                  assistant.closeAssistant(pageFromUri(pathname));
+                  assistant.closeAssistant();
                 }}
               >
                 Close
@@ -160,7 +156,7 @@ export const Sections = (props: any) => {
                 type="button"
                 className="close"
                 onClick={() => {
-                  assistant.closeAssistant(pageFromUri(pathname));
+                  assistant.closeAssistant();
                 }}
               >
                 Close
@@ -169,8 +165,8 @@ export const Sections = (props: any) => {
           </div>
         </HeaderWrapper>
         <ListWrapper>
-          <h2>{innerDefinition.title}</h2>
-          {innerDefinition.description.map((item, index) => (
+          <h2>{innerDefinition?.title}</h2>
+          {innerDefinition?.description.map((item, index) => (
             <p key={`inner_def_${index}`} className="definition">
               {item}
             </p>
