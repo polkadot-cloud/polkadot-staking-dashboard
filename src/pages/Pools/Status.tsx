@@ -8,9 +8,10 @@ import { usePools } from '../../contexts/Pools';
 import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
 import { Stat } from '../../library/Stat';
+import { APIContextInterface } from '../../types/api';
 
 export const Status = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { membership } = usePools();
   const { openModalWith } = useModal();

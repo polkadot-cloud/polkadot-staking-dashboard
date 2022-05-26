@@ -8,9 +8,10 @@ import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { ValidatorList } from '../../library/ValidatorList';
 import { PageTitle } from '../../library/PageTitle';
 import { PageRowWrapper } from '../../Wrappers';
+import { APIContextInterface } from '../../types/api';
 
 export const Favourites = (props: PageProps) => {
-  const { isReady }: any = useApi();
+  const { isReady } = useApi() as APIContextInterface;
   const { page } = props;
   const { title } = page;
   const { favouritesList } = useValidators();

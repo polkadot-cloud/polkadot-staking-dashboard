@@ -18,9 +18,10 @@ import { PAYEE_STATUS } from '../../../constants';
 import { useUi } from '../../../contexts/UI';
 import { useApi } from '../../../contexts/Api';
 import Stat from '../../../library/Stat';
+import { APIContextInterface } from '../../../types/api';
 
 export const Status = () => {
-  const { isReady }: any = useApi();
+  const { isReady } = useApi() as APIContextInterface;
   const { setOnSetup }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();

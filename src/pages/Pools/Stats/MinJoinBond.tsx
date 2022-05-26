@@ -5,9 +5,10 @@ import { usePools } from '../../../contexts/Pools';
 import { Number } from '../../../library/StatBoxList/Number';
 import { planckBnToUnit } from '../../../Utils';
 import { useApi } from '../../../contexts/Api';
+import { APIContextInterface } from '../../../types/api';
 
 const MinJoinBondStatBox = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { stats } = usePools();
 

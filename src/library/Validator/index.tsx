@@ -21,9 +21,10 @@ import { useModal } from '../../contexts/Modal';
 import { useValidators } from '../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
 import { useNotifications } from '../../contexts/Notifications';
+import { APIContextInterface } from '../../types/api';
 
 export const ValidatorInner = (props: any) => {
-  const { consts, network }: any = useApi();
+  const { consts, network } = useApi() as APIContextInterface;
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
   const { favourites, addFavourite, removeFavourite, meta } = useValidators();

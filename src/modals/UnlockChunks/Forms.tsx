@@ -17,10 +17,11 @@ import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
 import { planckBnToUnit } from '../../Utils';
+import { APIContextInterface } from '../../types/api';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
-    const { api, network }: any = useApi();
+    const { api, network } = useApi() as APIContextInterface;
     const { activeAccount } = useConnect();
     const { getControllerNotImported, staking } = useStaking();
     const { setStatus: setModalStatus }: any = useModal();
@@ -42,7 +43,7 @@ export const Forms = forwardRef(
     // tx to submit
     const tx = () => {
       let _tx = null;
-      if (!valid) {
+      if (!valid || !api) {
         return _tx;
       }
       if (task === 'rebond') {

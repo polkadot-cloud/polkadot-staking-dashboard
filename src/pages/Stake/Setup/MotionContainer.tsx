@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 
-export const MotionContainer = (props: any) => {
+export const MotionContainer = ({ props, children }: any) => {
   const { thisSection, activeSection } = props;
 
   // container variants
@@ -31,7 +31,7 @@ export const MotionContainer = (props: any) => {
         bounce: 0.2,
       }}
     >
-      {props.children}
+      {children}
     </motion.div>
   );
 };

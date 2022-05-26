@@ -17,6 +17,7 @@ import { useApi } from '../../contexts/Api';
 import { getGradient } from './Utils';
 import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
+import { APIContextInterface } from '../../types/api';
 
 ChartJS.register(
   CategoryScale,
@@ -30,7 +31,7 @@ ChartJS.register(
 
 export const PayoutLine = (props: any) => {
   const { mode } = useTheme();
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { payouts, height, background } = props;
 

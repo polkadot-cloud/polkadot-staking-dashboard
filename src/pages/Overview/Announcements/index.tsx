@@ -16,10 +16,11 @@ import {
 } from '../../../library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from '../../../library/Loaders/Announcement';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
+import { APIContextInterface } from '../../../types/api';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { staking }: any = useStaking();
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;

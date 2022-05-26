@@ -5,7 +5,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
-import { SunnyOutline, Moon, LogoGithub, Cog } from 'react-ionicons';
 import throttle from 'lodash.throttle';
 import { Wrapper, LogoWrapper } from './Wrapper';
 import Heading from './Heading';
@@ -14,6 +13,11 @@ import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../pages';
 import { useConnect } from '../../contexts/Connect';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from '../../img/polkadot_icon.svg';
+import { ReactComponent as CogOutlineSVG } from '../../img/cog-outline.svg';
+import { ReactComponent as LogoGithubSVG } from '../../img/logo-github.svg';
+import { ReactComponent as MoonOutlineSVG } from '../../img/moon-outline.svg';
+import { ReactComponent as SunnyOutlineSVG } from '../../img/sunny-outline.svg';
+
 import {
   URI_PREFIX,
   POLKADOT_URL,
@@ -26,9 +30,10 @@ import { useModal } from '../../contexts/Modal';
 import { useApi } from '../../contexts/Api';
 import { useBalances } from '../../contexts/Balances';
 import { useStaking } from '../../contexts/Staking';
+import { APIContextInterface } from '../../types/api';
 
 export const SideMenu = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
   const { activeAccount, accounts }: any = useConnect();
@@ -174,19 +179,19 @@ export const SideMenu = () => {
             )
           }
         >
-          <LogoGithub width="1.45rem" height="1.45rem" />
+          <LogoGithubSVG width="1.45rem" height="1.45rem" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('Settings', {}, 'small')}
         >
-          <Cog width="1.65rem" height="1.65rem" />
+          <CogOutlineSVG width="1.65rem" height="1.65rem" />
         </button>
         <button type="button" onClick={() => toggleTheme()}>
           {mode === 'light' ? (
-            <SunnyOutline width="1.65rem" height="1.65rem" />
+            <SunnyOutlineSVG width="1.65rem" height="1.65rem" />
           ) : (
-            <Moon width="1.45rem" height="1.45rem" />
+            <MoonOutlineSVG width="1.45rem" height="1.45rem" />
           )}
         </button>
         <button

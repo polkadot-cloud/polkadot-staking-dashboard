@@ -14,6 +14,7 @@ import {
   planckBnToUnit,
   localStorageOrDefault,
 } from '../../Utils';
+import { APIContextInterface } from '../../types/api';
 
 const EMPTY_H256 = new Uint8Array(32);
 const MOD_PREFIX = stringToU8a('modl');
@@ -48,8 +49,8 @@ export const PoolsContext: React.Context<PoolsContextState> =
 
 export const usePools = () => React.useContext(PoolsContext);
 
-export const PoolsProvider = (props: any) => {
-  const { api, network, isReady, consts }: any = useApi();
+export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
+  const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { poolsPalletId } = consts;
   const { features, units } = network;
 
@@ -123,6 +124,8 @@ export const PoolsProvider = (props: any) => {
 
   // subscribe to pool chain state
   const subscribeToPoolConfig = async () => {
+    if (!api) return;
+
     const unsub = await api.queryMulti(
       [
         api.query.nominationPools.counterForPoolMembers,
@@ -181,12 +184,14 @@ export const PoolsProvider = (props: any) => {
 
   // subscribe to accounts membership
   const subscribeToPoolMembership = async (address: string) => {
+    if (!api) return;
+
     const unsub = await api.query.nominationPools.poolMembers(
       address,
       async (result: any) => {
         let membership = result?.unwrapOr(undefined)?.toHuman();
         if (membership) {
-          let pool = await api.query.nominationPools.bondedPools(
+          let pool: any = await api.query.nominationPools.bondedPools(
             membership.poolId
           );
           pool = pool?.unwrapOr(undefined)?.toHuman();
@@ -250,6 +255,8 @@ export const PoolsProvider = (props: any) => {
 
   // fetch all bonded pool entries
   const fetchBondedPools = async () => {
+    if (!api) return;
+
     const _exposures = await api.query.nominationPools.bondedPools.entries();
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => {
@@ -270,6 +277,8 @@ export const PoolsProvider = (props: any) => {
     };
   };
   const createAccount = (poolId: BN, index: number): string => {
+    if (!api) return '';
+
     return api.registry
       .createType(
         'AccountId32',
@@ -366,7 +375,7 @@ export const PoolsProvider = (props: any) => {
         targets,
       }}
     >
-      {props.children}
+      {children}
     </PoolsContext.Provider>
   );
 };

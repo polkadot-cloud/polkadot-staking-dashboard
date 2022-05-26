@@ -6,9 +6,10 @@ import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
 import { useNetworkMetrics } from '../../../contexts/Network';
 import { Pie } from '../../../library/StatBoxList/Pie';
+import { APIContextInterface } from '../../../types/api';
 
 export const SupplyStakedStatBox = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { metrics }: any = useNetworkMetrics();
   const { totalIssuance } = metrics;

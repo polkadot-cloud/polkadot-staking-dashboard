@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { stringToU8a } from '@polkadot/util';
 import { APIConstants } from '../../types/api';
 
 export const consts: APIConstants = {
@@ -10,5 +11,5 @@ export const consts: APIConstants = {
   maxNominatorRewardedPerValidator: 0,
   maxElectingVoters: 0,
   expectedBlockTime: 0,
-  poolsPalletId: 0,
+  poolsPalletId: stringToU8a('0'),
 };

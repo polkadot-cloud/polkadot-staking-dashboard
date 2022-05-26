@@ -15,9 +15,10 @@ import { useAssistant } from '../../contexts/Assistant';
 import External from './Items/External';
 import Action from './Items/Action';
 import { pageFromUri } from '../../Utils';
+import { APIContextInterface } from '../../types/api';
 
 export const Sections = (props: any) => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { pageMeta } = props;
 
   const { initialise, activeAccount }: any = useConnect();

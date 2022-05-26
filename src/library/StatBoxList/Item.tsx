@@ -1,12 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import React from 'react';
 import { StatBoxWrapper } from './Wrapper';
 import { Pie } from './Pie';
 import { Number } from './Number';
 import { Text } from './Text';
 
-export const StatBox = ({ children }: any) => {
+export const StatBox = ({ children }: { children: React.ReactNode }) => {
   return (
     <StatBoxWrapper
       whileHover={{ scale: 1.02 }}
