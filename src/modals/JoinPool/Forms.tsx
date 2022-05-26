@@ -17,7 +17,8 @@ import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 export const Forms = (props: any) => {
   const { api, network }: any = useApi();
   const { units } = network;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus, config }: any = useModal();
+  const { id: poolId } = config;
   const { activeAccount } = useConnect();
 
   const { getBondOptions }: any = useBalances();
@@ -38,12 +39,7 @@ export const Forms = (props: any) => {
 
     // remove decimal errors
     const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
-    _tx = api.tx.nominationPools.create(
-      bondToSubmit,
-      activeAccount,
-      activeAccount,
-      activeAccount
-    );
+    _tx = api.tx.nominationPools.join(bondToSubmit, poolId);
 
     return _tx;
   };

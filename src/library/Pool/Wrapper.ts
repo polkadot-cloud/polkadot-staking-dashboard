@@ -57,7 +57,7 @@ export const Wrapper = styled(motion.div)<any>`
       justify-content: flex-end;
       align-items: center;
       flex-grow: 1;
-
+      flex-flow: row nowrap;
       .label {
         margin-left: 0.5rem;
         color: ${textSecondary};
