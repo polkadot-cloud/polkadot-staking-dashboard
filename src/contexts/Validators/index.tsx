@@ -16,7 +16,6 @@ export interface ValidatorsContextState {
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
   removeValidatorMetaBatch: (k: string) => void;
   fetchValidatorPrefs: (v: any) => any;
-  removeIndexFromBatch: (k: string, i: number) => void;
   addFavourite: (a: string) => any;
   removeFavourite: (a: string) => any;
   getMinRewardBond: (v: any) => any;
@@ -34,7 +33,6 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> =
     fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => {},
     removeValidatorMetaBatch: (k: string) => {},
     fetchValidatorPrefs: (v: any) => {},
-    removeIndexFromBatch: (k: string, i: number) => {},
     addFavourite: (a: string) => {},
     removeFavourite: (a: string) => {},
     getMinRewardBond: (v: any) => {},
@@ -73,7 +71,6 @@ export const ValidatorsProvider = ({
 
   // stores the meta data batches for validator lists
   const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({});
-
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
   const setValidatorMetaBatch = (val: any) => {
     validatorMetaBatchesRef.current = val;
@@ -82,7 +79,6 @@ export const ValidatorsProvider = ({
 
   // stores the meta batch subscriptions for validator lists
   const [validatorSubs, _setValidatorSubs]: any = useState({});
-
   const validatorSubsRef = useRef(validatorSubs);
   const setValidatorSubs = (val: any) => {
     validatorSubsRef.current = val;
@@ -493,19 +489,6 @@ export const ValidatorsProvider = ({
     }
   };
 
-  const removeIndexFromBatch = (key: string, index: number) => {
-    const batchesUpdated = Object.assign(validatorMetaBatchesRef.current, {});
-    batchesUpdated[key].addresses.splice(index, 1);
-
-    if (batchesUpdated[key].stake !== undefined) {
-      batchesUpdated[key].identities.splice(index, 1);
-    }
-    if (batchesUpdated[key].stake !== undefined) {
-      batchesUpdated[key].stake.splice(index, 1);
-    }
-    setValidatorMetaBatch({ ...batchesUpdated });
-  };
-
   /*
    * Adds a favourite validator.
    */
@@ -561,7 +544,6 @@ export const ValidatorsProvider = ({
         fetchValidatorMetaBatch,
         removeValidatorMetaBatch,
         fetchValidatorPrefs,
-        removeIndexFromBatch,
         addFavourite,
         removeFavourite,
         getMinRewardBond,
