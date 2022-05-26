@@ -116,15 +116,15 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
 
     const maxElectingVoters = _consts[4]
-      ? Number(_consts[2].toString())
+      ? Number(_consts[4].toString())
       : MAX_ELECTING_VOTERS;
 
     const expectedBlockTime = _consts[5]
-      ? Number(_consts[2].toString())
+      ? Number(_consts[5].toString())
       : EXPECTED_BLOCK_TIME;
 
     const poolsPalletId = _consts[6]
-      ? stringToU8a(_consts[2].toString())
+      ? stringToU8a(_consts[6].toString())
       : stringToU8a('0');
 
     setApi(_api);
