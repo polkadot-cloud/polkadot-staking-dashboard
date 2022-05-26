@@ -55,7 +55,7 @@ export const defaultThemes: any = {
       v('#E6007A', '#d33079'),
       v('#ccc', '#555'),
       v('#eee', '#222'),
-      v('#c25bc1', '#c25bc1'),
+      v('#e474bc', '#e474bc'),
     ],
     inactive: v('#cfcfcf', '#1a1a1a'),
     inactive2: v('#dadada', '#383838'),
