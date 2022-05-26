@@ -15,9 +15,10 @@ import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { Filters } from './Filters';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
+import { APIContextInterface } from '../../types/api';
 
 export const ValidatorListInner = (props: any) => {
-  const { isReady }: any = useApi();
+  const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();

@@ -17,9 +17,10 @@ import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
 import { PAYEE_STATUS } from '../../constants';
 import { Warning } from '../../library/Form/Warning';
+import { APIContextInterface } from '../../types/api';
 
 export const UpdatePayee = () => {
-  const { api }: any = useApi();
+  const { api } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { getBondedAccount }: any = useBalances();
   const { setStatus: setModalStatus }: any = useModal();
@@ -54,9 +55,10 @@ export const UpdatePayee = () => {
   const tx = () => {
     let _tx = null;
 
-    if (!valid) {
+    if (!api || !valid) {
       return _tx;
     }
+
     _tx = api.tx.staking.setPayee(selected.key);
     return _tx;
   };

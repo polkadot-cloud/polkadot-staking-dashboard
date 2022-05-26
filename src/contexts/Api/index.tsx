@@ -3,6 +3,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
+import { Codec } from '@polkadot/types-codec/types';
+import { stringToU8a } from '@polkadot/util';
 import {
   BONDING_DURATION,
   SESSIONS_PER_ERA,
@@ -64,11 +66,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       provider.on('connected', () => {
         setConnectionStatus(ConnectionStatus.Connected);
       });
-
       provider.on('error', () => {
         setConnectionStatus(ConnectionStatus.Disconnected);
       });
-
       connectedCallback(provider);
     }
   }, [provider]);
@@ -95,17 +95,47 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       promises.push(_api.consts.nominationPools.palletId);
     }
 
-    const _consts: any = await Promise.all(promises);
+    // fetch constants
+    const _consts = await Promise.all<Codec[]>(promises);
+
+    // format constants
+    const bondDuration = _consts[0]
+      ? Number(_consts[0].toString())
+      : BONDING_DURATION;
+
+    const maxNominations = _consts[1]
+      ? Number(_consts[1].toString())
+      : MAX_NOMINATIONS;
+
+    const sessionsPerEra = _consts[2]
+      ? Number(_consts[2].toString())
+      : SESSIONS_PER_ERA;
+
+    const maxNominatorRewardedPerValidator = _consts[3]
+      ? Number(_consts[3].toString())
+      : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
+
+    const maxElectingVoters = _consts[4]
+      ? Number(_consts[2].toString())
+      : MAX_ELECTING_VOTERS;
+
+    const expectedBlockTime = _consts[5]
+      ? Number(_consts[2].toString())
+      : EXPECTED_BLOCK_TIME;
+
+    const poolsPalletId = _consts[6]
+      ? stringToU8a(_consts[2].toString())
+      : stringToU8a('0');
+
     setApi(_api);
     setConsts({
-      bondDuration: _consts[0]?.toNumber() ?? BONDING_DURATION,
-      maxNominations: _consts[1]?.toNumber() ?? MAX_NOMINATIONS,
-      sessionsPerEra: _consts[2]?.toNumber() ?? SESSIONS_PER_ERA,
-      maxNominatorRewardedPerValidator:
-        _consts[3]?.toNumber() ?? MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
-      maxElectingVoters: _consts[4]?.toNumber() ?? MAX_ELECTING_VOTERS,
-      expectedBlockTime: _consts[5]?.toNumber() ?? EXPECTED_BLOCK_TIME,
-      poolsPalletId: _consts[6] ? _consts[6] : 0,
+      bondDuration,
+      maxNominations,
+      sessionsPerEra,
+      maxNominatorRewardedPerValidator,
+      maxElectingVoters,
+      expectedBlockTime,
+      poolsPalletId,
     });
   };
 

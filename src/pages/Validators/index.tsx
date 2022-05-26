@@ -12,12 +12,13 @@ import { PageRowWrapper } from '../../Wrappers';
 import ActiveEraStatBox from '../Stake/Active/Stats/ActiveEra';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
+import { APIContextInterface } from '../../types/api';
 
 export const Validators = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { isReady }: any = useApi();
+  const { isReady } = useApi() as APIContextInterface;
   const { validators } = useValidators();
 
   return (

@@ -11,6 +11,7 @@ import { useBalances } from './Balances';
 import { useApi } from './Api';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from '../constants';
 import { localStorageOrDefault } from '../Utils';
+import { APIContextInterface } from '../types/api';
 
 export interface UIContextState {
   setSideMenu: (v: number) => void;
@@ -64,8 +65,8 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
 
 export const useUi = () => React.useContext(UIContext);
 
-export const UIProvider = (props: any) => {
-  const { isReady, consts, network }: any = useApi();
+export const UIProvider = ({ children }: { children: React.ReactNode }) => {
+  const { isReady, consts, network } = useApi() as APIContextInterface;
   const { accounts: connectAccounts, activeAccount } = useConnect();
   const { staking, eraStakers, inSetup }: any = useStaking();
   const { meta, session } = useValidators();
@@ -505,7 +506,7 @@ export const UIProvider = (props: any) => {
         isSyncing,
       }}
     >
-      {props.children}
+      {children}
     </UIContext.Provider>
   );
 };

@@ -6,6 +6,7 @@ import { useApi } from './Api';
 import { useConnect } from './Connect';
 import { useUi } from './UI';
 import { API_ENDPOINTS, API_SUBSCAN_KEY } from '../constants';
+import { APIContextInterface } from '../types/api';
 
 export interface SubscanContextState {
   fetchEraPoints: (v: string, e: number) => void;
@@ -20,8 +21,12 @@ export const SubscanContext: React.Context<SubscanContextState> =
 
 export const useSubscan = () => React.useContext(SubscanContext);
 
-export const SubscanProvider = (props: any) => {
-  const { network, isReady }: any = useApi();
+export const SubscanProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const { network, isReady } = useApi() as APIContextInterface;
   const { services, getServices }: any = useUi();
   const { activeAccount }: any = useConnect();
 
@@ -128,7 +133,7 @@ export const SubscanProvider = (props: any) => {
         payouts,
       }}
     >
-      {props.children}
+      {children}
     </SubscanContext.Provider>
   );
 };

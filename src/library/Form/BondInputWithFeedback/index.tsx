@@ -11,6 +11,7 @@ import { humanNumber, planckBnToUnit } from '../../../Utils';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
 import { SectionHeaderWrapper } from '../../Graphs/Wrappers';
+import { APIContextInterface } from '../../../types/api';
 
 export const BondInputWithFeedback = (props: any) => {
   // input props
@@ -21,7 +22,7 @@ export const BondInputWithFeedback = (props: any) => {
   const setters = props.setters ?? [];
   const listenIsValid: any = props.listenIsValid ?? (() => {});
 
-  const { network }: any = useApi();
+  const { network }: any = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =

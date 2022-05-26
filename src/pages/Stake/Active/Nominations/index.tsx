@@ -13,10 +13,11 @@ import { useConnect } from '../../../../contexts/Connect';
 import { useUi } from '../../../../contexts/UI';
 import { useStaking } from '../../../../contexts/Staking';
 import { SectionHeaderWrapper } from '../../../../library/Graphs/Wrappers';
+import { APIContextInterface } from '../../../../types/api';
 
 export const Nominations = () => {
   const { openModalWith } = useModal();
-  const { isReady }: any = useApi();
+  const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { nominated }: any = useValidators();
   const { inSetup } = useStaking();

@@ -16,9 +16,10 @@ import { useConnect } from '../../contexts/Connect';
 import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
 import { planckBnToUnit } from '../../Utils';
+import { APIContextInterface } from '../../types/api';
 
 export const Nominate = () => {
-  const { api, network }: any = useApi();
+  const { api, network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { targets, staking, getControllerNotImported } = useStaking();
   const { getBondedAccount, getAccountLedger }: any = useBalances();
@@ -44,7 +45,7 @@ export const Nominate = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!valid) {
+    if (!valid || !api) {
       return _tx;
     }
     const targetsToSubmit = nominations.map((item: any) => {

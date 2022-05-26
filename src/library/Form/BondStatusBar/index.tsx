@@ -10,11 +10,12 @@ import { useApi } from '../../../contexts/Api';
 import { useStaking } from '../../../contexts/Staking';
 import { OpenAssistantIcon } from '../../OpenAssistantIcon';
 import { useUi } from '../../../contexts/UI';
+import { APIContextInterface } from '../../../types/api';
 
 export const BondStatusBar = (props: any) => {
   const { value } = props;
 
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { staking, eraStakers } = useStaking();
   const { isSyncing } = useUi();
   const { unit, units } = network;

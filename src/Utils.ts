@@ -10,39 +10,35 @@ export const clipAddress = (val: string) => {
   )}`;
 };
 
-export const convertRemToPixels = (rem: any) => {
-  const remAsNumber = rem.substr(0, rem.length - 3);
+export const convertRemToPixels = (rem: string) => {
+  const remAsNumber = Number(rem.slice(0, rem.length - 3));
   return (
     remAsNumber *
     parseFloat(getComputedStyle(document.documentElement).fontSize)
   );
 };
 
-export const toFixedIfNecessary = (value: any, dp: any) => {
-  return +parseFloat(value).toFixed(dp);
+export const toFixedIfNecessary = (value: number, dp: number) => {
+  return +parseFloat(String(value)).toFixed(dp);
 };
 
-export const planckToUnit: any = (val: any, units: number) => {
+export const planckToUnit = (val: number, units: number): number => {
   const value = val / 10 ** units;
   return value;
 };
 
-export const planckBnToUnit: any = (val: BN, units: number) => {
+export const planckBnToUnit = (val: BN, units: number): number => {
   const value = val.toNumber() / 10 ** units;
   return value;
 };
 
-export const fiatAmount: any = (val: any) => {
-  return val.toFixed(2);
-};
-
-export const humanNumber: any = (val: any) => {
+export const humanNumber = (val: number): string => {
   const str = val.toString().split('.');
   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return str.join('.');
 };
 
-export const rmCommas: any = (val: any) => {
+export const rmCommas = (val: string): string => {
   return val.replace(/,/g, '');
 };
 
@@ -54,7 +50,7 @@ export const removePercentage = (v: string) => {
   return Number(v.slice(0, -1));
 };
 
-export const shuffle = (array: any) => {
+export const shuffle = <T>(array: Array<T>) => {
   let currentIndex = array.length;
   let randomIndex;
   while (currentIndex !== 0) {
@@ -74,27 +70,28 @@ export const pageFromUri = (pathname: string) => {
   return page;
 };
 
-export const isNumeric = (str: any) => {
-  return !Number.isNaN(str) && !Number.isNaN(parseFloat(str));
+export const isNumeric = (str: string | number) => {
+  return !Number.isNaN(str) && !Number.isNaN(parseFloat(String(str)));
 };
 
-export const defaultIfNaN = (val: any, _default: any) => {
+export const defaultIfNaN = <T>(val: T, _default: T) => {
   if (Number.isNaN(val)) {
     return _default;
   }
   return val;
 };
 
-export const localStorageOrDefault = (
+export const localStorageOrDefault = <T>(
   key: string,
-  _default: any,
+  _default: T,
   parse = false
 ) => {
-  let val: any = localStorage.getItem(key);
+  let val: string | null = localStorage.getItem(key);
 
   if (val === null) {
-    val = _default;
-  } else if (parse) {
+    return _default;
+  }
+  if (parse) {
     val = JSON.parse(val);
   }
   return val;

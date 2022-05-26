@@ -7,11 +7,12 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from '../../contexts/Modal';
 import { useApi } from '../../contexts/Api';
 import { ContentWrapper } from './Wrappers';
+import { APIContextInterface } from '../../types/api';
 
 export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;
 
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { config }: any = useModal();
   const { fn } = config;
 

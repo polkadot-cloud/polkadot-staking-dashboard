@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputWrapper, RowWrapper } from './Wrappers';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
@@ -9,6 +9,7 @@ import { useBalances } from '../../../contexts/Balances';
 import { isNumeric, planckBnToUnit } from '../../../Utils';
 import { Button } from '../../Button';
 import { useStaking } from '../../../contexts/Staking';
+import { APIContextInterface } from '../../../types/api';
 
 export const BondInput = (props: any) => {
   // functional props
@@ -23,7 +24,7 @@ export const BondInput = (props: any) => {
   // whether a value has been provided already
   const _value = props.value ?? null;
 
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
@@ -51,8 +52,12 @@ export const BondInput = (props: any) => {
   };
 
   // handle change for unbonding
-  const handleChangeUnbond = (e: any) => {
-    const { value } = e.target;
+  const handleChangeUnbond = (e: React.ChangeEvent) => {
+    if (!e) return;
+
+    const element = e.currentTarget as HTMLInputElement;
+    const value = element.value;
+
     if (!isNumeric(value) && value !== '') {
       return;
     }

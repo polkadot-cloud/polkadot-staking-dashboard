@@ -14,9 +14,10 @@ import { useModal } from '../../contexts/Modal';
 import { HeadingWrapper, FooterWrapper } from '../Wrappers';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useApi } from '../../contexts/Api';
+import { APIContextInterface } from '../../types/api';
 
 export const UpdateController = () => {
-  const { api }: any = useApi();
+  const { api } = useApi() as APIContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const { accounts, activeAccount, getAccount } = useConnect();
   const { getBondedAccount, isController }: any = useBalances();
@@ -39,7 +40,7 @@ export const UpdateController = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!selected) {
+    if (!selected || !api) {
       return _tx;
     }
     const controllerToSubmit = {

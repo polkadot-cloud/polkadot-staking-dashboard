@@ -12,9 +12,10 @@ import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
 import { useUi } from '../../contexts/UI';
 import { usePools } from '../../contexts/Pools';
 import { SectionHeaderWrapper } from '../../library/Graphs/Wrappers';
+import { APIContextInterface } from '../../types/api';
 
 export const ManageBond = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();

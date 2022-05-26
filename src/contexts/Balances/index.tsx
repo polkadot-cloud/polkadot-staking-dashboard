@@ -7,6 +7,7 @@ import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 import { toFixedIfNecessary, planckBnToUnit, rmCommas } from '../../Utils';
+import { APIContextInterface } from '../../types/api';
 
 export const BalancesContext: any = React.createContext({
   getAccount: () => true,
@@ -24,8 +25,12 @@ export const BalancesContext: any = React.createContext({
 
 export const useBalances = () => React.useContext(BalancesContext);
 
-export const BalancesProvider = ({ children }: any) => {
-  const { api, isReady, network }: any = useApi();
+export const BalancesProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const { api, isReady, network } = useApi() as APIContextInterface;
   const { accounts, activeExtension }: any = useConnect();
   const { units } = network;
 
@@ -75,6 +80,8 @@ export const BalancesProvider = ({ children }: any) => {
 
   // subscribe to account balances, ledger, bonded and nominators
   const subscribeToBalances = async (address: string) => {
+    if (!api) return;
+
     const unsub = await api.queryMulti(
       [
         [api.query.system.account, address],

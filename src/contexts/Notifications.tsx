@@ -18,7 +18,11 @@ export const NotificationsContext: React.Context<NotificationsContextState> =
 
 export const useNotifications = () => React.useContext(NotificationsContext);
 
-export const NotificationsProvider = (props: any) => {
+export const NotificationsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [index, _setIndex] = useState(0);
   const [notifications, _setNotifications]: any = useState([]);
   const indexRef = useRef(index);
@@ -72,7 +76,7 @@ export const NotificationsProvider = (props: any) => {
         notifications: notificationsRef.current,
       }}
     >
-      {props.children}
+      {children}
     </NotificationsContext.Provider>
   );
 };

@@ -5,9 +5,10 @@ import BN from 'bn.js';
 import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
 import { Number } from '../../../library/StatBoxList/Number';
+import { APIContextInterface } from '../../../types/api';
 
 export const LastEraPayoutStatBox = () => {
-  const { network }: any = useApi();
+  const { network } = useApi() as APIContextInterface;
   const { staking }: any = useStaking();
   const { unit, units } = network;
   const { lastReward } = staking;

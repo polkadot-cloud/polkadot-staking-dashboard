@@ -9,6 +9,7 @@ import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { sleep, removePercentage, rmCommas } from '../../Utils';
 import * as defaults from './defaults';
+import { APIContextInterface } from '../../types/api';
 
 // context type
 export interface ValidatorsContextState {
@@ -48,8 +49,12 @@ export const ValidatorsContext: React.Context<ValidatorsContextState> =
 export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
-export const ValidatorsProvider = ({ children }: any) => {
-  const { isReady, api, network, consts }: any = useApi();
+export const ValidatorsProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const { isReady, api, network, consts } = useApi() as APIContextInterface;
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getAccountNominations }: any = useBalances();
@@ -190,7 +195,7 @@ export const ValidatorsProvider = ({ children }: any) => {
    * Validator meta batches are derived from this initial list.
    */
   const fetchValidators = async () => {
-    if (!isReady) {
+    if (!isReady || !api) {
       return;
     }
     if (fetchedValidators) {
@@ -241,7 +246,7 @@ export const ValidatorsProvider = ({ children }: any) => {
    * fetches prefs for a list of validators
    */
   const fetchValidatorPrefs = async (_validators: any) => {
-    if (!_validators.length) {
+    if (!_validators.length || !api) {
       return false;
     }
 
@@ -255,7 +260,7 @@ export const ValidatorsProvider = ({ children }: any) => {
     const validatorsWithPrefs = [];
     let i = 0;
     for (const _prefs of prefsAll) {
-      const prefs = _prefs.toHuman();
+      const prefs: any = _prefs.toHuman();
       const commission = removePercentage(prefs.commission);
 
       validatorsWithPrefs.push({
@@ -290,7 +295,7 @@ export const ValidatorsProvider = ({ children }: any) => {
     v: any,
     refetch = false
   ) => {
-    if (!isReady) {
+    if (!isReady || !api) {
       return;
     }
 

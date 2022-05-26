@@ -6,12 +6,13 @@ import { useApi } from '../../contexts/Api';
 import { useNotifications } from '../../contexts/Notifications';
 import { useExtrinsics } from '../../contexts/Extrinsics';
 import { useConnect } from '../../contexts/Connect';
+import { APIContextInterface } from '../../types/api';
 
 export const useSubmitExtrinsic = (extrinsic: any) => {
   // extract extrinsic info
   const { tx, from, shouldSubmit, callbackSubmit, callbackInBlock } = extrinsic;
 
-  const { api }: any = useApi();
+  const { api } = useApi() as APIContextInterface;
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount } = useConnect();
@@ -39,7 +40,7 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
 
   // submit extrinsic
   const submitTx = async () => {
-    if (submitting || !shouldSubmit) {
+    if (submitting || !shouldSubmit || !api) {
       return;
     }
     const accountNonce = await api.rpc.system.accountNextIndex(from);

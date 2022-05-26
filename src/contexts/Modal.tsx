@@ -36,7 +36,7 @@ export const ModalContext: React.Context<ModalContextState> =
 export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
-export const ModalProvider = ({ children }: any) => {
+export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, setState]: any = useState({
     status: 0,
     modal: DEFAULT_MODAL_COMPONENT,

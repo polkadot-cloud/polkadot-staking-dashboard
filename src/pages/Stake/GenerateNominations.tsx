@@ -9,6 +9,7 @@ import { useValidators } from '../../contexts/Validators';
 import { ValidatorList } from '../../library/ValidatorList';
 import { useUi } from '../../contexts/UI';
 import { Button } from '../../library/Button';
+import { APIContextInterface } from '../../types/api';
 
 export const GenerateNominations = (props: any) => {
   // functional props
@@ -16,7 +17,7 @@ export const GenerateNominations = (props: any) => {
   const defaultNominations = props.nominations;
   const { batchKey } = props;
 
-  const { isReady }: any = useApi();
+  const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, favouritesList, meta } =
     useValidators();
