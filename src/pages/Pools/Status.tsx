@@ -8,12 +8,13 @@ import { usePools } from '../../contexts/Pools';
 import { useModal } from '../../contexts/Modal';
 import { Stat } from '../../library/Stat';
 import { APIContextInterface } from '../../types/api';
-import { planckBnToUnit } from '../../Utils';
+import { toFixedIfNecessary, planckBnToUnit } from '../../Utils';
 
 export const Status = () => {
   const { network } = useApi() as APIContextInterface;
   const { units, unit } = network;
-  const { membership, isOwner, getPoolBondOptions } = usePools();
+  const { membership, activeBondedPool, isOwner, getPoolBondOptions } =
+    usePools();
   const { openModalWith } = useModal();
 
   const { active } = getPoolBondOptions();
@@ -56,15 +57,20 @@ export const Status = () => {
     : `0 ${unit}`;
 
   // Unclaimed rewards `Stat` props
-  const labelRewards = membership
-    ? `${membership?.unclaimedRewards ?? 0} ${unit}`
+  const { unclaimedReward } = activeBondedPool || {};
+  const labelRewards = unclaimedReward
+    ? `${toFixedIfNecessary(
+        planckBnToUnit(unclaimedReward, units),
+        units
+      )} ${unit}`
     : `0 ${unit}`;
-  const buttonsRewards = membership
+  const buttonsRewards = unclaimedReward
     ? [
         {
           title: 'Claim',
           small: true,
-          onClick: () => {},
+          onClick: () =>
+            openModalWith('ClaimReward', { target: 'pool' }, 'small'),
         },
       ]
     : undefined;

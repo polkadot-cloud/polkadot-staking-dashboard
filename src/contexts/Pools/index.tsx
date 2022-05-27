@@ -359,7 +359,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
           const pool = {
             ...bondedPool,
             id: poolId,
-            rewards: unclaimedReward,
+            unclaimedReward,
             addresses,
           };
           setActiveBondedPool({ pool, unsub });
