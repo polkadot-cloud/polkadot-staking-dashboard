@@ -184,7 +184,6 @@ export const ValidatorsProvider = ({
     });
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(n);
-    console.log('fetching', n);
     if (nominationsWithPrefs) {
       setPoolNominated(nominationsWithPrefs);
     } else {

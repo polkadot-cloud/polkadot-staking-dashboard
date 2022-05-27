@@ -20,7 +20,6 @@ export const NominatePool = () => {
   const { setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect();
   const { membership, isNominator, targets } = usePools();
-  console.log(targets);
   const { nominations } = targets;
   const poolId = membership?.poolId;
   const { units } = network;

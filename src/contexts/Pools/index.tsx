@@ -302,13 +302,36 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     );
     return unsub;
   };
-  const calculateReward = (
+  const calculatePayout = (
     membership: any,
     bondedPool: any,
     rewardPool: any,
     rewardAccountBalance: BN
-  ) => {
-    return new BN(0);
+  ): BN => {
+    const newBalance = new BN(rewardAccountBalance);
+    const lastBalance = new BN(rmCommas(rewardPool.balance));
+    const poolTotalEarnings = new BN(rmCommas(rewardPool.totalEarnings));
+    const rewardPoints = new BN(rmCommas(rewardPool.points));
+    const bondedPoints = new BN(rmCommas(bondedPool.points));
+    const memberPoints = new BN(rmCommas(membership.points));
+    const poolTotalEarningsAtLastClaim = new BN(
+      rmCommas(membership.rewardPoolTotalEarnings)
+    );
+
+    const generatedEarning = newBalance.sub(lastBalance);
+    const generatedPoints = bondedPoints.mul(generatedEarning);
+    const rewardPoolCurrentRewardPoints = rewardPoints.add(generatedPoints);
+    const generatedEarningSinceLastClaim = poolTotalEarnings.sub(
+      poolTotalEarningsAtLastClaim
+    );
+    const memberCurrentRewardPoint = memberPoints.mul(
+      generatedEarningSinceLastClaim
+    );
+    const payout = memberCurrentRewardPoint
+      .mul(generatedEarningSinceLastClaim)
+      .div(rewardPoolCurrentRewardPoints);
+    console.log(payout.toString());
+    return payout;
   };
   const subscribeToActiveBondedPool = async (membership: any) => {
     if (!api || !membership) {
@@ -327,7 +350,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
         if (rewardPool && bondedPool) {
           const rewardAccountBalance = balance?.free;
-          const unclaimedReward = calculateReward(
+          const unclaimedReward = calculatePayout(
             membership,
             bondedPool,
             rewardPool,
@@ -359,7 +382,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const subscribeToPoolNominations = async (poolBondAddress: string) => {
     if (!api) return;
-    console.log(poolBondAddress);
     const unsub = await api.query.staking.nominators(
       poolBondAddress,
       (nominations: any) => {
@@ -373,7 +395,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
             submittedIn: _nominations.submittedIn.toHuman(),
           };
         }
-        console.log(_nominations);
         setPoolNominations({ nominations: _nominations, unsub });
       }
     );
