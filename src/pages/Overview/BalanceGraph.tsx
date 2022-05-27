@@ -4,11 +4,12 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { usePools } from 'contexts/Pools';
 import { useApi } from '../../contexts/Api';
 import { useUi } from '../../contexts/UI';
 import { useBalances } from '../../contexts/Balances';
 import { useConnect } from '../../contexts/Connect';
-import { planckToUnit, humanNumber } from '../../Utils';
+import { planckToUnit, humanNumber, planckBnToUnit } from '../../Utils';
 import { useSize, formatSize } from '../../library/Graphs/Utils';
 import { defaultThemes } from '../../theme/default';
 import { useTheme } from '../../contexts/Themes';
@@ -29,6 +30,9 @@ export const BalanceGraph = () => {
   const prices = usePrices();
   const { freeToStake, freeToUnbond: staked }: any =
     getBondOptions(activeAccount) || {};
+  const { getPoolBondOptions } = usePools();
+
+  const poolBondOpions = getPoolBondOptions();
 
   let { free } = balance;
 
@@ -36,6 +40,8 @@ export const BalanceGraph = () => {
   const freeBase = planckToUnit(free.toNumber(), units);
   // convert balance to fiat value
   const freeBalance = Number(freeBase * prices.lastPrice).toFixed(2);
+  // get user's pool balance
+  const poolBalance = planckBnToUnit(poolBondOpions.active, units);
 
   // convert to currency unit
   free = planckToUnit(free.toNumber(), units);
@@ -43,11 +49,13 @@ export const BalanceGraph = () => {
   // graph data
   let graphStaked = staked;
   let graphFreeToStake = freeToStake;
+  let graphInPool = poolBalance;
 
   let zeroBalance = false;
   if (graphStaked === 0 && graphFreeToStake === 0) {
     graphStaked = -1;
     graphFreeToStake = -1;
+    graphInPool = -1;
     zeroBalance = true;
   }
 
@@ -90,7 +98,7 @@ export const BalanceGraph = () => {
 
   // determine stats from network features
   let _labels = ['Available', 'Staking', 'In Pool'];
-  let _data = zeroBalance ? [-1, -1, -1] : [graphFreeToStake, graphStaked, 0]; // TODO: inject pooling balance
+  let _data = [graphFreeToStake, graphStaked, graphInPool];
   let _colors = zeroBalance
     ? [
         defaultThemes.graphs.colors[2][mode],
