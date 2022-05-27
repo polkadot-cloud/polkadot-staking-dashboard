@@ -37,13 +37,18 @@ export const BalancesProvider = ({
   // balance accounts context state
   const [state, _setState]: any = useState({
     accounts: [],
-    unsub: [],
   });
-
   const stateRef = useRef(state);
   const setState = (val: any) => {
     stateRef.current = val;
     _setState(val);
+  };
+
+  const [unsubs, _setUnsubs]: any = useState([]);
+  const unsubsRef = useRef(unsubs);
+  const setUnsubs = (val: any) => {
+    unsubsRef.current = val;
+    _setUnsubs(val);
   };
 
   // existential amount of unit for an account
@@ -67,11 +72,10 @@ export const BalancesProvider = ({
 
   // unsubscribe from all activeAccount subscriptions
   const unsubscribeAll = async (refetch: boolean) => {
-    // unsubscribe from accounts
-    const { unsub } = stateRef.current;
-    for (const unsubscribe of unsub) {
-      unsubscribe();
-    }
+    // unsubscribe all unsubs
+    Object.values(unsubsRef.current).map((v: any) => {
+      return v();
+    });
     // refetch balances
     if (refetch) {
       getBalances();
@@ -90,7 +94,6 @@ export const BalancesProvider = ({
         [api.query.staking.nominators, address],
       ],
       ([{ data: balance }, ledger, bonded, nominations]: any) => {
-        // account state update
         const _account: any = {
           address,
         };
@@ -112,6 +115,11 @@ export const BalancesProvider = ({
           feeFrozen: feeFrozen.toBn(),
           freeAfterReserve,
         };
+
+        // set account bonded (controller) or null
+        let _bonded = bonded.unwrapOr(null);
+        _bonded = _bonded === null ? null : _bonded.toHuman();
+        _account.bonded = _bonded;
 
         // set account ledger
         const _ledger = ledger.unwrapOr(null);
@@ -138,11 +146,6 @@ export const BalancesProvider = ({
           };
         }
 
-        // set account bonded (controller) or null
-        let _bonded = bonded.unwrapOr(null);
-        _bonded = _bonded === null ? null : _bonded.toHuman();
-        _account.bonded = _bonded;
-
         // set account nominations
         let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
@@ -158,6 +161,7 @@ export const BalancesProvider = ({
 
         // update account in context state
         let _accounts = Object.values(stateRef.current.accounts);
+        // remove stale account if it's already in list
         _accounts = _accounts.filter((acc: any) => acc.address !== address);
         _accounts.push(_account);
 
@@ -169,18 +173,16 @@ export const BalancesProvider = ({
       }
     );
 
+    const _unsubs = unsubsRef.current;
+    _unsubs.push(unsub);
+    setUnsubs(_unsubs);
+
     return unsub;
   };
 
   // get active account balances
   const getBalances = async () => {
-    const unsubs = await Promise.all(
-      accounts.map((a: any) => subscribeToBalances(a.address))
-    );
-    setState({
-      ...stateRef.current,
-      unsub: unsubs,
-    });
+    Promise.all(accounts.map((a: any) => subscribeToBalances(a.address)));
   };
 
   // get an account's balance metadata
