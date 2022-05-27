@@ -59,7 +59,7 @@ export const UnlockChunks = () => {
         transition={{
           duration: 0.5,
           type: 'spring',
-          bounce: 0.22,
+          bounce: 0.1,
         }}
         variants={{
           home: {
