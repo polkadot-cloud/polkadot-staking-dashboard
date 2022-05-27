@@ -12,7 +12,7 @@ export const CreatePool = () => {
     <Wrapper>
       <HeadingWrapper>
         <FontAwesomeIcon transform="grow-2" icon={faPlus} />
-        Create an staking pool
+        Create Pool
       </HeadingWrapper>
       <Forms />
     </Wrapper>
