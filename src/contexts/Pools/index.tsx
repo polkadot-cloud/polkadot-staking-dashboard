@@ -300,7 +300,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const subscribeToPoolNominations = async (poolBondAddress: string) => {
     if (!api) return;
-    console.log(poolBondAddress);
     const unsub = await api.query.staking.nominators(
       poolBondAddress,
       (nominations: any) => {
@@ -314,7 +313,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
             submittedIn: _nominations.submittedIn.toHuman(),
           };
         }
-        console.log(_nominations);
         setPoolNominations({ nominations: _nominations, unsub });
       }
     );
