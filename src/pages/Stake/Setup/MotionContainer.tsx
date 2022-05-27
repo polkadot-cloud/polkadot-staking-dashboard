@@ -3,9 +3,11 @@
 
 import { motion } from 'framer-motion';
 
-export const MotionContainer = ({ props, children }: any) => {
-  const { thisSection, activeSection } = props;
-
+export const MotionContainer = ({
+  thisSection,
+  activeSection,
+  children,
+}: any) => {
   // container variants
   const containerVariants = {
     hidden: {

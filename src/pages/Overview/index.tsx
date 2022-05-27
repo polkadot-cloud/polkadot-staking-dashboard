@@ -50,7 +50,7 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title="What's Happening" />
+      <PageTitle title="Overview" />
       <StatBoxList>
         <SupplyStakedStatBox />
         <TotalNominatorsStatBox />

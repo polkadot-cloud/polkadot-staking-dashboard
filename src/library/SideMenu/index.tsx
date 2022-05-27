@@ -9,7 +9,7 @@ import throttle from 'lodash.throttle';
 import { Wrapper, LogoWrapper } from './Wrapper';
 import Heading from './Heading';
 import Item from './Item';
-import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../pages';
+import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../config/pages';
 import { useConnect } from '../../contexts/Connect';
 import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from '../../img/polkadot_icon.svg';

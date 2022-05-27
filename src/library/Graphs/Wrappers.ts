@@ -158,6 +158,7 @@ export const GraphWrapper = styled.div<any>`
     margin: 0.25rem 0 0;
   }
   h4 {
+    align-items: center;
     margin-top: 0.4rem;
 
     .assistant-icon {

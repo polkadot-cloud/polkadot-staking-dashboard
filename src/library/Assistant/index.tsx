@@ -11,12 +11,17 @@ import {
   HeightWrapper,
 } from './Wrappers';
 import { Sections } from './Sections';
-import { ASSISTANT_CONFIG } from '../../pages';
+import { ASSISTANT_CONFIG } from '../../config/assistant';
 import { pageFromUri } from '../../Utils';
 import { useOutsideAlerter } from '../Hooks';
+import {
+  AssistantContextInterface,
+  AssistantItem,
+} from '../../types/assistant';
+import { Toggle } from '../../types';
 
 export const Assistant = () => {
-  const assistant = useAssistant();
+  const assistant = useAssistant() as AssistantContextInterface;
   const { pathname } = useLocation();
 
   // container variants
@@ -48,14 +53,15 @@ export const Assistant = () => {
   useEffect(() => setPageOnPathname(), [setPageOnPathname]);
 
   // animate assistant container default
-  const animateContainer = assistant.open ? 'visible' : 'hidden';
+  const animateContainer =
+    assistant.open === Toggle.Open ? 'visible' : 'hidden';
 
   // animate assistant container default
   const animateSections = assistant.activeSection === 0 ? 'home' : 'item';
 
   // get page meta from active page
   const pageMeta = Object.values(ASSISTANT_CONFIG).find(
-    (item: any) => item.key === assistant.page
+    (item: AssistantItem) => item.key === assistant.page
   );
 
   const ref = useRef(null);
@@ -63,7 +69,7 @@ export const Assistant = () => {
   useOutsideAlerter(
     ref,
     () => {
-      assistant.closeAssistant(pageFromUri(pathname));
+      assistant.closeAssistant();
     },
     ['ignore-assistant-outside-alerter']
   );

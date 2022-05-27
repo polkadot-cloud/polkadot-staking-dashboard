@@ -57,7 +57,8 @@ Reach out to ross@parity.io for clarification of any content within this documen
 
 ## Config Files
 There are some ad-hoc files defining app configuration where needed. These just provide a means of bootstrapping app data, and further abstraction could be explored in the future.
-- [`pages.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/pages.ts): provides the pages and page categories of the app, as well as the assistant content.
+- [`config/pages.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/pages.ts): provides the pages and page categories of the app.
+- [`config/assistant.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/assistant.ts): provides the assistant content.
 - [`Utils.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Utils.ts): Various general helper functions used throughout the app, such as formatting utilities.
 
 ## Folders
