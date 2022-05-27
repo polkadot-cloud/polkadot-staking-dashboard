@@ -79,7 +79,7 @@ export const Status = () => {
   return (
     <SectionWrapper height="300">
       <Stat
-        label="Status"
+        label="Membership"
         assistant={['pools', 'Pool Status']}
         stat={labelMembership}
         buttons={buttonsMembership}
