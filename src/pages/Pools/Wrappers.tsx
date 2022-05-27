@@ -2,17 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textPrimary, textSecondary, borderPrimary } from '../../theme';
+import { textPrimary, textSecondary } from '../../theme';
 
 export const AccountWrapper = styled.div<any>`
   box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  border-bottom: ${(props) =>
-    !props.last ? `1px solid ${borderPrimary}` : `none`};
-  padding-bottom: ${(props) => (!props.last ? '0.5rem' : 0)};
-  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
 
   .account {
     width: 100%;
@@ -39,10 +36,10 @@ export const AccountWrapper = styled.div<any>`
       }
     }
 
-    > *:last-child {
-      flex-grow: 1;
+    > :last-child {
       display: flex;
       flex-flow: row-reverse wrap;
+      margin-left: 0.5rem;
 
       > .copy {
         color: ${textSecondary};

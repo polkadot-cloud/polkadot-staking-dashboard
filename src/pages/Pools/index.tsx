@@ -26,6 +26,7 @@ import { Status } from './Status';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { APIContextInterface } from '../../types/api';
+import { Roles } from './Roles';
 
 export const Pools = (props: PageProps) => {
   const { page } = props;
@@ -59,7 +60,16 @@ export const Pools = (props: PageProps) => {
           </SectionWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
-      {isBonding() && <ManagePool />}
+      {isBonding() && (
+        <>
+          <PageRowWrapper className="page-padding" noVerticalSpacer>
+            <SectionWrapper>
+              <Roles />
+            </SectionWrapper>
+          </PageRowWrapper>
+          <ManagePool />
+        </>
+      )}
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <SectionHeaderWrapper>
