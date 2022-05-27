@@ -13,28 +13,40 @@ import { APIContextInterface } from '../../types/api';
 export const Status = () => {
   const { network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
-  const { membership } = usePools();
+  const { membership, isOwner } = usePools();
   const { openModalWith } = useModal();
 
   // Pool status `Stat` props
   const labelMembership = membership ? 'Active in Pool' : 'Not in a Pool';
-  const buttonsMembership = !membership
-    ? [
-        {
-          title: 'Create Pool',
-          small: true,
-          onClick: () =>
-            openModalWith('CreatePool', { target: 'pool' }, 'small'),
-        },
-      ]
-    : [
-        {
-          title: 'Leave Pool',
-          small: true,
-          onClick: () =>
-            openModalWith('LeavePool', { target: 'pool' }, 'small'),
-        },
-      ];
+
+  let buttonsMembership;
+  if (!membership) {
+    buttonsMembership = [
+      {
+        title: 'Create Pool',
+        small: true,
+        onClick: () => openModalWith('CreatePool', { target: 'pool' }, 'small'),
+      },
+    ];
+  } else if (isOwner()) {
+    buttonsMembership = [
+      {
+        title: 'Destroy Pool',
+        small: true,
+        onClick: () =>
+          openModalWith('Destroy Pool', { target: 'pool' }, 'small'),
+      },
+    ];
+  } else {
+    // check if the unlocking bonds are mature bofore letting someone leave the pool
+    buttonsMembership = [
+      {
+        title: 'Leave Pool',
+        small: true,
+        onClick: () => openModalWith('LeavePool', { target: 'pool' }, 'small'),
+      },
+    ];
+  }
 
   // Bonded in pool `Stat` props
   const labelBonded = membership

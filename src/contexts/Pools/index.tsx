@@ -24,6 +24,8 @@ export interface PoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   isBonding: () => any;
   isNominator: () => any;
+  isOwner: () => any;
+  isDepositor: () => any;
   getPoolBondedAccount: () => any;
   getPoolBondOptions: () => any;
   setTargets: (targest: any) => void;
@@ -41,6 +43,8 @@ export const PoolsContext: React.Context<PoolsContextState> =
     fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => {},
     isBonding: () => false,
     isNominator: () => false,
+    isOwner: () => false,
+    isDepositor: () => false,
     getPoolBondedAccount: () => undefined,
     getPoolBondOptions: () => defaults.poolBondOptions,
     setTargets: (targets: any) => {},
@@ -433,9 +437,27 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     if (!activeAccount || !roles) {
       return false;
     }
-
     const result =
       activeAccount === roles?.root || activeAccount === roles?.nominator;
+    return result;
+  };
+
+  const isOwner = () => {
+    const roles = poolMembership?.membership?.pool?.roles;
+    if (!activeAccount || !roles) {
+      return false;
+    }
+    const result =
+      activeAccount === roles?.root || activeAccount === roles?.stateToggler;
+    return result;
+  };
+
+  const isDepositor = () => {
+    const roles = poolMembership?.membership?.pool?.roles;
+    if (!activeAccount || !roles) {
+      return false;
+    }
+    const result = activeAccount === roles?.depositor;
     return result;
   };
 
@@ -532,6 +554,8 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         fetchPoolsMetaBatch,
         isNominator,
+        isOwner,
+        isDepositor,
         isBonding,
         getPoolBondedAccount,
         getPoolBondOptions,
