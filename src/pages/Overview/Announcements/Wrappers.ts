@@ -38,6 +38,9 @@ export const Item = styled(motion.div)`
     &.warning {
       color: #b5a200;
     }
+    &.pools {
+      color: #cd68a9;
+    }
   }
 
   p {

@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from './Wrappers';
 import Router from './Router';
 import { withProviders } from './library/Hooks';
+import { AccountProvider } from './contexts/Account';
 import { APIProvider } from './contexts/Api';
 import { AssistantProvider } from './contexts/Assistant';
 import { BalancesProvider } from './contexts/Balances';
@@ -46,10 +47,11 @@ export const Providers = withProviders(
   AssistantProvider,
   SideBarProvider,
   NetworkMetricsProvider,
+  AccountProvider,
   BalancesProvider,
   StakingProvider,
-  ValidatorsProvider,
   PoolsProvider,
+  ValidatorsProvider,
   UIProvider,
   MessagesProvider,
   SubscanProvider,

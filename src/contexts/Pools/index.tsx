@@ -4,10 +4,16 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
+import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
-import { rmCommas } from '../../Utils';
+import {
+  rmCommas,
+  toFixedIfNecessary,
+  planckBnToUnit,
+  localStorageOrDefault,
+} from '../../Utils';
 import { APIContextInterface } from '../../types/api';
 
 const EMPTY_H256 = new Uint8Array(32);
@@ -16,21 +22,39 @@ const U32_OPTS = { bitLength: 32, isLe: true };
 
 export interface PoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
+  isBonding: () => any;
+  isNominator: () => any;
+  isOwner: () => any;
+  isDepositor: () => any;
+  getPoolBondedAccount: () => any;
+  getPoolBondOptions: () => any;
+  setTargets: (targest: any) => void;
   membership: any;
   enabled: number;
   meta: any;
   stats: any;
   bondedPools: any;
+  targets: any;
+  poolNominations: any;
 }
 
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
     fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => {},
+    isBonding: () => false,
+    isNominator: () => false,
+    isOwner: () => false,
+    isDepositor: () => false,
+    getPoolBondedAccount: () => undefined,
+    getPoolBondOptions: () => defaults.poolBondOptions,
+    setTargets: (targets: any) => {},
     membership: undefined,
     enabled: 0,
     meta: [],
     stats: defaults.stats,
     bondedPools: [],
+    targets: [],
+    poolNominations: defaults.poolNominations,
   });
 
 export const usePools = () => React.useContext(PoolsContext);
@@ -38,9 +62,10 @@ export const usePools = () => React.useContext(PoolsContext);
 export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { poolsPalletId } = consts;
-  const { features } = network;
-  const { activeAccount } = useConnect();
+  const { features, units } = network;
 
+  const { activeAccount } = useConnect();
+  const { getAccountBalance }: any = useBalances();
   // whether pools are enabled
   const [enabled, setEnabled] = useState(0);
 
@@ -55,6 +80,15 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     membership: undefined,
     unsub: null,
   });
+
+  // stores pool nominations
+  const [poolNominations, setPoolNominations]: any = useState({
+    noominations: defaults.poolNominations,
+    unsub: null,
+  });
+
+  // store account target validators
+  const [targets, _setTargets]: any = useState(defaults.targets);
 
   // stores the meta data batches for pool lists
   const [poolMetaBatches, _setPoolMetaBatch]: any = useState({});
@@ -93,7 +127,14 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       unsubscribe();
     };
-  }, [network, isReady]);
+  }, [network, isReady, enabled]);
+
+  const unsubscribe = () => {
+    if (poolsConfig.unsub !== null) {
+      poolsConfig.unsub();
+    }
+    setBondedPools([]);
+  };
 
   useEffect(() => {
     if (isReady && enabled && activeAccount) {
@@ -102,7 +143,38 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       unsubscribePoolMembership();
     };
-  }, [network, isReady, activeAccount]);
+  }, [network, isReady, activeAccount, enabled]);
+
+  const unsubscribePoolMembership = () => {
+    if (poolMembership?.unsub) {
+      poolMembership.unsub();
+    }
+    setPoolMembership({
+      membership: undefined,
+      unsub: null,
+    });
+  };
+
+  // subscribe to pool nominations
+  const bondedAddress = poolMembership?.membership?.pool?.addresses?.stash;
+  useEffect(() => {
+    if (isReady && enabled && bondedAddress) {
+      subscribeToPoolNominations(bondedAddress);
+    }
+    return () => {
+      unsubscribePoolNominations();
+    };
+  }, [network, isReady, bondedAddress, enabled]);
+
+  const unsubscribePoolNominations = () => {
+    if (poolNominations?.unsub) {
+      poolNominations.unsub();
+    }
+    setPoolNominations({
+      nominations: defaults.poolNominations,
+      unsub: null,
+    });
+  };
 
   // unsubscribe from any meta batches upon network change
   useEffect(() => {
@@ -114,23 +186,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       });
     };
   }, [isReady, network]);
-
-  const unsubscribe = async () => {
-    if (poolsConfig.unsub !== null) {
-      poolsConfig.unsub();
-    }
-    setBondedPools([]);
-  };
-
-  const unsubscribePoolMembership = async () => {
-    if (poolMembership?.unsub) {
-      poolMembership.unsub();
-    }
-    setPoolMembership({
-      membership: undefined,
-      unsub: null,
-    });
-  };
 
   // subscribe to pool chain state
   const subscribeToPoolConfig = async () => {
@@ -199,18 +254,91 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const unsub = await api.query.nominationPools.poolMembers(
       address,
       async (result: any) => {
-        let membership = result?.unwrapOr(undefined)?.toJSON();
+        let membership = result?.unwrapOr(undefined)?.toHuman();
         if (membership) {
           let pool: any = await api.query.nominationPools.bondedPools(
             membership.poolId
           );
-          pool = pool?.unwrapOr(undefined)?.toJSON();
-          membership = { ...membership, pool };
+          pool = pool?.unwrapOr(undefined)?.toHuman();
+          if (pool) {
+            pool = getPoolWithAddresses(membership.poolId, pool);
+
+            const stashAddress = pool?.addresses?.stash;
+            if (stashAddress) {
+              // set pool staking targets
+              _setTargets(
+                localStorageOrDefault(
+                  `${stashAddress}_pool_targets`,
+                  defaults.targets,
+                  true
+                )
+              );
+            }
+          }
+
+          // format pool's unlocking chunks
+          const unbondingEras: any = membership.unbondingEras;
+          const unlocking = [];
+          for (const [e, v] of Object.entries(unbondingEras || {})) {
+            const era = rmCommas(e as string);
+            const value = rmCommas(v as string);
+            unlocking.push({
+              era: Number(era),
+              value: new BN(value),
+            });
+          }
+          membership.points = membership.points
+            ? rmCommas(membership.points)
+            : '0';
+          membership = { ...membership, unlocking, pool };
         }
         setPoolMembership({ membership, unsub });
       }
     );
     return unsub;
+  };
+
+  const subscribeToPoolNominations = async (poolBondAddress: string) => {
+    if (!api) return;
+    console.log(poolBondAddress);
+    const unsub = await api.query.staking.nominators(
+      poolBondAddress,
+      (nominations: any) => {
+        // set pool nominations
+        let _nominations = nominations.unwrapOr(null);
+        if (_nominations === null) {
+          _nominations = defaults.poolNominations;
+        } else {
+          _nominations = {
+            targets: _nominations.targets.toHuman(),
+            submittedIn: _nominations.submittedIn.toHuman(),
+          };
+        }
+        console.log(_nominations);
+        setPoolNominations({ nominations: _nominations, unsub });
+      }
+    );
+    return unsub;
+  };
+
+  const getPoolWithAddresses = (id: number, pool: any) => {
+    return {
+      ...pool,
+      id,
+      addresses: createAccounts(id),
+    };
+  };
+
+  /* Sets pools target validators in storage */
+  const setTargets = (_targets: any) => {
+    const stashAddress = getPoolBondedAccount();
+    if (stashAddress) {
+      localStorage.setItem(
+        `${stashAddress}_pool_targets`,
+        JSON.stringify(_targets)
+      );
+      _setTargets(_targets);
+    }
   };
 
   // fetch all bonded pool entries
@@ -220,24 +348,24 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const _exposures = await api.query.nominationPools.bondedPools.entries();
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => {
-      const id = new BN(_keys.toHuman()[0]);
-      return {
-        ..._val.toHuman(),
-        id,
-        addresses: {
-          stash: createAccount(id, 0),
-          reward: createAccount(id, 1),
-        },
-      };
+      const id = _keys.toHuman()[0];
+      const pool = _val.toHuman();
+      return getPoolWithAddresses(id, pool);
     });
 
     setBondedPools(exposures);
   };
 
   // generates pool stash and reward accounts. assumes poolsPalletId is synced.
+  const createAccounts = (poolId: number): any => {
+    const poolIdBN = new BN(poolId);
+    return {
+      stash: createAccount(poolIdBN, 0),
+      reward: createAccount(poolIdBN, 1),
+    };
+  };
   const createAccount = (poolId: BN, index: number): string => {
     if (!api) return '';
-
     return api.registry
       .createType(
         'AccountId32',
@@ -250,6 +378,91 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         )
       )
       .toString();
+  };
+
+  // get the bond and unbond amounts available to the user
+  const getPoolBondOptions = () => {
+    if (!activeAccount) {
+      return defaults.poolBondOptions;
+    }
+    const { free, freeAfterReserve, miscFrozen } =
+      getAccountBalance(activeAccount);
+    const membership = poolMembership.membership;
+    const unlocking = membership?.unlocking || [];
+    const points = membership?.points;
+    let freeToUnbond = 0;
+    const active = points ? new BN(points) : new BN(0); // point to balance ratio is 1
+    if (membership) {
+      freeToUnbond = toFixedIfNecessary(planckBnToUnit(active, units), units);
+    }
+
+    // total amount actively unlocking
+    let totalUnlockingBn = new BN(0);
+    for (const u of unlocking) {
+      const { value } = u;
+      totalUnlockingBn = totalUnlockingBn.add(value);
+    }
+    const totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
+
+    // free transferrable balance that can be bonded in the pool
+    let freeToBond: any = toFixedIfNecessary(
+      planckBnToUnit(freeAfterReserve, units) -
+        planckBnToUnit(miscFrozen, units),
+      units
+    );
+    freeToBond = freeToBond < 0 ? 0 : freeToBond;
+
+    // total possible balance that can be bonded in the pool
+    const totalPossibleBond = toFixedIfNecessary(
+      planckBnToUnit(freeAfterReserve, units) - totalUnlocking,
+      units
+    );
+
+    return {
+      active,
+      freeToBond,
+      freeToUnbond,
+      totalUnlocking,
+      totalPossibleBond,
+      totalUnlockChuncks: unlocking.length,
+    };
+  };
+
+  const isBonding = () => {
+    return !!poolMembership?.membership;
+  };
+
+  const isNominator = () => {
+    const roles = poolMembership?.membership?.pool?.roles;
+    if (!activeAccount || !roles) {
+      return false;
+    }
+    const result =
+      activeAccount === roles?.root || activeAccount === roles?.nominator;
+    return result;
+  };
+
+  const isOwner = () => {
+    const roles = poolMembership?.membership?.pool?.roles;
+    if (!activeAccount || !roles) {
+      return false;
+    }
+    const result =
+      activeAccount === roles?.root || activeAccount === roles?.stateToggler;
+    return result;
+  };
+
+  const isDepositor = () => {
+    const roles = poolMembership?.membership?.pool?.roles;
+    if (!activeAccount || !roles) {
+      return false;
+    }
+    const result = activeAccount === roles?.depositor;
+    return result;
+  };
+
+  const getPoolBondedAccount = () => {
+    return poolMembership?.membership?.pool?.addresses?.stash;
   };
 
   /*
@@ -340,11 +553,20 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     <PoolsContext.Provider
       value={{
         fetchPoolsMetaBatch,
+        isNominator,
+        isOwner,
+        isDepositor,
+        isBonding,
+        getPoolBondedAccount,
+        getPoolBondOptions,
+        setTargets,
         membership: poolMembership?.membership,
         enabled,
         stats: poolsConfig.stats,
         meta: poolMetaBatchesRef.current,
         bondedPools,
+        targets,
+        poolNominations: poolNominations.nominations,
       }}
     >
       {children}

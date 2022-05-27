@@ -122,9 +122,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       ? Number(_consts[5].toString())
       : EXPECTED_BLOCK_TIME;
 
-    const poolsPalletId = _consts[6]
-      ? stringToU8a(_consts[6].toString())
-      : stringToU8a('0');
+    const poolsPalletId = _consts[6] ? _consts[6].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({

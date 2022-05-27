@@ -10,22 +10,31 @@ import {
 } from '../../theme';
 
 export const Wrapper = styled(motion.div)<any>`
-  padding: 0.5rem;
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
+  height: 3.2rem;
+  position: relative;
+  padding: 0.5rem;
+  margin: 0.5rem;
 
   > div {
+    background: ${backgroundValidator};
+    box-sizing: border-box;
     padding: 0.75rem 0.6rem;
     flex: 1;
-    background: ${backgroundValidator};
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
     flex: 1;
-    max-width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
 
     h3 {
       margin: 0 0.75rem;
@@ -57,7 +66,7 @@ export const Wrapper = styled(motion.div)<any>`
       justify-content: flex-end;
       align-items: center;
       flex-grow: 1;
-
+      flex-flow: row nowrap;
       .label {
         margin-left: 0.5rem;
         color: ${textSecondary};

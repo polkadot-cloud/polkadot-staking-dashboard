@@ -9,6 +9,7 @@ import { useApi } from '../../contexts/Api';
 import { useStaking } from '../../contexts/Staking';
 import { Button, ButtonRow } from '../../library/Button';
 import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { useModal } from '../../contexts/Modal';
 import { useUi } from '../../contexts/UI';
 import { usePools } from '../../contexts/Pools';
 import { SectionHeaderWrapper } from '../../library/Graphs/Wrappers';
@@ -17,16 +18,16 @@ import { APIContextInterface } from '../../types/api';
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
+  const { openModalWith } = useModal();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const { membership } = usePools();
+  const { getPoolBondOptions, isBonding, membership } = usePools();
 
   // TODO: hook up to live data
-  const totalUnlockChuncks = 0;
-  const active = new BN(0);
-  const totalUnlocking = 0;
-  const freeToBond = 0;
   const total = new BN(0);
+
+  const { active, freeToBond, totalUnlocking, totalUnlockChuncks } =
+    getPoolBondOptions();
 
   return (
     <>
@@ -44,15 +45,27 @@ export const ManageBond = () => {
             primary
             inline
             title="+"
-            disabled={!membership}
-            onClick={() => console.log('TODO: Add Funds To Pool')}
+            disabled={isSyncing || !isBonding()}
+            onClick={() =>
+              openModalWith(
+                'UpdateBond',
+                { fn: 'add', target: 'pool' },
+                'small'
+              )
+            }
           />
           <Button
             small
             primary
             title="-"
-            disabled={!membership}
-            onClick={() => console.log('TODO: Remove Funds To Pool')}
+            disabled={isSyncing || !isBonding()}
+            onClick={() =>
+              openModalWith(
+                'UpdateBond',
+                { fn: 'remove', target: 'pool' },
+                'small'
+              )
+            }
           />
           <Button
             small
@@ -60,7 +73,7 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={!membership}
+            disabled={isSyncing || !isBonding()}
             onClick={() => console.log('TODO: Manage Pool Unlocks')}
           />
         </ButtonRow>

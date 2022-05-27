@@ -8,12 +8,12 @@ import { HeadingWrapper } from '../Wrappers';
 import { useModal } from '../../contexts/Modal';
 import { Wrapper, SectionsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
-import { Forms } from './Forms';
+import { StakeForms } from './StakeForms';
+import { PoolForms } from './PoolForms';
 
 export const UpdateBond = () => {
   const { config, setModalHeight }: any = useModal();
-  const { fn } = config;
-
+  const { fn, target } = config;
   // modal task
   const [task, setTask]: any = useState(null);
 
@@ -64,7 +64,11 @@ export const UpdateBond = () => {
         }}
       >
         <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
-        <Forms setSection={setSection} task={task} ref={formsRef} />
+        {target === 'pool' ? (
+          <PoolForms setSection={setSection} task={task} ref={formsRef} />
+        ) : (
+          <StakeForms setSection={setSection} task={task} ref={formsRef} />
+        )}
       </SectionsWrapper>
     </Wrapper>
   );

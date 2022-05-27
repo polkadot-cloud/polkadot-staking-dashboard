@@ -3,15 +3,18 @@
 
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { useModal } from '../../contexts/Modal';
+import { usePools } from '../../contexts/Pools';
 import { Wrapper } from './Wrapper';
 import Identicon from '../Identicon';
 import { clipAddress } from '../../Utils';
-import { usePools } from '../../contexts/Pools';
 
 export const Pool = (props: any) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
+  const { openModalWith } = useModal();
+  const { isBonding } = usePools();
   const { meta } = usePools();
 
   const metadata = meta[batchKey]?.metadata ?? [];
@@ -31,7 +34,7 @@ export const Pool = (props: any) => {
   return (
     <Wrapper>
       <div>
-        <h3>{id.toNumber()}</h3>
+        <h3>{id}</h3>
         <Identicon value={addresses.stash} size={26} />
         {!metadataSynced ? (
           <motion.div
@@ -64,6 +67,24 @@ export const Pool = (props: any) => {
               &nbsp; {memberCounter}
             </div>
           </motion.div>
+          {!isBonding() && (
+            <div className="label">
+              <button
+                type="button"
+                onClick={() =>
+                  openModalWith(
+                    'JoinPool',
+                    {
+                      id,
+                    },
+                    'small'
+                  )
+                }
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>

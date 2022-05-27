@@ -6,14 +6,30 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
+import { clipAddress } from 'Utils';
+import { Identicon } from 'library/Identicon';
+import { useNotifications } from 'contexts/Notifications';
+import { useAccount } from 'contexts/Account';
+import { getIdentityDisplay } from 'library/Validator/Utils';
 import { AccountWrapper } from './Wrappers';
-import { Identicon } from '../../library/Identicon';
-import { clipAddress } from '../../Utils';
-import { useNotifications } from '../../contexts/Notifications';
 
 export const PoolAccount = (props: any) => {
-  const { address, last } = props;
+  const { address, last, batchKey, batchIndex } = props;
+
   const { addNotification } = useNotifications();
+  const { meta } = useAccount();
+
+  const identities = meta[batchKey]?.identities ?? [];
+  const supers = meta[batchKey]?.supers ?? [];
+
+  const identitiesSynced = identities.length > 0 ?? false;
+  const supersSynced = supers.length > 0 ?? false;
+  const synced = identitiesSynced && supersSynced;
+
+  const display = getIdentityDisplay(
+    identities[batchIndex],
+    supers[batchIndex]
+  );
 
   let notification = {};
 
@@ -26,9 +42,21 @@ export const PoolAccount = (props: any) => {
 
   return (
     <AccountWrapper last={last}>
-      <div className="account">
+      <motion.div
+        className="account"
+        initial={{ opacity: 0.5 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         {address === null ? (
           <h4>Not in a Pool</h4>
+        ) : synced && display !== null ? (
+          <>
+            <div className="icon">
+              <Identicon value={address} size="1.6rem" />
+            </div>
+            <h4>{display}</h4>
+          </>
         ) : (
           <>
             <div className="icon">
@@ -58,7 +86,7 @@ export const PoolAccount = (props: any) => {
             )}
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </AccountWrapper>
   );
 };

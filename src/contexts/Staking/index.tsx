@@ -289,7 +289,7 @@ export const StakingProvider = ({
     );
   }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
-  /* Gets an account's stored target validators */
+  /* Sets an account's stored target validators */
   const setTargets = (_targets: any) => {
     localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(_targets));
     _setTargets(_targets);

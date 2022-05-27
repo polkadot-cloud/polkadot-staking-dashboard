@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
+import { usePools } from 'contexts/Pools';
 import { Wrapper, Item } from './Wrappers';
 import { useStaking } from '../../../contexts/Staking';
 import { useApi } from '../../../contexts/Api';
@@ -24,6 +25,7 @@ export const Announcements = () => {
   const { units } = network;
   const { staking }: any = useStaking();
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
+  const { bondedPools } = usePools();
 
   const container = {
     hidden: { opacity: 0 },
@@ -77,6 +79,15 @@ export const Announcements = () => {
       subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(
         maxNominatorsCount.toNumber()
       )}.`,
+    });
+  }
+
+  // bonded pools available
+  if (bondedPools.length) {
+    announcements.push({
+      class: 'pools',
+      title: `${bondedPools.length} nomination pools are active`,
+      subtitle: `Nomination pools are available to join on the ${network.name} network.`,
     });
   }
 
