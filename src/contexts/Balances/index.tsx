@@ -121,7 +121,9 @@ export const BalancesProvider = ({
         _account.bonded = _bonded;
 
         // get account ledger if controller present (separate API call)
-        if (_bonded !== null) {
+        if (_bonded === null) {
+          _account.ledger = defaults.ledger;
+        } else {
           const ledger: any = await api.query.staking.ledger(_bonded);
           const _ledger = ledger.unwrapOr(null);
 
