@@ -5,16 +5,18 @@ import { Separator } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { useApi } from '../../contexts/Api';
 import { usePools } from '../../contexts/Pools';
-import { useConnect } from '../../contexts/Connect';
 import { useModal } from '../../contexts/Modal';
 import { Stat } from '../../library/Stat';
 import { APIContextInterface } from '../../types/api';
+import { planckBnToUnit } from '../../Utils';
 
 export const Status = () => {
   const { network } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect();
-  const { membership, isOwner } = usePools();
+  const { units, unit } = network;
+  const { membership, isOwner, getPoolBondOptions } = usePools();
   const { openModalWith } = useModal();
+
+  const { active } = getPoolBondOptions();
 
   // Pool status `Stat` props
   const labelMembership = membership ? 'Active in Pool' : 'Not in a Pool';
@@ -50,27 +52,13 @@ export const Status = () => {
 
   // Bonded in pool `Stat` props
   const labelBonded = membership
-    ? `${membership.bondedAmount} ${network.unit}`
-    : `0 ${network.unit}`;
-  const buttonsBonded = membership
-    ? [
-        {
-          title: '+',
-          small: true,
-          onClick: () => {},
-        },
-        {
-          title: '-',
-          small: true,
-          onClick: () => {},
-        },
-      ]
-    : undefined;
+    ? `${planckBnToUnit(active, units)} ${unit}`
+    : `0 ${unit}`;
 
   // Unclaimed rewards `Stat` props
   const labelRewards = membership
-    ? `${membership.unclaimedRewards} ${network.unit}`
-    : `0 ${network.unit}`;
+    ? `${membership.unclaimedRewards} ${unit}`
+    : `0 ${unit}`;
   const buttonsRewards = membership
     ? [
         {
@@ -94,7 +82,6 @@ export const Status = () => {
         label="Bonded in Pool"
         assistant={['pools', 'Bonded in Pool']}
         stat={labelBonded}
-        buttons={buttonsBonded}
       />
       <Separator />
       <Stat
