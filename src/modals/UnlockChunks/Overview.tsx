@@ -27,13 +27,13 @@ export const Overview = forwardRef(
     const { unlocking } = ledger;
 
     // calculate total withdraw available
-    const withdrawAvailable = new BN(0);
+    let withdrawAvailable = new BN(0);
     for (const _chunk of unlocking) {
       const { era, value } = _chunk;
       const left = era - activeEra.index;
 
       if (left <= 0) {
-        withdrawAvailable.add(value);
+        withdrawAvailable = withdrawAvailable.add(value);
       }
     }
 
@@ -41,8 +41,8 @@ export const Overview = forwardRef(
       <ContentWrapper ref={ref}>
         {withdrawAvailable.toNumber() > 0 && (
           <>
-            <ChunkWrapper>
-              <h4>Withdraw Funds</h4>
+            <ChunkWrapper noFill>
+              <h4>Available to Withdraw</h4>
               <div>
                 <section>
                   <h2>
@@ -69,7 +69,6 @@ export const Overview = forwardRef(
                 </section>
               </div>
             </ChunkWrapper>
-            <Separator />
           </>
         )}
         {unlocking.length === 0 && <h2>No Unlocks</h2>}
@@ -79,7 +78,7 @@ export const Overview = forwardRef(
 
           return (
             <ChunkWrapper key={`unlock_chunk_${index}`}>
-              <h4>Unlocks after era {era}</h4>
+              <h4>{left <= 0 ? 'Unlocked' : `Unlocks after era ${era}`}</h4>
               <div>
                 <section>
                   <h2>

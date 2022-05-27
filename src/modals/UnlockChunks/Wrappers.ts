@@ -39,7 +39,7 @@ export const ContentWrapper = styled.div`
   padding: 0 1rem;
 `;
 
-export const ChunkWrapper = styled.div`
+export const ChunkWrapper = styled.div<any>`
   flex: 1;
   display: flex;
   flex-flow: column wrap;
@@ -73,12 +73,13 @@ export const ChunkWrapper = styled.div`
     margin: 1rem 0 0 0;
   }
   h4 {
-    background: ${buttonPrimaryBackground};
+    background: ${(props) =>
+      !props.noFill ? buttonPrimaryBackground : 'none'};
+    padding: ${(props) => (!props.noFill ? '0.5rem' : '0 0.5rem')};
     color: ${textSecondary};
     box-sizing: border-box;
     margin: 0;
     width: 100%;
-    padding: 0.5rem;
     border-radius: 0.75rem;
   }
 `;
