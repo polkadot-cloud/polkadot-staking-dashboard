@@ -70,7 +70,7 @@ export const Status = () => {
     : undefined;
 
   return (
-    <SectionWrapper style={{ height: 300 }}>
+    <SectionWrapper height="300">
       <Stat
         label="Status"
         assistant={['pools', 'Pool Status']}
