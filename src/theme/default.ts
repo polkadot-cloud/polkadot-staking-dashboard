@@ -9,7 +9,7 @@ const v = (light: string, dark: string) => ({
 export const defaultThemes: any = {
   transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
   primary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
-  secondary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
+  secondary: v('#e474bc', '#e474bc'),
   text: {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
