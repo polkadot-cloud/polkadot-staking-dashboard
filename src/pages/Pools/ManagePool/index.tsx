@@ -14,7 +14,7 @@ import { PoolNominations } from '../PoolNominations';
 import { Button } from '../../../library/Button';
 
 export const ManagePool = () => {
-  const { isNominator, membership, setTargets, targets } = usePools();
+  const { isNominator, setTargets, targets } = usePools();
   const { openModalWith } = useModal();
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
