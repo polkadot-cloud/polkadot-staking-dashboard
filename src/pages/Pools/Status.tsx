@@ -57,7 +57,7 @@ export const Status = () => {
 
   // Unclaimed rewards `Stat` props
   const labelRewards = membership
-    ? `${membership.unclaimedRewards} ${unit}`
+    ? `${membership?.unclaimedRewards ?? 0} ${unit}`
     : `0 ${unit}`;
   const buttonsRewards = membership
     ? [
