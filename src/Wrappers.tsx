@@ -64,12 +64,12 @@ export const EntryWrapper = styled.div`
     }
   }
   .page-padding {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
 
     @media (min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
+      padding-left: 1.75rem;
+      padding-right: 1.75rem;
     }
     @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
       padding: 0 3rem 0 1rem;
@@ -113,6 +113,8 @@ export const SideInterfaceWrapper = styled.div<any>`
     props.minimised ? '75px' : `${SIDE_MENU_INTERFACE_WIDTH}px`};
   max-width: ${(props) =>
     props.minimised ? '75px' : `${SIDE_MENU_INTERFACE_WIDTH}px`};
+
+  margin-right: ${(props) => (!props.minimised ? 0 : '1.25rem')};
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     position: fixed;
@@ -279,5 +281,5 @@ export const RowSecondaryWrapper = styled.div<any>`
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   width: 100%;
-  margin: 1rem 0;
+  margin: 0.75rem 0;
 `;

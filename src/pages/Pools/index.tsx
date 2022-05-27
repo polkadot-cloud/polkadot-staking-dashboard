@@ -57,7 +57,7 @@ export const Pools = (props: PageProps) => {
           <Status />
         </RowPrimaryWrapper>
         <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <SectionWrapper height={310}>
+          <SectionWrapper height={300}>
             <ManageBond />
           </SectionWrapper>
         </RowSecondaryWrapper>

@@ -43,7 +43,7 @@ export const Status = () => {
   const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
 
   return (
-    <SectionWrapper height={310}>
+    <SectionWrapper height={300}>
       <Stat
         label="Status"
         assistant={['stake', 'Staking Status']}

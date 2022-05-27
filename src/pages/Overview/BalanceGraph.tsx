@@ -139,7 +139,7 @@ export const BalanceGraph = () => {
 
   const ref: any = React.useRef();
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 253);
+  const { width, height, minHeight } = formatSize(size, 256);
 
   return (
     <>

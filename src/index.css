@@ -57,7 +57,7 @@ h3 {
 h4 {
   font-variation-settings: 'wght' 540;
   font-weight: normal;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   line-height: 1.4rem;
 }
 
@@ -65,12 +65,12 @@ h5 {
   color: #333;
   font-variation-settings: 'wght' 540;
   font-weight: normal;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   margin: 1rem 0;
 }
 
 p {
-  font-size: 0.92rem;
+  font-size: 0.98rem;
   line-height: 1.4rem;
   margin: 0.5rem 0;
 }
