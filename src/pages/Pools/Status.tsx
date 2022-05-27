@@ -8,18 +8,17 @@ import { usePools } from '../../contexts/Pools';
 import { useModal } from '../../contexts/Modal';
 import { Stat } from '../../library/Stat';
 import { APIContextInterface } from '../../types/api';
-import { planckBnToUnit } from '../../Utils';
 
 export const Status = () => {
   const { network } = useApi() as APIContextInterface;
-  const { units, unit } = network;
-  const { membership, isOwner, getPoolBondOptions } = usePools();
+  const { unit } = network;
+  const { membership, isOwner } = usePools();
   const { openModalWith } = useModal();
 
-  const { active } = getPoolBondOptions();
-
   // Pool status `Stat` props
-  const labelMembership = membership ? 'Active in Pool' : 'Not in a Pool';
+  const labelMembership = membership
+    ? `Active in Pool ${membership.pool.id}`
+    : 'Not in a Pool';
 
   let buttonsMembership;
   if (!membership) {
@@ -50,11 +49,6 @@ export const Status = () => {
     ];
   }
 
-  // Bonded in pool `Stat` props
-  const labelBonded = membership
-    ? `${planckBnToUnit(active, units)} ${unit}`
-    : `0 ${unit}`;
-
   // Unclaimed rewards `Stat` props
   const labelRewards = membership
     ? `${membership?.unclaimedRewards ?? 0} ${unit}`
@@ -76,12 +70,6 @@ export const Status = () => {
         assistant={['pools', 'Pool Status']}
         stat={labelMembership}
         buttons={buttonsMembership}
-      />
-      <Separator />
-      <Stat
-        label="Bonded in Pool"
-        assistant={['pools', 'Bonded in Pool']}
-        stat={labelBonded}
       />
       <Separator />
       <Stat
