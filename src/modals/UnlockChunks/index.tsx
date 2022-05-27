@@ -15,9 +15,8 @@ import { useModal } from '../../contexts/Modal';
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const modal = useModal();
-  const { getBondedAccount, getAccountLedger }: any = useBalances();
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
+  const { getAccountLedger }: any = useBalances();
+  const ledger = getAccountLedger(activeAccount);
   const { unlocking } = ledger;
 
   // active modal section

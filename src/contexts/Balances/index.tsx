@@ -89,11 +89,10 @@ export const BalancesProvider = ({
     const unsub = await api.queryMulti(
       [
         [api.query.system.account, address],
-        [api.query.staking.ledger, address],
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      ([{ data: balance }, ledger, bonded, nominations]: any) => {
+      async ([{ data: balance }, bonded, nominations]: any) => {
         const _account: any = {
           address,
         };
@@ -121,29 +120,34 @@ export const BalancesProvider = ({
         _bonded = _bonded === null ? null : _bonded.toHuman();
         _account.bonded = _bonded;
 
-        // set account ledger
-        const _ledger = ledger.unwrapOr(null);
-        if (_ledger === null) {
-          _account.ledger = defaults.ledger;
-        } else {
-          const { stash, total, active, unlocking } = _ledger;
+        // get account ledger if controller present (separate API call)
+        if (_bonded !== null) {
+          const ledger: any = await api.query.staking.ledger(_bonded);
+          const _ledger = ledger.unwrapOr(null);
 
-          // format unlocking chunks
-          const _unlocking = [];
-          for (const u of unlocking.toHuman()) {
-            const era = rmCommas(u.era);
-            const value = rmCommas(u.value);
-            _unlocking.push({
-              era: Number(era),
-              value: new BN(value),
-            });
+          // fallback to default ledger if not present
+          if (_ledger === null) {
+            _account.ledger = defaults.ledger;
+          } else {
+            const { stash, total, active, unlocking } = _ledger;
+
+            // format unlocking chunks
+            const _unlocking = [];
+            for (const u of unlocking.toHuman()) {
+              const era = rmCommas(u.era);
+              const value = rmCommas(u.value);
+              _unlocking.push({
+                era: Number(era),
+                value: new BN(value),
+              });
+            }
+            _account.ledger = {
+              stash: stash.toHuman(),
+              active: active.toBn(),
+              total: total.toBn(),
+              unlocking: _unlocking,
+            };
           }
-          _account.ledger = {
-            stash: stash.toHuman(),
-            active: active.toBn(),
-            total: total.toBn(),
-            unlocking: _unlocking,
-          };
         }
 
         // set account nominations
@@ -263,9 +267,8 @@ export const BalancesProvider = ({
     if (account === null) {
       return defaults.bondOptions;
     }
-    const controller = getBondedAccount(address);
     const balance = getAccountBalance(address);
-    const ledger = getAccountLedger(controller);
+    const ledger = getAccountLedger(address);
     const { freeAfterReserve } = balance;
     const { active, unlocking } = ledger;
 

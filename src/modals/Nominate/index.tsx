@@ -28,7 +28,7 @@ export const Nominate = () => {
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
   const { nominations } = targets;
-  const ledger = getAccountLedger(controller);
+  const ledger = getAccountLedger(activeAccount);
   const { active } = ledger;
 
   const activeBase = planckBnToUnit(active, units);
