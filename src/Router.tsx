@@ -72,7 +72,7 @@ export const RouterInner = () => {
                         transition={{ duration: 0.2 }}
                       >
                         <Helmet>
-                          <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
+                          <title>{`${page.title} : ${TITLE_DEFAULT}`}</title>
                         </Helmet>
                         <Entry page={page} />
                       </PageWrapper>
