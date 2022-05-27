@@ -1,7 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef } from 'react';
+import throttle from 'lodash.throttle';
+import React, { useRef, useEffect } from 'react';
+import { SHOW_SIDE_BAR_WIDTH_THRESHOLD } from '../../../constants';
 import { Wrapper, ContentWrapper } from './Wrappers';
 import { useSideBar } from '../../../contexts/SideBar';
 import { useOutsideAlerter } from '../../Hooks';
@@ -18,6 +20,24 @@ export const SideBar = ({ children }: { children: React.ReactNode }) => {
     },
     ['ignore-toggle-side-bar']
   );
+
+  // listen to window resize to hide SideBar
+  useEffect(() => {
+    window.addEventListener('resize', windowThrottle);
+    return () => {
+      window.removeEventListener('resize', windowThrottle);
+    };
+  }, []);
+
+  const throttleCallback = () => {
+    if (window.innerWidth >= SHOW_SIDE_BAR_WIDTH_THRESHOLD) {
+      closeSideBar();
+    }
+  };
+  const windowThrottle = throttle(throttleCallback, 200, {
+    trailing: true,
+    leading: false,
+  });
 
   const variants = {
     hidden: {

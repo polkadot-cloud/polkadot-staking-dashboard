@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useLocation } from 'react-router-dom';
-import { Wrapper, HeadingWrapper, Item, SmallScreensOnly } from './Wrappers';
+import { Wrapper, HeadingWrapper, Item, LargeScreensOnly } from './Wrappers';
 import { useAssistant } from '../../contexts/Assistant';
 import { useConnect } from '../../contexts/Connect';
 import { SideBar } from './SideBar';
@@ -52,9 +52,9 @@ export const Headers = () => {
         <SideBarToggle />
 
         {/* connected accounts */}
-        <SmallScreensOnly>
+        <LargeScreensOnly>
           <Connected />
-        </SmallScreensOnly>
+        </LargeScreensOnly>
 
         {/* not connected */}
         <Connect />

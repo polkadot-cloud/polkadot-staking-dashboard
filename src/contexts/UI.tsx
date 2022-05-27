@@ -23,6 +23,7 @@ export interface UIContextState {
   toggleFilterValidators: (v: string, l: any) => void;
   toggleService: (k: string) => void;
   getSetupProgress: (a: string) => any;
+  getSetupProgressPercent: (a: string) => any;
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
   getServices: () => void;
@@ -48,6 +49,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   toggleFilterValidators: (v: string, l: any) => {},
   toggleService: (k: string) => {},
   getSetupProgress: (a: string) => {},
+  getSetupProgressPercent: (a: string) => {},
   setActiveAccountSetup: (p: any) => {},
   setActiveAccountSetupSection: (s: number) => {},
   getServices: () => {},
@@ -404,6 +406,18 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     return _setup.progress;
   };
 
+  const getSetupProgressPercent = (address: string) => {
+    const setupProgress = getSetupProgress(activeAccount);
+    const p = 25;
+    let progress = 0;
+    if (setupProgress.bond > 0) progress += p;
+    if (setupProgress.controller !== null) progress += p;
+    if (setupProgress.nominations.length) progress += p;
+    if (setupProgress.payee !== null) progress += p;
+
+    return progress;
+  };
+
   /*
    * Sets setup progress for an address
    */
@@ -491,6 +505,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         toggleFilterValidators,
         toggleService,
         getSetupProgress,
+        getSetupProgressPercent,
         setActiveAccountSetup,
         setActiveAccountSetupSection,
         getServices,

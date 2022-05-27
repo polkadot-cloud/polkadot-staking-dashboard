@@ -4,6 +4,7 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
+import { useStaking } from 'contexts/Staking';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -29,6 +30,7 @@ export interface PoolsContextState {
   getPoolBondedAccount: () => any;
   getPoolBondOptions: () => any;
   setTargets: (targest: any) => void;
+  getNominationsStatus: () => any;
   membership: any;
   enabled: number;
   meta: any;
@@ -48,6 +50,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
     getPoolBondedAccount: () => undefined,
     getPoolBondOptions: () => defaults.poolBondOptions,
     setTargets: (targets: any) => {},
+    getNominationsStatus: () => {},
     membership: undefined,
     enabled: 0,
     meta: [],
@@ -63,6 +66,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { poolsPalletId } = consts;
   const { features, units } = network;
+  const { inSetup, eraStakers } = useStaking();
 
   const { activeAccount } = useConnect();
   const { getAccountBalance }: any = useBalances();
@@ -300,7 +304,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const subscribeToPoolNominations = async (poolBondAddress: string) => {
     if (!api) return;
-    console.log(poolBondAddress);
     const unsub = await api.query.staking.nominators(
       poolBondAddress,
       (nominations: any) => {
@@ -314,7 +317,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
             submittedIn: _nominations.submittedIn.toHuman(),
           };
         }
-        console.log(_nominations);
         setPoolNominations({ nominations: _nominations, unsub });
       }
     );
@@ -549,6 +551,38 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     setPoolSubs(_unsubs);
   };
 
+  /*
+   * Get the status of nominations.
+   * Possible statuses: waiting, inactive, active.
+   */
+  const getNominationsStatus = () => {
+    if (!targets) {
+      return defaults.nominationStatus;
+    }
+
+    const { nominations } = targets;
+    const statuses: any = {};
+    for (const nomination of nominations) {
+      const s = eraStakers.current.stakers.find(
+        (_n: any) => _n.address === nomination
+      );
+
+      if (s === undefined) {
+        statuses[nomination] = 'waiting';
+        continue;
+      }
+      const exists = (s.others ?? []).find(
+        (_o: any) => _o.who === activeAccount
+      );
+      if (exists === undefined) {
+        statuses[nomination] = 'inactive';
+        continue;
+      }
+      statuses[nomination] = 'active';
+    }
+    return statuses;
+  };
+
   return (
     <PoolsContext.Provider
       value={{
@@ -560,6 +594,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         getPoolBondedAccount,
         getPoolBondOptions,
         setTargets,
+        getNominationsStatus,
         membership: poolMembership?.membership,
         enabled,
         stats: poolsConfig.stats,

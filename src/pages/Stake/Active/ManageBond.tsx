@@ -20,12 +20,10 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { getAccountLedger, getBondedAccount, getBondOptions }: any =
-    useBalances();
+  const { getAccountLedger, getBondOptions }: any = useBalances();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
+  const ledger = getAccountLedger(activeAccount);
   const { active, total } = ledger;
   const { freeToBond, totalUnlocking, totalUnlockChuncks } =
     getBondOptions(activeAccount);
