@@ -14,6 +14,9 @@ import { UpdatePayee } from './UpdatePayee';
 import { StopNominating } from './StopNominating';
 import { Nominate } from './Nominate';
 import { UnlockChunks } from './UnlockChunks';
+import { CreatePool } from './CreatePool';
+import { NominatePool } from './NominatePool';
+import { JoinPool } from './JoinPool';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -88,6 +91,9 @@ export const Modal = () => {
             {modal === 'StopNominating' && <StopNominating />}
             {modal === 'Nominate' && <Nominate />}
             {modal === 'UnlockChunks' && <UnlockChunks />}
+            {modal === 'CreatePool' && <CreatePool />}
+            {modal === 'NominatePool' && <NominatePool />}
+            {modal === 'JoinPool' && <JoinPool />}
           </ContentWrapper>
         </HeightWrapper>
         <button

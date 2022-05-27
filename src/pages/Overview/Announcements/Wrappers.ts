@@ -26,7 +26,7 @@ export const Item = styled(motion.div)`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin: 0 0 0.8rem;
+    margin: 0 0 0.5rem;
     padding: 0.2rem 0;
 
     &.neutral {
@@ -38,12 +38,14 @@ export const Item = styled(motion.div)`
     &.warning {
       color: #b5a200;
     }
+    &.pools {
+      color: #cd68a9;
+    }
   }
 
   p {
     margin: 0;
     color: ${textSecondary};
-    font-size: 0.9rem;
     line-height: 1.2rem;
     font-variation-settings: 'wght' 490;
   }

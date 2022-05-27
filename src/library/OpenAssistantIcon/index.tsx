@@ -4,9 +4,10 @@
 import { Wrapper } from './Wrapper';
 import { useAssistant } from '../../contexts/Assistant';
 import { ReactComponent as IconSVG } from '../../img/assistant.svg';
+import { AssistantContextInterface } from '../../types/assistant';
 
 export const OpenAssistantIcon = (props: any) => {
-  const { goToDefinition } = useAssistant();
+  const { goToDefinition } = useAssistant() as AssistantContextInterface;
 
   const { page, title } = props;
 

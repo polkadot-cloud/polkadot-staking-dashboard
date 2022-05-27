@@ -17,7 +17,7 @@ import {
   MainInterfaceWrapper,
   BodyInterfaceWrapper,
 } from './Wrappers';
-import { PAGES_CONFIG } from './pages';
+import { PAGES_CONFIG } from './config/pages';
 import { NetworkBar } from './library/NetworkBar';
 import { Modal } from './modals';
 import { Headers } from './library/Headers';
@@ -72,7 +72,7 @@ export const RouterInner = () => {
                         transition={{ duration: 0.2 }}
                       >
                         <Helmet>
-                          <title>{`${page.title} :: ${TITLE_DEFAULT}`}</title>
+                          <title>{`${page.title} : ${TITLE_DEFAULT}`}</title>
                         </Helmet>
                         <Entry page={page} />
                       </PageWrapper>

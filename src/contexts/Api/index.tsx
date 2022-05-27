@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { Codec } from '@polkadot/types-codec/types';
 import { stringToU8a } from '@polkadot/util';
 import {
   BONDING_DURATION,
@@ -116,16 +115,14 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
 
     const maxElectingVoters = _consts[4]
-      ? Number(_consts[2].toString())
+      ? Number(_consts[4].toString())
       : MAX_ELECTING_VOTERS;
 
     const expectedBlockTime = _consts[5]
-      ? Number(_consts[2].toString())
+      ? Number(_consts[5].toString())
       : EXPECTED_BLOCK_TIME;
 
-    const poolsPalletId = _consts[6]
-      ? stringToU8a(_consts[2].toString())
-      : stringToU8a('0');
+    const poolsPalletId = _consts[6] ? _consts[6].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({

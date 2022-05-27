@@ -61,7 +61,7 @@ export const Bonded = (props: any) => {
         },
       },
     },
-    cutout: '70%',
+    cutout: '75%',
   };
 
   const data = {

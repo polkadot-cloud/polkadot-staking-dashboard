@@ -15,10 +15,11 @@ import { Toggle as SideBarToggle } from './SideBar/Toggle';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
+import { AssistantContextInterface } from '../../types/assistant';
 
 export const Headers = () => {
   const { pathname } = useLocation();
-  const assistant = useAssistant();
+  const assistant = useAssistant() as AssistantContextInterface;
   const { activeAccount }: any = useConnect();
   const { validators } = useValidators();
   const { pending } = useExtrinsics();

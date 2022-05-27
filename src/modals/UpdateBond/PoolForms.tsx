@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { usePools } from 'contexts/Pools';
 import { FooterWrapper, Separator } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 import { useModal } from '../../contexts/Modal';
@@ -17,28 +18,20 @@ import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { Warning } from '../../library/Form/Warning';
 import { useStaking } from '../../contexts/Staking';
 import { planckBnToUnit } from '../../Utils';
-import { APIContextInterface } from '../../types/api';
 
-export const Forms = forwardRef((props: any, ref: any) => {
+export const PoolForms = forwardRef((props: any, ref: any) => {
   const { setSection, task } = props;
-
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network }: any = useApi();
+  const { activeAccount } = useConnect();
   const { units } = network;
   const { setStatus: setModalStatus }: any = useModal();
-  const { activeAccount } = useConnect();
-  const { staking, getControllerNotImported } = useStaking();
-  const { minNominatorBond } = staking;
-  const { getBondOptions, getBondedAccount, getAccountNominations }: any =
-    useBalances();
-  const { freeToBond, freeToUnbond, totalPossibleBond } =
-    getBondOptions(activeAccount);
-  const controller = getBondedAccount(activeAccount);
-  const nominations = getAccountNominations(activeAccount);
-  const controllerNotImported = getControllerNotImported(controller);
+  const { membership, getPoolBondOptions, stats } = usePools();
+  const { minJoinBond, minCreateBond } = stats;
+  const { freeToBond, freeToUnbond, totalPossibleBond } = getPoolBondOptions();
 
   // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = Math.max(
-    freeToUnbond - planckBnToUnit(minNominatorBond, units),
+  const freeToUnbondToMinPoolBond = Math.max(
+    freeToUnbond - planckBnToUnit(minJoinBond, units),
     0
   );
 
@@ -54,7 +47,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
       task === 'bond_some' || task === 'bond_all'
         ? freeToBond
         : task === 'unbond_some'
-        ? freeToUnbondToMinNominatorBond
+        ? freeToUnbondToMinPoolBond
         : freeToUnbond;
 
     setBond({ bond: _bond });
@@ -67,54 +60,34 @@ export const Forms = forwardRef((props: any, ref: any) => {
       }
     }
     if (task === 'unbond_all') {
-      if (
-        freeToUnbond > 0 &&
-        nominations.length === 0 &&
-        !controllerNotImported
-      ) {
-        setBondValid(true);
-      } else {
-        setBondValid(false);
-      }
+      // ToDO: check if there is any specific cases that needs to not be allowed to unbond all.
+      setBondValid(true);
     }
     if (task === 'unbond_some') {
-      if (!controllerNotImported) {
-        setBondValid(true);
-      } else {
-        setBondValid(false);
-      }
+      setBondValid(true);
     }
   }, [task]);
 
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!bondValid || !api) {
+    if (!bondValid) {
       return _tx;
     }
 
-    // controller must be imported
-    if (
-      (task === 'unbond_some' || task === 'unbond_all') &&
-      controllerNotImported
-    ) {
-      return _tx;
-    }
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
-
+    const bondToSubmit = Math.floor(bond.bond * 10 ** units);
     if (task === 'bond_some' || task === 'bond_all') {
-      _tx = api.tx.staking.bondExtra(bondToSubmit);
+      _tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
     } else if (task === 'unbond_some' || task === 'unbond_all') {
-      _tx = api.tx.staking.unbond(bondToSubmit);
+      _tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     }
     return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from:
-      task === 'bond_some' || task === 'bond_all' ? activeAccount : controller,
+    from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
@@ -153,7 +126,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
             {freeToBond === 0 && (
               <Warning text={`You have no free ${network.unit} to bond.`} />
             )}
-            <h4>Amount to bond:</h4>
+            <h4>Pool!! Amount to bond:</h4>
             <h2>
               {freeToBond} {network.unit}
             </h2>
@@ -174,7 +147,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
             <BondInputWithFeedback
               unbond
               listenIsValid={setBondValid}
-              defaultBond={freeToUnbondToMinNominatorBond}
+              defaultBond={freeToUnbondToMinPoolBond}
               setters={[
                 {
                   set: setBond,
@@ -193,16 +166,6 @@ export const Forms = forwardRef((props: any, ref: any) => {
         )}
         {task === 'unbond_all' && (
           <>
-            {controllerNotImported ? (
-              <Warning text="You must have your controller account imported to unbond." />
-            ) : (
-              <></>
-            )}
-            {nominations.length ? (
-              <Warning text="Stop nominating before unbonding all funds." />
-            ) : (
-              <></>
-            )}
             <h4>Amount to unbond:</h4>
             <h2>
               {freeToUnbond} {network.unit}
@@ -249,4 +212,4 @@ export const Forms = forwardRef((props: any, ref: any) => {
   );
 });
 
-export default Forms;
+export default PoolForms;

@@ -116,7 +116,7 @@ export const StakingProvider = ({
         ]: any) => {
           setStakingMetrics({
             ...stakingMetrics,
-            payee: _payee.toHuman(),
+            payee: Object.keys(_payee.toHuman())[0],
             historyDepth: _historyDepth.toBn(),
             lastTotalStake: _lastTotalStake.toBn(),
             validatorCount: _validatorCount.toBn(),
@@ -289,7 +289,7 @@ export const StakingProvider = ({
     );
   }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
-  /* Gets an account's stored target validators */
+  /* Sets an account's stored target validators */
   const setTargets = (_targets: any) => {
     localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(_targets));
     _setTargets(_targets);

@@ -50,7 +50,7 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title="What's Happening" />
+      <PageTitle title="Overview" />
       <StatBoxList>
         <SupplyStakedStatBox />
         <TotalNominatorsStatBox />
@@ -58,7 +58,7 @@ export const Overview = () => {
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowSecondaryWrapper hOrder={0} vOrder={0}>
-          <GraphWrapper flex>
+          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
             <ActiveAccount />
             <BalanceGraph />
           </GraphWrapper>

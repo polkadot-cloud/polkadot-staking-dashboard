@@ -3,6 +3,7 @@
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUi } from 'contexts/UI';
 import { PageProps } from '../types';
 import {
   PageRowWrapper,
@@ -26,13 +27,15 @@ import { Status } from './Status';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { APIContextInterface } from '../../types/api';
+import { Roles } from './Roles';
 
 export const Pools = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
-  const { bondedPools, membership } = usePools();
+  const { bondedPools, isBonding, isNominator, membership } = usePools();
+  const { isSyncing } = useUi();
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -54,17 +57,26 @@ export const Pools = (props: PageProps) => {
           <Status />
         </RowPrimaryWrapper>
         <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <SectionWrapper height={310}>
+          <SectionWrapper height={300}>
             <ManageBond />
           </SectionWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
-      <ManagePool />
+      {isBonding() && (
+        <>
+          <ManagePool />
+          <PageRowWrapper className="page-padding" noVerticalSpacer>
+            <SectionWrapper>
+              <Roles />
+            </SectionWrapper>
+          </PageRowWrapper>
+        </>
+      )}
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <SectionWrapper>
           <SectionHeaderWrapper>
             <h2>
-              Pools
+              {isBonding() || isSyncing ? 'Pools' : 'Join a Pool'}
               <OpenAssistantIcon page="pools" title="Nomination Pools" />
             </h2>
           </SectionHeaderWrapper>
