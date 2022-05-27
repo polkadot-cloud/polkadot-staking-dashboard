@@ -3,6 +3,7 @@
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUi } from 'contexts/UI';
 import { PageProps } from '../types';
 import {
   PageRowWrapper,
@@ -34,6 +35,7 @@ export const Pools = (props: PageProps) => {
   const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
   const { bondedPools, isBonding, isNominator, membership } = usePools();
+  const { isSyncing } = useUi();
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -74,7 +76,7 @@ export const Pools = (props: PageProps) => {
         <SectionWrapper>
           <SectionHeaderWrapper>
             <h2>
-              {isBonding() ? 'Pools' : 'Join a Pool'}
+              {isBonding() || isSyncing ? 'Pools' : 'Join a Pool'}
               <OpenAssistantIcon page="pools" title="Nomination Pools" />
             </h2>
           </SectionHeaderWrapper>
