@@ -59,7 +59,6 @@ export const ValidatorsProvider = ({
   const { activeAccount }: any = useConnect();
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getAccountNominations }: any = useBalances();
-
   const { poolNominations } = usePools();
 
   const { maxNominatorRewardedPerValidator } = consts;
