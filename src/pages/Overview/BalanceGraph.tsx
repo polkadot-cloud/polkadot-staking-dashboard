@@ -93,7 +93,7 @@ export const BalanceGraph = () => {
         },
       },
     },
-    cutout: '75%',
+    cutout: '76%',
   };
 
   // determine stats from network features
@@ -139,7 +139,7 @@ export const BalanceGraph = () => {
 
   const ref: any = React.useRef();
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 256);
+  const { width, height, minHeight } = formatSize(size, 240);
 
   return (
     <>
