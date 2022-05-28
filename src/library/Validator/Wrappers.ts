@@ -3,18 +3,17 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundValidator } from '../../theme';
+import { backgroundValidator, borderPrimary, textSecondary } from '../../theme';
 
-export const Wrapper = styled(motion.div)<any>`
-  padding: 0.5rem;
+export const Wrapper = styled.div<any>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: 3.2rem;
+  height: ${(props) => (props.format === 'nomination' ? '5.7rem' : '3.2rem')};
   position: relative;
   margin: 0.5rem;
 
-  > div {
+  > .inner {
     background: ${backgroundValidator};
     box-sizing: border-box;
     flex: 1;
@@ -30,6 +29,7 @@ export const Wrapper = styled(motion.div)<any>`
     left: 0px;
     width: 100%;
     height: 100%;
+    padding: 0;
 
     .row {
       box-sizing: border-box;
@@ -39,54 +39,58 @@ export const Wrapper = styled(motion.div)<any>`
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
-      padding: 0.75rem 0.6rem;
-    }
-    svg {
-      margin: 0;
+
+      &.status {
+        height: 2.5rem;
+      }
+      svg {
+        margin: 0;
+      }
     }
   }
 `;
 
-export const Identity = styled(motion.div)`
+export const Separator = styled.div`
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid ${borderPrimary};
+`;
+
+export const IdentityWrapper = styled(motion.div)`
   box-sizing: border-box;
   display: flex;
   margin-left: 0.75rem;
   margin-right: 0.5rem;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   align-items: center;
   align-content: center;
   overflow: hidden;
-  flex: 1 1 100%;
+  flex: 1 1 25%;
+  position: relative;
 
   h4 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 2rem;
+    padding-left: 2.2rem;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  .status {
-    margin-left: 0.75rem;
-
-    &.active {
-      color: green;
-    }
-    &.inactive {
-      opacity: 0.4;
-    }
-    &.waiting {
-      opacity: 0.4;
-    }
-  }
 `;
 
 export const Labels = styled.div`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
   overflow: hidden;
   flex: 1 1 100%;
+  padding: 0 0.5rem;
 
   .label {
     margin-left: 0.35rem;
@@ -108,6 +112,13 @@ export const Labels = styled.div`
       }
     }
   }
+`;
+
+export const NominationStatusWrapper = styled.div<{ status: string }>`
+  margin-right: 0.35rem;
+  padding: 0 1rem;
+  color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
+  opacity: ${(props) => (props.status === 'active' ? 1 : 0.75)};
 `;
 
 export default Wrapper;

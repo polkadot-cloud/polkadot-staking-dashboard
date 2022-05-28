@@ -38,6 +38,7 @@ export const PoolNominations = () => {
                     validators={poolNominated}
                     batchKey={batchKey}
                     title="Your Nominations"
+                    format="nomination"
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle
