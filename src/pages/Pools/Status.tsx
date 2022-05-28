@@ -37,7 +37,7 @@ export const Status = () => {
 
   // Pool status `Stat` props
   const labelMembership = membership
-    ? `Active in Pool ${membership.pool.id}`
+    ? `Active in Pool ${membership.poolId}`
     : 'Not in a Pool';
 
   let buttonsMembership;
