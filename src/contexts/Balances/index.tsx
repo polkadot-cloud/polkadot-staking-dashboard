@@ -3,25 +3,20 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
+import { Fn, Unsubs } from 'types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 import { toFixedIfNecessary, planckBnToUnit, rmCommas } from '../../Utils';
 import { APIContextInterface } from '../../types/api';
 
-export const BalancesContext: any = React.createContext({
-  getAccount: () => true,
-  getAccountBalance: () => true,
-  getAccountLedger: () => true,
-  getBondedAccount: () => true,
-  getAccountNominations: () => true,
-  getBondOptions: () => defaults.bondOptions,
-  isController: () => true,
-  accounts: [],
-  reserveAmount: 0,
-  existentialAmount: 0,
-  minReserve: 0,
-});
+import {
+  BalancesAccount,
+  BalancesContextInterface,
+} from '../../types/balances';
+
+export const BalancesContext =
+  React.createContext<BalancesContextInterface | null>(null);
 
 export const useBalances = () => React.useContext(BalancesContext);
 
@@ -31,34 +26,33 @@ export const BalancesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network } = useApi() as APIContextInterface;
-  const { accounts, activeExtension }: any = useConnect();
+  const { accounts: connectAccounts, activeExtension }: any = useConnect();
   const { units } = network;
 
   // balance accounts context state
-  const [state, _setState]: any = useState({
-    accounts: [],
-  });
-  const stateRef = useRef(state);
-  const setState = (val: any) => {
-    stateRef.current = val;
-    _setState(val);
+  const [accounts, _setAccounts] = useState<Array<BalancesAccount>>([]);
+
+  const accountsRef = useRef(accounts);
+  const setAccounts = (val: Array<BalancesAccount>) => {
+    accountsRef.current = val;
+    _setAccounts(val);
   };
 
-  const [unsubs, _setUnsubs]: any = useState([]);
-  const unsubsRef = useRef(unsubs);
-  const setUnsubs = (val: any) => {
+  const [unsubs, _setUnsubs] = useState<Unsubs>([]);
+  const unsubsRef = useRef<Unsubs>(unsubs);
+  const setUnsubs = (val: Unsubs) => {
     unsubsRef.current = val;
     _setUnsubs(val);
   };
 
   // existential amount of unit for an account
-  const [existentialAmount] = useState(new BN(10 ** units));
+  const [existentialAmount] = useState<BN>(new BN(10 ** units));
 
   // amount of compulsary reserve balance
-  const [reserveAmount] = useState(existentialAmount.div(new BN(10)));
+  const [reserveAmount] = useState<BN>(existentialAmount.div(new BN(10)));
 
   // minimum reserve for submitting extrinsics
-  const [minReserve] = useState(reserveAmount.add(existentialAmount));
+  const [minReserve] = useState<BN>(reserveAmount.add(existentialAmount));
 
   // unsubscribe and refetch active account
   useEffect(() => {
@@ -68,12 +62,12 @@ export const BalancesProvider = ({
     return () => {
       unsubscribeAll(false);
     };
-  }, [accounts, network, isReady, activeExtension]);
+  }, [connectAccounts, network, isReady, activeExtension]);
 
   // unsubscribe from all activeAccount subscriptions
   const unsubscribeAll = async (refetch: boolean) => {
     // unsubscribe all unsubs
-    Object.values(unsubsRef.current).map((v: any) => {
+    Object.values(unsubsRef.current).map((v: Fn) => {
       return v();
     });
     // refetch balances
@@ -86,19 +80,19 @@ export const BalancesProvider = ({
   const subscribeToBalances = async (address: string) => {
     if (!api) return;
 
-    const unsub = await api.queryMulti(
+    const unsub: () => void = await api.queryMulti(
       [
         [api.query.system.account, address],
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([{ data: balance }, bonded, nominations]: any) => {
+      async ([{ data }, bonded, nominations]: any): Promise<void> => {
         const _account: any = {
           address,
         };
 
         // get account balances
-        const { free, reserved, miscFrozen, feeFrozen } = balance;
+        const { free, reserved, miscFrozen, feeFrozen } = data;
 
         // calculate free balance after app reserve
         let freeAfterReserve = new BN(free).sub(minReserve);
@@ -116,7 +110,7 @@ export const BalancesProvider = ({
         };
 
         // set account bonded (controller) or null
-        let _bonded = bonded.unwrapOr(null);
+        let _bonded: any = bonded.unwrapOr(null);
         _bonded = _bonded === null ? null : _bonded.toHuman();
         _account.bonded = _bonded;
 
@@ -153,7 +147,7 @@ export const BalancesProvider = ({
         }
 
         // set account nominations
-        let _nominations = nominations.unwrapOr(null);
+        let _nominations: any = nominations.unwrapOr(null);
         if (_nominations === null) {
           _nominations = defaults.nominations;
         } else {
@@ -166,16 +160,13 @@ export const BalancesProvider = ({
         _account.nominations = _nominations;
 
         // update account in context state
-        let _accounts = Object.values(stateRef.current.accounts);
+        let _accounts = Object.values(accountsRef.current);
         // remove stale account if it's already in list
         _accounts = _accounts.filter((acc: any) => acc.address !== address);
         _accounts.push(_account);
 
         // update state
-        setState({
-          ...stateRef.current,
-          accounts: _accounts,
-        });
+        setAccounts(_accounts);
       }
     );
 
@@ -188,12 +179,14 @@ export const BalancesProvider = ({
 
   // get active account balances
   const getBalances = async () => {
-    Promise.all(accounts.map((a: any) => subscribeToBalances(a.address)));
+    Promise.all(
+      connectAccounts.map((a: any) => subscribeToBalances(a.address))
+    );
   };
 
   // get an account's balance metadata
   const getAccountBalance = (address: string) => {
-    const account = stateRef.current.accounts.find(
+    const account = accountsRef.current.find(
       (acc: any) => acc.address === address
     );
     if (account === undefined) {
@@ -208,7 +201,7 @@ export const BalancesProvider = ({
 
   // get an account's ledger metadata
   const getAccountLedger = (address: string) => {
-    const account = stateRef.current.accounts.find(
+    const account = accountsRef.current.find(
       (acc: any) => acc.address === address
     );
     if (account === undefined) {
@@ -223,7 +216,7 @@ export const BalancesProvider = ({
 
   // get an account's bonded (controller) account)
   const getBondedAccount = (address: string) => {
-    const account = stateRef.current.accounts.find(
+    const account = accountsRef.current.find(
       (acc: any) => acc.address === address
     );
     if (account === undefined) {
@@ -235,7 +228,7 @@ export const BalancesProvider = ({
 
   // get an account's nominations
   const getAccountNominations = (address: string) => {
-    const _accounts = stateRef.current.accounts;
+    const _accounts = accountsRef.current;
     const account = _accounts.find((acc: any) => acc.address === address);
     if (account === undefined) {
       return [];
@@ -246,7 +239,7 @@ export const BalancesProvider = ({
 
   // get an account
   const getAccount = (address: string) => {
-    const account = stateRef.current.accounts.find(
+    const account = accountsRef.current.find(
       (acc: any) => acc.address === address
     );
     if (account === undefined) {
@@ -257,7 +250,7 @@ export const BalancesProvider = ({
 
   // check if an account is a controller account
   const isController = (address: string) => {
-    const existsAsController = stateRef.current.accounts.filter(
+    const existsAsController = accountsRef.current.filter(
       (account: any) => account?.bonded === address
     );
     return existsAsController.length > 0;
@@ -329,7 +322,7 @@ export const BalancesProvider = ({
         getAccountNominations,
         getBondOptions,
         isController,
-        accounts: stateRef.current.accounts,
+        accounts: accountsRef.current,
         minReserve,
       }}
     >
