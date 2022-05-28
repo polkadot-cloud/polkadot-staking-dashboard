@@ -38,6 +38,7 @@ export const ValidatorListInner = (props: any) => {
     toggleFavourites,
     pagination,
     title,
+    showStatus,
   }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
@@ -242,6 +243,7 @@ export const ValidatorListInner = (props: any) => {
                   toggleFavourites={toggleFavourites}
                   batchIndex={batchIndex}
                   batchKey={batchKey}
+                  showStatus={showStatus}
                 />
               </motion.div>
             );

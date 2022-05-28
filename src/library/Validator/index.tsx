@@ -13,7 +13,9 @@ import {
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Wrapper } from './Wrapper';
+import { useUi } from 'contexts/UI';
+import { useStaking } from 'contexts/Staking';
+import { Wrapper, Labels, Identity } from './Wrappers';
 import Identicon from '../Identicon';
 import { clipAddress } from '../../Utils';
 import { useApi } from '../../contexts/Api';
@@ -28,7 +30,11 @@ export const ValidatorInner = (props: any) => {
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
   const { favourites, addFavourite, removeFavourite, meta } = useValidators();
-  const { validator, toggleFavourites, batchIndex, batchKey } = props;
+  const { listFormat }: any = useUi();
+  const { getNominationsStatus } = useStaking();
+
+  const { validator, toggleFavourites, batchIndex, batchKey, showStatus } =
+    props;
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -45,6 +51,9 @@ export const ValidatorInner = (props: any) => {
 
   const { address, prefs } = validator;
   const eraStakers = stake[batchIndex];
+
+  const nominationStatuses = getNominationsStatus();
+  const nominationStatus = nominationStatuses[address];
 
   const display = getIdentityDisplay(
     identities[batchIndex],
@@ -76,33 +85,35 @@ export const ValidatorInner = (props: any) => {
         subtitle: address,
       };
 
-  return (
-    <Wrapper>
-      <div>
-        <Identicon value={address} size={26} />
+  const displayOversubscribed =
+    synced.stake &&
+    total_nominations >= consts.maxNominatorRewardedPerValidator;
 
-        {synced.identities && display !== null ? (
-          <motion.div
+  return (
+    <Wrapper format={listFormat}>
+      <div>
+        <div className="row">
+          <Identicon value={address} size={26} />
+          <Identity
             className="identity"
             initial={{ opacity: 0.5 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <h4>{display}</h4>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="identity"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h4>{clipAddress(address)}</h4>
-          </motion.div>
-        )}
-        <div className="labels">
-          {synced.stake &&
-            total_nominations >= consts.maxNominatorRewardedPerValidator && (
+            {synced.identities && display !== null ? (
+              <h4>{display}</h4>
+            ) : (
+              <h4>{clipAddress(address)}</h4>
+            )}
+            {showStatus && (
+              <div className={`label status ${nominationStatus}`}>
+                {nominationStatus}
+              </div>
+            )}
+          </Identity>
+
+          <Labels>
+            {displayOversubscribed && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -118,65 +129,64 @@ export const ValidatorInner = (props: any) => {
                 </div>
               </motion.div>
             )}
-          {prefs !== undefined && (
-            <>
-              {blocked && (
-                <div className="label">
-                  <FontAwesomeIcon
-                    icon={faUserSlash}
-                    color="#d2545d"
-                    transform="shrink-1"
-                  />
-                </div>
-              )}
-              <div className="label">{commission}%</div>
-            </>
-          )}
-          <div className="label">
-            <button
-              type="button"
-              onClick={() =>
-                openModalWith(
-                  'ValidatorMetrics',
-                  {
-                    address,
-                    identity: display,
-                  },
-                  'large'
-                )
-              }
-            >
-              <FontAwesomeIcon icon={faChartLine} />
-            </button>
-          </div>
-          <div className="label">
-            <button
-              type="button"
-              onClick={() => addNotification(notificationCopyAddress)}
-            >
-              <CopyToClipboard text={address}>
-                <FontAwesomeIcon icon={faCopy as IconProp} />
-              </CopyToClipboard>
-            </button>
-          </div>
-          {toggleFavourites && (
+            {blocked && (
+              <div className="label">
+                <FontAwesomeIcon
+                  icon={faUserSlash}
+                  color="#d2545d"
+                  transform="shrink-1"
+                />
+              </div>
+            )}
+            <div className="label">{commission}%</div>
             <div className="label">
               <button
                 type="button"
-                className={favourites.includes(address) ? 'active' : undefined}
-                onClick={() => {
-                  if (favourites.includes(address)) {
-                    removeFavourite(address);
-                  } else {
-                    addFavourite(address);
-                  }
-                  addNotification(notificationFavourite);
-                }}
+                onClick={() =>
+                  openModalWith(
+                    'ValidatorMetrics',
+                    {
+                      address,
+                      identity: display,
+                    },
+                    'large'
+                  )
+                }
               >
-                <FontAwesomeIcon icon={faThumbtack} />
+                <FontAwesomeIcon icon={faChartLine} />
               </button>
             </div>
-          )}
+            <div className="label">
+              <button
+                type="button"
+                onClick={() => addNotification(notificationCopyAddress)}
+              >
+                <CopyToClipboard text={address}>
+                  <FontAwesomeIcon icon={faCopy as IconProp} />
+                </CopyToClipboard>
+              </button>
+            </div>
+            {toggleFavourites && (
+              <div className="label">
+                <button
+                  type="button"
+                  className={
+                    favourites.includes(address) ? 'active' : undefined
+                  }
+                  onClick={() => {
+                    if (favourites.includes(address)) {
+                      removeFavourite(address);
+                    } else {
+                      addFavourite(address);
+                    }
+                    addNotification(notificationFavourite);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faThumbtack} />
+                </button>
+              </div>
+            )}
+          </Labels>
         </div>
       </div>
     </Wrapper>

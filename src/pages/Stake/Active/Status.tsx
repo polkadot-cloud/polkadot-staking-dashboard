@@ -33,10 +33,8 @@ export const Status = () => {
 
   // get nomination status
   const nominationStatuses = getNominationsStatus();
-  const statuses: any =
-    nominationStatuses === undefined ? [] : nominationStatuses;
 
-  const active: any = Object.values(statuses).filter(
+  const active: any = Object.values(nominationStatuses).filter(
     (_v: any) => _v === 'active'
   ).length;
 

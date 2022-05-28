@@ -72,6 +72,7 @@ export const Nominations = () => {
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle
+                    showStatus
                   />
                 </div>
               ) : (
