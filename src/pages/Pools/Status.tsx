@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { formatBalance } from '@polkadot/util';
 import { Separator } from '../../Wrappers';
 import { SectionWrapper } from '../../library/Graphs/Wrappers';
 import { useApi } from '../../contexts/Api';
@@ -8,7 +9,7 @@ import { usePools } from '../../contexts/Pools';
 import { useModal } from '../../contexts/Modal';
 import { Stat } from '../../library/Stat';
 import { APIContextInterface } from '../../types/api';
-import { toFixedIfNecessary, planckBnToUnit } from '../../Utils';
+import { planckBnToUnit } from '../../Utils';
 
 export const Status = () => {
   const { network } = useApi() as APIContextInterface;
@@ -59,10 +60,11 @@ export const Status = () => {
   // Unclaimed rewards `Stat` props
   const { unclaimedReward } = activeBondedPool || {};
   const labelRewards = unclaimedReward
-    ? `${toFixedIfNecessary(
-        planckBnToUnit(unclaimedReward, units),
-        units
-      )} ${unit}`
+    ? `${formatBalance(unclaimedReward, {
+        decimals: units,
+        withSi: true,
+        withUnit: unit,
+      })}`
     : `0 ${unit}`;
   const buttonsRewards = unclaimedReward
     ? [

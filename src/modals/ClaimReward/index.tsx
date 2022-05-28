@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
+import { formatBalance } from '@polkadot/util';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStopCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
@@ -17,7 +18,6 @@ import { useConnect } from '../../contexts/Connect';
 import { Warning } from '../../library/Form/Warning';
 import { APIContextInterface } from '../../types/api';
 import { usePools } from '../../contexts/Pools';
-import { toFixedIfNecessary, planckBnToUnit } from '../../Utils';
 
 export const ClaimReward = () => {
   const { api, network } = useApi() as APIContextInterface;
@@ -26,13 +26,10 @@ export const ClaimReward = () => {
   const { activeAccount } = useConnect();
   const { units, unit } = network;
   const { unclaimedReward } = activeBondedPool || {};
-  const payoutAmount = unclaimedReward
-    ? toFixedIfNecessary(planckBnToUnit(unclaimedReward, units), units)
-    : 0;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (payoutAmount) {
+    if (unclaimedReward) {
       setValid(true);
     } else {
       setValid(false);
@@ -75,7 +72,7 @@ export const ClaimReward = () => {
           boxSizing: 'border-box',
         }}
       >
-        {!payoutAmount && (
+        {!unclaimedReward && (
           <>
             <Warning text="You have no Pool rewards to claim." />
             <Separator />
@@ -83,7 +80,11 @@ export const ClaimReward = () => {
         )}
         <div className="notes">
           <h2>
-            Claim {payoutAmount} {network.unit} rewards.
+            {`Claim ${formatBalance(unclaimedReward, {
+              decimals: units,
+              withSi: true,
+              withUnit: unit,
+            })} rewards.`}
           </h2>
           <Separator />
           <p>
