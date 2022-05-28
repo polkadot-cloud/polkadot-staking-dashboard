@@ -53,7 +53,7 @@ export const Roles = () => {
   return (
     <>
       <SectionHeaderWrapper>
-        <h2>Pool Roles</h2>
+        <h2>Roles</h2>
       </SectionHeaderWrapper>
       <RolesWrapper>
         <section>

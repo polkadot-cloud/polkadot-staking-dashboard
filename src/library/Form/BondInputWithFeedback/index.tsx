@@ -29,7 +29,7 @@ export const BondInputWithFeedback = (props: any) => {
     useBalances();
   const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
   const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(controller);
+  const ledger = getAccountLedger(activeAccount);
   const { units } = network;
   const { active } = ledger;
   const { minNominatorBond } = staking;

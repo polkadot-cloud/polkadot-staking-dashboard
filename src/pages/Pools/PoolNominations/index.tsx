@@ -6,18 +6,11 @@ import { useApi } from '../../../contexts/Api';
 import { useValidators } from '../../../contexts/Validators';
 import { ValidatorList } from '../../../library/ValidatorList';
 import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
-import { Button } from '../../../library/Button';
-import { useModal } from '../../../contexts/Modal';
-import { useBalances } from '../../../contexts/Balances';
-import { useConnect } from '../../../contexts/Connect';
 import { useUi } from '../../../contexts/UI';
-import { useStaking } from '../../../contexts/Staking';
 import { SectionHeaderWrapper } from '../../../library/Graphs/Wrappers';
 import { APIContextInterface } from '../../../types/api';
-import { usePools } from '../../../contexts/Pools';
 
 export const PoolNominations = () => {
-  const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();

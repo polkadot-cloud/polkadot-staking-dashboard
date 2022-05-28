@@ -22,7 +22,7 @@ import { APIContextInterface } from '../../../types/api';
 
 export const Status = () => {
   const { isReady } = useApi() as APIContextInterface;
-  const { setOnSetup }: any = useUi();
+  const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
@@ -42,8 +42,15 @@ export const Status = () => {
 
   const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
 
+  let startTitle = 'Start Staking';
+  if (inSetup()) {
+    const progress = getSetupProgressPercent(activeAccount);
+    if (progress > 0) {
+      startTitle += `: ${progress}%`;
+    }
+  }
   return (
-    <SectionWrapper height={310}>
+    <SectionWrapper height={300}>
       <Stat
         label="Status"
         assistant={['stake', 'Staking Status']}
@@ -61,7 +68,7 @@ export const Status = () => {
             ? []
             : [
                 {
-                  title: 'Start Staking',
+                  title: startTitle,
                   icon: faChevronCircleRight,
                   transform: 'grow-1',
                   disabled: !isReady,

@@ -31,10 +31,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
             >
               <div>
                 <h3>Bond Extra</h3>
-                <p>
-                  Bond more
-                  {network.unit}.
-                </p>
+                <p>Bond more {network.unit}.</p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -50,10 +47,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
             >
               <div>
                 <h3>Bond All</h3>
-                <p>
-                  Bond all available
-                  {network.unit}.
-                </p>
+                <p>Bond all available {network.unit}.</p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -73,10 +67,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
             >
               <div>
                 <h3>Unbond</h3>
-                <p>
-                  Unbond some of your
-                  {network.unit}.
-                </p>
+                <p>Unbond some of your {network.unit}.</p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />

@@ -129,7 +129,7 @@ export const ItemInactive = styled(motion.div)`
   }
 `;
 
-export const SmallScreensOnly = styled.div`
+export const LargeScreensOnly = styled.div`
   display: flex;
   @media (max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
     display: none;

@@ -64,7 +64,6 @@ export const PoolListInner = (props: any) => {
     if (props.pools !== poolsDefault) {
       setFetched(false);
     }
-    setFetched(false);
   }, [props.pools]);
 
   // configure pool list when network is ready to fetch

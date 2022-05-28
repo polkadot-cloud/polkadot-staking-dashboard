@@ -30,3 +30,5 @@ export const poolBondOptions = {
   totalUnlocking: 0,
   totalUnlockChuncks: 0,
 };
+
+export const nominationStatus = {};

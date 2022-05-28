@@ -34,7 +34,7 @@ export const Pools = (props: PageProps) => {
   const { title } = page;
   const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
-  const { bondedPools, isBonding, isNominator, membership } = usePools();
+  const { bondedPools, isBonding, targets } = usePools();
   const { isSyncing } = useUi();
 
   // back to overview if pools are not supported on network
@@ -57,14 +57,14 @@ export const Pools = (props: PageProps) => {
           <Status />
         </RowPrimaryWrapper>
         <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <SectionWrapper height={310}>
+          <SectionWrapper height={300}>
             <ManageBond />
           </SectionWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
       {isBonding() && (
         <>
-          <ManagePool />
+          {targets.nominations.length > 0 && <ManagePool />}
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <SectionWrapper>
               <Roles />

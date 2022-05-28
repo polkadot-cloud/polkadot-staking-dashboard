@@ -18,12 +18,11 @@ export const Overview = forwardRef(
     const { network, consts } = useApi() as APIContextInterface;
     const { activeAccount } = useConnect();
     const { metrics } = useNetworkMetrics();
-    const { getBondedAccount, getAccountLedger }: any = useBalances();
+    const { getAccountLedger }: any = useBalances();
     const { bondDuration } = consts;
     const { units } = network;
     const { activeEra } = metrics;
-    const controller = getBondedAccount(activeAccount);
-    const ledger = getAccountLedger(controller);
+    const ledger = getAccountLedger(activeAccount);
     const { unlocking } = ledger;
 
     // calculate total withdraw available

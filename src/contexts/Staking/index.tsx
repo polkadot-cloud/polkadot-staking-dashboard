@@ -328,7 +328,7 @@ export const StakingProvider = ({
     if (!hasController()) {
       return false;
     }
-    const ledger = getAccountLedger(getBondedAccount(activeAccount));
+    const ledger = getAccountLedger(activeAccount);
     return ledger.active.gt(0);
   };
 
@@ -340,7 +340,7 @@ export const StakingProvider = ({
     if (!hasController()) {
       return false;
     }
-    const ledger = getAccountLedger(getBondedAccount(activeAccount));
+    const ledger = getAccountLedger(activeAccount);
     return ledger.unlocking.length;
   };
 
