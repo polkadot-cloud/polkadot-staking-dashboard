@@ -29,7 +29,7 @@ export const ClaimReward = () => {
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (unclaimedReward) {
+    if (unclaimedReward?.gtn(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -72,21 +72,25 @@ export const ClaimReward = () => {
           boxSizing: 'border-box',
         }}
       >
-        {!unclaimedReward && (
+        {!unclaimedReward?.gtn(0) && (
           <>
-            <Warning text="You have no Pool rewards to claim." />
+            <Warning text="You have no rewards to claim." />
             <Separator />
           </>
         )}
         <div className="notes">
-          <h2>
-            {`Claim ${formatBalance(unclaimedReward, {
-              decimals: units,
-              withSi: true,
-              withUnit: unit,
-            })} rewards.`}
-          </h2>
-          <Separator />
+          {unclaimedReward?.gtn(0) && (
+            <>
+              <h2>
+                {`Claim ${formatBalance(unclaimedReward, {
+                  decimals: units,
+                  withSi: true,
+                  withUnit: unit,
+                })} rewards.`}
+              </h2>
+              <Separator />
+            </>
+          )}
           <p>
             Estimated Tx Fee:
             {estimatedFee === null ? '...' : `${estimatedFee}`}
