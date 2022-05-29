@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
+import { Menu } from 'library/Menu';
 import {
   PageWrapper,
   SideInterfaceWrapper,
@@ -43,6 +44,9 @@ export const RouterInner = () => {
       <BodyInterfaceWrapper>
         {/* Assistant: closed by default */}
         <Assistant />
+
+        {/* Menu: closed by default */}
+        <Menu />
 
         {/* Left side menu */}
         <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>

@@ -121,4 +121,12 @@ export const NominationStatusWrapper = styled.div<{ status: string }>`
   opacity: ${(props) => (props.status === 'active' ? 1 : 0.75)};
 `;
 
+export const MenuPosition = styled.div`
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+`;
 export default Wrapper;
