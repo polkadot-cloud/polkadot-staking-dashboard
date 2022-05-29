@@ -119,7 +119,7 @@ export const NominationStatusWrapper = styled.div<{ status: string }>`
 
   h5 {
     color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
-    opacity: ${(props) => (props.status === 'active' ? 1 : 0.75)};
+    opacity: ${(props) => (props.status === 'active' ? 1 : 0.5)};
     margin: 0;
   }
 `;
