@@ -11,7 +11,6 @@ export const Favourite = (props: any) => {
   const { favourites, addFavourite, removeFavourite } = useValidators();
   const { address } = props;
 
-  // favourite toggle notification
   const notificationFavourite = !favourites.includes(address)
     ? {
         title: 'Favourite Validator Added',
@@ -36,7 +35,7 @@ export const Favourite = (props: any) => {
           addNotification(notificationFavourite);
         }}
       >
-        <FontAwesomeIcon icon={faThumbtack} />
+        <FontAwesomeIcon icon={faThumbtack} transform="shrink-1" />
       </button>
     </div>
   );

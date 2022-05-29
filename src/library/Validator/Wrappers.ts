@@ -9,7 +9,7 @@ export const Wrapper = styled.div<any>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.format === 'nomination' ? '5.7rem' : '3.2rem')};
+  height: ${(props) => (props.format === 'nomination' ? '5.6rem' : '3.2rem')};
   position: relative;
   margin: 0.5rem;
 
@@ -39,27 +39,57 @@ export const Wrapper = styled.div<any>`
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
+      padding: 0 0.5rem;
 
       &.status {
-        height: 2.5rem;
+        height: 2.2rem;
       }
       svg {
         margin: 0;
       }
     }
+
+    .label {
+      margin-left: 0.3rem;
+      color: #aaa;
+
+      &.comm {
+        margin: 0 0.3rem;
+      }
+
+      &.warning {
+        color: #d2545d;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        padding-right: 0.35rem;
+      }
+      button {
+        color: #aaa;
+        &:hover {
+          color: #666;
+        }
+        &.active {
+          color: rgba(211, 48, 121, 0.85);
+        }
+      }
+    }
   }
 `;
 
-export const Separator = styled.div`
-  width: 100%;
-  height: 1px;
-  border-bottom: 1px solid ${borderPrimary};
+export const Labels = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: hidden;
+  flex: 1 1 100%;
+  padding: 0 0 0 0.25rem;
 `;
 
 export const IdentityWrapper = styled(motion.div)`
   box-sizing: border-box;
   display: flex;
-  margin-left: 0.75rem;
   margin-right: 0.5rem;
   flex-flow: row nowrap;
   align-items: center;
@@ -83,42 +113,21 @@ export const IdentityWrapper = styled(motion.div)`
   }
 `;
 
-export const Labels = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  align-items: center;
-  overflow: hidden;
-  flex: 1 1 100%;
+export const NominationStatusWrapper = styled.div<{ status: string }>`
+  margin-right: 0.35rem;
   padding: 0 0.5rem;
 
-  .label {
-    margin-left: 0.35rem;
-    color: #aaa;
-
-    &.warning {
-      color: #d2545d;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-    }
-    button {
-      color: #aaa;
-      &:hover {
-        color: #666;
-      }
-      &.active {
-        color: rgba(211, 48, 121, 0.85);
-      }
-    }
+  h5 {
+    color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
+    opacity: ${(props) => (props.status === 'active' ? 1 : 0.75)};
+    margin: 0;
   }
 `;
 
-export const NominationStatusWrapper = styled.div<{ status: string }>`
-  margin-right: 0.35rem;
-  padding: 0 1rem;
-  color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
-  opacity: ${(props) => (props.status === 'active' ? 1 : 0.75)};
+export const Separator = styled.div`
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid ${borderPrimary};
 `;
 
 export const MenuPosition = styled.div`

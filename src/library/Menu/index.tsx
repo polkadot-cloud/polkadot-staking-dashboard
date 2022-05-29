@@ -3,7 +3,7 @@
 
 import { useRef, useEffect } from 'react';
 import { useMenu } from 'contexts/Menu';
-import { Wrapper } from './Wrappers';
+import { Wrapper, ItemWrapper } from './Wrappers';
 import { useOutsideAlerter } from '../Hooks';
 
 export const Menu = () => {
@@ -51,7 +51,22 @@ export const Menu = () => {
             opacity: menu.show === 1 ? 1 : 0,
           }}
         >
-          Menu
+          {menu.items.map((item: any, i: number) => {
+            const { icon, title, wrap, cb } = item;
+
+            return (
+              <ItemWrapper
+                key={`menu_item_${i}`}
+                onClick={() => {
+                  cb();
+                  menu.closeMenu();
+                }}
+              >
+                {icon}
+                <div className="title">{title}</div>
+              </ItemWrapper>
+            );
+          })}
         </Wrapper>
       )}
     </>

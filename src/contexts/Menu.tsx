@@ -8,9 +8,11 @@ export interface MenuContextState {
   closeMenu: () => any;
   setMenuPosition: (ref: any) => void;
   checkMenuPosition: (ref: any) => void;
+  setMenuItems: (items: any) => void;
   open: number;
   show: number;
   position: [number, number];
+  items: any;
 }
 
 export const MenuContext: React.Context<MenuContextState> = React.createContext(
@@ -19,9 +21,11 @@ export const MenuContext: React.Context<MenuContextState> = React.createContext(
     closeMenu: () => {},
     setMenuPosition: (ref: any) => {},
     checkMenuPosition: (ref: any) => {},
+    setMenuItems: (items: any) => {},
     open: 0,
     show: 0,
     position: [0, 0],
+    items: [],
   }
 );
 
@@ -30,6 +34,7 @@ export const useMenu = () => React.useContext(MenuContext);
 export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(0);
   const [show, setShow] = useState(0);
+  const [items, setItems] = useState([]);
 
   const [position, setPosition] = useState<[number, number]>([0, 0]);
 
@@ -78,6 +83,10 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     setShow(1);
   };
 
+  const setMenuItems = (_items: any) => {
+    setItems(_items);
+  };
+
   return (
     <MenuContext.Provider
       value={{
@@ -85,9 +94,11 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
         closeMenu,
         setMenuPosition,
         checkMenuPosition,
+        setMenuItems,
         open,
         show,
         position,
+        items,
       }}
     >
       {children}

@@ -1,9 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useRef } from 'react';
-import { useMenu } from 'contexts/Menu';
-import { Wrapper, Labels, Separator, MenuPosition } from './Wrappers';
+import { Wrapper, Labels, Separator } from './Wrappers';
 import { useValidators } from '../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
 import { Favourite } from './Labels/Favourite';
@@ -16,7 +14,6 @@ import { NominationStatus } from './Labels/NominationStatus';
 
 export const Nomination = (props: any) => {
   const { meta } = useValidators();
-  const { setMenuPosition }: any = useMenu();
 
   const { validator, toggleFavourites, batchIndex, batchKey } = props;
   const identities = meta[batchKey]?.identities ?? [];
@@ -25,15 +22,8 @@ export const Nomination = (props: any) => {
   const { address, prefs } = validator;
   const commission = prefs?.commission ?? null;
 
-  const posRef = useRef(null);
-
-  const toggleMenu = () => {
-    setMenuPosition(posRef);
-  };
-
   return (
     <Wrapper format="nomination">
-      <MenuPosition ref={posRef} />
       <div className="inner">
         <div className="row">
           <Identity
@@ -51,13 +41,6 @@ export const Nomination = (props: any) => {
         <Separator />
         <div className="row status">
           <NominationStatus address={address} />
-          <button
-            type="button"
-            className="label ignore-open-menu-button"
-            onClick={() => toggleMenu()}
-          >
-            Menu
-          </button>
           <Labels>
             <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
             <Blocked prefs={prefs} />
