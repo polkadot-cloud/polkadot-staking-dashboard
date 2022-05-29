@@ -61,6 +61,15 @@ export const SectionWrapper = styled.div<any>`
   margin-top: ${(props) => (props.transparent ? '0rem' : '1rem')};
   position: relative;
 
+  @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
+    padding: ${(props) =>
+      props.noPadding
+        ? '0rem'
+        : props.transparent
+        ? '0rem 0rem'
+        : '1rem 0.5rem'};
+  }
+
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
     height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
   }
