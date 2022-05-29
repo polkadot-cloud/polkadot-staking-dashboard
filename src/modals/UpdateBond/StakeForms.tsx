@@ -24,7 +24,7 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus, setResize }: any = useModal();
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { minNominatorBond } = staking;
@@ -85,6 +85,11 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
       }
     }
   }, [task]);
+
+  // modal resize on form update
+  useEffect(() => {
+    setResize();
+  }, [bond]);
 
   // tx to submit
   const tx = () => {
