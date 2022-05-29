@@ -11,6 +11,7 @@ import { AssistantProvider } from './contexts/Assistant';
 import { BalancesProvider } from './contexts/Balances';
 import { ConnectProvider } from './contexts/Connect';
 import { ExtrinsicsProvider } from './contexts/Extrinsics';
+import { MenuProvider } from './contexts/Menu';
 import { MessagesProvider } from './contexts/Messages';
 import { ModalProvider } from './contexts/Modal';
 import { NetworkMetricsProvider } from './contexts/Network';
@@ -55,6 +56,7 @@ export const Providers = withProviders(
   UIProvider,
   MessagesProvider,
   SubscanProvider,
+  MenuProvider,
   NotificationsProvider,
   ExtrinsicsProvider,
   SessionEraProvider

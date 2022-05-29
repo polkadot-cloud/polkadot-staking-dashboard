@@ -14,8 +14,8 @@ export const NominationStatus = (props: any) => {
   const nominationStatus = nominationStatuses[address];
 
   return (
-    <NominationStatusWrapper status={nominationStatus} className="label">
-      {capitalizeFirstLetter(nominationStatus)}
+    <NominationStatusWrapper status={nominationStatus}>
+      <h5>{capitalizeFirstLetter(nominationStatus ?? '')}</h5>
     </NominationStatusWrapper>
   );
 };

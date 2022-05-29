@@ -17,7 +17,7 @@ import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 export const Forms = (props: any) => {
   const { api, network }: any = useApi();
   const { units } = network;
-  const { setStatus: setModalStatus, config }: any = useModal();
+  const { setStatus: setModalStatus, config, setResize }: any = useModal();
   const { id: poolId } = config;
   const { activeAccount } = useConnect();
 
@@ -29,6 +29,11 @@ export const Forms = (props: any) => {
 
   // bond valid
   const [bondValid, setBondValid]: any = useState(true);
+
+  // modal resize on form update
+  useEffect(() => {
+    setResize();
+  }, [bond]);
 
   // tx to submit
   const tx = () => {
