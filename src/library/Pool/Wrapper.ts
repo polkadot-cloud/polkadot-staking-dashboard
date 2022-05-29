@@ -21,7 +21,7 @@ export const Wrapper = styled(motion.div)<any>`
   > div {
     background: ${backgroundValidator};
     box-sizing: border-box;
-    padding: 0.75rem 0.6rem;
+    padding: 0.6rem;
     flex: 1;
     border-radius: 0.75rem;
     display: flex;
