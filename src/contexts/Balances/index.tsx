@@ -4,6 +4,7 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { Fn, Unsubs } from 'types';
+import { Option } from '@polkadot/types-codec';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -80,13 +81,15 @@ export const BalancesProvider = ({
   const subscribeToBalances = async (address: string) => {
     if (!api) return;
 
-    const unsub: () => void = await api.queryMulti(
+    const unsub: () => void = await api.queryMulti<
+      [any, Option<any>, Option<any>]
+    >(
       [
         [api.query.system.account, address],
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([{ data }, bonded, nominations]: any): Promise<void> => {
+      async ([{ data }, bonded, nominations]): Promise<void> => {
         const _account: any = {
           address,
         };
