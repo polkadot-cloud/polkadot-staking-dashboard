@@ -13,6 +13,8 @@ export const Wrapper = styled.div<any>`
   padding: 0.5rem 1rem;
   display: flex;
   flex-flow: column wrap;
+  transition: opacity 0.1s;
+  box-shadow: 1px 1px 1px ${borderPrimary};
 
   > button:last-child {
     border: none;
