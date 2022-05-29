@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useEffect } from 'react';
 import {
   faPercentage,
   faExclamationTriangle,
@@ -24,6 +25,11 @@ export const Filters = () => {
   const handleFilter = (fn: any, filter: string) => {
     fn(filter);
   };
+
+  // scroll to top of the window on every filter.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [validatorFilters]);
 
   return (
     <Wrapper>
