@@ -44,8 +44,10 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const closeMenu = () => {
-    setOpen(0);
     setShow(0);
+    setTimeout(() => {
+      setOpen(0);
+    }, 100);
   };
 
   const setMenuPosition = (posRef: any) => {

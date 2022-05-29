@@ -76,8 +76,10 @@ export const Default = (props: any) => {
   ];
 
   const toggleMenu = () => {
-    setMenuItems(menuItems);
-    setMenuPosition(posRef);
+    if (!open) {
+      setMenuItems(menuItems);
+      setMenuPosition(posRef);
+    }
   };
 
   return (
