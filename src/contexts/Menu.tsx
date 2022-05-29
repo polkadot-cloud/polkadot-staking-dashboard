@@ -72,11 +72,13 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     // small offset from menu start
     y -= 10;
 
+    const documentPadding = 20;
+
     if (right > bodyRect.right) {
-      x = bodyRect.right - menuRef.current.offsetWidth - 10;
+      x = bodyRect.right - menuRef.current.offsetWidth - documentPadding;
     }
     if (bottom > bodyRect.bottom) {
-      y = bodyRect.bottom - menuRef.current.offsetHeight - 10;
+      y = bodyRect.bottom - menuRef.current.offsetHeight - documentPadding;
     }
 
     setPosition([x, y]);
