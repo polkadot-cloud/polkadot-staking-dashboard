@@ -15,7 +15,7 @@ export const NominationStatus = (props: any) => {
 
   return (
     <NominationStatusWrapper status={nominationStatus}>
-      <h5>{capitalizeFirstLetter(nominationStatus)}</h5>
+      <h5>{capitalizeFirstLetter(nominationStatus ?? '')}</h5>
     </NominationStatusWrapper>
   );
 };
