@@ -69,6 +69,7 @@ export const Nominations = () => {
                     validators={nominated}
                     batchKey={batchKey}
                     title="Your Nominations"
+                    format="nomination"
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle

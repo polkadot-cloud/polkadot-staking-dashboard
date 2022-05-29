@@ -6,11 +6,12 @@ import { Pie } from '../../../../library/StatBoxList/Pie';
 
 export const ActiveNominationsStatBox = () => {
   const { getNominationsStatus } = useStaking();
-  const statuses = getNominationsStatus();
+  const nominationStatuses = getNominationsStatus();
 
-  const total = Object.values(statuses).length;
+  const total = Object.values(nominationStatuses).length;
   const active =
-    Object.values(statuses).filter((_v: any) => _v === 'active').length ?? 0;
+    Object.values(nominationStatuses).filter((_v: any) => _v === 'active')
+      .length ?? 0;
 
   const params = {
     label: 'Active Nominations',

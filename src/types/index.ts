@@ -5,6 +5,8 @@ import React, { FunctionComponent, SVGProps } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from '../pages/types';
 
+export type Fn = () => void;
+
 export enum NetworkName {
   Polkadot = 'polkadot',
   Westend = 'westend',
@@ -51,3 +53,5 @@ export type PagesConfig = Array<{
   Entry: React.FC<PageProps>;
   icon: IconDefinition;
 }>;
+
+export type Unsubs = Array<() => void>;
