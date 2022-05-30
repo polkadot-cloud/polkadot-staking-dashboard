@@ -55,26 +55,72 @@ export const BalancesProvider = ({
   // minimum reserve for submitting extrinsics
   const [minReserve] = useState<BN>(reserveAmount.add(existentialAmount));
 
-  // unsubscribe and refetch active account
+  // bonded controller accounts derived from getBalances
+  const [bondedAccounts, _setBondedAccounts] = useState<Array<any>>([]);
+  const bondedAccountsRef = useRef<Array<any>>(bondedAccounts);
+  const setBondedAccounts = (val: any) => {
+    bondedAccountsRef.current = val;
+    _setBondedAccounts(val);
+  };
+
+  // account ledgers to separate storage
+  const [ledgers, _setLedgers] = useState<any>([]);
+  const ledgersRef = useRef<Array<any>>(ledgers);
+  const setLedgers = (val: any) => {
+    ledgersRef.current = val;
+    _setLedgers(val);
+  };
+
+  // fetch account balances
   useEffect(() => {
     if (isReady) {
-      unsubscribeAll(true);
-    }
-    return () => {
-      unsubscribeAll(false);
-    };
-  }, [connectAccounts, network, isReady, activeExtension]);
-
-  // unsubscribe from all activeAccount subscriptions
-  const unsubscribeAll = async (refetch: boolean) => {
-    // unsubscribe all unsubs
-    Object.values(unsubsRef.current).map((v: Fn) => {
-      return v();
-    });
-    // refetch balances
-    if (refetch) {
+      // unsubscribe from current accounts and ledgers
+      setBondedAccounts([]);
+      setLedgers([]);
+      unsubscribeAll();
       getBalances();
     }
+  }, [connectAccounts, network, isReady, activeExtension]);
+
+  // fetch bonded account ledgers
+  useEffect(() => {
+    getLedgers();
+  }, [bondedAccountsRef.current]);
+
+  // unsubscribe from everything on unmount
+  useEffect(() => {
+    return () => {
+      unsubscribeAll();
+    };
+  }, []);
+
+  const unsubscribeAll = async () => {
+    Object.values(unsubsRef.current).forEach(async (v: Fn) => {
+      await v();
+    });
+    Object.values(bondedAccountsRef.current).forEach(async (v: any) => {
+      if (v.unsub !== null) {
+        await v.unsub();
+      }
+    });
+  };
+
+  const getBalances = async () => {
+    // subscribe to account balances
+    Promise.all(
+      connectAccounts.map((a: any) => subscribeToBalances(a.address))
+    );
+  };
+
+  const getLedgers = async () => {
+    // subscribe to account ledgers
+    const subs = [];
+    for (const bondedAccount of bondedAccountsRef.current) {
+      if (bondedAccount.unsub === null) {
+        subs.push(bondedAccount.address);
+      }
+    }
+    Promise.all(subs.map((a: any) => subscribeToLedger(a)));
   };
 
   // subscribe to account balances, ledger, bonded and nominators
@@ -117,36 +163,14 @@ export const BalancesProvider = ({
         _bonded = _bonded === null ? null : _bonded.toHuman();
         _account.bonded = _bonded;
 
-        // get account ledger if controller present (separate API call)
-        if (_bonded === null) {
-          _account.ledger = defaults.ledger;
-        } else {
-          const ledger: any = await api.query.staking.ledger(_bonded);
-          const _ledger = ledger.unwrapOr(null);
-
-          // fallback to default ledger if not present
-          if (_ledger === null) {
-            _account.ledger = defaults.ledger;
-          } else {
-            const { stash, total, active, unlocking } = _ledger;
-
-            // format unlocking chunks
-            const _unlocking = [];
-            for (const u of unlocking.toHuman()) {
-              const era = rmCommas(u.era);
-              const value = rmCommas(u.value);
-              _unlocking.push({
-                era: Number(era),
-                value: new BN(value),
-              });
-            }
-            _account.ledger = {
-              stash: stash.toHuman(),
-              active: active.toBn(),
-              total: total.toBn(),
-              unlocking: _unlocking,
-            };
-          }
+        // add bonded account to `bondedAccounts` if present
+        if (_bonded !== null) {
+          const _bondedAccounts: Array<any> = [...bondedAccountsRef.current];
+          _bondedAccounts.push({
+            address: _bonded,
+            unsub: null,
+          });
+          setBondedAccounts(_bondedAccounts);
         }
 
         // set account nominations
@@ -180,11 +204,61 @@ export const BalancesProvider = ({
     return unsub;
   };
 
-  // get active account balances
-  const getBalances = async () => {
-    Promise.all(
-      connectAccounts.map((a: any) => subscribeToBalances(a.address))
-    );
+  const subscribeToLedger = async (address: string) => {
+    if (!api) return;
+
+    const unsub = await api.query.staking.ledger(address, (l: any) => {
+      let ledger: any;
+
+      const _ledger = l.unwrapOr(null);
+      // fallback to default ledger if not present
+      if (_ledger === null) {
+        ledger = defaults.ledger;
+      } else {
+        const { stash, total, active, unlocking } = _ledger;
+
+        // format unlocking chunks
+        const _unlocking = [];
+        for (const u of unlocking.toHuman()) {
+          const era = rmCommas(u.era);
+          const value = rmCommas(u.value);
+          _unlocking.push({
+            era: Number(era),
+            value: new BN(value),
+          });
+        }
+        ledger = {
+          stash: stash.toHuman(),
+          active: active.toBn(),
+          total: total.toBn(),
+          unlocking: _unlocking,
+        };
+      }
+
+      // update ledgers in context state
+      let _ledgers = Object.values(ledgersRef.current);
+      // remove stale account if it's already in list
+      _ledgers = _ledgers.filter((acc: any) => acc.stash !== ledger.stash);
+      _ledgers.push(ledger);
+
+      // update state
+      setLedgers(_ledgers);
+    });
+
+    // add unsub to `bondedAccounts`
+    let _bondedAccounts = bondedAccountsRef.current;
+    _bondedAccounts = _bondedAccounts.map((acc: any) => {
+      if (acc.address === address) {
+        return {
+          address,
+          unsub,
+        };
+      }
+      return acc;
+    });
+
+    setBondedAccounts(_bondedAccounts);
+    return unsub;
   };
 
   // get an account's balance metadata
@@ -204,13 +278,10 @@ export const BalancesProvider = ({
 
   // get an account's ledger metadata
   const getAccountLedger = (address: string) => {
-    const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
-    );
-    if (account === undefined) {
+    const ledger = ledgersRef.current.find((acc: any) => acc.stash === address);
+    if (ledger === undefined) {
       return defaults.ledger;
     }
-    const { ledger } = account;
     if (ledger.stash === undefined) {
       return defaults.ledger;
     }
@@ -326,6 +397,7 @@ export const BalancesProvider = ({
         getBondOptions,
         isController,
         accounts: accountsRef.current,
+        ledgers,
         minReserve,
       }}
     >
