@@ -9,7 +9,12 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
-import { toFixedIfNecessary, planckBnToUnit, rmCommas } from '../../Utils';
+import {
+  toFixedIfNecessary,
+  planckBnToUnit,
+  rmCommas,
+  setStateWithRef,
+} from '../../Utils';
 import { APIContextInterface } from '../../types/api';
 
 import {
@@ -33,21 +38,13 @@ export const BalancesProvider = ({
   const { activeEra } = metrics;
   const { units } = network;
 
-  // balance accounts context state
-  const [accounts, _setAccounts] = useState<Array<BalancesAccount>>([]);
-
+  // balance accounts state
+  const [accounts, setAccounts] = useState<Array<BalancesAccount>>([]);
   const accountsRef = useRef(accounts);
-  const setAccounts = (val: Array<BalancesAccount>) => {
-    accountsRef.current = val;
-    _setAccounts(val);
-  };
 
-  const [unsubs, _setUnsubs] = useState<Unsubs>([]);
+  // subscriptions state
+  const [unsubs, setUnsubs] = useState<Unsubs>([]);
   const unsubsRef = useRef<Unsubs>(unsubs);
-  const setUnsubs = (val: Unsubs) => {
-    unsubsRef.current = val;
-    _setUnsubs(val);
-  };
 
   // existential amount of unit for an account
   const [existentialAmount] = useState<BN>(new BN(10 ** units));
@@ -115,15 +112,12 @@ export const BalancesProvider = ({
     );
   };
 
+  // subscribe to account ledgers
   const getLedgers = async () => {
-    // subscribe to account ledgers
-    const subs = [];
-    for (const bondedAccount of bondedAccountsRef.current) {
-      if (bondedAccount.unsub === null) {
-        subs.push(bondedAccount.address);
-      }
-    }
-    Promise.all(subs.map((a: any) => subscribeToLedger(a)));
+    const subs = bondedAccountsRef.current.filter(
+      (account: any) => account.unsub === null
+    );
+    Promise.all(subs.map((a: any) => subscribeToLedger(a.address)));
   };
 
   // subscribe to account balances, ledger, bonded and nominators
@@ -168,8 +162,9 @@ export const BalancesProvider = ({
 
         // add bonded account to `bondedAccounts` if present
         if (_bonded !== null) {
-          const _bondedAccounts: Array<any> = [...bondedAccountsRef.current];
-          _bondedAccounts.push({
+          const _bondedAccounts: Array<any> = [
+            ...bondedAccountsRef.current,
+          ].concat({
             address: _bonded,
             unsub: null,
           });
@@ -192,18 +187,16 @@ export const BalancesProvider = ({
         // update account in context state
         let _accounts = Object.values(accountsRef.current);
         // remove stale account if it's already in list
-        _accounts = _accounts.filter((acc: any) => acc.address !== address);
-        _accounts.push(_account);
+        _accounts = _accounts
+          .filter((acc: any) => acc.address !== address)
+          .concat(_account);
 
-        // update state
-        setAccounts(_accounts);
+        setStateWithRef(_accounts, setAccounts, accountsRef);
       }
     );
 
-    const _unsubs = unsubsRef.current;
-    _unsubs.push(unsub);
-    setUnsubs(_unsubs);
-
+    const _unsubs = unsubsRef.current.concat(unsub);
+    setStateWithRef(_unsubs, setUnsubs, unsubsRef);
     return unsub;
   };
 
@@ -241,8 +234,9 @@ export const BalancesProvider = ({
       // update ledgers in context state
       let _ledgers = Object.values(ledgersRef.current);
       // remove stale account if it's already in list
-      _ledgers = _ledgers.filter((acc: any) => acc.stash !== ledger.stash);
-      _ledgers.push(ledger);
+      _ledgers = _ledgers
+        .filter((acc: any) => acc.stash !== ledger.stash)
+        .concat(ledger);
 
       // update state
       setLedgers(_ledgers);
