@@ -28,11 +28,20 @@ export const BalanceGraph = () => {
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
-  const { freeToStake, freeToUnbond: staked }: any =
-    getBondOptions(activeAccount) || {};
+  const {
+    freeToStake,
+    freeToUnbond: staked,
+    totalUnlocking,
+    totalUnlocked,
+  }: any = getBondOptions(activeAccount) || {};
   const { getPoolBondOptions } = usePools();
 
   const poolBondOpions = getPoolBondOptions(activeAccount);
+  const unlocking =
+    poolBondOpions.totalUnlocking +
+    poolBondOpions.totalUnlocked +
+    totalUnlocked +
+    totalUnlocking;
 
   let { free } = balance;
 
@@ -97,22 +106,25 @@ export const BalanceGraph = () => {
   };
 
   // determine stats from network features
-  let _labels = ['Available', 'Staking', 'In Pool'];
-  let _data = [graphFreeToStake, graphStaked, graphInPool];
+  let _labels = ['Available', 'Unlocking', 'Staking', 'In Pool'];
+  let _data = [graphFreeToStake, unlocking, graphStaked, graphInPool];
   let _colors = zeroBalance
     ? [
         defaultThemes.graphs.colors[2][mode],
+        defaultThemes.graphs.inactive2[mode],
         defaultThemes.graphs.inactive2[mode],
         defaultThemes.graphs.inactive[mode],
       ]
     : [
         defaultThemes.graphs.colors[2][mode],
+        defaultThemes.graphs.colors[1][mode],
         defaultThemes.graphs.colors[0][mode],
         defaultThemes.graphs.colors[3][mode],
       ];
-  _data = features.pools ? _data : _data.slice(0, 2);
-  _colors = features.pools ? _colors : _colors.slice(0, 2);
-  _labels = features.pools ? _labels : _labels.slice(0, 2);
+
+  _data = features.pools ? _data : _data.slice(0, 3);
+  _colors = features.pools ? _colors : _colors.slice(0, 3);
+  _labels = features.pools ? _labels : _labels.slice(0, 3);
 
   // default to a greyscale 50/50 donut on zero balance
   let dataSet;
