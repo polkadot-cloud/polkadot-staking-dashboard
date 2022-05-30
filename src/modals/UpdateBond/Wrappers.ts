@@ -104,7 +104,4 @@ export const ContentWrapper = styled.div`
       }
     }
   }
-  .notes {
-    margin-top: 1rem;
-  }
 `;

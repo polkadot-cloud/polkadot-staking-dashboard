@@ -7,7 +7,12 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { usePools } from 'contexts/Pools';
-import { HeadingWrapper, FooterWrapper, Separator } from '../Wrappers';
+import {
+  HeadingWrapper,
+  FooterWrapper,
+  Separator,
+  NotesWrapper,
+} from '../Wrappers';
 import { Wrapper } from './Wrapper';
 import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
@@ -81,7 +86,7 @@ export const NominatePool = () => {
           {nominations.length === 1 ? '' : 's'}
         </h2>
         <Separator />
-        <div className="notes">
+        <NotesWrapper>
           <p>
             Once submitted, you will start nominating your chosen validators.
           </p>
@@ -89,7 +94,7 @@ export const NominatePool = () => {
             Estimated Tx Fee:
             {estimatedFee === null ? '...' : `${estimatedFee}`}
           </p>
-        </div>
+        </NotesWrapper>
         <FooterWrapper>
           <div>
             <button

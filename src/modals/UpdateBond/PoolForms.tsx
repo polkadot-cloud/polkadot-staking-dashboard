@@ -7,16 +7,14 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { usePools } from 'contexts/Pools';
-import { FooterWrapper, Separator } from '../Wrappers';
+import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 import { useModal } from '../../contexts/Modal';
-import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
 import { useConnect } from '../../contexts/Connect';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { Warning } from '../../library/Form/Warning';
-import { useStaking } from '../../contexts/Staking';
 import { planckBnToUnit } from '../../Utils';
 
 export const PoolForms = forwardRef((props: any, ref: any) => {
@@ -25,8 +23,8 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
   const { activeAccount } = useConnect();
   const { units } = network;
   const { setStatus: setModalStatus }: any = useModal();
-  const { membership, getPoolBondOptions, stats } = usePools();
-  const { minJoinBond, minCreateBond } = stats;
+  const { getPoolBondOptions, stats } = usePools();
+  const { minJoinBond } = stats;
   const { freeToBond, freeToUnbond, totalPossibleBond } = getPoolBondOptions();
 
   // unbond amount to `minNominatorBond` threshold
@@ -118,7 +116,7 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
                 },
               ]}
             />
-            <div className="notes">{TxFee}</div>
+            <NotesWrapper>{TxFee}</NotesWrapper>
           </>
         )}
         {task === 'bond_all' && (
@@ -139,7 +137,7 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
             <h2>
               {totalPossibleBond} {network.unit}
             </h2>
-            <div className="notes">{TxFee}</div>
+            <NotesWrapper>{TxFee}</NotesWrapper>
           </>
         )}
         {task === 'unbond_some' && (
@@ -155,13 +153,13 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
                 },
               ]}
             />
-            <div className="notes">
+            <NotesWrapper>
               <p>
                 Once unbonding, you must wait 28 days for your funds to become
                 available.
               </p>
               {TxFee}
-            </div>
+            </NotesWrapper>
           </>
         )}
         {task === 'unbond_all' && (
@@ -171,13 +169,13 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
               {freeToUnbond} {network.unit}
             </h2>
             <Separator />
-            <div className="notes">
+            <NotesWrapper>
               <p>
                 Once unbonding, you must wait 28 days for your funds to become
                 available.
               </p>
               {bondValid && TxFee}
-            </div>
+            </NotesWrapper>
           </>
         )}
       </div>

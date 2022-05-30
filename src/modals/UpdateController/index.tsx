@@ -11,7 +11,7 @@ import Wrapper from './Wrapper';
 import { AccountDropdown } from '../../library/Form/AccountDropdown';
 import { useBalances } from '../../contexts/Balances';
 import { useModal } from '../../contexts/Modal';
-import { HeadingWrapper, FooterWrapper } from '../Wrappers';
+import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useApi } from '../../contexts/Api';
 import { APIContextInterface } from '../../types/api';
@@ -85,12 +85,12 @@ export const UpdateController = () => {
           value={selected}
           height="17rem"
         />
-        <div style={{ marginTop: '1rem' }}>
+        <NotesWrapper>
           <p>
             Estimated Tx Fee:
             {estimatedFee === null ? '...' : `${estimatedFee}`}
           </p>
-        </div>
+        </NotesWrapper>
         <FooterWrapper>
           <div>
             <button

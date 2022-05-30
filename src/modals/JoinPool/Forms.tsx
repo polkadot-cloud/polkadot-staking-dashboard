@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FooterWrapper, Separator } from '../Wrappers';
+import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrapper';
 import { useModal } from '../../contexts/Modal';
 import { useBalances } from '../../contexts/Balances';
@@ -14,7 +14,7 @@ import { useConnect } from '../../contexts/Connect';
 import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 
-export const Forms = (props: any) => {
+export const Forms = () => {
   const { api, network }: any = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize }: any = useModal();
@@ -81,7 +81,7 @@ export const Forms = (props: any) => {
               },
             ]}
           />
-          <div className="notes">{TxFee}</div>
+          <NotesWrapper>{TxFee}</NotesWrapper>
         </>
       </div>
       <FooterWrapper>

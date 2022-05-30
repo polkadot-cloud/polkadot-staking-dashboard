@@ -71,6 +71,12 @@ export const ContentWrapper = styled.div<any>`
   .body {
     padding: 1rem;
   }
+  .notes {
+    padding: 1rem 0;
+    > p {
+      color: ${textSecondary};
+    }
+  }
 `;
 
 // modal header, used for extrinsics forms
@@ -127,4 +133,11 @@ export const Separator = styled.div`
   width: 100%;
   opacity: 0.1;
   margin: 0.75rem 0rem;
+`;
+
+export const NotesWrapper = styled.div`
+  padding: 1rem 0;
+  > p {
+    color: ${textSecondary};
+  }
 `;

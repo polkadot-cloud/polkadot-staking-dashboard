@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { forwardRef } from 'react';
-import { Separator } from '../Wrappers';
+import { Separator, NotesWrapper } from '../Wrappers';
 import { ContentWrapper, ChunkWrapper } from './Wrappers';
 import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
@@ -111,13 +111,13 @@ export const Overview = forwardRef(
             </ChunkWrapper>
           );
         })}
-        <div className="notes" style={{ paddingBottom: '1rem' }}>
+        <NotesWrapper>
           <p>
             Unlocks take {bondDuration} eras before they can be withdrawn. You
             can rebond unlocks at any time in this period, or withdraw them to
             your free balance thereafter.
           </p>
-        </div>
+        </NotesWrapper>
       </ContentWrapper>
     );
   }
