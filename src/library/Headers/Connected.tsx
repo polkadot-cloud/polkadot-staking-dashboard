@@ -16,12 +16,11 @@ export const Connected = () => {
   const { hasController, getControllerNotImported } = useStaking();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const { membership: poolMembership } = usePools();
+  const { activeBondedPool } = usePools();
 
   let poolAddress = '';
-  if (poolMembership !== undefined) {
-    const { pool } = poolMembership;
-    const { addresses } = pool;
+  if (activeBondedPool !== undefined) {
+    const { addresses } = activeBondedPool;
     poolAddress = addresses.stash;
   }
 
@@ -68,7 +67,7 @@ export const Connected = () => {
           )}
 
           {/* pool account display / hide if not in pool */}
-          {poolMembership !== undefined && (
+          {activeBondedPool !== undefined && (
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}
@@ -77,7 +76,7 @@ export const Connected = () => {
                     ? 'Not Imported'
                     : undefined
                 }
-                pool={poolMembership.pool}
+                pool={activeBondedPool}
                 label="Pool"
                 canClick={hasController()}
                 onClick={() => {}}

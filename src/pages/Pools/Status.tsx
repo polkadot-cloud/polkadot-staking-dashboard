@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { formatBalance } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { Separator } from '../../Wrappers';
@@ -13,11 +14,17 @@ import { APIContextInterface } from '../../types/api';
 
 export const Status = () => {
   const { network } = useApi() as APIContextInterface;
+  const { units, unit } = network;
   const { isSyncing } = useUi();
-  const { membership, isOwner, getNominationsStatus, targets } = usePools();
+  const {
+    membership,
+    activeBondedPool,
+    isOwner,
+    getNominationsStatus,
+    targets,
+  } = usePools();
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
-  const { unit } = network;
 
   // get nomination status
   const nominationStatuses = getNominationsStatus();
@@ -28,7 +35,7 @@ export const Status = () => {
 
   // Pool status `Stat` props
   const labelMembership = membership
-    ? `Active in Pool ${membership.pool.id}`
+    ? `Active in Pool ${membership.poolId}`
     : 'Not in a Pool';
 
   let buttonsMembership;
@@ -61,15 +68,21 @@ export const Status = () => {
   }
 
   // Unclaimed rewards `Stat` props
-  const labelRewards = membership
-    ? `${membership?.unclaimedRewards ?? 0} ${unit}`
+  const { unclaimedReward } = activeBondedPool || {};
+  const labelRewards = unclaimedReward
+    ? `${formatBalance(unclaimedReward, {
+        decimals: units,
+        withSi: true,
+        withUnit: unit,
+      })} ${unit}`
     : `0 ${unit}`;
-  const buttonsRewards = membership
+  const buttonsRewards = unclaimedReward
     ? [
         {
           title: 'Claim',
           small: true,
-          onClick: () => {},
+          onClick: () =>
+            openModalWith('ClaimReward', { target: 'pool' }, 'small'),
         },
       ]
     : undefined;

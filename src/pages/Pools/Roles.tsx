@@ -16,8 +16,8 @@ export const Roles = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
-  const { isNominator, membership } = usePools();
-  const activePool = membership?.pool;
+  const { isNominator, activeBondedPool } = usePools();
+  const activePool = activeBondedPool;
   const { roles } = activePool;
 
   const batchKey = 'pool_roles';

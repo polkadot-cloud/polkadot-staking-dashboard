@@ -32,6 +32,7 @@ export interface PoolsContextState {
   setTargets: (targest: any) => void;
   getNominationsStatus: () => any;
   membership: any;
+  activeBondedPool: any;
   enabled: number;
   meta: any;
   stats: any;
@@ -52,6 +53,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
     setTargets: (targets: any) => {},
     getNominationsStatus: () => {},
     membership: undefined,
+    activeBondedPool: undefined,
     enabled: 0,
     meta: [],
     stats: defaults.stats,
@@ -82,6 +84,12 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   // stores pool membership
   const [poolMembership, setPoolMembership]: any = useState({
     membership: undefined,
+    unsub: null,
+  });
+
+  // stores member's bonded pool
+  const [activeBondedPool, setActiveBondedPool]: any = useState({
+    pool: undefined,
     unsub: null,
   });
 
@@ -159,8 +167,25 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  // subscribe to active bonded pool deatils
+  useEffect(() => {
+    const membership = poolMembership?.membership;
+    if (isReady && enabled && membership) {
+      subscribeToActiveBondedPool(membership);
+    }
+    return () => {
+      unsubscribeActiveBondedPool();
+    };
+  }, [network, isReady, enabled, poolMembership?.membership]);
+
+  const unsubscribeActiveBondedPool = () => {
+    if (activeBondedPool?.unsub) {
+      activeBondedPool?.unsub();
+    }
+  };
+
   // subscribe to pool nominations
-  const bondedAddress = poolMembership?.membership?.pool?.addresses?.stash;
+  const bondedAddress = setActiveBondedPool.bondedPool?.addresses?.stash;
   useEffect(() => {
     if (isReady && enabled && bondedAddress) {
       subscribeToPoolNominations(bondedAddress);
@@ -260,26 +285,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       async (result: any) => {
         let membership = result?.unwrapOr(undefined)?.toHuman();
         if (membership) {
-          let pool: any = await api.query.nominationPools.bondedPools(
-            membership.poolId
-          );
-          pool = pool?.unwrapOr(undefined)?.toHuman();
-          if (pool) {
-            pool = getPoolWithAddresses(membership.poolId, pool);
-
-            const stashAddress = pool?.addresses?.stash;
-            if (stashAddress) {
-              // set pool staking targets
-              _setTargets(
-                localStorageOrDefault(
-                  `${stashAddress}_pool_targets`,
-                  defaults.targets,
-                  true
-                )
-              );
-            }
-          }
-
           // format pool's unlocking chunks
           const unbondingEras: any = membership.unbondingEras;
           const unlocking = [];
@@ -294,9 +299,86 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
           membership.points = membership.points
             ? rmCommas(membership.points)
             : '0';
-          membership = { ...membership, unlocking, pool };
+          membership = { ...membership, unlocking };
         }
         setPoolMembership({ membership, unsub });
+      }
+    );
+    return unsub;
+  };
+  const calculatePayout = (
+    membership: any,
+    bondedPool: any,
+    rewardPool: any,
+    rewardAccountBalance: BN
+  ): BN => {
+    const newBalance = new BN(rewardAccountBalance);
+    const lastBalance = new BN(rmCommas(rewardPool.balance));
+    const poolTotalEarnings = new BN(rmCommas(rewardPool.totalEarnings));
+    const rewardPoints = new BN(rmCommas(rewardPool.points));
+    const bondedPoints = new BN(rmCommas(bondedPool.points));
+    const memberPoints = new BN(rmCommas(membership.points));
+    const poolTotalEarningsAtLastClaim = new BN(
+      rmCommas(membership.rewardPoolTotalEarnings)
+    );
+
+    const generatedEarning = newBalance.sub(lastBalance);
+    const generatedPoints = bondedPoints.mul(generatedEarning);
+    const rewardPoolCurrentRewardPoints = rewardPoints.add(generatedPoints);
+    const generatedEarningSinceLastClaim = poolTotalEarnings.sub(
+      poolTotalEarningsAtLastClaim
+    );
+    const memberCurrentRewardPoint = memberPoints.mul(
+      generatedEarningSinceLastClaim
+    );
+    const payout = memberCurrentRewardPoint
+      .mul(generatedEarningSinceLastClaim)
+      .div(rewardPoolCurrentRewardPoints);
+    console.log(payout.toString());
+    return payout;
+  };
+  const subscribeToActiveBondedPool = async (membership: any) => {
+    if (!api || !membership) {
+      return;
+    }
+    const { poolId } = membership;
+    const addresses = createAccounts(poolId);
+    const unsub: any = await api.queryMulti(
+      [
+        [api.query.nominationPools.bondedPools, poolId],
+        [api.query.nominationPools.rewardPools, poolId],
+        [api.query.system.account, addresses.reward],
+      ],
+      ([bondedPool, rewardPool, { data: balance }]: any) => {
+        bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
+        rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
+        if (rewardPool && bondedPool) {
+          const rewardAccountBalance = balance?.free;
+          const unclaimedReward = calculatePayout(
+            membership,
+            bondedPool,
+            rewardPool,
+            rewardAccountBalance
+          );
+          const pool = {
+            ...bondedPool,
+            id: poolId,
+            unclaimedReward,
+            addresses,
+          };
+          setActiveBondedPool({ pool, unsub });
+
+          if (addresses?.stash) {
+            // set pool staking targets
+            _setTargets(
+              localStorageOrDefault(
+                `${addresses?.stash}_pool_targets`,
+                defaults.targets,
+                true
+              )
+            );
+          }
+        }
       }
     );
     return unsub;
@@ -431,11 +513,11 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isBonding = () => {
-    return !!poolMembership?.membership;
+    return !!activeBondedPool?.pool;
   };
 
   const isNominator = () => {
-    const roles = poolMembership?.membership?.pool?.roles;
+    const roles = activeBondedPool.pool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
@@ -445,7 +527,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isOwner = () => {
-    const roles = poolMembership?.membership?.pool?.roles;
+    const roles = activeBondedPool.pool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
@@ -455,7 +537,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isDepositor = () => {
-    const roles = poolMembership?.membership?.pool?.roles;
+    const roles = activeBondedPool.pool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
@@ -464,7 +546,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getPoolBondedAccount = () => {
-    return poolMembership?.membership?.pool?.addresses?.stash;
+    return activeBondedPool.pool?.addresses?.stash;
   };
 
   /*
@@ -595,7 +677,8 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         getPoolBondOptions,
         setTargets,
         getNominationsStatus,
-        membership: poolMembership?.membership,
+        membership: poolMembership.membership,
+        activeBondedPool: activeBondedPool.pool,
         enabled,
         stats: poolsConfig.stats,
         meta: poolMetaBatchesRef.current,

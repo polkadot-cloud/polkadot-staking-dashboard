@@ -17,6 +17,7 @@ import { UnlockChunks } from './UnlockChunks';
 import { CreatePool } from './CreatePool';
 import { NominatePool } from './NominatePool';
 import { JoinPool } from './JoinPool';
+import { ClaimReward } from './ClaimReward';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -94,6 +95,7 @@ export const Modal = () => {
             {modal === 'CreatePool' && <CreatePool />}
             {modal === 'NominatePool' && <NominatePool />}
             {modal === 'JoinPool' && <JoinPool />}
+            {modal === 'ClaimReward' && <ClaimReward />}
           </ContentWrapper>
         </HeightWrapper>
         <button
