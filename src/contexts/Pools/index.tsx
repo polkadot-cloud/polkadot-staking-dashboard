@@ -337,7 +337,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const payout = memberCurrentRewardPoint
       .mul(generatedEarningSinceLastClaim)
       .div(rewardPoolCurrentRewardPoints);
-    console.log(payout.toString());
+
     return payout;
   };
   const subscribeToActiveBondedPool = async (membership: any) => {
