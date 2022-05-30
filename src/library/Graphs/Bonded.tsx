@@ -15,7 +15,7 @@ export const Bonded = (props: any) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
 
-  const { active, unlocking, total, inactive } = props;
+  const { active, unlocking, unlocked, total, inactive } = props;
   let { free } = props;
 
   let zeroBalance = false;
@@ -69,7 +69,7 @@ export const Bonded = (props: any) => {
     datasets: [
       {
         label: network.unit,
-        data: [active, unlocking, free],
+        data: [active, unlocking + unlocked, free],
         backgroundColor: [
           defaultThemes.graphs.colors[0][mode],
           defaultThemes.graphs.colors[1][mode],
@@ -84,7 +84,11 @@ export const Bonded = (props: any) => {
     <GraphWrapper transparent noMargin>
       <div
         className="graph"
-        style={{ flex: 0, paddingRight: '1rem', height: 160 }}
+        style={{
+          flex: 0,
+          paddingRight: '1rem',
+          height: 160,
+        }}
       >
         <Doughnut options={options} data={data} />
       </div>

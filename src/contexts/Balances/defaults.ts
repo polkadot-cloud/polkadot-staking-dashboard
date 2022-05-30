@@ -28,5 +28,6 @@ export const bondOptions = {
   freeToBond: 0,
   freeToUnbond: 0,
   totalUnlocking: 0,
+  totalUnlocked: 0,
   totalPossibleBond: 0,
 };

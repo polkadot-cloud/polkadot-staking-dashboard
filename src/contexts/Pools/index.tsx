@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -66,9 +67,11 @@ export const usePools = () => React.useContext(PoolsContext);
 
 export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
+  const { metrics } = useNetworkMetrics();
   const { poolsPalletId } = consts;
   const { features, units } = network;
   const { inSetup, eraStakers } = useStaking();
+  const { activeEra } = metrics;
 
   const { activeAccount } = useConnect();
   const { getAccountBalance }: any = useBalances();
@@ -482,11 +485,18 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
 
     // total amount actively unlocking
     let totalUnlockingBn = new BN(0);
+    let totalUnlockedBn = new BN(0);
+
     for (const u of unlocking) {
-      const { value } = u;
-      totalUnlockingBn = totalUnlockingBn.add(value);
+      const { value, era } = u;
+      if (activeEra.index > era) {
+        totalUnlockedBn = totalUnlockedBn.add(value);
+      } else {
+        totalUnlockingBn = totalUnlockingBn.add(value);
+      }
     }
     const totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
+    const totalUnlocked = planckBnToUnit(totalUnlockedBn, units);
 
     // free transferrable balance that can be bonded in the pool
     let freeToBond: any = toFixedIfNecessary(
@@ -498,7 +508,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
 
     // total possible balance that can be bonded in the pool
     const totalPossibleBond = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) - totalUnlocking,
+      planckBnToUnit(freeAfterReserve, units) - totalUnlocking - totalUnlocked,
       units
     );
 

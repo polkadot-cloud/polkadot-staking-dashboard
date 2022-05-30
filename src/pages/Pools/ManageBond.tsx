@@ -26,8 +26,13 @@ export const ManageBond = () => {
   // TODO: hook up to live data
   const total = new BN(0);
 
-  const { active, freeToBond, totalUnlocking, totalUnlockChuncks } =
-    getPoolBondOptions();
+  const {
+    active,
+    freeToBond,
+    totalUnlocking,
+    totalUnlocked,
+    totalUnlockChuncks,
+  } = getPoolBondOptions();
 
   return (
     <>
@@ -81,6 +86,7 @@ export const ManageBond = () => {
       <BondedGraph
         active={planckBnToUnit(active, units)}
         unlocking={totalUnlocking}
+        unlocked={totalUnlocked}
         free={freeToBond}
         total={total.toNumber()}
         inactive={inSetup()}

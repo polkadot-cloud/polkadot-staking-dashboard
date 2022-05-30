@@ -28,6 +28,7 @@ export const poolBondOptions = {
   freeToBond: 0,
   freeToUnbond: 0,
   totalUnlocking: 0,
+  totalUnlocked: 0,
   totalUnlockChuncks: 0,
 };
 

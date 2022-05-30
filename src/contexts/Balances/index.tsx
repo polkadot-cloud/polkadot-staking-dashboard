@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { Fn, Unsubs } from 'types';
 import { Option } from '@polkadot/types-codec';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -27,7 +28,9 @@ export const BalancesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network } = useApi() as APIContextInterface;
+  const { metrics } = useNetworkMetrics();
   const { accounts: connectAccounts, activeExtension }: any = useConnect();
+  const { activeEra } = metrics;
   const { units } = network;
 
   // balance accounts context state
@@ -278,24 +281,33 @@ export const BalancesProvider = ({
 
     // total amount actively unlocking
     let totalUnlockingBn = new BN(0);
+    let totalUnlockedBn = new BN(0);
+
     for (const u of unlocking) {
-      const { value } = u;
-      totalUnlockingBn = totalUnlockingBn.add(value);
+      const { value, era } = u;
+
+      if (activeEra.index > era) {
+        totalUnlockedBn = totalUnlockedBn.add(value);
+      } else {
+        totalUnlockingBn = totalUnlockingBn.add(value);
+      }
     }
     const totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
+    const totalUnlocked = planckBnToUnit(totalUnlockedBn, units);
 
     // free to bond balance
     let freeToBond: any = toFixedIfNecessary(
       planckBnToUnit(freeAfterReserve, units) -
         planckBnToUnit(active, units) -
-        totalUnlocking,
+        totalUnlocking -
+        totalUnlocked,
       units
     );
     freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
     // total possible balance that can be bonded
     const totalPossibleBond = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) - totalUnlocking,
+      planckBnToUnit(freeAfterReserve, units) - totalUnlocking - totalUnlocked,
       units
     );
 
@@ -309,6 +321,7 @@ export const BalancesProvider = ({
       freeToBond,
       freeToUnbond,
       totalUnlocking,
+      totalUnlocked,
       totalPossibleBond,
       freeToStake,
       totalUnlockChuncks: unlocking.length,
