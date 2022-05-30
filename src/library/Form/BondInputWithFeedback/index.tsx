@@ -39,17 +39,22 @@ export const BondInputWithFeedback = (props: any) => {
   const activeBase = planckBnToUnit(active, units);
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
-  // get data based on subject
-  const { freeToBond, freeToUnbond } =
+  // format data based on subject.
+
+  // get bond options for either staking or pooling.
+  const options =
     subject === 'pools'
       ? getPoolBondOptions(activeAccount)
       : getBondOptions(activeAccount);
 
-  // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = Math.max(
-    freeToUnbond - planckBnToUnit(minNominatorBond, units),
-    0
-  );
+  const { freeToBond, freeToUnbond } = options;
+
+  // unbond amount to `minNominatorBond` threshold for staking,
+  // and the total amount for pools.
+  const freeToUnbondToMin =
+    subject === 'pools'
+      ? freeToUnbond
+      : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
 
   // store errors
   const [errors, setErrors]: any = useState([]);
@@ -96,7 +101,8 @@ export const BondInputWithFeedback = (props: any) => {
         _errors.push('Bond amount is more than your free balance.');
       }
 
-      if (nominating) {
+      // bond errors for staking only
+      if (nominating && subject === 'stake') {
         if (freeToBond < minNominatorBondBase) {
           _bondDisabled = true;
           _errors.push(
@@ -112,8 +118,8 @@ export const BondInputWithFeedback = (props: any) => {
       }
     }
 
-    // unbond errors
-    if (unbond) {
+    // unbond errors for staking only
+    if (unbond && subject === 'stake') {
       if (getControllerNotImported(controller)) {
         _errors.push(
           'You must have your controller account imported to unbond.'
@@ -121,13 +127,8 @@ export const BondInputWithFeedback = (props: any) => {
       }
       if (bond.bond !== '' && bond.bond > activeBase) {
         _errors.push('Unbond amount is more than your bonded balance.');
-      } else if (
-        bond.bond !== '' &&
-        bond.bond > freeToUnbondToMinNominatorBond
-      ) {
-        const remainingAfterUnbond = (
-          bond.bond - freeToUnbondToMinNominatorBond
-        ).toFixed(2);
+      } else if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
+        const remainingAfterUnbond = (bond.bond - freeToUnbondToMin).toFixed(2);
         _errors.push(
           `A minimum bond of ${minNominatorBondBase} ${network.unit} is required when actively nominating. Removing this amount will result in ~${remainingAfterUnbond} ${network.unit} remaining bond.`
         );
@@ -159,6 +160,8 @@ export const BondInputWithFeedback = (props: any) => {
         defaultValue={defaultBond}
         disabled={bondDisabled}
         setters={setters}
+        freeToBond={freeToBond}
+        freeToUnbondToMin={freeToUnbondToMin}
       />
     </>
   );
