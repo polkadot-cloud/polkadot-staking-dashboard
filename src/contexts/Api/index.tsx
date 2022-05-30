@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { stringToU8a } from '@polkadot/util';
 import {
   BONDING_DURATION,
   SESSIONS_PER_ERA,
