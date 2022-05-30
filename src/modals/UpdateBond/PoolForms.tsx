@@ -25,7 +25,8 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
   const { setStatus: setModalStatus }: any = useModal();
   const { getPoolBondOptions, stats } = usePools();
   const { minJoinBond } = stats;
-  const { freeToBond, freeToUnbond, totalPossibleBond } = getPoolBondOptions();
+  const { freeToBond, freeToUnbond, totalPossibleBond } =
+    getPoolBondOptions(activeAccount);
 
   // unbond amount to `minNominatorBond` threshold
   const freeToUnbondToMinPoolBond = Math.max(
@@ -106,6 +107,7 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
         {task === 'bond_some' && (
           <>
             <BondInputWithFeedback
+              subject="pools"
               unbond={false}
               listenIsValid={setBondValid}
               defaultBond={freeToBond}
@@ -143,6 +145,7 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
         {task === 'unbond_some' && (
           <>
             <BondInputWithFeedback
+              subject="pools"
               unbond
               listenIsValid={setBondValid}
               defaultBond={freeToUnbondToMinPoolBond}

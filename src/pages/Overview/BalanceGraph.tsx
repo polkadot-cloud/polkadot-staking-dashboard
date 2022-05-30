@@ -32,7 +32,7 @@ export const BalanceGraph = () => {
     getBondOptions(activeAccount) || {};
   const { getPoolBondOptions } = usePools();
 
-  const poolBondOpions = getPoolBondOptions();
+  const poolBondOpions = getPoolBondOptions(activeAccount);
 
   let { free } = balance;
 

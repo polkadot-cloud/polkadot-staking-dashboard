@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
+import { usePools } from 'contexts/Pools';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
@@ -15,7 +16,7 @@ import { APIContextInterface } from '../../../types/api';
 
 export const BondInputWithFeedback = (props: any) => {
   // input props
-  const { defaultBond, unbond } = props;
+  const { subject, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
 
   // functional props
@@ -27,7 +28,8 @@ export const BondInputWithFeedback = (props: any) => {
   const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
-  const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
+  const { getPoolBondOptions } = usePools();
+
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(activeAccount);
   const { units } = network;
@@ -36,6 +38,12 @@ export const BondInputWithFeedback = (props: any) => {
 
   const activeBase = planckBnToUnit(active, units);
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
+
+  // get data based on subject
+  const { freeToBond, freeToUnbond } =
+    subject === 'pools'
+      ? getPoolBondOptions(activeAccount)
+      : getBondOptions(activeAccount);
 
   // unbond amount to `minNominatorBond` threshold
   const freeToUnbondToMinNominatorBond = Math.max(

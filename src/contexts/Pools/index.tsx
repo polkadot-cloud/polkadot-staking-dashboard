@@ -29,7 +29,7 @@ export interface PoolsContextState {
   isOwner: () => any;
   isDepositor: () => any;
   getPoolBondedAccount: () => any;
-  getPoolBondOptions: () => any;
+  getPoolBondOptions: (a: string) => any;
   setTargets: (targest: any) => void;
   getNominationsStatus: () => any;
   membership: any;
@@ -50,7 +50,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
     isOwner: () => false,
     isDepositor: () => false,
     getPoolBondedAccount: () => undefined,
-    getPoolBondOptions: () => defaults.poolBondOptions,
+    getPoolBondOptions: (a: string) => defaults.poolBondOptions,
     setTargets: (targets: any) => {},
     getNominationsStatus: () => {},
     membership: undefined,
@@ -70,7 +70,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { metrics } = useNetworkMetrics();
   const { poolsPalletId } = consts;
   const { features, units } = network;
-  const { inSetup, eraStakers } = useStaking();
+  const { eraStakers } = useStaking();
   const { activeEra } = metrics;
 
   const { activeAccount } = useConnect();
@@ -468,12 +468,11 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // get the bond and unbond amounts available to the user
-  const getPoolBondOptions = () => {
-    if (!activeAccount) {
+  const getPoolBondOptions = (address: string) => {
+    if (!address) {
       return defaults.poolBondOptions;
     }
-    const { free, freeAfterReserve, miscFrozen } =
-      getAccountBalance(activeAccount);
+    const { free, freeAfterReserve, miscFrozen } = getAccountBalance(address);
     const membership = poolMembership.membership;
     const unlocking = membership?.unlocking || [];
     const points = membership?.points;

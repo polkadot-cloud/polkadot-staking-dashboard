@@ -3,6 +3,7 @@
 
 import BN from 'bn.js';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { useConnect } from 'contexts/Connect';
 import { planckBnToUnit } from '../../Utils';
 import BondedGraph from '../../library/Graphs/Bonded';
 import { useApi } from '../../contexts/Api';
@@ -19,9 +20,10 @@ export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { openModalWith } = useModal();
+  const { activeAccount } = useConnect();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const { getPoolBondOptions, isBonding, membership } = usePools();
+  const { getPoolBondOptions, isBonding } = usePools();
 
   // TODO: hook up to live data
   const total = new BN(0);
@@ -32,7 +34,7 @@ export const ManageBond = () => {
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
-  } = getPoolBondOptions();
+  } = getPoolBondOptions(activeAccount);
 
   return (
     <>
