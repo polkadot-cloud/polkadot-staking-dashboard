@@ -20,6 +20,5 @@ export interface BalancesContextInterface {
   getBondOptions: (address: string) => any;
   isController: (address: string) => boolean;
   accounts: Array<BalancesAccount>;
-  ledgers: any;
   minReserve: BN;
 }

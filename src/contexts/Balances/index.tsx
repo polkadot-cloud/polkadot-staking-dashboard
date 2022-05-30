@@ -397,7 +397,6 @@ export const BalancesProvider = ({
         getBondOptions,
         isController,
         accounts: accountsRef.current,
-        ledgers,
         minReserve,
       }}
     >
