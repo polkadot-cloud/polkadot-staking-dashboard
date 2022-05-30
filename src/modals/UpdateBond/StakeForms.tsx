@@ -163,8 +163,8 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
               {freeToBond} {network.unit}
             </h2>
             <p>
-              This amount of
-              {network.unit} will be added to your current bonded funds.
+              This amount of {network.unit} will be added to your current bonded
+              funds.
             </p>
             <Separator />
             <h4>New total bond:</h4>
