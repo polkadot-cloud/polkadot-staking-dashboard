@@ -472,7 +472,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     if (!address) {
       return defaults.poolBondOptions;
     }
-    const { free, freeAfterReserve, miscFrozen } = getAccountBalance(address);
+    const { freeAfterReserve, miscFrozen } = getAccountBalance(address);
     const membership = poolMembership.membership;
     const unlocking = membership?.unlocking || [];
     const points = membership?.points;
@@ -498,12 +498,16 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const totalUnlocked = planckBnToUnit(totalUnlockedBn, units);
 
     // free transferrable balance that can be bonded in the pool
-    let freeToBond: any = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) -
-        planckBnToUnit(miscFrozen, units),
-      units
+    const freeToBond: any = toFixedIfNecessary(
+      Math.max(
+        planckBnToUnit(freeAfterReserve, units) -
+          planckBnToUnit(miscFrozen, units) -
+          totalUnlocking -
+          totalUnlocked,
+        units
+      ),
+      0
     );
-    freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
     // total possible balance that can be bonded in the pool
     const totalPossibleBond = toFixedIfNecessary(
