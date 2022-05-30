@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
+import { useBalances } from 'contexts/Balances';
 import { planckBnToUnit } from '../../Utils';
 import BondedGraph from '../../library/Graphs/Bonded';
 import { useApi } from '../../contexts/Api';
@@ -23,10 +23,10 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
+  const { getAccountLedger }: any = useBalances();
   const { getPoolBondOptions, isBonding } = usePools();
-
-  // TODO: hook up to live data
-  const total = new BN(0);
+  const ledger = getAccountLedger(activeAccount);
+  const { total }: any = ledger;
 
   const {
     active,

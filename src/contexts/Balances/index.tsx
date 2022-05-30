@@ -313,11 +313,16 @@ export const BalancesProvider = ({
       units
     );
 
-    let freeToStake = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units),
+    const freeToStake = toFixedIfNecessary(
+      Math.max(
+        planckBnToUnit(freeAfterReserve, units) -
+          planckBnToUnit(active, units) -
+          totalUnlocking -
+          totalUnlocked,
+        0
+      ),
       units
     );
-    freeToStake = freeToStake < 0 ? 0 : freeToStake;
 
     return {
       freeToBond,

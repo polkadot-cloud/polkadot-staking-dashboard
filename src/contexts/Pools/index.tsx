@@ -520,6 +520,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       freeToBond,
       freeToUnbond,
       totalUnlocking,
+      totalUnlocked,
       totalPossibleBond,
       totalUnlockChuncks: unlocking.length,
     };
