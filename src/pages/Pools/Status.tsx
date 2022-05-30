@@ -74,7 +74,7 @@ export const Status = () => {
         decimals: units,
         withSi: true,
         withUnit: unit,
-      })}`
+      })} ${unit}`
     : `0 ${unit}`;
   const buttonsRewards = unclaimedReward
     ? [

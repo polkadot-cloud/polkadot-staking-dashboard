@@ -42,7 +42,7 @@ export const ClaimReward = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!api || !valid) {
+    if (!api) {
       return _tx;
     }
     _tx = api.tx.nominationPools.claimPayout();
@@ -73,24 +73,18 @@ export const ClaimReward = () => {
         }}
       >
         {!unclaimedReward?.gtn(0) && (
-          <>
-            <Warning text="You have no rewards to claim." />
-            <Separator />
-          </>
+          <Warning text="You have no rewards to claim." />
         )}
+        <h2>
+          {formatBalance(unclaimedReward, {
+            decimals: units,
+            withSi: true,
+            withUnit: unit,
+          })}
+          &nbsp;{network.unit}
+        </h2>
+        <Separator />
         <div className="notes">
-          {unclaimedReward?.gtn(0) && (
-            <>
-              <h2>
-                {`Claim ${formatBalance(unclaimedReward, {
-                  decimals: units,
-                  withSi: true,
-                  withUnit: unit,
-                })} rewards.`}
-              </h2>
-              <Separator />
-            </>
-          )}
           <p>
             Estimated Tx Fee:
             {estimatedFee === null ? '...' : `${estimatedFee}`}
