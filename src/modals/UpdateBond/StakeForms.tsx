@@ -140,6 +140,7 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
         {task === 'bond_some' && (
           <>
             <BondInputWithFeedback
+              subject="stake"
               unbond={false}
               listenIsValid={setBondValid}
               defaultBond={freeToBond}
@@ -177,6 +178,7 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
         {task === 'unbond_some' && (
           <>
             <BondInputWithFeedback
+              subject="stake"
               unbond
               listenIsValid={setBondValid}
               defaultBond={freeToUnbondToMinNominatorBond}

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
+import { usePools } from 'contexts/Pools';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
 import { useBalances } from '../../../contexts/Balances';
@@ -15,7 +16,7 @@ import { APIContextInterface } from '../../../types/api';
 
 export const BondInputWithFeedback = (props: any) => {
   // input props
-  const { defaultBond, unbond } = props;
+  const { subject, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
 
   // functional props
@@ -27,21 +28,40 @@ export const BondInputWithFeedback = (props: any) => {
   const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
-  const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
+  const { getPoolBondOptions, stats } = usePools();
+  const { minJoinBond } = stats;
+
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(activeAccount);
   const { units } = network;
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
-  const activeBase = planckBnToUnit(active, units);
-  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
+  const minBondBase =
+    subject === 'pools'
+      ? planckBnToUnit(minJoinBond, units)
+      : planckBnToUnit(minNominatorBond, units);
 
-  // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = Math.max(
-    freeToUnbond - planckBnToUnit(minNominatorBond, units),
-    0
-  );
+  // get bond options for either staking or pooling.
+  const options =
+    subject === 'pools'
+      ? getPoolBondOptions(activeAccount)
+      : getBondOptions(activeAccount);
+
+  const { freeToBond, freeToUnbond, active: poolsActive } = options;
+
+  // unbond amount to `minNominatorBond` threshold for staking,
+  // and unbond amount to `minJoinBond` for pools.
+  const freeToUnbondToMin =
+    subject === 'pools'
+      ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
+      : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
+
+  // get the actively bonded amount.
+  const activeBase =
+    subject === 'pools'
+      ? planckBnToUnit(poolsActive, units)
+      : planckBnToUnit(active, units);
 
   // store errors
   const [errors, setErrors]: any = useState([]);
@@ -88,17 +108,18 @@ export const BondInputWithFeedback = (props: any) => {
         _errors.push('Bond amount is more than your free balance.');
       }
 
+      // bond errors
       if (nominating) {
-        if (freeToBond < minNominatorBondBase) {
+        if (freeToBond < minBondBase) {
           _bondDisabled = true;
           _errors.push(
-            `You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}.`
+            `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
           );
         }
 
-        if (bond.bond !== '' && bond.bond < minNominatorBondBase) {
+        if (bond.bond !== '' && bond.bond < minBondBase) {
           _errors.push(
-            `Bond amount must be at least ${minNominatorBondBase} ${network.unit}.`
+            `Bond amount must be at least ${minBondBase} ${network.unit}.`
           );
         }
       }
@@ -106,22 +127,24 @@ export const BondInputWithFeedback = (props: any) => {
 
     // unbond errors
     if (unbond) {
-      if (getControllerNotImported(controller)) {
-        _errors.push(
-          'You must have your controller account imported to unbond.'
-        );
-      }
       if (bond.bond !== '' && bond.bond > activeBase) {
         _errors.push('Unbond amount is more than your bonded balance.');
-      } else if (
-        bond.bond !== '' &&
-        bond.bond > freeToUnbondToMinNominatorBond
-      ) {
-        const remainingAfterUnbond = (
-          bond.bond - freeToUnbondToMinNominatorBond
-        ).toFixed(2);
+      }
+
+      // unbond errors for staking only
+      if (subject === 'stake') {
+        if (getControllerNotImported(controller)) {
+          _errors.push(
+            'You must have your controller account imported to unbond.'
+          );
+        }
+      }
+
+      if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
         _errors.push(
-          `A minimum bond of ${minNominatorBondBase} ${network.unit} is required when actively nominating. Removing this amount will result in ~${remainingAfterUnbond} ${network.unit} remaining bond.`
+          `A minimum bond of ${minBondBase} ${network.unit} is required when ${
+            subject === 'stake' ? `actively nominating` : `in your pool`
+          }.`
         );
       }
     }
@@ -151,6 +174,8 @@ export const BondInputWithFeedback = (props: any) => {
         defaultValue={defaultBond}
         disabled={bondDisabled}
         setters={setters}
+        freeToBond={freeToBond}
+        freeToUnbondToMin={freeToUnbondToMin}
       />
     </>
   );

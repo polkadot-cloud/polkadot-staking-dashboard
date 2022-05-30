@@ -367,14 +367,16 @@ export const BalancesProvider = ({
     const totalUnlocked = planckBnToUnit(totalUnlockedBn, units);
 
     // free to bond balance
-    let freeToBond: any = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) -
-        planckBnToUnit(active, units) -
-        totalUnlocking -
-        totalUnlocked,
-      units
+    const freeToBond: any = Math.max(
+      toFixedIfNecessary(
+        planckBnToUnit(freeAfterReserve, units) -
+          planckBnToUnit(active, units) -
+          totalUnlocking -
+          totalUnlocked,
+        units
+      ),
+      0
     );
-    freeToBond = freeToBond < 0 ? 0 : freeToBond;
 
     // total possible balance that can be bonded
     const totalPossibleBond = toFixedIfNecessary(
@@ -382,11 +384,16 @@ export const BalancesProvider = ({
       units
     );
 
-    let freeToStake = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) - planckBnToUnit(active, units),
-      units
+    const freeToStake = Math.max(
+      toFixedIfNecessary(
+        planckBnToUnit(freeAfterReserve, units) -
+          planckBnToUnit(active, units) -
+          totalUnlocking -
+          totalUnlocked,
+        units
+      ),
+      0
     );
-    freeToStake = freeToStake < 0 ? 0 : freeToStake;
 
     return {
       freeToBond,

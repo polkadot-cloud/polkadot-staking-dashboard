@@ -5,18 +5,15 @@ import React, { useState, useEffect } from 'react';
 import { InputWrapper, RowWrapper } from './Wrappers';
 import { useApi } from '../../../contexts/Api';
 import { useConnect } from '../../../contexts/Connect';
-import { useBalances } from '../../../contexts/Balances';
-import { isNumeric, planckBnToUnit } from '../../../Utils';
+import { isNumeric } from '../../../Utils';
 import { Button } from '../../Button';
-import { useStaking } from '../../../contexts/Staking';
 import { APIContextInterface } from '../../../types/api';
 
 export const BondInput = (props: any) => {
   // functional props
   const setters = props.setters ?? [];
 
-  // input props
-  const { disabled } = props;
+  const { disabled, freeToBond, freeToUnbondToMin } = props;
 
   // whether to bond or unbond
   const task = props.task ?? 'bond';
@@ -25,18 +22,7 @@ export const BondInput = (props: any) => {
   const _value = props.value ?? null;
 
   const { network } = useApi() as APIContextInterface;
-  const { units } = network;
   const { activeAccount } = useConnect();
-  const { staking } = useStaking();
-  const { minNominatorBond } = staking;
-  const { getBondOptions }: any = useBalances();
-  const { freeToBond, freeToUnbond } = getBondOptions(activeAccount);
-
-  // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = Math.max(
-    freeToUnbond - planckBnToUnit(minNominatorBond, units),
-    0
-  );
 
   // the current local bond value
   const [bond, setBond] = useState(_value);
@@ -111,8 +97,7 @@ export const BondInput = (props: any) => {
             small
             title="Max"
             onClick={() => {
-              const value =
-                task === 'bond' ? freeToBond : freeToUnbondToMinNominatorBond;
+              const value = task === 'bond' ? freeToBond : freeToUnbondToMin;
               setBond(value);
               updateParentState(value);
             }}
