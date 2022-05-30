@@ -54,4 +54,4 @@ export type PagesConfig = Array<{
   icon: IconDefinition;
 }>;
 
-export type Unsubs = Array<() => void>;
+export type Unsubs = Array<any | (() => void)>;
