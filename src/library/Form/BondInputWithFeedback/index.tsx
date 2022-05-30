@@ -28,7 +28,8 @@ export const BondInputWithFeedback = (props: any) => {
   const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
-  const { getPoolBondOptions } = usePools();
+  const { getPoolBondOptions, stats } = usePools();
+  const { minJoinBond } = stats;
 
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(activeAccount);
@@ -36,10 +37,10 @@ export const BondInputWithFeedback = (props: any) => {
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
-  const activeBase = planckBnToUnit(active, units);
-  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
-
-  // format data based on subject.
+  const minBondBase =
+    subject === 'pools'
+      ? planckBnToUnit(minJoinBond, units)
+      : planckBnToUnit(minNominatorBond, units);
 
   // get bond options for either staking or pooling.
   const options =
@@ -47,14 +48,20 @@ export const BondInputWithFeedback = (props: any) => {
       ? getPoolBondOptions(activeAccount)
       : getBondOptions(activeAccount);
 
-  const { freeToBond, freeToUnbond } = options;
+  const { freeToBond, freeToUnbond, active: poolsActive } = options;
 
   // unbond amount to `minNominatorBond` threshold for staking,
-  // and the total amount for pools.
+  // and unbond amount to `minJoinBond` for pools.
   const freeToUnbondToMin =
     subject === 'pools'
-      ? freeToUnbond
+      ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
       : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
+
+  // get the actively bonded amount.
+  const activeBase =
+    subject === 'pools'
+      ? planckBnToUnit(poolsActive, units)
+      : planckBnToUnit(active, units);
 
   // store errors
   const [errors, setErrors]: any = useState([]);
@@ -101,36 +108,43 @@ export const BondInputWithFeedback = (props: any) => {
         _errors.push('Bond amount is more than your free balance.');
       }
 
-      // bond errors for staking only
-      if (nominating && subject === 'stake') {
-        if (freeToBond < minNominatorBondBase) {
+      // bond errors
+      if (nominating) {
+        if (freeToBond < minBondBase) {
           _bondDisabled = true;
           _errors.push(
-            `You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}.`
+            `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
           );
         }
 
-        if (bond.bond !== '' && bond.bond < minNominatorBondBase) {
+        if (bond.bond !== '' && bond.bond < minBondBase) {
           _errors.push(
-            `Bond amount must be at least ${minNominatorBondBase} ${network.unit}.`
+            `Bond amount must be at least ${minBondBase} ${network.unit}.`
           );
         }
       }
     }
 
-    // unbond errors for staking only
-    if (unbond && subject === 'stake') {
-      if (getControllerNotImported(controller)) {
-        _errors.push(
-          'You must have your controller account imported to unbond.'
-        );
-      }
+    // unbond errors
+    if (unbond) {
       if (bond.bond !== '' && bond.bond > activeBase) {
         _errors.push('Unbond amount is more than your bonded balance.');
-      } else if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
-        const remainingAfterUnbond = (bond.bond - freeToUnbondToMin).toFixed(2);
+      }
+
+      // unbond errors for staking only
+      if (subject === 'stake') {
+        if (getControllerNotImported(controller)) {
+          _errors.push(
+            'You must have your controller account imported to unbond.'
+          );
+        }
+      }
+
+      if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
         _errors.push(
-          `A minimum bond of ${minNominatorBondBase} ${network.unit} is required when actively nominating. Removing this amount will result in ~${remainingAfterUnbond} ${network.unit} remaining bond.`
+          `A minimum bond of ${minBondBase} ${network.unit} is required when ${
+            subject === 'stake' ? `actively nominating` : `in your pool`
+          }.`
         );
       }
     }
