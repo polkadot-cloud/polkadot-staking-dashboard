@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FooterWrapper, Separator } from '../Wrappers';
+import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 import { useModal } from '../../contexts/Modal';
 import { useBalances } from '../../contexts/Balances';
 import { useApi } from '../../contexts/Api';
@@ -85,12 +85,12 @@ export const Forms = forwardRef(
               </h2>
             )}
             <Separator />
-            <div className="notes">
+            <NotesWrapper>
               <p>
                 Estimated Tx Fee:
                 {estimatedFee === null ? '...' : `${estimatedFee}`}
               </p>
-            </div>
+            </NotesWrapper>
           </div>
           <FooterWrapper>
             <div>
