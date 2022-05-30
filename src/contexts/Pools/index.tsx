@@ -498,8 +498,8 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const totalUnlocked = planckBnToUnit(totalUnlockedBn, units);
 
     // free transferrable balance that can be bonded in the pool
-    const freeToBond: any = toFixedIfNecessary(
-      Math.max(
+    const freeToBond: any = Math.max(
+      toFixedIfNecessary(
         planckBnToUnit(freeAfterReserve, units) -
           planckBnToUnit(miscFrozen, units) -
           totalUnlocking -
