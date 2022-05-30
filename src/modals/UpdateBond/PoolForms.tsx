@@ -22,7 +22,7 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
   const { api, network }: any = useApi();
   const { activeAccount } = useConnect();
   const { units } = network;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus, setResize }: any = useModal();
   const { getPoolBondOptions, stats } = usePools();
   const { minJoinBond } = stats;
   const { freeToBond, freeToUnbond, totalPossibleBond } =
@@ -66,6 +66,11 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
       setBondValid(true);
     }
   }, [task]);
+
+  // modal resize on form update
+  useEffect(() => {
+    setResize();
+  }, [bond]);
 
   // tx to submit
   const tx = () => {
