@@ -8,6 +8,7 @@ import { useModal } from 'contexts/Modal';
 import { usePools } from 'contexts/Pools';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { Wrapper } from './Wrapper';
 
 export const Pool = (props: any) => {
@@ -27,6 +28,12 @@ export const Pool = (props: any) => {
 
   // fallback to address on empty metadata string
   let display = metadata[batchIndex] ?? defaultDisplay;
+  // check if super identity has been byte encoded
+  const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
+  if (displayAsBytes !== '') {
+    display = displayAsBytes;
+  }
+  // if still empty string, default to clipped address
   if (display === '') {
     display = defaultDisplay;
   }
