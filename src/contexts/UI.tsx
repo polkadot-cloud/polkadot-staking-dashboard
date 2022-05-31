@@ -21,6 +21,7 @@ export interface UIContextState {
   applyValidatorOrder: (l: any, o: string) => any;
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
+  resetValidatorFilters: () => void;
   toggleService: (k: string) => void;
   getSetupProgress: (a: string) => any;
   getSetupProgressPercent: (a: string) => any;
@@ -47,6 +48,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   applyValidatorOrder: (l: any, o: string) => {},
   applyValidatorFilters: (l: any, k: string, f?: any) => {},
   toggleFilterValidators: (v: string, l: any) => {},
+  resetValidatorFilters: () => {},
   toggleService: (k: string) => {},
   getSetupProgress: (a: string) => {},
   getSetupProgressPercent: (a: string) => {},
@@ -245,6 +247,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       list = filterInactive(list);
     }
     return list;
+  };
+
+  const resetValidatorFilters = () => {
+    setValidatorFilters([]);
+    setValidatorOrder('default');
   };
 
   const filterMissingIdentity = (list: any, batchKey: string) => {
@@ -497,6 +504,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         orderValidators,
         applyValidatorOrder,
         applyValidatorFilters,
+        resetValidatorFilters,
         toggleFilterValidators,
         toggleService,
         getSetupProgress,
