@@ -46,7 +46,6 @@ export const PoolAccount = (props: any) => {
   // handle pool list bootstrapping
   const getPoolMeta = () => {
     const pools: any = [{ id: props.pool.id }];
-    // console.log('fetching');
     fetchPoolsMetaBatch(batchKey, pools, true);
   };
 
