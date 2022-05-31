@@ -60,10 +60,12 @@ export const BalanceGraph = () => {
   let graphStaked = staked;
   let graphFreeToStake = freeToStake;
   let graphInPool = poolBalance;
+  let graphUnlocking = unlocking;
 
   let zeroBalance = false;
   if (graphStaked === 0 && graphFreeToStake === 0) {
     graphStaked = -1;
+    graphUnlocking = -1;
     graphFreeToStake = -1;
     graphInPool = -1;
     zeroBalance = true;
@@ -108,7 +110,7 @@ export const BalanceGraph = () => {
 
   // determine stats from network features
   let _labels = ['Available', 'Unlocking', 'Staking', 'In Pool'];
-  let _data = [graphFreeToStake, unlocking, graphStaked, graphInPool];
+  let _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
   let _colors = zeroBalance
     ? [
         defaultThemes.graphs.colors[2][mode],
