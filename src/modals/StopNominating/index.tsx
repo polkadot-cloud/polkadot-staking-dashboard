@@ -88,7 +88,7 @@ export const StopNominating = () => {
             will stop nominating from the start of the next era.
           </p>
           <p>
-            Estimated Tx Fee:
+            Estimated Tx Fee:{' '}
             {estimatedFee === null ? '...' : `${estimatedFee}`}
           </p>
         </NotesWrapper>

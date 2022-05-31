@@ -88,7 +88,7 @@ export const Forms = forwardRef(
             <Separator />
             <NotesWrapper>
               <p>
-                Estimated Tx Fee:
+                Estimated Tx Fee:{' '}
                 {estimatedFee === null ? '...' : `${estimatedFee}`}
               </p>
             </NotesWrapper>

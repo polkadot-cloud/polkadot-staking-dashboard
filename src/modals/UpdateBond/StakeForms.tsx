@@ -129,10 +129,7 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
   });
 
   const TxFee = (
-    <p>
-      Estimated Tx Fee:
-      {estimatedFee === null ? '...' : `${estimatedFee}`}
-    </p>
+    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
 
   return (

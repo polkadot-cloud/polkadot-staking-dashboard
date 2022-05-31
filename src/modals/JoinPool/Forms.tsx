@@ -61,10 +61,7 @@ export const Forms = () => {
   });
 
   const TxFee = (
-    <p>
-      Estimated Tx Fee:
-      {estimatedFee === null ? '...' : `${estimatedFee}`}
-    </p>
+    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
 
   return (

@@ -92,7 +92,7 @@ export const NominatePool = () => {
             Once submitted, you will start nominating your chosen validators.
           </p>
           <p>
-            Estimated Tx Fee:
+            Estimated Tx Fee:{' '}
             {estimatedFee === null ? '...' : `${estimatedFee}`}
           </p>
         </NotesWrapper>

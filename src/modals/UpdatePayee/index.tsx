@@ -105,7 +105,7 @@ export const UpdatePayee = () => {
         />
         <div>
           <p>
-            Estimated Tx Fee:
+            Estimated Tx Fee:{' '}
             {estimatedFee === null ? '...' : `${estimatedFee}`}
           </p>
         </div>
