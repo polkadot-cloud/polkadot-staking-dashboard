@@ -11,7 +11,7 @@ import {
 import { useApi } from './Api';
 import { localStorageOrDefault, setStateWithRef } from '../Utils';
 import { useModal } from './Modal';
-import { DAPP_NAME } from '../constants';
+import { DAPP_NAME } from '../consts';
 import { APIContextInterface } from '../types/api';
 
 export interface ConnectContextState {

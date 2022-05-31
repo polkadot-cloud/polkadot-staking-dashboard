@@ -9,7 +9,7 @@ import {
   SIDE_MENU_STICKY_THRESHOLD,
   SHOW_SIDE_BAR_WIDTH_THRESHOLD,
   SECTION_FULL_WIDTH_THRESHOLD,
-} from './constants';
+} from './consts';
 import {
   textPrimary,
   backgroundGradient,

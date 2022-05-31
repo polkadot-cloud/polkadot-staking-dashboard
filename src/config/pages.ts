@@ -19,7 +19,7 @@ import Favourites from '../pages/Favourites';
 import Payouts from '../pages/Payouts';
 import Projects from '../pages/explore/Projects';
 import Feedback from '../pages/explore/Feedback';
-import { URI_PREFIX } from '../constants';
+import { URI_PREFIX } from '../consts';
 import { PageCategories, PagesConfig } from '../types';
 
 export const PAGE_CATEGORIES: PageCategories = [

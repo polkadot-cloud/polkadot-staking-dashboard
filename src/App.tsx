@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Providers } from './Providers';
-import { DEFAULT_NETWORK } from './constants';
+import { DEFAULT_NETWORK } from './consts';
 import { ThemesProvider } from './contexts/Themes';
 
 const App: React.FC = () => {

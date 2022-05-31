@@ -14,7 +14,7 @@ import { useValidators } from '../../contexts/Validators';
 import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
 import { Filters } from './Filters';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
+import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../consts';
 import { APIContextInterface } from '../../types/api';
 
 export const ValidatorListInner = (props: any) => {

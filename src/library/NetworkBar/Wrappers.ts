@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { textSecondary, backgroundNetworkBar } from '../../theme';
-import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import { SIDE_MENU_STICKY_THRESHOLD } from '../../consts';
 
 export const Wrapper = styled(motion.div)<any>`
   width: 100%;

@@ -14,7 +14,7 @@ import { useStaking } from '../../../contexts/Staking';
 import { useBalances } from '../../../contexts/Balances';
 import { useConnect } from '../../../contexts/Connect';
 import { useModal } from '../../../contexts/Modal';
-import { PAYEE_STATUS } from '../../../constants';
+import { PAYEE_STATUS } from '../../../consts';
 import { useUi } from '../../../contexts/UI';
 import { useApi } from '../../../contexts/Api';
 import Stat from '../../../library/Stat';

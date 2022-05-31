@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useApi } from './Api';
 import { useConnect } from './Connect';
 import { useUi } from './UI';
-import { API_ENDPOINTS, API_SUBSCAN_KEY } from '../constants';
+import { API_ENDPOINTS, API_SUBSCAN_KEY } from '../consts';
 import { APIContextInterface } from '../types/api';
 
 export interface SubscanContextState {

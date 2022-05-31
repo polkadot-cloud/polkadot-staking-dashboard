@@ -10,7 +10,7 @@ import { useApi } from '../../contexts/Api';
 import { StakingContext } from '../../contexts/Staking';
 import { useUi } from '../../contexts/UI';
 import { useNetworkMetrics } from '../../contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
+import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../consts';
 import { Pool } from '../Pool';
 import { APIContextInterface } from '../../types/api';
 import { usePools } from '../../contexts/Pools';

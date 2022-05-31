@@ -18,7 +18,7 @@ import { useSubscan } from '../../contexts/Subscan';
 import { SubscanButton } from '../../library/SubscanButton';
 import { PageTitle } from '../../library/PageTitle';
 import { planckToUnit } from '../../Utils';
-import { GRAPH_HEIGHT } from '../../constants';
+import { GRAPH_HEIGHT } from '../../consts';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominators';
 import SupplyStakedStatBox from './Stats/SupplyStaked';

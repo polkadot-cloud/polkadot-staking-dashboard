@@ -12,7 +12,7 @@ import {
   NODE_ENDPOINTS,
   MAX_ELECTING_VOTERS,
   EXPECTED_BLOCK_TIME,
-} from '../../constants';
+} from '../../consts';
 import * as defaults from './defaults';
 import {
   APIContextInterface,

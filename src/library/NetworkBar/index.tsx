@@ -15,7 +15,7 @@ import { BlockNumber } from './BlockNumber';
 import { Status } from './Status';
 import { usePrices } from '../Hooks/usePrices';
 import { useOutsideAlerter } from '../Hooks';
-import { CONNECTION_SYMBOL_COLORS, NODE_ENDPOINTS } from '../../constants';
+import { CONNECTION_SYMBOL_COLORS, NODE_ENDPOINTS } from '../../consts';
 import { APIContextInterface, ConnectionStatus } from '../../types/api';
 
 export const NetworkBar = () => {

@@ -15,7 +15,7 @@ import { useApi } from '../../contexts/Api';
 import { useModal } from '../../contexts/Modal';
 import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
 import { useConnect } from '../../contexts/Connect';
-import { PAYEE_STATUS } from '../../constants';
+import { PAYEE_STATUS } from '../../consts';
 import { Warning } from '../../library/Form/Warning';
 import { APIContextInterface } from '../../types/api';
 

@@ -22,7 +22,7 @@ import {
   URI_PREFIX,
   POLKADOT_URL,
   SIDE_MENU_STICKY_THRESHOLD,
-} from '../../constants';
+} from '../../consts';
 import { useUi } from '../../contexts/UI';
 import { useOutsideAlerter } from '../Hooks';
 import { useTheme } from '../../contexts/Themes';

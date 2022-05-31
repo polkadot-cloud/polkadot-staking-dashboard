@@ -25,7 +25,7 @@ import { Headers } from './library/Headers';
 import SideMenu from './library/SideMenu';
 import Assistant from './library/Assistant';
 import Notifications from './library/Notifications';
-import { TITLE_DEFAULT } from './constants';
+import { TITLE_DEFAULT } from './consts';
 import { useUi } from './contexts/UI';
 
 export const RouterInner = () => {

@@ -3,7 +3,7 @@
 
 import throttle from 'lodash.throttle';
 import React, { useRef, useEffect } from 'react';
-import { SHOW_SIDE_BAR_WIDTH_THRESHOLD } from '../../../constants';
+import { SHOW_SIDE_BAR_WIDTH_THRESHOLD } from '../../../consts';
 import { Wrapper, ContentWrapper } from './Wrappers';
 import { useSideBar } from '../../../contexts/SideBar';
 import { useOutsideAlerter } from '../../Hooks';
