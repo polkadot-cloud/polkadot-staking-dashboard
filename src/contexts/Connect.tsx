@@ -61,7 +61,8 @@ export const ConnectProvider = ({
 
   // initialise extensions
   useEffect(() => {
-    initExtensions();
+    setExtensions(getWallets());
+
     return () => {
       if (unsubscribe !== null) {
         unsubscribeRef.current();
@@ -72,7 +73,12 @@ export const ConnectProvider = ({
   // re-import addresses with network switch
   useEffect(() => {
     if (accountsRef.current.length) {
-      handleReconnect();
+      (async () => {
+        if (unsubscribeRef.current !== null) {
+          await unsubscribeRef.current();
+        }
+        importNetworkAddresses(accounts, activeExtension);
+      })();
     }
   }, [network]);
 
@@ -116,15 +122,18 @@ export const ConnectProvider = ({
     setStateWithRef(_errors, _setExtensionErrors, extensionErrorsRef);
   };
 
-  const initExtensions = async () => {
-    setExtensions(getWallets());
-  };
-
-  const handleReconnect = async () => {
-    if (unsubscribeRef.current !== null) {
-      await unsubscribeRef.current();
+  const initialise = () => {
+    if (activeExtension === null || activeAccountRef.current === null) {
+      openModalWith(
+        'ConnectAccounts',
+        {
+          section: 0,
+        },
+        'small'
+      );
+    } else {
+      connectExtension(activeExtension);
     }
-    importNetworkAddresses(accounts, activeExtension);
   };
 
   const connectExtension = async (_wallet: any = null) => {
@@ -217,34 +226,6 @@ export const ConnectProvider = ({
     }
   };
 
-  const disconnectExtension = () => {
-    disconnectFromAccount();
-    localStorage.removeItem('active_wallet');
-    setActiveExtension(null);
-    setStateWithRef([], setAccounts, accountsRef);
-    setStateWithRef(null, setUnsubscribe, unsubscribeRef);
-  };
-
-  const disconnectFromAccount = () => {
-    localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
-    setActiveAccount(null);
-    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
-  };
-
-  const initialise = () => {
-    if (activeExtension === null || activeAccountRef.current === null) {
-      openModalWith(
-        'ConnectAccounts',
-        {
-          section: 0,
-        },
-        'small'
-      );
-    } else {
-      connectExtension(activeExtension);
-    }
-  };
-
   const accountExists = (addr: string) => {
     const account = accountsRef.current.filter(
       (acc: any) => acc.address === addr
@@ -258,6 +239,20 @@ export const ConnectProvider = ({
       return accs[0];
     }
     return null;
+  };
+
+  const disconnectFromAccount = () => {
+    localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
+    setActiveAccount(null);
+    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
+  };
+
+  const disconnectExtension = () => {
+    disconnectFromAccount();
+    localStorage.removeItem('active_wallet');
+    setActiveExtension(null);
+    setStateWithRef([], setAccounts, accountsRef);
+    setStateWithRef(null, setUnsubscribe, unsubscribeRef);
   };
 
   return (
