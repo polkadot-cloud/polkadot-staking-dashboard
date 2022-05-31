@@ -611,7 +611,11 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const batchesUpdated = Object.assign(poolMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].ids = ids;
-    setStateWithRef(batchesUpdated, setPoolMetaBatch, poolMetaBatchesRef);
+    setStateWithRef(
+      { ...batchesUpdated },
+      setPoolMetaBatch,
+      poolMetaBatchesRef
+    );
 
     const subscribeToMetadata = async (id: any) => {
       const unsub = await api.query.nominationPools.metadata.multi(
@@ -623,8 +627,9 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
           }
           const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
           _batchesUpdated[key].metadata = metadata;
+
           setStateWithRef(
-            _batchesUpdated,
+            { ..._batchesUpdated },
             setPoolMetaBatch,
             poolMetaBatchesRef
           );

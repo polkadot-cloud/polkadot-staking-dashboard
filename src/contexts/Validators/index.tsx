@@ -350,7 +350,7 @@ export const ValidatorsProvider = ({
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
     setStateWithRef(
-      batchesUpdated,
+      { ...batchesUpdated },
       setValidatorMetaBatch,
       validatorMetaBatchesRef
     );
@@ -368,7 +368,7 @@ export const ValidatorsProvider = ({
           );
           _batchesUpdated[key].identities = identities;
           setStateWithRef(
-            _batchesUpdated,
+            { ..._batchesUpdated },
             setValidatorMetaBatch,
             validatorMetaBatchesRef
           );
@@ -415,7 +415,7 @@ export const ValidatorsProvider = ({
           );
           _batchesUpdated[key].supers = supers;
           setStateWithRef(
-            _batchesUpdated,
+            { ..._batchesUpdated },
             setValidatorMetaBatch,
             validatorMetaBatchesRef
           );
@@ -496,7 +496,7 @@ export const ValidatorsProvider = ({
         _batchesUpdated[key].stake = stake;
 
         setStateWithRef(
-          _batchesUpdated,
+          { ..._batchesUpdated },
           setValidatorMetaBatch,
           validatorMetaBatchesRef
         );

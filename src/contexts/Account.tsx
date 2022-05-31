@@ -99,7 +99,11 @@ export const AccountProvider = ({
     const batchesUpdated = Object.assign(accountMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
-    setStateWithRef(batchesUpdated, setAccountMetaBatch, accountMetaBatchesRef);
+    setStateWithRef(
+      { ...batchesUpdated },
+      setAccountMetaBatch,
+      accountMetaBatchesRef
+    );
 
     const subscribeToIdentities = async (addr: any) => {
       const unsub = await api.query.identity.identityOf.multi(
@@ -112,7 +116,7 @@ export const AccountProvider = ({
           const _batchesUpdated = Object.assign(accountMetaBatchesRef.current);
           _batchesUpdated[key].identities = identities;
           setStateWithRef(
-            _batchesUpdated,
+            { ..._batchesUpdated },
             setAccountMetaBatch,
             accountMetaBatchesRef
           );
@@ -157,7 +161,7 @@ export const AccountProvider = ({
           const _batchesUpdated = Object.assign(accountMetaBatchesRef.current);
           _batchesUpdated[key].supers = supers;
           setStateWithRef(
-            _batchesUpdated,
+            { ..._batchesUpdated },
             setAccountMetaBatch,
             accountMetaBatchesRef
           );
