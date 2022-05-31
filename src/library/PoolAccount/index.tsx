@@ -60,7 +60,7 @@ export const PoolAccount = (props: any) => {
   const syncing = metaData === undefined;
 
   // fallback to address on empty metadata string
-  const display =
+  const display = syncing
     ? 'Syncing...'
     : metaData !== ''
     ? metaData
