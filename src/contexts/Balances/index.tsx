@@ -38,6 +38,15 @@ export const BalancesProvider = ({
   const { activeEra } = metrics;
   const { units } = network;
 
+  // existential amount of unit for an account
+  const existentialAmount: BN = new BN(10 ** units);
+
+  // amount of compulsary reserve balance
+  const reserveAmount: BN = existentialAmount.div(new BN(10));
+
+  // minimum reserve for submitting extrinsics
+  const minReserve: BN = reserveAmount.add(existentialAmount);
+
   // balance accounts state
   const [accounts, setAccounts] = useState<Array<BalancesAccount>>([]);
   const accountsRef = useRef(accounts);
@@ -46,37 +55,20 @@ export const BalancesProvider = ({
   const [unsubs, setUnsubs] = useState<Unsubs>([]);
   const unsubsRef = useRef<Unsubs>(unsubs);
 
-  // existential amount of unit for an account
-  const [existentialAmount] = useState<BN>(new BN(10 ** units));
-
-  // amount of compulsary reserve balance
-  const [reserveAmount] = useState<BN>(existentialAmount.div(new BN(10)));
-
-  // minimum reserve for submitting extrinsics
-  const [minReserve] = useState<BN>(reserveAmount.add(existentialAmount));
-
   // bonded controller accounts derived from getBalances
-  const [bondedAccounts, _setBondedAccounts] = useState<Array<any>>([]);
+  const [bondedAccounts, setBondedAccounts] = useState<Array<any>>([]);
   const bondedAccountsRef = useRef<Array<any>>(bondedAccounts);
-  const setBondedAccounts = (val: any) => {
-    bondedAccountsRef.current = val;
-    _setBondedAccounts(val);
-  };
 
   // account ledgers to separate storage
-  const [ledgers, _setLedgers] = useState<any>([]);
+  const [ledgers, setLedgers] = useState<any>([]);
   const ledgersRef = useRef<Array<any>>(ledgers);
-  const setLedgers = (val: any) => {
-    ledgersRef.current = val;
-    _setLedgers(val);
-  };
 
   // fetch account balances
   useEffect(() => {
     if (isReady) {
       // unsubscribe from current accounts and ledgers
-      setBondedAccounts([]);
-      setLedgers([]);
+      setStateWithRef([], setBondedAccounts, bondedAccountsRef);
+      setStateWithRef([], setLedgers, ledgersRef);
       unsubscribeAll();
       getBalances();
     }
@@ -168,7 +160,11 @@ export const BalancesProvider = ({
             address: _bonded,
             unsub: null,
           });
-          setBondedAccounts(_bondedAccounts);
+          setStateWithRef(
+            _bondedAccounts,
+            setBondedAccounts,
+            bondedAccountsRef
+          );
         }
 
         // set account nominations
@@ -239,7 +235,7 @@ export const BalancesProvider = ({
         .concat(ledger);
 
       // update state
-      setLedgers(_ledgers);
+      setStateWithRef(_ledgers, setLedgers, ledgersRef);
     });
 
     // add unsub to `bondedAccounts`
@@ -253,8 +249,7 @@ export const BalancesProvider = ({
       }
       return acc;
     });
-
-    setBondedAccounts(_bondedAccounts);
+    setStateWithRef(_bondedAccounts, setBondedAccounts, bondedAccountsRef);
     return unsub;
   };
 

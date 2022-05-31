@@ -10,7 +10,7 @@ import { useValidators } from './Validators';
 import { useBalances } from './Balances';
 import { useApi } from './Api';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from '../constants';
-import { localStorageOrDefault } from '../Utils';
+import { localStorageOrDefault, setStateWithRef } from '../Utils';
 import { APIContextInterface } from '../types/api';
 
 export interface UIContextState {
@@ -97,8 +97,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
   const setUserSideMenuMinimised = (v: number) => {
     localStorage.setItem('side_menu_minimised', String(v));
-    userSideMenuMinimisedRef.current = v;
-    _setUserSideMenuMinimised(v);
+    setStateWithRef(v, _setUserSideMenuMinimised, userSideMenuMinimisedRef);
   };
 
   // automatic side menu minimised
@@ -115,12 +114,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [onSetup, setOnSetup] = useState(0);
 
   // services
-  const [services, _setServices] = useState(servicesLocal);
+  const [services, setServices] = useState(servicesLocal);
   const servicesRef = useRef(services);
-  const setServices = (v: any) => {
-    servicesRef.current = v;
-    _setServices(v);
-  };
 
   // validator filtering
   const [validatorFilters, setValidatorFilters]: any = useState([]);
@@ -407,7 +402,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getSetupProgressPercent = (address: string) => {
-    const setupProgress = getSetupProgress(activeAccount);
+    const setupProgress = getSetupProgress(address);
     const p = 25;
     let progress = 0;
     if (setupProgress.bond > 0) progress += p;
@@ -486,7 +481,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     localStorage.setItem('services', JSON.stringify(_services));
-    setServices(_services);
+    setStateWithRef(_services, setServices, servicesRef);
   };
 
   const getServices = () => {

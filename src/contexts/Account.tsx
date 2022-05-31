@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
+import { setStateWithRef } from 'Utils';
 import { useApi } from './Api';
 import { APIContextInterface } from '../types/api';
 
@@ -31,20 +32,12 @@ export const AccountProvider = ({
   const { isReady, api } = useApi() as APIContextInterface;
 
   // stores the meta data batches for validator lists
-  const [accountMetaBatches, _setValidatorMetaBatch]: any = useState({});
+  const [accountMetaBatches, setAccountMetaBatch]: any = useState({});
   const accountMetaBatchesRef = useRef(accountMetaBatches);
-  const setValidatorMetaBatch = (val: any) => {
-    accountMetaBatchesRef.current = val;
-    _setValidatorMetaBatch(val);
-  };
 
   // stores the meta batch subscriptions for validator lists
-  const [validatorSubs, _setValidatorSubs]: any = useState({});
-  const accountSubsRef = useRef(validatorSubs);
-  const setValidatorSubs = (val: any) => {
-    accountSubsRef.current = val;
-    _setValidatorSubs(val);
-  };
+  const [accountSubs, setAccountSubs]: any = useState({});
+  const accountSubsRef = useRef(accountSubs);
 
   // unsubscribe from any validator meta batches
   useEffect(() => {
@@ -106,7 +99,7 @@ export const AccountProvider = ({
     const batchesUpdated = Object.assign(accountMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
-    setValidatorMetaBatch({ ...batchesUpdated });
+    setStateWithRef(batchesUpdated, setAccountMetaBatch, accountMetaBatchesRef);
 
     const subscribeToIdentities = async (addr: any) => {
       const unsub = await api.query.identity.identityOf.multi(
@@ -118,7 +111,11 @@ export const AccountProvider = ({
           }
           const _batchesUpdated = Object.assign(accountMetaBatchesRef.current);
           _batchesUpdated[key].identities = identities;
-          setValidatorMetaBatch({ ..._batchesUpdated });
+          setStateWithRef(
+            _batchesUpdated,
+            setAccountMetaBatch,
+            accountMetaBatchesRef
+          );
         }
       );
       return unsub;
@@ -159,7 +156,11 @@ export const AccountProvider = ({
 
           const _batchesUpdated = Object.assign(accountMetaBatchesRef.current);
           _batchesUpdated[key].supers = supers;
-          setValidatorMetaBatch({ ..._batchesUpdated });
+          setStateWithRef(
+            _batchesUpdated,
+            setAccountMetaBatch,
+            accountMetaBatchesRef
+          );
         }
       );
       return unsub;
@@ -182,7 +183,7 @@ export const AccountProvider = ({
 
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
-    setValidatorSubs(_unsubs);
+    setStateWithRef(_unsubs, setAccountSubs, accountSubsRef);
   };
 
   const removeAccountMetaBatch = (key: string) => {

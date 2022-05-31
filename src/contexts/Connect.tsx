@@ -9,7 +9,7 @@ import {
   Wallet,
 } from '@talisman-connect/wallets';
 import { useApi } from './Api';
-import { localStorageOrDefault } from '../Utils';
+import { localStorageOrDefault, setStateWithRef } from '../Utils';
 import { useModal } from './Modal';
 import { DAPP_NAME } from '../constants';
 import { APIContextInterface } from '../types/api';
@@ -87,31 +87,23 @@ export const ConnectProvider = ({
   };
 
   // store the currently active account
-  const [activeAccount, __setActiveAccount] = useState(
+  const [activeAccount, _setActiveAccount] = useState(
     getLocalStorageActiveAccount()
   );
-
   const activeAccountRef = useRef(activeAccount);
-  const _setActiveAccount = (v: any) => {
-    activeAccountRef.current = v;
-    __setActiveAccount(v);
+
+  const setActiveAccount = (address: string) => {
+    setLocalStorageActiveAccount(address);
+    setStateWithRef(address, _setActiveAccount, activeAccountRef);
   };
 
   // store the currently active account metadata
-  const [activeAccountMeta, _setActiveAccountMeta] = useState(null);
+  const [activeAccountMeta, setActiveAccountMeta] = useState(null);
   const activeAccountMetaRef = useRef(activeAccountMeta);
-  const setActiveAccountMeta = (v: any) => {
-    activeAccountMetaRef.current = v;
-    _setActiveAccountMeta(v);
-  };
 
   // store accounts list
-  const [accounts, _setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const accountsRef = useRef(accounts);
-  const setAccounts = (v: any) => {
-    accountsRef.current = v;
-    _setAccounts(v);
-  };
 
   // store wallet errors
   const [extensionErrors, _setextensionErrors] = useState({});
@@ -120,18 +112,12 @@ export const ConnectProvider = ({
   const setextensionErrors = (key: string, value: string) => {
     const _errors: any = { ...extensionErrorsRef.current };
     _errors[key] = value;
-
-    extensionErrorsRef.current = _errors;
-    _setextensionErrors(_errors);
+    setStateWithRef(_errors, _setextensionErrors, extensionErrorsRef);
   };
 
   // store unsubscribe handler for connected wallet
-  const [unsubscribe, _setUnsubscribe]: any = useState(null);
+  const [unsubscribe, setUnsubscribe]: any = useState(null);
   const unsubscribeRef: any = useRef(unsubscribe);
-  const setUnsubscribe = (v: any) => {
-    unsubscribeRef.current = v;
-    _setUnsubscribe(v);
-  };
 
   const [extensions, setExtensions]: any = useState([]);
 
@@ -215,7 +201,7 @@ export const ConnectProvider = ({
         }
 
         // update context state
-        setUnsubscribe(_unsubscribe);
+        setStateWithRef(_unsubscribe, setUnsubscribe, unsubscribeRef);
       }
     } catch (err) {
       // wallet not found.
@@ -250,13 +236,13 @@ export const ConnectProvider = ({
     connectToAccount(activeAccountInWallet);
 
     // set available accounts
-    setAccounts(_accounts);
+    setStateWithRef(_accounts, setAccounts, accountsRef);
   };
 
   const connectToAccount = (account: any = null) => {
     if (account !== null) {
       setActiveAccount(account.address);
-      setActiveAccountMeta(account);
+      setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
     }
   };
 
@@ -264,14 +250,14 @@ export const ConnectProvider = ({
     disconnectFromAccount();
     localStorage.removeItem('active_wallet');
     setactiveExtension(null);
-    setAccounts([]);
-    setUnsubscribe(null);
+    setStateWithRef([], setAccounts, accountsRef);
+    setStateWithRef(null, setUnsubscribe, unsubscribeRef);
   };
 
   const disconnectFromAccount = () => {
     removeLocalStorageActiveAccount();
     setActiveAccount('');
-    setActiveAccountMeta(null);
+    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
   const initialise = () => {
@@ -286,11 +272,6 @@ export const ConnectProvider = ({
     } else {
       connectToWallet(activeExtension);
     }
-  };
-
-  const setActiveAccount = (address: string) => {
-    setLocalStorageActiveAccount(address);
-    _setActiveAccount(address);
   };
 
   const accountExists = (addr: string) => {

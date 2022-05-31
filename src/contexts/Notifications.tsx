@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useRef } from 'react';
+import { setStateWithRef } from 'Utils';
 
 export interface NotificationsContextState {
   addNotification: (n: any) => any;
@@ -24,18 +25,13 @@ export const NotificationsProvider = ({
   children: React.ReactNode;
 }) => {
   const [index, _setIndex] = useState(0);
-  const [notifications, _setNotifications]: any = useState([]);
+  const [notifications, setNotifications]: any = useState([]);
   const indexRef = useRef(index);
   const notificationsRef = useRef(notifications);
 
   const setIndex = (_index: any) => {
     indexRef.current = _index;
     _setIndex(_index);
-  };
-
-  const setNotifications = (_notifications: any) => {
-    notificationsRef.current = _notifications;
-    _setNotifications(_notifications);
   };
 
   const add = (_n: any) => {
@@ -53,7 +49,7 @@ export const NotificationsProvider = ({
     });
 
     setIndex(newIndex);
-    setNotifications(_notifications);
+    setStateWithRef(_notifications, setNotifications, notificationsRef);
     setTimeout(() => {
       remove(newIndex);
     }, 3000);
@@ -65,7 +61,7 @@ export const NotificationsProvider = ({
     const _notifications = notificationsRef.current.filter(
       (item: any) => item.index !== _index
     );
-    setNotifications(_notifications);
+    setStateWithRef(_notifications, setNotifications, notificationsRef);
   };
 
   return (

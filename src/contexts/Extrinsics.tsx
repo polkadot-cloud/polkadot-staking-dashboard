@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useRef } from 'react';
+import { setStateWithRef } from 'Utils';
 
 export interface ExtrinsicsContextState {
   addPending: (t: any) => void;
@@ -23,23 +24,17 @@ export const ExtrinsicsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [pending, _setPending] = useState([]);
+  const [pending, setPending] = useState([]);
   const pendingRef = useRef(pending);
 
-  const setPending = (_pending: any) => {
-    pendingRef.current = _pending;
-    _setPending(_pending);
-  };
-
   const addPending = (nonce: any) => {
-    const _pending: any = [...pendingRef.current];
-    _pending.push(nonce);
-    setPending(_pending);
+    const _pending: any = [...pendingRef.current].concat(nonce);
+    setStateWithRef(_pending, setPending, pendingRef);
   };
 
   const removePending = (nonce: any) => {
     const _pending = pendingRef.current.filter((item: any) => item !== nonce);
-    setPending(_pending);
+    setStateWithRef(_pending, setPending, pendingRef);
   };
 
   return (

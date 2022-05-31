@@ -15,6 +15,7 @@ import {
   toFixedIfNecessary,
   planckBnToUnit,
   localStorageOrDefault,
+  setStateWithRef,
 } from '../../Utils';
 import { APIContextInterface } from '../../types/api';
 
@@ -68,13 +69,14 @@ export const usePools = () => React.useContext(PoolsContext);
 export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics();
-  const { poolsPalletId } = consts;
-  const { features, units } = network;
   const { eraStakers } = useStaking();
-  const { activeEra } = metrics;
-
   const { activeAccount } = useConnect();
   const { getAccountBalance }: any = useBalances();
+
+  const { activeEra } = metrics;
+  const { poolsPalletId } = consts;
+  const { features, units } = network;
+
   // whether pools are enabled
   const [enabled, setEnabled] = useState(0);
 
@@ -106,20 +108,12 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const [targets, _setTargets]: any = useState(defaults.targets);
 
   // stores the meta data batches for pool lists
-  const [poolMetaBatches, _setPoolMetaBatch]: any = useState({});
+  const [poolMetaBatches, setPoolMetaBatch]: any = useState({});
   const poolMetaBatchesRef = useRef(poolMetaBatches);
-  const setPoolMetaBatch = (val: any) => {
-    poolMetaBatchesRef.current = val;
-    _setPoolMetaBatch(val);
-  };
 
   // stores the meta batch subscriptions for pool lists
-  const [poolSubs, _setPoolSubs]: any = useState({});
+  const [poolSubs, setPoolSubs]: any = useState({});
   const poolSubsRef = useRef(poolSubs);
-  const setPoolSubs = (val: any) => {
-    poolSubsRef.current = val;
-    _setPoolSubs(val);
-  };
 
   // store bonded pools
   const [bondedPools, setBondedPools]: any = useState([]);
@@ -611,7 +605,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const batchesUpdated = Object.assign(poolMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].ids = ids;
-    setPoolMetaBatch({ ...batchesUpdated });
+    setStateWithRef(batchesUpdated, setPoolMetaBatch, poolMetaBatchesRef);
 
     const subscribeToMetadata = async (id: any) => {
       const unsub = await api.query.nominationPools.metadata.multi(
@@ -623,7 +617,11 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
           }
           const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
           _batchesUpdated[key].metadata = metadata;
-          setPoolMetaBatch({ ..._batchesUpdated });
+          setStateWithRef(
+            _batchesUpdated,
+            setPoolMetaBatch,
+            poolMetaBatchesRef
+          );
         }
       );
       return unsub;
@@ -644,7 +642,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
 
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
-    setPoolSubs(_unsubs);
+    setStateWithRef(_unsubs, setPoolSubs, poolSubsRef);
   };
 
   /*
