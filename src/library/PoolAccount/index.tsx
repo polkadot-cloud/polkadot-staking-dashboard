@@ -55,13 +55,16 @@ export const PoolAccount = (props: any) => {
   const wallet = props.wallet ?? false;
   const { canClick }: { canClick: boolean } = props;
 
-  const metadata = meta[batchKey]?.metadata?.[0];
+  const metaBatch = meta[batchKey];
+  const metaData = metaBatch?.metadata?.[0];
+  const syncing = meta[batchKey]?.metadata === undefined;
 
   // fallback to address on empty metadata string
-  let display = clipAddress(pool.addresses.stash);
-  if (metadata !== '') {
-    display = metadata;
-  }
+  const display = syncing
+    ? 'Syncing...'
+    : metaData !== ''
+    ? metaData
+    : clipAddress(pool.addresses.stash);
 
   return (
     <Wrapper
@@ -79,7 +82,9 @@ export const PoolAccount = (props: any) => {
           size={convertRemToPixels(fontSize) * 1.45}
         />
       </span>
-      <span className="title">{display}</span>
+      <span className={`title${syncing === true && ` syncing`}`}>
+        {display}
+      </span>
 
       {wallet && (
         <div className="wallet">

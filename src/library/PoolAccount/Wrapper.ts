@@ -49,8 +49,10 @@ export const Wrapper = styled(motion.button)<any>`
     overflow: hidden;
     line-height: 2.2rem;
     flex: 1;
-    /* flex-grow: 1; */
-    /* flex-shrink: 1; */
+
+    &.syncing {
+      opacity: 0.4;
+    }
 
     &.unassigned {
       color: ${textSecondary};
