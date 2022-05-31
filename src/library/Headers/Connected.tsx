@@ -7,6 +7,7 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
 import { usePools } from 'contexts/Pools';
+import { useUi } from 'contexts/UI';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
@@ -17,6 +18,7 @@ export const Connected = () => {
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
   const { activeBondedPool } = usePools();
+  const { isSyncing } = useUi();
 
   let poolAddress = '';
   if (activeBondedPool !== undefined) {
@@ -36,7 +38,7 @@ export const Connected = () => {
                 openModalWith('ConnectAccounts', {}, 'small');
               }}
               value={activeAccount}
-              label={hasController() ? 'Stash' : undefined}
+              label={hasController() && !isSyncing ? 'Stash' : undefined}
               format="name"
               filled
               wallet
@@ -44,7 +46,7 @@ export const Connected = () => {
           </HeadingWrapper>
 
           {/* controller account display / hide if no controller present */}
-          {hasController() && (
+          {hasController() && !isSyncing && (
             <HeadingWrapper>
               <Account
                 value={controller}
@@ -67,7 +69,7 @@ export const Connected = () => {
           )}
 
           {/* pool account display / hide if not in pool */}
-          {activeBondedPool !== undefined && (
+          {activeBondedPool !== undefined && !isSyncing && (
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}
