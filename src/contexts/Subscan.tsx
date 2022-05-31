@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { useApi } from './Api';
 import { useConnect } from './Connect';
 import { useUi } from './UI';
@@ -28,7 +29,7 @@ export const SubscanProvider = ({
 }) => {
   const { network, isReady } = useApi() as APIContextInterface;
   const { services, getServices }: any = useUi();
-  const { activeAccount }: any = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
 
   const [payouts, setPayouts]: any = useState([]);
 
@@ -50,7 +51,7 @@ export const SubscanProvider = ({
   }, [services]);
 
   const fetchPayouts = async () => {
-    if (activeAccount === '' || !services.includes('subscan')) {
+    if (activeAccount === null || !services.includes('subscan')) {
       setPayouts([]);
       return;
     }

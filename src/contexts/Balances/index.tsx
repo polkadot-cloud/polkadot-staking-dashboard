@@ -14,6 +14,7 @@ import {
   setStateWithRef,
 } from 'Utils';
 import { BalancesAccount, BalancesContextInterface } from 'types/balances';
+import { ConnectContextInterface } from 'types/connect';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -30,7 +31,8 @@ export const BalancesProvider = ({
 }) => {
   const { api, isReady, network } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics();
-  const { accounts: connectAccounts, activeExtension }: any = useConnect();
+  const { accounts: connectAccounts, activeExtension } =
+    useConnect() as ConnectContextInterface;
   const { activeEra } = metrics;
   const { units } = network;
 

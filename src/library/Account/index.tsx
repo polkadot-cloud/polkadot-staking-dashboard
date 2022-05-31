@@ -6,12 +6,13 @@ import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
+import { ConnectContextInterface } from 'types/connect';
 import Wrapper from './Wrapper';
 import Identicon from '../Identicon';
 
 export const Account = (props: any) => {
   const { mode } = useTheme();
-  const { getAccount } = useConnect();
+  const { getAccount } = useConnect() as ConnectContextInterface;
 
   // data props
   const { value, label }: any = props;

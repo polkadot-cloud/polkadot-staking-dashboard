@@ -7,6 +7,8 @@ import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
+import { MaybeAccount } from 'types';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -30,7 +32,7 @@ export interface PoolsContextState {
   isOwner: () => any;
   isDepositor: () => any;
   getPoolBondedAccount: () => any;
-  getPoolBondOptions: (a: string) => any;
+  getPoolBondOptions: (a: MaybeAccount) => any;
   setTargets: (targest: any) => void;
   getNominationsStatus: () => any;
   membership: any;
@@ -51,7 +53,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
     isOwner: () => false,
     isDepositor: () => false,
     getPoolBondedAccount: () => undefined,
-    getPoolBondOptions: (a: string) => defaults.poolBondOptions,
+    getPoolBondOptions: (a: MaybeAccount) => defaults.poolBondOptions,
     setTargets: (targets: any) => {},
     getNominationsStatus: () => {},
     membership: undefined,
@@ -70,7 +72,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountBalance }: any = useBalances();
 
   const { activeEra } = metrics;
@@ -462,7 +464,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // get the bond and unbond amounts available to the user
-  const getPoolBondOptions = (address: string) => {
+  const getPoolBondOptions = (address: MaybeAccount) => {
     if (!address) {
       return defaults.poolBondOptions;
     }

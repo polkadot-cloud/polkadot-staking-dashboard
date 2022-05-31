@@ -12,6 +12,7 @@ import { Wrapper as ButtonWrapper } from 'library/Button';
 import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { SummaryWrapper } from './Wrapper';
 import { MotionContainer } from '../MotionContainer';
 import { Header } from '../Header';
@@ -21,14 +22,15 @@ export const Summary = (props: any) => {
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount, activeExtension } = useConnect();
+  const { activeAccount, activeExtension } =
+    useConnect() as ConnectContextInterface;
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
 
   const txs = () => {
-    if (activeAccount === '' || activeExtension === null || !api) {
+    if (!activeAccount || activeExtension === null || !api) {
       return null;
     }
     const stashToSubmit = {

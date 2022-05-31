@@ -3,6 +3,7 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
+import { ConnectContextInterface } from 'types/connect';
 import { GenerateNominations } from '../GenerateNominations';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -10,7 +11,7 @@ import { MotionContainer } from './MotionContainer';
 
 export const ChooseNominators = (props: any) => {
   const { section } = props;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(activeAccount);
 

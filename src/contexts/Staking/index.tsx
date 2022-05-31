@@ -7,6 +7,7 @@ import BN from 'bn.js';
 import Worker from 'worker-loader!../../workers/stakers';
 import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
@@ -53,7 +54,7 @@ export const StakingProvider = ({
     activeAccount,
     activeExtension,
     accounts: connectAccounts,
-  } = useConnect();
+  } = useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } =
     useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
@@ -76,7 +77,11 @@ export const StakingProvider = ({
 
   // store account target validators
   const [targets, _setTargets]: any = useState(
-    localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true)
+    localStorageOrDefault(
+      `${activeAccount ?? ''}_targets`,
+      defaults.targets,
+      true
+    )
   );
 
   const subscribeToStakingkMetrics = async (_api: any) => {
@@ -237,58 +242,64 @@ export const StakingProvider = ({
   }, []);
 
   useEffect(() => {
-    // calculates minimum bond of the user's chosen nominated validators.
-    let _stakingMinActiveBond = new BN(0);
+    if (activeAccount) {
+      // calculates minimum bond of the user's chosen nominated validators.
+      let _stakingMinActiveBond = new BN(0);
 
-    const stakers = eraStakersRef.current?.stakers ?? null;
-    const nominations = getAccountNominations(activeAccount);
+      const stakers = eraStakersRef.current?.stakers ?? null;
+      const nominations = getAccountNominations(activeAccount);
 
-    if (nominations.length && stakers !== null) {
-      for (const n of nominations) {
-        const staker = stakers.find((item: any) => item.address === n);
+      if (nominations.length && stakers !== null) {
+        for (const n of nominations) {
+          const staker = stakers.find((item: any) => item.address === n);
 
-        if (staker !== undefined) {
-          let { others } = staker;
+          if (staker !== undefined) {
+            let { others } = staker;
 
-          // order others by bonded value, largest first.
-          others = others.sort((a: any, b: any) => {
-            const x = new BN(rmCommas(a.value));
-            const y = new BN(rmCommas(b.value));
-            return y.sub(x);
-          });
+            // order others by bonded value, largest first.
+            others = others.sort((a: any, b: any) => {
+              const x = new BN(rmCommas(a.value));
+              const y = new BN(rmCommas(b.value));
+              return y.sub(x);
+            });
 
-          if (others.length) {
-            const _minActive = new BN(rmCommas(others[0].value.toString()));
-            // set new minimum active bond if less than current value
-            if (
-              _minActive.lt(_stakingMinActiveBond) ||
-              _stakingMinActiveBond !== new BN(0)
-            ) {
-              _stakingMinActiveBond = _minActive;
+            if (others.length) {
+              const _minActive = new BN(rmCommas(others[0].value.toString()));
+              // set new minimum active bond if less than current value
+              if (
+                _minActive.lt(_stakingMinActiveBond) ||
+                _stakingMinActiveBond !== new BN(0)
+              ) {
+                _stakingMinActiveBond = _minActive;
+              }
             }
           }
         }
       }
+
+      // convert _stakingMinActiveBond to base value
+      const stakingMinActiveBond = _stakingMinActiveBond
+        .div(new BN(10 ** network.units))
+        .toNumber();
+
+      setStateWithRef(
+        {
+          ...eraStakersRef.current,
+          minStakingActiveBond: stakingMinActiveBond,
+        },
+        setEraStakers,
+        eraStakersRef
+      );
+
+      // set account's targets
+      _setTargets(
+        localStorageOrDefault(
+          `${activeAccount}_targets`,
+          defaults.targets,
+          true
+        )
+      );
     }
-
-    // convert _stakingMinActiveBond to base value
-    const stakingMinActiveBond = _stakingMinActiveBond
-      .div(new BN(10 ** network.units))
-      .toNumber();
-
-    setStateWithRef(
-      {
-        ...eraStakersRef.current,
-        minStakingActiveBond: stakingMinActiveBond,
-      },
-      setEraStakers,
-      eraStakersRef
-    );
-
-    // set account's targets
-    _setTargets(
-      localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true)
-    );
   }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
   /* Sets an account's stored target validators */
@@ -303,7 +314,7 @@ export const StakingProvider = ({
    * has set a controller account.
    */
   const hasController = () => {
-    if (activeAccount === '' || activeExtension === null) {
+    if (!activeAccount || activeExtension === null) {
       return false;
     }
     return getBondedAccount(activeAccount) !== null;
@@ -314,7 +325,7 @@ export const StakingProvider = ({
    * has been imported.
    */
   const getControllerNotImported = (address: string) => {
-    if (address === null || activeAccount === '' || !activeExtension) {
+    if (address === null || !activeAccount || !activeExtension) {
       return false;
     }
     // check if controller is imported
@@ -361,7 +372,7 @@ export const StakingProvider = ({
    */
   const inSetup = () => {
     return (
-      activeAccount === '' ||
+      !activeAccount ||
       activeExtension === null ||
       (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
     );

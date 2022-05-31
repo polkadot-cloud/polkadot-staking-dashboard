@@ -14,13 +14,14 @@ import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { planckBnToUnit } from 'Utils';
+import { ConnectContextInterface } from 'types/connect';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const PoolForms = forwardRef((props: any, ref: any) => {
   const { setSection, task } = props;
   const { api, network }: any = useApi();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize }: any = useModal();
   const { getPoolBondOptions, stats } = usePools();
@@ -75,7 +76,7 @@ export const PoolForms = forwardRef((props: any, ref: any) => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!bondValid) {
+    if (!bondValid || !activeAccount) {
       return _tx;
     }
 

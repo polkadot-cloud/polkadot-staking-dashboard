@@ -10,13 +10,14 @@ import { planckBnToUnit } from 'Utils';
 import Button from 'library/Button';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { ContentWrapper, ChunkWrapper } from './Wrappers';
 import { Separator, NotesWrapper } from '../Wrappers';
 
 export const Overview = forwardRef(
   ({ setSection, setUnlock, setTask }: any, ref: any) => {
     const { network, consts } = useApi() as APIContextInterface;
-    const { activeAccount } = useConnect();
+    const { activeAccount } = useConnect() as ConnectContextInterface;
     const { metrics } = useNetworkMetrics();
     const { getAccountLedger }: any = useBalances();
     const { bondDuration } = consts;

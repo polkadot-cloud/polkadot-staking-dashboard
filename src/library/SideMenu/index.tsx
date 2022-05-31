@@ -23,6 +23,7 @@ import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { APIContextInterface } from 'types/api';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
+import { ConnectContextInterface } from 'types/connect';
 import Item from './Item';
 import Heading from './Heading';
 import { Wrapper, LogoWrapper } from './Wrapper';
@@ -31,7 +32,7 @@ export const SideMenu = () => {
   const { network } = useApi() as APIContextInterface;
   const { openModalWith } = useModal();
   const { mode, toggleTheme } = useTheme();
-  const { activeAccount, accounts }: any = useConnect();
+  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname }: any = useLocation();
   const { getBondedAccount }: any = useBalances();
   const { getControllerNotImported } = useStaking();

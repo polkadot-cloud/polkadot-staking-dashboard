@@ -6,16 +6,17 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
+import { ConnectContextInterface } from 'types/connect';
 
 export const Extension = (props: any) => {
   const { meta, disabled, error, setSection, flag, disconnect } = props;
   const { extensionName, title } = meta;
-  const { activeExtension, connectToWallet, disconnectFromWallet }: any =
-    useConnect();
+  const { activeExtension, connectExtension, disconnectExtension } =
+    useConnect() as ConnectContextInterface;
 
   const handleWalletConnect = async () => {
     if (activeExtension !== extensionName) {
-      await connectToWallet(extensionName);
+      await connectExtension(extensionName);
     }
     setSection(1);
   };
@@ -28,7 +29,7 @@ export const Extension = (props: any) => {
       disabled={disabled}
       onClick={() => {
         if (disconnect) {
-          disconnectFromWallet();
+          disconnectExtension();
         } else {
           handleWalletConnect();
         }

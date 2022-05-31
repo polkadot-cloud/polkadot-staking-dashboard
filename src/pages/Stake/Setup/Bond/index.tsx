@@ -8,13 +8,14 @@ import { useUi } from 'contexts/UI';
 import { SectionWrapper } from 'library/Graphs/Wrappers';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { BondStatusBar } from 'library/Form/BondStatusBar';
+import { ConnectContextInterface } from 'types/connect';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 
 export const Bond = (props: any) => {
   const { section } = props;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondOptions }: any = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { freeToBond } = getBondOptions(activeAccount);
