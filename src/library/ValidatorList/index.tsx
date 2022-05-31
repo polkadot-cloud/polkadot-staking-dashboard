@@ -29,6 +29,7 @@ export const ValidatorListInner = (props: any) => {
     validatorOrder,
     applyValidatorFilters,
     applyValidatorOrder,
+    isSyncing,
   }: any = useUi();
 
   const {
@@ -77,7 +78,7 @@ export const ValidatorListInner = (props: any) => {
   // render batch
   const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
 
-  // refetch list when validator list changes
+  // reset list when validator list changes
   useEffect(() => {
     if (props.validators !== validatorsDefault) {
       setFetched(false);
@@ -105,7 +106,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [validatorFilters, validatorOrder]);
+  }, [validatorFilters, validatorOrder, isSyncing]);
 
   // handle validator list bootstrapping
   const setupValidatorList = () => {

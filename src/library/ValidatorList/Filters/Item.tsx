@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
@@ -13,8 +12,6 @@ export const Item = (props: any) => {
   const { mode }: any = useTheme();
   const { icon, label, transform, onClick } = props;
 
-  const [active, setActive] = useState(props.active);
-
   return (
     <motion.button
       whileHover={{ scale: 1.02 }}
@@ -23,13 +20,12 @@ export const Item = (props: any) => {
         duration: 0.3,
       }}
       onClick={() => {
-        setActive(!active);
         onClick();
       }}
     >
-      <ItemWrapper active={active}>
+      <ItemWrapper active={props.active}>
         <section>
-          {active && (
+          {props.active && (
             <div className="active">
               <FontAwesomeIcon icon={faCheck} transform="grow-0" />
             </div>
@@ -37,9 +33,11 @@ export const Item = (props: any) => {
           <div className="icon">
             <FontAwesomeIcon
               icon={icon}
-              color={active ? 'white' : defaultThemes.text.secondary[mode]}
+              color={
+                props.active ? 'white' : defaultThemes.text.secondary[mode]
+              }
               transform={transform}
-              opacity={active ? 1 : 0.7}
+              opacity={props.active ? 1 : 0.7}
             />
           </div>
         </section>
