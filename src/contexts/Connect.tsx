@@ -15,36 +15,36 @@ import { useModal } from './Modal';
 import { useApi } from './Api';
 
 export interface ConnectContextState {
-  disconnectFromAccount: () => void;
-  disconnectFromWallet: () => void;
   initialise: () => void;
+  connectExtension: (w: string) => void;
+  disconnectExtension: () => void;
   accountExists: (a: string) => number;
-  connectToWallet: (w: string) => void;
   getAccount: (a: string) => any;
   connectToAccount: (a: any) => void;
+  disconnectFromAccount: () => void;
+  extensions: any;
   activeExtension: any;
+  extensionErrors: any;
   accounts: any;
   activeAccount: string;
   activeAccountMeta: any;
-  extensionErrors: any;
-  extensions: any;
 }
 
 export const ConnectContext: React.Context<ConnectContextState> =
   React.createContext({
-    disconnectFromAccount: () => {},
-    disconnectFromWallet: () => {},
     initialise: () => {},
+    connectExtension: (w: string) => {},
+    disconnectExtension: () => {},
     accountExists: (a: string) => 0,
-    connectToWallet: (w: string) => {},
     getAccount: (a: string) => {},
     connectToAccount: (a: any) => {},
+    disconnectFromAccount: () => {},
+    extensions: [],
     activeExtension: null,
+    extensionErrors: {},
     accounts: [],
     activeAccount: '',
     activeAccountMeta: {},
-    extensionErrors: {},
-    extensions: [],
   });
 
 export const useConnect = () => React.useContext(ConnectContext);
@@ -75,7 +75,7 @@ export const ConnectProvider = ({
   const [extensions, setExtensions]: any = useState([]);
 
   // store wallet errors
-  const [extensionErrors, _setextensionErrors] = useState({});
+  const [extensionErrors, _setExtensionErrors] = useState({});
   const extensionErrorsRef: any = useRef(extensionErrors);
 
   // store unsubscribe handler for connected wallet
@@ -111,7 +111,7 @@ export const ConnectProvider = ({
       // we set a short timeout for extensions to initiate. This is a workaround
       // for a `NotInstalledError` that was happening when immediately attempting
       // to connect to a wallet.
-      setTimeout(() => connectToWallet(), 100);
+      setTimeout(() => connectExtension(), 100);
     }
   }, [extensions]);
 
@@ -132,10 +132,10 @@ export const ConnectProvider = ({
     setStateWithRef(address, _setActiveAccount, activeAccountRef);
   };
 
-  const setextensionErrors = (key: string, value: string) => {
+  const setExtensionErrors = (key: string, value: string) => {
     const _errors: any = { ...extensionErrorsRef.current };
     _errors[key] = value;
-    setStateWithRef(_errors, _setextensionErrors, extensionErrorsRef);
+    setStateWithRef(_errors, _setExtensionErrors, extensionErrorsRef);
   };
 
   // give web page time to initiate extensions
@@ -151,7 +151,7 @@ export const ConnectProvider = ({
     importNetworkAddresses(accounts, activeExtension);
   };
 
-  const connectToWallet = async (_wallet: any = null) => {
+  const connectExtension = async (_wallet: any = null) => {
     try {
       if (extensions.length === 0) {
         setActiveExtension(null);
@@ -177,7 +177,7 @@ export const ConnectProvider = ({
         const _unsubscribe = await wallet.subscribeAccounts((injected: any) => {
           // abort if no accounts
           if (!injected.length) {
-            setextensionErrors(_wallet, 'No accounts');
+            setExtensionErrors(_wallet, 'No accounts');
           } else {
             // import addresses with correct format
             importNetworkAddresses(injected, _wallet);
@@ -197,7 +197,7 @@ export const ConnectProvider = ({
       }
     } catch (err) {
       // wallet not found.
-      setextensionErrors(_wallet, 'Wallet not found');
+      setExtensionErrors(_wallet, 'Wallet not found');
     }
   };
 
@@ -241,7 +241,7 @@ export const ConnectProvider = ({
     }
   };
 
-  const disconnectFromWallet = () => {
+  const disconnectExtension = () => {
     disconnectFromAccount();
     localStorage.removeItem('active_wallet');
     setActiveExtension(null);
@@ -265,7 +265,7 @@ export const ConnectProvider = ({
         'small'
       );
     } else {
-      connectToWallet(activeExtension);
+      connectExtension(activeExtension);
     }
   };
 
@@ -287,19 +287,19 @@ export const ConnectProvider = ({
   return (
     <ConnectContext.Provider
       value={{
-        accountExists,
-        connectToWallet,
-        disconnectFromAccount,
-        disconnectFromWallet,
         initialise,
+        connectExtension,
+        disconnectExtension,
+        accountExists,
         getAccount,
         connectToAccount,
+        disconnectFromAccount,
+        extensions,
         activeExtension,
+        extensionErrors,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeAccountMeta: activeAccountMetaRef.current,
-        extensionErrors,
-        extensions,
       }}
     >
       {children}

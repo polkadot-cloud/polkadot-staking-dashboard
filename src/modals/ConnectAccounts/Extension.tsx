@@ -10,12 +10,12 @@ import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 export const Extension = (props: any) => {
   const { meta, disabled, error, setSection, flag, disconnect } = props;
   const { extensionName, title } = meta;
-  const { activeExtension, connectToWallet, disconnectFromWallet }: any =
+  const { activeExtension, connectExtension, disconnectExtension }: any =
     useConnect();
 
   const handleWalletConnect = async () => {
     if (activeExtension !== extensionName) {
-      await connectToWallet(extensionName);
+      await connectExtension(extensionName);
     }
     setSection(1);
   };
@@ -28,7 +28,7 @@ export const Extension = (props: any) => {
       disabled={disabled}
       onClick={() => {
         if (disconnect) {
-          disconnectFromWallet();
+          disconnectExtension();
         } else {
           handleWalletConnect();
         }
