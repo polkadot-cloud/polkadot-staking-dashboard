@@ -179,6 +179,10 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     if (activeBondedPool?.unsub) {
       activeBondedPool?.unsub();
     }
+    setActiveBondedPool({
+      membership: undefined,
+      unsub: null,
+    });
   };
 
   // subscribe to pool nominations
@@ -525,7 +529,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isNominator = () => {
-    const roles = activeBondedPool.pool?.roles;
+    const roles = activeBondedPool?.pool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }

@@ -18,7 +18,7 @@ export const Roles = () => {
   const { fetchAccountMetaBatch } = useAccount();
   const { isNominator, activeBondedPool } = usePools();
   const activePool = activeBondedPool;
-  const { roles } = activePool;
+  const { roles } = activePool || {};
 
   const batchKey = 'pool_roles';
 
