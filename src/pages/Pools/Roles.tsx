@@ -19,7 +19,7 @@ export const Roles = () => {
   const { fetchAccountMetaBatch } = useAccount();
   const { activeBondedPool } = usePools();
   const activePool = activeBondedPool;
-  const { roles } = activePool;
+  const { roles } = activePool || {};
 
   const batchKey = 'pool_roles';
 

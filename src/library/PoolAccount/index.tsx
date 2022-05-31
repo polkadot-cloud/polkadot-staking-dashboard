@@ -9,44 +9,43 @@ import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import Identicon from 'library/Identicon';
+import { useConnect } from 'contexts/Connect';
+import { ConnectContextInterface } from 'types/connect';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 
 export const PoolAccount = (props: any) => {
   const { mode } = useTheme();
   const { isReady } = useApi() as APIContextInterface;
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { fetchPoolsMetaBatch, meta } = usePools();
 
   const { label }: any = props;
-
-  const [pool, setPool] = useState(props.pool);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
 
   const batchKey = 'pool_header';
 
-  // refetch list when pool changes
+  // refetch when pool or active account changes
   useEffect(() => {
-    if (props.pool !== pool) {
-      setFetched(false);
-    }
     setFetched(false);
-  }, [props.pool]);
+  }, [activeAccount, props.pool]);
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !fetched) {
-      getPoolMeta();
+    if (isReady) {
+      setFetched(true);
+
+      if (!fetched) {
+        getPoolMeta();
+      }
     }
   }, [isReady, fetched]);
 
   // handle pool list bootstrapping
   const getPoolMeta = () => {
-    setPool(props.pool);
-    setFetched(true);
     const pools: any = [{ id: props.pool.id }];
-
     fetchPoolsMetaBatch(batchKey, pools, true);
   };
 
@@ -57,14 +56,14 @@ export const PoolAccount = (props: any) => {
 
   const metaBatch = meta[batchKey];
   const metaData = metaBatch?.metadata?.[0];
-  const syncing = meta[batchKey]?.metadata === undefined;
+  const syncing = metaData === undefined;
 
   // fallback to address on empty metadata string
   const display = syncing
     ? 'Syncing...'
     : metaData !== ''
     ? metaData
-    : clipAddress(pool.addresses.stash);
+    : clipAddress(props.pool.addresses.stash);
 
   return (
     <Wrapper
@@ -78,7 +77,7 @@ export const PoolAccount = (props: any) => {
 
       <span className="identicon">
         <Identicon
-          value={pool.addresses.stash}
+          value={props.pool.addresses.stash}
           size={convertRemToPixels(fontSize) * 1.45}
         />
       </span>
