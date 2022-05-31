@@ -139,9 +139,12 @@ export const ConnectProvider = ({
 
   // automatic connect from active wallet
   useEffect(() => {
-    // only auto connect if active wallet exists in localstorage
+    // only auto connect if active extension exists in localstorage
     if (extensions.length && activeExtension !== null) {
-      connectToWallet();
+      // we set a short timeout for extensions to initiate. This is a workaround
+      // for a `NotInstalledError` that was happening when immediately attempting
+      // to connect to a wallet.
+      setTimeout(() => connectToWallet(), 100);
     }
   }, [extensions]);
 
@@ -204,6 +207,7 @@ export const ConnectProvider = ({
         setStateWithRef(_unsubscribe, setUnsubscribe, unsubscribeRef);
       }
     } catch (err) {
+      console.log(err);
       // wallet not found.
       setextensionErrors(_wallet, 'Wallet not found');
     }
