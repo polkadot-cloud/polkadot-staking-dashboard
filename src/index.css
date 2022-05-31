@@ -20,11 +20,12 @@ html {
   }
 }
 
-@media(min-width: 1100px) {
+@media(min-width: 1800px) {
   html {
-    font-size: 14px;
+    font-size: 14.5px;
   }
 }
+
 
 body {
   margin: 0;
