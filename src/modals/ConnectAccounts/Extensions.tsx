@@ -4,6 +4,7 @@
 import { useEffect, forwardRef } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { ConnectContextInterface } from 'types/connect';
 import { Separator, ContentWrapper, PaddingWrapper } from './Wrappers';
 import { Extension } from './Extension';
 
@@ -11,10 +12,10 @@ export const Extensions = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
   const modal = useModal();
-  const { extensions, activeExtension, activeAccount, extensionErrors }: any =
-    useConnect();
+  const { extensions, activeExtension, activeAccount, extensionErrors } =
+    useConnect() as ConnectContextInterface;
 
-  let { accounts } = useConnect();
+  let { accounts } = useConnect() as ConnectContextInterface;
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);

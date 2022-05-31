@@ -16,13 +16,14 @@ import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { api, network } = useApi() as APIContextInterface;
-    const { activeAccount } = useConnect();
+    const { activeAccount } = useConnect() as ConnectContextInterface;
     const { getControllerNotImported, staking } = useStaking();
     const { setStatus: setModalStatus }: any = useModal();
     const { getBondedAccount }: any = useBalances();

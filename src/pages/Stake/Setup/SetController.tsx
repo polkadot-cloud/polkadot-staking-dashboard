@@ -10,6 +10,7 @@ import { useUi } from 'contexts/UI';
 import { AccountSelect } from 'library/Form/AccountSelect';
 import { planckToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Spacer } from '../Wrappers';
@@ -20,7 +21,8 @@ export const SetController = (props: any) => {
 
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount, accounts, getAccount } = useConnect();
+  const { activeAccount, accounts, getAccount } =
+    useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountBalance, minReserve, isController }: any =
     useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();

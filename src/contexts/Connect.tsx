@@ -11,41 +11,13 @@ import {
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { DAPP_NAME } from 'consts';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
+import { MaybeAccount } from 'types';
 import { useModal } from './Modal';
 import { useApi } from './Api';
 
-export interface ConnectContextState {
-  initialise: () => void;
-  connectExtension: (w: string) => void;
-  disconnectExtension: () => void;
-  accountExists: (a: string) => number;
-  getAccount: (a: string) => any;
-  connectToAccount: (a: any) => void;
-  disconnectFromAccount: () => void;
-  extensions: any;
-  activeExtension: any;
-  extensionErrors: any;
-  accounts: any;
-  activeAccount: string;
-  activeAccountMeta: any;
-}
-
-export const ConnectContext: React.Context<ConnectContextState> =
-  React.createContext({
-    initialise: () => {},
-    connectExtension: (w: string) => {},
-    disconnectExtension: () => {},
-    accountExists: (a: string) => 0,
-    getAccount: (a: string) => {},
-    connectToAccount: (a: any) => {},
-    disconnectFromAccount: () => {},
-    extensions: [],
-    activeExtension: null,
-    extensionErrors: {},
-    accounts: [],
-    activeAccount: '',
-    activeAccountMeta: {},
-  });
+export const ConnectContext =
+  React.createContext<ConnectContextInterface | null>(null);
 
 export const useConnect = () => React.useContext(ConnectContext);
 
@@ -62,10 +34,10 @@ export const ConnectProvider = ({
   const accountsRef = useRef(accounts);
 
   // store the currently active account
-  const [activeAccount, _setActiveAccount] = useState(
-    localStorageOrDefault(`${network.name.toLowerCase()}_active_account`, '')
+  const [activeAccount, _setActiveAccount] = useState<string | null>(
+    localStorageOrDefault(`${network.name.toLowerCase()}_active_account`, null)
   );
-  const activeAccountRef = useRef(activeAccount);
+  const activeAccountRef = useRef<string | null>(activeAccount);
 
   // store the currently active account metadata
   const [activeAccountMeta, setActiveAccountMeta] = useState(null);
@@ -110,7 +82,7 @@ export const ConnectProvider = ({
     if (extensions.length && activeExtension !== null) {
       // we set a short timeout for extensions to initiate. This is a workaround
       // for a `NotInstalledError` that was happening when immediately attempting
-      // to connect to a wallet.
+      // to connect to an extension.
       setTimeout(() => connectExtension(), 100);
     }
   }, [extensions]);
@@ -124,24 +96,28 @@ export const ConnectProvider = ({
     _setActiveExtension(wallet);
   };
 
-  const setActiveAccount = (address: string) => {
-    localStorage.setItem(
-      `${network.name.toLowerCase()}_active_account`,
-      address
-    );
-    setStateWithRef(address, _setActiveAccount, activeAccountRef);
+  const setActiveAccount = (address: string | null) => {
+    if (address === null) {
+      localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
+    } else {
+      localStorage.setItem(
+        `${network.name.toLowerCase()}_active_account`,
+        address
+      );
+      setStateWithRef(address, _setActiveAccount, activeAccountRef);
+    }
   };
 
   const setExtensionErrors = (key: string, value: string) => {
-    const _errors: any = { ...extensionErrorsRef.current };
-    _errors[key] = value;
+    const _errors: any = {
+      ...extensionErrorsRef.current,
+      [key]: value,
+    };
     setStateWithRef(_errors, _setExtensionErrors, extensionErrorsRef);
   };
 
-  // give web page time to initiate extensions
   const initExtensions = async () => {
-    const _extensions = getWallets();
-    setExtensions(_extensions);
+    setExtensions(getWallets());
   };
 
   const handleReconnect = async () => {
@@ -215,10 +191,10 @@ export const ConnectProvider = ({
     // active account is first in list if none presently persisted
     let _activeAccount: any = localStorageOrDefault(
       `${network.name.toLowerCase()}_active_account`,
-      ''
+      null
     );
 
-    if (_activeAccount !== '') {
+    if (_activeAccount !== null) {
       _activeAccount = keyring.addFromAddress(_activeAccount).address;
     }
 
@@ -251,12 +227,12 @@ export const ConnectProvider = ({
 
   const disconnectFromAccount = () => {
     localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
-    setActiveAccount('');
+    setActiveAccount(null);
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
   const initialise = () => {
-    if (activeExtension === null || activeAccountRef.current === '') {
+    if (activeExtension === null || activeAccountRef.current === null) {
       openModalWith(
         'ConnectAccounts',
         {
@@ -276,7 +252,7 @@ export const ConnectProvider = ({
     return account.length;
   };
 
-  const getAccount = (addr: string) => {
+  const getAccount = (addr: MaybeAccount) => {
     const accs = accountsRef.current.filter((acc: any) => acc.address === addr);
     if (accs.length) {
       return accs[0];

@@ -15,12 +15,13 @@ import { useUi } from 'contexts/UI';
 import { usePools } from 'contexts/Pools';
 import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const { getAccountLedger }: any = useBalances();

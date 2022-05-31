@@ -17,6 +17,7 @@ import { PageTitle } from 'library/PageTitle';
 import { planckToUnit } from 'Utils';
 import { GRAPH_HEIGHT } from 'consts';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominators';
 import SupplyStakedStatBox from './Stats/SupplyStaked';
@@ -28,7 +29,7 @@ import Payouts from './Payouts';
 export const Overview = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount }: any = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { payouts }: any = useSubscan();
 
   // get last payout

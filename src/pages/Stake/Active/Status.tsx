@@ -19,12 +19,13 @@ import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 
 export const Status = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
   const { getNominationsStatus, staking, inSetup } = useStaking();
   const { getAccountNominations }: any = useBalances();

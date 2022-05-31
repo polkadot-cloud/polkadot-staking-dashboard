@@ -16,6 +16,7 @@ import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { ConnectContextInterface } from 'types/connect';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -23,7 +24,7 @@ export const BalanceGraph = () => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
   const { units, features } = network;
-  const { activeAccount }: any = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountBalance, getBondOptions }: any = useBalances();
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();

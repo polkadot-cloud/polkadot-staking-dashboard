@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
+import { ConnectContextInterface } from 'types/connect';
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
-  const { activeAccount, initialise }: any = useConnect();
+  const { activeAccount, initialise } = useConnect() as ConnectContextInterface;
 
   return (
     <>
-      {activeAccount === '' && (
+      {!activeAccount && (
         <HeadingWrapper>
           <Item
             className="connect"

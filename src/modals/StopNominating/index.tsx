@@ -14,6 +14,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { Wrapper } from './Wrapper';
 import {
   HeadingWrapper,
@@ -25,7 +26,7 @@ import {
 export const StopNominating = () => {
   const { api } = useApi() as APIContextInterface;
   const { getControllerNotImported } = useStaking();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations }: any = useBalances();
   const { setStatus: setModalStatus }: any = useModal();
   const controller = getBondedAccount(activeAccount);

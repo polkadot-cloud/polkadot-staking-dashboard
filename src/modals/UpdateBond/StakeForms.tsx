@@ -16,6 +16,7 @@ import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
@@ -25,7 +26,7 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize }: any = useModal();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } = useStaking();
   const { minNominatorBond } = staking;
   const { getBondOptions, getBondedAccount, getAccountNominations }: any =

@@ -8,11 +8,12 @@ import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
 import { usePools } from 'contexts/Pools';
 import { useUi } from 'contexts/UI';
+import { ConnectContextInterface } from 'types/connect';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
-  const { activeAccount }: any = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
   const { hasController, getControllerNotImported } = useStaking();
   const { getBondedAccount }: any = useBalances();
@@ -28,7 +29,7 @@ export const Connected = () => {
 
   return (
     <>
-      {activeAccount !== '' && (
+      {activeAccount && (
         <>
           {/* default account display / stash label if actively nominating */}
           <HeadingWrapper>

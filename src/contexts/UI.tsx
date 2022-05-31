@@ -6,6 +6,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
+import { MaybeAccount } from 'types';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
@@ -23,7 +25,7 @@ export interface UIContextState {
   toggleFilterValidators: (v: string, l: any) => void;
   resetValidatorFilters: () => void;
   toggleService: (k: string) => void;
-  getSetupProgress: (a: string) => any;
+  getSetupProgress: (a: MaybeAccount) => any;
   getSetupProgressPercent: (a: string) => any;
   setActiveAccountSetup: (p: any) => any;
   setActiveAccountSetupSection: (s: number) => void;
@@ -50,7 +52,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   toggleFilterValidators: (v: string, l: any) => {},
   resetValidatorFilters: () => {},
   toggleService: (k: string) => {},
-  getSetupProgress: (a: string) => {},
+  getSetupProgress: (a: MaybeAccount) => {},
   getSetupProgressPercent: (a: string) => {},
   setActiveAccountSetup: (p: any) => {},
   setActiveAccountSetupSection: (s: number) => {},
@@ -71,7 +73,8 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady, consts, network } = useApi() as APIContextInterface;
-  const { accounts: connectAccounts, activeAccount } = useConnect();
+  const { accounts: connectAccounts, activeAccount } =
+    useConnect() as ConnectContextInterface;
   const { staking, eraStakers, inSetup }: any = useStaking();
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
@@ -398,7 +401,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   /*
    * Gets the setup progress for a connected account.
    */
-  const getSetupProgress = (address: string) => {
+  const getSetupProgress = (address: MaybeAccount) => {
     // find the current setup progress from `setup`.
     const _setup = setup.find((item: any) => item.address === address);
 
@@ -424,6 +427,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    * Sets setup progress for an address
    */
   const setActiveAccountSetup = (progress: any) => {
+    if (!activeAccount) return;
+
     // update local storage setup
     localStorage.setItem(
       `${network.name.toLowerCase()}_stake_setup_${activeAccount}`,
@@ -447,6 +452,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    * Sets active setup section for an address
    */
   const setActiveAccountSetupSection = (section: number) => {
+    if (!activeAccount) return;
+
     // get current progress
     const _accountSetup = [...setup].find(
       (item: any) => item.address === activeAccount

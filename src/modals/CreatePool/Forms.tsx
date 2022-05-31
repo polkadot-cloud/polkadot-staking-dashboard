@@ -11,6 +11,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { ConnectContextInterface } from 'types/connect';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -18,7 +19,7 @@ export const Forms = () => {
   const { api, network }: any = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize }: any = useModal();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
 
   const { getBondOptions }: any = useBalances();
   const { freeToBond } = getBondOptions(activeAccount);
@@ -37,7 +38,7 @@ export const Forms = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!bondValid) {
+    if (!bondValid || !activeAccount) {
       return _tx;
     }
 

@@ -9,14 +9,15 @@ import { APIContextInterface } from 'types/api';
 import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { usePools } from 'contexts/Pools';
+import { ConnectContextInterface } from 'types/connect';
 import { PoolAccount } from './PoolAccount';
 import { RolesWrapper } from './ManagePool/Wrappers';
 
 export const Roles = () => {
   const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { fetchAccountMetaBatch } = useAccount();
-  const { isNominator, activeBondedPool } = usePools();
+  const { activeBondedPool } = usePools();
   const activePool = activeBondedPool;
   const { roles } = activePool;
 

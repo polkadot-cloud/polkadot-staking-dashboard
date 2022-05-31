@@ -9,6 +9,7 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { AssistantContextInterface } from 'types/assistant';
 import { pageFromUri } from 'Utils';
+import { ConnectContextInterface } from 'types/connect';
 import { SideBar } from './SideBar';
 import { Spinner } from './Spinner';
 import { Wrapper, HeadingWrapper, Item, LargeScreensOnly } from './Wrappers';
@@ -20,7 +21,7 @@ import { SideMenuToggle } from './SideMenuToggle';
 export const Headers = () => {
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;
-  const { activeAccount }: any = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { validators } = useValidators();
   const { pending } = useExtrinsics();
   const { isSyncing }: any = useUi();
@@ -67,7 +68,7 @@ export const Headers = () => {
             }}
             whileHover={{ scale: 1.02 }}
           >
-            {activeAccount === '' && <div className="label">1</div>}
+            {!activeAccount && <div className="label">1</div>}
             <span>Assistant</span>
           </Item>
         </HeadingWrapper>

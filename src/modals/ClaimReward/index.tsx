@@ -14,6 +14,7 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { usePools } from 'contexts/Pools';
+import { ConnectContextInterface } from 'types/connect';
 import { Wrapper } from './Wrapper';
 import { HeadingWrapper, FooterWrapper, Separator } from '../Wrappers';
 
@@ -21,7 +22,7 @@ export const ClaimReward = () => {
   const { api, network } = useApi() as APIContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const { activeBondedPool } = usePools();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { unclaimedReward } = activeBondedPool || {};
 

@@ -55,3 +55,5 @@ export type PagesConfig = Array<{
 }>;
 
 export type Unsubs = Array<any | (() => void)>;
+
+export type MaybeAccount = string | null;

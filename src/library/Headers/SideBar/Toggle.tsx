@@ -4,11 +4,12 @@
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import { useSideBar } from 'contexts/SideBar';
 import { useConnect } from 'contexts/Connect';
+import { ConnectContextInterface } from 'types/connect';
 import { ToggleWrapper } from './Wrappers';
 import { Item } from '../Wrappers';
 
 export const Toggle = () => {
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { openSideBar, open } = useSideBar();
 
   const style = { flex: 0 };
@@ -28,7 +29,7 @@ export const Toggle = () => {
 
   return (
     <ToggleWrapper>
-      {!open && activeAccount !== '' && (
+      {!open && activeAccount && (
         <Item
           style={style}
           onClick={() => {

@@ -11,6 +11,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useAssistant } from 'contexts/Assistant';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import Heading from './Heading';
 import Definition from './Items/Definition';
 import { SectionWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
@@ -25,7 +26,7 @@ export const Sections = (props: any) => {
   const { network } = useApi() as APIContextInterface;
   const { pageMeta } = props;
 
-  const { initialise, activeAccount }: any = useConnect();
+  const { initialise, activeAccount } = useConnect() as ConnectContextInterface;
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;
 
@@ -83,7 +84,7 @@ export const Sections = (props: any) => {
         </HeaderWrapper>
         <ListWrapper>
           {/* only display if accounts not yet connected */}
-          {activeAccount === '' && (
+          {!activeAccount && (
             <Action
               height="120px"
               label="next step"
