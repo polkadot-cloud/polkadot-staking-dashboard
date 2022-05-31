@@ -13,12 +13,13 @@ import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = () => {
   const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { nominated }: any = useValidators();
   const { inSetup } = useStaking();
   const { getAccountNominations }: any = useBalances();
@@ -51,7 +52,7 @@ export const Nominations = () => {
           )}
         </div>
       </SectionHeaderWrapper>
-      {activeAccount === '' ? (
+      {!activeAccount ? (
         <div className="head">
           <h3>Not Nominating.</h3>
         </div>

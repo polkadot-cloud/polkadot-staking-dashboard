@@ -11,6 +11,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { ConnectContextInterface } from 'types/connect';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -19,7 +20,7 @@ export const Forms = () => {
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize }: any = useModal();
   const { id: poolId } = config;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
 
   const { getBondOptions }: any = useBalances();
   const { freeToBond } = getBondOptions(activeAccount);

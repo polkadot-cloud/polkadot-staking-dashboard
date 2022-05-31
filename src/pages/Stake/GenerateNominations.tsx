@@ -9,6 +9,7 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {
@@ -18,7 +19,7 @@ export const GenerateNominations = (props: any) => {
   const { batchKey } = props;
 
   const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { removeValidatorMetaBatch, validators, favouritesList, meta } =
     useValidators();
   const { applyValidatorOrder, applyValidatorFilters }: any = useUi();

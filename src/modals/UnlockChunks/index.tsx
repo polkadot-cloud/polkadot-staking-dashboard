@@ -7,13 +7,14 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { ConnectContextInterface } from 'types/connect';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, SectionsWrapper } from './Wrappers';
 import { Overview } from './Overview';
 import { Forms } from './Forms';
 
 export const UnlockChunks = () => {
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const modal = useModal();
   const { getAccountLedger }: any = useBalances();
   const ledger = getAccountLedger(activeAccount);

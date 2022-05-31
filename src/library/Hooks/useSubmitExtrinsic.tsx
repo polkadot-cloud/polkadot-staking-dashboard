@@ -7,15 +7,20 @@ import { useNotifications } from 'contexts/Notifications';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useConnect } from 'contexts/Connect';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 
 export const useSubmitExtrinsic = (extrinsic: any) => {
   // extract extrinsic info
-  const { tx, from, shouldSubmit, callbackSubmit, callbackInBlock } = extrinsic;
+  const { tx, shouldSubmit, callbackSubmit, callbackInBlock } = extrinsic;
+
+  // if null account is provided, fallback to empty string
+  let { from } = extrinsic;
+  from = from ?? '';
 
   const { api } = useApi() as APIContextInterface;
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount } = useConnect();
+  const { getAccount } = useConnect() as ConnectContextInterface;
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);

@@ -16,6 +16,7 @@ import { PageTitle } from 'library/PageTitle';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
+import { ConnectContextInterface } from 'types/connect';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { GenerateNominations } from '../GenerateNominations';
@@ -27,7 +28,7 @@ import { Status } from './Status';
 
 export const Active = ({ title }: any) => {
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
   const { targets, setTargets, inSetup } = useStaking();
   const { getAccountNominations }: any = useBalances();

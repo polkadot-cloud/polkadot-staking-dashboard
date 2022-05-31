@@ -7,6 +7,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import Identicon from 'library/Identicon';
 import { useModal } from 'contexts/Modal';
+import { ConnectContextInterface } from 'types/connect';
 import { Separator, ContentWrapper, PaddingWrapper } from './Wrappers';
 
 export const Accounts = forwardRef((props: any, ref: any) => {
@@ -17,9 +18,9 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     connectToAccount,
     disconnectFromAccount,
     activeAccount,
-  }: any = useConnect();
+  }: any = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
-  let { accounts } = useConnect();
+  let { accounts } = useConnect() as ConnectContextInterface;
 
   const activeAccountMeta = getAccount(activeAccount);
 
@@ -29,7 +30,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   return (
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
-        <h2>{activeAccount === '' ? 'Select' : 'Switch'} Account</h2>
+        <h2>{!activeAccount ? 'Select' : 'Switch'} Account</h2>
         <div className="head">
           <button
             type="button"
@@ -42,7 +43,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           </button>
         </div>
 
-        {activeAccount !== '' ? (
+        {activeAccount ? (
           <button
             type="button"
             className="item"

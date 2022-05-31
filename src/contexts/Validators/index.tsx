@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { sleep, removePercentage, rmCommas, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
+import { ConnectContextInterface } from 'types/connect';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -56,7 +57,7 @@ export const ValidatorsProvider = ({
   children: React.ReactNode;
 }) => {
   const { isReady, api, network, consts } = useApi() as APIContextInterface;
-  const { activeAccount }: any = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getAccountNominations }: any = useBalances();
   const { poolNominations } = usePools();
@@ -137,7 +138,7 @@ export const ValidatorsProvider = ({
 
   // fetch active account's nominations in validator list format
   useEffect(() => {
-    if (isReady && activeAccount !== '') {
+    if (isReady && activeAccount) {
       fetchNominatedList();
     }
   }, [isReady, activeAccount, accounts]);

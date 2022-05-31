@@ -15,11 +15,12 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { Validator } from 'library/Validator';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { ConnectContextInterface } from 'types/connect';
 import { Filters } from './Filters';
 
 export const ValidatorListInner = (props: any) => {
   const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
   const {

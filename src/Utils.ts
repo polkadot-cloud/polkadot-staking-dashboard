@@ -90,22 +90,6 @@ export const defaultIfNaN = <T>(val: T, _default: T) => {
   return val;
 };
 
-export const localStorageOrDefault = <T>(
-  key: string,
-  _default: T,
-  parse = false
-) => {
-  let val: string | null = localStorage.getItem(key);
-
-  if (val === null) {
-    return _default;
-  }
-  if (parse) {
-    val = JSON.parse(val);
-  }
-  return val;
-};
-
 export const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
@@ -117,4 +101,21 @@ export const setStateWithRef = <T>(
 ): void => {
   setState(value);
   ref.current = value;
+};
+
+export const localStorageOrDefault = <T>(
+  key: string,
+  _default: T,
+  parse = false
+) => {
+  const val: string | null = localStorage.getItem(key);
+
+  if (val === null) {
+    return _default;
+  }
+
+  if (parse) {
+    return JSON.parse(val) as T;
+  }
+  return val as string;
 };
