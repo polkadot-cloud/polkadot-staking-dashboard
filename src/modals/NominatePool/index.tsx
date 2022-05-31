@@ -7,18 +7,18 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { usePools } from 'contexts/Pools';
+import { useApi } from 'contexts/Api';
+import { useModal } from 'contexts/Modal';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useConnect } from 'contexts/Connect';
+import { Warning } from 'library/Form/Warning';
+import { Wrapper } from './Wrapper';
 import {
   HeadingWrapper,
   FooterWrapper,
   Separator,
   NotesWrapper,
 } from '../Wrappers';
-import { Wrapper } from './Wrapper';
-import { useApi } from '../../contexts/Api';
-import { useModal } from '../../contexts/Modal';
-import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
-import { useConnect } from '../../contexts/Connect';
-import { Warning } from '../../library/Form/Warning';
 
 export const NominatePool = () => {
   const { api, network }: any = useApi();

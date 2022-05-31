@@ -3,27 +3,23 @@
 
 import React from 'react';
 import moment from 'moment';
-import { PageProps } from '../types';
-import { StatBoxList } from '../../library/StatBoxList';
-import { useSubscan } from '../../contexts/Subscan';
-import { useUi } from '../../contexts/UI';
+import { StatBoxList } from 'library/StatBoxList';
+import { useSubscan } from 'contexts/Subscan';
+import { useUi } from 'contexts/UI';
 import {
   GraphWrapper,
   SectionWrapper,
   SectionHeaderWrapper,
-} from '../../library/Graphs/Wrappers';
-import { PageRowWrapper } from '../../Wrappers';
-import { SubscanButton } from '../../library/SubscanButton';
-import { PayoutLine } from '../../library/Graphs/PayoutLine';
-import { PayoutBar } from '../../library/Graphs/PayoutBar';
-import { PageTitle } from '../../library/PageTitle';
-import {
-  useSize,
-  formatSize,
-  prefillPayoutGraph,
-} from '../../library/Graphs/Utils';
-import { StatusLabel } from '../../library/StatusLabel';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+} from 'library/Graphs/Wrappers';
+import { PageRowWrapper } from 'Wrappers';
+import { SubscanButton } from 'library/SubscanButton';
+import { PayoutLine } from 'library/Graphs/PayoutLine';
+import { PayoutBar } from 'library/Graphs/PayoutBar';
+import { PageTitle } from 'library/PageTitle';
+import { useSize, formatSize, prefillPayoutGraph } from 'library/Graphs/Utils';
+import { StatusLabel } from 'library/StatusLabel';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
 

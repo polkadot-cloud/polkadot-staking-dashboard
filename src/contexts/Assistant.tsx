@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { ASSISTANT_CONFIG } from '../config/assistant';
-import { Toggle } from '../types';
+import { Toggle } from 'types';
 import {
   AssistantContextInterface,
   AssistantDefinition,
   AssistantItem,
-} from '../types/assistant';
+} from 'types/assistant';
+import { ASSISTANT_CONFIG } from 'config/assistant';
 
 export const AssistantContext =
   React.createContext<AssistantContextInterface | null>(null);

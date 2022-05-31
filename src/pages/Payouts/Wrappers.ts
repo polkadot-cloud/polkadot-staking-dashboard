@@ -3,12 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import {
-  backgroundValidator,
-  borderSecondary,
-  textSecondary,
-  primary,
-} from '../../theme';
+import { backgroundValidator, textSecondary, primary } from 'theme';
 
 export const ItemWrapper = styled(motion.div)<any>`
   padding: 0.5rem;

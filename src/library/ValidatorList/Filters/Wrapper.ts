@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary } from '../../../theme';
+import { textSecondary, borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;

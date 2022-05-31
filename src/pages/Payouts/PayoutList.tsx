@@ -6,20 +6,15 @@ import moment from 'moment';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import {
-  List,
-  Header,
-  Wrapper as ListWrapper,
-  Pagination,
-} from '../../library/List';
-import { useApi } from '../../contexts/Api';
-import { StakingContext } from '../../contexts/Staking';
-import { useUi } from '../../contexts/UI';
-import { useNetworkMetrics } from '../../contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../consts';
+import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { useApi } from 'contexts/Api';
+import { StakingContext } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { useNetworkMetrics } from 'contexts/Network';
+import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
+import { planckToUnit } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { ItemWrapper } from './Wrappers';
-import { planckToUnit } from '../../Utils';
-import { APIContextInterface } from '../../types/api';
 
 export const PayoutListInner = (props: any) => {
   const { isReady, network } = useApi() as APIContextInterface;

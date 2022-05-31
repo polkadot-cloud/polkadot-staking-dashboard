@@ -17,16 +17,16 @@ import {
   SideInterfaceWrapper,
   MainInterfaceWrapper,
   BodyInterfaceWrapper,
-} from './Wrappers';
-import { PAGES_CONFIG } from './config/pages';
-import { NetworkBar } from './library/NetworkBar';
-import { Modal } from './modals';
-import { Headers } from './library/Headers';
-import SideMenu from './library/SideMenu';
-import Assistant from './library/Assistant';
-import Notifications from './library/Notifications';
-import { TITLE_DEFAULT } from './consts';
-import { useUi } from './contexts/UI';
+} from 'Wrappers';
+import { PAGES_CONFIG } from 'config/pages';
+import { NetworkBar } from 'library/NetworkBar';
+import { Modal } from 'modals';
+import { Headers } from 'library/Headers';
+import SideMenu from 'library/SideMenu';
+import Assistant from 'library/Assistant';
+import Notifications from 'library/Notifications';
+import { TITLE_DEFAULT } from 'consts';
+import { useUi } from 'contexts/UI';
 
 export const RouterInner = () => {
   const { pathname } = useLocation();

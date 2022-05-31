@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { APIContext } from '../../contexts/Api';
+import { APIContext } from 'contexts/Api';
 
 export const BlockNumberInner = (props: any) => {
   return (

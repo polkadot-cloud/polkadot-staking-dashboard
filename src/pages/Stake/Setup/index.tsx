@@ -3,17 +3,17 @@
 
 import { Element } from 'react-scroll';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper } from '../../../Wrappers';
+import { PageRowWrapper } from 'Wrappers';
+import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { PageTitle } from 'library/PageTitle';
+import { Button } from 'library/Button';
+import { useUi } from 'contexts/UI';
 import { GoBackWrapper } from '../Wrappers';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { PageTitle } from '../../../library/PageTitle';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';
-import { Button } from '../../../library/Button';
-import { useUi } from '../../../contexts/UI';
 
 export const Setup = ({ title }: any) => {
   const { setOnSetup }: any = useUi();

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
+import { clipAddress } from 'Utils';
+import Identicon from 'library/Identicon';
 import { IdentityWrapper } from '../Wrappers';
-import Identicon from '../../Identicon';
-import { clipAddress } from '../../../Utils';
 import { getIdentityDisplay } from '../Utils';
 
 export const Identity = (props: any) => {

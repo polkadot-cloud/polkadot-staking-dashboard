@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect, forwardRef } from 'react';
-import { useConnect } from '../../contexts/Connect';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { Separator, ContentWrapper, PaddingWrapper } from './Wrappers';
-import { useModal } from '../../contexts/Modal';
 import { Extension } from './Extension';
 
 export const Extensions = forwardRef((props: any, ref: any) => {

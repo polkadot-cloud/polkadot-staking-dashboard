@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { useApi } from '../../contexts/Api';
-import { useNotifications } from '../../contexts/Notifications';
-import { useExtrinsics } from '../../contexts/Extrinsics';
-import { useConnect } from '../../contexts/Connect';
-import { APIContextInterface } from '../../types/api';
+import { useApi } from 'contexts/Api';
+import { useNotifications } from 'contexts/Notifications';
+import { useExtrinsics } from 'contexts/Extrinsics';
+import { useConnect } from 'contexts/Connect';
+import { APIContextInterface } from 'types/api';
 
 export const useSubmitExtrinsic = (extrinsic: any) => {
   // extract extrinsic info

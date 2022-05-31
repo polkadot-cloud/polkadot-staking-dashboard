@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, borderPrimary, textPrimary } from '../../../theme';
+import { backgroundToggle, borderPrimary, textPrimary } from 'theme';
 
 export const StyledDownshift = styled.div<any>`
   box-sizing: border-box;

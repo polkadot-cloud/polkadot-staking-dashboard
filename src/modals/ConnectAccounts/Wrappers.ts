@@ -10,7 +10,7 @@ import {
   textInvert,
   textSecondary,
   textDanger,
-} from '../../theme';
+} from 'theme';
 
 export const SectionsWrapper = styled(motion.div)`
   box-sizing: border-box;

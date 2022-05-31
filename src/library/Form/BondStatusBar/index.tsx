@@ -5,12 +5,12 @@ import BN from 'bn.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useApi } from 'contexts/Api';
+import { useStaking } from 'contexts/Staking';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { useUi } from 'contexts/UI';
+import { APIContextInterface } from 'types/api';
 import { Wrapper } from './Wrapper';
-import { useApi } from '../../../contexts/Api';
-import { useStaking } from '../../../contexts/Staking';
-import { OpenAssistantIcon } from '../../OpenAssistantIcon';
-import { useUi } from '../../../contexts/UI';
-import { APIContextInterface } from '../../../types/api';
 
 export const BondStatusBar = (props: any) => {
   const { value } = props;

@@ -4,11 +4,11 @@
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { useModal } from '../../contexts/Modal';
-import { usePools } from '../../contexts/Pools';
+import { useModal } from 'contexts/Modal';
+import { usePools } from 'contexts/Pools';
+import { clipAddress } from 'Utils';
+import Identicon from 'library/Identicon';
 import { Wrapper } from './Wrapper';
-import Identicon from '../Identicon';
-import { clipAddress } from '../../Utils';
 
 export const Pool = (props: any) => {
   const { pool, batchKey, batchIndex } = props;

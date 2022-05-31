@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, stringToU8a, u8aConcat } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
+import { APIContextInterface } from 'types/api';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -17,7 +18,6 @@ import {
   localStorageOrDefault,
   setStateWithRef,
 } from '../../Utils';
-import { APIContextInterface } from '../../types/api';
 
 const EMPTY_H256 = new Uint8Array(32);
 const MOD_PREFIX = stringToU8a('modl');

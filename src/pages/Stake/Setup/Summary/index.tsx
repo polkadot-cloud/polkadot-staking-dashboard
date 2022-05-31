@@ -4,17 +4,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { SectionWrapper } from '../../../../library/Graphs/Wrappers';
-import { Header } from '../Header';
-import { MotionContainer } from '../MotionContainer';
-import { useApi } from '../../../../contexts/Api';
-import { useUi } from '../../../../contexts/UI';
-import { useConnect } from '../../../../contexts/Connect';
-import { Wrapper as ButtonWrapper } from '../../../../library/Button';
+import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { useApi } from 'contexts/Api';
+import { useUi } from 'contexts/UI';
+import { useConnect } from 'contexts/Connect';
+import { Wrapper as ButtonWrapper } from 'library/Button';
+import { humanNumber } from 'Utils';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { APIContextInterface } from 'types/api';
 import { SummaryWrapper } from './Wrapper';
-import { humanNumber } from '../../../../Utils';
-import { useSubmitExtrinsic } from '../../../../library/Hooks/useSubmitExtrinsic';
-import { APIContextInterface } from '../../../../types/api';
+import { MotionContainer } from '../MotionContainer';
+import { Header } from '../Header';
 
 export const Summary = (props: any) => {
   const { section } = props;

@@ -5,14 +5,14 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { useModal } from 'contexts/Modal';
+import { useBalances } from 'contexts/Balances';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ContentWrapper } from './Wrapper';
-import { useModal } from '../../contexts/Modal';
-import { useBalances } from '../../contexts/Balances';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
-import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
+import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
   const { api, network }: any = useApi();

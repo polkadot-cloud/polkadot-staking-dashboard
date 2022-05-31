@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useApi } from 'contexts/Api';
+import { useValidators } from 'contexts/Validators';
+import { ValidatorList } from 'library/ValidatorList';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { useUi } from 'contexts/UI';
+import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { APIContextInterface } from 'types/api';
 import { Wrapper } from './Wrapper';
-import { useApi } from '../../../contexts/Api';
-import { useValidators } from '../../../contexts/Validators';
-import { ValidatorList } from '../../../library/ValidatorList';
-import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
-import { useUi } from '../../../contexts/UI';
-import { SectionHeaderWrapper } from '../../../library/Graphs/Wrappers';
-import { APIContextInterface } from '../../../types/api';
 
 export const PoolNominations = () => {
   const { isReady } = useApi() as APIContextInterface;

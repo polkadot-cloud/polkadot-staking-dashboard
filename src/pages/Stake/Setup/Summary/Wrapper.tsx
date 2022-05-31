@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { borderPrimary, primary } from '../../../../theme';
+import { borderPrimary, primary } from 'theme';
 
 export const SummaryWrapper = styled.div`
   display: flex;

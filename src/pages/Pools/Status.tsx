@@ -4,13 +4,13 @@
 import { formatBalance } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { Separator } from '../../Wrappers';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { useApi } from '../../contexts/Api';
-import { usePools } from '../../contexts/Pools';
-import { useModal } from '../../contexts/Modal';
-import { Stat } from '../../library/Stat';
-import { APIContextInterface } from '../../types/api';
+import { Separator } from 'Wrappers';
+import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { useApi } from 'contexts/Api';
+import { usePools } from 'contexts/Pools';
+import { useModal } from 'contexts/Modal';
+import { Stat } from 'library/Stat';
+import { APIContextInterface } from 'types/api';
 
 export const Status = () => {
   const { network } = useApi() as APIContextInterface;

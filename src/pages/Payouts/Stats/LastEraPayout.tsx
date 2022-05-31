@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useStaking } from '../../../contexts/Staking';
-import { useApi } from '../../../contexts/Api';
-import { Number } from '../../../library/StatBoxList/Number';
-import { APIContextInterface } from '../../../types/api';
+import { useStaking } from 'contexts/Staking';
+import { useApi } from 'contexts/Api';
+import { Number } from 'library/StatBoxList/Number';
+import { APIContextInterface } from 'types/api';
 
 export const LastEraPayoutStatBox = () => {
   const { network } = useApi() as APIContextInterface;

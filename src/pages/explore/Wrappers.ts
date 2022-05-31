@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary } from '../../theme';
+import { textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   h2 {

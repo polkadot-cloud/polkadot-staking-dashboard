@@ -3,8 +3,8 @@
 
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { defaultThemes } from '../../theme/default';
-import { useTheme } from '../../contexts/Themes';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
 
 ChartJS.register(ArcElement, Tooltip);
 

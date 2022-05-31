@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { PageTitle } from 'library/PageTitle';
+import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { Wrapper, ItemsWrapper, Item } from './Wrappers';
-import { PageTitle } from '../../library/PageTitle';
-import { PageRowWrapper } from '../../Wrappers';
 
 export const Projects = (props: PageProps) => {
   const { page } = props;

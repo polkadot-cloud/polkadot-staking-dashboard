@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
-import { APIContextInterface } from '../../types/api';
+import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 

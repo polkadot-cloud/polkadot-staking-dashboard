@@ -3,15 +3,15 @@
 
 import BN from 'bn.js';
 import { forwardRef } from 'react';
-import { Separator, NotesWrapper } from '../Wrappers';
+import { useBalances } from 'contexts/Balances';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { planckBnToUnit } from 'Utils';
+import Button from 'library/Button';
+import { useNetworkMetrics } from 'contexts/Network';
+import { APIContextInterface } from 'types/api';
 import { ContentWrapper, ChunkWrapper } from './Wrappers';
-import { useBalances } from '../../contexts/Balances';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
-import { planckBnToUnit } from '../../Utils';
-import Button from '../../library/Button';
-import { useNetworkMetrics } from '../../contexts/Network';
-import { APIContextInterface } from '../../types/api';
+import { Separator, NotesWrapper } from '../Wrappers';
 
 export const Overview = forwardRef(
   ({ setSection, setUnlock, setTask }: any, ref: any) => {

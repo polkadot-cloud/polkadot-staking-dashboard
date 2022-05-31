@@ -5,12 +5,12 @@ import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { usePools } from 'contexts/Pools';
-import Identicon from '../Identicon';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
+import { ReactComponent as WalletSVG } from 'img/wallet.svg';
+import Identicon from 'library/Identicon';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
-import { useTheme } from '../../contexts/Themes';
-import { defaultThemes } from '../../theme/default';
-import { ReactComponent as WalletSVG } from '../../img/wallet.svg';
 
 export const PoolAccount = (props: any) => {
   const { mode } = useTheme();

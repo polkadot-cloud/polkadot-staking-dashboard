@@ -5,17 +5,17 @@ import { useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft as faBack } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
-import { PAGES_CONFIG } from '../../config/pages';
-import { pageTitleFromUri } from '../../Utils';
+import { PAGES_CONFIG } from 'config/pages';
+import { pageTitleFromUri } from 'Utils';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useAssistant } from 'contexts/Assistant';
+import { APIContextInterface } from 'types/api';
 import Heading from './Heading';
 import Definition from './Items/Definition';
 import { SectionWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
-import { useAssistant } from '../../contexts/Assistant';
 import External from './Items/External';
 import Action from './Items/Action';
-import { APIContextInterface } from '../../types/api';
 import {
   AssistantContextInterface,
   AssistantDefinition,

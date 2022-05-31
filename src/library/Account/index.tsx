@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import Identicon from '../Identicon';
+import { clipAddress, convertRemToPixels } from 'Utils';
+import { useConnect } from 'contexts/Connect';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
+import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import Wrapper from './Wrapper';
-import { clipAddress, convertRemToPixels } from '../../Utils';
-import { useConnect } from '../../contexts/Connect';
-import { useTheme } from '../../contexts/Themes';
-import { defaultThemes } from '../../theme/default';
-import { ReactComponent as WalletSVG } from '../../img/wallet.svg';
+import Identicon from '../Identicon';
 
 export const Account = (props: any) => {
   const { mode } = useTheme();

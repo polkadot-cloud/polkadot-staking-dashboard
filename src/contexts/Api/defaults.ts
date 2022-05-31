@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { stringToU8a } from '@polkadot/util';
-import { APIConstants } from '../../types/api';
+import { APIConstants } from 'types/api';
 
 export const consts: APIConstants = {
   bondDuration: 0,

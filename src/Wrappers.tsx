@@ -9,13 +9,13 @@ import {
   SIDE_MENU_STICKY_THRESHOLD,
   SHOW_SIDE_BAR_WIDTH_THRESHOLD,
   SECTION_FULL_WIDTH_THRESHOLD,
-} from './consts';
+} from 'consts';
 import {
   textPrimary,
   backgroundGradient,
   backgroundPrimary,
   borderPrimary,
-} from './theme';
+} from 'theme';
 
 /* EntryWrapper
  *

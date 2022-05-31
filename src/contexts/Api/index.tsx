@@ -12,15 +12,15 @@ import {
   NODE_ENDPOINTS,
   MAX_ELECTING_VOTERS,
   EXPECTED_BLOCK_TIME,
-} from '../../consts';
-import * as defaults from './defaults';
+} from 'consts';
 import {
   APIContextInterface,
   NetworkState,
   APIConstants,
   ConnectionStatus,
-} from '../../types/api';
-import { NodeEndpoint, NetworkName } from '../../types';
+} from 'types/api';
+import { NodeEndpoint, NetworkName } from 'types';
+import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface | null>(null);
 

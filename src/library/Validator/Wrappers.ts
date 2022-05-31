@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundValidator, borderPrimary, textSecondary } from '../../theme';
+import { backgroundValidator, borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div<any>`
   display: flex;

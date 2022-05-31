@@ -3,9 +3,9 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useConnect } from '../../contexts/Connect';
-import { ReactComponent as TalismanSVG } from '../../img/talisman_icon.svg';
-import { ReactComponent as PolkadotJSSVG } from '../../img/dot_icon.svg';
+import { useConnect } from 'contexts/Connect';
+import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
+import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 
 export const Extension = (props: any) => {
   const { meta, disabled, error, setSection, flag, disconnect } = props;

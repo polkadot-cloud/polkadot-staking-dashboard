@@ -3,7 +3,11 @@
 
 import { useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAssistant } from '../../contexts/Assistant';
+import { useAssistant } from 'contexts/Assistant';
+import { ASSISTANT_CONFIG } from 'config/assistant';
+import { pageFromUri } from 'Utils';
+import { AssistantContextInterface, AssistantItem } from 'types/assistant';
+import { Toggle } from 'types';
 import {
   Wrapper,
   SectionsWrapper,
@@ -11,14 +15,7 @@ import {
   HeightWrapper,
 } from './Wrappers';
 import { Sections } from './Sections';
-import { ASSISTANT_CONFIG } from '../../config/assistant';
-import { pageFromUri } from '../../Utils';
 import { useOutsideAlerter } from '../Hooks';
-import {
-  AssistantContextInterface,
-  AssistantItem,
-} from '../../types/assistant';
-import { Toggle } from '../../types';
 
 export const Assistant = () => {
   const assistant = useAssistant() as AssistantContextInterface;

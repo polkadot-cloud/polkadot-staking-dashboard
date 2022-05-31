@@ -6,21 +6,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Fn, Unsubs } from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useApi } from '../Api';
-import { useConnect } from '../Connect';
-import * as defaults from './defaults';
+import { APIContextInterface } from 'types/api';
 import {
   toFixedIfNecessary,
   planckBnToUnit,
   rmCommas,
   setStateWithRef,
-} from '../../Utils';
-import { APIContextInterface } from '../../types/api';
-
-import {
-  BalancesAccount,
-  BalancesContextInterface,
-} from '../../types/balances';
+} from 'Utils';
+import { BalancesAccount, BalancesContextInterface } from 'types/balances';
+import { useApi } from '../Api';
+import { useConnect } from '../Connect';
+import * as defaults from './defaults';
 
 export const BalancesContext =
   React.createContext<BalancesContextInterface | null>(null);

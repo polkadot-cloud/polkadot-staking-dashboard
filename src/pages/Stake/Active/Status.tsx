@@ -8,17 +8,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Separator } from '../../../Wrappers';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { useStaking } from '../../../contexts/Staking';
-import { useBalances } from '../../../contexts/Balances';
-import { useConnect } from '../../../contexts/Connect';
-import { useModal } from '../../../contexts/Modal';
-import { PAYEE_STATUS } from '../../../consts';
-import { useUi } from '../../../contexts/UI';
-import { useApi } from '../../../contexts/Api';
-import Stat from '../../../library/Stat';
-import { APIContextInterface } from '../../../types/api';
+import { Separator } from 'Wrappers';
+import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { useStaking } from 'contexts/Staking';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { PAYEE_STATUS } from 'consts';
+import { useUi } from 'contexts/UI';
+import { useApi } from 'contexts/Api';
+import Stat from 'library/Stat';
+import { APIContextInterface } from 'types/api';
 
 export const Status = () => {
   const { isReady } = useApi() as APIContextInterface;

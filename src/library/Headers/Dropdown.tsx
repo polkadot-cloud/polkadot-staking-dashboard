@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useRef } from 'react';
-import { useOutsideAlerter } from '../Hooks';
+import { useOutsideAlerter } from 'library/Hooks';
 
 export const Dropdown = (props: any) => {
   const { toggleMenu, items } = props;

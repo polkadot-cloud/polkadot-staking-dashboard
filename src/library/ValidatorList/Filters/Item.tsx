@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import { useTheme } from 'styled-components';
-import defaultThemes from '../../../theme/default';
+import defaultThemes from 'theme/default';
 import { ItemWrapper } from './Wrapper';
 
 export const Item = (props: any) => {

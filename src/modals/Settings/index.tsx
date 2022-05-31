@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useUi } from 'contexts/UI';
+import { StatusButton } from 'library/StatusButton';
 import Wrapper from './Wrapper';
-import { useUi } from '../../contexts/UI';
-import { StatusButton } from '../../library/StatusButton';
 
 export const Settings = () => {
   const { services, toggleService } = useUi();

@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useApi } from 'contexts/Api';
+import { useValidators } from 'contexts/Validators';
+import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { ValidatorList } from 'library/ValidatorList';
+import { PageTitle } from 'library/PageTitle';
+import { PageRowWrapper } from 'Wrappers';
+import { APIContextInterface } from 'types/api';
 import { PageProps } from '../types';
-import { useApi } from '../../contexts/Api';
-import { useValidators } from '../../contexts/Validators';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { ValidatorList } from '../../library/ValidatorList';
-import { PageTitle } from '../../library/PageTitle';
-import { PageRowWrapper } from '../../Wrappers';
-import { APIContextInterface } from '../../types/api';
 
 export const Favourites = (props: PageProps) => {
   const { isReady } = useApi() as APIContextInterface;

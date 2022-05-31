@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { backgroundLabel } from '../../../theme';
+import { backgroundLabel } from 'theme';
 
 export const Wrapper = styled.div`
   background: ${backgroundLabel};

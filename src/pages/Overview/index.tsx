@@ -2,28 +2,28 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import moment from 'moment';
-import { StatBoxList } from '../../library/StatBoxList';
+import { StatBoxList } from 'library/StatBoxList';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
-} from '../../Wrappers';
-import { GraphWrapper } from '../../library/Graphs/Wrappers';
-import Payouts from './Payouts';
-import BalanceGraph from './BalanceGraph';
-import Announcements from './Announcements';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
-import { useSubscan } from '../../contexts/Subscan';
-import { SubscanButton } from '../../library/SubscanButton';
-import { PageTitle } from '../../library/PageTitle';
-import { planckToUnit } from '../../Utils';
-import { GRAPH_HEIGHT } from '../../consts';
+} from 'Wrappers';
+import { GraphWrapper } from 'library/Graphs/Wrappers';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useSubscan } from 'contexts/Subscan';
+import { SubscanButton } from 'library/SubscanButton';
+import { PageTitle } from 'library/PageTitle';
+import { planckToUnit } from 'Utils';
+import { GRAPH_HEIGHT } from 'consts';
+import { APIContextInterface } from 'types/api';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominators';
 import SupplyStakedStatBox from './Stats/SupplyStaked';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
-import { APIContextInterface } from '../../types/api';
+import Announcements from './Announcements';
+import BalanceGraph from './BalanceGraph';
+import Payouts from './Payouts';
 
 export const Overview = () => {
   const { network } = useApi() as APIContextInterface;

@@ -8,7 +8,7 @@ import {
   textSecondary,
   buttonSecondaryBackground,
   secondary as secondaryColor,
-} from '../../theme';
+} from 'theme';
 
 export const ButtonRow = styled.div`
   display: flex;

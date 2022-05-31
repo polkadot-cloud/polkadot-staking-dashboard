@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
-import { PagesConfig } from './types/index';
+import { PagesConfig } from 'types/index';
 
 export const clipAddress = (val: string) => {
   return `${val.substring(0, 6)}...${val.substring(

@@ -3,8 +3,8 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { useUi } from 'contexts/UI';
 import { Item } from './Wrappers';
-import { useUi } from '../../contexts/UI';
 
 export const SideMenuToggle = () => {
   const { setSideMenu, sideMenuOpen }: any = useUi();

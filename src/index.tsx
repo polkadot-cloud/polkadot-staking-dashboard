@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { createRoot } from 'react-dom/client';
-import './index.css';
+import 'index.css';
+import App from 'App';
 import reportWebVitals from './reportWebVitals';
-import App from './App';
 
 // workaround for supporting react 18 beta types:
 // https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/

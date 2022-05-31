@@ -2,20 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useLocation } from 'react-router-dom';
-import { Wrapper, HeadingWrapper, Item, LargeScreensOnly } from './Wrappers';
-import { useAssistant } from '../../contexts/Assistant';
-import { useConnect } from '../../contexts/Connect';
+import { useAssistant } from 'contexts/Assistant';
+import { useConnect } from 'contexts/Connect';
+import { useExtrinsics } from 'contexts/Extrinsics';
+import { useUi } from 'contexts/UI';
+import { useValidators } from 'contexts/Validators';
+import { AssistantContextInterface } from 'types/assistant';
+import { pageFromUri } from 'Utils';
 import { SideBar } from './SideBar';
-import { useExtrinsics } from '../../contexts/Extrinsics';
-import { useUi } from '../../contexts/UI';
 import { Spinner } from './Spinner';
-import { pageFromUri } from '../../Utils';
-import { useValidators } from '../../contexts/Validators';
+import { Wrapper, HeadingWrapper, Item, LargeScreensOnly } from './Wrappers';
 import { Toggle as SideBarToggle } from './SideBar/Toggle';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
-import { AssistantContextInterface } from '../../types/assistant';
 
 export const Headers = () => {
   const { pathname } = useLocation();

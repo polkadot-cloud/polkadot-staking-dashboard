@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { SectionWrapper } from '../../../library/Graphs/Wrappers';
-import { useApi } from '../../../contexts/Api';
-import { useBalances } from '../../../contexts/Balances';
-import { useConnect } from '../../../contexts/Connect';
-import { useUi } from '../../../contexts/UI';
-import { AccountSelect } from '../../../library/Form/AccountSelect';
+import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { useUi } from 'contexts/UI';
+import { AccountSelect } from 'library/Form/AccountSelect';
+import { planckToUnit } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Spacer } from '../Wrappers';
 import { MotionContainer } from './MotionContainer';
-import { planckToUnit } from '../../../Utils';
-import { APIContextInterface } from '../../../types/api';
 
 export const SetController = (props: any) => {
   const { section } = props;

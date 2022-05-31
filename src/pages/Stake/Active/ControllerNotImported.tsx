@@ -1,17 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  SectionWrapper,
-  SectionHeaderWrapper,
-} from '../../../library/Graphs/Wrappers';
-import { Button } from '../../../library/Button';
-import { useBalances } from '../../../contexts/Balances';
-import { useConnect } from '../../../contexts/Connect';
-import { useStaking } from '../../../contexts/Staking';
-import { PageRowWrapper } from '../../../Wrappers';
-import { useModal } from '../../../contexts/Modal';
-import { useUi } from '../../../contexts/UI';
+import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { Button } from 'library/Button';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { useStaking } from 'contexts/Staking';
+import { PageRowWrapper } from 'Wrappers';
+import { useModal } from 'contexts/Modal';
+import { useUi } from 'contexts/UI';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();

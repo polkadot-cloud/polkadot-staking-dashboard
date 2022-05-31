@@ -3,9 +3,9 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { useUi } from 'contexts/UI';
+import { useStaking } from 'contexts/Staking';
 import { Wrapper } from './Wrapper';
-import { useUi } from '../../contexts/UI';
-import { useStaking } from '../../contexts/Staking';
 
 export const StatusLabel = (props: any) => {
   const status = props.status ?? 'sync_or_setup';

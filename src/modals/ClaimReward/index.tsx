@@ -4,20 +4,18 @@
 import { useState, useEffect } from 'react';
 import { formatBalance } from '@polkadot/util';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStopCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { HeadingWrapper, FooterWrapper, Separator } from '../Wrappers';
+import { useApi } from 'contexts/Api';
+import { useModal } from 'contexts/Modal';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useConnect } from 'contexts/Connect';
+import { Warning } from 'library/Form/Warning';
+import { APIContextInterface } from 'types/api';
+import { usePools } from 'contexts/Pools';
 import { Wrapper } from './Wrapper';
-import { useBalances } from '../../contexts/Balances';
-import { useApi } from '../../contexts/Api';
-import { useModal } from '../../contexts/Modal';
-import { useStaking } from '../../contexts/Staking';
-import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
-import { useConnect } from '../../contexts/Connect';
-import { Warning } from '../../library/Form/Warning';
-import { APIContextInterface } from '../../types/api';
-import { usePools } from '../../contexts/Pools';
+import { HeadingWrapper, FooterWrapper, Separator } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { api, network } = useApi() as APIContextInterface;

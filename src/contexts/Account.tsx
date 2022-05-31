@@ -3,8 +3,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { useApi } from './Api';
-import { APIContextInterface } from '../types/api';
 
 // context type
 export interface AccountContextState {

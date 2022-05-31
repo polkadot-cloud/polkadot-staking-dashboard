@@ -10,9 +10,9 @@ import {
   faClock,
   faUserTag,
 } from '@fortawesome/free-solid-svg-icons';
+import { useUi } from 'contexts/UI';
 import { Wrapper } from './Wrapper';
 import { Item } from './Item';
-import { useUi } from '../../../contexts/UI';
 
 export const Filters = () => {
   const {

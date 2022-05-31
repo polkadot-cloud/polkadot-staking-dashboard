@@ -3,8 +3,8 @@
 
 import { useEffect, useRef } from 'react';
 import { useAnimation } from 'framer-motion';
+import { useModal } from 'contexts/Modal';
 import { ModalWrapper, ContentWrapper, HeightWrapper } from './Wrappers';
-import { useModal } from '../contexts/Modal';
 import { ConnectAccounts } from './ConnectAccounts';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { UpdateController } from './UpdateController';

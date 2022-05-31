@@ -4,10 +4,10 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useModal } from '../../contexts/Modal';
-import { useApi } from '../../contexts/Api';
+import { useModal } from 'contexts/Modal';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrappers';
-import { APIContextInterface } from '../../types/api';
 
 export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;

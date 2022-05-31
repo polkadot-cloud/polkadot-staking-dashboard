@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { planckBnToUnit } from '../../../Utils';
-import BondedGraph from '../../../library/Graphs/Bonded';
-import { useApi } from '../../../contexts/Api';
-import { useConnect } from '../../../contexts/Connect';
-import { useBalances } from '../../../contexts/Balances';
-import { useStaking } from '../../../contexts/Staking';
-import { Button, ButtonRow } from '../../../library/Button';
-import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
-import { useModal } from '../../../contexts/Modal';
-import { useUi } from '../../../contexts/UI';
-import { SectionHeaderWrapper } from '../../../library/Graphs/Wrappers';
-import { APIContextInterface } from '../../../types/api';
+import { planckBnToUnit } from 'Utils';
+import BondedGraph from 'library/Graphs/Bonded';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useBalances } from 'contexts/Balances';
+import { useStaking } from 'contexts/Staking';
+import { Button, ButtonRow } from 'library/Button';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { useModal } from 'contexts/Modal';
+import { useUi } from 'contexts/UI';
+import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { APIContextInterface } from 'types/api';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;

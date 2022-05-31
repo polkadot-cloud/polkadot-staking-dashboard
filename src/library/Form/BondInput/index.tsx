@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { isNumeric } from 'Utils';
+import { Button } from 'library/Button';
+import { APIContextInterface } from 'types/api';
 import { InputWrapper, RowWrapper } from './Wrappers';
-import { useApi } from '../../../contexts/Api';
-import { useConnect } from '../../../contexts/Connect';
-import { isNumeric } from '../../../Utils';
-import { Button } from '../../Button';
-import { APIContextInterface } from '../../../types/api';
 
 export const BondInput = (props: any) => {
   // functional props

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundPrimary } from '../../theme';
+import { backgroundPrimary } from 'theme';
 
 const StyledSpinner = styled.div`
   font-size: 10px;

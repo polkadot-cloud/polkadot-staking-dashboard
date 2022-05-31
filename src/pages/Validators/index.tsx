@@ -1,18 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageProps } from '../types';
-import { StatBoxList } from '../../library/StatBoxList';
-import { useApi } from '../../contexts/Api';
-import { useValidators } from '../../contexts/Validators';
-import { SectionWrapper } from '../../library/Graphs/Wrappers';
-import { ValidatorList } from '../../library/ValidatorList';
-import { PageTitle } from '../../library/PageTitle';
-import { PageRowWrapper } from '../../Wrappers';
+import { StatBoxList } from 'library/StatBoxList';
+import { useApi } from 'contexts/Api';
+import { useValidators } from 'contexts/Validators';
+import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { ValidatorList } from 'library/ValidatorList';
+import { PageTitle } from 'library/PageTitle';
+import { PageRowWrapper } from 'Wrappers';
+import { APIContextInterface } from 'types/api';
 import ActiveEraStatBox from '../Stake/Active/Stats/ActiveEra';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
-import { APIContextInterface } from '../../types/api';
+import { PageProps } from '../types';
 
 export const Validators = (props: PageProps) => {
   const { page } = props;

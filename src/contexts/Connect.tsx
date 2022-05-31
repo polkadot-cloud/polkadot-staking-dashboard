@@ -8,11 +8,11 @@ import {
   getWallets,
   Wallet,
 } from '@talisman-connect/wallets';
-import { useApi } from './Api';
-import { localStorageOrDefault, setStateWithRef } from '../Utils';
+import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { DAPP_NAME } from 'consts';
+import { APIContextInterface } from 'types/api';
 import { useModal } from './Modal';
-import { DAPP_NAME } from '../consts';
-import { APIContextInterface } from '../types/api';
+import { useApi } from './Api';
 
 export interface ConnectContextState {
   disconnectFromAccount: () => void;

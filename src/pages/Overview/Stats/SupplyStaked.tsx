@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useStaking } from '../../../contexts/Staking';
-import { useApi } from '../../../contexts/Api';
-import { useNetworkMetrics } from '../../../contexts/Network';
-import { Pie } from '../../../library/StatBoxList/Pie';
-import { APIContextInterface } from '../../../types/api';
+import { useStaking } from 'contexts/Staking';
+import { useApi } from 'contexts/Api';
+import { useNetworkMetrics } from 'contexts/Network';
+import { Pie } from 'library/StatBoxList/Pie';
+import { APIContextInterface } from 'types/api';
 
 export const SupplyStakedStatBox = () => {
   const { network } = useApi() as APIContextInterface;

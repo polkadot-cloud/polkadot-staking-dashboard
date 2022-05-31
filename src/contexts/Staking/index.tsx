@@ -5,13 +5,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import BN from 'bn.js';
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
+import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
-import { rmCommas, localStorageOrDefault, setStateWithRef } from '../../Utils';
 import * as defaults from './defaults';
-import { APIContextInterface } from '../../types/api';
 
 const worker = new Worker();
 

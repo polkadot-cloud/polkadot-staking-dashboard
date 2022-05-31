@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { Providers } from './Providers';
-import { DEFAULT_NETWORK } from './consts';
-import { ThemesProvider } from './contexts/Themes';
+import { DEFAULT_NETWORK } from 'consts';
+import { Providers } from 'Providers';
+import { ThemesProvider } from 'contexts/Themes';
 
 const App: React.FC = () => {
   let network = localStorage.getItem('network');

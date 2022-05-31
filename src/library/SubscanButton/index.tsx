@@ -4,9 +4,9 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
-import { useUi } from '../../contexts/UI';
-import { useTheme } from '../../contexts/Themes';
-import { defaultThemes } from '../../theme/default';
+import { useUi } from 'contexts/UI';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
 
 const Wrapper = styled.div<any>`
   position: absolute;

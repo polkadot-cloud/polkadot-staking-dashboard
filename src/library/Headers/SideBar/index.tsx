@@ -3,10 +3,10 @@
 
 import throttle from 'lodash.throttle';
 import React, { useRef, useEffect } from 'react';
-import { SHOW_SIDE_BAR_WIDTH_THRESHOLD } from '../../../consts';
+import { useOutsideAlerter } from 'library/Hooks';
+import { SHOW_SIDE_BAR_WIDTH_THRESHOLD } from 'consts';
+import { useSideBar } from 'contexts/SideBar';
 import { Wrapper, ContentWrapper } from './Wrappers';
-import { useSideBar } from '../../../contexts/SideBar';
-import { useOutsideAlerter } from '../../Hooks';
 
 export const SideBar = ({ children }: { children: React.ReactNode }) => {
   const { closeSideBar, open } = useSideBar();

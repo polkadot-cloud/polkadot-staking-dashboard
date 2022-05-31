@@ -6,31 +6,26 @@ import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
 import throttle from 'lodash.throttle';
-import { Wrapper, LogoWrapper } from './Wrapper';
-import Heading from './Heading';
+import { useConnect } from 'contexts/Connect';
+import { useUi } from 'contexts/UI';
+import { useTheme } from 'contexts/Themes';
+import { useModal } from 'contexts/Modal';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
+import { useStaking } from 'contexts/Staking';
+import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
+import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
+import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
+import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
+import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
+import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
+import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import { useOutsideAlerter } from 'library/Hooks';
+import { APIContextInterface } from 'types/api';
+import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import Item from './Item';
-import { PAGE_CATEGORIES, PAGES_CONFIG } from '../../config/pages';
-import { useConnect } from '../../contexts/Connect';
-import { ReactComponent as PolkadotLogoSVG } from '../../img/polkadot_logo.svg';
-import { ReactComponent as PolkadotIconSVG } from '../../img/polkadot_icon.svg';
-import { ReactComponent as CogOutlineSVG } from '../../img/cog-outline.svg';
-import { ReactComponent as LogoGithubSVG } from '../../img/logo-github.svg';
-import { ReactComponent as MoonOutlineSVG } from '../../img/moon-outline.svg';
-import { ReactComponent as SunnyOutlineSVG } from '../../img/sunny-outline.svg';
-
-import {
-  URI_PREFIX,
-  POLKADOT_URL,
-  SIDE_MENU_STICKY_THRESHOLD,
-} from '../../consts';
-import { useUi } from '../../contexts/UI';
-import { useOutsideAlerter } from '../Hooks';
-import { useTheme } from '../../contexts/Themes';
-import { useModal } from '../../contexts/Modal';
-import { useApi } from '../../contexts/Api';
-import { useBalances } from '../../contexts/Balances';
-import { useStaking } from '../../contexts/Staking';
-import { APIContextInterface } from '../../types/api';
+import Heading from './Heading';
+import { Wrapper, LogoWrapper } from './Wrapper';
 
 export const SideMenu = () => {
   const { network } = useApi() as APIContextInterface;

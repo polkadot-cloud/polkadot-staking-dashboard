@@ -3,18 +3,13 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
+import { sleep, removePercentage, rmCommas, setStateWithRef } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
-import {
-  sleep,
-  removePercentage,
-  rmCommas,
-  setStateWithRef,
-} from '../../Utils';
 import * as defaults from './defaults';
-import { APIContextInterface } from '../../types/api';
 import { usePools } from '../Pools';
 
 // context type

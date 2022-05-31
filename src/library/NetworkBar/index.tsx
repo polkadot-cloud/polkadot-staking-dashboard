@@ -2,6 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useRef } from 'react';
+import { useApi } from 'contexts/Api';
+import { useUi } from 'contexts/UI';
+import { usePrices } from 'library/Hooks/usePrices';
+import { CONNECTION_SYMBOL_COLORS, NODE_ENDPOINTS } from 'consts';
+import { APIContextInterface, ConnectionStatus } from 'types/api';
+import { useOutsideAlerter } from 'library/Hooks';
 import {
   Wrapper,
   Summary,
@@ -9,14 +15,8 @@ import {
   NetworkInfo,
   Separator,
 } from './Wrappers';
-import { useApi } from '../../contexts/Api';
-import { useUi } from '../../contexts/UI';
 import { BlockNumber } from './BlockNumber';
 import { Status } from './Status';
-import { usePrices } from '../Hooks/usePrices';
-import { useOutsideAlerter } from '../Hooks';
-import { CONNECTION_SYMBOL_COLORS, NODE_ENDPOINTS } from '../../consts';
-import { APIContextInterface, ConnectionStatus } from '../../types/api';
 
 export const NetworkBar = () => {
   const { services } = useUi();

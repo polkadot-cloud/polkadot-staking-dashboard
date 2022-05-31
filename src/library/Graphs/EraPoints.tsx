@@ -12,9 +12,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
 import { getGradient } from './Utils';
-import { defaultThemes } from '../../theme/default';
-import { useTheme } from '../../contexts/Themes';
 
 ChartJS.register(
   CategoryScale,

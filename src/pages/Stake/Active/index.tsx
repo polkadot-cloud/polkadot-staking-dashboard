@@ -5,27 +5,24 @@ import {
   PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
-} from '../../../Wrappers';
-import {
-  SectionWrapper,
-  SectionHeaderWrapper,
-} from '../../../library/Graphs/Wrappers';
-import { StatBoxList } from '../../../library/StatBoxList';
-import { useStaking } from '../../../contexts/Staking';
-import { useBalances } from '../../../contexts/Balances';
-import { useConnect } from '../../../contexts/Connect';
+} from 'Wrappers';
+import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { StatBoxList } from 'library/StatBoxList';
+import { useStaking } from 'contexts/Staking';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { Button } from 'library/Button';
+import { PageTitle } from 'library/PageTitle';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { useModal } from 'contexts/Modal';
+import { useUi } from 'contexts/UI';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
-import { Button } from '../../../library/Button';
 import { GenerateNominations } from '../GenerateNominations';
-import { PageTitle } from '../../../library/PageTitle';
-import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
-import { useModal } from '../../../contexts/Modal';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import ActiveEraStatBox from './Stats/ActiveEra';
 import { ControllerNotImported } from './ControllerNotImported';
-import { useUi } from '../../../contexts/UI';
 import { Status } from './Status';
 
 export const Active = ({ title }: any) => {

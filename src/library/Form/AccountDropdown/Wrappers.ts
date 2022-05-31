@@ -7,7 +7,7 @@ import {
   textPrimary,
   backgroundDropdown,
   textSecondary,
-} from '../../../theme';
+} from 'theme';
 
 export const StyledDownshift = styled.div`
   box-sizing: border-box;

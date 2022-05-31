@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useStaking } from '../../../contexts/Staking';
-import { Pie } from '../../../library/StatBoxList/Pie';
+import { useStaking } from 'contexts/Staking';
+import { Pie } from 'library/StatBoxList/Pie';
 
 const TotalValidatorsStatBox = () => {
   const { staking }: any = useStaking();

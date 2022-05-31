@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Item } from '../Wrappers';
+import { ReactComponent as WalletSVG } from 'img/wallet.svg';
+import { useSideBar } from 'contexts/SideBar';
+import { useConnect } from 'contexts/Connect';
 import { ToggleWrapper } from './Wrappers';
-import { ReactComponent as WalletSVG } from '../../../img/wallet.svg';
-import { useSideBar } from '../../../contexts/SideBar';
-import { useConnect } from '../../../contexts/Connect';
+import { Item } from '../Wrappers';
 
 export const Toggle = () => {
   const { activeAccount } = useConnect();

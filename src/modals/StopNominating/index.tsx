@@ -6,21 +6,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useBalances } from 'contexts/Balances';
+import { useApi } from 'contexts/Api';
+import { useModal } from 'contexts/Modal';
+import { useStaking } from 'contexts/Staking';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useConnect } from 'contexts/Connect';
+import { Warning } from 'library/Form/Warning';
+import { APIContextInterface } from 'types/api';
+import { Wrapper } from './Wrapper';
 import {
   HeadingWrapper,
   FooterWrapper,
   Separator,
   NotesWrapper,
 } from '../Wrappers';
-import { Wrapper } from './Wrapper';
-import { useBalances } from '../../contexts/Balances';
-import { useApi } from '../../contexts/Api';
-import { useModal } from '../../contexts/Modal';
-import { useStaking } from '../../contexts/Staking';
-import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
-import { useConnect } from '../../contexts/Connect';
-import { Warning } from '../../library/Form/Warning';
-import { APIContextInterface } from '../../types/api';
 
 export const StopNominating = () => {
   const { api } = useApi() as APIContextInterface;
