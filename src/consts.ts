@@ -4,8 +4,12 @@
 /*
  * SVGs
  */
-import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_icon.svg';
-import { ReactComponent as WestendLogoSVG } from 'img/westend_icon.svg';
+import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
+import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
+import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
+import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
+import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
+
 import { NodeEndpoints } from 'types';
 
 /*
@@ -28,13 +32,31 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
     unit: 'DOT',
     units: 10,
     ss58: 0,
-    icon: PolkadotLogoSVG,
+    icon: PolkadotIconSVG,
+    logo: PolkadotLogoSVG,
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
     },
     features: {
       pools: false,
+    },
+  },
+  kusama: {
+    name: 'Kusama',
+    endpoint: 'wss://kusama-rpc.polkadot.io',
+    subscanEndpoint: 'https://kusama.api.subscan.io',
+    unit: 'KSM',
+    units: 12,
+    ss58: 2,
+    icon: KusamaIconSVG,
+    logo: KusamaLogoSVG,
+    api: {
+      unit: 'KSM',
+      priceTicker: 'KSMUSDT',
+    },
+    features: {
+      pools: true,
     },
   },
   westend: {
@@ -44,7 +66,8 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
     unit: 'WND',
     units: 12,
     ss58: 42,
-    icon: WestendLogoSVG,
+    icon: WestendIconSVG,
+    logo: PolkadotLogoSVG,
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',

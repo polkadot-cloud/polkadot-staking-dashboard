@@ -12,7 +12,7 @@ export const Wrapper = styled(motion.div)<any>`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   color: #444;
   bottom: 0px;
   left: 0px;
@@ -49,7 +49,7 @@ export const Summary = styled.div`
 
   p {
     margin: 0 0.25rem;
-    font-size: 0.75rem;
+    font-size: 0.82rem;
   }
   .stat {
     margin: 0 0.25rem;
@@ -118,13 +118,11 @@ export const NetworkInfo = styled(motion.div)`
     align-content: flex-start;
     align-items: flex-start;
 
-    > h3 {
+    h2 {
       color: #eee;
-      font-size: 0.85rem;
-      margin: 1.5rem 0 0.75rem 0;
-      padding: 0.6rem 0.3rem 0rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      width: 100%;
+      font-size: 1.2rem;
+      line-height: 2rem;
+      padding: 0 0.25rem;
     }
 
     > div,
@@ -141,10 +139,9 @@ export const NetworkInfo = styled(motion.div)`
         margin-right: 0;
       }
     }
-    p {
-      margin: 0;
-      font-size: 0.85rem;
-      font-variation-settings: 'wght' 500;
+    h3 {
+      margin: 0.25rem 0;
+      font-variation-settings: 'wght' 575;
       color: #f1f1f1;
       padding: 0.2rem 0;
 

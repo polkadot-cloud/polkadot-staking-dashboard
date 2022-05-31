@@ -39,7 +39,7 @@ export const NetworkBar = () => {
       height: '2.5rem',
     },
     maximised: {
-      height: '150px',
+      height: '165px',
     },
   };
 
@@ -113,7 +113,7 @@ export const NetworkBar = () => {
 
       <NetworkInfo>
         <div className="row">
-          <h3> Choose Network:</h3>
+          <h2>Switch Network</h2>
         </div>
         <div className="row">
           {Object.entries(NODE_ENDPOINTS).map(
@@ -128,7 +128,7 @@ export const NetworkBar = () => {
                   }
                 }}
               >
-                <p>{item.name}</p>
+                <h3>{item.name}</h3>
               </button>
             )
           )}
