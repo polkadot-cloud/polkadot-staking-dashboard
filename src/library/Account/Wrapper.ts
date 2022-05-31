@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textPrimary, textSecondary, borderSecondary } from '../../theme';
+import { textPrimary, textSecondary, borderSecondary } from 'theme';
 
 export const Wrapper = styled(motion.button)<any>`
   border-radius: 1rem;

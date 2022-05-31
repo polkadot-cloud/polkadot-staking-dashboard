@@ -3,8 +3,8 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
-import { useValidators } from '../../../contexts/Validators';
-import { useNotifications } from '../../../contexts/Notifications';
+import { useValidators } from 'contexts/Validators';
+import { useNotifications } from 'contexts/Notifications';
 
 export const Favourite = (props: any) => {
   const { addNotification } = useNotifications();

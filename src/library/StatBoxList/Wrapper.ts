@@ -9,7 +9,7 @@ import {
   textInvert,
   backgroundSecondary,
   tooltipBackground,
-} from '../../theme';
+} from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;

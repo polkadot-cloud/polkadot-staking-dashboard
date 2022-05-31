@@ -3,11 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import {
-  textSecondary,
-  modalOverlayBackground,
-  modalBackground,
-} from '../theme';
+import { textSecondary, modalOverlayBackground, modalBackground } from 'theme';
 
 // Blurred background modal wrapper
 export const ModalWrapper = styled(motion.div)`

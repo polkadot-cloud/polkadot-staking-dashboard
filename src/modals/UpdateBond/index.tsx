@@ -4,8 +4,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { useModal } from 'contexts/Modal';
 import { HeadingWrapper } from '../Wrappers';
-import { useModal } from '../../contexts/Modal';
 import { Wrapper, SectionsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { StakeForms } from './StakeForms';

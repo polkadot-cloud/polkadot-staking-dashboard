@@ -12,12 +12,12 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { planckToUnit } from '../../Utils';
-import { useApi } from '../../contexts/Api';
+import { planckToUnit } from 'Utils';
+import { useApi } from 'contexts/Api';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
+import { APIContextInterface } from 'types/api';
 import { getGradient } from './Utils';
-import { defaultThemes } from '../../theme/default';
-import { useTheme } from '../../contexts/Themes';
-import { APIContextInterface } from '../../types/api';
 
 ChartJS.register(
   CategoryScale,

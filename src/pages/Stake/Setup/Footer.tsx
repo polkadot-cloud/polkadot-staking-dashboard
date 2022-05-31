@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { Button } from 'library/Button';
+import { useConnect } from 'contexts/Connect';
+import { useUi } from 'contexts/UI';
 import { FooterWrapper } from '../Wrappers';
-import { Button } from '../../../library/Button';
-import { useConnect } from '../../../contexts/Connect';
-import { useUi } from '../../../contexts/UI';
 
 export const Footer = (props: any) => {
   const { activeAccount } = useConnect();

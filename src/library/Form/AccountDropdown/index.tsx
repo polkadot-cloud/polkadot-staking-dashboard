@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useCombobox } from 'downshift';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
+import { convertRemToPixels } from 'Utils';
+import Identicon from 'library/Identicon';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
-import Identicon from '../../Identicon';
-import { useTheme } from '../../../contexts/Themes';
-import { defaultThemes } from '../../../theme/default';
-import { convertRemToPixels } from '../../../Utils';
 
 export const AccountDropdown = (props: any) => {
   const { items, onChange, placeholder, value, current, height }: any = props;

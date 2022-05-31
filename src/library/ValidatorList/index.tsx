@@ -5,17 +5,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { List, Header, Wrapper as ListWrapper, Pagination } from '../List';
-import { Validator } from '../Validator';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
-import { StakingContext } from '../../contexts/Staking';
-import { useValidators } from '../../contexts/Validators';
-import { useUi } from '../../contexts/UI';
-import { useNetworkMetrics } from '../../contexts/Network';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { StakingContext } from 'contexts/Staking';
+import { useValidators } from 'contexts/Validators';
+import { useUi } from 'contexts/UI';
+import { useNetworkMetrics } from 'contexts/Network';
+import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
+import { APIContextInterface } from 'types/api';
+import { Validator } from 'library/Validator';
+import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { Filters } from './Filters';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
-import { APIContextInterface } from '../../types/api';
 
 export const ValidatorListInner = (props: any) => {
   const { isReady } = useApi() as APIContextInterface;
@@ -29,6 +29,7 @@ export const ValidatorListInner = (props: any) => {
     validatorOrder,
     applyValidatorFilters,
     applyValidatorOrder,
+    isSyncing,
   }: any = useUi();
 
   const {
@@ -77,7 +78,7 @@ export const ValidatorListInner = (props: any) => {
   // render batch
   const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
 
-  // refetch list when validator list changes
+  // reset list when validator list changes
   useEffect(() => {
     if (props.validators !== validatorsDefault) {
       setFetched(false);
@@ -105,7 +106,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [validatorFilters, validatorOrder]);
+  }, [validatorFilters, validatorOrder, isSyncing]);
 
   // handle validator list bootstrapping
   const setupValidatorList = () => {

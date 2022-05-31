@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NodeEndpoints } from './types';
 /*
  * SVGs
  */
-import { ReactComponent as PolkadotLogoSVG } from './img/polkadot_icon.svg';
-import { ReactComponent as WestendLogoSVG } from './img/westend_icon.svg';
+import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_icon.svg';
+import { ReactComponent as WestendLogoSVG } from 'img/westend_icon.svg';
+import { NodeEndpoints } from 'types';
 
 /*
  * Global Constants

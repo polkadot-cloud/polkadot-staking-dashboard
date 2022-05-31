@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
+import { APIContextInterface } from 'types/api';
 import { useApi } from './Api';
 import { useConnect } from './Connect';
 import { useUi } from './UI';
-import { API_ENDPOINTS, API_SUBSCAN_KEY } from '../constants';
-import { APIContextInterface } from '../types/api';
 
 export interface SubscanContextState {
   fetchEraPoints: (v: string, e: number) => void;

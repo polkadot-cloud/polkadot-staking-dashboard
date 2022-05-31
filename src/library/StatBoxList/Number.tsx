@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { StatBox } from './Item';
-import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Number = (props: any) => {
   const { label, value, unit, assistant } = props;

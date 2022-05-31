@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect } from 'react';
+import { PageTitle } from 'library/PageTitle';
+import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
-import { PageTitle } from '../../library/PageTitle';
-import { PageRowWrapper } from '../../Wrappers';
 
 const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 

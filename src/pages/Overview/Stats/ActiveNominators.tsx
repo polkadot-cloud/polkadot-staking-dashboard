@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useStaking } from '../../../contexts/Staking';
-import { useApi } from '../../../contexts/Api';
-import { Pie } from '../../../library/StatBoxList/Pie';
-import { APIContextInterface } from '../../../types/api';
+import { useStaking } from 'contexts/Staking';
+import { useApi } from 'contexts/Api';
+import { Pie } from 'library/StatBoxList/Pie';
+import { APIContextInterface } from 'types/api';
 
 export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi() as APIContextInterface;

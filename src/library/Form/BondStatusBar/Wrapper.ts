@@ -1,10 +1,5 @@
 import styled from 'styled-components';
-import {
-  backgroundLabel,
-  textSecondary,
-  primary,
-  secondary,
-} from '../../../theme';
+import { backgroundLabel, textSecondary, primary, secondary } from 'theme';
 
 export const Wrapper = styled.div<any>`
   width: 100%;

@@ -4,13 +4,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, SectionsWrapper } from './Wrappers';
-import { useBalances } from '../../contexts/Balances';
-import { useConnect } from '../../contexts/Connect';
 import { Overview } from './Overview';
 import { Forms } from './Forms';
-import { useModal } from '../../contexts/Modal';
 
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();

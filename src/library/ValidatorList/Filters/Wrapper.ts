@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary } from '../../../theme';
+import { textSecondary, borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
@@ -52,6 +52,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.div<any>`
+  border: 1px solid ${borderPrimary};
   width: 110px;
   height: 80px;
   border-radius: 0.7rem;
@@ -61,7 +62,6 @@ export const ItemWrapper = styled.div<any>`
   flex-flow: column nowrap;
   margin-right: 1rem;
   position: relative;
-  border: 1px solid ${borderPrimary};
 
   &:last-child {
     margin-right: 0;

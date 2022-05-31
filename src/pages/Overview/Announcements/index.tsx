@@ -6,18 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import { usePools } from 'contexts/Pools';
+import { useStaking } from 'contexts/Staking';
+import { useApi } from 'contexts/Api';
+import { useUi } from 'contexts/UI';
+import { humanNumber, planckToUnit } from 'Utils';
+import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { APIContextInterface } from 'types/api';
 import { Wrapper, Item } from './Wrappers';
-import { useStaking } from '../../../contexts/Staking';
-import { useApi } from '../../../contexts/Api';
-import { useUi } from '../../../contexts/UI';
-import { humanNumber, planckToUnit } from '../../../Utils';
-import {
-  SectionWrapper,
-  SectionHeaderWrapper,
-} from '../../../library/Graphs/Wrappers';
-import { Announcement as AnnouncementLoader } from '../../../library/Loaders/Announcement';
-import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
-import { APIContextInterface } from '../../../types/api';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();

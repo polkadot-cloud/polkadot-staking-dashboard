@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
-import { StatPie } from '../Graphs/StatBoxPie';
-import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Pie = (props: any) => {
   const { label, stat, graph, tooltip, assistant } = props;

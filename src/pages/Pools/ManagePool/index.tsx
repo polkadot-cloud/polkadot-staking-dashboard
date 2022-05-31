@@ -3,15 +3,12 @@
 
 import { usePools } from 'contexts/Pools';
 import { useModal } from 'contexts/Modal';
-import { PageRowWrapper } from '../../../Wrappers';
-import {
-  SectionWrapper,
-  SectionHeaderWrapper,
-} from '../../../library/Graphs/Wrappers';
-import { OpenAssistantIcon } from '../../../library/OpenAssistantIcon';
+import { PageRowWrapper } from 'Wrappers';
+import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { Button } from 'library/Button';
 import { GenerateNominations } from '../../Stake/GenerateNominations';
 import { PoolNominations } from '../PoolNominations';
-import { Button } from '../../../library/Button';
 
 export const ManagePool = () => {
   const { isNominator, setTargets, targets } = usePools();

@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { useCombobox } from 'downshift';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
-import { useTheme } from '../../../contexts/Themes';
-import { defaultThemes } from '../../../theme/default';
 
 export const Dropdown = (props: any) => {
   const { items, onChange, label, placeholder, value, current }: any = props;

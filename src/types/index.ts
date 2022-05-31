@@ -3,7 +3,7 @@
 
 import React, { FunctionComponent, SVGProps } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { PageProps } from '../pages/types';
+import { PageProps } from 'pages/types';
 
 export type Fn = () => void;
 

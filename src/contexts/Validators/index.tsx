@@ -3,13 +3,13 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
+import { sleep, removePercentage, rmCommas, setStateWithRef } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
-import { sleep, removePercentage, rmCommas } from '../../Utils';
 import * as defaults from './defaults';
-import { APIContextInterface } from '../../types/api';
 import { usePools } from '../Pools';
 
 // context type
@@ -75,20 +75,12 @@ export const ValidatorsProvider = ({
   );
 
   // stores the meta data batches for validator lists
-  const [validatorMetaBatches, _setValidatorMetaBatch]: any = useState({});
+  const [validatorMetaBatches, setValidatorMetaBatch]: any = useState({});
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
-  const setValidatorMetaBatch = (val: any) => {
-    validatorMetaBatchesRef.current = val;
-    _setValidatorMetaBatch(val);
-  };
 
   // stores the meta batch subscriptions for validator lists
-  const [validatorSubs, _setValidatorSubs]: any = useState({});
+  const [validatorSubs, setValidatorSubs]: any = useState({});
   const validatorSubsRef = useRef(validatorSubs);
-  const setValidatorSubs = (val: any) => {
-    validatorSubsRef.current = val;
-    _setValidatorSubs(val);
-  };
 
   // get favourites from local storage
   const getFavourites = () => {
@@ -356,7 +348,11 @@ export const ValidatorsProvider = ({
     const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
-    setValidatorMetaBatch({ ...batchesUpdated });
+    setStateWithRef(
+      batchesUpdated,
+      setValidatorMetaBatch,
+      validatorMetaBatchesRef
+    );
 
     const subscribeToIdentities = async (addr: any) => {
       const unsub = await api.query.identity.identityOf.multi(
@@ -370,7 +366,11 @@ export const ValidatorsProvider = ({
             validatorMetaBatchesRef.current
           );
           _batchesUpdated[key].identities = identities;
-          setValidatorMetaBatch({ ..._batchesUpdated });
+          setStateWithRef(
+            _batchesUpdated,
+            setValidatorMetaBatch,
+            validatorMetaBatchesRef
+          );
         }
       );
       return unsub;
@@ -413,7 +413,11 @@ export const ValidatorsProvider = ({
             validatorMetaBatchesRef.current
           );
           _batchesUpdated[key].supers = supers;
-          setValidatorMetaBatch({ ..._batchesUpdated });
+          setStateWithRef(
+            _batchesUpdated,
+            setValidatorMetaBatch,
+            validatorMetaBatchesRef
+          );
         }
       );
       return unsub;
@@ -489,7 +493,12 @@ export const ValidatorsProvider = ({
         // commit update
         const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
         _batchesUpdated[key].stake = stake;
-        setValidatorMetaBatch({ ..._batchesUpdated });
+
+        setStateWithRef(
+          _batchesUpdated,
+          setValidatorMetaBatch,
+          validatorMetaBatchesRef
+        );
       }
     );
 
@@ -505,7 +514,7 @@ export const ValidatorsProvider = ({
 
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
-    setValidatorSubs(_unsubs);
+    setStateWithRef(_unsubs, setValidatorSubs, validatorSubsRef);
   };
 
   const removeValidatorMetaBatch = (key: string) => {

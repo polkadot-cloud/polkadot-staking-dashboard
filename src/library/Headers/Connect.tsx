@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useConnect } from 'contexts/Connect';
 import { HeadingWrapper, Item } from './Wrappers';
-import { useConnect } from '../../contexts/Connect';
 
 export const Connect = () => {
   const { activeAccount, initialise }: any = useConnect();

@@ -1,19 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useApi } from 'contexts/Api';
+import { useValidators } from 'contexts/Validators';
+import { ValidatorList } from 'library/ValidatorList';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { Button } from 'library/Button';
+import { useModal } from 'contexts/Modal';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { useUi } from 'contexts/UI';
+import { useStaking } from 'contexts/Staking';
+import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { APIContextInterface } from 'types/api';
 import { Wrapper } from './Wrapper';
-import { useApi } from '../../../../contexts/Api';
-import { useValidators } from '../../../../contexts/Validators';
-import { ValidatorList } from '../../../../library/ValidatorList';
-import { OpenAssistantIcon } from '../../../../library/OpenAssistantIcon';
-import { Button } from '../../../../library/Button';
-import { useModal } from '../../../../contexts/Modal';
-import { useBalances } from '../../../../contexts/Balances';
-import { useConnect } from '../../../../contexts/Connect';
-import { useUi } from '../../../../contexts/UI';
-import { useStaking } from '../../../../contexts/Staking';
-import { SectionHeaderWrapper } from '../../../../library/Graphs/Wrappers';
-import { APIContextInterface } from '../../../../types/api';
 
 export const Nominations = () => {
   const { openModalWith } = useModal();

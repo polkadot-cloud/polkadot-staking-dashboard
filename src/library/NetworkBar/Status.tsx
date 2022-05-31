@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
-import { useApi } from '../../contexts/Api';
-import { ConnectionStatus, APIContextInterface } from '../../types/api';
+import { useApi } from 'contexts/Api';
+import { ConnectionStatus, APIContextInterface } from 'types/api';
 
 export const Status = () => {
   const { status } = useApi() as APIContextInterface;

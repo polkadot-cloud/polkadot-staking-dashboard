@@ -4,10 +4,10 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useConnect } from 'contexts/Connect';
+import Identicon from 'library/Identicon';
+import { useModal } from 'contexts/Modal';
 import { Separator, ContentWrapper, PaddingWrapper } from './Wrappers';
-import { useConnect } from '../../contexts/Connect';
-import Identicon from '../../library/Identicon';
-import { useModal } from '../../contexts/Modal';
 
 export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;

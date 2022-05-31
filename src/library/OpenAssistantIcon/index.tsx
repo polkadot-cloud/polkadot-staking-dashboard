@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useAssistant } from 'contexts/Assistant';
+import { ReactComponent as IconSVG } from 'img/assistant.svg';
+import { AssistantContextInterface } from 'types/assistant';
 import { Wrapper } from './Wrapper';
-import { useAssistant } from '../../contexts/Assistant';
-import { ReactComponent as IconSVG } from '../../img/assistant.svg';
-import { AssistantContextInterface } from '../../types/assistant';
 
 export const OpenAssistantIcon = (props: any) => {
   const { goToDefinition } = useAssistant() as AssistantContextInterface;

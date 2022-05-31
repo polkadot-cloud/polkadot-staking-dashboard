@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { primary, backgroundPrimary, textSecondary } from '../../theme';
+import { primary, backgroundPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.ul`
   position: fixed;

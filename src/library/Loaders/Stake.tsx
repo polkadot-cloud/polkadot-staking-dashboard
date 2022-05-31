@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import ContentLoader from 'react-content-loader';
-import { useTheme } from '../../contexts/Themes';
-import { defaultThemes } from '../../theme/default';
-import { PageRowWrapper } from '../../Wrappers';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
+import { PageRowWrapper } from 'Wrappers';
 
 export const Stake = () => {
   const { mode } = useTheme();

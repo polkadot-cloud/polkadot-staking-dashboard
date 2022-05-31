@@ -3,15 +3,15 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
+import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
 import { useValidators } from './Validators';
 import { useBalances } from './Balances';
 import { useApi } from './Api';
-import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from '../constants';
-import { localStorageOrDefault } from '../Utils';
-import { APIContextInterface } from '../types/api';
 
 export interface UIContextState {
   setSideMenu: (v: number) => void;
@@ -21,6 +21,7 @@ export interface UIContextState {
   applyValidatorOrder: (l: any, o: string) => any;
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
+  resetValidatorFilters: () => void;
   toggleService: (k: string) => void;
   getSetupProgress: (a: string) => any;
   getSetupProgressPercent: (a: string) => any;
@@ -47,6 +48,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   applyValidatorOrder: (l: any, o: string) => {},
   applyValidatorFilters: (l: any, k: string, f?: any) => {},
   toggleFilterValidators: (v: string, l: any) => {},
+  resetValidatorFilters: () => {},
   toggleService: (k: string) => {},
   getSetupProgress: (a: string) => {},
   getSetupProgressPercent: (a: string) => {},
@@ -97,8 +99,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
   const setUserSideMenuMinimised = (v: number) => {
     localStorage.setItem('side_menu_minimised', String(v));
-    userSideMenuMinimisedRef.current = v;
-    _setUserSideMenuMinimised(v);
+    setStateWithRef(v, _setUserSideMenuMinimised, userSideMenuMinimisedRef);
   };
 
   // automatic side menu minimised
@@ -115,12 +116,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [onSetup, setOnSetup] = useState(0);
 
   // services
-  const [services, _setServices] = useState(servicesLocal);
+  const [services, setServices] = useState(servicesLocal);
   const servicesRef = useRef(services);
-  const setServices = (v: any) => {
-    servicesRef.current = v;
-    _setServices(v);
-  };
 
   // validator filtering
   const [validatorFilters, setValidatorFilters]: any = useState([]);
@@ -250,6 +247,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       list = filterInactive(list);
     }
     return list;
+  };
+
+  const resetValidatorFilters = () => {
+    setValidatorFilters([]);
+    setValidatorOrder('default');
   };
 
   const filterMissingIdentity = (list: any, batchKey: string) => {
@@ -407,7 +409,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getSetupProgressPercent = (address: string) => {
-    const setupProgress = getSetupProgress(activeAccount);
+    const setupProgress = getSetupProgress(address);
     const p = 25;
     let progress = 0;
     if (setupProgress.bond > 0) progress += p;
@@ -486,7 +488,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     localStorage.setItem('services', JSON.stringify(_services));
-    setServices(_services);
+    setStateWithRef(_services, setServices, servicesRef);
   };
 
   const getServices = () => {
@@ -502,6 +504,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         orderValidators,
         applyValidatorOrder,
         applyValidatorFilters,
+        resetValidatorFilters,
         toggleFilterValidators,
         toggleService,
         getSetupProgress,

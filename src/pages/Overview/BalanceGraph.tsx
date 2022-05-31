@@ -5,17 +5,17 @@ import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { usePools } from 'contexts/Pools';
-import { useApi } from '../../contexts/Api';
-import { useUi } from '../../contexts/UI';
-import { useBalances } from '../../contexts/Balances';
-import { useConnect } from '../../contexts/Connect';
-import { planckToUnit, humanNumber, planckBnToUnit } from '../../Utils';
-import { useSize, formatSize } from '../../library/Graphs/Utils';
-import { defaultThemes } from '../../theme/default';
-import { useTheme } from '../../contexts/Themes';
-import { usePrices } from '../../library/Hooks/usePrices';
-import { APIContextInterface } from '../../types/api';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { useApi } from 'contexts/Api';
+import { useUi } from 'contexts/UI';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { planckToUnit, humanNumber, planckBnToUnit } from 'Utils';
+import { useSize, formatSize } from 'library/Graphs/Utils';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
+import { usePrices } from 'library/Hooks/usePrices';
+import { APIContextInterface } from 'types/api';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

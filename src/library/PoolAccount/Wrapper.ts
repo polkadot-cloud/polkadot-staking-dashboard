@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textPrimary, textSecondary, borderSecondary } from '../../theme';
+import { textPrimary, textSecondary, borderSecondary } from 'theme';
 
 export const Wrapper = styled(motion.button)<any>`
   border-radius: 1rem;
@@ -49,8 +49,10 @@ export const Wrapper = styled(motion.button)<any>`
     overflow: hidden;
     line-height: 2.2rem;
     flex: 1;
-    /* flex-grow: 1; */
-    /* flex-shrink: 1; */
+
+    &.syncing {
+      opacity: 0.4;
+    }
 
     &.unassigned {
       color: ${textSecondary};

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNotifications } from '../../contexts/Notifications';
+import { useNotifications } from 'contexts/Notifications';
 import Wrapper from './Wrapper';
 
 export const Notifications = () => {

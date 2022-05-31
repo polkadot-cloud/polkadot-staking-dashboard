@@ -6,11 +6,11 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
-import { useConnect } from '../../contexts/Connect';
+import { useConnect } from 'contexts/Connect';
+import { Identicon } from 'library/Identicon';
+import { clipAddress } from 'Utils';
+import { useNotifications } from 'contexts/Notifications';
 import { Separator, AccountWrapper } from './Wrappers';
-import { Identicon } from '../../library/Identicon';
-import { clipAddress } from '../../Utils';
-import { useNotifications } from '../../contexts/Notifications';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();

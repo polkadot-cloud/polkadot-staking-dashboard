@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
-import { useModal } from '../../contexts/Modal';
-import { useSubscan } from '../../contexts/Subscan';
-import { EraPoints as EraPointsGraph } from '../../library/Graphs/EraPoints';
-import { SubscanButton } from '../../library/SubscanButton';
-import { GraphWrapper } from '../../library/Graphs/Wrappers';
-import { useSize, formatSize } from '../../library/Graphs/Utils';
-import Identicon from '../../library/Identicon';
-import { clipAddress } from '../../Utils';
-import { useNetworkMetrics } from '../../contexts/Network';
-import { StatusLabel } from '../../library/StatusLabel';
+import { useModal } from 'contexts/Modal';
+import { useSubscan } from 'contexts/Subscan';
+import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
+import { SubscanButton } from 'library/SubscanButton';
+import { GraphWrapper } from 'library/Graphs/Wrappers';
+import { useSize, formatSize } from 'library/Graphs/Utils';
+import Identicon from 'library/Identicon';
+import { clipAddress } from 'Utils';
+import { useNetworkMetrics } from 'contexts/Network';
+import { StatusLabel } from 'library/StatusLabel';
 
 export const ValidatorMetrics = () => {
   const { config } = useModal();

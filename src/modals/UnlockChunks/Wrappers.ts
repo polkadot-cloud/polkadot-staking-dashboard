@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, buttonPrimaryBackground } from '../../theme';
+import { textSecondary, buttonPrimaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;

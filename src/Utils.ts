@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { PagesConfig } from './types/index';
+import { MutableRefObject } from 'react';
+import { PagesConfig } from 'types/index';
 
 export const clipAddress = (val: string) => {
   return `${val.substring(0, 6)}...${val.substring(
@@ -107,4 +108,13 @@ export const localStorageOrDefault = <T>(
 
 export const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export const setStateWithRef = <T>(
+  value: T,
+  setState: (_state: T) => void,
+  ref: MutableRefObject<T>
+): void => {
+  setState(value);
+  ref.current = value;
 };

@@ -7,15 +7,15 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { usePools } from 'contexts/Pools';
-import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
+import { useModal } from 'contexts/Modal';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Warning } from 'library/Form/Warning';
+import { planckBnToUnit } from 'Utils';
 import { ContentWrapper } from './Wrappers';
-import { useModal } from '../../contexts/Modal';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
-import { BondInputWithFeedback } from '../../library/Form/BondInputWithFeedback';
-import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
-import { Warning } from '../../library/Form/Warning';
-import { planckBnToUnit } from '../../Utils';
+import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const PoolForms = forwardRef((props: any, ref: any) => {
   const { setSection, task } = props;

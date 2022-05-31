@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { SIDE_MENU_STICKY_THRESHOLD } from '../../constants';
+import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import {
   textPrimary,
   textSecondary,
@@ -11,7 +11,7 @@ import {
   highlightSecondary,
   backgroundOverlay,
   primary,
-} from '../../theme';
+} from 'theme';
 
 export const Wrapper = styled.div<any>`
   background: none;

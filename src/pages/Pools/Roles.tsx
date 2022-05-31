@@ -6,10 +6,10 @@ import { useAccount } from 'contexts/Account';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { SectionHeaderWrapper } from '../../library/Graphs/Wrappers';
-import { OpenAssistantIcon } from '../../library/OpenAssistantIcon';
+import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { usePools } from 'contexts/Pools';
 import { PoolAccount } from './PoolAccount';
-import { usePools } from '../../contexts/Pools';
 import { RolesWrapper } from './ManagePool/Wrappers';
 
 export const Roles = () => {

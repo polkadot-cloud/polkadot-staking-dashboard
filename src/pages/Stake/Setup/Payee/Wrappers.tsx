@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  textPrimary,
-  primary,
-  textSecondary,
-} from '../../../../theme';
+import { backgroundToggle, textPrimary, primary, textSecondary } from 'theme';
 
 export const Items = styled.div`
   position: relative;

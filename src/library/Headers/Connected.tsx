@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PoolAccount } from 'library/PoolAccount';
-import { HeadingWrapper } from './Wrappers';
-import { useConnect } from '../../contexts/Connect';
-import { useModal } from '../../contexts/Modal';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useStaking } from 'contexts/Staking';
+import { useBalances } from 'contexts/Balances';
+import { usePools } from 'contexts/Pools';
 import { Account } from '../Account';
-import { useStaking } from '../../contexts/Staking';
-import { useBalances } from '../../contexts/Balances';
-import { usePools } from '../../contexts/Pools';
+import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
   const { activeAccount }: any = useConnect();

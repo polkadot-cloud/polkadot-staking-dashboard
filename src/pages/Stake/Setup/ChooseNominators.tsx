@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useConnect } from 'contexts/Connect';
+import { useUi } from 'contexts/UI';
 import { GenerateNominations } from '../GenerateNominations';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
-import { useConnect } from '../../../contexts/Connect';
-import { useUi } from '../../../contexts/UI';
 
 export const ChooseNominators = (props: any) => {
   const { section } = props;

@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { StatBox } from './Item';
-import { OpenAssistantIcon } from '../OpenAssistantIcon';
 
 export const Text = (props: any) => {
   const { label, value, assistant } = props;

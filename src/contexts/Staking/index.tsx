@@ -5,13 +5,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import BN from 'bn.js';
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
+import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
-import { rmCommas, localStorageOrDefault } from '../../Utils';
 import * as defaults from './defaults';
-import { APIContextInterface } from '../../types/api';
 
 const worker = new Worker();
 
@@ -71,18 +71,13 @@ export const StakingProvider = ({
   );
 
   // store stakers metadata in state
-  const [eraStakers, _setEraStakers]: any = useState(defaults.eraStakers);
+  const [eraStakers, setEraStakers]: any = useState(defaults.eraStakers);
+  const eraStakersRef = useRef(eraStakers);
 
   // store account target validators
   const [targets, _setTargets]: any = useState(
     localStorageOrDefault(`${activeAccount}_targets`, defaults.targets, true)
   );
-
-  const eraStakersRef = useRef(eraStakers);
-  const setEraStakers = (val: any) => {
-    eraStakersRef.current = val;
-    _setEraStakers(val);
-  };
 
   const subscribeToStakingkMetrics = async (_api: any) => {
     if (isReady && metrics.activeEra.index !== 0) {
@@ -201,7 +196,7 @@ export const StakingProvider = ({
 
   useEffect(() => {
     if (status === 'connecting') {
-      setEraStakers(defaults.eraStakers);
+      setStateWithRef(defaults.eraStakers, setEraStakers, eraStakersRef);
       setStakingMetrics(defaults.stakingMetrics);
     }
   }, [status]);
@@ -223,17 +218,20 @@ export const StakingProvider = ({
     worker.onmessage = (message: any) => {
       if (message) {
         const { data } = message;
-
         const { stakers, activeNominators, activeValidators, minActiveBond } =
           data;
 
-        setEraStakers({
-          ...eraStakersRef.current,
-          stakers,
-          activeNominators,
-          activeValidators,
-          minActiveBond,
-        });
+        setStateWithRef(
+          {
+            ...eraStakersRef.current,
+            stakers,
+            activeNominators,
+            activeValidators,
+            minActiveBond,
+          },
+          setEraStakers,
+          eraStakersRef
+        );
       }
     };
   }, []);
@@ -278,10 +276,14 @@ export const StakingProvider = ({
       .div(new BN(10 ** network.units))
       .toNumber();
 
-    setEraStakers({
-      ...eraStakersRef.current,
-      minStakingActiveBond: stakingMinActiveBond,
-    });
+    setStateWithRef(
+      {
+        ...eraStakersRef.current,
+        minStakingActiveBond: stakingMinActiveBond,
+      },
+      setEraStakers,
+      eraStakersRef
+    );
 
     // set account's targets
     _setTargets(

@@ -5,15 +5,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { List, Header, Wrapper as ListWrapper, Pagination } from '../List';
-import { useApi } from '../../contexts/Api';
-import { StakingContext } from '../../contexts/Staking';
-import { useUi } from '../../contexts/UI';
-import { useNetworkMetrics } from '../../contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from '../../constants';
-import { Pool } from '../Pool';
-import { APIContextInterface } from '../../types/api';
-import { usePools } from '../../contexts/Pools';
+import { useApi } from 'contexts/Api';
+import { StakingContext } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { useNetworkMetrics } from 'contexts/Network';
+import { usePools } from 'contexts/Pools';
+import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
+import { APIContextInterface } from 'types/api';
+import { Pool } from 'library/Pool';
+import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 
 export const PoolListInner = (props: any) => {
   const { allowMoreCols, pagination, batchKey }: any = props;

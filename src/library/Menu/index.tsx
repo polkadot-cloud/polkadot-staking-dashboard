@@ -3,8 +3,8 @@
 
 import { useRef, useEffect } from 'react';
 import { useMenu } from 'contexts/Menu';
+import { useOutsideAlerter } from 'library/Hooks';
 import { Wrapper, ItemWrapper } from './Wrappers';
-import { useOutsideAlerter } from '../Hooks';
 
 export const Menu = () => {
   const menu = useMenu();

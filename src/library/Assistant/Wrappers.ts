@@ -3,13 +3,13 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { MAX_ASSISTANT_INTERFACE_WIDTH } from '../../constants';
+import { MAX_ASSISTANT_INTERFACE_WIDTH } from 'consts';
 import {
   textPrimary,
   textSecondary,
   assistantButton,
   assistantBackground,
-} from '../../theme';
+} from 'theme';
 
 export const Wrapper = styled(motion.div)<any>`
   position: fixed;

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, useRef } from 'react';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { Wrapper, SectionsWrapper } from './Wrappers';
-import { useConnect } from '../../contexts/Connect';
-import { useModal } from '../../contexts/Modal';
 import { Extensions } from './Extensions';
 import { Accounts } from './Accounts';
 

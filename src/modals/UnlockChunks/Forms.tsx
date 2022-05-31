@@ -7,17 +7,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
-import { useModal } from '../../contexts/Modal';
-import { useBalances } from '../../contexts/Balances';
-import { useApi } from '../../contexts/Api';
-import { useConnect } from '../../contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useBalances } from 'contexts/Balances';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Warning } from 'library/Form/Warning';
+import { useStaking } from 'contexts/Staking';
+import { planckBnToUnit } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrappers';
-import { useSubmitExtrinsic } from '../../library/Hooks/useSubmitExtrinsic';
-import { Warning } from '../../library/Form/Warning';
-import { useStaking } from '../../contexts/Staking';
-import { planckBnToUnit } from '../../Utils';
-import { APIContextInterface } from '../../types/api';
+import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {

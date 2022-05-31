@@ -5,12 +5,12 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useCombobox } from 'downshift';
+import Identicon from 'library/Identicon';
+import { clipAddress, convertRemToPixels } from 'Utils';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
+import { StatusLabel } from 'library/StatusLabel';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
-import Identicon from '../../Identicon';
-import { clipAddress, convertRemToPixels } from '../../../Utils';
-import { useTheme } from '../../../contexts/Themes';
-import { defaultThemes } from '../../../theme/default';
-import { StatusLabel } from '../../StatusLabel';
 
 export const AccountSelect = (props: any) => {
   const { items, onChange, placeholder, value }: any = props;

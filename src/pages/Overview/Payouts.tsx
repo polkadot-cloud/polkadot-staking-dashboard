@@ -2,15 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { useUi } from '../../contexts/UI';
-import { PayoutLine } from '../../library/Graphs/PayoutLine';
-import { PayoutBar } from '../../library/Graphs/PayoutBar';
-import {
-  useSize,
-  formatSize,
-  prefillPayoutGraph,
-} from '../../library/Graphs/Utils';
-import { StatusLabel } from '../../library/StatusLabel';
+import { useUi } from 'contexts/UI';
+import { PayoutLine } from 'library/Graphs/PayoutLine';
+import { PayoutBar } from 'library/Graphs/PayoutBar';
+import { useSize, formatSize, prefillPayoutGraph } from 'library/Graphs/Utils';
+import { StatusLabel } from 'library/StatusLabel';
 
 export const PayoutsInner = (props: any) => {
   const { payouts } = props;

@@ -3,16 +3,16 @@
 
 import { useState, useEffect } from 'react';
 import { usePools } from 'contexts/Pools';
-import { useApi } from '../../../contexts/Api';
-import { useConnect } from '../../../contexts/Connect';
-import { useBalances } from '../../../contexts/Balances';
-import { useStaking } from '../../../contexts/Staking';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useBalances } from 'contexts/Balances';
+import { useStaking } from 'contexts/Staking';
+import { humanNumber, planckBnToUnit } from 'Utils';
+import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { APIContextInterface } from 'types/api';
 import { BondInput } from '../BondInput';
-import { humanNumber, planckBnToUnit } from '../../../Utils';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
-import { SectionHeaderWrapper } from '../../Graphs/Wrappers';
-import { APIContextInterface } from '../../../types/api';
 
 export const BondInputWithFeedback = (props: any) => {
   // input props

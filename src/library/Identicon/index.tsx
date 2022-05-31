@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { Identicon as IdenticonDefault } from '@polkadot/react-identicon';
-import { backgroundIdenticon } from '../../theme';
+import { backgroundIdenticon } from 'theme';
 
 const Wrapper = styled.div`
   svg > circle:first-child {

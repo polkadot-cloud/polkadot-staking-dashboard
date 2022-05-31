@@ -6,13 +6,13 @@ import styled from 'styled-components';
 import {
   SIDE_MENU_STICKY_THRESHOLD,
   SHOW_SIDE_BAR_WIDTH_THRESHOLD,
-} from '../../constants';
+} from 'consts';
 import {
   backgroundDropdown,
   textPrimary,
   textInvert,
   buttonSecondaryBackground,
-} from '../../theme';
+} from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
