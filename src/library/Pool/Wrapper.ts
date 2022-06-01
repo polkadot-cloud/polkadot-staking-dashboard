@@ -3,7 +3,12 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundValidator, borderSecondary, textSecondary } from 'theme';
+import {
+  backgroundValidator,
+  borderSecondary,
+  textSecondary,
+  primary,
+} from 'theme';
 
 export const Wrapper = styled(motion.div)<any>`
   display: flex;
@@ -63,10 +68,19 @@ export const Wrapper = styled(motion.div)<any>`
       align-items: center;
       flex-grow: 1;
       flex-flow: row nowrap;
-      .label {
-        margin-left: 0.5rem;
-        color: ${textSecondary};
 
+      .join {
+        color: ${primary};
+      }
+
+      .label {
+        color: ${textSecondary};
+        display: flex;
+        align-items: center;
+        margin-left: 1rem;
+        .icon {
+          margin-right: 0.4rem;
+        }
         &.warning {
           color: #d2545d;
           display: flex;
@@ -76,10 +90,10 @@ export const Wrapper = styled(motion.div)<any>`
         button {
           color: ${textSecondary};
           &:hover {
-            color: #666;
+            opacity: 0.75;
           }
           &.active {
-            color: rgba(211, 48, 121, 0.85);
+            color: ${primary};
           }
         }
       }

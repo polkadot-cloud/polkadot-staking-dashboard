@@ -3,7 +3,11 @@
 
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faUsers } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHashtag,
+  faPlusCircle,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { usePools } from 'contexts/Pools';
 import { clipAddress } from 'Utils';
@@ -41,7 +45,6 @@ export const Pool = (props: any) => {
   return (
     <Wrapper>
       <div>
-        <h3>{id}</h3>
         <Identicon value={addresses.stash} size={26} />
         {!metadataSynced ? (
           <motion.div
@@ -63,35 +66,45 @@ export const Pool = (props: any) => {
           </motion.div>
         )}
 
-        <div className="labels">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.1 }}
-          >
-            <div className="label">
-              <FontAwesomeIcon icon={faUsers} />
-              &nbsp; {memberCounter}
+        <div>
+          <div className="labels">
+            <div className="label stat">
+              <FontAwesomeIcon icon={faHashtag} />
+              &nbsp;{id}
             </div>
-          </motion.div>
-          {!isBonding() && (
-            <div className="label">
-              <button
-                type="button"
-                onClick={() =>
-                  openModalWith(
-                    'JoinPool',
-                    {
-                      id,
-                    },
-                    'small'
-                  )
-                }
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-            </div>
-          )}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.1 }}
+            >
+              <div className="label">
+                <FontAwesomeIcon icon={faUsers} className="icon" />
+                {memberCounter}
+              </div>
+            </motion.div>
+            {!isBonding() && (
+              <div className="label">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openModalWith(
+                      'JoinPool',
+                      {
+                        id,
+                      },
+                      'small'
+                    )
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faPlusCircle}
+                    transform="grow-4"
+                    className="join"
+                  />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Wrapper>

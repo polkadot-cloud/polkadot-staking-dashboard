@@ -120,7 +120,7 @@ export const NetworkInfo = styled(motion.div)`
 
     h2 {
       color: #eee;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       line-height: 2rem;
       padding: 0 0.25rem;
     }

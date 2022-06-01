@@ -3,7 +3,12 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundValidator, borderPrimary, textSecondary } from 'theme';
+import {
+  backgroundValidator,
+  borderPrimary,
+  textSecondary,
+  primary,
+} from 'theme';
 
 export const Wrapper = styled.div<any>`
   display: flex;
@@ -51,7 +56,7 @@ export const Wrapper = styled.div<any>`
 
     .label {
       margin-left: 0.3rem;
-      color: #aaa;
+      color: ${textSecondary};
 
       &.comm {
         margin: 0 0.3rem;
@@ -65,12 +70,12 @@ export const Wrapper = styled.div<any>`
         padding-right: 0.35rem;
       }
       button {
-        color: #aaa;
+        color: ${textSecondary};
         &:hover {
-          color: #666;
+          opacity: 0.75;
         }
         &.active {
-          color: rgba(211, 48, 121, 0.85);
+          color: ${primary};
         }
       }
     }
