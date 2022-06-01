@@ -40,7 +40,7 @@ export const BalancesProvider = ({
   const existentialAmount = consts.existentialDeposit;
 
   // amount of compulsary reserve balance
-  const reserveAmount: BN = existentialAmount.div(new BN(10));
+  const reserveAmount: BN = existentialAmount.div(new BN(2));
 
   // minimum reserve for submitting extrinsics
   const minReserve: BN = reserveAmount.add(existentialAmount);
