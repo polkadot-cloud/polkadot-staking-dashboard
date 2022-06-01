@@ -10,7 +10,7 @@ import { clipAddress } from 'Utils';
 import { Identicon } from 'library/Identicon';
 import { useNotifications } from 'contexts/Notifications';
 import { useAccount } from 'contexts/Account';
-import { getIdentityDisplay } from 'library/Validator/Utils';
+import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
 import { AccountWrapper } from './Wrappers';
 
 export const PoolAccount = (props: any) => {

@@ -10,7 +10,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useModal } from 'contexts/Modal';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper, Labels, MenuPosition } from './Wrappers';
-import { useValidators } from '../../contexts/Validators';
+import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
 import { Favourite } from './Labels/Favourite';
 import { Identity } from './Labels/Identity';

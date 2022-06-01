@@ -13,10 +13,11 @@ import { useUi } from 'contexts/UI';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { APIContextInterface } from 'types/api';
-import { Validator } from 'library/Validator';
+import { Validator } from 'library/ValidatorList/Validator';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { ConnectContextInterface } from 'types/connect';
 import { Filters } from './Filters';
+import { ValidatorListProvider } from './context';
 
 export const ValidatorListInner = (props: any) => {
   const { isReady } = useApi() as APIContextInterface;
@@ -149,110 +150,112 @@ export const ValidatorListInner = (props: any) => {
   }
 
   return (
-    <ListWrapper>
-      <Header>
-        <div>
-          <h4>
-            {title ||
-              `Dispalying ${validators.length} Validator${
-                validators.length === 1 ? '' : 's'
-              }`}
-          </h4>
-        </div>
-        <div>
-          <button type="button" onClick={() => setListFormat('row')}>
-            <FontAwesomeIcon
-              icon={faBars}
-              color={listFormat === 'row' ? '#d33079' : 'inherit'}
-            />
-          </button>
-          <button type="button" onClick={() => setListFormat('col')}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={listFormat === 'col' ? '#d33079' : 'inherit'}
-            />
-          </button>
-        </div>
-      </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {allowFilters && <Filters />}
+    <ValidatorListProvider>
+      <ListWrapper>
+        <Header>
+          <div>
+            <h4>
+              {title ||
+                `Dispalying ${validators.length} Validator${
+                  validators.length === 1 ? '' : 's'
+                }`}
+            </h4>
+          </div>
+          <div>
+            <button type="button" onClick={() => setListFormat('row')}>
+              <FontAwesomeIcon
+                icon={faBars}
+                color={listFormat === 'row' ? '#d33079' : 'inherit'}
+              />
+            </button>
+            <button type="button" onClick={() => setListFormat('col')}>
+              <FontAwesomeIcon
+                icon={faGripVertical}
+                color={listFormat === 'col' ? '#d33079' : 'inherit'}
+              />
+            </button>
+          </div>
+        </Header>
+        <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+          {allowFilters && <Filters />}
 
-        {pagination && (
-          <Pagination prev={page !== 1} next={page !== totalPages}>
-            <div>
-              <h4>
-                Page {page} of {totalPages}
-              </h4>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="prev"
-                onClick={() => {
-                  setPage(prevPage);
-                }}
-              >
-                Prev
-              </button>
-              <button
-                type="button"
-                className="next"
-                onClick={() => {
-                  setPage(nextPage);
-                }}
-              >
-                Next
-              </button>
-            </div>
-          </Pagination>
-        )}
+          {pagination && (
+            <Pagination prev={page !== 1} next={page !== totalPages}>
+              <div>
+                <h4>
+                  Page {page} of {totalPages}
+                </h4>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="prev"
+                  onClick={() => {
+                    setPage(prevPage);
+                  }}
+                >
+                  Prev
+                </button>
+                <button
+                  type="button"
+                  className="next"
+                  onClick={() => {
+                    setPage(nextPage);
+                  }}
+                >
+                  Next
+                </button>
+              </div>
+            </Pagination>
+          )}
 
-        <motion.div
-          className="transition"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.01,
+          <motion.div
+            className="transition"
+            initial="hidden"
+            animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.01,
+                },
               },
-            },
-          }}
-        >
-          {listValidators.map((validator: any, index: number) => {
-            // fetch batch data by referring to default list index.
-            const batchIndex = validatorsDefault.indexOf(validator);
+            }}
+          >
+            {listValidators.map((validator: any, index: number) => {
+              // fetch batch data by referring to default list index.
+              const batchIndex = validatorsDefault.indexOf(validator);
 
-            return (
-              <motion.div
-                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                key={`nomination_${index}`}
-                variants={{
-                  hidden: {
-                    y: 15,
-                    opacity: 0,
-                  },
-                  show: {
-                    y: 0,
-                    opacity: 1,
-                  },
-                }}
-              >
-                <Validator
-                  validator={validator}
-                  toggleFavourites={toggleFavourites}
-                  batchIndex={batchIndex}
-                  batchKey={batchKey}
-                  format={format}
-                />
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </List>
-    </ListWrapper>
+              return (
+                <motion.div
+                  className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                  key={`nomination_${index}`}
+                  variants={{
+                    hidden: {
+                      y: 15,
+                      opacity: 0,
+                    },
+                    show: {
+                      y: 0,
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Validator
+                    validator={validator}
+                    toggleFavourites={toggleFavourites}
+                    batchIndex={batchIndex}
+                    batchKey={batchKey}
+                    format={format}
+                  />
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </List>
+      </ListWrapper>
+    </ValidatorListProvider>
   );
 };
 
