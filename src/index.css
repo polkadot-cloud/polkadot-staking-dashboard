@@ -20,7 +20,7 @@ html {
   }
 }
 
-@media(min-width: 1800px) {
+@media(min-width: 1600px) {
   html {
     font-size: 14.5px;
   }

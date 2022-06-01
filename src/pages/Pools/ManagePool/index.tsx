@@ -7,6 +7,7 @@ import { PageRowWrapper } from 'Wrappers';
 import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
+import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { GenerateNominations } from '../../Stake/GenerateNominations';
 import { PoolNominations } from '../PoolNominations';
 
@@ -28,6 +29,8 @@ export const ManagePool = () => {
                   small
                   inline
                   primary
+                  icon={faChevronCircleRight}
+                  transform="grow-1"
                   title="Nominate"
                   disabled={!isNominator()}
                   onClick={() => openModalWith('NominatePool', {}, 'small')}
