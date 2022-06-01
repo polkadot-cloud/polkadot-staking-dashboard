@@ -30,7 +30,8 @@ export const ValidatorListInner = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
-  const { selectActive, setSelectActive, selected } = useValidatorList();
+  const provider = useValidatorList();
+  const { selectActive, setSelectActive, selected } = provider;
 
   const {
     setListFormat,
@@ -229,7 +230,7 @@ export const ValidatorListInner = (props: any) => {
               <button
                 key={`a_all_${i}`}
                 type="button"
-                onClick={() => a.onClick()}
+                onClick={() => a.onClick(provider)}
               >
                 {a.title}
               </button>
@@ -248,7 +249,7 @@ export const ValidatorListInner = (props: any) => {
                   <button
                     key={`a_selected_${i}`}
                     type="button"
-                    onClick={() => a.onClick()}
+                    onClick={() => a.onClick(provider)}
                   >
                     {a.title}
                   </button>

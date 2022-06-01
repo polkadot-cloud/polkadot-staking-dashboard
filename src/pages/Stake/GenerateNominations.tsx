@@ -10,7 +10,6 @@ import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { useValidatorList } from 'library/ValidatorList/context';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {
@@ -23,11 +22,15 @@ export const GenerateNominations = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { removeValidatorMetaBatch, validators, favouritesList, meta } =
     useValidators();
-  const { selected } = useValidatorList();
   const { applyValidatorOrder, applyValidatorFilters }: any = useUi();
 
+  // store the method of fetching validators
   const [method, setMethod]: any = useState(null);
+
+  // store whether validators are being fetched
   const [fetching, setFetching] = useState(false);
+
+  // store the currently selected set of nominations
   const [nominations, setNominations] = useState(defaultNominations);
 
   const rawBatchKey = 'validators_browse';
@@ -89,8 +92,11 @@ export const GenerateNominations = (props: any) => {
         case 'Favourites':
           _nominations = fetchFavourites();
           break;
-        default:
+        case 'Most Profitable':
           _nominations = fetchMostProfitable();
+          break;
+        default:
+          return;
       }
 
       // update component state
@@ -108,7 +114,7 @@ export const GenerateNominations = (props: any) => {
   });
 
   // callback function for clearing nomination list
-  const cbClearNominations = () => {
+  const cbClearNominations = (provider: any) => {
     setMethod(null);
     removeValidatorMetaBatch(batchKey);
     setNominations([]);
@@ -118,6 +124,28 @@ export const GenerateNominations = (props: any) => {
         nominations: [],
       });
     }
+  };
+
+  // callback function for removing selected validators
+  const cbRemoveSelected = ({
+    selected,
+    resetSelected,
+    setSelectActive,
+  }: any) => {
+    setMethod('From List');
+    removeValidatorMetaBatch(batchKey);
+    const _nominations = [...nominations].filter((n: any) => {
+      return !selected.map((_s: any) => _s.address).includes(n.address);
+    });
+    setNominations(_nominations);
+    for (const s of setters) {
+      s.set({
+        ...s.current,
+        nominations: _nominations,
+      });
+    }
+    setSelectActive(false);
+    resetSelected();
   };
 
   return (
@@ -171,7 +199,7 @@ export const GenerateNominations = (props: any) => {
                   },
                   {
                     title: `Remove Selected`,
-                    onClick: cbClearNominations,
+                    onClick: cbRemoveSelected,
                     onSelected: true,
                   },
                 ]}
