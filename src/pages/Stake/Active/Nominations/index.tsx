@@ -61,7 +61,7 @@ export const Nominations = () => {
                 transform="grow-1"
                 inline
                 primary
-                title="Stop Nominating"
+                title="Stop"
                 disabled={inSetup() || isSyncing}
                 onClick={() =>
                   openModalWith(
