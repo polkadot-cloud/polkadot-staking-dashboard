@@ -204,7 +204,7 @@ export const BalancesProvider = ({
 
     // increment syncing ledger counter
     setStateWithRef(
-      ledgersSyncingCountRef.current + 1,
+      Math.max(ledgersSyncingCountRef.current + 1, 0),
       setLedgersSyncingCount,
       ledgersSyncingCountRef
     );
@@ -246,7 +246,7 @@ export const BalancesProvider = ({
 
       // decrement syncing ledger counter
       setStateWithRef(
-        ledgersSyncingCountRef.current - 1,
+        Math.max(ledgersSyncingCountRef.current - 1, 0),
         setLedgersSyncingCount,
         ledgersSyncingCountRef
       );
