@@ -76,7 +76,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { getAccountBalance }: any = useBalances();
 
   const { activeEra } = metrics;
-  const { poolsPalletId } = consts;
+  const { poolsPalletId, existentialDeposit } = consts;
   const { features, units } = network;
 
   // whether pools are enabled
@@ -318,14 +318,18 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     );
     return unsub;
   };
+
   const calculatePayout = (
     membership: any,
     bondedPool: any,
     rewardPool: any,
     rewardAccountBalance: BN
   ): BN => {
-    const newBalance = new BN(rewardAccountBalance);
-    const lastBalance = new BN(rmCommas(rewardPool.balance));
+    const newRewardPoolBalance = new BN(rewardAccountBalance).sub(
+      existentialDeposit
+    );
+
+    const lastRewardPoolBalance = new BN(rmCommas(rewardPool.balance));
     const poolTotalEarnings = new BN(rmCommas(rewardPool.totalEarnings));
     const rewardPoints = new BN(rmCommas(rewardPool.points));
     const bondedPoints = new BN(rmCommas(bondedPool.points));
@@ -334,7 +338,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       rmCommas(membership.rewardPoolTotalEarnings)
     );
 
-    const generatedEarning = newBalance.sub(lastBalance);
+    const generatedEarning = newRewardPoolBalance.sub(lastRewardPoolBalance);
     const generatedPoints = bondedPoints.mul(generatedEarning);
     const rewardPoolCurrentRewardPoints = rewardPoints.add(generatedPoints);
     const generatedEarningSinceLastClaim = poolTotalEarnings.sub(
@@ -343,12 +347,15 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const memberCurrentRewardPoint = memberPoints.mul(
       generatedEarningSinceLastClaim
     );
-    const payout = memberCurrentRewardPoint
-      .mul(generatedEarningSinceLastClaim)
-      .div(rewardPoolCurrentRewardPoints);
+    const payout = rewardPoolCurrentRewardPoints.gt(new BN(0))
+      ? memberCurrentRewardPoint
+          .mul(newRewardPoolBalance)
+          .div(rewardPoolCurrentRewardPoints)
+      : new BN(0);
 
     return payout;
   };
+
   const subscribeToActiveBondedPool = async (membership: any) => {
     if (!api || !membership) {
       return;
