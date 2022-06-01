@@ -14,11 +14,10 @@ const Wrapper = styled.div<any>`
   top: 10px;
   font-size: 0.9rem;
   font-variation-settings: 'wght' 570;
-  background: ${(props) => props.background};
   border-radius: 0.3rem;
   padding: 0.25rem 0.4rem;
   color: ${(props) => props.color};
-  opacity: 0.8;
+  opacity: ${(props) => props.opacity};
 `;
 
 export const SubscanButton = () => {
@@ -29,14 +28,10 @@ export const SubscanButton = () => {
     <Wrapper
       color={
         services.includes('subscan')
-          ? defaultThemes.text.invert[mode]
+          ? defaultThemes.primary[mode]
           : defaultThemes.text.secondary[mode]
       }
-      background={
-        services.includes('subscan')
-          ? defaultThemes.primary[mode]
-          : defaultThemes.background.label[mode]
-      }
+      opacity={services.includes('subscan') ? 1 : 0.5}
     >
       <FontAwesomeIcon
         icon={faProjectDiagram}
