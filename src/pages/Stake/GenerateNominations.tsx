@@ -194,7 +194,7 @@ export const GenerateNominations = (props: any) => {
                 selectable
                 actions={[
                   {
-                    title: 'Clear All',
+                    title: 'Reset',
                     onClick: cbClearNominations,
                     onSelected: false,
                   },

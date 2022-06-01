@@ -29,6 +29,22 @@ export const Nominations = () => {
 
   const batchKey = 'stake_nominations';
 
+  // callback function to stop nominating selected validators
+  const cbStopNominatingSelected = (provider: any) => {
+    const { selected } = provider;
+    const _nominations = [...nominations].filter((n: any) => {
+      return !selected.map((_s: any) => _s.address).includes(n);
+    });
+    openModalWith(
+      'StopNominating',
+      {
+        nominations: _nominations,
+        provider,
+      },
+      'small'
+    );
+  };
+
   return (
     <Wrapper>
       <SectionHeaderWrapper withAction>
@@ -45,9 +61,17 @@ export const Nominations = () => {
                 transform="grow-1"
                 inline
                 primary
-                title="Stop"
+                title="Stop Nominating"
                 disabled={inSetup() || isSyncing}
-                onClick={() => openModalWith('StopNominating', {}, 'small')}
+                onClick={() =>
+                  openModalWith(
+                    'StopNominating',
+                    {
+                      nominations: [],
+                    },
+                    'small'
+                  )
+                }
               />
             </div>
           ) : (
@@ -75,6 +99,13 @@ export const Nominations = () => {
                     title="Your Nominations"
                     format="nomination"
                     selectable
+                    actions={[
+                      {
+                        title: 'Stop Nominating Selected',
+                        onClick: cbStopNominatingSelected,
+                        onSelected: true,
+                      },
+                    ]}
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle
