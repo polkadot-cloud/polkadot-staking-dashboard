@@ -42,6 +42,8 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { minJoinBond } = stats;
   const isStaking = target === 'stake';
   const isPooling = target === 'pool';
+  const isBondTask = task === 'bond_some' || task === 'bond_all';
+  const isUnbondTask = task === 'unbond_some' || task === 'unbond_all';
 
   const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
   const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
@@ -68,17 +70,9 @@ export const Forms = forwardRef((props: any, ref: any) => {
   // unbnd some validation
   const unbondSomeValid = isPooling ? true : !controllerNotImported;
 
-  const isBondTask = () => {
-    return task === 'bond_some' || task === 'bond_all';
-  };
-
-  const isUnbondTask = () => {
-    return task === 'unbond_some' || task === 'unbond_all';
-  };
-
   // update bond value on task change
   useEffect(() => {
-    const _bond = isBondTask()
+    const _bond = isBondTask
       ? freeToBond
       : task === 'unbond_some'
       ? freeToUnbondToMin
@@ -122,7 +116,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
     }
 
     // stake unbond: controller must be imported
-    if (isStaking && isUnbondTask() && controllerNotImported) {
+    if (isStaking && isUnbondTask && controllerNotImported) {
       return _tx;
     }
     // remove decimal errors
@@ -130,13 +124,13 @@ export const Forms = forwardRef((props: any, ref: any) => {
 
     // determine _tx
     if (isPooling) {
-      if (isBondTask()) {
+      if (isBondTask) {
         _tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
       } else {
         _tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
       }
     } else if (isStaking) {
-      if (isBondTask()) {
+      if (isBondTask) {
         _tx = api.tx.staking.bondExtra(bondToSubmit);
       } else {
         _tx = api.tx.staking.unbond(bondToSubmit);
