@@ -74,6 +74,7 @@ export const Nominations = () => {
                     batchKey={batchKey}
                     title="Your Nominations"
                     format="nomination"
+                    selectable
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle

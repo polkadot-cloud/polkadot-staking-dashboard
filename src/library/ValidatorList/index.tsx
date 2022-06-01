@@ -42,6 +42,7 @@ export const ValidatorListInner = (props: any) => {
     pagination,
     title,
     format,
+    selectable,
   }: any = props;
 
   const disableThrottle = props.disableThrottle ?? false;
@@ -59,6 +60,9 @@ export const ValidatorListInner = (props: any) => {
 
   // manipulated list (ordering, filtering) of validators
   const [validators, setValidators]: any = useState(props.validators);
+
+  // store the selected validators (only actionable if `selectable` is true)
+  const [selected, setSelected] = useState<Array<any>>([]);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -208,6 +212,8 @@ export const ValidatorListInner = (props: any) => {
               </div>
             </Pagination>
           )}
+
+          <div>{selectable ? 'selectable' : 'not selectable'}</div>
 
           <motion.div
             className="transition"

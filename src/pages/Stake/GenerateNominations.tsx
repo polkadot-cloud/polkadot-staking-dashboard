@@ -164,6 +164,7 @@ export const GenerateNominations = (props: any) => {
               <ValidatorList
                 validators={nominations}
                 batchKey={batchKey}
+                selectable
                 allowMoreCols
               />
             </div>

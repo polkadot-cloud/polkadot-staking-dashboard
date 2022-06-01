@@ -48,6 +48,7 @@ export const Validators = (props: PageProps) => {
                   validators={validators}
                   batchKey="validators_browse"
                   title="Network Validators"
+                  selectable={false}
                   allowMoreCols
                   allowFilters
                   pagination
