@@ -160,6 +160,7 @@ export const StakingProvider = ({
 
     // worker to calculate stats
     worker.postMessage({
+      activeAccount,
       units: network.units,
       exposures,
       maxNominatorRewardedPerValidator,
@@ -223,8 +224,13 @@ export const StakingProvider = ({
     worker.onmessage = (message: any) => {
       if (message) {
         const { data } = message;
-        const { stakers, activeNominators, activeValidators, minActiveBond } =
-          data;
+        const {
+          stakers,
+          activeNominators,
+          activeValidators,
+          minActiveBond,
+          ownStake,
+        } = data;
 
         setStateWithRef(
           {
@@ -233,6 +239,7 @@ export const StakingProvider = ({
             activeNominators,
             activeValidators,
             minActiveBond,
+            ownStake,
           },
           setEraStakers,
           eraStakersRef
