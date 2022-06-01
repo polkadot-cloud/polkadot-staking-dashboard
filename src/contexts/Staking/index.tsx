@@ -380,7 +380,6 @@ export const StakingProvider = ({
   const inSetup = () => {
     return (
       !activeAccount ||
-      activeExtension === null ||
       (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
     );
   };
