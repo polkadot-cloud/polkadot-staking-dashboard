@@ -3,28 +3,23 @@
 
 import BN from 'bn.js';
 import { forwardRef } from 'react';
-import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { planckBnToUnit } from 'Utils';
 import Button from 'library/Button';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { ContentWrapper, ChunkWrapper } from './Wrappers';
 import { Separator, NotesWrapper } from '../Wrappers';
 
 export const Overview = forwardRef(
-  ({ setSection, setUnlock, setTask }: any, ref: any) => {
+  ({ unlocking, target, setSection, setUnlock, setTask }: any, ref: any) => {
     const { network, consts } = useApi() as APIContextInterface;
-    const { activeAccount } = useConnect() as ConnectContextInterface;
     const { metrics } = useNetworkMetrics();
-    const { getAccountLedger }: any = useBalances();
     const { bondDuration } = consts;
     const { units } = network;
     const { activeEra } = metrics;
-    const ledger = getAccountLedger(activeAccount);
-    const { unlocking } = ledger;
+
+    const isStaking = target === 'stake';
 
     // calculate total withdraw available
     let withdrawAvailable = new BN(0);
@@ -92,21 +87,23 @@ export const Overview = forwardRef(
                     <h3>Available to withdraw</h3>
                   )}
                 </section>
-                <section>
-                  <div>
-                    <Button
-                      small
-                      inline
-                      primary
-                      title="Rebond"
-                      onClick={() => {
-                        setTask('rebond');
-                        setUnlock(chunk);
-                        setSection(1);
-                      }}
-                    />
-                  </div>
-                </section>
+                {isStaking && (
+                  <section>
+                    <div>
+                      <Button
+                        small
+                        inline
+                        primary
+                        title="Rebond"
+                        onClick={() => {
+                          setTask('rebond');
+                          setUnlock(chunk);
+                          setSection(1);
+                        }}
+                      />
+                    </div>
+                  </section>
+                )}
               </div>
               <Separator />
             </ChunkWrapper>
