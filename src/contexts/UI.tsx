@@ -79,7 +79,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics }: any = useNetworkMetrics();
-  const { accounts, ledgersSyncingCount }: any = useBalances();
+  const { accounts }: any = useBalances();
 
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);
@@ -187,11 +187,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
     // all accounts have been synced
     if (accounts.length < connectAccounts.length) {
-      syncing = true;
-    }
-
-    // ledgers are not syncing
-    if (ledgersSyncingCount) {
       syncing = true;
     }
 
