@@ -33,6 +33,7 @@ export interface PoolsContextState {
   isDepositor: () => any;
   getPoolBondedAccount: () => any;
   getPoolBondOptions: (a: MaybeAccount) => any;
+  getPoolUnlocking: () => any;
   setTargets: (targest: any) => void;
   getNominationsStatus: () => any;
   membership: any;
@@ -54,6 +55,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
     isDepositor: () => false,
     getPoolBondedAccount: () => undefined,
     getPoolBondOptions: (a: MaybeAccount) => defaults.poolBondOptions,
+    getPoolUnlocking: () => [],
     setTargets: (targets: any) => {},
     getNominationsStatus: () => {},
     membership: undefined,
@@ -366,12 +368,16 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       [
         [api.query.nominationPools.bondedPools, poolId],
         [api.query.nominationPools.rewardPools, poolId],
+        [api.query.staking.slashingSpans, addresses.stash],
         [api.query.system.account, addresses.reward],
       ],
-      ([bondedPool, rewardPool, { data: balance }]: any) => {
+      ([bondedPool, rewardPool, slashingSpans, { data: balance }]: any) => {
         bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
         rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
         if (rewardPool && bondedPool) {
+          const slashingSpansCount = slashingSpans.isNone
+            ? 0
+            : slashingSpans.unwrap().prior.length + 1;
           const rewardAccountBalance = balance?.free;
           const unclaimedReward = calculatePayout(
             membership,
@@ -382,6 +388,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
           const pool = {
             ...bondedPool,
             id: poolId,
+            slashingSpansCount,
             unclaimedReward,
             addresses,
           };
@@ -540,6 +547,10 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       totalPossibleBond,
       totalUnlockChuncks: unlocking.length,
     };
+  };
+
+  const getPoolUnlocking = () => {
+    return poolMembership?.membership?.unlocking || [];
   };
 
   const isBonding = () => {
@@ -714,6 +725,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         isBonding,
         getPoolBondedAccount,
         getPoolBondOptions,
+        getPoolUnlocking,
         setTargets,
         getNominationsStatus,
         membership: poolMembership.membership,

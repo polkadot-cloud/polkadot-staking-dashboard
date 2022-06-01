@@ -82,7 +82,9 @@ export const ManageBond = () => {
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
             disabled={isSyncing || !isBonding()}
-            onClick={() => console.log('TODO: Manage Pool Unlocks')}
+            onClick={() =>
+              openModalWith('UnlockChunks', { target: 'pool' }, 'small')
+            }
           />
         </ButtonRow>
       </SectionHeaderWrapper>
