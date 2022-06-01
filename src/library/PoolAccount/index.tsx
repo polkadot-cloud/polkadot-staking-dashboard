@@ -11,6 +11,7 @@ import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 
@@ -58,12 +59,19 @@ export const PoolAccount = (props: any) => {
   const metaData = metaBatch?.metadata?.[0];
   const syncing = metaData === undefined;
 
-  // fallback to address on empty metadata string
-  const display = syncing
-    ? 'Syncing...'
-    : metaData !== ''
-    ? metaData
-    : clipAddress(props.pool.addresses.stash);
+  // display value
+  const defaultDisplay = clipAddress(props.pool.addresses.stash);
+  let display = syncing ? 'Syncing...' : metaData ?? defaultDisplay;
+
+  // check if super identity has been byte encoded
+  const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
+  if (displayAsBytes !== '') {
+    display = displayAsBytes;
+  }
+  // if still empty string, default to clipped address
+  if (display === '') {
+    display = defaultDisplay;
+  }
 
   return (
     <Wrapper
@@ -81,7 +89,7 @@ export const PoolAccount = (props: any) => {
           size={convertRemToPixels(fontSize) * 1.45}
         />
       </span>
-      <span className={`title${syncing === true && ` syncing`}`}>
+      <span className={`title${syncing === true ? ` syncing` : ``}`}>
         {display}
       </span>
 
