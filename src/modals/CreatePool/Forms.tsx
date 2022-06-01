@@ -72,7 +72,7 @@ export const Forms = () => {
       <div>
         <>
           <BondInputWithFeedback
-            subject="pools"
+            target="pool"
             unbond={false}
             listenIsValid={setBondValid}
             defaultBond={freeToBond}
