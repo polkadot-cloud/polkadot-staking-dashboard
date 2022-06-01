@@ -22,7 +22,7 @@ export const NominationStatus = (props: any) => {
 
   const ownStaked =
     nominationStatus === 'active'
-      ? ownStake?.find((_own: any) => _own.address).value ?? 0
+      ? ownStake?.find((_own: any) => _own.address)?.value ?? 0
       : 0;
 
   return (
