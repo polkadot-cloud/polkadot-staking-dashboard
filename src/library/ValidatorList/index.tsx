@@ -30,8 +30,7 @@ export const ValidatorListInner = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
-  const { selectActive, setSelectActive, selected, resetSelected } =
-    useValidatorList();
+  const { selectActive, setSelectActive, selected } = useValidatorList();
 
   const {
     setListFormat,
@@ -53,6 +52,12 @@ export const ValidatorListInner = (props: any) => {
     format,
     selectable,
   }: any = props;
+
+  const actions = props.actions ?? [];
+  const actionsAll = [...actions].filter((action: any) => !action.onSelected);
+  const actionsSelected = [...actions].filter(
+    (action: any) => action.onSelected
+  );
 
   const disableThrottle = props.disableThrottle ?? false;
   const refetchOnListUpdate =
@@ -220,20 +225,34 @@ export const ValidatorListInner = (props: any) => {
 
         {selectable && (
           <Selectable>
+            {actionsAll.map((a: any, i: number) => (
+              <button
+                key={`a_all_${i}`}
+                type="button"
+                onClick={() => a.onClick()}
+              >
+                {a.title}
+              </button>
+            ))}
             <button
               type="button"
               onClick={() => {
                 setSelectActive(!selectActive);
               }}
             >
-              {selectActive ? 'Cancel' : 'Select'}
+              {selectActive ? 'Cancel Selection' : 'Select'}
             </button>
             {selected.length > 0 && (
               <>
-                <button type="button" onClick={() => {}}>
-                  Stop Nominating {selected.length} Nominator
-                  {selected.length !== 1 && 's'}
-                </button>
+                {actionsSelected.map((a: any, i: number) => (
+                  <button
+                    key={`a_selected_${i}`}
+                    type="button"
+                    onClick={() => a.onClick()}
+                  >
+                    {a.title}
+                  </button>
+                ))}
               </>
             )}
           </Selectable>

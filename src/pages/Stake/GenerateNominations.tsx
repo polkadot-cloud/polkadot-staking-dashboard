@@ -10,6 +10,7 @@ import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { useValidatorList } from 'library/ValidatorList/context';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {
@@ -22,6 +23,7 @@ export const GenerateNominations = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { removeValidatorMetaBatch, validators, favouritesList, meta } =
     useValidators();
+  const { selected } = useValidatorList();
   const { applyValidatorOrder, applyValidatorFilters }: any = useUi();
 
   const [method, setMethod]: any = useState(null);
@@ -105,27 +107,23 @@ export const GenerateNominations = (props: any) => {
     }
   });
 
+  // callback function for clearing nomination list
+  const cbClearNominations = () => {
+    setMethod(null);
+    removeValidatorMetaBatch(batchKey);
+    setNominations([]);
+    for (const s of setters) {
+      s.set({
+        ...s.current,
+        nominations: [],
+      });
+    }
+  };
+
   return (
     <Wrapper style={{ minHeight: 200 }}>
       <div>
-        {nominations.length ? (
-          <Button
-            inline
-            small
-            title="Clear Nominations"
-            onClick={() => {
-              setMethod(null);
-              removeValidatorMetaBatch(batchKey);
-              setNominations([]);
-              for (const s of setters) {
-                s.set({
-                  ...s.current,
-                  nominations: [],
-                });
-              }
-            }}
-          />
-        ) : (
+        {!nominations.length && (
           <>
             <Button
               inline
@@ -165,6 +163,18 @@ export const GenerateNominations = (props: any) => {
                 validators={nominations}
                 batchKey={batchKey}
                 selectable
+                actions={[
+                  {
+                    title: 'Clear All',
+                    onClick: cbClearNominations,
+                    onSelected: false,
+                  },
+                  {
+                    title: `Remove Selected`,
+                    onClick: cbClearNominations,
+                    onSelected: true,
+                  },
+                ]}
                 allowMoreCols
               />
             </div>
