@@ -7,6 +7,7 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { usePools } from 'contexts/Pools';
 import { ConnectContextInterface } from 'types/connect';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, SectionsWrapper } from './Wrappers';
@@ -15,10 +16,30 @@ import { Forms } from './Forms';
 
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const modal = useModal();
+  const { config, setModalHeight } = useModal();
+  const { target } = config || {};
   const { getAccountLedger }: any = useBalances();
-  const ledger = getAccountLedger(activeAccount);
-  const { unlocking } = ledger;
+  const { getPoolUnlocking } = usePools();
+
+  // get the unlocking per target
+  const _getUnlocking = () => {
+    let unlocking = [];
+    let ledger;
+    switch (target) {
+      case 'stake':
+        ledger = getAccountLedger(activeAccount);
+        unlocking = ledger.unlocking;
+        break;
+      case 'pool':
+        unlocking = getPoolUnlocking();
+        break;
+      default:
+        console.error(`unlocking modal target ${target} is not defined.`);
+    }
+    return unlocking;
+  };
+
+  const unlocking = _getUnlocking();
 
   // active modal section
   const [section, setSection] = useState(0);
@@ -43,7 +64,7 @@ export const UnlockChunks = () => {
     } else {
       _height += formsRef.current?.clientHeight ?? 0;
     }
-    modal.setModalHeight(_height);
+    setModalHeight(_height);
   }, [task, section]);
 
   return (
@@ -72,6 +93,8 @@ export const UnlockChunks = () => {
         }}
       >
         <Overview
+          unlocking={unlocking}
+          target={target}
           setSection={setSection}
           setUnlock={setUnlock}
           setTask={setTask}

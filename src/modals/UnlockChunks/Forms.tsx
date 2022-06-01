@@ -17,6 +17,7 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { usePools } from 'contexts/Pools';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
@@ -25,11 +26,16 @@ export const Forms = forwardRef(
     const { api, network } = useApi() as APIContextInterface;
     const { activeAccount } = useConnect() as ConnectContextInterface;
     const { getControllerNotImported, staking } = useStaking();
-    const { setStatus: setModalStatus }: any = useModal();
+    const { activeBondedPool } = usePools();
+    const { setStatus: setModalStatus, config }: any = useModal();
+    const { target } = config || {};
     const { getBondedAccount }: any = useBalances();
     const { historyDepth } = staking;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);
+
+    const isStaking = target === 'stake';
+    const isPooling = target === 'pool';
 
     // valid to submit transaction
     const [valid, setValid]: any = useState(
@@ -47,17 +53,23 @@ export const Forms = forwardRef(
       if (!valid || !api) {
         return _tx;
       }
-      if (task === 'rebond') {
+      // rebond is only available when staking directly.
+      if (task === 'rebond' && isStaking) {
         _tx = api.tx.staking.rebond(unlock.value.toNumber());
-      } else {
+      } else if (task === 'withdraw' && isStaking) {
         _tx = api.tx.staking.withdrawUnbonded(historyDepth);
+      } else if (task === 'withdraw' && isPooling && activeBondedPool) {
+        _tx = api.tx.nominationPools.withdrawUnbonded(
+          activeAccount,
+          activeBondedPool?.slashingSpansCount
+        );
       }
       return _tx;
     };
-
+    const signingAccount = isStaking ? controller : activeAccount;
     const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
       tx: tx(),
-      from: controller,
+      from: signingAccount,
       shouldSubmit: valid,
       callbackSubmit: () => {
         setModalStatus(0);
