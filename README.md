@@ -1,6 +1,6 @@
 # Polkadot Staking Dashboard
 
-:warning: This project is a work in progress and should only be used for testing and development purposes. Do not use this app for Polkadot staking until its initial release.
+A redefining Polkadot staking dashboard.
 
 ## Demo
 

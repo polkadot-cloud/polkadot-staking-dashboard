@@ -144,6 +144,15 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     if (poolsConfig.unsub !== null) {
       poolsConfig.unsub();
     }
+    if (poolMembership.unsub !== null) {
+      poolMembership.unsub();
+    }
+    if (activeBondedPool.unsub !== null) {
+      activeBondedPool.unsub();
+    }
+    if (poolNominations.unsub !== null) {
+      poolNominations.unsub();
+    }
     setBondedPools([]);
   };
 

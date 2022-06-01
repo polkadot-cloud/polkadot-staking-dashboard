@@ -58,11 +58,6 @@ export const EntryWrapper = styled.div`
   path.primary {
     fill: ${textPrimary};
   }
-  .xs-none {
-    @media (max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
-      display: none;
-    }
-  }
   .page-padding {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -164,7 +159,7 @@ export const PageTitleWrapper = styled.header<any>`
   background: ${backgroundPrimary};
   position: sticky;
   top: 0px;
-  padding-top: 1.25rem;
+  padding-top: 1.5rem;
   padding-bottom: 0.5rem;
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     top: 4rem;

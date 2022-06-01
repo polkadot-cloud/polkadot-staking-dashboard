@@ -17,8 +17,7 @@ import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { Wrapper } from './Wrapper';
-import { HeadingWrapper, FooterWrapper } from '../Wrappers';
+import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { api } = useApi() as APIContextInterface;
@@ -80,7 +79,7 @@ export const UpdatePayee = () => {
   });
 
   return (
-    <Wrapper>
+    <PaddingWrapper verticalOnly>
       <HeadingWrapper>
         <FontAwesomeIcon transform="grow-2" icon={faWallet} />
         Update Reward Destination
@@ -128,7 +127,7 @@ export const UpdatePayee = () => {
           </div>
         </FooterWrapper>
       </div>
-    </Wrapper>
+    </PaddingWrapper>
   );
 };
 

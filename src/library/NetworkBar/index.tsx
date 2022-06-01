@@ -84,7 +84,7 @@ export const NetworkBar = () => {
               setOpen(!open);
             }}
           >
-            {open ? 'Collapse' : 'Network'}
+            {open ? 'Collapse' : 'Switch Network'}
           </button>
           <div className="stat" style={{ marginRight: 0 }}>
             {status === ConnectionStatus.Connected && <BlockNumber />}

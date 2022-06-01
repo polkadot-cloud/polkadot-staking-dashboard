@@ -17,7 +17,7 @@ import { Warning } from '../Warning';
 
 export const BondInputWithFeedback = (props: any) => {
   // input props
-  const { subject, defaultBond, unbond } = props;
+  const { target, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
 
   // functional props
@@ -39,13 +39,13 @@ export const BondInputWithFeedback = (props: any) => {
   const { minNominatorBond } = staking;
 
   const minBondBase =
-    subject === 'pools'
+    target === 'pool'
       ? planckBnToUnit(minJoinBond, units)
       : planckBnToUnit(minNominatorBond, units);
 
   // get bond options for either staking or pooling.
   const options =
-    subject === 'pools'
+    target === 'pool'
       ? getPoolBondOptions(activeAccount)
       : getBondOptions(activeAccount);
 
@@ -54,13 +54,13 @@ export const BondInputWithFeedback = (props: any) => {
   // unbond amount to `minNominatorBond` threshold for staking,
   // and unbond amount to `minJoinBond` for pools.
   const freeToUnbondToMin =
-    subject === 'pools'
+    target === 'pool'
       ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
       : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
 
   // get the actively bonded amount.
   const activeBase =
-    subject === 'pools'
+    target === 'pool'
       ? planckBnToUnit(poolsActive, units)
       : planckBnToUnit(active, units);
 
@@ -133,7 +133,7 @@ export const BondInputWithFeedback = (props: any) => {
       }
 
       // unbond errors for staking only
-      if (subject === 'stake') {
+      if (target === 'stake') {
         if (getControllerNotImported(controller)) {
           _errors.push(
             'You must have your controller account imported to unbond.'
@@ -144,7 +144,7 @@ export const BondInputWithFeedback = (props: any) => {
       if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
         _errors.push(
           `A minimum bond of ${minBondBase} ${network.unit} is required when ${
-            subject === 'stake' ? `actively nominating` : `in your pool`
+            target === 'stake' ? `actively nominating` : `in your pool`
           }.`
         );
       }

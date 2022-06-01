@@ -121,6 +121,11 @@ export const NominationStatusWrapper = styled.div<{ status: string }>`
     color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
     opacity: ${(props) => (props.status === 'active' ? 1 : 0.5)};
     margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 

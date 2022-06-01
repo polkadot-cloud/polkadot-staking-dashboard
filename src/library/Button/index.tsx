@@ -77,7 +77,7 @@ export const Button = (props: any) => {
       whileTap={{ scale: !disabled ? 0.98 : 1 }}
       type={type}
       margin={inline ? '0' : '0 0.5rem'}
-      padding={small ? '0.3rem 0.75rem' : '0.45rem 1.2rem'}
+      padding={small ? '0.36rem 0.8rem' : '0.45rem 1.2rem'}
       fontSize={small ? '0.95rem' : '1.05rem'}
     >
       <button type="button" disabled={disabled} onClick={() => onClick()}>

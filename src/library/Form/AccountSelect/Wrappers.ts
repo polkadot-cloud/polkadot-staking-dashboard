@@ -95,6 +95,7 @@ export const StyledSelect = styled.div`
         display: flex;
         flex-flow: row wrap;
         max-width: 100%;
+
         h3 {
           box-sizing: border-box;
           display: inline-block;

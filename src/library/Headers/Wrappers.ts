@@ -24,10 +24,10 @@ export const Wrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   align-content: center;
-  padding: 1rem;
+  padding: 0 1.25rem;
   transition: all 0.15s;
   z-index: 5;
-  margin-bottom: 0.5rem;
+  margin: 0.25rem 0;
   height: 4rem;
 
   /* no longer in use */

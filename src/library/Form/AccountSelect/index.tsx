@@ -109,7 +109,9 @@ const DropdownItem = ({ c, item, index }: any) => {
         <div className="icon">
           <Identicon value={item.address} size={40} />
         </div>
-        <h3 style={{ color }}>{item.name}</h3>
+        <div className="title">
+          <h3 style={{ color }}>{item.name}</h3>
+        </div>
         <p>{clipAddress(item.address)}</p>
       </div>
     </div>

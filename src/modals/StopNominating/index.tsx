@@ -15,12 +15,12 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { Wrapper } from './Wrapper';
 import {
   HeadingWrapper,
   FooterWrapper,
   Separator,
   NotesWrapper,
+  PaddingWrapper,
 } from '../Wrappers';
 
 export const StopNominating = () => {
@@ -61,7 +61,7 @@ export const StopNominating = () => {
   });
 
   return (
-    <Wrapper>
+    <PaddingWrapper verticalOnly>
       <HeadingWrapper>
         <FontAwesomeIcon transform="grow-2" icon={faStopCircle} />
         Stop Nominating
@@ -111,7 +111,7 @@ export const StopNominating = () => {
           </div>
         </FooterWrapper>
       </div>
-    </Wrapper>
+    </PaddingWrapper>
   );
 };
 
