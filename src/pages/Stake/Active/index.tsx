@@ -62,7 +62,7 @@ export const Active = ({ title }: any) => {
             <>
               <SectionHeaderWrapper withAction>
                 <h2>
-                  Generate Nominations
+                  Start Nominating
                   <OpenAssistantIcon page="stake" title="Nominations" />
                 </h2>
                 <div>
