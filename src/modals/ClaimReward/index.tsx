@@ -15,8 +15,12 @@ import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { usePools } from 'contexts/Pools';
 import { ConnectContextInterface } from 'types/connect';
-import { Wrapper } from './Wrapper';
-import { HeadingWrapper, FooterWrapper, Separator } from '../Wrappers';
+import {
+  HeadingWrapper,
+  FooterWrapper,
+  Separator,
+  PaddingWrapper,
+} from '../Wrappers';
 
 export const ClaimReward = () => {
   const { api, network } = useApi() as APIContextInterface;
@@ -59,7 +63,7 @@ export const ClaimReward = () => {
   });
 
   return (
-    <Wrapper>
+    <PaddingWrapper verticalOnly>
       <HeadingWrapper>
         <FontAwesomeIcon transform="grow-2" icon={faWallet} />
         Claim Payout
@@ -106,7 +110,7 @@ export const ClaimReward = () => {
           </div>
         </FooterWrapper>
       </div>
-    </Wrapper>
+    </PaddingWrapper>
   );
 };
 

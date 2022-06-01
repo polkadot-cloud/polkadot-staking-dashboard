@@ -75,6 +75,17 @@ export const ContentWrapper = styled.div<any>`
   }
 `;
 
+// generic wrapper for modal padding
+export const PaddingWrapper = styled.div<any>`
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding: ${(props) => (props.verticalOnly ? '1rem 0' : '1rem')};
+`;
+
 // modal header, used for extrinsics forms
 export const HeadingWrapper = styled.h3`
   display: flex;
