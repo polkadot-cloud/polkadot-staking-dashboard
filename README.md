@@ -1,5 +1,7 @@
 # Polkadot Staking Dashboard
 
+A redefining Polkadot staking dashboard.
+
 ## Demo
 
 [https://paritytech.github.io/polkadot-staking-dashboard/](https://paritytech.github.io/polkadot-staking-dashboard/)
