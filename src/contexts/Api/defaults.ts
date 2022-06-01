@@ -3,6 +3,7 @@
 
 import { stringToU8a } from '@polkadot/util';
 import { APIConstants } from 'types/api';
+import BN from 'bn.js';
 
 export const consts: APIConstants = {
   bondDuration: 0,
@@ -11,5 +12,6 @@ export const consts: APIConstants = {
   maxNominatorRewardedPerValidator: 0,
   maxElectingVoters: 0,
   expectedBlockTime: 0,
+  existentialDeposit: new BN(0),
   poolsPalletId: stringToU8a('0'),
 };

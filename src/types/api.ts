@@ -3,6 +3,7 @@
 
 import { ApiPromise } from '@polkadot/api';
 import { U8aLike } from '@polkadot/util/types';
+import BN from 'bn.js';
 import { NodeEndpoint, NetworkName } from '.';
 
 export enum ConnectionStatus {
@@ -22,6 +23,7 @@ export interface APIConstants {
   maxNominatorRewardedPerValidator: number;
   maxElectingVoters: number;
   expectedBlockTime: number;
+  existentialDeposit: BN;
   poolsPalletId: U8aLike;
 }
 
