@@ -61,12 +61,17 @@ export const BalancesProvider = ({
   const [ledgers, setLedgers] = useState<any>([]);
   const ledgersRef = useRef<Array<any>>(ledgers);
 
+  // store how many ledgers are currently syncing
+  const [ledgersSyncingCount, setLedgersSyncingCount] = useState(0);
+  const ledgersSyncingCountRef = useRef(ledgersSyncingCount);
+
   // fetch account balances
   useEffect(() => {
     if (isReady) {
       // unsubscribe from current accounts and ledgers
       setStateWithRef([], setBondedAccounts, bondedAccountsRef);
       setStateWithRef([], setLedgers, ledgersRef);
+      setStateWithRef(0, setLedgersSyncingCount, ledgersSyncingCountRef);
       unsubscribeAll();
       getBalances();
     }
@@ -197,6 +202,13 @@ export const BalancesProvider = ({
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
 
+    // increment syncing ledger counter
+    setStateWithRef(
+      Math.max(ledgersSyncingCountRef.current + 1, 0),
+      setLedgersSyncingCount,
+      ledgersSyncingCountRef
+    );
+
     const unsub = await api.query.staking.ledger(address, (l: any) => {
       let ledger: any;
 
@@ -231,6 +243,13 @@ export const BalancesProvider = ({
       _ledgers = _ledgers
         .filter((acc: any) => acc.stash !== ledger.stash)
         .concat(ledger);
+
+      // decrement syncing ledger counter
+      setStateWithRef(
+        Math.max(ledgersSyncingCountRef.current - 1, 0),
+        setLedgersSyncingCount,
+        ledgersSyncingCountRef
+      );
 
       // update state
       setStateWithRef(_ledgers, setLedgers, ledgersRef);
@@ -405,6 +424,7 @@ export const BalancesProvider = ({
         isController,
         accounts: accountsRef.current,
         minReserve,
+        ledgersSyncingCount: ledgersSyncingCountRef.current,
       }}
     >
       {children}

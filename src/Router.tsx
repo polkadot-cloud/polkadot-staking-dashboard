@@ -27,15 +27,18 @@ import Assistant from 'library/Assistant';
 import Notifications from 'library/Notifications';
 import { TITLE_DEFAULT } from 'consts';
 import { useUi } from 'contexts/UI';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 
 export const RouterInner = () => {
+  const { network } = useApi() as APIContextInterface;
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised } = useUi();
 
-  // scroll to top of the window on every page change.
+  // scroll to top of the window on every page change or network change
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, network]);
 
   return (
     <>

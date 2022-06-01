@@ -14,6 +14,7 @@ import { useStaking } from 'contexts/Staking';
 import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = () => {
@@ -40,6 +41,8 @@ export const Nominations = () => {
             <div>
               <Button
                 small
+                icon={faStopCircle}
+                transform="grow-1"
                 inline
                 primary
                 title="Stop"

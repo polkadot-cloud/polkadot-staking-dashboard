@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { formatBalance } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -11,9 +12,15 @@ import { usePools } from 'contexts/Pools';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 import { APIContextInterface } from 'types/api';
+import {
+  faChevronCircleRight,
+  faPaperPlane,
+  faSignOutAlt,
+  faTimesCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 export const Status = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network, isReady } = useApi() as APIContextInterface;
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const {
@@ -43,7 +50,9 @@ export const Status = () => {
     buttonsMembership = [
       {
         title: 'Create Pool',
-        small: true,
+        icon: faChevronCircleRight,
+        transform: 'grow-1',
+        disabled: !isReady,
         onClick: () => openModalWith('CreatePool', { target: 'pool' }, 'small'),
       },
     ];
@@ -51,6 +60,9 @@ export const Status = () => {
     buttonsMembership = [
       {
         title: 'Destroy Pool',
+        icon: faTimesCircle,
+        transform: 'grow-1',
+        disabled: !isReady,
         small: true,
         onClick: () =>
           openModalWith('Destroy Pool', { target: 'pool' }, 'small'),
@@ -61,14 +73,21 @@ export const Status = () => {
     buttonsMembership = [
       {
         title: 'Leave Pool',
+        icon: faSignOutAlt,
+        disabled: !isReady,
         small: true,
         onClick: () => openModalWith('LeavePool', { target: 'pool' }, 'small'),
       },
     ];
   }
 
+  // fallback to no buttons if app is syncing
+  buttonsMembership = isSyncing ? [] : buttonsMembership;
+
   // Unclaimed rewards `Stat` props
-  const { unclaimedReward } = activeBondedPool || {};
+  let { unclaimedReward } = activeBondedPool || {};
+  unclaimedReward = unclaimedReward ?? new BN(0);
+
   const labelRewards = unclaimedReward
     ? `${formatBalance(unclaimedReward, {
         decimals: units,
@@ -76,10 +95,12 @@ export const Status = () => {
         withUnit: unit,
       })} ${unit}`
     : `0 ${unit}`;
-  const buttonsRewards = unclaimedReward
+  const buttonsRewards = unclaimedReward.toNumber()
     ? [
         {
           title: 'Claim',
+          icon: faPaperPlane,
+          disabled: !isReady,
           small: true,
           onClick: () =>
             openModalWith('ClaimReward', { target: 'pool' }, 'small'),

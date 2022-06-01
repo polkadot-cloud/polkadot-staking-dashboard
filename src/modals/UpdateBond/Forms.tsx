@@ -17,31 +17,37 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { usePools } from 'contexts/Pools';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
-export const StakeForms = forwardRef((props: any, ref: any) => {
+export const Forms = forwardRef((props: any, ref: any) => {
   const { setSection, task } = props;
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { setStatus: setModalStatus, setResize }: any = useModal();
+  const { setStatus: setModalStatus, setResize, config }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } = useStaking();
-  const { minNominatorBond } = staking;
   const { getBondOptions, getBondedAccount, getAccountNominations }: any =
     useBalances();
-  const { freeToBond, freeToUnbond, totalPossibleBond } =
-    getBondOptions(activeAccount);
+  const { getPoolBondOptions, stats } = usePools();
+  const { target } = config;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
+  const { minNominatorBond } = staking;
+  const stakeBondOptions = getBondOptions(activeAccount);
+  const poolBondOptions = getPoolBondOptions(activeAccount);
+  const { minJoinBond } = stats;
+  const isStaking = target === 'stake';
+  const isPooling = target === 'pool';
+  const isBondTask = task === 'bond_some' || task === 'bond_all';
+  const isUnbondTask = task === 'unbond_some' || task === 'unbond_all';
 
-  // unbond amount to `minNominatorBond` threshold
-  const freeToUnbondToMinNominatorBond = Math.max(
-    freeToUnbond - planckBnToUnit(minNominatorBond, units),
-    0
-  );
+  const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { totalPossibleBond } = isPooling ? poolBondOptions : stakeBondOptions;
 
   // local bond value
   const [bond, setBond] = useState(freeToBond);
@@ -49,14 +55,28 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
   // bond valid
   const [bondValid, setBondValid]: any = useState(false);
 
+  // get the max amount available to unbond
+  const freeToUnbondToMin = isPooling
+    ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
+    : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
+
+  // unbond all validation
+  const unbondAllValid = isPooling
+    ? true
+    : totalPossibleBond > 0 &&
+      nominations.length === 0 &&
+      !controllerNotImported;
+
+  // unbnd some validation
+  const unbondSomeValid = isPooling ? true : !controllerNotImported;
+
   // update bond value on task change
   useEffect(() => {
-    const _bond =
-      task === 'bond_some' || task === 'bond_all'
-        ? freeToBond
-        : task === 'unbond_some'
-        ? freeToUnbondToMinNominatorBond
-        : freeToUnbond;
+    const _bond = isBondTask
+      ? freeToBond
+      : task === 'unbond_some'
+      ? freeToUnbondToMin
+      : totalPossibleBond;
 
     setBond({ bond: _bond });
 
@@ -68,18 +88,14 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
       }
     }
     if (task === 'unbond_all') {
-      if (
-        freeToUnbond > 0 &&
-        nominations.length === 0 &&
-        !controllerNotImported
-      ) {
+      if (unbondAllValid) {
         setBondValid(true);
       } else {
         setBondValid(false);
       }
     }
     if (task === 'unbond_some') {
-      if (!controllerNotImported) {
+      if (unbondSomeValid) {
         setBondValid(true);
       } else {
         setBondValid(false);
@@ -95,32 +111,41 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!bondValid || !api) {
+    if (!bondValid || !api || !activeAccount) {
       return _tx;
     }
 
-    // controller must be imported
-    if (
-      (task === 'unbond_some' || task === 'unbond_all') &&
-      controllerNotImported
-    ) {
+    // stake unbond: controller must be imported
+    if (isStaking && isUnbondTask && controllerNotImported) {
       return _tx;
     }
     // remove decimal errors
     const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
 
-    if (task === 'bond_some' || task === 'bond_all') {
-      _tx = api.tx.staking.bondExtra(bondToSubmit);
-    } else if (task === 'unbond_some' || task === 'unbond_all') {
-      _tx = api.tx.staking.unbond(bondToSubmit);
+    // determine _tx
+    if (isPooling) {
+      if (isBondTask) {
+        _tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
+      } else {
+        _tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+      }
+    } else if (isStaking) {
+      if (isBondTask) {
+        _tx = api.tx.staking.bondExtra(bondToSubmit);
+      } else {
+        _tx = api.tx.staking.unbond(bondToSubmit);
+      }
     }
     return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from:
-      task === 'bond_some' || task === 'bond_all' ? activeAccount : controller,
+    from: isPooling
+      ? activeAccount
+      : task === 'bond_some' || task === 'bond_all'
+      ? activeAccount
+      : controller,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
@@ -138,7 +163,7 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
         {task === 'bond_some' && (
           <>
             <BondInputWithFeedback
-              subject="stake"
+              target={target}
               unbond={false}
               listenIsValid={setBondValid}
               defaultBond={freeToBond}
@@ -176,10 +201,10 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
         {task === 'unbond_some' && (
           <>
             <BondInputWithFeedback
-              subject="stake"
+              target={target}
               unbond
               listenIsValid={setBondValid}
-              defaultBond={freeToUnbondToMinNominatorBond}
+              defaultBond={freeToUnbondToMin}
               setters={[
                 {
                   set: setBond,
@@ -198,12 +223,12 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
         )}
         {task === 'unbond_all' && (
           <>
-            {controllerNotImported ? (
+            {isStaking && controllerNotImported ? (
               <Warning text="You must have your controller account imported to unbond." />
             ) : (
               <></>
             )}
-            {nominations.length ? (
+            {isStaking && nominations.length ? (
               <Warning text="Stop nominating before unbonding all funds." />
             ) : (
               <></>
@@ -253,5 +278,3 @@ export const StakeForms = forwardRef((props: any, ref: any) => {
     </ContentWrapper>
   );
 });
-
-export default StakeForms;

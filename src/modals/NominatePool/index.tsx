@@ -13,12 +13,12 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { ConnectContextInterface } from 'types/connect';
-import { Wrapper } from './Wrapper';
 import {
   HeadingWrapper,
   FooterWrapper,
   Separator,
   NotesWrapper,
+  PaddingWrapper,
 } from '../Wrappers';
 
 export const NominatePool = () => {
@@ -70,7 +70,7 @@ export const NominatePool = () => {
   }
 
   return (
-    <Wrapper>
+    <PaddingWrapper verticalOnly>
       <HeadingWrapper>
         <FontAwesomeIcon transform="grow-2" icon={faPlayCircle} />
         Nominate
@@ -113,7 +113,7 @@ export const NominatePool = () => {
           </div>
         </FooterWrapper>
       </div>
-    </Wrapper>
+    </PaddingWrapper>
   );
 };
 

@@ -50,7 +50,7 @@ export const Bond = (props: any) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondInputWithFeedback
-          subject="stake"
+          target="stake"
           nominating
           unbond={false}
           listenIsValid={setBondValid}

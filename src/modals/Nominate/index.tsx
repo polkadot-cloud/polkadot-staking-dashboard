@@ -16,12 +16,12 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { Wrapper } from './Wrapper';
 import {
   HeadingWrapper,
   FooterWrapper,
   Separator,
   NotesWrapper,
+  PaddingWrapper,
 } from '../Wrappers';
 
 export const Nominate = () => {
@@ -90,7 +90,7 @@ export const Nominate = () => {
   }
 
   return (
-    <Wrapper>
+    <PaddingWrapper verticalOnly>
       <HeadingWrapper>
         <FontAwesomeIcon transform="grow-2" icon={faPlayCircle} />
         Nominate
@@ -133,7 +133,7 @@ export const Nominate = () => {
           </div>
         </FooterWrapper>
       </div>
-    </Wrapper>
+    </PaddingWrapper>
   );
 };
 

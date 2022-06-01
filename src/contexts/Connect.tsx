@@ -77,7 +77,7 @@ export const ConnectProvider = ({
         if (unsubscribeRef.current !== null) {
           await unsubscribeRef.current();
         }
-        importNetworkAddresses(accounts, activeExtension);
+        importNetworkAddresses(accountsRef.current);
       })();
     }
   }, [network]);
@@ -110,8 +110,8 @@ export const ConnectProvider = ({
         `${network.name.toLowerCase()}_active_account`,
         address
       );
-      setStateWithRef(address, _setActiveAccount, activeAccountRef);
     }
+    setStateWithRef(address, _setActiveAccount, activeAccountRef);
   };
 
   const setExtensionErrors = (key: string, value: string) => {
@@ -165,7 +165,7 @@ export const ConnectProvider = ({
             setExtensionErrors(_wallet, 'No accounts');
           } else {
             // import addresses with correct format
-            importNetworkAddresses(injected, _wallet);
+            importNetworkAddresses(injected);
             // set active wallet and connected status
             setActiveExtension(_wallet);
           }
@@ -186,44 +186,45 @@ export const ConnectProvider = ({
     }
   };
 
-  const importNetworkAddresses = (_accounts: any, wallet: any) => {
+  const importNetworkAddresses = (_accounts: any) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
+    // get account address in the correct format
     _accounts.forEach(async (account: any) => {
-      // get account address in the correct format
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;
       return account;
     });
 
-    // active account is first in list if none presently persisted
+    // get active account from local storage if present
     let _activeAccount: any = localStorageOrDefault(
       `${network.name.toLowerCase()}_active_account`,
       null
     );
 
+    // ensure the account is in the correct format
     if (_activeAccount !== null) {
       _activeAccount = keyring.addFromAddress(_activeAccount).address;
+
+      // check active account is in the currently selected wallet
+      const activeAccountInWallet =
+        _accounts.find((item: any) => item.address === _activeAccount) ?? null;
+
+      // auto connect to account
+      connectToAccount(activeAccountInWallet);
+    } else {
+      setActiveAccount(null);
+      setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
     }
-
-    // check active account is in the currently selected wallet
-    const activeAccountInWallet = _accounts.find(
-      (item: any) => item.address === _activeAccount
-    );
-
-    // auto connect to account
-    connectToAccount(activeAccountInWallet);
 
     // set available accounts
     setStateWithRef(_accounts, setAccounts, accountsRef);
   };
 
   const connectToAccount = (account: any = null) => {
-    if (account !== null) {
-      setActiveAccount(account.address);
-      setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
-    }
+    setActiveAccount(account.address);
+    setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
   };
 
   const accountExists = (addr: string) => {

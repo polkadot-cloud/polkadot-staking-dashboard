@@ -93,6 +93,7 @@ export const Status = () => {
         buttons={[
           {
             title: 'Update',
+            icon: faWallet,
             small: true,
             disabled: inSetup() || isSyncing,
             onClick: () => openModalWith('UpdatePayee', {}, 'small'),

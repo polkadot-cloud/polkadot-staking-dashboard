@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding: 0.25rem;
+  padding: 0.15rem 0.25rem;
   width: 100%;
   h4 {
     display: flex;
@@ -22,5 +22,6 @@ export const Wrapper = styled.div`
     flex-flow: row wrap;
     align-items: center;
     margin-bottom: 0;
+    line-height: 2.1rem;
   }
 `;
