@@ -114,7 +114,7 @@ export const GenerateNominations = (props: any) => {
   });
 
   // callback function for clearing nomination list
-  const cbClearNominations = (provider: any) => {
+  const cbClearNominations = ({ resetSelected }: any) => {
     setMethod(null);
     removeValidatorMetaBatch(batchKey);
     setNominations([]);
@@ -124,6 +124,7 @@ export const GenerateNominations = (props: any) => {
         nominations: [],
       });
     }
+    resetSelected();
   };
 
   // callback function for removing selected validators
