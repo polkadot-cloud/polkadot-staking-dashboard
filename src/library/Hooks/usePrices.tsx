@@ -10,22 +10,25 @@ export const usePrices = () => {
   const { network, fetchDotPrice } = useApi() as APIContextInterface;
   const { services }: any = useUi();
 
-  let pricesLocal = localStorage.getItem(`${network.name}_prices`);
-  pricesLocal =
-    pricesLocal === null
+  const pricesLocalStorage = () => {
+    const pricesLocal = localStorage.getItem(`${network.name}_prices`);
+    return pricesLocal === null
       ? {
           lastPrice: 0,
           change: 0,
         }
       : JSON.parse(pricesLocal);
+  };
 
-  const [prices, _setPrices]: any = useState(pricesLocal);
-
+  const [prices, _setPrices]: any = useState(pricesLocalStorage());
   const pricesRef = useRef(prices);
 
   const setPrices = (p: any) => {
     localStorage.setItem(`${network.name}_prices`, JSON.stringify(p));
-    pricesRef.current = prices;
+    pricesRef.current = {
+      ...pricesRef.current,
+      ...p,
+    };
     _setPrices({
       ...pricesRef.current,
       ...p,
@@ -77,7 +80,7 @@ export const usePrices = () => {
     }
   }, [services]);
 
-  return prices;
+  return pricesRef.current;
 };
 
 export default usePrices;
