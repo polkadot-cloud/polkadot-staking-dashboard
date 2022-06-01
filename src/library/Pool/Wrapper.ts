@@ -74,10 +74,10 @@ export const Wrapper = styled(motion.div)<any>`
       }
 
       .label {
+        color: ${textSecondary};
         display: flex;
         align-items: center;
         margin-left: 1rem;
-        color: ${textSecondary};
         .icon {
           margin-right: 0.4rem;
         }
@@ -90,10 +90,10 @@ export const Wrapper = styled(motion.div)<any>`
         button {
           color: ${textSecondary};
           &:hover {
-            color: #666;
+            opacity: 0.75;
           }
           &.active {
-            color: rgba(211, 48, 121, 0.85);
+            color: ${primary};
           }
         }
       }
