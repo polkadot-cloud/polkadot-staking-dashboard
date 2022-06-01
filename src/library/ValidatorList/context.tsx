@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 export const ValidatorListContext: React.Context<any> = React.createContext({
   setSelectable: (_selectable: boolean) => {},
   addToSelected: (item: any) => {},
-  removeFromSelected: (item: any) => {},
+  removeFromSelected: (items: Array<any>) => {},
   resetSelected: () => {},
   selected: [],
   selectable: false,
@@ -26,8 +26,8 @@ export const ValidatorListProvider = ({
     setSelected([...selected].concat(_item));
   };
 
-  const removeFromSelected = (_item: any) => {
-    setSelected([...selected].filter((item: any) => item !== _item));
+  const removeFromSelected = (items: Array<any>) => {
+    setSelected([...selected].filter((item: any) => !items.includes(item)));
   };
 
   const resetSelected = () => {

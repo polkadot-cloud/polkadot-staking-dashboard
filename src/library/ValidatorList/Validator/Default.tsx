@@ -95,7 +95,7 @@ export const Default = (props: any) => {
               type="checkbox"
               onClick={() => {
                 if (selected.includes(validator)) {
-                  removeFromSelected(validator);
+                  removeFromSelected([validator]);
                 } else {
                   addToSelected(validator);
                 }
