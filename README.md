@@ -1,7 +1,5 @@
 # Polkadot Staking Dashboard
 
-:warning: This project is a work in progress and should only be used for testing and development purposes. Do not use this app for Polkadot staking until its initial release.
-
 ## Demo
 
 [https://paritytech.github.io/polkadot-staking-dashboard/](https://paritytech.github.io/polkadot-staking-dashboard/)
