@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
+import BN from 'bn.js';
 import {
   BONDING_DURATION,
   SESSIONS_PER_ERA,
@@ -78,7 +79,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     localStorage.setItem('network', String(network.name));
 
-    // staking constants
+    // constants
     const promises = [
       _api.consts.staking.bondingDuration,
       _api.consts.staking.maxNominations,
@@ -86,6 +87,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.staking.maxNominatorRewardedPerValidator,
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
       _api.consts.babe.expectedBlockTime,
+      _api.consts.balances.existentialDeposit,
     ];
 
     // pools constants
@@ -123,6 +125,10 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     const poolsPalletId = _consts[6] ? _consts[6].toU8a() : new Uint8Array(0);
 
+    const existentialDeposit = _consts[6]
+      ? new BN(_consts[6].toString())
+      : new BN(0);
+
     setApi(_api);
     setConsts({
       bondDuration,
@@ -132,6 +138,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       maxElectingVoters,
       expectedBlockTime,
       poolsPalletId,
+      existentialDeposit,
     });
   };
 

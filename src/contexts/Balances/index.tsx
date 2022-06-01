@@ -29,7 +29,7 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network } = useApi() as APIContextInterface;
+  const { api, isReady, network, consts } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics();
   const { accounts: connectAccounts, activeExtension } =
     useConnect() as ConnectContextInterface;
@@ -37,7 +37,7 @@ export const BalancesProvider = ({
   const { units } = network;
 
   // existential amount of unit for an account
-  const existentialAmount: BN = new BN(10 ** units);
+  const existentialAmount = consts.existentialDeposit;
 
   // amount of compulsary reserve balance
   const reserveAmount: BN = existentialAmount.div(new BN(10));
