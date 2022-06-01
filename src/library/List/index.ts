@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary } from 'theme';
+import {
+  textSecondary,
+  borderPrimary,
+  buttonSecondaryBackground,
+  textPrimary,
+} from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -80,6 +85,25 @@ export const Pagination = styled.div<any>`
         color: ${(props) => (props.prev ? 'rgb(211, 48, 121)' : textSecondary)};
         cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
       }
+    }
+  }
+`;
+
+export const Selectable = styled.div<any>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+
+  > button {
+    color: ${textSecondary};
+    background: ${buttonSecondaryBackground};
+    border-radius: 0.5rem;
+    padding: 0.36rem 0.8rem;
+    margin-right: 0.5rem;
+
+    &:hover {
+      color: ${textPrimary};
     }
   }
 `;

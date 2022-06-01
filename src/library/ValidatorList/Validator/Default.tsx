@@ -16,6 +16,7 @@ import { Favourite } from './Labels/Favourite';
 import { Identity } from './Labels/Identity';
 import { Oversubscribed } from './Labels/Oversubscribed';
 import { Blocked } from './Labels/Blocked';
+import { useValidatorList } from '../context';
 
 export const Default = (props: any) => {
   const { validator, toggleFavourites, batchIndex, batchKey, showStatus } =
@@ -25,6 +26,8 @@ export const Default = (props: any) => {
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { meta } = useValidators();
+  const { selectActive, addToSelected, removeFromSelected, selected } =
+    useValidatorList();
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -87,6 +90,18 @@ export const Default = (props: any) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
+          {selectActive && (
+            <input
+              type="checkbox"
+              onClick={() => {
+                if (selected.includes(validator)) {
+                  removeFromSelected(validator);
+                } else {
+                  addToSelected(validator);
+                }
+              }}
+            />
+          )}
           <Identity
             validator={validator}
             batchIndex={batchIndex}

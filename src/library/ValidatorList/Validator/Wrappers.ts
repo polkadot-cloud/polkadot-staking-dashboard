@@ -79,6 +79,9 @@ export const Wrapper = styled.div<any>`
         }
       }
     }
+    input[type='checkbox'] {
+      margin-right: 0.75rem;
+    }
   }
 `;
 

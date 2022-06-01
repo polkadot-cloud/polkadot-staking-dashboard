@@ -8,6 +8,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
 import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
+import { usePools } from 'contexts/Pools';
 import { Wrapper } from './Wrapper';
 
 export const PoolNominations = () => {
@@ -15,6 +16,7 @@ export const PoolNominations = () => {
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
   const batchKey = 'stake_nominations';
+  const { isOwner } = usePools();
 
   return (
     <Wrapper>
@@ -38,7 +40,7 @@ export const PoolNominations = () => {
                     validators={poolNominated}
                     batchKey={batchKey}
                     title="Your Nominations"
-                    selectable
+                    selectable={isOwner()}
                     format="nomination"
                     refetchOnListUpdate
                     allowMoreCols

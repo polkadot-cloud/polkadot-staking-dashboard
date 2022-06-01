@@ -4,8 +4,10 @@
 import React, { useState } from 'react';
 
 export const ValidatorListContext: React.Context<any> = React.createContext({
-  setSelected: (_selected: Array<any>) => {},
   setSelectable: (_selectable: boolean) => {},
+  addToSelected: (item: any) => {},
+  removeFromSelected: (item: any) => {},
+  resetSelected: () => {},
   selected: [],
   selectable: false,
 });
@@ -17,24 +19,36 @@ export const ValidatorListProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [selected, _setSelected] = useState<Array<any>>([]);
-  const [selectable, _setSelectable] = useState(false);
+  const [selected, setSelected] = useState<Array<any>>([]);
+  const [selectActive, _setSelectActive] = useState(false);
 
-  const setSelected = (_selected: Array<any>) => {
-    _setSelected(_selected);
+  const addToSelected = (_item: any) => {
+    setSelected([...selected].concat(_item));
   };
 
-  const setSelectable = (_selectable: boolean) => {
-    _setSelectable(_selectable);
+  const removeFromSelected = (_item: any) => {
+    setSelected([...selected].filter((item: any) => item !== _item));
+  };
+
+  const resetSelected = () => {
+    setSelected([]);
+  };
+  const setSelectActive = (_selectActive: boolean) => {
+    _setSelectActive(_selectActive);
+    if (_selectActive === false) {
+      resetSelected();
+    }
   };
 
   return (
     <ValidatorListContext.Provider
       value={{
-        setSelected,
-        setSelectable,
+        setSelectActive,
+        addToSelected,
+        removeFromSelected,
+        resetSelected,
         selected,
-        selectable,
+        selectActive,
       }}
     >
       {children}

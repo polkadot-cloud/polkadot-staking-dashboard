@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
+import { useValidatorList } from '../context';
 import { Wrapper, Labels, Separator } from './Wrappers';
 import { getIdentityDisplay } from './Utils';
 import { Favourite } from './Labels/Favourite';
@@ -14,6 +15,8 @@ import { NominationStatus } from './Labels/NominationStatus';
 
 export const Nomination = (props: any) => {
   const { meta } = useValidators();
+  const { selectActive, addToSelected, removeFromSelected, selected } =
+    useValidatorList();
 
   const { validator, toggleFavourites, batchIndex, batchKey } = props;
   const identities = meta[batchKey]?.identities ?? [];
@@ -26,6 +29,18 @@ export const Nomination = (props: any) => {
     <Wrapper format="nomination">
       <div className="inner">
         <div className="row">
+          {selectActive && (
+            <input
+              type="checkbox"
+              onClick={() => {
+                if (selected.includes(validator)) {
+                  removeFromSelected(validator);
+                } else {
+                  addToSelected(validator);
+                }
+              }}
+            />
+          )}
           <Identity
             validator={validator}
             batchIndex={batchIndex}
