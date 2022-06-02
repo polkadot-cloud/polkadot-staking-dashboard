@@ -65,7 +65,7 @@ export const PoolsContext: React.Context<PoolsContextState> =
     stats: defaults.stats,
     bondedPools: [],
     targets: [],
-    poolNominations: defaults.poolNominations,
+    poolNominations: defaults.nominations,
   });
 
 export const usePools = () => React.useContext(PoolsContext);
@@ -102,9 +102,9 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     unsub: null,
   });
 
-  // stores pool nominations
+  // validators that are currently nominated by the activeBonded pool.
   const [poolNominations, setPoolNominations]: any = useState({
-    noominations: defaults.poolNominations,
+    noominations: defaults.nominations,
     unsub: null,
   });
 
@@ -214,7 +214,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       poolNominations.unsub();
     }
     setPoolNominations({
-      nominations: defaults.poolNominations,
+      nominations: defaults.nominations,
       unsub: null,
     });
   };
@@ -418,7 +418,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         // set pool nominations
         let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
-          _nominations = defaults.poolNominations;
+          _nominations = defaults.nominations;
         } else {
           _nominations = {
             targets: _nominations.targets.toHuman(),
@@ -688,11 +688,11 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
    * Possible statuses: waiting, inactive, active.
    */
   const getNominationsStatus = () => {
-    if (!targets) {
+    if (!poolNominations) {
       return defaults.nominationStatus;
     }
 
-    const { nominations } = targets;
+    const nominations = poolNominations?.nominations?.targets || [];
     const statuses: any = {};
     for (const nomination of nominations) {
       const s = eraStakers.stakers.find((_n: any) => _n.address === nomination);
@@ -710,6 +710,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       }
       statuses[nomination] = 'active';
     }
+
     return statuses;
   };
 
