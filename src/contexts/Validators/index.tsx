@@ -61,7 +61,6 @@ export const ValidatorsProvider = ({
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getAccountNominations }: any = useBalances();
   const { poolNominations } = usePools();
-
   const { maxNominatorRewardedPerValidator } = consts;
 
   // stores the total validator entries
