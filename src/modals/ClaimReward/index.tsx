@@ -81,10 +81,9 @@ export const ClaimReward = () => {
         <h2>
           {formatBalance(unclaimedReward, {
             decimals: units,
-            withSi: true,
+            withSiFull: true,
             withUnit: unit,
           })}
-          &nbsp;{network.unit}
         </h2>
         <Separator />
         <div className="notes">
