@@ -199,7 +199,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // subscribe to pool nominations
-  const bondedAddress = setActiveBondedPool.bondedPool?.addresses?.stash;
+  const bondedAddress = activeBondedPool.pool?.addresses?.stash;
   useEffect(() => {
     if (isReady && enabled && bondedAddress) {
       subscribeToPoolNominations(bondedAddress);
