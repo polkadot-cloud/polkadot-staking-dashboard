@@ -15,6 +15,7 @@ export const PoolNominations = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
+  const { isOwner } = usePools();
   const batchKey = 'pool_nominations';
 
   return (
