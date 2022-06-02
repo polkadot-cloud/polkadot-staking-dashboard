@@ -695,9 +695,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const { nominations } = targets;
     const statuses: any = {};
     for (const nomination of nominations) {
-      const s = eraStakers.current.stakers.find(
-        (_n: any) => _n.address === nomination
-      );
+      const s = eraStakers.stakers.find((_n: any) => _n.address === nomination);
 
       if (s === undefined) {
         statuses[nomination] = 'waiting';

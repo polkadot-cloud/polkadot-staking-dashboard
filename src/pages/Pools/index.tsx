@@ -31,7 +31,7 @@ export const Pools = (props: PageProps) => {
   const { title } = page;
   const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
-  const { bondedPools, isBonding, targets } = usePools();
+  const { bondedPools, isBonding, isNominator, targets } = usePools();
   const { isSyncing } = useUi();
 
   // back to overview if pools are not supported on network
@@ -61,30 +61,32 @@ export const Pools = (props: PageProps) => {
       </PageRowWrapper>
       {isBonding() && (
         <>
-          {targets.nominations.length > 0 && <ManagePool />}
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <SectionWrapper>
               <Roles />
             </SectionWrapper>
           </PageRowWrapper>
+          {isNominator() && <ManagePool />}
         </>
       )}
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
-          <SectionHeaderWrapper>
-            <h2>
-              {isBonding() || isSyncing ? 'Pools' : 'Join a Pool'}
-              <OpenAssistantIcon page="pools" title="Nomination Pools" />
-            </h2>
-          </SectionHeaderWrapper>
-          <PoolList
-            pools={bondedPools}
-            title="Active Pools"
-            allowMoreCols
-            pagination
-          />
-        </SectionWrapper>
-      </PageRowWrapper>
+      {!isBonding() && !isSyncing && (
+        <PageRowWrapper className="page-padding" noVerticalSpacer>
+          <SectionWrapper>
+            <SectionHeaderWrapper>
+              <h2>
+                Join a Pool
+                <OpenAssistantIcon page="pools" title="Nomination Pools" />
+              </h2>
+            </SectionHeaderWrapper>
+            <PoolList
+              pools={bondedPools}
+              title="Active Pools"
+              allowMoreCols
+              pagination
+            />
+          </SectionWrapper>
+        </PageRowWrapper>
+      )}
     </>
   );
 };
