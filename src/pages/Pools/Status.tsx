@@ -93,9 +93,9 @@ export const Status = () => {
   const labelRewards = unclaimedReward
     ? `${formatBalance(unclaimedReward, {
         decimals: units,
-        withSi: true,
+        withSiFull: true,
         withUnit: unit,
-      })} ${unit}`
+      })}`
     : `0 ${unit}`;
   const buttonsRewards = unclaimedReward.toNumber()
     ? [
