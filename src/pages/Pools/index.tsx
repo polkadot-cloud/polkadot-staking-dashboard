@@ -61,12 +61,12 @@ export const Pools = (props: PageProps) => {
       </PageRowWrapper>
       {isBonding() && (
         <>
+          <ManagePool />
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <SectionWrapper>
               <Roles />
             </SectionWrapper>
           </PageRowWrapper>
-          {isNominator() && <ManagePool />}
         </>
       )}
       {!isBonding() && !isSyncing && (
