@@ -18,7 +18,7 @@ export const targets = {
   nominations: [],
 };
 
-export const poolNominations = {
+export const nominations = {
   targets: [],
   submittedIn: 0,
 };

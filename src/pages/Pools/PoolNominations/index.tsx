@@ -14,7 +14,7 @@ export const PoolNominations = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
-  const batchKey = 'stake_nominations';
+  const batchKey = 'pool_nominations';
 
   return (
     <Wrapper>

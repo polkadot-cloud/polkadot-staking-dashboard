@@ -28,7 +28,7 @@ export const Status = () => {
     activeBondedPool,
     isOwner,
     getNominationsStatus,
-    targets,
+    poolNominations,
   } = usePools();
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
@@ -39,6 +39,8 @@ export const Status = () => {
   const active: any = Object.values(nominationStatuses).filter(
     (_v: any) => _v === 'active'
   ).length;
+
+  const isNominating = !!poolNominations?.targets?.length;
 
   // Pool status `Stat` props
   const labelMembership = membership
@@ -107,7 +109,6 @@ export const Status = () => {
         },
       ]
     : undefined;
-
   return (
     <SectionWrapper height="300">
       <Stat
@@ -130,9 +131,9 @@ export const Status = () => {
             label="Pool Status"
             assistant={['stake', 'Staking Status']}
             stat={
-              inSetup() || isSyncing
+              isSyncing
                 ? 'Inactive: Not Nominating'
-                : !targets.nominations.length
+                : !isNominating
                 ? 'Inactive: Not Nominating'
                 : active
                 ? 'Actively Nominating with Pool Funds'
