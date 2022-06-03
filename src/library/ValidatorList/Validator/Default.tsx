@@ -16,6 +16,7 @@ import { Favourite } from './Labels/Favourite';
 import { Identity } from './Labels/Identity';
 import { Oversubscribed } from './Labels/Oversubscribed';
 import { Blocked } from './Labels/Blocked';
+import { Select } from './Labels/Select';
 import { useValidatorList } from '../context';
 
 export const Default = (props: any) => {
@@ -96,18 +97,7 @@ export const Default = (props: any) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
-          {selectActive && (
-            <input
-              type="checkbox"
-              onClick={() => {
-                if (selected.includes(validator)) {
-                  removeFromSelected([validator]);
-                } else {
-                  addToSelected(validator);
-                }
-              }}
-            />
-          )}
+          {selectActive && <Select validator={validator} />}
           <Identity
             validator={validator}
             batchIndex={batchIndex}

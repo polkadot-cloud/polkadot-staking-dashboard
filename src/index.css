@@ -112,10 +112,6 @@ input::placeholder {
   color: #bbb;
 }
 
-input[type='checkbox'] {
-  transform: scale(1.2);
-}
-
 input:focus,
 textarea:focus,
 select:focus {

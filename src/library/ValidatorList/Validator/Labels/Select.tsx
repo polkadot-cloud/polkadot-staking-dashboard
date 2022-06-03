@@ -1,0 +1,48 @@
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import Checkbox from 'react-custom-checkbox';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'styled-components';
+import { useValidatorList } from '../../context';
+
+export const Select = (props: any) => {
+  const { validator } = props;
+
+  const { mode }: any = useTheme();
+  const { addToSelected, removeFromSelected, selected } = useValidatorList();
+
+  return (
+    <div className="select">
+      <Checkbox
+        onChange={() => {
+          if (selected.includes(validator)) {
+            removeFromSelected([validator]);
+          } else {
+            addToSelected(validator);
+          }
+        }}
+        icon={
+          <div className="checkbox">
+            <FontAwesomeIcon
+              icon={faCheck as IconProp}
+              transform="shrink-2"
+              color={defaultThemes.text.secondary[mode]}
+            />
+          </div>
+        }
+        borderColor="rgba(0,0,0,0)"
+        style={{
+          overflow: 'hidden',
+          cursor: 'pointer',
+        }}
+        size={18}
+      />
+    </div>
+  );
+};
+
+export default Select;

@@ -8,6 +8,7 @@ import {
   borderPrimary,
   textSecondary,
   primary,
+  buttonPrimaryBackground,
 } from 'theme';
 
 export const Wrapper = styled.div<any>`
@@ -79,8 +80,31 @@ export const Wrapper = styled.div<any>`
         }
       }
     }
-    input[type='checkbox'] {
-      margin-right: 0.75rem;
+    .select {
+      margin: 0 0.75rem 0 0.25rem;
+      overflow: hidden;
+      display: block;
+      background: ${buttonPrimaryBackground};
+      border-radius: 0.25rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      * {
+        cursor: pointer;
+        width: 1.4rem;
+        height: 1.4rem;
+      }
+      svg {
+        width: 1.1rem;
+        height: 1.1rem;
+      }
+      .checkbox {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        font-size: 1rem;
+      }
     }
   }
 `;

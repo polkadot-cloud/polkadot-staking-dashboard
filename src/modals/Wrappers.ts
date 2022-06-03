@@ -147,9 +147,3 @@ export const NotesWrapper = styled.div`
     color: ${textSecondary};
   }
 `;
-
-export const WarningsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  margin-bottom: 1rem;
-`;

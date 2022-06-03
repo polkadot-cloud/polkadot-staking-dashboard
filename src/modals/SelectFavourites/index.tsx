@@ -7,8 +7,7 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { Warning } from 'library/Form/Warning';
-import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
 export const SelectFavourites = () => {
@@ -43,13 +42,6 @@ export const SelectFavourites = () => {
   return (
     <PaddingWrapper>
       <h2>Add From Favourites</h2>
-      <WarningsWrapper>
-        {overMaxNominations && (
-          <Warning
-            text={`Adding this many validators will surpass the maximum limit of ${maxNominations} nominations.`}
-          />
-        )}
-      </WarningsWrapper>
       <ListWrapper>
         {favouritesList.length > 0 ? (
           <ValidatorList
@@ -73,9 +65,11 @@ export const SelectFavourites = () => {
           onClick={() => submitSelectedFavourites()}
         >
           {selectedFavourites.length > 0
-            ? `Add ${selectedFavourites.length} Favourite${
-                selectedFavourites.length !== 1 ? `s` : ``
-              } to Nominations`
+            ? overMaxNominations
+              ? `Adding this many favourites will surpass ${maxNominations} nominations.`
+              : `Add ${selectedFavourites.length} Favourite${
+                  selectedFavourites.length !== 1 ? `s` : ``
+                } to Nominations`
             : `No Favourites Selected`}
         </button>
       </FooterWrapper>
