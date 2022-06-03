@@ -11,6 +11,7 @@ import { Identity } from './Labels/Identity';
 import { CopyAddress } from './Labels/CopyAddress';
 import { Oversubscribed } from './Labels/Oversubscribed';
 import { Blocked } from './Labels/Blocked';
+import { Select } from './Labels/Select';
 import { NominationStatus } from './Labels/NominationStatus';
 
 export const Nomination = (props: any) => {
@@ -29,18 +30,7 @@ export const Nomination = (props: any) => {
     <Wrapper format="nomination">
       <div className="inner">
         <div className="row">
-          {selectActive && (
-            <input
-              type="checkbox"
-              onClick={() => {
-                if (selected.includes(validator)) {
-                  removeFromSelected([validator]);
-                } else {
-                  addToSelected(validator);
-                }
-              }}
-            />
-          )}
+          {selectActive && <Select validator={validator} />}
           <Identity
             validator={validator}
             batchIndex={batchIndex}
