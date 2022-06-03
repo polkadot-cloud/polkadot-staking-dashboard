@@ -59,7 +59,7 @@ export const ItemWrapper = styled.div<any>`
   display: flex;
   flex-flow: row nowrap;
   position: relative;
-  padding: 0.6rem 0.85rem;
+  padding: 0.65rem 0.85rem;
   margin-right: 1rem;
   align-items: center;
 
