@@ -31,11 +31,10 @@ export const ValidatorListInner = (props: any) => {
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useValidatorList();
-  const { selectActive, setSelectActive, selected } = provider;
+  const { selectActive, setSelectActive, selected, listFormat, setListFormat } =
+    provider;
 
   const {
-    setListFormat,
-    listFormat,
     validatorFilters,
     validatorOrder,
     applyValidatorFilters,

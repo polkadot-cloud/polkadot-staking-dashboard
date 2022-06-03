@@ -8,8 +8,10 @@ export const ValidatorListContext: React.Context<any> = React.createContext({
   addToSelected: (item: any) => {},
   removeFromSelected: (items: Array<any>) => {},
   resetSelected: () => {},
+  setListFormat: (v: string) => {},
   selected: [],
   selectable: false,
+  listFormat: 'col',
 });
 
 export const useValidatorList = () => React.useContext(ValidatorListContext);
@@ -21,6 +23,7 @@ export const ValidatorListProvider = ({
 }) => {
   const [selected, setSelected] = useState<Array<any>>([]);
   const [selectActive, _setSelectActive] = useState(false);
+  const [listFormat, _setListFormat] = useState('col');
 
   const addToSelected = (_item: any) => {
     setSelected([...selected].concat(_item));
@@ -40,6 +43,10 @@ export const ValidatorListProvider = ({
     }
   };
 
+  const setListFormat = (v: string) => {
+    _setListFormat(v);
+  };
+
   return (
     <ValidatorListContext.Provider
       value={{
@@ -47,8 +54,10 @@ export const ValidatorListProvider = ({
         addToSelected,
         removeFromSelected,
         resetSelected,
+        setListFormat,
         selected,
         selectActive,
+        listFormat,
       }}
     >
       {children}
