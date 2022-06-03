@@ -140,7 +140,7 @@ export const ValidatorListInner = (props: any) => {
   // handle modal resize on list format change
   useEffect(() => {
     maybeHandleModalResize();
-  }, [listFormat, renderIteration, validators]);
+  }, [listFormat, renderIteration, validators, page]);
 
   // handle validator list bootstrapping
   const setupValidatorList = () => {
