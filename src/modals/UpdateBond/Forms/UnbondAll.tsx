@@ -39,41 +39,32 @@ export const UnbondAll = forwardRef((props: any, ref: any) => {
   const isStaking = target === 'stake';
   const isPooling = target === 'pool';
 
-  const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
   const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
-  const { totalPossibleBond } = isPooling ? poolBondOptions : stakeBondOptions;
 
   // local bond value
-  const [bond, setBond] = useState(freeToBond);
+  const [bond, setBond] = useState(freeToUnbond);
 
   // bond valid
   const [bondValid, setBondValid]: any = useState(false);
 
-  // get the max amount available to unbond
-  const freeToUnbondToMin = isPooling
-    ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
-    : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
-
   // unbond all validation
   const isValid = (() => {
-    let isValid = false;
+    let _isValid = false;
     if (isPooling) {
-      isValid = totalPossibleBond > 0;
+      _isValid = freeToUnbond > 0;
     } else {
-      isValid =
-        totalPossibleBond > 0 &&
-        nominations.length === 0 &&
-        !controllerNotImported;
+      _isValid =
+        freeToUnbond > 0 && nominations.length === 0 && !controllerNotImported;
     }
-    return isValid;
+    return _isValid;
   })();
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = totalPossibleBond;
+    const _bond = freeToUnbond;
     setBond({ bond: _bond });
     setBondValid(isValid);
-  }, [totalPossibleBond, isValid]);
+  }, [freeToUnbond, isValid]);
 
   // modal resize on form update
   useEffect(() => {
