@@ -90,15 +90,19 @@ export const Status = () => {
             : faWallet) as IconProp
         }
         stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
-        buttons={[
-          {
-            title: 'Update',
-            icon: faWallet,
-            small: true,
-            disabled: inSetup() || isSyncing,
-            onClick: () => openModalWith('UpdatePayee', {}, 'small'),
-          },
-        ]}
+        buttons={
+          payeeStatus
+            ? [
+                {
+                  title: 'Update',
+                  icon: faWallet,
+                  small: true,
+                  disabled: inSetup() || isSyncing,
+                  onClick: () => openModalWith('UpdatePayee', {}, 'small'),
+                },
+              ]
+            : []
+        }
       />
     </SectionWrapper>
   );

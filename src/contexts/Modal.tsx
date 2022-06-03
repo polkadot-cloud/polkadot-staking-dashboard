@@ -70,6 +70,10 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const setModalHeight = (h: number) => {
+    // set maximum height to 80% of window height
+    const maxHeight = window.innerHeight * 0.8;
+    h = h > maxHeight ? maxHeight : h;
+
     setState({
       ...state,
       height: h,

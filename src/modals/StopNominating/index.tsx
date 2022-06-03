@@ -28,9 +28,13 @@ export const StopNominating = () => {
   const { getControllerNotImported } = useStaking();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations }: any = useBalances();
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus, config }: any = useModal();
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
+
+  const { nominations: newNominations, provider } = config;
+  const removing = nominations.length - newNominations.length;
+  const remaining = newNominations.length;
 
   // ensure selected key is valid
   useEffect(() => {
@@ -46,7 +50,17 @@ export const StopNominating = () => {
     if (!valid || !api) {
       return _tx;
     }
-    _tx = api.tx.staking.chill();
+
+    if (remaining === 0) {
+      _tx = api.tx.staking.chill();
+    } else {
+      const targetsToSubmit = newNominations.map((item: any) => {
+        return {
+          Id: item,
+        };
+      });
+      _tx = api.tx.staking.nominate(targetsToSubmit);
+    }
     return _tx;
   };
 
@@ -56,6 +70,12 @@ export const StopNominating = () => {
     shouldSubmit: valid,
     callbackSubmit: () => {
       setModalStatus(0);
+
+      // if removing a subset of nominations, reset selected list
+      if (provider) {
+        provider.setSelectActive(false);
+        provider.resetSelected();
+      }
     },
     callbackInBlock: () => {},
   });
@@ -78,14 +98,15 @@ export const StopNominating = () => {
           <Warning text="You must have your controller account imported to stop nominating." />
         )}
         <h2>
-          You Have {nominations.length} Nomination
-          {nominations.length === 1 ? '' : 's'}
+          Stop {!remaining ? 'All Nomination' : `${removing} Nomination`}
+          {remaining === 1 ? '' : 's'}
         </h2>
         <Separator />
         <NotesWrapper>
           <p>
-            Once submitted, your nominations will be removed immediately and
-            will stop nominating from the start of the next era.
+            Once submitted, your nominations will be removed from your dashboard
+            immediately, and will not be nominated from the start of the next
+            era.
           </p>
           <p>
             Estimated Tx Fee:{' '}

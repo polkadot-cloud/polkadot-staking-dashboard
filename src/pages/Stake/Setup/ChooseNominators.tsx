@@ -4,16 +4,20 @@
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 import { GenerateNominations } from '../GenerateNominations';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
 
 export const ChooseNominators = (props: any) => {
+  const { consts } = useApi() as APIContextInterface;
   const { section } = props;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(activeAccount);
+  const { maxNominations } = consts;
 
   return (
     <>
@@ -25,7 +29,11 @@ export const ChooseNominators = (props: any) => {
         assistantKey="Nominating"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <div style={{ marginTop: '1rem' }}>
+        <div style={{ marginTop: '0.5rem' }}>
+          <h4>
+            Choose up to {maxNominations} validators to nominate. Generate your
+            nominations automatically or add a selection from your favourites.
+          </h4>
           <GenerateNominations
             batchKey="generate_nominations_inactive"
             setters={[
