@@ -116,7 +116,9 @@ export const GenerateNominations = (props: any) => {
   });
 
   // callback function for adding nominations
-  const cbAddNominations = (provider: any) => {
+  const cbAddNominations = ({ setSelectActive }: any) => {
+    setSelectActive(false);
+
     const updateList = (_nominations: Array<any>) => {
       setMethod(null);
       removeValidatorMetaBatch(batchKey);
