@@ -141,8 +141,8 @@ export const SelectWrapper = styled.div`
   display: block;
   background: ${modalBackground};
   border-radius: 0.25rem;
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 1.1rem;
+  height: 1.1rem;
   * {
     cursor: pointer;
     width: 100%;
@@ -154,8 +154,8 @@ export const SelectWrapper = styled.div`
     justify-content: center;
   }
   svg {
-    width: 1.1rem;
-    height: 1.1rem;
+    width: 1rem;
+    height: 1rem;
   }
   .select-checkbox {
     display: flex;
