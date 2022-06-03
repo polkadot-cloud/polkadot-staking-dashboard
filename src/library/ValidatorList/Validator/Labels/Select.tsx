@@ -26,13 +26,11 @@ export const Select = (props: any) => {
           }
         }}
         icon={
-          <div className="checkbox">
-            <FontAwesomeIcon
-              icon={faCheck as IconProp}
-              transform="shrink-2"
-              color={defaultThemes.text.secondary[mode]}
-            />
-          </div>
+          <FontAwesomeIcon
+            icon={faCheck as IconProp}
+            transform="shrink-2"
+            color={defaultThemes.text.secondary[mode]}
+          />
         }
         borderColor="rgba(0,0,0,0)"
         style={{

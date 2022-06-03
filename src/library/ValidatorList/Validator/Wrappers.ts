@@ -90,19 +90,22 @@ export const Wrapper = styled.div<any>`
       height: 1.3rem;
       * {
         cursor: pointer;
-        width: 1.3rem;
-        height: 1.3rem;
+        width: 100%;
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       svg {
         width: 1.1rem;
         height: 1.1rem;
       }
-      .checkbox {
+      .select-checkbox {
         display: flex;
-        flex: 1;
         align-items: center;
         justify-content: center;
-        padding: 0;
         font-size: 1rem;
       }
     }
