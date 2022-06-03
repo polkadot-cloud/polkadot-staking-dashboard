@@ -25,6 +25,8 @@ export const Modal = () => {
     useModal();
   const controls = useAnimation();
 
+  const maxHeight = window.innerHeight * 0.8;
+
   const onFadeIn = async () => {
     await controls.start('visible');
   };
@@ -58,7 +60,10 @@ export const Modal = () => {
 
   // resize modal on status or resize change
   useEffect(() => {
-    setModalHeight(modalRef.current?.clientHeight ?? 0);
+    let _height = modalRef.current?.clientHeight;
+    _height = _height > maxHeight ? maxHeight : _height;
+
+    setModalHeight(_height);
   }, [status, resize]);
 
   if (status === 0) {
@@ -81,6 +86,7 @@ export const Modal = () => {
           size={size}
           style={{
             height,
+            overflowY: height >= maxHeight ? 'scroll' : 'hidden',
           }}
         >
           <ContentWrapper ref={modalRef}>
