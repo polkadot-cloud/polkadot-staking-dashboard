@@ -15,7 +15,7 @@ export const PoolNominations = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
-  const { isOwner } = usePools();
+  const { isNominator } = usePools();
   const batchKey = 'pool_nominations';
 
   return (
@@ -40,7 +40,7 @@ export const PoolNominations = () => {
                     validators={poolNominated}
                     batchKey={batchKey}
                     title="Your Nominations"
-                    selectable={isOwner()}
+                    selectable={isNominator()}
                     format="nomination"
                     refetchOnListUpdate
                     allowMoreCols
