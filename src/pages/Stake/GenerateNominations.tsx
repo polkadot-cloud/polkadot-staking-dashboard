@@ -10,6 +10,7 @@ import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { useModal } from 'contexts/Modal';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {
@@ -18,6 +19,7 @@ export const GenerateNominations = (props: any) => {
   const defaultNominations = props.nominations;
   const { batchKey } = props;
 
+  const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { removeValidatorMetaBatch, validators, favouritesList, meta } =
@@ -113,6 +115,31 @@ export const GenerateNominations = (props: any) => {
     }
   });
 
+  // callback function for adding nominations
+  const cbAddNominations = (provider: any) => {
+    const updateList = (_nominations: Array<any>) => {
+      setMethod(null);
+      removeValidatorMetaBatch(batchKey);
+      setNominations(_nominations);
+      for (const s of setters) {
+        s.set({
+          ...s.current,
+          nominations: _nominations,
+        });
+      }
+    };
+
+    openModalWith(
+      'SelectFavourites',
+      {
+        provider,
+        nominations,
+        callback: updateList,
+      },
+      'large'
+    );
+  };
+
   // callback function for clearing nomination list
   const cbClearNominations = ({ resetSelected }: any) => {
     setMethod(null);
@@ -196,6 +223,11 @@ export const GenerateNominations = (props: any) => {
                   {
                     title: 'Reset',
                     onClick: cbClearNominations,
+                    onSelected: false,
+                  },
+                  {
+                    title: 'Add Favourites',
+                    onClick: cbAddNominations,
                     onSelected: false,
                   },
                   {
