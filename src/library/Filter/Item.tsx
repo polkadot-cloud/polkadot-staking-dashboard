@@ -7,9 +7,11 @@ import { ItemWrapper } from './Wrappers';
 
 export const Item = (props: any) => {
   const { icon, label, transform, onClick } = props;
+  const disabled = props.disabled ?? false;
 
   return (
     <motion.button
+      disabled={disabled}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.99 }}
       transition={{
@@ -17,6 +19,9 @@ export const Item = (props: any) => {
       }}
       onClick={() => {
         onClick();
+      }}
+      style={{
+        opacity: disabled ? 0.5 : 1,
       }}
     >
       <ItemWrapper active={props.active} style={{ width: props.width ?? 180 }}>

@@ -7,10 +7,13 @@ import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useUi } from 'contexts/UI';
-import { Button } from 'library/Button';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
+import { Container } from 'library/Filter/Container';
+import { Category } from 'library/Filter/Category';
+import { Item } from 'library/Filter/Item';
+import { faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {
@@ -22,10 +25,13 @@ export const GenerateNominations = (props: any) => {
   const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { removeValidatorMetaBatch, validators, favouritesList, meta } =
-    useValidators();
+  const { removeValidatorMetaBatch, validators, meta } = useValidators();
   const { applyValidatorOrder, applyValidatorFilters }: any = useUi();
 
+  let { favouritesList } = useValidators();
+  if (favouritesList === null) {
+    favouritesList = [];
+  }
   // store the method of fetching validators
   const [method, setMethod]: any = useState(null);
 
@@ -177,35 +183,41 @@ export const GenerateNominations = (props: any) => {
   };
 
   return (
-    <Wrapper style={{ minHeight: 200 }}>
+    <Wrapper>
       <div>
         {!nominations.length && (
           <>
-            <Button
-              inline
-              small
-              title="Get Most Profitable"
-              onClick={() => {
-                setMethod('Most Profitable');
-                removeValidatorMetaBatch(batchKey);
-                setNominations([]);
-                setFetching(true);
-              }}
-            />
-            {favouritesList === null ? (
-              <></>
-            ) : (
-              <Button
-                small
-                title="Get Favourites"
-                onClick={() => {
-                  setMethod('Favourites');
-                  removeValidatorMetaBatch(batchKey);
-                  setNominations([]);
-                  setFetching(true);
-                }}
-              />
-            )}
+            <Container>
+              <Category title="Generate Method">
+                <Item
+                  label="Most Profitable"
+                  icon={faStar}
+                  transform="grow-2"
+                  active={false}
+                  onClick={() => {
+                    setMethod('Most Profitable');
+                    removeValidatorMetaBatch(batchKey);
+                    setNominations([]);
+                    setFetching(true);
+                  }}
+                  width={175}
+                />
+                <Item
+                  label="From Favourites"
+                  icon={faThumbtack}
+                  transform="grow-2"
+                  disabled={!favouritesList.length}
+                  active={false}
+                  onClick={() => {
+                    setMethod('Favourites');
+                    removeValidatorMetaBatch(batchKey);
+                    setNominations([]);
+                    setFetching(true);
+                  }}
+                  width={175}
+                />
+              </Category>
+            </Container>
           </>
         )}
       </div>
@@ -221,11 +233,12 @@ export const GenerateNominations = (props: any) => {
                 selectable
                 actions={[
                   {
-                    title: 'Reset',
+                    title: 'Start Again',
                     onClick: cbClearNominations,
                     onSelected: false,
                   },
                   {
+                    disabled: !favouritesList.length,
                     title: 'Add From Favourites',
                     onClick: cbAddNominations,
                     onSelected: false,

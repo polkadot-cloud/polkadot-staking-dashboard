@@ -251,6 +251,7 @@ export const ValidatorListInner = (props: any) => {
             {actionsAll.map((a: any, i: number) => (
               <button
                 key={`a_all_${i}`}
+                disabled={a.disabled ?? false}
                 type="button"
                 onClick={() => a.onClick(provider)}
               >
@@ -270,6 +271,7 @@ export const ValidatorListInner = (props: any) => {
                 {actionsSelected.map((a: any, i: number) => (
                   <button
                     key={`a_selected_${i}`}
+                    disabled={a.disabled ?? false}
                     type="button"
                     onClick={() => a.onClick(provider)}
                   >

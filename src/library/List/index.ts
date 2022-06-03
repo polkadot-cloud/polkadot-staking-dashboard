@@ -102,6 +102,10 @@ export const Selectable = styled.div<any>`
     padding: 0.36rem 0.8rem;
     margin-right: 0.5rem;
 
+    &:disabled {
+      opacity: 0.5;
+    }
+
     &:hover {
       color: ${textPrimary};
     }
