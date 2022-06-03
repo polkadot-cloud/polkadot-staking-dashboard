@@ -47,7 +47,7 @@ export const Menu = () => {
             position: 'absolute',
             left: `${position[0]}px`,
             top: `${position[1]}px`,
-            zIndex: 7,
+            zIndex: 99,
             opacity: menu.show === 1 ? 1 : 0,
           }}
         >
