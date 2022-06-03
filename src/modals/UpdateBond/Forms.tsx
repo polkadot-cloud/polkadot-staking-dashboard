@@ -61,11 +61,18 @@ export const Forms = forwardRef((props: any, ref: any) => {
     : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
 
   // unbond all validation
-  const unbondAllValid = isPooling
-    ? true
-    : totalPossibleBond > 0 &&
-      nominations.length === 0 &&
-      !controllerNotImported;
+  const unbondAllValid = () => {
+    let isValid = false;
+    if (isPooling) {
+      isValid = totalPossibleBond > 0;
+    } else {
+      isValid =
+        totalPossibleBond > 0 &&
+        nominations.length === 0 &&
+        !controllerNotImported;
+    }
+    return isValid;
+  };
 
   // unbnd some validation
   const unbondSomeValid = isPooling ? true : !controllerNotImported;
@@ -88,7 +95,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
       }
     }
     if (task === 'unbond_all') {
-      if (unbondAllValid) {
+      if (unbondAllValid()) {
         setBondValid(true);
       } else {
         setBondValid(false);
