@@ -124,6 +124,12 @@ export const ValidatorListInner = (props: any) => {
     }
   }, [renderIterationRef.current]);
 
+  useEffect(() => {
+    if (props.onSelected) {
+      props.onSelected(provider);
+    }
+  }, [selected]);
+
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     if (allowFilters && fetched) {

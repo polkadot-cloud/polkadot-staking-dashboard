@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useState } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
@@ -9,13 +10,21 @@ import { PaddingWrapper } from '../Wrappers';
 export const SelectFavourites = () => {
   const { config } = useModal();
   const { favouritesList } = useValidators();
-  const {
-    nominations,
-    provider: generateNominationsProvider,
-    callback: generateNominationsCallback,
-  }: any = config;
+  const { nominations, callback: generateNominationsCallback }: any = config;
+
+  const [selectedFavourites, setSelectedFavourites] = useState([]);
 
   const batchKey = 'favourite_validators';
+
+  const onSelected = (provider: any) => {
+    const { selected } = provider;
+    setSelectedFavourites(selected);
+  };
+
+  const submitSelectedFavourites = () => {
+    const newNominations = [...nominations].concat(...selectedFavourites);
+    generateNominationsCallback(newNominations);
+  };
 
   return (
     <PaddingWrapper>
@@ -26,6 +35,7 @@ export const SelectFavourites = () => {
           batchKey={batchKey}
           title="Favourite Validators"
           selectable
+          onSelected={onSelected}
           refetchOnListUpdate
           showMenu={false}
           inModal

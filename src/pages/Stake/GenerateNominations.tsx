@@ -128,11 +128,9 @@ export const GenerateNominations = (props: any) => {
         });
       }
     };
-
     openModalWith(
       'SelectFavourites',
       {
-        provider,
         nominations,
         callback: updateList,
       },
