@@ -1,18 +1,27 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
-import { PaddingWrapper } from '../Wrappers';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
+import { Warning } from 'library/Form/Warning';
+import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
+import { ListWrapper, FooterWrapper } from './Wrappers';
 
 export const SelectFavourites = () => {
-  const { config } = useModal();
+  const { consts } = useApi() as APIContextInterface;
+  const { config, setStatus, setResize } = useModal();
   const { favouritesList } = useValidators();
+  const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback }: any = config;
-
   const [selectedFavourites, setSelectedFavourites] = useState([]);
+
+  useEffect(() => {
+    setResize();
+  }, [selectedFavourites]);
 
   const batchKey = 'favourite_validators';
 
@@ -22,27 +31,54 @@ export const SelectFavourites = () => {
   };
 
   const submitSelectedFavourites = () => {
+    if (!selectedFavourites.length) return;
     const newNominations = [...nominations].concat(...selectedFavourites);
     generateNominationsCallback(newNominations);
+    setStatus(0);
   };
+
+  const totalAfterSelection = nominations.length + selectedFavourites.length;
+  const overMaxNominations = totalAfterSelection > maxNominations;
 
   return (
     <PaddingWrapper>
-      <h2>Select Favourites</h2>
-      {favouritesList.length > 0 ? (
-        <ValidatorList
-          validators={favouritesList}
-          batchKey={batchKey}
-          title="Favourite Validators"
-          selectable
-          onSelected={onSelected}
-          refetchOnListUpdate
-          showMenu={false}
-          inModal
-        />
-      ) : (
-        <h3>No Favourites.</h3>
-      )}
+      <h2>Add From Favourites</h2>
+      <WarningsWrapper>
+        {overMaxNominations && (
+          <Warning
+            text={`Adding this many validators will surpass the maximum limit of ${maxNominations} nominations.`}
+          />
+        )}
+      </WarningsWrapper>
+      <ListWrapper>
+        {favouritesList.length > 0 ? (
+          <ValidatorList
+            validators={favouritesList}
+            batchKey={batchKey}
+            title="Favourite Validators"
+            selectable
+            onSelected={onSelected}
+            refetchOnListUpdate
+            showMenu={false}
+            inModal
+          />
+        ) : (
+          <h3>No Favourites.</h3>
+        )}
+      </ListWrapper>
+      <FooterWrapper>
+        <button
+          type="button"
+          disabled={!selectedFavourites.length || overMaxNominations}
+          onClick={() => submitSelectedFavourites()}
+        >
+          {selectedFavourites.length > 0
+            ? `Add ${selectedFavourites.length} Favourite${
+                selectedFavourites.length !== 1 ? `s` : ``
+              } to Nominations`
+            : `No Favourites Selected`}
+        </button>
+      </FooterWrapper>
     </PaddingWrapper>
   );
 };

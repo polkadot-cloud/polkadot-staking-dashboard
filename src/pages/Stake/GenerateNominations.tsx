@@ -224,7 +224,7 @@ export const GenerateNominations = (props: any) => {
                     onSelected: false,
                   },
                   {
-                    title: 'Add Favourites',
+                    title: 'Add From Favourites',
                     onClick: cbAddNominations,
                     onSelected: false,
                   },
