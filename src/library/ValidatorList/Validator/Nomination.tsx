@@ -16,8 +16,7 @@ import { NominationStatus } from './Labels/NominationStatus';
 
 export const Nomination = (props: any) => {
   const { meta } = useValidators();
-  const { selectActive, addToSelected, removeFromSelected, selected } =
-    useValidatorList();
+  const { selectActive } = useValidatorList();
 
   const { validator, toggleFavourites, batchIndex, batchKey } = props;
   const identities = meta[batchKey]?.identities ?? [];

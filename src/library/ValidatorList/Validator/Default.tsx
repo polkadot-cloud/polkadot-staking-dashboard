@@ -33,8 +33,7 @@ export const Default = (props: any) => {
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { meta } = useValidators();
-  const { selectActive, addToSelected, removeFromSelected, selected } =
-    useValidatorList();
+  const { selectActive } = useValidatorList();
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
