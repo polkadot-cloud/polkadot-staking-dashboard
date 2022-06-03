@@ -8,6 +8,7 @@ import Checkbox from 'react-custom-checkbox';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'styled-components';
 import { useValidatorList } from '../../context';
+import { SelectWrapper } from '../Wrappers';
 
 export const Select = (props: any) => {
   const { validator } = props;
@@ -16,7 +17,7 @@ export const Select = (props: any) => {
   const { addToSelected, removeFromSelected, selected } = useValidatorList();
 
   return (
-    <div className="select">
+    <SelectWrapper>
       <Checkbox
         onChange={() => {
           if (selected.includes(validator)) {
@@ -39,7 +40,7 @@ export const Select = (props: any) => {
         }}
         size={18}
       />
-    </div>
+    </SelectWrapper>
   );
 };
 
