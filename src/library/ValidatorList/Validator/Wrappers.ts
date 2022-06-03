@@ -86,12 +86,12 @@ export const Wrapper = styled.div<any>`
       display: block;
       background: ${buttonPrimaryBackground};
       border-radius: 0.25rem;
-      width: 1.4rem;
-      height: 1.4rem;
+      width: 1.3rem;
+      height: 1.3rem;
       * {
         cursor: pointer;
-        width: 1.4rem;
-        height: 1.4rem;
+        width: 1.3rem;
+        height: 1.3rem;
       }
       svg {
         width: 1.1rem;
