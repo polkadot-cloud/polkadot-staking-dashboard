@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary } from 'theme';
+import { textSecondary, borderPrimary, primary } from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
-  padding: 0.25rem 0.5rem 1rem 0.5rem;
+  padding: 0 0.5rem;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-wrap: nowrap;
-  height: 125px;
+  height: 60px;
+  margin: 1rem 0;
 
   > .hide-scrollbar {
     position: absolute;
@@ -36,7 +37,8 @@ export const Wrapper = styled.div`
 
         > .head {
           flex: 1;
-          padding-bottom: 0.6rem;
+          padding-bottom: 0.5rem;
+          padding-left: 0.5rem;
           font-size: 0.8rem;
           color: ${textSecondary};
         }
@@ -52,76 +54,33 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.div<any>`
-  border: 1px solid ${borderPrimary};
-  width: 110px;
-  height: 80px;
+  border: 1px solid ${(props) => (props.active ? primary : borderPrimary)};
   border-radius: 0.7rem;
-  background: ${(props) =>
-    props.active ? 'rgba(211, 48, 121, 0.85)' : 'none'};
   display: flex;
-  flex-flow: column nowrap;
-  margin-right: 1rem;
+  flex-flow: row nowrap;
   position: relative;
+  padding: 0.6rem 0.85rem;
+  margin-right: 1rem;
+  align-items: center;
 
   &:last-child {
     margin-right: 0;
   }
-
-  section {
+  .icon {
+    color: ${(props) => (props.active ? primary : textSecondary)};
     display: flex;
-    flex-flow: row wrap;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    width: 100%;
-
-    &:first-child {
-      flex-grow: 1;
-      flex-basis: 70%;
-      justify-content: flex-start;
-      align-items: flex-end;
-      padding-bottom: 0.6rem;
-
-      .icon {
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: center;
-        align-items: center;
-        padding: 0 0.5rem;
-      }
-    }
-
-    &:last-child {
-      justify-content: flex-start;
-      padding-top: 0.2rem;
-      flex-basis: 30%;
-      min-height: 40px;
-      display: flex;
-      flex-flow: column wrap;
-      justify-content: flex-start;
-
-      p {
-        color: ${(props) => (props.active ? 'white' : textSecondary)};
-        font-size: 0.85rem;
-        margin: 0;
-        text-align: left;
-        padding-top: 0.15rem;
-        line-height: 0.9rem;
-      }
-    }
-
-    .active {
-      position: absolute;
-      right: 6px;
-      top: 4px;
-      width: 20px;
-      height: 20px;
-      z-index: 2;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    }
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.75rem;
+  }
+  p {
+    color: ${(props) => (props.active ? primary : textSecondary)};
+    font-size: 0.9rem;
+    margin: 0;
+    text-align: left;
+    padding-top: 0.15rem;
+    line-height: 0.95rem;
   }
 `;
 
