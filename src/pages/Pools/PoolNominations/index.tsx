@@ -18,6 +18,8 @@ export const PoolNominations = () => {
   const { isNominator } = usePools();
   const batchKey = 'pool_nominations';
 
+  // TODO: plug in action to stop nominating. Test when I am nominator of pool.
+
   return (
     <Wrapper>
       <SectionHeaderWrapper withAction>
