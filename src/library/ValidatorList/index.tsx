@@ -54,6 +54,7 @@ export const ValidatorListInner = (props: any) => {
   }: any = props;
 
   const actions = props.actions ?? [];
+  const showMenu = props.showMenu ?? true;
   const actionsAll = [...actions].filter((action: any) => !action.onSelected);
   const actionsSelected = [...actions].filter(
     (action: any) => action.onSelected
@@ -297,6 +298,7 @@ export const ValidatorListInner = (props: any) => {
                   batchIndex={batchIndex}
                   batchKey={batchKey}
                   format={format}
+                  showMenu={showMenu}
                 />
               </motion.div>
             );

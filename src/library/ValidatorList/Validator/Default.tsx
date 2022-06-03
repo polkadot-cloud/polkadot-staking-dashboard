@@ -19,8 +19,14 @@ import { Blocked } from './Labels/Blocked';
 import { useValidatorList } from '../context';
 
 export const Default = (props: any) => {
-  const { validator, toggleFavourites, batchIndex, batchKey, showStatus } =
-    props;
+  const {
+    validator,
+    toggleFavourites,
+    batchIndex,
+    batchKey,
+    showStatus,
+    showMenu,
+  } = props;
 
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
@@ -113,13 +119,15 @@ export const Default = (props: any) => {
               <Blocked prefs={prefs} />
               <div className="label comm">{commission}%</div>
               {toggleFavourites && <Favourite address={address} />}
-              <button
-                type="button"
-                className="label"
-                onClick={() => toggleMenu()}
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </button>
+              {showMenu && (
+                <button
+                  type="button"
+                  className="label"
+                  onClick={() => toggleMenu()}
+                >
+                  <FontAwesomeIcon icon={faBars} />
+                </button>
+              )}
             </Labels>
           </div>
         </div>

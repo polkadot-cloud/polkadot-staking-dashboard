@@ -27,6 +27,7 @@ export const SelectFavourites = () => {
           title="Favourite Validators"
           selectable
           refetchOnListUpdate
+          showMenu={false}
         />
       ) : (
         <h3>No Favourites.</h3>
