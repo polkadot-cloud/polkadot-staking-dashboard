@@ -28,6 +28,7 @@ export const SelectFavourites = () => {
           selectable
           refetchOnListUpdate
           showMenu={false}
+          inModal
         />
       ) : (
         <h3>No Favourites.</h3>

@@ -22,6 +22,7 @@ import {
   Selectable,
 } from 'library/List';
 import { ConnectContextInterface } from 'types/connect';
+import { useModal } from 'contexts/Modal';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
@@ -31,6 +32,8 @@ export const ValidatorListInner = (props: any) => {
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useValidatorList();
+  const modal = useModal();
+
   const { selectActive, setSelectActive, selected, listFormat, setListFormat } =
     provider;
 
@@ -55,6 +58,8 @@ export const ValidatorListInner = (props: any) => {
 
   const actions = props.actions ?? [];
   const showMenu = props.showMenu ?? true;
+  const inModal = props.inModal ?? false;
+
   const actionsAll = [...actions].filter((action: any) => !action.onSelected);
   const actionsSelected = [...actions].filter(
     (action: any) => action.onSelected
@@ -126,6 +131,11 @@ export const ValidatorListInner = (props: any) => {
     }
   }, [validatorFilters, validatorOrder, isSyncing]);
 
+  // handle modal resize on list format change
+  useEffect(() => {
+    maybeHandleModalResize();
+  }, [listFormat, renderIteration, validators]);
+
   // handle validator list bootstrapping
   const setupValidatorList = () => {
     setValidatorsDefault(props.validators);
@@ -160,6 +170,12 @@ export const ValidatorListInner = (props: any) => {
   } else {
     listValidators = validators;
   }
+
+  // if in modal, handle resize
+  const maybeHandleModalResize = () => {
+    if (!inModal) return;
+    modal.setResize();
+  };
 
   if (!validators.length) {
     return <></>;
