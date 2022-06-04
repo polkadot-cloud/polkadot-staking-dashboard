@@ -6,7 +6,7 @@ import {
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
-import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
@@ -49,18 +49,18 @@ export const Active = ({ title }: any) => {
           <Status />
         </RowPrimaryWrapper>
         <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <SectionWrapper height={300}>
+          <CardWrapper height={300}>
             <ManageBond />
-          </SectionWrapper>
+          </CardWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           {nominations.length || inSetup() || isSyncing ? (
             <Nominations />
           ) : (
             <>
-              <SectionHeaderWrapper withAction>
+              <CardHeaderWrapper withAction>
                 <h2>
                   Start Nominating
                   <OpenAssistantIcon page="stake" title="Nominations" />
@@ -77,7 +77,7 @@ export const Active = ({ title }: any) => {
                     onClick={() => openModalWith('Nominate', {}, 'small')}
                   />
                 </div>
-              </SectionHeaderWrapper>
+              </CardHeaderWrapper>
               <GenerateNominations
                 batchKey="generate_nominations_active"
                 setters={[
@@ -90,7 +90,7 @@ export const Active = ({ title }: any) => {
               />
             </>
           )}
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
     </>
   );

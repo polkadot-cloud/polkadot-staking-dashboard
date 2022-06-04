@@ -19,7 +19,7 @@ export const FixedContentWrapper = styled.div`
   flex-basis: 50%;
 `;
 
-export const SectionsWrapper = styled(motion.div)`
+export const CardsWrapper = styled(motion.div)`
   box-sizing: border-box;
   width: 200%;
   display: flex;
@@ -74,7 +74,7 @@ export const ChunkWrapper = styled.div<any>`
   }
   h4 {
     background: ${(props) =>
-      !props.noFill ? buttonPrimaryBackground : 'none'};
+    !props.noFill ? buttonPrimaryBackground : 'none'};
     padding: ${(props) => (!props.noFill ? '0.5rem' : '0 0.5rem')};
     color: ${textSecondary};
     box-sizing: border-box;

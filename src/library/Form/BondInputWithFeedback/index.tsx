@@ -8,7 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { humanNumber, planckBnToUnit } from 'Utils';
-import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BondInput } from '../BondInput';
@@ -22,7 +22,7 @@ export const BondInputWithFeedback = (props: any) => {
 
   // functional props
   const setters = props.setters ?? [];
-  const listenIsValid: any = props.listenIsValid ?? (() => {});
+  const listenIsValid: any = props.listenIsValid ?? (() => { });
 
   const { network }: any = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
@@ -143,8 +143,7 @@ export const BondInputWithFeedback = (props: any) => {
 
       if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
         _errors.push(
-          `A minimum bond of ${minBondBase} ${network.unit} is required when ${
-            target === 'stake' ? `actively nominating` : `in your pool`
+          `A minimum bond of ${minBondBase} ${network.unit} is required when ${target === 'stake' ? `actively nominating` : `in your pool`
           }.`
         );
       }
@@ -158,13 +157,13 @@ export const BondInputWithFeedback = (props: any) => {
 
   return (
     <>
-      <SectionHeaderWrapper>
+      <CardHeaderWrapper>
         <h4>
           {unbond ? 'Bonded' : 'Available'}:{' '}
           {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)}{' '}
           {network.unit}
         </h4>
-      </SectionHeaderWrapper>
+      </CardHeaderWrapper>
       {errors.map((err: any, index: any) => (
         <Warning key={`setup_error_${index}`} text={err} />
       ))}

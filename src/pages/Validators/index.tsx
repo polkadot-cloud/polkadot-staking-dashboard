@@ -4,7 +4,7 @@
 import { StatBoxList } from 'library/StatBoxList';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
@@ -30,7 +30,7 @@ export const Validators = (props: PageProps) => {
         <ActiveEraStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           {!isReady ? (
             <div className="item">
               <h3>Connecting...</h3>
@@ -57,7 +57,7 @@ export const Validators = (props: PageProps) => {
               )}
             </>
           )}
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
     </>
   );

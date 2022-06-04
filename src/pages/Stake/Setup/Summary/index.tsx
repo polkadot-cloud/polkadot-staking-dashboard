@@ -4,7 +4,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
@@ -59,12 +59,12 @@ export const Summary = (props: any) => {
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
-    callbackSubmit: () => {},
-    callbackInBlock: () => {},
+    callbackSubmit: () => { },
+    callbackInBlock: () => { },
   });
 
   return (
-    <SectionWrapper transparent>
+    <CardWrapper transparent>
       <Header thisSection={section} complete={null} title="Summary" />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <SummaryWrapper>
@@ -127,7 +127,7 @@ export const Summary = (props: any) => {
           </ButtonWrapper>
         </div>
       </MotionContainer>
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Button } from 'library/Button';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -23,15 +23,13 @@ export const ControllerNotImported = () => {
     <>
       {getControllerNotImported(controller) && !isSyncing && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
-          <SectionWrapper
-            style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}
-          >
-            <SectionHeaderWrapper>
+          <CardWrapper style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
+            <CardHeaderWrapper>
               <h4>
                 You have not imported your Controller account. If you have lost
                 access to your Controller account, set a new one now.
               </h4>
-            </SectionHeaderWrapper>
+            </CardHeaderWrapper>
             <Button
               small
               primary
@@ -39,7 +37,7 @@ export const ControllerNotImported = () => {
               title="Set New Controller"
               onClick={() => openModalWith('UpdateController', {}, 'large')}
             />
-          </SectionWrapper>
+          </CardWrapper>
         </PageRowWrapper>
       )}
     </>

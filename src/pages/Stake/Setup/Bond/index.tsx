@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { BondStatusBar } from 'library/Form/BondStatusBar';
 import { ConnectContextInterface } from 'types/connect';
@@ -40,7 +40,7 @@ export const Bond = (props: any) => {
   }, [activeAccount]);
 
   return (
-    <SectionWrapper transparent>
+    <CardWrapper transparent>
       <Header
         thisSection={section}
         complete={setup.bond !== 0}
@@ -69,7 +69,7 @@ export const Bond = (props: any) => {
         <BondStatusBar value={bond.bond} />
         <Footer complete={bondValid} />
       </MotionContainer>
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

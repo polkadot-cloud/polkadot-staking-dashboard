@@ -11,7 +11,7 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
-import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
@@ -47,7 +47,7 @@ export const Nominations = () => {
 
   return (
     <Wrapper>
-      <SectionHeaderWrapper withAction>
+      <CardHeaderWrapper withAction>
         <h2>
           Nominations
           <OpenAssistantIcon page="stake" title="Nominations" />
@@ -78,7 +78,7 @@ export const Nominations = () => {
             <></>
           )}
         </div>
-      </SectionHeaderWrapper>
+      </CardHeaderWrapper>
       {!activeAccount ? (
         <div className="head">
           <h3>Not Nominating.</h3>

@@ -6,7 +6,7 @@ import { formatBalance } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { usePools } from 'contexts/Pools';
 import { useModal } from 'contexts/Modal';
@@ -92,25 +92,25 @@ export const Status = () => {
 
   const labelRewards = unclaimedReward
     ? `${formatBalance(unclaimedReward, {
-        decimals: units,
-        withSi: true,
-        withUnit: unit,
-      })} ${unit}`
+      decimals: units,
+      withSi: true,
+      withUnit: unit,
+    })} ${unit}`
     : `0 ${unit}`;
   const buttonsRewards = unclaimedReward.toNumber()
     ? [
-        {
-          title: 'Claim',
-          icon: faPaperPlane,
-          disabled: !isReady,
-          small: true,
-          onClick: () =>
-            openModalWith('ClaimReward', { target: 'pool' }, 'small'),
-        },
-      ]
+      {
+        title: 'Claim',
+        icon: faPaperPlane,
+        disabled: !isReady,
+        small: true,
+        onClick: () =>
+          openModalWith('ClaimReward', { target: 'pool' }, 'small'),
+      },
+    ]
     : undefined;
   return (
-    <SectionWrapper height="300">
+    <CardWrapper height="300">
       <Stat
         label="Membership"
         assistant={['pools', 'Pool Status']}
@@ -134,15 +134,15 @@ export const Status = () => {
               isSyncing
                 ? 'Inactive: Not Nominating'
                 : !isNominating
-                ? 'Inactive: Not Nominating'
-                : active
-                ? 'Actively Nominating with Pool Funds'
-                : 'Waiting for Active Nominations'
+                  ? 'Inactive: Not Nominating'
+                  : active
+                    ? 'Actively Nominating with Pool Funds'
+                    : 'Waiting for Active Nominations'
             }
           />
         </>
       )}
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

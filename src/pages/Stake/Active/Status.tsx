@@ -9,7 +9,7 @@ import {
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Separator } from 'Wrappers';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -49,7 +49,7 @@ export const Status = () => {
     }
   }
   return (
-    <SectionWrapper height={300}>
+    <CardWrapper height={300}>
       <Stat
         label="Status"
         assistant={['stake', 'Staking Status']}
@@ -57,23 +57,23 @@ export const Status = () => {
           inSetup() || isSyncing
             ? 'Not Staking'
             : !nominations.length
-            ? 'Inactive: Not Nominating'
-            : active
-            ? 'Actively Nominating with Bonded Funds'
-            : 'Waiting for Active Nominations'
+              ? 'Inactive: Not Nominating'
+              : active
+                ? 'Actively Nominating with Bonded Funds'
+                : 'Waiting for Active Nominations'
         }
         buttons={
           !inSetup()
             ? []
             : [
-                {
-                  title: startTitle,
-                  icon: faChevronCircleRight,
-                  transform: 'grow-1',
-                  disabled: !isReady,
-                  onClick: () => setOnSetup(true),
-                },
-              ]
+              {
+                title: startTitle,
+                icon: faChevronCircleRight,
+                transform: 'grow-1',
+                disabled: !isReady,
+                onClick: () => setOnSetup(true),
+              },
+            ]
         }
       />
       <Separator />
@@ -84,27 +84,27 @@ export const Status = () => {
           (payee === null
             ? faCircle
             : payee === 'Staked'
-            ? faRedoAlt
-            : payee === 'None'
-            ? faCircle
-            : faWallet) as IconProp
+              ? faRedoAlt
+              : payee === 'None'
+                ? faCircle
+                : faWallet) as IconProp
         }
         stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
         buttons={
           payeeStatus
             ? [
-                {
-                  title: 'Update',
-                  icon: faWallet,
-                  small: true,
-                  disabled: inSetup() || isSyncing,
-                  onClick: () => openModalWith('UpdatePayee', {}, 'small'),
-                },
-              ]
+              {
+                title: 'Update',
+                icon: faWallet,
+                small: true,
+                disabled: inSetup() || isSyncing,
+                onClick: () => openModalWith('UpdatePayee', {}, 'small'),
+              },
+            ]
             : []
         }
       />
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

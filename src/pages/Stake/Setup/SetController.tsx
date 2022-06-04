@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -77,7 +77,7 @@ export const SetController = (props: any) => {
 
   return (
     <>
-      <SectionWrapper transparent>
+      <CardWrapper transparent>
         <Header
           thisSection={section}
           title="Set Controller Account"
@@ -95,7 +95,7 @@ export const SetController = (props: any) => {
           />
           <Footer complete={setup.controller !== null} />
         </MotionContainer>
-      </SectionWrapper>
+      </CardWrapper>
     </>
   );
 };

@@ -10,7 +10,7 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { humanNumber, planckToUnit } from 'Utils';
-import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { APIContextInterface } from 'types/api';
@@ -92,9 +92,8 @@ export const Announcements = () => {
   announcements.push({
     class: 'neutral',
     title: `The minimum nominator bond is now ${minNominatorBondBase} ${network.unit}.`,
-    subtitle: `The minimum bonding amount to start nominating on ${
-      network.name
-    } is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
+    subtitle: `The minimum bonding amount to start nominating on ${network.name
+      } is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // maximum nominators
@@ -109,13 +108,13 @@ export const Announcements = () => {
   });
 
   return (
-    <SectionWrapper>
-      <SectionHeaderWrapper>
+    <CardWrapper>
+      <CardHeaderWrapper>
         <h2>
           Announcements
           <OpenAssistantIcon page="overview" title="Announcements" />
         </h2>
-      </SectionHeaderWrapper>
+      </CardHeaderWrapper>
       <Wrapper>
         <motion.div
           variants={container}
@@ -141,7 +140,7 @@ export const Announcements = () => {
           )}
         </motion.div>
       </Wrapper>
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

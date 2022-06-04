@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import { SECTION_FULL_WIDTH_THRESHOLD } from 'consts';
 import { textSecondary, backgroundSecondary } from 'theme';
 
-/* SectionHeaderWrapper
+/* CardHeaderWrapper
  *
- * Used as headers for individual sections. Usually a h4 accompanied
+ * Used as headers for individual cards. Usually a h4 accompanied
  * with a h2. withAction allows a full-width header with a right-side
  * button.
  */
-export const SectionHeaderWrapper = styled.div<any>`
+export const CardHeaderWrapper = styled.div<any>`
   display: flex;
   flex-flow: ${(props) => (props.withAction ? 'row' : 'column')} wrap;
   width: 100%;
@@ -42,11 +42,11 @@ export const SectionHeaderWrapper = styled.div<any>`
   }
 `;
 
-/* SectionWrapper
+/* CardWrapper
  *
  * Used to separate the main modules throughout the app.
  */
-export const SectionWrapper = styled.div<any>`
+export const CardWrapper = styled.div<any>`
   box-sizing: border-box;
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
@@ -63,9 +63,9 @@ export const SectionWrapper = styled.div<any>`
 
   @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
     padding: ${(props) =>
-      props.noPadding
-        ? '0rem'
-        : props.transparent
+    props.noPadding
+      ? '0rem'
+      : props.transparent
         ? '0rem 0rem'
         : '1rem 0.5rem'};
   }
@@ -92,7 +92,7 @@ export const SectionWrapper = styled.div<any>`
   }
 `;
 
-/* SectionWrapper
+/* GraphWrapper
  *
  * Acts as a module, but used to wrap graphs.
  */
