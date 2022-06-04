@@ -4,7 +4,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
 import { useConnect } from 'contexts/Connect';
 import { Identicon } from 'library/Identicon';
@@ -50,14 +49,15 @@ export const ActiveAccount = () => {
               >
                 <button
                   type="button"
-                  onClick={() => addNotification(notification)}
+                  onClick={() => {
+                    navigator.clipboard.writeText(accountData.address);
+                    addNotification(notification);
+                  }}
                 >
-                  <CopyToClipboard text={accountData.address}>
-                    <FontAwesomeIcon
-                      icon={faCopy as IconProp}
-                      transform="grow-3"
-                    />
-                  </CopyToClipboard>
+                  <FontAwesomeIcon
+                    icon={faCopy as IconProp}
+                    transform="grow-3"
+                  />
                 </button>
               </motion.div>
             </div>

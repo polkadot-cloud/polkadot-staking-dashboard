@@ -4,7 +4,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useNotifications } from 'contexts/Notifications';
 
 export const CopyAddress = (props: any) => {
@@ -25,11 +24,12 @@ export const CopyAddress = (props: any) => {
     <div className="label">
       <button
         type="button"
-        onClick={() => addNotification(notificationCopyAddress)}
+        onClick={() => {
+          addNotification(notificationCopyAddress);
+          navigator.clipboard.writeText(address);
+        }}
       >
-        <CopyToClipboard text={address}>
-          <FontAwesomeIcon icon={faCopy as IconProp} />
-        </CopyToClipboard>
+        <FontAwesomeIcon icon={faCopy as IconProp} />
       </button>
     </div>
   );
