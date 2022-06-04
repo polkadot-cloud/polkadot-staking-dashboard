@@ -59,8 +59,8 @@ export const Summary = (props: any) => {
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
-    callbackSubmit: () => { },
-    callbackInBlock: () => { },
+    callbackSubmit: () => {},
+    callbackInBlock: () => {},
   });
 
   return (

@@ -22,7 +22,7 @@ export const BondInputWithFeedback = (props: any) => {
 
   // functional props
   const setters = props.setters ?? [];
-  const listenIsValid: any = props.listenIsValid ?? (() => { });
+  const listenIsValid: any = props.listenIsValid ?? (() => {});
 
   const { network }: any = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
@@ -143,7 +143,8 @@ export const BondInputWithFeedback = (props: any) => {
 
       if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
         _errors.push(
-          `A minimum bond of ${minBondBase} ${network.unit} is required when ${target === 'stake' ? `actively nominating` : `in your pool`
+          `A minimum bond of ${minBondBase} ${network.unit} is required when ${
+            target === 'stake' ? `actively nominating` : `in your pool`
           }.`
         );
       }

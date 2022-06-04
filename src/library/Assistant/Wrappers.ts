@@ -11,7 +11,7 @@ import {
   assistantBackground,
 } from 'theme';
 
-export const Wrapper = styled(motion.div) <any>`
+export const Wrapper = styled(motion.div)<any>`
   position: fixed;
   right: -600px;
   top: 0;
@@ -152,7 +152,7 @@ export const HeadingWrapper = styled.div`
   }
 `;
 
-export const DefinitionWrapper = styled(motion.div) <any>`
+export const DefinitionWrapper = styled(motion.div)<any>`
   width: 100%;
   display: flex;
 
@@ -194,7 +194,7 @@ export const DefinitionWrapper = styled(motion.div) <any>`
   }
 `;
 
-export const ItemWrapper = styled(motion.div) <any>`
+export const ItemWrapper = styled(motion.div)<any>`
   display: flex;
   width: ${(props) => props.width};
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};

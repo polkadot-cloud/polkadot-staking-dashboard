@@ -63,9 +63,9 @@ export const CardWrapper = styled.div<any>`
 
   @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
     padding: ${(props) =>
-    props.noPadding
-      ? '0rem'
-      : props.transparent
+      props.noPadding
+        ? '0rem'
+        : props.transparent
         ? '0rem 0rem'
         : '1rem 0.5rem'};
   }

@@ -92,8 +92,9 @@ export const Announcements = () => {
   announcements.push({
     class: 'neutral',
     title: `The minimum nominator bond is now ${minNominatorBondBase} ${network.unit}.`,
-    subtitle: `The minimum bonding amount to start nominating on ${network.name
-      } is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
+    subtitle: `The minimum bonding amount to start nominating on ${
+      network.name
+    } is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // maximum nominators

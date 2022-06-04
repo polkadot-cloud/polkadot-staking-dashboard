@@ -74,7 +74,7 @@ export const ChunkWrapper = styled.div<any>`
   }
   h4 {
     background: ${(props) =>
-    !props.noFill ? buttonPrimaryBackground : 'none'};
+      !props.noFill ? buttonPrimaryBackground : 'none'};
     padding: ${(props) => (!props.noFill ? '0.5rem' : '0 0.5rem')};
     color: ${textSecondary};
     box-sizing: border-box;

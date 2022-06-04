@@ -92,22 +92,22 @@ export const Status = () => {
 
   const labelRewards = unclaimedReward
     ? `${formatBalance(unclaimedReward, {
-      decimals: units,
-      withSi: true,
-      withUnit: unit,
-    })} ${unit}`
+        decimals: units,
+        withSi: true,
+        withUnit: unit,
+      })} ${unit}`
     : `0 ${unit}`;
   const buttonsRewards = unclaimedReward.toNumber()
     ? [
-      {
-        title: 'Claim',
-        icon: faPaperPlane,
-        disabled: !isReady,
-        small: true,
-        onClick: () =>
-          openModalWith('ClaimReward', { target: 'pool' }, 'small'),
-      },
-    ]
+        {
+          title: 'Claim',
+          icon: faPaperPlane,
+          disabled: !isReady,
+          small: true,
+          onClick: () =>
+            openModalWith('ClaimReward', { target: 'pool' }, 'small'),
+        },
+      ]
     : undefined;
   return (
     <CardWrapper height="300">
@@ -134,10 +134,10 @@ export const Status = () => {
               isSyncing
                 ? 'Inactive: Not Nominating'
                 : !isNominating
-                  ? 'Inactive: Not Nominating'
-                  : active
-                    ? 'Actively Nominating with Pool Funds'
-                    : 'Waiting for Active Nominations'
+                ? 'Inactive: Not Nominating'
+                : active
+                ? 'Actively Nominating with Pool Funds'
+                : 'Waiting for Active Nominations'
             }
           />
         </>
