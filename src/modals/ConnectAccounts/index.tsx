@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { ConnectContextInterface } from 'types/connect';
-import { Wrapper, SectionsWrapper } from './Wrappers';
+import { Wrapper, CardsWrapper } from './Wrappers';
 import { Extensions } from './Extensions';
 import { Accounts } from './Accounts';
 
@@ -48,7 +48,7 @@ export const ConnectAccounts = () => {
 
   return (
     <Wrapper>
-      <SectionsWrapper
+      <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}
         initial={false}
         transition={{
@@ -67,7 +67,7 @@ export const ConnectAccounts = () => {
       >
         <Extensions setSection={setSection} ref={extensionsRef} />
         <Accounts setSection={setSection} ref={accountsRef} />
-      </SectionsWrapper>
+      </CardsWrapper>
     </Wrapper>
   );
 };

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { HeadingWrapper } from '../Wrappers';
-import { Wrapper, SectionsWrapper, FixedContentWrapper } from './Wrappers';
+import { Wrapper, CardsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';
 
@@ -46,7 +46,7 @@ export const UpdateBond = () => {
           {fn === 'add' ? 'Add To' : 'Remove'} Bond
         </HeadingWrapper>
       </FixedContentWrapper>
-      <SectionsWrapper
+      <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -69,7 +69,7 @@ export const UpdateBond = () => {
           ref={formsRef}
           target={target}
         />
-      </SectionsWrapper>
+      </CardsWrapper>
     </Wrapper>
   );
 };

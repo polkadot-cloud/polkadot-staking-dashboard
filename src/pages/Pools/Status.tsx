@@ -6,7 +6,7 @@ import { formatBalance } from '@polkadot/util';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { usePools } from 'contexts/Pools';
 import { useModal } from 'contexts/Modal';
@@ -110,7 +110,7 @@ export const Status = () => {
       ]
     : undefined;
   return (
-    <SectionWrapper height="300">
+    <CardWrapper height="300">
       <Stat
         label="Membership"
         assistant={['pools', 'Pool Status']}
@@ -142,7 +142,7 @@ export const Status = () => {
           />
         </>
       )}
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

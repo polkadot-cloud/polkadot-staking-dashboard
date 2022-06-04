@@ -6,7 +6,7 @@ import { useAccount } from 'contexts/Account';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { usePools } from 'contexts/Pools';
 import { ConnectContextInterface } from 'types/connect';
@@ -53,9 +53,9 @@ export const Roles = () => {
 
   return (
     <>
-      <SectionHeaderWrapper>
+      <CardHeaderWrapper>
         <h2>Roles</h2>
-      </SectionHeaderWrapper>
+      </CardHeaderWrapper>
       <RolesWrapper>
         <section>
           <div className="inner">

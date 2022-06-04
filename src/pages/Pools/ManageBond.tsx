@@ -13,7 +13,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { usePools } from 'contexts/Pools';
-import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 
@@ -39,7 +39,7 @@ export const ManageBond = () => {
 
   return (
     <>
-      <SectionHeaderWrapper>
+      <CardHeaderWrapper>
         <h4>
           Bonded Funds
           <OpenAssistantIcon page="pools" title="Bonded in Pool" />
@@ -87,7 +87,7 @@ export const ManageBond = () => {
             }
           />
         </ButtonRow>
-      </SectionHeaderWrapper>
+      </CardHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}
         unlocking={totalUnlocking}

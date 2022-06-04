@@ -12,7 +12,7 @@ import {
   textDanger,
 } from 'theme';
 
-export const SectionsWrapper = styled(motion.div)`
+export const CardsWrapper = styled(motion.div)`
   box-sizing: border-box;
   width: 200%;
   display: flex;

@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
@@ -22,7 +22,7 @@ export const Favourites = (props: PageProps) => {
     <>
       <PageTitle title={title} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           {favouritesList === null ? (
             <h3>Fetching favourite validators...</h3>
           ) : (
@@ -46,7 +46,7 @@ export const Favourites = (props: PageProps) => {
               )}
             </>
           )}
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
     </>
   );

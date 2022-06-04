@@ -9,7 +9,7 @@ import {
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
-import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
@@ -54,37 +54,37 @@ export const Pools = (props: PageProps) => {
           <Status />
         </RowPrimaryWrapper>
         <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <SectionWrapper height={300}>
+          <CardWrapper height={300}>
             <ManageBond />
-          </SectionWrapper>
+          </CardWrapper>
         </RowSecondaryWrapper>
       </PageRowWrapper>
       {isBonding() && (
         <>
           <ManagePool />
           <PageRowWrapper className="page-padding" noVerticalSpacer>
-            <SectionWrapper>
+            <CardWrapper>
               <Roles />
-            </SectionWrapper>
+            </CardWrapper>
           </PageRowWrapper>
         </>
       )}
       {!isBonding() && !isSyncing && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
-          <SectionWrapper>
-            <SectionHeaderWrapper>
+          <CardWrapper>
+            <CardHeaderWrapper>
               <h2>
                 Join a Pool
                 <OpenAssistantIcon page="pools" title="Nomination Pools" />
               </h2>
-            </SectionHeaderWrapper>
+            </CardHeaderWrapper>
             <PoolList
               pools={bondedPools}
               title="Active Pools"
               allowMoreCols
               pagination
             />
-          </SectionWrapper>
+          </CardWrapper>
         </PageRowWrapper>
       )}
     </>

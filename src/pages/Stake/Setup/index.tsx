@@ -4,7 +4,7 @@
 import { Element } from 'react-scroll';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { PageRowWrapper } from 'Wrappers';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
@@ -33,34 +33,34 @@ export const Setup = ({ title }: any) => {
         </GoBackWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           <Element name="controller" style={{ position: 'absolute' }} />
           <SetController section={1} />
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
           <Payee section={2} />
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <ChooseNominators section={3} />
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond section={4} />
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <SectionWrapper>
+        <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
           <Summary section={5} />
-        </SectionWrapper>
+        </CardWrapper>
       </PageRowWrapper>
     </>
   );

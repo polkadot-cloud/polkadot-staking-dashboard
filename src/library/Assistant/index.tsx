@@ -10,7 +10,7 @@ import { AssistantContextInterface, AssistantItem } from 'types/assistant';
 import { Toggle } from 'types';
 import {
   Wrapper,
-  SectionsWrapper,
+  CardsWrapper,
   ContentWrapper,
   HeightWrapper,
 } from './Wrappers';
@@ -88,7 +88,7 @@ export const Assistant = () => {
           style={{ height: assistant.height }}
           transition={assistant.transition}
         >
-          <SectionsWrapper
+          <CardsWrapper
             animate={animateSections}
             transition={{
               duration: 0.5,
@@ -98,7 +98,7 @@ export const Assistant = () => {
             variants={sectionVariants}
           >
             <Sections pageMeta={pageMeta} />
-          </SectionsWrapper>
+          </CardsWrapper>
         </HeightWrapper>
       </ContentWrapper>
     </Wrapper>
