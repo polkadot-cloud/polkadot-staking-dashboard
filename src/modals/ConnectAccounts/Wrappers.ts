@@ -62,7 +62,6 @@ export const AccountWrapper = styled.button`
   box-sizing: border-box;
   width: 100%;
   margin: 0.75rem 0;
-  padding: 0 0.75rem;
   border-radius: 0.75rem;
   font-size: 1rem;
   background: ${buttonPrimaryBackground};
