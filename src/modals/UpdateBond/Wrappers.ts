@@ -45,7 +45,8 @@ export const ContentWrapper = styled.div`
     border-bottom: none;
     width: auto;
     border-radius: 0.75rem;
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
     z-index: 1;
     width: 100%;
 
