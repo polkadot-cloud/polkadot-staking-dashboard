@@ -20,13 +20,6 @@ html {
   }
 }
 
-@media(min-width: 1600px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-
 body {
   margin: 0;
   font-family: 'Work Sans', 'sans-serif', sans-serif;
