@@ -25,7 +25,7 @@ export interface StakingContextState {
   staking: any;
   eraStakers: any;
   targets: any;
-  erasStakersResyncing: any;
+  erasStakersSyncing: any;
 }
 
 export const StakingContext: React.Context<StakingContextState> =
@@ -40,7 +40,7 @@ export const StakingContext: React.Context<StakingContextState> =
     staking: {},
     eraStakers: {},
     targets: [],
-    erasStakersResyncing: false,
+    erasStakersSyncing: false,
   });
 
 export const useStaking = () => React.useContext(StakingContext);
@@ -76,8 +76,8 @@ export const StakingProvider = ({
   const eraStakersRef = useRef(eraStakers);
 
   // flags whether erasStakers is resyncing
-  const [erasStakersResyncing, setErasStakersResyncing] = useState(false);
-  const erasStakersResyncingRef = useRef(erasStakersResyncing);
+  const [erasStakersSyncing, setErasStakersSyncing] = useState(false);
+  const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
   // store account target validators
   const [targets, _setTargets]: any = useState(
@@ -103,7 +103,7 @@ export const StakingProvider = ({
       } = data;
 
       // finish sync
-      setStateWithRef(false, setErasStakersResyncing, erasStakersResyncingRef);
+      setStateWithRef(false, setErasStakersSyncing, erasStakersSyncingRef);
 
       // check if account hasn't changed since worker started
       if (getActiveAccount() === _activeAccount) {
@@ -191,9 +191,7 @@ export const StakingProvider = ({
     );
 
     // flag eraStakers is recyncing
-    if (eraStakersRef.current.stakers.length) {
-      setStateWithRef(true, setErasStakersResyncing, erasStakersResyncingRef);
-    }
+    setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => ({
@@ -418,7 +416,7 @@ export const StakingProvider = ({
         inSetup,
         staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
-        erasStakersResyncing: erasStakersResyncingRef.current,
+        erasStakersSyncing: erasStakersSyncingRef.current,
         targets,
       }}
     >
