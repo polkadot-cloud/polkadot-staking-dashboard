@@ -86,7 +86,7 @@ export const Modal = () => {
           size={size}
           style={{
             height,
-            overflowY: height >= maxHeight ? 'scroll' : 'hidden',
+            overflow: height >= maxHeight ? 'scroll' : 'hidden',
           }}
         >
           <ContentWrapper ref={modalRef}>

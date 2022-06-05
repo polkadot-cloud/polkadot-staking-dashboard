@@ -64,13 +64,6 @@ export const ConnectProvider = ({
     };
   });
 
-  // fetch extension accounts
-  useEffect(() => {
-    if (extensions.length) {
-      getExtensionsAccounts();
-    }
-  }, [extensions]);
-
   // re-sync extensions on network switch
   useEffect(() => {
     if (extensions.length) {
@@ -96,9 +89,7 @@ export const ConnectProvider = ({
     if (_activeAccount !== null) {
       _activeAccount = keyring.addFromAddress(_activeAccount).address;
     }
-
-    // reset accounts context state
-    setStateWithRef([], setAccounts, accountsRef.current);
+    console.log(extensions);
 
     // iterate extensions and add accounts to state
     extensions.forEach(async (_extension: any) => {
@@ -141,11 +132,13 @@ export const ConnectProvider = ({
 
                 // remove accounts if they exist
                 let _accounts = [...accountsRef.current];
-                _accounts = _accounts.filter((_account: any) =>
-                  injected.find(
+
+                _accounts = _accounts.filter((_account: any) => {
+                  const alreadyExists = injected.find(
                     (_injected: any) => _injected.address === _account.address
-                  )
-                );
+                  );
+                  return alreadyExists === undefined;
+                });
 
                 // concat accounts and store
                 _accounts = _accounts.concat(injected);
@@ -161,7 +154,7 @@ export const ConnectProvider = ({
           );
         }
       } catch (err) {
-        // extension not found
+        console.error('extension failed to load');
       }
     });
   };
@@ -217,6 +210,7 @@ export const ConnectProvider = ({
         connectToAccount,
         disconnectFromAccount,
         setActiveExtension,
+        getExtensionsAccounts,
         getActiveAccount,
         extensions,
         activeExtension,

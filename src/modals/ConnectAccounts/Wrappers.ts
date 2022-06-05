@@ -34,6 +34,7 @@ export const ContentWrapper = styled.div`
 export const PaddingWrapper = styled.div`
   box-sizing: border-box;
   padding: 1rem 0 0.5rem 0rem;
+  height: auto;
 `;
 export const Wrapper = styled.div`
   box-sizing: border-box;

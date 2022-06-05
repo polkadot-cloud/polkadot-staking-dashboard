@@ -22,7 +22,7 @@ export const Connect = () => {
               openModalWith(
                 'ConnectAccounts',
                 {
-                  section: 0,
+                  section: 1,
                 },
                 'small'
               );

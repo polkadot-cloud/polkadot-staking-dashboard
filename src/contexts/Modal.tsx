@@ -51,11 +51,12 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   }, [state.status]);
 
   const setStatus = (newStatus: number) => {
-    setState({
+    const _state = {
       ...state,
       status: newStatus,
       resize: state.resize + 1,
-    });
+    };
+    setState(_state);
   };
 
   const openModalWith = (modal: string, config: any = {}, size = 'large') => {
@@ -70,6 +71,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const setModalHeight = (h: number) => {
+    if (state.status === 0) return;
+
     // set maximum height to 80% of window height
     const maxHeight = window.innerHeight * 0.8;
     h = h > maxHeight ? maxHeight : h;

@@ -11,7 +11,8 @@ import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
-  const { activeAccount, extensions } = useConnect() as ConnectContextInterface;
+  const { activeAccount, extensions, getExtensionsAccounts } =
+    useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
   const { config } = modal;
   const _section = config?.section ?? null;
@@ -25,7 +26,7 @@ export const ConnectAccounts = () => {
   const extensionsRef: any = useRef(null);
   const accountsRef: any = useRef(null);
 
-  useEffect(() => {
+  const resizeModal = () => {
     let _height = 0;
     if (section === 0) {
       _height = extensionsRef.current?.clientHeight ?? 0;
@@ -33,7 +34,15 @@ export const ConnectAccounts = () => {
       _height = accountsRef.current?.clientHeight ?? 0;
     }
     modal.setModalHeight(_height);
+  };
+
+  useEffect(() => {
+    resizeModal();
   }, [section, activeAccount, accounts, extensions]);
+
+  useEffect(() => {
+    getExtensionsAccounts();
+  }, []);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
