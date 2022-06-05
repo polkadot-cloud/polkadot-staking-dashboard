@@ -104,6 +104,15 @@ export const Item = styled(motion.button)`
     background: #d33079;
     > span {
       color: ${textInvert};
+      svg {
+        color: white;
+      }
+    }
+    .icon {
+      margin-right: 0.4rem;
+      path {
+        fill: white;
+      }
     }
   }
   path {

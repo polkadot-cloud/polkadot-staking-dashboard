@@ -3,6 +3,8 @@
 
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
+import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
@@ -19,6 +21,7 @@ export const Connect = () => {
             }}
             whileHover={{ scale: 1.02 }}
           >
+            <FontAwesomeIcon icon={faWallet} color="white" className="icon" />
             <span>Connect</span>
           </Item>
         </HeadingWrapper>
