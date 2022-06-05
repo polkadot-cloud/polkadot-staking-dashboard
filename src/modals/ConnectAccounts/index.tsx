@@ -33,7 +33,7 @@ export const ConnectAccounts = () => {
       _height = accountsRef.current?.clientHeight ?? 0;
     }
     modal.setModalHeight(_height);
-  }, [section, activeAccount, activeAccount, accounts, extensions]);
+  }, [section, activeAccount, accounts, extensions]);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
