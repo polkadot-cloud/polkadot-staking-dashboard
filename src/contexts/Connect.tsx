@@ -72,10 +72,10 @@ export const ConnectProvider = ({
         for (const unsub of _unsubs) {
           unsub();
         }
-        getExtensionsAccounts();
+        setTimeout(() => getExtensionsAccounts(), 200);
       })();
     }
-  }, [network]);
+  }, [extensions, network]);
 
   const getExtensionsAccounts = async () => {
     const keyring = new Keyring();
@@ -89,7 +89,6 @@ export const ConnectProvider = ({
     if (_activeAccount !== null) {
       _activeAccount = keyring.addFromAddress(_activeAccount).address;
     }
-    console.log(extensions);
 
     // iterate extensions and add accounts to state
     extensions.forEach(async (_extension: any) => {
@@ -134,10 +133,7 @@ export const ConnectProvider = ({
                 let _accounts = [...accountsRef.current];
 
                 _accounts = _accounts.filter((_account: any) => {
-                  const alreadyExists = injected.find(
-                    (_injected: any) => _injected.address === _account.address
-                  );
-                  return alreadyExists === undefined;
+                  return _account.source !== extensionName;
                 });
 
                 // concat accounts and store
@@ -154,7 +150,7 @@ export const ConnectProvider = ({
           );
         }
       } catch (err) {
-        console.error('extension failed to load');
+        console.error('Extension failed to load');
       }
     });
   };
