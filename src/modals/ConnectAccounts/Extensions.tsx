@@ -22,14 +22,15 @@ export const Extensions = forwardRef((props: any, ref: any) => {
   return (
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
-        <h2>Select Wallet</h2>
+        <div className="head">
+          <h2>Select Wallet</h2>
+        </div>
 
         {extensions.map((extension: any, i: number) => {
           return (
             <Extension
               key={`active_extension_${i}`}
               meta={extension}
-              disabled={false}
               setSection={setSection}
             />
           );

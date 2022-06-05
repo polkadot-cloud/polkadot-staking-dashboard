@@ -7,9 +7,10 @@ import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
+import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
-  const { meta, disabled, setSection, flag } = props;
+  const { meta, setSection, flag } = props;
   const { extensionName, title } = meta;
 
   const { setActiveExtension } = useConnect() as ConnectContextInterface;
@@ -19,33 +20,32 @@ export const Extension = (props: any) => {
     setSection(1);
   };
 
+  const size = '2rem';
+
   return (
-    <button
-      type="button"
-      className="item"
+    <ExtensionWrapper
       key={`wallet_${extensionName}`}
-      disabled={disabled}
       onClick={() => {
         handleClick();
       }}
     >
       <div>
         {extensionName === 'talisman' && (
-          <TalismanSVG width="1.5rem" height="1.5rem" />
+          <TalismanSVG width={size} height={size} />
         )}
         {extensionName === 'polkadot-js' && (
-          <PolkadotJSSVG width="1.5rem" height="1.5rem" />
+          <PolkadotJSSVG width={size} height={size} />
         )}
-        &nbsp; {title}
+        <span className="name">&nbsp; {title}</span>
       </div>
       <div className="neutral">
         {flag && flag}
         <FontAwesomeIcon
           icon={faChevronRight}
-          transform="shrink-5"
+          transform="shrink-0"
           className="icon"
         />
       </div>
-    </button>
+    </ExtensionWrapper>
   );
 };

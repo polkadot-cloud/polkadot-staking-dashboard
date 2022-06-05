@@ -33,7 +33,7 @@ export const ContentWrapper = styled.div`
 
 export const PaddingWrapper = styled.div`
   box-sizing: border-box;
-  padding: 1rem 0;
+  padding: 1rem 0 0.5rem 0rem;
 `;
 export const Wrapper = styled.div`
   box-sizing: border-box;
@@ -56,74 +56,145 @@ export const Wrapper = styled.div`
     align-items: center;
     margin-bottom: 1rem;
   }
+`;
 
-  .item {
+export const AccountWrapper = styled.button`
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0.75rem 0;
+  padding: 0 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background: ${buttonPrimaryBackground};
+  transition: background 0.15s;
+  color: ${textPrimary};
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  min-height: 3.5rem;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+  &:hover {
+    background: ${backgroundToggle};
+  }
+
+  > div {
     box-sizing: border-box;
-    width: 100%;
-    margin: 0.75rem 0;
-    padding: 0 0.75rem;
-    border-radius: 1rem;
-    font-size: 1rem;
-    background: ${buttonPrimaryBackground};
-    transition: background 0.15s;
-    color: ${textPrimary};
     display: flex;
     flex-flow: row nowrap;
+    justify-content: flex-start;
     align-items: center;
-    min-height: 3.5rem;
+    padding: 0 1rem;
 
-    &:disabled {
-      cursor: default;
-      opacity: 0.5;
-    }
-    &:hover {
-      background: ${backgroundToggle};
-    }
+    &:first-child {
+      flex-shrink: 1;
+      overflow: hidden;
 
-    > div {
-      box-sizing: border-box;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 0 1rem;
-
-      &:first-child {
-        flex-shrink: 1;
+      .name {
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         overflow: hidden;
-
-        .name {
-          max-width: 100%;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-        }
       }
+    }
 
-      &:last-child {
-        flex-grow: 1;
-        justify-content: flex-end;
+    &:last-child {
+      flex-grow: 1;
+      justify-content: flex-end;
 
-        &.neutral {
-          color: ${textSecondary};
-          opacity: 0.75;
-        }
-        &.danger {
-          color: ${textDanger};
-        }
-        .icon {
-          margin-left: 1rem;
-        }
+      &.neutral {
+        color: ${textSecondary};
+        opacity: 0.75;
       }
+      &.danger {
+        color: ${textDanger};
+      }
+      .icon {
+        margin-left: 1rem;
+      }
+    }
 
-      /* svg theming */
-      svg {
-        .light {
-          fill: ${textInvert};
-        }
-        .dark {
-          fill: ${textSecondary};
-        }
+    /* svg theming */
+    svg {
+      .light {
+        fill: ${textInvert};
+      }
+      .dark {
+        fill: ${textSecondary};
+      }
+    }
+  }
+`;
+
+export const ExtensionWrapper = styled.button`
+  box-sizing: border-box;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background: ${buttonPrimaryBackground};
+  transition: background 0.15s;
+  color: ${textPrimary};
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  min-height: 3.5rem;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+  &:hover {
+    background: ${backgroundToggle};
+  }
+
+  > div {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 1rem;
+
+    &:first-child {
+      flex-shrink: 1;
+      overflow: hidden;
+
+      .name {
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+
+    &:last-child {
+      flex-grow: 1;
+      justify-content: flex-end;
+
+      &.neutral {
+        color: ${textSecondary};
+        opacity: 0.75;
+      }
+      &.danger {
+        color: ${textDanger};
+      }
+      .icon {
+        margin-left: 1rem;
+      }
+    }
+
+    /* svg theming */
+    svg {
+      .light {
+        fill: ${textInvert};
+      }
+      .dark {
+        fill: ${textSecondary};
       }
     }
   }
