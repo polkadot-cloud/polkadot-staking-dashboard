@@ -21,7 +21,7 @@ export const SetController = (props: any) => {
 
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount, accounts, getAccount } =
+  const { activeAccount, accounts, activeExtension, getAccount } =
     useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountBalance, minReserve, isController }: any =
     useBalances();
@@ -40,7 +40,7 @@ export const SetController = (props: any) => {
     const _selected = setup.controller !== null ? setup.controller : controller;
     const _initial = getAccount(_selected);
     setSelected(_initial);
-  }, [activeAccount]);
+  }, [activeAccount, accounts, activeExtension]);
 
   const handleOnChange = ({ selectedItem }: any) => {
     setSelected(selectedItem);
@@ -76,27 +76,25 @@ export const SetController = (props: any) => {
   });
 
   return (
-    <>
-      <CardWrapper transparent>
-        <Header
-          thisSection={section}
-          title="Set Controller Account"
-          assistantPage="stake"
-          assistantKey="Stash and Controller Accounts"
-          complete={setup.controller !== null}
+    <CardWrapper transparent>
+      <Header
+        thisSection={section}
+        title="Set Controller Account"
+        assistantPage="stake"
+        assistantKey="Stash and Controller Accounts"
+        complete={setup.controller !== null}
+      />
+      <MotionContainer thisSection={section} activeSection={setup.section}>
+        <Spacer />
+        <AccountSelect
+          items={items}
+          onChange={handleOnChange}
+          placeholder="Search Account"
+          value={selected}
         />
-        <MotionContainer thisSection={section} activeSection={setup.section}>
-          <Spacer />
-          <AccountSelect
-            items={items}
-            onChange={handleOnChange}
-            placeholder="Search Account"
-            value={selected}
-          />
-          <Footer complete={setup.controller !== null} />
-        </MotionContainer>
-      </CardWrapper>
-    </>
+        <Footer complete={setup.controller !== null} />
+      </MotionContainer>
+    </CardWrapper>
   );
 };
 
