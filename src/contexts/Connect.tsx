@@ -13,7 +13,6 @@ import { DAPP_NAME } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { MaybeAccount } from 'types';
-import { useModal } from './Modal';
 import { useApi } from './Api';
 
 export const ConnectContext =
@@ -27,16 +26,13 @@ export const ConnectProvider = ({
   children: React.ReactNode;
 }) => {
   const { network } = useApi() as APIContextInterface;
-  const { openModalWith } = useModal();
 
   // store accounts list
-  const [accounts, setAccounts] = useState([]);
+  const [accounts, setAccounts] = useState<any>([]);
   const accountsRef = useRef(accounts);
 
   // store the currently active account
-  const [activeAccount, _setActiveAccount] = useState<string | null>(
-    localStorageOrDefault(`${network.name.toLowerCase()}_active_account`, null)
-  );
+  const [activeAccount, _setActiveAccount] = useState<string | null>(null);
   const activeAccountRef = useRef<string | null>(activeAccount);
 
   // store the currently active account metadata
@@ -46,58 +42,124 @@ export const ConnectProvider = ({
   // store available extensions in state
   const [extensions, setExtensions]: any = useState([]);
 
-  // store wallet errors
-  const [extensionErrors, _setExtensionErrors] = useState({});
-  const extensionErrorsRef: any = useRef(extensionErrors);
-
   // store unsubscribe handler for connected wallet
-  const [unsubscribe, setUnsubscribe]: any = useState(null);
+  const [unsubscribe, setUnsubscribe]: any = useState([]);
   const unsubscribeRef: any = useRef(unsubscribe);
 
   // store the currently active wallet
   const [activeExtension, _setActiveExtension] = useState(
-    localStorageOrDefault('active_wallet', null)
+    localStorageOrDefault('active_extension', null)
   );
 
   // initialise extensions
   useEffect(() => {
-    setExtensions(getWallets());
-
+    if (!extensions.length) {
+      setExtensions(getWallets());
+    }
     return () => {
-      if (unsubscribe !== null) {
-        unsubscribeRef.current();
+      const _unsubs = unsubscribeRef.current;
+      for (const unsub of _unsubs) {
+        unsub();
       }
     };
-  }, []);
+  });
 
-  // re-import addresses with network switch
+  // re-sync extensions on network switch
   useEffect(() => {
-    if (accountsRef.current.length) {
+    if (extensions.length) {
       (async () => {
-        if (unsubscribeRef.current !== null) {
-          await unsubscribeRef.current();
+        const _unsubs = unsubscribeRef.current;
+        for (const unsub of _unsubs) {
+          unsub();
         }
-        importNetworkAddresses(accountsRef.current);
+        setTimeout(() => getExtensionsAccounts(), 200);
       })();
     }
-  }, [network]);
+  }, [extensions, network]);
 
-  // automatic connect from active wallet
-  useEffect(() => {
-    // only auto connect if active extension exists in localstorage
-    if (extensions.length && activeExtension !== null) {
-      // we set a short timeout for extensions to initiate. This is a workaround
-      // for a `NotInstalledError` that was happening when immediately attempting
-      // to connect to an extension.
-      setTimeout(() => connectExtension(), 100);
+  const getExtensionsAccounts = async () => {
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+
+    // get and format active account if present
+    let _activeAccount: any = localStorageOrDefault(
+      `${network.name.toLowerCase()}_active_account`,
+      null
+    );
+    if (_activeAccount !== null) {
+      _activeAccount = keyring.addFromAddress(_activeAccount).address;
     }
-  }, [extensions]);
+
+    // iterate extensions and add accounts to state
+    extensions.forEach(async (_extension: any) => {
+      const { extensionName } = _extension;
+      try {
+        const extension: Wallet | undefined = getWalletBySource(extensionName);
+
+        if (extension === undefined) {
+          throw new Error('extension not found');
+        } else {
+          // summons extension popup
+          await extension.enable(DAPP_NAME);
+
+          // subscribe to accounts
+          const _unsubscribe = await extension.subscribeAccounts(
+            (injected: any) => {
+              // abort if no accounts
+              if (injected.length) {
+                // reformat address to ensure correct format
+                injected.forEach(async (account: any) => {
+                  const { address } = keyring.addFromAddress(account.address);
+                  account.address = address;
+                  return account;
+                });
+
+                // connect to active account if found in extension
+                const activeAccountInWallet =
+                  injected.find(
+                    (item: any) => item.address === _activeAccount
+                  ) ?? null;
+
+                if (activeAccountInWallet) {
+                  connectToAccount(activeAccountInWallet);
+                }
+
+                // auto connect to account
+                if (activeAccountInWallet !== null) {
+                  connectToAccount(activeAccountInWallet);
+                }
+
+                // remove accounts if they exist
+                let _accounts = [...accountsRef.current];
+
+                _accounts = _accounts.filter((_account: any) => {
+                  return _account.source !== extensionName;
+                });
+
+                // concat accounts and store
+                _accounts = _accounts.concat(injected);
+                setStateWithRef(_accounts, setAccounts, accountsRef);
+              }
+            }
+          );
+          // update context state
+          setStateWithRef(
+            [...unsubscribeRef.current].concat(_unsubscribe),
+            setUnsubscribe,
+            unsubscribeRef
+          );
+        }
+      } catch (err) {
+        console.error('Extension failed to load');
+      }
+    });
+  };
 
   const setActiveExtension = (wallet: any) => {
     if (wallet === null) {
-      localStorage.removeItem('active_wallet');
+      localStorage.removeItem('active_extension');
     } else {
-      localStorage.setItem('active_wallet', wallet);
+      localStorage.setItem('active_extension', wallet);
     }
     _setActiveExtension(wallet);
   };
@@ -114,124 +176,15 @@ export const ConnectProvider = ({
     setStateWithRef(address, _setActiveAccount, activeAccountRef);
   };
 
-  const setExtensionErrors = (key: string, value: string) => {
-    const _errors: any = {
-      ...extensionErrorsRef.current,
-      [key]: value,
-    };
-    setStateWithRef(_errors, _setExtensionErrors, extensionErrorsRef);
-  };
-
-  const initialise = () => {
-    if (activeExtension === null || activeAccountRef.current === null) {
-      openModalWith(
-        'ConnectAccounts',
-        {
-          section: 0,
-        },
-        'small'
-      );
-    } else {
-      connectExtension(activeExtension);
-    }
-  };
-
-  const connectExtension = async (_wallet: any = null) => {
-    try {
-      if (extensions.length === 0) {
-        setActiveExtension(null);
-        return;
-      }
-
-      if (_wallet === null) {
-        if (activeExtension !== null) {
-          _wallet = activeExtension;
-        }
-      }
-
-      // get wallet
-      const wallet: Wallet | undefined = getWalletBySource(_wallet);
-
-      if (wallet === undefined) {
-        throw new Error('wallet not found');
-      } else {
-        // summons extension popup
-        await wallet.enable(DAPP_NAME);
-
-        // subscribe to accounts
-        const _unsubscribe = await wallet.subscribeAccounts((injected: any) => {
-          // abort if no accounts
-          if (!injected.length) {
-            setExtensionErrors(_wallet, 'No accounts');
-          } else {
-            // import addresses with correct format
-            importNetworkAddresses(injected);
-            // set active wallet and connected status
-            setActiveExtension(_wallet);
-          }
-        });
-
-        // unsubscribe if errors exist
-        const _hasError = extensionErrorsRef.current?._wallet ?? null;
-        if (_hasError !== null) {
-          disconnectFromAccount();
-        }
-
-        // update context state
-        setStateWithRef(_unsubscribe, setUnsubscribe, unsubscribeRef);
-      }
-    } catch (err) {
-      // wallet not found.
-      setExtensionErrors(_wallet, 'Wallet not found');
-    }
-  };
-
-  const importNetworkAddresses = (_accounts: any) => {
-    const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
-
-    // get account address in the correct format
-    _accounts.forEach(async (account: any) => {
-      const { address } = keyring.addFromAddress(account.address);
-      account.address = address;
-      return account;
-    });
-
-    // get active account from local storage if present
-    let _activeAccount: any = localStorageOrDefault(
-      `${network.name.toLowerCase()}_active_account`,
-      null
-    );
-
-    // ensure the account is in the correct format
-    if (_activeAccount !== null) {
-      _activeAccount = keyring.addFromAddress(_activeAccount).address;
-
-      // check active account is in the currently selected wallet
-      const activeAccountInWallet =
-        _accounts.find((item: any) => item.address === _activeAccount) ?? null;
-
-      // auto connect to account
-      connectToAccount(activeAccountInWallet);
-    } else {
-      setActiveAccount(null);
-      setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
-    }
-
-    // set available accounts
-    setStateWithRef(_accounts, setAccounts, accountsRef);
-  };
-
-  const connectToAccount = (account: any = null) => {
+  const connectToAccount = (account: any) => {
     setActiveAccount(account.address);
     setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
   };
 
-  const accountExists = (addr: string) => {
-    const account = accountsRef.current.filter(
-      (acc: any) => acc.address === addr
-    );
-    return account.length;
+  const disconnectFromAccount = () => {
+    localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
+    setActiveAccount(null);
+    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
   const getAccount = (addr: MaybeAccount) => {
@@ -242,33 +195,20 @@ export const ConnectProvider = ({
     return null;
   };
 
-  const disconnectFromAccount = () => {
-    localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
-    setActiveAccount(null);
-    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
-  };
-
-  const disconnectExtension = () => {
-    disconnectFromAccount();
-    localStorage.removeItem('active_wallet');
-    setActiveExtension(null);
-    setStateWithRef([], setAccounts, accountsRef);
-    setStateWithRef(null, setUnsubscribe, unsubscribeRef);
+  const getActiveAccount = () => {
+    return activeAccountRef.current;
   };
 
   return (
     <ConnectContext.Provider
       value={{
-        initialise,
-        connectExtension,
-        disconnectExtension,
-        accountExists,
         getAccount,
         connectToAccount,
         disconnectFromAccount,
+        setActiveExtension,
+        getActiveAccount,
         extensions,
         activeExtension,
-        extensionErrors,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeAccountMeta: activeAccountMetaRef.current,

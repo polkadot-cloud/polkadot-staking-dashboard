@@ -24,7 +24,8 @@ export const CardsWrapper = styled(motion.div)`
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
   position: relative;
   height: 100%;
 `;

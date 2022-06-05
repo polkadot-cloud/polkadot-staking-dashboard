@@ -8,6 +8,8 @@ import { useExtrinsics } from 'contexts/Extrinsics';
 import { useConnect } from 'contexts/Connect';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { getWalletBySource, Wallet } from '@talisman-connect/wallets';
+import { DAPP_NAME } from 'consts';
 
 export const useSubmitExtrinsic = (extrinsic: any) => {
   // extract extrinsic info
@@ -49,7 +51,17 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
       return;
     }
     const accountNonce = await api.rpc.system.accountNextIndex(from);
-    const { signer } = getAccount(from);
+    const account = getAccount(from);
+    const { signer, source } = account;
+
+    // get extension
+    const extension: Wallet | undefined = getWalletBySource(source);
+    if (extension === undefined) {
+      throw new Error('wallet not found');
+    } else {
+      // summons extension popup if not already connected.
+      await extension.enable(DAPP_NAME);
+    }
 
     // pre-submission state update
     setSubmitting(true);

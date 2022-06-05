@@ -14,8 +14,6 @@ import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-const worker = new Worker();
-
 export interface StakingContextState {
   getNominationsStatus: () => any;
   setTargets: (t: any) => any;
@@ -27,6 +25,7 @@ export interface StakingContextState {
   staking: any;
   eraStakers: any;
   targets: any;
+  erasStakersSyncing: any;
 }
 
 export const StakingContext: React.Context<StakingContextState> =
@@ -41,6 +40,7 @@ export const StakingContext: React.Context<StakingContextState> =
     staking: {},
     eraStakers: {},
     targets: [],
+    erasStakersSyncing: false,
   });
 
 export const useStaking = () => React.useContext(StakingContext);
@@ -52,8 +52,8 @@ export const StakingProvider = ({
 }) => {
   const {
     activeAccount,
-    activeExtension,
     accounts: connectAccounts,
+    getActiveAccount,
   } = useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } =
     useApi() as APIContextInterface;
@@ -75,6 +75,10 @@ export const StakingProvider = ({
   const [eraStakers, setEraStakers]: any = useState(defaults.eraStakers);
   const eraStakersRef = useRef(eraStakers);
 
+  // flags whether erasStakers is resyncing
+  const [erasStakersSyncing, setErasStakersSyncing] = useState(false);
+  const erasStakersSyncingRef = useRef(erasStakersSyncing);
+
   // store account target validators
   const [targets, _setTargets]: any = useState(
     localStorageOrDefault(
@@ -83,6 +87,41 @@ export const StakingProvider = ({
       true
     )
   );
+
+  const worker = new Worker();
+
+  worker.onmessage = (message: any) => {
+    if (message) {
+      const { data } = message;
+      const {
+        stakers,
+        activeNominators,
+        activeValidators,
+        minActiveBond,
+        ownStake,
+        _activeAccount,
+      } = data;
+
+      // finish sync
+      setStateWithRef(false, setErasStakersSyncing, erasStakersSyncingRef);
+
+      // check if account hasn't changed since worker started
+      if (getActiveAccount() === _activeAccount) {
+        setStateWithRef(
+          {
+            ...eraStakersRef.current,
+            stakers,
+            activeNominators,
+            activeValidators,
+            minActiveBond,
+            ownStake,
+          },
+          setEraStakers,
+          eraStakersRef
+        );
+      }
+    }
+  };
 
   const subscribeToStakingkMetrics = async (_api: any) => {
     if (isReady && metrics.activeEra.index !== 0) {
@@ -147,10 +186,12 @@ export const StakingProvider = ({
     if (!isReady || metrics.activeEra.index === 0 || !api) {
       return;
     }
-
     const _exposures = await api.query.staking.erasStakers.entries(
       metrics.activeEra.index
     );
+
+    // flag eraStakers is recyncing
+    setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => ({
@@ -207,9 +248,9 @@ export const StakingProvider = ({
     }
   }, [status]);
 
+  // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
-      fetchEraStakers();
       subscribeToStakingkMetrics(api);
     }
     return () => {
@@ -220,33 +261,12 @@ export const StakingProvider = ({
     };
   }, [isReady, metrics.activeEra]);
 
+  // handle syncing with eraStakers
   useEffect(() => {
-    worker.onmessage = (message: any) => {
-      if (message) {
-        const { data } = message;
-        const {
-          stakers,
-          activeNominators,
-          activeValidators,
-          minActiveBond,
-          ownStake,
-        } = data;
-
-        setStateWithRef(
-          {
-            ...eraStakersRef.current,
-            stakers,
-            activeNominators,
-            activeValidators,
-            minActiveBond,
-            ownStake,
-          },
-          setEraStakers,
-          eraStakersRef
-        );
-      }
-    };
-  }, []);
+    if (isReady) {
+      fetchEraStakers();
+    }
+  }, [isReady, metrics.activeEra.index, activeAccount]);
 
   useEffect(() => {
     if (activeAccount) {
@@ -321,7 +341,7 @@ export const StakingProvider = ({
    * has set a controller account.
    */
   const hasController = () => {
-    if (!activeAccount || activeExtension === null) {
+    if (!activeAccount) {
       return false;
     }
     return getBondedAccount(activeAccount) !== null;
@@ -332,7 +352,7 @@ export const StakingProvider = ({
    * has been imported.
    */
   const getControllerNotImported = (address: string) => {
-    if (address === null || !activeAccount || !activeExtension) {
+    if (address === null || !activeAccount) {
       return false;
     }
     // check if controller is imported
@@ -396,6 +416,7 @@ export const StakingProvider = ({
         inSetup,
         staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
+        erasStakersSyncing: erasStakersSyncingRef.current,
         targets,
       }}
     >

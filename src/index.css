@@ -8,7 +8,6 @@
   src: url('../public/fonts/WorkSans-VariableFont_wght.ttf');
 }
 
-
 /* global font size */
 html {
   font-size: 12px;
@@ -25,7 +24,6 @@ html {
     font-size: 14px;
   }
 }
-
 
 body {
   margin: 0;

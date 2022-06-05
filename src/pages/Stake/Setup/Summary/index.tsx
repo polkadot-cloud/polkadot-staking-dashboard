@@ -22,15 +22,14 @@ export const Summary = (props: any) => {
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount, activeExtension } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
 
   const txs = () => {
-    if (!activeAccount || activeExtension === null || !api) {
+    if (!activeAccount || !api) {
       return null;
     }
     const stashToSubmit = {

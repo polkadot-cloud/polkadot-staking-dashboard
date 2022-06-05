@@ -21,7 +21,7 @@ export const SetController = (props: any) => {
 
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount, accounts, activeExtension, getAccount } =
+  const { activeAccount, accounts, getAccount } =
     useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountBalance, minReserve, isController }: any =
     useBalances();
@@ -40,7 +40,7 @@ export const SetController = (props: any) => {
     const _selected = setup.controller !== null ? setup.controller : controller;
     const _initial = getAccount(_selected);
     setSelected(_initial);
-  }, [activeAccount, accounts, activeExtension]);
+  }, [activeAccount, accounts]);
 
   const handleOnChange = ({ selectedItem }: any) => {
     setSelected(selectedItem);
