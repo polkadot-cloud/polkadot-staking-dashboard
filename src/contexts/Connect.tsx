@@ -206,7 +206,6 @@ export const ConnectProvider = ({
         connectToAccount,
         disconnectFromAccount,
         setActiveExtension,
-        getExtensionsAccounts,
         getActiveAccount,
         extensions,
         activeExtension,
