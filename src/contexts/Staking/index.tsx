@@ -14,8 +14,6 @@ import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-const worker = new Worker();
-
 export interface StakingContextState {
   getNominationsStatus: () => any;
   setTargets: (t: any) => any;
@@ -50,8 +48,11 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { activeAccount, accounts: connectAccounts } =
-    useConnect() as ConnectContextInterface;
+  const {
+    activeAccount,
+    accounts: connectAccounts,
+    getActiveAccount,
+  } = useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } =
     useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
@@ -80,6 +81,38 @@ export const StakingProvider = ({
       true
     )
   );
+
+  const worker = new Worker();
+
+  worker.onmessage = (message: any) => {
+    if (message) {
+      const { data } = message;
+      const {
+        stakers,
+        activeNominators,
+        activeValidators,
+        minActiveBond,
+        ownStake,
+        _activeAccount,
+      } = data;
+
+      // check if account hasn't changed since worker started
+      if (getActiveAccount() === _activeAccount) {
+        setStateWithRef(
+          {
+            ...eraStakersRef.current,
+            stakers,
+            activeNominators,
+            activeValidators,
+            minActiveBond,
+            ownStake,
+          },
+          setEraStakers,
+          eraStakersRef
+        );
+      }
+    }
+  };
 
   const subscribeToStakingkMetrics = async (_api: any) => {
     if (isReady && metrics.activeEra.index !== 0) {
@@ -144,11 +177,9 @@ export const StakingProvider = ({
     if (!isReady || metrics.activeEra.index === 0 || !api) {
       return;
     }
-
     const _exposures = await api.query.staking.erasStakers.entries(
       metrics.activeEra.index
     );
-
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => ({
       keys: _keys.toHuman(),
@@ -204,9 +235,9 @@ export const StakingProvider = ({
     }
   }, [status]);
 
+  // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
-      fetchEraStakers();
       subscribeToStakingkMetrics(api);
     }
     return () => {
@@ -217,33 +248,12 @@ export const StakingProvider = ({
     };
   }, [isReady, metrics.activeEra]);
 
+  // handle syncing with eraStakers
   useEffect(() => {
-    worker.onmessage = (message: any) => {
-      if (message) {
-        const { data } = message;
-        const {
-          stakers,
-          activeNominators,
-          activeValidators,
-          minActiveBond,
-          ownStake,
-        } = data;
-
-        setStateWithRef(
-          {
-            ...eraStakersRef.current,
-            stakers,
-            activeNominators,
-            activeValidators,
-            minActiveBond,
-            ownStake,
-          },
-          setEraStakers,
-          eraStakersRef
-        );
-      }
-    };
-  }, []);
+    if (isReady) {
+      fetchEraStakers();
+    }
+  }, [isReady, metrics.activeEra.index, activeAccount]);
 
   useEffect(() => {
     if (activeAccount) {
