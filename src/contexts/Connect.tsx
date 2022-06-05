@@ -197,6 +197,10 @@ export const ConnectProvider = ({
     return null;
   };
 
+  const getActiveAccount = () => {
+    return activeAccountRef.current;
+  };
+
   return (
     <ConnectContext.Provider
       value={{
@@ -204,6 +208,7 @@ export const ConnectProvider = ({
         connectToAccount,
         disconnectFromAccount,
         setActiveExtension,
+        getActiveAccount,
         extensions,
         activeExtension,
         accounts: accountsRef.current,

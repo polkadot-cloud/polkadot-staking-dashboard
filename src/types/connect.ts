@@ -8,6 +8,7 @@ export interface ConnectContextInterface {
   connectToAccount: (a: any) => void;
   disconnectFromAccount: () => void;
   setActiveExtension: (e: any) => void;
+  getActiveAccount: () => any;
   extensions: any;
   activeExtension: any;
   accounts: any;
