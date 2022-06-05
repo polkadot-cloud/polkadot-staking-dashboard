@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/polkadot-staking-dashboard/static/css/main.5a8fb6ec.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.44e18323.js",
+    "main.css": "/polkadot-staking-dashboard/static/css/main.254825bc.css",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.d07edf56.js",
     "static/js/787.0a38be7b.chunk.js": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js",
     "static/media/WorkSans-VariableFont_wght.ttf": "/polkadot-staking-dashboard/static/media/WorkSans-VariableFont_wght.bb6e3e8193f32a7fc502.ttf",
-    "static/js/stakers.35f62806.worker.js": "/polkadot-staking-dashboard/static/js/stakers.35f62806.worker.js",
+    "static/js/stakers.78311585.worker.js": "/polkadot-staking-dashboard/static/js/stakers.78311585.worker.js",
     "static/media/westend_icon.svg": "/polkadot-staking-dashboard/static/media/westend_icon.6c9cdb56012c5151652539e07932ca45.svg",
     "static/media/polkadot_logo.svg": "/polkadot-staking-dashboard/static/media/polkadot_logo.3672415fb852303e9822ebf07ee67a61.svg",
     "static/media/cog-outline.svg": "/polkadot-staking-dashboard/static/media/cog-outline.69ff9b5c947ab88a5a87e745be35bff3.svg",
@@ -19,12 +19,12 @@
     "static/media/sunny-outline.svg": "/polkadot-staking-dashboard/static/media/sunny-outline.1d11bc314beb185514e6818f10d444be.svg",
     "static/media/moon-outline.svg": "/polkadot-staking-dashboard/static/media/moon-outline.ed14e62383eee27a57c447e80da2f840.svg",
     "static/media/assistant.svg": "/polkadot-staking-dashboard/static/media/assistant.710ee0b66a632101a3e85de51b365ddb.svg",
-    "main.5a8fb6ec.css.map": "/polkadot-staking-dashboard/static/css/main.5a8fb6ec.css.map",
-    "main.44e18323.js.map": "/polkadot-staking-dashboard/static/js/main.44e18323.js.map",
+    "main.254825bc.css.map": "/polkadot-staking-dashboard/static/css/main.254825bc.css.map",
+    "main.d07edf56.js.map": "/polkadot-staking-dashboard/static/js/main.d07edf56.js.map",
     "787.0a38be7b.chunk.js.map": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5a8fb6ec.css",
-    "static/js/main.44e18323.js"
+    "static/css/main.254825bc.css",
+    "static/js/main.d07edf56.js"
   ]
 }
