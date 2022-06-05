@@ -14,7 +14,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import Heading from './Heading';
 import Definition from './Items/Definition';
-import { CardsWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
+import { CardWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import External from './Items/External';
 import Action from './Items/Action';
 import {
@@ -62,7 +62,7 @@ export const Sections = (props: any) => {
 
   return (
     <>
-      <CardsWrapper
+      <CardWrapper
         ref={homeRef}
         style={{ height: assistant.activeSection === 0 ? 'auto' : 0 }}
       >
@@ -136,9 +136,9 @@ export const Sections = (props: any) => {
             </>
           )}
         </ListWrapper>
-      </CardsWrapper>
+      </CardWrapper>
 
-      <CardsWrapper
+      <CardWrapper
         ref={itemRef}
         style={{ height: assistant.activeSection === 1 ? 'auto' : 0 }}
       >
@@ -173,7 +173,7 @@ export const Sections = (props: any) => {
             </p>
           ))}
         </ListWrapper>
-      </CardsWrapper>
+      </CardWrapper>
     </>
   );
 };
