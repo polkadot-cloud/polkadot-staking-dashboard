@@ -138,8 +138,17 @@ export const ConnectProvider = ({
                 if (activeAccountInWallet !== null) {
                   connectToAccount(activeAccountInWallet);
                 }
-                // save imported accounts to state
-                const _accounts = [...accountsRef.current].concat(injected);
+
+                // remove accounts if they exist
+                let _accounts = [...accountsRef.current];
+                _accounts = _accounts.filter((_account: any) =>
+                  injected.find(
+                    (_injected: any) => _injected.address === _account.address
+                  )
+                );
+
+                // concat accounts and store
+                _accounts = _accounts.concat(injected);
                 setStateWithRef(_accounts, setAccounts, accountsRef);
               }
             }
