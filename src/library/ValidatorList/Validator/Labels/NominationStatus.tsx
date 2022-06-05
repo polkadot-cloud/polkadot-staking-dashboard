@@ -8,7 +8,8 @@ import { capitalizeFirstLetter } from 'Utils';
 import { NominationStatusWrapper } from '../Wrappers';
 
 export const NominationStatus = (props: any) => {
-  const { getNominationsStatus, eraStakers } = useStaking();
+  const { getNominationsStatus, eraStakers, erasStakersResyncing } =
+    useStaking();
   const {
     network: { unit },
   } = useApi() as APIContextInterface;
@@ -29,7 +30,8 @@ export const NominationStatus = (props: any) => {
     <NominationStatusWrapper status={nominationStatus}>
       <h5>
         {capitalizeFirstLetter(nominationStatus ?? '')}
-        {ownStaked > 0 && ` / ${ownStaked} ${unit} `}
+        {ownStaked > 0 &&
+          ` / ${erasStakersResyncing ? '...' : `${ownStaked}${unit}`}`}
       </h5>
     </NominationStatusWrapper>
   );

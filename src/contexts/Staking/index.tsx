@@ -25,6 +25,7 @@ export interface StakingContextState {
   staking: any;
   eraStakers: any;
   targets: any;
+  erasStakersResyncing: any;
 }
 
 export const StakingContext: React.Context<StakingContextState> =
@@ -39,6 +40,7 @@ export const StakingContext: React.Context<StakingContextState> =
     staking: {},
     eraStakers: {},
     targets: [],
+    erasStakersResyncing: false,
   });
 
 export const useStaking = () => React.useContext(StakingContext);
@@ -73,6 +75,10 @@ export const StakingProvider = ({
   const [eraStakers, setEraStakers]: any = useState(defaults.eraStakers);
   const eraStakersRef = useRef(eraStakers);
 
+  // flags whether erasStakers is resyncing
+  const [erasStakersResyncing, setErasStakersResyncing] = useState(false);
+  const erasStakersResyncingRef = useRef(erasStakersResyncing);
+
   // store account target validators
   const [targets, _setTargets]: any = useState(
     localStorageOrDefault(
@@ -95,6 +101,9 @@ export const StakingProvider = ({
         ownStake,
         _activeAccount,
       } = data;
+
+      // finish sync
+      setStateWithRef(false, setErasStakersResyncing, erasStakersResyncingRef);
 
       // check if account hasn't changed since worker started
       if (getActiveAccount() === _activeAccount) {
@@ -180,6 +189,12 @@ export const StakingProvider = ({
     const _exposures = await api.query.staking.erasStakers.entries(
       metrics.activeEra.index
     );
+
+    // flag eraStakers is recyncing
+    if (eraStakersRef.current.stakers.length) {
+      setStateWithRef(true, setErasStakersResyncing, erasStakersResyncingRef);
+    }
+
     // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: any) => ({
       keys: _keys.toHuman(),
@@ -403,6 +418,7 @@ export const StakingProvider = ({
         inSetup,
         staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
+        erasStakersResyncing: erasStakersResyncingRef.current,
         targets,
       }}
     >
