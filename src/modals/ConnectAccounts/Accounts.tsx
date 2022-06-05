@@ -20,9 +20,13 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     activeAccount,
   }: any = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
+  const { activeExtension } = useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
 
   const activeAccountMeta = getAccount(activeAccount);
+
+  // filter accounts by extension name
+  accounts = accounts.filter((item: any) => item.source === activeExtension);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);

@@ -11,8 +11,7 @@ import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
-  const { activeExtension, activeAccount, extensions } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, extensions } = useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
   const { config } = modal;
   const _section = config?.section ?? null;
@@ -38,13 +37,6 @@ export const ConnectAccounts = () => {
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
-
-  // back to wallet section if none active
-  useEffect(() => {
-    if (activeExtension === null) {
-      setSection(0);
-    }
-  }, [activeExtension]);
 
   return (
     <Wrapper>

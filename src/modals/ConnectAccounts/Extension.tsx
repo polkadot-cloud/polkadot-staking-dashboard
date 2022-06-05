@@ -3,21 +3,19 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useConnect } from 'contexts/Connect';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
+import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
 
 export const Extension = (props: any) => {
-  const { meta, disabled, error, setSection, flag, disconnect } = props;
+  const { meta, disabled, setSection, flag } = props;
   const { extensionName, title } = meta;
-  const { activeExtension, connectExtension, disconnectExtension } =
-    useConnect() as ConnectContextInterface;
 
-  const handleWalletConnect = async () => {
-    if (activeExtension !== extensionName) {
-      await connectExtension(extensionName);
-    }
+  const { setActiveExtension } = useConnect() as ConnectContextInterface;
+
+  const handleClick = async () => {
+    setActiveExtension(extensionName);
     setSection(1);
   };
 
@@ -28,11 +26,7 @@ export const Extension = (props: any) => {
       key={`wallet_${extensionName}`}
       disabled={disabled}
       onClick={() => {
-        if (disconnect) {
-          disconnectExtension();
-        } else {
-          handleWalletConnect();
-        }
+        handleClick();
       }}
     >
       <div>
@@ -42,9 +36,9 @@ export const Extension = (props: any) => {
         {extensionName === 'polkadot-js' && (
           <PolkadotJSSVG width="1.5rem" height="1.5rem" />
         )}
-        &nbsp; {error || title}
+        &nbsp; {title}
       </div>
-      <div className={disconnect ? 'danger' : 'neutral'}>
+      <div className="neutral">
         {flag && flag}
         <FontAwesomeIcon
           icon={faChevronRight}

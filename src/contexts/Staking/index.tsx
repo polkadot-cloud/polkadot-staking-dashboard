@@ -50,11 +50,8 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const {
-    activeAccount,
-    activeExtension,
-    accounts: connectAccounts,
-  } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts: connectAccounts } =
+    useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } =
     useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
@@ -321,7 +318,7 @@ export const StakingProvider = ({
    * has set a controller account.
    */
   const hasController = () => {
-    if (!activeAccount || activeExtension === null) {
+    if (!activeAccount) {
       return false;
     }
     return getBondedAccount(activeAccount) !== null;
@@ -332,7 +329,7 @@ export const StakingProvider = ({
    * has been imported.
    */
   const getControllerNotImported = (address: string) => {
-    if (address === null || !activeAccount || !activeExtension) {
+    if (address === null || !activeAccount) {
       return false;
     }
     // check if controller is imported
