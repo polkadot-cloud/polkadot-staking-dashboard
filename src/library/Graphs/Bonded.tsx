@@ -40,7 +40,7 @@ export const Bonded = (props: any) => {
           padding: 20,
           color: defaultThemes.text.primary[mode],
           font: {
-            size: 15,
+            size: 14,
             weight: '500',
           },
         },
