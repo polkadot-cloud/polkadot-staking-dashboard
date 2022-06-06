@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { isNumeric } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
@@ -67,7 +67,7 @@ export const Payee = (props: any) => {
   };
 
   return (
-    <SectionWrapper transparent>
+    <CardWrapper transparent>
       <Header
         thisSection={section}
         complete={setup.payee !== null}
@@ -93,7 +93,7 @@ export const Payee = (props: any) => {
         </Items>
         <Footer complete={setup.payee !== null} />
       </MotionContainer>
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

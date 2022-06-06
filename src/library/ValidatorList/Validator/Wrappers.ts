@@ -8,6 +8,7 @@ import {
   borderPrimary,
   textSecondary,
   primary,
+  modalBackground,
 } from 'theme';
 
 export const Wrapper = styled.div<any>`
@@ -131,6 +132,36 @@ export const NominationStatusWrapper = styled.div<{ status: string }>`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+`;
+
+export const SelectWrapper = styled.div`
+  margin: 0 0.75rem 0 0.25rem;
+  overflow: hidden;
+  display: block;
+  background: ${modalBackground};
+  border-radius: 0.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  * {
+    cursor: pointer;
+    width: 100%;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .select-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
   }
 `;
 

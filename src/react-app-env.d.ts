@@ -5,6 +5,7 @@
 declare module 'react-dom/client';
 declare module 'che-react-number-easing';
 declare module 'faler';
+declare module 'react-custom-checkbox';
 
 declare module 'worker-loader!*' {
   // You need to change `Worker`, if you specified a different value for the `workerType` option

@@ -4,10 +4,14 @@
 import React, { useState } from 'react';
 
 export const ValidatorListContext: React.Context<any> = React.createContext({
-  setSelected: (_selected: Array<any>) => {},
   setSelectable: (_selectable: boolean) => {},
+  addToSelected: (item: any) => {},
+  removeFromSelected: (items: Array<any>) => {},
+  resetSelected: () => {},
+  setListFormat: (v: string) => {},
   selected: [],
   selectable: false,
+  listFormat: 'col',
 });
 
 export const useValidatorList = () => React.useContext(ValidatorListContext);
@@ -17,24 +21,43 @@ export const ValidatorListProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [selected, _setSelected] = useState<Array<any>>([]);
-  const [selectable, _setSelectable] = useState(false);
+  const [selected, setSelected] = useState<Array<any>>([]);
+  const [selectActive, _setSelectActive] = useState(false);
+  const [listFormat, _setListFormat] = useState('col');
 
-  const setSelected = (_selected: Array<any>) => {
-    _setSelected(_selected);
+  const addToSelected = (_item: any) => {
+    setSelected([...selected].concat(_item));
   };
 
-  const setSelectable = (_selectable: boolean) => {
-    _setSelectable(_selectable);
+  const removeFromSelected = (items: Array<any>) => {
+    setSelected([...selected].filter((item: any) => !items.includes(item)));
+  };
+
+  const resetSelected = () => {
+    setSelected([]);
+  };
+  const setSelectActive = (_selectActive: boolean) => {
+    _setSelectActive(_selectActive);
+    if (_selectActive === false) {
+      resetSelected();
+    }
+  };
+
+  const setListFormat = (v: string) => {
+    _setListFormat(v);
   };
 
   return (
     <ValidatorListContext.Provider
       value={{
-        setSelected,
-        setSelectable,
+        setSelectActive,
+        addToSelected,
+        removeFromSelected,
+        resetSelected,
+        setListFormat,
         selected,
-        selectable,
+        selectActive,
+        listFormat,
       }}
     >
       {children}

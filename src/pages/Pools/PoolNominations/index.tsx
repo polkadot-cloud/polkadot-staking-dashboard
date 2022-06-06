@@ -6,24 +6,28 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
-import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
+import { usePools } from 'contexts/Pools';
 import { Wrapper } from './Wrapper';
 
 export const PoolNominations = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
+  const { isNominator } = usePools();
   const batchKey = 'pool_nominations';
+
+  // TODO: plug in action to stop nominating. Test when I am nominator of pool.
 
   return (
     <Wrapper>
-      <SectionHeaderWrapper withAction>
+      <CardHeaderWrapper withAction>
         <h2>
           Pool Nominations
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h2>
-      </SectionHeaderWrapper>
+      </CardHeaderWrapper>
       {isSyncing ? (
         <div className="head">
           <h3>Syncing nominations...</h3>
@@ -38,6 +42,7 @@ export const PoolNominations = () => {
                     validators={poolNominated}
                     batchKey={batchKey}
                     title="Your Nominations"
+                    selectable={isNominator()}
                     format="nomination"
                     refetchOnListUpdate
                     allowMoreCols

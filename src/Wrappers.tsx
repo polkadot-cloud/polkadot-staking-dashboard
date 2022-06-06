@@ -238,13 +238,18 @@ export const RowPrimaryWrapper = styled.div<any>`
   flex-basis: 100%;
   max-width: 100%;
 
-  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
-    ${(props) => props.hOrder === 0 && ' padding-right: 1rem;'}
-    ${(props) => props.hOrder === 1 && 'padding-left: 1rem;'}
+  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+    ${(props) => props.hOrder === 0 && ' padding-right: 0.5rem;'}
+    ${(props) => props.hOrder === 1 && 'padding-left: 0.5rem;'}
     order: ${(props) => props.hOrder};
+    flex-basis: 50%;
+    width: 50%;
+    flex: 1;
+  }
+
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
     flex-basis: 62%;
     width: 62%;
-    flex: 1;
   }
 `;
 
@@ -260,11 +265,18 @@ export const RowSecondaryWrapper = styled.div<any>`
   width: 100%;
   border-radius: 1rem;
 
-  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
+  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+    ${(props) => props.hOrder === 1 && ' padding-left: 0.5rem;'}
+    ${(props) => props.hOrder === 0 && 'padding-right: 0.5rem;'}
     order: ${(props) => props.hOrder};
+    flex-basis: 50%;
+    width: 50%;
+    flex: 1;
+  }
+
+  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
     flex-basis: 38%;
     max-width: 38%;
-    flex-grow: 1;
   }
 `;
 

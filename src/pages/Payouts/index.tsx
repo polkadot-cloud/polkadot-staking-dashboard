@@ -8,8 +8,8 @@ import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
 import {
   GraphWrapper,
-  SectionWrapper,
-  SectionHeaderWrapper,
+  CardWrapper,
+  CardHeaderWrapper,
 } from 'library/Graphs/Wrappers';
 import { PageRowWrapper } from 'Wrappers';
 import { SubscanButton } from 'library/SubscanButton';
@@ -49,7 +49,7 @@ export const Payouts = (props: PageProps) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <GraphWrapper>
           <SubscanButton />
-          <SectionHeaderWrapper padded>
+          <CardHeaderWrapper padded>
             <h4>
               Payout History
               <OpenAssistantIcon page="payouts" title="Payout History" />
@@ -67,7 +67,7 @@ export const Payouts = (props: PageProps) => {
                 'None'
               )}
             </h2>
-          </SectionHeaderWrapper>
+          </CardHeaderWrapper>
           <div className="inner" ref={ref} style={{ minHeight }}>
             {!services.includes('subscan') ? (
               <StatusLabel
@@ -97,13 +97,13 @@ export const Payouts = (props: PageProps) => {
         <></>
       ) : (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
-          <SectionWrapper>
+          <CardWrapper>
             <PayoutList
               title="Recent Payouts"
               payouts={payoutsList}
               pagination
             />
-          </SectionWrapper>
+          </CardWrapper>
         </PageRowWrapper>
       )}
     </>

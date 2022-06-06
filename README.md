@@ -27,7 +27,7 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Node only / External API toggles
 - [x] Screen size support
 - [x] Extrinsics
-- [ ] Initial Nomination management tooling
+- [x] Initial Nomination management tooling
 - [ ] Nomination Pools
 - [ ] Chain API Integration
 

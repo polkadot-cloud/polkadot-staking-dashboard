@@ -5,14 +5,13 @@ import { useState, useEffect, useRef } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { ConnectContextInterface } from 'types/connect';
-import { Wrapper, SectionsWrapper } from './Wrappers';
+import { Wrapper, CardsWrapper } from './Wrappers';
 import { Extensions } from './Extensions';
 import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
-  const { activeExtension, activeAccount, extensions } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, extensions } = useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
   const { config } = modal;
   const _section = config?.section ?? null;
@@ -26,29 +25,26 @@ export const ConnectAccounts = () => {
   const extensionsRef: any = useRef(null);
   const accountsRef: any = useRef(null);
 
-  useEffect(() => {
+  const resizeModal = () => {
     let _height = 0;
     if (section === 0) {
       _height = extensionsRef.current?.clientHeight ?? 0;
-    } else {
+    } else if (section === 1) {
       _height = accountsRef.current?.clientHeight ?? 0;
     }
     modal.setModalHeight(_height);
-  }, [section, activeAccount, activeAccount, accounts, extensions]);
+  };
+
+  useEffect(() => {
+    resizeModal();
+  }, [section, activeAccount, accounts, extensions, modal.height]);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
 
-  // back to wallet section if none active
-  useEffect(() => {
-    if (activeExtension === null) {
-      setSection(0);
-    }
-  }, [activeExtension]);
-
   return (
     <Wrapper>
-      <SectionsWrapper
+      <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}
         initial={false}
         transition={{
@@ -67,7 +63,7 @@ export const ConnectAccounts = () => {
       >
         <Extensions setSection={setSection} ref={extensionsRef} />
         <Accounts setSection={setSection} ref={accountsRef} />
-      </SectionsWrapper>
+      </CardsWrapper>
     </Wrapper>
   );
 };

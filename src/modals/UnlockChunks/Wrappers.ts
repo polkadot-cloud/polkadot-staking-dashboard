@@ -19,12 +19,13 @@ export const FixedContentWrapper = styled.div`
   flex-basis: 50%;
 `;
 
-export const SectionsWrapper = styled(motion.div)`
+export const CardsWrapper = styled(motion.div)`
   box-sizing: border-box;
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
   position: relative;
   height: 100%;
 `;

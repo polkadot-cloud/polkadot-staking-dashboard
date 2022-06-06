@@ -3,55 +3,49 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useConnect } from 'contexts/Connect';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
+import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
+import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
-  const { meta, disabled, error, setSection, flag, disconnect } = props;
+  const { meta, setSection, flag } = props;
   const { extensionName, title } = meta;
-  const { activeExtension, connectExtension, disconnectExtension } =
-    useConnect() as ConnectContextInterface;
 
-  const handleWalletConnect = async () => {
-    if (activeExtension !== extensionName) {
-      await connectExtension(extensionName);
-    }
+  const { setActiveExtension } = useConnect() as ConnectContextInterface;
+
+  const handleClick = async () => {
+    setActiveExtension(extensionName);
     setSection(1);
   };
 
+  const size = '2rem';
+
   return (
-    <button
-      type="button"
-      className="item"
+    <ExtensionWrapper
       key={`wallet_${extensionName}`}
-      disabled={disabled}
       onClick={() => {
-        if (disconnect) {
-          disconnectExtension();
-        } else {
-          handleWalletConnect();
-        }
+        handleClick();
       }}
     >
       <div>
         {extensionName === 'talisman' && (
-          <TalismanSVG width="1.5rem" height="1.5rem" />
+          <TalismanSVG width={size} height={size} />
         )}
         {extensionName === 'polkadot-js' && (
-          <PolkadotJSSVG width="1.5rem" height="1.5rem" />
+          <PolkadotJSSVG width={size} height={size} />
         )}
-        &nbsp; {error || title}
+        <span className="name">&nbsp; {title}</span>
       </div>
-      <div className={disconnect ? 'danger' : 'neutral'}>
+      <div className="neutral">
         {flag && flag}
         <FontAwesomeIcon
           icon={faChevronRight}
-          transform="shrink-5"
+          transform="shrink-0"
           className="icon"
         />
       </div>
-    </button>
+    </ExtensionWrapper>
   );
 };

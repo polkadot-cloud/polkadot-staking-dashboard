@@ -15,7 +15,7 @@ export const PayoutsInner = (props: any) => {
 
   const ref: any = React.useRef();
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 346);
+  const { width, height, minHeight } = formatSize(size, 306);
 
   // pre-fill missing items if payouts < 60
   const payoutsGraph = prefillPayoutGraph([...payouts], 10);
@@ -40,9 +40,9 @@ export const PayoutsInner = (props: any) => {
           position: 'absolute',
         }}
       >
-        <PayoutBar payouts={payoutsGraph} height="200px" />
+        <PayoutBar payouts={payoutsGraph} height="170px" />
         <div style={{ marginTop: '1rem' }}>
-          <PayoutLine payouts={payoutsGraph} height="80px" />
+          <PayoutLine payouts={payoutsGraph} height="70px" />
         </div>
       </div>
     </div>

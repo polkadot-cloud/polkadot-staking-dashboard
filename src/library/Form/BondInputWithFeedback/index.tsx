@@ -8,7 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { humanNumber, planckBnToUnit } from 'Utils';
-import { SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BondInput } from '../BondInput';
@@ -158,13 +158,13 @@ export const BondInputWithFeedback = (props: any) => {
 
   return (
     <>
-      <SectionHeaderWrapper>
+      <CardHeaderWrapper>
         <h4>
           {unbond ? 'Bonded' : 'Available'}:{' '}
           {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)}{' '}
           {network.unit}
         </h4>
-      </SectionHeaderWrapper>
+      </CardHeaderWrapper>
       {errors.map((err: any, index: any) => (
         <Warning key={`setup_error_${index}`} text={err} />
       ))}

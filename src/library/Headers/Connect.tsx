@@ -3,10 +3,14 @@
 
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
+import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useModal } from 'contexts/Modal';
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
-  const { activeAccount, initialise } = useConnect() as ConnectContextInterface;
+  const { openModalWith } = useModal();
+  const { activeAccount } = useConnect() as ConnectContextInterface;
 
   return (
     <>
@@ -15,10 +19,11 @@ export const Connect = () => {
           <Item
             className="connect"
             onClick={() => {
-              initialise();
+              openModalWith('ConnectAccounts', {}, 'small');
             }}
             whileHover={{ scale: 1.02 }}
           >
+            <FontAwesomeIcon icon={faWallet} color="white" className="icon" />
             <span>Connect</span>
           </Item>
         </HeadingWrapper>

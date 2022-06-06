@@ -87,7 +87,7 @@ export const BalanceGraph = () => {
           padding: 20,
           color: defaultThemes.text.primary[mode],
           font: {
-            size: 15,
+            size: 14,
             weight: '500',
           },
         },
@@ -154,7 +154,7 @@ export const BalanceGraph = () => {
 
   const ref: any = React.useRef();
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 240);
+  const { width, height, minHeight } = formatSize(size, 220);
 
   return (
     <>

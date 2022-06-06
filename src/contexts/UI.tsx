@@ -18,7 +18,6 @@ import { useApi } from './Api';
 export interface UIContextState {
   setSideMenu: (v: number) => void;
   setUserSideMenuMinimised: (v: number) => void;
-  setListFormat: (v: string) => void;
   orderValidators: (v: string) => void;
   applyValidatorOrder: (l: any, o: string) => any;
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
@@ -34,7 +33,6 @@ export interface UIContextState {
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;
-  listFormat: string;
   services: any;
   validatorFilters: any;
   validatorOrder: string;
@@ -45,7 +43,6 @@ export interface UIContextState {
 export const UIContext: React.Context<UIContextState> = React.createContext({
   setSideMenu: (v: number) => {},
   setUserSideMenuMinimised: (v: number) => {},
-  setListFormat: (v: string) => {},
   orderValidators: (v: string) => {},
   applyValidatorOrder: (l: any, o: string) => {},
   applyValidatorFilters: (l: any, k: string, f?: any) => {},
@@ -61,7 +58,6 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
-  listFormat: 'col',
   services: SERVICES,
   validatorFilters: [],
   validatorOrder: 'default',
@@ -111,9 +107,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       ? 1
       : userSideMenuMinimisedRef.current
   );
-
-  // global list format
-  const [listFormat, _setListFormat] = useState('col');
 
   // is the user actively on the setup page
   const [onSetup, setOnSetup] = useState(0);
@@ -200,10 +193,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
-  };
-
-  const setListFormat = (v: string) => {
-    _setListFormat(v);
   };
 
   const setValidatorsOrder = (by: string) => {
@@ -507,7 +496,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         setSideMenu,
         setUserSideMenuMinimised,
-        setListFormat,
         orderValidators,
         applyValidatorOrder,
         applyValidatorFilters,
@@ -523,7 +511,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
-        listFormat,
         validatorFilters,
         validatorOrder,
         services: servicesRef.current,

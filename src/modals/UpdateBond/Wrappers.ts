@@ -19,7 +19,7 @@ export const FixedContentWrapper = styled.div`
   flex-basis: 50%;
 `;
 
-export const SectionsWrapper = styled(motion.div)`
+export const CardsWrapper = styled(motion.div)`
   box-sizing: border-box;
   width: 200%;
   display: flex;
@@ -45,7 +45,8 @@ export const ContentWrapper = styled.div`
     border-bottom: none;
     width: auto;
     border-radius: 0.75rem;
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
     z-index: 1;
     width: 100%;
 

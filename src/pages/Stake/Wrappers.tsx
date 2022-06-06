@@ -35,7 +35,6 @@ export const HeaderWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 0 0.25rem;
 
   > section {
     color: ${textSecondary};

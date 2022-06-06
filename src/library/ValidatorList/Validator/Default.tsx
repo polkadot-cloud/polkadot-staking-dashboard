@@ -16,15 +16,24 @@ import { Favourite } from './Labels/Favourite';
 import { Identity } from './Labels/Identity';
 import { Oversubscribed } from './Labels/Oversubscribed';
 import { Blocked } from './Labels/Blocked';
+import { Select } from './Labels/Select';
+import { useValidatorList } from '../context';
 
 export const Default = (props: any) => {
-  const { validator, toggleFavourites, batchIndex, batchKey, showStatus } =
-    props;
+  const {
+    validator,
+    toggleFavourites,
+    batchIndex,
+    batchKey,
+    showStatus,
+    showMenu,
+  } = props;
 
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { meta } = useValidators();
+  const { selectActive } = useValidatorList();
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -87,6 +96,7 @@ export const Default = (props: any) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
+          {selectActive && <Select validator={validator} />}
           <Identity
             validator={validator}
             batchIndex={batchIndex}
@@ -98,13 +108,15 @@ export const Default = (props: any) => {
               <Blocked prefs={prefs} />
               <div className="label comm">{commission}%</div>
               {toggleFavourites && <Favourite address={address} />}
-              <button
-                type="button"
-                className="label"
-                onClick={() => toggleMenu()}
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </button>
+              {showMenu && (
+                <button
+                  type="button"
+                  className="label"
+                  onClick={() => toggleMenu()}
+                >
+                  <FontAwesomeIcon icon={faBars} />
+                </button>
+              )}
             </Labels>
           </div>
         </div>

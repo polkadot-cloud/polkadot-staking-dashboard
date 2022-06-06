@@ -12,7 +12,7 @@ export const Wrapper = styled(motion.div)<any>`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: #444;
   bottom: 0px;
   left: 0px;
@@ -49,7 +49,7 @@ export const Summary = styled.div`
 
   p {
     margin: 0 0.25rem;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
   }
   .stat {
     margin: 0 0.25rem;
@@ -86,6 +86,7 @@ export const Summary = styled.div`
         border-radius: 0.4rem;
         padding: 0.25rem 0.5rem;
         color: ${textSecondary};
+        font-size: 0.85rem;
       }
       span {
         &.pos {
@@ -123,6 +124,7 @@ export const NetworkInfo = styled(motion.div)`
       font-size: 1.1rem;
       line-height: 2rem;
       padding: 0 0.25rem;
+      margin: 1rem 0;
     }
 
     > div,

@@ -2,13 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { forwardRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import Identicon from 'library/Identicon';
 import { useModal } from 'contexts/Modal';
 import { ConnectContextInterface } from 'types/connect';
-import { Separator, ContentWrapper, PaddingWrapper } from './Wrappers';
+import Button from 'library/Button';
+import {
+  Separator,
+  ContentWrapper,
+  PaddingWrapper,
+  AccountWrapper,
+} from './Wrappers';
 
 export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
@@ -20,9 +25,13 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     activeAccount,
   }: any = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
+  const { activeExtension } = useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
 
   const activeAccountMeta = getAccount(activeAccount);
+
+  // filter accounts by extension name
+  accounts = accounts.filter((item: any) => item.source === activeExtension);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
@@ -30,23 +39,19 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   return (
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
-        <h2>{!activeAccount ? 'Select' : 'Switch'} Account</h2>
+        <h2>Select Account</h2>
         <div className="head">
-          <button
-            type="button"
-            onClick={() => {
-              setSection(0);
-            }}
-          >
-            <FontAwesomeIcon icon={faChevronLeft} transform="shrink-5" />
-            &nbsp;Back to Wallets
-          </button>
+          <Button
+            title="Back"
+            primary
+            icon={faChevronLeft}
+            transform="shrink-2"
+            onClick={() => setSection(0)}
+          />
         </div>
 
         {activeAccount ? (
-          <button
-            type="button"
-            className="item"
+          <AccountWrapper
             onClick={() => {
               disconnectFromAccount();
             }}
@@ -55,22 +60,20 @@ export const Accounts = forwardRef((props: any, ref: any) => {
               <Identicon value={activeAccountMeta?.address} size={26} />
               <span className="name">&nbsp; {activeAccountMeta?.name}</span>
             </div>
-            <div className="danger">Disconnect </div>
-          </button>
+            <div className="danger">Disconnect</div>
+          </AccountWrapper>
         ) : (
-          <button type="button" className="item" disabled>
+          <AccountWrapper disabled>
             <div>No Account Connected</div>
             <div />
-          </button>
+          </AccountWrapper>
         )}
         <Separator />
 
         {accounts.map((item: any, index: number) => {
           const { address, name } = item;
           return (
-            <button
-              type="button"
-              className="item"
+            <AccountWrapper
               key={`switch_acnt_${index}`}
               onClick={() => {
                 connectToAccount(item);
@@ -82,7 +85,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
                 <span className="name">&nbsp; {name}</span>
               </div>
               <div />
-            </button>
+            </AccountWrapper>
           );
         })}
       </PaddingWrapper>

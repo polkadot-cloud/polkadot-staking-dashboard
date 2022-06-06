@@ -10,7 +10,7 @@ import { useModal } from 'contexts/Modal';
 import { usePools } from 'contexts/Pools';
 import { ConnectContextInterface } from 'types/connect';
 import { HeadingWrapper } from '../Wrappers';
-import { Wrapper, FixedContentWrapper, SectionsWrapper } from './Wrappers';
+import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';
 import { Forms } from './Forms';
 
@@ -76,7 +76,7 @@ export const UnlockChunks = () => {
           {unlocking.length === 1 ? '' : 's'}
         </HeadingWrapper>
       </FixedContentWrapper>
-      <SectionsWrapper
+      <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -106,7 +106,7 @@ export const UnlockChunks = () => {
           task={task}
           ref={formsRef}
         />
-      </SectionsWrapper>
+      </CardsWrapper>
     </Wrapper>
   );
 };

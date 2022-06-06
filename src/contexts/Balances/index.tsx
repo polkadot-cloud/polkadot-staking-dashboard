@@ -31,8 +31,7 @@ export const BalancesProvider = ({
 }) => {
   const { api, isReady, network, consts } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics();
-  const { accounts: connectAccounts, activeExtension } =
-    useConnect() as ConnectContextInterface;
+  const { accounts: connectAccounts } = useConnect() as ConnectContextInterface;
   const { activeEra } = metrics;
   const { units } = network;
 
@@ -75,7 +74,7 @@ export const BalancesProvider = ({
       unsubscribeAll();
       getBalances();
     }
-  }, [connectAccounts, network, isReady, activeExtension]);
+  }, [connectAccounts, network, isReady]);
 
   // fetch bonded account ledgers
   useEffect(() => {

@@ -7,13 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePools } from 'contexts/Pools';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { PoolListProvider, usePoolList } from './context';
 
 export const PoolListInner = (props: any) => {
   const { allowMoreCols, pagination, batchKey }: any = props;
@@ -23,8 +23,8 @@ export const PoolListInner = (props: any) => {
 
   const { isReady } = useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
-  const { setListFormat, listFormat }: any = useUi();
   const { fetchPoolsMetaBatch }: any = usePools();
+  const { listFormat, setListFormat } = usePoolList();
   // ---
 
   // current page
@@ -199,7 +199,15 @@ export const PoolListInner = (props: any) => {
   );
 };
 
-export class PoolList extends React.Component<any, any> {
+export const PoolList = (props: any) => {
+  return (
+    <PoolListProvider>
+      <PoolListShouldUpdate {...props} />
+    </PoolListProvider>
+  );
+};
+
+export class PoolListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;
 
   shouldComponentUpdate(nextProps: any, nextState: any) {

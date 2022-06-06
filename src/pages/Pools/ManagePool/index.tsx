@@ -4,7 +4,7 @@
 import { usePools } from 'contexts/Pools';
 import { useModal } from 'contexts/Modal';
 import { PageRowWrapper } from 'Wrappers';
-import { SectionWrapper, SectionHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
@@ -16,10 +16,10 @@ export const ManagePool = () => {
   const { openModalWith } = useModal();
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
-      <SectionWrapper>
+      <CardWrapper>
         {isNominator() ? (
           <>
-            <SectionHeaderWrapper withAction>
+            <CardHeaderWrapper withAction>
               <h3>
                 Generate Nominations
                 <OpenAssistantIcon page="stake" title="Nominations" />
@@ -36,7 +36,7 @@ export const ManagePool = () => {
                   onClick={() => openModalWith('NominatePool', {}, 'small')}
                 />
               </div>
-            </SectionHeaderWrapper>
+            </CardHeaderWrapper>
             <GenerateNominations
               batchKey="generate_pool_nominations"
               nominations={targets.nominations}
@@ -51,7 +51,7 @@ export const ManagePool = () => {
         ) : (
           <PoolNominations />
         )}
-      </SectionWrapper>
+      </CardWrapper>
     </PageRowWrapper>
   );
 };

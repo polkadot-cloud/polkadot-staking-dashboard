@@ -20,7 +20,6 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/lodash.throttle": "^4.1.6",
-    "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-helmet": "^6.1.5",
     "@types/react-scroll": "^1.8.3",
     "@types/styled-theming": "^2.2.5",
@@ -39,7 +38,7 @@
     "react": "^18.1.0",
     "react-chartjs-2": "^4.0.1",
     "react-content-loader": "^6.2.0",
-    "react-copy-to-clipboard": "^5.1.0",
+    "react-custom-checkbox": "^2.0.1",
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
     "react-lorem-ipsum": "^1.4.9",
@@ -77,6 +76,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "gh-pages": "^3.2.3",
     "prettier": "^2.6.2",
+    "terser-webpack-plugin": "^5.3.3",
     "worker-loader": "^3.0.8"
   },
   "scripts": {

@@ -9,20 +9,21 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { planckToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { ItemWrapper } from './Wrappers';
+import { usePoolList } from 'library/PoolList/context';
+import { ItemWrapper } from '../Wrappers';
+import { PayoutListProvider } from './context';
 
 export const PayoutListInner = (props: any) => {
+  const { allowMoreCols, pagination }: any = props;
+
   const { isReady, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { metrics }: any = useNetworkMetrics();
-
-  const { setListFormat, listFormat }: any = useUi();
-  const { allowMoreCols, pagination }: any = props;
+  const { listFormat, setListFormat } = usePoolList();
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -210,7 +211,15 @@ export const PayoutListInner = (props: any) => {
   );
 };
 
-export class PayoutList extends React.Component<any, any> {
+export const PayoutList = (props: any) => {
+  return (
+    <PayoutListProvider>
+      <PayoutListShouldUpdate {...props} />
+    </PayoutListProvider>
+  );
+};
+
+export class PayoutListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;
 
   render() {

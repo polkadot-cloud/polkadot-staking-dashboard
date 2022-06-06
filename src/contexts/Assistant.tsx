@@ -89,7 +89,7 @@ export class AssistantProvider extends React.Component<Props, State> {
         ...this.state,
         activeSection: 0,
       });
-    }, 100);
+    }, 150);
   };
 
   setActiveSection = (index: number) => {
@@ -100,9 +100,14 @@ export class AssistantProvider extends React.Component<Props, State> {
   };
 
   goToDefinition = (page: string, title: string) => {
-    const definition = AssistantProvider.getDefinition(page, title);
+    const definition: any = AssistantProvider.getDefinition(page, title);
 
-    if (definition !== undefined) {
+    if (
+      this.state.innerDefinition === definition &&
+      this.state.open === Toggle.Open
+    ) {
+      this.closeAssistant();
+    } else if (definition !== undefined) {
       this.setPage(page);
       this.setInnerDefinition(definition);
       this.setActiveSection(1);

@@ -12,9 +12,10 @@ import { useConnect } from 'contexts/Connect';
 import { useAssistant } from 'contexts/Assistant';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { useModal } from 'contexts/Modal';
 import Heading from './Heading';
 import Definition from './Items/Definition';
-import { SectionWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
+import { CardWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import External from './Items/External';
 import Action from './Items/Action';
 import {
@@ -23,10 +24,11 @@ import {
 } from '../../types/assistant';
 
 export const Sections = (props: any) => {
+  const { openModalWith } = useModal();
   const { network } = useApi() as APIContextInterface;
   const { pageMeta } = props;
 
-  const { initialise, activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;
 
@@ -35,7 +37,7 @@ export const Sections = (props: any) => {
     // close assistant
     assistant.toggle();
     // initialise connect
-    initialise();
+    openModalWith('ConnectAccounts', {}, 'small');
   };
 
   // resources to display
@@ -62,7 +64,7 @@ export const Sections = (props: any) => {
 
   return (
     <>
-      <SectionWrapper
+      <CardWrapper
         ref={homeRef}
         style={{ height: assistant.activeSection === 0 ? 'auto' : 0 }}
       >
@@ -136,9 +138,9 @@ export const Sections = (props: any) => {
             </>
           )}
         </ListWrapper>
-      </SectionWrapper>
+      </CardWrapper>
 
-      <SectionWrapper
+      <CardWrapper
         ref={itemRef}
         style={{ height: assistant.activeSection === 1 ? 'auto' : 0 }}
       >
@@ -173,7 +175,7 @@ export const Sections = (props: any) => {
             </p>
           ))}
         </ListWrapper>
-      </SectionWrapper>
+      </CardWrapper>
     </>
   );
 };

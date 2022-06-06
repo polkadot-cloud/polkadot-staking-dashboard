@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useCombobox } from 'downshift';
@@ -15,9 +15,13 @@ import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
 export const AccountSelect = (props: any) => {
   const { items, onChange, placeholder, value }: any = props;
 
-  const itemToString = (item: any) => (item ? item.name : '');
-
   const [inputItems, setInputItems] = useState(items);
+
+  useEffect(() => {
+    setInputItems(items);
+  }, [items]);
+
+  const itemToString = (item: any) => (item ? item.name : '');
 
   const c: any = useCombobox({
     items: inputItems,

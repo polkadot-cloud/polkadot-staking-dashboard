@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -40,7 +40,7 @@ export const SetController = (props: any) => {
     const _selected = setup.controller !== null ? setup.controller : controller;
     const _initial = getAccount(_selected);
     setSelected(_initial);
-  }, [activeAccount]);
+  }, [activeAccount, accounts]);
 
   const handleOnChange = ({ selectedItem }: any) => {
     setSelected(selectedItem);
@@ -76,27 +76,25 @@ export const SetController = (props: any) => {
   });
 
   return (
-    <>
-      <SectionWrapper transparent>
-        <Header
-          thisSection={section}
-          title="Set Controller Account"
-          assistantPage="stake"
-          assistantKey="Stash and Controller Accounts"
-          complete={setup.controller !== null}
+    <CardWrapper transparent>
+      <Header
+        thisSection={section}
+        title="Set Controller Account"
+        assistantPage="stake"
+        assistantKey="Stash and Controller Accounts"
+        complete={setup.controller !== null}
+      />
+      <MotionContainer thisSection={section} activeSection={setup.section}>
+        <Spacer />
+        <AccountSelect
+          items={items}
+          onChange={handleOnChange}
+          placeholder="Search Account"
+          value={selected}
         />
-        <MotionContainer thisSection={section} activeSection={setup.section}>
-          <Spacer />
-          <AccountSelect
-            items={items}
-            onChange={handleOnChange}
-            placeholder="Search Account"
-            value={selected}
-          />
-          <Footer complete={setup.controller !== null} />
-        </MotionContainer>
-      </SectionWrapper>
-    </>
+        <Footer complete={setup.controller !== null} />
+      </MotionContainer>
+    </CardWrapper>
   );
 };
 

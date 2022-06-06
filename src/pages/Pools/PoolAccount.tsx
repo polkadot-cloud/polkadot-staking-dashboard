@@ -4,7 +4,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
 import { clipAddress } from 'Utils';
 import { Identicon } from 'library/Identicon';
@@ -74,14 +73,12 @@ export const PoolAccount = (props: any) => {
             {address !== null && (
               <button
                 type="button"
-                onClick={() => addNotification(notification)}
+                onClick={() => {
+                  navigator.clipboard.writeText(address);
+                  addNotification(notification);
+                }}
               >
-                <CopyToClipboard text={address}>
-                  <FontAwesomeIcon
-                    icon={faCopy as IconProp}
-                    transform="grow-1"
-                  />
-                </CopyToClipboard>
+                <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />
               </button>
             )}
           </motion.div>

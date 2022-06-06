@@ -4,7 +4,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { SectionWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
@@ -22,15 +22,14 @@ export const Summary = (props: any) => {
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount, activeExtension } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
 
   const txs = () => {
-    if (!activeAccount || activeExtension === null || !api) {
+    if (!activeAccount || !api) {
       return null;
     }
     const stashToSubmit = {
@@ -64,7 +63,7 @@ export const Summary = (props: any) => {
   });
 
   return (
-    <SectionWrapper transparent>
+    <CardWrapper transparent>
       <Header thisSection={section} complete={null} title="Summary" />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <SummaryWrapper>
@@ -127,7 +126,7 @@ export const Summary = (props: any) => {
           </ButtonWrapper>
         </div>
       </MotionContainer>
-    </SectionWrapper>
+    </CardWrapper>
   );
 };
 

@@ -39,7 +39,7 @@ export const NetworkBar = () => {
       height: '2.5rem',
     },
     maximised: {
-      height: '165px',
+      height: '155px',
     },
   };
 

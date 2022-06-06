@@ -29,7 +29,7 @@ export const Wrapper = styled(motion.div)<any>`
   }
 `;
 
-export const SectionsWrapper = styled(motion.div)`
+export const CardsWrapper = styled(motion.div)`
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
@@ -59,7 +59,7 @@ export const HeightWrapper = styled.div<any>`
   overflow-x: hidden;
 `;
 
-export const SectionWrapper = styled(motion.div)`
+export const CardWrapper = styled(motion.div)`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 100%;

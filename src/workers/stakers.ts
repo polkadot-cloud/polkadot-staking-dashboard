@@ -84,6 +84,7 @@ ctx.addEventListener('message', (event: any) => {
     activeNominators: nominators.length,
     activeValidators,
     minActiveBond,
+    _activeAccount: activeAccount,
   });
 });
 
