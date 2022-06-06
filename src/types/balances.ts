@@ -8,6 +8,7 @@ export interface BalancesAccount {
   balance: any;
   bonded: any;
   ledger: any;
+  locks: any;
   nominations: any;
 }
 
@@ -15,6 +16,7 @@ export interface BalancesContextInterface {
   getAccount: (address: string) => BalancesAccount | null;
   getAccountBalance: (address: string) => any;
   getAccountLedger: (address: string) => any;
+  getAccountLocks: (address: string) => any;
   getBondedAccount: (address: string) => any;
   getAccountNominations: (address: string) => any;
   getBondOptions: (address: string) => any;
