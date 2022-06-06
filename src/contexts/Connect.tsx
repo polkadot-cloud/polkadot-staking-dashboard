@@ -120,14 +120,8 @@ export const ConnectProvider = ({
                     (item: any) => item.address === _activeAccount
                   ) ?? null;
 
-                if (activeAccountInWallet) {
-                  connectToAccount(activeAccountInWallet);
-                }
-
-                // auto connect to account
-                if (activeAccountInWallet !== null) {
-                  connectToAccount(activeAccountInWallet);
-                }
+                // set active account for network
+                connectToAccount(activeAccountInWallet);
 
                 // remove accounts if they exist
                 let _accounts = [...accountsRef.current];
@@ -177,7 +171,7 @@ export const ConnectProvider = ({
   };
 
   const connectToAccount = (account: any) => {
-    setActiveAccount(account.address);
+    setActiveAccount(account?.address ?? null);
     setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
   };
 
