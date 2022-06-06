@@ -11,7 +11,7 @@ import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { usePools } from 'contexts/Pools';
+import { usePools, PoolState } from 'contexts/Pools';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 
@@ -52,43 +52,63 @@ export const Status = () => {
   const { label, buttons } = (() => {
     let _label;
     let _buttons;
+    const createBtn = {
+      title: 'Create Pool',
+      icon: faChevronCircleRight,
+      transform: 'grow-1',
+      disabled: !isReady,
+      onClick: () => openModalWith('CreatePool', { target: 'pool' }, 'small'),
+    };
+    const leaveBtn = {
+      title: 'Leave Pool',
+      icon: faSignOutAlt,
+      disabled: !isReady,
+      small: true,
+      onClick: () => openModalWith('LeavePool', { target: 'pool' }, 'small'),
+    };
+    const destroyBtn = {
+      title: 'Destroy Pool',
+      icon: faTimesCircle,
+      transform: 'grow-1',
+      disabled: !isReady,
+      small: true,
+      onClick: () => openModalWith('Destroy Pool', { target: 'pool' }, 'small'),
+    };
+    const blockBtn = {
+      title: 'Block Pool',
+      icon: faTimesCircle,
+      transform: 'grow-1',
+      disabled: !isReady,
+      small: true,
+      onClick: () => openModalWith('Block Pool', { target: 'pool' }, 'small'),
+    };
+    const openBtn = {
+      title: 'Open Pool',
+      icon: faTimesCircle,
+      transform: 'grow-1',
+      disabled: !isReady,
+      small: true,
+      onClick: () => openModalWith('Open Pool', { target: 'pool' }, 'small'),
+    };
+
     if (!membership) {
       _label = 'Not in a Pool';
-      _buttons = [
-        {
-          title: 'Create Pool',
-          icon: faChevronCircleRight,
-          transform: 'grow-1',
-          disabled: !isReady,
-          onClick: () =>
-            openModalWith('CreatePool', { target: 'pool' }, 'small'),
-        },
-      ];
+      _buttons = [createBtn];
     } else if (isOwner()) {
       _label = `Admin in Pool ${membership.poolId}`;
-      _buttons = [
-        {
-          title: 'Destroy Pool',
-          icon: faTimesCircle,
-          transform: 'grow-1',
-          disabled: !isReady,
-          small: true,
-          onClick: () =>
-            openModalWith('Destroy Pool', { target: 'pool' }, 'small'),
-        },
-      ];
+      switch (activeBondedPool?.state) {
+        case PoolState.Open:
+          _buttons = [destroyBtn, blockBtn];
+          break;
+        case PoolState.Blocked:
+          _buttons = [destroyBtn, openBtn];
+          break;
+        default:
+          _buttons = [];
+      }
     } else if (active?.gt(0)) {
       _label = `Active in Pool ${membership.poolId}`;
-      _buttons = [
-        {
-          title: 'Leave Pool',
-          icon: faSignOutAlt,
-          disabled: !isReady,
-          small: true,
-          onClick: () =>
-            openModalWith('LeavePool', { target: 'pool' }, 'small'),
-        },
-      ];
+      _buttons = [leaveBtn];
     } else {
       _label = `Leaving Pool ${membership.poolId}`;
     }
