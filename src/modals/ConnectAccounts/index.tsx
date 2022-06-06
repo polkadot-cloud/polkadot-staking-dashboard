@@ -29,7 +29,7 @@ export const ConnectAccounts = () => {
     let _height = 0;
     if (section === 0) {
       _height = extensionsRef.current?.clientHeight ?? 0;
-    } else {
+    } else if (section === 1) {
       _height = accountsRef.current?.clientHeight ?? 0;
     }
     modal.setModalHeight(_height);
@@ -37,7 +37,7 @@ export const ConnectAccounts = () => {
 
   useEffect(() => {
     resizeModal();
-  }, [section, activeAccount, accounts, extensions]);
+  }, [section, activeAccount, accounts, extensions, modal.height]);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);

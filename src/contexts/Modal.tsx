@@ -23,7 +23,7 @@ export const ModalContext: React.Context<ModalContextState> =
   React.createContext({
     status: 0,
     setStatus: (status) => {},
-    openModalWith: (modal: string, config?: any, size?: string) => {},
+    openModalWith: (modal: string, _config?: any, size?: string) => {},
     setModalHeight: (v: any) => {},
     setResize: () => {},
     modal: DEFAULT_MODAL_COMPONENT,
@@ -59,12 +59,12 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setState(_state);
   };
 
-  const openModalWith = (modal: string, config: any = {}, size = 'large') => {
+  const openModalWith = (modal: string, _config: any = {}, size = 'large') => {
     setState({
       ...state,
       modal,
       status: 1,
-      config,
+      config: _config,
       size,
       resize: state.resize + 1,
     });
@@ -72,11 +72,9 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setModalHeight = (h: number) => {
     if (state.status === 0) return;
-
     // set maximum height to 80% of window height
     const maxHeight = window.innerHeight * 0.8;
     h = h > maxHeight ? maxHeight : h;
-
     setState({
       ...state,
       height: h,

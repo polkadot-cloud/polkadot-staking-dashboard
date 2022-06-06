@@ -21,8 +21,16 @@ import { ClaimReward } from './ClaimReward';
 import { SelectFavourites } from './SelectFavourites';
 
 export const Modal = () => {
-  const { setModalHeight, setStatus, status, modal, size, height, resize } =
-    useModal();
+  const {
+    setModalHeight,
+    setStatus,
+    status,
+    modal,
+    size,
+    height,
+    resize,
+    config,
+  } = useModal();
   const controls = useAnimation();
 
   const maxHeight = window.innerHeight * 0.8;
@@ -60,11 +68,14 @@ export const Modal = () => {
 
   // resize modal on status or resize change
   useEffect(() => {
+    handleResize();
+  }, [resize]);
+
+  const handleResize = () => {
     let _height = modalRef.current?.clientHeight;
     _height = _height > maxHeight ? maxHeight : _height;
-
     setModalHeight(_height);
-  }, [status, resize]);
+  };
 
   if (status === 0) {
     return <></>;
