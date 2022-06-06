@@ -606,6 +606,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return result;
   };
 
+  // get the stash address of the bonded pool that the member is participating in.
   const getPoolBondedAccount = () => {
     return activeBondedPool.pool?.addresses?.stash;
   };
