@@ -17,6 +17,8 @@ import { UnlockChunks } from './UnlockChunks';
 import { CreatePool } from './CreatePool';
 import { NominatePool } from './NominatePool';
 import { JoinPool } from './JoinPool';
+import { LeavePool } from './LeavePool';
+import { ChangePoolState } from './ChangePoolState';
 import { ClaimReward } from './ClaimReward';
 import { SelectFavourites } from './SelectFavourites';
 
@@ -113,6 +115,8 @@ export const Modal = () => {
             {modal === 'CreatePool' && <CreatePool />}
             {modal === 'NominatePool' && <NominatePool />}
             {modal === 'JoinPool' && <JoinPool />}
+            {modal === 'LeavePool' && <LeavePool />}
+            {modal === 'ChangePoolState' && <ChangePoolState />}
             {modal === 'ClaimReward' && <ClaimReward />}
             {modal === 'SelectFavourites' && <SelectFavourites />}
           </ContentWrapper>

@@ -46,6 +46,18 @@ export interface PoolsContextState {
   poolNominations: any;
 }
 
+export enum PoolState {
+  /// The pool is open to be joined, and is working normally.
+  Open = 'Open',
+  /// The pool is blocked. No one else can join.
+  Block = 'Blocked',
+  /// The pool is in the process of being destroyed.
+  ///
+  /// All members can now be permissionlessly unbonded, and the pool can never go back to any
+  /// other state other than being dissolved.
+  Destroy = 'Destroying',
+}
+
 export const PoolsContext: React.Context<PoolsContextState> =
   React.createContext({
     fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => {},
@@ -327,33 +339,53 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     rewardPool: any,
     rewardAccountBalance: BN
   ): BN => {
-    const newRewardPoolBalance = new BN(rewardAccountBalance).sub(
-      existentialDeposit
+    // calculate the latest reward account balance minus the existential deposit
+    const newRewardPoolBalance = BN.max(
+      new BN(0),
+      new BN(rewardAccountBalance).sub(existentialDeposit)
     );
 
     const lastRewardPoolBalance = new BN(rmCommas(rewardPool.balance));
-    const poolTotalEarnings = new BN(rmCommas(rewardPool.totalEarnings));
+    let poolTotalEarnings = new BN(rmCommas(rewardPool.totalEarnings));
     const rewardPoints = new BN(rmCommas(rewardPool.points));
     const bondedPoints = new BN(rmCommas(bondedPool.points));
     const memberPoints = new BN(rmCommas(membership.points));
+
+    // the pool total earning the last time the member claimed his rewards
     const poolTotalEarningsAtLastClaim = new BN(
       rmCommas(membership.rewardPoolTotalEarnings)
     );
 
-    const generatedEarning = newRewardPoolBalance.sub(lastRewardPoolBalance);
-    const generatedPoints = bondedPoints.mul(generatedEarning);
-    const rewardPoolCurrentRewardPoints = rewardPoints.add(generatedPoints);
-    const generatedEarningSinceLastClaim = poolTotalEarnings.sub(
-      poolTotalEarningsAtLastClaim
+    // new generated earning
+    const generatedEarning = BN.max(
+      new BN(0),
+      newRewardPoolBalance.sub(lastRewardPoolBalance)
     );
+
+    // update poolTotalEarning
+    poolTotalEarnings = poolTotalEarnings.add(generatedEarning);
+
+    // The new points that will be added to the pool. For every unit of balance that has been
+    // earned by the reward pool, we inflate the reward pool points by `bonded_pool.points`. In
+    // effect this allows each, single unit of balance (e.g. plank) to be divvied up pro rata
+    // among members based on points.
+    const generatedPoints = bondedPoints.mul(generatedEarning);
+
+    const currentRewardPoints = rewardPoints.add(generatedPoints);
+
+    const generatedEarningSinceLastClaim = BN.max(
+      new BN(0),
+      poolTotalEarnings.sub(poolTotalEarningsAtLastClaim)
+    );
+
     const memberCurrentRewardPoint = memberPoints.mul(
       generatedEarningSinceLastClaim
     );
-    const payout = rewardPoolCurrentRewardPoints.gt(new BN(0))
-      ? memberCurrentRewardPoint
+    const payout = currentRewardPoints.isZero()
+      ? new BN(0)
+      : memberCurrentRewardPoint
           .mul(newRewardPoolBalance)
-          .div(rewardPoolCurrentRewardPoints)
-      : new BN(0);
+          .div(currentRewardPoints);
 
     return payout;
   };
@@ -586,6 +618,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return result;
   };
 
+  // get the stash address of the bonded pool that the member is participating in.
   const getPoolBondedAccount = () => {
     return activeBondedPool.pool?.addresses?.stash;
   };
