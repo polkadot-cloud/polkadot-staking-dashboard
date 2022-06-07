@@ -4,6 +4,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
+import React from 'react';
 import { Wrapper } from './Wrapper';
 
 export const Stat = (props: any) => {
@@ -29,7 +30,7 @@ export const Stat = (props: any) => {
           <span>
             &nbsp;&nbsp;
             {buttons.map((btn: any, index: number) => (
-              <>
+              <React.Fragment key={`stat_${index}`}>
                 <Button
                   key={`btn_${index}_${Math.random()}`}
                   primary
@@ -42,7 +43,7 @@ export const Stat = (props: any) => {
                   onClick={() => btn.onClick()}
                 />
                 &nbsp;
-              </>
+              </React.Fragment>
             ))}
           </span>
         )}
