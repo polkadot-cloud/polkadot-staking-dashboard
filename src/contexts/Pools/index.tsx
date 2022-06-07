@@ -50,12 +50,12 @@ export enum PoolState {
   /// The pool is open to be joined, and is working normally.
   Open = 'Open',
   /// The pool is blocked. No one else can join.
-  Blocked = 'Blocked',
+  Block = 'Blocked',
   /// The pool is in the process of being destroyed.
   ///
   /// All members can now be permissionlessly unbonded, and the pool can never go back to any
   /// other state other than being dissolved.
-  Destroying = 'Destroying',
+  Destroy = 'Destroying',
 }
 
 export const PoolsContext: React.Context<PoolsContextState> =

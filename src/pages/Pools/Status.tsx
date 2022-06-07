@@ -20,6 +20,8 @@ import {
   faPaperPlane,
   faSignOutAlt,
   faTimesCircle,
+  faLock,
+  faLockOpen,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const Status = () => {
@@ -72,23 +74,38 @@ export const Status = () => {
       transform: 'grow-1',
       disabled: !isReady,
       small: true,
-      onClick: () => openModalWith('Destroy Pool', { target: 'pool' }, 'small'),
+      onClick: () =>
+        openModalWith(
+          'ChangePoolState',
+          { target: 'pool', state: PoolState.Destroy },
+          'small'
+        ),
     };
     const blockBtn = {
-      title: 'Block Pool',
-      icon: faTimesCircle,
+      title: 'Lock Pool',
+      icon: faLock,
       transform: 'grow-1',
       disabled: !isReady,
       small: true,
-      onClick: () => openModalWith('Block Pool', { target: 'pool' }, 'small'),
+      onClick: () =>
+        openModalWith(
+          'ChangePoolState',
+          { target: 'pool', state: PoolState.Block },
+          'small'
+        ),
     };
     const openBtn = {
-      title: 'Open Pool',
-      icon: faTimesCircle,
+      title: 'Unlock Pool',
+      icon: faLockOpen,
       transform: 'grow-1',
       disabled: !isReady,
       small: true,
-      onClick: () => openModalWith('Open Pool', { target: 'pool' }, 'small'),
+      onClick: () =>
+        openModalWith(
+          'ChangePoolState',
+          { target: 'pool', state: PoolState.Open },
+          'small'
+        ),
     };
 
     if (!membership) {
@@ -100,7 +117,7 @@ export const Status = () => {
         case PoolState.Open:
           _buttons = [destroyBtn, blockBtn];
           break;
-        case PoolState.Blocked:
+        case PoolState.Block:
           _buttons = [destroyBtn, openBtn];
           break;
         default:
