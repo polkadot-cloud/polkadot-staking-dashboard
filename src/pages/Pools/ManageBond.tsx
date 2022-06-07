@@ -7,7 +7,6 @@ import { useBalances } from 'contexts/Balances';
 import { planckBnToUnit } from 'Utils';
 import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
-import { useStaking } from 'contexts/Staking';
 import { Button, ButtonRow } from 'library/Button';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
@@ -22,7 +21,6 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const { getAccountLedger }: any = useBalances();
   const { getPoolBondOptions, isBonding } = usePools();
@@ -94,7 +92,7 @@ export const ManageBond = () => {
         unlocked={totalUnlocked}
         free={freeToBond}
         total={total.toNumber()}
-        inactive={inSetup()}
+        inactive={!isBonding()}
       />
     </>
   );
