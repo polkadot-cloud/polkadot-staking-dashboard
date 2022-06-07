@@ -98,6 +98,7 @@ export const Nominations = () => {
                     batchKey={batchKey}
                     title="Your Nominations"
                     format="nomination"
+                    target="stake"
                     selectable
                     actions={[
                       {

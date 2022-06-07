@@ -12,12 +12,15 @@ import { GenerateNominations } from '../../Stake/GenerateNominations';
 import { PoolNominations } from '../PoolNominations';
 
 export const ManagePool = () => {
-  const { isNominator, setTargets, targets } = usePools();
+  const { isNominator, setTargets, targets, poolNominations } = usePools();
   const { openModalWith } = useModal();
+
+  const isNominating = !!poolNominations?.targets?.length;
+
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
-        {isNominator() ? (
+        {isNominator() && !isNominating ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>
