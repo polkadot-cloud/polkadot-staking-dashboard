@@ -79,11 +79,10 @@ export const NominatePool = () => {
         style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
       >
         {warnings.map((text: any, index: number) => (
-          <Warning text={text} />
+          <Warning key={`warning_${index}`} text={text} />
         ))}
         <h2>
-          You Have
-          {nominations.length} Nomination
+          You Have {nominations.length} Nomination
           {nominations.length === 1 ? '' : 's'}
         </h2>
         <Separator />

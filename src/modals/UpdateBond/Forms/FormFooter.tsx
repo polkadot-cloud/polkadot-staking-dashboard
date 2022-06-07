@@ -13,13 +13,27 @@ export const FormFooter = ({
   submitting,
   isValid,
 }: any) => {
+  const hasSections = setSection !== undefined;
+
+  const handleSubmit = () => {
+    if (hasSections) {
+      setSection(0);
+    }
+  };
+
   return (
     <FooterWrapper>
       <div>
-        <button type="button" className="submit" onClick={() => setSection(0)}>
-          <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
-          Back
-        </button>
+        {hasSections && (
+          <button
+            type="button"
+            className="submit"
+            onClick={() => handleSubmit()}
+          >
+            <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
+            Back
+          </button>
+        )}
       </div>
       <div>
         <button
