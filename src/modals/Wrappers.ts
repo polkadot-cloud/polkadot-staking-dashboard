@@ -85,14 +85,14 @@ export const PaddingWrapper = styled.div<any>`
 `;
 
 // modal header, used for extrinsics forms
-export const HeadingWrapper = styled.h3`
+export const HeadingWrapper = styled.h3<any>`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
   margin-top: 0.25rem;
-  padding: 0 1rem;
+  padding: ${(props) => (props.noPadding ? '0' : '0 1rem')};
   color: ${textSecondary};
   flex: 1;
 

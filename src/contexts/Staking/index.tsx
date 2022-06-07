@@ -369,7 +369,7 @@ export const StakingProvider = ({
       return false;
     }
     const ledger = getAccountLedger(activeAccount);
-    return ledger.active.gt(0);
+    return ledger.active.gt(new BN(0));
   };
 
   /*

@@ -18,7 +18,7 @@ export const PoolNominations = () => {
   const { isNominator } = usePools();
   const batchKey = 'pool_nominations';
 
-  // TODO: plug in action to stop nominating. Test when I am nominator of pool.
+  // TODO: plug in action to stop nominating.
 
   return (
     <Wrapper>
@@ -44,6 +44,7 @@ export const PoolNominations = () => {
                     title="Your Nominations"
                     selectable={isNominator()}
                     format="nomination"
+                    target="pool"
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle

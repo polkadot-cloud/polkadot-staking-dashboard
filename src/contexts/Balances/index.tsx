@@ -119,14 +119,15 @@ export const BalancesProvider = ({
     if (!api) return;
 
     const unsub: () => void = await api.queryMulti<
-      [any, Option<any>, Option<any>]
+      [any, any, Option<any>, Option<any>]
     >(
       [
         [api.query.system.account, address],
+        [api.query.balances.locks, address],
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([{ data }, bonded, nominations]): Promise<void> => {
+      async ([{ data }, locks, bonded, nominations]): Promise<void> => {
         const _account: any = {
           address,
         };
@@ -148,6 +149,13 @@ export const BalancesProvider = ({
           feeFrozen: feeFrozen.toBn(),
           freeAfterReserve,
         };
+
+        // get account locks
+        const _locks = locks.toHuman();
+        for (let i = 0; i < _locks.length; i++) {
+          _locks[i].amount = new BN(rmCommas(_locks[i].amount));
+        }
+        _account.locks = _locks;
 
         // set account bonded (controller) or null
         let _bonded: any = bonded.unwrapOr(null);
@@ -296,6 +304,19 @@ export const BalancesProvider = ({
     return ledger;
   };
 
+  // get an account's locks metadata
+  const getAccountLocks = (address: string) => {
+    const account = accountsRef.current.find(
+      (acc: any) => acc.address === address
+    );
+    if (account === undefined) {
+      return [];
+    }
+
+    const { locks } = account;
+    return locks;
+  };
+
   // get an account's bonded (controller) account)
   const getBondedAccount = (address: string) => {
     const account = accountsRef.current.find(
@@ -417,6 +438,7 @@ export const BalancesProvider = ({
         getAccount,
         getAccountBalance,
         getAccountLedger,
+        getAccountLocks,
         getBondedAccount,
         getAccountNominations,
         getBondOptions,

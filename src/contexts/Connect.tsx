@@ -91,7 +91,13 @@ export const ConnectProvider = ({
     }
 
     // iterate extensions and add accounts to state
+    let extensionsCount = 0;
+    const totalExtensions = extensions.length;
+    let activeWalletAccount: any = null;
+
     extensions.forEach(async (_extension: any) => {
+      extensionsCount++;
+
       const { extensionName } = _extension;
       try {
         const extension: Wallet | undefined = getWalletBySource(extensionName);
@@ -119,9 +125,14 @@ export const ConnectProvider = ({
                   injected.find(
                     (item: any) => item.address === _activeAccount
                   ) ?? null;
+                if (activeAccountInWallet !== null) {
+                  activeWalletAccount = activeAccountInWallet;
+                }
 
                 // set active account for network
-                connectToAccount(activeAccountInWallet);
+                if (extensionsCount === totalExtensions) {
+                  connectToAccount(activeWalletAccount);
+                }
 
                 // remove accounts if they exist
                 let _accounts = [...accountsRef.current];

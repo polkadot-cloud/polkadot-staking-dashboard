@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { forwardRef } from 'react';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
@@ -8,6 +9,7 @@ import Identicon from 'library/Identicon';
 import { useModal } from 'contexts/Modal';
 import { ConnectContextInterface } from 'types/connect';
 import Button from 'library/Button';
+import { useBalances } from 'contexts/Balances';
 import {
   Separator,
   ContentWrapper,
@@ -25,10 +27,28 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     activeAccount,
   }: any = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
+  const { getAccountLedger, getAccountLocks }: any = useBalances();
   const { activeExtension } = useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
-
   const activeAccountMeta = getAccount(activeAccount);
+
+  const _controllers = [];
+  const _stashes = [];
+
+  for (const account of accounts) {
+    const ledger = getAccountLedger(account.address);
+    const locks = getAccountLocks(account.address);
+
+    // accumulate stashes
+    if (locks.find((l: any) => l.id === 'staking' && l.amount.gt(new BN(0)))) {
+      _stashes.push(account.address);
+    }
+
+    // accumulate controllers
+    if (ledger.total.gt(new BN(new BN(0)))) {
+      _controllers.push(account.address);
+    }
+  }
 
   // filter accounts by extension name
   accounts = accounts.filter((item: any) => item.source === activeExtension);
@@ -54,6 +74,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           <AccountWrapper
             onClick={() => {
               disconnectFromAccount();
+              setSection(0);
             }}
           >
             <div>

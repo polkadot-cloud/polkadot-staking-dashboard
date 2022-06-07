@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
+import { usePools } from 'contexts/Pools';
 import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
 import { capitalizeFirstLetter } from 'Utils';
@@ -9,15 +10,22 @@ import { NominationStatusWrapper } from '../Wrappers';
 
 export const NominationStatus = (props: any) => {
   const { getNominationsStatus, eraStakers, erasStakersSyncing } = useStaking();
+  const { getNominationsStatus: poolsGetNominationsStatus } = usePools();
   const {
     network: { unit },
   } = useApi() as APIContextInterface;
 
   const { ownStake } = eraStakers;
 
-  const { address } = props;
+  const { address, target } = props;
 
-  const nominationStatuses = getNominationsStatus();
+  let nominationStatuses;
+  if (target === 'pool') {
+    nominationStatuses = poolsGetNominationsStatus();
+  } else {
+    nominationStatuses = getNominationsStatus();
+  }
+
   const nominationStatus = nominationStatuses[address];
 
   const ownStaked =
