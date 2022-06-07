@@ -80,7 +80,8 @@ export const pageTitleFromUri = (pathname: string, pages: PagesConfig) => {
 };
 
 export const isNumeric = (str: string | number) => {
-  return !Number.isNaN(str) && !Number.isNaN(parseFloat(String(str)));
+  str = typeof str === 'string' ? str.trim() : String(str);
+  return str !== '' && !Number.isNaN(Number(str));
 };
 
 export const defaultIfNaN = <T>(val: T, _default: T) => {
