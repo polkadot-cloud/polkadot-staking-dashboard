@@ -65,7 +65,7 @@ export const Forms = () => {
     let message;
     switch (state) {
       case PoolState.Destroy:
-        title = <h2>Destroying a Pool is Irreversible.</h2>;
+        title = <h2>Destroying a Pool is Irreversible</h2>;
         message = (
           <p>
             Once you Destroy the pool, all members can be permissionlessly

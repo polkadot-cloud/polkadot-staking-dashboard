@@ -23,16 +23,8 @@ import { ClaimReward } from './ClaimReward';
 import { SelectFavourites } from './SelectFavourites';
 
 export const Modal = () => {
-  const {
-    setModalHeight,
-    setStatus,
-    status,
-    modal,
-    size,
-    height,
-    resize,
-    config,
-  } = useModal();
+  const { setModalHeight, setStatus, status, modal, size, height, resize } =
+    useModal();
   const controls = useAnimation();
 
   const maxHeight = window.innerHeight * 0.8;
