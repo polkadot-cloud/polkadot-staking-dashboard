@@ -70,26 +70,30 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           />
         </div>
 
-        {activeAccount ? (
-          <AccountWrapper
-            onClick={() => {
-              disconnectFromAccount();
-              setSection(0);
-            }}
-          >
-            <div>
-              <Identicon value={activeAccountMeta?.address} size={26} />
-              <span className="name">&nbsp; {activeAccountMeta?.name}</span>
-            </div>
-            <div className="danger">Disconnect</div>
-          </AccountWrapper>
-        ) : (
-          <AccountWrapper disabled>
-            <div>No Account Connected</div>
-            <div />
-          </AccountWrapper>
+        {activeAccountMeta.source === activeExtension && (
+          <>
+            {activeAccount ? (
+              <AccountWrapper
+                onClick={() => {
+                  disconnectFromAccount();
+                  setSection(0);
+                }}
+              >
+                <div>
+                  <Identicon value={activeAccountMeta?.address} size={26} />
+                  <span className="name">&nbsp; {activeAccountMeta?.name}</span>
+                </div>
+                <div className="danger">Disconnect</div>
+              </AccountWrapper>
+            ) : (
+              <AccountWrapper disabled>
+                <div>No Account Connected</div>
+                <div />
+              </AccountWrapper>
+            )}
+            <Separator />
+          </>
         )}
-        <Separator />
 
         {accounts.map((item: any, index: number) => {
           const { address, name } = item;
