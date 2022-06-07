@@ -133,8 +133,6 @@ export const Status = () => {
   })();
 
   const labelMembership = label;
-  // fallback to no buttons if app is syncing
-  const buttonsMembership = isSyncing ? [] : buttons;
 
   // Unclaimed rewards `Stat` props
   let { unclaimedReward } = activeBondedPool || {};
@@ -165,14 +163,14 @@ export const Status = () => {
         label="Membership"
         assistant={['pools', 'Pool Status']}
         stat={labelMembership}
-        buttons={buttonsMembership}
+        buttons={isSyncing ? [] : buttons}
       />
       <Separator />
       <Stat
         label="Unclaimed Rewards"
         assistant={['pools', 'Pool Rewards']}
         stat={labelRewards}
-        buttons={buttonsRewards}
+        buttons={isSyncing ? [] : buttonsRewards}
       />
       {membership && (
         <>
