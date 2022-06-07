@@ -74,6 +74,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           <AccountWrapper
             onClick={() => {
               disconnectFromAccount();
+              setSection(0);
             }}
           >
             <div>
