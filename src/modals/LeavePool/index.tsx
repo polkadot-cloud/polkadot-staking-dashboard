@@ -9,7 +9,7 @@ import { HeadingWrapper, PaddingWrapper } from '../Wrappers';
 export const LeavePool = () => {
   return (
     <PaddingWrapper>
-      <HeadingWrapper>
+      <HeadingWrapper noPadding>
         <FontAwesomeIcon transform="grow-2" icon={faPlus} />
         Leave Pool
       </HeadingWrapper>
