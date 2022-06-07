@@ -14,12 +14,13 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
 import { PoolState, usePools } from 'contexts/Pools';
+import { Separator } from 'Wrappers';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
   const { api }: any = useApi();
-  const { setStatus: setModalStatus, config, setResize }: any = useModal();
+  const { setStatus: setModalStatus, config }: any = useModal();
   const { state } = config;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { membership, isOwner } = usePools();
@@ -59,29 +60,32 @@ export const Forms = () => {
     return _tx;
   };
 
-  const NoteMessage = (() => {
+  const content = (() => {
+    let title;
     let message;
     switch (state) {
       case PoolState.Destroy:
+        title = <h2>Destroying a Pool is Irreversible.</h2>;
         message = (
           <p>
-            This action is irreversible.
-            <br />
             Once you Destroy the pool, all members can be permissionlessly
             unbonded, and the pool can never be reopened.
           </p>
         );
         break;
       case PoolState.Open:
+        title = <h2>Submit Pool Unlock</h2>;
         message = <p>Once you Unlock the pool new people can join the pool.</p>;
         break;
       case PoolState.Block:
+        title = <h2>Submit Pool Lock</h2>;
         message = <p>Once you Lock the pool no one else can join the pool.</p>;
         break;
       default:
+        title = null;
         message = null;
     }
-    return message;
+    return { title, message };
   })();
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
@@ -102,9 +106,10 @@ export const Forms = () => {
     <ContentWrapper>
       <div>
         <>
+          {content.title}
+          <Separator />
           <NotesWrapper>
-            {NoteMessage}
-            <br />
+            {content.message}
             {TxFee}
           </NotesWrapper>
         </>

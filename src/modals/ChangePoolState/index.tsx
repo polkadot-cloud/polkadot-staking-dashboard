@@ -13,7 +13,7 @@ export const ChangePoolState = () => {
   const { state } = config;
   return (
     <PaddingWrapper>
-      <HeadingWrapper>
+      <HeadingWrapper noPadding>
         <FontAwesomeIcon transform="grow-2" icon={faPlus} />
         {state === PoolState.Open && 'Unlock Pool'}
         {state === PoolState.Block && 'Lock Pool'}
