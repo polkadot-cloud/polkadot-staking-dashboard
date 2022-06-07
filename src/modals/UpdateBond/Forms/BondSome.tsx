@@ -1,22 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePools } from 'contexts/Pools';
-import { ContentWrapper } from '../Wrappers';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
-export const BondSome = forwardRef((props: any, ref: any) => {
+export const BondSome = (props: any) => {
   const { setSection } = props;
 
   const { api, network } = useApi() as APIContextInterface;
@@ -24,7 +22,7 @@ export const BondSome = forwardRef((props: any, ref: any) => {
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondOptions }: any = useBalances();
-  const { getPoolBondOptions, stats } = usePools();
+  const { getPoolBondOptions } = usePools();
   const { target } = config;
 
   const stakeBondOptions = getBondOptions(activeAccount);
@@ -85,7 +83,7 @@ export const BondSome = forwardRef((props: any, ref: any) => {
   );
 
   return (
-    <ContentWrapper ref={ref}>
+    <>
       <div className="items">
         <>
           <BondInputWithFeedback
@@ -109,6 +107,6 @@ export const BondSome = forwardRef((props: any, ref: any) => {
         submitting={submitting}
         isValid={bondValid}
       />
-    </ContentWrapper>
+    </>
   );
-});
+};

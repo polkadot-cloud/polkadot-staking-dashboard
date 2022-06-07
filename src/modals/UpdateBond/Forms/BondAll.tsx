@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
@@ -11,11 +11,10 @@ import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePools } from 'contexts/Pools';
-import { ContentWrapper } from '../Wrappers';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
-export const BondAll = forwardRef((props: any, ref: any) => {
+export const BondAll = (props: any) => {
   const { setSection } = props;
 
   const { api, network } = useApi() as APIContextInterface;
@@ -90,7 +89,7 @@ export const BondAll = forwardRef((props: any, ref: any) => {
   );
 
   return (
-    <ContentWrapper ref={ref}>
+    <>
       <div className="items">
         <>
           {freeToBond === 0 && (
@@ -118,6 +117,6 @@ export const BondAll = forwardRef((props: any, ref: any) => {
         submitting={submitting}
         isValid={bondValid}
       />
-    </ContentWrapper>
+    </>
   );
-});
+};

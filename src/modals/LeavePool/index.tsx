@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { UnbondAll as Forms } from 'modals/UpdateBond/Forms/UnbondAll';
+import { UnbondAll } from 'modals/UpdateBond/Forms/UnbondAll';
 import { HeadingWrapper, PaddingWrapper } from '../Wrappers';
 
 export const LeavePool = () => {
@@ -13,7 +13,7 @@ export const LeavePool = () => {
         <FontAwesomeIcon transform="grow-2" icon={faPlus} />
         Leave Pool
       </HeadingWrapper>
-      <Forms />
+      <UnbondAll />
     </PaddingWrapper>
   );
 };

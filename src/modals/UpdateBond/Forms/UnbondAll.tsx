@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
@@ -9,33 +9,29 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
-import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePools } from 'contexts/Pools';
-import { ContentWrapper } from '../Wrappers';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
-export const UnbondAll = forwardRef((props: any, ref: any) => {
-  const { setSection, task } = props;
+export const UnbondAll = (props: any) => {
+  const { setSection } = props;
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { staking, getControllerNotImported } = useStaking();
+  const { getControllerNotImported } = useStaking();
   const { getBondOptions, getBondedAccount, getAccountNominations }: any =
     useBalances();
-  const { getPoolBondOptions, stats } = usePools();
+  const { getPoolBondOptions } = usePools();
   const { target } = config;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
-  const { minNominatorBond } = staking;
   const stakeBondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
-  const { minJoinBond } = stats;
   const isStaking = target === 'stake';
   const isPooling = target === 'pool';
 
@@ -109,7 +105,7 @@ export const UnbondAll = forwardRef((props: any, ref: any) => {
   );
 
   return (
-    <ContentWrapper ref={ref}>
+    <>
       <div className="items">
         <>
           {isStaking && controllerNotImported ? (
@@ -142,6 +138,6 @@ export const UnbondAll = forwardRef((props: any, ref: any) => {
         submitting={submitting}
         isValid={bondValid}
       />
-    </ContentWrapper>
+    </>
   );
-});
+};

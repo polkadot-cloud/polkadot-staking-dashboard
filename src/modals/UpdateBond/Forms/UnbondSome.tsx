@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
@@ -13,24 +13,21 @@ import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePools } from 'contexts/Pools';
-import { ContentWrapper } from '../Wrappers';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
-export const UnbondSome = forwardRef((props: any, ref: any) => {
-  const { setSection, task } = props;
+export const UnbondSome = (props: any) => {
+  const { setSection } = props;
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } = useStaking();
-  const { getBondOptions, getBondedAccount, getAccountNominations }: any =
-    useBalances();
+  const { getBondOptions, getBondedAccount }: any = useBalances();
   const { getPoolBondOptions, stats } = usePools();
   const { target } = config;
   const controller = getBondedAccount(activeAccount);
-  const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond } = staking;
   const stakeBondOptions = getBondOptions(activeAccount);
@@ -38,12 +35,9 @@ export const UnbondSome = forwardRef((props: any, ref: any) => {
   const { minJoinBond } = stats;
   const isStaking = target === 'stake';
   const isPooling = target === 'pool';
-  const isBondTask = task === 'bond_some' || task === 'bond_all';
-  const isUnbondTask = task === 'unbond_some' || task === 'unbond_all';
 
   const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
   const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
-  const { totalPossibleBond } = isPooling ? poolBondOptions : stakeBondOptions;
 
   // local bond value
   const [bond, setBond] = useState(freeToBond);
@@ -109,7 +103,7 @@ export const UnbondSome = forwardRef((props: any, ref: any) => {
   );
 
   return (
-    <ContentWrapper ref={ref}>
+    <>
       <div className="items">
         <>
           <BondInputWithFeedback
@@ -139,6 +133,6 @@ export const UnbondSome = forwardRef((props: any, ref: any) => {
         submitting={submitting}
         isValid={bondValid}
       />
-    </ContentWrapper>
+    </>
   );
-});
+};

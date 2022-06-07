@@ -34,8 +34,10 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
+  min-width: 50%;
   height: auto;
   padding: 0 1rem 1rem 1rem;
+  flex-grow: 1;
 
   .items {
     box-sizing: border-box;
