@@ -11,6 +11,8 @@ import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePools } from 'contexts/Pools';
+import { BondOptionsInterface } from 'types/balances';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -25,25 +27,33 @@ export const BondAll = (props: any) => {
   const { getPoolBondOptions } = usePools();
   const { target } = config;
 
-  const stakeBondOptions = getBondOptions(activeAccount);
+  const stakeBondOptions: BondOptionsInterface = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
   const isStaking = target === 'stake';
   const isPooling = target === 'pool';
 
-  const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
-  const { totalPossibleBond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { freeToBond: freeToBondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
+  const { totalPossibleBond: totalPossibleBondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
+
+  // convert BN values to number
+  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const totalPossibleBond = planckBnToUnit(totalPossibleBondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState(freeToBond);
+  const [bond, setBond] = useState({ bond: freeToBond });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState(false);
 
   // update bond value on task change
   useEffect(() => {
     const _bond = freeToBond;
     setBond({ bond: _bond });
-    if (freeToBond > 0) {
+    if (_bond > 0) {
       setBondValid(true);
     } else {
       setBondValid(false);
@@ -63,7 +73,7 @@ export const BondAll = (props: any) => {
     }
 
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
+    const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
     // determine _tx
     if (isPooling) {

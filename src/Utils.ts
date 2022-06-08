@@ -30,8 +30,30 @@ export const planckToUnit = (val: number, units: number): number => {
 };
 
 export const planckBnToUnit = (val: BN, units: number): number => {
-  const value = val.toNumber() / 10 ** units;
-  return value;
+  const Bn10 = new BN(10);
+  const BnUnits = new BN(units);
+  const div = val.div(Bn10.pow(BnUnits));
+  const mod = val.mod(Bn10.pow(BnUnits));
+  const whole = div.toString();
+  const decimal = mod.toString().padStart(units, '0');
+  const result = `${whole}.${decimal || '0'}`;
+  return Number(result);
+};
+
+export const unitToPlanckBn = (val: number, units: number): BN => {
+  const Bn10 = new BN(10);
+  const BnUnits = new BN(units);
+  console.log(val);
+  const [w, d] = val.toFixed(units).split('.');
+  const wholeBn = new BN(Number(w));
+  const decimalBn = new BN(Number(d));
+  const resultBn = wholeBn.mul(Bn10.pow(BnUnits)).add(decimalBn);
+  return resultBn;
+};
+
+export const humanNumberBn = (valBn: BN, units: number): string => {
+  const val = planckBnToUnit(valBn, units);
+  return humanNumber(val);
 };
 
 export const humanNumber = (val: number): string => {

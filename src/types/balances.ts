@@ -12,6 +12,16 @@ export interface BalancesAccount {
   nominations: any;
 }
 
+export interface BondOptionsInterface {
+  freeToBond: BN;
+  freeToUnbond: BN;
+  totalUnlocking: BN;
+  totalUnlocked: BN;
+  totalPossibleBond: BN;
+  freeToStake: BN;
+  totalUnlockChuncks: number;
+}
+
 export interface BalancesContextInterface {
   getAccount: (address: string) => BalancesAccount | null;
   getAccountBalance: (address: string) => any;
@@ -19,7 +29,7 @@ export interface BalancesContextInterface {
   getAccountLocks: (address: string) => any;
   getBondedAccount: (address: string) => any;
   getAccountNominations: (address: string) => any;
-  getBondOptions: (address: string) => any;
+  getBondOptions: (address: string) => BondOptionsInterface;
   isController: (address: string) => boolean;
   accounts: Array<BalancesAccount>;
   minReserve: BN;

@@ -13,17 +13,21 @@ import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
-import {
-  rmCommas,
-  toFixedIfNecessary,
-  planckBnToUnit,
-  localStorageOrDefault,
-  setStateWithRef,
-} from '../../Utils';
+import { rmCommas, localStorageOrDefault, setStateWithRef } from '../../Utils';
 
 const EMPTY_H256 = new Uint8Array(32);
 const MOD_PREFIX = stringToU8a('modl');
 const U32_OPTS = { bitLength: 32, isLe: true };
+
+export interface PoolBondOptionsInterface {
+  active: BN;
+  freeToBond: BN;
+  freeToUnbond: BN;
+  totalUnlocking: BN;
+  totalUnlocked: BN;
+  totalPossibleBond: BN;
+  totalUnlockChuncks: number;
+}
 
 export interface PoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
@@ -32,7 +36,7 @@ export interface PoolsContextState {
   isOwner: () => any;
   isDepositor: () => any;
   getPoolBondedAccount: () => any;
-  getPoolBondOptions: (a: MaybeAccount) => any;
+  getPoolBondOptions: (a: MaybeAccount) => PoolBondOptionsInterface;
   getPoolUnlocking: () => any;
   setTargets: (targest: any) => void;
   getNominationsStatus: () => any;
@@ -531,43 +535,34 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     const membership = poolMembership.membership;
     const unlocking = membership?.unlocking || [];
     const points = membership?.points;
-    let freeToUnbond = 0;
-    const active = points ? new BN(points) : new BN(0); // point to balance ratio is 1
-    if (membership) {
-      freeToUnbond = toFixedIfNecessary(planckBnToUnit(active, units), units);
-    }
+
+    // point to balance ratio is 1
+    const active = points ? new BN(points) : new BN(0);
+    const freeToUnbond = active;
 
     // total amount actively unlocking
-    let totalUnlockingBn = new BN(0);
-    let totalUnlockedBn = new BN(0);
+    let totalUnlocking = new BN(0);
+    let totalUnlocked = new BN(0);
 
     for (const u of unlocking) {
       const { value, era } = u;
       if (activeEra.index > era) {
-        totalUnlockedBn = totalUnlockedBn.add(value);
+        totalUnlocked = totalUnlocked.add(value);
       } else {
-        totalUnlockingBn = totalUnlockingBn.add(value);
+        totalUnlocking = totalUnlocking.add(value);
       }
     }
-    const totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
-    const totalUnlocked = planckBnToUnit(totalUnlockedBn, units);
 
     // free transferrable balance that can be bonded in the pool
-    const freeToBond: any = Math.max(
-      toFixedIfNecessary(
-        planckBnToUnit(freeAfterReserve, units) -
-          planckBnToUnit(miscFrozen, units) -
-          totalUnlocking -
-          totalUnlocked,
-        units
-      ),
-      0
+    const freeToBond: any = BN.max(
+      freeAfterReserve.sub(miscFrozen).sub(totalUnlocking).sub(totalUnlocked),
+      new BN(0)
     );
 
     // total possible balance that can be bonded in the pool
-    const totalPossibleBond = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) - totalUnlocking - totalUnlocked,
-      units
+    const totalPossibleBond = BN.max(
+      freeAfterReserve.sub(totalUnlocking).sub(totalUnlocked),
+      new BN(0)
     );
 
     return {

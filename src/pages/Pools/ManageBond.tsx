@@ -15,6 +15,7 @@ import { usePools } from 'contexts/Pools';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import BN from 'bn.js';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -25,7 +26,7 @@ export const ManageBond = () => {
   const { getAccountLedger }: any = useBalances();
   const { getPoolBondOptions, isBonding } = usePools();
   const ledger = getAccountLedger(activeAccount);
-  const { total }: any = ledger;
+  const { total }: { total: BN } = ledger;
 
   const {
     active,
@@ -88,10 +89,10 @@ export const ManageBond = () => {
       </CardHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}
-        unlocking={totalUnlocking}
-        unlocked={totalUnlocked}
-        free={freeToBond}
-        total={total.toNumber()}
+        unlocking={planckBnToUnit(totalUnlocking, units)}
+        unlocked={planckBnToUnit(totalUnlocked, units)}
+        free={planckBnToUnit(freeToBond, units)}
+        total={planckBnToUnit(total, units)}
         inactive={!isBonding()}
       />
     </>
