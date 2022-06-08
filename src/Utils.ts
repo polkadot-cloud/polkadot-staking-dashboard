@@ -41,6 +41,10 @@ export const planckBnToUnit = (val: BN, units: number): number => {
 };
 
 export const unitToPlanckBn = (val: number, units: number): BN => {
+  // conver to number in case the number arguments are passed as numeric strings
+  val = Number(val);
+  units = Number(units);
+
   const Bn10 = new BN(10);
   const BnUnits = new BN(units);
   console.log(val);
