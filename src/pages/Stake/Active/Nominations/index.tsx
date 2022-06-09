@@ -15,6 +15,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
+import { BatchKeys } from 'library/BatchKeys';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = () => {
@@ -27,7 +28,7 @@ export const Nominations = () => {
   const { isSyncing } = useUi();
   const nominations = getAccountNominations(activeAccount);
 
-  const batchKey = 'stake_nominations';
+  const batchKey = BatchKeys.new('stake_nominations');
 
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {

@@ -12,6 +12,7 @@ import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { BatchKeys } from 'library/BatchKeys';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 
@@ -26,7 +27,7 @@ export const PoolAccount = (props: any) => {
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
 
-  const batchKey = 'pool_header';
+  const batchKey = BatchKeys.new('pool_header');
 
   // refetch when pool or active account changes
   useEffect(() => {
