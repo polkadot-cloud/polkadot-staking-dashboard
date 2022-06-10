@@ -11,7 +11,7 @@ import { UpdateController } from './UpdateController';
 import { Settings } from './Settings';
 import { UpdateBond } from './UpdateBond';
 import { UpdatePayee } from './UpdatePayee';
-import { StopNominating } from './StopNominating';
+import { ChangeNominations } from './ChangeNominations';
 import { Nominate } from './Nominate';
 import { UnlockChunks } from './UnlockChunks';
 import { CreatePool } from './CreatePool';
@@ -101,7 +101,7 @@ export const Modal = () => {
             {modal === 'UpdateController' && <UpdateController />}
             {modal === 'UpdateBond' && <UpdateBond />}
             {modal === 'UpdatePayee' && <UpdatePayee />}
-            {modal === 'StopNominating' && <StopNominating />}
+            {modal === 'ChangeNominations' && <ChangeNominations />}
             {modal === 'Nominate' && <Nominate />}
             {modal === 'UnlockChunks' && <UnlockChunks />}
             {modal === 'CreatePool' && <CreatePool />}

@@ -26,15 +26,15 @@ export const UnbondSome = (props: any) => {
   const { staking, getControllerNotImported } = useStaking();
   const { getBondOptions, getBondedAccount }: any = useBalances();
   const { getPoolBondOptions, stats } = usePools();
-  const { target } = config;
+  const { bondType } = config;
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond } = staking;
   const stakeBondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
   const { minJoinBond } = stats;
-  const isStaking = target === 'stake';
-  const isPooling = target === 'pool';
+  const isStaking = bondType === 'stake';
+  const isPooling = bondType === 'pool';
 
   const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
   const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
@@ -107,7 +107,7 @@ export const UnbondSome = (props: any) => {
       <div className="items">
         <>
           <BondInputWithFeedback
-            target={target}
+            bondType={bondType}
             unbond
             listenIsValid={setBondValid}
             defaultBond={freeToUnbondToMin}

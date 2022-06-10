@@ -26,14 +26,14 @@ export const UnbondAll = (props: any) => {
   const { getBondOptions, getBondedAccount, getAccountNominations }: any =
     useBalances();
   const { getPoolBondOptions } = usePools();
-  const { target } = config;
+  const { bondType } = config;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const stakeBondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
-  const isStaking = target === 'stake';
-  const isPooling = target === 'pool';
+  const isStaking = bondType === 'stake';
+  const isPooling = bondType === 'pool';
 
   const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
 

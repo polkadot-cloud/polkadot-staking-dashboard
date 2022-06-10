@@ -23,12 +23,12 @@ export const BondAll = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondOptions }: any = useBalances();
   const { getPoolBondOptions } = usePools();
-  const { target } = config;
+  const { bondType } = config;
 
   const stakeBondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
-  const isStaking = target === 'stake';
-  const isPooling = target === 'pool';
+  const isStaking = bondType === 'stake';
+  const isPooling = bondType === 'pool';
 
   const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
   const { totalPossibleBond } = isPooling ? poolBondOptions : stakeBondOptions;

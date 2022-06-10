@@ -12,14 +12,14 @@ import { ContentWrapper, ChunkWrapper } from './Wrappers';
 import { Separator, NotesWrapper } from '../Wrappers';
 
 export const Overview = forwardRef(
-  ({ unlocking, target, setSection, setUnlock, setTask }: any, ref: any) => {
+  ({ unlocking, bondType, setSection, setUnlock, setTask }: any, ref: any) => {
     const { network, consts } = useApi() as APIContextInterface;
     const { metrics } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
     const { activeEra } = metrics;
 
-    const isStaking = target === 'stake';
+    const isStaking = bondType === 'stake';
 
     // calculate total withdraw available
     let withdrawAvailable = new BN(0);

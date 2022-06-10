@@ -49,7 +49,7 @@ export const ManageBond = () => {
             onClick={() =>
               openModalWith(
                 'UpdateBond',
-                { fn: 'add', target: 'stake' },
+                { fn: 'add', bondType: 'stake' },
                 'small'
               )
             }
@@ -62,7 +62,7 @@ export const ManageBond = () => {
             onClick={() =>
               openModalWith(
                 'UpdateBond',
-                { fn: 'remove', target: 'stake' },
+                { fn: 'remove', bondType: 'stake' },
                 'small'
               )
             }
@@ -75,7 +75,7 @@ export const ManageBond = () => {
             title={String(totalUnlockChuncks ?? 0)}
             disabled={inSetup() || isSyncing}
             onClick={() =>
-              openModalWith('UnlockChunks', { target: 'stake' }, 'small')
+              openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
             }
           />
         </ButtonRow>

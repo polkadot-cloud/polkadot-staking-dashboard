@@ -54,7 +54,7 @@ export const ValidatorListInner = (props: any) => {
     title,
     format,
     selectable,
-    target,
+    bondType,
   }: any = props;
 
   const actions = props.actions ?? [];
@@ -324,7 +324,7 @@ export const ValidatorListInner = (props: any) => {
                   batchKey={batchKey}
                   format={format}
                   showMenu={showMenu}
-                  target={target}
+                  bondType={bondType}
                 />
               </motion.div>
             );

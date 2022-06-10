@@ -12,7 +12,7 @@ import { Forms } from './Forms';
 
 export const UpdateBond = () => {
   const { config, setModalHeight }: any = useModal();
-  const { fn, target } = config;
+  const { fn, bondType } = config;
   // modal task
   const [task, setTask]: any = useState(null);
 
@@ -67,7 +67,7 @@ export const UpdateBond = () => {
           setSection={setSection}
           task={task}
           ref={formsRef}
-          target={target}
+          bondType={bondType}
         />
       </CardsWrapper>
     </Wrapper>

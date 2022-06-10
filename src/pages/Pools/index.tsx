@@ -31,7 +31,7 @@ export const Pools = (props: PageProps) => {
   const { title } = page;
   const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
-  const { bondedPools, isBonding, isNominator, targets } = usePools();
+  const { bondedPools, isBonding } = usePools();
   const { isSyncing } = useUi();
 
   // back to overview if pools are not supported on network
