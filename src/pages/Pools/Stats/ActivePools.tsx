@@ -1,11 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { usePools } from 'contexts/Pools';
+import { usePoolsConfig } from 'contexts/Pools/Config';
 import { Number } from 'library/StatBoxList/Number';
+import { PoolsConfigContextState } from 'types/pools';
 
 const ActivePoolsStatBox = () => {
-  const { stats } = usePools();
+  const { stats } = usePoolsConfig() as PoolsConfigContextState;
 
   const params = {
     label: 'Active Pools',

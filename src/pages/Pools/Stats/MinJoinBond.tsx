@@ -1,16 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { usePools } from 'contexts/Pools';
 import { Number } from 'library/StatBoxList/Number';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
+import { usePoolsConfig } from 'contexts/Pools/Config';
+import { PoolsConfigContextState } from 'types/pools';
 
 const MinJoinBondStatBox = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { stats } = usePools();
+  const { stats } = usePoolsConfig() as PoolsConfigContextState;
 
   const params = {
     label: 'Minimum Join Bond',

@@ -15,6 +15,7 @@ import { usePools } from 'contexts/Pools';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { PoolsContextState } from 'types/pools';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -23,7 +24,7 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
   const { getAccountLedger }: any = useBalances();
-  const { getPoolBondOptions, isBonding } = usePools();
+  const { getPoolBondOptions, isBonding } = usePools() as PoolsContextState;
   const ledger = getAccountLedger(activeAccount);
   const { total }: any = ledger;
 

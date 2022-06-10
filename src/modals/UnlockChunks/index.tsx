@@ -9,6 +9,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePools } from 'contexts/Pools';
 import { ConnectContextInterface } from 'types/connect';
+import { PoolsContextState } from 'types/pools';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';
@@ -19,7 +20,7 @@ export const UnlockChunks = () => {
   const { config, setModalHeight } = useModal();
   const { target } = config || {};
   const { getAccountLedger }: any = useBalances();
-  const { getPoolUnlocking } = usePools();
+  const { getPoolUnlocking } = usePools() as PoolsContextState;
 
   // get the unlocking per target
   const _getUnlocking = () => {

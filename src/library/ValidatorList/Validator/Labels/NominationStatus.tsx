@@ -5,12 +5,14 @@ import { useApi } from 'contexts/Api';
 import { usePools } from 'contexts/Pools';
 import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
+import { PoolsContextState } from 'types/pools';
 import { capitalizeFirstLetter } from 'Utils';
 import { NominationStatusWrapper } from '../Wrappers';
 
 export const NominationStatus = (props: any) => {
   const { getNominationsStatus, eraStakers, erasStakersSyncing } = useStaking();
-  const { getNominationsStatus: poolsGetNominationsStatus } = usePools();
+  const { getNominationsStatus: poolsGetNominationsStatus } =
+    usePools() as PoolsContextState;
   const {
     network: { unit },
   } = useApi() as APIContextInterface;

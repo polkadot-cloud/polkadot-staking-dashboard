@@ -17,6 +17,7 @@ import { usePrices } from 'library/Hooks/usePrices';
 import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { ConnectContextInterface } from 'types/connect';
+import { PoolsContextState } from 'types/pools';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -35,7 +36,7 @@ export const BalanceGraph = () => {
     totalUnlocking,
     totalUnlocked,
   }: any = getBondOptions(activeAccount) || {};
-  const { getPoolBondOptions } = usePools();
+  const { getPoolBondOptions } = usePools() as PoolsContextState;
 
   const poolBondOpions = getPoolBondOptions(activeAccount);
   const unlocking =

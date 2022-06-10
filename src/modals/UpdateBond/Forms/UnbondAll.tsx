@@ -12,6 +12,7 @@ import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePools } from 'contexts/Pools';
+import { PoolsContextState } from 'types/pools';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -25,7 +26,7 @@ export const UnbondAll = (props: any) => {
   const { getControllerNotImported } = useStaking();
   const { getBondOptions, getBondedAccount, getAccountNominations }: any =
     useBalances();
-  const { getPoolBondOptions } = usePools();
+  const { getPoolBondOptions } = usePools() as PoolsContextState;
   const { target } = config;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);

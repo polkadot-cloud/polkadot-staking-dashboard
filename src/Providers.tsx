@@ -16,6 +16,7 @@ import { MessagesProvider } from './contexts/Messages';
 import { ModalProvider } from './contexts/Modal';
 import { NetworkMetricsProvider } from './contexts/Network';
 import { NotificationsProvider } from './contexts/Notifications';
+import { PoolsConfigProvider } from './contexts/Pools/Config';
 import { PoolsProvider } from './contexts/Pools';
 import { SideBarProvider } from './contexts/SideBar';
 import { StakingProvider } from './contexts/Staking';
@@ -51,6 +52,7 @@ export const Providers = withProviders(
   AccountProvider,
   BalancesProvider,
   StakingProvider,
+  PoolsConfigProvider,
   PoolsProvider,
   ValidatorsProvider,
   UIProvider,

@@ -12,6 +12,7 @@ import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { PoolsContextState } from 'types/pools';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 
@@ -19,7 +20,7 @@ export const PoolAccount = (props: any) => {
   const { mode } = useTheme();
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { fetchPoolsMetaBatch, meta } = usePools();
+  const { fetchPoolsMetaBatch, meta } = usePools() as PoolsContextState;
 
   const { label }: any = props;
 

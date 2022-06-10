@@ -14,6 +14,7 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { APIContextInterface } from 'types/api';
+import { PoolsContextState } from 'types/pools';
 import { Wrapper, Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -22,7 +23,7 @@ export const Announcements = () => {
   const { units } = network;
   const { staking }: any = useStaking();
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
-  const { bondedPools } = usePools();
+  const { bondedPools } = usePools() as PoolsContextState;
 
   const container = {
     hidden: { opacity: 0 },

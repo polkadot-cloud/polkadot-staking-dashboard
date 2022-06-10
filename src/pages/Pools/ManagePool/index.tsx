@@ -8,11 +8,13 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { PoolsContextState } from 'types/pools';
 import { GenerateNominations } from '../../Stake/GenerateNominations';
 import { PoolNominations } from '../PoolNominations';
 
 export const ManagePool = () => {
-  const { isNominator, setTargets, targets, poolNominations } = usePools();
+  const { isNominator, setTargets, targets, poolNominations } =
+    usePools() as PoolsContextState;
   const { openModalWith } = useModal();
 
   const isNominating = !!poolNominations?.targets?.length;

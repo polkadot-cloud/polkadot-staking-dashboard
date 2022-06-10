@@ -13,6 +13,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { ConnectContextInterface } from 'types/connect';
+import { PoolsContextState } from 'types/pools';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -22,13 +23,12 @@ import {
 } from '../Wrappers';
 
 export const NominatePool = () => {
-  const { api, network }: any = useApi();
+  const { api }: any = useApi();
   const { setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { membership, isNominator, targets } = usePools();
+  const { membership, isNominator, targets } = usePools() as PoolsContextState;
   const { nominations } = targets;
   const poolId = membership?.poolId;
-  const { units } = network;
 
   // valid to submit transaction
   const [valid, setValid]: any = useState(false);

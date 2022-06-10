@@ -3,6 +3,11 @@
 
 import { MaybeAccount } from 'types';
 
+export interface PoolsConfigContextState {
+  enabled: number;
+  stats: any;
+}
+
 export interface PoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   isBonding: () => any;
@@ -16,9 +21,7 @@ export interface PoolsContextState {
   getNominationsStatus: () => any;
   membership: any;
   activeBondedPool: any;
-  enabled: number;
   meta: any;
-  stats: any;
   bondedPools: any;
   targets: any;
   poolNominations: any;

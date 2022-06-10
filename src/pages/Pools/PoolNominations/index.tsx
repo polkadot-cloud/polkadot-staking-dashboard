@@ -9,13 +9,14 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { usePools } from 'contexts/Pools';
+import { PoolsContextState } from 'types/pools';
 import { Wrapper } from './Wrapper';
 
 export const PoolNominations = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
-  const { isNominator } = usePools();
+  const { isNominator } = usePools() as PoolsContextState;
   const batchKey = 'pool_nominations';
 
   // TODO: plug in action to stop nominating.

@@ -9,12 +9,13 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { MaybeAccount } from 'types';
-import { PoolsContextState } from 'types/pools';
+import { PoolsConfigContextState, PoolsContextState } from 'types/pools';
+import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
-import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from './Utils';
+import { usePoolsConfig } from './Config';
 import {
   rmCommas,
   toFixedIfNecessary,
@@ -33,19 +34,11 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { eraStakers } = useStaking();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountBalance }: any = useBalances();
+  const { enabled } = usePoolsConfig() as PoolsConfigContextState;
 
   const { activeEra } = metrics;
   const { poolsPalletId, existentialDeposit } = consts;
-  const { features, units } = network;
-
-  // whether pools are enabled
-  const [enabled, setEnabled] = useState(0);
-
-  // store pool metadata
-  const [poolsConfig, setPoolsConfig]: any = useState({
-    stats: defaults.stats,
-    unsub: null,
-  });
+  const { units } = network;
 
   // stores pool membership
   const [poolMembership, setPoolMembership]: any = useState({
@@ -79,19 +72,8 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   // store bonded pools
   const [bondedPools, setBondedPools]: any = useState([]);
 
-  // disable pools if network does not support them
-  useEffect(() => {
-    if (features.pools) {
-      setEnabled(1);
-    } else {
-      setEnabled(0);
-      unsubscribe();
-    }
-  }, [network]);
-
   useEffect(() => {
     if (isReady && enabled) {
-      subscribeToPoolConfig();
       fetchBondedPools();
     }
     return () => {
@@ -100,9 +82,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   }, [network, isReady, enabled]);
 
   const unsubscribe = () => {
-    if (poolsConfig.unsub !== null) {
-      poolsConfig.unsub();
-    }
     if (poolMembership.unsub !== null) {
       poolMembership.unsub();
     }
@@ -410,66 +389,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [isReady, network]);
 
-  // subscribe to pool chain state
-  const subscribeToPoolConfig = async () => {
-    if (!api) return;
-
-    const unsub = await api.queryMulti(
-      [
-        api.query.nominationPools.counterForPoolMembers,
-        api.query.nominationPools.counterForBondedPools,
-        api.query.nominationPools.counterForRewardPools,
-        api.query.nominationPools.maxPoolMembers,
-        api.query.nominationPools.maxPoolMembersPerPool,
-        api.query.nominationPools.maxPools,
-        api.query.nominationPools.minCreateBond,
-        api.query.nominationPools.minJoinBond,
-      ],
-      ([
-        _counterForPoolMembers,
-        _counterForBondedPools,
-        _counterForRewardPools,
-        _maxPoolMembers,
-        _maxPoolMembersPerPool,
-        _maxPools,
-        _minCreateBond,
-        _minJoinBond,
-      ]: any) => {
-        // format optional configs to BN or null
-        _maxPoolMembers = _maxPoolMembers.toHuman();
-        if (_maxPoolMembers !== null) {
-          _maxPoolMembers = new BN(rmCommas(_maxPoolMembers));
-        }
-        _maxPoolMembersPerPool = _maxPoolMembersPerPool.toHuman();
-        if (_maxPoolMembersPerPool !== null) {
-          _maxPoolMembersPerPool = new BN(rmCommas(_maxPoolMembersPerPool));
-        }
-        _maxPools = _maxPools.toHuman();
-        if (_maxPools !== null) {
-          _maxPools = new BN(rmCommas(_maxPools));
-        }
-
-        setPoolsConfig({
-          ...poolsConfig,
-          stats: {
-            counterForPoolMembers: _counterForPoolMembers.toBn(),
-            counterForBondedPools: _counterForBondedPools.toBn(),
-            counterForRewardPools: _counterForRewardPools.toBn(),
-            maxPoolMembers: _maxPoolMembers,
-            maxPoolMembersPerPool: _maxPoolMembersPerPool,
-            maxPools: _maxPools,
-            minCreateBond: _minCreateBond.toBn(),
-            minJoinBond: _minJoinBond.toBn(),
-          },
-        });
-      }
-    );
-    setPoolsConfig({
-      ...poolsConfig,
-      unsub,
-    });
-  };
-
   // fetch all bonded pool entries
   const fetchBondedPools = async () => {
     if (!api) return;
@@ -707,8 +626,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         getNominationsStatus,
         membership: poolMembership.membership,
         activeBondedPool: activeBondedPool.pool,
-        enabled,
-        stats: poolsConfig.stats,
         meta: poolMetaBatchesRef.current,
         bondedPools,
         targets,

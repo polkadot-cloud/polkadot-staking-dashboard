@@ -10,8 +10,6 @@ import { ConnectContextInterface } from 'types/connect';
 import Button from 'library/Button';
 import { useBalances } from 'contexts/Balances';
 import { usePools } from 'contexts/Pools';
-import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { PoolsContextState } from 'types/pools';
 import {
   Separator,
@@ -23,7 +21,6 @@ import {
 export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
-  const { network } = useApi() as APIContextInterface;
   const {
     getAccount,
     connectToAccount,

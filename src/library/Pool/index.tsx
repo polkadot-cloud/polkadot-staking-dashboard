@@ -13,14 +13,14 @@ import { usePools } from 'contexts/Pools';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { PoolsContextState } from 'types/pools';
 import { Wrapper } from './Wrapper';
 
 export const Pool = (props: any) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
   const { openModalWith } = useModal();
-  const { isBonding } = usePools();
-  const { meta } = usePools();
+  const { isBonding, meta } = usePools() as PoolsContextState;
 
   const metadata = meta[batchKey]?.metadata ?? [];
 

@@ -11,6 +11,8 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { PoolsConfigContextState, PoolsContextState } from 'types/pools';
+import { usePoolsConfig } from 'contexts/Pools/Config';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
@@ -29,7 +31,8 @@ export const BondInputWithFeedback = (props: any) => {
   const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
-  const { getPoolBondOptions, stats } = usePools();
+  const { getPoolBondOptions } = usePools() as PoolsContextState;
+  const { stats } = usePoolsConfig() as PoolsConfigContextState;
   const { minJoinBond } = stats;
 
   const controller = getBondedAccount(activeAccount);
