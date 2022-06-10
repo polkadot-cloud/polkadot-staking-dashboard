@@ -15,7 +15,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { BatchKeys } from 'library/BatchKeys';
+import { BatchKeys } from 'library/batchKeys';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = () => {

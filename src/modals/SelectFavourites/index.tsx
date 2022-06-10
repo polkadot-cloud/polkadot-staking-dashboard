@@ -7,7 +7,7 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { BatchKeys } from 'library/BatchKeys';
+import { BatchKeys } from 'library/batchKeys';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 

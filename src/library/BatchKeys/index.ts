@@ -5,10 +5,10 @@ export const batchkeys: Array<string> = [];
 
 export class BatchKeys {
     static new(name: string): string {
-        for (name in batchkeys) {
+        if (name in batchkeys) {
             console.error("The key exists");
         }
         batchkeys.push(name);
-        return name
+        return name;
     }
 }

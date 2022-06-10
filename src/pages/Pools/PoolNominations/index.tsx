@@ -9,7 +9,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { usePools } from 'contexts/Pools';
-import { BatchKeys } from 'library/BatchKeys';
+import { BatchKeys } from 'library/batchKeys';
 import { Wrapper } from './Wrapper';
 
 export const PoolNominations = () => {

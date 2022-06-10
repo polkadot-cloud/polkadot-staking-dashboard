@@ -12,7 +12,7 @@ import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { BatchKeys } from 'library/BatchKeys';
+import { BatchKeys } from 'library/batchKeys';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 
