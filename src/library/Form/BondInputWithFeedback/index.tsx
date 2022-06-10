@@ -19,7 +19,6 @@ export const BondInputWithFeedback = (props: any) => {
   // input props
   const { target, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
-  console.log(defaultBond);
   // functional props
   const setters = props.setters ?? [];
   const listenIsValid: any = props.listenIsValid ?? (() => {});
@@ -49,7 +48,6 @@ export const BondInputWithFeedback = (props: any) => {
     freeToUnbond: freeToUnbondBn,
     active: poolsActiveBn,
   } = options;
-  console.log(options);
   // Convert BN values to number
   const minJoinBond = planckBnToUnit(minJoinBondBn, units);
   const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
