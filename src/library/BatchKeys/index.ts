@@ -6,15 +6,15 @@
  * A console.error is executed in the event the same batch key is used more than once.
  */
 export class BatchKeys {
-  static batchKeys: Array<string> = [];
+  private static _batchKeys: Array<string> = [];
 
   static new(name: string): string {
-    if (BatchKeys.batchKeys.includes(name)) {
+    if (BatchKeys._batchKeys.includes(name)) {
       console.error(
         `Batch Key ${name} already exists. Batch keys must be unique.`
       );
     } else {
-      BatchKeys.batchKeys.push(name);
+      BatchKeys._batchKeys.push(name);
     }
     return name;
   }
