@@ -528,6 +528,8 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       return defaults.poolBondOptions;
     }
     const { freeAfterReserve, miscFrozen } = getAccountBalance(address);
+
+    // TOOD: membership always refers to `activeAccount` membership, not `address`s membership.
     const membership = poolMembership.membership;
     const unlocking = membership?.unlocking || [];
     const points = membership?.points;
@@ -536,6 +538,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     if (membership) {
       freeToUnbond = toFixedIfNecessary(planckBnToUnit(active, units), units);
     }
+    // TODO: above error effects up to here ---
 
     // total amount actively unlocking
     let totalUnlockingBn = new BN(0);
