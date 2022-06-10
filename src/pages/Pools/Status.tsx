@@ -3,15 +3,15 @@
 
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { PoolsContextState, PoolState } from 'types/pools';
 import BN from 'bn.js';
 import { formatBalance } from '@polkadot/util';
-import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { usePools, PoolState } from 'contexts/Pools';
+import { usePools } from 'contexts/Pools';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 
@@ -36,7 +36,7 @@ export const Status = () => {
     isOwner,
     getNominationsStatus,
     getPoolBondOptions,
-  } = usePools();
+  } = usePools() as PoolsContextState;
 
   const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
