@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { forwardRef } from 'react';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
@@ -10,6 +9,10 @@ import { useModal } from 'contexts/Modal';
 import { ConnectContextInterface } from 'types/connect';
 import Button from 'library/Button';
 import { useBalances } from 'contexts/Balances';
+import { usePools } from 'contexts/Pools';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
+import { PoolsContextState } from 'types/pools';
 import {
   Separator,
   ContentWrapper,
@@ -20,6 +23,7 @@ import {
 export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
+  const { network } = useApi() as APIContextInterface;
   const {
     getAccount,
     connectToAccount,
@@ -27,27 +31,88 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     activeAccount,
   }: any = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
-  const { getAccountLedger, getAccountLocks }: any = useBalances();
+  const { getAccountLedger, getAccountLocks, getBondedAccount }: any =
+    useBalances();
+  const { getPoolBondOptions } = usePools() as PoolsContextState;
   const { activeExtension } = useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
   const activeAccountMeta = getAccount(activeAccount);
 
-  const _controllers = [];
-  const _stashes = [];
+  const _controllers: any = [];
+  const _stashes: any = [];
 
+  // accumulate imported stash accounts
   for (const account of accounts) {
-    const ledger = getAccountLedger(account.address);
     const locks = getAccountLocks(account.address);
 
-    // accumulate stashes
-    if (locks.find((l: any) => l.id === 'staking' && l.amount.gt(new BN(0)))) {
-      _stashes.push(account.address);
+    // account is a stash if they have an active `staking` lock
+    const activeLocks = locks.find((l: any) => {
+      const { id }: any = l;
+      return id.trim() === 'staking';
+    });
+    if (activeLocks !== undefined) {
+      _stashes.push({
+        address: account.address,
+        controller: getBondedAccount(account.address),
+      });
+    }
+  }
+
+  // accumulate imported controller accounts
+  for (const account of accounts) {
+    if (_stashes.find((s: any) => s.controller === account.address)) {
+      const ledger = getAccountLedger(account.address);
+      _controllers.push({
+        address: account.address,
+        ledger,
+      });
+    }
+  }
+
+  // construct account groupings
+  const activeStaking: any = [];
+
+  for (const account of accounts) {
+    const stash = _stashes.find((s: any) => s.address === account.address);
+
+    // if stash, get controller
+    if (stash) {
+      activeStaking.push({
+        stash: account.address,
+        controller: stash.controller,
+        stashImported: true,
+        controlerImported:
+          accounts.find((a: any) => a.address === stash.controller) !==
+          undefined,
+      });
     }
 
-    // accumulate controllers
-    if (ledger.total.gt(new BN(new BN(0)))) {
-      _controllers.push(account.address);
+    const controller = _controllers.find(
+      (c: any) => c.address === account.address
+    );
+
+    // if controller, get stash
+    if (controller) {
+      const applied =
+        activeStaking.find((a: any) => a.controller === account.address) !==
+        undefined;
+
+      if (!applied) {
+        activeStaking.push({
+          stash: controller.ledger.stash,
+          controller: controller.address,
+          stashImported:
+            accounts.find((a: any) => a.address === controller.ledger.stash) !==
+            undefined,
+          controllerImported: true,
+        });
+      }
     }
+
+    // if pooling, add to active pooling
+    const poolOptions = getPoolBondOptions(account.address);
+
+    // TODO: finish
   }
 
   // filter accounts by extension name
