@@ -17,7 +17,8 @@ import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { usePools } from 'contexts/Pools';
 import { APIContextInterface } from 'types/api';
-import { PoolsContextState } from 'types/pools';
+import { BondedPoolsContextState, PoolsContextState } from 'types/pools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import MinCreateBondStatBox from './Stats/MinCreateBond';
@@ -32,7 +33,8 @@ export const Pools = (props: PageProps) => {
   const { title } = page;
   const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
-  const { bondedPools, isBonding } = usePools() as PoolsContextState;
+  const { bondedPools } = useBondedPools() as BondedPoolsContextState;
+  const { isBonding } = usePools() as PoolsContextState;
   const { isSyncing } = useUi();
 
   // back to overview if pools are not supported on network

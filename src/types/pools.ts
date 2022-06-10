@@ -8,8 +8,14 @@ export interface PoolsConfigContextState {
   stats: any;
 }
 
-export interface PoolsContextState {
+export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
+  createAccounts: (p: number) => any;
+  bondedPools: any;
+  meta: any;
+}
+
+export interface PoolsContextState {
   isBonding: () => any;
   isNominator: () => any;
   isOwner: () => any;
@@ -21,8 +27,6 @@ export interface PoolsContextState {
   getNominationsStatus: () => any;
   membership: any;
   activeBondedPool: any;
-  meta: any;
-  bondedPools: any;
   targets: any;
   poolNominations: any;
 }

@@ -2,15 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect, useRef } from 'react';
-import { bnToU8a, u8aConcat } from '@polkadot/util';
+import React, { useState, useEffect } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { MaybeAccount } from 'types';
-import { PoolsConfigContextState, PoolsContextState } from 'types/pools';
-import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
+import {
+  BondedPoolsContextState,
+  PoolsConfigContextState,
+  PoolsContextState,
+} from 'types/pools';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -21,8 +23,8 @@ import {
   toFixedIfNecessary,
   planckBnToUnit,
   localStorageOrDefault,
-  setStateWithRef,
 } from '../../Utils';
+import { useBondedPools } from './BondedPools';
 
 export const PoolsContext = React.createContext<PoolsContextState | null>(null);
 
@@ -35,9 +37,10 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountBalance }: any = useBalances();
   const { enabled } = usePoolsConfig() as PoolsConfigContextState;
+  const { createAccounts } = useBondedPools() as BondedPoolsContextState;
 
   const { activeEra } = metrics;
-  const { poolsPalletId, existentialDeposit } = consts;
+  const { existentialDeposit } = consts;
   const { units } = network;
 
   // stores pool membership
@@ -61,21 +64,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   // store account target validators
   const [targets, _setTargets]: any = useState(defaults.targets);
 
-  // stores the meta data batches for pool lists
-  const [poolMetaBatches, setPoolMetaBatch]: any = useState({});
-  const poolMetaBatchesRef = useRef(poolMetaBatches);
-
-  // stores the meta batch subscriptions for pool lists
-  const [poolSubs, setPoolSubs]: any = useState({});
-  const poolSubsRef = useRef(poolSubs);
-
-  // store bonded pools
-  const [bondedPools, setBondedPools]: any = useState([]);
-
   useEffect(() => {
-    if (isReady && enabled) {
-      fetchBondedPools();
-    }
     return () => {
       unsubscribe();
     };
@@ -91,7 +80,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     if (poolNominations.unsub !== null) {
       poolNominations.unsub();
     }
-    setBondedPools([]);
   };
 
   useEffect(() => {
@@ -316,14 +304,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     return unsub;
   };
 
-  const getPoolWithAddresses = (id: number, pool: any) => {
-    return {
-      ...pool,
-      id,
-      addresses: createAccounts(id),
-    };
-  };
-
   /* Sets pools target validators in storage */
   const setTargets = (_targets: any) => {
     const stashAddress = getPoolBondedAccount();
@@ -376,57 +356,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   // get the stash address of the bonded pool that the member is participating in.
   const getPoolBondedAccount = () => {
     return activeBondedPool.pool?.addresses?.stash;
-  };
-
-  // unsubscribe from any meta batches upon network change
-  useEffect(() => {
-    return () => {
-      Object.values(poolSubsRef.current).map((batch: any, index: number) => {
-        return Object.entries(batch).map(([k, v]: any) => {
-          return v();
-        });
-      });
-    };
-  }, [isReady, network]);
-
-  // fetch all bonded pool entries
-  const fetchBondedPools = async () => {
-    if (!api) return;
-
-    const _exposures = await api.query.nominationPools.bondedPools.entries();
-    // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: any) => {
-      const id = _keys.toHuman()[0];
-      const pool = _val.toHuman();
-      return getPoolWithAddresses(id, pool);
-    });
-
-    setBondedPools(exposures);
-  };
-
-  // generates pool stash and reward accounts. assumes poolsPalletId is synced.
-  const createAccounts = (poolId: number): any => {
-    const poolIdBN = new BN(poolId);
-    return {
-      stash: createAccount(poolIdBN, 0),
-      reward: createAccount(poolIdBN, 1),
-    };
-  };
-
-  const createAccount = (poolId: BN, index: number): string => {
-    if (!api) return '';
-    return api.registry
-      .createType(
-        'AccountId32',
-        u8aConcat(
-          MOD_PREFIX,
-          poolsPalletId,
-          new Uint8Array([index]),
-          bnToU8a(poolId, U32_OPTS),
-          EMPTY_H256
-        )
-      )
-      .toString();
   };
 
   // get the bond and unbond amounts available to the user
@@ -489,99 +418,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   /*
-    Fetches a new batch of pool metadata.
-    Fetches the metadata of a pool that we assume to be a string.
-    structure:
-    {
-      key: {
-        [
-          {
-          metadata: [],
-        }
-      ]
-    },
-  };
-  */
-  const fetchPoolsMetaBatch = async (key: string, p: any, refetch = false) => {
-    if (!isReady || !api) {
-      return;
-    }
-    if (!p.length) {
-      return;
-    }
-
-    if (!refetch) {
-      // if already exists, do not re-fetch
-      if (poolMetaBatchesRef.current[key] !== undefined) {
-        return;
-      }
-    } else {
-      // tidy up if existing batch exists
-      delete poolMetaBatches[key];
-      delete poolMetaBatchesRef.current[key];
-
-      if (poolSubsRef.current[key] !== undefined) {
-        for (const unsub of poolSubsRef.current[key]) {
-          unsub();
-        }
-      }
-    }
-
-    const ids = [];
-    for (const _p of p) {
-      ids.push(Number(_p.id));
-    }
-
-    // store batch ids
-    const batchesUpdated = Object.assign(poolMetaBatchesRef.current);
-    batchesUpdated[key] = {};
-    batchesUpdated[key].ids = ids;
-    setStateWithRef(
-      { ...batchesUpdated },
-      setPoolMetaBatch,
-      poolMetaBatchesRef
-    );
-
-    const subscribeToMetadata = async (id: any) => {
-      const unsub = await api.query.nominationPools.metadata.multi(
-        id,
-        (_metadata: any) => {
-          const metadata = [];
-          for (let i = 0; i < _metadata.length; i++) {
-            metadata.push(_metadata[i].toHuman());
-          }
-          const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
-          _batchesUpdated[key].metadata = metadata;
-
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setPoolMetaBatch,
-            poolMetaBatchesRef
-          );
-        }
-      );
-      return unsub;
-    };
-
-    // initiate subscriptions
-    await Promise.all([subscribeToMetadata(ids)]).then((unsubs: any) => {
-      addMetaBatchUnsubs(key, unsubs);
-    });
-  };
-
-  /*
-   * Helper function to add mataBatch unsubs by key.
-   */
-  const addMetaBatchUnsubs = (key: string, unsubs: any) => {
-    const _unsubs = poolSubsRef.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
-
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setPoolSubs, poolSubsRef);
-  };
-
-  /*
    * Get the status of nominations.
    * Possible statuses: waiting, inactive, active.
    */
@@ -614,7 +450,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <PoolsContext.Provider
       value={{
-        fetchPoolsMetaBatch,
         isNominator,
         isOwner,
         isDepositor,
@@ -626,8 +461,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         getNominationsStatus,
         membership: poolMembership.membership,
         activeBondedPool: activeBondedPool.pool,
-        meta: poolMetaBatchesRef.current,
-        bondedPools,
         targets,
         poolNominations: poolNominations.nominations,
       }}
