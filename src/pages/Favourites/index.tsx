@@ -6,7 +6,7 @@ import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
-import { BatchKeys } from 'library/batchKeys';
+import { BatchKeys } from 'library/BatchKeys';
 import { PageRowWrapper } from 'Wrappers';
 import { APIContextInterface } from 'types/api';
 import { PageProps } from '../types';

@@ -10,7 +10,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { usePools } from 'contexts/Pools';
 import { ConnectContextInterface } from 'types/connect';
-import { BatchKeys } from 'library/batchKeys';
+import { BatchKeys } from 'library/BatchKeys';
 import { PoolAccount } from './PoolAccount';
 import { RolesWrapper } from './ManagePool/Wrappers';
 
