@@ -132,7 +132,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           />
         </div>
 
-        {activeAccountMeta.source === activeExtension && (
+        {activeAccountMeta?.source === activeExtension && (
           <>
             {activeAccount ? (
               <AccountWrapper
