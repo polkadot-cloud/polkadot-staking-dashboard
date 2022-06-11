@@ -10,12 +10,19 @@ import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { AccountWrapper } from './Wrappers';
 
-export const Account = (props: any) => {
-  const { address, meta } = props;
-  const label = props.label ?? null;
-  const disconnect = props.disconnect ?? false;
-  const source = meta?.source ?? null;
+export const AccountElement = (props: any) => {
+  return (
+    <AccountWrapper>
+      <div>
+        <AccountInner {...props} />
+      </div>
+    </AccountWrapper>
+  );
+};
 
+export const AccountButton = (props: any) => {
+  const { meta } = props;
+  const disconnect = props.disconnect ?? false;
   const { connectToAccount, disconnectFromAccount }: any =
     useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
@@ -23,19 +30,35 @@ export const Account = (props: any) => {
   const imported = meta !== null;
 
   return (
-    <AccountWrapper
-      disabled={meta === null}
-      onClick={() => {
-        if (imported) {
-          if (disconnect) {
-            disconnectFromAccount();
-          } else {
-            connectToAccount(meta);
-            setStatus(0);
+    <AccountWrapper>
+      <button
+        type="button"
+        disabled={meta === null}
+        onClick={() => {
+          if (imported) {
+            if (disconnect) {
+              disconnectFromAccount();
+            } else {
+              connectToAccount(meta);
+              setStatus(0);
+            }
           }
-        }
-      }}
-    >
+        }}
+      >
+        <AccountInner {...props} />
+      </button>
+    </AccountWrapper>
+  );
+};
+
+export const AccountInner = (props: any) => {
+  const { address, meta } = props;
+  const label = props.label ?? null;
+  const source = meta?.source ?? null;
+  const imported = meta !== null;
+
+  return (
+    <>
       <div>
         <Identicon value={address} size={26} />
         <span className="name">
@@ -43,16 +66,20 @@ export const Account = (props: any) => {
         </span>
       </div>
       {!imported && (
-        <div className="label warning" style={{ color: '#a17703' }}>
+        <div
+          className="label warning"
+          style={{ color: '#a17703', paddingLeft: '0.5rem' }}
+        >
           Not Imported
         </div>
       )}
+
       <div className={label === null ? `` : label[0]}>
-        {label !== null && label[1]}
+        {label !== null && <h5>{label[1]}</h5>}
 
         {source === 'talisman' && <TalismanSVG className="icon" />}
         {source === 'polkadot-js' && <PolkadotJSSVG className="icon" />}
       </div>
-    </AccountWrapper>
+    </>
   );
 };
