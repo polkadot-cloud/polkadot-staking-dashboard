@@ -26,8 +26,9 @@ export const ControllerNotImported = () => {
           <CardWrapper style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
             <CardHeaderWrapper>
               <h4>
-                You have not imported your Controller account. If you have lost
-                access to your Controller account, set a new one now.
+                You have not imported your controller account. If you have lost
+                access to your controller account, set a new one now. Otherwise,
+                import the controller into one of your active extensions.
               </h4>
             </CardHeaderWrapper>
             <Button

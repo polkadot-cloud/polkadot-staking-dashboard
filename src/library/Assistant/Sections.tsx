@@ -37,7 +37,7 @@ export const Sections = (props: any) => {
     // close assistant
     assistant.toggle();
     // initialise connect
-    openModalWith('ConnectAccounts', {}, 'small');
+    openModalWith('ConnectAccounts', {}, 'large');
   };
 
   // resources to display

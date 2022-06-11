@@ -31,11 +31,6 @@ export const ContentWrapper = styled.div`
   padding: 0 1rem 1rem 1rem;
 `;
 
-export const PaddingWrapper = styled.div`
-  box-sizing: border-box;
-  padding: 1rem 0 0.5rem 0rem;
-  height: auto;
-`;
 export const Wrapper = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -43,11 +38,19 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 0;
+  width: 100%;
+
+  h1 {
+    margin: 0.5rem 0 1rem 0;
+  }
 
   h2 {
-    margin-top: 0.5rem;
-    padding: 0 0.5rem;
+    margin-top: 0;
     color: ${textPrimary};
+  }
+
+  h3 {
+    margin: 1rem 0;
   }
 
   .head {
@@ -59,10 +62,48 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const AccountGroupWrapper = styled.div`
+  box-sizing: border-box;
+  border-radius: 1rem;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  > section {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column wrap;
+    flex-basis: 100%;
+
+    @media (min-width: 800px) {
+      flex-basis: 50%;
+
+      &:first-child {
+        padding-right: 0.5rem;
+      }
+      &:last-child {
+        padding-left: 0.5rem;
+      }
+    }
+
+    > h5 {
+      margin: 0.5rem 0 0 0;
+      opacity: 0.75;
+    }
+  }
+`;
+
+export const PaddingWrapper = styled.div`
+  box-sizing: border-box;
+  padding: 1rem 0 0.5rem 0rem;
+  height: auto;
+`;
+
 export const AccountWrapper = styled.button`
   box-sizing: border-box;
   width: 100%;
-  margin: 0.75rem 0;
+  margin: 0.5rem 0;
   border-radius: 0.75rem;
   font-size: 1rem;
   background: ${buttonPrimaryBackground};
@@ -87,7 +128,7 @@ export const AccountWrapper = styled.button`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
 
     &:first-child {
       flex-shrink: 1;
@@ -104,17 +145,19 @@ export const AccountWrapper = styled.button`
     &:last-child {
       flex-grow: 1;
       justify-content: flex-end;
+    }
 
-      &.neutral {
-        color: ${textSecondary};
-        opacity: 0.75;
-      }
-      &.danger {
-        color: ${textDanger};
-      }
-      .icon {
-        margin-left: 1rem;
-      }
+    &.neutral {
+      color: ${textSecondary};
+      opacity: 0.75;
+    }
+    &.danger {
+      color: ${textDanger};
+    }
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      margin-left: 1rem;
     }
 
     /* svg theming */
@@ -204,7 +247,7 @@ export const Separator = styled.div`
   border-top: 1px solid ${textSecondary};
   width: 100%;
   opacity: 0.1;
-  margin: 0.75rem 0rem;
+  margin: 1.5rem 0rem;
 `;
 
 export default Wrapper;
