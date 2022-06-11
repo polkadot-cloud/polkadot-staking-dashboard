@@ -141,7 +141,7 @@ export const PoolMembershipsProvider = ({
     <PoolMembershipsContext.Provider
       value={{
         membership: getActiveAccountPoolMembership(),
-        memberships: poolMembershipsRef,
+        memberships: poolMembershipsRef.current,
       }}
     >
       {children}
