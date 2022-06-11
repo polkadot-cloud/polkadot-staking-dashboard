@@ -8,7 +8,7 @@ import { APIContextInterface } from 'types/api';
 import { BondedPoolsContextState, PoolsConfigContextState } from 'types/pools';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import { useApi } from '../Api';
-import { usePoolsConfig } from './Config';
+import { usePoolsConfig } from './PoolsConfig';
 import { setStateWithRef } from '../../Utils';
 
 export const BondedPoolsContext =

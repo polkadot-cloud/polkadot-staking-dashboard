@@ -12,7 +12,7 @@ import {
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
-import { usePoolsConfig } from './Config';
+import { usePoolsConfig } from './PoolsConfig';
 import { rmCommas, setStateWithRef } from '../../Utils';
 
 export const PoolMembershipsContext =

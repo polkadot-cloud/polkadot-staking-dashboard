@@ -12,7 +12,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { PoolsConfigContextState, PoolsContextState } from 'types/pools';
-import { usePoolsConfig } from 'contexts/Pools/Config';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';

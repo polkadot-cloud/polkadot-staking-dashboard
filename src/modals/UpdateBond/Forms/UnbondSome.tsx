@@ -14,7 +14,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePools } from 'contexts/Pools';
 import { PoolsConfigContextState, PoolsContextState } from 'types/pools';
-import { usePoolsConfig } from 'contexts/Pools/Config';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
