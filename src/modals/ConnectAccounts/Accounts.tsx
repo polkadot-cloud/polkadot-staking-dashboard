@@ -9,8 +9,8 @@ import { useModal } from 'contexts/Modal';
 import { ConnectContextInterface } from 'types/connect';
 import Button from 'library/Button';
 import { useBalances } from 'contexts/Balances';
-import { usePools } from 'contexts/Pools';
-import { PoolsContextState } from 'types/pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { ActivePoolContextState } from 'types/pools';
 import {
   Separator,
   ContentWrapper,
@@ -30,7 +30,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { setStatus } = useModal();
   const { getAccountLedger, getAccountLocks, getBondedAccount }: any =
     useBalances();
-  const { getPoolBondOptions } = usePools() as PoolsContextState;
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { activeExtension } = useConnect() as ConnectContextInterface;
   let { accounts } = useConnect() as ConnectContextInterface;
   const activeAccountMeta = getAccount(activeAccount);

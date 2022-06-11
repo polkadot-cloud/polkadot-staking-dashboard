@@ -8,15 +8,15 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
-import { usePools } from 'contexts/Pools';
-import { PoolsContextState } from 'types/pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { ActivePoolContextState } from 'types/pools';
 import { Wrapper } from './Wrapper';
 
 export const PoolNominations = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { isSyncing } = useUi();
   const { poolNominated }: any = useValidators();
-  const { isNominator } = usePools() as PoolsContextState;
+  const { isNominator } = useActivePool() as ActivePoolContextState;
   const batchKey = 'pool_nominations';
 
   // TODO: plug in action to stop nominating.

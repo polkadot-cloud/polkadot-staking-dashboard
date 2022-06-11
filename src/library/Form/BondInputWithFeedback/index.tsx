@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
@@ -11,7 +11,7 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { PoolsConfigContextState, PoolsContextState } from 'types/pools';
+import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
@@ -31,7 +31,7 @@ export const BondInputWithFeedback = (props: any) => {
   const { staking, getControllerNotImported } = useStaking();
   const { getAccountLedger, getBondedAccount, getBondOptions }: any =
     useBalances();
-  const { getPoolBondOptions } = usePools() as PoolsContextState;
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { stats } = usePoolsConfig() as PoolsConfigContextState;
   const { minJoinBond } = stats;
 

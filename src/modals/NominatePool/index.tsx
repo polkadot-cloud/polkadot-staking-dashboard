@@ -6,14 +6,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { ConnectContextInterface } from 'types/connect';
-import { PoolMembershipsContextState, PoolsContextState } from 'types/pools';
+import {
+  PoolMembershipsContextState,
+  ActivePoolContextState,
+} from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {
   HeadingWrapper,
@@ -28,7 +31,7 @@ export const NominatePool = () => {
   const { setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
-  const { isNominator, targets } = usePools() as PoolsContextState;
+  const { isNominator, targets } = useActivePool() as ActivePoolContextState;
   const { nominations } = targets;
   const poolId = membership?.poolId;
 

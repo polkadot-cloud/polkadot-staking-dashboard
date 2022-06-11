@@ -19,7 +19,7 @@ import { NotificationsProvider } from './contexts/Notifications';
 import { PoolsConfigProvider } from './contexts/Pools/PoolsConfig';
 import { BondedPoolsProvider } from './contexts/Pools/BondedPools';
 import { PoolMembershipsProvider } from './contexts/Pools/PoolMemberships';
-import { PoolsProvider } from './contexts/Pools';
+import { ActivePoolProvider } from './contexts/Pools/ActivePool';
 import { SideBarProvider } from './contexts/SideBar';
 import { StakingProvider } from './contexts/Staking';
 import { SubscanProvider } from './contexts/Subscan';
@@ -57,7 +57,7 @@ export const Providers = withProviders(
   PoolsConfigProvider,
   BondedPoolsProvider,
   PoolMembershipsProvider,
-  PoolsProvider,
+  ActivePoolProvider,
   ValidatorsProvider,
   UIProvider,
   MessagesProvider,

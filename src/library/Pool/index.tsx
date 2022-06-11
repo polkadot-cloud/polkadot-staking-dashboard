@@ -9,11 +9,11 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { BondedPoolsContextState, PoolsContextState } from 'types/pools';
+import { BondedPoolsContextState, ActivePoolContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Wrapper } from './Wrapper';
 
@@ -22,7 +22,7 @@ export const Pool = (props: any) => {
   const { memberCounter, addresses, id } = pool;
   const { openModalWith } = useModal();
   const { meta } = useBondedPools() as BondedPoolsContextState;
-  const { isBonding } = usePools() as PoolsContextState;
+  const { isBonding } = useActivePool() as ActivePoolContextState;
 
   const metadata = meta[batchKey]?.metadata ?? [];
 

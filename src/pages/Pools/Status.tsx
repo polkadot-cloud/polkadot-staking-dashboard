@@ -5,7 +5,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import {
   PoolMembershipsContextState,
-  PoolsContextState,
+  ActivePoolContextState,
   PoolState,
 } from 'types/pools';
 import BN from 'bn.js';
@@ -15,7 +15,7 @@ import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 
@@ -41,7 +41,7 @@ export const Status = () => {
     isOwner,
     getNominationsStatus,
     getPoolBondOptions,
-  } = usePools() as PoolsContextState;
+  } = useActivePool() as ActivePoolContextState;
   const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
   const nominationStatuses = getNominationsStatus();

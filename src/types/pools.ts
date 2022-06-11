@@ -20,7 +20,7 @@ export interface PoolMembershipsContextState {
   membership: any;
 }
 
-export interface PoolsContextState {
+export interface ActivePoolContextState {
   isBonding: () => any;
   isNominator: () => any;
   isOwner: () => any;

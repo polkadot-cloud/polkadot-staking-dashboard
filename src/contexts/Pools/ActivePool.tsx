@@ -9,10 +9,10 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { MaybeAccount } from 'types';
 import {
+  PoolsConfigContextState,
   BondedPoolsContextState,
   PoolMembershipsContextState,
-  PoolsConfigContextState,
-  PoolsContextState,
+  ActivePoolContextState,
 } from 'types/pools';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
@@ -28,11 +28,16 @@ import {
 import { useBondedPools } from './BondedPools';
 import { usePoolMemberships } from './PoolMemberships';
 
-export const PoolsContext = React.createContext<PoolsContextState | null>(null);
+export const ActivePoolContext =
+  React.createContext<ActivePoolContextState | null>(null);
 
-export const usePools = () => React.useContext(PoolsContext);
+export const useActivePool = () => React.useContext(ActivePoolContext);
 
-export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
+export const ActivePoolProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
@@ -388,7 +393,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <PoolsContext.Provider
+    <ActivePoolContext.Provider
       value={{
         isNominator,
         isOwner,
@@ -405,6 +410,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       {children}
-    </PoolsContext.Provider>
+    </ActivePoolContext.Provider>
   );
 };

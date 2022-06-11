@@ -6,13 +6,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { sleep, removePercentage, rmCommas, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { PoolsContextState } from 'types/pools';
+import { ActivePoolContextState } from 'types/pools';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
-import { usePools } from '../Pools';
+import { useActivePool } from '../Pools/ActivePool';
 
 // context type
 export interface ValidatorsContextState {
@@ -61,7 +61,7 @@ export const ValidatorsProvider = ({
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const { accounts, getAccountNominations }: any = useBalances();
-  const { poolNominations } = usePools() as PoolsContextState;
+  const { poolNominations } = useActivePool() as ActivePoolContextState;
   const { maxNominatorRewardedPerValidator } = consts;
 
   // stores the total validator entries
