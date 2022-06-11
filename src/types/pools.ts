@@ -15,6 +15,11 @@ export interface BondedPoolsContextState {
   meta: any;
 }
 
+export interface PoolMembershipsContextState {
+  memberships: any;
+  membership: any;
+}
+
 export interface PoolsContextState {
   isBonding: () => any;
   isNominator: () => any;
@@ -25,7 +30,6 @@ export interface PoolsContextState {
   getPoolUnlocking: () => any;
   setTargets: (targest: any) => void;
   getNominationsStatus: () => any;
-  membership: any;
   activeBondedPool: any;
   targets: any;
   poolNominations: any;

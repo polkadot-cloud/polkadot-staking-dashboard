@@ -3,7 +3,11 @@
 
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { PoolsContextState, PoolState } from 'types/pools';
+import {
+  PoolMembershipsContextState,
+  PoolsContextState,
+  PoolState,
+} from 'types/pools';
 import BN from 'bn.js';
 import { formatBalance } from '@polkadot/util';
 import { useUi } from 'contexts/UI';
@@ -23,14 +27,15 @@ import {
   faLock,
   faLockOpen,
 } from '@fortawesome/free-solid-svg-icons';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 
 export const Status = () => {
   const { network, isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { isSyncing } = useUi();
+  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const {
-    membership,
     activeBondedPool,
     poolNominations,
     isOwner,

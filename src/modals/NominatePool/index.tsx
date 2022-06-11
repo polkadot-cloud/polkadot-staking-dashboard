@@ -13,7 +13,8 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { ConnectContextInterface } from 'types/connect';
-import { PoolsContextState } from 'types/pools';
+import { PoolMembershipsContextState, PoolsContextState } from 'types/pools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -26,7 +27,8 @@ export const NominatePool = () => {
   const { api }: any = useApi();
   const { setStatus: setModalStatus }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { membership, isNominator, targets } = usePools() as PoolsContextState;
+  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { isNominator, targets } = usePools() as PoolsContextState;
   const { nominations } = targets;
   const poolId = membership?.poolId;
 

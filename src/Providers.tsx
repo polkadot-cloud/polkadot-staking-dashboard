@@ -18,6 +18,7 @@ import { NetworkMetricsProvider } from './contexts/Network';
 import { NotificationsProvider } from './contexts/Notifications';
 import { PoolsConfigProvider } from './contexts/Pools/Config';
 import { BondedPoolsProvider } from './contexts/Pools/BondedPools';
+import { PoolMembershipsProvider } from './contexts/Pools/PoolMemberships';
 import { PoolsProvider } from './contexts/Pools';
 import { SideBarProvider } from './contexts/SideBar';
 import { StakingProvider } from './contexts/Staking';
@@ -55,6 +56,7 @@ export const Providers = withProviders(
   StakingProvider,
   PoolsConfigProvider,
   BondedPoolsProvider,
+  PoolMembershipsProvider,
   PoolsProvider,
   ValidatorsProvider,
   UIProvider,
