@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
@@ -20,6 +20,7 @@ import { useConnect } from '../Connect';
 import { usePoolsConfig } from './Config';
 import {
   rmCommas,
+  setStateWithRef,
   toFixedIfNecessary,
   planckBnToUnit,
   localStorageOrDefault,
@@ -34,7 +35,8 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { accounts: connectAccounts, activeAccount } =
+    useConnect() as ConnectContextInterface;
   const { getAccountBalance }: any = useBalances();
   const { enabled } = usePoolsConfig() as PoolsConfigContextState;
   const { createAccounts } = useBondedPools() as BondedPoolsContextState;
@@ -43,19 +45,13 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   const { existentialDeposit } = consts;
   const { units } = network;
 
-  // stores pool membership
-  const [poolMembership, setPoolMembership]: any = useState({
-    membership: undefined,
-    unsub: null,
-  });
-
   // stores member's bonded pool
   const [activeBondedPool, setActiveBondedPool]: any = useState({
     pool: undefined,
     unsub: null,
   });
 
-  // validators that are currently nominated by the activeBonded pool.
+  // currently nominated validators by the activeBonded pool.
   const [poolNominations, setPoolNominations]: any = useState({
     noominations: defaults.nominations,
     unsub: null,
@@ -64,6 +60,45 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   // store account target validators
   const [targets, _setTargets]: any = useState(defaults.targets);
 
+  // stores pool membership
+  const [poolMemberships, setPoolMemberships]: any = useState([]);
+  const poolMembershipsRef = useRef<any>(poolMemberships);
+
+  // subscriptions state
+  const [poolMembershipUnsubs, setpoolMembershipUnsubs] = useState<any>([]);
+  const poolMembershipUnsubRefs = useRef<any>(poolMembershipUnsubs);
+
+  useEffect(() => {
+    if (isReady && enabled) {
+      (async () => {
+        setStateWithRef([], setPoolMemberships, poolMembershipsRef);
+        await unsubscribeAll();
+        getPoolMemberships();
+      })();
+    }
+  }, [network, isReady, connectAccounts, enabled]);
+
+  // subscribe to account pool memberships
+  const getPoolMemberships = async () => {
+    Promise.all(
+      connectAccounts.map((a: any) => subscribeToPoolMembership(a.address))
+    );
+  };
+
+  // unsubscribe from pool memberships on unmount
+  useEffect(() => {
+    return () => {
+      unsubscribeAll();
+    };
+  }, []);
+
+  // unsubscribe from all pool memberships
+  const unsubscribeAll = async () => {
+    Object.values(poolMembershipUnsubRefs.current).forEach(async (v: any) => {
+      await v();
+    });
+  };
+
   useEffect(() => {
     return () => {
       unsubscribe();
@@ -71,9 +106,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   }, [network, isReady, enabled]);
 
   const unsubscribe = () => {
-    if (poolMembership.unsub !== null) {
-      poolMembership.unsub();
-    }
     if (activeBondedPool.unsub !== null) {
       activeBondedPool.unsub();
     }
@@ -82,35 +114,82 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  useEffect(() => {
-    if (isReady && enabled && activeAccount) {
-      subscribeToPoolMembership(activeAccount);
-    }
-    return () => {
-      unsubscribePoolMembership();
-    };
-  }, [network, isReady, activeAccount, enabled]);
+  // subscribe to an account's pool membership
+  const subscribeToPoolMembership = async (address: string) => {
+    if (!api) return;
 
-  const unsubscribePoolMembership = () => {
-    if (poolMembership?.unsub) {
-      poolMembership.unsub();
-    }
-    setPoolMembership({
-      membership: undefined,
-      unsub: null,
-    });
+    const unsub = await api.query.nominationPools.poolMembers(
+      address,
+      async (result: any) => {
+        let membership = result?.unwrapOr(undefined)?.toHuman();
+
+        if (membership) {
+          // format pool's unlocking chunks
+          const unbondingEras: any = membership.unbondingEras;
+          const unlocking = [];
+          for (const [e, v] of Object.entries(unbondingEras || {})) {
+            const era = rmCommas(e as string);
+            const value = rmCommas(v as string);
+            unlocking.push({
+              era: Number(era),
+              value: new BN(value),
+            });
+          }
+          membership.points = membership.points
+            ? rmCommas(membership.points)
+            : '0';
+          membership = {
+            address,
+            ...membership,
+            unlocking,
+          };
+
+          // update membership in context state
+          let _poolMemberships = Object.values(poolMembershipsRef.current);
+
+          // remove stale membership if it's already in list
+          _poolMemberships = _poolMemberships
+            .filter((m: any) => m.address !== address)
+            .concat(membership);
+
+          setStateWithRef(
+            _poolMemberships,
+            setPoolMemberships,
+            poolMembershipsRef
+          );
+        }
+      }
+    );
+
+    const _unsubs = poolMembershipUnsubRefs.current.concat(unsub);
+    setStateWithRef(_unsubs, setpoolMembershipUnsubs, poolMembershipUnsubRefs);
+    return unsub;
   };
 
-  // subscribe to active bonded pool deatils
+  // gets the membership of the active account
+  const getActiveAccountPoolMembership = () => {
+    if (!activeAccount) {
+      return defaults.poolMembership;
+    }
+    const poolMembership = poolMembershipsRef.current.find(
+      (m: any) => m.address === activeAccount
+    );
+    if (poolMembership === undefined) {
+      return defaults.poolMembership;
+    }
+    return poolMembership;
+  };
+
+  // subscribe to active bonded pool deatils for the active account
   useEffect(() => {
-    const membership = poolMembership?.membership;
+    const membership = getActiveAccountPoolMembership();
     if (isReady && enabled && membership) {
       subscribeToActiveBondedPool(membership);
     }
     return () => {
       unsubscribeActiveBondedPool();
     };
-  }, [network, isReady, enabled, poolMembership?.membership]);
+  }, [network, isReady, enabled, getActiveAccountPoolMembership()]);
 
   const unsubscribeActiveBondedPool = () => {
     if (activeBondedPool?.unsub) {
@@ -141,37 +220,6 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       nominations: defaults.nominations,
       unsub: null,
     });
-  };
-
-  // subscribe to accounts membership
-  const subscribeToPoolMembership = async (address: string) => {
-    if (!api) return;
-
-    const unsub = await api.query.nominationPools.poolMembers(
-      address,
-      async (result: any) => {
-        let membership = result?.unwrapOr(undefined)?.toHuman();
-        if (membership) {
-          // format pool's unlocking chunks
-          const unbondingEras: any = membership.unbondingEras;
-          const unlocking = [];
-          for (const [e, v] of Object.entries(unbondingEras || {})) {
-            const era = rmCommas(e as string);
-            const value = rmCommas(v as string);
-            unlocking.push({
-              era: Number(era),
-              value: new BN(value),
-            });
-          }
-          membership.points = membership.points
-            ? rmCommas(membership.points)
-            : '0';
-          membership = { ...membership, unlocking };
-        }
-        setPoolMembership({ membership, unsub });
-      }
-    );
-    return unsub;
   };
 
   const calculatePayout = (
@@ -317,7 +365,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getPoolUnlocking = () => {
-    return poolMembership?.membership?.unlocking || [];
+    return getActiveAccountPoolMembership()?.unlocking || [];
   };
 
   const isBonding = () => {
@@ -364,7 +412,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
       return defaults.poolBondOptions;
     }
     const { freeAfterReserve, miscFrozen } = getAccountBalance(address);
-    const membership = poolMembership.membership;
+    const membership = getActiveAccountPoolMembership();
     const unlocking = membership?.unlocking || [];
     const points = membership?.points;
     let freeToUnbond = 0;
@@ -459,7 +507,7 @@ export const PoolsProvider = ({ children }: { children: React.ReactNode }) => {
         getPoolUnlocking,
         setTargets,
         getNominationsStatus,
-        membership: poolMembership.membership,
+        membership: getActiveAccountPoolMembership(),
         activeBondedPool: activeBondedPool.pool,
         targets,
         poolNominations: poolNominations.nominations,

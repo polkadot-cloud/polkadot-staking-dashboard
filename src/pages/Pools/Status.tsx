@@ -37,17 +37,12 @@ export const Status = () => {
     getNominationsStatus,
     getPoolBondOptions,
   } = usePools() as PoolsContextState;
-
   const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
-
-  // get nomination status
   const nominationStatuses = getNominationsStatus();
-
   const activeNominations: any = Object.values(nominationStatuses).filter(
     (_v: any) => _v === 'active'
   ).length;
-
   const isNominating = !!poolNominations?.targets?.length;
 
   // Pool status `Stat` props
@@ -138,7 +133,7 @@ export const Status = () => {
   let { unclaimedReward } = activeBondedPool || {};
   unclaimedReward = unclaimedReward ?? new BN(0);
 
-  const labelRewards = unclaimedReward
+  const labelRewards = unclaimedReward.gt(new BN(0))
     ? `${formatBalance(unclaimedReward, {
         decimals: units,
         withSiFull: true,

@@ -23,6 +23,8 @@ export const nominations = {
   submittedIn: 0,
 };
 
+export const poolMembership = null;
+
 export const poolBondOptions = {
   active: new BN(0),
   freeToBond: 0,
