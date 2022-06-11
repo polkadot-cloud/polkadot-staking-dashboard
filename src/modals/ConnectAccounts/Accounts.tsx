@@ -130,7 +130,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
       <PaddingWrapper ref={ref}>
         <div className="head">
           <div>
-            <h1>Select Account</h1>
+            <h1>Accounts</h1>
           </div>
           <div>
             <Button
@@ -152,7 +152,9 @@ export const Accounts = forwardRef((props: any, ref: any) => {
         ) : (
           <AccountWrapper>
             <div>
-              <div>No Account Connected</div>
+              <div>
+                <h3>No Account Connected</h3>
+              </div>
               <div />
             </div>
           </AccountWrapper>
