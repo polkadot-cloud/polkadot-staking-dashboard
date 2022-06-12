@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { usePools } from 'contexts/Pools';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
@@ -12,6 +11,8 @@ import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { BondedPoolsContextState } from 'types/pools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 
@@ -19,7 +20,8 @@ export const PoolAccount = (props: any) => {
   const { mode } = useTheme();
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { fetchPoolsMetaBatch, meta } = usePools();
+  const { fetchPoolsMetaBatch, meta } =
+    useBondedPools() as BondedPoolsContextState;
 
   const { label }: any = props;
 

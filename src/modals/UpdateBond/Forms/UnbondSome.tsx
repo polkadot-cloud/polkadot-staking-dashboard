@@ -12,7 +12,9 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -25,7 +27,8 @@ export const UnbondSome = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } = useStaking();
   const { getBondOptions, getBondedAccount }: any = useBalances();
-  const { getPoolBondOptions, stats } = usePools();
+  const { stats } = usePoolsConfig() as PoolsConfigContextState;
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { target } = config;
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);

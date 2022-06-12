@@ -11,10 +11,11 @@ import { Button, ButtonRow } from 'library/Button';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { ActivePoolContextState } from 'types/pools';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -23,7 +24,8 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
   const { getAccountLedger }: any = useBalances();
-  const { getPoolBondOptions, isBonding } = usePools();
+  const { getPoolBondOptions, isBonding } =
+    useActivePool() as ActivePoolContextState;
   const ledger = getAccountLedger(activeAccount);
   const { total }: any = ledger;
 

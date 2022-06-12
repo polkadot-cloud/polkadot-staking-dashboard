@@ -3,15 +3,19 @@
 
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import {
+  PoolMembershipsContextState,
+  ActivePoolContextState,
+  PoolState,
+} from 'types/pools';
 import BN from 'bn.js';
 import { formatBalance } from '@polkadot/util';
-import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { usePools, PoolState } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 
@@ -23,31 +27,27 @@ import {
   faLock,
   faLockOpen,
 } from '@fortawesome/free-solid-svg-icons';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 
 export const Status = () => {
   const { network, isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { isSyncing } = useUi();
+  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const {
-    membership,
     activeBondedPool,
     poolNominations,
     isOwner,
     getNominationsStatus,
     getPoolBondOptions,
-  } = usePools();
-
+  } = useActivePool() as ActivePoolContextState;
   const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
-
-  // get nomination status
   const nominationStatuses = getNominationsStatus();
-
   const activeNominations: any = Object.values(nominationStatuses).filter(
     (_v: any) => _v === 'active'
   ).length;
-
   const isNominating = !!poolNominations?.targets?.length;
 
   // Pool status `Stat` props
@@ -138,7 +138,7 @@ export const Status = () => {
   let { unclaimedReward } = activeBondedPool || {};
   unclaimedReward = unclaimedReward ?? new BN(0);
 
-  const labelRewards = unclaimedReward
+  const labelRewards = unclaimedReward.gt(new BN(0))
     ? `${formatBalance(unclaimedReward, {
         decimals: units,
         withSiFull: true,
