@@ -26,11 +26,10 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     useConnect() as ConnectContextInterface;
   const { getAccountLedger, getAccountLocks, getBondedAccount }: any =
     useBalances();
-  const { activeExtension, connectToAccount } =
-    useConnect() as ConnectContextInterface;
+  const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
 
-  let { accounts } = useConnect() as ConnectContextInterface;
+  const { accounts } = useConnect() as ConnectContextInterface;
   const { memberships } = usePoolMemberships() as PoolMembershipsContextState;
 
   const _controllers: any = [];
@@ -118,12 +117,6 @@ export const Accounts = forwardRef((props: any, ref: any) => {
       inactive.push(account.address);
     }
   }
-
-  // filter accounts by extension name
-  accounts = accounts.filter((item: any) => item.source === activeExtension);
-
-  // remove active account from connect list
-  accounts = accounts.filter((item: any) => item.address !== activeAccount);
 
   return (
     <ContentWrapper>

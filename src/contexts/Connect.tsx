@@ -46,11 +46,6 @@ export const ConnectProvider = ({
   const [unsubscribe, setUnsubscribe]: any = useState([]);
   const unsubscribeRef: any = useRef(unsubscribe);
 
-  // store the currently active wallet
-  const [activeExtension, _setActiveExtension] = useState(
-    localStorageOrDefault('active_extension', null)
-  );
-
   // initialise extensions
   useEffect(() => {
     if (!extensions.length) {
@@ -64,7 +59,7 @@ export const ConnectProvider = ({
     };
   });
 
-  // re-sync extensions on network switch
+  // re-sync extensions accounts on network switch
   useEffect(() => {
     if (extensions.length) {
       (async () => {
@@ -160,15 +155,6 @@ export const ConnectProvider = ({
     });
   };
 
-  const setActiveExtension = (wallet: any) => {
-    if (wallet === null) {
-      localStorage.removeItem('active_extension');
-    } else {
-      localStorage.setItem('active_extension', wallet);
-    }
-    _setActiveExtension(wallet);
-  };
-
   const setActiveAccount = (address: string | null) => {
     if (address === null) {
       localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
@@ -210,10 +196,8 @@ export const ConnectProvider = ({
         getAccount,
         connectToAccount,
         disconnectFromAccount,
-        setActiveExtension,
         getActiveAccount,
         extensions,
-        activeExtension,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeAccountMeta: activeAccountMetaRef.current,

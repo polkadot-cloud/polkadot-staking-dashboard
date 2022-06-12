@@ -18,7 +18,7 @@ export const Connect = () => {
           <Item
             className="connect"
             onClick={() => {
-              openModalWith('ConnectAccounts', {}, 'large');
+              openModalWith('ConnectAccounts', { section: 1 }, 'large');
             }}
             whileHover={{ scale: 1.02 }}
           >

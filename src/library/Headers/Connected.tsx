@@ -37,7 +37,7 @@ export const Connected = () => {
             <Account
               canClick
               onClick={() => {
-                openModalWith('ConnectAccounts', {}, 'large');
+                openModalWith('ConnectAccounts', { section: 1 }, 'large');
               }}
               value={activeAccount}
               label={hasController() && !isSyncing ? 'Stash' : undefined}

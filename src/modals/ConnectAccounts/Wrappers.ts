@@ -42,6 +42,10 @@ export const Wrapper = styled.div`
   padding: 0;
   width: 100%;
 
+  h1 {
+    padding: 0 0.5rem;
+  }
+
   h2 {
     color: ${textPrimary};
     border-bottom: 1px solid ${borderPrimary};
