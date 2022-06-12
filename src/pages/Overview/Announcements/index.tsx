@@ -5,7 +5,6 @@ import BN from 'bn.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
-import { usePools } from 'contexts/Pools';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
@@ -14,6 +13,8 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { APIContextInterface } from 'types/api';
+import { BondedPoolsContextState } from 'types/pools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Wrapper, Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -22,7 +23,7 @@ export const Announcements = () => {
   const { units } = network;
   const { staking }: any = useStaking();
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
-  const { bondedPools } = usePools();
+  const { bondedPools } = useBondedPools() as BondedPoolsContextState;
 
   const container = {
     hidden: { opacity: 0 },

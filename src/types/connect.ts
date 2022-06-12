@@ -4,13 +4,13 @@
 import { MaybeAccount } from 'types';
 
 export interface ConnectContextInterface {
+  connectExtensionAccounts: (n: string) => void;
   getAccount: (account: MaybeAccount) => any;
   connectToAccount: (a: any) => void;
   disconnectFromAccount: () => void;
-  setActiveExtension: (e: any) => void;
   getActiveAccount: () => any;
   extensions: any;
-  activeExtension: any;
+  extensionsStatus: any;
   accounts: any;
   activeAccount: string | null;
   activeAccountMeta: any;
