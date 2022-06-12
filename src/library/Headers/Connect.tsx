@@ -10,7 +10,7 @@ import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   return (
     <>
       {!activeAccount && (
@@ -18,7 +18,11 @@ export const Connect = () => {
           <Item
             className="connect"
             onClick={() => {
-              openModalWith('ConnectAccounts', { section: 1 }, 'large');
+              openModalWith(
+                'ConnectAccounts',
+                { section: accounts.length ? 1 : 0 },
+                'large'
+              );
             }}
             whileHover={{ scale: 1.02 }}
           >

@@ -14,7 +14,7 @@ import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
   const { hasController, getControllerNotImported } = useStaking();
   const { getBondedAccount }: any = useBalances();
@@ -37,7 +37,11 @@ export const Connected = () => {
             <Account
               canClick
               onClick={() => {
-                openModalWith('ConnectAccounts', { section: 1 }, 'large');
+                openModalWith(
+                  'ConnectAccounts',
+                  { section: accounts.length ? 1 : 0 },
+                  'large'
+                );
               }}
               value={activeAccount}
               label={hasController() && !isSyncing ? 'Stash' : undefined}
