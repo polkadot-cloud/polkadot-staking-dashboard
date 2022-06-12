@@ -9,13 +9,14 @@ import { Button } from 'library/Button';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { usePools } from 'contexts/Pools';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { ActivePoolContextState } from 'types/pools';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
@@ -27,7 +28,8 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { getAccountNominations }: any = useBalances();
   const { nominated: stakeNominated, poolNominated }: any = useValidators();
 
-  const { poolNominations, isNominator: isPoolNominator } = usePools();
+  const { poolNominations, isNominator: isPoolNominator } =
+    useActivePool() as ActivePoolContextState;
 
   const isPool = bondType === 'pool';
   const nominations = isPool
