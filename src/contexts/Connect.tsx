@@ -148,15 +148,7 @@ export const ConnectProvider = ({
                 setStateWithRef(_accounts, setAccounts, accountsRef);
 
                 // update extensions status
-                const _extensionsStatus = Object.assign(
-                  extensionsStatusRef.current,
-                  { [extensionName]: 'connected' }
-                );
-                setStateWithRef(
-                  _extensionsStatus,
-                  setExtensionsStatus,
-                  extensionsStatusRef
-                );
+                updateExtensionStatus(extensionName, 'connected');
               }
             }
           );
@@ -169,7 +161,14 @@ export const ConnectProvider = ({
           );
         }
       } catch (err) {
-        console.error('Extension failed to load');
+        const _err = String(err);
+
+        if (_err.substring(0, 9) === 'AuthError') {
+          updateExtensionStatus(extensionName, 'not_authenticated');
+        }
+        if (_err.substring(0, 17) === 'NotInstalledError') {
+          updateExtensionStatus(extensionName, 'not_found');
+        }
       }
     });
   };
@@ -220,15 +219,7 @@ export const ConnectProvider = ({
               setStateWithRef(_accounts, setAccounts, accountsRef);
 
               // update extensions status
-              const _extensionsStatus = Object.assign(
-                extensionsStatusRef.current,
-                { [extensionName]: 'connected' }
-              );
-              setStateWithRef(
-                _extensionsStatus,
-                setExtensionsStatus,
-                extensionsStatusRef
-              );
+              updateExtensionStatus(extensionName, 'connected');
             }
           }
         );
@@ -240,7 +231,14 @@ export const ConnectProvider = ({
         );
       }
     } catch (err) {
-      console.error('Extension failed to load');
+      const _err = String(err);
+
+      if (_err.substring(0, 9) === 'AuthError') {
+        updateExtensionStatus(extensionName, 'not_authenticated');
+      }
+      if (_err.substring(0, 17) === 'NotInstalledError') {
+        updateExtensionStatus(extensionName, 'not_found');
+      }
     }
   };
 
@@ -265,6 +263,16 @@ export const ConnectProvider = ({
     localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
     setActiveAccount(null);
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
+  };
+
+  const updateExtensionStatus = (extensionName: string, status: string) => {
+    setStateWithRef(
+      Object.assign(extensionsStatusRef.current, {
+        [extensionName]: status,
+      }),
+      setExtensionsStatus,
+      extensionsStatusRef
+    );
   };
 
   const getAccount = (addr: MaybeAccount) => {

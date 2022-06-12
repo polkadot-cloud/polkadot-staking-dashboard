@@ -36,11 +36,15 @@ export const Extension = (props: any) => {
   switch (status) {
     case 'connected':
       message = `${accountsConnected.length} account${
-        accountsConnected.length !== 1 && `s`
+        accountsConnected.length !== 1 ? `s` : ``
       } imported`;
       break;
-    case 'not_installed':
-      message = 'Not Installed';
+    case 'not_authenticated':
+      message = 'Not Authenticated. Authenticate and Try Again';
+      break;
+
+    case 'not_found':
+      message = 'Not Found. Install and Refresh';
       break;
     default:
       message = 'Not Connected';
