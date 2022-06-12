@@ -4,6 +4,7 @@
 import { MaybeAccount } from 'types';
 
 export interface ConnectContextInterface {
+  connectExtensionAccounts: (n: string) => void;
   getAccount: (account: MaybeAccount) => any;
   connectToAccount: (a: any) => void;
   disconnectFromAccount: () => void;

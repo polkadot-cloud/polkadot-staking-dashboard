@@ -63,11 +63,11 @@ export const ConnectProvider = ({
     };
   });
 
-  // re-sync extensions accounts on network switch
-  // do this if activeAccount is present.
-  // if activeAccount is present, and extensions have for some
-  // reason forgot the site, then all pop-ups will be summoned
-  // here.
+  /* re-sync extensions accounts on network switch
+   * do this if activeAccount is present.
+   * if activeAccount is present, and extensions have for some
+   * reason forgot the site, then all pop-ups will be summoned
+   * here. */
   useEffect(() => {
     const _activeAccount: any = localStorageOrDefault(
       `${network.name.toLowerCase()}_active_account`,
@@ -81,26 +81,23 @@ export const ConnectProvider = ({
         for (const unsub of _unsubs) {
           unsub();
         }
-        setTimeout(() => getExtensionsAccounts(), 200);
+        setTimeout(() => connectAllExtensions(), 200);
       })();
     }
   }, [extensions, network]);
 
-  /*
+  /* connectAllExtensions
    * Loop through extensions and connect to accounts.
+   * If `activeAccount` exists locally, we wait until all
+   * extensions are looped before connecting to it; there is
+   * no guarantee it still exists - must explicitly find it.
    */
-  const getExtensionsAccounts = async () => {
+  const connectAllExtensions = async () => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
     // get and format active account if present
-    let _activeAccount: any = localStorageOrDefault(
-      `${network.name.toLowerCase()}_active_account`,
-      null
-    );
-    if (_activeAccount !== null) {
-      _activeAccount = keyring.addFromAddress(_activeAccount).address;
-    }
+    const _activeAccount: any = getActiveAccountLocal();
 
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
@@ -110,9 +107,9 @@ export const ConnectProvider = ({
     extensions.forEach(async (_extension: any) => {
       extensionsCount++;
       const { extensionName } = _extension;
+
       try {
         const extension: Wallet | undefined = getWalletBySource(extensionName);
-
         if (extension !== undefined) {
           // summons extension popup
           await extension.enable(DAPP_NAME);
@@ -128,7 +125,6 @@ export const ConnectProvider = ({
                   account.address = address;
                   return account;
                 });
-
                 // connect to active account if found in extension
                 const activeAccountInWallet =
                   injected.find(
@@ -137,19 +133,16 @@ export const ConnectProvider = ({
                 if (activeAccountInWallet !== null) {
                   activeWalletAccount = activeAccountInWallet;
                 }
-
                 // set active account for network
                 if (extensionsCount === totalExtensions) {
                   connectToAccount(activeWalletAccount);
                 }
-
-                // remove accounts if they exist
-                let _accounts = [...accountsRef.current];
-
-                _accounts = _accounts.filter((_account: any) => {
-                  return _account.source !== extensionName;
-                });
-
+                // remove accounts if they already exist
+                let _accounts = [...accountsRef.current].filter(
+                  (_account: any) => {
+                    return _account.source !== extensionName;
+                  }
+                );
                 // concat accounts and store
                 _accounts = _accounts.concat(injected);
                 setStateWithRef(_accounts, setAccounts, accountsRef);
@@ -168,6 +161,65 @@ export const ConnectProvider = ({
         console.error('Extension failed to load');
       }
     });
+  };
+
+  /* connectExtensionAccounts
+   * Similar to the above but only connects to a single extension.
+   * This is invoked by the user by clicking on an extension.
+   * If activeAccount is not found here, it is simply ignored.
+   */
+  const connectExtensionAccounts = async (extensionName: string) => {
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+    const _activeAccount: any = getActiveAccountLocal();
+    try {
+      const extension: Wallet | undefined = getWalletBySource(extensionName);
+      if (extension !== undefined) {
+        // summons extension popup
+        await extension.enable(DAPP_NAME);
+
+        // subscribe to accounts
+        const _unsubscribe = await extension.subscribeAccounts(
+          (injected: any) => {
+            // abort if no accounts
+            if (injected.length) {
+              // reformat address to ensure correct format
+              injected.forEach(async (account: any) => {
+                const { address } = keyring.addFromAddress(account.address);
+                account.address = address;
+                return account;
+              });
+
+              // connect to active account if found in extension
+              const activeAccountInWallet =
+                injected.find((item: any) => item.address === _activeAccount) ??
+                null;
+              if (activeAccountInWallet !== null) {
+                connectToAccount(activeAccountInWallet);
+              }
+
+              // remove accounts if they already exist
+              let _accounts = [...accountsRef.current].filter(
+                (_account: any) => {
+                  return _account.source !== extensionName;
+                }
+              );
+              // concat accounts and store
+              _accounts = _accounts.concat(injected);
+              setStateWithRef(_accounts, setAccounts, accountsRef);
+            }
+          }
+        );
+        // update context state
+        setStateWithRef(
+          [...unsubscribeRef.current].concat(_unsubscribe),
+          setUnsubscribe,
+          unsubscribeRef
+        );
+      }
+    } catch (err) {
+      console.error('Extension failed to load');
+    }
   };
 
   const setActiveAccount = (address: string | null) => {
@@ -205,9 +257,25 @@ export const ConnectProvider = ({
     return activeAccountRef.current;
   };
 
+  const getActiveAccountLocal = () => {
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+
+    // get and format active account if present
+    let _activeAccount: any = localStorageOrDefault(
+      `${network.name.toLowerCase()}_active_account`,
+      null
+    );
+    if (_activeAccount !== null) {
+      _activeAccount = keyring.addFromAddress(_activeAccount).address;
+    }
+    return _activeAccount;
+  };
+
   return (
     <ConnectContext.Provider
       value={{
+        connectExtensionAccounts,
         getAccount,
         connectToAccount,
         disconnectFromAccount,
