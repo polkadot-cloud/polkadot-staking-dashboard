@@ -146,6 +146,17 @@ export const ConnectProvider = ({
                 // concat accounts and store
                 _accounts = _accounts.concat(injected);
                 setStateWithRef(_accounts, setAccounts, accountsRef);
+
+                // update extensions status
+                const _extensionsStatus = Object.assign(
+                  extensionsStatusRef.current,
+                  { [extensionName]: 'connected' }
+                );
+                setStateWithRef(
+                  _extensionsStatus,
+                  setExtensionsStatus,
+                  extensionsStatusRef
+                );
               }
             }
           );
@@ -207,6 +218,17 @@ export const ConnectProvider = ({
               // concat accounts and store
               _accounts = _accounts.concat(injected);
               setStateWithRef(_accounts, setAccounts, accountsRef);
+
+              // update extensions status
+              const _extensionsStatus = Object.assign(
+                extensionsStatusRef.current,
+                { [extensionName]: 'connected' }
+              );
+              setStateWithRef(
+                _extensionsStatus,
+                setExtensionsStatus,
+                extensionsStatusRef
+              );
             }
           }
         );

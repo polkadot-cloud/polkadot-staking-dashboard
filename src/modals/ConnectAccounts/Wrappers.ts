@@ -256,11 +256,17 @@ export const ExtensionWrapper = styled.button`
       flex-shrink: 1;
       overflow: hidden;
 
-      .name {
-        max-width: 100%;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+      > span {
+        margin-right: 1rem;
+        &.name {
+          max-width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        &.message {
+          opacity: 0.75;
+        }
       }
     }
 

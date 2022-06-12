@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { useConnect } from 'contexts/Connect';
@@ -13,14 +13,38 @@ export const Extension = (props: any) => {
   const { meta, setSection, flag } = props;
   const { extensionName, title } = meta;
 
-  const { extensionsStatus } = useConnect() as ConnectContextInterface;
+  const { extensionsStatus, connectExtensionAccounts, accounts } =
+    useConnect() as ConnectContextInterface;
   const status = extensionsStatus[extensionName];
 
   const handleClick = async () => {
     if (status === 'connected') {
       setSection(1);
+    } else {
+      (async () => {
+        await connectExtensionAccounts(extensionName);
+      })();
     }
   };
+
+  const accountsConnected = accounts.filter(
+    (a: any) => a.source === extensionName
+  );
+
+  // determine message to be displayed based on extension status.
+  let message;
+  switch (status) {
+    case 'connected':
+      message = `${accountsConnected.length} account${
+        accountsConnected.length !== 1 && `s`
+      } imported`;
+      break;
+    case 'not_installed':
+      message = 'Not Installed';
+      break;
+    default:
+      message = 'Not Connected';
+  }
 
   const size = '2rem';
 
@@ -39,11 +63,12 @@ export const Extension = (props: any) => {
           <PolkadotJSSVG width={size} height={size} />
         )}
         <span className="name">&nbsp; {title}</span>
+        <span className="message">{message}</span>
       </div>
       <div className="neutral">
         {flag && flag}
         <FontAwesomeIcon
-          icon={faChevronRight}
+          icon={status === 'connected' ? faAngleDoubleRight : faPlus}
           transform="shrink-0"
           className="icon"
         />
