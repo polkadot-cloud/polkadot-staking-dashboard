@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
@@ -17,12 +18,18 @@ export const Extension = (props: any) => {
     useConnect() as ConnectContextInterface;
   const status = extensionsStatus[extensionName];
 
+  // force re-render on click
+  const [increment, setIncrement] = useState(0);
+
   const handleClick = async () => {
     if (status === 'connected') {
       setSection(1);
     } else {
       (async () => {
         await connectExtensionAccounts(extensionName);
+
+        // force re-render to display error messages
+        setIncrement(increment + 1);
       })();
     }
   };
@@ -47,7 +54,8 @@ export const Extension = (props: any) => {
       message = 'Not Found. Install and Refresh';
       break;
     default:
-      message = 'Not Connected';
+      message =
+        status === 'no_accounts' ? 'No Accounts Connected' : 'Not Connected';
   }
 
   const size = '2rem';

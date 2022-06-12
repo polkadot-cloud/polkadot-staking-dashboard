@@ -69,13 +69,13 @@ export const ConnectProvider = ({
    * reason forgot the site, then all pop-ups will be summoned
    * here. */
   useEffect(() => {
-    const _activeAccount: any = localStorageOrDefault(
-      `${network.name.toLowerCase()}_active_account`,
-      null
+    const localExtensions: any = localStorageOrDefault(
+      `active_extensions`,
+      [],
+      true
     );
-
-    // get account if activeAccount && extensions exist
-    if (extensions.length && _activeAccount) {
+    // get account if extensions exist and local extensions exist (previously connected).
+    if (extensions.length && localExtensions.length) {
       (async () => {
         const _unsubs = unsubscribeRef.current;
         for (const unsub of _unsubs) {
@@ -87,6 +87,8 @@ export const ConnectProvider = ({
   }, [extensions, network]);
 
   /* connectAllExtensions
+   * Connects to extensions that already have been connected
+   * to and stored in localStorage.
    * Loop through extensions and connect to accounts.
    * If `activeAccount` exists locally, we wait until all
    * extensions are looped before connecting to it; there is
@@ -108,66 +110,74 @@ export const ConnectProvider = ({
       extensionsCount++;
       const { extensionName } = _extension;
 
-      try {
-        const extension: Wallet | undefined = getWalletBySource(extensionName);
-        if (extension !== undefined) {
-          // summons extension popup
-          await extension.enable(DAPP_NAME);
+      // connect if extension has been connected to previously
+      const localExtensions: any = localStorageOrDefault(
+        `active_extensions`,
+        [],
+        true
+      );
 
-          // subscribe to accounts
-          const _unsubscribe = await extension.subscribeAccounts(
-            (injected: any) => {
-              // abort if no accounts
-              if (injected.length) {
-                // reformat address to ensure correct format
-                injected.forEach(async (account: any) => {
-                  const { address } = keyring.addFromAddress(account.address);
-                  account.address = address;
-                  return account;
-                });
-                // connect to active account if found in extension
-                const activeAccountInWallet =
-                  injected.find(
-                    (item: any) => item.address === _activeAccount
-                  ) ?? null;
-                if (activeAccountInWallet !== null) {
-                  activeWalletAccount = activeAccountInWallet;
-                }
-                // set active account for network
-                if (extensionsCount === totalExtensions) {
-                  connectToAccount(activeWalletAccount);
-                }
-                // remove accounts if they already exist
-                let _accounts = [...accountsRef.current].filter(
-                  (_account: any) => {
-                    return _account.source !== extensionName;
-                  }
-                );
-                // concat accounts and store
-                _accounts = _accounts.concat(injected);
-                setStateWithRef(_accounts, setAccounts, accountsRef);
+      const foundExtensionLocally = localExtensions.find(
+        (l: any) => l === extensionName
+      );
+      if (foundExtensionLocally) {
+        try {
+          const extension: Wallet | undefined =
+            getWalletBySource(extensionName);
+          if (extension !== undefined) {
+            // summons extension popup
+            await extension.enable(DAPP_NAME);
 
+            // subscribe to accounts
+            const _unsubscribe = await extension.subscribeAccounts(
+              (injected: any) => {
                 // update extensions status
                 updateExtensionStatus(extensionName, 'connected');
+                // update local active extensions
+                addToLocalExtensions(extensionName);
+
+                // abort if no accounts
+                if (injected.length) {
+                  // reformat address to ensure correct format
+                  injected.forEach(async (account: any) => {
+                    const { address } = keyring.addFromAddress(account.address);
+                    account.address = address;
+                    return account;
+                  });
+                  // connect to active account if found in extension
+                  const activeAccountInWallet =
+                    injected.find(
+                      (item: any) => item.address === _activeAccount
+                    ) ?? null;
+                  if (activeAccountInWallet !== null) {
+                    activeWalletAccount = activeAccountInWallet;
+                  }
+                  // set active account for network
+                  if (extensionsCount === totalExtensions) {
+                    connectToAccount(activeWalletAccount);
+                  }
+                  // remove accounts if they already exist
+                  let _accounts = [...accountsRef.current].filter(
+                    (_account: any) => {
+                      return _account.source !== extensionName;
+                    }
+                  );
+                  // concat accounts and store
+                  _accounts = _accounts.concat(injected);
+                  setStateWithRef(_accounts, setAccounts, accountsRef);
+                }
               }
-            }
-          );
+            );
 
-          // update context state
-          setStateWithRef(
-            [...unsubscribeRef.current].concat(_unsubscribe),
-            setUnsubscribe,
-            unsubscribeRef
-          );
-        }
-      } catch (err) {
-        const _err = String(err);
-
-        if (_err.substring(0, 9) === 'AuthError') {
-          updateExtensionStatus(extensionName, 'not_authenticated');
-        }
-        if (_err.substring(0, 17) === 'NotInstalledError') {
-          updateExtensionStatus(extensionName, 'not_found');
+            // update context state
+            setStateWithRef(
+              [...unsubscribeRef.current].concat(_unsubscribe),
+              setUnsubscribe,
+              unsubscribeRef
+            );
+          }
+        } catch (err) {
+          handleExtensionError(extensionName, String(err));
         }
       }
     });
@@ -184,6 +194,7 @@ export const ConnectProvider = ({
     const _activeAccount: any = getActiveAccountLocal();
     try {
       const extension: Wallet | undefined = getWalletBySource(extensionName);
+
       if (extension !== undefined) {
         // summons extension popup
         await extension.enable(DAPP_NAME);
@@ -191,6 +202,11 @@ export const ConnectProvider = ({
         // subscribe to accounts
         const _unsubscribe = await extension.subscribeAccounts(
           (injected: any) => {
+            // update extensions status
+            updateExtensionStatus(extensionName, 'connected');
+            // update local active extensions
+            addToLocalExtensions(extensionName);
+
             // abort if no accounts
             if (injected.length) {
               // reformat address to ensure correct format
@@ -217,9 +233,6 @@ export const ConnectProvider = ({
               // concat accounts and store
               _accounts = _accounts.concat(injected);
               setStateWithRef(_accounts, setAccounts, accountsRef);
-
-              // update extensions status
-              updateExtensionStatus(extensionName, 'connected');
             }
           }
         );
@@ -231,14 +244,26 @@ export const ConnectProvider = ({
         );
       }
     } catch (err) {
-      const _err = String(err);
+      handleExtensionError(extensionName, String(err));
+    }
+  };
 
-      if (_err.substring(0, 9) === 'AuthError') {
-        updateExtensionStatus(extensionName, 'not_authenticated');
-      }
-      if (_err.substring(0, 17) === 'NotInstalledError') {
-        updateExtensionStatus(extensionName, 'not_found');
-      }
+  const handleExtensionError = (extensionName: string, err: string) => {
+    // authentication error (extension not enabled)
+    if (err.substring(0, 9) === 'AuthError') {
+      removeFromLocalExtensions(extensionName);
+      updateExtensionStatus(extensionName, 'not_authenticated');
+    }
+
+    // extension not found (does not exist)
+    if (err.substring(0, 17) === 'NotInstalledError') {
+      removeFromLocalExtensions(extensionName);
+      updateExtensionStatus(extensionName, 'not_found');
+    }
+
+    // general error (maybe enabled but no accounts trust app)
+    if (err.substring(0, 5) === 'Error') {
+      updateExtensionStatus(extensionName, 'no_accounts');
     }
   };
 
@@ -273,6 +298,26 @@ export const ConnectProvider = ({
       setExtensionsStatus,
       extensionsStatusRef
     );
+  };
+
+  const addToLocalExtensions = (extensionName: string) => {
+    const localExtensions: any = localStorageOrDefault(
+      `active_extensions`,
+      [],
+      true
+    );
+    localExtensions.push(extensionName);
+    localStorage.setItem('active_extensions', JSON.stringify(localExtensions));
+  };
+
+  const removeFromLocalExtensions = (extensionName: string) => {
+    let localExtensions: any = localStorageOrDefault(
+      `active_extensions`,
+      [],
+      true
+    );
+    localExtensions = localExtensions.filter((l: any) => l !== extensionName);
+    localStorage.setItem('active_extensions', JSON.stringify(localExtensions));
   };
 
   const getAccount = (addr: MaybeAccount) => {
