@@ -5,14 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
+import { useConnect } from 'contexts/Connect';
+import { ConnectContextInterface } from 'types/connect';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
   const { meta, setSection, flag } = props;
   const { extensionName, title } = meta;
 
+  const { extensionsStatus } = useConnect() as ConnectContextInterface;
+  const status = extensionsStatus[extensionName];
+
   const handleClick = async () => {
-    setSection(1);
+    if (status === 'connected') {
+      setSection(1);
+    }
   };
 
   const size = '2rem';

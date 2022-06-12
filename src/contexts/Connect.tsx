@@ -40,7 +40,11 @@ export const ConnectProvider = ({
   const activeAccountMetaRef = useRef(activeAccountMeta);
 
   // store available extensions in state
-  const [extensions, setExtensions]: any = useState([]);
+  const [extensions, setExtensions] = useState<any>([]);
+
+  // store extensions metadata in state
+  const [extensionsStatus, setExtensionsStatus] = useState<any>({});
+  const extensionsStatusRef = useRef<any>(extensionsStatus);
 
   // store unsubscribe handler for connected wallet
   const [unsubscribe, setUnsubscribe]: any = useState([]);
@@ -60,8 +64,18 @@ export const ConnectProvider = ({
   });
 
   // re-sync extensions accounts on network switch
+  // do this if activeAccount is present.
+  // if activeAccount is present, and extensions have for some
+  // reason forgot the site, then all pop-ups will be summoned
+  // here.
   useEffect(() => {
-    if (extensions.length) {
+    const _activeAccount: any = localStorageOrDefault(
+      `${network.name.toLowerCase()}_active_account`,
+      null
+    );
+
+    // get account if activeAccount && extensions exist
+    if (extensions.length && _activeAccount) {
       (async () => {
         const _unsubs = unsubscribeRef.current;
         for (const unsub of _unsubs) {
@@ -72,6 +86,9 @@ export const ConnectProvider = ({
     }
   }, [extensions, network]);
 
+  /*
+   * Loop through extensions and connect to accounts.
+   */
   const getExtensionsAccounts = async () => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
@@ -92,14 +109,11 @@ export const ConnectProvider = ({
 
     extensions.forEach(async (_extension: any) => {
       extensionsCount++;
-
       const { extensionName } = _extension;
       try {
         const extension: Wallet | undefined = getWalletBySource(extensionName);
 
-        if (extension === undefined) {
-          throw new Error('extension not found');
-        } else {
+        if (extension !== undefined) {
           // summons extension popup
           await extension.enable(DAPP_NAME);
 
@@ -142,6 +156,7 @@ export const ConnectProvider = ({
               }
             }
           );
+
           // update context state
           setStateWithRef(
             [...unsubscribeRef.current].concat(_unsubscribe),
@@ -198,6 +213,7 @@ export const ConnectProvider = ({
         disconnectFromAccount,
         getActiveAccount,
         extensions,
+        extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeAccountMeta: activeAccountMetaRef.current,

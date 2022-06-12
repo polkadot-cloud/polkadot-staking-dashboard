@@ -9,6 +9,7 @@ export interface ConnectContextInterface {
   disconnectFromAccount: () => void;
   getActiveAccount: () => any;
   extensions: any;
+  extensionsStatus: any;
   accounts: any;
   activeAccount: string | null;
   activeAccountMeta: any;
