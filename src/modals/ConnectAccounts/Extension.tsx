@@ -42,9 +42,9 @@ export const Extension = (props: any) => {
   let message;
   switch (status) {
     case 'connected':
-      message = `${accountsConnected.length} account${
+      message = `${accountsConnected.length} Account${
         accountsConnected.length !== 1 ? `s` : ``
-      } imported`;
+      } Imported`;
       break;
     case 'not_authenticated':
       message = 'Not Authenticated. Authenticate and Try Again';
@@ -55,7 +55,7 @@ export const Extension = (props: any) => {
       break;
     default:
       message =
-        status === 'no_accounts' ? 'No Accounts Connected' : 'Not Connected';
+        status === 'no_accounts' ? 'No Accounts Imported' : 'Not Connected';
   }
 
   const size = '2rem';
