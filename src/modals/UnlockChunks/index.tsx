@@ -7,8 +7,9 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ConnectContextInterface } from 'types/connect';
+import { ActivePoolContextState } from 'types/pools';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';
@@ -19,7 +20,7 @@ export const UnlockChunks = () => {
   const { config, setModalHeight } = useModal();
   const { target } = config || {};
   const { getAccountLedger }: any = useBalances();
-  const { getPoolUnlocking } = usePools();
+  const { getPoolUnlocking } = useActivePool() as ActivePoolContextState;
 
   // get the unlocking per target
   const _getUnlocking = () => {

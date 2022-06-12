@@ -8,11 +8,11 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { usePools } from 'contexts/Pools';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { PoolListProvider, usePoolList } from './context';
 
 export const PoolListInner = (props: any) => {
@@ -23,7 +23,7 @@ export const PoolListInner = (props: any) => {
 
   const { isReady } = useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
-  const { fetchPoolsMetaBatch }: any = usePools();
+  const { fetchPoolsMetaBatch }: any = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   // ---
 

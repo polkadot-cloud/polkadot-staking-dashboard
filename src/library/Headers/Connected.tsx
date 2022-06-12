@@ -6,19 +6,20 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
+import { ActivePoolContextState } from 'types/pools';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
   const { hasController, getControllerNotImported } = useStaking();
   const { getBondedAccount }: any = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const { activeBondedPool } = usePools();
+  const { activeBondedPool } = useActivePool() as ActivePoolContextState;
   const { isSyncing } = useUi();
 
   let poolAddress = '';
@@ -36,7 +37,11 @@ export const Connected = () => {
             <Account
               canClick
               onClick={() => {
-                openModalWith('ConnectAccounts', {}, 'small');
+                openModalWith(
+                  'ConnectAccounts',
+                  { section: accounts.length ? 1 : 0 },
+                  'large'
+                );
               }}
               value={activeAccount}
               label={hasController() && !isSyncing ? 'Stash' : undefined}

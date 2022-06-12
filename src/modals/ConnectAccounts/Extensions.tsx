@@ -16,7 +16,7 @@ export const Extensions = forwardRef((props: any, ref: any) => {
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
         <div className="head">
-          <h2>Select Wallet</h2>
+          <h1>Extensions</h1>
         </div>
 
         {extensions.map((extension: any, i: number) => {

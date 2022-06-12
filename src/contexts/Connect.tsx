@@ -40,16 +40,15 @@ export const ConnectProvider = ({
   const activeAccountMetaRef = useRef(activeAccountMeta);
 
   // store available extensions in state
-  const [extensions, setExtensions]: any = useState([]);
+  const [extensions, setExtensions] = useState<any>([]);
+
+  // store extensions metadata in state
+  const [extensionsStatus, setExtensionsStatus] = useState<any>({});
+  const extensionsStatusRef = useRef<any>(extensionsStatus);
 
   // store unsubscribe handler for connected wallet
   const [unsubscribe, setUnsubscribe]: any = useState([]);
   const unsubscribeRef: any = useRef(unsubscribe);
-
-  // store the currently active wallet
-  const [activeExtension, _setActiveExtension] = useState(
-    localStorageOrDefault('active_extension', null)
-  );
 
   // initialise extensions
   useEffect(() => {
@@ -64,31 +63,43 @@ export const ConnectProvider = ({
     };
   });
 
-  // re-sync extensions on network switch
+  /* re-sync extensions accounts on network switch
+   * do this if activeAccount is present.
+   * if activeAccount is present, and extensions have for some
+   * reason forgot the site, then all pop-ups will be summoned
+   * here. */
   useEffect(() => {
-    if (extensions.length) {
+    const localExtensions: any = localStorageOrDefault(
+      `active_extensions`,
+      [],
+      true
+    );
+    // get account if extensions exist and local extensions exist (previously connected).
+    if (extensions.length && localExtensions.length) {
       (async () => {
         const _unsubs = unsubscribeRef.current;
         for (const unsub of _unsubs) {
           unsub();
         }
-        setTimeout(() => getExtensionsAccounts(), 200);
+        setTimeout(() => connectAllExtensions(), 200);
       })();
     }
   }, [extensions, network]);
 
-  const getExtensionsAccounts = async () => {
+  /* connectAllExtensions
+   * Connects to extensions that already have been connected
+   * to and stored in localStorage.
+   * Loop through extensions and connect to accounts.
+   * If `activeAccount` exists locally, we wait until all
+   * extensions are looped before connecting to it; there is
+   * no guarantee it still exists - must explicitly find it.
+   */
+  const connectAllExtensions = async () => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
     // get and format active account if present
-    let _activeAccount: any = localStorageOrDefault(
-      `${network.name.toLowerCase()}_active_account`,
-      null
-    );
-    if (_activeAccount !== null) {
-      _activeAccount = keyring.addFromAddress(_activeAccount).address;
-    }
+    const _activeAccount: any = getActiveAccountLocal();
 
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
@@ -97,76 +108,163 @@ export const ConnectProvider = ({
 
     extensions.forEach(async (_extension: any) => {
       extensionsCount++;
-
       const { extensionName } = _extension;
-      try {
-        const extension: Wallet | undefined = getWalletBySource(extensionName);
 
-        if (extension === undefined) {
-          throw new Error('extension not found');
-        } else {
-          // summons extension popup
-          await extension.enable(DAPP_NAME);
+      // connect if extension has been connected to previously
+      const localExtensions: any = localStorageOrDefault(
+        `active_extensions`,
+        [],
+        true
+      );
 
-          // subscribe to accounts
-          const _unsubscribe = await extension.subscribeAccounts(
-            (injected: any) => {
-              // abort if no accounts
-              if (injected.length) {
-                // reformat address to ensure correct format
-                injected.forEach(async (account: any) => {
-                  const { address } = keyring.addFromAddress(account.address);
-                  account.address = address;
-                  return account;
-                });
+      const foundExtensionLocally = localExtensions.find(
+        (l: any) => l === extensionName
+      );
+      if (foundExtensionLocally) {
+        try {
+          const extension: Wallet | undefined =
+            getWalletBySource(extensionName);
+          if (extension !== undefined) {
+            // summons extension popup
+            await extension.enable(DAPP_NAME);
 
-                // connect to active account if found in extension
-                const activeAccountInWallet =
-                  injected.find(
-                    (item: any) => item.address === _activeAccount
-                  ) ?? null;
-                if (activeAccountInWallet !== null) {
-                  activeWalletAccount = activeAccountInWallet;
+            // subscribe to accounts
+            const _unsubscribe = await extension.subscribeAccounts(
+              (injected: any) => {
+                // update extensions status
+                updateExtensionStatus(extensionName, 'connected');
+                // update local active extensions
+                addToLocalExtensions(extensionName);
+
+                // abort if no accounts
+                if (injected.length) {
+                  // reformat address to ensure correct format
+                  injected.forEach(async (account: any) => {
+                    const { address } = keyring.addFromAddress(account.address);
+                    account.address = address;
+                    return account;
+                  });
+                  // connect to active account if found in extension
+                  const activeAccountInWallet =
+                    injected.find(
+                      (item: any) => item.address === _activeAccount
+                    ) ?? null;
+                  if (activeAccountInWallet !== null) {
+                    activeWalletAccount = activeAccountInWallet;
+                  }
+                  // set active account for network
+                  if (extensionsCount === totalExtensions) {
+                    connectToAccount(activeWalletAccount);
+                  }
+                  // remove accounts if they already exist
+                  let _accounts = [...accountsRef.current].filter(
+                    (_account: any) => {
+                      return _account.source !== extensionName;
+                    }
+                  );
+                  // concat accounts and store
+                  _accounts = _accounts.concat(injected);
+                  setStateWithRef(_accounts, setAccounts, accountsRef);
                 }
-
-                // set active account for network
-                if (extensionsCount === totalExtensions) {
-                  connectToAccount(activeWalletAccount);
-                }
-
-                // remove accounts if they exist
-                let _accounts = [...accountsRef.current];
-
-                _accounts = _accounts.filter((_account: any) => {
-                  return _account.source !== extensionName;
-                });
-
-                // concat accounts and store
-                _accounts = _accounts.concat(injected);
-                setStateWithRef(_accounts, setAccounts, accountsRef);
               }
-            }
-          );
-          // update context state
-          setStateWithRef(
-            [...unsubscribeRef.current].concat(_unsubscribe),
-            setUnsubscribe,
-            unsubscribeRef
-          );
+            );
+
+            // update context state
+            setStateWithRef(
+              [...unsubscribeRef.current].concat(_unsubscribe),
+              setUnsubscribe,
+              unsubscribeRef
+            );
+          }
+        } catch (err) {
+          handleExtensionError(extensionName, String(err));
         }
-      } catch (err) {
-        console.error('Extension failed to load');
       }
     });
   };
 
-  const setActiveExtension = (wallet: any) => {
-    if (wallet === null) {
-      localStorage.removeItem('active_extension');
-    } else {
-      localStorage.setItem('active_extension', wallet);
+  /* connectExtensionAccounts
+   * Similar to the above but only connects to a single extension.
+   * This is invoked by the user by clicking on an extension.
+   * If activeAccount is not found here, it is simply ignored.
+   */
+  const connectExtensionAccounts = async (extensionName: string) => {
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+    const _activeAccount: any = getActiveAccountLocal();
+    try {
+      const extension: Wallet | undefined = getWalletBySource(extensionName);
+
+      if (extension !== undefined) {
+        // summons extension popup
+        await extension.enable(DAPP_NAME);
+
+        // subscribe to accounts
+        const _unsubscribe = await extension.subscribeAccounts(
+          (injected: any) => {
+            // update extensions status
+            updateExtensionStatus(extensionName, 'connected');
+            // update local active extensions
+            addToLocalExtensions(extensionName);
+
+            // abort if no accounts
+            if (injected.length) {
+              // reformat address to ensure correct format
+              injected.forEach(async (account: any) => {
+                const { address } = keyring.addFromAddress(account.address);
+                account.address = address;
+                return account;
+              });
+
+              // connect to active account if found in extension
+              const activeAccountInWallet =
+                injected.find((item: any) => item.address === _activeAccount) ??
+                null;
+              if (activeAccountInWallet !== null) {
+                connectToAccount(activeAccountInWallet);
+              }
+
+              // remove accounts if they already exist
+              let _accounts = [...accountsRef.current].filter(
+                (_account: any) => {
+                  return _account.source !== extensionName;
+                }
+              );
+              // concat accounts and store
+              _accounts = _accounts.concat(injected);
+              setStateWithRef(_accounts, setAccounts, accountsRef);
+            }
+          }
+        );
+        // update context state
+        setStateWithRef(
+          [...unsubscribeRef.current].concat(_unsubscribe),
+          setUnsubscribe,
+          unsubscribeRef
+        );
+      }
+    } catch (err) {
+      handleExtensionError(extensionName, String(err));
     }
-    _setActiveExtension(wallet);
+  };
+
+  const handleExtensionError = (extensionName: string, err: string) => {
+    // authentication error (extension not enabled)
+    if (err.substring(0, 9) === 'AuthError') {
+      removeFromLocalExtensions(extensionName);
+      updateExtensionStatus(extensionName, 'not_authenticated');
+    }
+
+    // extension not found (does not exist)
+    if (err.substring(0, 17) === 'NotInstalledError') {
+      removeFromLocalExtensions(extensionName);
+      updateExtensionStatus(extensionName, 'not_found');
+    }
+
+    // general error (maybe enabled but no accounts trust app)
+    if (err.substring(0, 5) === 'Error') {
+      updateExtensionStatus(extensionName, 'no_accounts');
+    }
   };
 
   const setActiveAccount = (address: string | null) => {
@@ -192,6 +290,36 @@ export const ConnectProvider = ({
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
+  const updateExtensionStatus = (extensionName: string, status: string) => {
+    setStateWithRef(
+      Object.assign(extensionsStatusRef.current, {
+        [extensionName]: status,
+      }),
+      setExtensionsStatus,
+      extensionsStatusRef
+    );
+  };
+
+  const addToLocalExtensions = (extensionName: string) => {
+    const localExtensions: any = localStorageOrDefault(
+      `active_extensions`,
+      [],
+      true
+    );
+    localExtensions.push(extensionName);
+    localStorage.setItem('active_extensions', JSON.stringify(localExtensions));
+  };
+
+  const removeFromLocalExtensions = (extensionName: string) => {
+    let localExtensions: any = localStorageOrDefault(
+      `active_extensions`,
+      [],
+      true
+    );
+    localExtensions = localExtensions.filter((l: any) => l !== extensionName);
+    localStorage.setItem('active_extensions', JSON.stringify(localExtensions));
+  };
+
   const getAccount = (addr: MaybeAccount) => {
     const accs = accountsRef.current.filter((acc: any) => acc.address === addr);
     if (accs.length) {
@@ -204,16 +332,31 @@ export const ConnectProvider = ({
     return activeAccountRef.current;
   };
 
+  const getActiveAccountLocal = () => {
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+
+    // get and format active account if present
+    let _activeAccount: any = localStorageOrDefault(
+      `${network.name.toLowerCase()}_active_account`,
+      null
+    );
+    if (_activeAccount !== null) {
+      _activeAccount = keyring.addFromAddress(_activeAccount).address;
+    }
+    return _activeAccount;
+  };
+
   return (
     <ConnectContext.Provider
       value={{
+        connectExtensionAccounts,
         getAccount,
         connectToAccount,
         disconnectFromAccount,
-        setActiveExtension,
         getActiveAccount,
         extensions,
-        activeExtension,
+        extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeAccountMeta: activeAccountMetaRef.current,

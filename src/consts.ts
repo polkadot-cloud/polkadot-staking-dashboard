@@ -1,6 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { NodeEndpoints } from 'types';
+import { stringToU8a } from '@polkadot/util';
+
 /*
  * SVGs
  */
@@ -9,8 +12,6 @@ import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
 import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
-
-import { NodeEndpoints } from 'types';
 
 /*
  * Global Constants
@@ -24,6 +25,16 @@ export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
 export const DEFAULT_NETWORK = 'polkadot';
 export const ACTIVE_NETWORK = 'polkadot';
 
+/*
+ * Data Structure Helpers
+ */
+export const EMPTY_H256 = new Uint8Array(32);
+export const MOD_PREFIX = stringToU8a('modl');
+export const U32_OPTS = { bitLength: 32, isLe: true };
+
+/*
+ * Network Configuration
+ */
 export const NODE_ENDPOINTS: NodeEndpoints = {
   polkadot: {
     name: 'Polkadot',
@@ -138,7 +149,6 @@ export const LIST_ITEMS_PER_BATCH = 30;
  * Third party API keys and endpoints
  */
 
-// TODO: check with Subscan should API key be public
 export const API_SUBSCAN_KEY = 'd37149339f64775155a82a53f4253b27';
 
 export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3';

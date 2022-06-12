@@ -21,7 +21,7 @@ html {
 
 @media(min-width: 1600px) {
   html {
-    font-size: 14px;
+    font-size: 13.5px;
   }
 }
 
@@ -35,7 +35,7 @@ body {
 
 h1 {
   font-weight: normal;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-variation-settings: 'wght' 600;
   margin: 0 0 0.4rem 0;
 }
