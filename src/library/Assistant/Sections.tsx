@@ -28,7 +28,7 @@ export const Sections = (props: any) => {
   const { network } = useApi() as APIContextInterface;
   const { pageMeta } = props;
 
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;
 
@@ -37,7 +37,11 @@ export const Sections = (props: any) => {
     // close assistant
     assistant.toggle();
     // initialise connect
-    openModalWith('ConnectAccounts', {}, 'small');
+    openModalWith(
+      'ConnectAccounts',
+      { section: accounts.length ? 1 : 0 },
+      'large'
+    );
   };
 
   // resources to display

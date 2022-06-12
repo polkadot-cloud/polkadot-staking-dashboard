@@ -11,8 +11,9 @@ import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BondOptionsInterface } from 'types/balances';
+import { ActivePoolContextState } from 'types/pools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
@@ -27,7 +28,7 @@ export const UnbondAll = (props: any) => {
   const { getControllerNotImported } = useStaking();
   const { getBondOptions, getBondedAccount, getAccountNominations }: any =
     useBalances();
-  const { getPoolBondOptions } = usePools();
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { target } = config;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);

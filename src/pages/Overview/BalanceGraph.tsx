@@ -4,12 +4,12 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { planckToUnit, humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber, planckBnToUnit } from 'Utils';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
@@ -18,6 +18,7 @@ import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { ConnectContextInterface } from 'types/connect';
 import { BondOptionsInterface } from 'types/balances';
+import { ActivePoolContextState } from 'types/pools';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -36,7 +37,7 @@ export const BalanceGraph = () => {
     totalUnlocking,
     totalUnlocked,
   }: BondOptionsInterface = getBondOptions(activeAccount) || {};
-  const { getPoolBondOptions } = usePools();
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 
   const poolBondOpions = getPoolBondOptions(activeAccount);
   const unlocking = poolBondOpions.totalUnlocking

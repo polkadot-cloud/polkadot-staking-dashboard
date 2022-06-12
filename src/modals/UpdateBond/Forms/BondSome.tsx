@@ -10,7 +10,8 @@ import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { ActivePoolContextState } from 'types/pools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondOptionsInterface } from 'types/balances';
 import { NotesWrapper } from '../../Wrappers';
@@ -24,7 +25,7 @@ export const BondSome = (props: any) => {
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondOptions }: any = useBalances();
-  const { getPoolBondOptions } = usePools();
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { target } = config;
 
   const stakeBondOptions: BondOptionsInterface = getBondOptions(activeAccount);
