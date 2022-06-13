@@ -76,7 +76,7 @@ export const SubscanProvider = ({
     if (res.message === 'Success') {
       if (getServices().includes('subscan')) {
         if (res.data.list !== null) {
-          setPayouts(res.data.list.reverse());
+          setPayouts(res.data.list);
         } else {
           setPayouts([]);
         }
