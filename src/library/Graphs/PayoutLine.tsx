@@ -12,7 +12,6 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { planckToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
@@ -32,7 +31,6 @@ ChartJS.register(
 export const PayoutLine = (props: any) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
-  const { units } = network;
   const { payouts, height, background } = props;
 
   const options = {
@@ -99,7 +97,7 @@ export const PayoutLine = (props: any) => {
         label: 'Price',
         // data: empty_data,
         data: payouts.map((item: any, index: number) => {
-          return planckToUnit(item.amount, units);
+          return item.amount;
         }),
         borderColor: (context: any) => {
           const { chart } = context;

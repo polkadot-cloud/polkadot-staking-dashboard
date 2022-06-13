@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import moment from 'moment';
 import { StatBoxList } from 'library/StatBoxList';
 import {
@@ -14,10 +15,11 @@ import { useConnect } from 'contexts/Connect';
 import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
-import { planckToUnit } from 'Utils';
 import { GRAPH_HEIGHT } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { prefillToMaxDays, calculatePayoutsByDay } from 'library/Graphs/Utils';
+import { planckBnToUnit } from 'Utils';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominators';
 import SupplyStakedStatBox from './Stats/SupplyStaked';
@@ -32,22 +34,19 @@ export const Overview = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { payouts }: any = useSubscan();
 
-  // get last payout
-  let lastPayout: any = null;
-  if (payouts.length > 0) {
-    const _last = payouts[payouts.length - 1];
-    lastPayout = {
-      amount: planckToUnit(_last.amount, units),
-      block_timestamp: `${_last.block_timestamp}`,
-    };
-  }
+  // generate payouts by day data
+  const maxDays = 21;
+  let payoutsByDay = prefillToMaxDays(
+    calculatePayoutsByDay(payouts, maxDays, units),
+    maxDays
+  );
 
-  // payouts thresholds
-  let payoutsEnd = payouts.length;
-  payoutsEnd = payoutsEnd < 0 ? 0 : payoutsEnd;
+  // reverse payouts: most recent last
+  payoutsByDay = payoutsByDay.reverse();
 
-  let payoutsStart = payoutsEnd - 10;
-  payoutsStart = payoutsStart < 0 ? 0 : payoutsStart;
+  // get most recent payout
+  const lastPayout =
+    payouts.find((p: any) => new BN(p.amount).gt(new BN(0))) ?? null;
 
   return (
     <>
@@ -70,7 +69,9 @@ export const Overview = () => {
             <div className="head">
               <h4>Recent Payouts</h4>
               <h2>
-                {lastPayout === null ? 0 : lastPayout.amount}
+                {lastPayout === null
+                  ? 0
+                  : planckBnToUnit(new BN(lastPayout.amount), units)}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">
@@ -80,10 +81,7 @@ export const Overview = () => {
                 </span>
               </h2>
             </div>
-            <Payouts
-              account={activeAccount}
-              payouts={payouts.slice(payoutsStart, payoutsEnd)}
-            />
+            <Payouts account={activeAccount} payouts={payoutsByDay} />
           </GraphWrapper>
         </RowPrimaryWrapper>
       </PageRowWrapper>

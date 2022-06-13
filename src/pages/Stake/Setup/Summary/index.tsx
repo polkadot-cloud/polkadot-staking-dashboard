@@ -8,7 +8,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
-import { Wrapper as ButtonWrapper } from 'library/Button';
+import { Button } from 'library/Button';
 import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { APIContextInterface } from 'types/api';
@@ -114,16 +114,23 @@ export const Summary = (props: any) => {
             <div>{estimatedFee === null ? '...' : `${estimatedFee}`}</div>
           </section>
         </SummaryWrapper>
-        <div style={{ flex: 1, width: '100%', display: 'flex' }}>
-          <ButtonWrapper
+        <div
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'end',
+          }}
+        >
+          <Button
             margin="0"
             padding="0.75rem 1.2rem"
             fontSize="1.1rem"
             onClick={() => submitTx()}
             disabled={submitting}
-          >
-            Start Staking
-          </ButtonWrapper>
+            title="Start Staking"
+          />
         </div>
       </MotionContainer>
     </CardWrapper>

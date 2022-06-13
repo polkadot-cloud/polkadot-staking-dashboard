@@ -14,7 +14,6 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { planckToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
@@ -47,7 +46,7 @@ export const PayoutBar = (props: any) => {
         label: 'Price',
         // data: empty_data,
         data: payouts.map((item: any, index: number) => {
-          return planckToUnit(item.amount, units);
+          return item.amount;
         }),
         borderColor: defaultThemes.graphs.colors[0][mode],
         backgroundColor: (context: any) => {
@@ -59,7 +58,7 @@ export const PayoutBar = (props: any) => {
           return getGradient(ctx, chartArea);
         },
         pointRadius: 0,
-        borderRadius: 5,
+        borderRadius: 3,
       },
     ],
   };
@@ -67,7 +66,7 @@ export const PayoutBar = (props: any) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.28,
+    barPercentage: 0.4,
     maxBarThickness: 11,
     scales: {
       x: {

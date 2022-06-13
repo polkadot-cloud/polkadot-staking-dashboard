@@ -16,17 +16,25 @@ import { SubscanButton } from 'library/SubscanButton';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PageTitle } from 'library/PageTitle';
-import { useSize, formatSize, prefillPayoutGraph } from 'library/Graphs/Utils';
+import {
+  useSize,
+  formatSize,
+  prefillToMaxDays,
+  calculatePayoutsByDay,
+} from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
+  const { network } = useApi() as APIContextInterface;
   const { payouts }: any = useSubscan();
   const { services }: any = useUi();
-
+  const { units } = network;
   const { page } = props;
   const { title } = page;
 
@@ -34,11 +42,21 @@ export const Payouts = (props: PageProps) => {
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 250);
 
-  // pre-fill missing items if payouts < 60
-  const payoutsGraph = prefillPayoutGraph([...payouts], 60);
+  // generate payouts by day data
+  const maxDays = 60;
+  let payoutsByDay = prefillToMaxDays(
+    calculatePayoutsByDay(payouts, maxDays, units),
+    maxDays
+  );
 
-  // take payouts in most-recent order
-  const payoutsList = [...payouts].reverse().slice(0, 60);
+  // reverse payouts: most recent last
+  payoutsByDay = payoutsByDay.reverse();
+
+  // take non-zero payouts in most-recent order
+  const payoutsList = [...payouts.filter((p: any) => p.amount > 0)].slice(
+    0,
+    maxDays
+  );
 
   return (
     <>
@@ -87,8 +105,8 @@ export const Payouts = (props: PageProps) => {
                 position: 'absolute',
               }}
             >
-              <PayoutBar payouts={payoutsGraph} height="120px" />
-              <PayoutLine payouts={payoutsGraph} height="70px" />
+              <PayoutBar payouts={payoutsByDay} height="120px" />
+              <PayoutLine payouts={payoutsByDay} height="70px" />
             </div>
           </div>
         </GraphWrapper>
