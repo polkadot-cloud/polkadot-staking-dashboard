@@ -9,12 +9,14 @@ import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { BondOptionsInterface } from 'types/balances';
+
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -32,26 +34,31 @@ export const UnbondSome = (props: any) => {
   const { target } = config;
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
-  const { minNominatorBond } = staking;
-  const stakeBondOptions = getBondOptions(activeAccount);
+  const { minNominatorBond: minNominatorBondBn } = staking;
+  const stakeBondOptions: BondOptionsInterface = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
-  const { minJoinBond } = stats;
+  const { minJoinBond: minJoinBondBn } = stats;
   const isStaking = target === 'stake';
   const isPooling = target === 'pool';
 
-  const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
-  const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { freeToUnbond: freeToUnbondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
 
+  // convert BN values to number
+  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
+  const minJoinBond = planckBnToUnit(minJoinBondBn, units);
+  const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
   // local bond value
-  const [bond, setBond] = useState(freeToBond);
+  const [bond, setBond] = useState({ bond: freeToUnbond });
 
   // bond valid
   const [bondValid, setBondValid]: any = useState(false);
 
   // get the max amount available to unbond
   const freeToUnbondToMin = isPooling
-    ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
-    : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
+    ? Math.max(freeToUnbond - minJoinBond, 0)
+    : Math.max(freeToUnbond - minNominatorBond, 0);
 
   // unbond some validation
   const isValid = isPooling ? true : !controllerNotImported;
@@ -80,7 +87,7 @@ export const UnbondSome = (props: any) => {
       return _tx;
     }
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
+    const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
     // determine _tx
     if (isPooling) {

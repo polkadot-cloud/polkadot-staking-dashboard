@@ -21,7 +21,6 @@ export const BondInputWithFeedback = (props: any) => {
   // input props
   const { target, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
-
   // functional props
   const setters = props.setters ?? [];
   const listenIsValid: any = props.listenIsValid ?? (() => {});
@@ -33,18 +32,13 @@ export const BondInputWithFeedback = (props: any) => {
     useBalances();
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { stats } = usePoolsConfig() as PoolsConfigContextState;
-  const { minJoinBond } = stats;
+  const { minJoinBond: minJoinBondBn } = stats;
 
   const controller = getBondedAccount(activeAccount);
   const ledger = getAccountLedger(activeAccount);
   const { units } = network;
-  const { active } = ledger;
-  const { minNominatorBond } = staking;
-
-  const minBondBase =
-    target === 'pool'
-      ? planckBnToUnit(minJoinBond, units)
-      : planckBnToUnit(minNominatorBond, units);
+  const { active: activeBn } = ledger;
+  const { minNominatorBond: minNominatorBondBn } = staking;
 
   // get bond options for either staking or pooling.
   const options =
@@ -52,20 +46,31 @@ export const BondInputWithFeedback = (props: any) => {
       ? getPoolBondOptions(activeAccount)
       : getBondOptions(activeAccount);
 
-  const { freeToBond, freeToUnbond, active: poolsActive } = options;
+  const {
+    freeToBond: freeToBondBn,
+    freeToUnbond: freeToUnbondBn,
+    active: poolsActiveBn,
+  } = options;
+  // Convert BN values to number
+  const minJoinBond = planckBnToUnit(minJoinBondBn, units);
+  const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
+  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
+
+  const minBondBase = target === 'pool' ? minJoinBond : minNominatorBond;
+
+  // get the actively bonded amount.
+  const activeBase =
+    target === 'pool'
+      ? planckBnToUnit(poolsActiveBn, units)
+      : planckBnToUnit(activeBn, units);
 
   // unbond amount to `minNominatorBond` threshold for staking,
   // and unbond amount to `minJoinBond` for pools.
   const freeToUnbondToMin =
     target === 'pool'
-      ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
-      : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
-
-  // get the actively bonded amount.
-  const activeBase =
-    target === 'pool'
-      ? planckBnToUnit(poolsActive, units)
-      : planckBnToUnit(active, units);
+      ? Math.max(freeToUnbond - minJoinBond, 0)
+      : Math.max(freeToUnbond - minNominatorBond, 0);
 
   // store errors
   const [errors, setErrors]: any = useState([]);

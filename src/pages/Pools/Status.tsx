@@ -123,7 +123,7 @@ export const Status = () => {
         default:
           _buttons = [];
       }
-    } else if (active?.gt(0)) {
+    } else if (active?.gtn(0)) {
       _label = `Active in Pool ${membership.poolId}`;
       _buttons = [leaveBtn];
     } else {
@@ -145,7 +145,7 @@ export const Status = () => {
         withUnit: unit,
       })}`
     : `0 ${unit}`;
-  const buttonsRewards = unclaimedReward.toNumber()
+  const buttonsRewards = unclaimedReward.gtn(0)
     ? [
         {
           title: 'Claim',

@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { planckToUnit, humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber, planckBnToUnit } from 'Utils';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
@@ -17,6 +17,7 @@ import { usePrices } from 'library/Hooks/usePrices';
 import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { ConnectContextInterface } from 'types/connect';
+import { BondOptionsInterface } from 'types/balances';
 import { ActivePoolContextState } from 'types/pools';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -35,33 +36,30 @@ export const BalanceGraph = () => {
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
-  }: any = getBondOptions(activeAccount) || {};
+  }: BondOptionsInterface = getBondOptions(activeAccount) || {};
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 
   const poolBondOpions = getPoolBondOptions(activeAccount);
-  const unlocking =
-    poolBondOpions.totalUnlocking +
-    poolBondOpions.totalUnlocked +
-    totalUnlocked +
-    totalUnlocking;
+  const unlocking = poolBondOpions.totalUnlocking
+    .add(poolBondOpions.totalUnlocked)
+    .add(totalUnlocked)
+    .add(totalUnlocking);
 
   let { free } = balance;
 
   // get user's total free balance
-  const freeBase = planckToUnit(free.toNumber(), units);
+  const freeBase = planckBnToUnit(free, units);
   // convert balance to fiat value
   const freeBalance = Number(freeBase * prices.lastPrice).toFixed(2);
-  // get user's pool balance
-  const poolBalance = planckBnToUnit(poolBondOpions.active, units);
 
   // convert to currency unit
-  free = planckToUnit(free.toNumber(), units);
+  free = planckBnToUnit(free, units);
 
   // graph data
-  let graphStaked = staked;
-  let graphFreeToStake = freeToStake;
-  let graphInPool = poolBalance;
-  let graphUnlocking = unlocking;
+  let graphStaked = planckBnToUnit(staked, units);
+  let graphFreeToStake = planckBnToUnit(freeToStake, units);
+  let graphInPool = planckBnToUnit(poolBondOpions.active, units);
+  let graphUnlocking = planckBnToUnit(unlocking, units);
 
   let zeroBalance = false;
   if (graphStaked === 0 && graphFreeToStake === 0) {

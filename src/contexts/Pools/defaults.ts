@@ -27,10 +27,11 @@ export const poolMembership = null;
 
 export const poolBondOptions = {
   active: new BN(0),
-  freeToBond: 0,
-  freeToUnbond: 0,
-  totalUnlocking: 0,
-  totalUnlocked: 0,
+  freeToBond: new BN(0),
+  freeToUnbond: new BN(0),
+  totalUnlocking: new BN(0),
+  totalUnlocked: new BN(0),
+  totalPossibleBond: new BN(0),
   totalUnlockChuncks: 0,
 };
 
