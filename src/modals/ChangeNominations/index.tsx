@@ -124,7 +124,7 @@ export const ChangeNominations = () => {
       >
         {!nominations.length && <Warning text="You have no nominations set." />}
         {isPool && !newNominations.length && (
-          <Warning text="A pool need to have at least one nomination. If you intend to delete the pool, you can destroy the pool." />
+          <Warning text="A pool need to have at least one nomination. If the intention is to delete the pool, the pool owner can destroy it." />
         )}
         {!isPool && getControllerNotImported(controller) && (
           <Warning text="You must have your controller account imported to stop nominating." />
