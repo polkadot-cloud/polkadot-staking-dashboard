@@ -64,7 +64,7 @@ export const ChangeNominations = () => {
   // ensure selected membership and targests are valid
   let isValid = nominations.length > 0;
   if (isPool) {
-    isValid = membership && isNominator() && nominations.length > 0;
+    isValid = membership && isNominator() && newNominations.length > 0;
   }
   useEffect(() => {
     setValid(isValid);
@@ -123,6 +123,9 @@ export const ChangeNominations = () => {
         }}
       >
         {!nominations.length && <Warning text="You have no nominations set." />}
+        {isPool && !newNominations.length && (
+          <Warning text="A pool need to have at least one nomination. If you intend to delete the pool, you can destroy the pool." />
+        )}
         {!isPool && getControllerNotImported(controller) && (
           <Warning text="You must have your controller account imported to stop nominating." />
         )}
