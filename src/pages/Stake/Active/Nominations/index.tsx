@@ -28,8 +28,11 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { getAccountNominations }: any = useBalances();
   const { nominated: stakeNominated, poolNominated }: any = useValidators();
 
-  const { poolNominations, isNominator: isPoolNominator } =
-    useActivePool() as ActivePoolContextState;
+  const {
+    poolNominations,
+    isNominator: isPoolNominator,
+    isOwner: isPoolOwner,
+  } = useActivePool() as ActivePoolContextState;
 
   const isPool = bondType === 'pool';
   const nominations = isPool
@@ -63,7 +66,11 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h2>
         <div>
-          {!isPool && nominations.length ? (
+          {(isPool &&
+            isPoolOwner() &&
+            isPoolNominator() &&
+            nominations.length) ||
+          (!isPool && nominations.length) ? (
             <div>
               <Button
                 small
