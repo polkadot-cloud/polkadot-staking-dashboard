@@ -60,7 +60,7 @@ export const planckBnToUnit = (val: BN, units: number): number => {
  * Since the result can be a very large number all calculations should happen in BN.
  * @param val the value in chain unit
  * @param units the chain decimal points (e.x. 10 for polkadot and 12 for Kusama)
- * @returns A big number that contains the the equivalent value of the balance val in plancks
+ * @returns A big number that contains the equivalent value of the balance val in plancks
  */
 export const unitToPlanckBn = (val: number, units: number): BN => {
   // convert to number in case the number arguments are passed as numeric strings
