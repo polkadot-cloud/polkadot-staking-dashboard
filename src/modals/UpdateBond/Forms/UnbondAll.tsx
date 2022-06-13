@@ -12,7 +12,9 @@ import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { BondOptionsInterface } from 'types/balances';
 import { ActivePoolContextState } from 'types/pools';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -31,15 +33,22 @@ export const UnbondAll = (props: any) => {
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
-  const stakeBondOptions = getBondOptions(activeAccount);
+  const stakeBondOptions: BondOptionsInterface = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { freeToUnbond: freeToUnbondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
+
+  // conver BN values to number
+  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState(freeToUnbond);
+  const [bond, setBond] = useState({
+    bond: freeToUnbond,
+  });
 
   // bond valid
   const [bondValid, setBondValid]: any = useState(false);
@@ -80,7 +89,7 @@ export const UnbondAll = (props: any) => {
       return _tx;
     }
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
+    const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
     // determine _tx
     if (isPooling) {

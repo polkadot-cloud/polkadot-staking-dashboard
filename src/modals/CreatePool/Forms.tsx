@@ -12,6 +12,8 @@ import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
+import { BondOptionsInterface } from 'types/balances';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -22,10 +24,10 @@ export const Forms = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
 
   const { getBondOptions }: any = useBalances();
-  const { freeToBond } = getBondOptions(activeAccount);
+  const { freeToBond }: BondOptionsInterface = getBondOptions(activeAccount);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToBond });
+  const [bond, setBond] = useState({ bond: planckBnToUnit(freeToBond, units) });
 
   // bond valid
   const [bondValid, setBondValid]: any = useState(true);
@@ -43,7 +45,7 @@ export const Forms = () => {
     }
 
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
+    const bondToSubmit = unitToPlanckBn(bond.bond, units);
     _tx = api.tx.nominationPools.create(
       bondToSubmit,
       activeAccount,
@@ -75,7 +77,7 @@ export const Forms = () => {
             bondType="pool"
             unbond={false}
             listenIsValid={setBondValid}
-            defaultBond={freeToBond}
+            defaultBond={planckBnToUnit(freeToBond, units)}
             setters={[
               {
                 set: setBond,

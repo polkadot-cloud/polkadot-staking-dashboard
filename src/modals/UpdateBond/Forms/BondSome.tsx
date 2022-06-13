@@ -12,6 +12,8 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ActivePoolContextState } from 'types/pools';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { BondOptionsInterface } from 'types/balances';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -26,15 +28,18 @@ export const BondSome = (props: any) => {
   const { bondType } = config;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 
-  const stakeBondOptions = getBondOptions(activeAccount);
+  const stakeBondOptions: BondOptionsInterface = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { freeToBond: freeToBondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
+  const freeToBond = planckBnToUnit(freeToBondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState(freeToBond);
+  const [bond, setBond] = useState({ bond: freeToBond });
 
   // bond valid
   const [bondValid, setBondValid]: any = useState(false);
@@ -58,7 +63,7 @@ export const BondSome = (props: any) => {
     }
 
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
+    const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
     // determine _tx
     if (isPooling) {
@@ -82,7 +87,6 @@ export const BondSome = (props: any) => {
   const TxFee = (
     <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
-
   return (
     <>
       <div className="items">

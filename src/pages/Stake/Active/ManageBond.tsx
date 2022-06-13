@@ -15,6 +15,8 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BondOptionsInterface } from 'types/balances';
+import BN from 'bn.js';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -25,9 +27,13 @@ export const ManageBond = () => {
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getAccountLedger(activeAccount);
-  const { active, total } = ledger;
-  const { freeToBond, totalUnlocking, totalUnlocked, totalUnlockChuncks } =
-    getBondOptions(activeAccount);
+  const { active, total }: { active: BN; total: BN } = ledger;
+  const {
+    freeToBond,
+    totalUnlocking,
+    totalUnlocked,
+    totalUnlockChuncks,
+  }: BondOptionsInterface = getBondOptions(activeAccount);
 
   return (
     <>
@@ -82,10 +88,10 @@ export const ManageBond = () => {
       </CardHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}
-        unlocking={totalUnlocking}
-        unlocked={totalUnlocked}
-        free={freeToBond}
-        total={total.toNumber()}
+        unlocking={planckBnToUnit(totalUnlocking, units)}
+        unlocked={planckBnToUnit(totalUnlocked, units)}
+        free={planckBnToUnit(freeToBond, units)}
+        total={planckBnToUnit(total, units)}
         inactive={inSetup()}
       />
     </>

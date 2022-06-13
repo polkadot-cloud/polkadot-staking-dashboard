@@ -7,13 +7,13 @@ import { Fn, Unsubs } from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
+import { rmCommas, setStateWithRef } from 'Utils';
+
 import {
-  toFixedIfNecessary,
-  planckBnToUnit,
-  rmCommas,
-  setStateWithRef,
-} from 'Utils';
-import { BalancesAccount, BalancesContextInterface } from 'types/balances';
+  BalancesAccount,
+  BalancesContextInterface,
+  BondOptionsInterface,
+} from 'types/balances';
 import { ConnectContextInterface } from 'types/connect';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -33,7 +33,6 @@ export const BalancesProvider = ({
   const { metrics } = useNetworkMetrics();
   const { accounts: connectAccounts } = useConnect() as ConnectContextInterface;
   const { activeEra } = metrics;
-  const { units } = network;
 
   // existential amount of unit for an account
   const existentialAmount = consts.existentialDeposit;
@@ -362,7 +361,7 @@ export const BalancesProvider = ({
   };
 
   // get the bond and unbond amounts available to the user
-  const getBondOptions = (address: string) => {
+  const getBondOptions = (address: string): BondOptionsInterface => {
     const account = getAccount(address);
     if (account === null) {
       return defaults.bondOptions;
@@ -371,56 +370,38 @@ export const BalancesProvider = ({
     const ledger = getAccountLedger(address);
     const { freeAfterReserve } = balance;
     const { active, unlocking } = ledger;
-
     // free to unbond balance
-    const freeToUnbond = toFixedIfNecessary(
-      planckBnToUnit(active, units),
-      units
-    );
+    const freeToUnbond = active;
 
     // total amount actively unlocking
-    let totalUnlockingBn = new BN(0);
-    let totalUnlockedBn = new BN(0);
+    let totalUnlocking = new BN(0);
+    let totalUnlocked = new BN(0);
 
     for (const u of unlocking) {
       const { value, era } = u;
 
       if (activeEra.index > era) {
-        totalUnlockedBn = totalUnlockedBn.add(value);
+        totalUnlocked = totalUnlocked.add(value);
       } else {
-        totalUnlockingBn = totalUnlockingBn.add(value);
+        totalUnlocking = totalUnlocking.add(value);
       }
     }
-    const totalUnlocking = planckBnToUnit(totalUnlockingBn, units);
-    const totalUnlocked = planckBnToUnit(totalUnlockedBn, units);
 
     // free to bond balance
-    const freeToBond: any = Math.max(
-      toFixedIfNecessary(
-        planckBnToUnit(freeAfterReserve, units) -
-          planckBnToUnit(active, units) -
-          totalUnlocking -
-          totalUnlocked,
-        units
-      ),
-      0
+    const freeToBond: any = BN.max(
+      freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
+      new BN(0)
     );
 
     // total possible balance that can be bonded
-    const totalPossibleBond = toFixedIfNecessary(
-      planckBnToUnit(freeAfterReserve, units) - totalUnlocking - totalUnlocked,
-      units
+    const totalPossibleBond = BN.max(
+      freeAfterReserve.sub(totalUnlocking).sub(totalUnlocked),
+      new BN(0)
     );
 
-    const freeToStake = Math.max(
-      toFixedIfNecessary(
-        planckBnToUnit(freeAfterReserve, units) -
-          planckBnToUnit(active, units) -
-          totalUnlocking -
-          totalUnlocked,
-        units
-      ),
-      0
+    const freeToStake = BN.max(
+      freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
+      new BN(0)
     );
 
     return {

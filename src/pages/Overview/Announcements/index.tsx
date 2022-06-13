@@ -84,7 +84,7 @@ export const Announcements = () => {
   if (bondedPools.length) {
     announcements.push({
       class: 'pools',
-      title: `${bondedPools.length} nomination pools are active`,
+      title: `${bondedPools.length} nomination pools are active.`,
       subtitle: `Nomination pools are available to join on the ${network.name} network.`,
     });
   }
