@@ -25,8 +25,8 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
 
   // provide default card if not set
   if (!['flat', 'border', 'shadow'].includes(localCard || '')) {
-    localCard = 'flat';
-    localStorage.setItem('card', 'flat');
+    localCard = 'shadow';
+    localStorage.setItem('card', localCard);
   }
 
   // the theme state
