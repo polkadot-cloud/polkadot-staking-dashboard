@@ -41,7 +41,7 @@ export const ThemedRouter = () => {
   const { network } = useApi() as APIContextInterface;
 
   return (
-    <ThemeProvider theme={{ mode, card, network: network.name }}>
+    <ThemeProvider theme={{ mode, card, network: `${network.name}-${mode}` }}>
       <WrappedRouter />
     </ThemeProvider>
   );
