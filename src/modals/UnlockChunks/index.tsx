@@ -18,15 +18,15 @@ import { Forms } from './Forms';
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { config, setModalHeight } = useModal();
-  const { target } = config || {};
+  const { bondType } = config || {};
   const { getAccountLedger }: any = useBalances();
   const { getPoolUnlocking } = useActivePool() as ActivePoolContextState;
 
-  // get the unlocking per target
+  // get the unlocking per bondType
   const _getUnlocking = () => {
     let unlocking = [];
     let ledger;
-    switch (target) {
+    switch (bondType) {
       case 'stake':
         ledger = getAccountLedger(activeAccount);
         unlocking = ledger.unlocking;
@@ -35,7 +35,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking();
         break;
       default:
-        console.error(`unlocking modal target ${target} is not defined.`);
+        console.error(`unlocking modal bond-type ${bondType} is not defined.`);
     }
     return unlocking;
   };
@@ -95,7 +95,7 @@ export const UnlockChunks = () => {
       >
         <Overview
           unlocking={unlocking}
-          target={target}
+          bondType={bondType}
           setSection={setSection}
           setUnlock={setUnlock}
           setTask={setTask}

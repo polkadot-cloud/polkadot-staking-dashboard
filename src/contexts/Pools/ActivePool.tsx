@@ -19,12 +19,7 @@ import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePoolsConfig } from './PoolsConfig';
-import {
-  rmCommas,
-  toFixedIfNecessary,
-  planckBnToUnit,
-  localStorageOrDefault,
-} from '../../Utils';
+import { rmCommas, localStorageOrDefault } from '../../Utils';
 import { useBondedPools } from './BondedPools';
 import { usePoolMemberships } from './PoolMemberships';
 
@@ -49,7 +44,6 @@ export const ActivePoolProvider = ({
 
   const { activeEra } = metrics;
   const { existentialDeposit } = consts;
-  const { units } = network;
 
   // stores member's bonded pool
   const [activeBondedPool, setActiveBondedPool]: any = useState({

@@ -59,14 +59,14 @@ export const Status = () => {
       icon: faChevronCircleRight,
       transform: 'grow-1',
       disabled: !isReady,
-      onClick: () => openModalWith('CreatePool', { target: 'pool' }, 'small'),
+      onClick: () => openModalWith('CreatePool', { bondType: 'pool' }, 'small'),
     };
     const leaveBtn = {
       title: 'Leave Pool',
       icon: faSignOutAlt,
       disabled: !isReady,
       small: true,
-      onClick: () => openModalWith('LeavePool', { target: 'pool' }, 'small'),
+      onClick: () => openModalWith('LeavePool', { bondType: 'pool' }, 'small'),
     };
     const destroyBtn = {
       title: 'Destroy Pool',
@@ -77,7 +77,7 @@ export const Status = () => {
       onClick: () =>
         openModalWith(
           'ChangePoolState',
-          { target: 'pool', state: PoolState.Destroy },
+          { bondType: 'pool', state: PoolState.Destroy },
           'small'
         ),
     };
@@ -90,7 +90,7 @@ export const Status = () => {
       onClick: () =>
         openModalWith(
           'ChangePoolState',
-          { target: 'pool', state: PoolState.Block },
+          { bondType: 'pool', state: PoolState.Block },
           'small'
         ),
     };
@@ -103,7 +103,7 @@ export const Status = () => {
       onClick: () =>
         openModalWith(
           'ChangePoolState',
-          { target: 'pool', state: PoolState.Open },
+          { bondType: 'pool', state: PoolState.Open },
           'small'
         ),
     };
@@ -153,7 +153,7 @@ export const Status = () => {
           disabled: !isReady,
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { target: 'pool' }, 'small'),
+            openModalWith('ClaimReward', { bondType: 'pool' }, 'small'),
         },
       ]
     : undefined;

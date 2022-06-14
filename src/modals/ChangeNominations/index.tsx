@@ -15,6 +15,12 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import {
+  ActivePoolContextState,
+  PoolMembershipsContextState,
+} from 'types/pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -23,16 +29,27 @@ import {
   PaddingWrapper,
 } from '../Wrappers';
 
-export const StopNominating = () => {
+export const ChangeNominations = () => {
   const { api } = useApi() as APIContextInterface;
   const { getControllerNotImported } = useStaking();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations }: any = useBalances();
   const { setStatus: setModalStatus, config }: any = useModal();
-  const controller = getBondedAccount(activeAccount);
-  const nominations = getAccountNominations(activeAccount);
+  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { poolNominations, isNominator } =
+    useActivePool() as ActivePoolContextState;
 
-  const { nominations: newNominations, provider } = config;
+  const { nominations: newNominations, provider, bondType } = config;
+
+  const isPool = bondType === 'pool';
+  const isStaking = bondType === 'stake';
+  const controller = getBondedAccount(activeAccount);
+  const signingAccount = isPool ? activeAccount : controller;
+
+  const nominations =
+    isPool === true
+      ? poolNominations.targets
+      : getAccountNominations(activeAccount);
   const removing = nominations.length - newNominations.length;
   const remaining = newNominations.length;
 
@@ -42,7 +59,16 @@ export const StopNominating = () => {
   }, [nominations]);
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(nominations.length > 0);
+  const [valid, setValid]: any = useState(false);
+
+  // ensure selected membership and targests are valid
+  let isValid = nominations.length > 0;
+  if (isPool) {
+    isValid = membership && isNominator() && newNominations.length > 0;
+  }
+  useEffect(() => {
+    setValid(isValid);
+  }, [isValid]);
 
   // tx to submit
   const tx = () => {
@@ -50,23 +76,26 @@ export const StopNominating = () => {
     if (!valid || !api) {
       return _tx;
     }
-
-    if (remaining === 0) {
-      _tx = api.tx.staking.chill();
-    } else {
-      const targetsToSubmit = newNominations.map((item: any) => {
-        return {
-          Id: item,
-        };
-      });
+    const targetsToSubmit = newNominations.map((item: any) =>
+      isPool
+        ? item?.address
+        : {
+            Id: item,
+          }
+    );
+    if (isPool && remaining !== 0) {
+      _tx = api.tx.nominationPools.nominate(membership.poolId, targetsToSubmit);
+    } else if (isStaking && remaining !== 0) {
       _tx = api.tx.staking.nominate(targetsToSubmit);
+    } else if (isStaking && remaining === 0) {
+      _tx = api.tx.staking.chill();
     }
     return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from: controller,
+    from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
       setModalStatus(0);
@@ -94,7 +123,10 @@ export const StopNominating = () => {
         }}
       >
         {!nominations.length && <Warning text="You have no nominations set." />}
-        {getControllerNotImported(controller) && (
+        {isPool && !newNominations.length && (
+          <Warning text="A pool needs to have at least one nomination. If the intention is to delete the pool, the pool owner can destroy it." />
+        )}
+        {!isPool && getControllerNotImported(controller) && (
           <Warning text="You must have your controller account imported to stop nominating." />
         )}
         <h2>
@@ -136,4 +168,4 @@ export const StopNominating = () => {
   );
 };
 
-export default StopNominating;
+export default ChangeNominations;

@@ -19,10 +19,10 @@ export const NominationStatus = (props: any) => {
 
   const { ownStake } = eraStakers;
 
-  const { address, target } = props;
+  const { address, bondType } = props;
 
   let nominationStatuses;
-  if (target === 'pool') {
+  if (bondType === 'pool') {
     nominationStatuses = poolsGetNominationsStatus();
   } else {
     nominationStatuses = getNominationsStatus();

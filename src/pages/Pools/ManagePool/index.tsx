@@ -8,9 +8,9 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import Nominations from 'pages/Stake/Active/Nominations';
+import { GenerateNominations } from 'pages/Stake/GenerateNominations';
 import { ActivePoolContextState } from 'types/pools';
-import { GenerateNominations } from '../../Stake/GenerateNominations';
-import { PoolNominations } from '../PoolNominations';
 
 export const ManagePool = () => {
   const { isNominator, setTargets, targets, poolNominations } =
@@ -54,7 +54,7 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <PoolNominations />
+          <Nominations bondType="pool" />
         )}
       </CardWrapper>
     </PageRowWrapper>

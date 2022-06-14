@@ -71,7 +71,7 @@ export const Forms = () => {
       <div>
         <>
           <BondInputWithFeedback
-            target="pool"
+            bondType="pool"
             unbond={false}
             listenIsValid={setBondValid}
             defaultBond={planckBnToUnit(freeToBond, units)}

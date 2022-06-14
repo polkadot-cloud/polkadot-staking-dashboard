@@ -29,14 +29,14 @@ export const Forms = forwardRef(
     const { getControllerNotImported, staking } = useStaking();
     const { activeBondedPool } = useActivePool() as ActivePoolContextState;
     const { setStatus: setModalStatus, config }: any = useModal();
-    const { target } = config || {};
+    const { bondType } = config || {};
     const { getBondedAccount }: any = useBalances();
     const { historyDepth } = staking;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);
 
-    const isStaking = target === 'stake';
-    const isPooling = target === 'pool';
+    const isStaking = bondType === 'stake';
+    const isPooling = bondType === 'pool';
 
     // valid to submit transaction
     const [valid, setValid]: any = useState(
