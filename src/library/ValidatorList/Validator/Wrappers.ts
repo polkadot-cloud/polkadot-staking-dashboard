@@ -7,7 +7,7 @@ import {
   backgroundValidator,
   borderPrimary,
   textSecondary,
-  primary,
+  networkColor,
   modalBackground,
 } from 'theme';
 
@@ -76,7 +76,7 @@ export const Wrapper = styled.div<any>`
           opacity: 0.75;
         }
         &.active {
-          color: ${primary};
+          color: ${networkColor};
         }
       }
     }

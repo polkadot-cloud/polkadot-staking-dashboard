@@ -8,6 +8,7 @@ import {
   textSecondary,
   buttonSecondaryBackground,
   secondary as secondaryColor,
+  networkColor,
 } from 'theme';
 
 export const ButtonRow = styled.div`
@@ -26,7 +27,7 @@ export const Wrapper = styled(motion.div)<any>`
     align-items: center;
     background: ${(props) =>
       props.type === 'invert-primary'
-        ? 'rgba(211, 48, 121, 0.9)'
+        ? networkColor
         : props.type === 'invert-secondary'
         ? secondaryColor
         : buttonSecondaryBackground};

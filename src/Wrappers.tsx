@@ -58,6 +58,26 @@ export const EntryWrapper = styled.div`
   path.primary {
     fill: ${textPrimary};
   }
+
+  input {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 0.7rem 0rem;
+    font-size: 1.1rem;
+    background: none;
+    transition: all 0.1s;
+  }
+
+  input::placeholder {
+    color: #bbb;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+  }
+
   .page-padding {
     padding-left: 1.25rem;
     padding-right: 1.25rem;

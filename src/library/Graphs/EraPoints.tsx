@@ -12,9 +12,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
-import { getGradient } from './Utils';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 
 ChartJS.register(
   CategoryScale,
@@ -28,6 +29,7 @@ ChartJS.register(
 
 export const EraPoints = (props: any) => {
   const { mode } = useTheme();
+  const { network } = useApi() as APIContextInterface;
   let { items } = props;
   const { height } = props;
 
@@ -107,15 +109,8 @@ export const EraPoints = (props: any) => {
         data: items.map((item: any, index: number) => {
           return item.reward_point;
         }),
-        borderColor: (context: any) => {
-          const { chart } = context;
-          const { ctx, chartArea } = chart;
-          if (!chartArea) {
-            return;
-          }
-          return getGradient(ctx, chartArea);
-        },
-        backgroundColor: defaultThemes.graphs.colors[0][mode],
+        borderColor: networkColors[`${network.name}-${mode}`],
+        backgroundColor: networkColors[`${network.name}-${mode}`],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,

@@ -11,7 +11,7 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { useSize, formatSize } from 'library/Graphs/Utils';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { APIContextInterface } from 'types/api';
@@ -120,7 +120,7 @@ export const BalanceGraph = () => {
     : [
         defaultThemes.graphs.colors[2][mode],
         defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.colors[0][mode],
+        networkColors[`${network.name}-${mode}`],
         defaultThemes.graphs.colors[3][mode],
       ];
 

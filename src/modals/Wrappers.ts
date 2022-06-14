@@ -3,7 +3,12 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, modalOverlayBackground, modalBackground } from 'theme';
+import {
+  textSecondary,
+  modalOverlayBackground,
+  modalBackground,
+  networkColor,
+} from 'theme';
 
 // Blurred background modal wrapper
 export const ModalWrapper = styled(motion.div)`
@@ -121,8 +126,8 @@ export const FooterWrapper = styled.div`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    color: rgba(211, 48, 121, 0.85);
-    border: 1px solid rgba(211, 48, 121, 0.85);
+    color: ${networkColor};
+    border: 1px solid ${networkColor};
 
     &:disabled {
       opacity: 0.25;

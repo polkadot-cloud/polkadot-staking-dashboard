@@ -9,6 +9,7 @@ import {
   textSecondary,
   assistantButton,
   assistantBackground,
+  networkColor,
 } from 'theme';
 
 export const Wrapper = styled(motion.div)<any>`
@@ -244,7 +245,7 @@ export const ItemWrapper = styled(motion.div)<any>`
     }
 
     &.action {
-      background: rgba(211, 48, 121, 0.85);
+      background: ${networkColor};
       > h4 {
         color: white;
       }

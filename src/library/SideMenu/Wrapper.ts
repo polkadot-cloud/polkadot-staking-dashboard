@@ -10,7 +10,7 @@ import {
   highlightPrimary,
   highlightSecondary,
   backgroundOverlay,
-  primary,
+  networkColor,
 } from 'theme';
 
 export const Wrapper = styled.div<any>`
@@ -78,7 +78,7 @@ export const LogoWrapper = styled(motion.button)<any>`
   margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
 
   ellipse {
-    fill: ${primary};
+    fill: ${networkColor};
   }
 `;
 

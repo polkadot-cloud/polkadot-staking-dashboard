@@ -23,11 +23,14 @@ import {
 } from 'library/List';
 import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
+import { useTheme } from 'contexts/Themes';
+import { networkColors } from 'theme/default';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
 export const ValidatorListInner = (props: any) => {
-  const { isReady } = useApi() as APIContextInterface;
+  const { mode } = useTheme();
+  const { isReady, network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
@@ -203,13 +206,21 @@ export const ValidatorListInner = (props: any) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
         </div>

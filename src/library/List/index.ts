@@ -7,6 +7,7 @@ import {
   borderPrimary,
   buttonSecondaryBackground,
   textPrimary,
+  networkColor,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -78,11 +79,11 @@ export const Pagination = styled.div<any>`
     button {
       margin-left: 0.5rem;
       &.next {
-        color: ${(props) => (props.next ? 'rgb(211, 48, 121)' : textSecondary)};
+        color: ${(props) => (props.next ? networkColor : textSecondary)};
         cursor: ${(props) => (props.next ? 'pointer' : 'default')};
       }
       &.prev {
-        color: ${(props) => (props.prev ? 'rgb(211, 48, 121)' : textSecondary)};
+        color: ${(props) => (props.prev ? networkColor : textSecondary)};
         cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
       }
     }

@@ -60,8 +60,8 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
   kusama: {
     name: 'Kusama',
     colors: {
-      light: '#111',
-      dark: '#ccc',
+      light: '#333',
+      dark: '#666',
     },
     endpoint: 'wss://kusama-rpc.polkadot.io',
     subscanEndpoint: 'https://kusama.api.subscan.io',
@@ -81,8 +81,8 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
   westend: {
     name: 'Westend',
     colors: {
-      light: '#ed7f5e',
-      dark: '#ed7f5e',
+      light: '#Ec6e6e',
+      dark: '#Ec6e6e',
     },
     endpoint: 'wss://westend-rpc.polkadot.io',
     subscanEndpoint: 'https://westend.api.subscan.io',

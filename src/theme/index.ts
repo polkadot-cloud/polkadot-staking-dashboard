@@ -11,8 +11,6 @@ const v = 'mode';
 
 // main theme colors
 
-export const primary: theme.ThemeSet = theme(v, defaultThemes.primary);
-
 export const secondary: theme.ThemeSet = theme(v, defaultThemes.secondary);
 
 // text colors

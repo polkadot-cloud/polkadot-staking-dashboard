@@ -3,7 +3,7 @@
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { APIContextInterface } from 'types/api';
@@ -71,7 +71,7 @@ export const Bonded = (props: any) => {
         label: network.unit,
         data: [active, unlocking + unlocked, free],
         backgroundColor: [
-          defaultThemes.graphs.colors[0][mode],
+          networkColors[`${network.name}-${mode}`],
           defaultThemes.graphs.colors[1][mode],
           defaultThemes.graphs.colors[2][mode],
         ],

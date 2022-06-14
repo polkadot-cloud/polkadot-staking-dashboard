@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useCombobox } from 'downshift';
 import { useTheme } from 'contexts/Themes';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
 import { convertRemToPixels } from 'Utils';
 import Identicon from 'library/Identicon';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
 
 export const AccountDropdown = (props: any) => {
@@ -96,14 +98,15 @@ export const AccountDropdown = (props: any) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
+  const { network } = useApi() as APIContextInterface;
   const { mode } = useTheme();
 
   let color;
   let border;
 
   if (c.selectedItem === item) {
-    color = defaultThemes.primary[mode];
-    border = `2px solid ${defaultThemes.primary[mode]}`;
+    color = networkColors[`${network.name}-${mode}`];
+    border = `2px solid ${networkColors[`${network.name}-${mode}`]}`;
   } else {
     color = defaultThemes.text.primary[mode];
     border = `2px solid ${defaultThemes.transparent[mode]}`;

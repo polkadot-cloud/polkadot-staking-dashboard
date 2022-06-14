@@ -7,7 +7,7 @@ import {
   backgroundValidator,
   borderSecondary,
   textSecondary,
-  primary,
+  networkColor,
 } from 'theme';
 
 export const Wrapper = styled(motion.div)<any>`
@@ -70,7 +70,7 @@ export const Wrapper = styled(motion.div)<any>`
       flex-flow: row nowrap;
 
       .join {
-        color: ${primary};
+        color: ${networkColor};
       }
 
       .label {
@@ -93,7 +93,7 @@ export const Wrapper = styled(motion.div)<any>`
             opacity: 0.75;
           }
           &.active {
-            color: ${primary};
+            color: ${networkColor};
           }
         }
       }

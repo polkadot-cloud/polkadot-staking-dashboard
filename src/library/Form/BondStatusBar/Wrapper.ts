@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { backgroundLabel, textSecondary, primary, secondary } from 'theme';
+import { backgroundLabel, textSecondary, networkColor, secondary } from 'theme';
 
 export const Wrapper = styled.div<any>`
   width: 100%;
@@ -68,7 +68,7 @@ export const Wrapper = styled.div<any>`
 
       &.invert {
         h4 {
-          color: ${primary};
+          color: ${networkColor};
         }
         h5 {
           opacity: 1;
