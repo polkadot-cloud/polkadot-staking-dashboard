@@ -47,7 +47,7 @@ export const Bond = (props: any) => {
   }, [activeAccount]);
 
   return (
-    <CardWrapper transparent>
+    <>
       <Header
         thisSection={section}
         complete={setup.bond !== 0}
@@ -76,7 +76,7 @@ export const Bond = (props: any) => {
         <BondStatusBar value={bond.bond} />
         <Footer complete={bondValid} />
       </MotionContainer>
-    </CardWrapper>
+    </>
   );
 };
 

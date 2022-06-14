@@ -63,7 +63,7 @@ export const Summary = (props: any) => {
   });
 
   return (
-    <CardWrapper transparent>
+    <>
       <Header thisSection={section} complete={null} title="Summary" />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <SummaryWrapper>
@@ -124,16 +124,16 @@ export const Summary = (props: any) => {
           }}
         >
           <Button
-            margin="0"
             padding="0.75rem 1.2rem"
             fontSize="1.1rem"
             onClick={() => submitTx()}
             disabled={submitting}
             title="Start Staking"
+            primary
           />
         </div>
       </MotionContainer>
-    </CardWrapper>
+    </>
   );
 };
 
