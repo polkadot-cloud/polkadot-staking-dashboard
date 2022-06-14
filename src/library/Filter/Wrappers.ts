@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary, primary } from 'theme';
+import { textSecondary, borderPrimary, networkColor } from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
@@ -54,7 +54,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.div<any>`
-  border: 1px solid ${(props) => (props.active ? primary : borderPrimary)};
+  border: 1px solid ${(props) => (props.active ? networkColor : borderPrimary)};
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row nowrap;
@@ -67,7 +67,7 @@ export const ItemWrapper = styled.div<any>`
     margin-right: 0;
   }
   .icon {
-    color: ${(props) => (props.active ? primary : textSecondary)};
+    color: ${(props) => (props.active ? networkColor : textSecondary)};
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -75,7 +75,7 @@ export const ItemWrapper = styled.div<any>`
     margin-right: 0.75rem;
   }
   p {
-    color: ${(props) => (props.active ? primary : textSecondary)};
+    color: ${(props) => (props.active ? networkColor : textSecondary)};
     font-size: 0.9rem;
     margin: 0;
     text-align: left;

@@ -6,7 +6,9 @@ import { useCombobox } from 'downshift';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'contexts/Themes';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 
 export const Dropdown = (props: any) => {
@@ -71,14 +73,15 @@ export const Dropdown = (props: any) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
+  const { network } = useApi() as APIContextInterface;
   const { mode } = useTheme();
   const color =
     c.selectedItem?.key === item.key
-      ? defaultThemes.primary[mode]
+      ? networkColors[`${network.name}-${mode}`]
       : defaultThemes.text.primary[mode];
   const border =
     c.selectedItem?.key === item.key
-      ? `2px solid ${defaultThemes.primary[mode]}`
+      ? `2px solid ${networkColors[`${network.name}-${mode}`]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 
   return (

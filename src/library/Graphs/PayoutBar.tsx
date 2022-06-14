@@ -15,10 +15,9 @@ import {
   Legend,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { APIContextInterface } from 'types/api';
-import { getGradient } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -32,9 +31,8 @@ ChartJS.register(
 );
 
 export const PayoutBar = (props: any) => {
-  const { network } = useApi() as APIContextInterface;
-  const { units } = network;
   const { mode } = useTheme();
+  const { network } = useApi() as APIContextInterface;
   const { payouts, height } = props;
 
   const data = {
@@ -48,15 +46,8 @@ export const PayoutBar = (props: any) => {
         data: payouts.map((item: any, index: number) => {
           return item.amount;
         }),
-        borderColor: defaultThemes.graphs.colors[0][mode],
-        backgroundColor: (context: any) => {
-          const { chart } = context;
-          const { ctx, chartArea } = chart;
-          if (!chartArea) {
-            return;
-          }
-          return getGradient(ctx, chartArea);
-        },
+        borderColor: networkColors[`${network.name}-${mode}`],
+        backgroundColor: networkColors[`${network.name}-${mode}`],
         pointRadius: 0,
         borderRadius: 3,
       },

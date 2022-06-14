@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { primary, textSecondary } from 'theme';
+import { networkColor, textSecondary } from 'theme';
 
 export const ListWrapper = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export const FooterWrapper = styled.div`
 
   button {
     font-size: 1.2rem;
-    color: ${primary};
+    color: ${networkColor};
 
     &:disabled {
       opacity: 0.5;

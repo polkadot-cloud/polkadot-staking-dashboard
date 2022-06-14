@@ -14,12 +14,15 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { planckToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { usePoolList } from 'library/PoolList/context';
+import { networkColors } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider } from './context';
 
 export const PayoutListInner = (props: any) => {
   const { allowMoreCols, pagination }: any = props;
 
+  const { mode } = useTheme();
   const { isReady, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { metrics }: any = useNetworkMetrics();
@@ -110,13 +113,21 @@ export const PayoutListInner = (props: any) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
         </div>

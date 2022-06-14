@@ -12,6 +12,7 @@ import {
   textPrimary,
   textInvert,
   buttonSecondaryBackground,
+  networkColor,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -87,9 +88,9 @@ export const Item = styled(motion.button)`
   font-size: 1rem;
 
   .label {
-    border: 0.125rem solid #d33079;
+    border: 0.125rem solid ${networkColor};
     border-radius: 0.8rem;
-    color: #d33079;
+    color: ${networkColor};
     font-size: 0.85rem;
     font-variation-settings: 'wght' 525;
     margin-right: 0.6rem;
@@ -101,7 +102,7 @@ export const Item = styled(motion.button)`
     line-height: 2.2rem;
   }
   &.connect {
-    background: #d33079;
+    background: ${networkColor};
     > span {
       color: ${textInvert};
       svg {

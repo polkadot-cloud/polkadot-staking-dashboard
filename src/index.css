@@ -96,23 +96,3 @@ button {
   flex-flow: row wrap;
   align-items: flex-end;
 }
-
-input {
-  border: none;
-  border-bottom: 1px solid #ddd;
-  padding: 0.7rem 0rem;
-  font-size: 1.1rem;
-  background: none;
-  transition: all 0.2s;
-}
-
-input::placeholder {
-  color: #bbb;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-bottom: 1px solid rgba(211, 48, 121, 0.6);
-}

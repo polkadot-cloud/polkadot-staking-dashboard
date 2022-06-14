@@ -3,7 +3,12 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, borderPrimary } from 'theme';
+import {
+  textSecondary,
+  borderPrimary,
+  networkColor,
+  networkColorSecondary,
+} from 'theme';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -30,7 +35,7 @@ export const Item = styled(motion.div)`
     padding: 0.2rem 0;
 
     &.neutral {
-      color: #d33079;
+      color: ${networkColor};
     }
     &.danger {
       color: #d2545d;
@@ -39,7 +44,7 @@ export const Item = styled(motion.div)`
       color: #b5a200;
     }
     &.pools {
-      color: #cd68a9;
+      color: ${networkColorSecondary};
     }
   }
 

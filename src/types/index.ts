@@ -19,6 +19,16 @@ export enum Toggle {
 
 export interface NodeEndpoint {
   name: string;
+  colors: {
+    primary: {
+      light: string;
+      dark: string;
+    };
+    secondary: {
+      light: string;
+      dark: string;
+    };
+  };
   endpoint: string;
   subscanEndpoint: string;
   unit: string;

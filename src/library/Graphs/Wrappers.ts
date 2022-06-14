@@ -10,6 +10,7 @@ import {
   borderPrimary,
   cardShadow,
   shadowColor,
+  networkColor,
 } from 'theme';
 
 /* CardHeaderWrapper
@@ -132,7 +133,7 @@ export const GraphWrapper = styled.div<any>`
     top: 10px;
     font-size: 0.8rem;
     font-variation-settings: 'wght' 550;
-    background: #d33079;
+    background: ${networkColor};
     border-radius: 0.3rem;
     padding: 0.2rem 0.4rem;
     color: #fff;

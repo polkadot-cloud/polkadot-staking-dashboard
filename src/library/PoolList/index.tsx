@@ -13,6 +13,8 @@ import { APIContextInterface } from 'types/api';
 import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useTheme } from 'contexts/Themes';
+import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 
 export const PoolListInner = (props: any) => {
@@ -21,11 +23,11 @@ export const PoolListInner = (props: any) => {
   const refetchOnListUpdate =
     props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
-  const { isReady } = useApi() as APIContextInterface;
+  const { mode } = useTheme();
+  const { isReady, network } = useApi() as APIContextInterface;
   const { metrics }: any = useNetworkMetrics();
   const { fetchPoolsMetaBatch }: any = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
-  // ---
 
   // current page
   const [page, setPage]: any = useState(1);
@@ -114,13 +116,21 @@ export const PoolListInner = (props: any) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
         </div>
