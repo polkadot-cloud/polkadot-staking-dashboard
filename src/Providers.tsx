@@ -5,8 +5,9 @@ import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
 import Router from 'Router';
 import { withProviders } from 'library/Hooks';
+import { APIContextInterface } from 'types/api';
 import { AccountProvider } from './contexts/Account';
-import { APIProvider } from './contexts/Api';
+import { APIProvider, useApi } from './contexts/Api';
 import { AssistantProvider } from './contexts/Assistant';
 import { BalancesProvider } from './contexts/Balances';
 import { ConnectProvider } from './contexts/Connect';
@@ -37,9 +38,10 @@ export const WrappedRouter = () => (
 
 export const ThemedRouter = () => {
   const { mode, card } = useTheme();
+  const { network } = useApi() as APIContextInterface;
 
   return (
-    <ThemeProvider theme={{ mode, card }}>
+    <ThemeProvider theme={{ mode, card, network: network.name }}>
       <WrappedRouter />
     </ThemeProvider>
   );

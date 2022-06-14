@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import { useTheme } from 'contexts/Themes';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
+import { useApi } from 'contexts/Api';
+import { APIContextInterface } from 'types/api';
 
 const Wrapper = styled.div<any>`
   position: absolute;
@@ -21,6 +23,7 @@ const Wrapper = styled.div<any>`
 `;
 
 export const SubscanButton = () => {
+  const { network } = useApi() as APIContextInterface;
   const { mode } = useTheme();
   const { services } = useUi();
 
@@ -28,7 +31,7 @@ export const SubscanButton = () => {
     <Wrapper
       color={
         services.includes('subscan')
-          ? defaultThemes.primary[mode]
+          ? networkColors[network.name]
           : defaultThemes.text.secondary[mode]
       }
       opacity={services.includes('subscan') ? 1 : 0.5}

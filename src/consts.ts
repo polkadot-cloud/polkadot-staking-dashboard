@@ -38,6 +38,7 @@ export const U32_OPTS = { bitLength: 32, isLe: true };
 export const NODE_ENDPOINTS: NodeEndpoints = {
   polkadot: {
     name: 'Polkadot',
+    color: 'rgb(211, 48, 121)',
     endpoint: 'wss://rpc.polkadot.io',
     subscanEndpoint: 'https://polkadot.api.subscan.io',
     unit: 'DOT',
@@ -55,6 +56,7 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
   },
   kusama: {
     name: 'Kusama',
+    color: '#111',
     endpoint: 'wss://kusama-rpc.polkadot.io',
     subscanEndpoint: 'https://kusama.api.subscan.io',
     unit: 'KSM',
@@ -72,6 +74,7 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
   },
   westend: {
     name: 'Westend',
+    color: '#ed7f5e',
     endpoint: 'wss://westend-rpc.polkadot.io',
     subscanEndpoint: 'https://westend.api.subscan.io',
     unit: 'WND',

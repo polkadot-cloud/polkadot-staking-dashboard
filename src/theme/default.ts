@@ -1,6 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { NODE_ENDPOINTS } from 'consts';
+import { NodeEndpoint } from 'types';
+
 // configure theme
 const v = (light: string, dark: string) => ({
   light,
@@ -104,3 +107,9 @@ export const cardThemes: any = {
     shadow: c('none', 'none', '-2px 2px 26px'),
   },
 };
+
+// configure network colors
+export const networkColors: any = [];
+Object.values(NODE_ENDPOINTS).forEach((node: NodeEndpoint) => {
+  networkColors[node.name] = node.color;
+});
