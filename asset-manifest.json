@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/polkadot-staking-dashboard/static/css/main.ba5dd84c.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.ab0825d3.js",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.715c719c.js",
     "static/js/787.0a38be7b.chunk.js": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js",
     "static/media/WorkSans-VariableFont_wght.ttf": "/polkadot-staking-dashboard/static/media/WorkSans-VariableFont_wght.bb6e3e8193f32a7fc502.ttf",
     "static/js/stakers.78311585.worker.js": "/polkadot-staking-dashboard/static/js/stakers.78311585.worker.js",
     "static/media/westend_icon.svg": "/polkadot-staking-dashboard/static/media/westend_icon.6c9cdb56012c5151652539e07932ca45.svg",
-    "static/media/polkadot_logo.svg": "/polkadot-staking-dashboard/static/media/polkadot_logo.3672415fb852303e9822ebf07ee67a61.svg",
+    "static/media/polkadot_logo.svg": "/polkadot-staking-dashboard/static/media/polkadot_logo.edd2b5cef520b0551d097f5f1b29600d.svg",
     "static/media/cog-outline.svg": "/polkadot-staking-dashboard/static/media/cog-outline.69ff9b5c947ab88a5a87e745be35bff3.svg",
     "static/media/kusama_logo.svg": "/polkadot-staking-dashboard/static/media/kusama_logo.8505bf9f895b772cf97d95933eaada8a.svg",
     "index.html": "/polkadot-staking-dashboard/index.html",
@@ -20,11 +20,11 @@
     "static/media/moon-outline.svg": "/polkadot-staking-dashboard/static/media/moon-outline.ed14e62383eee27a57c447e80da2f840.svg",
     "static/media/assistant.svg": "/polkadot-staking-dashboard/static/media/assistant.710ee0b66a632101a3e85de51b365ddb.svg",
     "main.ba5dd84c.css.map": "/polkadot-staking-dashboard/static/css/main.ba5dd84c.css.map",
-    "main.ab0825d3.js.map": "/polkadot-staking-dashboard/static/js/main.ab0825d3.js.map",
+    "main.715c719c.js.map": "/polkadot-staking-dashboard/static/js/main.715c719c.js.map",
     "787.0a38be7b.chunk.js.map": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ba5dd84c.css",
-    "static/js/main.ab0825d3.js"
+    "static/js/main.715c719c.js"
   ]
 }
