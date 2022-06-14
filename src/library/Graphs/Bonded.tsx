@@ -72,8 +72,8 @@ export const Bonded = (props: any) => {
         data: [active, unlocking + unlocked, free],
         backgroundColor: [
           networkColors[`${network.name}-${mode}`],
+          defaultThemes.graphs.colors[0][mode],
           defaultThemes.graphs.colors[1][mode],
-          defaultThemes.graphs.colors[2][mode],
         ],
         borderWidth: 0,
       },

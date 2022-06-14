@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { backgroundLabel, textSecondary, networkColor, secondary } from 'theme';
+import { backgroundLabel, textSecondary, networkColor } from 'theme';
 
 export const Wrapper = styled.div<any>`
   width: 100%;
@@ -75,7 +75,7 @@ export const Wrapper = styled.div<any>`
           color: white;
         }
         .bar {
-          background: ${secondary};
+          background: ${networkColor};
         }
       }
     }

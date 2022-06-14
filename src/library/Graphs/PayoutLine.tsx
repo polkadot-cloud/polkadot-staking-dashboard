@@ -99,7 +99,7 @@ export const PayoutLine = (props: any) => {
           return item.amount;
         }),
         borderColor: networkColors[`${network.name}-${mode}`],
-        backgroundColor: defaultThemes.graphs.colors[2][mode],
+        backgroundColor: defaultThemes.graphs.colors[1][mode],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,

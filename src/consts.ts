@@ -39,8 +39,14 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
   polkadot: {
     name: 'Polkadot',
     colors: {
-      light: 'rgb(211, 48, 121)',
-      dark: 'rgb(211, 48, 121)',
+      primary: {
+        light: 'rgb(211, 48, 121)',
+        dark: 'rgb(211, 48, 121)',
+      },
+      secondary: {
+        light: '#e474bc',
+        dark: '#e474bc',
+      },
     },
     endpoint: 'wss://rpc.polkadot.io',
     subscanEndpoint: 'https://polkadot.api.subscan.io',
@@ -60,8 +66,14 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
   kusama: {
     name: 'Kusama',
     colors: {
-      light: '#333',
-      dark: '#666',
+      primary: {
+        light: '#333',
+        dark: '#666',
+      },
+      secondary: {
+        light: '#888',
+        dark: '#888',
+      },
     },
     endpoint: 'wss://kusama-rpc.polkadot.io',
     subscanEndpoint: 'https://kusama.api.subscan.io',
@@ -81,8 +93,14 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
   westend: {
     name: 'Westend',
     colors: {
-      light: '#Ec6e6e',
-      dark: '#Ec6e6e',
+      primary: {
+        light: '#EC6E79',
+        dark: '#EC6E79',
+      },
+      secondary: {
+        light: '#Ec8f6e',
+        dark: '#Ec8f6e',
+      },
     },
     endpoint: 'wss://westend-rpc.polkadot.io',
     subscanEndpoint: 'https://westend.api.subscan.io',

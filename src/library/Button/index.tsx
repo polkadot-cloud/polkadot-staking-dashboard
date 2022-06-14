@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   textSecondary,
   buttonSecondaryBackground,
-  secondary as secondaryColor,
   networkColor,
+  networkColorSecondary,
 } from 'theme';
 
 export const ButtonRow = styled.div`
@@ -29,7 +29,7 @@ export const Wrapper = styled(motion.div)<any>`
       props.type === 'invert-primary'
         ? networkColor
         : props.type === 'invert-secondary'
-        ? secondaryColor
+        ? networkColorSecondary
         : buttonSecondaryBackground};
     color: ${(props) =>
       props.type === 'invert-primary' || props.type === 'invert-secondary'
