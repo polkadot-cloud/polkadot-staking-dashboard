@@ -13,9 +13,9 @@ import {
 export const Wrapper = styled.div<any>`
   background: ${backgroundPrimary};
   box-sizing: border-box;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   width: ${FLOATING_MENU_WIDTH}px;
-  padding: 1rem 0.75rem;
+  padding: 1rem;
   display: flex;
   flex-flow: column wrap;
   transition: opacity 0.1s;
