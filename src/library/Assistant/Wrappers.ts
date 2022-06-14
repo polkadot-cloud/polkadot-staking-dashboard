@@ -130,6 +130,7 @@ export const ListWrapper = styled(motion.div)`
     color: ${textPrimary};
     padding: 0 0.75rem;
     margin: 0.5rem 0;
+    width: 100%;
   }
   p {
     color: ${textPrimary};
