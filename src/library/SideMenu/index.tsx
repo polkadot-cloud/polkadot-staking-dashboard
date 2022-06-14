@@ -4,38 +4,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExpandAlt,
+  faCompressAlt,
+  faPalette,
+} from '@fortawesome/free-solid-svg-icons';
 import throttle from 'lodash.throttle';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { useTheme } from 'contexts/Themes';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
-import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
-import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
-import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { APIContextInterface } from 'types/api';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { ConnectContextInterface } from 'types/connect';
+import { usePalette } from 'contexts/Palette';
 import Item from './Item';
 import Heading from './Heading';
-import { Wrapper, LogoWrapper } from './Wrapper';
+import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
 
 export const SideMenu = () => {
   const { network } = useApi() as APIContextInterface;
   const { openModalWith } = useModal();
-  const { mode, toggleTheme } = useTheme();
   const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname }: any = useLocation();
   const { getBondedAccount }: any = useBalances();
   const { getControllerNotImported } = useStaking();
+  const { setPalettePosition, open }: any = usePalette();
   const controller = getBondedAccount(activeAccount);
   const {
     isSyncing,
@@ -104,6 +104,14 @@ export const SideMenu = () => {
     );
   }
 
+  // toggle palette
+  const posRef = useRef(null);
+  const togglePalette = () => {
+    if (!open) {
+      setPalettePosition(posRef);
+    }
+  };
+
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
@@ -169,6 +177,17 @@ export const SideMenu = () => {
         <button
           type="button"
           onClick={() =>
+            setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)
+          }
+        >
+          <FontAwesomeIcon
+            icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
+            transform="grow-3"
+          />
+        </button>
+        <button
+          type="button"
+          onClick={() =>
             window.open(
               'https://github.com/rossbulat/polkadot-staking-experience',
               '_blank'
@@ -183,23 +202,9 @@ export const SideMenu = () => {
         >
           <CogOutlineSVG width="1.65rem" height="1.65rem" />
         </button>
-        <button type="button" onClick={() => toggleTheme()}>
-          {mode === 'light' ? (
-            <SunnyOutlineSVG width="1.65rem" height="1.65rem" />
-          ) : (
-            <MoonOutlineSVG width="1.45rem" height="1.45rem" />
-          )}
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)
-          }
-        >
-          <FontAwesomeIcon
-            icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
-            transform="grow-3"
-          />
+        <button type="button" onClick={() => togglePalette()}>
+          <PalettePosition ref={posRef} />
+          <FontAwesomeIcon icon={faPalette} transform="grow-5" />
         </button>
       </section>
     </Wrapper>

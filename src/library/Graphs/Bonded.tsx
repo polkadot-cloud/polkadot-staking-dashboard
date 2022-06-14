@@ -81,7 +81,11 @@ export const Bonded = (props: any) => {
   };
 
   return (
-    <GraphWrapper transparent noMargin>
+    <GraphWrapper
+      transparent
+      noMargin
+      style={{ border: 'none', boxShadow: 'none' }}
+    >
       <div
         className="graph"
         style={{

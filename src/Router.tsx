@@ -12,6 +12,7 @@ import {
 import { AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Menu } from 'library/Menu';
+import { Palette } from 'library/Palette';
 import {
   PageWrapper,
   SideInterfaceWrapper,
@@ -50,6 +51,9 @@ export const RouterInner = () => {
 
         {/* Menu: closed by default */}
         <Menu />
+
+        {/* Palette: closed by default */}
+        <Palette />
 
         {/* Left side menu */}
         <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>

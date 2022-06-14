@@ -50,6 +50,7 @@ export const Wrapper = styled.div<any>`
       padding-top: 0.5rem;
 
       button {
+        position: relative;
         color: ${textSecondary};
         transition: color 0.2s;
         margin-right: ${(props) => (props.minimised ? 0 : '0.1rem')};
@@ -160,6 +161,12 @@ export const MinimisedItemWrapper = styled(motion.div)`
       }
     }
   }
+`;
+
+export const PalettePosition = styled.div`
+  position: absolute;
+  right: 10px;
+  top: -150px;
 `;
 
 export default Wrapper;

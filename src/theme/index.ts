@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import theme from 'styled-theming';
-import { defaultThemes } from './default';
+import { defaultThemes, cardThemes } from './default';
 
 /* Aggregates all theme configurations and serves the currently
  * active mode via the theming context.
@@ -165,3 +165,13 @@ export const assistantLink: theme.ThemeSet = theme(
   v,
   defaultThemes.assistant.link
 );
+
+// shadow
+
+export const shadowColor: theme.ThemeSet = theme(v, defaultThemes.shadow);
+
+const c = 'card';
+
+export const cardBorder: theme.ThemeSet = theme(c, cardThemes.card.border);
+
+export const cardShadow: theme.ThemeSet = theme(c, cardThemes.card.shadow);
