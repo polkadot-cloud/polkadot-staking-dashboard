@@ -67,7 +67,7 @@ export const Payee = (props: any) => {
   };
 
   return (
-    <CardWrapper transparent>
+    <>
       <Header
         thisSection={section}
         complete={setup.payee !== null}
@@ -93,7 +93,7 @@ export const Payee = (props: any) => {
         </Items>
         <Footer complete={setup.payee !== null} />
       </MotionContainer>
-    </CardWrapper>
+    </>
   );
 };
 

@@ -76,7 +76,7 @@ export const SetController = (props: any) => {
   });
 
   return (
-    <CardWrapper transparent>
+    <>
       <Header
         thisSection={section}
         title="Set Controller Account"
@@ -94,7 +94,7 @@ export const SetController = (props: any) => {
         />
         <Footer complete={setup.controller !== null} />
       </MotionContainer>
-    </CardWrapper>
+    </>
   );
 };
 
