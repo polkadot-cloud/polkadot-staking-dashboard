@@ -31,7 +31,7 @@ export const SubscanButton = () => {
     <Wrapper
       color={
         services.includes('subscan')
-          ? networkColors[network.name]
+          ? networkColors[`${network.name}-${mode}`]
           : defaultThemes.text.secondary[mode]
       }
       opacity={services.includes('subscan') ? 1 : 0.5}

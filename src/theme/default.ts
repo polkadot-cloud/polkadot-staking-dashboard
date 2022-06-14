@@ -111,5 +111,7 @@ export const cardThemes: any = {
 // configure network colors
 export const networkColors: any = [];
 Object.values(NODE_ENDPOINTS).forEach((node: NodeEndpoint) => {
-  networkColors[node.name] = node.color;
+  const { name, colors } = node;
+  networkColors[`${name}-light`] = colors.light;
+  networkColors[`${name}-dark`] = colors.dark;
 });
