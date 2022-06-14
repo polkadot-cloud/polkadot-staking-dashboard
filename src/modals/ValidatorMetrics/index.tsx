@@ -45,7 +45,15 @@ export const ValidatorMetrics = () => {
         </h1>
       </div>
       <div className="body">
-        <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>
+        <GraphWrapper
+          style={{
+            margin: '0 0.5rem',
+            height: 275,
+            border: 'none',
+            boxShadow: 'none',
+          }}
+          flex
+        >
           <h4>Recent Era Points</h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel

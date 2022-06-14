@@ -14,7 +14,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper, ItemWrapper } from './Wrappers';
 
 export const Palette = () => {
-  const { mode, toggleTheme } = useTheme();
+  const { mode, card, toggleTheme, toggleCard } = useTheme();
   const palette = usePalette();
   const { position } = palette;
 
@@ -78,13 +78,25 @@ export const Palette = () => {
           </ItemWrapper>
           <h4>Card Style</h4>
           <ItemWrapper>
-            <button type="button" onClick={() => {}}>
-              <FontAwesomeIcon icon={faSquare} />
+            <button
+              type="button"
+              onClick={() => toggleCard('flat')}
+              disabled={card === 'flat'}
+            >
+              &nbsp;
             </button>
-            <button type="button" onClick={() => {}}>
+            <button
+              type="button"
+              onClick={() => toggleCard('border')}
+              disabled={card === 'border'}
+            >
               <FontAwesomeIcon icon={faSquareRegular as IconProp} />
             </button>
-            <button type="button" onClick={() => {}}>
+            <button
+              type="button"
+              onClick={() => toggleCard('shadow')}
+              disabled={card === 'shadow'}
+            >
               <FontAwesomeIcon icon={faSquare} />
             </button>
           </ItemWrapper>

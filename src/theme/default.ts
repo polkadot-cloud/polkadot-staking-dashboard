@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+// configure theme
 const v = (light: string, dark: string) => ({
   light,
   dark,
@@ -87,6 +88,19 @@ export const defaultThemes: any = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
+  shadow: v('#eaeaea', '#181818'),
 };
 
-export default defaultThemes;
+// configure card style
+const c = (flat: string, border: string, shadow: string) => ({
+  flat,
+  border,
+  shadow,
+});
+
+export const cardThemes: any = {
+  card: {
+    border: c('none', '1px solid', 'none'),
+    shadow: c('none', 'none', '-2px 2px 26px'),
+  },
+};

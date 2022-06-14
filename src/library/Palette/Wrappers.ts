@@ -3,7 +3,12 @@
 
 import styled from 'styled-components';
 import { FLOATING_MENU_WIDTH } from 'consts';
-import { backgroundPrimary, borderPrimary, textSecondary } from 'theme';
+import {
+  backgroundPrimary,
+  borderPrimary,
+  textSecondary,
+  shadowColor,
+} from 'theme';
 
 export const Wrapper = styled.div<any>`
   background: ${backgroundPrimary};
@@ -14,7 +19,7 @@ export const Wrapper = styled.div<any>`
   display: flex;
   flex-flow: column wrap;
   transition: opacity 0.1s;
-  box-shadow: 3px 3px 20px ${borderPrimary};
+  box-shadow: 3px 3px 20px ${shadowColor};
 
   h4 {
     color: ${textSecondary};

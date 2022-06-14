@@ -233,7 +233,6 @@ export const PageRowWrapper = styled.div<any>`
 export const RowPrimaryWrapper = styled.div<any>`
   order: ${(props) => props.vOrder};
   box-sizing: border-box;
-  overflow: hidden;
   flex: 1;
   flex-basis: 100%;
   max-width: 100%;
@@ -260,7 +259,6 @@ export const RowPrimaryWrapper = styled.div<any>`
 export const RowSecondaryWrapper = styled.div<any>`
   order: ${(props) => props.vOrder};
   box-sizing: border-box;
-  overflow: hidden;
   flex-basis: 100%;
   width: 100%;
   border-radius: 1rem;
