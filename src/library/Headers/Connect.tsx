@@ -26,7 +26,7 @@ export const Connect = () => {
             }}
             whileHover={{ scale: 1.02 }}
           >
-            <FontAwesomeIcon icon={faWallet} color="white" className="icon" />
+            <FontAwesomeIcon icon={faWallet} className="icon" />
             <span>Connect</span>
           </Item>
         </HeadingWrapper>
