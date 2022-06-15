@@ -15,6 +15,7 @@ import Identicon from 'library/Identicon';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { BondedPoolsContextState, ActivePoolContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolsTabs } from 'pages/Pools/context';
 import { Wrapper } from './Wrapper';
 
 export const Pool = (props: any) => {
@@ -23,6 +24,8 @@ export const Pool = (props: any) => {
   const { openModalWith } = useModal();
   const { meta } = useBondedPools() as BondedPoolsContextState;
   const { isBonding } = useActivePool() as ActivePoolContextState;
+  // assumes component is under `PoolsTabsProvider` (Pools page)
+  const { setActiveTab } = usePoolsTabs();
 
   const metadata = meta[batchKey]?.metadata ?? [];
 
@@ -93,6 +96,7 @@ export const Pool = (props: any) => {
                       'JoinPool',
                       {
                         id,
+                        setActiveTab,
                       },
                       'small'
                     )

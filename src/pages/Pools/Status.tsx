@@ -29,13 +29,16 @@ import {
   faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { usePoolsTabs } from './context';
 
-export const Status = ({ setActiveTab }: { setActiveTab: any }) => {
+export const Status = () => {
   const { network, isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { setActiveTab } = usePoolsTabs();
+
   const {
     activeBondedPool,
     poolNominations,

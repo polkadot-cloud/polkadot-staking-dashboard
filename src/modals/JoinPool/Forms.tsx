@@ -21,7 +21,7 @@ export const Forms = () => {
   const { api, network }: any = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize }: any = useModal();
-  const { id: poolId } = config;
+  const { id: poolId, setActiveTab } = config;
   const { activeAccount } = useConnect() as ConnectContextInterface;
 
   const { getBondOptions }: any = useBalances();
@@ -58,6 +58,7 @@ export const Forms = () => {
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
+      setActiveTab(0);
     },
     callbackInBlock: () => {},
   });

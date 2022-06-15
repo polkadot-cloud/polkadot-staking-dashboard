@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   PageRowWrapper,
@@ -27,16 +27,16 @@ import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { PageProps } from '../types';
 import { Roles } from './Roles';
+import { PoolsTabsProvider, usePoolsTabs } from './context';
 
-export const Pools = (props: PageProps) => {
+export const PoolsInner = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network } = useApi() as APIContextInterface;
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools() as BondedPoolsContextState;
   const { isBonding } = useActivePool() as ActivePoolContextState;
-
-  const [activeTab, setActiveTab] = useState(0);
+  const { activeTab, setActiveTab } = usePoolsTabs();
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -71,7 +71,7 @@ export const Pools = (props: PageProps) => {
           </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <RowPrimaryWrapper hOrder={1} vOrder={0}>
-              <Status setActiveTab={setActiveTab} />
+              <Status />
             </RowPrimaryWrapper>
             <RowSecondaryWrapper hOrder={0} vOrder={1}>
               <CardWrapper height={300}>
@@ -117,6 +117,14 @@ export const Pools = (props: PageProps) => {
         </>
       )}
     </>
+  );
+};
+
+export const Pools = (props: PageProps) => {
+  return (
+    <PoolsTabsProvider>
+      <PoolsInner {...props} />
+    </PoolsTabsProvider>
   );
 };
 
