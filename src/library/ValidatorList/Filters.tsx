@@ -49,7 +49,7 @@ export const Filters = () => {
         title="Exclude:"
         buttons={[
           {
-            title: 'Select All',
+            title: 'All',
             onClick: () => toggleAllValidatorFilters(1),
           },
           {
