@@ -48,7 +48,7 @@ export const Wrapper = styled.div`
           color: ${textSecondary};
           display: flex;
           flex-flow: row wrap;
-          align-items: flex-end;
+          align-items: center;
 
           > button {
             font-size: 0.88rem;
