@@ -102,8 +102,7 @@ export const Nominate = () => {
           <Warning text={text} />
         ))}
         <h2>
-          You Have
-          {nominations.length} Nomination
+          You Have {nominations.length} Nomination
           {nominations.length === 1 ? '' : 's'}
         </h2>
         <Separator />
