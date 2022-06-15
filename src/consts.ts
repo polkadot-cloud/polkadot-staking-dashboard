@@ -7,11 +7,12 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * SVGs
  */
+import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
 import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
-import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
-import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
+import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
+import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 
 /*
  * Global Constants
@@ -108,7 +109,7 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
     units: 12,
     ss58: 42,
     icon: WestendIconSVG,
-    logo: PolkadotLogoSVG,
+    logo: WestendLogoSVG,
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
