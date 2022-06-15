@@ -218,7 +218,7 @@ export const PageTitleWrapper = styled.header<any>`
 
       > button {
         padding: 0.75rem 1rem;
-        margin-bottom: ${(props) => (props.sticky ? '0.5rem' : '0.75rem')};
+        margin-bottom: 0.5rem;
         margin-right: 0.75rem;
         font-size: 1.15rem;
         color: ${textSecondary};
