@@ -1,9 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUi } from 'contexts/UI';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
@@ -35,7 +34,8 @@ export const Pools = (props: PageProps) => {
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools() as BondedPoolsContextState;
   const { isBonding } = useActivePool() as ActivePoolContextState;
-  const { isSyncing } = useUi();
+
+  const [activeTab, setActiveTab] = useState(0);
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -46,49 +46,69 @@ export const Pools = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={title} />
-      <StatBoxList>
-        <ActivePoolsStatBox />
-        <MinJoinBondStatBox />
-        <MinCreateBondStatBox />
-      </StatBoxList>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowPrimaryWrapper hOrder={1} vOrder={0}>
-          <Status />
-        </RowPrimaryWrapper>
-        <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <CardWrapper height={300}>
-            <ManageBond />
-          </CardWrapper>
-        </RowSecondaryWrapper>
-      </PageRowWrapper>
-      {isBonding() && (
+      <PageTitle
+        title={title}
+        tabs={[
+          {
+            title: 'Overview',
+            active: activeTab === 0,
+            onClick: () => setActiveTab(0),
+          },
+          {
+            title: 'All Pools',
+            active: activeTab === 1,
+            onClick: () => setActiveTab(1),
+          },
+        ]}
+      />
+      {activeTab === 0 && (
         <>
-          <ManagePool />
+          <StatBoxList>
+            <ActivePoolsStatBox />
+            <MinJoinBondStatBox />
+            <MinCreateBondStatBox />
+          </StatBoxList>
+          <PageRowWrapper className="page-padding" noVerticalSpacer>
+            <RowPrimaryWrapper hOrder={1} vOrder={0}>
+              <Status setActiveTab={setActiveTab} />
+            </RowPrimaryWrapper>
+            <RowSecondaryWrapper hOrder={0} vOrder={1}>
+              <CardWrapper height={300}>
+                <ManageBond />
+              </CardWrapper>
+            </RowSecondaryWrapper>
+          </PageRowWrapper>
+          {isBonding() && (
+            <>
+              <ManagePool />
+              <PageRowWrapper className="page-padding" noVerticalSpacer>
+                <CardWrapper>
+                  <Roles />
+                </CardWrapper>
+              </PageRowWrapper>
+            </>
+          )}
+        </>
+      )}
+      {activeTab === 1 && (
+        <>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
-              <Roles />
+              <CardHeaderWrapper>
+                <h2>
+                  All Pools
+                  <OpenAssistantIcon page="pools" title="Nomination Pools" />
+                </h2>
+              </CardHeaderWrapper>
+              <PoolList
+                pools={bondedPools}
+                title="Active Pools"
+                allowMoreCols
+                pagination
+              />
             </CardWrapper>
           </PageRowWrapper>
         </>
-      )}
-      {!isBonding() && !isSyncing && (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
-          <CardWrapper>
-            <CardHeaderWrapper>
-              <h2>
-                Join a Pool
-                <OpenAssistantIcon page="pools" title="Nomination Pools" />
-              </h2>
-            </CardHeaderWrapper>
-            <PoolList
-              pools={bondedPools}
-              title="Active Pools"
-              allowMoreCols
-              pagination
-            />
-          </CardWrapper>
-        </PageRowWrapper>
       )}
     </>
   );
