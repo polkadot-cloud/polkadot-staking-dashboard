@@ -55,6 +55,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
       ...state,
       status: newStatus,
       resize: state.resize + 1,
+      height: newStatus === 0 ? 0 : state.height,
     };
     setState(_state);
   };
