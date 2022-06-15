@@ -1,7 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { setStateWithRef } from 'Utils';
 
 export const ThemeContext: React.Context<any> = React.createContext({
   toggleTheme: (str?: string) => {},
@@ -20,6 +21,15 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   // provide default theme if not set
   if (localTheme !== 'light' && localTheme !== 'dark') {
     localTheme = 'light';
+    // check system theme
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      localTheme = 'light';
+    } else {
+      localTheme = 'dark';
+    }
     localStorage.setItem('theme', localTheme);
   }
 
@@ -34,24 +44,32 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     mode: localTheme,
     card: localCard,
   });
+  const stateRef = useRef(state);
+
+  // auto change theme on system change
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', (event) => {
+      const _theme = event.matches ? 'dark' : 'light';
+      localStorage.setItem('theme', _theme);
+      setStateWithRef(
+        { ...stateRef.current, mode: _theme },
+        setState,
+        stateRef
+      );
+    });
 
   const toggleTheme = (_theme: string | null = null): void => {
     if (_theme === null) {
       _theme = state.mode === 'dark' ? 'light' : 'dark';
     }
     localStorage.setItem('theme', _theme);
-    setState({
-      ...state,
-      mode: _theme,
-    });
+    setStateWithRef({ ...stateRef.current, mode: _theme }, setState, stateRef);
   };
 
   const toggleCard = (_card: string): void => {
     localStorage.setItem('card', _card);
-    setState({
-      ...state,
-      card: _card,
-    });
+    setStateWithRef({ ...stateRef.current, card: _card }, setState, stateRef);
   };
 
   return (
@@ -59,8 +77,8 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         toggleTheme,
         toggleCard,
-        mode: state.mode,
-        card: state.card,
+        mode: stateRef.current.mode,
+        card: stateRef.current.card,
       }}
     >
       {children}

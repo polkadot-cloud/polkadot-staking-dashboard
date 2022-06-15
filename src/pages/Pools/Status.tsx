@@ -20,16 +20,17 @@ import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 
 import {
-  faChevronCircleRight,
   faPaperPlane,
   faSignOutAlt,
   faTimesCircle,
   faLock,
   faLockOpen,
+  faUserPlus,
+  faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 
-export const Status = () => {
+export const Status = ({ setActiveTab }: { setActiveTab: any }) => {
   const { network, isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { units, unit } = network;
@@ -56,10 +57,17 @@ export const Status = () => {
     let _buttons;
     const createBtn = {
       title: 'Create Pool',
-      icon: faChevronCircleRight,
+      icon: faPlusCircle,
       transform: 'grow-1',
       disabled: !isReady,
       onClick: () => openModalWith('CreatePool', { bondType: 'pool' }, 'small'),
+    };
+    const joinPoolBtn = {
+      title: 'Join Pool',
+      icon: faUserPlus,
+      transform: 'grow-1',
+      disabled: !isReady,
+      onClick: () => setActiveTab(1),
     };
     const leaveBtn = {
       title: 'Leave Pool',
@@ -110,7 +118,7 @@ export const Status = () => {
 
     if (!membership) {
       _label = 'Not in a Pool';
-      _buttons = [createBtn];
+      _buttons = [createBtn, joinPoolBtn];
     } else if (isOwner()) {
       _label = `Admin in Pool ${membership.poolId}`;
       switch (activeBondedPool?.state) {

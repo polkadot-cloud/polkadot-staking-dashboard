@@ -112,7 +112,7 @@ export const Item = styled(motion.button)`
     .icon {
       margin-right: 0.4rem;
       path {
-        fill: white;
+        fill: ${textInvert};
       }
     }
   }

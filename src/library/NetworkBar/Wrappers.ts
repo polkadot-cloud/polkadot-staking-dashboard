@@ -108,14 +108,14 @@ export const NetworkInfo = styled(motion.div)`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  align-content: flex-start;
+  align-content: flex-end;
   padding: 0.25rem 1rem 1rem 1rem;
   overflow: auto;
 
   > .row {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-content: flex-start;
     align-items: flex-start;
 

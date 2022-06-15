@@ -15,6 +15,8 @@ import {
   backgroundGradient,
   backgroundPrimary,
   borderPrimary,
+  textSecondary,
+  buttonSecondaryBackground,
 } from 'theme';
 
 /* EntryWrapper
@@ -180,7 +182,8 @@ export const PageTitleWrapper = styled.header<any>`
   position: sticky;
   top: 0px;
   padding-top: 1.5rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     top: 4rem;
     padding-top: 0.25rem;
@@ -198,6 +201,43 @@ export const PageTitleWrapper = styled.header<any>`
       font-size: 1.5rem;
     }
     transition: font 0.5s;
+  }
+
+  > .tabs {
+    box-sizing: border-box;
+    overflow: auto;
+    max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
+    margin-top: ${(props) => (props.sticky ? '0' : '0.75rem')};
+    transition: margin 0.2s;
+
+    > .inner {
+      display: flex;
+      flex-flow: row nowrap;
+      border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
+      border-bottom-color: ${borderPrimary};
+
+      > button {
+        padding: 0.75rem 1rem;
+        margin-bottom: ${(props) => (props.sticky ? '0.5rem' : '0.75rem')};
+        margin-right: 0.75rem;
+        font-size: 1.15rem;
+        color: ${textSecondary};
+        transition: opacity 0.1s;
+        border-radius: 0.5rem;
+
+        &.active {
+          background: ${buttonSecondaryBackground};
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
   }
 `;
 
