@@ -142,7 +142,7 @@ export const SideMenu = () => {
             <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
           ) : (
             <network.logo
-              style={{ maxHeight: '100%', height: '100%', width: '6rem' }}
+              style={{ maxHeight: '100%', height: '100%', width: '7rem' }}
             />
           )}
         </LogoWrapper>
