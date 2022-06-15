@@ -20,6 +20,7 @@ import { BondedPoolsContextState, ActivePoolContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
+import PoolMembershipBox from './Stats/PoolMembership';
 import MinCreateBondStatBox from './Stats/MinCreateBond';
 import { Status } from './Status';
 import { ManageBond } from './ManageBond';
@@ -92,6 +93,11 @@ export const Pools = (props: PageProps) => {
       )}
       {activeTab === 1 && (
         <>
+          <StatBoxList>
+            <PoolMembershipBox />
+            <ActivePoolsStatBox />
+            <MinJoinBondStatBox />
+          </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
               <CardHeaderWrapper>
