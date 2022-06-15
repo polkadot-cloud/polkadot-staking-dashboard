@@ -75,7 +75,7 @@ export const prefillPayoutGraph = (list: any, maxLength: number) => {
   // get last timestamp to iterate daily
   let lastTimestamp = list[list.length - 1].block_timestamp;
 
-  for (let i = list.length; i < maxLength; i++) {
+  for (let i = list.length; i <= maxLength; i++) {
     lastTimestamp -= 60 * 60 * 24;
     list.push({
       event_id: 'Reward',
@@ -114,8 +114,8 @@ export const calculatePayoutsByDay = (
   // add inactive days
   if (daysSinceLast > 0) {
     daysSinceLast = daysSinceLast > maxDays ? maxDays : daysSinceLast;
-    let timestamp = moment().endOf('day');
-    for (let i = 1; i < daysSinceLast; i++) {
+    let timestamp = moment().add(1, 'days').endOf('day');
+    for (let i = 1; i <= daysSinceLast; i++) {
       timestamp = timestamp.subtract(1, 'days');
       payoutsByDay.push({
         amount: 0,
