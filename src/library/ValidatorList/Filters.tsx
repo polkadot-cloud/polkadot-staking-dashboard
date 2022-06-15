@@ -21,6 +21,7 @@ export const Filters = () => {
     validatorFilters,
     orderValidators,
     toggleFilterValidators,
+    toggleAllValidatorFilters,
   }: any = useUi();
 
   const handleFilter = (fn: any, filter: string) => {
@@ -44,7 +45,20 @@ export const Filters = () => {
           width={175}
         />
       </Category>
-      <Category title="Exclude">
+      <Category
+        title="Exclude:"
+        buttons={[
+          {
+            title: 'Select All',
+            onClick: () => toggleAllValidatorFilters(1),
+          },
+          {
+            title: 'Clear',
+            onClick: () => toggleAllValidatorFilters(0),
+            disabled: !validatorFilters.length,
+          },
+        ]}
+      >
         <Item
           label="inactive validators"
           icon={faClock}

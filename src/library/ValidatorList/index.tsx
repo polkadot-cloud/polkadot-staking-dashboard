@@ -258,7 +258,7 @@ export const ValidatorListInner = (props: any) => {
           </Pagination>
         )}
 
-        {selectable && (
+        {actions.length > 0 && (
           <Selectable>
             {actionsAll.map((a: any, i: number) => (
               <button
@@ -270,26 +270,32 @@ export const ValidatorListInner = (props: any) => {
                 {a.title}
               </button>
             ))}
-            <button
-              type="button"
-              onClick={() => {
-                setSelectActive(!selectActive);
-              }}
-            >
-              {selectActive ? 'Cancel Selection' : 'Select'}
-            </button>
-            {selected.length > 0 && (
+
+            {selectable && (
               <>
-                {actionsSelected.map((a: any, i: number) => (
-                  <button
-                    key={`a_selected_${i}`}
-                    disabled={a.disabled ?? false}
-                    type="button"
-                    onClick={() => a.onClick(provider)}
-                  >
-                    {a.title}
-                  </button>
-                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectActive(!selectActive);
+                  }}
+                >
+                  {selectActive ? 'Cancel Selection' : 'Select'}
+                </button>
+
+                {selected.length > 0 && (
+                  <>
+                    {actionsSelected.map((a: any, i: number) => (
+                      <button
+                        key={`a_selected_${i}`}
+                        disabled={a.disabled ?? false}
+                        type="button"
+                        onClick={() => a.onClick(provider)}
+                      >
+                        {a.title}
+                      </button>
+                    ))}
+                  </>
+                )}
               </>
             )}
           </Selectable>

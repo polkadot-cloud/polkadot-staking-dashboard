@@ -22,6 +22,7 @@ export interface UIContextState {
   applyValidatorOrder: (l: any, o: string) => any;
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
+  toggleAllValidatorFilters: (t: number) => void;
   resetValidatorFilters: () => void;
   toggleService: (k: string) => void;
   getSetupProgress: (a: MaybeAccount) => any;
@@ -47,6 +48,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   applyValidatorOrder: (l: any, o: string) => {},
   applyValidatorFilters: (l: any, k: string, f?: any) => {},
   toggleFilterValidators: (v: string, l: any) => {},
+  toggleAllValidatorFilters: (t: number) => {},
   resetValidatorFilters: () => {},
   toggleService: (k: string) => {},
   getSetupProgress: (a: MaybeAccount) => {},
@@ -204,6 +206,20 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Validator list filtering functions
+
+  const toggleAllValidatorFilters = (toggle: number) => {
+    if (toggle) {
+      setValidatorsFilter([
+        'all_commission',
+        'blocked_nominations',
+        'over_subscribed',
+        'missing_identity',
+        'inactive',
+      ]);
+    } else {
+      setValidatorFilters([]);
+    }
+  };
 
   const toggleFilterValidators = (f: string) => {
     const filter = [...validatorFilters];
@@ -501,6 +517,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         applyValidatorFilters,
         resetValidatorFilters,
         toggleFilterValidators,
+        toggleAllValidatorFilters,
         toggleService,
         getSetupProgress,
         getSetupProgressPercent,

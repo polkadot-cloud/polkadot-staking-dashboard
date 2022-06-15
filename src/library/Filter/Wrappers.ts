@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary, networkColor } from 'theme';
+import {
+  textSecondary,
+  borderPrimary,
+  networkColor,
+  buttonSecondaryBackground,
+} from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
@@ -11,7 +16,7 @@ export const Wrapper = styled.div`
   overflow: hidden;
   display: flex;
   flex-wrap: nowrap;
-  height: 60px;
+  height: 65px;
   margin: 1rem 0;
 
   > .hide-scrollbar {
@@ -39,8 +44,24 @@ export const Wrapper = styled.div`
           flex: 1;
           padding-bottom: 0.5rem;
           padding-left: 0.5rem;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           color: ${textSecondary};
+          display: flex;
+          flex-flow: row wrap;
+          align-items: flex-end;
+
+          > button {
+            font-size: 0.88rem;
+            background: ${buttonSecondaryBackground};
+            border-radius: 0.5rem;
+            margin: 0 0.5rem;
+            padding: 0.25rem 0.75rem;
+
+            &:disabled {
+              opacity: 0.5;
+              cursor: default;
+            }
+          }
         }
         > .items {
           flex: 1;
