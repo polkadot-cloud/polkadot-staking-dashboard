@@ -38,19 +38,21 @@ export const NominateFromFavourites = () => {
   const { bondType, nominations }: any = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;
 
+  // store filtered favourites
+  const [availableFavourites, setAvailableFavourites] = useState([]);
+
   // store selected favourites in local state
   const [selectedFavourites, setSelectedFavourites] = useState([]);
 
   // store filtered favourites
-  const [nonActiveFavourites, setNonActiveFavourites] = useState([]);
-
-  // store filtered favourites
   useEffect(() => {
-    const _nonActiveFavourites = favouritesList.filter(
+    const _availableFavourites = favouritesList.filter(
       (favourite: any) =>
-        !nominations.find((nomination: any) => nomination === favourite.address)
+        !nominations.find(
+          (nomination: any) => nomination === favourite.address
+        ) && !favourite.prefs.blocked
     );
-    setNonActiveFavourites(_nonActiveFavourites);
+    setAvailableFavourites(_availableFavourites);
   }, []);
 
   // calculate active + selected favourites
@@ -124,9 +126,9 @@ export const NominateFromFavourites = () => {
     <PaddingWrapper>
       <h2>Nominate From Favourites</h2>
       <ListWrapper>
-        {nonActiveFavourites.length > 0 ? (
+        {availableFavourites.length > 0 ? (
           <ValidatorList
-            validators={nonActiveFavourites}
+            validators={availableFavourites}
             batchKey={batchKey}
             title="Favourite Validators / Not Nominated"
             selectable
@@ -138,7 +140,7 @@ export const NominateFromFavourites = () => {
             inModal
           />
         ) : (
-          <h3>No Favourites.</h3>
+          <h3>No Favourites Available.</h3>
         )}
       </ListWrapper>
       <NotesWrapper style={{ paddingBottom: 0 }}>
