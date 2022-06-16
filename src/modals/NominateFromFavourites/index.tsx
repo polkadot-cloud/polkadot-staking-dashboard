@@ -166,7 +166,9 @@ export const NominateFromFavourites = () => {
             className="submit"
             onClick={() => submitTx()}
             disabled={
-              !valid || submitting || getControllerNotImported(controller)
+              !valid ||
+              submitting ||
+              (bondType === 'stake' && getControllerNotImported(controller))
             }
           >
             <FontAwesomeIcon
