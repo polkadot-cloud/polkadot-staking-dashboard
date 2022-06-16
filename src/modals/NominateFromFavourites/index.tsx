@@ -66,7 +66,8 @@ export const NominateFromFavourites = () => {
   useEffect(() => {
     setValid(
       nominationsToSubmit.length > 0 &&
-        nominationsToSubmit.length <= maxNominations
+        nominationsToSubmit.length <= maxNominations &&
+        selectedFavourites.length > 0
     );
   }, [selectedFavourites]);
 
