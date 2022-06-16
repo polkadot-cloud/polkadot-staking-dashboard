@@ -63,9 +63,9 @@ export const AccountInner = (props: any) => {
   return (
     <>
       <div>
-        <Identicon value={address} size={26} />
+        <Identicon value={address ?? ''} size={26} />
         <span className="name">
-          &nbsp; {meta?.name ?? clipAddress(address)}
+          &nbsp; {meta?.name ?? clipAddress(address ?? '')}
         </span>
       </div>
       {!imported && (
