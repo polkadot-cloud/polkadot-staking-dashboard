@@ -37,8 +37,14 @@ export const ValidatorListInner = (props: any) => {
   const provider = useValidatorList();
   const modal = useModal();
 
-  const { selectActive, setSelectActive, selected, listFormat, setListFormat } =
-    provider;
+  const {
+    selectActive,
+    setSelectActive,
+    selected,
+    listFormat,
+    setListFormat,
+    selectToggleable,
+  } = provider;
 
   const {
     validatorFilters,
@@ -270,14 +276,16 @@ export const ValidatorListInner = (props: any) => {
                 {a.title}
               </button>
             ))}
-            <button
-              type="button"
-              onClick={() => {
-                setSelectActive(!selectActive);
-              }}
-            >
-              {selectActive ? 'Cancel Selection' : 'Select'}
-            </button>
+            {selectToggleable === true && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectActive(!selectActive);
+                }}
+              >
+                {selectActive ? 'Cancel Selection' : 'Select'}
+              </button>
+            )}
 
             {selected.length > 0 && (
               <>
@@ -348,9 +356,12 @@ export const ValidatorListInner = (props: any) => {
 };
 
 export const ValidatorList = (props: any) => {
-  const { selectActive } = props;
+  const { selectActive, selectToggleable } = props;
   return (
-    <ValidatorListProvider selectActive={selectActive}>
+    <ValidatorListProvider
+      selectActive={selectActive}
+      selectToggleable={selectToggleable}
+    >
       <ValidatorListShouldUpdate {...props} />
     </ValidatorListProvider>
   );

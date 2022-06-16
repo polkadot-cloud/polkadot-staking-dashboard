@@ -50,6 +50,7 @@ export const SelectFavourites = () => {
             title="Favourite Validators"
             selectable
             selectActive
+            selectToggleable={false}
             onSelected={onSelected}
             refetchOnListUpdate
             showMenu={false}
