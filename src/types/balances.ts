@@ -3,6 +3,11 @@
 
 import BN from 'bn.js';
 
+export interface BondedAccount {
+  address: string;
+  unsub: { (): void } | null;
+}
+
 export interface BalancesAccount {
   address: string;
   balance: any;

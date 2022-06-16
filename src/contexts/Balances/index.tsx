@@ -12,6 +12,7 @@ import { rmCommas, setStateWithRef } from 'Utils';
 import {
   BalancesAccount,
   BalancesContextInterface,
+  BondedAccount,
   BondOptionsInterface,
 } from 'types/balances';
 import { ConnectContextInterface } from 'types/connect';
@@ -52,12 +53,16 @@ export const BalancesProvider = ({
   const unsubsRef = useRef<Unsubs>(unsubs);
 
   // bonded controller accounts derived from getBalances
-  const [bondedAccounts, setBondedAccounts] = useState<Array<any>>([]);
-  const bondedAccountsRef = useRef<Array<any>>(bondedAccounts);
+  const [bondedAccounts, setBondedAccounts] = useState<Array<BondedAccount>>(
+    []
+  );
+  const bondedAccountsRef = useRef(bondedAccounts);
 
   // account ledgers to separate storage
   const [ledgers, setLedgers] = useState<any>([]);
   const ledgersRef = useRef<Array<any>>(ledgers);
+
+  // console.log(ledgers);
 
   // store how many ledgers are currently syncing
   const [ledgersSyncingCount, setLedgersSyncingCount] = useState(0);
@@ -159,18 +164,18 @@ export const BalancesProvider = ({
         _account.locks = _locks;
 
         // set account bonded (controller) or null
-        let _bonded: any = bonded.unwrapOr(null);
-        _bonded = _bonded === null ? null : _bonded.toHuman();
+        let _bonded = bonded.unwrapOr(null);
+        _bonded =
+          _bonded === null ? null : (_bonded.toHuman() as string | null);
         _account.bonded = _bonded;
 
         // add bonded account to `bondedAccounts` if present
         if (_bonded !== null) {
-          const _bondedAccounts: Array<any> = [
-            ...bondedAccountsRef.current,
-          ].concat({
+          const _bondedAccounts = [...bondedAccountsRef.current].concat({
             address: _bonded,
             unsub: null,
           });
+
           setStateWithRef(
             _bondedAccounts,
             setBondedAccounts,
@@ -179,7 +184,7 @@ export const BalancesProvider = ({
         }
 
         // set account nominations
-        let _nominations: any = nominations.unwrapOr(null);
+        let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
           _nominations = defaults.nominations;
         } else {
@@ -195,7 +200,7 @@ export const BalancesProvider = ({
         let _accounts = Object.values(accountsRef.current);
         // remove stale account if it's already in list
         _accounts = _accounts
-          .filter((acc: any) => acc.address !== address)
+          .filter((a: BalancesAccount) => a.address !== address)
           .concat(_account);
 
         setStateWithRef(_accounts, setAccounts, accountsRef);
@@ -265,14 +270,14 @@ export const BalancesProvider = ({
 
     // add unsub to `bondedAccounts`
     let _bondedAccounts = bondedAccountsRef.current;
-    _bondedAccounts = _bondedAccounts.map((acc: any) => {
-      if (acc.address === address) {
+    _bondedAccounts = _bondedAccounts.map((a: any) => {
+      if (a.address === address) {
         return {
           address,
           unsub,
         };
       }
-      return acc;
+      return a;
     });
     setStateWithRef(_bondedAccounts, setBondedAccounts, bondedAccountsRef);
     return unsub;
@@ -281,7 +286,7 @@ export const BalancesProvider = ({
   // get an account's balance metadata
   const getAccountBalance = (address: string) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return defaults.balance;
@@ -295,7 +300,7 @@ export const BalancesProvider = ({
 
   // get an account's ledger metadata
   const getAccountLedger = (address: string) => {
-    const ledger = ledgersRef.current.find((acc: any) => acc.stash === address);
+    const ledger = ledgersRef.current.find((a: any) => a.stash === address);
     if (ledger === undefined) {
       return defaults.ledger;
     }
@@ -308,7 +313,7 @@ export const BalancesProvider = ({
   // get an account's locks metadata
   const getAccountLocks = (address: string) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return [];
@@ -321,7 +326,7 @@ export const BalancesProvider = ({
   // get an account's bonded (controller) account)
   const getBondedAccount = (address: string) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return [];
@@ -333,7 +338,9 @@ export const BalancesProvider = ({
   // get an account's nominations
   const getAccountNominations = (address: string) => {
     const _accounts = accountsRef.current;
-    const account = _accounts.find((acc: any) => acc.address === address);
+    const account = _accounts.find(
+      (a: BalancesAccount) => a.address === address
+    );
     if (account === undefined) {
       return [];
     }
@@ -344,7 +351,7 @@ export const BalancesProvider = ({
   // get an account
   const getAccount = (address: string) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return null;
@@ -355,7 +362,7 @@ export const BalancesProvider = ({
   // check if an account is a controller account
   const isController = (address: string) => {
     const existsAsController = accountsRef.current.filter(
-      (account: any) => account?.bonded === address
+      (a: BalancesAccount) => a?.bonded === address
     );
     return existsAsController.length > 0;
   };
@@ -388,7 +395,7 @@ export const BalancesProvider = ({
     }
 
     // free to bond balance
-    const freeToBond: any = BN.max(
+    const freeToBond = BN.max(
       freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
       new BN(0)
     );
