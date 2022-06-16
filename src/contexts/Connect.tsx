@@ -116,7 +116,7 @@ export const ConnectProvider = ({
       const { extensionName } = _extension;
 
       // connect if extension has been connected to previously
-      const localExtensions: string | never[] = localStorageOrDefault(
+      const localExtensions = localStorageOrDefault<Array<string>>(
         `active_extensions`,
         [],
         true
