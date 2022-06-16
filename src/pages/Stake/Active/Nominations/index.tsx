@@ -27,6 +27,10 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountNominations }: any = useBalances();
   const { nominated: stakeNominated, poolNominated }: any = useValidators();
+  let { favouritesList } = useValidators();
+  if (favouritesList === null) {
+    favouritesList = [];
+  }
 
   const { poolNominations, isNominator: isPoolNominator } =
     useActivePool() as ActivePoolContextState;
@@ -52,6 +56,19 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
         bondType,
       },
       'small'
+    );
+  };
+
+  // callback function for adding nominations
+  const cbAddNominations = ({ setSelectActive }: any) => {
+    setSelectActive(false);
+    openModalWith(
+      'NominateFromFavourites',
+      {
+        nominations,
+        bondType,
+      },
+      'large'
     );
   };
 
@@ -116,6 +133,12 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
                         title: 'Stop Nominating Selected',
                         onClick: cbStopNominatingSelected,
                         onSelected: true,
+                      },
+                      {
+                        disabled: !favouritesList.length,
+                        title: 'Add From Favourites',
+                        onClick: cbAddNominations,
+                        onSelected: false,
                       },
                     ]}
                     refetchOnListUpdate

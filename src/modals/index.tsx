@@ -21,6 +21,7 @@ import { LeavePool } from './LeavePool';
 import { ChangePoolState } from './ChangePoolState';
 import { ClaimReward } from './ClaimReward';
 import { SelectFavourites } from './SelectFavourites';
+import { NominateFromFavourites } from './NominateFromFavourites';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -111,6 +112,7 @@ export const Modal = () => {
             {modal === 'ChangePoolState' && <ChangePoolState />}
             {modal === 'ClaimReward' && <ClaimReward />}
             {modal === 'SelectFavourites' && <SelectFavourites />}
+            {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
           </ContentWrapper>
         </HeightWrapper>
         <button

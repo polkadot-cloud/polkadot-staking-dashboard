@@ -16,7 +16,23 @@ export const SelectFavourites = () => {
   const { favouritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback }: any = config;
+
+  // store filtered favourites
+  const [availableFavourites, setAvailableFavourites] = useState([]);
+
+  // store selected favourites in local state
   const [selectedFavourites, setSelectedFavourites] = useState([]);
+
+  // store filtered favourites
+  useEffect(() => {
+    const _availableFavourites = favouritesList.filter(
+      (favourite: any) =>
+        !nominations.find(
+          (nomination: any) => nomination.address === favourite.address
+        ) && !favourite.prefs.blocked
+    );
+    setAvailableFavourites(_availableFavourites);
+  }, []);
 
   useEffect(() => {
     setResize();
@@ -43,19 +59,21 @@ export const SelectFavourites = () => {
     <PaddingWrapper>
       <h2>Add From Favourites</h2>
       <ListWrapper>
-        {favouritesList.length > 0 ? (
+        {availableFavourites.length > 0 ? (
           <ValidatorList
-            validators={favouritesList}
+            validators={availableFavourites}
             batchKey={batchKey}
             title="Favourite Validators"
             selectable
+            selectActive
+            selectToggleable={false}
             onSelected={onSelected}
             refetchOnListUpdate
             showMenu={false}
             inModal
           />
         ) : (
-          <h3>No Favourites.</h3>
+          <h3>No Favourites Available.</h3>
         )}
       </ListWrapper>
       <FooterWrapper>
