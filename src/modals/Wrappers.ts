@@ -115,6 +115,16 @@ export const FooterWrapper = styled.div`
   width: 100%;
   margin-top: 1rem;
 
+  h3 {
+    color: ${textSecondary};
+    opacity: 0.5;
+    margin: 0;
+    &.active {
+      opacity: 1;
+      color: ${networkColor};
+    }
+  }
+
   > div {
     margin-left: 1rem;
   }
@@ -146,6 +156,7 @@ export const Separator = styled.div`
 `;
 
 export const NotesWrapper = styled.div`
+  width: 100%;
   padding: 1rem 0;
   > p {
     color: ${textSecondary};

@@ -53,13 +53,13 @@ export const ChangeNominations = () => {
   const removing = nominations.length - newNominations.length;
   const remaining = newNominations.length;
 
+  // valid to submit transaction
+  const [valid, setValid]: any = useState(false);
+
   // ensure selected key is valid
   useEffect(() => {
     setValid(nominations.length > 0);
   }, [nominations]);
-
-  // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
 
   // ensure selected membership and targests are valid
   let isValid = nominations.length > 0;
