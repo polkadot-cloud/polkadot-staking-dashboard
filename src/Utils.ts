@@ -162,7 +162,7 @@ export const localStorageOrDefault = <T>(
   key: string,
   _default: T,
   parse = false
-) => {
+): T | string => {
   const val: string | null = localStorage.getItem(key);
 
   if (val === null) {
@@ -172,5 +172,5 @@ export const localStorageOrDefault = <T>(
   if (parse) {
     return JSON.parse(val) as T;
   }
-  return val as string;
+  return val;
 };
