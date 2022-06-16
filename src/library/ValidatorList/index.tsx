@@ -348,8 +348,9 @@ export const ValidatorListInner = (props: any) => {
 };
 
 export const ValidatorList = (props: any) => {
+  const { selectActive } = props;
   return (
-    <ValidatorListProvider>
+    <ValidatorListProvider selectActive={selectActive}>
       <ValidatorListShouldUpdate {...props} />
     </ValidatorListProvider>
   );

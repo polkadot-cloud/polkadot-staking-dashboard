@@ -49,6 +49,7 @@ export const SelectFavourites = () => {
             batchKey={batchKey}
             title="Favourite Validators"
             selectable
+            selectActive
             onSelected={onSelected}
             refetchOnListUpdate
             showMenu={false}
