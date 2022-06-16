@@ -9,7 +9,10 @@ import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { useStaking } from 'contexts/Staking';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { PoolMembershipsContextState } from 'types/pools';
+import {
+  ActivePoolContextState,
+  PoolMembershipsContextState,
+} from 'types/pools';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
@@ -17,6 +20,7 @@ import { useBalances } from 'contexts/Balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -27,14 +31,11 @@ export const NominateFromFavourites = () => {
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators();
   const { getControllerNotImported } = useStaking();
+  const { isNominator, isOwner } = useActivePool() as ActivePoolContextState;
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const { maxNominations } = consts;
-  const {
-    bondType,
-    nominations,
-    callback: updateList, // not currenly in use - probably do not need
-  }: any = config;
+  const { bondType, nominations }: any = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;
 
   // store selected favourites in local state
@@ -53,7 +54,9 @@ export const NominateFromFavourites = () => {
   }, []);
 
   // calculate active + selected favourites
-  const nominationsToSubmit = nominations.concat(selectedFavourites);
+  const nominationsToSubmit = nominations.concat(
+    selectedFavourites.map((favourite: any) => favourite.address)
+  );
 
   // valid to submit transaction
   const [valid, setValid]: any = useState(false);
@@ -83,28 +86,28 @@ export const NominateFromFavourites = () => {
 
   // tx to submit
   const tx = () => {
-    const _tx = null;
+    let _tx = null;
     if (!valid || !api) {
       return _tx;
     }
+
+    const targetsToSubmit = nominationsToSubmit.map((item: any) =>
+      bondType === 'pool'
+        ? item
+        : {
+            Id: item,
+          }
+    );
+
+    if (bondType === 'pool') {
+      _tx = api.tx.nominationPools.nominate(
+        membership?.poolId,
+        targetsToSubmit
+      );
+    } else {
+      _tx = api.tx.staking.nominate(targetsToSubmit);
+    }
     return _tx;
-
-    // TODO: combine selected favourites with current nominations
-    // const targetsToSubmit = selectedFavourites.map((item: any) =>
-    //   bondType === 'pool'
-    //     ? item?.address
-    //     : {
-    //         Id: item,
-    //       }
-    // );
-
-    // // TODO: check valid pool membership / role rights
-    // if (bondType === 'pool') {
-    //   _tx = api.tx.nominationPools.nominate(membership.poolId, targetsToSubmit);
-    // } else {
-    //   _tx = api.tx.staking.nominate(targetsToSubmit);
-    // }
-    // return _tx;
   };
 
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
@@ -168,7 +171,8 @@ export const NominateFromFavourites = () => {
             disabled={
               !valid ||
               submitting ||
-              (bondType === 'stake' && getControllerNotImported(controller))
+              (bondType === 'stake' && getControllerNotImported(controller)) ||
+              (bondType === 'pool' && !isNominator() && !isOwner())
             }
           >
             <FontAwesomeIcon

@@ -62,16 +62,11 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   // callback function for adding nominations
   const cbAddNominations = ({ setSelectActive }: any) => {
     setSelectActive(false);
-
-    const updateList = (_nominations: Array<any>) => {
-      console.log('any updates needed?');
-    };
     openModalWith(
       'NominateFromFavourites',
       {
         nominations,
         bondType,
-        callback: updateList,
       },
       'large'
     );
