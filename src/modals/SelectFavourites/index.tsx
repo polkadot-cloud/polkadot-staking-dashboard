@@ -16,6 +16,8 @@ export const SelectFavourites = () => {
   const { favouritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback }: any = config;
+
+  // store selected favourites in local state
   const [selectedFavourites, setSelectedFavourites] = useState([]);
 
   useEffect(() => {
