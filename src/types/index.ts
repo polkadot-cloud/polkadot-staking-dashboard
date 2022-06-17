@@ -73,7 +73,15 @@ export type Unsubs = Array<any | (() => void)>;
 export type MaybeAccount = string | null;
 
 export interface NetworkMetricsContextInterface {
-  metrics: any;
+  metrics: NetworkMetrics;
+}
+
+export interface NetworkMetrics {
+  activeEra: {
+    index: number;
+    start: number;
+  };
+  totalIssuance: BN;
 }
 
 export interface NetworkMetricsState {
