@@ -33,5 +33,6 @@ export interface BalancesContextInterface {
   isController: (address: string) => boolean;
   accounts: Array<BalancesAccount>;
   minReserve: BN;
+  ledgers: any;
   ledgersSyncingCount: number;
 }
