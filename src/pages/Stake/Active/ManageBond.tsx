@@ -27,7 +27,7 @@ export const ManageBond = () => {
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getAccountLedger(activeAccount);
-  const { active, total }: { active: BN; total: BN } = ledger;
+  const { active }: { active: BN } = ledger;
   const {
     freeToBond,
     totalUnlocking,
@@ -91,7 +91,6 @@ export const ManageBond = () => {
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
         free={planckBnToUnit(freeToBond, units)}
-        total={planckBnToUnit(total, units)}
         inactive={inSetup()}
       />
     </>
