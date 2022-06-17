@@ -40,8 +40,7 @@ export const StakingProvider = ({
   } = useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } =
     useApi() as APIContextInterface;
-  const { metrics }: any =
-    useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const {
     accounts,
     getBondedAccount,
