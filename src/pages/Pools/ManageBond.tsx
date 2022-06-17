@@ -3,7 +3,6 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
-import { useBalances } from 'contexts/Balances';
 import { planckBnToUnit } from 'Utils';
 import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
@@ -15,9 +14,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import BN from 'bn.js';
 import { ActivePoolContextState } from 'types/pools';
-import { BalancesContextInterface } from 'types/balances';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -25,11 +22,8 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
-  const { getAccountLedger } = useBalances() as BalancesContextInterface;
   const { getPoolBondOptions, isBonding } =
     useActivePool() as ActivePoolContextState;
-  const ledger = getAccountLedger(activeAccount);
-  const { total }: { total: BN } = ledger;
 
   const {
     active,
@@ -95,7 +89,6 @@ export const ManageBond = () => {
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
         free={planckBnToUnit(freeToBond, units)}
-        total={planckBnToUnit(total, units)}
         inactive={!isBonding()}
       />
     </>

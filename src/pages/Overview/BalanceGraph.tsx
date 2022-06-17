@@ -65,7 +65,12 @@ export const BalanceGraph = () => {
   let graphUnlocking = planckBnToUnit(unlocking, units);
 
   let zeroBalance = false;
-  if (graphStaked === 0 && graphFreeToStake === 0) {
+  if (
+    graphStaked === 0 &&
+    graphFreeToStake === 0 &&
+    graphUnlocking === 0 &&
+    graphInPool === 0
+  ) {
     graphStaked = -1;
     graphUnlocking = -1;
     graphFreeToStake = -1;

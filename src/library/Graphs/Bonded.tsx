@@ -15,12 +15,19 @@ export const Bonded = (props: any) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
 
-  const { active, unlocking, unlocked, total, inactive } = props;
-  let { free } = props;
+  const { active, unlocking, unlocked, inactive } = props;
+  const { free } = props;
+
+  // graph data
+  let graphActive = active;
+  let graphUnlocking = unlocking + unlocked;
+  let graphFree = free;
 
   let zeroBalance = false;
-  if (total === 0 || total === undefined) {
-    free = -1;
+  if (graphActive === 0 && graphUnlocking === 0 && graphFree === 0) {
+    graphActive = -1;
+    graphUnlocking = -1;
+    graphFree = -1;
     zeroBalance = true;
   }
 
@@ -63,18 +70,25 @@ export const Bonded = (props: any) => {
     },
     cutout: '75%',
   };
+  const _colors = zeroBalance
+    ? [
+        defaultThemes.graphs.colors[1][mode],
+        defaultThemes.graphs.inactive2[mode],
+        defaultThemes.graphs.inactive[mode],
+      ]
+    : [
+        networkColors[`${network.name}-${mode}`],
+        defaultThemes.graphs.colors[0][mode],
+        defaultThemes.graphs.colors[1][mode],
+      ];
 
   const data = {
     labels: ['Active', 'Unlocking', 'Free'],
     datasets: [
       {
         label: network.unit,
-        data: [active, unlocking + unlocked, free],
-        backgroundColor: [
-          networkColors[`${network.name}-${mode}`],
-          defaultThemes.graphs.colors[0][mode],
-          defaultThemes.graphs.colors[1][mode],
-        ],
+        data: [graphActive, graphUnlocking, graphFree],
+        backgroundColor: _colors,
         borderWidth: 0,
       },
     ],
