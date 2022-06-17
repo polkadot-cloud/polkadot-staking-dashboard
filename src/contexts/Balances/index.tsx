@@ -3,7 +3,12 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { Fn, MaybeAccount, Unsubs } from 'types';
+import {
+  Fn,
+  MaybeAccount,
+  NetworkMetricsContextInterface,
+  Unsubs,
+} from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
@@ -33,7 +38,7 @@ export const BalancesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network, consts } = useApi() as APIContextInterface;
-  const { metrics } = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { accounts: connectAccounts } = useConnect() as ConnectContextInterface;
   const { activeEra } = metrics;
 

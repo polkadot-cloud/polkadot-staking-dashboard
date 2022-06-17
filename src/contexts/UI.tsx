@@ -7,7 +7,7 @@ import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { MaybeAccount } from 'types';
+import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import { BalancesContextInterface } from 'types/balances';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
@@ -77,7 +77,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { staking, eraStakers, inSetup }: any = useStaking();
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { accounts } = useBalances() as BalancesContextInterface;
 
   // set whether app is syncing

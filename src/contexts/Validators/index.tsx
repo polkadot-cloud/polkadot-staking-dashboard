@@ -8,6 +8,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
+import { NetworkMetricsContextInterface } from 'types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -60,7 +61,8 @@ export const ValidatorsProvider = ({
 }) => {
   const { isReady, api, network, consts } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics }: any =
+    useNetworkMetrics() as NetworkMetricsContextInterface;
   const { accounts, getAccountNominations } =
     useBalances() as BalancesContextInterface;
   const { poolNominations } = useActivePool() as ActivePoolContextState;

@@ -15,6 +15,7 @@ import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
+import { NetworkMetricsContextInterface } from 'types';
 import { PoolListProvider, usePoolList } from './context';
 
 export const PoolListInner = (props: any) => {
@@ -25,7 +26,8 @@ export const PoolListInner = (props: any) => {
 
   const { mode } = useTheme();
   const { isReady, network } = useApi() as APIContextInterface;
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics }: any =
+    useNetworkMetrics() as NetworkMetricsContextInterface;
   const { fetchPoolsMetaBatch }: any = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
 

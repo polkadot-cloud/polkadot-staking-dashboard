@@ -16,6 +16,7 @@ import { APIContextInterface } from 'types/api';
 import { usePoolList } from 'library/PoolList/context';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
+import { NetworkMetricsContextInterface } from 'types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider } from './context';
 
@@ -25,7 +26,8 @@ export const PayoutListInner = (props: any) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics }: any =
+    useNetworkMetrics() as NetworkMetricsContextInterface;
   const { listFormat, setListFormat } = usePoolList();
 
   const disableThrottle = props.disableThrottle ?? false;

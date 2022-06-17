@@ -3,17 +3,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { APIContextInterface } from 'types/api';
+import { NetworkMetricsContextInterface, NetworkMetricsState } from 'types';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 
-export interface NetworkMetricsContextState {
-  metrics: any;
-}
-
-export const NetworkMetricsContext: React.Context<NetworkMetricsContextState> =
-  React.createContext({
-    metrics: {},
-  });
+export const NetworkMetricsContext =
+  React.createContext<NetworkMetricsContextInterface | null>(null);
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
@@ -31,7 +26,7 @@ export const NetworkMetricsProvider = ({
   }, [status]);
 
   // store network metrics in state
-  const [state, setState]: any = useState(defaults.state);
+  const [state, setState] = useState<NetworkMetricsState>(defaults.state);
 
   // manage unsubscribe
   useEffect(() => {

@@ -9,7 +9,7 @@ import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
-import { MaybeAccount } from 'types';
+import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
@@ -59,7 +59,8 @@ export const StakingProvider = ({
   } = useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } =
     useApi() as APIContextInterface;
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics }: any =
+    useNetworkMetrics() as NetworkMetricsContextInterface;
   const {
     accounts,
     getBondedAccount,
