@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { AssistantItem } from 'types/assistant';
+
 export interface ActionProps {
   onClick: () => void;
   height: number | string;
@@ -35,4 +37,8 @@ export interface HeightWrapperProps {
 export interface ItemWrapperProps {
   width: number | string;
   height: number | string;
+}
+
+export interface SectionProps {
+  pageMeta: AssistantItem | undefined;
 }
