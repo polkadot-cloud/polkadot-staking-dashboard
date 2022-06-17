@@ -61,8 +61,7 @@ export const ValidatorsProvider = ({
 }) => {
   const { isReady, api, network, consts } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { metrics }: any =
-    useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { accounts, getAccountNominations } =
     useBalances() as BalancesContextInterface;
   const { poolNominations } = useActivePool() as ActivePoolContextState;
