@@ -10,6 +10,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
@@ -17,7 +18,7 @@ export const Connected = () => {
   const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
   const { hasController, getControllerNotImported } = useStaking();
-  const { getBondedAccount }: any = useBalances();
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);
   const { activeBondedPool } = useActivePool() as ActivePoolContextState;
   const { isSyncing } = useUi();
@@ -55,7 +56,7 @@ export const Connected = () => {
           {hasController() && !isSyncing && (
             <HeadingWrapper>
               <Account
-                value={controller}
+                value={controller ?? ''}
                 title={
                   getControllerNotImported(controller)
                     ? 'Not Imported'

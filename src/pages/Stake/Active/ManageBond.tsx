@@ -15,7 +15,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { BondOptions } from 'types/balances';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
 import BN from 'bn.js';
 
 export const ManageBond = () => {
@@ -23,7 +23,8 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountLedger, getBondOptions }: any = useBalances();
+  const { getAccountLedger, getBondOptions } =
+    useBalances() as BalancesContextInterface;
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getAccountLedger(activeAccount);

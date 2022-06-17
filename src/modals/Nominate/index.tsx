@@ -16,6 +16,7 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -28,7 +29,8 @@ export const Nominate = () => {
   const { api, network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { targets, staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount, getAccountLedger }: any = useBalances();
+  const { getBondedAccount, getAccountLedger } =
+    useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const { units } = network;
   const { minNominatorBond } = staking;

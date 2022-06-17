@@ -18,6 +18,7 @@ import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { BalancesContextInterface } from 'types/balances';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { GenerateNominations } from '../GenerateNominations';
@@ -32,7 +33,7 @@ export const Active = ({ title }: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
   const { targets, setTargets, inSetup } = useStaking();
-  const { getAccountNominations }: any = useBalances();
+  const { getAccountNominations } = useBalances() as BalancesContextInterface;
   const nominations = getAccountNominations(activeAccount);
 
   return (

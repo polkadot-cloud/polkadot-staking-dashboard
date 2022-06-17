@@ -14,6 +14,7 @@ import {
   PoolMembershipsContextState,
   ActivePoolContextState,
 } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -37,7 +38,7 @@ export const ActivePoolProvider = ({
   const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountBalance }: any = useBalances();
+  const { getAccountBalance } = useBalances() as BalancesContextInterface;
   const { enabled } = usePoolsConfig() as PoolsConfigContextState;
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const { createAccounts } = useBondedPools() as BondedPoolsContextState;

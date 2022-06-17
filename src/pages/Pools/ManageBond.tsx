@@ -17,6 +17,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import BN from 'bn.js';
 import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -24,7 +25,7 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
-  const { getAccountLedger }: any = useBalances();
+  const { getAccountLedger } = useBalances() as BalancesContextInterface;
   const { getPoolBondOptions, isBonding } =
     useActivePool() as ActivePoolContextState;
   const ledger = getAccountLedger(activeAccount);

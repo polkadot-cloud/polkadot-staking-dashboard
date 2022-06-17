@@ -17,12 +17,13 @@ import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { api } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondedAccount }: any = useBalances();
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
