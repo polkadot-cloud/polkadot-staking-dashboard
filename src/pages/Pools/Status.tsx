@@ -9,7 +9,6 @@ import {
   PoolState,
 } from 'types/pools';
 import BN from 'bn.js';
-import { formatBalance } from '@polkadot/util';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -18,6 +17,7 @@ import { useConnect } from 'contexts/Connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
+import { planckBnToUnit } from 'Utils';
 
 import {
   faPaperPlane,
@@ -148,14 +148,8 @@ export const Status = () => {
   // Unclaimed rewards `Stat` props
   let { unclaimedReward } = activeBondedPool || {};
   unclaimedReward = unclaimedReward ?? new BN(0);
+  const labelRewards = `${planckBnToUnit(unclaimedReward, units)} ${unit}`;
 
-  const labelRewards = unclaimedReward.gt(new BN(0))
-    ? `${formatBalance(unclaimedReward, {
-        decimals: units,
-        withSiFull: true,
-        withUnit: unit,
-      })}`
-    : `0 ${unit}`;
   const buttonsRewards = unclaimedReward.gtn(0)
     ? [
         {
