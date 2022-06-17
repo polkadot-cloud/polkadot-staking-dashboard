@@ -17,6 +17,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface, BondOptions } from 'types/balances';
 import BN from 'bn.js';
+import { StakingContextInterface } from 'types/staking';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -25,7 +26,7 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountLedger, getBondOptions } =
     useBalances() as BalancesContextInterface;
-  const { inSetup } = useStaking();
+  const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const ledger = getAccountLedger(activeAccount);
   const { active, total }: { active: BN; total: BN } = ledger;

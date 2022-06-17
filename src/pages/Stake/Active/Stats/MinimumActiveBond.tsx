@@ -5,10 +5,11 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
 import { APIContextInterface } from 'types/api';
+import { StakingContextInterface } from 'types/staking';
 
 export const MinimumActiveBondStatBox = () => {
   const { network } = useApi() as APIContextInterface;
-  const { eraStakers } = useStaking();
+  const { eraStakers } = useStaking() as StakingContextInterface;
   const { minActiveBond } = eraStakers;
 
   const params = {

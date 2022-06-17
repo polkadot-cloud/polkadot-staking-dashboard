@@ -9,6 +9,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
@@ -74,7 +75,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady, consts, network } = useApi() as APIContextInterface;
   const { accounts: connectAccounts, activeAccount } =
     useConnect() as ConnectContextInterface;
-  const { staking, eraStakers, inSetup }: any = useStaking();
+  const { staking, eraStakers, inSetup } =
+    useStaking() as StakingContextInterface;
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;

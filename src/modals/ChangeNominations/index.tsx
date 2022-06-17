@@ -22,6 +22,7 @@ import {
 } from 'types/pools';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -32,7 +33,7 @@ import {
 
 export const ChangeNominations = () => {
   const { api } = useApi() as APIContextInterface;
-  const { getControllerNotImported } = useStaking();
+  const { getControllerNotImported } = useStaking() as StakingContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations } =
     useBalances() as BalancesContextInterface;

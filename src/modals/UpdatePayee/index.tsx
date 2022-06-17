@@ -18,6 +18,7 @@ import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
@@ -26,7 +27,8 @@ export const UpdatePayee = () => {
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking, getControllerNotImported } = useStaking();
+  const { staking, getControllerNotImported } =
+    useStaking() as StakingContextInterface;
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);

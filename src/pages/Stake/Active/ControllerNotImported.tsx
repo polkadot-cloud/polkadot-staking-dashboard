@@ -11,11 +11,12 @@ import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();
   const { isSyncing } = useUi();
-  const { getControllerNotImported } = useStaking();
+  const { getControllerNotImported } = useStaking() as StakingContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);

@@ -10,40 +10,15 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
 import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
+import { StakingContextInterface } from 'types/staking';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-export interface StakingContextState {
-  getNominationsStatus: () => any;
-  setTargets: (t: any) => any;
-  hasController: () => any;
-  getControllerNotImported: (a: MaybeAccount) => any;
-  isBonding: () => any;
-  isNominating: () => any;
-  inSetup: () => any;
-  staking: any;
-  eraStakers: any;
-  targets: any;
-  erasStakersSyncing: any;
-}
-
-export const StakingContext: React.Context<StakingContextState> =
-  React.createContext({
-    getNominationsStatus: () => true,
-    setTargets: (t: any) => false,
-    hasController: () => false,
-    getControllerNotImported: (a: MaybeAccount) => false,
-    isBonding: () => false,
-    isNominating: () => false,
-    inSetup: () => false,
-    staking: {},
-    eraStakers: {},
-    targets: [],
-    erasStakersSyncing: false,
-  });
+export const StakingContext =
+  React.createContext<StakingContextInterface | null>(null);
 
 export const useStaking = () => React.useContext(StakingContext);
 

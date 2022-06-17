@@ -15,6 +15,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { ActivePoolContextState } from 'types/pools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { StakingContextInterface } from 'types/staking';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -25,7 +26,7 @@ export const UnbondAll = (props: any) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getControllerNotImported } = useStaking();
+  const { getControllerNotImported } = useStaking() as StakingContextInterface;
   const { getBondOptions, getBondedAccount, getAccountNominations } =
     useBalances() as BalancesContextInterface;
   const { bondType } = config;

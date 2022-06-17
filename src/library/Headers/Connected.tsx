@@ -11,13 +11,15 @@ import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
   const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
-  const { hasController, getControllerNotImported } = useStaking();
+  const { hasController, getControllerNotImported } =
+    useStaking() as StakingContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);
   const { activeBondedPool } = useActivePool() as ActivePoolContextState;

@@ -20,6 +20,7 @@ import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
@@ -27,7 +28,8 @@ export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { api, network } = useApi() as APIContextInterface;
     const { activeAccount } = useConnect() as ConnectContextInterface;
-    const { getControllerNotImported, staking } = useStaking();
+    const { getControllerNotImported, staking } =
+      useStaking() as StakingContextInterface;
     const { activeBondedPool } = useActivePool() as ActivePoolContextState;
     const { setStatus: setModalStatus, config }: any = useModal();
     const { bondType } = config || {};

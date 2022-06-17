@@ -18,12 +18,13 @@ import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
-  const { inSetup } = useStaking();
+  const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountNominations } = useBalances() as BalancesContextInterface;
