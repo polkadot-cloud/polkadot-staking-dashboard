@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { Fn, Unsubs } from 'types';
+import { Fn, MaybeAccount, Unsubs } from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
@@ -286,7 +286,7 @@ export const BalancesProvider = ({
   };
 
   // get an account's balance metadata
-  const getAccountBalance = (address: string) => {
+  const getAccountBalance = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
@@ -301,7 +301,7 @@ export const BalancesProvider = ({
   };
 
   // get an account's ledger metadata
-  const getAccountLedger = (address: string) => {
+  const getAccountLedger = (address: MaybeAccount) => {
     const ledger = ledgersRef.current.find(
       (l: BalanceLedger) => l.stash === address
     );
@@ -315,7 +315,7 @@ export const BalancesProvider = ({
   };
 
   // get an account's locks metadata
-  const getAccountLocks = (address: string) => {
+  const getAccountLocks = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
@@ -328,7 +328,7 @@ export const BalancesProvider = ({
   };
 
   // get an account's bonded (controller) account)
-  const getBondedAccount = (address: string) => {
+  const getBondedAccount = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
@@ -340,7 +340,7 @@ export const BalancesProvider = ({
   };
 
   // get an account's nominations
-  const getAccountNominations = (address: string) => {
+  const getAccountNominations = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
@@ -357,7 +357,7 @@ export const BalancesProvider = ({
   };
 
   // get an account
-  const getAccount = (address: string) => {
+  const getAccount = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
@@ -368,7 +368,7 @@ export const BalancesProvider = ({
   };
 
   // check if an account is a controller account
-  const isController = (address: string) => {
+  const isController = (address: MaybeAccount) => {
     const existsAsController = accountsRef.current.filter(
       (a: BalancesAccount) => (a?.bonded || '') === address
     );
@@ -376,7 +376,7 @@ export const BalancesProvider = ({
   };
 
   // get the bond and unbond amounts available to the user
-  const getBondOptions = (address: string): BondOptions => {
+  const getBondOptions = (address: MaybeAccount): BondOptions => {
     const account = getAccount(address);
     if (account === null) {
       return defaults.bondOptions;

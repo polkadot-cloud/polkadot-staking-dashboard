@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { MaybeAccount } from 'types';
 
 export interface UnlockChunk {
   era: number;
@@ -60,14 +61,14 @@ export interface Nominations {
 export type Targets = Array<string>;
 
 export interface BalancesContextInterface {
-  getAccount: (address: string) => BalancesAccount | null;
-  getAccountBalance: (address: string) => Balance;
-  getAccountLedger: (address: string) => BalanceLedger;
-  getAccountLocks: (address: string) => Array<Lock>;
-  getBondedAccount: (address: string) => string | null;
-  getAccountNominations: (address: string) => Targets;
-  getBondOptions: (address: string) => BondOptions;
-  isController: (address: string) => boolean;
+  getAccount: (address: MaybeAccount) => BalancesAccount | null;
+  getAccountBalance: (address: MaybeAccount) => Balance;
+  getAccountLedger: (address: MaybeAccount) => BalanceLedger;
+  getAccountLocks: (address: MaybeAccount) => Array<Lock>;
+  getBondedAccount: (address: MaybeAccount) => string | null;
+  getAccountNominations: (address: MaybeAccount) => Targets;
+  getBondOptions: (address: MaybeAccount | null) => BondOptions;
+  isController: (address: MaybeAccount) => boolean;
   accounts: Array<BalancesAccount>;
   minReserve: BN;
   ledgersSyncingCount: number;

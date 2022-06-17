@@ -8,6 +8,8 @@ import Worker from 'worker-loader!../../workers/stakers';
 import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { MaybeAccount } from 'types';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
@@ -18,7 +20,7 @@ export interface StakingContextState {
   getNominationsStatus: () => any;
   setTargets: (t: any) => any;
   hasController: () => any;
-  getControllerNotImported: (a: string) => any;
+  getControllerNotImported: (a: MaybeAccount) => any;
   isBonding: () => any;
   isNominating: () => any;
   inSetup: () => any;
@@ -33,7 +35,7 @@ export const StakingContext: React.Context<StakingContextState> =
     getNominationsStatus: () => true,
     setTargets: (t: any) => false,
     hasController: () => false,
-    getControllerNotImported: (a: string) => false,
+    getControllerNotImported: (a: MaybeAccount) => false,
     isBonding: () => false,
     isNominating: () => false,
     inSetup: () => false,
@@ -63,7 +65,7 @@ export const StakingProvider = ({
     getBondedAccount,
     getAccountLedger,
     getAccountNominations,
-  }: any = useBalances();
+  } = useBalances() as BalancesContextInterface;
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store staking metrics in state
@@ -216,6 +218,9 @@ export const StakingProvider = ({
     if (inSetup()) {
       return defaults.nominationStatus;
     }
+    if (!activeAccount) {
+      return defaults.nominationStatus;
+    }
     const nominations = getAccountNominations(activeAccount);
     const statuses: any = {};
 
@@ -351,7 +356,7 @@ export const StakingProvider = ({
    * Helper function to determine whether the controller account
    * has been imported.
    */
-  const getControllerNotImported = (address: string) => {
+  const getControllerNotImported = (address: MaybeAccount) => {
     if (address === null || !activeAccount) {
       return false;
     }
@@ -365,9 +370,10 @@ export const StakingProvider = ({
    * is bonding, or is yet to start.
    */
   const isBonding = () => {
-    if (!hasController()) {
+    if (!hasController() || !activeAccount) {
       return false;
     }
+
     const ledger = getAccountLedger(activeAccount);
     return ledger.active.gt(new BN(0));
   };
@@ -377,7 +383,7 @@ export const StakingProvider = ({
    * has funds unlocking.
    */
   const isUnlocking = () => {
-    if (!hasController()) {
+    if (!hasController() || !activeAccount) {
       return false;
     }
     const ledger = getAccountLedger(activeAccount);
@@ -389,6 +395,9 @@ export const StakingProvider = ({
    * is nominating, or is yet to start.
    */
   const isNominating = () => {
+    if (!activeAccount) {
+      return false;
+    }
     const nominations = getAccountNominations(activeAccount);
     return nominations.length > 0;
   };
