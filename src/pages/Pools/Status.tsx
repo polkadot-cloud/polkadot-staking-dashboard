@@ -123,7 +123,7 @@ export const Status = () => {
       _label = 'Not in a Pool';
       _buttons = [createBtn, joinPoolBtn];
     } else if (isOwner()) {
-      _label = `Admin in Pool ${membership.poolId}`;
+      _label = `Owner of Pool ${membership.poolId}`;
       switch (activeBondedPool?.state) {
         case PoolState.Open:
           _buttons = [destroyBtn, blockBtn];
