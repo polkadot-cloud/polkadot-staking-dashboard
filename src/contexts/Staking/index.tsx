@@ -10,7 +10,13 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
 import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
-import { StakingContextInterface } from 'types/staking';
+import {
+  EraStakers,
+  NominationStatuses,
+  StakingContextInterface,
+  StakingMetrics,
+  StakingTargets,
+} from 'types/staking';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
@@ -45,12 +51,12 @@ export const StakingProvider = ({
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store staking metrics in state
-  const [stakingMetrics, setStakingMetrics]: any = useState(
+  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
     defaults.stakingMetrics
   );
 
   // store stakers metadata in state
-  const [eraStakers, setEraStakers]: any = useState(defaults.eraStakers);
+  const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
   const eraStakersRef = useRef(eraStakers);
 
   // flags whether erasStakers is resyncing
@@ -58,17 +64,17 @@ export const StakingProvider = ({
   const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
   // store account target validators
-  const [targets, _setTargets]: any = useState(
-    localStorageOrDefault(
+  const [targets, _setTargets] = useState<StakingTargets>(
+    localStorageOrDefault<StakingTargets>(
       `${activeAccount ?? ''}_targets`,
       defaults.targets,
       true
-    )
+    ) as StakingTargets
   );
 
   const worker = new Worker();
 
-  worker.onmessage = (message: any) => {
+  worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
       const {
@@ -101,23 +107,23 @@ export const StakingProvider = ({
     }
   };
 
-  const subscribeToStakingkMetrics = async (_api: any) => {
-    if (isReady && metrics.activeEra.index !== 0) {
+  const subscribeToStakingkMetrics = async () => {
+    if (api !== null && isReady && metrics.activeEra.index !== 0) {
       const previousEra = metrics.activeEra.index - 1;
 
       // subscribe to staking metrics
-      const unsub = await _api.queryMulti(
+      const unsub = await api.queryMulti(
         [
-          _api.query.staking.counterForNominators,
-          _api.query.staking.counterForValidators,
-          _api.query.staking.maxNominatorsCount,
-          _api.query.staking.maxValidatorsCount,
-          _api.query.staking.validatorCount,
-          [_api.query.staking.erasValidatorReward, previousEra],
-          [_api.query.staking.erasTotalStake, previousEra],
-          _api.query.staking.minNominatorBond,
-          _api.query.staking.historyDepth,
-          [_api.query.staking.payee, activeAccount],
+          api.query.staking.counterForNominators,
+          api.query.staking.counterForValidators,
+          api.query.staking.maxNominatorsCount,
+          api.query.staking.maxValidatorsCount,
+          api.query.staking.validatorCount,
+          [api.query.staking.erasValidatorReward, previousEra],
+          [api.query.staking.erasTotalStake, previousEra],
+          api.query.staking.minNominatorBond,
+          api.query.staking.historyDepth,
+          [api.query.staking.payee, activeAccount],
         ],
         ([
           _totalNominators,
@@ -172,10 +178,12 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: any) => ({
-      keys: _keys.toHuman(),
-      val: _val.toHuman(),
-    }));
+    const exposures = _exposures.map(([_keys, _val]: any) => {
+      return {
+        keys: _keys.toHuman(),
+        val: _val.toHuman(),
+      };
+    });
 
     // worker to calculate stats
     worker.postMessage({
@@ -198,7 +206,7 @@ export const StakingProvider = ({
       return defaults.nominationStatus;
     }
     const nominations = getAccountNominations(activeAccount);
-    const statuses: any = {};
+    const statuses: NominationStatuses = {};
 
     for (const nomination of nominations) {
       const s = eraStakersRef.current.stakers.find(
@@ -232,7 +240,7 @@ export const StakingProvider = ({
   // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
-      subscribeToStakingkMetrics(api);
+      subscribeToStakingkMetrics();
     }
     return () => {
       // unsubscribe from staking metrics
@@ -305,13 +313,13 @@ export const StakingProvider = ({
           `${activeAccount}_targets`,
           defaults.targets,
           true
-        )
+        ) as StakingTargets
       );
     }
   }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
   /* Sets an account's stored target validators */
-  const setTargets = (_targets: any) => {
+  const setTargets = (_targets: StakingTargets) => {
     localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(_targets));
     _setTargets(_targets);
     return [];

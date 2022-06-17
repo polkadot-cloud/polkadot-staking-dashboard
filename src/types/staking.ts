@@ -27,6 +27,12 @@ export interface EraStakers {
   ownStake: any;
 }
 
+export type NominationStatuses = { [key: string]: string };
+
+export interface StakingTargets {
+  nominations: Array<string>;
+}
+
 export interface StakingContextInterface {
   getNominationsStatus: () => any;
   setTargets: (t: any) => any;
