@@ -10,12 +10,14 @@ import { APIContextInterface } from 'types/api';
 import { rmCommas, setStateWithRef } from 'Utils';
 
 import {
+  BalanceLedger,
   BalancesAccount,
   BalancesContextInterface,
   BondedAccount,
-  BondOptionsInterface,
+  BondOptions,
 } from 'types/balances';
 import { ConnectContextInterface } from 'types/connect';
+import { WalletAccount } from '@talisman-connect/wallets';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -59,10 +61,8 @@ export const BalancesProvider = ({
   const bondedAccountsRef = useRef(bondedAccounts);
 
   // account ledgers to separate storage
-  const [ledgers, setLedgers] = useState<any>([]);
-  const ledgersRef = useRef<Array<any>>(ledgers);
-
-  // console.log(ledgers);
+  const [ledgers, setLedgers] = useState<Array<BalanceLedger>>([]);
+  const ledgersRef = useRef(ledgers);
 
   // store how many ledgers are currently syncing
   const [ledgersSyncingCount, setLedgersSyncingCount] = useState(0);
@@ -98,26 +98,28 @@ export const BalancesProvider = ({
     Object.values(unsubsRef.current).forEach(async (v: Fn) => {
       await v();
     });
-    Object.values(bondedAccountsRef.current).forEach(async (v: any) => {
-      if (v.unsub !== null) {
-        await v.unsub();
+    Object.values(bondedAccountsRef.current).forEach(
+      async (b: BondedAccount) => {
+        if (b.unsub !== null) {
+          await b.unsub();
+        }
       }
-    });
+    );
   };
 
   const getBalances = async () => {
     // subscribe to account balances
     Promise.all(
-      connectAccounts.map((a: any) => subscribeToBalances(a.address))
+      connectAccounts.map((a: WalletAccount) => subscribeToBalances(a.address))
     );
   };
 
   // subscribe to account ledgers
   const getLedgers = async () => {
     const subs = bondedAccountsRef.current.filter(
-      (account: any) => account.unsub === null
+      (b: BondedAccount) => b.unsub === null
     );
-    Promise.all(subs.map((a: any) => subscribeToLedger(a.address)));
+    Promise.all(subs.map((a: BondedAccount) => subscribeToLedger(a.address)));
   };
 
   // subscribe to account balances, ledger, bonded and nominators
@@ -134,7 +136,7 @@ export const BalancesProvider = ({
         [api.query.staking.nominators, address],
       ],
       async ([{ data }, locks, bonded, nominations]): Promise<void> => {
-        const _account: any = {
+        const _account: BalancesAccount = {
           address,
         };
 
@@ -223,7 +225,7 @@ export const BalancesProvider = ({
     );
 
     const unsub = await api.query.staking.ledger(address, (l: any) => {
-      let ledger: any;
+      let ledger: BalanceLedger;
 
       const _ledger = l.unwrapOr(null);
       // fallback to default ledger if not present
@@ -254,7 +256,7 @@ export const BalancesProvider = ({
       let _ledgers = Object.values(ledgersRef.current);
       // remove stale account if it's already in list
       _ledgers = _ledgers
-        .filter((acc: any) => acc.stash !== ledger.stash)
+        .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
         .concat(ledger);
 
       // decrement syncing ledger counter
@@ -292,7 +294,7 @@ export const BalancesProvider = ({
       return defaults.balance;
     }
     const { balance } = account;
-    if (balance.free === undefined) {
+    if (balance?.free === undefined) {
       return defaults.balance;
     }
     return balance;
@@ -300,7 +302,9 @@ export const BalancesProvider = ({
 
   // get an account's ledger metadata
   const getAccountLedger = (address: string) => {
-    const ledger = ledgersRef.current.find((a: any) => a.stash === address);
+    const ledger = ledgersRef.current.find(
+      (l: BalanceLedger) => l.stash === address
+    );
     if (ledger === undefined) {
       return defaults.ledger;
     }
@@ -319,7 +323,7 @@ export const BalancesProvider = ({
       return [];
     }
 
-    const { locks } = account;
+    const locks = account.locks ?? [];
     return locks;
   };
 
@@ -329,23 +333,27 @@ export const BalancesProvider = ({
       (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
-      return [];
+      return null;
     }
-    const { bonded } = account;
+    const bonded = account.bonded ?? null;
     return bonded;
   };
 
   // get an account's nominations
   const getAccountNominations = (address: string) => {
-    const _accounts = accountsRef.current;
-    const account = _accounts.find(
+    const account = accountsRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return [];
     }
-    const { nominations } = account;
-    return nominations.targets;
+    const nominations = account.nominations;
+    if (nominations === undefined) {
+      return [];
+    }
+
+    const targets = nominations.targets ?? [];
+    return targets;
   };
 
   // get an account
@@ -362,13 +370,13 @@ export const BalancesProvider = ({
   // check if an account is a controller account
   const isController = (address: string) => {
     const existsAsController = accountsRef.current.filter(
-      (a: BalancesAccount) => a?.bonded === address
+      (a: BalancesAccount) => (a?.bonded || '') === address
     );
     return existsAsController.length > 0;
   };
 
   // get the bond and unbond amounts available to the user
-  const getBondOptions = (address: string): BondOptionsInterface => {
+  const getBondOptions = (address: string): BondOptions => {
     const account = getAccount(address);
     if (account === null) {
       return defaults.bondOptions;

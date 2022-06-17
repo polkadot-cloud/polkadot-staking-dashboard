@@ -15,7 +15,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { BondOptionsInterface } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import BN from 'bn.js';
 
 export const ManageBond = () => {
@@ -33,7 +33,7 @@ export const ManageBond = () => {
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
-  }: BondOptionsInterface = getBondOptions(activeAccount);
+  }: BondOptions = getBondOptions(activeAccount);
 
   return (
     <>
