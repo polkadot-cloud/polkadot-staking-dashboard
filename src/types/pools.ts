@@ -11,6 +11,7 @@ export interface PoolsConfigContextState {
 export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   createAccounts: (p: number) => any;
+  getBondedPool: (p: number) => any;
   bondedPools: any;
   meta: any;
 }
@@ -34,6 +35,8 @@ export interface ActivePoolContextState {
   targets: any;
   poolNominations: any;
 }
+
+export type MaybePool = number | null;
 
 export enum PoolState {
   /// The pool is open to be joined, and is working normally.

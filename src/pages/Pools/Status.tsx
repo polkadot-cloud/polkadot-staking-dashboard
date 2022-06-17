@@ -24,9 +24,10 @@ import {
   faSignOutAlt,
   faTimesCircle,
   faLock,
-  faLockOpen,
   faUserPlus,
   faPlusCircle,
+  faLockOpen,
+  faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsTabs } from './context';
@@ -162,6 +163,39 @@ export const Status = () => {
         },
       ]
     : undefined;
+
+  // determine pool state icon
+  const poolState = activeBondedPool?.state ?? null;
+
+  let poolStateIcon;
+  switch (poolState) {
+    case PoolState.Block:
+      poolStateIcon = faLock;
+      break;
+    case PoolState.Destroy:
+      poolStateIcon = faExclamationTriangle;
+      break;
+    default:
+      poolStateIcon = undefined;
+  }
+
+  // determine pool status - left side
+  const poolStatusLeft =
+    poolState === PoolState.Block
+      ? 'Blocked / '
+      : poolState === PoolState.Destroy
+      ? 'Destroying / '
+      : '';
+
+  // determine pool status - right side
+  const poolStatusRight = isSyncing
+    ? 'Inactive: Not Nominating'
+    : !isNominating
+    ? 'Inactive: Not Nominating'
+    : activeNominations
+    ? 'Actively Nominating with Pool Funds'
+    : 'Waiting for Active Nominations';
+
   return (
     <CardWrapper height="300">
       <Stat
@@ -181,17 +215,10 @@ export const Status = () => {
         <>
           <Separator />
           <Stat
+            icon={isSyncing ? undefined : poolStateIcon}
             label="Pool Status"
             assistant={['stake', 'Staking Status']}
-            stat={
-              isSyncing
-                ? 'Inactive: Not Nominating'
-                : !isNominating
-                ? 'Inactive: Not Nominating'
-                : activeNominations
-                ? 'Actively Nominating with Pool Funds'
-                : 'Waiting for Active Nominations'
-            }
+            stat={`${poolStatusLeft}${poolStatusRight}`}
           />
         </>
       )}
