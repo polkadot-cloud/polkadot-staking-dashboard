@@ -9,7 +9,6 @@ import {
   PoolState,
 } from 'types/pools';
 import BN from 'bn.js';
-import { formatBalance } from '@polkadot/util';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -18,15 +17,17 @@ import { useConnect } from 'contexts/Connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
+import { planckBnToUnit } from 'Utils';
 
 import {
   faPaperPlane,
   faSignOutAlt,
   faTimesCircle,
   faLock,
-  faLockOpen,
   faUserPlus,
   faPlusCircle,
+  faLockOpen,
+  faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsTabs } from './context';
@@ -123,7 +124,7 @@ export const Status = () => {
       _label = 'Not in a Pool';
       _buttons = [createBtn, joinPoolBtn];
     } else if (isOwner()) {
-      _label = `Admin in Pool ${membership.poolId}`;
+      _label = `Owner of Pool ${membership.poolId}`;
       switch (activeBondedPool?.state) {
         case PoolState.Open:
           _buttons = [destroyBtn, blockBtn];
@@ -148,14 +149,8 @@ export const Status = () => {
   // Unclaimed rewards `Stat` props
   let { unclaimedReward } = activeBondedPool || {};
   unclaimedReward = unclaimedReward ?? new BN(0);
+  const labelRewards = `${planckBnToUnit(unclaimedReward, units)} ${unit}`;
 
-  const labelRewards = unclaimedReward.gt(new BN(0))
-    ? `${formatBalance(unclaimedReward, {
-        decimals: units,
-        withSiFull: true,
-        withUnit: unit,
-      })}`
-    : `0 ${unit}`;
   const buttonsRewards = unclaimedReward.gtn(0)
     ? [
         {
@@ -168,6 +163,39 @@ export const Status = () => {
         },
       ]
     : undefined;
+
+  // determine pool state icon
+  const poolState = activeBondedPool?.state ?? null;
+
+  let poolStateIcon;
+  switch (poolState) {
+    case PoolState.Block:
+      poolStateIcon = faLock;
+      break;
+    case PoolState.Destroy:
+      poolStateIcon = faExclamationTriangle;
+      break;
+    default:
+      poolStateIcon = undefined;
+  }
+
+  // determine pool status - left side
+  const poolStatusLeft =
+    poolState === PoolState.Block
+      ? 'Blocked / '
+      : poolState === PoolState.Destroy
+      ? 'Destroying / '
+      : '';
+
+  // determine pool status - right side
+  const poolStatusRight = isSyncing
+    ? 'Inactive: Not Nominating'
+    : !isNominating
+    ? 'Inactive: Not Nominating'
+    : activeNominations
+    ? 'Actively Nominating with Pool Funds'
+    : 'Waiting for Active Nominations';
+
   return (
     <CardWrapper height="300">
       <Stat
@@ -187,17 +215,10 @@ export const Status = () => {
         <>
           <Separator />
           <Stat
+            icon={isSyncing ? undefined : poolStateIcon}
             label="Pool Status"
             assistant={['stake', 'Staking Status']}
-            stat={
-              isSyncing
-                ? 'Inactive: Not Nominating'
-                : !isNominating
-                ? 'Inactive: Not Nominating'
-                : activeNominations
-                ? 'Actively Nominating with Pool Funds'
-                : 'Waiting for Active Nominations'
-            }
+            stat={`${poolStatusLeft}${poolStatusRight}`}
           />
         </>
       )}

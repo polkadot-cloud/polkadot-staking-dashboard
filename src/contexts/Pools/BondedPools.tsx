@@ -5,7 +5,11 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, u8aConcat } from '@polkadot/util';
 import { APIContextInterface } from 'types/api';
-import { BondedPoolsContextState, PoolsConfigContextState } from 'types/pools';
+import {
+  BondedPoolsContextState,
+  MaybePool,
+  PoolsConfigContextState,
+} from 'types/pools';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import { useApi } from '../Api';
 import { usePoolsConfig } from './PoolsConfig';
@@ -197,11 +201,17 @@ export const BondedPoolsProvider = ({
       .toString();
   };
 
+  const getBondedPool = (poolId: MaybePool) => {
+    const pool = bondedPools.find((p: any) => p.id === poolId) ?? null;
+    return pool;
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
         fetchPoolsMetaBatch,
         createAccounts,
+        getBondedPool,
         bondedPools,
         meta: poolMetaBatchesRef.current,
       }}

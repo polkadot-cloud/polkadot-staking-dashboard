@@ -448,6 +448,7 @@ export const BalancesProvider = ({
         isController,
         accounts: accountsRef.current,
         minReserve,
+        ledgers: ledgersRef.current,
         ledgersSyncingCount: ledgersSyncingCountRef.current,
       }}
     >
