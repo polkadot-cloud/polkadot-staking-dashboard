@@ -73,12 +73,15 @@ export const ConnectProvider = ({
    * reason forgot the site, then all pop-ups will be summoned
    * here. */
   useEffect(() => {
+    // get local external accounts
+    importExternalAccounts();
+
+    // get active extensions
     const localExtensions = localStorageOrDefault(
       `active_extensions`,
       [],
       true
     );
-
     // get account if extensions exist and local extensions exist (previously connected).
     if (extensions.length && localExtensions.length) {
       (async () => {
@@ -90,6 +93,42 @@ export const ConnectProvider = ({
       })();
     }
   }, [extensions, network]);
+
+  /* importExternalAccounts
+   * checks previously imported read-only accounts from
+   * localStorage and adds them to `accounts` state.
+   * if local active account is present, it will also be
+   * assigned as active.
+   */
+  const importExternalAccounts = () => {
+    // import any local external accounts
+    const localExternalAccounts = localStorageOrDefault(
+      `external_accounts`,
+      [],
+      true
+    ) as Array<ImportedAccount>;
+
+    if (localExternalAccounts.length) {
+      // get and format active account if present
+      const _activeAccount = getActiveAccountLocal();
+
+      const activeAccountIsExternal =
+        localExternalAccounts.find(
+          (a: ImportedAccount) => a.address === _activeAccount
+        ) ?? null;
+
+      // set active account for network
+      if (activeAccountIsExternal) {
+        connectToAccount(activeAccountIsExternal);
+      }
+      // add external accounts to imported
+      setStateWithRef(
+        [...accountsRef.current].concat(localExternalAccounts),
+        setAccounts,
+        accountsRef
+      );
+    }
+  };
 
   /* connectActiveExtensions
    * Connects to extensions that already have been connected
@@ -163,7 +202,10 @@ export const ConnectProvider = ({
                   }
 
                   // set active account for network
-                  if (extensionsCount === totalExtensions) {
+                  if (
+                    extensionsCount === totalExtensions &&
+                    activeAccountRef.current === null
+                  ) {
                     connectToAccount(activeWalletAccount);
                   }
                   // remove accounts if they already exist
@@ -376,12 +418,26 @@ export const ConnectProvider = ({
 
   // adds an external account (non-wallet) to accounts
   const addExternalAccount = (address: string) => {
+    const externalAccount = {
+      address,
+      name: clipAddress(address),
+      source: 'external',
+    };
+
+    // add external account to localStorage and update
+    const localExternalAccounts = localStorageOrDefault<Array<ImportedAccount>>(
+      `external_accounts`,
+      [],
+      true
+    ) as Array<ImportedAccount>;
+
+    localStorage.setItem(
+      'external_accounts',
+      JSON.stringify(localExternalAccounts.concat(externalAccount))
+    );
+
     setStateWithRef(
-      [...accountsRef.current].concat({
-        address,
-        name: clipAddress(address),
-        source: 'external',
-      }),
+      [...accountsRef.current].concat(externalAccount),
       setAccounts,
       accountsRef
     );
