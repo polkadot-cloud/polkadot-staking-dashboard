@@ -11,6 +11,7 @@ export interface ConnectContextInterface {
   disconnectFromAccount: () => void;
   addExternalAccount: (a: string) => void;
   getActiveAccount: () => string | null;
+  accountHasSigner: (a: MaybeAccount) => boolean;
   extensions: Array<Wallet>;
   extensionsStatus: { [key: string]: string };
   accounts: Array<WalletAccount>;
@@ -22,5 +23,6 @@ export type ImportedAccount = WalletAccount | ExternalAccount;
 
 export interface ExternalAccount {
   address: string;
+  name: string;
   source: string;
 }

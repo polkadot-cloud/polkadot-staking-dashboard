@@ -9,7 +9,7 @@ import {
   WalletAccount,
   Wallet,
 } from '@talisman-connect/wallets';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { DAPP_NAME } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
@@ -374,15 +374,27 @@ export const ConnectProvider = ({
     return _activeAccount;
   };
 
-  // adds an external account (not imported) to accounts
+  // adds an external account (non-wallet) to accounts
   const addExternalAccount = (address: string) => {
     setStateWithRef(
-      [...accountsRef.current].concat({ address, source: 'external' }),
+      [...accountsRef.current].concat({
+        address,
+        name: clipAddress(address),
+        source: 'external',
+      }),
       setAccounts,
       accountsRef
     );
   };
 
+  // checks whether an account can sign transactions
+  const accountHasSigner = (address: MaybeAccount) => {
+    const exists =
+      accountsRef.current.find(
+        (a: ImportedAccount) => a.address === address && a.source !== 'external'
+      ) !== undefined;
+    return exists;
+  };
   return (
     <ConnectContext.Provider
       value={{
@@ -392,6 +404,7 @@ export const ConnectProvider = ({
         disconnectFromAccount,
         addExternalAccount,
         getActiveAccount,
+        accountHasSigner,
         extensions,
         extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,
