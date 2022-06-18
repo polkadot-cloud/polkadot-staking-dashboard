@@ -91,6 +91,11 @@ export const humanNumberBn = (valBn: BN, units: number): string => {
   return humanNumber(val);
 };
 
+export const usdFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 export const humanNumber = (val: number): string => {
   const str = val.toString().split('.');
   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
