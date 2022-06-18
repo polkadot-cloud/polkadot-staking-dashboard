@@ -86,12 +86,12 @@ export const ConnectProvider = ({
         for (const unsub of _unsubs) {
           unsub();
         }
-        setTimeout(() => connectAllExtensions(), 200);
+        setTimeout(() => connectActiveExtensions(), 200);
       })();
     }
   }, [extensions, network]);
 
-  /* connectAllExtensions
+  /* connectActiveExtensions
    * Connects to extensions that already have been connected
    * to and stored in localStorage.
    * Loop through extensions and connect to accounts.
@@ -99,7 +99,7 @@ export const ConnectProvider = ({
    * extensions are looped before connecting to it; there is
    * no guarantee it still exists - must explicitly find it.
    */
-  const connectAllExtensions = async () => {
+  const connectActiveExtensions = async () => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
@@ -163,10 +163,7 @@ export const ConnectProvider = ({
                   }
 
                   // set active account for network
-                  if (
-                    extensionsCount === totalExtensions &&
-                    activeWalletAccount !== null
-                  ) {
+                  if (extensionsCount === totalExtensions) {
                     connectToAccount(activeWalletAccount);
                   }
                   // remove accounts if they already exist
@@ -292,7 +289,7 @@ export const ConnectProvider = ({
     setStateWithRef(address, _setActiveAccount, activeAccountRef);
   };
 
-  const connectToAccount = (account: WalletAccount) => {
+  const connectToAccount = (account: WalletAccount | null) => {
     setActiveAccount(account?.address ?? null);
     setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
   };
