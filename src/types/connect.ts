@@ -23,6 +23,7 @@ export type ImportedAccount = WalletAccount | ExternalAccount;
 
 export interface ExternalAccount {
   address: string;
+  network: string;
   name: string;
   source: string;
 }
