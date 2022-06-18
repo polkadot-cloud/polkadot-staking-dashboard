@@ -41,6 +41,9 @@ export const ConnectProvider = ({
     useState<ImportedAccount | null>(null);
   const activeAccountMetaRef = useRef(activeAccountMeta);
 
+  // store whether extensions have been fetched
+  const [extensionsFetched, setExtensionsFetched] = useState(false);
+
   // store available extensions in state
   const [extensions, setExtensions] = useState<Array<Wallet>>([]);
 
@@ -58,6 +61,7 @@ export const ConnectProvider = ({
   useEffect(() => {
     if (!extensions.length) {
       setExtensions(getWallets());
+      setExtensionsFetched(true);
     }
     return () => {
       const _unsubs = unsubscribeRef.current;
@@ -73,9 +77,6 @@ export const ConnectProvider = ({
    * reason forgot the site, then all pop-ups will be summoned
    * here. */
   useEffect(() => {
-    // get local external accounts
-    importExternalAccounts();
-
     // get active extensions
     const localExtensions = localStorageOrDefault(
       `active_extensions`,
@@ -92,6 +93,11 @@ export const ConnectProvider = ({
         setTimeout(() => connectActiveExtensions(), 200);
       })();
     }
+
+    // get local external accounts if no extensions
+    if (extensionsFetched && !extensions.length) {
+      importExternalAccounts();
+    }
   }, [extensions, network]);
 
   /* importExternalAccounts
@@ -99,14 +105,12 @@ export const ConnectProvider = ({
    * localStorage and adds them to `accounts` state.
    * if local active account is present, it will also be
    * assigned as active.
+   * Should be called AFTER extension accounts are imported, as
+   * to not replace an extension account by an external account.
    */
   const importExternalAccounts = () => {
     // import any local external accounts
-    const localExternalAccounts = localStorageOrDefault(
-      `external_accounts`,
-      [],
-      true
-    ) as Array<ImportedAccount>;
+    let localExternalAccounts = getLocalExternalAccounts();
 
     if (localExternalAccounts.length) {
       // get and format active account if present
@@ -121,12 +125,17 @@ export const ConnectProvider = ({
       if (activeAccountIsExternal) {
         connectToAccount(activeAccountIsExternal);
       }
-      // add external accounts to imported
-      setStateWithRef(
-        [...accountsRef.current].concat(localExternalAccounts),
-        setAccounts,
-        accountsRef
+
+      // remove already-imported accounts
+      localExternalAccounts = localExternalAccounts.filter(
+        (l: ImportedAccount) =>
+          accountsRef.current.find(
+            (a: ImportedAccount) => a.address === l.address
+          )
       );
+      const _accounts = [...accountsRef.current].concat(localExternalAccounts);
+      // add external accounts to imported
+      setStateWithRef(_accounts, setAccounts, accountsRef);
     }
   };
 
@@ -231,6 +240,11 @@ export const ConnectProvider = ({
         } catch (err) {
           handleExtensionError(extensionName, String(err));
         }
+      }
+
+      // after last extension, import external accounts
+      if (extensionsCount === totalExtensions) {
+        importExternalAccounts();
       }
     });
   };
@@ -424,23 +438,49 @@ export const ConnectProvider = ({
       source: 'external',
     };
 
-    // add external account to localStorage and update
+    // get external accounts from localStorage
+    const localExternalAccounts = getLocalExternalAccounts();
+
+    // add external account to localStorage if not there already
+    if (
+      !localExternalAccounts.find((l: ImportedAccount) => l.address === address)
+    ) {
+      localStorage.setItem(
+        'external_accounts',
+        JSON.stringify(localExternalAccounts.concat(externalAccount))
+      );
+    }
+
+    // add external account to imported accounts
+    setStateWithRef(
+      [...accountsRef.current].concat(externalAccount),
+      setAccounts,
+      accountsRef
+    );
+  };
+
+  /* getLocalExternalAccounts
+   * Formats local external accounts using active network ss58 format.
+   */
+  const getLocalExternalAccounts = () => {
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+
     const localExternalAccounts = localStorageOrDefault<Array<ImportedAccount>>(
       `external_accounts`,
       [],
       true
     ) as Array<ImportedAccount>;
 
-    localStorage.setItem(
-      'external_accounts',
-      JSON.stringify(localExternalAccounts.concat(externalAccount))
-    );
-
-    setStateWithRef(
-      [...accountsRef.current].concat(externalAccount),
-      setAccounts,
-      accountsRef
-    );
+    // reformat address to ensure correct format
+    if (localExternalAccounts.length) {
+      localExternalAccounts.forEach(async (account: ImportedAccount) => {
+        const { address } = keyring.addFromAddress(account.address);
+        account.address = address;
+        return account;
+      });
+    }
+    return localExternalAccounts;
   };
 
   // checks whether an account can sign transactions
