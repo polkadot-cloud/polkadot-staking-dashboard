@@ -65,7 +65,7 @@ export interface BalancesContextInterface {
   getAccount: (address: MaybeAccount) => BalancesAccount | null;
   getAccountBalance: (address: MaybeAccount) => Balance;
   getLedgerForStash: (address: MaybeAccount) => BalanceLedger;
-  getLedgerForController: (address: MaybeAccount) => BalanceLedger;
+  getLedgerForController: (address: MaybeAccount) => BalanceLedger | null;
   getAccountLocks: (address: MaybeAccount) => Array<Lock>;
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;

@@ -321,15 +321,16 @@ export const BalancesProvider = ({
   };
 
   // get a controler account's ledger
+  // returns null if ledger does not exist.
   const getLedgerForController = (address: MaybeAccount) => {
     const ledger = ledgersRef.current.find(
       (l: BalanceLedger) => l.address === address
     );
     if (ledger === undefined) {
-      return defaults.ledger;
+      return null;
     }
     if (ledger.address === undefined) {
-      return defaults.ledger;
+      return null;
     }
     return ledger;
   };

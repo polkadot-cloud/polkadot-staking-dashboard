@@ -28,7 +28,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { isReady } = useApi() as APIContextInterface;
   const { getAccount, activeAccount }: any =
     useConnect() as ConnectContextInterface;
-  const { getLedgerForStash, getAccountLocks, getBondedAccount, ledgers } =
+  const { getLedgerForController, getAccountLocks, getBondedAccount, ledgers } =
     useBalances() as BalancesContextInterface;
   const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
@@ -68,14 +68,8 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
     // accumulate imported controller accounts
     for (const account of accounts) {
-      // TODO: remove the need to have stash in imported accounts.
-      // fetch ledger by controller account.
-      const _stash = _stashes.find(
-        (s: any) => s.controller === account.address
-      );
-
-      if (_stash) {
-        const ledger = getLedgerForStash(_stash.address);
+      const ledger = getLedgerForController(account.address);
+      if (ledger) {
         _controllers.push({
           address: account.address,
           ledger,
