@@ -41,7 +41,7 @@ export const Bond = (props: any) => {
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: setup.bond,
+      bond: initialBondValue,
     });
   }, [activeAccount]);
 
