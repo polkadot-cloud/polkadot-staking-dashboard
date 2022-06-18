@@ -39,6 +39,10 @@ export const Wrapper = styled(motion.button)<any>`
     white-space: nowrap;
     overflow: hidden;
     flex-shrink: 1;
+
+    > svg {
+      color: ${textSecondary};
+    }
   }
 
   .title {

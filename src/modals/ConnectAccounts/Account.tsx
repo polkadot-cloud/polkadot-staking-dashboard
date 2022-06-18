@@ -9,7 +9,7 @@ import { clipAddress } from 'Utils';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { AccountWrapper } from './Wrappers';
 
@@ -84,9 +84,9 @@ export const AccountInner = (props: any) => {
         {source === 'polkadot-js' && <PolkadotJSSVG className="icon" />}
         {!imported && (
           <FontAwesomeIcon
-            icon={faExclamationTriangle as IconProp}
+            icon={faGlasses as IconProp}
             className="icon"
-            style={{ opacity: 0.2 }}
+            style={{ opacity: 0.7 }}
           />
         )}
       </div>
