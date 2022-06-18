@@ -64,7 +64,7 @@ export type Targets = Array<string>;
 export interface BalancesContextInterface {
   getAccount: (address: MaybeAccount) => BalancesAccount | null;
   getAccountBalance: (address: MaybeAccount) => Balance;
-  getAccountLedger: (address: MaybeAccount) => BalanceLedger;
+  getLedgerForStash: (address: MaybeAccount) => BalanceLedger;
   getAccountLocks: (address: MaybeAccount) => Array<Lock>;
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;

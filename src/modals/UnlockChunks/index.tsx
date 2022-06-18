@@ -20,7 +20,7 @@ export const UnlockChunks = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { config, setModalHeight } = useModal();
   const { bondType } = config || {};
-  const { getAccountLedger } = useBalances() as BalancesContextInterface;
+  const { getLedgerForStash } = useBalances() as BalancesContextInterface;
   const { getPoolUnlocking } = useActivePool() as ActivePoolContextState;
 
   // get the unlocking per bondType
@@ -29,7 +29,7 @@ export const UnlockChunks = () => {
     let ledger;
     switch (bondType) {
       case 'stake':
-        ledger = getAccountLedger(activeAccount);
+        ledger = getLedgerForStash(activeAccount);
         unlocking = ledger.unlocking;
         break;
       case 'pool':

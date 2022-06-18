@@ -307,7 +307,7 @@ export const BalancesProvider = ({
   };
 
   // get an account's ledger metadata
-  const getAccountLedger = (address: MaybeAccount) => {
+  const getLedgerForStash = (address: MaybeAccount) => {
     const ledger = ledgersRef.current.find(
       (l: BalanceLedger) => l.stash === address
     );
@@ -388,7 +388,7 @@ export const BalancesProvider = ({
       return defaults.bondOptions;
     }
     const balance = getAccountBalance(address);
-    const ledger = getAccountLedger(address);
+    const ledger = getLedgerForStash(address);
     const { freeAfterReserve } = balance;
     const { active, unlocking } = ledger;
     // free to unbond balance
@@ -441,7 +441,7 @@ export const BalancesProvider = ({
       value={{
         getAccount,
         getAccountBalance,
-        getAccountLedger,
+        getLedgerForStash,
         getAccountLocks,
         getBondedAccount,
         getAccountNominations,

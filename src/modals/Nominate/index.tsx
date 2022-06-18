@@ -31,14 +31,14 @@ export const Nominate = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { targets, staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;
-  const { getBondedAccount, getAccountLedger } =
+  const { getBondedAccount, getLedgerForStash } =
     useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const { units } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
   const { nominations } = targets;
-  const ledger = getAccountLedger(activeAccount);
+  const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
 
   const activeBase = planckBnToUnit(active, units);

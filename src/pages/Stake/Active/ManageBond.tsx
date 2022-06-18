@@ -24,11 +24,11 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountLedger, getBondOptions } =
+  const { getLedgerForStash, getBondOptions } =
     useBalances() as BalancesContextInterface;
   const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
-  const ledger = getAccountLedger(activeAccount);
+  const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
   const {
     freeToBond,

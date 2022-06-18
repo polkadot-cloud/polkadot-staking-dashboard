@@ -33,14 +33,14 @@ export const BondInputWithFeedback = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;
-  const { getAccountLedger, getBondedAccount, getBondOptions } =
+  const { getLedgerForStash, getBondedAccount, getBondOptions } =
     useBalances() as BalancesContextInterface;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { stats } = usePoolsConfig() as PoolsConfigContextState;
   const { minJoinBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(activeAccount);
+  const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
