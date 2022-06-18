@@ -9,7 +9,6 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
-import { useStaking } from 'contexts/Staking';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
@@ -22,7 +21,6 @@ import {
 } from 'types/pools';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -33,8 +31,8 @@ import {
 
 export const ChangeNominations = () => {
   const { api } = useApi() as APIContextInterface;
-  const { getControllerNotImported } = useStaking() as StakingContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations } =
     useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus, config }: any = useModal();
@@ -129,8 +127,12 @@ export const ChangeNominations = () => {
         {isPool && !newNominations.length && (
           <Warning text="A pool needs to have at least one nomination. If the intention is to delete the pool, the pool owner can destroy it." />
         )}
-        {!isPool && getControllerNotImported(controller) && (
-          <Warning text="You must have your controller account imported to stop nominating." />
+        {!accountHasSigner(signingAccount) && (
+          <Warning
+            text={`You must have your${
+              bondType === 'stake' ? ' controller' : ' '
+            }account imported to stop nominating.`}
+          />
         )}
         <h2>
           Stop {!remaining ? 'All Nomination' : `${removing} Nomination`}
@@ -155,7 +157,7 @@ export const ChangeNominations = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                !valid || submitting || getControllerNotImported(controller)
+                !valid || submitting || !accountHasSigner(signingAccount)
               }
             >
               <FontAwesomeIcon
