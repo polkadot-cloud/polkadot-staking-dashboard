@@ -39,6 +39,9 @@ export const Account = (props: AccountProps) => {
         displayValue = clipAddress(value);
       }
       break;
+    case 'text':
+      displayValue = value;
+      break;
     default:
       if (value) {
         displayValue = clipAddress(value);
@@ -64,13 +67,15 @@ export const Account = (props: AccountProps) => {
         <span className="title unassigned">Not Staking</span>
       ) : (
         <>
-          <span className="identicon">
-            <Identicon
-              value={value}
-              size={convertRemToPixels(fontSize) * 1.45}
-            />
-          </span>
-          <span className="title">{displayValue}</span>
+          {format !== 'text' && (
+            <span className="identicon">
+              <Identicon
+                value={value}
+                size={convertRemToPixels(fontSize) * 1.45}
+              />
+            </span>
+          )}
+          <span className="title">{displayValue || clipAddress(value)}</span>
         </>
       )}
 

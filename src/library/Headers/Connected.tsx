@@ -31,6 +31,8 @@ export const Connected = () => {
     poolAddress = addresses.stash;
   }
 
+  const activeAccountLabel = `${hasController() && !isSyncing ? 'Stash' : ''}`;
+
   return (
     <>
       {activeAccount && (
@@ -39,18 +41,10 @@ export const Connected = () => {
           <HeadingWrapper>
             <Account
               canClick
-              onClick={() => {
-                openModalWith(
-                  'ConnectAccounts',
-                  { section: accounts.length ? 1 : 0 },
-                  'large'
-                );
-              }}
               value={activeAccount}
-              label={hasController() && !isSyncing ? 'Stash' : undefined}
+              label={activeAccountLabel}
               format="name"
               filled
-              wallet
             />
           </HeadingWrapper>
 
@@ -95,6 +89,22 @@ export const Connected = () => {
               />
             </HeadingWrapper>
           )}
+          <HeadingWrapper>
+            <Account
+              canClick
+              onClick={() => {
+                openModalWith(
+                  'ConnectAccounts',
+                  { section: accounts.length ? 1 : 0 },
+                  'large'
+                );
+              }}
+              value="Accounts"
+              format="text"
+              filled
+              wallet
+            />
+          </HeadingWrapper>
         </>
       )}
     </>

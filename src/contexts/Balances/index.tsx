@@ -38,7 +38,8 @@ export const BalancesProvider = ({
 }) => {
   const { api, isReady, network, consts } = useApi() as APIContextInterface;
   const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
-  const { accounts: connectAccounts } = useConnect() as ConnectContextInterface;
+  const { accounts: connectAccounts, addExternalAccount } =
+    useConnect() as ConnectContextInterface;
   const { activeEra } = metrics;
 
   // existential amount of unit for an account
@@ -209,6 +210,12 @@ export const BalancesProvider = ({
             value: new BN(value),
           });
         }
+
+        // add stash as external account if not present
+        if (!connectAccounts.find((s: any) => s.address === stash.toHuman())) {
+          addExternalAccount(stash.toHuman());
+        }
+
         ledger = {
           address,
           stash: stash.toHuman(),

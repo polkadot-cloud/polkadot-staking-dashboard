@@ -58,7 +58,7 @@ export const AccountInner = (props: any) => {
   const { address, meta } = props;
   const label = props.label ?? null;
   const source = meta?.source ?? null;
-  const imported = meta !== null;
+  const imported = meta !== null && source !== 'external';
 
   return (
     <>

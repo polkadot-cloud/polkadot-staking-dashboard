@@ -12,7 +12,7 @@ import {
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { DAPP_NAME } from 'consts';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { MaybeAccount } from 'types';
 import { useApi } from './Api';
 
@@ -29,7 +29,7 @@ export const ConnectProvider = ({
   const { network } = useApi() as APIContextInterface;
 
   // store accounts list
-  const [accounts, setAccounts] = useState<Array<WalletAccount>>([]);
+  const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
   const accountsRef = useRef(accounts);
 
   // store the currently active account
@@ -38,7 +38,7 @@ export const ConnectProvider = ({
 
   // store the currently active account metadata
   const [activeAccountMeta, setActiveAccountMeta] =
-    useState<WalletAccount | null>(null);
+    useState<ImportedAccount | null>(null);
   const activeAccountMetaRef = useRef(activeAccountMeta);
 
   // store available extensions in state
@@ -109,7 +109,7 @@ export const ConnectProvider = ({
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
     const totalExtensions = extensions.length;
-    let activeWalletAccount: WalletAccount | null = null;
+    let activeWalletAccount: ImportedAccount | null = null;
 
     extensions.forEach(async (_extension: Wallet) => {
       extensionsCount++;
@@ -168,8 +168,8 @@ export const ConnectProvider = ({
                   }
                   // remove accounts if they already exist
                   let _accounts = [...accountsRef.current].filter(
-                    (a: WalletAccount) => {
-                      return a.source !== extensionName;
+                    (a: ImportedAccount) => {
+                      return a?.source !== extensionName;
                     }
                   );
                   // concat accounts and store
@@ -236,8 +236,8 @@ export const ConnectProvider = ({
 
             // remove accounts if they already exist
             let _accounts = [...accountsRef.current].filter(
-              (a: WalletAccount) => {
-                return a.source !== extensionName;
+              (a: ImportedAccount) => {
+                return a?.source !== extensionName;
               }
             );
             // concat accounts and store
@@ -289,7 +289,7 @@ export const ConnectProvider = ({
     setStateWithRef(address, _setActiveAccount, activeAccountRef);
   };
 
-  const connectToAccount = (account: WalletAccount | null) => {
+  const connectToAccount = (account: ImportedAccount | null) => {
     setActiveAccount(account?.address ?? null);
     setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
   };
@@ -347,7 +347,7 @@ export const ConnectProvider = ({
 
   const getAccount = (addr: MaybeAccount) => {
     const accs = accountsRef.current.filter(
-      (a: WalletAccount) => a.address === addr
+      (a: ImportedAccount) => a?.address === addr
     );
     if (accs.length) {
       return accs[0];
@@ -374,6 +374,15 @@ export const ConnectProvider = ({
     return _activeAccount;
   };
 
+  // adds an external account (not imported) to accounts
+  const addExternalAccount = (address: string) => {
+    setStateWithRef(
+      [...accountsRef.current].concat({ address, source: 'external' }),
+      setAccounts,
+      accountsRef
+    );
+  };
+
   return (
     <ConnectContext.Provider
       value={{
@@ -381,6 +390,7 @@ export const ConnectProvider = ({
         getAccount,
         connectToAccount,
         disconnectFromAccount,
+        addExternalAccount,
         getActiveAccount,
         extensions,
         extensionsStatus: extensionsStatusRef.current,
