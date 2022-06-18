@@ -306,7 +306,7 @@ export const BalancesProvider = ({
     return balance;
   };
 
-  // get an account's ledger metadata
+  // get a stash account's ledger metadata
   const getLedgerForStash = (address: MaybeAccount) => {
     const ledger = ledgersRef.current.find(
       (l: BalanceLedger) => l.stash === address
@@ -315,6 +315,20 @@ export const BalancesProvider = ({
       return defaults.ledger;
     }
     if (ledger.stash === undefined) {
+      return defaults.ledger;
+    }
+    return ledger;
+  };
+
+  // get a controler account's ledger
+  const getLedgerForController = (address: MaybeAccount) => {
+    const ledger = ledgersRef.current.find(
+      (l: BalanceLedger) => l.address === address
+    );
+    if (ledger === undefined) {
+      return defaults.ledger;
+    }
+    if (ledger.address === undefined) {
       return defaults.ledger;
     }
     return ledger;
@@ -442,6 +456,7 @@ export const BalancesProvider = ({
         getAccount,
         getAccountBalance,
         getLedgerForStash,
+        getLedgerForController,
         getAccountLocks,
         getBondedAccount,
         getAccountNominations,
