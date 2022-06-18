@@ -36,7 +36,7 @@ export const AccountButton = (props: any) => {
     <AccountWrapper>
       <button
         type="button"
-        disabled={meta === null}
+        disabled={!disconnect && !imported}
         onClick={() => {
           if (imported) {
             if (disconnect) {
