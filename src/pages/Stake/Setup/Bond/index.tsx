@@ -45,6 +45,17 @@ export const Bond = (props: any) => {
     });
   }, [activeAccount]);
 
+  // apply initial bond value to setup progress
+  useEffect(() => {
+    // only update if Bond is currently active
+    if (setup.section === 4) {
+      setActiveAccountSetup({
+        ...setup,
+        bond: initialBondValue,
+      });
+    }
+  }, [setup.section]);
+
   return (
     <>
       <Header
