@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
+import { ActionProps } from '../types';
 import { ItemWrapper as Wrapper } from '../Wrappers';
 
-export const Action = (props: any) => {
+export const Action = (props: ActionProps) => {
   const { height, subtitle, label, title, onClick } = props;
 
   return (

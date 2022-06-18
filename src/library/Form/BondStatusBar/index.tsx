@@ -10,13 +10,14 @@ import { useStaking } from 'contexts/Staking';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
 import { APIContextInterface } from 'types/api';
+import { StakingContextInterface } from 'types/staking';
 import { Wrapper } from './Wrapper';
 
 export const BondStatusBar = (props: any) => {
   const { value } = props;
 
   const { network } = useApi() as APIContextInterface;
-  const { staking, eraStakers } = useStaking();
+  const { staking, eraStakers } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const { unit, units } = network;
   const { minNominatorBond } = staking;

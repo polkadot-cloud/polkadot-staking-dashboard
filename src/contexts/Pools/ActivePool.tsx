@@ -7,13 +7,15 @@ import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { MaybeAccount } from 'types';
+import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import {
   PoolsConfigContextState,
   BondedPoolsContextState,
   PoolMembershipsContextState,
   ActivePoolContextState,
 } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -34,10 +36,10 @@ export const ActivePoolProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, network, isReady, consts } = useApi() as APIContextInterface;
-  const { metrics } = useNetworkMetrics();
-  const { eraStakers } = useStaking();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { eraStakers } = useStaking() as StakingContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountBalance }: any = useBalances();
+  const { getAccountBalance } = useBalances() as BalancesContextInterface;
   const { enabled } = usePoolsConfig() as PoolsConfigContextState;
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const { createAccounts } = useBondedPools() as BondedPoolsContextState;

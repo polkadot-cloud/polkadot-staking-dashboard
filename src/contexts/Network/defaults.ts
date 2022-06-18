@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { NetworkMetricsState } from 'types';
 
-export const state = {
+export const state: NetworkMetricsState = {
   activeEra: {
     index: 0,
     start: 0,

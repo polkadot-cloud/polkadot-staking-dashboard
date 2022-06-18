@@ -11,6 +11,7 @@ import { PoolMembershipsContextState } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
+import { BalancesContextInterface } from 'types/balances';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import {
@@ -27,8 +28,8 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { isReady } = useApi() as APIContextInterface;
   const { getAccount, activeAccount }: any =
     useConnect() as ConnectContextInterface;
-  const { getAccountLedger, getAccountLocks, getBondedAccount, ledgers }: any =
-    useBalances();
+  const { getAccountLedger, getAccountLocks, getBondedAccount, ledgers } =
+    useBalances() as BalancesContextInterface;
   const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
 

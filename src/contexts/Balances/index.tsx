@@ -3,18 +3,26 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { Fn, Unsubs } from 'types';
+import {
+  Fn,
+  MaybeAccount,
+  NetworkMetricsContextInterface,
+  Unsubs,
+} from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
 import { rmCommas, setStateWithRef } from 'Utils';
 
 import {
+  BalanceLedger,
   BalancesAccount,
   BalancesContextInterface,
-  BondOptionsInterface,
+  BondedAccount,
+  BondOptions,
 } from 'types/balances';
 import { ConnectContextInterface } from 'types/connect';
+import { WalletAccount } from '@talisman-connect/wallets';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -30,7 +38,7 @@ export const BalancesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network, consts } = useApi() as APIContextInterface;
-  const { metrics } = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { accounts: connectAccounts } = useConnect() as ConnectContextInterface;
   const { activeEra } = metrics;
 
@@ -52,12 +60,14 @@ export const BalancesProvider = ({
   const unsubsRef = useRef<Unsubs>(unsubs);
 
   // bonded controller accounts derived from getBalances
-  const [bondedAccounts, setBondedAccounts] = useState<Array<any>>([]);
-  const bondedAccountsRef = useRef<Array<any>>(bondedAccounts);
+  const [bondedAccounts, setBondedAccounts] = useState<Array<BondedAccount>>(
+    []
+  );
+  const bondedAccountsRef = useRef(bondedAccounts);
 
   // account ledgers to separate storage
-  const [ledgers, setLedgers] = useState<any>([]);
-  const ledgersRef = useRef<Array<any>>(ledgers);
+  const [ledgers, setLedgers] = useState<Array<BalanceLedger>>([]);
+  const ledgersRef = useRef(ledgers);
 
   // store how many ledgers are currently syncing
   const [ledgersSyncingCount, setLedgersSyncingCount] = useState(0);
@@ -93,26 +103,28 @@ export const BalancesProvider = ({
     Object.values(unsubsRef.current).forEach(async (v: Fn) => {
       await v();
     });
-    Object.values(bondedAccountsRef.current).forEach(async (v: any) => {
-      if (v.unsub !== null) {
-        await v.unsub();
+    Object.values(bondedAccountsRef.current).forEach(
+      async (b: BondedAccount) => {
+        if (b.unsub !== null) {
+          await b.unsub();
+        }
       }
-    });
+    );
   };
 
   const getBalances = async () => {
     // subscribe to account balances
     Promise.all(
-      connectAccounts.map((a: any) => subscribeToBalances(a.address))
+      connectAccounts.map((a: WalletAccount) => subscribeToBalances(a.address))
     );
   };
 
   // subscribe to account ledgers
   const getLedgers = async () => {
     const subs = bondedAccountsRef.current.filter(
-      (account: any) => account.unsub === null
+      (b: BondedAccount) => b.unsub === null
     );
-    Promise.all(subs.map((a: any) => subscribeToLedger(a.address)));
+    Promise.all(subs.map((a: BondedAccount) => subscribeToLedger(a.address)));
   };
 
   // subscribe to account balances, ledger, bonded and nominators
@@ -129,7 +141,7 @@ export const BalancesProvider = ({
         [api.query.staking.nominators, address],
       ],
       async ([{ data }, locks, bonded, nominations]): Promise<void> => {
-        const _account: any = {
+        const _account: BalancesAccount = {
           address,
         };
 
@@ -159,18 +171,18 @@ export const BalancesProvider = ({
         _account.locks = _locks;
 
         // set account bonded (controller) or null
-        let _bonded: any = bonded.unwrapOr(null);
-        _bonded = _bonded === null ? null : _bonded.toHuman();
+        let _bonded = bonded.unwrapOr(null);
+        _bonded =
+          _bonded === null ? null : (_bonded.toHuman() as string | null);
         _account.bonded = _bonded;
 
         // add bonded account to `bondedAccounts` if present
         if (_bonded !== null) {
-          const _bondedAccounts: Array<any> = [
-            ...bondedAccountsRef.current,
-          ].concat({
+          const _bondedAccounts = [...bondedAccountsRef.current].concat({
             address: _bonded,
             unsub: null,
           });
+
           setStateWithRef(
             _bondedAccounts,
             setBondedAccounts,
@@ -179,7 +191,7 @@ export const BalancesProvider = ({
         }
 
         // set account nominations
-        let _nominations: any = nominations.unwrapOr(null);
+        let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
           _nominations = defaults.nominations;
         } else {
@@ -195,7 +207,7 @@ export const BalancesProvider = ({
         let _accounts = Object.values(accountsRef.current);
         // remove stale account if it's already in list
         _accounts = _accounts
-          .filter((acc: any) => acc.address !== address)
+          .filter((a: BalancesAccount) => a.address !== address)
           .concat(_account);
 
         setStateWithRef(_accounts, setAccounts, accountsRef);
@@ -218,7 +230,7 @@ export const BalancesProvider = ({
     );
 
     const unsub = await api.query.staking.ledger(address, (l: any) => {
-      let ledger: any;
+      let ledger: BalanceLedger;
 
       const _ledger = l.unwrapOr(null);
       // fallback to default ledger if not present
@@ -249,7 +261,7 @@ export const BalancesProvider = ({
       let _ledgers = Object.values(ledgersRef.current);
       // remove stale account if it's already in list
       _ledgers = _ledgers
-        .filter((acc: any) => acc.stash !== ledger.stash)
+        .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
         .concat(ledger);
 
       // decrement syncing ledger counter
@@ -265,37 +277,39 @@ export const BalancesProvider = ({
 
     // add unsub to `bondedAccounts`
     let _bondedAccounts = bondedAccountsRef.current;
-    _bondedAccounts = _bondedAccounts.map((acc: any) => {
-      if (acc.address === address) {
+    _bondedAccounts = _bondedAccounts.map((a: any) => {
+      if (a.address === address) {
         return {
           address,
           unsub,
         };
       }
-      return acc;
+      return a;
     });
     setStateWithRef(_bondedAccounts, setBondedAccounts, bondedAccountsRef);
     return unsub;
   };
 
   // get an account's balance metadata
-  const getAccountBalance = (address: string) => {
+  const getAccountBalance = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return defaults.balance;
     }
     const { balance } = account;
-    if (balance.free === undefined) {
+    if (balance?.free === undefined) {
       return defaults.balance;
     }
     return balance;
   };
 
   // get an account's ledger metadata
-  const getAccountLedger = (address: string) => {
-    const ledger = ledgersRef.current.find((acc: any) => acc.stash === address);
+  const getAccountLedger = (address: MaybeAccount) => {
+    const ledger = ledgersRef.current.find(
+      (l: BalanceLedger) => l.stash === address
+    );
     if (ledger === undefined) {
       return defaults.ledger;
     }
@@ -306,45 +320,51 @@ export const BalancesProvider = ({
   };
 
   // get an account's locks metadata
-  const getAccountLocks = (address: string) => {
+  const getAccountLocks = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return [];
     }
 
-    const { locks } = account;
+    const locks = account.locks ?? [];
     return locks;
   };
 
   // get an account's bonded (controller) account)
-  const getBondedAccount = (address: string) => {
+  const getBondedAccount = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
-      return [];
+      return null;
     }
-    const { bonded } = account;
+    const bonded = account.bonded ?? null;
     return bonded;
   };
 
   // get an account's nominations
-  const getAccountNominations = (address: string) => {
-    const _accounts = accountsRef.current;
-    const account = _accounts.find((acc: any) => acc.address === address);
+  const getAccountNominations = (address: MaybeAccount) => {
+    const account = accountsRef.current.find(
+      (a: BalancesAccount) => a.address === address
+    );
     if (account === undefined) {
       return [];
     }
-    const { nominations } = account;
-    return nominations.targets;
+    const nominations = account.nominations;
+    if (nominations === undefined) {
+      return [];
+    }
+
+    const targets = nominations.targets ?? [];
+    return targets;
   };
 
   // get an account
-  const getAccount = (address: string) => {
+  const getAccount = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
-      (acc: any) => acc.address === address
+      (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
       return null;
@@ -353,15 +373,15 @@ export const BalancesProvider = ({
   };
 
   // check if an account is a controller account
-  const isController = (address: string) => {
+  const isController = (address: MaybeAccount) => {
     const existsAsController = accountsRef.current.filter(
-      (account: any) => account?.bonded === address
+      (a: BalancesAccount) => (a?.bonded || '') === address
     );
     return existsAsController.length > 0;
   };
 
   // get the bond and unbond amounts available to the user
-  const getBondOptions = (address: string): BondOptionsInterface => {
+  const getBondOptions = (address: MaybeAccount): BondOptions => {
     const account = getAccount(address);
     if (account === null) {
       return defaults.bondOptions;
@@ -388,7 +408,7 @@ export const BalancesProvider = ({
     }
 
     // free to bond balance
-    const freeToBond: any = BN.max(
+    const freeToBond = BN.max(
       freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
       new BN(0)
     );

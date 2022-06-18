@@ -4,9 +4,10 @@
 import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { StakingContextInterface } from 'types/staking';
 
 const TotalValidatorsStatBox = () => {
-  const { staking }: any = useStaking();
+  const { staking } = useStaking() as StakingContextInterface;
   const { totalValidators, maxValidatorsCount } = staking;
 
   // total validators as percent

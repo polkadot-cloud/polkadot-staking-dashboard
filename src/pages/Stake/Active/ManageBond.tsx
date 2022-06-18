@@ -15,16 +15,18 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { BondOptionsInterface } from 'types/balances';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
 import BN from 'bn.js';
+import { StakingContextInterface } from 'types/staking';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountLedger, getBondOptions }: any = useBalances();
-  const { inSetup } = useStaking();
+  const { getAccountLedger, getBondOptions } =
+    useBalances() as BalancesContextInterface;
+  const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const ledger = getAccountLedger(activeAccount);
   const { active }: { active: BN } = ledger;
@@ -33,7 +35,7 @@ export const ManageBond = () => {
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
-  }: BondOptionsInterface = getBondOptions(activeAccount);
+  }: BondOptions = getBondOptions(activeAccount);
 
   return (
     <>

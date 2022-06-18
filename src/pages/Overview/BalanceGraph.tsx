@@ -21,7 +21,7 @@ import { usePrices } from 'library/Hooks/usePrices';
 import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { ConnectContextInterface } from 'types/connect';
-import { BondOptionsInterface } from 'types/balances';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { ActivePoolContextState } from 'types/pools';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -31,7 +31,8 @@ export const BalanceGraph = () => {
   const { network } = useApi() as APIContextInterface;
   const { units, features } = network;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountBalance, getBondOptions }: any = useBalances();
+  const { getAccountBalance, getBondOptions } =
+    useBalances() as BalancesContextInterface;
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
@@ -40,7 +41,7 @@ export const BalanceGraph = () => {
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
-  }: BondOptionsInterface = getBondOptions(activeAccount) || {};
+  }: BondOptions = getBondOptions(activeAccount) || {};
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 
   const poolBondOpions = getPoolBondOptions(activeAccount);
@@ -49,15 +50,13 @@ export const BalanceGraph = () => {
     .add(totalUnlocked)
     .add(totalUnlocking);
 
-  let { free } = balance;
+  const { free } = balance;
 
   // get user's total free balance
   const freeBase = planckBnToUnit(free, units);
+
   // convert balance to fiat value
   const freeBalance = Number(freeBase * prices.lastPrice).toFixed(2);
-
-  // convert to currency unit
-  free = planckBnToUnit(free, units);
 
   // graph data
   let graphStaked = planckBnToUnit(staked, units);

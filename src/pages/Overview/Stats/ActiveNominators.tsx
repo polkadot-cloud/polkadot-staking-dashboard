@@ -6,11 +6,12 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Pie } from 'library/StatBoxList/Pie';
 import { APIContextInterface } from 'types/api';
+import { StakingContextInterface } from 'types/staking';
 
 export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi() as APIContextInterface;
   const { maxElectingVoters } = consts;
-  const { eraStakers }: any = useStaking();
+  const { eraStakers } = useStaking() as StakingContextInterface;
   const { activeNominators } = eraStakers;
 
   // active nominators as percent

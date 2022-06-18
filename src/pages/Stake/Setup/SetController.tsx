@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -11,6 +10,7 @@ import { AccountSelect } from 'library/Form/AccountSelect';
 import { planckToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Spacer } from '../Wrappers';
@@ -23,8 +23,8 @@ export const SetController = (props: any) => {
   const { units } = network;
   const { activeAccount, accounts, getAccount } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount, getAccountBalance, minReserve, isController }: any =
-    useBalances();
+  const { getBondedAccount, getAccountBalance, minReserve, isController } =
+    useBalances() as BalancesContextInterface;
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const controller = getBondedAccount(activeAccount);
   const setup = getSetupProgress(activeAccount);

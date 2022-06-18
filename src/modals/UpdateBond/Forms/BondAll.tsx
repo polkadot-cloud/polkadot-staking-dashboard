@@ -12,7 +12,7 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ActivePoolContextState } from 'types/pools';
-import { BondOptionsInterface } from 'types/balances';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
@@ -24,11 +24,11 @@ export const BondAll = (props: any) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondOptions }: any = useBalances();
+  const { getBondOptions } = useBalances() as BalancesContextInterface;
   const { bondType } = config;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 
-  const stakeBondOptions: BondOptionsInterface = getBondOptions(activeAccount);
+  const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';

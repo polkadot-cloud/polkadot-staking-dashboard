@@ -9,16 +9,17 @@ import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import { ConnectContextInterface } from 'types/connect';
 import Wrapper from './Wrapper';
 import Identicon from '../Identicon';
+import { AccountProps } from './types';
 
-export const Account = (props: any) => {
+export const Account = (props: AccountProps) => {
   const { mode } = useTheme();
   const { getAccount } = useConnect() as ConnectContextInterface;
 
   // data props
-  const { value, label }: any = props;
+  const { value, label } = props;
 
   // presentational props
-  const { format }: any = props;
+  const { format } = props;
   const filled = props.filled ?? false;
   const fontSize = props.fontSize ?? '1rem';
   const wallet = props.wallet ?? false;

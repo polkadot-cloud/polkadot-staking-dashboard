@@ -5,8 +5,9 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { DefinitionWrapper as Wrapper } from '../Wrappers';
+import { DefinitionProps } from '../types';
 
-export const Heading = (props: any) => {
+export const Heading = (props: DefinitionProps) => {
   const { onClick, title, description } = props;
 
   const subtitle =
@@ -15,7 +16,7 @@ export const Heading = (props: any) => {
       : description[0];
 
   return (
-    <Wrapper width="100%" height="100px">
+    <Wrapper>
       <motion.button
         className="item"
         whileHover={{ scale: 1.01 }}

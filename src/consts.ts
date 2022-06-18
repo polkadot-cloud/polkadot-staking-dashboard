@@ -122,7 +122,7 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
 
 export const POLKADOT_URL = 'https://polkadot.network';
 
-export const CONNECTION_SYMBOL_COLORS: any = {
+export const CONNECTION_SYMBOL_COLORS: { [key: string]: string } = {
   disconnected: 'red',
   connecting: 'orange',
   connected: 'green',

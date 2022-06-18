@@ -8,20 +8,21 @@ import { motion } from 'framer-motion';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
-import { humanNumber, planckToUnit } from 'Utils';
+import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { APIContextInterface } from 'types/api';
 import { BondedPoolsContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { StakingContextInterface } from 'types/staking';
 import { Wrapper, Item } from './Wrappers';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { staking }: any = useStaking();
+  const { staking } = useStaking() as StakingContextInterface;
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
   const { bondedPools } = useBondedPools() as BondedPoolsContextState;
 
@@ -46,7 +47,7 @@ export const Announcements = () => {
 
   const nominatorCapReached = maxNominatorsCount.eq(totalNominators);
 
-  let nominatorReachedPercentage = 0;
+  let nominatorReachedPercentage = new BN(0);
   if (maxNominatorsCount.gt(new BN(0)) && totalNominators.gt(new BN(0))) {
     nominatorReachedPercentage = totalNominators.div(
       maxNominatorsCount.div(new BN(100))
@@ -68,12 +69,12 @@ export const Announcements = () => {
   }
 
   // 90% plus nominators reached - warning
-  if (nominatorReachedPercentage >= 90) {
+  if (nominatorReachedPercentage.toNumber() >= 90) {
     announcements.push({
       class: 'warning',
-      title: `${nominatorReachedPercentage.toFixed(
-        2
-      )}% of Nominator Limit Reached.`,
+      title: `${nominatorReachedPercentage
+        .toNumber()
+        .toFixed(2)}% of Nominator Limit Reached.`,
       subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(
         maxNominatorsCount.toNumber()
       )}.`,
@@ -95,7 +96,7 @@ export const Announcements = () => {
     title: `The minimum nominator bond is now ${minNominatorBondBase} ${network.unit}.`,
     subtitle: `The minimum bonding amount to start nominating on ${
       network.name
-    } is now ${planckToUnit(minNominatorBond, units)} ${network.unit}.`,
+    } is now ${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // maximum nominators

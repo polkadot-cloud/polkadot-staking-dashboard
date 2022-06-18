@@ -21,16 +21,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavourites = () => {
   const { consts, api } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondedAccount }: any = useBalances();
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators();
-  const { getControllerNotImported } = useStaking();
+  const { getControllerNotImported } = useStaking() as StakingContextInterface;
   const { isNominator, isOwner } = useActivePool() as ActivePoolContextState;
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;

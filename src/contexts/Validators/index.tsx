@@ -7,6 +7,8 @@ import { sleep, removePercentage, rmCommas, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
+import { NetworkMetricsContextInterface } from 'types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -59,8 +61,9 @@ export const ValidatorsProvider = ({
 }) => {
   const { isReady, api, network, consts } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { metrics }: any = useNetworkMetrics();
-  const { accounts, getAccountNominations }: any = useBalances();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { accounts, getAccountNominations } =
+    useBalances() as BalancesContextInterface;
   const { poolNominations } = useActivePool() as ActivePoolContextState;
   const { maxNominatorRewardedPerValidator } = consts;
 
@@ -144,15 +147,18 @@ export const ValidatorsProvider = ({
   }, [isReady, activeAccount, accounts]);
 
   const fetchNominatedList = async () => {
-    // get raw nominations list
-    let n = getAccountNominations(activeAccount);
+    if (!activeAccount) {
+      return;
+    }
+    // get raw targets list
+    const targets = getAccountNominations(activeAccount);
+
     // format to list format
-    n = n.map((item: any, index: any) => {
+    const targetsFormatted = targets.map((item: any) => {
       return { address: item };
     });
     // fetch preferences
-
-    const nominationsWithPrefs = await fetchValidatorPrefs(n);
+    const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
 
     if (nominationsWithPrefs) {
       setNominated(nominationsWithPrefs);

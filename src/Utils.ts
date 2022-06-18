@@ -6,6 +6,9 @@ import { MutableRefObject } from 'react';
 import { PagesConfig } from 'types/index';
 
 export const clipAddress = (val: string) => {
+  if (typeof val !== 'string') {
+    return val;
+  }
   return `${val.substring(0, 6)}...${val.substring(
     val.length - 6,
     val.length
@@ -162,7 +165,7 @@ export const localStorageOrDefault = <T>(
   key: string,
   _default: T,
   parse = false
-) => {
+): T | string => {
   const val: string | null = localStorage.getItem(key);
 
   if (val === null) {
@@ -172,5 +175,5 @@ export const localStorageOrDefault = <T>(
   if (parse) {
     return JSON.parse(val) as T;
   }
-  return val as string;
+  return val;
 };

@@ -5,11 +5,10 @@ import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
-import { CardWrapper } from 'library/Graphs/Wrappers';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { BondStatusBar } from 'library/Form/BondStatusBar';
 import { ConnectContextInterface } from 'types/connect';
-import { BondOptionsInterface } from 'types/balances';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
@@ -22,9 +21,9 @@ export const Bond = (props: any) => {
   const { units } = network;
   const { section } = props;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondOptions }: any = useBalances();
+  const { getBondOptions } = useBalances() as BalancesContextInterface;
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const { freeToBond }: BondOptionsInterface = getBondOptions(activeAccount);
+  const { freeToBond }: BondOptions = getBondOptions(activeAccount);
   const setup = getSetupProgress(activeAccount);
 
   // either free to bond or existing setup value

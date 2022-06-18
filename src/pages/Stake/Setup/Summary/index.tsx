@@ -4,7 +4,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
@@ -124,8 +123,6 @@ export const Summary = (props: any) => {
           }}
         >
           <Button
-            padding="0.75rem 1.2rem"
-            fontSize="1.1rem"
             onClick={() => submitTx()}
             disabled={submitting}
             title="Start Staking"

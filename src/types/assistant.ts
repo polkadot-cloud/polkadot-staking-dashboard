@@ -13,11 +13,13 @@ export type AssistantConfig = Array<AssistantItem>;
 
 export interface AssistantItem {
   key: string;
-  definitions?: AssistantDefinitions | [];
-  external?: AssistantExternal | [];
+  definitions?: AssistantDefinitions;
+  external?: AssistantExternals;
 }
 
-export type AssistantDefinitions = Array<AssistantDefinition> | [];
+export type AssistantExternals = Array<AssistantExternal>;
+
+export type AssistantDefinitions = Array<AssistantDefinition>;
 
 export type AssistantDefinition = {
   title: string;

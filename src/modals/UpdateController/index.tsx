@@ -14,6 +14,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
@@ -22,7 +23,8 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus }: any = useModal();
   const { accounts, activeAccount, getAccount } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount, isController }: any = useBalances();
+  const { getBondedAccount, isController } =
+    useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 

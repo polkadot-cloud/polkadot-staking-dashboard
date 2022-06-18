@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { MaybeAccount } from 'types';
+import { WalletAccount, Wallet } from '@talisman-connect/wallets';
 
 export interface ConnectContextInterface {
   connectExtensionAccounts: (n: string) => void;
-  getAccount: (account: MaybeAccount) => any;
-  connectToAccount: (a: any) => void;
+  getAccount: (account: MaybeAccount) => WalletAccount | null;
+  connectToAccount: (a: WalletAccount) => void;
   disconnectFromAccount: () => void;
-  getActiveAccount: () => any;
-  extensions: any;
-  extensionsStatus: any;
-  accounts: any;
+  getActiveAccount: () => string | null;
+  extensions: Array<Wallet>;
+  extensionsStatus: { [key: string]: string };
+  accounts: Array<WalletAccount>;
   activeAccount: string | null;
-  activeAccountMeta: any;
+  activeAccountMeta: WalletAccount | null;
 }

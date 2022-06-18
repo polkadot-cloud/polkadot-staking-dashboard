@@ -20,6 +20,8 @@ import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 
 export const Status = () => {
   const { isReady } = useApi() as APIContextInterface;
@@ -27,8 +29,9 @@ export const Status = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
-  const { getNominationsStatus, staking, inSetup } = useStaking();
-  const { getAccountNominations }: any = useBalances();
+  const { getNominationsStatus, staking, inSetup } =
+    useStaking() as StakingContextInterface;
+  const { getAccountNominations } = useBalances() as BalancesContextInterface;
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
 

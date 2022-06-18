@@ -24,6 +24,8 @@ import { APIContextInterface } from 'types/api';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { ConnectContextInterface } from 'types/connect';
 import { usePalette } from 'contexts/Palette';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import Item from './Item';
 import Heading from './Heading';
 import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
@@ -33,8 +35,8 @@ export const SideMenu = () => {
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname }: any = useLocation();
-  const { getBondedAccount }: any = useBalances();
-  const { getControllerNotImported } = useStaking();
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
+  const { getControllerNotImported } = useStaking() as StakingContextInterface;
   const { setPalettePosition, open }: any = usePalette();
   const controller = getBondedAccount(activeAccount);
   const {

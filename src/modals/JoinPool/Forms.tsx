@@ -12,7 +12,7 @@ import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
-import { BondOptionsInterface } from 'types/balances';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
@@ -24,8 +24,8 @@ export const Forms = () => {
   const { id: poolId, setActiveTab } = config;
   const { activeAccount } = useConnect() as ConnectContextInterface;
 
-  const { getBondOptions }: any = useBalances();
-  const { freeToBond }: BondOptionsInterface = getBondOptions(activeAccount);
+  const { getBondOptions } = useBalances() as BalancesContextInterface;
+  const { freeToBond }: BondOptions = getBondOptions(activeAccount);
 
   // local bond value
   const [bond, setBond] = useState({ bond: planckBnToUnit(freeToBond, units) });
