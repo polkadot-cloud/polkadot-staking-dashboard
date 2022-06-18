@@ -24,6 +24,7 @@ export const BondInputWithFeedback = (props: any) => {
   // input props
   const { bondType, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
+  const warnings = props.warnings ?? [];
 
   // functional props
   const setters = props.setters ?? [];
@@ -113,7 +114,7 @@ export const BondInputWithFeedback = (props: any) => {
   // handle error updates
   const handleErrors = () => {
     let _bondDisabled = false;
-    const _errors = [];
+    const _errors = warnings;
 
     // bond errors
     if (!unbond) {
