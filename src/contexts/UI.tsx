@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';
@@ -183,8 +183,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       syncing = true;
     }
 
-    // all accounts have been synced
-    if (accounts.length < connectAccounts.length) {
+    // all extension accounts have been synced
+    const extensionAccounts = connectAccounts.filter(
+      (a: ImportedAccount) => a.source !== 'external'
+    );
+    if (accounts.length < extensionAccounts.length) {
       syncing = true;
     }
 
