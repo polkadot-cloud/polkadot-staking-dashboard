@@ -68,7 +68,7 @@ export const Summary = (props: any) => {
       <Header thisSection={section} complete={null} title="Summary" />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is not imported and cannot sign transactions." />
+          <Warning text="Your account is read only, and cannot sign transactions." />
         )}
         <SummaryWrapper>
           <section>

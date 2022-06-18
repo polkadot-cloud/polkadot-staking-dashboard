@@ -70,7 +70,7 @@ export const Forms = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is not imported and cannot sign transactions.');
+    warnings.push('Your account is read only, and cannot sign transactions.');
   }
 
   return (

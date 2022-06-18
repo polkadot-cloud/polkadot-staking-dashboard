@@ -88,7 +88,7 @@ export const Forms = forwardRef(
         <div ref={ref} style={{ paddingBottom: '1rem' }}>
           <div>
             {!accountHasSigner(signingAccount) && (
-              <Warning text="Your account is not imported and cannot sign transactions." />
+              <Warning text="Your account is read only, and cannot sign transactions." />
             )}
             {task === 'rebond' && (
               <h2>

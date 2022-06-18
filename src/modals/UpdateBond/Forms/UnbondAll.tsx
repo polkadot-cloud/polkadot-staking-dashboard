@@ -123,7 +123,7 @@ export const UnbondAll = (props: any) => {
       <div className="items">
         <>
           {!accountHasSigner(signingAccount) && (
-            <Warning text="Your account is not imported and cannot sign transactions." />
+            <Warning text="Your account is read only, and cannot sign transactions." />
           )}
           {isStaking && controllerNotImported ? (
             <Warning text="You must have your controller account imported to unbond." />

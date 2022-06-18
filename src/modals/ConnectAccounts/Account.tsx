@@ -73,7 +73,7 @@ export const AccountInner = (props: any) => {
           className="label warning"
           style={{ color: '#a17703', paddingLeft: '0.5rem' }}
         >
-          Not Imported
+          Read Only
         </div>
       )}
 

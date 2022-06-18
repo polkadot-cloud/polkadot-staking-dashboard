@@ -114,7 +114,7 @@ export const Forms = () => {
   return (
     <ContentWrapper>
       {!accountHasSigner(activeAccount) && (
-        <Warning text="Your account is not imported and cannot sign transactions." />
+        <Warning text="Your account is read only, and cannot sign transactions." />
       )}
       <div>
         <>

@@ -105,7 +105,7 @@ export const BondAll = (props: any) => {
       <div className="items">
         <>
           {!accountHasSigner(activeAccount) && (
-            <Warning text="Your account is not imported and cannot sign transactions." />
+            <Warning text="Your account is read only, and cannot sign transactions." />
           )}
           {freeToBond === 0 && (
             <Warning text={`You have no free ${network.unit} to bond.`} />

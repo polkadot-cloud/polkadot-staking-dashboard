@@ -78,7 +78,7 @@ export const ClaimReward = () => {
         }}
       >
         {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is not imported and cannot sign transactions." />
+          <Warning text="Your account is read only, and cannot sign transactions." />
         )}
         {!unclaimedReward?.gtn(0) && (
           <Warning text="You have no rewards to claim." />
