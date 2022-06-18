@@ -31,7 +31,11 @@ export const Connected = () => {
     poolAddress = addresses.stash;
   }
 
-  const activeAccountLabel = `${hasController() && !isSyncing ? 'Stash' : ''}`;
+  const activeAccountLabel = isSyncing
+    ? undefined
+    : hasController()
+    ? 'Stash'
+    : undefined;
 
   return (
     <>
