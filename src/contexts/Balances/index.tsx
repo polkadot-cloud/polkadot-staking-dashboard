@@ -250,6 +250,7 @@ export const BalancesProvider = ({
           });
         }
         ledger = {
+          address,
           stash: stash.toHuman(),
           active: active.toBn(),
           total: total.toBn(),

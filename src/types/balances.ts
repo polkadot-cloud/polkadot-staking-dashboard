@@ -10,6 +10,7 @@ export interface UnlockChunk {
 }
 
 export interface BalanceLedger {
+  address: MaybeAccount;
   stash: string | null;
   active: BN;
   total: BN;

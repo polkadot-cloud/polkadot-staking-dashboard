@@ -18,6 +18,7 @@ export const balance: Balance = {
 };
 
 export const ledger: BalanceLedger = {
+  address: null,
   stash: null,
   active: new BN(0),
   total: new BN(0),
