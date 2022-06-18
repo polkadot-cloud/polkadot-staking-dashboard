@@ -18,7 +18,6 @@ import {
   BalanceLedger,
   BalancesAccount,
   BalancesContextInterface,
-  BondedAccount,
   BondOptions,
 } from 'types/balances';
 import { ConnectContextInterface } from 'types/connect';
@@ -55,42 +54,31 @@ export const BalancesProvider = ({
   const [accounts, setAccounts] = useState<Array<BalancesAccount>>([]);
   const accountsRef = useRef(accounts);
 
-  // subscriptions state
-  const [unsubs, setUnsubs] = useState<Unsubs>([]);
-  const unsubsRef = useRef<Unsubs>(unsubs);
-
-  // bonded controller accounts derived from getBalances
-  const [bondedAccounts, setBondedAccounts] = useState<Array<BondedAccount>>(
-    []
-  );
-  const bondedAccountsRef = useRef(bondedAccounts);
+  // balance subscriptions state
+  const [unsubsBalances, setUnsubsBalances] = useState<Unsubs>([]);
+  const unsubsBalancesRef = useRef<Unsubs>(unsubsBalances);
 
   // account ledgers to separate storage
   const [ledgers, setLedgers] = useState<Array<BalanceLedger>>([]);
   const ledgersRef = useRef(ledgers);
 
-  // store how many ledgers are currently syncing
-  const [ledgersSyncingCount, setLedgersSyncingCount] = useState(0);
-  const ledgersSyncingCountRef = useRef(ledgersSyncingCount);
+  // ledger subscriptions state
+  const [unsubsLedgers, setUnsubsLedgers] = useState<Unsubs>([]);
+  const unsubsLedgersRef = useRef<Unsubs>(unsubsLedgers);
 
   // fetch account balances
   useEffect(() => {
     if (isReady) {
       // unsubscribe from current accounts and ledgers
       (async () => {
-        setStateWithRef([], setBondedAccounts, bondedAccountsRef);
+        setStateWithRef([], setAccounts, accountsRef);
         setStateWithRef([], setLedgers, ledgersRef);
-        setStateWithRef(0, setLedgersSyncingCount, ledgersSyncingCountRef);
         await unsubscribeAll();
         getBalances();
+        getLedgers();
       })();
     }
   }, [connectAccounts, network, isReady]);
-
-  // fetch bonded account ledgers
-  useEffect(() => {
-    getLedgers();
-  }, [bondedAccountsRef.current]);
 
   // unsubscribe from everything on unmount
   useEffect(() => {
@@ -100,16 +88,12 @@ export const BalancesProvider = ({
   }, []);
 
   const unsubscribeAll = async () => {
-    Object.values(unsubsRef.current).forEach(async (v: Fn) => {
+    Object.values(unsubsBalancesRef.current).forEach(async (v: Fn) => {
       await v();
     });
-    Object.values(bondedAccountsRef.current).forEach(
-      async (b: BondedAccount) => {
-        if (b.unsub !== null) {
-          await b.unsub();
-        }
-      }
-    );
+    Object.values(unsubsLedgersRef.current).forEach(async (v: Fn) => {
+      await v();
+    });
   };
 
   const getBalances = async () => {
@@ -121,10 +105,9 @@ export const BalancesProvider = ({
 
   // subscribe to account ledgers
   const getLedgers = async () => {
-    const subs = bondedAccountsRef.current.filter(
-      (b: BondedAccount) => b.unsub === null
+    Promise.all(
+      connectAccounts.map((a: WalletAccount) => subscribeToLedger(a.address))
     );
-    Promise.all(subs.map((a: BondedAccount) => subscribeToLedger(a.address)));
   };
 
   // subscribe to account balances, ledger, bonded and nominators
@@ -176,20 +159,6 @@ export const BalancesProvider = ({
           _bonded === null ? null : (_bonded.toHuman() as string | null);
         _account.bonded = _bonded;
 
-        // add bonded account to `bondedAccounts` if present
-        if (_bonded !== null) {
-          const _bondedAccounts = [...bondedAccountsRef.current].concat({
-            address: _bonded,
-            unsub: null,
-          });
-
-          setStateWithRef(
-            _bondedAccounts,
-            setBondedAccounts,
-            bondedAccountsRef
-          );
-        }
-
         // set account nominations
         let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
@@ -214,29 +183,20 @@ export const BalancesProvider = ({
       }
     );
 
-    const _unsubs = unsubsRef.current.concat(unsub);
-    setStateWithRef(_unsubs, setUnsubs, unsubsRef);
+    const _unsubs = unsubsBalancesRef.current.concat(unsub);
+    setStateWithRef(_unsubs, setUnsubsBalances, unsubsBalancesRef);
     return unsub;
   };
 
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
 
-    // increment syncing ledger counter
-    setStateWithRef(
-      Math.max(ledgersSyncingCountRef.current + 1, 0),
-      setLedgersSyncingCount,
-      ledgersSyncingCountRef
-    );
-
     const unsub = await api.query.staking.ledger(address, (l: any) => {
       let ledger: BalanceLedger;
 
       const _ledger = l.unwrapOr(null);
       // fallback to default ledger if not present
-      if (_ledger === null) {
-        ledger = defaults.ledger;
-      } else {
+      if (_ledger !== null) {
         const { stash, total, active, unlocking } = _ledger;
 
         // format unlocking chunks
@@ -256,38 +216,22 @@ export const BalancesProvider = ({
           total: total.toBn(),
           unlocking: _unlocking,
         };
+
+        // update ledgers in context state
+        let _ledgers = Object.values(ledgersRef.current);
+
+        // remove stale account if it's already in list, and concat.
+        _ledgers = _ledgers
+          .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
+          .concat(ledger);
+
+        // update state
+        setStateWithRef(_ledgers, setLedgers, ledgersRef);
       }
-
-      // update ledgers in context state
-      let _ledgers = Object.values(ledgersRef.current);
-      // remove stale account if it's already in list
-      _ledgers = _ledgers
-        .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
-        .concat(ledger);
-
-      // decrement syncing ledger counter
-      setStateWithRef(
-        Math.max(ledgersSyncingCountRef.current - 1, 0),
-        setLedgersSyncingCount,
-        ledgersSyncingCountRef
-      );
-
-      // update state
-      setStateWithRef(_ledgers, setLedgers, ledgersRef);
     });
 
-    // add unsub to `bondedAccounts`
-    let _bondedAccounts = bondedAccountsRef.current;
-    _bondedAccounts = _bondedAccounts.map((a: any) => {
-      if (a.address === address) {
-        return {
-          address,
-          unsub,
-        };
-      }
-      return a;
-    });
-    setStateWithRef(_bondedAccounts, setBondedAccounts, bondedAccountsRef);
+    const _unsubs = unsubsLedgersRef.current.concat(unsub);
+    setStateWithRef(_unsubs, setUnsubsLedgers, unsubsLedgersRef);
     return unsub;
   };
 
@@ -466,7 +410,6 @@ export const BalancesProvider = ({
         accounts: accountsRef.current,
         minReserve,
         ledgers: ledgersRef.current,
-        ledgersSyncingCount: ledgersSyncingCountRef.current,
       }}
     >
       {children}

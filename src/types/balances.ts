@@ -74,5 +74,4 @@ export interface BalancesContextInterface {
   accounts: Array<BalancesAccount>;
   minReserve: BN;
   ledgers: any;
-  ledgersSyncingCount: number;
 }
