@@ -85,7 +85,7 @@ export const defaultThemes: any = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
-  shadow: v('#e7e7e7', '#141414'),
+  shadow: v('#e8e8e8', '#141414'),
 };
 
 // configure card style
