@@ -17,6 +17,7 @@ export const defaultThemes: any = {
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
     danger: v('#ae2324', '#d14445'),
+    success: v('green', 'green'),
   },
   background: {
     primary: v('rgba(248,247,247,1)', 'rgba(27,27,27,1)'),
