@@ -3,12 +3,7 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Fn,
-  MaybeAccount,
-  NetworkMetricsContextInterface,
-  Unsubs,
-} from 'types';
+import { MaybeAccount, NetworkMetricsContextInterface, Unsubs } from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
@@ -87,11 +82,11 @@ export const BalancesProvider = ({
   }, []);
 
   const unsubscribeAll = () => {
-    Object.values(unsubsBalancesRef.current).forEach(async (v: Fn) => {
-      v();
+    Object.values(unsubsBalancesRef.current).forEach(async ({ unsub }) => {
+      unsub();
     });
-    Object.values(unsubsLedgersRef.current).forEach(async (v: Fn) => {
-      v();
+    Object.values(unsubsLedgersRef.current).forEach(async ({ unsub }) => {
+      unsub();
     });
   };
 
@@ -182,7 +177,10 @@ export const BalancesProvider = ({
       }
     );
 
-    const _unsubs = unsubsBalancesRef.current.concat(unsub);
+    const _unsubs = unsubsBalancesRef.current.concat({
+      key: address,
+      unsub,
+    });
     setStateWithRef(_unsubs, setUnsubsBalances, unsubsBalancesRef);
     return unsub;
   };
@@ -190,52 +188,60 @@ export const BalancesProvider = ({
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
 
-    const unsub = await api.query.staking.ledger(address, (l: any) => {
-      let ledger: BalanceLedger;
+    const unsub: () => void = await api.queryMulti<[any]>(
+      [[api.query.staking.ledger, address]],
+      async ([l]): Promise<void> => {
+        let ledger: BalanceLedger;
 
-      const _ledger = l.unwrapOr(null);
-      // fallback to default ledger if not present
-      if (_ledger !== null) {
-        const { stash, total, active, unlocking } = _ledger;
+        const _ledger = l.unwrapOr(null);
+        // fallback to default ledger if not present
+        if (_ledger !== null) {
+          const { stash, total, active, unlocking } = _ledger;
 
-        // format unlocking chunks
-        const _unlocking = [];
-        for (const u of unlocking.toHuman()) {
-          const era = rmCommas(u.era);
-          const value = rmCommas(u.value);
-          _unlocking.push({
-            era: Number(era),
-            value: new BN(value),
-          });
+          // format unlocking chunks
+          const _unlocking = [];
+          for (const u of unlocking.toHuman()) {
+            const era = rmCommas(u.era);
+            const value = rmCommas(u.value);
+            _unlocking.push({
+              era: Number(era),
+              value: new BN(value),
+            });
+          }
+
+          // add stash as external account if not present
+          if (
+            !connectAccounts.find((s: any) => s.address === stash.toHuman())
+          ) {
+            addExternalAccount(stash.toHuman());
+          }
+
+          ledger = {
+            address,
+            stash: stash.toHuman(),
+            active: active.toBn(),
+            total: total.toBn(),
+            unlocking: _unlocking,
+          };
+
+          // update ledgers in context state
+          let _ledgers = Object.values(ledgersRef.current);
+
+          // remove stale account if it's already in list, and concat.
+          _ledgers = _ledgers
+            .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
+            .concat(ledger);
+
+          // update state
+          setStateWithRef(_ledgers, setLedgers, ledgersRef);
         }
-
-        // add stash as external account if not present
-        if (!connectAccounts.find((s: any) => s.address === stash.toHuman())) {
-          addExternalAccount(stash.toHuman());
-        }
-
-        ledger = {
-          address,
-          stash: stash.toHuman(),
-          active: active.toBn(),
-          total: total.toBn(),
-          unlocking: _unlocking,
-        };
-
-        // update ledgers in context state
-        let _ledgers = Object.values(ledgersRef.current);
-
-        // remove stale account if it's already in list, and concat.
-        _ledgers = _ledgers
-          .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
-          .concat(ledger);
-
-        // update state
-        setStateWithRef(_ledgers, setLedgers, ledgersRef);
       }
-    });
+    );
 
-    const _unsubs = unsubsLedgersRef.current.concat(unsub);
+    const _unsubs = unsubsLedgersRef.current.concat({
+      key: address,
+      unsub,
+    });
     setStateWithRef(_unsubs, setUnsubsLedgers, unsubsLedgersRef);
     return unsub;
   };
