@@ -238,7 +238,11 @@ export const ExtensionWrapper = styled.button`
 
   &:disabled {
     cursor: default;
-    opacity: 0.5;
+    opacity: 1;
+
+    &:hover {
+      background: ${buttonPrimaryBackground};
+    }
   }
   &:hover {
     background: ${backgroundToggle};

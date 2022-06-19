@@ -4,13 +4,20 @@
 import { forwardRef } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
-import { ContentWrapper, PaddingWrapper } from './Wrappers';
+import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  ContentWrapper,
+  PaddingWrapper,
+  Separator,
+  ExtensionWrapper,
+} from './Wrappers';
 import { Extension } from './Extension';
 
 export const Extensions = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
-  const { extensions } = useConnect() as ConnectContextInterface;
+  const { extensions, accounts } = useConnect() as ConnectContextInterface;
 
   return (
     <ContentWrapper>
@@ -18,7 +25,26 @@ export const Extensions = forwardRef((props: any, ref: any) => {
         <div className="head">
           <h1>Extensions</h1>
         </div>
-
+        {/* <Extension meta={extension} setSection={setSection} /> */}
+        <ExtensionWrapper
+          onClick={() => {
+            setSection(1);
+          }}
+        >
+          <div>
+            <span className="name">
+              {accounts.length} Imported Account{accounts.length !== 1 && 's'}
+            </span>
+          </div>
+          <div className="neutral">
+            <FontAwesomeIcon
+              icon={faAngleDoubleRight}
+              transform="shrink-0"
+              className="icon"
+            />
+          </div>
+        </ExtensionWrapper>
+        <Separator />
         {extensions.map((extension: any, i: number) => {
           return (
             <Extension

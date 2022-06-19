@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDoubleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { useConnect } from 'contexts/Connect';
@@ -63,8 +63,11 @@ export const Extension = (props: any) => {
   return (
     <ExtensionWrapper
       key={`wallet_${extensionName}`}
+      disabled={status === 'connected'}
       onClick={() => {
-        handleClick();
+        if (status !== 'connected') {
+          handleClick();
+        }
       }}
     >
       <div>
@@ -80,7 +83,7 @@ export const Extension = (props: any) => {
       <div className="neutral">
         {flag && flag}
         <FontAwesomeIcon
-          icon={status === 'connected' ? faAngleDoubleRight : faPlus}
+          icon={status === 'connected' ? faCheckCircle : faPlus}
           transform="shrink-0"
           className="icon"
         />
