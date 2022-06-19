@@ -82,7 +82,7 @@ export const UpdateController = () => {
       >
         <div style={{ marginBottom: '1.5rem' }}>
           {!accountHasSigner(activeAccount) && (
-            <Warning text="Your stash account is not imported and cannot sign transactions." />
+            <Warning text="Your stash account is read only and cannot sign transactions." />
           )}
         </div>
         <AccountDropdown
