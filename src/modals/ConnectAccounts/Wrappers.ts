@@ -242,10 +242,6 @@ export const ExtensionWrapper = styled.div`
     align-items: center;
     min-height: 3.5rem;
 
-    &:hover {
-      background: ${backgroundToggle};
-    }
-
     > div {
       box-sizing: border-box;
       display: flex;
@@ -307,10 +303,13 @@ export const ExtensionWrapper = styled.div`
     }
   }
   > button {
+    &:hover {
+      background: ${backgroundToggle};
+    }
+
     &:disabled {
       cursor: default;
       opacity: 1;
-
       &:hover {
         background: ${buttonPrimaryBackground};
       }
