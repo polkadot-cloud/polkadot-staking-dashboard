@@ -52,7 +52,7 @@ export const HeightWrapper = styled.div<any>`
   width: 100%;
   max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
   max-height: 100%;
-  border-radius: 1.1rem;
+  border-radius: 1rem;
   z-index: 9;
   position: relative;
 `;
