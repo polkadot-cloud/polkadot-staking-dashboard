@@ -132,7 +132,7 @@ export const ConnectProvider = ({
           (a: ImportedAccount) => a.address === _activeAccount
         ) ?? null;
 
-      // remove already-imported accounts
+      // remove already-imported accounts (extensions may have already imported)
       localExternalAccounts = localExternalAccounts.filter(
         (l: ImportedAccount) =>
           accountsRef.current.find(
@@ -450,7 +450,7 @@ export const ConnectProvider = ({
       source: 'external',
     };
 
-    // get external accounts from localStorage
+    // get all external accounts from localStorage
     const localExternalAccounts = getLocalExternalAccounts(false);
     const exists = localExternalAccounts.find(
       (l: ExternalAccount) =>
