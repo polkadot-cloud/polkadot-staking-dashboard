@@ -26,23 +26,29 @@ export const Extensions = forwardRef((props: any, ref: any) => {
           <h1>Extensions</h1>
         </div>
         {/* <Extension meta={extension} setSection={setSection} /> */}
-        <ExtensionWrapper
-          onClick={() => {
-            setSection(1);
-          }}
-        >
-          <div>
-            <span className="name">
-              {accounts.length} Imported Account{accounts.length !== 1 && 's'}
-            </span>
-          </div>
-          <div className="neutral">
-            <FontAwesomeIcon
-              icon={faAngleDoubleRight}
-              transform="shrink-0"
-              className="icon"
-            />
-          </div>
+        <ExtensionWrapper>
+          <button
+            type="button"
+            onClick={() => {
+              setSection(1);
+            }}
+          >
+            <div>
+              <h3>
+                <span className="name">
+                  {accounts.length} Imported Account
+                  {accounts.length !== 1 && 's'}
+                </span>
+              </h3>
+            </div>
+            <div className="neutral">
+              <FontAwesomeIcon
+                icon={faAngleDoubleRight}
+                transform="shrink-0"
+                className="icon"
+              />
+            </div>
+          </button>
         </ExtensionWrapper>
         <Separator />
         {extensions.map((extension: any, i: number) => {

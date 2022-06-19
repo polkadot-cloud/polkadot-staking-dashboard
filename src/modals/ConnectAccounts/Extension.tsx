@@ -11,28 +11,12 @@ import { ConnectContextInterface } from 'types/connect';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
-  const { meta, setSection, flag } = props;
-  const { extensionName, title } = meta;
+  const { meta } = props;
+  const { extensionName } = meta;
 
-  const { extensionsStatus, connectExtensionAccounts, accounts } =
+  const { extensionsStatus, accounts } =
     useConnect() as ConnectContextInterface;
   const status = extensionsStatus[extensionName];
-
-  // force re-render on click
-  const [increment, setIncrement] = useState(0);
-
-  const handleClick = async () => {
-    if (status === 'connected') {
-      setSection(1);
-    } else {
-      (async () => {
-        await connectExtensionAccounts(extensionName);
-
-        // force re-render to display error messages
-        setIncrement(increment + 1);
-      })();
-    }
-  };
 
   const accountsConnected = accounts.filter(
     (a: any) => a.source === extensionName
@@ -44,7 +28,7 @@ export const Extension = (props: any) => {
     case 'connected':
       message = `${accountsConnected.length} Account${
         accountsConnected.length !== 1 ? `s` : ``
-      } Imported`;
+      } Connected`;
       break;
     case 'not_authenticated':
       message = 'Not Authenticated. Authenticate and Try Again';
@@ -54,15 +38,55 @@ export const Extension = (props: any) => {
       message = 'Not Found. Install and Refresh';
       break;
     default:
-      message =
-        status === 'no_accounts' ? 'No Accounts Imported' : 'Not Connected';
+      message = status === 'no_accounts' ? 'No Accounts' : 'Not Connected';
   }
 
-  const size = '2rem';
+  return (
+    <ExtensionWrapper>
+      {status === 'connected' ? (
+        <ExtensionElement
+          {...props}
+          message={message}
+          status={status}
+          size="2rem"
+        />
+      ) : (
+        <ExtensionButton
+          {...props}
+          message={message}
+          status={status}
+          size="2rem"
+        />
+      )}
+    </ExtensionWrapper>
+  );
+};
+
+export const ExtensionButton = (props: any) => {
+  const { meta, setSection } = props;
+  const { extensionName, status } = meta;
+
+  const { connectExtensionAccounts } = useConnect() as ConnectContextInterface;
+
+  // force re-render on click
+  const [increment, setIncrement] = useState(0);
+
+  // click to connect to extension
+  const handleClick = async () => {
+    if (status === 'connected') {
+      setSection(1);
+    } else {
+      (async () => {
+        await connectExtensionAccounts(extensionName);
+        // force re-render to display error messages
+        setIncrement(increment + 1);
+      })();
+    }
+  };
 
   return (
-    <ExtensionWrapper
-      key={`wallet_${extensionName}`}
+    <button
+      type="button"
       disabled={status === 'connected'}
       onClick={() => {
         if (status !== 'connected') {
@@ -70,17 +94,39 @@ export const Extension = (props: any) => {
         }
       }}
     >
+      <ExtensionInner {...props} />
+    </button>
+  );
+};
+
+export const ExtensionElement = (props: any) => {
+  return (
+    <div>
+      <ExtensionInner {...props} />
+    </div>
+  );
+};
+
+export const ExtensionInner = (props: any) => {
+  const { size, message, flag, meta, status } = props;
+  const { extensionName, title } = meta;
+  return (
+    <>
       <div>
         {extensionName === 'talisman' && (
-          <TalismanSVG width={size} height={size} />
+          <>
+            <TalismanSVG width={size} height={size} />
+          </>
         )}
         {extensionName === 'polkadot-js' && (
           <PolkadotJSSVG width={size} height={size} />
         )}
-        <span className="name">&nbsp; {title}</span>
-        <span className="message">{message}</span>
+        <h3>
+          <span className="name">&nbsp; {title}</span>
+          <span className="message">{message}</span>
+        </h3>
       </div>
-      <div className="neutral">
+      <div className={status === 'connected' ? 'success' : 'neutral'}>
         {flag && flag}
         <FontAwesomeIcon
           icon={status === 'connected' ? faCheckCircle : faPlus}
@@ -88,6 +134,6 @@ export const Extension = (props: any) => {
           className="icon"
         />
       </div>
-    </ExtensionWrapper>
+    </>
   );
 };
