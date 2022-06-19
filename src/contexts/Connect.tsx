@@ -57,8 +57,13 @@ export const ConnectProvider = ({
   }>({});
   const extensionsStatusRef = useRef(extensionsStatus);
 
-  // store unsubscribe handler for connected wallet
-  const [unsubscribe, setUnsubscribe] = useState<Array<() => void>>([]);
+  // store unsubscribe handler for connected extensions
+  const [unsubscribe, setUnsubscribe] = useState<
+    Array<{
+      key: string;
+      unsub: () => void;
+    }>
+  >([]);
   const unsubscribeRef = useRef(unsubscribe);
 
   // initialise extensions
@@ -67,10 +72,9 @@ export const ConnectProvider = ({
       setExtensions(getWallets());
     }
     return () => {
-      const _unsubs = unsubscribeRef.current;
-      for (const unsub of _unsubs) {
+      unsubscribeRef.current.forEach(({ unsub }) => {
         unsub();
-      }
+      });
     };
   });
 
@@ -87,8 +91,8 @@ export const ConnectProvider = ({
       true
     );
 
-    // unsubscribe from accounts and reset state
-    unsubscribeRef.current.forEach((unsub) => {
+    // unsubscribe from all accounts and reset state
+    unsubscribeRef.current.forEach(({ unsub }) => {
       unsub();
     });
     setStateWithRef(null, _setActiveAccount, activeAccountRef);
@@ -243,7 +247,10 @@ export const ConnectProvider = ({
 
             // update context state
             setStateWithRef(
-              [...unsubscribeRef.current].concat(_unsubscribe),
+              [...unsubscribeRef.current].concat({
+                key: extensionName,
+                unsub: _unsubscribe,
+              }),
               setUnsubscribe,
               unsubscribeRef
             );
@@ -315,7 +322,10 @@ export const ConnectProvider = ({
 
         // update context state
         setStateWithRef(
-          [...unsubscribeRef.current].concat(_unsubscribe),
+          [...unsubscribeRef.current].concat({
+            key: extensionName,
+            unsub: _unsubscribe,
+          }),
           setUnsubscribe,
           unsubscribeRef
         );
