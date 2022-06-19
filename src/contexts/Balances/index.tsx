@@ -71,13 +71,11 @@ export const BalancesProvider = ({
   useEffect(() => {
     if (isReady) {
       // unsubscribe from current accounts and ledgers
-      (async () => {
-        setStateWithRef([], setAccounts, accountsRef);
-        setStateWithRef([], setLedgers, ledgersRef);
-        await unsubscribeAll();
-        getBalances();
-        getLedgers();
-      })();
+      setStateWithRef([], setAccounts, accountsRef);
+      setStateWithRef([], setLedgers, ledgersRef);
+      unsubscribeAll();
+      getBalances();
+      getLedgers();
     }
   }, [connectAccounts, network, isReady]);
 
@@ -88,12 +86,12 @@ export const BalancesProvider = ({
     };
   }, []);
 
-  const unsubscribeAll = async () => {
+  const unsubscribeAll = () => {
     Object.values(unsubsBalancesRef.current).forEach(async (v: Fn) => {
-      await v();
+      v();
     });
     Object.values(unsubsLedgersRef.current).forEach(async (v: Fn) => {
-      await v();
+      v();
     });
   };
 
