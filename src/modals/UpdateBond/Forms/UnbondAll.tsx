@@ -25,7 +25,8 @@ export const UnbondAll = (props: any) => {
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { getControllerNotImported } = useStaking() as StakingContextInterface;
   const { getBondOptions, getBondedAccount, getAccountNominations } =
     useBalances() as BalancesContextInterface;
@@ -101,9 +102,11 @@ export const UnbondAll = (props: any) => {
     return _tx;
   };
 
+  const signingAccount = isPooling ? activeAccount : controller;
+
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from: isPooling ? activeAccount : controller,
+    from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
@@ -119,6 +122,9 @@ export const UnbondAll = (props: any) => {
     <>
       <div className="items">
         <>
+          {!accountHasSigner(signingAccount) && (
+            <Warning text="Your account is read only, and cannot sign transactions." />
+          )}
           {isStaking && controllerNotImported ? (
             <Warning text="You must have your controller account imported to unbond." />
           ) : (
@@ -147,7 +153,7 @@ export const UnbondAll = (props: any) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid}
+        isValid={bondValid && accountHasSigner(signingAccount)}
       />
     </>
   );

@@ -23,7 +23,8 @@ export const BondSome = (props: any) => {
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { getBondOptions } = useBalances() as BalancesContextInterface;
   const { bondType } = config;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
@@ -87,6 +88,12 @@ export const BondSome = (props: any) => {
   const TxFee = (
     <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
+
+  const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push('Your account is read only, and cannot sign transactions.');
+  }
+
   return (
     <>
       <div className="items">
@@ -102,6 +109,7 @@ export const BondSome = (props: any) => {
                 current: bond,
               },
             ]}
+            warnings={warnings}
           />
           <NotesWrapper>{TxFee}</NotesWrapper>
         </>
@@ -110,7 +118,7 @@ export const BondSome = (props: any) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid}
+        isValid={bondValid && accountHasSigner(activeAccount)}
       />
     </>
   );

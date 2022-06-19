@@ -42,7 +42,7 @@ export const BondStatusBar = (props: any) => {
         <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp; Nominate
+            &nbsp; Nominate &nbsp;
             <OpenAssistantIcon page="stake" title="Nominating" />
           </h4>
           <div className="bar">
@@ -54,7 +54,7 @@ export const BondStatusBar = (props: any) => {
         <section className={gtMinActiveBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp; Active
+            &nbsp;Active &nbsp;
             <OpenAssistantIcon page="stake" title="Active Bond Threshold" />
           </h4>
           <div className="bar">

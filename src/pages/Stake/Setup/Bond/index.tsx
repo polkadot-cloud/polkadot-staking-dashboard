@@ -41,9 +41,20 @@ export const Bond = (props: any) => {
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: setup.bond,
+      bond: initialBondValue,
     });
   }, [activeAccount]);
+
+  // apply initial bond value to setup progress
+  useEffect(() => {
+    // only update if Bond is currently active
+    if (setup.section === 4) {
+      setActiveAccountSetup({
+        ...setup,
+        bond: initialBondValue,
+      });
+    }
+  }, [setup.section]);
 
   return (
     <>

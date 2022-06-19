@@ -27,7 +27,8 @@ export const UnbondSome = (props: any) => {
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;
   const { getBondOptions, getBondedAccount } =
@@ -101,9 +102,11 @@ export const UnbondSome = (props: any) => {
     return _tx;
   };
 
+  const signingAccount = isPooling ? activeAccount : controller;
+
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from: isPooling ? activeAccount : controller,
+    from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
@@ -114,6 +117,11 @@ export const UnbondSome = (props: any) => {
   const TxFee = (
     <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
+
+  const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push('Your account is read only, and cannot sign transactions.');
+  }
 
   return (
     <>
@@ -130,6 +138,7 @@ export const UnbondSome = (props: any) => {
                 current: bond,
               },
             ]}
+            warnings={warnings}
           />
           <NotesWrapper>
             <p>
@@ -144,7 +153,7 @@ export const UnbondSome = (props: any) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid}
+        isValid={bondValid && accountHasSigner(signingAccount)}
       />
     </>
   );

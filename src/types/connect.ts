@@ -9,10 +9,21 @@ export interface ConnectContextInterface {
   getAccount: (account: MaybeAccount) => WalletAccount | null;
   connectToAccount: (a: WalletAccount) => void;
   disconnectFromAccount: () => void;
+  addExternalAccount: (a: string) => void;
   getActiveAccount: () => string | null;
+  accountHasSigner: (a: MaybeAccount) => boolean;
   extensions: Array<Wallet>;
   extensionsStatus: { [key: string]: string };
   accounts: Array<WalletAccount>;
   activeAccount: string | null;
   activeAccountMeta: WalletAccount | null;
+}
+
+export type ImportedAccount = WalletAccount | ExternalAccount;
+
+export interface ExternalAccount {
+  address: string;
+  network: string;
+  name: string;
+  source: string;
 }

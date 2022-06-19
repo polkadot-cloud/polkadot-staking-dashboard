@@ -27,9 +27,9 @@ import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { api, network } = useApi() as APIContextInterface;
-    const { activeAccount } = useConnect() as ConnectContextInterface;
-    const { getControllerNotImported, staking } =
-      useStaking() as StakingContextInterface;
+    const { activeAccount, accountHasSigner } =
+      useConnect() as ConnectContextInterface;
+    const { staking } = useStaking() as StakingContextInterface;
     const { activeBondedPool } = useActivePool() as ActivePoolContextState;
     const { setStatus: setModalStatus, config }: any = useModal();
     const { bondType } = config || {};
@@ -87,10 +87,9 @@ export const Forms = forwardRef(
       <ContentWrapper>
         <div ref={ref} style={{ paddingBottom: '1rem' }}>
           <div>
-            {getControllerNotImported(controller) && (
-              <Warning text="You must have your controller account imported to stop nominating." />
+            {!accountHasSigner(signingAccount) && (
+              <Warning text="Your account is read only, and cannot sign transactions." />
             )}
-
             {task === 'rebond' && (
               <h2>
                 Rebond {planckBnToUnit(value, units)} {network.unit}
@@ -126,7 +125,7 @@ export const Forms = forwardRef(
                 className="submit"
                 onClick={() => submitTx()}
                 disabled={
-                  !valid || submitting || getControllerNotImported(controller)
+                  !valid || submitting || !accountHasSigner(signingAccount)
                 }
               >
                 <FontAwesomeIcon

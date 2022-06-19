@@ -23,22 +23,20 @@ export const SetController = (props: any) => {
   const { units } = network;
   const { activeAccount, accounts, getAccount } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount, getAccountBalance, minReserve, isController } =
+  const { getAccountBalance, minReserve, isController } =
     useBalances() as BalancesContextInterface;
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const controller = getBondedAccount(activeAccount);
   const setup = getSetupProgress(activeAccount);
-  const initialValue =
-    setup.controller !== null ? setup.controller : controller;
-  const initialAccount = getAccount(initialValue);
 
   // store the currently selected controller account
-  const [selected, setSelected] = useState(initialAccount);
+  const _selected = setup.controller !== null ? setup.controller : null;
+  const [selected, setSelected] = useState<any>(getAccount(_selected));
 
   // update selected value on account switch
   useEffect(() => {
-    const _selected = setup.controller !== null ? setup.controller : controller;
-    const _initial = getAccount(_selected);
+    const _initial = getAccount(
+      setup.controller !== null ? setup.controller : null
+    );
     setSelected(_initial);
   }, [activeAccount, accounts]);
 

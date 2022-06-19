@@ -23,7 +23,8 @@ export const BondAll = (props: any) => {
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { getBondOptions } = useBalances() as BalancesContextInterface;
   const { bondType } = config;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
@@ -103,6 +104,9 @@ export const BondAll = (props: any) => {
     <>
       <div className="items">
         <>
+          {!accountHasSigner(activeAccount) && (
+            <Warning text="Your account is read only, and cannot sign transactions." />
+          )}
           {freeToBond === 0 && (
             <Warning text={`You have no free ${network.unit} to bond.`} />
           )}
@@ -126,7 +130,7 @@ export const BondAll = (props: any) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid}
+        isValid={bondValid && accountHasSigner(activeAccount)}
       />
     </>
   );

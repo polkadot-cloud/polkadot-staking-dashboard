@@ -29,7 +29,8 @@ import {
 export const NominatePool = () => {
   const { api }: any = useApi();
   const { setStatus: setModalStatus }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const { isNominator, targets } = useActivePool() as ActivePoolContextState;
   const { nominations } = targets;
@@ -67,6 +68,9 @@ export const NominatePool = () => {
 
   // warnings
   const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push('Your account is read only, and cannot sign transactions.');
+  }
   if (!nominations.length) {
     warnings.push('You have no nominations set.');
   }
@@ -83,7 +87,7 @@ export const NominatePool = () => {
       <div
         style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
       >
-        {warnings.map((text: any, index: number) => (
+        {warnings.map((text: string, index: number) => (
           <Warning key={`warning_${index}`} text={text} />
         ))}
         <h2>
@@ -106,7 +110,12 @@ export const NominatePool = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting || warnings.length}
+              disabled={
+                !valid ||
+                submitting ||
+                warnings.length ||
+                !accountHasSigner(activeAccount)
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"

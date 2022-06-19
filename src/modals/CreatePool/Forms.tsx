@@ -21,7 +21,8 @@ export const Forms = () => {
   const { api, network }: any = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
 
   const { getBondOptions } = useBalances() as BalancesContextInterface;
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);
@@ -69,6 +70,11 @@ export const Forms = () => {
     <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
 
+  const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push('Your account is read only, and cannot sign transactions.');
+  }
+
   return (
     <ContentWrapper>
       <div>
@@ -84,6 +90,7 @@ export const Forms = () => {
                 current: bond,
               },
             ]}
+            warnings={warnings}
           />
           <NotesWrapper>{TxFee}</NotesWrapper>
         </>
@@ -94,7 +101,9 @@ export const Forms = () => {
             type="button"
             className="submit"
             onClick={() => submitTx()}
-            disabled={submitting || !bondValid}
+            disabled={
+              submitting || !bondValid || !accountHasSigner(activeAccount)
+            }
           >
             <FontAwesomeIcon
               transform="grow-2"

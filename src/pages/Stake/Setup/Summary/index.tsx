@@ -12,6 +12,7 @@ import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { Warning } from 'library/Form/Warning';
 import { SummaryWrapper } from './Wrapper';
 import { MotionContainer } from '../MotionContainer';
 import { Header } from '../Header';
@@ -21,7 +22,8 @@ export const Summary = (props: any) => {
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 
@@ -65,6 +67,9 @@ export const Summary = (props: any) => {
     <>
       <Header thisSection={section} complete={null} title="Summary" />
       <MotionContainer thisSection={section} activeSection={setup.section}>
+        {!accountHasSigner(activeAccount) && (
+          <Warning text="Your account is read only, and cannot sign transactions." />
+        )}
         <SummaryWrapper>
           <section>
             <div>
@@ -124,7 +129,7 @@ export const Summary = (props: any) => {
         >
           <Button
             onClick={() => submitTx()}
-            disabled={submitting}
+            disabled={submitting || !accountHasSigner(activeAccount)}
             title="Start Staking"
             primary
           />

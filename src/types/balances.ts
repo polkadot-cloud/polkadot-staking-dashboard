@@ -10,6 +10,7 @@ export interface UnlockChunk {
 }
 
 export interface BalanceLedger {
+  address: MaybeAccount;
   stash: string | null;
   active: BN;
   total: BN;
@@ -63,7 +64,8 @@ export type Targets = Array<string>;
 export interface BalancesContextInterface {
   getAccount: (address: MaybeAccount) => BalancesAccount | null;
   getAccountBalance: (address: MaybeAccount) => Balance;
-  getAccountLedger: (address: MaybeAccount) => BalanceLedger;
+  getLedgerForStash: (address: MaybeAccount) => BalanceLedger;
+  getLedgerForController: (address: MaybeAccount) => BalanceLedger | null;
   getAccountLocks: (address: MaybeAccount) => Array<Lock>;
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;
@@ -72,5 +74,4 @@ export interface BalancesContextInterface {
   accounts: Array<BalancesAccount>;
   minReserve: BN;
   ledgers: any;
-  ledgersSyncingCount: number;
 }

@@ -65,7 +65,7 @@ export const Sections = ({ pageMeta }: SectionProps) => {
         ? homeRef.current.clientHeight
         : itemRef.current.clientHeight
     );
-  }, [assistant.activeSection, assistant.open]);
+  }, [assistant.activeSection, assistant.open, assistant.innerDefinition]);
 
   return (
     <>

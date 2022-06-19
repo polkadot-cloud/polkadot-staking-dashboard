@@ -9,7 +9,7 @@ import { clipAddress } from 'Utils';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { AccountWrapper } from './Wrappers';
 
@@ -36,7 +36,7 @@ export const AccountButton = (props: any) => {
     <AccountWrapper>
       <button
         type="button"
-        disabled={meta === null}
+        disabled={!disconnect && !imported}
         onClick={() => {
           if (imported) {
             if (disconnect) {
@@ -58,7 +58,7 @@ export const AccountInner = (props: any) => {
   const { address, meta } = props;
   const label = props.label ?? null;
   const source = meta?.source ?? null;
-  const imported = meta !== null;
+  const imported = meta !== null && source !== 'external';
 
   return (
     <>
@@ -73,7 +73,7 @@ export const AccountInner = (props: any) => {
           className="label warning"
           style={{ color: '#a17703', paddingLeft: '0.5rem' }}
         >
-          Not Imported
+          Read Only
         </div>
       )}
 
@@ -84,9 +84,9 @@ export const AccountInner = (props: any) => {
         {source === 'polkadot-js' && <PolkadotJSSVG className="icon" />}
         {!imported && (
           <FontAwesomeIcon
-            icon={faExclamationTriangle as IconProp}
+            icon={faGlasses as IconProp}
             className="icon"
-            style={{ opacity: 0.2 }}
+            style={{ opacity: 0.7 }}
           />
         )}
       </div>

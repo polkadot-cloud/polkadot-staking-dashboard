@@ -24,6 +24,7 @@ export const BondInputWithFeedback = (props: any) => {
   // input props
   const { bondType, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
+  const warnings = props.warnings ?? [];
 
   // functional props
   const setters = props.setters ?? [];
@@ -33,14 +34,14 @@ export const BondInputWithFeedback = (props: any) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;
-  const { getAccountLedger, getBondedAccount, getBondOptions } =
+  const { getLedgerForStash, getBondedAccount, getBondOptions } =
     useBalances() as BalancesContextInterface;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { stats } = usePoolsConfig() as PoolsConfigContextState;
   const { minJoinBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(activeAccount);
+  const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
@@ -113,7 +114,7 @@ export const BondInputWithFeedback = (props: any) => {
   // handle error updates
   const handleErrors = () => {
     let _bondDisabled = false;
-    const _errors = [];
+    const _errors = warnings;
 
     // bond errors
     if (!unbond) {

@@ -220,9 +220,9 @@ export const PageTitleWrapper = styled.header<any>`
         padding: 0.75rem 1rem;
         margin-bottom: 0.5rem;
         margin-right: 0.75rem;
-        font-size: 1.15rem;
+        font-size: ${(props) => (props.sticky ? '1.05rem' : '1.15rem')};
         color: ${textSecondary};
-        transition: opacity 0.1s;
+        transition: opacity 0.1s, font-size 0.1s;
         border-radius: 0.5rem;
 
         &.active {

@@ -12,11 +12,13 @@ import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';
+import { clipAddress } from 'Utils';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
-  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
   const { hasController, getControllerNotImported } =
     useStaking() as StakingContextInterface;
@@ -30,6 +32,12 @@ export const Connected = () => {
     const { addresses } = activeBondedPool;
     poolAddress = addresses.stash;
   }
+
+  const activeAccountLabel = isSyncing
+    ? undefined
+    : hasController()
+    ? 'Stash'
+    : undefined;
 
   return (
     <>
@@ -47,7 +55,8 @@ export const Connected = () => {
                 );
               }}
               value={activeAccount}
-              label={hasController() && !isSyncing ? 'Stash' : undefined}
+              readOnly={!accountHasSigner(activeAccount)}
+              label={activeAccountLabel}
               format="name"
               filled
               wallet
@@ -59,9 +68,12 @@ export const Connected = () => {
             <HeadingWrapper>
               <Account
                 value={controller ?? ''}
+                readOnly={!accountHasSigner(controller)}
                 title={
                   getControllerNotImported(controller)
-                    ? 'Not Imported'
+                    ? controller
+                      ? clipAddress(controller)
+                      : 'Not Imported'
                     : undefined
                 }
                 format="name"
@@ -82,14 +94,9 @@ export const Connected = () => {
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}
-                title={
-                  getControllerNotImported(controller)
-                    ? 'Not Imported'
-                    : undefined
-                }
                 pool={activeBondedPool}
                 label="Pool"
-                canClick={hasController()}
+                canClick={false}
                 onClick={() => {}}
                 filled
               />

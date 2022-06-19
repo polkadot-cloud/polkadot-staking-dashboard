@@ -7,7 +7,6 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { useStaking } from 'contexts/Staking';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {
   ActivePoolContextState,
@@ -22,17 +21,17 @@ import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
+import { Warning } from 'library/Form/Warning';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavourites = () => {
   const { consts, api } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators();
-  const { getControllerNotImported } = useStaking() as StakingContextInterface;
   const { isNominator, isOwner } = useActivePool() as ActivePoolContextState;
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
@@ -127,6 +126,15 @@ export const NominateFromFavourites = () => {
   return (
     <PaddingWrapper>
       <h2>Nominate From Favourites</h2>
+      <div style={{ marginBottom: '1rem' }}>
+        {!accountHasSigner(signingAccount) && (
+          <Warning
+            text={`You must have your${
+              bondType === 'stake' ? ' controller' : ' '
+            }account imported to add nominations.`}
+          />
+        )}
+      </div>
       <ListWrapper>
         {availableFavourites.length > 0 ? (
           <ValidatorList
@@ -175,8 +183,8 @@ export const NominateFromFavourites = () => {
             disabled={
               !valid ||
               submitting ||
-              (bondType === 'stake' && getControllerNotImported(controller)) ||
-              (bondType === 'pool' && !isNominator() && !isOwner())
+              (bondType === 'pool' && !isNominator() && !isOwner()) ||
+              !accountHasSigner(signingAccount)
             }
           >
             <FontAwesomeIcon

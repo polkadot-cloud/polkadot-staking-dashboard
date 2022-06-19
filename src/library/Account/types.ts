@@ -11,4 +11,5 @@ export interface AccountProps {
   fontSize?: string;
   wallet?: boolean;
   title?: string;
+  readOnly?: boolean;
 }

@@ -44,7 +44,7 @@ export const StakingProvider = ({
   const {
     accounts,
     getBondedAccount,
-    getAccountLedger,
+    getLedgerForStash,
     getAccountNominations,
   } = useBalances() as BalancesContextInterface;
   const { maxNominatorRewardedPerValidator } = consts;
@@ -357,7 +357,7 @@ export const StakingProvider = ({
       return false;
     }
 
-    const ledger = getAccountLedger(activeAccount);
+    const ledger = getLedgerForStash(activeAccount);
     return ledger.active.gt(new BN(0));
   };
 
@@ -369,7 +369,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-    const ledger = getAccountLedger(activeAccount);
+    const ledger = getLedgerForStash(activeAccount);
     return ledger.unlocking.length;
   };
 

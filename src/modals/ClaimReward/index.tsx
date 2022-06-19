@@ -27,7 +27,8 @@ export const ClaimReward = () => {
   const { api, network } = useApi() as APIContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const { activeBondedPool } = useActivePool() as ActivePoolContextState;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { unclaimedReward } = activeBondedPool || {};
 
@@ -76,6 +77,9 @@ export const ClaimReward = () => {
           boxSizing: 'border-box',
         }}
       >
+        {!accountHasSigner(activeAccount) && (
+          <Warning text="Your account is read only, and cannot sign transactions." />
+        )}
         {!unclaimedReward?.gtn(0) && (
           <Warning text="You have no rewards to claim." />
         )}
@@ -99,7 +103,9 @@ export const ClaimReward = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting}
+              disabled={
+                !valid || submitting || !accountHasSigner(activeAccount)
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"
