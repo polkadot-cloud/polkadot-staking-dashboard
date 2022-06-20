@@ -98,6 +98,10 @@ export const Extensions = forwardRef((props: any, ref: any) => {
                 />
                 <h3>
                   <span className="name">Read Only Accounts</span>
+                </h3>
+              </div>
+              <div className="neutral">
+                <h3>
                   <span
                     className={`message${
                       externalAccountsByUser.length ? ` success` : ``
@@ -108,8 +112,6 @@ export const Extensions = forwardRef((props: any, ref: any) => {
                       : ``}
                   </span>
                 </h3>
-              </div>
-              <div className="neutral">
                 <FontAwesomeIcon
                   icon={readOnlyOpen ? faTimes : faCog}
                   className="icon"
