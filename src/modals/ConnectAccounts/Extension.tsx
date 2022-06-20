@@ -75,9 +75,9 @@ export const Extension = (props: any) => {
           <PolkadotJSSVG width={size} height={size} />
         )}
         <span className="name">&nbsp; {title}</span>
-        <span className="message">{message}</span>
       </div>
       <div className="neutral">
+        <span className="message">{message}</span>
         {flag && flag}
         <FontAwesomeIcon
           icon={status === 'connected' ? faAngleDoubleRight : faPlus}
