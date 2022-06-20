@@ -13,6 +13,7 @@ export interface ConnectContextInterface {
   addExternalAccount: (a: string, addedBy: string) => void;
   getActiveAccount: () => string | null;
   accountHasSigner: (a: MaybeAccount) => boolean;
+  forgetAccounts: (a: Array<ExternalAccount>) => void;
   extensions: Array<Wallet>;
   extensionsStatus: { [key: string]: string };
   accounts: Array<WalletAccount>;

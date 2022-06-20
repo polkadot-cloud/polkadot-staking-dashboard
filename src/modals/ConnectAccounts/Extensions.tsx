@@ -28,7 +28,8 @@ import { ReadOnlyInput } from './ReadOnlyInput';
 export const Extensions = forwardRef((props: any, ref: any) => {
   const { setSection, setReadOnlyOpen, readOnlyOpen } = props;
 
-  const { extensions, accounts } = useConnect() as ConnectContextInterface;
+  const { extensions, accounts, forgetAccounts } =
+    useConnect() as ConnectContextInterface;
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {
@@ -41,8 +42,8 @@ export const Extensions = forwardRef((props: any, ref: any) => {
   );
 
   // forget account
-  const forgetAccount = (address: string) => {
-    // TODO: implement forget account
+  const forgetAccount = (account: ExternalAccount) => {
+    forgetAccounts([account]);
   };
 
   return (
@@ -133,10 +134,11 @@ export const Extensions = forwardRef((props: any, ref: any) => {
                     type="button"
                     className="account"
                     onClick={() => {
-                      forgetAccount(a.address);
+                      forgetAccount(a);
                     }}
                   >
-                    {a.address}
+                    <div>{a.address}</div>
+                    <div>Forget</div>
                   </button>
                 ))}
               </div>

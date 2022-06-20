@@ -50,7 +50,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
   useEffect(() => {
     getStakingStatuses();
-  }, [isReady, ledgers, balanceAccounts]);
+  }, [isReady, ledgers, accounts, balanceAccounts]);
 
   const getStakingStatuses = () => {
     // accumulate imported stash accounts
@@ -251,7 +251,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
             <h2>Not Staking</h2>
             {inactive.map((item: string, i: number) => {
               const account = getAccount(item);
-              const { address } = account;
+              const address = account?.address ?? '';
 
               return (
                 <AccountButton

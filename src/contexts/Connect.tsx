@@ -118,7 +118,9 @@ export const ConnectProvider = ({
   /*
    * Unsubscrbe from some account subscriptions and update the resulting state.
    */
-  const unsubscribeSomeAndUpdateState = (keys: Array<string>) => {
+  const forgetAccounts = (_accounts: Array<ExternalAccount>) => {
+    const keys = _accounts.map((a: ExternalAccount) => a.address);
+
     // unsubscribe from provided keys
     const unsubs = unsubscribeRef.current.filter((f: Unsub) =>
       keys.includes(f.key)
@@ -131,11 +133,44 @@ export const ConnectProvider = ({
       (f: Unsub) => !keys.includes(f.key)
     );
 
+    // if active account is being forgotten, disconnect
+    const activeAccountUnsub = _accounts.find(
+      (a: ExternalAccount) => a.address === activeAccount
+    );
+    if (activeAccountUnsub !== undefined) {
+      setStateWithRef(null, setActiveAccount, activeAccountRef);
+      setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
+    }
+
+    // update localStorage
+    let localExternalAccounts = getLocalExternalAccounts(true);
+
+    // remove forgotten accounts from localStorage
+    localExternalAccounts = localExternalAccounts.filter(
+      (l: ImportedAccount) =>
+        _accounts.find((a: ImportedAccount) => a.address === l.address) ===
+        undefined
+    );
+
+    if (localExternalAccounts.length) {
+      localStorage.setItem(
+        'external_accounts',
+        JSON.stringify(localExternalAccounts)
+      );
+    } else {
+      localStorage.removeItem('external_accounts');
+    }
+
+    // update accounts
+    const accountsNew = accountsRef.current.filter(
+      (a: ImportedAccount) =>
+        _accounts.find((e: ExternalAccount) => e.address === a.address) ===
+        undefined
+    );
+
+    setStateWithRef(accountsNew, setAccounts, accountsRef);
     // update unsubs state with filtered unsubs
     setStateWithRef(unsubsNew, setUnsubscribe, unsubscribeRef);
-
-    // TODO: update accounts, activeAccount, activeAccountMeta.
-    // set activeAccount / meta to null if it has been unsubscribed.
   };
 
   /* importExternalAccounts
@@ -539,6 +574,7 @@ export const ConnectProvider = ({
       const result: any = await api.query.system.account(address);
       const account = result.toHuman();
       const nonce = account?.nonce ?? undefined;
+
       return nonce !== undefined;
     } catch (e) {
       return false;
@@ -556,6 +592,7 @@ export const ConnectProvider = ({
         addExternalAccount,
         getActiveAccount,
         accountHasSigner,
+        forgetAccounts,
         extensions,
         extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,

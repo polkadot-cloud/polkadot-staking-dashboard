@@ -13,6 +13,7 @@ import {
   borderPrimary,
   modalBackground,
   textSuccess,
+  borderSecondary,
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
@@ -279,7 +280,6 @@ export const ExtensionWrapper = styled.div<any>`
         }
       }
     }
-
     .neutral {
       color: ${textSecondary};
       opacity: 0.8;
@@ -290,7 +290,6 @@ export const ExtensionWrapper = styled.div<any>`
     .success {
       color: ${textSuccess};
     }
-
     /* svg theming */
     svg {
       .light {
@@ -358,5 +357,35 @@ export const ReadOnlyWrapper = styled.div`
     padding: 1rem;
     display: flex;
     flex-flow: row wrap;
+    transition: border 0.1s;
+
+    > div {
+      color: ${textSecondary};
+      transition: opacity 0.2s;
+
+      &:first-child {
+        box-sizing: border-box;
+        flex: 1;
+        display: flex;
+        flex-flow: row wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      &:last-child {
+        padding-left: 2rem;
+        opacity: 0.25;
+      }
+    }
+
+    &:hover {
+      > div:last-child {
+        opacity: 1;
+      }
+    }
+
+    &:hover {
+      border-color: ${borderSecondary};
+    }
   }
 `;
