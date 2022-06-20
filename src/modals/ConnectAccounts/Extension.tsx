@@ -41,14 +41,14 @@ export const Extension = (props: any) => {
           {...props}
           message={message}
           status={status}
-          size="2rem"
+          size="1.5rem"
         />
       ) : (
         <ExtensionButton
           {...props}
           message={message}
           status={status}
-          size="2rem"
+          size="1.5rem"
         />
       )}
     </ExtensionWrapper>

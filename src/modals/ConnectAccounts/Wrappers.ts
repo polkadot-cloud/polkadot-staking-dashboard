@@ -279,7 +279,6 @@ export const ExtensionWrapper = styled.div<any>`
     }
     .neutral {
       color: ${textSecondary};
-      opacity: 0.8;
     }
     .danger {
       color: ${textDanger};

@@ -93,8 +93,8 @@ export const Extensions = forwardRef((props: any, ref: any) => {
               <div>
                 <FontAwesomeIcon
                   icon={faGlasses}
-                  transform="grow-8"
-                  style={{ margin: '0 1rem 0 1.25rem' }}
+                  transform="grow-5"
+                  style={{ margin: '0 1rem 0 1rem' }}
                 />
                 <h3>
                   <span className="name">Read Only Accounts</span>
