@@ -20,8 +20,7 @@ import {
   BalancesContextInterface,
   BondOptions,
 } from 'types/balances';
-import { ConnectContextInterface } from 'types/connect';
-import { WalletAccount } from '@talisman-connect/wallets';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -67,15 +66,86 @@ export const BalancesProvider = ({
   const [unsubsLedgers, setUnsubsLedgers] = useState<Unsubs>([]);
   const unsubsLedgersRef = useRef<Unsubs>(unsubsLedgers);
 
-  // fetch account balances
+  // fetch account balances & ledgers. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
-      // unsubscribe from any current accounts and ledgers
-      unsubscribeAll();
-      setStateWithRef([], setAccounts, accountsRef);
-      setStateWithRef([], setLedgers, ledgersRef);
-      getBalances();
-      getLedgers();
+      // local updated values
+      let _accounts = accountsRef.current;
+      let _ledgers = ledgersRef.current;
+      const _unsubsBalances = unsubsBalancesRef.current;
+      const _unsubsLedgers = unsubsLedgersRef.current;
+
+      // get accounts removed: use these to unsubscribe
+      const accountsRemoved = accountsRef.current.filter(
+        (a: BalancesAccount) =>
+          !connectAccounts.find((c: ImportedAccount) => c.address === a.address)
+      );
+      // get accounts added: use these to subscribe
+      const accountsAdded = connectAccounts.filter(
+        (c: ImportedAccount) =>
+          !accountsRef.current.find(
+            (a: BalancesAccount) => a.address === c.address
+          )
+      );
+      // update accounts state for removal
+      _accounts = accountsRef.current.filter((a: BalancesAccount) =>
+        connectAccounts.find((c: ImportedAccount) => c.address === a.address)
+      );
+      // update ledgers state for removal
+      _ledgers = ledgersRef.current.filter((l: BalanceLedger) =>
+        connectAccounts.find((c: ImportedAccount) => c.address === l.address)
+      );
+
+      // update accounts state and unsubscribe if accounts have been removed
+      if (_accounts.length < accountsRef.current.length) {
+        // unsubscribe from removed balances
+        accountsRemoved.forEach((a: BalancesAccount) => {
+          const unsub = unsubsBalancesRef.current.find(
+            (u: Unsub) => u.key === a.address
+          );
+          if (unsub) {
+            unsub.unsub();
+            // remove unsub from balances
+            _unsubsBalances.filter((u: Unsub) => u.key !== a.address);
+          }
+        });
+        // commit state updates
+        setStateWithRef(_unsubsBalances, setUnsubsBalances, unsubsBalancesRef);
+        setStateWithRef(_accounts, setAccounts, accountsRef);
+      }
+
+      // update ledgers state and unsubscribe if accounts have been removed
+      if (_ledgers.length < ledgersRef.current.length) {
+        // unsubscribe from removed ledgers if it exists
+        accountsRemoved.forEach((a: BalancesAccount) => {
+          const unsub = unsubsLedgersRef.current.find(
+            (u: Unsub) => u.key === a.address
+          );
+          if (unsub) {
+            unsub.unsub();
+            // remove unsub from balances
+            _unsubsLedgers.filter((u: Unsub) => u.key !== a.address);
+          }
+        });
+        // commit state updates
+        setStateWithRef(_unsubsLedgers, setUnsubsLedgers, unsubsLedgersRef);
+        setStateWithRef(_ledgers, setLedgers, ledgersRef);
+      }
+
+      // if accounts have changed, update state with new unsubs / accounts
+      if (accountsAdded.length) {
+        // subscribe to account balances
+        Promise.all(
+          accountsAdded.map((a: ImportedAccount) =>
+            subscribeToBalances(a.address)
+          )
+        );
+        Promise.all(
+          accountsAdded.map((a: ImportedAccount) =>
+            subscribeToLedger(a.address)
+          )
+        );
+      }
     }
   }, [connectAccounts, network, isReady]);
 
@@ -96,49 +166,6 @@ export const BalancesProvider = ({
     Object.values(unsubsLedgersRef.current).forEach(({ unsub }) => {
       unsub();
     });
-  };
-
-  /*
-   * Unsubscrbe from some balance subscriptions and update the resultig state.
-   */
-  const unsubscribeSomeAndUpdateState = (keys: Array<string>) => {
-    // unsubscribe from provided keys
-    const balancesToUnsub = unsubsBalancesRef.current.filter((f: Unsub) =>
-      keys.includes(f.key)
-    );
-    const ledgersToUnsub = unsubsLedgersRef.current.filter((f: Unsub) =>
-      keys.includes(f.key)
-    );
-    Object.values(balancesToUnsub).forEach(({ unsub }) => {
-      unsub();
-    });
-    Object.values(ledgersToUnsub).forEach(({ unsub }) => {
-      unsub();
-    });
-    // filter keys from current unsubs
-    const balancesNew = unsubsBalancesRef.current.filter(
-      (f: Unsub) => !keys.includes(f.key)
-    );
-    const ledgersNew = unsubsLedgersRef.current.filter((f: Unsub) =>
-      keys.includes(f.key)
-    );
-    // update unsubs state with filtered unsubs
-    setStateWithRef(balancesNew, setUnsubsBalances, unsubsBalancesRef);
-    setStateWithRef(ledgersNew, setUnsubsLedgers, unsubsLedgersRef);
-  };
-
-  const getBalances = async () => {
-    // subscribe to account balances
-    Promise.all(
-      connectAccounts.map((a: WalletAccount) => subscribeToBalances(a.address))
-    );
-  };
-
-  // subscribe to account ledgers
-  const getLedgers = async () => {
-    Promise.all(
-      connectAccounts.map((a: WalletAccount) => subscribeToLedger(a.address))
-    );
   };
 
   // subscribe to account balances, ledger, bonded and nominators
