@@ -28,8 +28,13 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { isReady } = useApi() as APIContextInterface;
   const { getAccount, activeAccount }: any =
     useConnect() as ConnectContextInterface;
-  const { getLedgerForController, getAccountLocks, getBondedAccount, ledgers } =
-    useBalances() as BalancesContextInterface;
+  const {
+    getLedgerForController,
+    getAccountLocks,
+    getBondedAccount,
+    accounts: balanceAccounts,
+    ledgers,
+  } = useBalances() as BalancesContextInterface;
   const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
   const { accounts } = useConnect() as ConnectContextInterface;
@@ -45,7 +50,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
   useEffect(() => {
     getStakingStatuses();
-  }, [isReady, ledgers, accounts]);
+  }, [isReady, ledgers, balanceAccounts]);
 
   const getStakingStatuses = () => {
     // accumulate imported stash accounts

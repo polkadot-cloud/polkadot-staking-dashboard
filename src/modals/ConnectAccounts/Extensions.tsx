@@ -3,7 +3,11 @@
 
 import { forwardRef } from 'react';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
+import {
+  ConnectContextInterface,
+  ExternalAccount,
+  ImportedAccount,
+} from 'types/connect';
 import {
   faAngleDoubleRight,
   faGlasses,
@@ -25,6 +29,21 @@ export const Extensions = forwardRef((props: any, ref: any) => {
   const { setSection, setReadOnlyOpen, readOnlyOpen } = props;
 
   const { extensions, accounts } = useConnect() as ConnectContextInterface;
+
+  // get all external accounts
+  const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {
+    return a.source === 'external';
+  }) as Array<ExternalAccount>;
+
+  // get external accounts added by user
+  const externalAccountsByUser = externalAccountsOnly.filter(
+    (a: ExternalAccount) => a.addedBy === 'user'
+  );
+
+  // forget account
+  const forgetAccount = (address: string) => {
+    // TODO: implement forget account
+  };
 
   return (
     <ContentWrapper>
@@ -78,7 +97,15 @@ export const Extensions = forwardRef((props: any, ref: any) => {
                 />
                 <h3>
                   <span className="name">Read Only Accounts</span>
-                  <span className="message">&nbsp;</span>
+                  <span
+                    className={`message${
+                      externalAccountsByUser.length ? ` success` : ``
+                    }`}
+                  >
+                    {externalAccountsByUser.length
+                      ? `${externalAccountsByUser.length} Connected`
+                      : ``}
+                  </span>
                 </h3>
               </div>
               <div className="neutral">
@@ -93,16 +120,25 @@ export const Extensions = forwardRef((props: any, ref: any) => {
           {readOnlyOpen && (
             <div className="content">
               <ReadOnlyInput />
+              {externalAccountsByUser.length > 0 && (
+                <h5>
+                  {externalAccountsByUser.length} Read Only Account
+                  {externalAccountsByUser.length === 1 ? '' : 's'}
+                </h5>
+              )}
               <div className="accounts">
-                <button
-                  type="button"
-                  className="account"
-                  onClick={() => {
-                    /* forget account */
-                  }}
-                >
-                  Read Only Account
-                </button>
+                {externalAccountsByUser.map((a: ExternalAccount, i: number) => (
+                  <button
+                    key={`user_external_account_${i}`}
+                    type="button"
+                    className="account"
+                    onClick={() => {
+                      forgetAccount(a.address);
+                    }}
+                  >
+                    {a.address}
+                  </button>
+                ))}
               </div>
             </div>
           )}

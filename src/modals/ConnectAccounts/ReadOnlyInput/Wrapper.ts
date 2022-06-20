@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
+import { borderPrimary, textDanger, textSecondary, textSuccess } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -35,5 +35,15 @@ export const Wrapper = styled.div`
   }
   h5 {
     margin: 0.75rem 0.25rem;
+    &.neutral {
+      color: ${textSecondary};
+      opacity: 0.8;
+    }
+    &.danger {
+      color: ${textDanger};
+    }
+    &.success {
+      color: ${textSuccess};
+    }
   }
 `;

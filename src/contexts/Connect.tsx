@@ -30,7 +30,7 @@ export const ConnectProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useApi() as APIContextInterface;
+  const { api, network } = useApi() as APIContextInterface;
 
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
@@ -164,7 +164,7 @@ export const ConnectProvider = ({
         (l: ImportedAccount) =>
           accountsRef.current.find(
             (a: ImportedAccount) => a.address === l.address
-          )
+          ) === undefined
       );
 
       // set active account for network
@@ -531,9 +531,24 @@ export const ConnectProvider = ({
       ) !== undefined;
     return exists;
   };
+
+  // check an account balance exists on-chain
+  const fetchAccountValid = async (address: string) => {
+    if (!api) return false;
+    try {
+      const result: any = await api.query.system.account(address);
+      const account = result.toHuman();
+      const nonce = account?.nonce ?? undefined;
+      return nonce !== undefined;
+    } catch (e) {
+      return false;
+    }
+  };
+
   return (
     <ConnectContext.Provider
       value={{
+        fetchAccountValid,
         connectExtensionAccounts,
         getAccount,
         connectToAccount,

@@ -5,6 +5,7 @@ import { MaybeAccount } from 'types';
 import { WalletAccount, Wallet } from '@talisman-connect/wallets';
 
 export interface ConnectContextInterface {
+  fetchAccountValid: (a: string) => Promise<boolean>;
   connectExtensionAccounts: (n: string) => void;
   getAccount: (account: MaybeAccount) => WalletAccount | null;
   connectToAccount: (a: WalletAccount) => void;
@@ -19,6 +20,9 @@ export interface ConnectContextInterface {
   activeAccountMeta: WalletAccount | null;
 }
 
+export interface ExtensionAccount extends WalletAccount {
+  addedBy: string;
+}
 export type ImportedAccount = WalletAccount | ExternalAccount;
 
 export interface ExternalAccount {

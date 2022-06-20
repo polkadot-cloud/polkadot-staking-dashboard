@@ -4,6 +4,8 @@
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
 import { PagesConfig } from 'types/index';
+import { decodeAddress, encodeAddress } from '@polkadot/keyring';
+import { hexToU8a, isHex } from '@polkadot/util';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -181,4 +183,13 @@ export const localStorageOrDefault = <T>(
     return JSON.parse(val) as T;
   }
   return val;
+};
+
+export const isValidAddress = (address: string) => {
+  try {
+    encodeAddress(isHex(address) ? hexToU8a(address) : decodeAddress(address));
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
