@@ -116,7 +116,7 @@ export const ConnectProvider = ({
   };
 
   /*
-   * Unsubscrbe from some account subscriptions and update the resultig state.
+   * Unsubscrbe from some account subscriptions and update the resulting state.
    */
   const unsubscribeSomeAndUpdateState = (keys: Array<string>) => {
     // unsubscribe from provided keys
@@ -133,6 +133,9 @@ export const ConnectProvider = ({
 
     // update unsubs state with filtered unsubs
     setStateWithRef(unsubsNew, setUnsubscribe, unsubscribeRef);
+
+    // TODO: update accounts, activeAccount, activeAccountMeta.
+    // set activeAccount / meta to null if it has been unsubscribed.
   };
 
   /* importExternalAccounts
