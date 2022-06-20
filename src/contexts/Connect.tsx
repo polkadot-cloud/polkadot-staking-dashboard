@@ -207,6 +207,7 @@ export const ConnectProvider = ({
         connectToAccount(activeAccountIsExternal);
       }
       const _accounts = [...accountsRef.current].concat(localExternalAccounts);
+
       // add external accounts to imported
       setStateWithRef(_accounts, setAccounts, accountsRef);
     }
@@ -510,7 +511,12 @@ export const ConnectProvider = ({
   };
 
   // adds an external account (non-wallet) to accounts
-  const addExternalAccount = (address: string, addedBy: string) => {
+  const addExternalAccount = (_address: string, addedBy: string) => {
+    // ensure account is formatted correctly
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+    const { address } = keyring.addFromAddress(_address);
+
     const externalAccount = {
       address,
       network: network.name,
@@ -568,9 +574,13 @@ export const ConnectProvider = ({
   };
 
   // check an account balance exists on-chain
-  const fetchAccountValid = async (address: string) => {
+  const fetchAccountValid = async (_address: string) => {
     if (!api) return false;
     try {
+      const keyring = new Keyring();
+      keyring.setSS58Format(network.ss58);
+      const { address } = keyring.addFromAddress(_address);
+
       const result: any = await api.query.system.account(address);
       const account = result.toHuman();
       const nonce = account?.nonce ?? undefined;
