@@ -26,4 +26,5 @@ export interface ExternalAccount {
   network: string;
   name: string;
   source: string;
+  addedBy: string;
 }

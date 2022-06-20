@@ -481,6 +481,7 @@ export const ConnectProvider = ({
       network: network.name,
       name: clipAddress(address),
       source: 'external',
+      addedBy: 'system',
     };
 
     // get all external accounts from localStorage
