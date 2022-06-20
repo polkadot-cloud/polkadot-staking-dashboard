@@ -12,9 +12,9 @@ import {
 
 export const Wrapper = styled(motion.button)<any>`
   border: 1px solid ${borderPrimary};
-  cursor: ${(props) => props.cursor};
   background: ${(props) => props.fill};
   font-size: ${(props) => props.fontSize};
+  box-sizing: border-box;
   border-radius: 1rem;
   box-shadow: none;
   display: flex;
@@ -59,8 +59,6 @@ export const Wrapper = styled(motion.button)<any>`
     overflow: hidden;
     line-height: 2.2rem;
     flex: 1;
-    /* flex-grow: 1; */
-    /* flex-shrink: 1; */
 
     &.unassigned {
       color: ${textSecondary};
