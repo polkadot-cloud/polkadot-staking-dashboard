@@ -3,7 +3,12 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { MaybeAccount, NetworkMetricsContextInterface, Unsubs } from 'types';
+import {
+  MaybeAccount,
+  NetworkMetricsContextInterface,
+  Unsub,
+  Unsubs,
+} from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
@@ -65,10 +70,10 @@ export const BalancesProvider = ({
   // fetch account balances
   useEffect(() => {
     if (isReady) {
-      // unsubscribe from current accounts and ledgers
+      // unsubscribe from any current accounts and ledgers
+      unsubscribeAll();
       setStateWithRef([], setAccounts, accountsRef);
       setStateWithRef([], setLedgers, ledgersRef);
-      unsubscribeAll();
       getBalances();
       getLedgers();
     }
@@ -81,13 +86,45 @@ export const BalancesProvider = ({
     };
   }, []);
 
+  /*
+   * Unsubscrbe all balance subscriptions
+   */
   const unsubscribeAll = () => {
-    Object.values(unsubsBalancesRef.current).forEach(async ({ unsub }) => {
+    Object.values(unsubsBalancesRef.current).forEach(({ unsub }) => {
       unsub();
     });
-    Object.values(unsubsLedgersRef.current).forEach(async ({ unsub }) => {
+    Object.values(unsubsLedgersRef.current).forEach(({ unsub }) => {
       unsub();
     });
+  };
+
+  /*
+   * Unsubscrbe from some balance subscriptions and update the resultig state.
+   */
+  const unsubscribeSomeAndUpdateState = (keys: Array<string>) => {
+    // unsubscribe from provided keys
+    const balancesToUnsub = unsubsBalancesRef.current.filter((f: Unsub) =>
+      keys.includes(f.key)
+    );
+    const ledgersToUnsub = unsubsLedgersRef.current.filter((f: Unsub) =>
+      keys.includes(f.key)
+    );
+    Object.values(balancesToUnsub).forEach(({ unsub }) => {
+      unsub();
+    });
+    Object.values(ledgersToUnsub).forEach(({ unsub }) => {
+      unsub();
+    });
+    // filter keys from current unsubs
+    const balancesNew = unsubsBalancesRef.current.filter(
+      (f: Unsub) => !keys.includes(f.key)
+    );
+    const ledgersNew = unsubsLedgersRef.current.filter((f: Unsub) =>
+      keys.includes(f.key)
+    );
+    // update unsubs state with filtered unsubs
+    setStateWithRef(balancesNew, setUnsubsBalances, unsubsBalancesRef);
+    setStateWithRef(ledgersNew, setUnsubsLedgers, unsubsLedgersRef);
   };
 
   const getBalances = async () => {

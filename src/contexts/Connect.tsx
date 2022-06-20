@@ -17,7 +17,7 @@ import {
   ImportedAccount,
   ExternalAccount,
 } from 'types/connect';
-import { MaybeAccount } from 'types';
+import { MaybeAccount, Unsub, Unsubs } from 'types';
 import { useApi } from './Api';
 
 export const ConnectContext =
@@ -58,12 +58,7 @@ export const ConnectProvider = ({
   const extensionsStatusRef = useRef(extensionsStatus);
 
   // store unsubscribe handler for connected extensions
-  const [unsubscribe, setUnsubscribe] = useState<
-    Array<{
-      key: string;
-      unsub: () => void;
-    }>
-  >([]);
+  const [unsubscribe, setUnsubscribe] = useState<Unsubs>([]);
   const unsubscribeRef = useRef(unsubscribe);
 
   // initialise extensions
@@ -72,9 +67,7 @@ export const ConnectProvider = ({
       setExtensions(getWallets());
     }
     return () => {
-      unsubscribeRef.current.forEach(({ unsub }) => {
-        unsub();
-      });
+      unsubscribeAll();
     };
   });
 
@@ -84,20 +77,18 @@ export const ConnectProvider = ({
    * reason forgot the site, then all pop-ups will be summoned
    * here. */
   useEffect(() => {
+    // unsubscribe from all accounts and reset state
+    unsubscribeAll();
+    setStateWithRef(null, _setActiveAccount, activeAccountRef);
+    setStateWithRef([], setAccounts, accountsRef);
+    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
+
     // get active extensions
     const localExtensions = localStorageOrDefault(
       `active_extensions`,
       [],
       true
     );
-
-    // unsubscribe from all accounts and reset state
-    unsubscribeRef.current.forEach(({ unsub }) => {
-      unsub();
-    });
-    setStateWithRef(null, _setActiveAccount, activeAccountRef);
-    setStateWithRef([], setAccounts, accountsRef);
-    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
     setExtensionsFetched(false);
 
     // get account if extensions exist and local extensions exist (previously connected).
@@ -114,6 +105,35 @@ export const ConnectProvider = ({
       importExternalAccounts();
     }
   }, [extensionsFetched]);
+
+  /*
+   * Unsubscrbe all account subscriptions
+   */
+  const unsubscribeAll = () => {
+    unsubscribeRef.current.forEach(({ unsub }) => {
+      unsub();
+    });
+  };
+
+  /*
+   * Unsubscrbe from some account subscriptions and update the resultig state.
+   */
+  const unsubscribeSomeAndUpdateState = (keys: Array<string>) => {
+    // unsubscribe from provided keys
+    const unsubs = unsubscribeRef.current.filter((f: Unsub) =>
+      keys.includes(f.key)
+    );
+    Object.values(unsubs).forEach(({ unsub }) => {
+      unsub();
+    });
+    // filter keys from current unsubs
+    const unsubsNew = unsubscribeRef.current.filter(
+      (f: Unsub) => !keys.includes(f.key)
+    );
+
+    // update unsubs state with filtered unsubs
+    setStateWithRef(unsubsNew, setUnsubscribe, unsubscribeRef);
+  };
 
   /* importExternalAccounts
    * checks previously imported read-only accounts from
