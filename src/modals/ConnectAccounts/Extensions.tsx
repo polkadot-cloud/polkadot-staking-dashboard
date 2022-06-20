@@ -94,7 +94,15 @@ export const Extensions = forwardRef((props: any, ref: any) => {
             <div className="content">
               <ReadOnlyInput />
               <div className="accounts">
-                <div className="account">Read Only Account</div>
+                <button
+                  type="button"
+                  className="account"
+                  onClick={() => {
+                    /* forget account */
+                  }}
+                >
+                  Read Only Account
+                </button>
               </div>
             </div>
           )}
