@@ -32,7 +32,6 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     useBalances() as BalancesContextInterface;
   const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
-
   const { accounts } = useConnect() as ConnectContextInterface;
   const { memberships } = usePoolMemberships() as PoolMembershipsContextState;
 

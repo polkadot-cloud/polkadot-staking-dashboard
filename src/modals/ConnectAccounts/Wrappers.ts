@@ -222,7 +222,7 @@ export const AccountWrapper = styled.div`
   }
 `;
 
-export const ExtensionWrapper = styled.div`
+export const ExtensionWrapper = styled.div<any>`
   box-sizing: border-box;
   width: 100%;
 
@@ -230,11 +230,11 @@ export const ExtensionWrapper = styled.div`
   > div {
     box-sizing: border-box;
     width: 100%;
-    margin: 1rem 0;
-    padding: 1rem 0.75rem;
-    border-radius: 0.5rem;
+    margin: ${(props) => (props.noSpacing ? 0 : '1rem 0')};
+    padding: ${(props) => (props.noSpacing ? 0 : '1rem 0.75rem')};
     font-size: 1rem;
     background: ${buttonPrimaryBackground};
+    border-radius: 0.75rem;
     transition: background 0.15s;
     color: ${textPrimary};
     display: flex;
@@ -257,8 +257,7 @@ export const ExtensionWrapper = styled.div`
         h3 {
           margin: 0;
           span {
-            margin-right: 1rem;
-
+            margin-right: 1.25rem;
             &.name {
               max-width: 100%;
               text-overflow: ellipsis;
@@ -275,21 +274,21 @@ export const ExtensionWrapper = styled.div`
       &:last-child {
         flex-grow: 1;
         justify-content: flex-end;
-
-        &.neutral {
-          color: ${textSecondary};
-          opacity: 0.8;
-        }
-        &.danger {
-          color: ${textDanger};
-        }
-        &.success {
-          color: ${textSuccess};
-        }
         .icon {
           margin-left: 1rem;
         }
       }
+    }
+
+    .neutral {
+      color: ${textSecondary};
+      opacity: 0.8;
+    }
+    .danger {
+      color: ${textDanger};
+    }
+    .success {
+      color: ${textSuccess};
     }
 
     /* svg theming */
@@ -324,4 +323,35 @@ export const Separator = styled.div`
   margin: 1.5rem 0rem;
 `;
 
-export default Wrapper;
+export const ReadOnlyWrapper = styled.div`
+  box-sizing: border-box;
+  border-radius: 0.75rem;
+  width: 100%;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  background: ${buttonPrimaryBackground};
+  transition: background 0.15s;
+  color: ${textPrimary};
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  min-height: 3.5rem;
+
+  > .content {
+    box-sizing: border-box;
+    padding: 0 1.5rem;
+    width: 100%;
+  }
+
+  .account {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid ${borderPrimary};
+    border-radius: 0.75rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+  }
+`;

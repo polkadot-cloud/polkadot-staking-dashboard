@@ -14,21 +14,14 @@ export const Extension = (props: any) => {
   const { meta } = props;
   const { extensionName } = meta;
 
-  const { extensionsStatus, accounts } =
-    useConnect() as ConnectContextInterface;
+  const { extensionsStatus } = useConnect() as ConnectContextInterface;
   const status = extensionsStatus[extensionName];
-
-  const accountsConnected = accounts.filter(
-    (a: any) => a.source === extensionName
-  );
 
   // determine message to be displayed based on extension status.
   let message;
   switch (status) {
     case 'connected':
-      message = `${accountsConnected.length} Account${
-        accountsConnected.length !== 1 ? `s` : ``
-      } Connected`;
+      message = `Connected`;
       break;
     case 'not_authenticated':
       message = 'Not Authenticated. Authenticate and Try Again';
@@ -123,7 +116,11 @@ export const ExtensionInner = (props: any) => {
         )}
         <h3>
           <span className="name">&nbsp; {title}</span>
-          <span className="message">{message}</span>
+          <span
+            className={`message ${status === 'connected' ? 'success' : ''}`}
+          >
+            {message}
+          </span>
         </h3>
       </div>
       <div className={status === 'connected' ? 'success' : 'neutral'}>
