@@ -84,6 +84,7 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
+    "build:netlify": "BUILD_PATH='./build/dashboard' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src --fix"

@@ -250,28 +250,25 @@ export const ExtensionWrapper = styled.div<any>`
       justify-content: flex-start;
       align-items: center;
       padding: 0 1rem;
-
+      h3 {
+        margin: 0;
+      }
+      span {
+        margin-right: 1.25rem;
+        &.name {
+          max-width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        &.message {
+          opacity: 0.75;
+        }
+      }
       &:first-child {
         flex-shrink: 1;
         overflow: hidden;
-
-        h3 {
-          margin: 0;
-          span {
-            margin-right: 1.25rem;
-            &.name {
-              max-width: 100%;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-            }
-            &.message {
-              opacity: 0.75;
-            }
-          }
-        }
       }
-
       &:last-child {
         flex-grow: 1;
         justify-content: flex-end;

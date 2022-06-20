@@ -116,14 +116,17 @@ export const ExtensionInner = (props: any) => {
         )}
         <h3>
           <span className="name">&nbsp; {title}</span>
+        </h3>
+      </div>
+
+      <div className={status === 'connected' ? 'success' : 'neutral'}>
+        <h3>
           <span
             className={`message ${status === 'connected' ? 'success' : ''}`}
           >
             {message}
           </span>
         </h3>
-      </div>
-      <div className={status === 'connected' ? 'success' : 'neutral'}>
         {flag && flag}
         <FontAwesomeIcon
           icon={status === 'connected' ? faCheckCircle : faPlus}
