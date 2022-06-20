@@ -475,13 +475,13 @@ export const ConnectProvider = ({
   };
 
   // adds an external account (non-wallet) to accounts
-  const addExternalAccount = (address: string) => {
+  const addExternalAccount = (address: string, addedBy: string) => {
     const externalAccount = {
       address,
       network: network.name,
       name: clipAddress(address),
       source: 'external',
-      addedBy: 'system',
+      addedBy,
     };
 
     // get all external accounts from localStorage

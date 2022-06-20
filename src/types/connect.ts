@@ -9,7 +9,7 @@ export interface ConnectContextInterface {
   getAccount: (account: MaybeAccount) => WalletAccount | null;
   connectToAccount: (a: WalletAccount) => void;
   disconnectFromAccount: () => void;
-  addExternalAccount: (a: string) => void;
+  addExternalAccount: (a: string, addedBy: string) => void;
   getActiveAccount: () => string | null;
   accountHasSigner: (a: MaybeAccount) => boolean;
   extensions: Array<Wallet>;

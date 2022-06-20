@@ -277,7 +277,7 @@ export const BalancesProvider = ({
           if (
             !connectAccounts.find((s: any) => s.address === stash.toHuman())
           ) {
-            addExternalAccount(stash.toHuman());
+            addExternalAccount(stash.toHuman(), 'system');
           }
 
           ledger = {
