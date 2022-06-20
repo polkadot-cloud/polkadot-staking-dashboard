@@ -340,7 +340,12 @@ export const ReadOnlyWrapper = styled.div`
 
   > .content {
     box-sizing: border-box;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
+    width: 100%;
+  }
+
+  .accounts {
+    margin-top: 1rem;
     width: 100%;
   }
 

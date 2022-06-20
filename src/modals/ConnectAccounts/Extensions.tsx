@@ -19,6 +19,7 @@ import {
   ReadOnlyWrapper,
 } from './Wrappers';
 import { Extension } from './Extension';
+import { ReadOnlyInput } from './ReadOnlyInput';
 
 export const Extensions = forwardRef((props: any, ref: any) => {
   const { setSection, setReadOnlyOpen, readOnlyOpen } = props;
@@ -91,7 +92,10 @@ export const Extensions = forwardRef((props: any, ref: any) => {
           </ExtensionWrapper>
           {readOnlyOpen && (
             <div className="content">
-              <div className="account">Read Only Account</div>
+              <ReadOnlyInput />
+              <div className="accounts">
+                <div className="account">Read Only Account</div>
+              </div>
             </div>
           )}
         </ReadOnlyWrapper>
