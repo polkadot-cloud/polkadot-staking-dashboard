@@ -53,11 +53,11 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
   useEffect(() => {
     setLocalAccounts(accounts);
-  }, [isReady, ledgers, accounts, balanceAccounts]);
+  }, [isReady, accounts]);
 
   useEffect(() => {
     getStakingStatuses();
-  }, [localAccounts]);
+  }, [localAccounts, balanceAccounts, ledgers]);
 
   const getStakingStatuses = () => {
     // accumulate imported stash accounts
