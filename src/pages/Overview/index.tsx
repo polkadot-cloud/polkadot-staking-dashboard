@@ -35,7 +35,7 @@ export const Overview = () => {
   const { payouts }: any = useSubscan();
 
   // generate payouts by day data
-  const maxDays = 14;
+  const maxDays = 21;
   let payoutsByDay = prefillToMaxDays(
     calculatePayoutsByDay(payouts, maxDays, units),
     maxDays
