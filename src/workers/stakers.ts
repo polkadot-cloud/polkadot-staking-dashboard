@@ -59,9 +59,9 @@ ctx.addEventListener('message', (event: any) => {
       if (own !== undefined) {
         ownStake.push({
           address,
-          value:
-            new BN(rmCommas(own.value)).toNumber() /
-            new BN(10 ** units).toNumber(),
+          value: new BN(rmCommas(own.value))
+            .div(new BN(10 ** units))
+            .toString(),
         });
       }
     }
