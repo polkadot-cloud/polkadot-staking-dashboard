@@ -95,6 +95,9 @@ export const Wrapper = styled(motion.div)<any>`
           &.active {
             color: ${networkColor};
           }
+          &:disabled {
+            opacity: 0.25;
+          }
         }
       }
     }

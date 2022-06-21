@@ -28,16 +28,23 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { isReady } = useApi() as APIContextInterface;
   const { getAccount, activeAccount }: any =
     useConnect() as ConnectContextInterface;
-  const { getLedgerForController, getAccountLocks, getBondedAccount, ledgers } =
-    useBalances() as BalancesContextInterface;
+  const {
+    getLedgerForController,
+    getAccountLocks,
+    getBondedAccount,
+    accounts: balanceAccounts,
+    ledgers,
+  } = useBalances() as BalancesContextInterface;
   const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
-
   const { accounts } = useConnect() as ConnectContextInterface;
   const { memberships } = usePoolMemberships() as PoolMembershipsContextState;
 
   const _controllers: any = [];
   const _stashes: any = [];
+
+  // store local copy of accounts
+  const [localAccounts, setLocalAccounts] = useState(accounts);
 
   // store staking statuses
   const [activeStaking, setActiveStaking] = useState<Array<any>>([]);
@@ -45,12 +52,16 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const [inactive, setInactive] = useState<Array<any>>([]);
 
   useEffect(() => {
+    setLocalAccounts(accounts);
+  }, [isReady, accounts]);
+
+  useEffect(() => {
     getStakingStatuses();
-  }, [isReady, ledgers, accounts]);
+  }, [localAccounts, balanceAccounts, ledgers]);
 
   const getStakingStatuses = () => {
     // accumulate imported stash accounts
-    for (const account of accounts) {
+    for (const account of localAccounts) {
       const locks = getAccountLocks(account.address);
 
       // account is a stash if they have an active `staking` lock
@@ -67,7 +78,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     }
 
     // accumulate imported controller accounts
-    for (const account of accounts) {
+    for (const account of localAccounts) {
       const ledger = getLedgerForController(account.address);
       if (ledger) {
         _controllers.push({
@@ -82,7 +93,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     const _activePooling: Array<any> = [];
     const _inactive: Array<any> = [];
 
-    for (const account of accounts) {
+    for (const account of localAccounts) {
       const stash = _stashes.find((s: any) => s.address === account.address);
       const controller = _controllers.find(
         (c: any) => c.address === account.address
@@ -103,7 +114,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
             controller: stash.controller,
             stashImported: true,
             controllerImported:
-              accounts.find((a: any) => a.address === stash.controller) !==
+              localAccounts.find((a: any) => a.address === stash.controller) !==
               undefined,
           };
           _activeStaking.push(_record);
@@ -121,7 +132,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
             stash: controller.ledger.stash,
             controller: controller.address,
             stashImported:
-              accounts.find(
+              localAccounts.find(
                 (a: any) => a.address === controller.ledger.stash
               ) !== undefined,
             controllerImported: true,
@@ -247,7 +258,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
             <h2>Not Staking</h2>
             {inactive.map((item: string, i: number) => {
               const account = getAccount(item);
-              const { address } = account;
+              const address = account?.address ?? '';
 
               return (
                 <AccountButton

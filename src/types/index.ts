@@ -68,7 +68,12 @@ export type PagesConfig = Array<{
   icon: IconDefinition;
 }>;
 
-export type Unsubs = Array<any | (() => void)>;
+export type Unsubs = Array<Unsub>;
+
+export interface Unsub {
+  key: string;
+  unsub: { (): void };
+}
 
 export type MaybeAccount = string | null;
 

@@ -24,19 +24,20 @@ export const GenerateNominations = (props: any) => {
 
   const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
-  const { applyValidatorOrder, applyValidatorFilters }: any = useUi();
+  const { applyValidatorOrder, applyValidatorFilters } = useUi();
 
   let { favouritesList } = useValidators();
   if (favouritesList === null) {
     favouritesList = [];
   }
   // store the method of fetching validators
-  const [method, setMethod]: any = useState(null);
+  const [method, setMethod] = useState<string | null>(null);
 
   // store whether validators are being fetched
-  const [fetching, setFetching] = useState(false);
+  const [fetching, setFetching] = useState<boolean>(false);
 
   // store the currently selected set of nominations
   const [nominations, setNominations] = useState(defaultNominations);
@@ -185,7 +186,7 @@ export const GenerateNominations = (props: any) => {
   return (
     <Wrapper>
       <div>
-        {!nominations.length && (
+        {!isReadOnlyAccount(activeAccount) && !nominations.length && (
           <>
             <Container>
               <Category title="Generate Method">
@@ -225,7 +226,7 @@ export const GenerateNominations = (props: any) => {
         <></>
       ) : (
         <>
-          {isReady && nominations.length > 0 && (
+          {isReady && nominations.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
                 validators={nominations}
@@ -251,6 +252,10 @@ export const GenerateNominations = (props: any) => {
                 ]}
                 allowMoreCols
               />
+            </div>
+          ) : (
+            <div className="head">
+              <h3>Not Nominating.</h3>
             </div>
           )}
         </>

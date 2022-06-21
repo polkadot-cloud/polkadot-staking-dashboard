@@ -17,6 +17,7 @@ export const defaultThemes: any = {
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
     danger: v('#ae2324', '#d14445'),
+    success: v('green', 'green'),
   },
   background: {
     primary: v('rgba(248,247,247,1)', 'rgba(27,27,27,1)'),
@@ -84,7 +85,7 @@ export const defaultThemes: any = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
-  shadow: v('#eaeaea', '#181818'),
+  shadow: v('#e8e8e8', '#141414'),
 };
 
 // configure card style
@@ -97,7 +98,7 @@ const c = (flat: string, border: string, shadow: string) => ({
 export const cardThemes: any = {
   card: {
     border: c('none', '1px solid', 'none'),
-    shadow: c('none', 'none', '-2px 2px 26px'),
+    shadow: c('none', 'none', '-2px 2px 30px'),
   },
 };
 

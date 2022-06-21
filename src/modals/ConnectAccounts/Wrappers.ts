@@ -12,6 +12,8 @@ import {
   textDanger,
   borderPrimary,
   modalBackground,
+  textSuccess,
+  borderSecondary,
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
@@ -221,70 +223,69 @@ export const AccountWrapper = styled.div`
   }
 `;
 
-export const ExtensionWrapper = styled.button`
+export const ExtensionWrapper = styled.div<any>`
   box-sizing: border-box;
   width: 100%;
-  margin: 1rem 0;
-  padding: 1rem 0.75rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  background: ${buttonPrimaryBackground};
-  transition: background 0.15s;
-  color: ${textPrimary};
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  min-height: 3.5rem;
 
-  &:disabled {
-    cursor: default;
-    opacity: 0.5;
-  }
-  &:hover {
-    background: ${backgroundToggle};
-  }
-
+  > button,
   > div {
     box-sizing: border-box;
+    width: 100%;
+    margin: ${(props) => (props.noSpacing ? 0 : '1rem 0')};
+    padding: ${(props) => (props.noSpacing ? 0 : '1rem 0.75rem')};
+    font-size: 1rem;
+    background: ${buttonPrimaryBackground};
+    border-radius: 0.75rem;
+    transition: background 0.15s;
+    color: ${textPrimary};
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
     align-items: center;
-    padding: 0 1rem;
+    min-height: 3.5rem;
 
-    > span {
-      margin-right: 1rem;
-      &.name {
-        max-width: 100%;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    > div {
+      box-sizing: border-box;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 1rem;
+      h3 {
+        margin: 0;
+      }
+      span {
+        margin-right: 1.25rem;
+        &.name {
+          max-width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        &.message {
+          opacity: 0.75;
+        }
+      }
+      &:first-child {
+        flex-shrink: 1;
         overflow: hidden;
       }
-      &.message {
-        opacity: 0.75;
+      &:last-child {
+        flex-grow: 1;
+        justify-content: flex-end;
+        .icon {
+          margin-left: 1rem;
+        }
       }
     }
-    &:first-child {
-      flex-shrink: 1;
-      overflow: hidden;
+    .neutral {
+      color: ${textSecondary};
     }
-
-    &:last-child {
-      flex-grow: 1;
-      justify-content: flex-end;
-
-      &.neutral {
-        color: ${textSecondary};
-        opacity: 0.75;
-      }
-      &.danger {
-        color: ${textDanger};
-      }
-      .icon {
-        margin-left: 1rem;
-      }
+    .danger {
+      color: ${textDanger};
     }
-
+    .success {
+      color: ${textSuccess};
+    }
     /* svg theming */
     svg {
       .light {
@@ -292,6 +293,19 @@ export const ExtensionWrapper = styled.button`
       }
       .dark {
         fill: ${textSecondary};
+      }
+    }
+  }
+  > button {
+    &:hover {
+      background: ${backgroundToggle};
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 1;
+      &:hover {
+        background: ${buttonPrimaryBackground};
       }
     }
   }
@@ -303,5 +317,3 @@ export const Separator = styled.div`
   opacity: 0.1;
   margin: 1.5rem 0rem;
 `;
-
-export default Wrapper;

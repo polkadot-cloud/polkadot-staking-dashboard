@@ -4,9 +4,9 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Fn,
   MaybeAccount,
   NetworkMetricsContextInterface,
+  Unsub,
   Unsubs,
 } from 'types';
 import { Option } from '@polkadot/types-codec';
@@ -20,8 +20,7 @@ import {
   BalancesContextInterface,
   BondOptions,
 } from 'types/balances';
-import { ConnectContextInterface } from 'types/connect';
-import { WalletAccount } from '@talisman-connect/wallets';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -67,15 +66,86 @@ export const BalancesProvider = ({
   const [unsubsLedgers, setUnsubsLedgers] = useState<Unsubs>([]);
   const unsubsLedgersRef = useRef<Unsubs>(unsubsLedgers);
 
-  // fetch account balances
+  // fetch account balances & ledgers. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
-      // unsubscribe from current accounts and ledgers
-      setStateWithRef([], setAccounts, accountsRef);
-      setStateWithRef([], setLedgers, ledgersRef);
-      unsubscribeAll();
-      getBalances();
-      getLedgers();
+      // local updated values
+      let _accounts = accountsRef.current;
+      let _ledgers = ledgersRef.current;
+      const _unsubsBalances = unsubsBalancesRef.current;
+      const _unsubsLedgers = unsubsLedgersRef.current;
+
+      // get accounts removed: use these to unsubscribe
+      const accountsRemoved = accountsRef.current.filter(
+        (a: BalancesAccount) =>
+          !connectAccounts.find((c: ImportedAccount) => c.address === a.address)
+      );
+      // get accounts added: use these to subscribe
+      const accountsAdded = connectAccounts.filter(
+        (c: ImportedAccount) =>
+          !accountsRef.current.find(
+            (a: BalancesAccount) => a.address === c.address
+          )
+      );
+      // update accounts state for removal
+      _accounts = accountsRef.current.filter((a: BalancesAccount) =>
+        connectAccounts.find((c: ImportedAccount) => c.address === a.address)
+      );
+      // update ledgers state for removal
+      _ledgers = ledgersRef.current.filter((l: BalanceLedger) =>
+        connectAccounts.find((c: ImportedAccount) => c.address === l.address)
+      );
+
+      // update accounts state and unsubscribe if accounts have been removed
+      if (_accounts.length < accountsRef.current.length) {
+        // unsubscribe from removed balances
+        accountsRemoved.forEach((a: BalancesAccount) => {
+          const unsub = unsubsBalancesRef.current.find(
+            (u: Unsub) => u.key === a.address
+          );
+          if (unsub) {
+            unsub.unsub();
+            // remove unsub from balances
+            _unsubsBalances.filter((u: Unsub) => u.key !== a.address);
+          }
+        });
+        // commit state updates
+        setStateWithRef(_unsubsBalances, setUnsubsBalances, unsubsBalancesRef);
+        setStateWithRef(_accounts, setAccounts, accountsRef);
+      }
+
+      // update ledgers state and unsubscribe if accounts have been removed
+      if (_ledgers.length < ledgersRef.current.length) {
+        // unsubscribe from removed ledgers if it exists
+        accountsRemoved.forEach((a: BalancesAccount) => {
+          const unsub = unsubsLedgersRef.current.find(
+            (u: Unsub) => u.key === a.address
+          );
+          if (unsub) {
+            unsub.unsub();
+            // remove unsub from balances
+            _unsubsLedgers.filter((u: Unsub) => u.key !== a.address);
+          }
+        });
+        // commit state updates
+        setStateWithRef(_unsubsLedgers, setUnsubsLedgers, unsubsLedgersRef);
+        setStateWithRef(_ledgers, setLedgers, ledgersRef);
+      }
+
+      // if accounts have changed, update state with new unsubs / accounts
+      if (accountsAdded.length) {
+        // subscribe to account balances
+        Promise.all(
+          accountsAdded.map((a: ImportedAccount) =>
+            subscribeToBalances(a.address)
+          )
+        );
+        Promise.all(
+          accountsAdded.map((a: ImportedAccount) =>
+            subscribeToLedger(a.address)
+          )
+        );
+      }
     }
   }, [connectAccounts, network, isReady]);
 
@@ -86,27 +156,16 @@ export const BalancesProvider = ({
     };
   }, []);
 
+  /*
+   * Unsubscrbe all balance subscriptions
+   */
   const unsubscribeAll = () => {
-    Object.values(unsubsBalancesRef.current).forEach(async (v: Fn) => {
-      v();
+    Object.values(unsubsBalancesRef.current).forEach(({ unsub }) => {
+      unsub();
     });
-    Object.values(unsubsLedgersRef.current).forEach(async (v: Fn) => {
-      v();
+    Object.values(unsubsLedgersRef.current).forEach(({ unsub }) => {
+      unsub();
     });
-  };
-
-  const getBalances = async () => {
-    // subscribe to account balances
-    Promise.all(
-      connectAccounts.map((a: WalletAccount) => subscribeToBalances(a.address))
-    );
-  };
-
-  // subscribe to account ledgers
-  const getLedgers = async () => {
-    Promise.all(
-      connectAccounts.map((a: WalletAccount) => subscribeToLedger(a.address))
-    );
   };
 
   // subscribe to account balances, ledger, bonded and nominators
@@ -182,7 +241,10 @@ export const BalancesProvider = ({
       }
     );
 
-    const _unsubs = unsubsBalancesRef.current.concat(unsub);
+    const _unsubs = unsubsBalancesRef.current.concat({
+      key: address,
+      unsub,
+    });
     setStateWithRef(_unsubs, setUnsubsBalances, unsubsBalancesRef);
     return unsub;
   };
@@ -190,52 +252,60 @@ export const BalancesProvider = ({
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
 
-    const unsub = await api.query.staking.ledger(address, (l: any) => {
-      let ledger: BalanceLedger;
+    const unsub: () => void = await api.queryMulti<[any]>(
+      [[api.query.staking.ledger, address]],
+      async ([l]): Promise<void> => {
+        let ledger: BalanceLedger;
 
-      const _ledger = l.unwrapOr(null);
-      // fallback to default ledger if not present
-      if (_ledger !== null) {
-        const { stash, total, active, unlocking } = _ledger;
+        const _ledger = l.unwrapOr(null);
+        // fallback to default ledger if not present
+        if (_ledger !== null) {
+          const { stash, total, active, unlocking } = _ledger;
 
-        // format unlocking chunks
-        const _unlocking = [];
-        for (const u of unlocking.toHuman()) {
-          const era = rmCommas(u.era);
-          const value = rmCommas(u.value);
-          _unlocking.push({
-            era: Number(era),
-            value: new BN(value),
-          });
+          // format unlocking chunks
+          const _unlocking = [];
+          for (const u of unlocking.toHuman()) {
+            const era = rmCommas(u.era);
+            const value = rmCommas(u.value);
+            _unlocking.push({
+              era: Number(era),
+              value: new BN(value),
+            });
+          }
+
+          // add stash as external account if not present
+          if (
+            !connectAccounts.find((s: any) => s.address === stash.toHuman())
+          ) {
+            addExternalAccount(stash.toHuman(), 'system');
+          }
+
+          ledger = {
+            address,
+            stash: stash.toHuman(),
+            active: active.toBn(),
+            total: total.toBn(),
+            unlocking: _unlocking,
+          };
+
+          // update ledgers in context state
+          let _ledgers = Object.values(ledgersRef.current);
+
+          // remove stale account if it's already in list, and concat.
+          _ledgers = _ledgers
+            .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
+            .concat(ledger);
+
+          // update state
+          setStateWithRef(_ledgers, setLedgers, ledgersRef);
         }
-
-        // add stash as external account if not present
-        if (!connectAccounts.find((s: any) => s.address === stash.toHuman())) {
-          addExternalAccount(stash.toHuman());
-        }
-
-        ledger = {
-          address,
-          stash: stash.toHuman(),
-          active: active.toBn(),
-          total: total.toBn(),
-          unlocking: _unlocking,
-        };
-
-        // update ledgers in context state
-        let _ledgers = Object.values(ledgersRef.current);
-
-        // remove stale account if it's already in list, and concat.
-        _ledgers = _ledgers
-          .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
-          .concat(ledger);
-
-        // update state
-        setStateWithRef(_ledgers, setLedgers, ledgersRef);
       }
-    });
+    );
 
-    const _unsubs = unsubsLedgersRef.current.concat(unsub);
+    const _unsubs = unsubsLedgersRef.current.concat({
+      key: address,
+      unsub,
+    });
     setStateWithRef(_unsubs, setUnsubsLedgers, unsubsLedgersRef);
     return unsub;
   };

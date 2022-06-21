@@ -13,6 +13,7 @@ import {
   textInvert,
   buttonSecondaryBackground,
   networkColor,
+  borderPrimary,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -75,6 +76,7 @@ export const HeadingWrapper = styled.div`
 
 export const Item = styled(motion.button)`
   background: ${buttonSecondaryBackground};
+  border: 1px solid ${borderPrimary};
   flex-grow: 1;
   padding: 0 1rem;
   border-radius: 1rem;

@@ -8,6 +8,10 @@ import {
   modalOverlayBackground,
   modalBackground,
   networkColor,
+  cardShadow,
+  shadowColor,
+  cardBorder,
+  borderPrimary,
 } from 'theme';
 
 // Blurred background modal wrapper
@@ -41,12 +45,14 @@ export const ModalWrapper = styled(motion.div)`
 `;
 
 export const HeightWrapper = styled.div<any>`
+  border: ${cardBorder} ${borderPrimary};
+  box-shadow: ${cardShadow} ${shadowColor};
   transition: height 0.6s cubic-bezier(0.1, 1, 0.2, 1);
   box-sizing: border-box;
   width: 100%;
   max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
   max-height: 100%;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   z-index: 9;
   position: relative;
 `;
@@ -59,7 +65,6 @@ export const ContentWrapper = styled.div<any>`
   height: auto;
   overflow: hidden;
   position: relative;
-
   .header {
     width: 100%;
     display: flex;

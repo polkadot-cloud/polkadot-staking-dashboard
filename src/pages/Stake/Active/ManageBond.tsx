@@ -23,7 +23,8 @@ export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
   const { getLedgerForStash, getBondOptions } =
     useBalances() as BalancesContextInterface;
   const { inSetup } = useStaking() as StakingContextInterface;
@@ -53,7 +54,9 @@ export const ManageBond = () => {
             primary
             inline
             title="+"
-            disabled={inSetup() || isSyncing}
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -66,7 +69,9 @@ export const ManageBond = () => {
             small
             primary
             title="-"
-            disabled={inSetup() || isSyncing}
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -81,7 +86,9 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={inSetup() || isSyncing}
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
             }
