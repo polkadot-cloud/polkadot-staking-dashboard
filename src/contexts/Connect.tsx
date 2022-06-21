@@ -573,6 +573,16 @@ export const ConnectProvider = ({
     return exists;
   };
 
+  const isReadOnlyAccount = (address: MaybeAccount) => {
+    const account = getAccount(address) ?? {};
+
+    if (Object.hasOwn(account, 'addedBy')) {
+      const { addedBy } = account as ExternalAccount;
+      return addedBy === 'user';
+    }
+    return false;
+  };
+
   // check an account balance exists on-chain
   const formatAccountSs58 = (_address: string) => {
     try {
@@ -599,6 +609,7 @@ export const ConnectProvider = ({
         addExternalAccount,
         getActiveAccount,
         accountHasSigner,
+        isReadOnlyAccount,
         forgetAccounts,
         extensions,
         extensionsStatus: extensionsStatusRef.current,
