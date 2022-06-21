@@ -11,7 +11,6 @@ import { faGlasses, faCog, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ExtensionWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
-
 import { ReadOnlyInput } from '../ReadOnlyInput';
 
 export const ReadOnly = (props: any) => {

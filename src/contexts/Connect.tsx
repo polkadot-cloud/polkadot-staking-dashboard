@@ -574,27 +574,24 @@ export const ConnectProvider = ({
   };
 
   // check an account balance exists on-chain
-  const fetchAccountValid = async (_address: string) => {
-    if (!api) return false;
+  const formatAccountSs58 = (_address: string) => {
     try {
       const keyring = new Keyring();
       keyring.setSS58Format(network.ss58);
       const { address } = keyring.addFromAddress(_address);
-
-      const result: any = await api.query.system.account(address);
-      const account = result.toHuman();
-      const nonce = account?.nonce ?? undefined;
-
-      return nonce !== undefined;
+      if (address !== _address) {
+        return address;
+      }
+      return null;
     } catch (e) {
-      return false;
+      return null;
     }
   };
 
   return (
     <ConnectContext.Provider
       value={{
-        fetchAccountValid,
+        formatAccountSs58,
         connectExtensionAccounts,
         getAccount,
         connectToAccount,

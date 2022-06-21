@@ -9,25 +9,34 @@ import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const ReadOnlyInput = () => {
-  const { fetchAccountValid, accounts, addExternalAccount } =
+  const { formatAccountSs58, accounts, addExternalAccount } =
     useConnect() as ConnectContextInterface;
 
+  // store current input value
   const [value, setValue] = useState('');
 
+  // store whether current input value is valid
   const [valid, setValid] = useState<string | null>(null);
 
-  const handleChange = async (e: React.FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
+  // store whether address was formatted (displays confirm prompt)
+  const [reformatted, setReformatted] = useState(false);
 
-    // set value
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+    // set value on key change
     setValue(newValue);
 
-    // check empty value
+    // reset reformatted if true - value has changed
+    if (reformatted) {
+      setReformatted(false);
+    }
+
+    // reset valid if empty value
     if (newValue === '') {
       setValid(null);
       return;
     }
-    // check already imported
+    // check address already imported
     const alreadyImported = accounts.find(
       (a: ImportedAccount) => a.address === newValue
     );
@@ -35,27 +44,35 @@ export const ReadOnlyInput = () => {
       setValid('already_imported');
       return;
     }
-    // check if valid
-    let _valid = 'not_valid';
-    if (isValidAddress(newValue)) {
-      const isValid = await fetchAccountValid(newValue);
-      _valid = isValid ? 'valid' : 'not_valid';
-    }
-    setValid(_valid);
+    // check if valid address
+    setValid(isValidAddress(newValue) ? 'valid' : 'not_valid');
   };
 
   const handleImport = () => {
-    // add as external account
-    addExternalAccount(value, 'user');
-
-    // reset state
-    setValue('');
-    setValid(null);
+    // reformat address if in wrong format
+    const addressFormatted = formatAccountSs58(value);
+    if (addressFormatted) {
+      setValid('confirm_reformat');
+      setValue(addressFormatted);
+      setReformatted(true);
+    } else {
+      // add as external account
+      addExternalAccount(value, 'user');
+      // reset state
+      setReformatted(false);
+      setValue('');
+      setValid(null);
+    }
   };
 
   let label;
   let labelClass;
   switch (valid) {
+    case 'confirm_reformat':
+      label = 'Address was reformatted. Please confirm';
+      labelClass = 'neutral';
+
+      break;
     case 'already_imported':
       label = 'Address Already Imported';
       labelClass = 'danger';
@@ -73,6 +90,12 @@ export const ReadOnlyInput = () => {
       labelClass = 'neutral';
   }
 
+  const handleConfirm = () => {
+    setValid('valid');
+    setReformatted(false);
+    handleImport();
+  };
+
   return (
     <Wrapper>
       <h5 className={labelClass}>{label}</h5>
@@ -86,12 +109,16 @@ export const ReadOnlyInput = () => {
           />
         </section>
         <section>
-          <Button
-            inline
-            onClick={() => handleImport()}
-            title="Import"
-            disabled={valid !== 'valid'}
-          />
+          {!reformatted ? (
+            <Button
+              inline
+              onClick={() => handleImport()}
+              title="Import"
+              disabled={valid !== 'valid'}
+            />
+          ) : (
+            <Button inline onClick={() => handleConfirm()} title="Confirm" />
+          )}
         </section>
       </div>
     </Wrapper>
