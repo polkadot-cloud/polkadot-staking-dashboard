@@ -69,7 +69,7 @@ export const ReadOnlyInput = () => {
   let labelClass;
   switch (valid) {
     case 'confirm_reformat':
-      label = 'Address was reformatted. Please confirm';
+      label = 'Address was reformatted. Please confirm.';
       labelClass = 'neutral';
 
       break;
