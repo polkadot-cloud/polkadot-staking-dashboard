@@ -16,12 +16,17 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { BondedPoolsContextState, ActivePoolContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/context';
+import { useConnect } from 'contexts/Connect';
+import { ConnectContextInterface } from 'types/connect';
+import _ from 'window-or-global';
 import { Wrapper } from './Wrapper';
 
 export const Pool = (props: any) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
   const { openModalWith } = useModal();
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
   const { meta } = useBondedPools() as BondedPoolsContextState;
   const { isBonding } = useActivePool() as ActivePoolContextState;
   // assumes component is under `PoolsTabsProvider` (Pools page)
@@ -91,6 +96,7 @@ export const Pool = (props: any) => {
               <div className="label">
                 <button
                   type="button"
+                  disabled={isReadOnlyAccount(activeAccount) || !activeAccount}
                   onClick={() =>
                     openModalWith(
                       'JoinPool',

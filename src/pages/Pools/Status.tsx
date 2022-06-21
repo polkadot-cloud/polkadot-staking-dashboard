@@ -34,7 +34,8 @@ import { usePoolsTabs } from './context';
 
 export const Status = () => {
   const { network, isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
@@ -63,20 +64,20 @@ export const Status = () => {
       title: 'Create Pool',
       icon: faPlusCircle,
       transform: 'grow-1',
-      disabled: !isReady,
+      disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
       onClick: () => openModalWith('CreatePool', { bondType: 'pool' }, 'small'),
     };
     const joinPoolBtn = {
       title: 'Join Pool',
       icon: faUserPlus,
       transform: 'grow-1',
-      disabled: !isReady,
+      disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
       onClick: () => setActiveTab(1),
     };
     const leaveBtn = {
       title: 'Leave Pool',
       icon: faSignOutAlt,
-      disabled: !isReady,
+      disabled: !isReady || isReadOnlyAccount(activeAccount),
       small: true,
       onClick: () => openModalWith('LeavePool', { bondType: 'pool' }, 'small'),
     };
@@ -84,7 +85,7 @@ export const Status = () => {
       title: 'Destroy Pool',
       icon: faTimesCircle,
       transform: 'grow-1',
-      disabled: !isReady,
+      disabled: !isReady || isReadOnlyAccount(activeAccount),
       small: true,
       onClick: () =>
         openModalWith(
@@ -97,7 +98,7 @@ export const Status = () => {
       title: 'Lock Pool',
       icon: faLock,
       transform: 'grow-1',
-      disabled: !isReady,
+      disabled: !isReady || isReadOnlyAccount(activeAccount),
       small: true,
       onClick: () =>
         openModalWith(
@@ -110,7 +111,7 @@ export const Status = () => {
       title: 'Unlock Pool',
       icon: faLockOpen,
       transform: 'grow-1',
-      disabled: !isReady,
+      disabled: !isReady || isReadOnlyAccount(activeAccount),
       small: true,
       onClick: () =>
         openModalWith(
@@ -156,7 +157,7 @@ export const Status = () => {
         {
           title: 'Claim',
           icon: faPaperPlane,
-          disabled: !isReady,
+          disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
           onClick: () =>
             openModalWith('ClaimReward', { bondType: 'pool' }, 'small'),

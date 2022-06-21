@@ -26,7 +26,8 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { isReady } = useApi() as APIContextInterface;
   const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
   const { getAccountNominations } = useBalances() as BalancesContextInterface;
   const { nominated: stakeNominated, poolNominated }: any = useValidators();
   let { favouritesList } = useValidators();
@@ -91,7 +92,11 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
                 inline
                 primary
                 title="Stop"
-                disabled={(!isPool && inSetup()) || isSyncing}
+                disabled={
+                  (!isPool && inSetup()) ||
+                  isSyncing ||
+                  isReadOnlyAccount(activeAccount)
+                }
                 onClick={() =>
                   openModalWith(
                     'ChangeNominations',
@@ -129,20 +134,27 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
                     title="Your Nominations"
                     format="nomination"
                     bondType={isPool ? 'pool' : 'stake'}
-                    selectable={!isPool || isPoolNominator()}
-                    actions={[
-                      {
-                        title: 'Stop Nominating Selected',
-                        onClick: cbStopNominatingSelected,
-                        onSelected: true,
-                      },
-                      {
-                        disabled: !favouritesList.length,
-                        title: 'Add From Favourites',
-                        onClick: cbAddNominations,
-                        onSelected: false,
-                      },
-                    ]}
+                    selectable={
+                      !isReadOnlyAccount(activeAccount) &&
+                      (!isPool || isPoolNominator())
+                    }
+                    actions={
+                      isReadOnlyAccount(activeAccount)
+                        ? []
+                        : [
+                            {
+                              title: 'Stop Nominating Selected',
+                              onClick: cbStopNominatingSelected,
+                              onSelected: true,
+                            },
+                            {
+                              disabled: !favouritesList.length,
+                              title: 'Add From Favourites',
+                              onClick: cbAddNominations,
+                              onSelected: false,
+                            },
+                          ]
+                    }
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle

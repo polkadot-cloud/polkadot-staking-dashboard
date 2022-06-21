@@ -7,7 +7,7 @@ import BN from 'bn.js';
 import Worker from 'worker-loader!../../workers/stakers';
 import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ExternalAccount } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
 import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import {
@@ -345,7 +345,17 @@ export const StakingProvider = ({
     }
     // check if controller is imported
     const exists = connectAccounts.find((acc: any) => acc.address === address);
-    return !exists;
+    if (exists === undefined) {
+      return true;
+    }
+
+    if (Object.hasOwn(exists, 'addedBy')) {
+      const externalAccount = exists as ExternalAccount;
+      if (externalAccount.addedBy === 'user') {
+        return false;
+      }
+    }
+    return !Object.hasOwn(exists, 'signer');
   };
 
   /*
