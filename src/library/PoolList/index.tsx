@@ -35,7 +35,7 @@ export const PoolListInner = (props: any) => {
   const [page, setPage]: any = useState(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration]: any = useState(1);
+  const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of pools
   const [poolsDefault, setPoolsDefault] = useState(props.pools);

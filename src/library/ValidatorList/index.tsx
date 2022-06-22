@@ -85,7 +85,7 @@ export const ValidatorListInner = (props: any) => {
   const [page, setPage]: any = useState(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration]: any = useState(1);
+  const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of validators
   const [validatorsDefault, setValidatorsDefault] = useState(props.validators);

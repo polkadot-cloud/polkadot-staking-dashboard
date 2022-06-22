@@ -45,7 +45,7 @@ export const Nominate = () => {
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected key is valid
   useEffect(() => {

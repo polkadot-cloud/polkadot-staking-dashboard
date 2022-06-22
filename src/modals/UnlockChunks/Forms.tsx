@@ -42,7 +42,7 @@ export const Forms = forwardRef(
     const isPooling = bondType === 'pool';
 
     // valid to submit transaction
-    const [valid, setValid]: any = useState(
+    const [valid, setValid] = useState<boolean>(
       unlock?.value?.toNumber() > 0 ?? false
     );
 

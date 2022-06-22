@@ -62,7 +62,7 @@ export const NominateFromFavourites = () => {
   );
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
     setResize();
