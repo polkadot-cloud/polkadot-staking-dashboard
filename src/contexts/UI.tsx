@@ -128,6 +128,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // staking setup persist
   const [setup, setSetup]: any = useState([]);
+  const setupRef = useRef<any>(setup);
 
   // resize side menu callback
   const resizeCallback = () => {
@@ -162,7 +163,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (connectAccounts.length) {
       const _setup = setupDefault();
-      setSetup(_setup);
+      setStateWithRef(_setup, setSetup, setupRef);
     }
   }, [activeAccount, network, connectAccounts]);
 
@@ -414,7 +415,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const getSetupProgress = (address: MaybeAccount) => {
     // find the current setup progress from `setup`.
-    const _setup = setup.find((item: any) => item.address === address);
+    const _setup = setupRef.current.find(
+      (item: any) => item.address === address
+    );
 
     if (_setup === undefined) {
       return PROGRESS_DEFAULT;
@@ -447,7 +450,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     // update context setup
-    const _setup = setup.map((obj: any) =>
+    const _setup = setupRef.current.map((obj: any) =>
       obj.address === activeAccount
         ? {
             ...obj,
@@ -455,8 +458,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
           }
         : obj
     );
-
-    setSetup(_setup);
+    setStateWithRef(_setup, setSetup, setupRef);
   };
 
   /*
@@ -466,7 +468,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     if (!activeAccount) return;
 
     // get current progress
-    const _accountSetup = [...setup].find(
+    const _accountSetup = [...setupRef.current].find(
       (item: any) => item.address === activeAccount
     );
 
@@ -478,7 +480,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     _accountSetup.progress.section = section;
 
     // update context setup
-    const _setup = setup.map((obj: any) =>
+    const _setup = setupRef.current.map((obj: any) =>
       obj.address === activeAccount ? _accountSetup : obj
     );
 
@@ -489,7 +491,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     // update context
-    setSetup(_setup);
+    setStateWithRef(_setup, setSetup, setupRef);
   };
 
   /*
