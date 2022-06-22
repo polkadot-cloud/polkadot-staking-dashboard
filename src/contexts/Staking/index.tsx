@@ -349,13 +349,14 @@ export const StakingProvider = ({
       return true;
     }
 
-    if (Object.hasOwn(exists, 'addedBy')) {
+    if (Object.prototype.hasOwnProperty.call(exists, 'addedBy')) {
       const externalAccount = exists as ExternalAccount;
       if (externalAccount.addedBy === 'user') {
         return false;
       }
     }
-    return !Object.hasOwn(exists, 'signer');
+
+    return !Object.prototype.hasOwnProperty.call(exists, 'signer');
   };
 
   /*

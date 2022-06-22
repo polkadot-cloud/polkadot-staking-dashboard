@@ -576,7 +576,7 @@ export const ConnectProvider = ({
   const isReadOnlyAccount = (address: MaybeAccount) => {
     const account = getAccount(address) ?? {};
 
-    if (Object.hasOwn(account, 'addedBy')) {
+    if (Object.prototype.hasOwnProperty.call(account, 'addedBy')) {
       const { addedBy } = account as ExternalAccount;
       return addedBy === 'user';
     }
