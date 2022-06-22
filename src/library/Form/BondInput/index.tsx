@@ -20,7 +20,7 @@ export const BondInput = (props: any) => {
   const task = props.task ?? 'bond';
 
   // whether a value has been provided already
-  const _value = props.value ?? null;
+  const _value = props.value ?? 0;
 
   const { network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
