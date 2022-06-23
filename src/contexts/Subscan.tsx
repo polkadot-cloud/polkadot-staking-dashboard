@@ -64,7 +64,7 @@ export const SubscanProvider = ({
           'X-API-Key': API_SUBSCAN_KEY,
         },
         body: JSON.stringify({
-          row: 60,
+          row: 100,
           page: 0,
           address: activeAccount,
         }),
