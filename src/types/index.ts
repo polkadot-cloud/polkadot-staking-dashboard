@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import React, { FunctionComponent, SVGProps } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
@@ -19,6 +20,16 @@ export enum Toggle {
 
 export interface NodeEndpoint {
   name: string;
+  colors: {
+    primary: {
+      light: string;
+      dark: string;
+    };
+    secondary: {
+      light: string;
+      dark: string;
+    };
+  };
   endpoint: string;
   subscanEndpoint: string;
   unit: string;
@@ -57,6 +68,32 @@ export type PagesConfig = Array<{
   icon: IconDefinition;
 }>;
 
-export type Unsubs = Array<any | (() => void)>;
+export type Unsubs = Array<Unsub>;
+
+export interface Unsub {
+  key: string;
+  unsub: { (): void };
+}
 
 export type MaybeAccount = string | null;
+
+export interface NetworkMetricsContextInterface {
+  metrics: NetworkMetrics;
+}
+
+export interface NetworkMetrics {
+  activeEra: {
+    index: number;
+    start: number;
+  };
+  totalIssuance: BN;
+}
+
+export interface NetworkMetricsState {
+  activeEra: {
+    index: number;
+    start: number;
+  };
+  totalIssuance: BN;
+  unsub: { (): void } | undefined;
+}

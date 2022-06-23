@@ -20,15 +20,19 @@ import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 
 export const Status = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
-  const { getNominationsStatus, staking, inSetup } = useStaking();
-  const { getAccountNominations }: any = useBalances();
+  const { getNominationsStatus, staking, inSetup } =
+    useStaking() as StakingContextInterface;
+  const { getAccountNominations } = useBalances() as BalancesContextInterface;
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
 
@@ -70,7 +74,10 @@ export const Status = () => {
                   title: startTitle,
                   icon: faChevronCircleRight,
                   transform: 'grow-1',
-                  disabled: !isReady,
+                  disabled:
+                    !isReady ||
+                    isReadOnlyAccount(activeAccount) ||
+                    !activeAccount,
                   onClick: () => setOnSetup(true),
                 },
               ]
@@ -97,7 +104,8 @@ export const Status = () => {
                   title: 'Update',
                   icon: faWallet,
                   small: true,
-                  disabled: inSetup() || isSyncing,
+                  disabled:
+                    inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
                   onClick: () => openModalWith('UpdatePayee', {}, 'small'),
                 },
               ]

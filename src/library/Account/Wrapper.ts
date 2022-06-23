@@ -3,9 +3,18 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textPrimary, textSecondary, borderSecondary } from 'theme';
+import {
+  textPrimary,
+  textSecondary,
+  borderSecondary,
+  borderPrimary,
+} from 'theme';
 
 export const Wrapper = styled(motion.button)<any>`
+  border: 1px solid ${borderPrimary};
+  background: ${(props) => props.fill};
+  font-size: ${(props) => props.fontSize};
+  box-sizing: border-box;
   border-radius: 1rem;
   box-shadow: none;
   display: flex;
@@ -13,9 +22,6 @@ export const Wrapper = styled(motion.button)<any>`
   justify-content: flex-start;
   align-items: center;
   font-variation-settings: 'wght' 540;
-  cursor: ${(props) => props.cursor};
-  background: ${(props) => props.fill};
-  font-size: ${(props) => props.fontSize};
   padding: 0 1rem;
   max-width: 250px;
   flex: 1;
@@ -39,6 +45,10 @@ export const Wrapper = styled(motion.button)<any>`
     white-space: nowrap;
     overflow: hidden;
     flex-shrink: 1;
+
+    > svg {
+      color: ${textSecondary};
+    }
   }
 
   .title {
@@ -49,8 +59,6 @@ export const Wrapper = styled(motion.button)<any>`
     overflow: hidden;
     line-height: 2.2rem;
     flex: 1;
-    /* flex-grow: 1; */
-    /* flex-shrink: 1; */
 
     &.unassigned {
       color: ${textSecondary};

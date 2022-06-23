@@ -13,8 +13,9 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ConnectContextInterface } from 'types/connect';
+import { ActivePoolContextState } from 'types/pools';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -25,8 +26,9 @@ import {
 export const ClaimReward = () => {
   const { api, network } = useApi() as APIContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
-  const { activeBondedPool } = usePools();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeBondedPool } = useActivePool() as ActivePoolContextState;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { unclaimedReward } = activeBondedPool || {};
 
@@ -40,7 +42,7 @@ export const ClaimReward = () => {
   }, [activeBondedPool]);
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // tx to submit
   const tx = () => {
@@ -75,6 +77,9 @@ export const ClaimReward = () => {
           boxSizing: 'border-box',
         }}
       >
+        {!accountHasSigner(activeAccount) && (
+          <Warning text="Your account is read only, and cannot sign transactions." />
+        )}
         {!unclaimedReward?.gtn(0) && (
           <Warning text="You have no rewards to claim." />
         )}
@@ -98,7 +103,9 @@ export const ClaimReward = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting}
+              disabled={
+                !valid || submitting || !accountHasSigner(activeAccount)
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"

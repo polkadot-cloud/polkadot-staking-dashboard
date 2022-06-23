@@ -8,8 +8,10 @@ import { useCombobox } from 'downshift';
 import Identicon from 'library/Identicon';
 import { clipAddress, convertRemToPixels } from 'Utils';
 import { useTheme } from 'contexts/Themes';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
 import { StatusLabel } from 'library/StatusLabel';
+import { APIContextInterface } from 'types/api';
+import { useApi } from 'contexts/Api';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
 
 export const AccountSelect = (props: any) => {
@@ -76,6 +78,7 @@ export const AccountSelect = (props: any) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
+  const { network } = useApi() as APIContextInterface;
   const { mode } = useTheme();
 
   // disable item in list if account doesn't satisfy controller budget.
@@ -83,12 +86,12 @@ const DropdownItem = ({ c, item, index }: any) => {
 
   const color =
     c.selectedItem?.address === item?.address
-      ? defaultThemes.primary[mode]
+      ? networkColors[`${network.name}-${mode}`]
       : defaultThemes.text.primary[mode];
 
   const border =
     c.selectedItem?.address === item?.address
-      ? `2px solid ${defaultThemes.primary[mode]}`
+      ? `2px solid ${networkColors[`${network.name}-${mode}`]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 
   const opacity = item.active ? 1 : 0.1;

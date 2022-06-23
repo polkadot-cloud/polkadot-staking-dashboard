@@ -8,9 +8,9 @@ import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ConnectContextInterface } from 'types/connect';
-import { BatchKeys } from 'library/BatchKeys';
+import { ActivePoolContextState } from 'types/pools';
 import { PoolAccount } from './PoolAccount';
 import { RolesWrapper } from './ManagePool/Wrappers';
 
@@ -18,7 +18,7 @@ export const Roles = () => {
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { fetchAccountMetaBatch } = useAccount();
-  const { activeBondedPool } = usePools();
+  const { activeBondedPool } = useActivePool() as ActivePoolContextState;
   const activePool = activeBondedPool;
   const { roles } = activePool || {};
 

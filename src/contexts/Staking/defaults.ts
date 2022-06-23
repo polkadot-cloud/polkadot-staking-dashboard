@@ -2,8 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import {
+  StakingMetrics,
+  EraStakers,
+  StakingTargets,
+  NominationStatuses,
+} from 'types/staking';
 
-export const stakingMetrics = {
+export const stakingMetrics: StakingMetrics = {
   totalNominators: new BN(0),
   totalValidators: new BN(0),
   lastReward: new BN(0),
@@ -17,16 +23,17 @@ export const stakingMetrics = {
   unsub: null,
 };
 
-export const eraStakers = {
+export const eraStakers: EraStakers = {
   stakers: [],
   activeNominators: 0,
   activeValidators: 0,
   minActiveBond: 0,
   minStakingActiveBond: 0,
+  ownStake: 0,
 };
 
-export const targets = {
+export const targets: StakingTargets = {
   nominations: [],
 };
 
-export const nominationStatus = {};
+export const nominationStatus: NominationStatuses = {};

@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
+import { ActionProps } from '../types';
 import { ItemWrapper as Wrapper } from '../Wrappers';
 
-export const Action = (props: any) => {
+export const Action = (props: ActionProps) => {
   const { height, subtitle, label, title, onClick } = props;
 
   return (
-    <Wrapper width="100%" height={height} border="3px solid #d33079">
+    <Wrapper width="100%" height={height}>
       <motion.button
         className="item action"
         whileHover={{ scale: 1.015 }}

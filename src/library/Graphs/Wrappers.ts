@@ -3,7 +3,15 @@
 
 import styled from 'styled-components';
 import { SECTION_FULL_WIDTH_THRESHOLD } from 'consts';
-import { textSecondary, backgroundSecondary } from 'theme';
+import {
+  textSecondary,
+  backgroundSecondary,
+  cardBorder,
+  borderPrimary,
+  cardShadow,
+  shadowColor,
+  networkColor,
+} from 'theme';
 
 /* CardHeaderWrapper
  *
@@ -47,6 +55,8 @@ export const CardHeaderWrapper = styled.div<any>`
  * Used to separate the main modules throughout the app.
  */
 export const CardWrapper = styled.div<any>`
+  border: ${cardBorder} ${borderPrimary};
+  box-shadow: ${cardShadow} ${shadowColor};
   box-sizing: border-box;
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
@@ -98,6 +108,8 @@ export const CardWrapper = styled.div<any>`
  */
 
 export const GraphWrapper = styled.div<any>`
+  border: ${cardBorder} ${borderPrimary};
+  box-shadow: ${cardShadow} ${shadowColor};
   box-sizing: border-box;
   border-radius: 1rem;
   background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
@@ -121,7 +133,7 @@ export const GraphWrapper = styled.div<any>`
     top: 10px;
     font-size: 0.8rem;
     font-variation-settings: 'wght' 550;
-    background: #d33079;
+    background: ${networkColor};
     border-radius: 0.3rem;
     padding: 0.2rem 0.4rem;
     color: #fff;

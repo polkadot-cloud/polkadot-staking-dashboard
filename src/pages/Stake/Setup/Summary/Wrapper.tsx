@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { borderPrimary, primary } from 'theme';
+import { borderPrimary, networkColor } from 'theme';
 
 export const SummaryWrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ export const SummaryWrapper = styled.div`
       align-items: flex-end;
 
       svg {
-        color: ${primary};
+        color: ${networkColor};
       }
     }
 

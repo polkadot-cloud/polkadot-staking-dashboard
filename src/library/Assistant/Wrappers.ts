@@ -9,9 +9,11 @@ import {
   textSecondary,
   assistantButton,
   assistantBackground,
+  networkColor,
 } from 'theme';
+import { HeightWrapperProps, ItemWrapperProps } from './types';
 
-export const Wrapper = styled(motion.div)<any>`
+export const Wrapper = styled(motion.div)`
   position: fixed;
   right: -600px;
   top: 0;
@@ -50,7 +52,7 @@ export const ContentWrapper = styled.div`
   max-height: 100%;
 `;
 
-export const HeightWrapper = styled.div<any>`
+export const HeightWrapper = styled.div<HeightWrapperProps>`
   transition: ${(props) =>
     props.transition ? 'height 0.4s cubic-bezier(0.1, 1, 0.2, 1)' : 'none'};
   width: 100%;
@@ -129,6 +131,7 @@ export const ListWrapper = styled(motion.div)`
     color: ${textPrimary};
     padding: 0 0.75rem;
     margin: 0.5rem 0;
+    width: 100%;
   }
   p {
     color: ${textPrimary};
@@ -152,7 +155,7 @@ export const HeadingWrapper = styled.div`
   }
 `;
 
-export const DefinitionWrapper = styled(motion.div)<any>`
+export const DefinitionWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
 
@@ -194,7 +197,7 @@ export const DefinitionWrapper = styled(motion.div)<any>`
   }
 `;
 
-export const ItemWrapper = styled(motion.div)<any>`
+export const ItemWrapper = styled(motion.div)<ItemWrapperProps>`
   display: flex;
   width: ${(props) => props.width};
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};
@@ -244,7 +247,7 @@ export const ItemWrapper = styled(motion.div)<any>`
     }
 
     &.action {
-      background: rgba(211, 48, 121, 0.85);
+      background: ${networkColor};
       > h4 {
         color: white;
       }

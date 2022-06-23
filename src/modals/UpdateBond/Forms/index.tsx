@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { forwardRef } from 'react';
-import { ContentWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { ContentWrapper } from '../Wrappers';
 import { BondSome } from './BondSome';
 import { BondAll } from './BondAll';
 import { UnbondSome } from './UnbondSome';
@@ -12,12 +12,10 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { task } = props;
   return (
     <ContentWrapper ref={ref}>
-      <PaddingWrapper>
-        {task === 'bond_some' && <BondSome {...props} />}
-        {task === 'bond_all' && <BondAll {...props} />}
-        {task === 'unbond_some' && <UnbondSome {...props} />}
-        {task === 'unbond_all' && <UnbondAll {...props} />}
-      </PaddingWrapper>
+      {task === 'bond_some' && <BondSome {...props} />}
+      {task === 'bond_all' && <BondAll {...props} />}
+      {task === 'unbond_some' && <UnbondSome {...props} />}
+      {task === 'unbond_all' && <UnbondAll {...props} />}
     </ContentWrapper>
   );
 });

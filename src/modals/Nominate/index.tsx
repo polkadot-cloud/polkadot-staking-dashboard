@@ -16,6 +16,8 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -27,21 +29,23 @@ import {
 export const Nominate = () => {
   const { api, network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { targets, staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount, getAccountLedger }: any = useBalances();
+  const { targets, staking, getControllerNotImported } =
+    useStaking() as StakingContextInterface;
+  const { getBondedAccount, getLedgerForStash } =
+    useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const { units } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
   const { nominations } = targets;
-  const ledger = getAccountLedger(activeAccount);
+  const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
 
   const activeBase = planckBnToUnit(active, units);
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected key is valid
   useEffect(() => {
@@ -102,8 +106,7 @@ export const Nominate = () => {
           <Warning text={text} />
         ))}
         <h2>
-          You Have
-          {nominations.length} Nomination
+          You Have {nominations.length} Nomination
           {nominations.length === 1 ? '' : 's'}
         </h2>
         <Separator />

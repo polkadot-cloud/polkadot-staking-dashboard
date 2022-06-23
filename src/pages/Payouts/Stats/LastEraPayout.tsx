@@ -6,10 +6,11 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Number } from 'library/StatBoxList/Number';
 import { APIContextInterface } from 'types/api';
+import { StakingContextInterface } from 'types/staking';
 
 export const LastEraPayoutStatBox = () => {
   const { network } = useApi() as APIContextInterface;
-  const { staking }: any = useStaking();
+  const { staking } = useStaking() as StakingContextInterface;
   const { unit, units } = network;
   const { lastReward } = staking;
 

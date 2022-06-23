@@ -13,37 +13,34 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { planckToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { usePoolList } from 'library/PoolList/context';
+import { networkColors } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
+import { NetworkMetricsContextInterface } from 'types';
+import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
-import { PayoutListProvider } from './context';
 
 export const PayoutListInner = (props: any) => {
-  const { allowMoreCols, pagination }: any = props;
+  const { allowMoreCols, pagination } = props;
 
+  const { mode } = useTheme();
   const { isReady, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { metrics }: any = useNetworkMetrics();
-  const { listFormat, setListFormat } = usePoolList();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { listFormat, setListFormat } = usePayoutList();
 
   const disableThrottle = props.disableThrottle ?? false;
 
   // current page
-  const [page, setPage]: any = useState(1);
+  const [page, setPage] = useState<number>(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration]: any = useState(1);
-
-  // default list of payouts. Will be used for filtering.
-  const [payoutsDefault, setPayoutsDefault] = useState(props.payouts);
+  const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts]: any = useState(props.payouts);
-
-  // is this the initial render
-  const [initial, setInitial] = useState(true);
+  const [payouts, setPayouts] = useState<any>(props.payouts);
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState(false);
+  const [fetched, setFetched] = useState<boolean>(false);
 
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
@@ -70,9 +67,7 @@ export const PayoutListInner = (props: any) => {
   // configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
-      setPayoutsDefault(props.payouts);
       setPayouts(props.payouts);
-      setInitial(true);
       setFetched(true);
     }
   }, [isReady, fetched, metrics.activeEra.index]);
@@ -110,13 +105,21 @@ export const PayoutListInner = (props: any) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
         </div>
@@ -135,7 +138,6 @@ export const PayoutListInner = (props: any) => {
                 className="prev"
                 onClick={() => {
                   setPage(prevPage);
-                  setInitial(false);
                 }}
               >
                 Prev
@@ -145,7 +147,6 @@ export const PayoutListInner = (props: any) => {
                 className="next"
                 onClick={() => {
                   setPage(nextPage);
-                  setInitial(false);
                 }}
               >
                 Next
@@ -169,7 +170,7 @@ export const PayoutListInner = (props: any) => {
           }}
         >
           {listPayouts.map((payout: any, index: number) => {
-            const { amount, block_timestamp, event_id }: any = payout;
+            const { amount, block_timestamp, event_id } = payout;
 
             return (
               <motion.div

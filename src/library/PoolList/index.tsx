@@ -8,11 +8,14 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { usePools } from 'contexts/Pools';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useTheme } from 'contexts/Themes';
+import { networkColors } from 'theme/default';
+import { NetworkMetricsContextInterface } from 'types';
 import { PoolListProvider, usePoolList } from './context';
 
 export const PoolListInner = (props: any) => {
@@ -21,17 +24,18 @@ export const PoolListInner = (props: any) => {
   const refetchOnListUpdate =
     props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
-  const { isReady } = useApi() as APIContextInterface;
-  const { metrics }: any = useNetworkMetrics();
-  const { fetchPoolsMetaBatch }: any = usePools();
+  const { mode } = useTheme();
+  const { isReady, network } = useApi() as APIContextInterface;
+  const { metrics }: any =
+    useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { fetchPoolsMetaBatch }: any = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
-  // ---
 
   // current page
   const [page, setPage]: any = useState(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration]: any = useState(1);
+  const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of pools
   const [poolsDefault, setPoolsDefault] = useState(props.pools);
@@ -114,13 +118,21 @@ export const PoolListInner = (props: any) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
         </div>

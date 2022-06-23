@@ -4,15 +4,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
-import { Wrapper as ButtonWrapper } from 'library/Button';
+import { Button } from 'library/Button';
 import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { Warning } from 'library/Form/Warning';
 import { SummaryWrapper } from './Wrapper';
 import { MotionContainer } from '../MotionContainer';
 import { Header } from '../Header';
@@ -22,7 +22,8 @@ export const Summary = (props: any) => {
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 
@@ -63,9 +64,12 @@ export const Summary = (props: any) => {
   });
 
   return (
-    <CardWrapper transparent>
+    <>
       <Header thisSection={section} complete={null} title="Summary" />
       <MotionContainer thisSection={section} activeSection={setup.section}>
+        {!accountHasSigner(activeAccount) && (
+          <Warning text="Your account is read only, and cannot sign transactions." />
+        )}
         <SummaryWrapper>
           <section>
             <div>
@@ -114,19 +118,24 @@ export const Summary = (props: any) => {
             <div>{estimatedFee === null ? '...' : `${estimatedFee}`}</div>
           </section>
         </SummaryWrapper>
-        <div style={{ flex: 1, width: '100%', display: 'flex' }}>
-          <ButtonWrapper
-            margin="0"
-            padding="0.75rem 1.2rem"
-            fontSize="1.1rem"
+        <div
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'end',
+          }}
+        >
+          <Button
             onClick={() => submitTx()}
-            disabled={submitting}
-          >
-            Start Staking
-          </ButtonWrapper>
+            disabled={submitting || !accountHasSigner(activeAccount)}
+            title="Start Staking"
+            primary
+          />
         </div>
       </MotionContainer>
-    </CardWrapper>
+    </>
   );
 };
 

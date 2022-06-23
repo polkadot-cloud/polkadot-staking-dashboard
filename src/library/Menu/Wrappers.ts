@@ -3,18 +3,17 @@
 
 import styled from 'styled-components';
 import { FLOATING_MENU_WIDTH } from 'consts';
-import { backgroundPrimary, borderPrimary, textSecondary } from 'theme';
+import { modalBackground, borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div<any>`
-  background: ${backgroundPrimary};
+  background: ${modalBackground};
   box-sizing: border-box;
-  border-radius: 0.5rem;
   width: ${FLOATING_MENU_WIDTH}px;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.75rem;
   display: flex;
   flex-flow: column wrap;
   transition: opacity 0.1s;
-  box-shadow: 1px 1px 1px ${borderPrimary};
+  border-radius: 1rem;
 
   > button:last-child {
     border: none;

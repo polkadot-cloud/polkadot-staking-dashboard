@@ -7,20 +7,23 @@ import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import { ConnectContextInterface } from 'types/connect';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Wrapper from './Wrapper';
 import Identicon from '../Identicon';
+import { AccountProps } from './types';
 
-export const Account = (props: any) => {
+export const Account = (props: AccountProps) => {
   const { mode } = useTheme();
   const { getAccount } = useConnect() as ConnectContextInterface;
 
   // data props
-  const { value, label }: any = props;
+  const { value, label, readOnly } = props;
 
   // presentational props
-  const { format }: any = props;
+  const { format } = props;
   const filled = props.filled ?? false;
-  const fontSize = props.fontSize ?? '1rem';
+  const fontSize = props.fontSize ?? '0.95rem';
   const wallet = props.wallet ?? false;
 
   // functional props
@@ -37,6 +40,9 @@ export const Account = (props: any) => {
       } else {
         displayValue = clipAddress(value);
       }
+      break;
+    case 'text':
+      displayValue = value;
       break;
     default:
       if (value) {
@@ -57,19 +63,31 @@ export const Account = (props: any) => {
       fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
       fontSize={fontSize}
     >
-      {label !== undefined && <div className="account-label">{label}</div>}
+      {label !== undefined && (
+        <div className="account-label">
+          {label}{' '}
+          {readOnly && (
+            <>
+              &nbsp;
+              <FontAwesomeIcon icon={faGlasses} />
+            </>
+          )}
+        </div>
+      )}
 
       {unassigned ? (
         <span className="title unassigned">Not Staking</span>
       ) : (
         <>
-          <span className="identicon">
-            <Identicon
-              value={value}
-              size={convertRemToPixels(fontSize) * 1.45}
-            />
-          </span>
-          <span className="title">{displayValue}</span>
+          {format !== 'text' && (
+            <span className="identicon">
+              <Identicon
+                value={value}
+                size={convertRemToPixels(fontSize) * 1.45}
+              />
+            </span>
+          )}
+          <span className="title">{displayValue || clipAddress(value)}</span>
         </>
       )}
 

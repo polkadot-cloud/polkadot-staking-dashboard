@@ -21,14 +21,15 @@ import Action from './Items/Action';
 import {
   AssistantContextInterface,
   AssistantDefinition,
+  AssistantExternal,
 } from '../../types/assistant';
+import { SectionProps } from './types';
 
-export const Sections = (props: any) => {
+export const Sections = ({ pageMeta }: SectionProps) => {
   const { openModalWith } = useModal();
   const { network } = useApi() as APIContextInterface;
-  const { pageMeta } = props;
 
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;
 
@@ -37,7 +38,11 @@ export const Sections = (props: any) => {
     // close assistant
     assistant.toggle();
     // initialise connect
-    openModalWith('ConnectAccounts', {}, 'small');
+    openModalWith(
+      'ConnectAccounts',
+      { section: accounts.length ? 1 : 0 },
+      'large'
+    );
   };
 
   // resources to display
@@ -51,8 +56,8 @@ export const Sections = (props: any) => {
   // get definition
   const innerDefinition: AssistantDefinition = assistant.innerDefinition;
 
-  const homeRef: any = useRef(null);
-  const itemRef: any = useRef(null);
+  const homeRef = useRef<any>(null);
+  const itemRef = useRef<any>(null);
 
   useEffect(() => {
     assistant.setAssistantHeight(
@@ -60,7 +65,7 @@ export const Sections = (props: any) => {
         ? homeRef.current.clientHeight
         : itemRef.current.clientHeight
     );
-  }, [assistant.activeSection, assistant.open]);
+  }, [assistant.activeSection, assistant.open, assistant.innerDefinition]);
 
   return (
     <>
@@ -100,17 +105,19 @@ export const Sections = (props: any) => {
           {definitions.length > 0 && (
             <>
               <Heading title="Definitions" />
-              {definitions.map((item: any, index: number) => (
-                <Definition
-                  key={`def_${index}`}
-                  onClick={() => {
-                    assistant.setInnerDefinition(item);
-                    assistant.setActiveSection(1);
-                  }}
-                  title={item.title}
-                  description={item.description}
-                />
-              ))}
+              {definitions.map((item: AssistantDefinition, index: number) => {
+                return (
+                  <Definition
+                    key={`def_${index}`}
+                    onClick={() => {
+                      assistant.setInnerDefinition(item);
+                      assistant.setActiveSection(1);
+                    }}
+                    title={item.title}
+                    description={item.description}
+                  />
+                );
+              })}
             </>
           )}
 
@@ -118,8 +125,8 @@ export const Sections = (props: any) => {
           {external.length > 0 && (
             <>
               <Heading title="Articles" />
-              {external.map((item: any, index: number) => {
-                const thisRteturn: any = (
+              {external.map((item: AssistantExternal, index: number) => {
+                const thisRteturn = (
                   <External
                     key={`ext_${index}`}
                     width={flexWidths[curFlexWidth]}

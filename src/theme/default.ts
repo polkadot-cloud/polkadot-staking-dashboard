@@ -1,6 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { NODE_ENDPOINTS } from 'consts';
+import { NodeEndpoint } from 'types';
+
+// configure theme
 const v = (light: string, dark: string) => ({
   light,
   dark,
@@ -8,13 +12,12 @@ const v = (light: string, dark: string) => ({
 
 export const defaultThemes: any = {
   transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
-  primary: v('rgb(211, 48, 121)', 'rgb(211, 48, 121)'),
-  secondary: v('#e474bc', '#e474bc'),
   text: {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
     danger: v('#ae2324', '#d14445'),
+    success: v('green', 'green'),
   },
   background: {
     primary: v('rgba(248,247,247,1)', 'rgba(27,27,27,1)'),
@@ -51,12 +54,7 @@ export const defaultThemes: any = {
     ),
   },
   graphs: {
-    colors: [
-      v('#E6007A', '#d33079'),
-      v('#ccc', '#555'),
-      v('#eee', '#222'),
-      v('#e474bc', '#e474bc'),
-    ],
+    colors: [v('#ccc', '#555'), v('#eee', '#222')],
     inactive: v('#cfcfcf', '#1a1a1a'),
     inactive2: v('#dadada', '#383838'),
     tooltip: v('#333', '#ddd'),
@@ -87,6 +85,34 @@ export const defaultThemes: any = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
+  shadow: v('#e8e8e8', '#141414'),
 };
 
-export default defaultThemes;
+// configure card style
+const c = (flat: string, border: string, shadow: string) => ({
+  flat,
+  border,
+  shadow,
+});
+
+export const cardThemes: any = {
+  card: {
+    border: c('none', '1px solid', 'none'),
+    shadow: c('none', 'none', '-2px 2px 30px'),
+  },
+};
+
+// configure network colors
+export const networkColors: any = [];
+export const networkColorsSecondary: any = [];
+
+Object.values(NODE_ENDPOINTS).forEach((node: NodeEndpoint) => {
+  const { name, colors } = node;
+  const { primary, secondary } = colors;
+
+  networkColors[`${name}-light`] = primary.light;
+  networkColors[`${name}-dark`] = primary.dark;
+
+  networkColorsSecondary[`${name}-light`] = secondary.light;
+  networkColorsSecondary[`${name}-dark`] = secondary.dark;
+});

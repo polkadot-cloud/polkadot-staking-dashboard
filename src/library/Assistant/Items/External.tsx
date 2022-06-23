@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 import { ItemWrapper as Wrapper } from '../Wrappers';
+import { ExternalProps } from '../types';
 
-export const External = (props: any) => {
+export const External = (props: ExternalProps) => {
   const { width, height, subtitle, label, title, url } = props;
 
   const handleClick = () => {
@@ -15,7 +15,7 @@ export const External = (props: any) => {
   };
 
   return (
-    <Wrapper width={`${width}%`} height={height} border={undefined}>
+    <Wrapper width={`${width}%`} height={height || 'auto'}>
       <motion.button
         className="item"
         whileHover={{ scale: 1.015 }}

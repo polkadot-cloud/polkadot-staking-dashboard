@@ -5,20 +5,16 @@ import React from 'react';
 import { useUi } from 'contexts/UI';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
-import { useSize, formatSize, prefillPayoutGraph } from 'library/Graphs/Utils';
+import { useSize, formatSize } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 
 export const PayoutsInner = (props: any) => {
   const { payouts } = props;
-
   const { services } = useUi();
 
   const ref: any = React.useRef();
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 306);
-
-  // pre-fill missing items if payouts < 60
-  const payoutsGraph = prefillPayoutGraph([...payouts], 10);
 
   return (
     <div className="inner" ref={ref} style={{ minHeight }}>
@@ -40,9 +36,9 @@ export const PayoutsInner = (props: any) => {
           position: 'absolute',
         }}
       >
-        <PayoutBar payouts={payoutsGraph} height="170px" />
+        <PayoutBar payouts={payouts} height="170px" />
         <div style={{ marginTop: '1rem' }}>
-          <PayoutLine payouts={payoutsGraph} height="70px" />
+          <PayoutLine payouts={payouts} height="70px" />
         </div>
       </div>
     </div>

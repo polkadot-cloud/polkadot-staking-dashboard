@@ -7,8 +7,10 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ConnectContextInterface } from 'types/connect';
+import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';
@@ -17,24 +19,24 @@ import { Forms } from './Forms';
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { config, setModalHeight } = useModal();
-  const { target } = config || {};
-  const { getAccountLedger }: any = useBalances();
-  const { getPoolUnlocking } = usePools();
+  const { bondType } = config || {};
+  const { getLedgerForStash } = useBalances() as BalancesContextInterface;
+  const { getPoolUnlocking } = useActivePool() as ActivePoolContextState;
 
-  // get the unlocking per target
+  // get the unlocking per bondType
   const _getUnlocking = () => {
     let unlocking = [];
     let ledger;
-    switch (target) {
+    switch (bondType) {
       case 'stake':
-        ledger = getAccountLedger(activeAccount);
+        ledger = getLedgerForStash(activeAccount);
         unlocking = ledger.unlocking;
         break;
       case 'pool':
         unlocking = getPoolUnlocking();
         break;
       default:
-        console.error(`unlocking modal target ${target} is not defined.`);
+        console.error(`unlocking modal bond-type ${bondType} is not defined.`);
     }
     return unlocking;
   };
@@ -94,7 +96,7 @@ export const UnlockChunks = () => {
       >
         <Overview
           unlocking={unlocking}
-          target={target}
+          bondType={bondType}
           setSection={setSection}
           setUnlock={setUnlock}
           setTask={setTask}

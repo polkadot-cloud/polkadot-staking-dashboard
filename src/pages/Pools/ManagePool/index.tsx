@@ -1,18 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { PageRowWrapper } from 'Wrappers';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { GenerateNominations } from '../../Stake/GenerateNominations';
-import { PoolNominations } from '../PoolNominations';
+import Nominations from 'pages/Stake/Active/Nominations';
+import { GenerateNominations } from 'pages/Stake/GenerateNominations';
+import { ActivePoolContextState } from 'types/pools';
 
 export const ManagePool = () => {
-  const { isNominator, setTargets, targets, poolNominations } = usePools();
+  const { isNominator, setTargets, targets, poolNominations } =
+    useActivePool() as ActivePoolContextState;
   const { openModalWith } = useModal();
 
   const isNominating = !!poolNominations?.targets?.length;
@@ -52,7 +54,7 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <PoolNominations />
+          <Nominations bondType="pool" />
         )}
       </CardWrapper>
     </PageRowWrapper>

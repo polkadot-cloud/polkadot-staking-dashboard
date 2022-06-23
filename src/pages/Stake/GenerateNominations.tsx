@@ -24,19 +24,20 @@ export const GenerateNominations = (props: any) => {
 
   const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
-  const { applyValidatorOrder, applyValidatorFilters }: any = useUi();
+  const { applyValidatorOrder, applyValidatorFilters } = useUi();
 
   let { favouritesList } = useValidators();
   if (favouritesList === null) {
     favouritesList = [];
   }
   // store the method of fetching validators
-  const [method, setMethod]: any = useState(null);
+  const [method, setMethod] = useState<string | null>(null);
 
   // store whether validators are being fetched
-  const [fetching, setFetching] = useState(false);
+  const [fetching, setFetching] = useState<boolean>(false);
 
   // store the currently selected set of nominations
   const [nominations, setNominations] = useState(defaultNominations);
@@ -112,14 +113,28 @@ export const GenerateNominations = (props: any) => {
       setFetching(false);
 
       // apply update to setters
-      for (const s of setters) {
-        s.set({
-          ...s.current,
-          nominations: _nominations,
-        });
-      }
+      updateSetters(_nominations);
     }
   });
+
+  const updateSetters = (_nominations: any) => {
+    for (const s of setters) {
+      const { current, set } = s;
+      const callable = current?.callable ?? false;
+      let _current;
+
+      if (!callable) {
+        _current = current;
+      } else {
+        _current = current.fn();
+      }
+      const _set = {
+        ..._current,
+        nominations: _nominations,
+      };
+      set(_set);
+    }
+  };
 
   // callback function for adding nominations
   const cbAddNominations = ({ setSelectActive }: any) => {
@@ -129,12 +144,7 @@ export const GenerateNominations = (props: any) => {
       setMethod(null);
       removeValidatorMetaBatch(batchKey);
       setNominations(_nominations);
-      for (const s of setters) {
-        s.set({
-          ...s.current,
-          nominations: _nominations,
-        });
-      }
+      updateSetters(_nominations);
     };
     openModalWith(
       'SelectFavourites',
@@ -151,12 +161,7 @@ export const GenerateNominations = (props: any) => {
     setMethod(null);
     removeValidatorMetaBatch(batchKey);
     setNominations([]);
-    for (const s of setters) {
-      s.set({
-        ...s.current,
-        nominations: [],
-      });
-    }
+    updateSetters([]);
     resetSelected();
   };
 
@@ -172,12 +177,7 @@ export const GenerateNominations = (props: any) => {
       return !selected.map((_s: any) => _s.address).includes(n.address);
     });
     setNominations(_nominations);
-    for (const s of setters) {
-      s.set({
-        ...s.current,
-        nominations: _nominations,
-      });
-    }
+    updateSetters(_nominations);
     setSelectActive(false);
     resetSelected();
   };
@@ -185,7 +185,7 @@ export const GenerateNominations = (props: any) => {
   return (
     <Wrapper>
       <div>
-        {!nominations.length && (
+        {!isReadOnlyAccount(activeAccount) && !nominations.length && (
           <>
             <Container>
               <Category title="Generate Method">
@@ -225,7 +225,7 @@ export const GenerateNominations = (props: any) => {
         <></>
       ) : (
         <>
-          {isReady && nominations.length > 0 && (
+          {isReady && nominations.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
                 validators={nominations}
@@ -251,6 +251,10 @@ export const GenerateNominations = (props: any) => {
                 ]}
                 allowMoreCols
               />
+            </div>
+          ) : (
+            <div className="head">
+              <h3>No Nominations.</h3>
             </div>
           )}
         </>

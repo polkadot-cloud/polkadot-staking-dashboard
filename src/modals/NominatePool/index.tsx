@@ -6,13 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { ConnectContextInterface } from 'types/connect';
+import {
+  PoolMembershipsContextState,
+  ActivePoolContextState,
+} from 'types/pools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -22,16 +27,17 @@ import {
 } from '../Wrappers';
 
 export const NominatePool = () => {
-  const { api, network }: any = useApi();
+  const { api }: any = useApi();
   const { setStatus: setModalStatus }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { membership, isNominator, targets } = usePools();
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
+  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { isNominator, targets } = useActivePool() as ActivePoolContextState;
   const { nominations } = targets;
   const poolId = membership?.poolId;
-  const { units } = network;
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected membership and targests are valid
   const isValid = membership && isNominator() && nominations.length > 0;
@@ -62,6 +68,9 @@ export const NominatePool = () => {
 
   // warnings
   const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push('Your account is read only, and cannot sign transactions.');
+  }
   if (!nominations.length) {
     warnings.push('You have no nominations set.');
   }
@@ -78,7 +87,7 @@ export const NominatePool = () => {
       <div
         style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
       >
-        {warnings.map((text: any, index: number) => (
+        {warnings.map((text: string, index: number) => (
           <Warning key={`warning_${index}`} text={text} />
         ))}
         <h2>
@@ -101,7 +110,12 @@ export const NominatePool = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting || warnings.length}
+              disabled={
+                !valid ||
+                submitting ||
+                warnings.length ||
+                !accountHasSigner(activeAccount)
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"

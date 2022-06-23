@@ -13,8 +13,15 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
-import { PoolState, usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Separator } from 'Wrappers';
+import {
+  PoolState,
+  ActivePoolContextState,
+  PoolMembershipsContextState,
+} from 'types/pools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { Warning } from 'library/Form/Warning';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -22,12 +29,14 @@ export const Forms = () => {
   const { api }: any = useApi();
   const { setStatus: setModalStatus, config }: any = useModal();
   const { state } = config;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { membership, isOwner } = usePools();
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
+  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { isOwner } = useActivePool() as ActivePoolContextState;
   const poolId = membership?.poolId;
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected membership and targests are valid
   const isValid = membership && isOwner();
@@ -104,6 +113,9 @@ export const Forms = () => {
 
   return (
     <ContentWrapper>
+      {!accountHasSigner(activeAccount) && (
+        <Warning text="Your account is read only, and cannot sign transactions." />
+      )}
       <div>
         <>
           {content.title}
@@ -134,7 +146,7 @@ export const Forms = () => {
             type="button"
             className="submit"
             onClick={() => submitTx()}
-            disabled={submitting}
+            disabled={submitting || !accountHasSigner(activeAccount)}
           >
             <FontAwesomeIcon
               transform="grow-2"

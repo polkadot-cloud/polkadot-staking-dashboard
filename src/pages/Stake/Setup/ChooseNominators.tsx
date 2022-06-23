@@ -19,6 +19,10 @@ export const ChooseNominators = (props: any) => {
   const setup = getSetupProgress(activeAccount);
   const { maxNominations } = consts;
 
+  const setterFn = () => {
+    return getSetupProgress(activeAccount);
+  };
+
   return (
     <>
       <Header
@@ -38,12 +42,14 @@ export const ChooseNominators = (props: any) => {
             batchKey="generate_nominations_inactive"
             setters={[
               {
+                current: {
+                  callable: true,
+                  fn: setterFn,
+                },
                 set: setActiveAccountSetup,
-                current: setup,
               },
             ]}
             nominations={setup.nominations}
-            setSetup={setActiveAccountSetup}
           />
         </div>
         <Footer complete={setup.nominations.length > 0} />

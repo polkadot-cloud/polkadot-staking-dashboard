@@ -7,8 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   textSecondary,
   buttonSecondaryBackground,
-  secondary as secondaryColor,
+  networkColor,
+  networkColorSecondary,
 } from 'theme';
+import { ButtonProps, ButtonWrapperProps } from './types';
 
 export const ButtonRow = styled.div`
   display: flex;
@@ -16,7 +18,7 @@ export const ButtonRow = styled.div`
   justify-content: flex-start;
 `;
 
-export const Wrapper = styled(motion.div)<any>`
+export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
   display: inline-block;
   margin: ${(props) => props.margin};
 
@@ -26,9 +28,9 @@ export const Wrapper = styled(motion.div)<any>`
     align-items: center;
     background: ${(props) =>
       props.type === 'invert-primary'
-        ? 'rgba(211, 48, 121, 0.9)'
+        ? networkColor
         : props.type === 'invert-secondary'
-        ? secondaryColor
+        ? networkColorSecondary
         : buttonSecondaryBackground};
     color: ${(props) =>
       props.type === 'invert-primary' || props.type === 'invert-secondary'
@@ -52,17 +54,11 @@ export const Wrapper = styled(motion.div)<any>`
   }
 `;
 
-export const Button = (props: any) => {
-  let { primary, secondary, inline, small, disabled, icon, transform, title } =
-    props;
+export const Button = (props: ButtonProps) => {
+  let { transform } = props;
+  const { primary, secondary, icon, title, disabled, small, inline } = props;
   const { onClick } = props;
-  title = title ?? false;
-  primary = primary ?? false;
-  secondary = secondary ?? false;
-  inline = inline ?? false;
-  small = small ?? false;
-  disabled = disabled ?? false;
-  icon = icon ?? false;
+
   transform = transform ?? 'shrink-1';
 
   const type = primary
@@ -80,7 +76,11 @@ export const Button = (props: any) => {
       padding={small ? '0.36rem 0.8rem' : '0.45rem 1.2rem'}
       fontSize={small ? '0.95rem' : '1.05rem'}
     >
-      <button type="button" disabled={disabled} onClick={() => onClick()}>
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => onClick !== undefined && onClick()}
+      >
         {icon && (
           <FontAwesomeIcon
             icon={icon}

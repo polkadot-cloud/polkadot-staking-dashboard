@@ -15,19 +15,28 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
+import BN from 'bn.js';
+import { StakingContextInterface } from 'types/staking';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
   const { units } = network;
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountLedger, getBondOptions }: any = useBalances();
-  const { inSetup } = useStaking();
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
+  const { getLedgerForStash, getBondOptions } =
+    useBalances() as BalancesContextInterface;
+  const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
-  const ledger = getAccountLedger(activeAccount);
-  const { active, total } = ledger;
-  const { freeToBond, totalUnlocking, totalUnlocked, totalUnlockChuncks } =
-    getBondOptions(activeAccount);
+  const ledger = getLedgerForStash(activeAccount);
+  const { active }: { active: BN } = ledger;
+  const {
+    freeToBond,
+    totalUnlocking,
+    totalUnlocked,
+    totalUnlockChuncks,
+  }: BondOptions = getBondOptions(activeAccount);
 
   return (
     <>
@@ -45,11 +54,13 @@ export const ManageBond = () => {
             primary
             inline
             title="+"
-            disabled={inSetup() || isSyncing}
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
             onClick={() =>
               openModalWith(
                 'UpdateBond',
-                { fn: 'add', target: 'stake' },
+                { fn: 'add', bondType: 'stake' },
                 'small'
               )
             }
@@ -58,11 +69,13 @@ export const ManageBond = () => {
             small
             primary
             title="-"
-            disabled={inSetup() || isSyncing}
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
             onClick={() =>
               openModalWith(
                 'UpdateBond',
-                { fn: 'remove', target: 'stake' },
+                { fn: 'remove', bondType: 'stake' },
                 'small'
               )
             }
@@ -73,19 +86,20 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={inSetup() || isSyncing}
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
             onClick={() =>
-              openModalWith('UnlockChunks', { target: 'stake' }, 'small')
+              openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
             }
           />
         </ButtonRow>
       </CardHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}
-        unlocking={totalUnlocking}
-        unlocked={totalUnlocked}
-        free={freeToBond}
-        total={total.toNumber()}
+        unlocking={planckBnToUnit(totalUnlocking, units)}
+        unlocked={planckBnToUnit(totalUnlocked, units)}
+        free={planckBnToUnit(freeToBond, units)}
         inactive={inSetup()}
       />
     </>

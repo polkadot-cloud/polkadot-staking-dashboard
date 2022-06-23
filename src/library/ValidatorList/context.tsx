@@ -12,17 +12,18 @@ export const ValidatorListContext: React.Context<any> = React.createContext({
   selected: [],
   selectable: false,
   listFormat: 'col',
+  selectToggleable: true,
 });
 
 export const useValidatorList = () => React.useContext(ValidatorListContext);
 
-export const ValidatorListProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ValidatorListProvider = (props: any) => {
+  const selectToggleable = props.selectToggleable ?? true;
+
   const [selected, setSelected] = useState<Array<any>>([]);
-  const [selectActive, _setSelectActive] = useState(false);
+  const [selectActive, _setSelectActive] = useState(
+    props.selectActive ?? false
+  );
   const [listFormat, _setListFormat] = useState('col');
 
   const addToSelected = (_item: any) => {
@@ -58,9 +59,10 @@ export const ValidatorListProvider = ({
         selected,
         selectActive,
         listFormat,
+        selectToggleable,
       }}
     >
-      {children}
+      {props.children}
     </ValidatorListContext.Provider>
   );
 };

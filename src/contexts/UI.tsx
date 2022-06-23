@@ -6,8 +6,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import { MaybeAccount } from 'types';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
 import { useStaking } from './Staking';
@@ -22,6 +24,7 @@ export interface UIContextState {
   applyValidatorOrder: (l: any, o: string) => any;
   applyValidatorFilters: (l: any, k: string, f?: any) => void;
   toggleFilterValidators: (v: string, l: any) => void;
+  toggleAllValidatorFilters: (t: number) => void;
   resetValidatorFilters: () => void;
   toggleService: (k: string) => void;
   getSetupProgress: (a: MaybeAccount) => any;
@@ -47,6 +50,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   applyValidatorOrder: (l: any, o: string) => {},
   applyValidatorFilters: (l: any, k: string, f?: any) => {},
   toggleFilterValidators: (v: string, l: any) => {},
+  toggleAllValidatorFilters: (t: number) => {},
   resetValidatorFilters: () => {},
   toggleService: (k: string) => {},
   getSetupProgress: (a: MaybeAccount) => {},
@@ -71,11 +75,12 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady, consts, network } = useApi() as APIContextInterface;
   const { accounts: connectAccounts, activeAccount } =
     useConnect() as ConnectContextInterface;
-  const { staking, eraStakers, inSetup }: any = useStaking();
+  const { staking, eraStakers, inSetup } =
+    useStaking() as StakingContextInterface;
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
-  const { metrics }: any = useNetworkMetrics();
-  const { accounts }: any = useBalances();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { accounts } = useBalances() as BalancesContextInterface;
 
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);
@@ -123,6 +128,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // staking setup persist
   const [setup, setSetup]: any = useState([]);
+  const setupRef = useRef<any>(setup);
 
   // resize side menu callback
   const resizeCallback = () => {
@@ -157,7 +163,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (connectAccounts.length) {
       const _setup = setupDefault();
-      setSetup(_setup);
+      setStateWithRef(_setup, setSetup, setupRef);
     }
   }, [activeAccount, network, connectAccounts]);
 
@@ -178,8 +184,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       syncing = true;
     }
 
-    // all accounts have been synced
-    if (accounts.length < connectAccounts.length) {
+    // all extension accounts have been synced
+    const extensionAccounts = connectAccounts.filter(
+      (a: ImportedAccount) => a.source !== 'external'
+    );
+    if (accounts.length < extensionAccounts.length) {
       syncing = true;
     }
 
@@ -204,6 +213,20 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Validator list filtering functions
+
+  const toggleAllValidatorFilters = (toggle: number) => {
+    if (toggle) {
+      setValidatorsFilter([
+        'all_commission',
+        'blocked_nominations',
+        'over_subscribed',
+        'missing_identity',
+        'inactive',
+      ]);
+    } else {
+      setValidatorFilters([]);
+    }
+  };
 
   const toggleFilterValidators = (f: string) => {
     const filter = [...validatorFilters];
@@ -392,7 +415,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const getSetupProgress = (address: MaybeAccount) => {
     // find the current setup progress from `setup`.
-    const _setup = setup.find((item: any) => item.address === address);
+    const _setup = setupRef.current.find(
+      (item: any) => item.address === address
+    );
 
     if (_setup === undefined) {
       return PROGRESS_DEFAULT;
@@ -425,7 +450,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     // update context setup
-    const _setup = setup.map((obj: any) =>
+    const _setup = setupRef.current.map((obj: any) =>
       obj.address === activeAccount
         ? {
             ...obj,
@@ -433,8 +458,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
           }
         : obj
     );
-
-    setSetup(_setup);
+    setStateWithRef(_setup, setSetup, setupRef);
   };
 
   /*
@@ -444,7 +468,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     if (!activeAccount) return;
 
     // get current progress
-    const _accountSetup = [...setup].find(
+    const _accountSetup = [...setupRef.current].find(
       (item: any) => item.address === activeAccount
     );
 
@@ -456,7 +480,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     _accountSetup.progress.section = section;
 
     // update context setup
-    const _setup = setup.map((obj: any) =>
+    const _setup = setupRef.current.map((obj: any) =>
       obj.address === activeAccount ? _accountSetup : obj
     );
 
@@ -467,7 +491,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     // update context
-    setSetup(_setup);
+    setStateWithRef(_setup, setSetup, setupRef);
   };
 
   /*
@@ -501,6 +525,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         applyValidatorFilters,
         resetValidatorFilters,
         toggleFilterValidators,
+        toggleAllValidatorFilters,
         toggleService,
         getSetupProgress,
         getSetupProgressPercent,

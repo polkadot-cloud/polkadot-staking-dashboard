@@ -17,28 +17,32 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { api, network } = useApi() as APIContextInterface;
-    const { activeAccount } = useConnect() as ConnectContextInterface;
-    const { getControllerNotImported, staking } = useStaking();
-    const { activeBondedPool } = usePools();
+    const { activeAccount, accountHasSigner } =
+      useConnect() as ConnectContextInterface;
+    const { staking } = useStaking() as StakingContextInterface;
+    const { activeBondedPool } = useActivePool() as ActivePoolContextState;
     const { setStatus: setModalStatus, config }: any = useModal();
-    const { target } = config || {};
-    const { getBondedAccount }: any = useBalances();
+    const { bondType } = config || {};
+    const { getBondedAccount } = useBalances() as BalancesContextInterface;
     const { historyDepth } = staking;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);
 
-    const isStaking = target === 'stake';
-    const isPooling = target === 'pool';
+    const isStaking = bondType === 'stake';
+    const isPooling = bondType === 'pool';
 
     // valid to submit transaction
-    const [valid, setValid]: any = useState(
+    const [valid, setValid] = useState<boolean>(
       unlock?.value?.toNumber() > 0 ?? false
     );
 
@@ -83,10 +87,9 @@ export const Forms = forwardRef(
       <ContentWrapper>
         <div ref={ref} style={{ paddingBottom: '1rem' }}>
           <div>
-            {getControllerNotImported(controller) && (
-              <Warning text="You must have your controller account imported to stop nominating." />
+            {!accountHasSigner(signingAccount) && (
+              <Warning text="Your account is read only, and cannot sign transactions." />
             )}
-
             {task === 'rebond' && (
               <h2>
                 Rebond {planckBnToUnit(value, units)} {network.unit}
@@ -122,7 +125,7 @@ export const Forms = forwardRef(
                 className="submit"
                 onClick={() => submitTx()}
                 disabled={
-                  !valid || submitting || getControllerNotImported(controller)
+                  !valid || submitting || !accountHasSigner(signingAccount)
                 }
               >
                 <FontAwesomeIcon

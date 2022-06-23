@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, backgroundNetworkBar } from 'theme';
+import { textSecondary, backgroundNetworkBar, networkColor } from 'theme';
 import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 
 export const Wrapper = styled(motion.div)<any>`
@@ -102,20 +102,20 @@ export const Summary = styled.div`
 
 export const NetworkInfo = styled(motion.div)`
   width: 100%;
-  background: #d33079;
+  background: ${networkColor};
   flex: 1;
   box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  align-content: flex-start;
+  align-content: flex-end;
   padding: 0.25rem 1rem 1rem 1rem;
   overflow: auto;
 
   > .row {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-content: flex-start;
     align-items: flex-start;
 

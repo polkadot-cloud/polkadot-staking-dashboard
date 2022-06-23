@@ -12,6 +12,8 @@ import {
   textPrimary,
   textInvert,
   buttonSecondaryBackground,
+  networkColor,
+  borderPrimary,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -74,6 +76,7 @@ export const HeadingWrapper = styled.div`
 
 export const Item = styled(motion.button)`
   background: ${buttonSecondaryBackground};
+  border: 1px solid ${borderPrimary};
   flex-grow: 1;
   padding: 0 1rem;
   border-radius: 1rem;
@@ -87,9 +90,9 @@ export const Item = styled(motion.button)`
   font-size: 1rem;
 
   .label {
-    border: 0.125rem solid #d33079;
+    border: 0.125rem solid ${networkColor};
     border-radius: 0.8rem;
-    color: #d33079;
+    color: ${networkColor};
     font-size: 0.85rem;
     font-variation-settings: 'wght' 525;
     margin-right: 0.6rem;
@@ -101,7 +104,7 @@ export const Item = styled(motion.button)`
     line-height: 2.2rem;
   }
   &.connect {
-    background: #d33079;
+    background: ${networkColor};
     > span {
       color: ${textInvert};
       svg {
@@ -111,7 +114,7 @@ export const Item = styled(motion.button)`
     .icon {
       margin-right: 0.4rem;
       path {
-        fill: white;
+        fill: ${textInvert};
       }
     }
   }

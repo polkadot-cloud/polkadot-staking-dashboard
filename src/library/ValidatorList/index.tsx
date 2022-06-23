@@ -23,19 +23,30 @@ import {
 } from 'library/List';
 import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
+import { useTheme } from 'contexts/Themes';
+import { networkColors } from 'theme/default';
+import { NetworkMetricsContextInterface } from 'types';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
 export const ValidatorListInner = (props: any) => {
-  const { isReady } = useApi() as APIContextInterface;
+  const { mode } = useTheme();
+  const { isReady, network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics }: any =
+    useNetworkMetrics() as NetworkMetricsContextInterface;
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useValidatorList();
   const modal = useModal();
 
-  const { selectActive, setSelectActive, selected, listFormat, setListFormat } =
-    provider;
+  const {
+    selectActive,
+    setSelectActive,
+    selected,
+    listFormat,
+    setListFormat,
+    selectToggleable,
+  } = provider;
 
   const {
     validatorFilters,
@@ -54,7 +65,7 @@ export const ValidatorListInner = (props: any) => {
     title,
     format,
     selectable,
-    target,
+    bondType,
   }: any = props;
 
   const actions = props.actions ?? [];
@@ -74,7 +85,7 @@ export const ValidatorListInner = (props: any) => {
   const [page, setPage]: any = useState(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration]: any = useState(1);
+  const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of validators
   const [validatorsDefault, setValidatorsDefault] = useState(props.validators);
@@ -203,13 +214,21 @@ export const ValidatorListInner = (props: any) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={listFormat === 'row' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'row'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={listFormat === 'col' ? '#d33079' : 'inherit'}
+              color={
+                listFormat === 'col'
+                  ? networkColors[`${network.name}-${mode}`]
+                  : 'inherit'
+              }
             />
           </button>
         </div>
@@ -259,14 +278,17 @@ export const ValidatorListInner = (props: any) => {
                 {a.title}
               </button>
             ))}
-            <button
-              type="button"
-              onClick={() => {
-                setSelectActive(!selectActive);
-              }}
-            >
-              {selectActive ? 'Cancel Selection' : 'Select'}
-            </button>
+            {selectToggleable === true && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectActive(!selectActive);
+                }}
+              >
+                {selectActive ? 'Cancel Selection' : 'Select'}
+              </button>
+            )}
+
             {selected.length > 0 && (
               <>
                 {actionsSelected.map((a: any, i: number) => (
@@ -324,7 +346,7 @@ export const ValidatorListInner = (props: any) => {
                   batchKey={batchKey}
                   format={format}
                   showMenu={showMenu}
-                  target={target}
+                  bondType={bondType}
                 />
               </motion.div>
             );
@@ -336,8 +358,12 @@ export const ValidatorListInner = (props: any) => {
 };
 
 export const ValidatorList = (props: any) => {
+  const { selectActive, selectToggleable } = props;
   return (
-    <ValidatorListProvider>
+    <ValidatorListProvider
+      selectActive={selectActive}
+      selectToggleable={selectToggleable}
+    >
       <ValidatorListShouldUpdate {...props} />
     </ValidatorListProvider>
   );

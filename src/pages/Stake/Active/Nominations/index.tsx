@@ -15,20 +15,35 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { BatchKeys } from 'library/BatchKeys';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { Wrapper } from './Wrapper';
 
-export const Nominations = () => {
+export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { openModalWith } = useModal();
   const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { nominated }: any = useValidators();
-  const { inSetup } = useStaking();
-  const { getAccountNominations }: any = useBalances();
+  const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
-  const nominations = getAccountNominations(activeAccount);
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
+  const { getAccountNominations } = useBalances() as BalancesContextInterface;
+  const { nominated: stakeNominated, poolNominated }: any = useValidators();
+  let { favouritesList } = useValidators();
+  if (favouritesList === null) {
+    favouritesList = [];
+  }
 
-  const batchKey = BatchKeys.new('stake_nominations');
+  const { poolNominations, isNominator: isPoolNominator } =
+    useActivePool() as ActivePoolContextState;
+
+  const isPool = bondType === 'pool';
+  const nominations = isPool
+    ? poolNominations.targets
+    : getAccountNominations(activeAccount);
+  const nominated = isPool ? poolNominated : stakeNominated;
+  const batchKey = isPool ? 'pool_nominations' : 'stake_nominations';
 
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {
@@ -37,12 +52,26 @@ export const Nominations = () => {
       return !selected.map((_s: any) => _s.address).includes(n);
     });
     openModalWith(
-      'StopNominating',
+      'ChangeNominations',
       {
         nominations: _nominations,
         provider,
+        bondType,
       },
       'small'
+    );
+  };
+
+  // callback function for adding nominations
+  const cbAddNominations = ({ setSelectActive }: any) => {
+    setSelectActive(false);
+    openModalWith(
+      'NominateFromFavourites',
+      {
+        nominations,
+        bondType,
+      },
+      'large'
     );
   };
 
@@ -50,11 +79,11 @@ export const Nominations = () => {
     <Wrapper>
       <CardHeaderWrapper withAction>
         <h2>
-          Nominations
+          {isPool ? 'Pool Nominations' : 'Nominations'}
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h2>
         <div>
-          {nominations.length ? (
+          {!isPool && nominations.length ? (
             <div>
               <Button
                 small
@@ -63,12 +92,17 @@ export const Nominations = () => {
                 inline
                 primary
                 title="Stop"
-                disabled={inSetup() || isSyncing}
+                disabled={
+                  (!isPool && inSetup()) ||
+                  isSyncing ||
+                  isReadOnlyAccount(activeAccount)
+                }
                 onClick={() =>
                   openModalWith(
-                    'StopNominating',
+                    'ChangeNominations',
                     {
                       nominations: [],
+                      bondType,
                     },
                     'small'
                   )
@@ -99,15 +133,28 @@ export const Nominations = () => {
                     batchKey={batchKey}
                     title="Your Nominations"
                     format="nomination"
-                    target="stake"
-                    selectable
-                    actions={[
-                      {
-                        title: 'Stop Nominating Selected',
-                        onClick: cbStopNominatingSelected,
-                        onSelected: true,
-                      },
-                    ]}
+                    bondType={isPool ? 'pool' : 'stake'}
+                    selectable={
+                      !isReadOnlyAccount(activeAccount) &&
+                      (!isPool || isPoolNominator())
+                    }
+                    actions={
+                      isReadOnlyAccount(activeAccount)
+                        ? []
+                        : [
+                          {
+                            title: 'Stop Nominating Selected',
+                            onClick: cbStopNominatingSelected,
+                            onSelected: true,
+                          },
+                          {
+                            disabled: !favouritesList.length,
+                            title: 'Add From Favourites',
+                            onClick: cbAddNominations,
+                            onSelected: false,
+                          },
+                        ]
+                    }
                     refetchOnListUpdate
                     allowMoreCols
                     disableThrottle

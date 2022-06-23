@@ -1,11 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { setStateWithRef } from 'Utils';
 
 export const ThemeContext: React.Context<any> = React.createContext({
   toggleTheme: (str?: string) => {},
+  toggleCard: (c: string) => {},
   mode: 'light',
+  card: 'flat',
 });
 
 export const useTheme = () => React.useContext(ThemeContext);
@@ -13,36 +16,69 @@ export const useTheme = () => React.useContext(ThemeContext);
 export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   // get the current theme
   let localTheme = localStorage.getItem('theme');
+  let localCard = localStorage.getItem('card');
 
   // provide default theme if not set
   if (localTheme !== 'light' && localTheme !== 'dark') {
     localTheme = 'light';
+    // check system theme
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      localTheme = 'light';
+    } else {
+      localTheme = 'dark';
+    }
     localStorage.setItem('theme', localTheme);
+  }
+
+  // provide default card if not set
+  if (!['flat', 'border', 'shadow'].includes(localCard || '')) {
+    localCard = 'shadow';
+    localStorage.setItem('card', localCard);
   }
 
   // the theme state
   const [state, setState] = React.useState({
     mode: localTheme,
+    card: localCard,
   });
+  const stateRef = useRef(state);
+
+  // auto change theme on system change
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', (event) => {
+      const _theme = event.matches ? 'dark' : 'light';
+      localStorage.setItem('theme', _theme);
+      setStateWithRef(
+        { ...stateRef.current, mode: _theme },
+        setState,
+        stateRef
+      );
+    });
 
   const toggleTheme = (_theme: string | null = null): void => {
     if (_theme === null) {
       _theme = state.mode === 'dark' ? 'light' : 'dark';
     }
-
     localStorage.setItem('theme', _theme);
+    setStateWithRef({ ...stateRef.current, mode: _theme }, setState, stateRef);
+  };
 
-    setState({
-      ...state,
-      mode: _theme,
-    });
+  const toggleCard = (_card: string): void => {
+    localStorage.setItem('card', _card);
+    setStateWithRef({ ...stateRef.current, card: _card }, setState, stateRef);
   };
 
   return (
     <ThemeContext.Provider
       value={{
         toggleTheme,
-        mode: state.mode,
+        toggleCard,
+        mode: stateRef.current.mode,
+        card: stateRef.current.card,
       }}
     >
       {children}

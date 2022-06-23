@@ -9,18 +9,28 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { BondedPoolsContextState, ActivePoolContextState } from 'types/pools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolsTabs } from 'pages/Pools/context';
+import { useConnect } from 'contexts/Connect';
+import { ConnectContextInterface } from 'types/connect';
+import _ from 'window-or-global';
 import { Wrapper } from './Wrapper';
 
 export const Pool = (props: any) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
   const { openModalWith } = useModal();
-  const { isBonding } = usePools();
-  const { meta } = usePools();
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
+  const { meta } = useBondedPools() as BondedPoolsContextState;
+  const { isBonding } = useActivePool() as ActivePoolContextState;
+  // assumes component is under `PoolsTabsProvider` (Pools page)
+  const { setActiveTab } = usePoolsTabs();
 
   const metadata = meta[batchKey]?.metadata ?? [];
 
@@ -86,11 +96,13 @@ export const Pool = (props: any) => {
               <div className="label">
                 <button
                   type="button"
+                  disabled={isReadOnlyAccount(activeAccount) || !activeAccount}
                   onClick={() =>
                     openModalWith(
                       'JoinPool',
                       {
                         id,
+                        setActiveTab,
                       },
                       'small'
                     )

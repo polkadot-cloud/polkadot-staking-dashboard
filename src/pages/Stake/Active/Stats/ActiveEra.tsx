@@ -6,9 +6,10 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useSessionEra } from 'contexts/SessionEra';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { Pie } from 'library/StatBoxList/Pie';
+import { NetworkMetricsContextInterface } from 'types';
 
 const ActiveEraStatBox = () => {
-  const { metrics } = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { sessionEra } = useSessionEra();
   const eraTimeLeft = useEraTimeLeft();
 

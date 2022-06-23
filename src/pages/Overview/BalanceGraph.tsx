@@ -4,19 +4,25 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { planckToUnit, humanNumber, planckBnToUnit } from 'Utils';
+import { usdFormatter, planckBnToUnit } from 'Utils';
 import { useSize, formatSize } from 'library/Graphs/Utils';
-import { defaultThemes } from 'theme/default';
+import {
+  defaultThemes,
+  networkColors,
+  networkColorsSecondary,
+} from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { ActivePoolContextState } from 'types/pools';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -25,7 +31,8 @@ export const BalanceGraph = () => {
   const { network } = useApi() as APIContextInterface;
   const { units, features } = network;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountBalance, getBondOptions }: any = useBalances();
+  const { getAccountBalance, getBondOptions } =
+    useBalances() as BalancesContextInterface;
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
@@ -34,36 +41,36 @@ export const BalanceGraph = () => {
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
-  }: any = getBondOptions(activeAccount) || {};
-  const { getPoolBondOptions } = usePools();
+  }: BondOptions = getBondOptions(activeAccount) || {};
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 
   const poolBondOpions = getPoolBondOptions(activeAccount);
-  const unlocking =
-    poolBondOpions.totalUnlocking +
-    poolBondOpions.totalUnlocked +
-    totalUnlocked +
-    totalUnlocking;
+  const unlocking = poolBondOpions.totalUnlocking
+    .add(poolBondOpions.totalUnlocked)
+    .add(totalUnlocked)
+    .add(totalUnlocking);
 
-  let { free } = balance;
+  const { free } = balance;
 
   // get user's total free balance
-  const freeBase = planckToUnit(free.toNumber(), units);
+  const freeBase = planckBnToUnit(free, units);
+
   // convert balance to fiat value
   const freeBalance = Number(freeBase * prices.lastPrice).toFixed(2);
-  // get user's pool balance
-  const poolBalance = planckBnToUnit(poolBondOpions.active, units);
-
-  // convert to currency unit
-  free = planckToUnit(free.toNumber(), units);
 
   // graph data
-  let graphStaked = staked;
-  let graphFreeToStake = freeToStake;
-  let graphInPool = poolBalance;
-  let graphUnlocking = unlocking;
+  let graphStaked = planckBnToUnit(staked, units);
+  let graphFreeToStake = planckBnToUnit(freeToStake, units);
+  let graphInPool = planckBnToUnit(poolBondOpions.active, units);
+  let graphUnlocking = planckBnToUnit(unlocking, units);
 
   let zeroBalance = false;
-  if (graphStaked === 0 && graphFreeToStake === 0) {
+  if (
+    graphStaked === 0 &&
+    graphFreeToStake === 0 &&
+    graphUnlocking === 0 &&
+    graphInPool === 0
+  ) {
     graphStaked = -1;
     graphUnlocking = -1;
     graphFreeToStake = -1;
@@ -113,16 +120,16 @@ export const BalanceGraph = () => {
   let _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
   let _colors = zeroBalance
     ? [
-        defaultThemes.graphs.colors[2][mode],
+        defaultThemes.graphs.colors[1][mode],
         defaultThemes.graphs.inactive2[mode],
         defaultThemes.graphs.inactive2[mode],
         defaultThemes.graphs.inactive[mode],
       ]
     : [
-        defaultThemes.graphs.colors[2][mode],
         defaultThemes.graphs.colors[1][mode],
         defaultThemes.graphs.colors[0][mode],
-        defaultThemes.graphs.colors[3][mode],
+        networkColors[`${network.name}-${mode}`],
+        networkColorsSecondary[`${network.name}-${mode}`],
       ];
 
   _data = features.pools ? _data : _data.slice(0, 3);
@@ -167,7 +174,7 @@ export const BalanceGraph = () => {
           <span className="amount">{freeBase}</span>&nbsp;{network.unit}
           <span className="fiat">
             {services.includes('binance_spot') && (
-              <>&nbsp;${humanNumber(Number(freeBalance))}</>
+              <>&nbsp;{usdFormatter.format(Number(freeBalance))}</>
             )}
           </span>
         </h2>

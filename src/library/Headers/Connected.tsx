@@ -6,19 +6,25 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
+import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
+import { clipAddress } from 'Utils';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
-  const { hasController, getControllerNotImported } = useStaking();
-  const { getBondedAccount }: any = useBalances();
+  const { hasController, getControllerNotImported } =
+    useStaking() as StakingContextInterface;
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);
-  const { activeBondedPool } = usePools();
+  const { activeBondedPool } = useActivePool() as ActivePoolContextState;
   const { isSyncing } = useUi();
 
   let poolAddress = '';
@@ -26,6 +32,12 @@ export const Connected = () => {
     const { addresses } = activeBondedPool;
     poolAddress = addresses.stash;
   }
+
+  const activeAccountLabel = isSyncing
+    ? undefined
+    : hasController()
+    ? 'Stash'
+    : undefined;
 
   return (
     <>
@@ -36,10 +48,15 @@ export const Connected = () => {
             <Account
               canClick
               onClick={() => {
-                openModalWith('ConnectAccounts', {}, 'small');
+                openModalWith(
+                  'ConnectAccounts',
+                  { section: accounts.length ? 1 : 0 },
+                  'large'
+                );
               }}
               value={activeAccount}
-              label={hasController() && !isSyncing ? 'Stash' : undefined}
+              readOnly={!accountHasSigner(activeAccount)}
+              label={activeAccountLabel}
               format="name"
               filled
               wallet
@@ -50,10 +67,13 @@ export const Connected = () => {
           {hasController() && !isSyncing && (
             <HeadingWrapper>
               <Account
-                value={controller}
+                value={controller ?? ''}
+                readOnly={!accountHasSigner(controller)}
                 title={
                   getControllerNotImported(controller)
-                    ? 'Not Imported'
+                    ? controller
+                      ? clipAddress(controller)
+                      : 'Not Imported'
                     : undefined
                 }
                 format="name"
@@ -74,14 +94,9 @@ export const Connected = () => {
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}
-                title={
-                  getControllerNotImported(controller)
-                    ? 'Not Imported'
-                    : undefined
-                }
                 pool={activeBondedPool}
                 label="Pool"
-                canClick={hasController()}
+                canClick={false}
                 onClick={() => {}}
                 filled
               />

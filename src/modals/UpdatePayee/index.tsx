@@ -17,15 +17,18 @@ import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { api } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondedAccount }: any = useBalances();
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking, getControllerNotImported } = useStaking();
+  const { staking, getControllerNotImported } =
+    useStaking() as StakingContextInterface;
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);
@@ -49,7 +52,7 @@ export const UpdatePayee = () => {
   };
 
   // bond valid
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // tx to submit
   const tx = () => {

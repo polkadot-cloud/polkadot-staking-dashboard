@@ -12,12 +12,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { planckToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
-import { defaultThemes } from 'theme/default';
+import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { APIContextInterface } from 'types/api';
-import { getGradient } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +30,6 @@ ChartJS.register(
 export const PayoutLine = (props: any) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
-  const { units } = network;
   const { payouts, height, background } = props;
 
   const options = {
@@ -99,17 +96,10 @@ export const PayoutLine = (props: any) => {
         label: 'Price',
         // data: empty_data,
         data: payouts.map((item: any, index: number) => {
-          return planckToUnit(item.amount, units);
+          return item.amount;
         }),
-        borderColor: (context: any) => {
-          const { chart } = context;
-          const { ctx, chartArea } = chart;
-          if (!chartArea) {
-            return;
-          }
-          return getGradient(ctx, chartArea);
-        },
-        backgroundColor: defaultThemes.graphs.colors[2][mode],
+        borderColor: networkColors[`${network.name}-${mode}`],
+        backgroundColor: defaultThemes.graphs.colors[1][mode],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,

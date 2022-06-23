@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
@@ -11,14 +11,20 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import BN from 'bn.js';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
 
 export const BondInputWithFeedback = (props: any) => {
   // input props
-  const { target, defaultBond, unbond } = props;
+  const { bondType, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;
+  const warnings = props.warnings ?? [];
 
   // functional props
   const setters = props.setters ?? [];
@@ -26,41 +32,53 @@ export const BondInputWithFeedback = (props: any) => {
 
   const { network }: any = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { staking, getControllerNotImported } = useStaking();
-  const { getAccountLedger, getBondedAccount, getBondOptions }: any =
-    useBalances();
-  const { getPoolBondOptions, stats } = usePools();
+  const { staking, getControllerNotImported } =
+    useStaking() as StakingContextInterface;
+  const { getLedgerForStash, getBondedAccount, getBondOptions } =
+    useBalances() as BalancesContextInterface;
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
+  const { stats } = usePoolsConfig() as PoolsConfigContextState;
   const { minJoinBond } = stats;
-
-  const controller = getBondedAccount(activeAccount);
-  const ledger = getAccountLedger(activeAccount);
   const { units } = network;
+  const controller = getBondedAccount(activeAccount);
+  const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
-  const minBondBase =
-    target === 'pool'
-      ? planckBnToUnit(minJoinBond, units)
-      : planckBnToUnit(minNominatorBond, units);
-
   // get bond options for either staking or pooling.
   const options =
-    target === 'pool'
+    bondType === 'pool'
       ? getPoolBondOptions(activeAccount)
       : getBondOptions(activeAccount);
 
-  const { freeToBond, freeToUnbond, active: poolsActive } = options;
+  const {
+    freeToBond: freeToBondBn,
+    freeToUnbond: freeToUnbondBn,
+    active: poolsActive,
+  } = options;
+  const freeToBond = planckBnToUnit(freeToBondBn, units);
+
+  const minBondBase =
+    bondType === 'pool'
+      ? planckBnToUnit(minJoinBond, units)
+      : planckBnToUnit(minNominatorBond, units);
 
   // unbond amount to `minNominatorBond` threshold for staking,
   // and unbond amount to `minJoinBond` for pools.
   const freeToUnbondToMin =
-    target === 'pool'
-      ? Math.max(freeToUnbond - planckBnToUnit(minJoinBond, units), 0)
-      : Math.max(freeToUnbond - planckBnToUnit(minNominatorBond, units), 0);
+    bondType === 'pool'
+      ? planckBnToUnit(
+          BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)),
+          units
+        )
+      : planckBnToUnit(
+          BN.max(freeToUnbondBn.sub(minNominatorBond), new BN(0)),
+          units
+        );
 
   // get the actively bonded amount.
   const activeBase =
-    target === 'pool'
+    bondType === 'pool'
       ? planckBnToUnit(poolsActive, units)
       : planckBnToUnit(active, units);
 
@@ -96,7 +114,7 @@ export const BondInputWithFeedback = (props: any) => {
   // handle error updates
   const handleErrors = () => {
     let _bondDisabled = false;
-    const _errors = [];
+    const _errors = warnings;
 
     // bond errors
     if (!unbond) {
@@ -133,7 +151,7 @@ export const BondInputWithFeedback = (props: any) => {
       }
 
       // unbond errors for staking only
-      if (target === 'stake') {
+      if (bondType === 'stake') {
         if (getControllerNotImported(controller)) {
           _errors.push(
             'You must have your controller account imported to unbond.'
@@ -144,7 +162,7 @@ export const BondInputWithFeedback = (props: any) => {
       if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
         _errors.push(
           `A minimum bond of ${minBondBase} ${network.unit} is required when ${
-            target === 'stake' ? `actively nominating` : `in your pool`
+            bondType === 'stake' ? `actively nominating` : `in your pool`
           }.`
         );
       }

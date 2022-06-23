@@ -21,6 +21,9 @@ export const ConnectAccounts = () => {
     _section !== null ? _section : activeAccount !== null ? 1 : 0
   );
 
+  // toggle read only management
+  const [readOnlyOpen, setReadOnlyOpen] = useState(false);
+
   // resize modal on state change
   const extensionsRef: any = useRef(null);
   const accountsRef: any = useRef(null);
@@ -37,7 +40,14 @@ export const ConnectAccounts = () => {
 
   useEffect(() => {
     resizeModal();
-  }, [section, activeAccount, accounts, extensions, modal.height]);
+  }, [
+    section,
+    activeAccount,
+    accounts,
+    extensions,
+    modal.height,
+    readOnlyOpen,
+  ]);
 
   // remove active account from connect list
   accounts = accounts.filter((item: any) => item.address !== activeAccount);
@@ -61,7 +71,12 @@ export const ConnectAccounts = () => {
           },
         }}
       >
-        <Extensions setSection={setSection} ref={extensionsRef} />
+        <Extensions
+          setSection={setSection}
+          readOnlyOpen={readOnlyOpen}
+          setReadOnlyOpen={setReadOnlyOpen}
+          ref={extensionsRef}
+        />
         <Accounts setSection={setSection} ref={accountsRef} />
       </CardsWrapper>
     </Wrapper>

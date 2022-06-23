@@ -10,7 +10,10 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { ActivePoolContextState } from 'types/pools';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -20,30 +23,39 @@ export const BondAll = (props: any) => {
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondOptions }: any = useBalances();
-  const { getPoolBondOptions } = usePools();
-  const { target } = config;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
+  const { getBondOptions } = useBalances() as BalancesContextInterface;
+  const { bondType } = config;
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 
-  const stakeBondOptions = getBondOptions(activeAccount);
+  const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
-  const isStaking = target === 'stake';
-  const isPooling = target === 'pool';
+  const isStaking = bondType === 'stake';
+  const isPooling = bondType === 'pool';
 
-  const { freeToBond } = isPooling ? poolBondOptions : stakeBondOptions;
-  const { totalPossibleBond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { freeToBond: freeToBondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
+  const { totalPossibleBond: totalPossibleBondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
+
+  // convert BN values to number
+  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const totalPossibleBond = planckBnToUnit(totalPossibleBondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState(freeToBond);
+  const [bond, setBond] = useState({ bond: freeToBond });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState(false);
 
   // update bond value on task change
   useEffect(() => {
     const _bond = freeToBond;
     setBond({ bond: _bond });
-    if (freeToBond > 0) {
+    if (_bond > 0) {
       setBondValid(true);
     } else {
       setBondValid(false);
@@ -63,7 +75,7 @@ export const BondAll = (props: any) => {
     }
 
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
+    const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
     // determine _tx
     if (isPooling) {
@@ -92,6 +104,9 @@ export const BondAll = (props: any) => {
     <>
       <div className="items">
         <>
+          {!accountHasSigner(activeAccount) && (
+            <Warning text="Your account is read only, and cannot sign transactions." />
+          )}
           {freeToBond === 0 && (
             <Warning text={`You have no free ${network.unit} to bond.`} />
           )}
@@ -115,7 +130,7 @@ export const BondAll = (props: any) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid}
+        isValid={bondValid && accountHasSigner(activeAccount)}
       />
     </>
   );

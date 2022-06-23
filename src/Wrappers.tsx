@@ -15,6 +15,8 @@ import {
   backgroundGradient,
   backgroundPrimary,
   borderPrimary,
+  textSecondary,
+  buttonSecondaryBackground,
 } from 'theme';
 
 /* EntryWrapper
@@ -58,6 +60,26 @@ export const EntryWrapper = styled.div`
   path.primary {
     fill: ${textPrimary};
   }
+
+  input {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 0.7rem 0rem;
+    font-size: 1.1rem;
+    background: none;
+    transition: all 0.1s;
+  }
+
+  input::placeholder {
+    color: #bbb;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+  }
+
   .page-padding {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -160,7 +182,8 @@ export const PageTitleWrapper = styled.header<any>`
   position: sticky;
   top: 0px;
   padding-top: 1.5rem;
-  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     top: 4rem;
     padding-top: 0.25rem;
@@ -178,6 +201,43 @@ export const PageTitleWrapper = styled.header<any>`
       font-size: 1.5rem;
     }
     transition: font 0.5s;
+  }
+
+  > .tabs {
+    box-sizing: border-box;
+    overflow: auto;
+    max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
+    margin-top: ${(props) => (props.sticky ? '0' : '0.75rem')};
+    transition: margin 0.2s;
+
+    > .inner {
+      display: flex;
+      flex-flow: row nowrap;
+      border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
+      border-bottom-color: ${borderPrimary};
+
+      > button {
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        margin-right: 0.75rem;
+        font-size: ${(props) => (props.sticky ? '1.05rem' : '1.15rem')};
+        color: ${textSecondary};
+        transition: opacity 0.1s, font-size 0.1s;
+        border-radius: 0.5rem;
+
+        &.active {
+          background: ${buttonSecondaryBackground};
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
   }
 `;
 
@@ -233,7 +293,6 @@ export const PageRowWrapper = styled.div<any>`
 export const RowPrimaryWrapper = styled.div<any>`
   order: ${(props) => props.vOrder};
   box-sizing: border-box;
-  overflow: hidden;
   flex: 1;
   flex-basis: 100%;
   max-width: 100%;
@@ -260,7 +319,6 @@ export const RowPrimaryWrapper = styled.div<any>`
 export const RowSecondaryWrapper = styled.div<any>`
   order: ${(props) => props.vOrder};
   box-sizing: border-box;
-  overflow: hidden;
   flex-basis: 100%;
   width: 100%;
   border-radius: 1rem;

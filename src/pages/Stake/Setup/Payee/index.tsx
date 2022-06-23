@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { CardWrapper } from 'library/Graphs/Wrappers';
 import { isNumeric } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
@@ -67,7 +66,7 @@ export const Payee = (props: any) => {
   };
 
   return (
-    <CardWrapper transparent>
+    <>
       <Header
         thisSection={section}
         complete={setup.payee !== null}
@@ -78,22 +77,24 @@ export const Payee = (props: any) => {
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
         <Items>
-          {buttons.map((item: any, index: number) => (
-            <Item
-              key={`payee_option_${index}`}
-              selected={payee === options[item.index]}
-              onClick={() => handleChangePayee(item.index)}
-            >
-              <h3>{item.title}</h3>
-              <div>
-                <p>{item.subtitle}</p>
-              </div>
-            </Item>
-          ))}
+          {buttons.map((item: any, index: number) => {
+            return (
+              <Item
+                key={`payee_option_${index}`}
+                selected={payee === options[item.index]}
+                onClick={() => handleChangePayee(item.index)}
+              >
+                <h3>{item.title}</h3>
+                <div>
+                  <p>{item.subtitle}</p>
+                </div>
+              </Item>
+            );
+          })}
         </Items>
         <Footer complete={setup.payee !== null} />
       </MotionContainer>
-    </CardWrapper>
+    </>
   );
 };
 

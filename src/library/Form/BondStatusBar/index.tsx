@@ -10,13 +10,14 @@ import { useStaking } from 'contexts/Staking';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
 import { APIContextInterface } from 'types/api';
+import { StakingContextInterface } from 'types/staking';
 import { Wrapper } from './Wrapper';
 
 export const BondStatusBar = (props: any) => {
   const { value } = props;
 
   const { network } = useApi() as APIContextInterface;
-  const { staking, eraStakers } = useStaking();
+  const { staking, eraStakers } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const { unit, units } = network;
   const { minNominatorBond } = staking;
@@ -41,7 +42,7 @@ export const BondStatusBar = (props: any) => {
         <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp; Nominate
+            &nbsp; Nominate &nbsp;
             <OpenAssistantIcon page="stake" title="Nominating" />
           </h4>
           <div className="bar">
@@ -53,7 +54,7 @@ export const BondStatusBar = (props: any) => {
         <section className={gtMinActiveBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp; Active
+            &nbsp;Active &nbsp;
             <OpenAssistantIcon page="stake" title="Active Bond Threshold" />
           </h4>
           <div className="bar">

@@ -7,41 +7,24 @@ import BN from 'bn.js';
 import Worker from 'worker-loader!../../workers/stakers';
 import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ExternalAccount } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
+import {
+  EraStakers,
+  NominationStatuses,
+  StakingContextInterface,
+  StakingMetrics,
+  StakingTargets,
+} from 'types/staking';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-export interface StakingContextState {
-  getNominationsStatus: () => any;
-  setTargets: (t: any) => any;
-  hasController: () => any;
-  getControllerNotImported: (a: string) => any;
-  isBonding: () => any;
-  isNominating: () => any;
-  inSetup: () => any;
-  staking: any;
-  eraStakers: any;
-  targets: any;
-  erasStakersSyncing: any;
-}
-
-export const StakingContext: React.Context<StakingContextState> =
-  React.createContext({
-    getNominationsStatus: () => true,
-    setTargets: (t: any) => false,
-    hasController: () => false,
-    getControllerNotImported: (a: string) => false,
-    isBonding: () => false,
-    isNominating: () => false,
-    inSetup: () => false,
-    staking: {},
-    eraStakers: {},
-    targets: [],
-    erasStakersSyncing: false,
-  });
+export const StakingContext =
+  React.createContext<StakingContextInterface | null>(null);
 
 export const useStaking = () => React.useContext(StakingContext);
 
@@ -57,22 +40,22 @@ export const StakingProvider = ({
   } = useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } =
     useApi() as APIContextInterface;
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const {
     accounts,
     getBondedAccount,
-    getAccountLedger,
+    getLedgerForStash,
     getAccountNominations,
-  }: any = useBalances();
+  } = useBalances() as BalancesContextInterface;
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store staking metrics in state
-  const [stakingMetrics, setStakingMetrics]: any = useState(
+  const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
     defaults.stakingMetrics
   );
 
   // store stakers metadata in state
-  const [eraStakers, setEraStakers]: any = useState(defaults.eraStakers);
+  const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
   const eraStakersRef = useRef(eraStakers);
 
   // flags whether erasStakers is resyncing
@@ -80,17 +63,17 @@ export const StakingProvider = ({
   const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
   // store account target validators
-  const [targets, _setTargets]: any = useState(
-    localStorageOrDefault(
+  const [targets, _setTargets] = useState<StakingTargets>(
+    localStorageOrDefault<StakingTargets>(
       `${activeAccount ?? ''}_targets`,
       defaults.targets,
       true
-    )
+    ) as StakingTargets
   );
 
   const worker = new Worker();
 
-  worker.onmessage = (message: any) => {
+  worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
       const {
@@ -123,23 +106,23 @@ export const StakingProvider = ({
     }
   };
 
-  const subscribeToStakingkMetrics = async (_api: any) => {
-    if (isReady && metrics.activeEra.index !== 0) {
+  const subscribeToStakingkMetrics = async () => {
+    if (api !== null && isReady && metrics.activeEra.index !== 0) {
       const previousEra = metrics.activeEra.index - 1;
 
       // subscribe to staking metrics
-      const unsub = await _api.queryMulti(
+      const unsub = await api.queryMulti(
         [
-          _api.query.staking.counterForNominators,
-          _api.query.staking.counterForValidators,
-          _api.query.staking.maxNominatorsCount,
-          _api.query.staking.maxValidatorsCount,
-          _api.query.staking.validatorCount,
-          [_api.query.staking.erasValidatorReward, previousEra],
-          [_api.query.staking.erasTotalStake, previousEra],
-          _api.query.staking.minNominatorBond,
-          _api.query.staking.historyDepth,
-          [_api.query.staking.payee, activeAccount],
+          api.query.staking.counterForNominators,
+          api.query.staking.counterForValidators,
+          api.query.staking.maxNominatorsCount,
+          api.query.staking.maxValidatorsCount,
+          api.query.staking.validatorCount,
+          [api.query.staking.erasValidatorReward, previousEra],
+          [api.query.staking.erasTotalStake, previousEra],
+          api.query.staking.minNominatorBond,
+          api.query.staking.historyDepth,
+          [api.query.staking.payee, activeAccount],
         ],
         ([
           _totalNominators,
@@ -194,10 +177,12 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: any) => ({
-      keys: _keys.toHuman(),
-      val: _val.toHuman(),
-    }));
+    const exposures = _exposures.map(([_keys, _val]: any) => {
+      return {
+        keys: _keys.toHuman(),
+        val: _val.toHuman(),
+      };
+    });
 
     // worker to calculate stats
     worker.postMessage({
@@ -216,8 +201,11 @@ export const StakingProvider = ({
     if (inSetup()) {
       return defaults.nominationStatus;
     }
+    if (!activeAccount) {
+      return defaults.nominationStatus;
+    }
     const nominations = getAccountNominations(activeAccount);
-    const statuses: any = {};
+    const statuses: NominationStatuses = {};
 
     for (const nomination of nominations) {
       const s = eraStakersRef.current.stakers.find(
@@ -251,7 +239,7 @@ export const StakingProvider = ({
   // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
-      subscribeToStakingkMetrics(api);
+      subscribeToStakingkMetrics();
     }
     return () => {
       // unsubscribe from staking metrics
@@ -324,13 +312,13 @@ export const StakingProvider = ({
           `${activeAccount}_targets`,
           defaults.targets,
           true
-        )
+        ) as StakingTargets
       );
     }
   }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
   /* Sets an account's stored target validators */
-  const setTargets = (_targets: any) => {
+  const setTargets = (_targets: StakingTargets) => {
     localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(_targets));
     _setTargets(_targets);
     return [];
@@ -351,13 +339,24 @@ export const StakingProvider = ({
    * Helper function to determine whether the controller account
    * has been imported.
    */
-  const getControllerNotImported = (address: string) => {
+  const getControllerNotImported = (address: MaybeAccount) => {
     if (address === null || !activeAccount) {
       return false;
     }
     // check if controller is imported
     const exists = connectAccounts.find((acc: any) => acc.address === address);
-    return !exists;
+    if (exists === undefined) {
+      return true;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(exists, 'addedBy')) {
+      const externalAccount = exists as ExternalAccount;
+      if (externalAccount.addedBy === 'user') {
+        return false;
+      }
+    }
+
+    return !Object.prototype.hasOwnProperty.call(exists, 'signer');
   };
 
   /*
@@ -365,10 +364,11 @@ export const StakingProvider = ({
    * is bonding, or is yet to start.
    */
   const isBonding = () => {
-    if (!hasController()) {
+    if (!hasController() || !activeAccount) {
       return false;
     }
-    const ledger = getAccountLedger(activeAccount);
+
+    const ledger = getLedgerForStash(activeAccount);
     return ledger.active.gt(new BN(0));
   };
 
@@ -377,10 +377,10 @@ export const StakingProvider = ({
    * has funds unlocking.
    */
   const isUnlocking = () => {
-    if (!hasController()) {
+    if (!hasController() || !activeAccount) {
       return false;
     }
-    const ledger = getAccountLedger(activeAccount);
+    const ledger = getLedgerForStash(activeAccount);
     return ledger.unlocking.length;
   };
 
@@ -389,6 +389,9 @@ export const StakingProvider = ({
    * is nominating, or is yet to start.
    */
   const isNominating = () => {
+    if (!activeAccount) {
+      return false;
+    }
     const nominations = getAccountNominations(activeAccount);
     return nominations.length > 0;
   };

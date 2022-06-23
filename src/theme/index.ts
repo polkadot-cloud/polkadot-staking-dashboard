@@ -2,18 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import theme from 'styled-theming';
-import { defaultThemes } from './default';
+import {
+  defaultThemes,
+  cardThemes,
+  networkColors,
+  networkColorsSecondary,
+} from './default';
 
 /* Aggregates all theme configurations and serves the currently
  * active mode via the theming context.
  */
 const v = 'mode';
-
-// main theme colors
-
-export const primary: theme.ThemeSet = theme(v, defaultThemes.primary);
-
-export const secondary: theme.ThemeSet = theme(v, defaultThemes.secondary);
 
 // text colors
 
@@ -27,6 +26,8 @@ export const textSecondary: theme.ThemeSet = theme(
 export const textInvert: theme.ThemeSet = theme(v, defaultThemes.text.invert);
 
 export const textDanger: theme.ThemeSet = theme(v, defaultThemes.text.danger);
+
+export const textSuccess: theme.ThemeSet = theme(v, defaultThemes.text.success);
 
 // background colors
 
@@ -164,4 +165,29 @@ export const assistantButton: theme.ThemeSet = theme(
 export const assistantLink: theme.ThemeSet = theme(
   v,
   defaultThemes.assistant.link
+);
+
+// shadow
+
+export const shadowColor: theme.ThemeSet = theme(v, defaultThemes.shadow);
+
+/* Aggregates all card configurations and serves the currently
+ * active card style via the theming context.
+ */
+const c = 'card';
+
+export const cardBorder: theme.ThemeSet = theme(c, cardThemes.card.border);
+
+export const cardShadow: theme.ThemeSet = theme(c, cardThemes.card.shadow);
+
+/* Serves the currently active network color via the theming context.
+ */
+
+const n = 'network';
+
+export const networkColor: theme.ThemeSet = theme(n, networkColors);
+
+export const networkColorSecondary: theme.ThemeSet = theme(
+  n,
+  networkColorsSecondary
 );

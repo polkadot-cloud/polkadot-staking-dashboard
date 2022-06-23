@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, textPrimary, primary, textSecondary } from 'theme';
+import {
+  backgroundToggle,
+  textPrimary,
+  networkColor,
+  textSecondary,
+} from 'theme';
 
 export const Items = styled.div`
   position: relative;
@@ -19,7 +24,8 @@ export const Items = styled.div`
 
 export const Item = styled.button<any>`
   background: ${backgroundToggle};
-  border: 2px solid ${(props) => (props.selected ? primary : backgroundToggle)};
+  border: 2px solid
+    ${(props) => (props.selected ? networkColor : backgroundToggle)};
   box-sizing: border-box;
   width: 240px;
   height: 120px;
@@ -36,7 +42,7 @@ export const Item = styled.button<any>`
     width: 100%;
   }
   h3 {
-    color: ${(props) => (props.selected ? primary : textPrimary)};
+    color: ${(props) => (props.selected ? networkColor : textPrimary)};
     font-size: 1.2rem;
   }
   &:first-child {

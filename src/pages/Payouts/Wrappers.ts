@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundValidator, textSecondary, primary } from 'theme';
+import { backgroundValidator, textSecondary, networkColor } from 'theme';
 
 export const ItemWrapper = styled(motion.div)<any>`
   padding: 0.5rem;
@@ -28,7 +28,7 @@ export const ItemWrapper = styled(motion.div)<any>`
       color: ${textSecondary};
 
       &.reward {
-        color: ${primary};
+        color: ${networkColor};
       }
     }
 

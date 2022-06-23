@@ -21,7 +21,7 @@ html {
 
 @media(min-width: 1600px) {
   html {
-    font-size: 14px;
+    font-size: 13.5px;
   }
 }
 
@@ -35,7 +35,7 @@ body {
 
 h1 {
   font-weight: normal;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-variation-settings: 'wght' 600;
   margin: 0 0 0.4rem 0;
 }
@@ -95,24 +95,4 @@ button {
   display: flex;
   flex-flow: row wrap;
   align-items: flex-end;
-}
-
-input {
-  border: none;
-  border-bottom: 1px solid #ddd;
-  padding: 0.7rem 0rem;
-  font-size: 1.1rem;
-  background: none;
-  transition: all 0.2s;
-}
-
-input::placeholder {
-  color: #bbb;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-bottom: 1px solid rgba(211, 48, 121, 0.6);
 }

@@ -10,36 +10,45 @@ import { PageRowWrapper } from 'Wrappers';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { StakingContextInterface } from 'types/staking';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();
   const { isSyncing } = useUi();
-  const { getControllerNotImported } = useStaking();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondedAccount }: any = useBalances();
+  const { getControllerNotImported } = useStaking() as StakingContextInterface;
+  const { activeAccount, isReadOnlyAccount } =
+    useConnect() as ConnectContextInterface;
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);
 
   return (
     <>
-      {getControllerNotImported(controller) && !isSyncing && (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
-          <CardWrapper style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}>
-            <CardHeaderWrapper>
-              <h4>
-                You have not imported your Controller account. If you have lost
-                access to your Controller account, set a new one now.
-              </h4>
-            </CardHeaderWrapper>
-            <Button
-              small
-              primary
-              inline
-              title="Set New Controller"
-              onClick={() => openModalWith('UpdateController', {}, 'large')}
-            />
-          </CardWrapper>
-        </PageRowWrapper>
-      )}
+      {getControllerNotImported(controller) &&
+        !isSyncing &&
+        !isReadOnlyAccount(activeAccount) && (
+          <PageRowWrapper className="page-padding" noVerticalSpacer>
+            <CardWrapper
+              style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}
+            >
+              <CardHeaderWrapper>
+                <h4>
+                  You have not imported your controller account. If you have
+                  lost access to your controller account, set a new one now.
+                  Otherwise, import the controller into one of your active
+                  extensions.
+                </h4>
+              </CardHeaderWrapper>
+              <Button
+                small
+                primary
+                inline
+                title="Set New Controller"
+                onClick={() => openModalWith('UpdateController', {}, 'large')}
+              />
+            </CardWrapper>
+          </PageRowWrapper>
+        )}
     </>
   );
 };

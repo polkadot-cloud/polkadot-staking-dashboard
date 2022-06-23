@@ -3,7 +3,6 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
-import { useBalances } from 'contexts/Balances';
 import { planckBnToUnit } from 'Utils';
 import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
@@ -11,10 +10,11 @@ import { Button, ButtonRow } from 'library/Button';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { ActivePoolContextState } from 'types/pools';
 
 export const ManageBond = () => {
   const { network } = useApi() as APIContextInterface;
@@ -22,10 +22,8 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { isSyncing } = useUi();
-  const { getAccountLedger }: any = useBalances();
-  const { getPoolBondOptions, isBonding } = usePools();
-  const ledger = getAccountLedger(activeAccount);
-  const { total }: any = ledger;
+  const { getPoolBondOptions, isBonding } =
+    useActivePool() as ActivePoolContextState;
 
   const {
     active,
@@ -55,7 +53,7 @@ export const ManageBond = () => {
             onClick={() =>
               openModalWith(
                 'UpdateBond',
-                { fn: 'add', target: 'pool' },
+                { fn: 'add', bondType: 'pool' },
                 'small'
               )
             }
@@ -68,7 +66,7 @@ export const ManageBond = () => {
             onClick={() =>
               openModalWith(
                 'UpdateBond',
-                { fn: 'remove', target: 'pool' },
+                { fn: 'remove', bondType: 'pool' },
                 'small'
               )
             }
@@ -81,17 +79,16 @@ export const ManageBond = () => {
             title={String(totalUnlockChuncks ?? 0)}
             disabled={isSyncing || !isBonding()}
             onClick={() =>
-              openModalWith('UnlockChunks', { target: 'pool' }, 'small')
+              openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
             }
           />
         </ButtonRow>
       </CardHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}
-        unlocking={totalUnlocking}
-        unlocked={totalUnlocked}
-        free={freeToBond}
-        total={total.toNumber()}
+        unlocking={planckBnToUnit(totalUnlocking, units)}
+        unlocked={planckBnToUnit(totalUnlocked, units)}
+        free={planckBnToUnit(freeToBond, units)}
         inactive={!isBonding()}
       />
     </>

@@ -14,15 +14,18 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
+import { BalancesContextInterface } from 'types/balances';
+import { Warning } from 'library/Form/Warning';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
 export const UpdateController = () => {
   const { api } = useApi() as APIContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
-  const { accounts, activeAccount, getAccount } =
+  const { accounts, activeAccount, getAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount, isController }: any = useBalances();
+  const { getBondedAccount, isController } =
+    useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
@@ -77,6 +80,11 @@ export const UpdateController = () => {
       <div
         style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
       >
+        <div style={{ marginBottom: '1.5rem' }}>
+          {!accountHasSigner(activeAccount) && (
+            <Warning text="Your stash account is read only and cannot sign transactions." />
+          )}
+        </div>
         <AccountDropdown
           items={accountsList.filter(
             (acc: any) => acc.address !== activeAccount
@@ -99,7 +107,11 @@ export const UpdateController = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={selected === null || submitting}
+              disabled={
+                selected === null ||
+                submitting ||
+                !accountHasSigner(activeAccount)
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"

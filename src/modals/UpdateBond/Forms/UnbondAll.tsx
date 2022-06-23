@@ -11,7 +11,11 @@ import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { usePools } from 'contexts/Pools';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { ActivePoolContextState } from 'types/pools';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { StakingContextInterface } from 'types/staking';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -21,24 +25,32 @@ export const UnbondAll = (props: any) => {
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config }: any = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getControllerNotImported } = useStaking();
-  const { getBondOptions, getBondedAccount, getAccountNominations }: any =
-    useBalances();
-  const { getPoolBondOptions } = usePools();
-  const { target } = config;
+  const { activeAccount, accountHasSigner } =
+    useConnect() as ConnectContextInterface;
+  const { getControllerNotImported } = useStaking() as StakingContextInterface;
+  const { getBondOptions, getBondedAccount, getAccountNominations } =
+    useBalances() as BalancesContextInterface;
+  const { bondType } = config;
+  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
-  const stakeBondOptions = getBondOptions(activeAccount);
+  const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
-  const isStaking = target === 'stake';
-  const isPooling = target === 'pool';
+  const isStaking = bondType === 'stake';
+  const isPooling = bondType === 'pool';
 
-  const { freeToUnbond } = isPooling ? poolBondOptions : stakeBondOptions;
+  const { freeToUnbond: freeToUnbondBn } = isPooling
+    ? poolBondOptions
+    : stakeBondOptions;
+
+  // conver BN values to number
+  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState(freeToUnbond);
+  const [bond, setBond] = useState({
+    bond: freeToUnbond,
+  });
 
   // bond valid
   const [bondValid, setBondValid]: any = useState(false);
@@ -79,7 +91,7 @@ export const UnbondAll = (props: any) => {
       return _tx;
     }
     // remove decimal errors
-    const bondToSubmit = Math.floor(bond.bond * 10 ** units).toString();
+    const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
     // determine _tx
     if (isPooling) {
@@ -90,9 +102,11 @@ export const UnbondAll = (props: any) => {
     return _tx;
   };
 
+  const signingAccount = isPooling ? activeAccount : controller;
+
   const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
     tx: tx(),
-    from: isPooling ? activeAccount : controller,
+    from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
       setModalStatus(0);
@@ -108,6 +122,9 @@ export const UnbondAll = (props: any) => {
     <>
       <div className="items">
         <>
+          {!accountHasSigner(signingAccount) && (
+            <Warning text="Your account is read only, and cannot sign transactions." />
+          )}
           {isStaking && controllerNotImported ? (
             <Warning text="You must have your controller account imported to unbond." />
           ) : (
@@ -136,7 +153,7 @@ export const UnbondAll = (props: any) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid}
+        isValid={bondValid && accountHasSigner(signingAccount)}
       />
     </>
   );

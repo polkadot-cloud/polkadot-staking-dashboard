@@ -50,8 +50,12 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
     if (submitting || !shouldSubmit || !api) {
       return;
     }
-    const accountNonce = await api.rpc.system.accountNextIndex(from);
     const account = getAccount(from);
+    if (account === null) {
+      return;
+    }
+
+    const accountNonce = await api.rpc.system.accountNextIndex(from);
     const { signer, source } = account;
 
     // get extension

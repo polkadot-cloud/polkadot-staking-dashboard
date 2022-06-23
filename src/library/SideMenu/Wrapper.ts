@@ -10,7 +10,7 @@ import {
   highlightPrimary,
   highlightSecondary,
   backgroundOverlay,
-  primary,
+  networkColor,
 } from 'theme';
 
 export const Wrapper = styled.div<any>`
@@ -50,6 +50,7 @@ export const Wrapper = styled.div<any>`
       padding-top: 0.5rem;
 
       button {
+        position: relative;
         color: ${textSecondary};
         transition: color 0.2s;
         margin-right: ${(props) => (props.minimised ? 0 : '0.1rem')};
@@ -77,7 +78,7 @@ export const LogoWrapper = styled(motion.button)<any>`
   margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
 
   ellipse {
-    fill: ${primary};
+    fill: ${networkColor};
   }
 `;
 
@@ -160,6 +161,12 @@ export const MinimisedItemWrapper = styled(motion.div)`
       }
     }
   }
+`;
+
+export const PalettePosition = styled.div`
+  position: absolute;
+  right: 10px;
+  top: -150px;
 `;
 
 export default Wrapper;

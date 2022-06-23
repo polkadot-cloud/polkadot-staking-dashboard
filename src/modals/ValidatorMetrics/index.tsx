@@ -12,12 +12,13 @@ import Identicon from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StatusLabel } from 'library/StatusLabel';
+import { NetworkMetricsContextInterface } from 'types';
 
 export const ValidatorMetrics = () => {
   const { config } = useModal();
   const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
-  const { metrics } = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
 
   const [list, setList] = useState([]);
 
@@ -45,7 +46,15 @@ export const ValidatorMetrics = () => {
         </h1>
       </div>
       <div className="body">
-        <GraphWrapper style={{ margin: '0 0.5rem', height: 275 }} flex>
+        <GraphWrapper
+          style={{
+            margin: '0 0.5rem',
+            height: 275,
+            border: 'none',
+            boxShadow: 'none',
+          }}
+          flex
+        >
           <h4>Recent Era Points</h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel
