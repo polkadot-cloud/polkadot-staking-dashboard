@@ -51,7 +51,7 @@ export const EntryWrapper = styled.div`
     color: ${textPrimary};
   }
   a {
-    color: ${textPrimary};
+    color: ${textSecondary};
   }
   input {
     color: ${textPrimary};
