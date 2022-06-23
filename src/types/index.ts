@@ -38,9 +38,12 @@ export interface NodeEndpoint {
   icon: FunctionComponent<
     SVGProps<SVGSVGElement> & { title?: string | undefined }
   >;
-  logo: FunctionComponent<
-    SVGProps<SVGSVGElement> & { title?: string | undefined }
-  >;
+  logo: {
+    svg: FunctionComponent<
+      SVGProps<SVGSVGElement> & { title?: string | undefined }
+    >;
+    width: string;
+  };
   api: {
     unit: string;
     priceTicker: string;

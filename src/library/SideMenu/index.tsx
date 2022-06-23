@@ -143,8 +143,12 @@ export const SideMenu = () => {
           {sideMenuMinimised ? (
             <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
           ) : (
-            <network.logo
-              style={{ maxHeight: '100%', height: '100%', width: '7rem' }}
+            <network.logo.svg
+              style={{
+                maxHeight: '100%',
+                height: '100%',
+                width: network.logo.width,
+              }}
             />
           )}
         </LogoWrapper>

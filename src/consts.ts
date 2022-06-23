@@ -55,7 +55,10 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
     units: 10,
     ss58: 0,
     icon: PolkadotIconSVG,
-    logo: PolkadotLogoSVG,
+    logo: {
+      svg: PolkadotLogoSVG,
+      width: '8.5rem',
+    },
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
@@ -82,7 +85,10 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
     units: 12,
     ss58: 2,
     icon: KusamaIconSVG,
-    logo: KusamaLogoSVG,
+    logo: {
+      svg: KusamaLogoSVG,
+      width: '7rem',
+    },
     api: {
       unit: 'KSM',
       priceTicker: 'KSMUSDT',
@@ -109,7 +115,10 @@ export const NODE_ENDPOINTS: NodeEndpoints = {
     units: 12,
     ss58: 42,
     icon: WestendIconSVG,
-    logo: WestendLogoSVG,
+    logo: {
+      svg: WestendLogoSVG,
+      width: '8rem',
+    },
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
