@@ -36,12 +36,12 @@ export interface ValidatorsContextState {
 // context definition
 export const ValidatorsContext: React.Context<ValidatorsContextState> =
   React.createContext({
-    fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => {},
-    removeValidatorMetaBatch: (k: string) => {},
-    fetchValidatorPrefs: (v: any) => {},
-    addFavourite: (a: string) => {},
-    removeFavourite: (a: string) => {},
-    getMinRewardBond: (v: any) => {},
+    fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => { },
+    removeValidatorMetaBatch: (k: string) => { },
+    fetchValidatorPrefs: (v: any) => { },
+    addFavourite: (a: string) => { },
+    removeFavourite: (a: string) => { },
+    getMinRewardBond: (v: any) => { },
     validators: [],
     meta: {},
     session: [],
@@ -469,8 +469,8 @@ export const ValidatorsProvider = ({
           const lowestActive =
             others.length > 0
               ? new BN(rmCommas(others[0].value))
-                  .div(new BN(10 ** network.units))
-                  .toNumber()
+                .div(new BN(10 ** network.units))
+                .toNumber()
               : 0;
 
           // get the lowest reward stake of the validator, which is
@@ -484,8 +484,8 @@ export const ValidatorsProvider = ({
           const lowestReward =
             others.length > 0
               ? new BN(rmCommas(others[lowestRewardIndex]?.value))
-                  .div(new BN(10 ** network.units))
-                  .toNumber()
+                .div(new BN(10 ** network.units))
+                .toNumber()
               : 0;
 
           stake.push({

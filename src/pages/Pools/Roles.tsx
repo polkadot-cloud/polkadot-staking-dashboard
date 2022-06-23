@@ -22,7 +22,7 @@ export const Roles = () => {
   const activePool = activeBondedPool;
   const { roles } = activePool || {};
 
-  const batchKey = BatchKeys.new('pool_roles');
+  const batchKey = 'pool_roles';
 
   const _accounts: Array<string> = [
     roles.root,

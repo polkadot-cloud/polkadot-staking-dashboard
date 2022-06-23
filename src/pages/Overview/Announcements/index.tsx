@@ -54,7 +54,7 @@ export const Announcements = () => {
     );
   }
 
-  const minNominatorBondBase = minNominatorBond.div(new BN(10 ** units));
+  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
 
   const announcements = [];
 

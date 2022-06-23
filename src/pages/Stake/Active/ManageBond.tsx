@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, humanNumber } from 'Utils';
 import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -46,7 +46,7 @@ export const ManageBond = () => {
           <OpenAssistantIcon page="stake" title="Bonding" />
         </h4>
         <h2>
-          {planckBnToUnit(active, units)}&nbsp;{network.unit}
+          {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
         </h2>
         <ButtonRow>
           <Button
