@@ -16,6 +16,7 @@ import { useApi } from 'contexts/Api';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { APIContextInterface } from 'types/api';
+import { humanNumber } from 'Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -76,7 +77,7 @@ export const PayoutLine = (props: any) => {
             return [];
           },
           label: (context: any) => {
-            return `${context.parsed.y} ${network.unit}`;
+            return `${humanNumber(context.parsed.y)} ${network.unit}`;
           },
         },
         intersect: false,
