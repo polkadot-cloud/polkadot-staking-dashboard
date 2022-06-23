@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { rmCommas } from 'Utils';
+import { rmCommas, planckBnToUnit } from 'Utils';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
@@ -59,9 +59,7 @@ ctx.addEventListener('message', (event: any) => {
       if (own !== undefined) {
         ownStake.push({
           address,
-          value: new BN(rmCommas(own.value))
-            .div(new BN(10 ** units))
-            .toString(),
+          value: planckBnToUnit(new BN(rmCommas(own.value)), units),
         });
       }
     }
@@ -76,7 +74,7 @@ ctx.addEventListener('message', (event: any) => {
   let minActiveBond = _getMinBonds[0]?.value ?? new BN(0);
 
   // convert minActiveBond to base value
-  minActiveBond = minActiveBond.div(new BN(10 ** units)).toNumber();
+  minActiveBond = planckBnToUnit(minActiveBond, units);
 
   postMessage({
     stakers,

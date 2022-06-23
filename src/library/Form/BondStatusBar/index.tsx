@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -11,6 +10,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
 import { APIContextInterface } from 'types/api';
 import { StakingContextInterface } from 'types/staking';
+import { planckBnToUnit } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const BondStatusBar = (props: any) => {
@@ -23,10 +23,7 @@ export const BondStatusBar = (props: any) => {
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
 
-  const minNominatorBondBase = minNominatorBond
-    .div(new BN(10 ** units))
-    .toNumber();
-
+  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
   const gtMinNominatorBond = value >= minNominatorBondBase;
   const gtMinActiveBond = value >= minActiveBond;
 
