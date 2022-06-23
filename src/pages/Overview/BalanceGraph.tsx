@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { usdFormatter, planckBnToUnit } from 'Utils';
+import { usdFormatter, planckBnToUnit, humanNumber } from 'Utils';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import {
   defaultThemes,
@@ -171,7 +171,8 @@ export const BalanceGraph = () => {
           <OpenAssistantIcon page="overview" title="Your Balance" />
         </h4>
         <h2>
-          <span className="amount">{freeBase}</span>&nbsp;{network.unit}
+          <span className="amount">{humanNumber(freeBase)}</span>&nbsp;
+          {network.unit}
           <span className="fiat">
             {services.includes('binance_spot') && (
               <>&nbsp;{usdFormatter.format(Number(freeBalance))}</>
