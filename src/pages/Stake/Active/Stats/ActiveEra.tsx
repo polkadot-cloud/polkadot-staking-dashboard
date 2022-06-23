@@ -27,7 +27,7 @@ const ActiveEraStatBox = () => {
       value1: sessionEra.eraProgress,
       value2: sessionEra.eraLength - sessionEra.eraProgress,
     },
-    tooltip: timeleft,
+    tooltip: metrics.activeEra.index === 0 ? undefined : timeleft,
     assistant: {
       page: 'validators',
       key: 'Era',
