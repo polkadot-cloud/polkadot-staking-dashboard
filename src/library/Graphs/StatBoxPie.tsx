@@ -5,10 +5,11 @@ import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
+import { StatPieProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip);
 
-export const StatPie = (props: any) => {
+export const StatPie = (props: StatPieProps) => {
   let { value, value2 } = props;
 
   // format zero value graph

@@ -1,0 +1,12 @@
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+export interface PoolListProps {
+  allowMoreCols?: string;
+  pagination?: number;
+  batchKey?: string;
+  disableThrottle?: boolean;
+  refetchOnListUpdate?: string;
+  pools?: any;
+  title?: string;
+}

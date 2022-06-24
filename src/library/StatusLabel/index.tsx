@@ -7,8 +7,9 @@ import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { StakingContextInterface } from 'types/staking';
 import { Wrapper } from './Wrapper';
+import { StatusLabelProps } from './types';
 
-export const StatusLabel = (props: any) => {
+export const StatusLabel = (props: StatusLabelProps) => {
   const status = props.status ?? 'sync_or_setup';
   const statusFor = props.statusFor ?? false;
 

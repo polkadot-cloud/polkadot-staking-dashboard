@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { useValidators } from 'contexts/Validators';
 import { useNotifications } from 'contexts/Notifications';
+import { FavouriteProps } from '../types';
 
-export const Favourite = (props: any) => {
+export const Favourite = (props: FavouriteProps) => {
   const { addNotification } = useNotifications();
   const { favourites, addFavourite, removeFavourite } = useValidators();
   const { address } = props;

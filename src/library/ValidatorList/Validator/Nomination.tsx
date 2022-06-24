@@ -13,8 +13,9 @@ import { Oversubscribed } from './Labels/Oversubscribed';
 import { Blocked } from './Labels/Blocked';
 import { Select } from './Labels/Select';
 import { NominationStatus } from './Labels/NominationStatus';
+import { NominationProps } from './types';
 
-export const Nomination = (props: any) => {
+export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();
   const { selectActive } = useValidatorList();
 

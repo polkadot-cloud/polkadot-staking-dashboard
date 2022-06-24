@@ -3,8 +3,9 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { PageTitleWrapper, MenuPaddingWrapper } from 'Wrappers';
+import { PageTitleProps } from './types';
 
-export const PageTitle = (props: any) => {
+export const PageTitle = (props: PageTitleProps) => {
   const { title } = props;
   const tabs = props.tabs ?? [];
 

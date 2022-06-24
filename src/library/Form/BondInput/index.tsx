@@ -9,8 +9,9 @@ import { Button } from 'library/Button';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { InputWrapper, RowWrapper } from './Wrappers';
+import { BondInputProps } from '../types';
 
-export const BondInput = (props: any) => {
+export const BondInput = (props: BondInputProps) => {
   // functional props
   const setters = props.setters ?? [];
 

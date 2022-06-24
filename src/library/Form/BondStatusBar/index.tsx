@@ -12,8 +12,9 @@ import { APIContextInterface } from 'types/api';
 import { StakingContextInterface } from 'types/staking';
 import { planckBnToUnit } from 'Utils';
 import { Wrapper } from './Wrapper';
+import { BondStatusBarProps } from '../types';
 
-export const BondStatusBar = (props: any) => {
+export const BondStatusBar = (props: BondStatusBarProps) => {
   const { value } = props;
 
   const { network } = useApi() as APIContextInterface;

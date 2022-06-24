@@ -4,8 +4,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
+import { MetricsProps } from '../types';
 
-export const Metrics = (props: any) => {
+export const Metrics = (props: MetricsProps) => {
   const { openModalWith } = useModal();
 
   const { display, address } = props;

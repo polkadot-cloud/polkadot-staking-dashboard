@@ -20,8 +20,9 @@ import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
 import _ from 'window-or-global';
 import { Wrapper } from './Wrapper';
+import { PoolProps } from './types';
 
-export const Pool = (props: any) => {
+export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
   const { openModalWith } = useModal();

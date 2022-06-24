@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useCombobox } from 'downshift';
+import { useCombobox, UseComboboxStateChange } from 'downshift';
 import Identicon from 'library/Identicon';
 import { clipAddress, convertRemToPixels } from 'Utils';
 import { useTheme } from 'contexts/Themes';
@@ -13,27 +13,33 @@ import { StatusLabel } from 'library/StatusLabel';
 import { APIContextInterface } from 'types/api';
 import { useApi } from 'contexts/Api';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
+import { AccountSelectProps, InputItem } from '../types';
 
-export const AccountSelect = (props: any) => {
-  const { items, onChange, placeholder, value }: any = props;
+export const AccountSelect = (props: AccountSelectProps) => {
+  const { items, onChange, placeholder, value } = props;
 
-  const [inputItems, setInputItems] = useState(items);
+  const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
 
   useEffect(() => {
     setInputItems(items);
   }, [items]);
 
-  const itemToString = (item: any) => (item ? item.name : '');
+  const itemToString = (item: InputItem) => {
+    const name = item?.name ?? '';
+    return name;
+  };
 
-  const c: any = useCombobox({
+  const c = useCombobox({
     items: inputItems,
     itemToString,
     onSelectedItemChange: onChange,
     initialSelectedItem: value,
-    onInputValueChange: ({ inputValue }: any) => {
+    onInputValueChange: ({ inputValue }: UseComboboxStateChange<InputItem>) => {
       setInputItems(
-        items.filter((item: any) =>
-          item.name.toLowerCase().startsWith(inputValue.toLowerCase())
+        items.filter((item: InputItem) =>
+          inputValue
+            ? item?.name?.toLowerCase().startsWith(inputValue?.toLowerCase())
+            : true
         )
       );
     },
@@ -55,14 +61,14 @@ export const AccountSelect = (props: any) => {
 
           {c.selectedItem && (
             <StyledController
-              onClick={() => c.selectItem(null)}
+              onClick={() => c.reset()}
               aria-label="clear selection"
             >
               <FontAwesomeIcon transform="grow-2" icon={faTimes} />
             </StyledController>
           )}
           <StyledSelect {...c.getMenuProps()}>
-            {inputItems.map((item: any, index: number) => (
+            {inputItems.map((item: InputItem, index: number) => (
               <DropdownItem
                 key={`controller_acc_${index}`}
                 c={c}

@@ -9,8 +9,9 @@ import { defaultThemes } from 'theme/default';
 import { useTheme } from 'styled-components';
 import { useValidatorList } from '../../context';
 import { SelectWrapper } from '../Wrappers';
+import { SelectProps } from '../types';
 
-export const Select = (props: any) => {
+export const Select = (props: SelectProps) => {
   const { validator } = props;
 
   const { mode }: any = useTheme();

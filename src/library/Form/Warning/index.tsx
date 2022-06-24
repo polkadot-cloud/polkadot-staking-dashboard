@@ -4,8 +4,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper } from './Wrapper';
+import { WarningProps } from '../types';
 
-export const Warning = (props: any) => {
+export const Warning = (props: WarningProps) => {
   const { text } = props;
 
   return (
