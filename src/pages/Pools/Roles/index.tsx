@@ -23,7 +23,7 @@ import { PoolAccount } from '../PoolAccount';
 import { RolesWrapper } from '../ManagePool/Wrappers';
 import RoleEditInput from './RoleEditInput';
 
-type RoleEdit = {
+export type RoleEdit = {
   oldAddress: string;
   newAddress: string;
   valid: boolean;
@@ -89,7 +89,7 @@ export const Roles = () => {
   }, [isReady, fetched]);
 
   const saveHandler = () => {
-    openModalWith('ChangePoolRoles', { roleEdits }, 'large');
+    openModalWith('ChangePoolRoles', { roleEdits }, 'small');
     setIsEditing(false);
   };
   const editHandler = () => {
