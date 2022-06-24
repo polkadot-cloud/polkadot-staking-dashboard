@@ -6,7 +6,7 @@ import BN from 'bn.js';
 
 export interface AccountDropdownProps {
   items: Array<WalletAccount>;
-  onChange: (o:any) => void;
+  onChange: (o: any) => void;
   placeholder: string;
   value: any; // WalletAccount
   current: WalletAccount | null;
@@ -17,7 +17,7 @@ export interface AccountSelectProps {
   items: Array<WalletAccount>;
   onChange: (string: any) => void;
   placeholder: string;
-  value: any; // WalletAccount
+  value: WalletAccount;
 }
 
 export interface BondInputProps {
