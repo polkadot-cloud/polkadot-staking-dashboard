@@ -98,9 +98,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         _services.splice(index, 1);
       }
     }
-    if (!DISABLE_FIAT && !_services.includes('binance_spot')) {
-      _services.push('binance_spot');
-    }
     return _services;
   };
 
