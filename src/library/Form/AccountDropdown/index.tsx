@@ -12,8 +12,9 @@ import Identicon from 'library/Identicon';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
+import { AccountDropdownProps } from '../types';
 
-export const AccountDropdown = (props: any) => {
+export const AccountDropdown = (props: AccountDropdownProps) => {
   const { items, onChange, placeholder, value, current, height }: any = props;
 
   const itemToString = (item: any) => (item ? item.name : '');

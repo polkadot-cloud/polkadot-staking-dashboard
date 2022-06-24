@@ -17,8 +17,9 @@ import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
 import { NetworkMetricsContextInterface } from 'types';
 import { PoolListProvider, usePoolList } from './context';
+import { PoolListInnerProps } from './types';
 
-export const PoolListInner = (props: any) => {
+export const PoolListInner = (props: PoolListInnerProps) => {
   const { allowMoreCols, pagination, batchKey }: any = props;
   const disableThrottle = props.disableThrottle ?? false;
   const refetchOnListUpdate =

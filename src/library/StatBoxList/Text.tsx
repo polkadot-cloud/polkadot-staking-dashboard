@@ -3,8 +3,9 @@
 
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { StatBox } from './Item';
+import { TextProps } from './types';
 
-export const Text = (props: any) => {
+export const Text = (props: TextProps) => {
   const { label, value, assistant } = props;
 
   const assist = assistant !== undefined;

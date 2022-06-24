@@ -10,8 +10,9 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
+import { DropdownProps } from '../types';
 
-export const Dropdown = (props: any) => {
+export const Dropdown = (props: DropdownProps) => {
   const { items, onChange, label, placeholder, value, current }: any = props;
 
   const [inputItems, setInputItems] = useState(items);

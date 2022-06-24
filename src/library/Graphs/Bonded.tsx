@@ -9,10 +9,11 @@ import { useTheme } from 'contexts/Themes';
 import { APIContextInterface } from 'types/api';
 import { humanNumber } from 'Utils';
 import { GraphWrapper } from './Wrappers';
+import { BondedProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const Bonded = (props: any) => {
+export const Bonded = (props: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
 

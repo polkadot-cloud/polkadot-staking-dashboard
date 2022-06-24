@@ -6,8 +6,9 @@ import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
 import { IdentityWrapper } from '../Wrappers';
 import { getIdentityDisplay } from '../Utils';
+import { IdentityProps } from '../types';
 
-export const Identity = (props: any) => {
+export const Identity = (props: IdentityProps) => {
   const { meta } = useValidators();
 
   const { validator, batchIndex, batchKey } = props;

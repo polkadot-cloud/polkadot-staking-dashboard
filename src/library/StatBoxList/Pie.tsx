@@ -5,8 +5,9 @@ import NumberEasing from 'che-react-number-easing';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
+import { PieProps } from './types';
 
-export const Pie = (props: any) => {
+export const Pie = (props: PieProps) => {
   const { label, stat, graph, tooltip, assistant } = props;
   const assist = assistant !== undefined;
   const page = assistant?.page ?? '';

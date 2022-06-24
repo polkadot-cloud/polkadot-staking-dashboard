@@ -15,8 +15,9 @@ import { BondedPoolsContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
+import { PoolAccountProps } from './types';
 
-export const PoolAccount = (props: any) => {
+export const PoolAccount = (props: PoolAccountProps) => {
   const { mode } = useTheme();
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
