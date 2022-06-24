@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export interface PoolListInnerProps {
+export interface PoolListProps {
   allowMoreCols?: string;
   pagination?: number;
   batchKey?: string;
