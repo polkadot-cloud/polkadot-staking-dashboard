@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
@@ -72,9 +72,10 @@ export const Announcements = () => {
   if (nominatorReachedPercentage.toNumber() >= 90) {
     announcements.push({
       class: 'warning',
-      title: `${nominatorReachedPercentage
-        .toNumber()
-        .toFixed(2)}% of Nominator Limit Reached.`,
+      title: `${toFixedIfNecessary(
+        nominatorReachedPercentage.toNumber(),
+        2
+      )}% of Nominator Limit Reached.`,
       subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(
         maxNominatorsCount.toNumber()
       )}.`,

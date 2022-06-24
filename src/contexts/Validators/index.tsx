@@ -9,6 +9,7 @@ import {
   rmCommas,
   setStateWithRef,
   planckBnToUnit,
+  toFixedIfNecessary,
 } from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
@@ -476,10 +477,10 @@ export const ValidatorsProvider = ({
 
           const lowestActive =
             others.length > 0
-              ? planckBnToUnit(
-                  new BN(rmCommas(others[0].value)),
-                  units
-                ).toFixed(MIN_BOND_PRECISION)
+              ? toFixedIfNecessary(
+                  planckBnToUnit(new BN(rmCommas(others[0].value)), units),
+                  MIN_BOND_PRECISION
+                )
               : 0;
 
           // get the lowest reward stake of the validator, which is
@@ -492,10 +493,13 @@ export const ValidatorsProvider = ({
 
           const lowestReward =
             others.length > 0
-              ? planckBnToUnit(
-                  new BN(rmCommas(others[lowestRewardIndex]?.value)),
-                  units
-                ).toFixed(MIN_BOND_PRECISION)
+              ? toFixedIfNecessary(
+                  planckBnToUnit(
+                    new BN(rmCommas(others[lowestRewardIndex]?.value)),
+                    units
+                  ),
+                  MIN_BOND_PRECISION
+                )
               : 0;
 
           stake.push({

@@ -9,7 +9,12 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { usdFormatter, planckBnToUnit, humanNumber } from 'Utils';
+import {
+  usdFormatter,
+  planckBnToUnit,
+  humanNumber,
+  toFixedIfNecessary,
+} from 'Utils';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import {
   defaultThemes,
@@ -56,7 +61,10 @@ export const BalanceGraph = () => {
   const freeBase = planckBnToUnit(free, units);
 
   // convert balance to fiat value
-  const freeBalance = Number(freeBase * prices.lastPrice).toFixed(2);
+  const freeBalance = toFixedIfNecessary(
+    Number(freeBase * prices.lastPrice),
+    2
+  );
 
   // graph data
   let graphStaked = planckBnToUnit(staked, units);
