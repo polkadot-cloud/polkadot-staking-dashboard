@@ -47,6 +47,9 @@ export const Summary = styled.div`
     }
   }
 
+  a {
+    opacity: 0.75;
+  }
   p {
     margin: 0 0.25rem;
     font-size: 0.85rem;

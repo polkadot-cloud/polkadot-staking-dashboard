@@ -16,7 +16,6 @@ import {
   Separator,
 } from './Wrappers';
 import { BlockNumber } from './BlockNumber';
-import { Status } from './Status';
 
 export const NetworkBar = () => {
   const { services } = useUi();
@@ -70,11 +69,15 @@ export const NetworkBar = () => {
       <Summary>
         <section>
           <network.icon className="network_icon" />
-          <div className="hide-small">
-            <p>{network.name}</p>
-            <Separator />
-            <Status />
-          </div>
+          &copy; Web3 Foundation
+          <Separator />
+          <a
+            href="https://polkadot.network/privacy/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Privacy
+          </a>
         </section>
         <section>
           <button
@@ -90,24 +93,30 @@ export const NetworkBar = () => {
             {status === ConnectionStatus.Connected && <BlockNumber />}
             <ConnectionSymbol color={symbolColor} />
           </div>
-          {services.includes('binance_spot') && (
-            <>
-              <Separator />
-              <div className="stat">
-                <span
-                  className={`change${
-                    prices.change < 0 ? ' neg' : prices.change > 0 ? ' pos' : ''
-                  }`}
-                >
-                  {prices.change < 0 ? '' : prices.change > 0 ? '+' : ''}
-                  {prices.change}%
-                </span>
-              </div>
-              <div className="stat">
-                1 {network.api.unit} / {prices.lastPrice} USD
-              </div>
-            </>
-          )}
+          <div className="hide-small">
+            {services.includes('binance_spot') && (
+              <>
+                <div className="stat">
+                  <span
+                    className={`change${
+                      prices.change < 0
+                        ? ' neg'
+                        : prices.change > 0
+                        ? ' pos'
+                        : ''
+                    }`}
+                  >
+                    {prices.change < 0 ? '' : prices.change > 0 ? '+' : ''}
+                    {prices.change}%
+                  </span>
+                </div>
+                <div className="stat">
+                  1 {network.api.unit} / {prices.lastPrice} USD
+                </div>
+                <Separator />
+              </>
+            )}
+          </div>
         </section>
       </Summary>
 

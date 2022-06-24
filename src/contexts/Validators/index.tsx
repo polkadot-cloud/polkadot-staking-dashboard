@@ -3,12 +3,19 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { sleep, removePercentage, rmCommas, setStateWithRef } from 'Utils';
+import {
+  sleep,
+  removePercentage,
+  rmCommas,
+  setStateWithRef,
+  planckBnToUnit,
+} from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
 import { NetworkMetricsContextInterface } from 'types';
+import { MIN_BOND_PRECISION } from 'consts';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -65,6 +72,7 @@ export const ValidatorsProvider = ({
   const { accounts, getAccountNominations } =
     useBalances() as BalancesContextInterface;
   const { poolNominations } = useActivePool() as ActivePoolContextState;
+  const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
 
   // stores the total validator entries
@@ -468,9 +476,10 @@ export const ValidatorsProvider = ({
 
           const lowestActive =
             others.length > 0
-              ? new BN(rmCommas(others[0].value))
-                .div(new BN(10 ** network.units))
-                .toNumber()
+              ? planckBnToUnit(
+                new BN(rmCommas(others[0].value)),
+                units
+              ).toFixed(MIN_BOND_PRECISION)
               : 0;
 
           // get the lowest reward stake of the validator, which is
@@ -483,9 +492,10 @@ export const ValidatorsProvider = ({
 
           const lowestReward =
             others.length > 0
-              ? new BN(rmCommas(others[lowestRewardIndex]?.value))
-                .div(new BN(10 ** network.units))
-                .toNumber()
+              ? planckBnToUnit(
+                new BN(rmCommas(others[lowestRewardIndex]?.value)),
+                units
+              ).toFixed(MIN_BOND_PRECISION)
               : 0;
 
           stake.push({

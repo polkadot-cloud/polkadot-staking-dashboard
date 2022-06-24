@@ -105,7 +105,7 @@ export const BalanceGraph = () => {
         bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           label: (context: any) => {
-            return `${context.label}: ${context.parsed === -1 ? 0 : context.parsed
+            return `${context.label}: ${context.parsed === -1 ? 0 : humanNumber(context.parsed)
               } ${network.unit}`;
           },
         },
