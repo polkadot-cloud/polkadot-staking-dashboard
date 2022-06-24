@@ -10,21 +10,24 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
-import { DropdownProps } from '../types';
+import { DropdownProps, DropdownInput } from '../types';
 
 export const Dropdown = (props: DropdownProps) => {
-  const { items, onChange, label, placeholder, value, current }: any = props;
+  const { items, onChange, label, placeholder, value, current } = props;
 
-  const [inputItems, setInputItems] = useState(items);
+  const [inputItems, setInputItems] = useState<Array<DropdownInput>>(items);
 
-  const itemToString = (item: any) => item?.name ?? '';
+  const itemToString = (item: DropdownInput | null) => {
+    const name = item?.name ?? '';
+    return name;
+  };
 
-  const c: any = useCombobox({
+  const c = useCombobox({
     items: inputItems,
     itemToString,
     onSelectedItemChange: onChange,
     initialSelectedItem: value,
-    onInputValueChange: ({ inputValue }: any) => {
+    onInputValueChange: () => {
       setInputItems(items);
     },
   });
@@ -57,7 +60,7 @@ export const Dropdown = (props: DropdownProps) => {
 
           <StyledDropdown {...c.getMenuProps()}>
             <div className="items">
-              {inputItems.map((item: any, index: number) => (
+              {inputItems.map((item: DropdownInput, index: number) => (
                 <DropdownItem
                   key={`controller_acc_${index}`}
                   c={c}

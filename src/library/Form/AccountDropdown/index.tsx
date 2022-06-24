@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
-import { useCombobox } from 'downshift';
+import { useCombobox, UseComboboxStateChange } from 'downshift';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes, networkColors } from 'theme/default';
 import { convertRemToPixels } from 'Utils';
@@ -12,25 +12,30 @@ import Identicon from 'library/Identicon';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
-import { AccountDropdownProps } from '../types';
+import { AccountDropdownProps, InputItem } from '../types';
 
 export const AccountDropdown = (props: AccountDropdownProps) => {
-  const { items, onChange, placeholder, value, current, height }: any = props;
+  const { items, onChange, placeholder, value, current, height } = props;
 
-  const itemToString = (item: any) => (item ? item.name : '');
+  const itemToString = (item: InputItem) => {
+    const name = item?.name ?? '';
+    return name;
+  };
 
   // store input items
-  const [inputItems, setInputItems] = useState(items);
+  const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
 
-  const c: any = useCombobox({
+  const c = useCombobox({
     items: inputItems,
     itemToString,
     onSelectedItemChange: onChange,
     initialSelectedItem: value,
-    onInputValueChange: ({ inputValue }: any) => {
+    onInputValueChange: ({ inputValue }: UseComboboxStateChange<InputItem>) => {
       setInputItems(
-        items.filter((item: any) =>
-          item.name.toLowerCase().startsWith(inputValue.toLowerCase())
+        items.filter((item: InputItem) =>
+          inputValue
+            ? item?.name?.toLowerCase().startsWith(inputValue?.toLowerCase())
+            : true
         )
       );
     },
@@ -75,14 +80,14 @@ export const AccountDropdown = (props: AccountDropdownProps) => {
             <div className="items">
               {c.selectedItem && (
                 <StyledController
-                  onClick={() => c.selectItem(null)}
+                  onClick={() => c.reset()}
                   aria-label="clear selection"
                 >
                   <FontAwesomeIcon transform="grow-2" icon={faTimes} />
                 </StyledController>
               )}
 
-              {inputItems.map((item: any, index: number) => (
+              {inputItems.map((item: InputItem, index: number) => (
                 <DropdownItem
                   key={`controller_acc_${index}`}
                   c={c}

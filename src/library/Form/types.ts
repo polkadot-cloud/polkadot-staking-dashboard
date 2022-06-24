@@ -1,32 +1,35 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { WalletAccount } from '@talisman-connect/wallets';
+import { ImportedAccount } from 'types/connect';
+
+export type InputItem = ImportedAccount | null;
+
+export interface DropdownInput {
+  key: string;
+  name: string;
+}
 
 export interface AccountDropdownProps {
-  items: Array<WalletAccount>;
+  items: Array<InputItem>;
   onChange: (o: any) => void;
   placeholder: string;
-  value: WalletAccount; // WalletAccount
-  current: WalletAccount | null;
+  value: InputItem;
+  current: InputItem;
   height: string | number | undefined;
 }
 
 export interface AccountSelectProps {
-  items: Array<WalletAccount>;
-  onChange: (string: any) => void;
+  items: Array<ImportedAccount>;
+  onChange: (o: any) => void;
   placeholder: string;
-  value: WalletAccount;
+  value: InputItem;
 }
 
 export interface BondInputProps {
-  // setters: Array<{
-  //   fn: () => void;
-  //   val: T;
-  // }>;
   setters: any;
-  task: string;
   value: any;
+  task: string;
   defaultValue: number;
   disabled: boolean;
   freeToBond: number;
@@ -34,11 +37,11 @@ export interface BondInputProps {
 }
 
 export interface BondInputWithFeedbackProps {
+  setters: any;
   bondType: string;
   defaultBond: number;
   unbond: boolean;
   nominating?: boolean;
-  setters: any;
   listenIsValid: boolean;
   warnings?: Array<string>;
 }
@@ -48,12 +51,12 @@ export interface BondStatusBarProps {
 }
 
 export interface DropdownProps {
-  items: Array<any>;
-  onChange: (string: any) => void;
+  items: Array<DropdownInput>;
+  onChange: (o: any) => void;
   label?: string;
   placeholder: string;
-  value: number;
-  current: number;
+  value: DropdownInput;
+  current: DropdownInput;
   height: string;
 }
 
