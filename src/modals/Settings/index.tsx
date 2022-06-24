@@ -9,7 +9,7 @@ export const Settings = () => {
   const { services, toggleService } = useUi();
 
   // fetch flag to disable fiat
-  const REACT_APP_DISABLE_FIAT = process.env.REACT_APP_DISABLE_FIAT ?? false;
+  const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT) ?? 0;
 
   return (
     <PaddingWrapper>
@@ -21,7 +21,7 @@ export const Settings = () => {
           toggleService('subscan');
         }}
       />
-      {!REACT_APP_DISABLE_FIAT && (
+      {!DISABLE_FIAT && (
         <StatusButton
           checked={services.includes('binance_spot')}
           label="Binance Spot API"

@@ -88,17 +88,20 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // get initial services
   const getAvailableServices = () => {
     // get services config from local storage
-    const services: any = localStorageOrDefault('services', SERVICES, true);
+    const _services: any = localStorageOrDefault('services', SERVICES, true);
 
     // if fiat is disabled, remove binance_spot service
-    const REACT_APP_DISABLE_FIAT = process.env.REACT_APP_DISABLE_FIAT ?? false;
-    if (REACT_APP_DISABLE_FIAT && services.includes('binance_spot')) {
-      const index = services.indexOf('binance_spot');
+    const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT) ?? 0;
+    if (DISABLE_FIAT && _services.includes('binance_spot')) {
+      const index = _services.indexOf('binance_spot');
       if (index !== -1) {
-        services.splice(index, 1);
+        _services.splice(index, 1);
       }
     }
-    return services;
+    if (!DISABLE_FIAT && !_services.includes('binance_spot')) {
+      _services.push('binance_spot');
+    }
+    return _services;
   };
 
   // get side menu minimised state from local storage, default to not
