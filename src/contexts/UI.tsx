@@ -62,7 +62,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
-  services: SERVICES,
+  services: [],
   validatorFilters: [],
   validatorOrder: 'default',
   onSetup: 0,
@@ -85,8 +85,21 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);
 
-  // get services config from local storage
-  const servicesLocal: any = localStorageOrDefault('services', SERVICES, true);
+  // get initial services
+  const getAvailableServices = () => {
+    // get services config from local storage
+    const services: any = localStorageOrDefault('services', SERVICES, true);
+
+    // if fiat is disabled, remove binance_spot service
+    const REACT_APP_DISABLE_FIAT = process.env.REACT_APP_DISABLE_FIAT ?? false;
+    if (REACT_APP_DISABLE_FIAT && services.includes('binance_spot')) {
+      const index = services.indexOf('binance_spot');
+      if (index !== -1) {
+        services.splice(index, 1);
+      }
+    }
+    return services;
+  };
 
   // get side menu minimised state from local storage, default to not
   const _userSideMenuMinimised: any = Number(
@@ -117,7 +130,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [onSetup, setOnSetup] = useState(0);
 
   // services
-  const [services, setServices] = useState(servicesLocal);
+  const [services, setServices] = useState(getAvailableServices());
   const servicesRef = useRef(services);
 
   // validator filtering

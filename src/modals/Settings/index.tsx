@@ -8,6 +8,9 @@ import { PaddingWrapper } from '../Wrappers';
 export const Settings = () => {
   const { services, toggleService } = useUi();
 
+  // fetch flag to disable fiat
+  const REACT_APP_DISABLE_FIAT = process.env.REACT_APP_DISABLE_FIAT ?? false;
+
   return (
     <PaddingWrapper>
       <h2>Toggle Services</h2>
@@ -18,13 +21,15 @@ export const Settings = () => {
           toggleService('subscan');
         }}
       />
-      <StatusButton
-        checked={services.includes('binance_spot')}
-        label="Binance Spot API"
-        onClick={() => {
-          toggleService('binance_spot');
-        }}
-      />
+      {!REACT_APP_DISABLE_FIAT && (
+        <StatusButton
+          checked={services.includes('binance_spot')}
+          label="Binance Spot API"
+          onClick={() => {
+            toggleService('binance_spot');
+          }}
+        />
+      )}
     </PaddingWrapper>
   );
 };
