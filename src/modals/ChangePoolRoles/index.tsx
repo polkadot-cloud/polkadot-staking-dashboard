@@ -7,8 +7,6 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
-import { AccountDropdown } from 'library/Form/AccountDropdown';
-import { useBalances } from 'contexts/Balances';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';

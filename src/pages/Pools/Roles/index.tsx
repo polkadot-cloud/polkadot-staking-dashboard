@@ -93,13 +93,12 @@ export const Roles = () => {
     setIsEditing(false);
   };
   const editHandler = () => {
-    console.log('edit');
+    setRoleEdits(initEditState);
     setIsEditing(true);
   };
   const cancelHandler = () => {
-    console.log('cancel');
-    setIsEditing(false);
     setRoleEdits(initEditState);
+    setIsEditing(false);
   };
   return (
     <>
