@@ -7,7 +7,6 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { BatchKeys } from 'library/BatchKeys';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
@@ -39,7 +38,7 @@ export const SelectFavourites = () => {
     setResize();
   }, [selectedFavourites]);
 
-  const batchKey = BatchKeys.new('favourite_validators');
+  const batchKey = 'favourite_validators';
 
   const onSelected = (provider: any) => {
     const { selected } = provider;
