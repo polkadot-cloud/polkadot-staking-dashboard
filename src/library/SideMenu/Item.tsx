@@ -10,7 +10,7 @@ import { ItemWrapper, MinimisedItemWrapper } from './Wrapper';
 import { ItemProps } from './types';
 
 export const Item = (props: ItemProps) => {
-  const { setSideMenu }: any = useUi();
+  const { setSideMenu } = useUi();
 
   const { name, active, to, icon, action, minimised } = props;
 
