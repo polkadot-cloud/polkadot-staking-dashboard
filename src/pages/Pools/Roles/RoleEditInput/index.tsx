@@ -13,7 +13,7 @@ export const RoleEditInput = ({ setRoleEdit, roleEdit }: any) => {
   const getRoleEdit = (newAddress: string) => {
     let edit = {
       newAddress,
-      valid: false,
+      valid: newAddress === '', // empty address is valid and removes the role
       reformatted: false,
     };
     if (isValidAddress(newAddress)) {

@@ -40,7 +40,7 @@ export const Roles = () => {
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const activePool = activeBondedPool;
-  const { roles } = activePool || {};
+  const { id: poolId, roles } = activePool || {};
 
   const batchKey = 'pool_roles';
 
@@ -89,7 +89,7 @@ export const Roles = () => {
   }, [isReady, fetched]);
 
   const saveHandler = () => {
-    openModalWith('ChangePoolRoles', { roleEdits }, 'small');
+    openModalWith('ChangePoolRoles', { poolId, roleEdits }, 'small');
     setIsEditing(false);
   };
   const editHandler = () => {
