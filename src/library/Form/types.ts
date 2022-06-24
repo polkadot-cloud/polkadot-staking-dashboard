@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { WalletAccount } from '@talisman-connect/wallets';
-import BN from 'bn.js';
 
 export interface AccountDropdownProps {
   items: Array<WalletAccount>;
   onChange: (o: any) => void;
   placeholder: string;
-  value: any; // WalletAccount
+  value: WalletAccount; // WalletAccount
   current: WalletAccount | null;
   height: string | number | undefined;
 }
