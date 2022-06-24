@@ -18,9 +18,17 @@ import {
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
+import { useModal } from 'contexts/Modal';
 import { PoolAccount } from '../PoolAccount';
 import { RolesWrapper } from '../ManagePool/Wrappers';
-import AddressInput from './AddressInput';
+import RoleEditInput from './RoleEditInput';
+
+type RoleEdit = {
+  oldAddress: string;
+  newAddress: string;
+  valid: boolean;
+  reformatted: boolean;
+};
 
 export const Roles = () => {
   const { isReady } = useApi() as APIContextInterface;
@@ -30,12 +38,27 @@ export const Roles = () => {
   const { activeBondedPool, isOwner } =
     useActivePool() as ActivePoolContextState;
   const { isSyncing } = useUi();
+  const { openModalWith } = useModal();
   const activePool = activeBondedPool;
   const { roles } = activePool || {};
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [newRoles, setNewRoles] = useState(roles);
   const batchKey = 'pool_roles';
+
+  // role edits
+  const initEditState: any = (() => {
+    const initState: Record<string, RoleEdit> = {};
+    Object.entries(roles)?.forEach(([roleName, address]: any) => {
+      initState[roleName] = {
+        oldAddress: address,
+        newAddress: address,
+        valid: true,
+        reformatted: false,
+      };
+    });
+    return initState;
+  })();
+  const [isEditing, setIsEditing] = useState(false);
+  const [roleEdits, setRoleEdits] = useState(initEditState);
 
   const _accounts: Array<string> = [
     roles.root,
@@ -66,7 +89,7 @@ export const Roles = () => {
   }, [isReady, fetched]);
 
   const saveHandler = () => {
-    console.log(newRoles);
+    openModalWith('ChangePoolRoles', { roleEdits }, 'large');
     setIsEditing(false);
   };
   const editHandler = () => {
@@ -76,6 +99,7 @@ export const Roles = () => {
   const cancelHandler = () => {
     console.log('cancel');
     setIsEditing(false);
+    setRoleEdits(initEditState);
   };
   return (
     <>
@@ -147,11 +171,13 @@ export const Roles = () => {
               Nominator <OpenAssistantIcon page="pools" title="Joined Pool" />
             </h3>
             {isEditing ? (
-              <AddressInput
-                address={`${newRoles?.nominator || ''}`}
-                setAddress={(nominator: string) => {
-                  console.log(nominator);
-                  setNewRoles((values: any) => ({ ...values, nominator }));
+              <RoleEditInput
+                roleEdit={roleEdits?.nominator}
+                setRoleEdit={(nominator: RoleEdit) => {
+                  setRoleEdits((values: Record<string, RoleEdit>) => ({
+                    ...values,
+                    nominator,
+                  }));
                 }}
               />
             ) : (
@@ -170,11 +196,13 @@ export const Roles = () => {
               <OpenAssistantIcon page="pools" title="Joined Pool" />
             </h3>
             {isEditing ? (
-              <AddressInput
-                address={`${newRoles?.stateToggler || ''}`}
-                setAddress={(stateToggler: string) => {
-                  console.log(stateToggler);
-                  setNewRoles((values: any) => ({ ...values, stateToggler }));
+              <RoleEditInput
+                roleEdit={roleEdits?.stateToggler}
+                setRoleEdit={(stateToggler: RoleEdit) => {
+                  setRoleEdits((values: Record<string, RoleEdit>) => ({
+                    ...values,
+                    stateToggler,
+                  }));
                 }}
               />
             ) : (

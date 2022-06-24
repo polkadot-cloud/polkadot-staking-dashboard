@@ -110,6 +110,7 @@ export const Modal = () => {
             {modal === 'JoinPool' && <JoinPool />}
             {modal === 'LeavePool' && <LeavePool />}
             {modal === 'ChangePoolState' && <ChangePoolState />}
+            {modal === 'ChangePoolRoles' && <ChangePoolState />}
             {modal === 'ClaimReward' && <ClaimReward />}
             {modal === 'SelectFavourites' && <SelectFavourites />}
             {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
