@@ -11,7 +11,7 @@ export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
   return (
     <RoleChangeWrapper>
       <div className="label">{roleName}</div>
-      <div className="current">
+      <div className="role-change">
         <div className="input-wrap selected">
           <Identicon
             value={oldAddress ?? ''}
