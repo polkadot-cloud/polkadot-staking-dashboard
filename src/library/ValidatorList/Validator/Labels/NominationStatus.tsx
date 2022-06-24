@@ -43,7 +43,8 @@ export const NominationStatus = (props: NominationStatusProps) => {
       <h5>
         {capitalizeFirstLetter(nominationStatus ?? '')}
         {ownStaked > 0 &&
-         `/ ${erasStakersSyncing ? '...' : `${humanNumber(ownStaked)} ${unit}`
+          `/ ${
+            erasStakersSyncing ? '...' : `${humanNumber(ownStaked)} ${unit}`
           }`}
       </h5>
     </NominationStatusWrapper>

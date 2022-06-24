@@ -142,18 +142,18 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
                       isReadOnlyAccount(activeAccount)
                         ? []
                         : [
-                          {
-                            title: 'Stop Nominating Selected',
-                            onClick: cbStopNominatingSelected,
-                            onSelected: true,
-                          },
-                          {
-                            disabled: !favouritesList.length,
-                            title: 'Add From Favourites',
-                            onClick: cbAddNominations,
-                            onSelected: false,
-                          },
-                        ]
+                            {
+                              title: 'Stop Nominating Selected',
+                              onClick: cbStopNominatingSelected,
+                              onSelected: true,
+                            },
+                            {
+                              disabled: !favouritesList.length,
+                              title: 'Add From Favourites',
+                              onClick: cbAddNominations,
+                              onSelected: false,
+                            },
+                          ]
                     }
                     refetchOnListUpdate
                     allowMoreCols

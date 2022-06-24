@@ -72,8 +72,8 @@ export const Overview = () => {
                 {lastPayout === null
                   ? 0
                   : humanNumber(
-                    planckBnToUnit(new BN(lastPayout.amount), units)
-                  )}
+                      planckBnToUnit(new BN(lastPayout.amount), units)
+                    )}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">
