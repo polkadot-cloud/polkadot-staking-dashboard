@@ -54,10 +54,3 @@ export interface DefaultProps {
   showStatus: boolean;
   showMenu: boolean;
 }
-
-// export interface ValidatorInnerProps {
-//     format?: any;
-//     validator?: string;
-//     batchIndex?: number;
-//     batchKey?: string;
-// }
