@@ -9,6 +9,7 @@ import { Pie } from 'library/StatBoxList/Pie';
 import { APIContextInterface } from 'types/api';
 import { NetworkMetricsContextInterface } from 'types';
 import { StakingContextInterface } from 'types/staking';
+import { toFixedIfNecessary } from 'Utils';
 
 export const SupplyStakedStatBox = () => {
   const { network } = useApi() as APIContextInterface;
@@ -43,7 +44,7 @@ export const SupplyStakedStatBox = () => {
       value2: totalIssuanceBase.sub(lastTotalStakeBase).toNumber(),
     },
 
-    tooltip: `${supplyAsPercent.toFixed(2)}%`,
+    tooltip: `${toFixedIfNecessary(supplyAsPercent, 2)}%`,
     assistant: {
       page: 'overview',
       key: 'Supply Staked',

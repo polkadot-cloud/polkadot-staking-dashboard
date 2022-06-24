@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api';
 import { Pie } from 'library/StatBoxList/Pie';
 import { APIContextInterface } from 'types/api';
 import { StakingContextInterface } from 'types/staking';
+import { toFixedIfNecessary } from 'Utils';
 
 export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi() as APIContextInterface;
@@ -32,7 +33,7 @@ export const ActiveNominatorsStatBox = () => {
       value1: activeNominators,
       value2: maxElectingVoters - activeNominators,
     },
-    tooltip: `${activeNominatorsAsPercent.toFixed(2)}%`,
+    tooltip: `${toFixedIfNecessary(activeNominatorsAsPercent, 2)}%`,
     assistant: {
       page: 'overview',
       key: 'Active Nominators',
