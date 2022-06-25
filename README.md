@@ -4,7 +4,7 @@
 
 [https://paritytech.github.io/polkadot-staking-dashboard/](https://paritytech.github.io/polkadot-staking-dashboard/)
 
-<img width="1569" alt="dashboard" src="https://user-images.githubusercontent.com/13929023/163815633-df567f72-f285-4d31-b266-0a9836ea042b.png">
+<img width="1895" alt="Screenshot 2022-06-25 at 22 59 22" src="https://user-images.githubusercontent.com/13929023/175791673-9ee701c7-4249-462a-b7fc-2f45a9416e55.png">
 
 # Milestones
 
