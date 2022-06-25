@@ -7,12 +7,14 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { DefinitionWrapper as Wrapper } from '../Wrappers';
 import { DefinitionProps } from '../types';
 
+const MAX_SUBTITLE_LENGTH = 55;
+
 export const Heading = (props: DefinitionProps) => {
   const { onClick, title, description } = props;
 
   const subtitle =
-    description[0].length > 50
-      ? `${description[0].substring(0, 50)}...`
+    description[0].length > MAX_SUBTITLE_LENGTH
+      ? `${description[0].substring(0, MAX_SUBTITLE_LENGTH)}...`
       : description[0];
 
   return (
