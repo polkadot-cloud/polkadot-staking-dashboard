@@ -152,7 +152,14 @@ export const SideMenu = () => {
             <>
               <div
                 className="beta"
-                style={{ right: network.name === 'Kusama' ? '1.5rem' : '0px' }}
+                style={{
+                  right:
+                    network.name === 'Kusama'
+                      ? '1.8rem'
+                      : network.name === 'Westend'
+                      ? '0.5rem'
+                      : '0px',
+                }}
               >
                 BETA
               </div>
