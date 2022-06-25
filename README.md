@@ -56,13 +56,13 @@ Reach out to ross@parity.io for clarification of any content within this documen
 ## Environment Variables
 Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard:
 ```
-# disable all mentioning of fiat values and token prices.
+# disable all mentioning of fiat values and token prices
 # REACT_APP_DISABLE_FIAT=1
 
-# display an organisation label in the network bar.
+# display an organisation label in the network bar
 # REACT_APP_ORGANISATION="© Parity Technologies"
 
-# display a privacy policy url in the network bar.
+# provide a privacy policy url in the network bar
 # REACT_APP_PRIVACY_URL=https://www.parity.io/privacy/
 ```
 ## Config Files
