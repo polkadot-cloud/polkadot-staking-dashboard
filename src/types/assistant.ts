@@ -35,6 +35,7 @@ export interface AssistantExternal {
 }
 
 export interface AssistantContextInterface {
+  fillDefinitionVariables: (d: AssistantDefinition) => AssistantDefinition;
   toggle: () => void;
   setPage: (page: string) => void;
   setInnerDefinition: (meta: AssistantDefinition) => void;

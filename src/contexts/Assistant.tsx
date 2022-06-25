@@ -11,6 +11,7 @@ import {
 } from 'types/assistant';
 import { ASSISTANT_CONFIG } from 'config/assistant';
 import { APIContextInterface } from 'types/api';
+import { replaceAll } from 'Utils';
 import { useApi } from './Api';
 
 export const AssistantContext =
@@ -46,8 +47,17 @@ export const AssistantProvider = (props: AssistantContextProps) => {
   });
 
   const fillDefinitionVariables = (d: AssistantDefinition) => {
+    let { title, description } = d;
+
     // replace UNIT with network.unit
-    return d;
+    title = replaceAll(title, '{NETWORK_UNIT}', network.unit);
+    description = description.map((_d: string) =>
+      replaceAll(_d, '{NETWORK_UNIT}', network.unit)
+    );
+    return {
+      title,
+      description,
+    };
   };
 
   const setPage = (newPage: string) => {
@@ -126,6 +136,7 @@ export const AssistantProvider = (props: AssistantContextProps) => {
   return (
     <AssistantContext.Provider
       value={{
+        fillDefinitionVariables,
         toggle,
         setPage,
         setInnerDefinition,

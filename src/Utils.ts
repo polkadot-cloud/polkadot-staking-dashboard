@@ -193,3 +193,12 @@ export const isValidAddress = (address: string) => {
     return false;
   }
 };
+
+export const escapeRegExp = (string: string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& === the whole matched string
+};
+
+// replace all to work with legacy browsers
+export const replaceAll = (str: string, find: string, replace: string) => {
+  return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+};
