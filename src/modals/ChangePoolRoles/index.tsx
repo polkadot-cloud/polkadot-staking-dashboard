@@ -7,8 +7,6 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
-import { AccountDropdown } from 'library/Form/AccountDropdown';
-import { useBalances } from 'contexts/Balances';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';
@@ -24,20 +22,27 @@ export const ChangePoolRoles = () => {
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { config } = useModal();
-  const { roleEdits } = config;
+  const { poolId, roleEdits } = config;
   console.log(config, roleEdits);
 
+  // create roleUpdate types
   // tx to submit
   const tx = () => {
-    /* let _tx = null;
-    if (!selected || !api) {
-      return _tx;
-    }
-    const controllerToSubmit = {
-      Id: selected?.address ?? '',
-    };
-    _tx = api.tx.staking.setController(controllerToSubmit);
-    return _tx; */
+    let _tx = null;
+    const nominator = roleEdits?.nominator?.newAddress
+      ? { Set: roleEdits?.nominator?.newAddress }
+      : 'Remove';
+    const stateToggler = roleEdits?.stateToggler?.newAddress
+      ? { Set: roleEdits?.stateToggler?.newAddress }
+      : 'Remove';
+
+    _tx = api?.tx.nominationPools?.updateRoles(
+      poolId,
+      'Noop',
+      nominator,
+      stateToggler
+    );
+    return _tx;
   };
 
   // handle extrinsic

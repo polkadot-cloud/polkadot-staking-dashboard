@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  textPrimary,
-  backgroundDropdown,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
@@ -28,7 +23,7 @@ export const RoleChangeWrapper = styled.div`
   .label {
     margin: 0.25rem 0 0.75rem 0;
   }
-  .current {
+  .role-change {
     flex: 1;
     display: flex;
     align-items: center;
@@ -41,7 +36,6 @@ export const RoleChangeWrapper = styled.div`
     }
   }
 
-  /* input element of dropdown */
   .input-wrap {
     border-bottom: 1px solid ${borderPrimary};
     display: flex;
@@ -59,8 +53,6 @@ export const RoleChangeWrapper = styled.div`
       padding: 0.1rem 0.75rem;
     }
   }
-
-  /* input element of dropdown */
   .input {
     border: none;
     box-sizing: border-box;

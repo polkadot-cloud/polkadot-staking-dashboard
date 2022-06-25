@@ -40,7 +40,7 @@ export const Roles = () => {
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const activePool = activeBondedPool;
-  const { roles } = activePool || {};
+  const { id: poolId, roles } = activePool || {};
 
   const batchKey = 'pool_roles';
 
@@ -59,6 +59,14 @@ export const Roles = () => {
   })();
   const [isEditing, setIsEditing] = useState(false);
   const [roleEdits, setRoleEdits] = useState(initEditState);
+  const isRoleEditsValid = () => {
+    for (const roleEdit of Object.values<RoleEdit>(roleEdits)) {
+      if (roleEdit?.valid === false) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const _accounts: Array<string> = [
     roles.root,
@@ -89,17 +97,16 @@ export const Roles = () => {
   }, [isReady, fetched]);
 
   const saveHandler = () => {
-    openModalWith('ChangePoolRoles', { roleEdits }, 'small');
+    openModalWith('ChangePoolRoles', { poolId, roleEdits }, 'small');
     setIsEditing(false);
   };
   const editHandler = () => {
-    console.log('edit');
+    setRoleEdits(initEditState);
     setIsEditing(true);
   };
   const cancelHandler = () => {
-    console.log('cancel');
-    setIsEditing(false);
     setRoleEdits(initEditState);
+    setIsEditing(false);
   };
   return (
     <>
@@ -130,7 +137,11 @@ export const Roles = () => {
                 inline
                 primary
                 title={isEditing ? 'Save' : 'Edit'}
-                disabled={isSyncing || isReadOnlyAccount(activeAccount)}
+                disabled={
+                  isSyncing ||
+                  isReadOnlyAccount(activeAccount) ||
+                  !isRoleEditsValid()
+                }
                 onClick={() => (isEditing ? saveHandler() : editHandler())}
               />
             </div>
