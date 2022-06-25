@@ -57,7 +57,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Stash and Controller Accounts',
         description: [
-          'The Stash and Controller are simply Polkadot accounts that manage your staking activity.',
+          'The Stash and Controller are simply {NETWORK_NAME} accounts that manage your staking activity.',
           "Your Stash account is the account used to hold your staked funds, whereas the Controller account is used to carry out Staking actions on the Stash account's behalf.",
           'When you switch accounts in this app, you are actually switching your Stash account. Your Controller account is then automatically fetched for you.',
           'This app assumes you have both Stash and Controller accounts imported. If you do not, you will not be able to use all app functions.',
@@ -76,7 +76,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         description: [
           'The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ',
           'Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.',
-          'Only the top 256 nominators are rewarded per validator. Ensuring your active bond is above this threshold will increase your chances of rewards.',
+          'Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.',
           'You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT} or changing your nominations.',
         ],
       },
@@ -165,7 +165,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Validator',
         description: [
-          'An entity that validates blocks for the Polkadot Relay Chain. Validators play a key role in Polkadot to secure the network and produce blocks.',
+          'An entity that validates blocks for the {NETWORK_NAME} Relay Chain. Validators play a key role in {NETWORK_NAME} to secure the network and produce blocks.',
           'As a nominator, you choose which validators you wish to back, and receive rewards for doing so.',
         ],
       },
@@ -174,7 +174,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         description: [
           "A validator that is actively validating blocks. Rewards are accumulated based on the validator's activity.",
           'A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.',
-          'Polkadot allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.',
+          '{NETWORK_NAME} allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.',
         ],
       },
       {
@@ -187,7 +187,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Epoch',
         description: [
-          'An epoch is another name for a session in Polkadot. A different set of validators are selected to validate blocks at the beginning of every epoch.',
+          'An epoch is another name for a session in {NETWORK_NAME}. A different set of validators are selected to validate blocks at the beginning of every epoch.',
           '1 epoch is currently 4 hours in Polkadot.',
         ],
       },
@@ -217,7 +217,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Over Subscribed',
         description: [
-          'Only the top 256 nominators for each validator are rewarded in Polkadot. When this number is surpassed, this validator is considered over subscribed.',
+          'Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed.',
         ],
       },
       {
@@ -235,7 +235,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Payout',
         description: [
-          'Payouts are staking rewards on Polkadot. They depend on how many "Era Points" your nominated validators accrue over time. Rewards are determined at the end of every Era (24 hour periods).',
+          'Payouts are staking rewards on {NETWORK_NAME}. They depend on how many "Era Points" your nominated validators accrue over time. Rewards are determined at the end of every Era (24 hour periods).',
           'To receive staking rewards, a Payout needs to be requested. Any nominator backing the validator in question can request a Payout.',
           'One payout request triggers the reward payout for every nominator.',
         ],

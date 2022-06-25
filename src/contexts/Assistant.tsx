@@ -20,7 +20,8 @@ export const AssistantContext =
 export const useAssistant = () => React.useContext(AssistantContext);
 
 export const AssistantProvider = (props: AssistantContextProps) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network, consts } = useApi() as APIContextInterface;
+  const { maxNominatorRewardedPerValidator } = consts;
 
   // store whether assistant is open and whether it should transition
   const [open, setOpen] = useState<{
@@ -49,11 +50,22 @@ export const AssistantProvider = (props: AssistantContextProps) => {
   const fillDefinitionVariables = (d: AssistantDefinition) => {
     let { title, description } = d;
 
-    // replace UNIT with network.unit
-    title = replaceAll(title, '{NETWORK_UNIT}', network.unit);
-    description = description.map((_d: string) =>
-      replaceAll(_d, '{NETWORK_UNIT}', network.unit)
-    );
+    const varsToValues = [
+      ['{NETWORK_UNIT}', network.unit],
+      ['{NETWORK_NAME}', network.name],
+      [
+        '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
+        String(maxNominatorRewardedPerValidator),
+      ],
+    ];
+
+    for (const varToVal of varsToValues) {
+      title = replaceAll(title, varToVal[0], varToVal[1]);
+      description = description.map((_d: string) =>
+        replaceAll(_d, varToVal[0], varToVal[1])
+      );
+    }
+
     return {
       title,
       description,
