@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ReactNode } from 'react';
 import { Toggle } from '.';
 
 export enum ConnectionStatus {
@@ -49,4 +50,8 @@ export interface AssistantContextInterface {
   innerDefinition: AssistantDefinition;
   height: number;
   transition: number;
+}
+
+export interface AssistantContextProps {
+  children: ReactNode;
 }
