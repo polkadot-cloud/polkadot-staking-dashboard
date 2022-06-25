@@ -1,152 +1,172 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Toggle } from 'types';
 import {
   AssistantContextInterface,
   AssistantDefinition,
   AssistantItem,
+  AssistantContextProps,
 } from 'types/assistant';
 import { ASSISTANT_CONFIG } from 'config/assistant';
+import { APIContextInterface } from 'types/api';
+import { replaceAll } from 'Utils';
+import { useApi } from './Api';
 
 export const AssistantContext =
   React.createContext<AssistantContextInterface | null>(null);
 
 export const useAssistant = () => React.useContext(AssistantContext);
 
-interface Props {
-  children: React.ReactNode;
-}
+export const AssistantProvider = (props: AssistantContextProps) => {
+  const { network, consts } = useApi() as APIContextInterface;
+  const { maxNominatorRewardedPerValidator } = consts;
 
-interface State {
-  open: Toggle;
-  page: string;
-  innerDefinition: AssistantDefinition;
-  activeSection: number;
-  height: number;
-  transition: number;
-}
+  // store whether assistant is open and whether it should transition
+  const [open, setOpen] = useState<{
+    state: Toggle;
+    transition: number;
+  }>({
+    state: Toggle.Closed,
+    transition: 0,
+  });
 
-export class AssistantProvider extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      open: Toggle.Closed,
-      page: 'overview',
-      innerDefinition: {
-        title: '',
-        description: [''],
-      },
-      activeSection: 0,
-      height: 0,
-      transition: 0,
+  // store the current page of assistant
+  const [page, _setPage] = useState<string>('overview');
+
+  // store the active section of assistant (home or item)
+  const [section, setSection] = useState<number>(0);
+
+  // store assistant height
+  const [height, setHeight] = useState<number>(0);
+
+  // store currently active inner definition of assistant
+  const [innerDefinition, _setInnerDefinition] = useState<AssistantDefinition>({
+    title: '',
+    description: [''],
+  });
+
+  const fillDefinitionVariables = (d: AssistantDefinition) => {
+    let { title, description } = d;
+
+    const varsToValues = [
+      ['{NETWORK_UNIT}', network.unit],
+      ['{NETWORK_NAME}', network.name],
+      [
+        '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
+        String(maxNominatorRewardedPerValidator),
+      ],
+    ];
+
+    for (const varToVal of varsToValues) {
+      title = replaceAll(title, varToVal[0], varToVal[1]);
+      description = description.map((_d: string) =>
+        replaceAll(_d, varToVal[0], varToVal[1])
+      );
+    }
+
+    return {
+      title,
+      description,
     };
-  }
-
-  setPage = (newPage: string) => {
-    this.setState({
-      page: newPage,
-    });
   };
 
-  static getDefinition = (key: string, title: string) => {
-    return ASSISTANT_CONFIG.find(
+  const setPage = (newPage: string) => {
+    _setPage(newPage);
+  };
+
+  const getDefinition = (key: string, title: string) => {
+    const definition = ASSISTANT_CONFIG.find(
       (item: AssistantItem) => item.key === key
     )?.definitions?.find((item: AssistantDefinition) => item.title === title);
+
+    if (definition === undefined) {
+      return undefined;
+    }
+    return fillDefinitionVariables(definition);
   };
 
-  setInnerDefinition = (meta: AssistantDefinition) => {
-    this.setState({
-      innerDefinition: meta,
-    });
+  const setInnerDefinition = (meta: AssistantDefinition) => {
+    meta = fillDefinitionVariables(meta);
+    _setInnerDefinition(meta);
   };
 
-  toggle = () => {
-    const { open } = this.state;
-    this.setState({
-      open: open === Toggle.Closed ? Toggle.Open : Toggle.Closed,
+  const toggle = () => {
+    setOpen({
+      state: Toggle.Closed ? Toggle.Open : Toggle.Closed,
       transition: 0,
     });
   };
 
-  openAssistant = () => {
-    this.setState({
-      open: Toggle.Open,
+  const openAssistant = () => {
+    setOpen({
+      state: Toggle.Open,
       transition: 0,
     });
   };
 
-  closeAssistant = () => {
-    this.setState({
-      open: Toggle.Closed,
+  const closeAssistant = () => {
+    setOpen({
+      state: Toggle.Closed,
       transition: 0,
     });
 
     // short timeout to hide back to list
     setTimeout(() => {
-      this.setState({
-        ...this.state,
-        activeSection: 0,
-      });
+      setSection(0);
     }, 150);
   };
 
-  setActiveSection = (index: number) => {
-    this.setState({
-      activeSection: index,
+  const setActiveSection = (index: number) => {
+    setOpen({
+      state: open.state,
       transition: 1,
     });
+    setSection(index);
   };
 
-  goToDefinition = (page: string, title: string) => {
-    const definition: any = AssistantProvider.getDefinition(page, title);
+  const goToDefinition = (_page: string, _title: string) => {
+    const definition = getDefinition(_page, _title);
 
-    if (
-      this.state.innerDefinition === definition &&
-      this.state.open === Toggle.Open
-    ) {
-      this.closeAssistant();
+    if (innerDefinition === definition && open.state === Toggle.Open) {
+      closeAssistant();
     } else if (definition !== undefined) {
-      this.setPage(page);
-      this.setInnerDefinition(definition);
-      this.setActiveSection(1);
+      setPage(_page);
+      setSection(1);
+      setInnerDefinition(definition);
 
       // short timeout to hide inner transition
-      setTimeout(() => this.openAssistant(), 60);
+      setTimeout(() => openAssistant(), 60);
     }
   };
 
-  setAssistantHeight = (v: number) => {
-    this.setState({
-      ...this.state,
-      height: v,
-    });
+  const setAssistantHeight = (h: number) => {
+    setHeight(h);
   };
 
-  render() {
-    return (
-      <AssistantContext.Provider
-        value={{
-          toggle: this.toggle,
-          setPage: this.setPage,
-          setInnerDefinition: this.setInnerDefinition,
-          getDefinition: AssistantProvider.getDefinition,
-          openAssistant: this.openAssistant,
-          closeAssistant: this.closeAssistant,
-          setActiveSection: this.setActiveSection,
-          goToDefinition: this.goToDefinition,
-          setAssistantHeight: this.setAssistantHeight,
-          activeSection: this.state.activeSection,
-          open: this.state.open,
-          page: this.state.page,
-          innerDefinition: this.state.innerDefinition,
-          height: this.state.height,
-          transition: this.state.transition,
-        }}
-      >
-        {this.props.children}
-      </AssistantContext.Provider>
-    );
-  }
-}
+  return (
+    <AssistantContext.Provider
+      value={{
+        fillDefinitionVariables,
+        toggle,
+        setPage,
+        setInnerDefinition,
+        getDefinition,
+        openAssistant,
+        closeAssistant,
+        setActiveSection,
+        goToDefinition,
+        setAssistantHeight,
+        height,
+        page,
+        innerDefinition,
+        activeSection: section,
+        open: open.state,
+        transition: open.transition,
+      }}
+    >
+      {props.children}
+    </AssistantContext.Provider>
+  );
+};

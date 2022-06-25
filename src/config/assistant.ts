@@ -10,15 +10,15 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Supply Staked',
         description: [
-          'The current cumulative supply of DOT being staked globally.',
-          'The percentage of staked DOT is relative to the total supply of DOT.',
+          'The current cumulative supply of {NETWORK_UNIT} being staked globally.',
+          'The percentage of staked {NETWORK_UNIT} is relative to the total supply of {NETWORK_UNIT}.',
         ],
       },
       {
         title: 'Nominators',
         description: [
           'Nominators are accounts who are staking in the network, regardless of whether they are active or earning rewards.',
-          'In order to stake DOT, you must be a nominator.',
+          'In order to stake {NETWORK_UNIT}, you must be a nominator.',
         ],
       },
       {
@@ -57,7 +57,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Stash and Controller Accounts',
         description: [
-          'The Stash and Controller are simply Polkadot accounts that manage your staking activity.',
+          'The Stash and Controller are simply {NETWORK_NAME} accounts that manage your staking activity.',
           "Your Stash account is the account used to hold your staked funds, whereas the Controller account is used to carry out Staking actions on the Stash account's behalf.",
           'When you switch accounts in this app, you are actually switching your Stash account. Your Controller account is then automatically fetched for you.',
           'This app assumes you have both Stash and Controller accounts imported. If you do not, you will not be able to use all app functions.',
@@ -67,17 +67,17 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Bonding',
         description: [
-          'Bonding funds is the process of "locking" (or staking) DOT. Bonded DOT will then be automatically allocated to one or more of your nominated validators.',
-          'The minimum active bond statistic is the minimum DOT being bonded by a nominator for the current era.',
+          'Bonding funds is the process of "locking" (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of your nominated validators.',
+          'The minimum active bond statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era.',
         ],
       },
       {
         title: 'Active Bond Threshold',
         description: [
-          'The amount of DOT needed to be actively nominating in an era. ',
+          'The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ',
           'Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.',
-          'Only the top 256 nominators are rewarded per validator. Ensuring your active bond is above this threshold will increase your chances of rewards.',
-          'You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded DOT or changing your nominations.',
+          'Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.',
+          'You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT} or changing your nominations.',
         ],
       },
       {
@@ -90,7 +90,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Nominating',
         description: [
-          'Nominating is the process of selecting validators you wish to stake your DOT to. You can choose to nominate up to 16 validators for each of your accounts.',
+          'Nominating is the process of selecting validators you wish to stake your {NETWORK_UNIT} to. You can choose to nominate up to 16 validators for each of your accounts.',
           'Once you have nominated your selected validators, they become your nominations.',
         ],
       },
@@ -111,8 +111,8 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Nomination Pools',
         description: [
-          'Nomination pools allow users to contribute DOT and earn staking rewards.',
-          'Unlike nominating, staking using pools requires a small amount of DOT, and the pool manages nominees on your behalf.',
+          'Nomination pools allow users to contribute {NETWORK_UNIT} and earn staking rewards.',
+          'Unlike nominating, staking using pools requires a small amount of {NETWORK_UNIT}, and the pool manages nominees on your behalf.',
         ],
       },
       {
@@ -122,13 +122,13 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Minimum Join Bond',
         description: [
-          'The minimum amount of DOT needed to bond in order to join a pool.',
+          'The minimum amount of {NETWORK_UNIT} needed to bond in order to join a pool.',
         ],
       },
       {
         title: 'Minimum Create Bond',
         description: [
-          'The minimum amount of DOT needed to bond for a creator  of a pool.',
+          'The minimum amount of {NETWORK_UNIT} needed to bond for a creator  of a pool.',
         ],
       },
       {
@@ -139,13 +139,15 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       },
       {
         title: 'Bonded in Pool',
-        description: ['The amount of DOT currently bonded in a pool.'],
+        description: [
+          'The amount of {NETWORK_UNIT} currently bonded in a pool.',
+        ],
       },
       {
         title: 'Pool Rewards',
         description: [
-          'The amount of rewards in DOT generated by being an active participant in a pool.',
-          'Users are required to claim their pool rewards in order to receive them. Pool rewards can be bonded back into the pool, or sent to your account as free DOT.',
+          'The amount of rewards in {NETWORK_UNIT} generated by being an active participant in a pool.',
+          'Users are required to claim their pool rewards in order to receive them. Pool rewards can be bonded back into the pool, or sent to your account as free {NETWORK_UNIT}.',
         ],
       },
       {
@@ -163,7 +165,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Validator',
         description: [
-          'An entity that validates blocks for the Polkadot Relay Chain. Validators play a key role in Polkadot to secure the network and produce blocks.',
+          'An entity that validates blocks for the {NETWORK_NAME} Relay Chain. Validators play a key role in {NETWORK_NAME} to secure the network and produce blocks.',
           'As a nominator, you choose which validators you wish to back, and receive rewards for doing so.',
         ],
       },
@@ -172,20 +174,20 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         description: [
           "A validator that is actively validating blocks. Rewards are accumulated based on the validator's activity.",
           'A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.',
-          'Polkadot allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.',
+          '{NETWORK_NAME} allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.',
         ],
       },
       {
         title: 'Era',
         description: [
-          'At the end of each era, validators are rewarded DOT based on how many era points they accumulated in that era. This DOT reward is then distributed amongst the nominators of the validator via a payout.',
+          'At the end of each era, validators are rewarded {NETWORK_UNIT} based on how many era points they accumulated in that era. This {NETWORK_UNIT} reward is then distributed amongst the nominators of the validator via a payout.',
           '1 era is currently 24 hours in Polkadot.',
         ],
       },
       {
         title: 'Epoch',
         description: [
-          'An epoch is another name for a session in Polkadot. A different set of validators are selected to validate blocks at the beginning of every epoch.',
+          'An epoch is another name for a session in {NETWORK_NAME}. A different set of validators are selected to validate blocks at the beginning of every epoch.',
           '1 epoch is currently 4 hours in Polkadot.',
         ],
       },
@@ -215,7 +217,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Over Subscribed',
         description: [
-          'Only the top 256 nominators for each validator are rewarded in Polkadot. When this number is surpassed, this validator is considered over subscribed.',
+          'Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed.',
         ],
       },
       {
@@ -233,7 +235,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Payout',
         description: [
-          'Payouts are staking rewards on Polkadot. They depend on how many "Era Points" your nominated validators accrue over time. Rewards are determined at the end of every Era (24 hour periods).',
+          'Payouts are staking rewards on {NETWORK_NAME}. They depend on how many "Era Points" your nominated validators accrue over time. Rewards are determined at the end of every Era (24 hour periods).',
           'To receive staking rewards, a Payout needs to be requested. Any nominator backing the validator in question can request a Payout.',
           'One payout request triggers the reward payout for every nominator.',
         ],
@@ -241,9 +243,9 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Last Era Payout',
         description: [
-          'The total amount of DOT paid out for the last active era.',
+          'The total amount of {NETWORK_UNIT} paid out for the last active era.',
           'Payouts are distributed evenly amongst the active validators for that era, and are then further distributed to the active nominators that took part in that era.',
-          'The payout amounts received depend on how much DOT the nominators, and validators themselves, had bonded for that era.',
+          'The payout amounts received depend on how much {NETWORK_UNIT} the nominators, and validators themselves, had bonded for that era.',
         ],
       },
       {

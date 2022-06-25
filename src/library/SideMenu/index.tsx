@@ -142,7 +142,7 @@ export const SideMenu = () => {
             <>
               <div
                 className="beta-min"
-                style={{ top: network.name === 'Westend' ? '-9px' : '-14px' }}
+                style={{ top: network.name === 'Westend' ? '-5px' : '-14px' }}
               >
                 BETA
               </div>
@@ -152,7 +152,14 @@ export const SideMenu = () => {
             <>
               <div
                 className="beta"
-                style={{ right: network.name === 'Kusama' ? '1.5rem' : '0px' }}
+                style={{
+                  right:
+                    network.name === 'Kusama'
+                      ? '1.8rem'
+                      : network.name === 'Westend'
+                      ? '0.5rem'
+                      : '0px',
+                }}
               >
                 BETA
               </div>

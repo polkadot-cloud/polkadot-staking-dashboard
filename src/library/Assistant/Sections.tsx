@@ -28,7 +28,6 @@ import { SectionProps } from './types';
 export const Sections = ({ pageMeta }: SectionProps) => {
   const { openModalWith } = useModal();
   const { network } = useApi() as APIContextInterface;
-
   const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;
@@ -106,6 +105,7 @@ export const Sections = ({ pageMeta }: SectionProps) => {
             <>
               <Heading title="Definitions" />
               {definitions.map((item: AssistantDefinition, index: number) => {
+                item = assistant.fillDefinitionVariables(item);
                 return (
                   <Definition
                     key={`def_${index}`}
