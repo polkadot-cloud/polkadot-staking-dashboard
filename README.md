@@ -26,15 +26,11 @@ Features are being implemented in an incremental fashion. We are considering the
 - [x] Screen size support
 - [x] Extrinsics
 - [x] Initial Nomination management tooling
-- [ ] Nomination Pools
-- [ ] Chain API Integration
+- [x] Nomination Pools
 
-Additional features that are being considered:
-
-- [ ] Validator Lists
-- [ ] Validator selection algorithm
-- [ ] Validator ranking algorithm
-- [ ] Wallet Connect support
+Additional planned sprints:
+- Chain API Integration
+- Enhanced Validator Support
 
 # Contribution Guide
 
