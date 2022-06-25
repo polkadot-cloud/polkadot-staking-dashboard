@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -23,7 +22,6 @@ export const ChangePoolRoles = () => {
     useConnect() as ConnectContextInterface;
   const { config } = useModal();
   const { poolId, roleEdits } = config;
-  console.log(config, roleEdits);
 
   // create roleUpdate types
   // tx to submit
