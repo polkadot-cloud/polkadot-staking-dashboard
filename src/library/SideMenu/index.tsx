@@ -136,20 +136,26 @@ export const SideMenu = () => {
           onClick={() => {
             window.open(POLKADOT_URL, '_blank');
           }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
           minimised={sideMenuMinimised}
         >
           {sideMenuMinimised ? (
             <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
           ) : (
-            <network.logo.svg
-              style={{
-                maxHeight: '100%',
-                height: '100%',
-                width: network.logo.width,
-              }}
-            />
+            <>
+              <div
+                className="beta"
+                style={{ right: network.name === 'Kusama' ? '1.5rem' : '0px' }}
+              >
+                BETA
+              </div>
+              <network.logo.svg
+                style={{
+                  maxHeight: '100%',
+                  height: '100%',
+                  width: network.logo.width,
+                }}
+              />
+            </>
           )}
         </LogoWrapper>
 

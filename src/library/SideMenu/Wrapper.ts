@@ -68,7 +68,7 @@ export const Wrapper = styled.div<any>`
   }
 `;
 
-export const LogoWrapper = styled(motion.button)<any>`
+export const LogoWrapper = styled.button<any>`
   display: flex;
   flex-flow: row wrap;
   justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
@@ -76,7 +76,14 @@ export const LogoWrapper = styled(motion.button)<any>`
   height: 2.8rem;
   padding: ${(props) => (props.minimised ? '0' : '0.4rem 0.5rem')};
   margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
+  position: relative;
 
+  > .beta {
+    color: ${textSecondary};
+    position: absolute;
+    top: 0px;
+    font-size: 0.85rem;
+  }
   ellipse {
     fill: ${networkColor};
   }
