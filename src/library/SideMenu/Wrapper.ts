@@ -11,6 +11,7 @@ import {
   highlightSecondary,
   backgroundOverlay,
   networkColor,
+  modalBackground,
 } from 'theme';
 
 export const Wrapper = styled.div<any>`
@@ -83,6 +84,17 @@ export const LogoWrapper = styled.button<any>`
     position: absolute;
     top: 0px;
     font-size: 0.85rem;
+  }
+
+  > .beta-min {
+    color: ${networkColor};
+    background: ${modalBackground};
+    position: absolute;
+    right: -8px;
+    z-index: 2;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 0.5rem;
   }
   ellipse {
     fill: ${networkColor};

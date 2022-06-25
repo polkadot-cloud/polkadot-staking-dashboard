@@ -139,7 +139,15 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
         >
           {sideMenuMinimised ? (
-            <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
+            <>
+              <div
+                className="beta-min"
+                style={{ top: network.name === 'Westend' ? '-9px' : '-14px' }}
+              >
+                BETA
+              </div>
+              <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
+            </>
           ) : (
             <>
               <div
