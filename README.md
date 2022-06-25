@@ -53,6 +53,18 @@ Reach out to ross@parity.io for clarification of any content within this documen
 - Downshift for dropdowns [[docs](https://www.npmjs.com/package/downshift)]
 - Styled Components [[docs](https://styled-components.com/docs)] alongside Styled Theming [[docs](https://www.npmjs.com/package/styled-theming)] for theme configuration.
 
+## Environment Variables
+Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard:
+```
+# disable all mentioning of fiat values and token prices.
+# REACT_APP_DISABLE_FIAT=1
+
+# display an organisation label in the network bar.
+# REACT_APP_ORGANISATION="© Parity Technologies"
+
+# display a privacy policy url in the network bar.
+# REACT_APP_PRIVACY_URL=https://polkadot.network/privacy/
+```
 ## Config Files
 There are some ad-hoc files defining app configuration where needed. These just provide a means of bootstrapping app data, and further abstraction could be explored in the future.
 - [`config/pages.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/pages.ts): provides the pages and page categories of the app.
