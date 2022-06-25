@@ -4,8 +4,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { ItemWrapper } from './Wrappers';
+import { ItemProps } from './types';
 
-export const Item = (props: any) => {
+export const Item = (props: ItemProps) => {
   const { icon, label, transform, onClick } = props;
   const disabled = props.disabled ?? false;
 

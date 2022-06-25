@@ -9,8 +9,9 @@ import { Button } from 'library/Button';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { InputWrapper, RowWrapper } from './Wrappers';
+import { BondInputProps } from '../types';
 
-export const BondInput = (props: any) => {
+export const BondInput = (props: BondInputProps) => {
   // functional props
   const setters = props.setters ?? [];
 
@@ -20,7 +21,7 @@ export const BondInput = (props: any) => {
   const task = props.task ?? 'bond';
 
   // whether a value has been provided already
-  const _value = props.value ?? null;
+  const _value = props.value ?? 0;
 
   const { network } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;

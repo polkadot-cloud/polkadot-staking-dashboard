@@ -18,8 +18,9 @@ import { Oversubscribed } from './Labels/Oversubscribed';
 import { Blocked } from './Labels/Blocked';
 import { Select } from './Labels/Select';
 import { useValidatorList } from '../context';
+import { DefaultProps } from './types';
 
-export const Default = (props: any) => {
+export const Default = (props: DefaultProps) => {
   const {
     validator,
     toggleFavourites,

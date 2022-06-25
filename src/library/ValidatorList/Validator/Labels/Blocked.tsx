@@ -3,8 +3,9 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
+import { BlockedProps } from '../types';
 
-export const Blocked = (props: any) => {
+export const Blocked = (props: BlockedProps) => {
   const { prefs } = props;
   const blocked = prefs?.blocked ?? null;
 

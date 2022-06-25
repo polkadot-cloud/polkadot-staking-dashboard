@@ -55,7 +55,7 @@ export const ChangeNominations = () => {
   const remaining = newNominations.length;
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected key is valid
   useEffect(() => {

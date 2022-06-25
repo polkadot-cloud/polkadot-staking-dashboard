@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { StakingContextInterface } from 'types/staking';
+import { toFixedIfNecessary } from 'Utils';
 
 const TotalValidatorsStatBox = () => {
   const { staking } = useStaking() as StakingContextInterface;
@@ -29,7 +30,7 @@ const TotalValidatorsStatBox = () => {
       value1: totalValidators.toNumber(),
       value2: maxValidatorsCount.sub(totalValidators).toNumber(),
     },
-    tooltip: `${totalValidatorsAsPercent.toFixed(2)}%`,
+    tooltip: `${toFixedIfNecessary(totalValidatorsAsPercent, 2)}%`,
     assistant: {
       page: 'validators',
       key: 'Validator',

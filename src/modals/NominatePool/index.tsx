@@ -37,7 +37,7 @@ export const NominatePool = () => {
   const poolId = membership?.poolId;
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected membership and targests are valid
   const isValid = membership && isNominator() && nominations.length > 0;

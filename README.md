@@ -1,6 +1,4 @@
-# Polkadot Staking Dashboard
-
-A redefining Polkadot staking dashboard.
+# Polkadot Staking Dashboard [Beta]
 
 ## Demo
 

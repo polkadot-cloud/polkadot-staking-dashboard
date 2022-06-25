@@ -17,8 +17,9 @@ import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
 import { NetworkMetricsContextInterface } from 'types';
 import { PoolListProvider, usePoolList } from './context';
+import { PoolListProps } from './types';
 
-export const PoolListInner = (props: any) => {
+export const PoolListInner = (props: PoolListProps) => {
   const { allowMoreCols, pagination, batchKey }: any = props;
   const disableThrottle = props.disableThrottle ?? false;
   const refetchOnListUpdate =
@@ -35,7 +36,7 @@ export const PoolListInner = (props: any) => {
   const [page, setPage]: any = useState(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration]: any = useState(1);
+  const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of pools
   const [poolsDefault, setPoolsDefault] = useState(props.pools);
@@ -222,7 +223,7 @@ export const PoolList = (props: any) => {
 export class PoolListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;
 
-  shouldComponentUpdate(nextProps: any, nextState: any) {
+  shouldComponentUpdate(nextProps: PoolListProps, nextState: any) {
     return this.props.pools !== nextProps.pools;
   }
 

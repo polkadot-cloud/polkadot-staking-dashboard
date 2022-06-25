@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { HeadingWrapper as Wrapper } from './Wrapper';
+import { HeadingProps } from './types';
 
-export const Heading = (props: any) => {
+export const Heading = (props: HeadingProps) => {
   const { title, minimised } = props;
 
   return (

@@ -42,7 +42,7 @@ export const ClaimReward = () => {
   }, [activeBondedPool]);
 
   // valid to submit transaction
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // tx to submit
   const tx = () => {

@@ -52,7 +52,7 @@ export const UpdatePayee = () => {
   };
 
   // bond valid
-  const [valid, setValid]: any = useState(false);
+  const [valid, setValid] = useState<boolean>(false);
 
   // tx to submit
   const tx = () => {

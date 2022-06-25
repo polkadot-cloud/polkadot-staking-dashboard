@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Number } from 'library/StatBoxList/Number';
 import { APIContextInterface } from 'types/api';
 import { StakingContextInterface } from 'types/staking';
+import { planckBnToUnit } from 'Utils';
 
 export const LastEraPayoutStatBox = () => {
   const { network } = useApi() as APIContextInterface;
@@ -14,7 +14,7 @@ export const LastEraPayoutStatBox = () => {
   const { unit, units } = network;
   const { lastReward } = staking;
 
-  const lastRewardBase = lastReward.div(new BN(10 ** units)).toNumber();
+  const lastRewardBase = planckBnToUnit(lastReward, units).toFixed(0);
 
   const params = {
     label: 'Last Era Payout',

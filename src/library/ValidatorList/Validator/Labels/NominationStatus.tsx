@@ -7,10 +7,11 @@ import { useStaking } from 'contexts/Staking';
 import { APIContextInterface } from 'types/api';
 import { ActivePoolContextState } from 'types/pools';
 import { StakingContextInterface } from 'types/staking';
-import { capitalizeFirstLetter } from 'Utils';
+import { capitalizeFirstLetter, humanNumber } from 'Utils';
 import { NominationStatusWrapper } from '../Wrappers';
+import { NominationStatusProps } from '../types';
 
-export const NominationStatus = (props: any) => {
+export const NominationStatus = (props: NominationStatusProps) => {
   const { getNominationsStatus, eraStakers, erasStakersSyncing } =
     useStaking() as StakingContextInterface;
   const { getNominationsStatus: poolsGetNominationsStatus } =
@@ -42,7 +43,9 @@ export const NominationStatus = (props: any) => {
       <h5>
         {capitalizeFirstLetter(nominationStatus ?? '')}
         {ownStaked > 0 &&
-          ` / ${erasStakersSyncing ? '...' : `${ownStaked} ${unit}`}`}
+          `/ ${
+            erasStakersSyncing ? '...' : `${humanNumber(ownStaked)} ${unit}`
+          }`}
       </h5>
     </NominationStatusWrapper>
   );

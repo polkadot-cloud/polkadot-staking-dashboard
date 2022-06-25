@@ -7,9 +7,10 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import { ItemWrapper, MinimisedItemWrapper } from './Wrapper';
+import { ItemProps } from './types';
 
-export const Item = (props: any) => {
-  const { setSideMenu }: any = useUi();
+export const Item = (props: ItemProps) => {
+  const { setSideMenu } = useUi();
 
   const { name, active, to, icon, action, minimised } = props;
 

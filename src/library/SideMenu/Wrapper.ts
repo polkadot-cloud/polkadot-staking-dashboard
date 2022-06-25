@@ -11,6 +11,7 @@ import {
   highlightSecondary,
   backgroundOverlay,
   networkColor,
+  modalBackground,
 } from 'theme';
 
 export const Wrapper = styled.div<any>`
@@ -68,15 +69,33 @@ export const Wrapper = styled.div<any>`
   }
 `;
 
-export const LogoWrapper = styled(motion.button)<any>`
+export const LogoWrapper = styled.button<any>`
   display: flex;
   flex-flow: row wrap;
   justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
   width: 100%;
-  height: 2.4rem;
+  height: 2.8rem;
   padding: ${(props) => (props.minimised ? '0' : '0.4rem 0.5rem')};
   margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
+  position: relative;
 
+  > .beta {
+    color: ${networkColor};
+    position: absolute;
+    top: 0px;
+    font-size: 0.85rem;
+  }
+
+  > .beta-min {
+    color: ${networkColor};
+    background: ${modalBackground};
+    position: absolute;
+    right: -8px;
+    z-index: 2;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 0.5rem;
+  }
   ellipse {
     fill: ${networkColor};
   }

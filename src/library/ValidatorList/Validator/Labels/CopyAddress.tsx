@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useNotifications } from 'contexts/Notifications';
+import { CopyAddressProps } from '../types';
 
-export const CopyAddress = (props: any) => {
+export const CopyAddress = (props: CopyAddressProps) => {
   const { addNotification } = useNotifications();
   const { validator } = props;
   const { address } = validator;

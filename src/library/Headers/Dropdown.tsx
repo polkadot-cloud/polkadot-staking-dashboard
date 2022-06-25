@@ -3,8 +3,9 @@
 
 import { useRef } from 'react';
 import { useOutsideAlerter } from 'library/Hooks';
+import { DropdownProps } from './types';
 
-export const Dropdown = (props: any) => {
+export const Dropdown = (props: DropdownProps) => {
   const { toggleMenu, items } = props;
 
   const ref = useRef(null);

@@ -19,8 +19,9 @@ import { StakingContextInterface } from 'types/staking';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
+import { BondInputWithFeedbackProps } from '../types';
 
-export const BondInputWithFeedback = (props: any) => {
+export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   // input props
   const { bondType, defaultBond, unbond } = props;
   const nominating = props.nominating ?? false;

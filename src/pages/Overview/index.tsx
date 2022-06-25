@@ -19,7 +19,7 @@ import { GRAPH_HEIGHT } from 'consts';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { prefillToMaxDays, calculatePayoutsByDay } from 'library/Graphs/Utils';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, humanNumber } from 'Utils';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominators';
 import SupplyStakedStatBox from './Stats/SupplyStaked';
@@ -71,7 +71,9 @@ export const Overview = () => {
               <h2>
                 {lastPayout === null
                   ? 0
-                  : planckBnToUnit(new BN(lastPayout.amount), units)}
+                  : humanNumber(
+                      planckBnToUnit(new BN(lastPayout.amount), units)
+                    )}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">

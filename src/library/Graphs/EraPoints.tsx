@@ -16,6 +16,7 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
+import { EraPointsProps } from './types';
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +28,7 @@ ChartJS.register(
   Legend
 );
 
-export const EraPoints = (props: any) => {
+export const EraPoints = (props: EraPointsProps) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
   let { items } = props;

@@ -5,7 +5,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import BN from 'bn.js';
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
-import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
+import {
+  rmCommas,
+  localStorageOrDefault,
+  setStateWithRef,
+  planckBnToUnit,
+} from 'Utils';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface, ExternalAccount } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
@@ -47,6 +52,7 @@ export const StakingProvider = ({
     getLedgerForStash,
     getAccountNominations,
   } = useBalances() as BalancesContextInterface;
+  const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store staking metrics in state
@@ -293,9 +299,7 @@ export const StakingProvider = ({
       }
 
       // convert _stakingMinActiveBond to base value
-      const stakingMinActiveBond = _stakingMinActiveBond
-        .div(new BN(10 ** network.units))
-        .toNumber();
+      const stakingMinActiveBond = planckBnToUnit(_stakingMinActiveBond, units);
 
       setStateWithRef(
         {
@@ -349,13 +353,14 @@ export const StakingProvider = ({
       return true;
     }
 
-    if (Object.hasOwn(exists, 'addedBy')) {
+    if (Object.prototype.hasOwnProperty.call(exists, 'addedBy')) {
       const externalAccount = exists as ExternalAccount;
       if (externalAccount.addedBy === 'user') {
         return false;
       }
     }
-    return !Object.hasOwn(exists, 'signer');
+
+    return !Object.prototype.hasOwnProperty.call(exists, 'signer');
   };
 
   /*

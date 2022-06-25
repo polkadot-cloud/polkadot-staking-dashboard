@@ -6,8 +6,9 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from './Wrapper';
+import { StatusButtonProps } from './types';
 
-export const StatusButton = (props: any) => {
+export const StatusButton = (props: StatusButtonProps) => {
   const { checked, label, onClick } = props;
 
   return (

@@ -16,6 +16,8 @@ import { useApi } from 'contexts/Api';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { APIContextInterface } from 'types/api';
+import { humanNumber } from 'Utils';
+import { PayoutLineProps } from './types';
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-export const PayoutLine = (props: any) => {
+export const PayoutLine = (props: PayoutLineProps) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
   const { payouts, height, background } = props;
@@ -76,7 +78,7 @@ export const PayoutLine = (props: any) => {
             return [];
           },
           label: (context: any) => {
-            return `${context.parsed.y} ${network.unit}`;
+            return `${humanNumber(context.parsed.y)} ${network.unit}`;
           },
         },
         intersect: false,

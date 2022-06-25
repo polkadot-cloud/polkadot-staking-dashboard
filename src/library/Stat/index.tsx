@@ -6,8 +6,9 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import React from 'react';
 import { Wrapper } from './Wrapper';
+import { StatProps } from './types';
 
-export const Stat = (props: any) => {
+export const Stat = (props: StatProps) => {
   const { label, stat, buttons, assistant, icon } = props;
 
   return (

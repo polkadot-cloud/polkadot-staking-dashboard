@@ -3,7 +3,7 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, humanNumber } from 'Utils';
 import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
 import { Button, ButtonRow } from 'library/Button';
@@ -41,7 +41,7 @@ export const ManageBond = () => {
           <OpenAssistantIcon page="pools" title="Bonded in Pool" />
         </h4>
         <h2>
-          {planckBnToUnit(active, units)}&nbsp;{network.unit}
+          {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
         </h2>
         <ButtonRow>
           <Button

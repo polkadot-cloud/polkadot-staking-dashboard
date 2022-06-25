@@ -7,11 +7,13 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { APIContextInterface } from 'types/api';
+import { humanNumber } from 'Utils';
 import { GraphWrapper } from './Wrappers';
+import { BondedProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const Bonded = (props: any) => {
+export const Bonded = (props: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi() as APIContextInterface;
 
@@ -62,7 +64,7 @@ export const Bonded = (props: any) => {
               return 'Inactive';
             }
             return `${context.label}: ${
-              context.parsed === -1 ? 0 : context.parsed
+              context.parsed === -1 ? 0 : humanNumber(context.parsed)
             } ${network.unit}`;
           },
         },

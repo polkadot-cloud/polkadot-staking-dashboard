@@ -4,8 +4,9 @@
 import NumberEasing from 'che-react-number-easing';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { StatBox } from './Item';
+import { NumberProps } from './types';
 
-export const Number = (props: any) => {
+export const Number = (props: NumberProps) => {
   const { label, value, unit, assistant } = props;
 
   const assist = assistant !== undefined;
