@@ -9,7 +9,7 @@ export const Settings = () => {
   const { services, toggleService } = useUi();
 
   // fetch flag to disable fiat
-  const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT) ?? 0;
+  const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
 
   return (
     <PaddingWrapper>

@@ -43,8 +43,10 @@ export const NetworkBar = () => {
   };
 
   const animate = open ? 'maximised' : 'minimised';
-
   const ref = useRef(null);
+
+  const PRIVACY_URL = process.env.REACT_APP_PRIVACY_URL;
+  const ORGANISATION = process.env.REACT_APP_ORGANISATION;
 
   useOutsideAlerter(
     ref,
@@ -69,15 +71,15 @@ export const NetworkBar = () => {
       <Summary>
         <section>
           <network.icon className="network_icon" />
-          &copy; Web3 Foundation
-          <Separator />
-          <a
-            href="https://polkadot.network/privacy/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Privacy
-          </a>
+          {ORGANISATION === undefined ? network.name : ORGANISATION}
+          {PRIVACY_URL !== undefined && (
+            <>
+              <Separator />
+              <a href={PRIVACY_URL} target="_blank" rel="noreferrer">
+                Privacy
+              </a>
+            </>
+          )}
         </section>
         <section>
           <button

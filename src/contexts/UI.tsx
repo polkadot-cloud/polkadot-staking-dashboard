@@ -91,7 +91,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     const _services: any = localStorageOrDefault('services', SERVICES, true);
 
     // if fiat is disabled, remove binance_spot service
-    const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT) ?? 0;
+    const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
     if (DISABLE_FIAT && _services.includes('binance_spot')) {
       const index = _services.indexOf('binance_spot');
       if (index !== -1) {
