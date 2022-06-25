@@ -10,6 +10,7 @@ export const AccountWrapper = styled.div<any>`
   display: flex;
   flex-flow: column wrap;
   padding-bottom: 0.5rem;
+  margin-top: 1.25rem;
 
   .account {
     width: 100%;
