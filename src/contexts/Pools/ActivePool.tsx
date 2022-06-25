@@ -92,7 +92,7 @@ export const ActivePoolProvider = ({
       activeBondedPool?.unsub();
     }
     setActiveBondedPool({
-      membership: undefined,
+      pool: undefined,
       unsub: null,
     });
   };

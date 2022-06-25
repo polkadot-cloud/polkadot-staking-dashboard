@@ -19,6 +19,7 @@ import { NominatePool } from './NominatePool';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
 import { ChangePoolState } from './ChangePoolState';
+import { ChangePoolRoles } from './ChangePoolRoles';
 import { ClaimReward } from './ClaimReward';
 import { SelectFavourites } from './SelectFavourites';
 import { NominateFromFavourites } from './NominateFromFavourites';
@@ -110,6 +111,7 @@ export const Modal = () => {
             {modal === 'JoinPool' && <JoinPool />}
             {modal === 'LeavePool' && <LeavePool />}
             {modal === 'ChangePoolState' && <ChangePoolState />}
+            {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
             {modal === 'ClaimReward' && <ClaimReward />}
             {modal === 'SelectFavourites' && <SelectFavourites />}
             {modal === 'NominateFromFavourites' && <NominateFromFavourites />}

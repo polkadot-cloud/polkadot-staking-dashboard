@@ -18,7 +18,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 import { planckBnToUnit } from 'Utils';
-
 import {
   faPaperPlane,
   faSignOutAlt,

@@ -48,7 +48,7 @@ export const RolesWrapper = styled.div`
       > h3 {
         display: flex;
         align-items: center;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0rem;
 
         > .assistant-icon {
           margin-left: 0.5rem;
