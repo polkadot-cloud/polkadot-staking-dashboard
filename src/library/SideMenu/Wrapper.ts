@@ -80,7 +80,7 @@ export const LogoWrapper = styled.button<any>`
   position: relative;
 
   > .beta {
-    color: ${textSecondary};
+    color: ${networkColor};
     position: absolute;
     top: 0px;
     font-size: 0.85rem;
