@@ -157,7 +157,7 @@ export const SideMenu = () => {
                     network.name === 'Kusama'
                       ? '1.8rem'
                       : network.name === 'Westend'
-                      ? '0.5rem'
+                      ? '0.25rem'
                       : '0px',
                 }}
               >
