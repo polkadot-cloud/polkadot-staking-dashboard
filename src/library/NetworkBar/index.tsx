@@ -75,11 +75,11 @@ export const NetworkBar = () => {
           <p>{ORGANISATION === undefined ? network.name : ORGANISATION}</p>
           <Separator />
           {PRIVACY_URL !== undefined ? (
-            <>
+            <p>
               <a href={PRIVACY_URL} target="_blank" rel="noreferrer">
                 Privacy
               </a>
-            </>
+            </p>
           ) : (
             <Status />
           )}
