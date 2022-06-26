@@ -5,8 +5,9 @@ import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { AccountSelect } from 'library/Form/AccountSelect';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
+import { InputItem } from 'library/Form/types';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Spacer } from '../Wrappers';
@@ -22,7 +23,9 @@ export const SetController = (props: any) => {
 
   // store the currently selected controller account
   const _selected = setup.controller !== null ? setup.controller : null;
-  const [selected, setSelected] = useState<any>(getAccount(_selected));
+  const [selected, setSelected] = useState<ImportedAccount | null>(
+    getAccount(_selected)
+  );
 
   // get eligible controllers for input
   const items = getEligibleControllers();
@@ -35,7 +38,7 @@ export const SetController = (props: any) => {
     setSelected(_initial);
   }, [activeAccount, accounts]);
 
-  const handleOnChange = ({ selectedItem }: any) => {
+  const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
     setSelected(selectedItem);
     setActiveAccountSetup({
       ...setup,

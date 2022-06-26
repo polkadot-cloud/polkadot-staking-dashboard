@@ -14,15 +14,16 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
 import { Warning } from 'library/Form/Warning';
+import { InputItem } from 'library/Form/types';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
 export const UpdateController = () => {
   const { api } = useApi() as APIContextInterface;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
@@ -30,7 +31,7 @@ export const UpdateController = () => {
   const account = getAccount(controller);
 
   // the selected value in the form
-  const [selected, setSelected]: any = useState(null);
+  const [selected, setSelected] = useState<ImportedAccount | null>(null);
 
   // get eligible controller accounts
   const items = getEligibleControllers();
@@ -41,7 +42,7 @@ export const UpdateController = () => {
   }, [activeAccount, items]);
 
   // handle account selection change
-  const handleOnChange = ({ selectedItem }: any) => {
+  const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
     setSelected(selectedItem);
   };
 
