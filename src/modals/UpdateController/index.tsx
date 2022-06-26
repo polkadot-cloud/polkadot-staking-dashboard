@@ -11,6 +11,7 @@ import { AccountDropdown } from 'library/Form/AccountDropdown';
 import { useBalances } from 'contexts/Balances';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
@@ -22,20 +23,22 @@ import Wrapper from './Wrapper';
 export const UpdateController = () => {
   const { api } = useApi() as APIContextInterface;
   const { setStatus: setModalStatus }: any = useModal();
-  const { accounts, activeAccount, getAccount, accountHasSigner } =
+  const { activeAccount, getAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount, isController } =
-    useBalances() as BalancesContextInterface;
+  const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
   // the selected value in the form
   const [selected, setSelected]: any = useState(null);
 
+  // get eligible controller accounts
+  const items = getEligibleControllers();
+
   // reset selected value on account change
   useEffect(() => {
     setSelected(null);
-  }, [activeAccount]);
+  }, [activeAccount, items]);
 
   // handle account selection change
   const handleOnChange = ({ selectedItem }: any) => {
@@ -66,11 +69,6 @@ export const UpdateController = () => {
     callbackInBlock: () => {},
   });
 
-  // remove active controller from selectable items
-  const accountsList = accounts.filter((acc: any) => {
-    return acc.address !== activeAccount && !isController(acc.address);
-  });
-
   return (
     <Wrapper>
       <HeadingWrapper>
@@ -86,9 +84,7 @@ export const UpdateController = () => {
           )}
         </div>
         <AccountDropdown
-          items={accountsList.filter(
-            (acc: any) => acc.address !== activeAccount
-          )}
+          items={items}
           onChange={handleOnChange}
           placeholder="Search Account"
           current={account}
