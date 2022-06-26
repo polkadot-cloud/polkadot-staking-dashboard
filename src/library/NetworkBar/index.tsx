@@ -16,6 +16,7 @@ import {
   Separator,
 } from './Wrappers';
 import { BlockNumber } from './BlockNumber';
+import { Status } from './Status';
 
 export const NetworkBar = () => {
   const { services } = useUi();
@@ -71,14 +72,16 @@ export const NetworkBar = () => {
       <Summary>
         <section>
           <network.icon className="network_icon" />
-          {ORGANISATION === undefined ? network.name : ORGANISATION}
-          {PRIVACY_URL !== undefined && (
+          <p>{ORGANISATION === undefined ? network.name : ORGANISATION}</p>
+          <Separator />
+          {PRIVACY_URL !== undefined ? (
             <>
-              <Separator />
               <a href={PRIVACY_URL} target="_blank" rel="noreferrer">
                 Privacy
               </a>
             </>
+          ) : (
+            <Status />
           )}
         </section>
         <section>
