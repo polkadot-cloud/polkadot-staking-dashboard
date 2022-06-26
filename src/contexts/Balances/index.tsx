@@ -13,7 +13,6 @@ import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
 import { rmCommas, setStateWithRef } from 'Utils';
-
 import {
   BalanceLedger,
   BalancesAccount,
@@ -482,8 +481,8 @@ export const BalancesProvider = ({
         getAccountNominations,
         getBondOptions,
         isController,
-        accounts: accountsRef.current,
         minReserve,
+        accounts: accountsRef.current,
         ledgers: ledgersRef.current,
       }}
     >
