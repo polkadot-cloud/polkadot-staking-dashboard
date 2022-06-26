@@ -10,15 +10,16 @@ import { BalancesContextInterface } from 'types/balances';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { planckBnToUnit } from 'Utils';
 import { useConnect } from 'contexts/Connect';
+import { InputItem } from '../types';
 
-export const getEligibleControllers = () => {
+export const getEligibleControllers = (): Array<InputItem> => {
   const { network } = useApi() as APIContextInterface;
   const { activeAccount, accounts: connectAccounts } =
     useConnect() as ConnectContextInterface;
   const { isController, getAccountBalance, minReserve } =
     useBalances() as BalancesContextInterface;
 
-  const [accounts, setAccounts] = useState<any>([]);
+  const [accounts, setAccounts] = useState<Array<InputItem>>([]);
 
   useEffect(() => {
     setAccounts(filterAccounts());
@@ -36,20 +37,22 @@ export const getEligibleControllers = () => {
     );
 
     // inject balances and whether account can be an active item
-    let _accountsAsInput = _accounts.map((acc: ImportedAccount) => {
-      const balance = getAccountBalance(acc?.address ?? null);
-      return {
-        ...acc,
-        balance,
-        active:
-          planckBnToUnit(balance.free, network.units) >=
-          planckBnToUnit(minReserve, network.units),
-        alert: `Not Enough ${network.unit}`,
-      };
-    });
+    let _accountsAsInput: Array<InputItem> = _accounts.map(
+      (acc: ImportedAccount) => {
+        const balance = getAccountBalance(acc?.address ?? null);
+        return {
+          ...acc,
+          balance,
+          active:
+            planckBnToUnit(balance.free, network.units) >=
+            planckBnToUnit(minReserve, network.units),
+          alert: `Not Enough ${network.unit}`,
+        };
+      }
+    );
 
     // sort accounts with at least free balance first
-    _accountsAsInput = _accountsAsInput.sort((a: any, b: any) => {
+    _accountsAsInput = _accountsAsInput.sort((a: InputItem, b: InputItem) => {
       const aFree = a?.balance?.free ?? new BN(0);
       const bFree = b?.balance?.free ?? new BN(0);
       return bFree.sub(aFree).toNumber();

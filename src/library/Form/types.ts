@@ -1,9 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ImportedAccount } from 'types/connect';
+import { ExternalAccount } from 'types/connect';
+import { WalletAccount } from '@talisman-connect/wallets';
+import { Balance } from 'types/balances';
 
-export type InputItem = ImportedAccount | null;
+export interface WalletAccountItem extends WalletAccount {
+  active?: boolean;
+  alert?: string;
+  balance?: Balance;
+}
+export interface ExternalAccountItem extends ExternalAccount {
+  active?: boolean;
+  alert?: string;
+  balance?: Balance;
+}
+export type ImportedAccountItem = WalletAccountItem | ExternalAccountItem;
+
+export type InputItem = ImportedAccountItem | null;
 
 export interface DropdownInput {
   key: string;
@@ -20,7 +34,7 @@ export interface AccountDropdownProps {
 }
 
 export interface AccountSelectProps {
-  items: Array<ImportedAccount>;
+  items: Array<InputItem>;
   onChange: (o: any) => void;
   placeholder: string;
   value: InputItem;
