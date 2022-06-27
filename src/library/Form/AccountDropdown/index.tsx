@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
@@ -17,6 +17,10 @@ import { AccountDropdownProps, InputItem } from '../types';
 export const AccountDropdown = (props: AccountDropdownProps) => {
   const { items, onChange, placeholder, value, current, height } = props;
 
+  useEffect(() => {
+    setInputItems(items);
+  }, [items]);
+
   const itemToString = (item: InputItem) => {
     const name = item?.name ?? '';
     return name;
@@ -24,7 +28,6 @@ export const AccountDropdown = (props: AccountDropdownProps) => {
 
   // store input items
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
-
   const c = useCombobox({
     items: inputItems,
     itemToString,
@@ -118,15 +121,23 @@ const DropdownItem = ({ c, item, index }: any) => {
     border = `2px solid ${defaultThemes.transparent[mode]}`;
   }
 
+  // disable item in list if account doesn't satisfy controller budget.
+  const itemProps = item.active
+    ? c.getItemProps({ key: item.name, index, item })
+    : {};
+  const opacity = item.active ? 1 : 0.5;
+  const cursor = item.active ? 'pointer' : 'default';
+
   return (
     <div
       className="item"
-      {...c.getItemProps({ key: item.name, index, item })}
-      style={{ color, border }}
+      {...itemProps}
+      style={{ color, border, opacity, cursor }}
     >
       <div className="icon">
         <Identicon value={item.address} size={26} />
       </div>
+      {!item.active && <span>Not Enough {network.unit}</span>}
       <p>{item.name}</p>
     </div>
   );

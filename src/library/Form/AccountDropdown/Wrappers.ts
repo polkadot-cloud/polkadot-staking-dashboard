@@ -7,6 +7,7 @@ import {
   textPrimary,
   backgroundDropdown,
   textSecondary,
+  borderSecondary,
 } from 'theme';
 
 export const StyledDownshift = styled.div`
@@ -107,6 +108,14 @@ export const StyledDropdown = styled.div<any>`
       align-items: center;
 
       .icon {
+        margin-right: 0.5rem;
+      }
+      span {
+        color: ${textSecondary};
+        border: 1px solid ${borderSecondary};
+        border-radius: 0.5rem;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.9rem;
         margin-right: 0.5rem;
       }
       p {
