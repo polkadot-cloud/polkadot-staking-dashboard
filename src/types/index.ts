@@ -101,5 +101,8 @@ export interface NetworkMetricsState {
   unsub: { (): void } | undefined;
 }
 
+// any types to compress compiler warnings
+// eslint-disable-next-line
 export type AnyApi = any;
+// eslint-disable-next-line
 export type AnyMetaBatch = any;
