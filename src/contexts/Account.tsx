@@ -4,14 +4,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { AnyApi } from 'types';
+import { AnyApi, AnyMetaBatch } from 'types';
 import { useApi } from './Api';
 
 // context type
 export interface AccountContextState {
   fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
   removeAccountMetaBatch: (k: string) => void;
-  meta: any;
+  meta: AnyMetaBatch;
 }
 
 // context definition
@@ -33,7 +33,7 @@ export const AccountProvider = ({
   const { isReady, api } = useApi() as APIContextInterface;
 
   // stores the meta data batches for validator lists
-  const [accountMetaBatches, setAccountMetaBatch]: any = useState({});
+  const [accountMetaBatches, setAccountMetaBatch] = useState<AnyMetaBatch>({});
   const accountMetaBatchesRef = useRef(accountMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
@@ -43,8 +43,8 @@ export const AccountProvider = ({
   // unsubscribe from any validator meta batches
   useEffect(() => {
     return () => {
-      Object.values(accountSubsRef.current).map((batch: any) => {
-        return Object.entries(batch).map(([k, v]: any) => {
+      Object.values(accountSubsRef.current).map((batch: AnyMetaBatch) => {
+        return Object.entries(batch).map(([k, v]: AnyApi) => {
           return v();
         });
       });
@@ -131,8 +131,8 @@ export const AccountProvider = ({
         addr,
         async (_supers) => {
           // determine where supers exist
-          const supers: any = [];
-          const supersWithIdentity: any = [];
+          const supers: AnyApi = [];
+          const supersWithIdentity: AnyApi = [];
 
           for (let i = 0; i < _supers.length; i++) {
             const _super = _supers[i].toHuman();
@@ -144,8 +144,8 @@ export const AccountProvider = ({
 
           // get supers one-off multi query
           const query = supers
-            .filter((s: any) => s !== null)
-            .map((s: any) => s[0]);
+            .filter((s: AnyApi) => s !== null)
+            .map((s: AnyApi) => s[0]);
 
           const temp = await api.query.identity.identityOf.multi<AnyApi>(
             query,

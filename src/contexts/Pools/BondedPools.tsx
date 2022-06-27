@@ -11,7 +11,7 @@ import {
   PoolsConfigContextState,
 } from 'types/pools';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
-import { AnyApi } from 'types';
+import { AnyApi, AnyMetaBatch } from 'types';
 import { useApi } from '../Api';
 import { usePoolsConfig } from './PoolsConfig';
 import { setStateWithRef } from '../../Utils';
@@ -31,7 +31,7 @@ export const BondedPoolsProvider = ({
   const { poolsPalletId } = consts;
 
   // stores the meta data batches for pool lists
-  const [poolMetaBatches, setPoolMetaBatch]: any = useState({});
+  const [poolMetaBatches, setPoolMetaBatch]: AnyMetaBatch = useState({});
   const poolMetaBatchesRef = useRef(poolMetaBatches);
 
   // stores the meta batch subscriptions for pool lists
@@ -88,7 +88,11 @@ export const BondedPoolsProvider = ({
     },
   };
   */
-  const fetchPoolsMetaBatch = async (key: string, p: any, refetch = false) => {
+  const fetchPoolsMetaBatch = async (
+    key: string,
+    p: AnyMetaBatch,
+    refetch = false
+  ) => {
     if (!isReady || !api) {
       return;
     }
@@ -127,10 +131,10 @@ export const BondedPoolsProvider = ({
       poolMetaBatchesRef
     );
 
-    const subscribeToMetadata = async (id: any) => {
+    const subscribeToMetadata = async (id: AnyApi) => {
       const unsub = await api.query.nominationPools.metadata.multi(
         id,
-        (_metadata: any) => {
+        (_metadata: AnyApi) => {
           const metadata = [];
           for (let i = 0; i < _metadata.length; i++) {
             metadata.push(_metadata[i].toHuman());
@@ -178,7 +182,7 @@ export const BondedPoolsProvider = ({
   };
 
   // Helper: generates pool stash and reward accounts. assumes poolsPalletId is synced.
-  const createAccounts = (poolId: number): any => {
+  const createAccounts = (poolId: number) => {
     const poolIdBN = new BN(poolId);
     return {
       stash: createAccount(poolIdBN, 0),

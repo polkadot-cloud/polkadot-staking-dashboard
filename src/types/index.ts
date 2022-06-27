@@ -102,3 +102,4 @@ export interface NetworkMetricsState {
 }
 
 export type AnyApi = any;
+export type AnyMetaBatch = any;

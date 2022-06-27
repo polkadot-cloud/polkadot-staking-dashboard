@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { AnyMetaBatch } from 'types';
+
 export interface ValidatorsContextInterface {
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
   removeValidatorMetaBatch: (k: string) => void;
@@ -10,7 +12,7 @@ export interface ValidatorsContextInterface {
   addFavourite: (a: string) => void;
   removeFavourite: (a: string) => void;
   validators: Array<Validator>;
-  meta: any;
+  meta: AnyMetaBatch;
   session: SessionValidators;
   favourites: string[];
   nominated: Array<Validator> | null;

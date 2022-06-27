@@ -9,6 +9,7 @@ import {
   PoolsConfigContextState,
   PoolMembershipsContextState,
 } from 'types/pools';
+import { AnyApi } from 'types';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -77,12 +78,12 @@ export const PoolMembershipsProvider = ({
 
     const unsub = await api.query.nominationPools.poolMembers(
       address,
-      async (result: any) => {
+      async (result: AnyApi) => {
         let membership = result?.unwrapOr(undefined)?.toHuman();
 
         if (membership) {
           // format pool's unlocking chunks
-          const unbondingEras: any = membership.unbondingEras;
+          const unbondingEras: AnyApi = membership.unbondingEras;
           const unlocking = [];
           for (const [e, v] of Object.entries(unbondingEras || {})) {
             const era = rmCommas(e as string);
