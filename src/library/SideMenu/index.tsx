@@ -155,13 +155,13 @@ export const SideMenu = () => {
                 style={{
                   right:
                     network.name === 'Kusama'
-                      ? '1.8rem'
+                      ? '1.6rem'
                       : network.name === 'Westend'
-                      ? '0.25rem'
-                      : '0px',
+                      ? '1.25rem'
+                      : '0.25rem',
                 }}
               >
-                BETA
+                Staking | BETA
               </div>
               <network.logo.svg
                 style={{

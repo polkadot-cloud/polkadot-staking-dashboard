@@ -82,8 +82,8 @@ export const LogoWrapper = styled.button<any>`
   > .beta {
     color: ${networkColor};
     position: absolute;
-    top: 0px;
-    font-size: 0.75rem;
+    top: -7px;
+    font-size: 0.7rem;
   }
 
   > .beta-min {
