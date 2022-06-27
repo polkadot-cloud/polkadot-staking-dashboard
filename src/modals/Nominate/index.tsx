@@ -67,7 +67,7 @@ export const Nominate = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: controller,
     shouldSubmit: valid,
@@ -125,7 +125,7 @@ export const Nominate = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting || warnings.length}
+              disabled={!valid || submitting || warnings.length > 0}
             >
               <FontAwesomeIcon
                 transform="grow-2"

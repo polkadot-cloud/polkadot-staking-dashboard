@@ -66,7 +66,7 @@ export const UpdatePayee = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: controller,
     shouldSubmit: valid,

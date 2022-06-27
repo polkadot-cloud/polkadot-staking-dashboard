@@ -55,7 +55,7 @@ export const Summary = (props: any) => {
     return api.tx.utility.batch(_txs);
   };
 
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,

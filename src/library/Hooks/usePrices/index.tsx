@@ -8,7 +8,7 @@ import { APIContextInterface } from 'types/api';
 
 export const usePrices = () => {
   const { network, fetchDotPrice } = useApi() as APIContextInterface;
-  const { services }: any = useUi();
+  const { services } = useUi();
 
   const pricesLocalStorage = () => {
     const pricesLocal = localStorage.getItem(`${network.name}_prices`);

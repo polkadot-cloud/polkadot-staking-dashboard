@@ -71,7 +71,7 @@ export const Forms = forwardRef(
       return _tx;
     };
     const signingAccount = isStaking ? controller : activeAccount;
-    const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+    const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
       tx: tx(),
       from: signingAccount,
       shouldSubmit: valid,

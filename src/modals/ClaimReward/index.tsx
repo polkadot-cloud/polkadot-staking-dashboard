@@ -54,7 +54,7 @@ export const ClaimReward = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: valid,

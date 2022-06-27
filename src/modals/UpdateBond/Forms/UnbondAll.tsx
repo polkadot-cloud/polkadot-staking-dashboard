@@ -104,7 +104,7 @@ export const UnbondAll = (props: any) => {
 
   const signingAccount = isPooling ? activeAccount : controller;
 
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: signingAccount,
     shouldSubmit: bondValid,

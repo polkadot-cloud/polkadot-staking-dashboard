@@ -56,7 +56,7 @@ export const ValidatorListInner = (props: any) => {
     applyValidatorFilters,
     applyValidatorOrder,
     isSyncing,
-  }: any = useUi();
+  } = useUi();
 
   const {
     batchKey,

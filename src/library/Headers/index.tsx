@@ -25,7 +25,7 @@ export const Headers = () => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { validators } = useValidators() as ValidatorsContextInterface;
   const { pending } = useExtrinsics();
-  const { isSyncing }: any = useUi();
+  const { isSyncing } = useUi();
 
   let syncing = isSyncing;
 

@@ -44,7 +44,7 @@ export const ChangePoolRoles = () => {
   };
 
   // handle extrinsic
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,

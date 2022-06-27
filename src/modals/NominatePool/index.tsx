@@ -18,6 +18,7 @@ import {
   ActivePoolContextState,
 } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { APIContextInterface } from 'types/api';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -27,8 +28,8 @@ import {
 } from '../Wrappers';
 
 export const NominatePool = () => {
-  const { api }: any = useApi();
-  const { setStatus: setModalStatus }: any = useModal();
+  const { api } = useApi() as APIContextInterface;
+  const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
@@ -48,7 +49,7 @@ export const NominatePool = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!valid) {
+    if (!valid || !api) {
       return _tx;
     }
     const targetsToSubmit = nominations.map((item: any) => item.address);
@@ -56,7 +57,7 @@ export const NominatePool = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -113,7 +114,7 @@ export const NominatePool = () => {
               disabled={
                 !valid ||
                 submitting ||
-                warnings.length ||
+                warnings.length > 0 ||
                 !accountHasSigner(activeAccount)
               }
             >

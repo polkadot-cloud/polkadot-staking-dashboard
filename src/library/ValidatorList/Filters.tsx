@@ -22,7 +22,7 @@ export const Filters = () => {
     orderValidators,
     toggleFilterValidators,
     toggleAllValidatorFilters,
-  }: any = useUi();
+  } = useUi();
 
   const handleFilter = (fn: any, filter: string) => {
     fn(filter);

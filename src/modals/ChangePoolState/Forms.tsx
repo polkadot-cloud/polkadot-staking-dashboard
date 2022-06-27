@@ -97,7 +97,7 @@ export const Forms = () => {
     return { title, message };
   })();
 
-  const { submitTx, estimatedFee, submitting }: any = useSubmitExtrinsic({
+  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,

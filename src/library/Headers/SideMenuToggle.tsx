@@ -7,7 +7,7 @@ import { useUi } from 'contexts/UI';
 import { Item } from './Wrappers';
 
 export const SideMenuToggle = () => {
-  const { setSideMenu, sideMenuOpen }: any = useUi();
+  const { setSideMenu, sideMenuOpen } = useUi();
 
   return (
     <div className="menu">

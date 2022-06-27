@@ -32,8 +32,8 @@ import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { network } = useApi() as APIContextInterface;
-  const { payouts }: any = useSubscan();
-  const { services }: any = useUi();
+  const { payouts } = useSubscan();
+  const { services } = useUi();
   const { units } = network;
   const { page } = props;
   const { title } = page;

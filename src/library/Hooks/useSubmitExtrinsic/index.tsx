@@ -10,14 +10,17 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { getWalletBySource, Wallet } from '@talisman-connect/wallets';
 import { DAPP_NAME } from 'consts';
+import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
-export const useSubmitExtrinsic = (extrinsic: any) => {
+export const useSubmitExtrinsic = (
+  extrinsic: UseSubmitExtrinsicProps
+): UseSubmitExtrinsic => {
   // extract extrinsic info
   const { tx, shouldSubmit, callbackSubmit, callbackInBlock } = extrinsic;
 
   // if null account is provided, fallback to empty string
-  let { from } = extrinsic;
-  from = from ?? '';
+  const { from } = extrinsic;
+  const submitAddress: string = from ?? '';
 
   const { api } = useApi() as APIContextInterface;
   const { addNotification } = useNotifications();
@@ -40,7 +43,7 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
       return;
     }
     // get payment info
-    const info = await tx.paymentInfo(from);
+    const info = await tx.paymentInfo(submitAddress);
     // convert fee to unit
     setEstimatedFee(info.partialFee.toHuman());
   };
@@ -50,12 +53,12 @@ export const useSubmitExtrinsic = (extrinsic: any) => {
     if (submitting || !shouldSubmit || !api) {
       return;
     }
-    const account = getAccount(from);
+    const account = getAccount(submitAddress);
     if (account === null) {
       return;
     }
 
-    const accountNonce = await api.rpc.system.accountNextIndex(from);
+    const accountNonce = await api.rpc.system.accountNextIndex(submitAddress);
     const { signer, source } = account;
 
     // get extension

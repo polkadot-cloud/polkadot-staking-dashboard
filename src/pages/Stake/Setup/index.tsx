@@ -16,7 +16,7 @@ import { Payee } from './Payee';
 import { Summary } from './Summary';
 
 export const Setup = ({ title }: any) => {
-  const { setOnSetup }: any = useUi();
+  const { setOnSetup } = useUi();
 
   return (
     <>
