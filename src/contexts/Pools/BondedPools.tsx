@@ -11,7 +11,7 @@ import {
   PoolsConfigContextState,
 } from 'types/pools';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
-import { AnyApi, AnyMetaBatch } from 'types';
+import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { useApi } from '../Api';
 import { usePoolsConfig } from './PoolsConfig';
 import { setStateWithRef } from '../../Utils';
@@ -35,7 +35,9 @@ export const BondedPoolsProvider = ({
   const poolMetaBatchesRef = useRef(poolMetaBatches);
 
   // stores the meta batch subscriptions for pool lists
-  const [poolSubs, setPoolSubs]: any = useState({});
+  const [poolSubs, setPoolSubs] = useState<{
+    [key: string]: Array<Fn>;
+  }>({});
   const poolSubsRef = useRef(poolSubs);
 
   // store bonded pools
@@ -51,8 +53,8 @@ export const BondedPoolsProvider = ({
   }, [network, isReady, enabled]);
 
   const unsubscribe = () => {
-    Object.values(poolSubsRef.current).map((batch: any, i: number) => {
-      return Object.entries(batch).map(([k, v]: any) => {
+    Object.values(poolSubsRef.current).map((batch: Array<Fn>) => {
+      return Object.entries(batch).map(([, v]) => {
         return v();
       });
     });
@@ -153,7 +155,7 @@ export const BondedPoolsProvider = ({
     };
 
     // initiate subscriptions
-    await Promise.all([subscribeToMetadata(ids)]).then((unsubs: any) => {
+    await Promise.all([subscribeToMetadata(ids)]).then((unsubs: Array<Fn>) => {
       addMetaBatchUnsubs(key, unsubs);
     });
   };
@@ -161,7 +163,7 @@ export const BondedPoolsProvider = ({
   /*
    * Helper: to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: any) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
     const _unsubs = poolSubsRef.current;
     const _keyUnsubs = _unsubs[key] ?? [];
 

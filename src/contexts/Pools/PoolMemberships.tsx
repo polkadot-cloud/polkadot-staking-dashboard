@@ -4,12 +4,12 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import {
   PoolsConfigContextState,
   PoolMembershipsContextState,
 } from 'types/pools';
-import { AnyApi } from 'types';
+import { AnyApi, Fn } from 'types';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -38,8 +38,10 @@ export const PoolMembershipsProvider = ({
   const poolMembershipsRef = useRef<any>(poolMemberships);
 
   // stores pool subscription objects
-  const [poolMembershipUnsubs, setpoolMembershipUnsubs] = useState<any>([]);
-  const poolMembershipUnsubRefs = useRef<any>(poolMembershipUnsubs);
+  const [poolMembershipUnsubs, setpoolMembershipUnsubs] = useState<Array<Fn>>(
+    []
+  );
+  const poolMembershipUnsubRefs = useRef<Array<AnyApi>>(poolMembershipUnsubs);
 
   useEffect(() => {
     if (isReady && enabled) {
@@ -54,7 +56,9 @@ export const PoolMembershipsProvider = ({
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map((a: any) => subscribeToPoolMembership(a.address))
+      connectAccounts.map((a: ImportedAccount) =>
+        subscribeToPoolMembership(a.address)
+      )
     );
   };
 
@@ -67,7 +71,7 @@ export const PoolMembershipsProvider = ({
 
   // unsubscribe from all pool memberships
   const unsubscribeAll = async () => {
-    Object.values(poolMembershipUnsubRefs.current).forEach(async (v: any) => {
+    Object.values(poolMembershipUnsubRefs.current).forEach(async (v: Fn) => {
       await v();
     });
   };

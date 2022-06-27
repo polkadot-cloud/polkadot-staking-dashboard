@@ -15,7 +15,12 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
-import { AnyApi, AnyMetaBatch, NetworkMetricsContextInterface } from 'types';
+import {
+  AnyApi,
+  AnyMetaBatch,
+  Fn,
+  NetworkMetricsContextInterface,
+} from 'types';
 import { MIN_BOND_PRECISION } from 'consts';
 import {
   SessionValidators,
@@ -68,7 +73,9 @@ export const ValidatorsProvider = ({
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [validatorSubs, setValidatorSubs] = useState<any>({});
+  const [validatorSubs, setValidatorSubs] = useState<{
+    [key: string]: Array<Fn>;
+  }>({});
   const validatorSubsRef = useRef(validatorSubs);
 
   // get favourites from local storage
@@ -111,7 +118,7 @@ export const ValidatorsProvider = ({
 
     return () => {
       // unsubscribe from any validator meta batches
-      Object.values(validatorSubsRef.current).map((batch: any) => {
+      Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) => {
         return Object.entries(batch).map(([k, v]: AnyApi) => {
           return v();
         });
@@ -420,7 +427,7 @@ export const ValidatorsProvider = ({
     await Promise.all([
       subscribeToIdentities(addresses),
       subscribeToSuperIdentities(addresses),
-    ]).then((unsubs: any) => {
+    ]).then((unsubs: Array<Fn>) => {
       addMetaBatchUnsubs(key, unsubs);
     });
 
@@ -428,7 +435,7 @@ export const ValidatorsProvider = ({
     await sleep(250);
 
     // subscribe to validator nominators
-    const args: any = [];
+    const args: AnyApi = [];
 
     for (let i = 0; i < v.length; i++) {
       args.push([metrics.activeEra.index, v[i].address]);
@@ -507,7 +514,7 @@ export const ValidatorsProvider = ({
   /*
    * Helper function to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: any) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
     const _unsubs = validatorSubsRef.current;
     const _keyUnsubs = _unsubs[key] ?? [];
 
