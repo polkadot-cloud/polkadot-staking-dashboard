@@ -6,32 +6,6 @@
 
 <img width="1700" alt="Screenshot 2022-06-25 at 23 05 22" src="https://user-images.githubusercontent.com/13929023/175791794-df33a9c7-86ce-43cc-9f27-5111cdd39e0d.png">
 
-# Milestones
-
-Features are being implemented in an incremental fashion. We are considering the app MVP once the following tasks are completed:
-
-- [x] Initial app layout and navigation
-- [x] Assistant initialisation
-- [x] Live charts
-- [x] Network metrics, staking metrics 
-- [x] Polkadot JS accounts import
-- [x] Stash / controller account abstraction
-- [x] Performant validator list fetching and meta data syncing
-- [x] Validator filtering initialisation and favourite validators
-- [x] Theming support
-- [x] Integrate Intention / Active Bond Thresholds
-- [x] Recent Payouts as list
-- [x] Multi-wallet support
-- [x] Node only / External API toggles
-- [x] Screen size support
-- [x] Extrinsics
-- [x] Initial Nomination management tooling
-- [x] Nomination Pools
-
-Additional planned sprints:
-- Chain API Integration
-- Enhanced Validator Support
-
 # Contribution Guide
 
 ## Introduction
