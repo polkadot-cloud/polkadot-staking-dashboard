@@ -22,6 +22,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BalancesContextInterface } from 'types/balances';
 import { Warning } from 'library/Form/Warning';
+import { Validator, ValidatorsContextInterface } from 'types/validators';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -31,7 +32,7 @@ export const NominateFromFavourites = () => {
     useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const { config, setStatus: setModalStatus, setResize } = useModal();
-  const { favouritesList } = useValidators();
+  const { favouritesList } = useValidators() as ValidatorsContextInterface;
   const { isNominator, isOwner } = useActivePool() as ActivePoolContextState;
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
@@ -40,25 +41,31 @@ export const NominateFromFavourites = () => {
   const signingAccount = bondType === 'pool' ? activeAccount : controller;
 
   // store filtered favourites
-  const [availableFavourites, setAvailableFavourites] = useState([]);
+  const [availableFavourites, setAvailableFavourites] = useState<
+    Array<Validator>
+  >([]);
 
   // store selected favourites in local state
-  const [selectedFavourites, setSelectedFavourites] = useState([]);
+  const [selectedFavourites, setSelectedFavourites] = useState<
+    Array<Validator>
+  >([]);
 
   // store filtered favourites
   useEffect(() => {
-    const _availableFavourites = favouritesList.filter(
-      (favourite: any) =>
-        !nominations.find(
-          (nomination: any) => nomination === favourite.address
-        ) && !favourite.prefs.blocked
-    );
-    setAvailableFavourites(_availableFavourites);
+    if (favouritesList) {
+      const _availableFavourites = favouritesList.filter(
+        (favourite: Validator) =>
+          !nominations.find(
+            (nomination: string) => nomination === favourite.address
+          ) && !favourite.prefs.blocked
+      );
+      setAvailableFavourites(_availableFavourites);
+    }
   }, []);
 
   // calculate active + selected favourites
   const nominationsToSubmit = nominations.concat(
-    selectedFavourites.map((favourite: any) => favourite.address)
+    selectedFavourites.map((favourite: Validator) => favourite.address)
   );
 
   // valid to submit transaction

@@ -4,6 +4,7 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import {
+  AnyApi,
   MaybeAccount,
   NetworkMetricsContextInterface,
   Unsub,
@@ -172,7 +173,7 @@ export const BalancesProvider = ({
     if (!api) return;
 
     const unsub: () => void = await api.queryMulti<
-      [any, any, Option<any>, Option<any>]
+      [AnyApi, AnyApi, Option<AnyApi>, Option<AnyApi>]
     >(
       [
         [api.query.system.account, address],
@@ -251,7 +252,7 @@ export const BalancesProvider = ({
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
 
-    const unsub: () => void = await api.queryMulti<[any]>(
+    const unsub: () => void = await api.queryMulti<[AnyApi]>(
       [[api.query.staking.ledger, address]],
       async ([l]): Promise<void> => {
         let ledger: BalanceLedger;
@@ -274,7 +275,9 @@ export const BalancesProvider = ({
 
           // add stash as external account if not present
           if (
-            !connectAccounts.find((s: any) => s.address === stash.toHuman())
+            !connectAccounts.find(
+              (s: ImportedAccount) => s.address === stash.toHuman()
+            )
           ) {
             addExternalAccount(stash.toHuman(), 'system');
           }

@@ -59,7 +59,7 @@ export interface Nominations {
   submittedIn: string | number;
 }
 
-export type Targets = Array<string>;
+export type Targets = string[];
 
 export interface BalancesContextInterface {
   getAccount: (address: MaybeAccount) => BalancesAccount | null;

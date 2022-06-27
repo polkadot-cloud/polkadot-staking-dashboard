@@ -7,11 +7,12 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { APIContextInterface } from 'types/api';
+import { ValidatorsContextInterface } from 'types/validators';
 import { OversubscribedProps } from '../types';
 
 export const Oversubscribed = (props: OversubscribedProps) => {
   const { consts, network } = useApi() as APIContextInterface;
-  const { meta } = useValidators();
+  const { meta } = useValidators() as ValidatorsContextInterface;
 
   const { batchIndex, batchKey } = props;
 

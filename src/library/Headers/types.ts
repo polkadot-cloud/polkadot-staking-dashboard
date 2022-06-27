@@ -3,5 +3,5 @@
 
 export interface DropdownProps {
   toggleMenu: any;
-  items: Array<string>;
+  items: string[];
 }

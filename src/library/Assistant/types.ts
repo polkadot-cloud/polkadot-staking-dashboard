@@ -14,7 +14,7 @@ export interface ActionProps {
 export interface DefinitionProps {
   onClick: () => void;
   title: string;
-  description: Array<string>;
+  description: string[];
 }
 
 export interface ExternalProps {

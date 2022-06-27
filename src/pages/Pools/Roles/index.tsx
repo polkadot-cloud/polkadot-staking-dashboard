@@ -68,7 +68,7 @@ export const Roles = () => {
     return true;
   };
 
-  const _accounts: Array<string> = [
+  const _accounts: string[] = [
     roles.root,
     roles.depositor,
     roles.nominator,

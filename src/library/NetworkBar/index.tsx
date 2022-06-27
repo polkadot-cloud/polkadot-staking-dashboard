@@ -131,7 +131,7 @@ export const NetworkBar = () => {
         </div>
         <div className="row">
           {Object.entries(NODE_ENDPOINTS).map(
-            ([key, item]: any, index: any) => (
+            ([key, item]: any, index: number) => (
               <button
                 type="button"
                 key={`switch_network_${index}`}

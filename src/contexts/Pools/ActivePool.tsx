@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
-import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
+import { AnyApi, MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import {
   PoolsConfigContextState,
   BondedPoolsContextState,
@@ -180,14 +180,14 @@ export const ActivePoolProvider = ({
     }
     const { poolId } = membership;
     const addresses = createAccounts(poolId);
-    const unsub: any = await api.queryMulti(
+    const unsub = await api.queryMulti<[AnyApi, AnyApi, AnyApi, AnyApi]>(
       [
         [api.query.nominationPools.bondedPools, poolId],
         [api.query.nominationPools.rewardPools, poolId],
         [api.query.staking.slashingSpans, addresses.stash],
         [api.query.system.account, addresses.reward],
       ],
-      ([bondedPool, rewardPool, slashingSpans, { data: balance }]: any) => {
+      ([bondedPool, rewardPool, slashingSpans, { data: balance }]) => {
         bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
         rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
         if (rewardPool && bondedPool) {
@@ -229,7 +229,7 @@ export const ActivePoolProvider = ({
     if (!api) return;
     const unsub = await api.query.staking.nominators(
       poolBondAddress,
-      (nominations: any) => {
+      (nominations: AnyApi) => {
         // set pool nominations
         let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
@@ -327,7 +327,7 @@ export const ActivePoolProvider = ({
     }
 
     // free transferrable balance that can be bonded in the pool
-    const freeToBond: any = BN.max(
+    const freeToBond = BN.max(
       freeAfterReserve.sub(miscFrozen).sub(totalUnlocking).sub(totalUnlocked),
       new BN(0)
     );
@@ -359,7 +359,8 @@ export const ActivePoolProvider = ({
     }
 
     const nominations = poolNominations?.nominations?.targets || [];
-    const statuses: any = {};
+    const statuses: { [key: string]: string } = {};
+
     for (const nomination of nominations) {
       const s = eraStakers.stakers.find((_n: any) => _n.address === nomination);
 

@@ -8,13 +8,14 @@ import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
 import { APIContextInterface } from 'types/api';
+import { ValidatorsContextInterface } from 'types/validators';
 import { PageProps } from '../types';
 
 export const Favourites = (props: PageProps) => {
   const { isReady } = useApi() as APIContextInterface;
   const { page } = props;
   const { title } = page;
-  const { favouritesList } = useValidators();
+  const { favouritesList } = useValidators() as ValidatorsContextInterface;
 
   const batchKey = 'favourite_validators';
 

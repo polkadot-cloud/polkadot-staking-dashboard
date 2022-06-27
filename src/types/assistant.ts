@@ -24,7 +24,7 @@ export type AssistantDefinitions = Array<AssistantDefinition>;
 
 export type AssistantDefinition = {
   title: string;
-  description: Array<string>;
+  description: string[];
 };
 
 export interface AssistantExternal {

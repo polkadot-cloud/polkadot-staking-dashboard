@@ -7,31 +7,36 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
+import { Validator, ValidatorsContextInterface } from 'types/validators';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
 export const SelectFavourites = () => {
   const { consts } = useApi() as APIContextInterface;
   const { config, setStatus, setResize } = useModal();
-  const { favouritesList } = useValidators();
+  const { favouritesList } = useValidators() as ValidatorsContextInterface;
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback }: any = config;
 
   // store filtered favourites
-  const [availableFavourites, setAvailableFavourites] = useState([]);
+  const [availableFavourites, setAvailableFavourites] = useState<
+    Array<Validator>
+  >([]);
 
   // store selected favourites in local state
   const [selectedFavourites, setSelectedFavourites] = useState([]);
 
   // store filtered favourites
   useEffect(() => {
-    const _availableFavourites = favouritesList.filter(
-      (favourite: any) =>
-        !nominations.find(
-          (nomination: any) => nomination.address === favourite.address
-        ) && !favourite.prefs.blocked
-    );
-    setAvailableFavourites(_availableFavourites);
+    if (favouritesList) {
+      const _availableFavourites = favouritesList.filter(
+        (favourite: Validator) =>
+          !nominations.find(
+            (nomination: Validator) => nomination.address === favourite.address
+          ) && !favourite.prefs.blocked
+      );
+      setAvailableFavourites(_availableFavourites);
+    }
   }, []);
 
   useEffect(() => {

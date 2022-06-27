@@ -3,6 +3,7 @@
 
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import { AnyApi } from 'types';
 import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
@@ -52,7 +53,7 @@ export const SessionEraProvider = ({
   // active subscription
   const subscribeToSessionProgress = async () => {
     if (isReady && api !== null) {
-      const unsub = await api.derive.session.progress((session: any) => {
+      const unsub = await api.derive.session.progress((session: AnyApi) => {
         const _state = {
           eraLength: session.eraLength.toNumber(),
           eraProgress: session.eraProgress.toNumber(),

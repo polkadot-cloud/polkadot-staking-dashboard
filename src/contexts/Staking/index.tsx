@@ -12,9 +12,13 @@ import {
   planckBnToUnit,
 } from 'Utils';
 import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface, ExternalAccount } from 'types/connect';
+import {
+  ConnectContextInterface,
+  ExternalAccount,
+  ImportedAccount,
+} from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
-import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
+import { AnyApi, MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import {
   EraStakers,
   NominationStatuses,
@@ -117,7 +121,7 @@ export const StakingProvider = ({
       const previousEra = metrics.activeEra.index - 1;
 
       // subscribe to staking metrics
-      const unsub = await api.queryMulti(
+      const unsub = await api.queryMulti<AnyApi>(
         [
           api.query.staking.counterForNominators,
           api.query.staking.counterForValidators,
@@ -141,7 +145,7 @@ export const StakingProvider = ({
           _minNominatorBond,
           _historyDepth,
           _payee,
-        ]: any) => {
+        ]) => {
           setStakingMetrics({
             ...stakingMetrics,
             payee: _payee.toHuman(),
@@ -183,7 +187,7 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: any) => {
+    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
       return {
         keys: _keys.toHuman(),
         val: _val.toHuman(),
@@ -348,7 +352,9 @@ export const StakingProvider = ({
       return false;
     }
     // check if controller is imported
-    const exists = connectAccounts.find((acc: any) => acc.address === address);
+    const exists = connectAccounts.find(
+      (acc: ImportedAccount) => acc.address === address
+    );
     if (exists === undefined) {
       return true;
     }

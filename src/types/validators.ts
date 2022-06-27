@@ -1,0 +1,38 @@
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+export interface ValidatorsContextInterface {
+  fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
+  removeValidatorMetaBatch: (k: string) => void;
+  fetchValidatorPrefs: (
+    v: ValidatorAddresses
+  ) => Promise<Array<Validator> | null>;
+  addFavourite: (a: string) => void;
+  removeFavourite: (a: string) => void;
+  validators: Array<Validator>;
+  meta: any;
+  session: SessionValidators;
+  favourites: string[];
+  nominated: Array<Validator> | null;
+  poolNominated: Array<Validator> | null;
+  favouritesList: Array<Validator> | null;
+}
+
+export type ValidatorAddresses = Array<{
+  address: string;
+}>;
+
+export interface SessionValidators {
+  list: string[];
+  unsub: { (): void } | null;
+}
+
+export interface Validator {
+  address: string;
+  prefs: ValidatorPrefs;
+}
+
+export interface ValidatorPrefs {
+  commission: number;
+  blocked: boolean;
+}

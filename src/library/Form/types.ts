@@ -57,7 +57,7 @@ export interface BondInputWithFeedbackProps {
   unbond: boolean;
   nominating?: boolean;
   listenIsValid: boolean;
-  warnings?: Array<string>;
+  warnings?: string[];
 }
 
 export interface BondStatusBarProps {

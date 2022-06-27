@@ -19,6 +19,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';
+import { ValidatorsContextInterface } from 'types/validators';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
@@ -29,8 +30,9 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
   const { getAccountNominations } = useBalances() as BalancesContextInterface;
-  const { nominated: stakeNominated, poolNominated }: any = useValidators();
-  let { favouritesList } = useValidators();
+  const { nominated: stakeNominated, poolNominated }: any =
+    useValidators() as ValidatorsContextInterface;
+  let { favouritesList } = useValidators() as ValidatorsContextInterface;
   if (favouritesList === null) {
     favouritesList = [];
   }

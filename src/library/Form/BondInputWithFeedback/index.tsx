@@ -184,7 +184,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
           {network.unit}
         </h4>
       </CardHeaderWrapper>
-      {errors.map((err: any, index: any) => (
+      {errors.map((err: any, index: number) => (
         <Warning key={`setup_error_${index}`} text={err} />
       ))}
       <Spacer />

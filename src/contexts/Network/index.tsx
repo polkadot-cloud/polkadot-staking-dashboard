@@ -3,7 +3,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { APIContextInterface } from 'types/api';
-import { NetworkMetricsContextInterface, NetworkMetricsState } from 'types';
+import {
+  AnyApi,
+  NetworkMetricsContextInterface,
+  NetworkMetricsState,
+} from 'types';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 
@@ -45,7 +49,7 @@ export const NetworkMetricsProvider = ({
     if (isReady) {
       const unsub = await api.queryMulti(
         [api.query.staking.activeEra, api.query.balances.totalIssuance],
-        ([activeEra, _totalIssuance]: any) => {
+        ([activeEra, _totalIssuance]: AnyApi) => {
           // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
           let _activeEra = activeEra
             .unwrapOrDefault({

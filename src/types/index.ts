@@ -100,3 +100,5 @@ export interface NetworkMetricsState {
   totalIssuance: BN;
   unsub: { (): void } | undefined;
 }
+
+export type AnyApi = any;

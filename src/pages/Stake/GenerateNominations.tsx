@@ -14,6 +14,7 @@ import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
 import { faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
+import { Validator, ValidatorsContextInterface } from 'types/validators';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {
@@ -26,10 +27,11 @@ export const GenerateNominations = (props: any) => {
   const { isReady } = useApi() as APIContextInterface;
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
-  const { removeValidatorMetaBatch, validators, meta } = useValidators();
+  const { removeValidatorMetaBatch, validators, meta } =
+    useValidators() as ValidatorsContextInterface;
   const { applyValidatorOrder, applyValidatorFilters } = useUi();
 
-  let { favouritesList } = useValidators();
+  let { favouritesList } = useValidators() as ValidatorsContextInterface;
   if (favouritesList === null) {
     favouritesList = [];
   }
@@ -50,7 +52,12 @@ export const GenerateNominations = (props: any) => {
   }, [activeAccount, defaultNominations]);
 
   const fetchFavourites = () => {
-    let _favs = [];
+    let _favs: Array<Validator> = [];
+
+    if (!favouritesList) {
+      return _favs;
+    }
+
     if (favouritesList.length) {
       // take subset of up to 16 favourites
       _favs = favouritesList.slice(0, 16);

@@ -4,11 +4,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { APIContextInterface } from 'types/api';
+import { AnyApi } from 'types';
 import { useApi } from './Api';
 
 // context type
 export interface AccountContextState {
-  fetchAccountMetaBatch: (k: string, v: Array<string>, r?: boolean) => void;
+  fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
   removeAccountMetaBatch: (k: string) => void;
   meta: any;
 }
@@ -16,7 +17,7 @@ export interface AccountContextState {
 // context definition
 export const AccountContext: React.Context<AccountContextState> =
   React.createContext({
-    fetchAccountMetaBatch: (k: string, v: Array<string>, r?: boolean) => {},
+    fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => {},
     removeAccountMetaBatch: (k: string) => {},
     meta: {},
   });
@@ -67,7 +68,7 @@ export const AccountProvider = ({
   */
   const fetchAccountMetaBatch = async (
     key: string,
-    addresses: Array<string>,
+    addresses: string[],
     refetch = false
   ) => {
     if (!isReady || !api) {
@@ -106,9 +107,9 @@ export const AccountProvider = ({
     );
 
     const subscribeToIdentities = async (addr: any) => {
-      const unsub = await api.query.identity.identityOf.multi(
+      const unsub = await api.query.identity.identityOf.multi<AnyApi>(
         addr,
-        (_identities: any) => {
+        (_identities) => {
           const identities = [];
           for (let i = 0; i < _identities.length; i++) {
             identities.push(_identities[i].toHuman());
@@ -126,9 +127,9 @@ export const AccountProvider = ({
     };
 
     const subscribeToSuperIdentities = async (addr: any) => {
-      const unsub = await api.query.identity.superOf.multi(
+      const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
-        async (_supers: any) => {
+        async (_supers) => {
           // determine where supers exist
           const supers: any = [];
           const supersWithIdentity: any = [];
@@ -146,9 +147,9 @@ export const AccountProvider = ({
             .filter((s: any) => s !== null)
             .map((s: any) => s[0]);
 
-          const temp = await api.query.identity.identityOf.multi(
+          const temp = await api.query.identity.identityOf.multi<AnyApi>(
             query,
-            (_identities: any) => {
+            (_identities) => {
               for (let j = 0; j < _identities.length; j++) {
                 const _identity = _identities[j].toHuman();
                 // inject identity into super array

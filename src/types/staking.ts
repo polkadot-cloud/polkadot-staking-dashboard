@@ -30,7 +30,7 @@ export interface EraStakers {
 export type NominationStatuses = { [key: string]: string };
 
 export interface StakingTargets {
-  nominations: Array<string>;
+  nominations: string[];
 }
 
 export interface StakingContextInterface {

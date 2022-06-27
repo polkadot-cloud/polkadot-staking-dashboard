@@ -11,6 +11,7 @@ import {
   PoolsConfigContextState,
 } from 'types/pools';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
+import { AnyApi } from 'types';
 import { useApi } from '../Api';
 import { usePoolsConfig } from './PoolsConfig';
 import { setStateWithRef } from '../../Utils';
@@ -64,7 +65,7 @@ export const BondedPoolsProvider = ({
 
     const _exposures = await api.query.nominationPools.bondedPools.entries();
     // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: any) => {
+    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
       const id = _keys.toHuman()[0];
       const pool = _val.toHuman();
       return getPoolWithAddresses(id, pool);

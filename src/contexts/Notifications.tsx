@@ -29,7 +29,7 @@ export const NotificationsProvider = ({
   const indexRef = useRef(index);
   const notificationsRef = useRef(notifications);
 
-  const setIndex = (_index: any) => {
+  const setIndex = (_index: number) => {
     indexRef.current = _index;
     _setIndex(_index);
   };
@@ -57,7 +57,7 @@ export const NotificationsProvider = ({
     return newIndex;
   };
 
-  const remove = (_index: any) => {
+  const remove = (_index: number) => {
     const _notifications = notificationsRef.current.filter(
       (item: any) => item.index !== _index
     );

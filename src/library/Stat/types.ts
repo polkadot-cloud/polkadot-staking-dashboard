@@ -7,6 +7,6 @@ export interface StatProps {
   label: string;
   stat: string;
   buttons?: any;
-  assistant: Array<string>;
+  assistant: string[];
   icon?: IconProp;
 }

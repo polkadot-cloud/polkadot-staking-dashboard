@@ -15,8 +15,14 @@ import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';
-import { NetworkMetricsContextInterface } from 'types';
+import { AnyApi, NetworkMetricsContextInterface } from 'types';
 import { MIN_BOND_PRECISION } from 'consts';
+import {
+  SessionValidators,
+  Validator,
+  ValidatorAddresses,
+  ValidatorsContextInterface,
+} from 'types/validators';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -24,40 +30,8 @@ import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useActivePool } from '../Pools/ActivePool';
 
-// context type
-export interface ValidatorsContextState {
-  fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
-  removeValidatorMetaBatch: (k: string) => void;
-  fetchValidatorPrefs: (v: any) => any;
-  addFavourite: (a: string) => any;
-  removeFavourite: (a: string) => any;
-  getMinRewardBond: (v: any) => any;
-  validators: any;
-  meta: any;
-  session: any;
-  favourites: any;
-  nominated: any;
-  poolNominated: any;
-  favouritesList: any;
-}
-
-// context definition
-export const ValidatorsContext: React.Context<ValidatorsContextState> =
-  React.createContext({
-    fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => {},
-    removeValidatorMetaBatch: (k: string) => {},
-    fetchValidatorPrefs: (v: any) => {},
-    addFavourite: (a: string) => {},
-    removeFavourite: (a: string) => {},
-    getMinRewardBond: (v: any) => {},
-    validators: [],
-    meta: {},
-    session: [],
-    favourites: [],
-    nominated: [],
-    poolNominated: [],
-    favouritesList: [],
-  });
+export const ValidatorsContext =
+  React.createContext<ValidatorsContextInterface | null>(null);
 
 export const useValidators = () => React.useContext(ValidatorsContext);
 
@@ -77,43 +51,47 @@ export const ValidatorsProvider = ({
   const { maxNominatorRewardedPerValidator } = consts;
 
   // stores the total validator entries
-  const [validators, setValidators]: any = useState([]);
+  const [validators, setValidators] = useState<Array<Validator>>([]);
 
   // track whether the validator list has been fetched yet
-  const [fetchedValidators, setFetchedValidators] = useState(false);
+  const [fetchedValidators, setFetchedValidators] = useState<any>(false);
 
   // stores the currently active validator set
-  const [sessionValidators, setSessionValidators] = useState(
+  const [sessionValidators, setSessionValidators] = useState<SessionValidators>(
     defaults.sessionValidators
   );
 
   // stores the meta data batches for validator lists
-  const [validatorMetaBatches, setValidatorMetaBatch]: any = useState({});
+  const [validatorMetaBatches, setValidatorMetaBatch] = useState<any>({});
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [validatorSubs, setValidatorSubs]: any = useState({});
+  const [validatorSubs, setValidatorSubs] = useState<any>({});
   const validatorSubsRef = useRef(validatorSubs);
 
   // get favourites from local storage
   const getFavourites = () => {
-    const _favourites: any = localStorage.getItem(
+    const _favourites = localStorage.getItem(
       `${network.name.toLowerCase()}_favourites`
     );
     return _favourites !== null ? JSON.parse(_favourites) : [];
   };
 
   // stores the user's favourite validators
-  const [favourites, setFavourites]: any = useState(getFavourites());
+  const [favourites, setFavourites] = useState<string[]>(getFavourites());
 
   // stores the user's nominated validators as list
-  const [nominated, setNominated]: any = useState(null);
+  const [nominated, setNominated] = useState<Array<Validator> | null>(null);
 
   // stores the nominated validators by the members pool's as list
-  const [poolNominated, setPoolNominated]: any = useState(null);
+  const [poolNominated, setPoolNominated] = useState<Array<Validator> | null>(
+    null
+  );
 
   // stores the user's favourites validators as list
-  const [favouritesList, setFavouritesList]: any = useState(null);
+  const [favouritesList, setFavouritesList] = useState<Array<Validator> | null>(
+    null
+  );
 
   // reset validators list on network change
   useEffect(() => {
@@ -187,7 +165,7 @@ export const ValidatorsProvider = ({
     // get raw nominations list
     let n = poolNominations.targets;
     // format to list format
-    n = n.map((item: any, index: any) => {
+    n = n.map((item: string) => {
       return { address: item };
     });
     // fetch preferences
@@ -213,7 +191,7 @@ export const ValidatorsProvider = ({
 
   const fetchFavouriteList = async () => {
     // format to list format
-    const _favourites = [...favourites].map((item: any, index: any) => {
+    const _favourites = [...favourites].map((item: string) => {
       return { address: item };
     });
     // // fetch preferences
@@ -238,9 +216,9 @@ export const ValidatorsProvider = ({
     }
 
     // fetch validator set
-    const v: any = [];
+    const v: Array<Validator> = [];
     const exposures = await api.query.staking.validators.entries();
-    exposures.forEach(([_args, _prefs]: any) => {
+    exposures.forEach(([_args, _prefs]: AnyApi) => {
       const address = _args.args[0].toHuman();
       const prefs = _prefs.toHuman();
 
@@ -264,28 +242,27 @@ export const ValidatorsProvider = ({
    */
   const subscribeSessionValidators = async (_api: any) => {
     if (isReady) {
-      const unsub = await _api.query.session.validators((_validators: any) => {
-        setSessionValidators({
-          ...sessionValidators,
-          list: _validators.toHuman(),
-        });
-      });
-      setSessionValidators({
-        ...sessionValidators,
-        unsub,
-      });
+      const unsub = await _api.query.session.validators(
+        (_validators: AnyApi) => {
+          setSessionValidators({
+            ...sessionValidators,
+            list: _validators.toHuman(),
+            unsub,
+          });
+        }
+      );
     }
   };
 
   /*
    * fetches prefs for a list of validators
    */
-  const fetchValidatorPrefs = async (_validators: any) => {
+  const fetchValidatorPrefs = async (_validators: ValidatorAddresses) => {
     if (!_validators.length || !api) {
-      return false;
+      return null;
     }
 
-    const v: any = [];
+    const v: string[] = [];
     for (const _v of _validators) {
       v.push(_v.address);
     }
@@ -296,7 +273,8 @@ export const ValidatorsProvider = ({
     let i = 0;
     for (const _prefs of prefsAll) {
       const prefs: any = _prefs.toHuman();
-      const commission = removePercentage(prefs.commission);
+
+      const commission = removePercentage(prefs?.commission ?? '0%');
 
       validatorsWithPrefs.push({
         address: v[i],
@@ -371,9 +349,9 @@ export const ValidatorsProvider = ({
     );
 
     const subscribeToIdentities = async (addr: any) => {
-      const unsub = await api.query.identity.identityOf.multi(
+      const unsub = await api.query.identity.identityOf.multi<AnyApi>(
         addr,
-        (_identities: any) => {
+        (_identities) => {
           const identities = [];
           for (let i = 0; i < _identities.length; i++) {
             identities.push(_identities[i].toHuman());
@@ -393,9 +371,9 @@ export const ValidatorsProvider = ({
     };
 
     const subscribeToSuperIdentities = async (addr: any) => {
-      const unsub = await api.query.identity.superOf.multi(
+      const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
-        async (_supers: any) => {
+        async (_supers) => {
           // determine where supers exist
           const supers: any = [];
           const supersWithIdentity: any = [];
@@ -413,9 +391,9 @@ export const ValidatorsProvider = ({
             .filter((s: any) => s !== null)
             .map((s: any) => s[0]);
 
-          const temp = await api.query.identity.identityOf.multi(
+          const temp = await api.query.identity.identityOf.multi<AnyApi>(
             query,
-            (_identities: any) => {
+            (_identities) => {
               for (let j = 0; j < _identities.length; j++) {
                 const _identity = _identities[j].toHuman();
                 // inject identity into super array
@@ -456,9 +434,9 @@ export const ValidatorsProvider = ({
       args.push([metrics.activeEra.index, v[i].address]);
     }
 
-    const unsub3 = await api.query.staking.erasStakers.multi(
+    const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
       args,
-      (_validators: any) => {
+      (_validators) => {
         const stake = [];
 
         for (let _validator of _validators) {
@@ -579,26 +557,6 @@ export const ValidatorsProvider = ({
     setFavourites([..._favourites]);
   };
 
-  /*
-   * Gets the minimum bond of a group of validators needed for rewards.
-   */
-  const getMinRewardBond = (_addresses: any) => {
-    const batch = validatorMetaBatchesRef.current.validators_browse;
-
-    let lowest = null;
-    for (const a of _addresses) {
-      const batchIndex = batch.addresses.indexOf(a);
-      const stake = batch.stake[batchIndex];
-
-      if (lowest === null) {
-        lowest = stake.lowest;
-      } else if (stake.lowest < lowest) {
-        lowest = stake.lowest;
-      }
-    }
-    return lowest;
-  };
-
   return (
     <ValidatorsContext.Provider
       value={{
@@ -607,7 +565,6 @@ export const ValidatorsProvider = ({
         fetchValidatorPrefs,
         addFavourite,
         removeFavourite,
-        getMinRewardBond,
         validators,
         meta: validatorMetaBatchesRef.current,
         session: sessionValidators,

@@ -30,7 +30,7 @@ export const ConnectProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network } = useApi() as APIContextInterface;
+  const { network } = useApi() as APIContextInterface;
 
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
@@ -238,7 +238,7 @@ export const ConnectProvider = ({
       const { extensionName } = _extension;
 
       // connect if extension has been connected to previously
-      const localExtensions = localStorageOrDefault<Array<string>>(
+      const localExtensions = localStorageOrDefault<string[]>(
         `active_extensions`,
         [],
         true
@@ -447,7 +447,7 @@ export const ConnectProvider = ({
   };
 
   const addToLocalExtensions = (extensionName: string) => {
-    const localExtensions = localStorageOrDefault<Array<string>>(
+    const localExtensions = localStorageOrDefault<string[]>(
       `active_extensions`,
       [],
       true
@@ -465,7 +465,7 @@ export const ConnectProvider = ({
   };
 
   const removeFromLocalExtensions = (extensionName: string) => {
-    let localExtensions = localStorageOrDefault<Array<string>>(
+    let localExtensions = localStorageOrDefault<string[]>(
       `active_extensions`,
       [],
       true

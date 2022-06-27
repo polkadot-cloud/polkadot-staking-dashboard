@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
 import { APIContextInterface } from 'types/api';
 import { PoolsConfigContextState } from 'types/pools';
+import { AnyApi } from 'types';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { rmCommas } from '../../Utils';
@@ -60,7 +61,7 @@ export const PoolsConfigProvider = ({
   const subscribeToPoolConfig = async () => {
     if (!api) return;
 
-    const unsub = await api.queryMulti(
+    const unsub = await api.queryMulti<AnyApi>(
       [
         api.query.nominationPools.counterForPoolMembers,
         api.query.nominationPools.counterForBondedPools,
@@ -80,7 +81,7 @@ export const PoolsConfigProvider = ({
         _maxPools,
         _minCreateBond,
         _minJoinBond,
-      ]: any) => {
+      ]) => {
         // format optional configs to BN or null
         _maxPoolMembers = _maxPoolMembers.toHuman();
         if (_maxPoolMembers !== null) {
