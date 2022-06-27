@@ -10,6 +10,7 @@ const v = (light: string, dark: string) => ({
   dark,
 });
 
+// eslint-disable-next-line
 export const defaultThemes: any = {
   transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
   text: {
@@ -95,6 +96,7 @@ const c = (flat: string, border: string, shadow: string) => ({
   shadow,
 });
 
+// eslint-disable-next-line
 export const cardThemes: any = {
   card: {
     border: c('none', '1px solid', 'none'),
