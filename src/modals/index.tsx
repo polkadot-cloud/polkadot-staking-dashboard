@@ -60,7 +60,7 @@ export const Modal = () => {
     }
   }, [status]);
 
-  const modalRef: any = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   // resize modal on status or resize change
   useEffect(() => {
@@ -68,7 +68,7 @@ export const Modal = () => {
   }, [resize]);
 
   const handleResize = () => {
-    let _height = modalRef.current?.clientHeight;
+    let _height = modalRef.current?.clientHeight ?? 0;
     _height = _height > maxHeight ? maxHeight : _height;
     setModalHeight(_height);
   };

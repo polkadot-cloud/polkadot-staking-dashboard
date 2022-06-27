@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { ConnectContextInterface } from 'types/connect';
+import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { Wrapper, CardsWrapper } from './Wrappers';
 import { Extensions } from './Extensions';
 import { Accounts } from './Accounts';
@@ -25,8 +25,8 @@ export const ConnectAccounts = () => {
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
 
   // resize modal on state change
-  const extensionsRef: any = useRef(null);
-  const accountsRef: any = useRef(null);
+  const extensionsRef = useRef<HTMLDivElement>(null);
+  const accountsRef = useRef<HTMLDivElement>(null);
 
   const resizeModal = () => {
     let _height = 0;
@@ -50,7 +50,9 @@ export const ConnectAccounts = () => {
   ]);
 
   // remove active account from connect list
-  accounts = accounts.filter((item: any) => item.address !== activeAccount);
+  accounts = accounts.filter(
+    (item: ImportedAccount) => item.address !== activeAccount
+  );
 
   return (
     <Wrapper>

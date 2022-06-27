@@ -47,15 +47,15 @@ export const UnlockChunks = () => {
   const [section, setSection] = useState(0);
 
   // modal task
-  const [task, setTask]: any = useState(null);
+  const [task, setTask] = useState<string | null>(null);
 
   // unlock value of interest
   const [unlock, setUnlock] = useState(null);
 
   // refs for wrappers
-  const headerRef: any = useRef(null);
-  const overviewRef: any = useRef(null);
-  const formsRef: any = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const overviewRef = useRef<HTMLDivElement>(null);
+  const formsRef = useRef<HTMLDivElement>(null);
 
   // resize modal on state change
   useEffect(() => {

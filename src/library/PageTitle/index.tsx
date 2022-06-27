@@ -11,7 +11,7 @@ export const PageTitle = (props: PageTitleProps) => {
 
   const [sticky, setSticky] = useState(false);
 
-  const ref: any = useRef();
+  const ref = useRef<Element | undefined>();
 
   useEffect(() => {
     const cachedRef = ref.current;
@@ -21,10 +21,15 @@ export const PageTitle = (props: PageTitleProps) => {
       },
       { threshold: [1], rootMargin: '-1px 0px 0px 0px' }
     );
-    observer.observe(cachedRef);
+
+    if (cachedRef) {
+      observer.observe(cachedRef);
+    }
     // unmount
     return () => {
-      observer.unobserve(cachedRef);
+      if (cachedRef) {
+        observer.unobserve(cachedRef);
+      }
     };
   }, [sticky]);
 

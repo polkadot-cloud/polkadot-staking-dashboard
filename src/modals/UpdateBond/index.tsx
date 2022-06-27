@@ -20,9 +20,9 @@ export const UpdateBond = () => {
   const [section, setSection] = useState(0);
 
   // refs for wrappers
-  const headerRef: any = useRef(null);
-  const tasksRef: any = useRef(null);
-  const formsRef: any = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const tasksRef = useRef<HTMLDivElement>(null);
+  const formsRef = useRef<HTMLDivElement>(null);
 
   // resize modal on state change
   useEffect(() => {
