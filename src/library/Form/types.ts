@@ -56,7 +56,7 @@ export interface BondInputWithFeedbackProps {
   defaultBond: number;
   unbond: boolean;
   nominating?: boolean;
-  listenIsValid: boolean;
+  listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
 }
 

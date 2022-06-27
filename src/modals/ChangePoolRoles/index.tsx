@@ -17,7 +17,7 @@ import { RoleChange } from './RoleChange';
 
 export const ChangePoolRoles = () => {
   const { api } = useApi() as APIContextInterface;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { config } = useModal();

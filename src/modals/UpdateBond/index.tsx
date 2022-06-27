@@ -11,7 +11,7 @@ import { Tasks } from './Tasks';
 import { Forms } from './Forms';
 
 export const UpdateBond = () => {
-  const { config, setModalHeight }: any = useModal();
+  const { config, setModalHeight } = useModal();
   const { fn, bondType } = config;
   // modal task
   const [task, setTask]: any = useState(null);

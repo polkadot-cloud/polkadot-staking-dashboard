@@ -24,7 +24,7 @@ export const UnbondAll = (props: any) => {
 
   const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { setStatus: setModalStatus, setResize, config }: any = useModal();
+  const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { getControllerNotImported } = useStaking() as StakingContextInterface;

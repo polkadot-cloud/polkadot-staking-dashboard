@@ -31,7 +31,7 @@ export const Forms = forwardRef(
       useConnect() as ConnectContextInterface;
     const { staking } = useStaking() as StakingContextInterface;
     const { activeBondedPool } = useActivePool() as ActivePoolContextState;
-    const { setStatus: setModalStatus, config }: any = useModal();
+    const { setStatus: setModalStatus, config } = useModal();
     const { bondType } = config || {};
     const { getBondedAccount } = useBalances() as BalancesContextInterface;
     const { historyDepth } = staking;

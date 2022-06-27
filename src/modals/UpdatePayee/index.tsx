@@ -25,7 +25,7 @@ export const UpdatePayee = () => {
   const { api } = useApi() as APIContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;

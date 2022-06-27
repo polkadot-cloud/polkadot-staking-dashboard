@@ -13,7 +13,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;
 
   const { network } = useApi() as APIContextInterface;
-  const { config }: any = useModal();
+  const { config } = useModal();
   const { fn } = config;
 
   return (

@@ -25,7 +25,7 @@ import {
 
 export const ClaimReward = () => {
   const { api, network } = useApi() as APIContextInterface;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus } = useModal();
   const { activeBondedPool } = useActivePool() as ActivePoolContextState;
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;

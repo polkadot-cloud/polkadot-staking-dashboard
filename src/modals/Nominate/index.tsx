@@ -33,7 +33,7 @@ export const Nominate = () => {
     useStaking() as StakingContextInterface;
   const { getBondedAccount, getLedgerForStash } =
     useBalances() as BalancesContextInterface;
-  const { setStatus: setModalStatus }: any = useModal();
+  const { setStatus: setModalStatus } = useModal();
   const { units } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);

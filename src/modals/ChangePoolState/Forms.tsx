@@ -22,12 +22,13 @@ import {
 } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
+import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
-  const { api }: any = useApi();
-  const { setStatus: setModalStatus, config }: any = useModal();
+  const { api } = useApi() as APIContextInterface;
+  const { setStatus: setModalStatus, config } = useModal();
   const { state } = config;
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
@@ -47,7 +48,7 @@ export const Forms = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!valid) {
+    if (!valid || !api) {
       return _tx;
     }
 

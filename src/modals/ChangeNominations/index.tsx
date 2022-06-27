@@ -35,7 +35,7 @@ export const ChangeNominations = () => {
     useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations } =
     useBalances() as BalancesContextInterface;
-  const { setStatus: setModalStatus, config }: any = useModal();
+  const { setStatus: setModalStatus, config } = useModal();
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const { poolNominations, isNominator } =
     useActivePool() as ActivePoolContextState;
@@ -77,6 +77,7 @@ export const ChangeNominations = () => {
     if (!valid || !api) {
       return _tx;
     }
+
     const targetsToSubmit = newNominations.map((item: any) =>
       isPool
         ? item?.address

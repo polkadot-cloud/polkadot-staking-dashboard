@@ -14,13 +14,14 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
-  const { api, network }: any = useApi();
+  const { api, network } = useApi() as APIContextInterface;
   const { units } = network;
-  const { setStatus: setModalStatus, setResize }: any = useModal();
+  const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
 
@@ -31,7 +32,7 @@ export const Forms = () => {
   const [bond, setBond] = useState({ bond: planckBnToUnit(freeToBond, units) });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(true);
+  const [bondValid, setBondValid] = useState<boolean>(true);
 
   // modal resize on form update
   useEffect(() => {
@@ -41,7 +42,7 @@ export const Forms = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!bondValid || !activeAccount) {
+    if (!bondValid || !activeAccount || !api) {
       return _tx;
     }
 
