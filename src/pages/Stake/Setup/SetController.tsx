@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { AccountSelect } from 'library/Form/AccountSelect';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ConnectContextInterface } from 'types/connect';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { InputItem } from 'library/Form/types';
 import { Header } from './Header';
@@ -23,7 +23,7 @@ export const SetController = (props: any) => {
 
   // store the currently selected controller account
   const _selected = setup.controller !== null ? setup.controller : null;
-  const [selected, setSelected] = useState<ImportedAccount | null>(
+  const [selected, setSelected] = useState<InputItem | null>(
     getAccount(_selected)
   );
 
