@@ -129,7 +129,10 @@ export const AssistantProvider = (props: AssistantContextProps) => {
   const goToDefinition = (_page: string, _title: string) => {
     const definition = getDefinition(_page, _title);
 
-    if (innerDefinition === definition && open.state === Toggle.Open) {
+    if (
+      innerDefinition.title === definition?.title &&
+      open.state === Toggle.Open
+    ) {
       closeAssistant();
     } else if (definition !== undefined) {
       setPage(_page);
