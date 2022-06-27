@@ -16,7 +16,6 @@ const Feedback = (props: PageProps) => {
 
   useEffect(() => {
     (function (w: any, d: any, i: any, s: any) {
-      // eslint-disable-next-line
       function l() {
         if (!d.getElementById(i)) {
           var f = d.getElementsByTagName(s)[0],
@@ -27,7 +26,6 @@ const Feedback = (props: PageProps) => {
             f.parentNode.insertBefore(e, f);
         }
       }
-      // eslint-disable-next-line
       if ('function' != typeof w.Canny) {
         var c: any = function () {
           c.q.push(arguments);
@@ -53,7 +51,6 @@ const Feedback = (props: PageProps) => {
   return (
     <Wrapper>
       <PageTitle title={title} />
-
       <PageRowWrapper className='page-padding'>
         <div data-canny style={{ width: '100%' }} />
       </PageRowWrapper>
