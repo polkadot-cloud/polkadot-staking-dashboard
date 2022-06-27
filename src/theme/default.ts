@@ -103,8 +103,8 @@ export const cardThemes: any = {
 };
 
 // configure network colors
-export const networkColors: any = [];
-export const networkColorsSecondary: any = [];
+export const networkColors: { [key: string]: string } = {};
+export const networkColorsSecondary: { [key: string]: string } = {};
 
 Object.values(NODE_ENDPOINTS).forEach((node: NodeEndpoint) => {
   const { name, colors } = node;
