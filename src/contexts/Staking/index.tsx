@@ -16,7 +16,7 @@ import {
   ExternalAccount,
   ImportedAccount,
 } from 'types/connect';
-import { AnyApi, MaybeAccount, NetworkMetricsContextInterface } from 'types';
+import { AnyApi, MaybeAccount } from 'types';
 import {
   EraStakers,
   NominationStatuses,
@@ -46,7 +46,7 @@ export const StakingProvider = ({
     getActiveAccount,
   } = useConnect() as ConnectContextInterface;
   const { isReady, api, consts, status, network } = useApi();
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { metrics } = useNetworkMetrics();
   const {
     accounts,
     getBondedAccount,

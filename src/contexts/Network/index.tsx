@@ -11,7 +11,9 @@ import { useApi } from '../Api';
 import * as defaults from './defaults';
 
 export const NetworkMetricsContext =
-  React.createContext<NetworkMetricsContextInterface | null>(null);
+  React.createContext<NetworkMetricsContextInterface>(
+    defaults.defaultNetworkContext
+  );
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 

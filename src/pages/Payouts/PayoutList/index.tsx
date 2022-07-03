@@ -14,7 +14,6 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { planckToUnit } from 'Utils';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
-import { NetworkMetricsContextInterface } from 'types';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 
@@ -24,7 +23,7 @@ export const PayoutListInner = (props: any) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { units } = network;
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { metrics } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
 
   const disableThrottle = props.disableThrottle ?? false;

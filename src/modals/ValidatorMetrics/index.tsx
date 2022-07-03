@@ -12,13 +12,12 @@ import Identicon from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StatusLabel } from 'library/StatusLabel';
-import { NetworkMetricsContextInterface } from 'types';
 
 export const ValidatorMetrics = () => {
   const { config } = useModal();
   const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { metrics } = useNetworkMetrics();
 
   const [list, setList] = useState([]);
 

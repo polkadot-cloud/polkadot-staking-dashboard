@@ -13,12 +13,7 @@ import {
 } from 'Utils';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
-import {
-  AnyApi,
-  AnyMetaBatch,
-  Fn,
-  NetworkMetricsContextInterface,
-} from 'types';
+import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { MIN_BOND_PRECISION } from 'consts';
 import {
   SessionValidators,
@@ -46,7 +41,7 @@ export const ValidatorsProvider = ({
 }) => {
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { metrics } = useNetworkMetrics();
   const { accounts, getAccountNominations } = useBalances();
   const { poolNominations } = useActivePool() as ActivePoolContextState;
   const { units } = network;

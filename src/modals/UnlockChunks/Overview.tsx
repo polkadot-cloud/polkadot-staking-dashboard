@@ -7,14 +7,13 @@ import { useApi } from 'contexts/Api';
 import { planckBnToUnit } from 'Utils';
 import Button from 'library/Button';
 import { useNetworkMetrics } from 'contexts/Network';
-import { NetworkMetricsContextInterface } from 'types';
 import { ContentWrapper, ChunkWrapper } from './Wrappers';
 import { Separator, NotesWrapper } from '../Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondType, setSection, setUnlock, setTask }: any, ref: any) => {
     const { network, consts } = useApi();
-    const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+    const { metrics } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
     const { activeEra } = metrics;
