@@ -6,9 +6,9 @@ import { setStateWithRef } from 'Utils';
 import { defaultExtrinsicsContext } from './defaults';
 
 export interface ExtrinsicsContextInterface {
-  addPending: (t: any) => void;
-  removePending: (t: any) => void;
-  pending: any;
+  addPending: (n: number) => void;
+  removePending: (n: number) => void;
+  pending: number[];
 }
 
 export const ExtrinsicsContext =
@@ -21,16 +21,17 @@ export const ExtrinsicsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [pending, setPending] = useState([]);
+  const [pending, setPending] = useState<number[]>([]);
   const pendingRef = useRef(pending);
 
-  const addPending = (nonce: any) => {
-    const _pending: any = [...pendingRef.current].concat(nonce);
+  const addPending = (nonce: number) => {
+    const _pending: number[] = [...pendingRef.current];
+    _pending.push(nonce);
     setStateWithRef(_pending, setPending, pendingRef);
   };
 
-  const removePending = (nonce: any) => {
-    const _pending = pendingRef.current.filter((item: any) => item !== nonce);
+  const removePending = (nonce: number) => {
+    const _pending = pendingRef.current.filter((n: number) => n !== nonce);
     setStateWithRef(_pending, setPending, pendingRef);
   };
 

@@ -41,7 +41,7 @@ export const AccountProvider = ({
   useEffect(() => {
     return () => {
       Object.values(accountSubsRef.current).map((batch: AnyMetaBatch) => {
-        return Object.entries(batch).map(([k, v]: AnyApi) => {
+        return Object.entries(batch).map(([, v]: AnyApi) => {
           return v();
         });
       });
@@ -103,7 +103,7 @@ export const AccountProvider = ({
       accountMetaBatchesRef
     );
 
-    const subscribeToIdentities = async (addr: any) => {
+    const subscribeToIdentities = async (addr: string[]) => {
       const unsub = await api.query.identity.identityOf.multi<AnyApi>(
         addr,
         (_identities) => {
@@ -123,7 +123,7 @@ export const AccountProvider = ({
       return unsub;
     };
 
-    const subscribeToSuperIdentities = async (addr: any) => {
+    const subscribeToSuperIdentities = async (addr: string[]) => {
       const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
         async (_supers) => {
