@@ -16,7 +16,6 @@ import {
   ExternalAccount,
   ImportedAccount,
 } from 'types/connect';
-import { BalancesContextInterface } from 'types/balances';
 import { AnyApi, MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import {
   EraStakers,
@@ -53,7 +52,7 @@ export const StakingProvider = ({
     getBondedAccount,
     getLedgerForStash,
     getAccountNominations,
-  } = useBalances() as BalancesContextInterface;
+  } = useBalances();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
 

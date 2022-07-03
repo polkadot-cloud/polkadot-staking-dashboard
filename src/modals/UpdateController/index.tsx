@@ -14,7 +14,6 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { useApi } from 'contexts/Api';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
-import { BalancesContextInterface } from 'types/balances';
 import { Warning } from 'library/Form/Warning';
 import { InputItem } from 'library/Form/types';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
@@ -25,7 +24,7 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount } = useBalances() as BalancesContextInterface;
+  const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 

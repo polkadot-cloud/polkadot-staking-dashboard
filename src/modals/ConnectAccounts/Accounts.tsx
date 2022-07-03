@@ -11,7 +11,6 @@ import { PoolMembershipsContextState } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
-import { BalancesContextInterface } from 'types/balances';
 import { useApi } from 'contexts/Api';
 import {
   AccountWrapper,
@@ -33,7 +32,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     getBondedAccount,
     accounts: balanceAccounts,
     ledgers,
-  } = useBalances() as BalancesContextInterface;
+  } = useBalances();
   const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
   const { accounts } = useConnect() as ConnectContextInterface;

@@ -24,8 +24,9 @@ import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-export const BalancesContext =
-  React.createContext<BalancesContextInterface | null>(null);
+export const BalancesContext = React.createContext<BalancesContextInterface>(
+  defaults.defaultBalancesContext
+);
 
 export const useBalances = () => React.useContext(BalancesContext);
 

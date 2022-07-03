@@ -25,7 +25,7 @@ import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import { ActivePoolContextState } from 'types/pools';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -35,8 +35,7 @@ export const BalanceGraph = () => {
   const { network } = useApi();
   const { units, features } = network;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountBalance, getBondOptions } =
-    useBalances() as BalancesContextInterface;
+  const { getAccountBalance, getBondOptions } = useBalances();
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();

@@ -14,7 +14,7 @@ import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 
 import { StakingContextInterface } from 'types/staking';
 import { NotesWrapper } from '../../Wrappers';
@@ -30,8 +30,7 @@ export const UnbondSome = (props: any) => {
     useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;
-  const { getBondOptions, getBondedAccount } =
-    useBalances() as BalancesContextInterface;
+  const { getBondOptions, getBondedAccount } = useBalances();
   const { bondType } = config;
   const { stats } = usePoolsConfig() as PoolsConfigContextState;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;

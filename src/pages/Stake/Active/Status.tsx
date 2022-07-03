@@ -19,7 +19,6 @@ import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
 import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';
 
 export const Status = () => {
@@ -31,7 +30,7 @@ export const Status = () => {
   const { isSyncing } = useUi();
   const { getNominationsStatus, staking, inSetup } =
     useStaking() as StakingContextInterface;
-  const { getAccountNominations } = useBalances() as BalancesContextInterface;
+  const { getAccountNominations } = useBalances();
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
 

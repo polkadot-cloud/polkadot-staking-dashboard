@@ -14,7 +14,7 @@ import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import BN from 'bn.js';
 import { StakingContextInterface } from 'types/staking';
 
@@ -24,8 +24,7 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
-  const { getLedgerForStash, getBondOptions } =
-    useBalances() as BalancesContextInterface;
+  const { getLedgerForStash, getBondOptions } = useBalances();
   const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);

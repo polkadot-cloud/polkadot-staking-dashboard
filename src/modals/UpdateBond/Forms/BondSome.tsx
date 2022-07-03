@@ -12,7 +12,7 @@ import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ActivePoolContextState } from 'types/pools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
@@ -24,7 +24,7 @@ export const BondSome = (props: any) => {
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
-  const { getBondOptions } = useBalances() as BalancesContextInterface;
+  const { getBondOptions } = useBalances();
   const { bondType } = config;
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
 

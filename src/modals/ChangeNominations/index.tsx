@@ -19,7 +19,6 @@ import {
   PoolMembershipsContextState,
 } from 'types/pools';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BalancesContextInterface } from 'types/balances';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -32,8 +31,7 @@ export const ChangeNominations = () => {
   const { api } = useApi();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount, getAccountNominations } =
-    useBalances() as BalancesContextInterface;
+  const { getBondedAccount, getAccountNominations } = useBalances();
   const { setStatus: setModalStatus, config } = useModal();
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
   const { poolNominations, isNominator } =

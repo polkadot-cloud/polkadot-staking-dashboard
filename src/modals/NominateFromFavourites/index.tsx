@@ -19,7 +19,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BalancesContextInterface } from 'types/balances';
 import { Warning } from 'library/Form/Warning';
 import { Validator, ValidatorsContextInterface } from 'types/validators';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
@@ -29,7 +28,7 @@ export const NominateFromFavourites = () => {
   const { consts, api } = useApi();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
-  const { getBondedAccount } = useBalances() as BalancesContextInterface;
+  const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators() as ValidatorsContextInterface;
   const { isNominator, isOwner } = useActivePool() as ActivePoolContextState;

@@ -12,7 +12,7 @@ import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
@@ -25,7 +25,7 @@ export const Forms = () => {
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
 
-  const { getBondOptions } = useBalances() as BalancesContextInterface;
+  const { getBondOptions } = useBalances();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);
 
   // local bond value

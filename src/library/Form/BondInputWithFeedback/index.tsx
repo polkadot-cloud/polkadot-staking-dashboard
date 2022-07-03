@@ -13,7 +13,6 @@ import { ConnectContextInterface } from 'types/connect';
 import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import BN from 'bn.js';
-import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
@@ -34,8 +33,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;
-  const { getLedgerForStash, getBondedAccount, getBondOptions } =
-    useBalances() as BalancesContextInterface;
+  const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
   const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
   const { stats } = usePoolsConfig() as PoolsConfigContextState;
   const { minJoinBond } = stats;

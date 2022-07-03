@@ -13,7 +13,6 @@ import {
 } from 'Utils';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
-import { BalancesContextInterface } from 'types/balances';
 import {
   AnyApi,
   AnyMetaBatch,
@@ -48,8 +47,7 @@ export const ValidatorsProvider = ({
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
-  const { accounts, getAccountNominations } =
-    useBalances() as BalancesContextInterface;
+  const { accounts, getAccountNominations } = useBalances();
   const { poolNominations } = useActivePool() as ActivePoolContextState;
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
