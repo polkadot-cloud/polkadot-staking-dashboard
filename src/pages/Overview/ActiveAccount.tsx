@@ -9,6 +9,7 @@ import { useConnect } from 'contexts/Connect';
 import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
+import { NotificationText } from 'contexts/Notifications/types';
 import { Separator, AccountWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
@@ -17,7 +18,7 @@ export const ActiveAccount = () => {
   const accountData = getAccount(activeAccount);
 
   // click to copy notification
-  let notification = {};
+  let notification: NotificationText | null = null;
   if (accountData !== null) {
     notification = {
       title: 'Address Copied to Clipboard',
@@ -50,7 +51,9 @@ export const ActiveAccount = () => {
                   type="button"
                   onClick={() => {
                     navigator.clipboard.writeText(accountData.address);
-                    addNotification(notification);
+                    if (notification) {
+                      addNotification(notification);
+                    }
                   }}
                 >
                   <FontAwesomeIcon

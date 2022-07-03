@@ -4,7 +4,11 @@
 import React, { useState, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultNotificationsContext } from './defaults';
-import { NotificationsContextInterface } from './types';
+import {
+  NotificationsContextInterface,
+  NotificationInterface,
+  NotificationItem,
+} from './types';
 
 export const NotificationsContext =
   React.createContext<NotificationsContextInterface>(
@@ -19,7 +23,10 @@ export const NotificationsProvider = ({
   children: React.ReactNode;
 }) => {
   const [index, _setIndex] = useState(0);
-  const [notifications, setNotifications]: any = useState([]);
+  const [notifications, setNotifications] = useState<NotificationInterface[]>(
+    []
+  );
+
   const indexRef = useRef(index);
   const notificationsRef = useRef(notifications);
 
@@ -28,32 +35,33 @@ export const NotificationsProvider = ({
     _setIndex(_index);
   };
 
-  const add = (_n: any) => {
-    const _notifications = [...notificationsRef.current];
+  const addNotification = (_n: NotificationItem) => {
+    const _notifications: NotificationInterface[] = [
+      ...notificationsRef.current,
+    ];
 
-    const newIndex = indexRef.current + 1;
+    const newIndex: number = indexRef.current + 1;
 
-    const item = {
-      ..._n,
-      index: newIndex,
-    };
     _notifications.push({
       index: newIndex,
-      item,
+      item: {
+        ..._n,
+        index: newIndex,
+      },
     });
 
     setIndex(newIndex);
     setStateWithRef(_notifications, setNotifications, notificationsRef);
     setTimeout(() => {
-      remove(newIndex);
+      removeNotification(newIndex);
     }, 3000);
 
     return newIndex;
   };
 
-  const remove = (_index: number) => {
+  const removeNotification = (_index: number) => {
     const _notifications = notificationsRef.current.filter(
-      (item: any) => item.index !== _index
+      (item: NotificationInterface) => item.index !== _index
     );
     setStateWithRef(_notifications, setNotifications, notificationsRef);
   };
@@ -61,8 +69,8 @@ export const NotificationsProvider = ({
   return (
     <NotificationsContext.Provider
       value={{
-        addNotification: add,
-        removeNotification: remove,
+        addNotification,
+        removeNotification,
         notifications: notificationsRef.current,
       }}
     >

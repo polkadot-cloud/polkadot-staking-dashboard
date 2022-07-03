@@ -10,6 +10,7 @@ import { Identicon } from 'library/Identicon';
 import { useNotifications } from 'contexts/Notifications';
 import { useAccount } from 'contexts/Account';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
+import { NotificationText } from 'contexts/Notifications/types';
 import { AccountWrapper } from './Wrappers';
 
 export const PoolAccount = (props: any) => {
@@ -30,8 +31,7 @@ export const PoolAccount = (props: any) => {
     supers[batchIndex]
   );
 
-  let notification = {};
-
+  let notification: NotificationText | null = null;
   if (address !== null) {
     notification = {
       title: 'Address Copied to Clipboard',
@@ -75,7 +75,9 @@ export const PoolAccount = (props: any) => {
                 type="button"
                 onClick={() => {
                   navigator.clipboard.writeText(address);
-                  addNotification(notification);
+                  if (notification) {
+                    addNotification(notification);
+                  }
                 }}
               >
                 <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />

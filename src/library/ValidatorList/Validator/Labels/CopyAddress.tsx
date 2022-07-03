@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useNotifications } from 'contexts/Notifications';
+import { NotificationText } from 'contexts/Notifications/types';
 import { CopyAddressProps } from '../types';
 
 export const CopyAddress = (props: CopyAddressProps) => {
@@ -13,9 +14,9 @@ export const CopyAddress = (props: CopyAddressProps) => {
   const { address } = validator;
 
   // copy address notification
-  const notificationCopyAddress =
+  const notificationCopyAddress: NotificationText | null =
     address == null
-      ? {}
+      ? null
       : {
           title: 'Address Copied to Clipboard',
           subtitle: address,
@@ -26,8 +27,10 @@ export const CopyAddress = (props: CopyAddressProps) => {
       <button
         type="button"
         onClick={() => {
-          addNotification(notificationCopyAddress);
-          navigator.clipboard.writeText(address);
+          if (notificationCopyAddress) {
+            addNotification(notificationCopyAddress);
+          }
+          navigator.clipboard.writeText(address || '');
         }}
       >
         <FontAwesomeIcon icon={faCopy as IconProp} />

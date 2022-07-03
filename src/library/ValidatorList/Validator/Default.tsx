@@ -9,6 +9,7 @@ import { useMenu } from 'contexts/Menu';
 import { useNotifications } from 'contexts/Notifications';
 import { useModal } from 'contexts/Modal';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { NotificationText } from 'contexts/Notifications/types';
 import { Wrapper, Labels, MenuPosition } from './Wrappers';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
@@ -50,15 +51,15 @@ export const Default = (props: DefaultProps) => {
   );
 
   // copy address notification
-  const notificationCopyAddress =
+  const notificationCopyAddress: NotificationText | null =
     address == null
-      ? {}
+      ? null
       : {
           title: 'Address Copied to Clipboard',
           subtitle: address,
         };
 
-  const menuItems: any = [
+  const menuItems = [
     {
       icon: <FontAwesomeIcon icon={faChartLine as IconProp} />,
       wrap: null,
@@ -80,7 +81,9 @@ export const Default = (props: DefaultProps) => {
       title: `Copy Address`,
       cb: () => {
         navigator.clipboard.writeText(address);
-        addNotification(notificationCopyAddress);
+        if (notificationCopyAddress) {
+          addNotification(notificationCopyAddress);
+        }
       },
     },
   ];

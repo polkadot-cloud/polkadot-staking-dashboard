@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { defaultModalContext } from './defaults';
-import { ModalContextInterface } from './types';
+import { ModalConfig, ModalContextInterface, ModalContextState } from './types';
 
 // default modal content
 const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';
@@ -15,7 +15,7 @@ export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, setState]: any = useState({
+  const [state, setState] = useState<ModalContextState>({
     status: 0,
     modal: DEFAULT_MODAL_COMPONENT,
     config: {},
@@ -38,7 +38,11 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setState(_state);
   };
 
-  const openModalWith = (modal: string, _config: any = {}, size = 'large') => {
+  const openModalWith = (
+    modal: string,
+    _config: ModalConfig = {},
+    size = 'large'
+  ) => {
     setState({
       ...state,
       modal,

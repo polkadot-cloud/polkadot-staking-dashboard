@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import { defaultPaletteContext } from './defaults';
 import { PaletteContextInterface } from './types';
 
@@ -33,8 +33,8 @@ export const PaletteProvider = ({
     }, 100);
   };
 
-  const setPalettePosition = (posRef: any) => {
-    if (open) return;
+  const setPalettePosition = (posRef: RefObject<HTMLDivElement>) => {
+    if (open || !posRef?.current) return;
     const bodyRect = document.body.getBoundingClientRect();
     const elemRect = posRef.current.getBoundingClientRect();
 
@@ -45,7 +45,9 @@ export const PaletteProvider = ({
     openPalette();
   };
 
-  const checkPalettePosition = (paletteRef: any) => {
+  const checkPalettePosition = (paletteRef: RefObject<HTMLDivElement>) => {
+    if (!paletteRef?.current) return;
+
     const bodyRect = document.body.getBoundingClientRect();
     const paletteRect = paletteRef.current.getBoundingClientRect();
 
