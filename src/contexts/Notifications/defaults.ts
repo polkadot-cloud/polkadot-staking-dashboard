@@ -7,6 +7,6 @@ export const defaultNotificationsContext: NotificationsContextInterface = {
   // eslint-disable-next-line
   addNotification: (n: any) => {},
   // eslint-disable-next-line
-    removeNotification: (n: any) => {},
+  removeNotification: (n: any) => {},
   notifications: [],
 };
