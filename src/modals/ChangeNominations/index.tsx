@@ -12,15 +12,8 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import {
-  ActivePoolContextState,
-  PoolMembershipsContextState,
-} from 'types/pools';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BalancesContextInterface } from 'types/balances';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -30,15 +23,12 @@ import {
 } from '../Wrappers';
 
 export const ChangeNominations = () => {
-  const { api } = useApi() as APIContextInterface;
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
-  const { getBondedAccount, getAccountNominations } =
-    useBalances() as BalancesContextInterface;
+  const { api } = useApi();
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { getBondedAccount, getAccountNominations } = useBalances();
   const { setStatus: setModalStatus, config } = useModal();
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
-  const { poolNominations, isNominator } =
-    useActivePool() as ActivePoolContextState;
+  const { membership } = usePoolMemberships();
+  const { poolNominations, isNominator } = useActivePool();
 
   const { nominations: newNominations, provider, bondType } = config;
 

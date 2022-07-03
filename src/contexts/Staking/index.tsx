@@ -11,14 +11,8 @@ import {
   setStateWithRef,
   planckBnToUnit,
 } from 'Utils';
-import { APIContextInterface } from 'types/api';
-import {
-  ConnectContextInterface,
-  ExternalAccount,
-  ImportedAccount,
-} from 'types/connect';
-import { BalancesContextInterface } from 'types/balances';
-import { AnyApi, MaybeAccount, NetworkMetricsContextInterface } from 'types';
+import { ExternalAccount, ImportedAccount } from 'types/connect';
+import { AnyApi, MaybeAccount } from 'types';
 import {
   EraStakers,
   NominationStatuses,
@@ -32,8 +26,9 @@ import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-export const StakingContext =
-  React.createContext<StakingContextInterface | null>(null);
+export const StakingContext = React.createContext<StakingContextInterface>(
+  defaults.defaultStakingContext
+);
 
 export const useStaking = () => React.useContext(StakingContext);
 
@@ -46,16 +41,15 @@ export const StakingProvider = ({
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
-  } = useConnect() as ConnectContextInterface;
-  const { isReady, api, consts, status, network } =
-    useApi() as APIContextInterface;
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
+  } = useConnect();
+  const { isReady, api, consts, status, network } = useApi();
+  const { metrics } = useNetworkMetrics();
   const {
     accounts,
     getBondedAccount,
     getLedgerForStash,
     getAccountNominations,
-  } = useBalances() as BalancesContextInterface;
+  } = useBalances();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
 

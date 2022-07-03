@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { isNumeric } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { Spacer } from '../../Wrappers';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
@@ -15,7 +14,7 @@ import { Items, Item } from './Wrappers';
 export const Payee = (props: any) => {
   const { section } = props;
 
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(activeAccount);
 

@@ -10,17 +10,18 @@ import {
   AssistantContextProps,
 } from 'types/assistant';
 import { ASSISTANT_CONFIG } from 'config/assistant';
-import { APIContextInterface } from 'types/api';
 import { replaceAll } from 'Utils';
-import { useApi } from './Api';
+import { useApi } from '../Api';
+import { defaultAssistantContext } from './defaults';
 
-export const AssistantContext =
-  React.createContext<AssistantContextInterface | null>(null);
+export const AssistantContext = React.createContext<AssistantContextInterface>(
+  defaultAssistantContext
+);
 
 export const useAssistant = () => React.useContext(AssistantContext);
 
 export const AssistantProvider = (props: AssistantContextProps) => {
-  const { network, consts } = useApi() as APIContextInterface;
+  const { network, consts } = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store whether assistant is open and whether it should transition

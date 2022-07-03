@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useAssistant } from 'contexts/Assistant';
 import { ASSISTANT_CONFIG } from 'config/assistant';
 import { pageFromUri } from 'Utils';
-import { AssistantContextInterface, AssistantItem } from 'types/assistant';
+import { AssistantItem } from 'types/assistant';
 import { Toggle } from 'types';
 import {
   Wrapper,
@@ -18,7 +18,7 @@ import { Sections } from './Sections';
 import { useOutsideAlerter } from '../Hooks';
 
 export const Assistant = () => {
-  const assistant = useAssistant() as AssistantContextInterface;
+  const assistant = useAssistant();
   const { pathname } = useLocation();
 
   // container variants

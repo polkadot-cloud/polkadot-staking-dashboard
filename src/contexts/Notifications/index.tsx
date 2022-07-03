@@ -3,19 +3,18 @@
 
 import React, { useState, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
+import { defaultNotificationsContext } from './defaults';
 
-export interface NotificationsContextState {
+export interface NotificationsContextInterface {
   addNotification: (n: any) => any;
   removeNotification: (n: any) => void;
   notifications: any;
 }
 
-export const NotificationsContext: React.Context<NotificationsContextState> =
-  React.createContext({
-    addNotification: (n: any) => {},
-    removeNotification: (n: any) => {},
-    notifications: [],
-  });
+export const NotificationsContext =
+  React.createContext<NotificationsContextInterface>(
+    defaultNotificationsContext
+  );
 
 export const useNotifications = () => React.useContext(NotificationsContext);
 

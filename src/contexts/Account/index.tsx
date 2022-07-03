@@ -3,24 +3,21 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { AnyApi, AnyMetaBatch } from 'types';
-import { useApi } from './Api';
+import { useApi } from '../Api';
+import { defaultAccountContext } from './defaults';
 
 // context type
-export interface AccountContextState {
+export interface AccountContextInterface {
   fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
   removeAccountMetaBatch: (k: string) => void;
   meta: AnyMetaBatch;
 }
 
 // context definition
-export const AccountContext: React.Context<AccountContextState> =
-  React.createContext({
-    fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => {},
-    removeAccountMetaBatch: (k: string) => {},
-    meta: {},
-  });
+export const AccountContext = React.createContext<AccountContextInterface>(
+  defaultAccountContext
+);
 
 export const useAccount = () => React.useContext(AccountContext);
 
@@ -30,7 +27,7 @@ export const AccountProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api } = useApi() as APIContextInterface;
+  const { isReady, api } = useApi();
 
   // stores the meta data batches for validator lists
   const [accountMetaBatches, setAccountMetaBatch] = useState<AnyMetaBatch>({});

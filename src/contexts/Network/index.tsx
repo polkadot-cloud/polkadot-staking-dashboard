@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
-import { APIContextInterface } from 'types/api';
 import {
   AnyApi,
   NetworkMetricsContextInterface,
@@ -12,7 +11,9 @@ import { useApi } from '../Api';
 import * as defaults from './defaults';
 
 export const NetworkMetricsContext =
-  React.createContext<NetworkMetricsContextInterface | null>(null);
+  React.createContext<NetworkMetricsContextInterface>(
+    defaults.defaultNetworkContext
+  );
 
 export const useNetworkMetrics = () => React.useContext(NetworkMetricsContext);
 
@@ -21,23 +22,23 @@ export const NetworkMetricsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, status } = useApi() as APIContextInterface;
+  const { isReady, api, status } = useApi();
 
   useEffect(() => {
     if (status === 'connecting') {
-      setState(defaults.state);
+      setMetrics(defaults.metrics);
     }
   }, [status]);
 
   // store network metrics in state
-  const [state, setState] = useState<NetworkMetricsState>(defaults.state);
+  const [metrics, setMetrics] = useState<NetworkMetricsState>(defaults.metrics);
 
   // manage unsubscribe
   useEffect(() => {
     subscribeToNetworkMetrics();
     return () => {
-      if (state.unsub !== undefined) {
-        state.unsub();
+      if (metrics.unsub !== undefined) {
+        metrics.unsub();
       }
     };
   }, [isReady]);
@@ -61,12 +62,12 @@ export const NetworkMetricsProvider = ({
           // convert JSON string to object
           _activeEra = JSON.parse(_activeEra);
 
-          const _state = {
+          const _metrics = {
             activeEra: _activeEra,
             totalIssuance: _totalIssuance.toBn(),
             unsub,
           };
-          setState(_state);
+          setMetrics(_metrics);
         }
       );
 
@@ -79,8 +80,8 @@ export const NetworkMetricsProvider = ({
     <NetworkMetricsContext.Provider
       value={{
         metrics: {
-          activeEra: state.activeEra,
-          totalIssuance: state.totalIssuance,
+          activeEra: metrics.activeEra,
+          totalIssuance: metrics.totalIssuance,
         },
       }}
     >

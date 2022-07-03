@@ -8,20 +8,17 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ConnectContextInterface } from 'types/connect';
-import { ActivePoolContextState } from 'types/pools';
-import { BalancesContextInterface } from 'types/balances';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';
 import { Forms } from './Forms';
 
 export const UnlockChunks = () => {
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
   const { bondType } = config || {};
-  const { getLedgerForStash } = useBalances() as BalancesContextInterface;
-  const { getPoolUnlocking } = useActivePool() as ActivePoolContextState;
+  const { getLedgerForStash } = useBalances();
+  const { getPoolUnlocking } = useActivePool();
 
   // get the unlocking per bondType
   const _getUnlocking = () => {

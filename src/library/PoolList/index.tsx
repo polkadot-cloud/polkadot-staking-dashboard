@@ -9,13 +9,11 @@ import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { APIContextInterface } from 'types/api';
 import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
-import { NetworkMetricsContextInterface } from 'types';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -26,9 +24,8 @@ export const PoolListInner = (props: PoolListProps) => {
     props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
   const { mode } = useTheme();
-  const { isReady, network } = useApi() as APIContextInterface;
-  const { metrics }: any =
-    useNetworkMetrics() as NetworkMetricsContextInterface;
+  const { isReady, network } = useApi();
+  const { metrics }: any = useNetworkMetrics();
   const { fetchPoolsMetaBatch }: any = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
 

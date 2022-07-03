@@ -11,17 +11,18 @@ import {
 } from '@talisman-connect/wallets';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { DAPP_NAME } from 'consts';
-import { APIContextInterface } from 'types/api';
 import {
   ConnectContextInterface,
   ImportedAccount,
   ExternalAccount,
 } from 'types/connect';
 import { MaybeAccount, Unsub, Unsubs } from 'types';
-import { useApi } from './Api';
+import { useApi } from '../Api';
+import { defaultConnectContext } from './defaults';
 
-export const ConnectContext =
-  React.createContext<ConnectContextInterface | null>(null);
+export const ConnectContext = React.createContext<ConnectContextInterface>(
+  defaultConnectContext
+);
 
 export const useConnect = () => React.useContext(ConnectContext);
 
@@ -30,7 +31,7 @@ export const ConnectProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
 
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);

@@ -20,23 +20,19 @@ import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
-import { APIContextInterface } from 'types/api';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
-import { ConnectContextInterface } from 'types/connect';
 import { usePalette } from 'contexts/Palette';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
 import Item from './Item';
 import Heading from './Heading';
 import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
 
 export const SideMenu = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { openModalWith } = useModal();
-  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect();
   const { pathname }: any = useLocation();
-  const { getBondedAccount } = useBalances() as BalancesContextInterface;
-  const { getControllerNotImported } = useStaking() as StakingContextInterface;
+  const { getBondedAccount } = useBalances();
+  const { getControllerNotImported } = useStaking();
   const { setPalettePosition, open }: any = usePalette();
   const controller = getBondedAccount(activeAccount);
   const {

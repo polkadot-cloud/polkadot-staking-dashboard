@@ -15,20 +15,15 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
-  const { api } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getBondedAccount } = useBalances() as BalancesContextInterface;
+  const { api } = useApi();
+  const { activeAccount } = useConnect();
+  const { getBondedAccount } = useBalances();
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking, getControllerNotImported } =
-    useStaking() as StakingContextInterface;
+  const { staking, getControllerNotImported } = useStaking();
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);

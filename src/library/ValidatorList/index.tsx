@@ -12,7 +12,6 @@ import { useValidators } from 'contexts/Validators';
 import { useUi } from 'contexts/UI';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { APIContextInterface } from 'types/api';
 import { Validator } from 'library/ValidatorList/Validator';
 import {
   List,
@@ -21,23 +20,18 @@ import {
   Pagination,
   Selectable,
 } from 'library/List';
-import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
-import { NetworkMetricsContextInterface } from 'types';
-import { ValidatorsContextInterface } from 'types/validators';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
 export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
-  const { isReady, network } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { metrics }: any =
-    useNetworkMetrics() as NetworkMetricsContextInterface;
-  const { fetchValidatorMetaBatch } =
-    useValidators() as ValidatorsContextInterface;
+  const { isReady, network } = useApi();
+  const { activeAccount } = useConnect();
+  const { metrics }: any = useNetworkMetrics();
+  const { fetchValidatorMetaBatch } = useValidators();
   const provider = useValidatorList();
   const modal = useModal();
 

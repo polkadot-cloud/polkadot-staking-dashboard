@@ -16,10 +16,7 @@ import { PageTitle } from 'library/PageTitle';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
-import { ConnectContextInterface } from 'types/connect';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { GenerateNominations } from '../GenerateNominations';
@@ -31,11 +28,10 @@ import { Status } from './Status';
 
 export const Active = ({ title }: any) => {
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
-  const { targets, setTargets, inSetup } =
-    useStaking() as StakingContextInterface;
-  const { getAccountNominations } = useBalances() as BalancesContextInterface;
+  const { targets, setTargets, inSetup } = useStaking();
+  const { getAccountNominations } = useBalances();
   const nominations = getAccountNominations(activeAccount);
 
   return (

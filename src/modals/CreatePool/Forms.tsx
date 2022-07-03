@@ -11,21 +11,18 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
 
-  const { getBondOptions } = useBalances() as BalancesContextInterface;
+  const { getBondOptions } = useBalances();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);
 
   // local bond value

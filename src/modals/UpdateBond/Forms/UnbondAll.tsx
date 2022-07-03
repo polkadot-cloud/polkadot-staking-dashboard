@@ -9,29 +9,24 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
-import { ActivePoolContextState } from 'types/pools';
+import { BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { StakingContextInterface } from 'types/staking';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
 export const UnbondAll = (props: any) => {
   const { setSection } = props;
 
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
-  const { getControllerNotImported } = useStaking() as StakingContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { getControllerNotImported } = useStaking();
   const { getBondOptions, getBondedAccount, getAccountNominations } =
-    useBalances() as BalancesContextInterface;
+    useBalances();
   const { bondType } = config;
-  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
+  const { getPoolBondOptions } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);

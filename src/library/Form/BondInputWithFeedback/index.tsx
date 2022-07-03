@@ -9,13 +9,8 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import BN from 'bn.js';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
@@ -31,14 +26,12 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const setters = props.setters ?? [];
   const listenIsValid: any = props.listenIsValid ?? (() => {});
 
-  const { network } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { staking, getControllerNotImported } =
-    useStaking() as StakingContextInterface;
-  const { getLedgerForStash, getBondedAccount, getBondOptions } =
-    useBalances() as BalancesContextInterface;
-  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
-  const { stats } = usePoolsConfig() as PoolsConfigContextState;
+  const { network } = useApi();
+  const { activeAccount } = useConnect();
+  const { staking, getControllerNotImported } = useStaking();
+  const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
+  const { getPoolBondOptions } = useActivePool();
+  const { stats } = usePoolsConfig();
   const { minJoinBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);

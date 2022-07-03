@@ -4,20 +4,17 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, u8aConcat } from '@polkadot/util';
-import { APIContextInterface } from 'types/api';
-import {
-  BondedPoolsContextState,
-  MaybePool,
-  PoolsConfigContextState,
-} from 'types/pools';
+import { BondedPoolsContextState, MaybePool } from 'types/pools';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { useApi } from '../Api';
 import { usePoolsConfig } from './PoolsConfig';
 import { setStateWithRef } from '../../Utils';
+import { defaultBondedPoolsContext } from './defaults';
 
-export const BondedPoolsContext =
-  React.createContext<BondedPoolsContextState | null>(null);
+export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
+  defaultBondedPoolsContext
+);
 
 export const useBondedPools = () => React.useContext(BondedPoolsContext);
 
@@ -26,8 +23,8 @@ export const BondedPoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady, consts } = useApi() as APIContextInterface;
-  const { enabled } = usePoolsConfig() as PoolsConfigContextState;
+  const { api, network, isReady, consts } = useApi();
+  const { enabled } = usePoolsConfig();
   const { poolsPalletId } = consts;
 
   // stores the meta data batches for pool lists

@@ -5,15 +5,11 @@ import { useState, useEffect, forwardRef } from 'react';
 import { faCog, faChartLine, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import Button from 'library/Button';
-import { ConnectContextInterface } from 'types/connect';
 import { useBalances } from 'contexts/Balances';
-import { PoolMembershipsContextState } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
-import { BalancesContextInterface } from 'types/balances';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import {
   AccountWrapper,
   AccountGroupWrapper,
@@ -25,20 +21,19 @@ import { AccountElement, AccountButton } from './Account';
 export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
-  const { isReady } = useApi() as APIContextInterface;
-  const { getAccount, activeAccount }: any =
-    useConnect() as ConnectContextInterface;
+  const { isReady } = useApi();
+  const { getAccount, activeAccount }: any = useConnect();
   const {
     getLedgerForController,
     getAccountLocks,
     getBondedAccount,
     accounts: balanceAccounts,
     ledgers,
-  } = useBalances() as BalancesContextInterface;
-  const { connectToAccount } = useConnect() as ConnectContextInterface;
+  } = useBalances();
+  const { connectToAccount } = useConnect();
   const { setStatus } = useModal();
-  const { accounts } = useConnect() as ConnectContextInterface;
-  const { memberships } = usePoolMemberships() as PoolMembershipsContextState;
+  const { accounts } = useConnect();
+  const { memberships } = usePoolMemberships();
 
   const _controllers: any = [];
   const _stashes: any = [];

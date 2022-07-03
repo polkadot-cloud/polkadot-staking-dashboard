@@ -6,36 +6,28 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import {
-  ActivePoolContextState,
-  PoolMembershipsContextState,
-} from 'types/pools';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { useBalances } from 'contexts/Balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BalancesContextInterface } from 'types/balances';
 import { Warning } from 'library/Form/Warning';
-import { Validator, ValidatorsContextInterface } from 'types/validators';
+import { Validator } from 'types/validators';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavourites = () => {
-  const { consts, api } = useApi() as APIContextInterface;
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
-  const { getBondedAccount } = useBalances() as BalancesContextInterface;
+  const { consts, api } = useApi();
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
-  const { favouritesList } = useValidators() as ValidatorsContextInterface;
-  const { isNominator, isOwner } = useActivePool() as ActivePoolContextState;
+  const { favouritesList } = useValidators();
+  const { isNominator, isOwner } = useActivePool();
   const controller = getBondedAccount(activeAccount);
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { membership } = usePoolMemberships();
   const { maxNominations } = consts;
   const { bondType, nominations }: any = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;

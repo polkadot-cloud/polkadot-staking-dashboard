@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import {
-  ConnectContextInterface,
-  ExternalAccount,
-  ImportedAccount,
-} from 'types/connect';
+import { ExternalAccount, ImportedAccount } from 'types/connect';
 import { faGlasses, faCog, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ExtensionWrapper } from '../Wrappers';
@@ -16,7 +12,7 @@ import { ReadOnlyInput } from '../ReadOnlyInput';
 export const ReadOnly = (props: any) => {
   const { setReadOnlyOpen, readOnlyOpen } = props;
 
-  const { accounts, forgetAccounts } = useConnect() as ConnectContextInterface;
+  const { accounts, forgetAccounts } = useConnect();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {

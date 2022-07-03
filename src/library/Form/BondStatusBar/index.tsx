@@ -8,8 +8,6 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
-import { APIContextInterface } from 'types/api';
-import { StakingContextInterface } from 'types/staking';
 import { planckBnToUnit } from 'Utils';
 import { Wrapper } from './Wrapper';
 import { BondStatusBarProps } from '../types';
@@ -17,8 +15,8 @@ import { BondStatusBarProps } from '../types';
 export const BondStatusBar = (props: BondStatusBarProps) => {
   const { value } = props;
 
-  const { network } = useApi() as APIContextInterface;
-  const { staking, eraStakers } = useStaking() as StakingContextInterface;
+  const { network } = useApi();
+  const { staking, eraStakers } = useStaking();
   const { isSyncing } = useUi();
   const { unit, units } = network;
   const { minNominatorBond } = staking;

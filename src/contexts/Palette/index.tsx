@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { defaultPaletteContext } from './defaults';
 
-export interface PaletteContextState {
+export interface PaletteContextInterface {
   openPalette: () => any;
   closePalette: () => any;
   setPalettePosition: (ref: any) => void;
@@ -13,16 +14,9 @@ export interface PaletteContextState {
   position: [number, number];
 }
 
-export const PaletteContext: React.Context<PaletteContextState> =
-  React.createContext({
-    openPalette: () => {},
-    closePalette: () => {},
-    setPalettePosition: (ref: any) => {},
-    checkPalettePosition: (ref: any) => {},
-    open: 0,
-    show: 0,
-    position: [0, 0],
-  });
+export const PaletteContext = React.createContext<PaletteContextInterface>(
+  defaultPaletteContext
+);
 
 export const usePalette = () => React.useContext(PaletteContext);
 

@@ -16,8 +16,6 @@ import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
 import { GRAPH_HEIGHT } from 'consts';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { prefillToMaxDays, calculatePayoutsByDay } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';
 import { ActiveAccount } from './ActiveAccount';
@@ -29,9 +27,9 @@ import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
 
 export const Overview = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { payouts }: any = useSubscan();
 
   // generate payouts by day data

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
@@ -10,7 +9,7 @@ import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
   const { openModalWith } = useModal();
-  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect();
   return (
     <>
       {!activeAccount && (

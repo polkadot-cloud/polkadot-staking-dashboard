@@ -2,6 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { MaybeAccount } from 'types';
+import {
+  ActivePoolContextState,
+  BondedPoolsContextState,
+  PoolMembershipsContextState,
+  PoolsConfigContextState,
+} from 'types/pools';
 
 export const stats = {
   counterForPoolMembers: new BN(0),
@@ -36,3 +43,41 @@ export const poolBondOptions = {
 };
 
 export const nominationStatus = {};
+
+export const defaultActivePoolContext: ActivePoolContextState = {
+  isBonding: () => false,
+  isNominator: () => false,
+  isOwner: () => false,
+  isDepositor: () => false,
+  getPoolBondedAccount: () => null,
+  // eslint-disable-next-line
+  getPoolBondOptions: (a: MaybeAccount) => null,
+  getPoolUnlocking: () => [],
+  // eslint-disable-next-line
+  setTargets: (targest: any) => {},
+  getNominationsStatus: () => nominationStatus,
+  activeBondedPool: {},
+  targets: [],
+  poolNominations: [],
+};
+
+export const defaultBondedPoolsContext: BondedPoolsContextState = {
+  // eslint-disable-next-line
+  fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => {},
+  // eslint-disable-next-line
+  createAccounts: (p: number) => {},
+  // eslint-disable-next-line
+  getBondedPool: (p: number) => [],
+  bondedPools: [],
+  meta: {},
+};
+
+export const defaultPoolMembershipsContext: PoolMembershipsContextState = {
+  memberships: [],
+  membership: null,
+};
+
+export const defaultPoolsConfigContext: PoolsConfigContextState = {
+  enabled: 0,
+  stats: {},
+};

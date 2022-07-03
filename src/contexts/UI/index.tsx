@@ -5,20 +5,17 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
-import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
-import { ValidatorsContextInterface } from 'types/validators';
-import { useConnect } from './Connect';
-import { useNetworkMetrics } from './Network';
-import { useStaking } from './Staking';
-import { useValidators } from './Validators';
-import { useBalances } from './Balances';
-import { useApi } from './Api';
+import { ImportedAccount } from 'types/connect';
+import { MaybeAccount } from 'types';
+import { useConnect } from '../Connect';
+import { useNetworkMetrics } from '../Network';
+import { useStaking } from '../Staking';
+import { useValidators } from '../Validators';
+import { useBalances } from '../Balances';
+import { useApi } from '../Api';
+import { defaultUIContext } from './defaults';
 
-export interface UIContextState {
+export interface UIContextInterface {
   setSideMenu: (v: number) => void;
   setUserSideMenuMinimised: (v: number) => void;
   orderValidators: (v: string) => void;
@@ -44,44 +41,19 @@ export interface UIContextState {
   isSyncing: any;
 }
 
-export const UIContext: React.Context<UIContextState> = React.createContext({
-  setSideMenu: (v: number) => {},
-  setUserSideMenuMinimised: (v: number) => {},
-  orderValidators: (v: string) => {},
-  applyValidatorOrder: (l: any, o: string) => {},
-  applyValidatorFilters: (l: any, k: string, f?: any) => {},
-  toggleFilterValidators: (v: string, l: any) => {},
-  toggleAllValidatorFilters: (t: number) => {},
-  resetValidatorFilters: () => {},
-  toggleService: (k: string) => {},
-  getSetupProgress: (a: MaybeAccount) => {},
-  getSetupProgressPercent: (a: string) => {},
-  setActiveAccountSetup: (p: any) => {},
-  setActiveAccountSetupSection: (s: number) => {},
-  getServices: () => {},
-  setOnSetup: (v: any) => {},
-  sideMenuOpen: 0,
-  userSideMenuMinimised: 0,
-  sideMenuMinimised: 0,
-  services: [],
-  validatorFilters: [],
-  validatorOrder: 'default',
-  onSetup: 0,
-  isSyncing: false,
-});
+export const UIContext =
+  React.createContext<UIContextInterface>(defaultUIContext);
 
 export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
-  const { isReady, consts, network } = useApi() as APIContextInterface;
-  const { accounts: connectAccounts, activeAccount } =
-    useConnect() as ConnectContextInterface;
-  const { staking, eraStakers, inSetup } =
-    useStaking() as StakingContextInterface;
-  const { meta, session } = useValidators() as ValidatorsContextInterface;
+  const { isReady, consts, network } = useApi();
+  const { accounts: connectAccounts, activeAccount } = useConnect();
+  const { staking, eraStakers, inSetup } = useStaking();
+  const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
-  const { accounts } = useBalances() as BalancesContextInterface;
+  const { metrics } = useNetworkMetrics();
+  const { accounts } = useBalances();
 
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);

@@ -18,21 +18,15 @@ import { PAYEE_STATUS } from 'consts';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
 
 export const Status = () => {
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
-  const { getNominationsStatus, staking, inSetup } =
-    useStaking() as StakingContextInterface;
-  const { getAccountNominations } = useBalances() as BalancesContextInterface;
+  const { getNominationsStatus, staking, inSetup } = useStaking();
+  const { getAccountNominations } = useBalances();
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
 

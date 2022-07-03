@@ -4,22 +4,19 @@
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import { useApi } from './Api';
-import { useConnect } from './Connect';
-import { useUi } from './UI';
+import { useApi } from '../Api';
+import { useConnect } from '../Connect';
+import { useUi } from '../UI';
+import { defaultSubscanContext } from './defaults';
 
-export interface SubscanContextState {
+export interface SubscanContextInterface {
   fetchEraPoints: (v: string, e: number) => void;
   payouts: any;
 }
 
-export const SubscanContext: React.Context<SubscanContextState> =
-  React.createContext({
-    fetchEraPoints: (v: string, e: number) => {},
-    payouts: [],
-  });
+export const SubscanContext = React.createContext<SubscanContextInterface>(
+  defaultSubscanContext
+);
 
 export const useSubscan = () => React.useContext(SubscanContext);
 
@@ -28,9 +25,9 @@ export const SubscanProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network, isReady } = useApi() as APIContextInterface;
+  const { network, isReady } = useApi();
   const { services, getServices }: any = useUi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
 
   const [payouts, setPayouts]: any = useState([]);
 

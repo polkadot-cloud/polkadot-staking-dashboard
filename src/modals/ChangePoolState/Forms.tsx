@@ -12,28 +12,21 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Separator } from 'Wrappers';
-import {
-  PoolState,
-  ActivePoolContextState,
-  PoolMembershipsContextState,
-} from 'types/pools';
+import { PoolState } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
-import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { setStatus: setModalStatus, config } = useModal();
   const { state } = config;
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
-  const { isOwner } = useActivePool() as ActivePoolContextState;
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { membership } = usePoolMemberships();
+  const { isOwner } = useActivePool();
   const poolId = membership?.poolId;
 
   // valid to submit transaction

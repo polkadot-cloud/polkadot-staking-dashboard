@@ -4,15 +4,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'types/connect';
 import { Wrapper, CardsWrapper } from './Wrappers';
 import { Extensions } from './Extensions';
 import { Accounts } from './Accounts';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
-  const { activeAccount, extensions } = useConnect() as ConnectContextInterface;
-  let { accounts } = useConnect() as ConnectContextInterface;
+  const { activeAccount, extensions } = useConnect();
+  let { accounts } = useConnect();
   const { config } = modal;
   const _section = config?.section ?? null;
 

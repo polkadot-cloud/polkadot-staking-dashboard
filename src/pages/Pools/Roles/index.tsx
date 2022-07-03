@@ -5,12 +5,9 @@ import { useState, useEffect } from 'react';
 import { useAccount } from 'contexts/Account';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ConnectContextInterface } from 'types/connect';
-import { ActivePoolContextState } from 'types/pools';
 import Button from 'library/Button';
 import {
   faEdit,
@@ -31,12 +28,10 @@ export type RoleEdit = {
 };
 
 export const Roles = () => {
-  const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { isReady } = useApi();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
-  const { activeBondedPool, isOwner } =
-    useActivePool() as ActivePoolContextState;
+  const { activeBondedPool, isOwner } = useActivePool();
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const activePool = activeBondedPool;

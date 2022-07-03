@@ -7,14 +7,12 @@ import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useUi } from 'contexts/UI';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
 import { faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
-import { Validator, ValidatorsContextInterface } from 'types/validators';
+import { Validator } from 'types/validators';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {
@@ -24,14 +22,12 @@ export const GenerateNominations = (props: any) => {
   const { batchKey } = props;
 
   const { openModalWith } = useModal();
-  const { isReady } = useApi() as APIContextInterface;
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
-  const { removeValidatorMetaBatch, validators, meta } =
-    useValidators() as ValidatorsContextInterface;
+  const { isReady } = useApi();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { removeValidatorMetaBatch, validators, meta } = useValidators();
   const { applyValidatorOrder, applyValidatorFilters } = useUi();
 
-  let { favouritesList } = useValidators() as ValidatorsContextInterface;
+  let { favouritesList } = useValidators();
   if (favouritesList === null) {
     favouritesList = [];
   }

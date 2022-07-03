@@ -8,26 +8,22 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ActivePoolContextState } from 'types/pools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
 export const BondSome = (props: any) => {
   const { setSection } = props;
 
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
-  const { getBondOptions } = useBalances() as BalancesContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { getBondOptions } = useBalances();
   const { bondType } = config;
-  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
+  const { getPoolBondOptions } = useActivePool();
 
   const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);

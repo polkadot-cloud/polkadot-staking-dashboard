@@ -3,15 +3,15 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
-import { APIContextInterface } from 'types/api';
 import { PoolsConfigContextState } from 'types/pools';
 import { AnyApi } from 'types';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
 import { rmCommas } from '../../Utils';
 
-export const PoolsConfigContext =
-  React.createContext<PoolsConfigContextState | null>(null);
+export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
+  defaults.defaultPoolsConfigContext
+);
 
 export const usePoolsConfig = () => React.useContext(PoolsConfigContext);
 
@@ -20,7 +20,7 @@ export const PoolsConfigProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi() as APIContextInterface;
+  const { api, network, isReady } = useApi();
   const { features } = network;
 
   // whether pools are enabled

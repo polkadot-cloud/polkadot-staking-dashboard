@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
-import { StakingContextInterface } from 'types/staking';
 import { Wrapper } from './Wrapper';
 import { StatusLabelProps } from './types';
 
@@ -14,7 +13,7 @@ export const StatusLabel = (props: StatusLabelProps) => {
   const statusFor = props.statusFor ?? false;
 
   const { isSyncing, services } = useUi();
-  const { inSetup } = useStaking() as StakingContextInterface;
+  const { inSetup } = useStaking();
 
   if (status === 'sync_or_setup') {
     if (isSyncing || !inSetup()) {

@@ -3,16 +3,9 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  AnyApi,
-  MaybeAccount,
-  NetworkMetricsContextInterface,
-  Unsub,
-  Unsubs,
-} from 'types';
+import { AnyApi, MaybeAccount, Unsub, Unsubs } from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
-import { APIContextInterface } from 'types/api';
 import { rmCommas, setStateWithRef } from 'Utils';
 import {
   BalanceLedger,
@@ -20,13 +13,14 @@ import {
   BalancesContextInterface,
   BondOptions,
 } from 'types/balances';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'types/connect';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-export const BalancesContext =
-  React.createContext<BalancesContextInterface | null>(null);
+export const BalancesContext = React.createContext<BalancesContextInterface>(
+  defaults.defaultBalancesContext
+);
 
 export const useBalances = () => React.useContext(BalancesContext);
 
@@ -35,10 +29,9 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network, consts } = useApi() as APIContextInterface;
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
-  const { accounts: connectAccounts, addExternalAccount } =
-    useConnect() as ConnectContextInterface;
+  const { api, isReady, network, consts } = useApi();
+  const { metrics } = useNetworkMetrics();
+  const { accounts: connectAccounts, addExternalAccount } = useConnect();
   const { activeEra } = metrics;
 
   // existential amount of unit for an account

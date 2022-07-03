@@ -12,19 +12,16 @@ import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { APIContextInterface } from 'types/api';
-import { BondedPoolsContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { StakingContextInterface } from 'types/staking';
 import { Wrapper, Item } from './Wrappers';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
-  const { staking } = useStaking() as StakingContextInterface;
+  const { staking } = useStaking();
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
-  const { bondedPools } = useBondedPools() as BondedPoolsContextState;
+  const { bondedPools } = useBondedPools();
 
   const container = {
     hidden: { opacity: 0 },

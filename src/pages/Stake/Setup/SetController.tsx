@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { AccountSelect } from 'library/Form/AccountSelect';
-import { ConnectContextInterface } from 'types/connect';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { InputItem } from 'library/Form/types';
 import { Header } from './Header';
@@ -16,8 +15,7 @@ import { MotionContainer } from './MotionContainer';
 export const SetController = (props: any) => {
   const { section } = props;
 
-  const { activeAccount, accounts, getAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts, getAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(activeAccount);
 

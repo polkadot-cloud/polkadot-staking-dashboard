@@ -4,20 +4,18 @@
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { AnyApi } from 'types';
-import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 
-export interface SessionEraContextState {
+export interface SessionEraContextInterface {
   getEraTimeLeft: () => number;
   sessionEra: any;
 }
 
-export const SessionEraContext: React.Context<SessionEraContextState> =
-  React.createContext({
-    getEraTimeLeft: () => 0,
-    sessionEra: {},
-  });
+export const SessionEraContext =
+  React.createContext<SessionEraContextInterface>(
+    defaults.defaultSessionEraContext
+  );
 
 // Warning: Do not use this hook in heavy components.
 // Using this hook in a component makes the component rerender per each new block.
@@ -28,7 +26,7 @@ export const SessionEraProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, status, consts } = useApi() as APIContextInterface;
+  const { isReady, api, status, consts } = useApi();
   const { expectedBlockTime } = consts;
 
   useEffect(() => {

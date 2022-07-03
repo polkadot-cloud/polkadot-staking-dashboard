@@ -6,7 +6,6 @@ import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
-import { ConnectContextInterface } from 'types/connect';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Wrapper from './Wrapper';
@@ -15,7 +14,7 @@ import { AccountProps } from './types';
 
 export const Account = (props: AccountProps) => {
   const { mode } = useTheme();
-  const { getAccount } = useConnect() as ConnectContextInterface;
+  const { getAccount } = useConnect();
 
   // data props
   const { value, label, readOnly } = props;

@@ -6,7 +6,6 @@ import { Doughnut } from 'react-chartjs-2';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
-import { APIContextInterface } from 'types/api';
 import { humanNumber } from 'Utils';
 import { GraphWrapper } from './Wrappers';
 import { BondedProps } from './types';
@@ -15,7 +14,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const Bonded = (props: BondedProps) => {
   const { mode } = useTheme();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
 
   const { active, unlocking, unlocked, inactive } = props;
   const { free } = props;

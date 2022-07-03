@@ -17,7 +17,6 @@ import {
 import { useApi } from 'contexts/Api';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
-import { APIContextInterface } from 'types/api';
 import { humanNumber } from 'Utils';
 import { PayoutBarProps } from './types';
 
@@ -34,7 +33,7 @@ ChartJS.register(
 
 export const PayoutBar = (props: PayoutBarProps) => {
   const { mode } = useTheme();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { payouts, height } = props;
 
   const data = {

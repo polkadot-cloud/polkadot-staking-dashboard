@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
-import { ValidatorsContextInterface } from 'types/validators';
 import { useValidatorList } from '../context';
 import { Wrapper, Labels, Separator } from './Wrappers';
 import { getIdentityDisplay } from './Utils';
@@ -17,7 +16,7 @@ import { NominationStatus } from './Labels/NominationStatus';
 import { NominationProps } from './types';
 
 export const Nomination = (props: NominationProps) => {
-  const { meta } = useValidators() as ValidatorsContextInterface;
+  const { meta } = useValidators();
   const { selectActive } = useValidatorList();
 
   const { validator, toggleFavourites, batchIndex, batchKey, bondType } = props;

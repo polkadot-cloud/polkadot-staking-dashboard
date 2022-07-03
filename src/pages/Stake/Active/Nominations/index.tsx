@@ -12,33 +12,24 @@ import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ActivePoolContextState } from 'types/pools';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
-import { ValidatorsContextInterface } from 'types/validators';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { openModalWith } = useModal();
-  const { isReady } = useApi() as APIContextInterface;
-  const { inSetup } = useStaking() as StakingContextInterface;
+  const { isReady } = useApi();
+  const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
-  const { getAccountNominations } = useBalances() as BalancesContextInterface;
-  const { nominated: stakeNominated, poolNominated }: any =
-    useValidators() as ValidatorsContextInterface;
-  let { favouritesList } = useValidators() as ValidatorsContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { getAccountNominations } = useBalances();
+  const { nominated: stakeNominated, poolNominated }: any = useValidators();
+  let { favouritesList } = useValidators();
   if (favouritesList === null) {
     favouritesList = [];
   }
 
-  const { poolNominations, isNominator: isPoolNominator } =
-    useActivePool() as ActivePoolContextState;
+  const { poolNominations, isNominator: isPoolNominator } = useActivePool();
 
   const isPool = bondType === 'pool';
   const nominations = isPool

@@ -1,13 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import {
-  PoolMembershipsContextState,
-  ActivePoolContextState,
-  PoolState,
-} from 'types/pools';
+import { PoolState } from 'types/pools';
 import BN from 'bn.js';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
@@ -32,12 +26,11 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsTabs } from './context';
 
 export const Status = () => {
-  const { network, isReady } = useApi() as APIContextInterface;
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { network, isReady } = useApi();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
   const { isSyncing } = useUi();
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
 
   const {
@@ -46,7 +39,7 @@ export const Status = () => {
     isOwner,
     getNominationsStatus,
     getPoolBondOptions,
-  } = useActivePool() as ActivePoolContextState;
+  } = useActivePool();
   const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
   const nominationStatuses = getNominationsStatus();

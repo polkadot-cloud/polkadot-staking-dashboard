@@ -13,21 +13,16 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
+import { BondOptions } from 'types/balances';
 import BN from 'bn.js';
-import { StakingContextInterface } from 'types/staking';
 
 export const ManageBond = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
-  const { getLedgerForStash, getBondOptions } =
-    useBalances() as BalancesContextInterface;
-  const { inSetup } = useStaking() as StakingContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { getLedgerForStash, getBondOptions } = useBalances();
+  const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;

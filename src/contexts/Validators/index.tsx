@@ -11,16 +11,7 @@ import {
   planckBnToUnit,
   toFixedIfNecessary,
 } from 'Utils';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
-import { ActivePoolContextState } from 'types/pools';
-import { BalancesContextInterface } from 'types/balances';
-import {
-  AnyApi,
-  AnyMetaBatch,
-  Fn,
-  NetworkMetricsContextInterface,
-} from 'types';
+import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { MIN_BOND_PRECISION } from 'consts';
 import {
   SessionValidators,
@@ -36,7 +27,9 @@ import * as defaults from './defaults';
 import { useActivePool } from '../Pools/ActivePool';
 
 export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface | null>(null);
+  React.createContext<ValidatorsContextInterface>(
+    defaults.defaultValidatorsContext
+  );
 
 export const useValidators = () => React.useContext(ValidatorsContext);
 
@@ -46,12 +39,11 @@ export const ValidatorsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, network, consts } = useApi() as APIContextInterface;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
-  const { accounts, getAccountNominations } =
-    useBalances() as BalancesContextInterface;
-  const { poolNominations } = useActivePool() as ActivePoolContextState;
+  const { isReady, api, network, consts } = useApi();
+  const { activeAccount } = useConnect();
+  const { metrics } = useNetworkMetrics();
+  const { accounts, getAccountNominations } = useBalances();
+  const { poolNominations } = useActivePool();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
 

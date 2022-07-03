@@ -15,25 +15,19 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ActivePoolContextState } from 'types/pools';
-import { BalancesContextInterface } from 'types/balances';
-import { StakingContextInterface } from 'types/staking';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
-    const { api, network } = useApi() as APIContextInterface;
-    const { activeAccount, accountHasSigner } =
-      useConnect() as ConnectContextInterface;
-    const { staking } = useStaking() as StakingContextInterface;
-    const { activeBondedPool } = useActivePool() as ActivePoolContextState;
+    const { api, network } = useApi();
+    const { activeAccount, accountHasSigner } = useConnect();
+    const { staking } = useStaking();
+    const { activeBondedPool } = useActivePool();
     const { setStatus: setModalStatus, config } = useModal();
     const { bondType } = config || {};
-    const { getBondedAccount } = useBalances() as BalancesContextInterface;
+    const { getBondedAccount } = useBalances();
     const { historyDepth } = staking;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);

@@ -10,7 +10,6 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { convertRemToPixels } from 'Utils';
 import Identicon from 'library/Identicon';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
 import { AccountDropdownProps, InputItem } from '../types';
 
@@ -107,7 +106,7 @@ export const AccountDropdown = (props: AccountDropdownProps) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { mode } = useTheme();
 
   let color;

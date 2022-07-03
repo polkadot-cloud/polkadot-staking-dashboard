@@ -3,12 +3,11 @@
 
 import React from 'react';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleEdit }: any) => {
-  const { formatAccountSs58 } = useConnect() as ConnectContextInterface;
+  const { formatAccountSs58 } = useConnect();
   const getRoleEdit = (newAddress: string) => {
     let edit = {
       newAddress,

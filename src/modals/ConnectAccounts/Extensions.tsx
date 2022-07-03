@@ -3,7 +3,6 @@
 
 import { forwardRef } from 'react';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -18,7 +17,7 @@ import { ReadOnly } from './ReadOnly';
 export const Extensions = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
-  const { extensions, accounts } = useConnect() as ConnectContextInterface;
+  const { extensions, accounts } = useConnect();
 
   return (
     <ContentWrapper>

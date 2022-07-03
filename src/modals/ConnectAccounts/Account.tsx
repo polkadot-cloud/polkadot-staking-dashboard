@@ -4,7 +4,6 @@
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import Identicon from 'library/Identicon';
-import { ConnectContextInterface } from 'types/connect';
 import { clipAddress } from 'Utils';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
@@ -26,8 +25,7 @@ export const AccountElement = (props: any) => {
 export const AccountButton = (props: any) => {
   const { meta } = props;
   const disconnect = props.disconnect ?? false;
-  const { connectToAccount, disconnectFromAccount }: any =
-    useConnect() as ConnectContextInterface;
+  const { connectToAccount, disconnectFromAccount }: any = useConnect();
   const { setStatus } = useModal();
 
   const imported = meta !== null;

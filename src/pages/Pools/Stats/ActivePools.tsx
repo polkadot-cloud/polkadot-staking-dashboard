@@ -3,10 +3,9 @@
 
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Number } from 'library/StatBoxList/Number';
-import { PoolsConfigContextState } from 'types/pools';
 
 const ActivePoolsStatBox = () => {
-  const { stats } = usePoolsConfig() as PoolsConfigContextState;
+  const { stats } = usePoolsConfig();
 
   const params = {
     label: 'Active Pools',

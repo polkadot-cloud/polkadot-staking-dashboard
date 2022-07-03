@@ -4,13 +4,12 @@
 import { useValidators } from 'contexts/Validators';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
-import { ValidatorsContextInterface } from 'types/validators';
 import { IdentityWrapper } from '../Wrappers';
 import { getIdentityDisplay } from '../Utils';
 import { IdentityProps } from '../types';
 
 export const Identity = (props: IdentityProps) => {
-  const { meta } = useValidators() as ValidatorsContextInterface;
+  const { meta } = useValidators();
 
   const { validator, batchIndex, batchKey } = props;
 

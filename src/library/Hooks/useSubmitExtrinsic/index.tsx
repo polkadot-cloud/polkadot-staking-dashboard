@@ -6,8 +6,6 @@ import { useApi } from 'contexts/Api';
 import { useNotifications } from 'contexts/Notifications';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useConnect } from 'contexts/Connect';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { getWalletBySource, Wallet } from '@talisman-connect/wallets';
 import { DAPP_NAME } from 'consts';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -22,10 +20,10 @@ export const useSubmitExtrinsic = (
   const { from } = extrinsic;
   const submitAddress: string = from ?? '';
 
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount } = useConnect() as ConnectContextInterface;
+  const { getAccount } = useConnect();
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);

@@ -10,27 +10,21 @@ import { pageTitleFromUri } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useAssistant } from 'contexts/Assistant';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import Heading from './Heading';
 import Definition from './Items/Definition';
 import { CardWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import External from './Items/External';
 import Action from './Items/Action';
-import {
-  AssistantContextInterface,
-  AssistantDefinition,
-  AssistantExternal,
-} from '../../types/assistant';
+import { AssistantDefinition, AssistantExternal } from '../../types/assistant';
 import { SectionProps } from './types';
 
 export const Sections = ({ pageMeta }: SectionProps) => {
   const { openModalWith } = useModal();
-  const { network } = useApi() as APIContextInterface;
-  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
+  const { network } = useApi();
+  const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
-  const assistant = useAssistant() as AssistantContextInterface;
+  const assistant = useAssistant();
 
   // connect handler
   const connectOnClick = () => {

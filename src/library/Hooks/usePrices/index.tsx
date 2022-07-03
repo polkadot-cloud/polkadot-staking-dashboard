@@ -4,10 +4,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
-import { APIContextInterface } from 'types/api';
 
 export const usePrices = () => {
-  const { network, fetchDotPrice } = useApi() as APIContextInterface;
+  const { network, fetchDotPrice } = useApi();
   const { services } = useUi();
 
   const pricesLocalStorage = () => {

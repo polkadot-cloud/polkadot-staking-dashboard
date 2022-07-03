@@ -23,21 +23,17 @@ import {
 } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
-import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { ConnectContextInterface } from 'types/connect';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
-import { ActivePoolContextState } from 'types/pools';
+import { BondOptions } from 'types/balances';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BalanceGraph = () => {
   const { mode } = useTheme();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units, features } = network;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { getAccountBalance, getBondOptions } =
-    useBalances() as BalancesContextInterface;
+  const { activeAccount } = useConnect();
+  const { getAccountBalance, getBondOptions } = useBalances();
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
@@ -47,7 +43,7 @@ export const BalanceGraph = () => {
     totalUnlocking,
     totalUnlocked,
   }: BondOptions = getBondOptions(activeAccount) || {};
-  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
+  const { getPoolBondOptions } = useActivePool();
 
   const poolBondOpions = getPoolBondOptions(activeAccount);
   const unlocking = poolBondOpions.totalUnlocking

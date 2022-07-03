@@ -10,7 +10,6 @@ import { clipAddress, convertRemToPixels } from 'Utils';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes, networkColors } from 'theme/default';
 import { StatusLabel } from 'library/StatusLabel';
-import { APIContextInterface } from 'types/api';
 import { useApi } from 'contexts/Api';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
 import { AccountSelectProps, InputItem } from '../types';
@@ -84,7 +83,7 @@ export const AccountSelect = (props: AccountSelectProps) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { mode } = useTheme();
 
   // disable item in list if account doesn't satisfy controller budget.

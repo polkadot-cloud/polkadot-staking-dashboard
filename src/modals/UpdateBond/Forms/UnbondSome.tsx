@@ -10,32 +10,24 @@ import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { APIContextInterface } from 'types/api';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { BalancesContextInterface, BondOptions } from 'types/balances';
-
-import { StakingContextInterface } from 'types/staking';
+import { BondOptions } from 'types/balances';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 
 export const UnbondSome = (props: any) => {
   const { setSection } = props;
 
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
-  const { staking, getControllerNotImported } =
-    useStaking() as StakingContextInterface;
-  const { getBondOptions, getBondedAccount } =
-    useBalances() as BalancesContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { staking, getControllerNotImported } = useStaking();
+  const { getBondOptions, getBondedAccount } = useBalances();
   const { bondType } = config;
-  const { stats } = usePoolsConfig() as PoolsConfigContextState;
-  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
+  const { stats } = usePoolsConfig();
+  const { getPoolBondOptions } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;

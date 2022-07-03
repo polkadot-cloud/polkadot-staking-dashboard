@@ -9,7 +9,6 @@ import { useMenu } from 'contexts/Menu';
 import { useNotifications } from 'contexts/Notifications';
 import { useModal } from 'contexts/Modal';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { ValidatorsContextInterface } from 'types/validators';
 import { Wrapper, Labels, MenuPosition } from './Wrappers';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
@@ -34,7 +33,7 @@ export const Default = (props: DefaultProps) => {
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { meta } = useValidators() as ValidatorsContextInterface;
+  const { meta } = useValidators();
   const { selectActive } = useValidatorList();
 
   const identities = meta[batchKey]?.identities ?? [];
