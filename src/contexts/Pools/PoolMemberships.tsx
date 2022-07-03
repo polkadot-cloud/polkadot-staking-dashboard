@@ -3,8 +3,8 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { ImportedAccount } from 'types/connect';
-import { PoolMembershipsContextState } from 'types/pools';
+import { ImportedAccount } from 'contexts/Connect/types';
+import { PoolMembershipsContextState } from 'contexts/Pools/types';
 import { AnyApi, Fn } from 'types';
 import * as defaults from './defaults';
 import { useApi } from '../Api';

@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { AnyApi, MaybeAccount } from 'types';
-import { ActivePoolContextState } from 'types/pools';
+import { ActivePoolContextState } from 'contexts/Pools/types';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';

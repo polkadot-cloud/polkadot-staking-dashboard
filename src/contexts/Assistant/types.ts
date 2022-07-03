@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ReactNode } from 'react';
-import { Toggle } from '.';
-
-export enum ConnectionStatus {
-  Connecting = 'connecting',
-  Connected = 'connected',
-  Disconnected = 'disconnected',
-}
+import { Toggle } from '../../types';
 
 export type AssistantConfig = Array<AssistantItem>;
 

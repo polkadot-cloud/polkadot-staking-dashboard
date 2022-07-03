@@ -7,7 +7,7 @@ import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { BondStatusBar } from 'library/Form/BondStatusBar';
-import { BondOptions } from 'types/balances';
+import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { Header } from '../Header';

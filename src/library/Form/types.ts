@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExternalAccount } from 'types/connect';
+import { ExternalAccount } from 'contexts/Connect/types';
 import { WalletAccount } from '@talisman-connect/wallets';
-import { Balance } from 'types/balances';
+import { Balance } from 'contexts/Balances/types';
 
 export interface WalletAccountItem extends WalletAccount {
   active?: boolean;

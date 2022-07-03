@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Button from 'library/Button';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'contexts/Connect/types';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 

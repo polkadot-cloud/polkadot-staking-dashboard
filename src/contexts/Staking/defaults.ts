@@ -9,7 +9,7 @@ import {
   StakingTargets,
   NominationStatuses,
   StakingContextInterface,
-} from 'types/staking';
+} from 'contexts/Staking/types';
 
 export const stakingMetrics: StakingMetrics = {
   totalNominators: new BN(0),

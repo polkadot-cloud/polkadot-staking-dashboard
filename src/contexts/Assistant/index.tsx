@@ -8,7 +8,7 @@ import {
   AssistantDefinition,
   AssistantItem,
   AssistantContextProps,
-} from 'types/assistant';
+} from 'contexts/Assistant/types';
 import { ASSISTANT_CONFIG } from 'config/assistant';
 import { replaceAll } from 'Utils';
 import { useApi } from '../Api';

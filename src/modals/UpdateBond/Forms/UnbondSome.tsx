@@ -12,7 +12,7 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { BondOptions } from 'types/balances';
+import { BondOptions } from 'contexts/Balances/types';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 

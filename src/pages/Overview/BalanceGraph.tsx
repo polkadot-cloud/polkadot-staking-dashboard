@@ -24,7 +24,7 @@ import {
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { BondOptions } from 'types/balances';
+import { BondOptions } from 'contexts/Balances/types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

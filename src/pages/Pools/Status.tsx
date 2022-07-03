@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolState } from 'types/pools';
+import { PoolState } from 'contexts/Pools/types';
 import BN from 'bn.js';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';

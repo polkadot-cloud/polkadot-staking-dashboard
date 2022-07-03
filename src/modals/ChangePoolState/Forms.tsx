@@ -14,7 +14,7 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Separator } from 'Wrappers';
-import { PoolState } from 'types/pools';
+import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
 import { ContentWrapper } from './Wrapper';

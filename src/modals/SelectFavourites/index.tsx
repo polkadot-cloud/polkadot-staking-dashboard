@@ -6,7 +6,7 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
-import { Validator } from 'types/validators';
+import { Validator } from 'contexts/Validators/types';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 

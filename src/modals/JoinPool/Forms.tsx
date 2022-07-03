@@ -11,7 +11,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { BondOptions } from 'types/balances';
+import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';

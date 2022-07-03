@@ -8,7 +8,7 @@ import {
   BondedPoolsContextState,
   PoolMembershipsContextState,
   PoolsConfigContextState,
-} from 'types/pools';
+} from 'contexts/Pools/types';
 
 export const stats = {
   counterForPoolMembers: new BN(0),
