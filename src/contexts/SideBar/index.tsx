@@ -2,19 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { defaultSideBarContext } from './defaults';
 
-export interface SideBarContextState {
+export interface SideBarContextInterface {
   openSideBar: () => any;
   closeSideBar: () => any;
   open: number;
 }
 
-export const SideBarContext: React.Context<SideBarContextState> =
-  React.createContext({
-    openSideBar: () => {},
-    closeSideBar: () => {},
-    open: 0,
-  });
+export const SideBarContext = React.createContext<SideBarContextInterface>(
+  defaultSideBarContext
+);
 
 export const useSideBar = () => React.useContext(SideBarContext);
 
