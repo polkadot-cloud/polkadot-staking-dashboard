@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { defaultMessagesContext } from './defaults';
 
-export interface MessagesContextState {
+export interface MessagesContextInterface {
   messages: any;
   setMessage: (k: string, m: any) => void;
   setMessages: (msgs: any) => void;
@@ -11,14 +12,9 @@ export interface MessagesContextState {
   getMessage: (k: string) => any;
 }
 
-export const MessagesContext: React.Context<MessagesContextState> =
-  React.createContext({
-    messages: [],
-    setMessage: (k: string, m: any) => {},
-    removeMessage: (k: string) => {},
-    setMessages: (msgs: any) => {},
-    getMessage: (k: string) => {},
-  });
+export const MessagesContext = React.createContext<MessagesContextInterface>(
+  defaultMessagesContext
+);
 
 export const useMessages = () => React.useContext(MessagesContext);
 
