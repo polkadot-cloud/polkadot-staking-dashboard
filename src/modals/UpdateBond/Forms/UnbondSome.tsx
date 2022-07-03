@@ -24,7 +24,7 @@ import { FormFooter } from './FormFooter';
 export const UnbondSome = (props: any) => {
   const { setSection } = props;
 
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } =

@@ -27,7 +27,7 @@ export const PoolMembershipsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi() as APIContextInterface;
+  const { api, network, isReady } = useApi();
   const { accounts: connectAccounts, activeAccount } =
     useConnect() as ConnectContextInterface;
 

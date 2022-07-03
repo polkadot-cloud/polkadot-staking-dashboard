@@ -28,7 +28,7 @@ export const SessionEraProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, status, consts } = useApi() as APIContextInterface;
+  const { isReady, api, status, consts } = useApi();
   const { expectedBlockTime } = consts;
 
   useEffect(() => {

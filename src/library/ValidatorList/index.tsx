@@ -32,7 +32,7 @@ import { useValidatorList, ValidatorListProvider } from './context';
 
 export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
-  const { isReady, network } = useApi() as APIContextInterface;
+  const { isReady, network } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any =
     useNetworkMetrics() as NetworkMetricsContextInterface;

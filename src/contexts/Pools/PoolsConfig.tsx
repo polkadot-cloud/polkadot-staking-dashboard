@@ -20,7 +20,7 @@ export const PoolsConfigProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi() as APIContextInterface;
+  const { api, network, isReady } = useApi();
   const { features } = network;
 
   // whether pools are enabled

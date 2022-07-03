@@ -22,7 +22,7 @@ import { StakingContextInterface } from 'types/staking';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;
   const { setStatus: setModalStatus } = useModal();

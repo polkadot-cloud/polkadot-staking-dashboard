@@ -30,7 +30,7 @@ export const ConnectProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
 
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);

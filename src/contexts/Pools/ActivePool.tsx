@@ -35,7 +35,7 @@ export const ActivePoolProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady, consts } = useApi() as APIContextInterface;
+  const { api, network, isReady, consts } = useApi();
   const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { eraStakers } = useStaking() as StakingContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;

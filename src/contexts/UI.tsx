@@ -73,7 +73,7 @@ export const UIContext: React.Context<UIContextState> = React.createContext({
 export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
-  const { isReady, consts, network } = useApi() as APIContextInterface;
+  const { isReady, consts, network } = useApi();
   const { accounts: connectAccounts, activeAccount } =
     useConnect() as ConnectContextInterface;
   const { staking, eraStakers, inSetup } =

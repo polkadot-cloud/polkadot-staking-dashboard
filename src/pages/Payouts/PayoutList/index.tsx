@@ -23,7 +23,7 @@ export const PayoutListInner = (props: any) => {
   const { allowMoreCols, pagination } = props;
 
   const { mode } = useTheme();
-  const { isReady, network } = useApi() as APIContextInterface;
+  const { isReady, network } = useApi();
   const { units } = network;
   const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { listFormat, setListFormat } = usePayoutList();

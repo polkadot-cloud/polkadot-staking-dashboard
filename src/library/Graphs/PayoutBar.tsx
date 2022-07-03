@@ -34,7 +34,7 @@ ChartJS.register(
 
 export const PayoutBar = (props: PayoutBarProps) => {
   const { mode } = useTheme();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { payouts, height } = props;
 
   const data = {

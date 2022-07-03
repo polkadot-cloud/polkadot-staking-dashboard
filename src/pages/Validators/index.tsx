@@ -19,7 +19,7 @@ export const Validators = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { validators } = useValidators() as ValidatorsContextInterface;
 
   return (

@@ -33,7 +33,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const BalanceGraph = () => {
   const { mode } = useTheme();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units, features } = network;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getAccountBalance, getBondOptions } =

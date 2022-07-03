@@ -20,7 +20,7 @@ import { Header } from '../Header';
 export const Summary = (props: any) => {
   const { section } = props;
 
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;

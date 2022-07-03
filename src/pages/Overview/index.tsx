@@ -29,7 +29,7 @@ import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
 
 export const Overview = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { payouts }: any = useSubscan();

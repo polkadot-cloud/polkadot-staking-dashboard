@@ -35,7 +35,7 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network, consts } = useApi() as APIContextInterface;
+  const { api, isReady, network, consts } = useApi();
   const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { accounts: connectAccounts, addExternalAccount } =
     useConnect() as ConnectContextInterface;

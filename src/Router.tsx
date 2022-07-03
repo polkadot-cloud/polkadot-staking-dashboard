@@ -32,7 +32,7 @@ import { useApi } from 'contexts/Api';
 import { APIContextInterface } from 'types/api';
 
 export const RouterInner = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised } = useUi();
 

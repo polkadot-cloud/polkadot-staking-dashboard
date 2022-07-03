@@ -15,7 +15,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const Bonded = (props: BondedProps) => {
   const { mode } = useTheme();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
 
   const { active, unlocking, unlocked, inactive } = props;
   const { free } = props;

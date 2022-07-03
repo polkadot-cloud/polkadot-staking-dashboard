@@ -46,7 +46,7 @@ export const ValidatorsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, network, consts } = useApi() as APIContextInterface;
+  const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
   const { accounts, getAccountNominations } =

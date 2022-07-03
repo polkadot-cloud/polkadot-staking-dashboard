@@ -23,7 +23,9 @@ import {
 import { NodeEndpoint, NetworkName } from 'types';
 import * as defaults from './defaults';
 
-export const APIContext = React.createContext<APIContextInterface | null>(null);
+export const APIContext = React.createContext<APIContextInterface>(
+  defaults.defaultApiContext
+);
 
 export const useApi = () => React.useContext(APIContext);
 

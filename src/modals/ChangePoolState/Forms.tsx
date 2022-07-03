@@ -27,7 +27,7 @@ import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { setStatus: setModalStatus, config } = useModal();
   const { state } = config;
   const { activeAccount, accountHasSigner } =

@@ -14,7 +14,7 @@ import { Separator, NotesWrapper } from '../Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondType, setSection, setUnlock, setTask }: any, ref: any) => {
-    const { network, consts } = useApi() as APIContextInterface;
+    const { network, consts } = useApi();
     const { metrics } = useNetworkMetrics() as NetworkMetricsContextInterface;
     const { bondDuration } = consts;
     const { units } = network;

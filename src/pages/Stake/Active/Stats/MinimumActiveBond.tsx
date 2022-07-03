@@ -8,7 +8,7 @@ import { APIContextInterface } from 'types/api';
 import { StakingContextInterface } from 'types/staking';
 
 export const MinimumActiveBondStatBox = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { eraStakers } = useStaking() as StakingContextInterface;
   const { minActiveBond } = eraStakers;
 

@@ -11,7 +11,7 @@ import { ValidatorsContextInterface } from 'types/validators';
 import { OversubscribedProps } from '../types';
 
 export const Oversubscribed = (props: OversubscribedProps) => {
-  const { consts, network } = useApi() as APIContextInterface;
+  const { consts, network } = useApi();
   const { meta } = useValidators() as ValidatorsContextInterface;
 
   const { batchIndex, batchKey } = props;

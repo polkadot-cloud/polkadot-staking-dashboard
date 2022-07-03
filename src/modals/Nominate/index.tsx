@@ -27,7 +27,7 @@ import {
 } from '../Wrappers';
 
 export const Nominate = () => {
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { targets, staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;

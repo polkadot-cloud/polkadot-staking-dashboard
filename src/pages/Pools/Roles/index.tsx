@@ -31,7 +31,7 @@ export type RoleEdit = {
 };
 
 export const Roles = () => {
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
   const { fetchAccountMetaBatch } = useAccount();

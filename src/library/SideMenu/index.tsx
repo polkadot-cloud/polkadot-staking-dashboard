@@ -31,7 +31,7 @@ import Heading from './Heading';
 import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
 
 export const SideMenu = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname }: any = useLocation();

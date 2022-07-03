@@ -24,7 +24,7 @@ export const GenerateNominations = (props: any) => {
   const { batchKey } = props;
 
   const { openModalWith } = useModal();
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
   const { removeValidatorMetaBatch, validators, meta } =

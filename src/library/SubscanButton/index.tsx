@@ -23,7 +23,7 @@ const Wrapper = styled.div<any>`
 `;
 
 export const SubscanButton = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { mode } = useTheme();
   const { services } = useUi();
 

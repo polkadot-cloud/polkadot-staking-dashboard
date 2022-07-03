@@ -107,7 +107,7 @@ export const AccountDropdown = (props: AccountDropdownProps) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { mode } = useTheme();
 
   let color;

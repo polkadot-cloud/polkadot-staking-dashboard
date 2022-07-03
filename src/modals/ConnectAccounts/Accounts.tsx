@@ -25,7 +25,7 @@ import { AccountElement, AccountButton } from './Account';
 export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { getAccount, activeAccount }: any =
     useConnect() as ConnectContextInterface;
   const {

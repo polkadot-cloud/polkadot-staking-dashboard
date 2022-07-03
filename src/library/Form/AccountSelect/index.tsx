@@ -84,7 +84,7 @@ export const AccountSelect = (props: AccountSelectProps) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { mode } = useTheme();
 
   // disable item in list if account doesn't satisfy controller budget.

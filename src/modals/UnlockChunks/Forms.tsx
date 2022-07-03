@@ -26,7 +26,7 @@ import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
-    const { api, network } = useApi() as APIContextInterface;
+    const { api, network } = useApi();
     const { activeAccount, accountHasSigner } =
       useConnect() as ConnectContextInterface;
     const { staking } = useStaking() as StakingContextInterface;

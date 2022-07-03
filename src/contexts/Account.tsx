@@ -30,7 +30,7 @@ export const AccountProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api } = useApi() as APIContextInterface;
+  const { isReady, api } = useApi();
 
   // stores the meta data batches for validator lists
   const [accountMetaBatches, setAccountMetaBatch] = useState<AnyMetaBatch>({});

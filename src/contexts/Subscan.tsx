@@ -28,7 +28,7 @@ export const SubscanProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network, isReady } = useApi() as APIContextInterface;
+  const { network, isReady } = useApi();
   const { services, getServices }: any = useUi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
 

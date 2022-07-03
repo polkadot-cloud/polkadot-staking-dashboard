@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { ConnectionStatus, APIContextInterface } from 'types/api';
 
 export const Status = () => {
-  const { status } = useApi() as APIContextInterface;
+  const { status } = useApi();
 
   return (
     <>

@@ -27,7 +27,7 @@ import { SectionProps } from './types';
 
 export const Sections = ({ pageMeta }: SectionProps) => {
   const { openModalWith } = useModal();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;

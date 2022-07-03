@@ -20,7 +20,7 @@ import { Wrapper, Item } from './Wrappers';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking() as StakingContextInterface;
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;

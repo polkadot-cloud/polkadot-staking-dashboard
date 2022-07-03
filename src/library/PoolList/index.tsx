@@ -26,7 +26,7 @@ export const PoolListInner = (props: PoolListProps) => {
     props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
   const { mode } = useTheme();
-  const { isReady, network } = useApi() as APIContextInterface;
+  const { isReady, network } = useApi();
   const { metrics }: any =
     useNetworkMetrics() as NetworkMetricsContextInterface;
   const { fetchPoolsMetaBatch }: any = useBondedPools();

@@ -26,7 +26,7 @@ export const BondedPoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady, consts } = useApi() as APIContextInterface;
+  const { api, network, isReady, consts } = useApi();
   const { enabled } = usePoolsConfig() as PoolsConfigContextState;
   const { poolsPalletId } = consts;
 

@@ -22,7 +22,7 @@ import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
 export const UpdateController = () => {
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;

@@ -24,7 +24,7 @@ import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';
 
 export const Status = () => {
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } =

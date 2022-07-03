@@ -20,7 +20,7 @@ import { Status } from './Status';
 
 export const NetworkBar = () => {
   const { services } = useUi();
-  const { status, switchNetwork, network } = useApi() as APIContextInterface;
+  const { status, switchNetwork, network } = useApi();
   const prices = usePrices();
 
   const [open, setOpen] = useState(false);

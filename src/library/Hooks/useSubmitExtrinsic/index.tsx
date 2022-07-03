@@ -22,7 +22,7 @@ export const useSubmitExtrinsic = (
   const { from } = extrinsic;
   const submitAddress: string = from ?? '';
 
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount } = useConnect() as ConnectContextInterface;

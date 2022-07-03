@@ -9,7 +9,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { PoolsConfigContextState } from 'types/pools';
 
 const MinCreateBondStatBox = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
   const { stats } = usePoolsConfig() as PoolsConfigContextState;
 

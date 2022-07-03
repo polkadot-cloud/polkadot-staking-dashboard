@@ -12,7 +12,7 @@ import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
 export const SelectFavourites = () => {
-  const { consts } = useApi() as APIContextInterface;
+  const { consts } = useApi();
   const { config, setStatus, setResize } = useModal();
   const { favouritesList } = useValidators() as ValidatorsContextInterface;
   const { maxNominations } = consts;

@@ -24,7 +24,7 @@ import { Wrapper } from './Wrapper';
 
 export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { openModalWith } = useModal();
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { inSetup } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } =

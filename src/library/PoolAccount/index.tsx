@@ -19,7 +19,7 @@ import { PoolAccountProps } from './types';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { mode } = useTheme();
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { fetchPoolsMetaBatch, meta } =
     useBondedPools() as BondedPoolsContextState;

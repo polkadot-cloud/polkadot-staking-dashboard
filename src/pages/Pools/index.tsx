@@ -32,7 +32,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 export const PoolsInner = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools() as BondedPoolsContextState;
   const { isBonding } = useActivePool() as ActivePoolContextState;

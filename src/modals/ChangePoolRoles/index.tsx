@@ -16,7 +16,7 @@ import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
 
 export const ChangePoolRoles = () => {
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;

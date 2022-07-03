@@ -27,7 +27,7 @@ import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavourites = () => {
-  const { consts, api } = useApi() as APIContextInterface;
+  const { consts, api } = useApi();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances() as BalancesContextInterface;

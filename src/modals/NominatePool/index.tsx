@@ -28,7 +28,7 @@ import {
 } from '../Wrappers';
 
 export const NominatePool = () => {
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;

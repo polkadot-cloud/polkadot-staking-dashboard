@@ -23,7 +23,7 @@ export const BondInput = (props: BondInputProps) => {
   // whether a value has been provided already
   const _value = props.value ?? 0;
 
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
 
   // the current local bond value

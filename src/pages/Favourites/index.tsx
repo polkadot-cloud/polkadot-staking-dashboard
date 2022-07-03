@@ -12,7 +12,7 @@ import { ValidatorsContextInterface } from 'types/validators';
 import { PageProps } from '../types';
 
 export const Favourites = (props: PageProps) => {
-  const { isReady } = useApi() as APIContextInterface;
+  const { isReady } = useApi();
   const { page } = props;
   const { title } = page;
   const { favouritesList } = useValidators() as ValidatorsContextInterface;

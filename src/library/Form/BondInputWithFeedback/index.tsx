@@ -31,7 +31,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const setters = props.setters ?? [];
   const listenIsValid: any = props.listenIsValid ?? (() => {});
 
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { staking, getControllerNotImported } =
     useStaking() as StakingContextInterface;

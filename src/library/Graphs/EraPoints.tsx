@@ -30,7 +30,7 @@ ChartJS.register(
 
 export const EraPoints = (props: EraPointsProps) => {
   const { mode } = useTheme();
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   let { items } = props;
   const { height } = props;
 

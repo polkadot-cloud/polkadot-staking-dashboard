@@ -21,7 +21,7 @@ export const NetworkMetricsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, status } = useApi() as APIContextInterface;
+  const { isReady, api, status } = useApi();
 
   useEffect(() => {
     if (status === 'connecting') {

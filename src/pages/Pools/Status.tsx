@@ -32,7 +32,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsTabs } from './context';
 
 export const Status = () => {
-  const { network, isReady } = useApi() as APIContextInterface;
+  const { network, isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
   const { units, unit } = network;

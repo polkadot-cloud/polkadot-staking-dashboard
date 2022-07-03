@@ -12,7 +12,7 @@ import { StakingContextInterface } from 'types/staking';
 import { toFixedIfNecessary } from 'Utils';
 
 export const SupplyStakedStatBox = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
   const { metrics }: any =
     useNetworkMetrics() as NetworkMetricsContextInterface;

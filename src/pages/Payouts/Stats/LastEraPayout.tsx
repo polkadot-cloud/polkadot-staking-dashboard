@@ -9,7 +9,7 @@ import { StakingContextInterface } from 'types/staking';
 import { planckBnToUnit } from 'Utils';
 
 export const LastEraPayoutStatBox = () => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { staking } = useStaking() as StakingContextInterface;
   const { unit, units } = network;
   const { lastReward } = staking;

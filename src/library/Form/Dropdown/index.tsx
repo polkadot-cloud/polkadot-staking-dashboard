@@ -77,7 +77,7 @@ export const Dropdown = (props: DropdownProps) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { mode } = useTheme();
   const color =
     c.selectedItem?.key === item.key

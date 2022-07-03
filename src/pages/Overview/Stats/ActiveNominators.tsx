@@ -10,7 +10,7 @@ import { StakingContextInterface } from 'types/staking';
 import { toFixedIfNecessary } from 'Utils';
 
 export const ActiveNominatorsStatBox = () => {
-  const { consts } = useApi() as APIContextInterface;
+  const { consts } = useApi();
   const { maxElectingVoters } = consts;
   const { eraStakers } = useStaking() as StakingContextInterface;
   const { activeNominators } = eraStakers;

@@ -17,7 +17,7 @@ import { BondStatusBarProps } from '../types';
 export const BondStatusBar = (props: BondStatusBarProps) => {
   const { value } = props;
 
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { staking, eraStakers } = useStaking() as StakingContextInterface;
   const { isSyncing } = useUi();
   const { unit, units } = network;

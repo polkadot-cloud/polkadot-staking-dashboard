@@ -17,7 +17,7 @@ import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 
 export const Bond = (props: any) => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { units } = network;
   const { section } = props;
   const { activeAccount } = useConnect() as ConnectContextInterface;

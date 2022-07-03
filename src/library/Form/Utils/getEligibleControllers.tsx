@@ -13,7 +13,7 @@ import { useConnect } from 'contexts/Connect';
 import { InputItem } from '../types';
 
 export const getEligibleControllers = (): Array<InputItem> => {
-  const { network } = useApi() as APIContextInterface;
+  const { network } = useApi();
   const { activeAccount, accounts: connectAccounts } =
     useConnect() as ConnectContextInterface;
   const { isController, getAccountBalance, minReserve } =

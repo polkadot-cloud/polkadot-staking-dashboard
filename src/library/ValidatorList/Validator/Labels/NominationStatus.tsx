@@ -18,7 +18,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
     useActivePool() as ActivePoolContextState;
   const {
     network: { unit },
-  } = useApi() as APIContextInterface;
+  } = useApi();
 
   const { ownStake } = eraStakers;
 

@@ -19,7 +19,7 @@ import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = () => {
-  const { api, network } = useApi() as APIContextInterface;
+  const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { id: poolId, setActiveTab } = config;

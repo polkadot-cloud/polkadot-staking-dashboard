@@ -20,7 +20,7 @@ export const AssistantContext =
 export const useAssistant = () => React.useContext(AssistantContext);
 
 export const AssistantProvider = (props: AssistantContextProps) => {
-  const { network, consts } = useApi() as APIContextInterface;
+  const { network, consts } = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store whether assistant is open and whether it should transition

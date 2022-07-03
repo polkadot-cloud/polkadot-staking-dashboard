@@ -12,7 +12,7 @@ import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
 
 export const ChooseNominators = (props: any) => {
-  const { consts } = useApi() as APIContextInterface;
+  const { consts } = useApi();
   const { section } = props;
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { getSetupProgress, setActiveAccountSetup } = useUi();

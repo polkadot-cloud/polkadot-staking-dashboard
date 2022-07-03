@@ -30,7 +30,7 @@ import {
 } from '../Wrappers';
 
 export const ChangeNominations = () => {
-  const { api } = useApi() as APIContextInterface;
+  const { api } = useApi();
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations } =
