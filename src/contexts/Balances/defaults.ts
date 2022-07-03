@@ -31,7 +31,6 @@ export const bondOptions: BondOptions = {
   totalUnlocking: new BN(0),
   totalUnlocked: new BN(0),
   totalPossibleBond: new BN(0),
-  freeToStake: new BN(0),
   totalUnlockChuncks: 0,
 };
 

@@ -50,7 +50,6 @@ export interface BondOptions {
   totalUnlocking: BN;
   totalUnlocked: BN;
   totalPossibleBond: BN;
-  freeToStake: BN;
   totalUnlockChuncks: number;
 }
 

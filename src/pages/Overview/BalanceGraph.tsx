@@ -42,7 +42,7 @@ export const BalanceGraph = () => {
   const { services } = useUi();
   const prices = usePrices();
   const {
-    freeToStake,
+    freeToBond,
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
@@ -68,7 +68,7 @@ export const BalanceGraph = () => {
 
   // graph data
   let graphStaked = planckBnToUnit(staked, units);
-  let graphFreeToStake = planckBnToUnit(freeToStake, units);
+  let graphFreeToStake = planckBnToUnit(freeToBond, units);
   let graphInPool = planckBnToUnit(poolBondOpions.active, units);
   let graphUnlocking = planckBnToUnit(unlocking, units);
 

@@ -456,18 +456,12 @@ export const BalancesProvider = ({
       new BN(0)
     );
 
-    const freeToStake = BN.max(
-      freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
-      new BN(0)
-    );
-
     return {
       freeToBond,
       freeToUnbond,
       totalUnlocking,
       totalUnlocked,
       totalPossibleBond,
-      freeToStake,
       totalUnlockChuncks: unlocking.length,
     };
   };
