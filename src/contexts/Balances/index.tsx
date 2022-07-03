@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { AnyApi, MaybeAccount, Unsub, Unsubs } from 'types';
+import { AnyApi, MaybeAccount } from 'types';
 import { Option } from '@polkadot/types-codec';
 import { useNetworkMetrics } from 'contexts/Network';
 import { rmCommas, setStateWithRef } from 'Utils';
@@ -12,8 +12,8 @@ import {
   BalancesAccount,
   BalancesContextInterface,
   BondOptions,
-} from 'types/balances';
-import { ImportedAccount } from 'types/connect';
+} from 'contexts/Balances/types';
+import { ImportedAccount } from 'contexts/Connect/types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -48,16 +48,16 @@ export const BalancesProvider = ({
   const accountsRef = useRef(accounts);
 
   // balance subscriptions state
-  const [unsubsBalances, setUnsubsBalances] = useState<Unsubs>([]);
-  const unsubsBalancesRef = useRef<Unsubs>(unsubsBalances);
+  const [unsubsBalances, setUnsubsBalances] = useState<AnyApi>([]);
+  const unsubsBalancesRef = useRef<AnyApi>(unsubsBalances);
 
   // account ledgers to separate storage
   const [ledgers, setLedgers] = useState<Array<BalanceLedger>>([]);
   const ledgersRef = useRef(ledgers);
 
   // ledger subscriptions state
-  const [unsubsLedgers, setUnsubsLedgers] = useState<Unsubs>([]);
-  const unsubsLedgersRef = useRef<Unsubs>(unsubsLedgers);
+  const [unsubsLedgers, setUnsubsLedgers] = useState<AnyApi>([]);
+  const unsubsLedgersRef = useRef<AnyApi>(unsubsLedgers);
 
   // fetch account balances & ledgers. Remove or add subscriptions
   useEffect(() => {
@@ -94,12 +94,12 @@ export const BalancesProvider = ({
         // unsubscribe from removed balances
         accountsRemoved.forEach((a: BalancesAccount) => {
           const unsub = unsubsBalancesRef.current.find(
-            (u: Unsub) => u.key === a.address
+            (u: AnyApi) => u.key === a.address
           );
           if (unsub) {
             unsub.unsub();
             // remove unsub from balances
-            _unsubsBalances.filter((u: Unsub) => u.key !== a.address);
+            _unsubsBalances.filter((u: AnyApi) => u.key !== a.address);
           }
         });
         // commit state updates
@@ -112,12 +112,12 @@ export const BalancesProvider = ({
         // unsubscribe from removed ledgers if it exists
         accountsRemoved.forEach((a: BalancesAccount) => {
           const unsub = unsubsLedgersRef.current.find(
-            (u: Unsub) => u.key === a.address
+            (u: AnyApi) => u.key === a.address
           );
           if (unsub) {
             unsub.unsub();
             // remove unsub from balances
-            _unsubsLedgers.filter((u: Unsub) => u.key !== a.address);
+            _unsubsLedgers.filter((u: AnyApi) => u.key !== a.address);
           }
         });
         // commit state updates
@@ -153,10 +153,10 @@ export const BalancesProvider = ({
    * Unsubscrbe all balance subscriptions
    */
   const unsubscribeAll = () => {
-    Object.values(unsubsBalancesRef.current).forEach(({ unsub }) => {
+    Object.values(unsubsBalancesRef.current).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
-    Object.values(unsubsLedgersRef.current).forEach(({ unsub }) => {
+    Object.values(unsubsLedgersRef.current).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
   };

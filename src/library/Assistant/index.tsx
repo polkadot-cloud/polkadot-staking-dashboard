@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useAssistant } from 'contexts/Assistant';
 import { ASSISTANT_CONFIG } from 'config/assistant';
 import { pageFromUri } from 'Utils';
-import { AssistantItem } from 'types/assistant';
+import { AssistantItem } from 'contexts/Assistant/types';
 import { Toggle } from 'types';
 import {
   Wrapper,

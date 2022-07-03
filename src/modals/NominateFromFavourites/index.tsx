@@ -15,7 +15,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
-import { Validator } from 'types/validators';
+import { Validator } from 'contexts/Validators/types';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 

@@ -15,8 +15,8 @@ import {
   ConnectContextInterface,
   ImportedAccount,
   ExternalAccount,
-} from 'types/connect';
-import { MaybeAccount, Unsub, Unsubs } from 'types';
+} from 'contexts/Connect/types';
+import { AnyApi, MaybeAccount } from 'types';
 import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';
 
@@ -59,7 +59,7 @@ export const ConnectProvider = ({
   const extensionsStatusRef = useRef(extensionsStatus);
 
   // store unsubscribe handler for connected extensions
-  const [unsubscribe, setUnsubscribe] = useState<Unsubs>([]);
+  const [unsubscribe, setUnsubscribe] = useState<AnyApi>([]);
   const unsubscribeRef = useRef(unsubscribe);
 
   // initialise extensions
@@ -111,7 +111,7 @@ export const ConnectProvider = ({
    * Unsubscrbe all account subscriptions
    */
   const unsubscribeAll = () => {
-    unsubscribeRef.current.forEach(({ unsub }) => {
+    unsubscribeRef.current.forEach(({ unsub }: AnyApi) => {
       unsub();
     });
   };
@@ -123,15 +123,15 @@ export const ConnectProvider = ({
     const keys = _accounts.map((a: ExternalAccount) => a.address);
 
     // unsubscribe from provided keys
-    const unsubs = unsubscribeRef.current.filter((f: Unsub) =>
+    const unsubs = unsubscribeRef.current.filter((f: AnyApi) =>
       keys.includes(f.key)
     );
-    Object.values(unsubs).forEach(({ unsub }) => {
+    Object.values(unsubs).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
     // filter keys from current unsubs
     const unsubsNew = unsubscribeRef.current.filter(
-      (f: Unsub) => !keys.includes(f.key)
+      (f: AnyApi) => !keys.includes(f.key)
     );
 
     // if active account is being forgotten, disconnect

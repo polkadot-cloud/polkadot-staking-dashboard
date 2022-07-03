@@ -13,7 +13,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { BondOptions } from 'types/balances';
+import { BondOptions } from 'contexts/Balances/types';
 import BN from 'bn.js';
 
 export const ManageBond = () => {

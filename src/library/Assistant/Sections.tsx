@@ -16,7 +16,10 @@ import Definition from './Items/Definition';
 import { CardWrapper, ListWrapper, HeaderWrapper } from './Wrappers';
 import External from './Items/External';
 import Action from './Items/Action';
-import { AssistantDefinition, AssistantExternal } from '../../types/assistant';
+import {
+  AssistantDefinition,
+  AssistantExternal,
+} from '../../contexts/Assistant/types';
 import { SectionProps } from './types';
 
 export const Sections = ({ pageMeta }: SectionProps) => {

@@ -11,7 +11,7 @@ import {
   setStateWithRef,
   planckBnToUnit,
 } from 'Utils';
-import { ExternalAccount, ImportedAccount } from 'types/connect';
+import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   EraStakers,
@@ -19,7 +19,7 @@ import {
   StakingContextInterface,
   StakingMetrics,
   StakingTargets,
-} from 'types/staking';
+} from 'contexts/Staking/types';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';

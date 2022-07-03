@@ -5,7 +5,7 @@ import { Toggle } from 'types';
 import {
   AssistantContextInterface,
   AssistantDefinition,
-} from 'types/assistant';
+} from 'contexts/Assistant/types';
 
 export const definition: AssistantDefinition = {
   title: '',

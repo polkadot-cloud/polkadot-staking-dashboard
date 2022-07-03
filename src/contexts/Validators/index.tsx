@@ -18,7 +18,7 @@ import {
   Validator,
   ValidatorAddresses,
   ValidatorsContextInterface,
-} from 'types/validators';
+} from 'contexts/Validators/types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -111,7 +111,7 @@ export const ValidatorsProvider = ({
     return () => {
       // unsubscribe from any validator meta batches
       Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) => {
-        return Object.entries(batch).map(([k, v]: AnyApi) => {
+        return Object.entries(batch).map(([, v]: AnyApi) => {
           return v();
         });
       });

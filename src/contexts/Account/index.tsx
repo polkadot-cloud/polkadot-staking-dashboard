@@ -34,7 +34,7 @@ export const AccountProvider = ({
   const accountMetaBatchesRef = useRef(accountMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [accountSubs, setAccountSubs]: any = useState({});
+  const [accountSubs, setAccountSubs] = useState<AnyApi>({});
   const accountSubsRef = useRef(accountSubs);
 
   // unsubscribe from any validator meta batches
@@ -171,7 +171,7 @@ export const AccountProvider = ({
     await Promise.all([
       subscribeToIdentities(addresses),
       subscribeToSuperIdentities(addresses),
-    ]).then((unsubs: any) => {
+    ]).then((unsubs: AnyApi) => {
       addMetaBatchUnsubs(key, unsubs);
     });
   };
@@ -179,7 +179,7 @@ export const AccountProvider = ({
   /*
    * Helper function to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: any) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: AnyApi) => {
     const _unsubs = accountSubsRef.current;
     const _keyUnsubs = _unsubs[key] ?? [];
 

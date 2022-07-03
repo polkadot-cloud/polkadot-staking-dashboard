@@ -3,7 +3,10 @@
 
 import { WalletAccount } from '@talisman-connect/wallets';
 import { MaybeAccount } from 'types';
-import { ConnectContextInterface, ExternalAccount } from 'types/connect';
+import {
+  ConnectContextInterface,
+  ExternalAccount,
+} from 'contexts/Connect/types';
 
 export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line

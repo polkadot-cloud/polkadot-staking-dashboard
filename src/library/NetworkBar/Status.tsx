@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import { useApi } from 'contexts/Api';
-import { ConnectionStatus } from 'types/api';
+import { ConnectionStatus } from 'contexts/Api/types';
 
 export const Status = () => {
   const { status } = useApi();

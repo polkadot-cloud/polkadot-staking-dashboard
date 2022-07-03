@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { ExternalAccount, ImportedAccount } from 'types/connect';
+import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { faGlasses, faCog, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ExtensionWrapper } from '../Wrappers';

@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import { defaultSideBarContext } from './defaults';
 
 export interface SideBarContextInterface {
-  openSideBar: () => any;
-  closeSideBar: () => any;
+  openSideBar: () => void;
+  closeSideBar: () => void;
   open: number;
 }
 

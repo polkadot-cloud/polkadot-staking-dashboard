@@ -4,7 +4,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
-import { PoolState } from 'types/pools';
+import { PoolState } from 'contexts/Pools/types';
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { HeadingWrapper, PaddingWrapper } from '../Wrappers';

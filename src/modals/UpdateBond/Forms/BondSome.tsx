@@ -10,7 +10,7 @@ import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { BondOptions } from 'types/balances';
+import { BondOptions } from 'contexts/Balances/types';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 

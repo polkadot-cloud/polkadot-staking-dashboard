@@ -12,7 +12,7 @@ import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
 import { faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
-import { Validator } from 'types/validators';
+import { Validator } from 'contexts/Validators/types';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
 export const GenerateNominations = (props: any) => {

@@ -19,7 +19,7 @@ import {
   NetworkState,
   APIConstants,
   ConnectionStatus,
-} from 'types/api';
+} from 'contexts/Api/types';
 import { NodeEndpoint, NetworkName } from 'types';
 import * as defaults from './defaults';
 

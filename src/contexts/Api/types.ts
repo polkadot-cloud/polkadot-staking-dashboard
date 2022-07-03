@@ -4,7 +4,7 @@
 import { ApiPromise } from '@polkadot/api';
 import { U8aLike } from '@polkadot/util/types';
 import BN from 'bn.js';
-import { NodeEndpoint, NetworkName } from '.';
+import { NodeEndpoint, NetworkName } from '../../types';
 
 export enum ConnectionStatus {
   Connecting = 'connecting',

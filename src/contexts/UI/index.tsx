@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
-import { ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount } from 'types';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';

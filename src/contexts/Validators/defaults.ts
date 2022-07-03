@@ -4,7 +4,7 @@
 import {
   ValidatorAddresses,
   ValidatorsContextInterface,
-} from 'types/validators';
+} from 'contexts/Validators/types';
 
 export const sessionValidators = {
   list: [],

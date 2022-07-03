@@ -13,7 +13,7 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { useApi } from 'contexts/Api';
-import { ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'contexts/Connect/types';
 import { Warning } from 'library/Form/Warning';
 import { InputItem } from 'library/Form/types';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';

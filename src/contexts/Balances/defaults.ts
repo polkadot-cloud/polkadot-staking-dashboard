@@ -9,7 +9,7 @@ import {
   BondOptions,
   Nominations,
   BalancesContextInterface,
-} from 'types/balances';
+} from 'contexts/Balances/types';
 
 export const balance: Balance = {
   free: new BN(0),
