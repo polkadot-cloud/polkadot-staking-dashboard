@@ -30,10 +30,10 @@ export const SideMenu = () => {
   const { network } = useApi();
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
-  const { pathname }: any = useLocation();
+  const { pathname } = useLocation();
   const { getBondedAccount } = useBalances();
   const { getControllerNotImported } = useStaking();
-  const { setPalettePosition, open }: any = usePalette();
+  const { setPalettePosition, open } = usePalette();
   const controller = getBondedAccount(activeAccount);
   const {
     isSyncing,

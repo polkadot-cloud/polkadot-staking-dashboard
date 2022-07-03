@@ -3,7 +3,11 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import {
+  SIDE_MENU_MAXIMISED_WIDTH,
+  SIDE_MENU_MINIMISED_WIDTH,
+  SIDE_MENU_STICKY_THRESHOLD,
+} from 'consts';
 import {
   textPrimary,
   textSecondary,
@@ -15,19 +19,25 @@ import {
 } from 'theme';
 
 export const Wrapper = styled.div<any>`
+  box-sizing: border-box;
+  border-radius: ${(props) => (props.minimised ? '0.7rem' : 0)};
   background: none;
-  border-radius: 0.7rem;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1.5rem 1rem 0.5rem;
   overflow: auto;
   flex-grow: 1;
   margin: 0.75rem 0 3.35rem 1rem;
   display: flex;
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
+  width: ${(props) =>
+    props.minimised
+      ? `${SIDE_MENU_MINIMISED_WIDTH}px`
+      : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     background: ${backgroundOverlay};
     transition: all 0.2s;
+    padding-right: 2rem;
   }
 
   .close-menu {

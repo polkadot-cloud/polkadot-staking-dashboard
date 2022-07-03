@@ -4,7 +4,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import {
-  SIDE_MENU_INTERFACE_WIDTH,
+  SIDE_MENU_MAXIMISED_WIDTH,
+  SIDE_MENU_MINIMISED_WIDTH,
   INTERFACE_MAXIMUM_WIDTH,
   SIDE_MENU_STICKY_THRESHOLD,
   SHOW_SIDE_BAR_WIDTH_THRESHOLD,
@@ -127,17 +128,20 @@ export const SideInterfaceWrapper = styled.div<any>`
   flex: 0;
   overflow: hidden;
   min-width: ${(props) =>
-    props.minimised ? '75px' : `${SIDE_MENU_INTERFACE_WIDTH}px`};
+    props.minimised
+      ? `${SIDE_MENU_MINIMISED_WIDTH}px`
+      : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
   max-width: ${(props) =>
-    props.minimised ? '75px' : `${SIDE_MENU_INTERFACE_WIDTH}px`};
-
-  margin-right: ${(props) => (!props.minimised ? 0 : '1.25rem')};
+    props.minimised
+      ? `${SIDE_MENU_MINIMISED_WIDTH}px`
+      : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
+  padding-right: ${(props) => (!props.minimised ? 0 : '1.25rem')};
+  transition: all 0.2s ease-in-out;
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     position: fixed;
-    transition: all 0.15s ease-in-out;
     top: 0;
-    left: ${(props) => (props.open ? 0 : `-${SIDE_MENU_INTERFACE_WIDTH}px`)};
+    left: ${(props) => (props.open ? 0 : `-${SIDE_MENU_MAXIMISED_WIDTH}px`)};
   }
 `;
 
