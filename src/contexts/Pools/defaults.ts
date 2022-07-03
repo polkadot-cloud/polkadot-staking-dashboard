@@ -70,3 +70,8 @@ export const defaultPoolMembershipsContext = {
   memberships: [],
   membership: null,
 };
+
+export const defaultPoolsConfigContext = {
+  enabled: 0,
+  stats: {},
+};

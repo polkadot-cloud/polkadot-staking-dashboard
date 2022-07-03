@@ -5,12 +5,11 @@ import { Number } from 'library/StatBoxList/Number';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { PoolsConfigContextState } from 'types/pools';
 
 const MinCreateBondStatBox = () => {
   const { network } = useApi();
   const { units } = network;
-  const { stats } = usePoolsConfig() as PoolsConfigContextState;
+  const { stats } = usePoolsConfig();
 
   const params = {
     label: 'Minimum Create Bond',
