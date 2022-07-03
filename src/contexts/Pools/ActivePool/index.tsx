@@ -53,7 +53,7 @@ export const ActivePoolProvider = ({
 
   // currently nominated validators by the activeBonded pool.
   const [poolNominations, setPoolNominations] = useState<any>({
-    nominations: defaults.nominations,
+    nominations: defaults.poolNominations,
     unsub: null,
   });
 
@@ -111,7 +111,7 @@ export const ActivePoolProvider = ({
       poolNominations.unsub();
     }
     setPoolNominations({
-      nominations: defaults.nominations,
+      nominations: defaults.poolNominations,
       unsub: null,
     });
   };
@@ -238,7 +238,7 @@ export const ActivePoolProvider = ({
         // set pool nominations
         let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
-          _nominations = defaults.nominations;
+          _nominations = defaults.poolNominations;
         } else {
           _nominations = {
             targets: _nominations.targets.toHuman(),

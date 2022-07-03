@@ -42,7 +42,7 @@ export const Roles = () => {
   // role edits
   const initEditState: any = (() => {
     const initState: Record<string, RoleEdit> = {};
-    Object.entries(roles)?.forEach(([roleName, address]: any) => {
+    Object.entries(roles || [])?.forEach(([roleName, address]: any) => {
       initState[roleName] = {
         oldAddress: address,
         newAddress: address,
@@ -64,10 +64,10 @@ export const Roles = () => {
   };
 
   const _accounts: string[] = [
-    roles.root,
-    roles.depositor,
-    roles.nominator,
-    roles.stateToggler,
+    roles?.root ?? '',
+    roles?.depositor ?? '',
+    roles?.nominator ?? '',
+    roles?.stateToggler ?? '',
   ];
 
   // store role accounts
@@ -153,8 +153,8 @@ export const Roles = () => {
               <OpenAssistantIcon page="pools" title="Joined Pool" />
             </h3>
             <PoolAccount
-              address={roles.root ?? null}
-              batchIndex={accounts.indexOf(roles.root)}
+              address={roles?.root ?? null}
+              batchIndex={accounts.indexOf(roles?.root ?? '-1')}
               batchKey={batchKey}
             />
           </div>
@@ -165,8 +165,8 @@ export const Roles = () => {
               Depositor <OpenAssistantIcon page="pools" title="Joined Pool" />
             </h3>
             <PoolAccount
-              address={roles.depositor ?? null}
-              batchIndex={accounts.indexOf(roles.depositor)}
+              address={roles?.depositor ?? null}
+              batchIndex={accounts.indexOf(roles?.depositor ?? '-1')}
               batchKey={batchKey}
             />
           </div>
@@ -188,8 +188,8 @@ export const Roles = () => {
               />
             ) : (
               <PoolAccount
-                address={roles.nominator ?? null}
-                batchIndex={accounts.indexOf(roles.nominator)}
+                address={roles?.nominator ?? null}
+                batchIndex={accounts.indexOf(roles?.nominator ?? '-1')}
                 batchKey={batchKey}
               />
             )}
@@ -213,8 +213,8 @@ export const Roles = () => {
               />
             ) : (
               <PoolAccount
-                address={roles.stateToggler ?? null}
-                batchIndex={accounts.indexOf(roles.stateToggler)}
+                address={roles?.stateToggler ?? null}
+                batchIndex={accounts.indexOf(roles?.stateToggler ?? '-1')}
                 batchKey={batchKey}
                 last
               />

@@ -51,8 +51,14 @@ export interface BondedPoolsContextState {
 }
 
 export interface ActiveBondedPoolState {
-  pool: BondedPool | undefined;
+  pool: ActiveBondedPool | undefined;
   unsub: AnyApi;
+}
+
+export interface ActiveBondedPool extends BondedPool {
+  roles: PoolRoles;
+  unclaimedReward: BN;
+  slashingSpansCount: 0;
 }
 
 export interface BondedPool {
@@ -69,6 +75,8 @@ export interface BondedPool {
   state: PoolState;
 }
 
+export type NominationStatuses = { [key: string]: string };
+
 export interface ActivePoolContextState {
   isBonding: () => boolean;
   isNominator: () => boolean;
@@ -78,13 +86,20 @@ export interface ActivePoolContextState {
   getPoolBondOptions: (a: MaybeAccount) => any;
   getPoolUnlocking: () => any;
   setTargets: (t: any) => void;
-  getNominationsStatus: () => any;
-  activeBondedPool: any;
+  getNominationsStatus: () => NominationStatuses;
+  activeBondedPool: ActiveBondedPool | undefined;
   targets: any;
   poolNominations: any;
 }
 
 // Misc types
+
+export interface PoolRoles {
+  depositor: string;
+  nominator: string;
+  root: string;
+  stateToggler: string;
+}
 
 export interface PoolAddresses {
   stash: string;
