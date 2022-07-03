@@ -4,7 +4,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { AnyApi, AnyMetaBatch } from 'types';
-import { useApi } from './Api';
+import { useApi } from '../Api';
+import { defaultAccountContext } from './defaults';
 
 // context type
 export interface AccountContextState {
@@ -14,12 +15,9 @@ export interface AccountContextState {
 }
 
 // context definition
-export const AccountContext: React.Context<AccountContextState> =
-  React.createContext({
-    fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => {},
-    removeAccountMetaBatch: (k: string) => {},
-    meta: {},
-  });
+export const AccountContext = React.createContext<AccountContextState>(
+  defaultAccountContext
+);
 
 export const useAccount = () => React.useContext(AccountContext);
 
