@@ -3,13 +3,9 @@
 
 import React, { useRef } from 'react';
 import { setStateWithRef } from 'Utils';
+import { defaultThemeContext } from './defaults';
 
-export const ThemeContext: React.Context<any> = React.createContext({
-  toggleTheme: (str?: string) => {},
-  toggleCard: (c: string) => {},
-  mode: 'light',
-  card: 'flat',
-});
+export const ThemeContext = React.createContext<any>(defaultThemeContext);
 
 export const useTheme = () => React.useContext(ThemeContext);
 
