@@ -10,4 +10,9 @@ export const state = {
   unsub: undefined,
 };
 
+export const defaultSessionEraContext = {
+  getEraTimeLeft: () => 0,
+  sessionEra: {},
+};
+
 export default state;

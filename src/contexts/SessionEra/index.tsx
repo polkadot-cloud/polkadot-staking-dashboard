@@ -12,11 +12,9 @@ export interface SessionEraContextState {
   sessionEra: any;
 }
 
-export const SessionEraContext: React.Context<SessionEraContextState> =
-  React.createContext({
-    getEraTimeLeft: () => 0,
-    sessionEra: {},
-  });
+export const SessionEraContext = React.createContext<SessionEraContextState>(
+  defaults.defaultSessionEraContext
+);
 
 // Warning: Do not use this hook in heavy components.
 // Using this hook in a component makes the component rerender per each new block.
