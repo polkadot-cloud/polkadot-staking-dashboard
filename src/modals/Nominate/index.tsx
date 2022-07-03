@@ -15,7 +15,6 @@ import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { ConnectContextInterface } from 'types/connect';
-import { StakingContextInterface } from 'types/staking';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -27,8 +26,7 @@ import {
 export const Nominate = () => {
   const { api, network } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { targets, staking, getControllerNotImported } =
-    useStaking() as StakingContextInterface;
+  const { targets, staking, getControllerNotImported } = useStaking();
   const { getBondedAccount, getLedgerForStash } = useBalances();
   const { setStatus: setModalStatus } = useModal();
   const { units } = network;

@@ -15,14 +15,13 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { StakingContextInterface } from 'types/staking';
 import { ValidatorsContextInterface } from 'types/validators';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { openModalWith } = useModal();
   const { isReady } = useApi();
-  const { inSetup } = useStaking() as StakingContextInterface;
+  const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;

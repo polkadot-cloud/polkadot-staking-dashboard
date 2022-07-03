@@ -4,11 +4,10 @@
 import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
-import { StakingContextInterface } from 'types/staking';
 import { toFixedIfNecessary } from 'Utils';
 
 export const TotalNominatorsStatBox = () => {
-  const { staking } = useStaking() as StakingContextInterface;
+  const { staking } = useStaking();
   const { totalNominators, maxNominatorsCount } = staking;
 
   // total active nominators as percent

@@ -10,12 +10,11 @@ import { PageRowWrapper } from 'Wrappers';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
-import { StakingContextInterface } from 'types/staking';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();
   const { isSyncing } = useUi();
-  const { getControllerNotImported } = useStaking() as StakingContextInterface;
+  const { getControllerNotImported } = useStaking();
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances();

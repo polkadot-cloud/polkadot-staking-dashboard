@@ -5,13 +5,12 @@ import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Pie } from 'library/StatBoxList/Pie';
-import { StakingContextInterface } from 'types/staking';
 import { toFixedIfNecessary } from 'Utils';
 
 export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi();
   const { maxElectingVoters } = consts;
-  const { eraStakers } = useStaking() as StakingContextInterface;
+  const { eraStakers } = useStaking();
   const { activeNominators } = eraStakers;
 
   // active nominators as percent

@@ -9,7 +9,6 @@ import { useBalances } from 'contexts/Balances';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
-import { StakingContextInterface } from 'types/staking';
 import { clipAddress } from 'Utils';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
@@ -18,8 +17,7 @@ export const Connected = () => {
   const { activeAccount, accounts, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { openModalWith } = useModal();
-  const { hasController, getControllerNotImported } =
-    useStaking() as StakingContextInterface;
+  const { hasController, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
   const { activeBondedPool } = useActivePool();

@@ -13,14 +13,13 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { StakingContextInterface } from 'types/staking';
 import { Wrapper, Item } from './Wrappers';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
   const { network } = useApi();
   const { units } = network;
-  const { staking } = useStaking() as StakingContextInterface;
+  const { staking } = useStaking();
   const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
   const { bondedPools } = useBondedPools();
 

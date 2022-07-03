@@ -30,8 +30,9 @@ import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
 
-export const StakingContext =
-  React.createContext<StakingContextInterface | null>(null);
+export const StakingContext = React.createContext<StakingContextInterface>(
+  defaults.defaultStakingContext
+);
 
 export const useStaking = () => React.useContext(StakingContext);
 

@@ -16,7 +16,6 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { ConnectContextInterface } from 'types/connect';
 import { BondOptions } from 'types/balances';
 import BN from 'bn.js';
-import { StakingContextInterface } from 'types/staking';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -25,7 +24,7 @@ export const ManageBond = () => {
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
   const { getLedgerForStash, getBondOptions } = useBalances();
-  const { inSetup } = useStaking() as StakingContextInterface;
+  const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;

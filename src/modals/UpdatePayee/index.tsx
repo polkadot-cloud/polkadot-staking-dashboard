@@ -16,7 +16,6 @@ import { useConnect } from 'contexts/Connect';
 import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
 import { ConnectContextInterface } from 'types/connect';
-import { StakingContextInterface } from 'types/staking';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
@@ -25,8 +24,7 @@ export const UpdatePayee = () => {
   const { getBondedAccount } = useBalances();
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking, getControllerNotImported } =
-    useStaking() as StakingContextInterface;
+  const { staking, getControllerNotImported } = useStaking();
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item: any) => item.key === payee);

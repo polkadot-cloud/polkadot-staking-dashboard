@@ -7,7 +7,6 @@ import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { MaybeAccount } from 'types';
-import { StakingContextInterface } from 'types/staking';
 import { ValidatorsContextInterface } from 'types/validators';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
@@ -74,8 +73,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady, consts, network } = useApi();
   const { accounts: connectAccounts, activeAccount } =
     useConnect() as ConnectContextInterface;
-  const { staking, eraStakers, inSetup } =
-    useStaking() as StakingContextInterface;
+  const { staking, eraStakers, inSetup } = useStaking();
   const { meta, session } = useValidators() as ValidatorsContextInterface;
   const { maxNominatorRewardedPerValidator } = consts;
   const { metrics } = useNetworkMetrics();

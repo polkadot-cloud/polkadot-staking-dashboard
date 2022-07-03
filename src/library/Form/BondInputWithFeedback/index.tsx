@@ -12,7 +12,6 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { ConnectContextInterface } from 'types/connect';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import BN from 'bn.js';
-import { StakingContextInterface } from 'types/staking';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
@@ -30,8 +29,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
 
   const { network } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { staking, getControllerNotImported } =
-    useStaking() as StakingContextInterface;
+  const { staking, getControllerNotImported } = useStaking();
   const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
   const { getPoolBondOptions } = useActivePool();
   const { stats } = usePoolsConfig();

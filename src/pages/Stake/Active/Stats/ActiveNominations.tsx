@@ -3,10 +3,9 @@
 
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
-import { StakingContextInterface } from 'types/staking';
 
 export const ActiveNominationsStatBox = () => {
-  const { getNominationsStatus } = useStaking() as StakingContextInterface;
+  const { getNominationsStatus } = useStaking();
   const nominationStatuses = getNominationsStatus();
 
   const total = Object.values(nominationStatuses).length;
