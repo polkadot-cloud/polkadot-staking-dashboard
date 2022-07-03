@@ -10,7 +10,6 @@ import {
   AssistantContextProps,
 } from 'types/assistant';
 import { ASSISTANT_CONFIG } from 'config/assistant';
-import { APIContextInterface } from 'types/api';
 import { replaceAll } from 'Utils';
 import { useApi } from './Api';
 

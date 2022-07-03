@@ -9,7 +9,6 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';

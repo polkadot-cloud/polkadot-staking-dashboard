@@ -15,7 +15,6 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { APIContextInterface } from 'types/api';
 import { BondedPoolsContextState, ActivePoolContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import ActivePoolsStatBox from './Stats/ActivePools';

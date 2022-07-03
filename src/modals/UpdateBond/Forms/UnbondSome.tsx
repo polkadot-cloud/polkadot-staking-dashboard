@@ -10,7 +10,6 @@ import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { PoolsConfigContextState, ActivePoolContextState } from 'types/pools';

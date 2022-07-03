@@ -6,7 +6,6 @@ import { useApi } from 'contexts/Api';
 import { useNotifications } from 'contexts/Notifications';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useConnect } from 'contexts/Connect';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { getWalletBySource, Wallet } from '@talisman-connect/wallets';
 import { DAPP_NAME } from 'consts';

@@ -18,7 +18,6 @@ import {
   ActivePoolContextState,
 } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { APIContextInterface } from 'types/api';
 import {
   HeadingWrapper,
   FooterWrapper,

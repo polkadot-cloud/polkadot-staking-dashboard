@@ -3,7 +3,6 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import {
   PoolsConfigContextState,

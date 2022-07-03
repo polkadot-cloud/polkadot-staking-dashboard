@@ -11,7 +11,6 @@ import {
 } from '@talisman-connect/wallets';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { DAPP_NAME } from 'consts';
-import { APIContextInterface } from 'types/api';
 import {
   ConnectContextInterface,
   ImportedAccount,

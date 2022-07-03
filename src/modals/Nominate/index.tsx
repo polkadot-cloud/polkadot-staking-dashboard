@@ -14,7 +14,6 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';

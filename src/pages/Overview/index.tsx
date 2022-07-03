@@ -16,7 +16,6 @@ import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
 import { GRAPH_HEIGHT } from 'consts';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { prefillToMaxDays, calculatePayoutsByDay } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';

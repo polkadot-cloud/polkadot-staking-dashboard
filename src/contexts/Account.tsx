@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { AnyApi, AnyMetaBatch } from 'types';
 import { useApi } from './Api';
 

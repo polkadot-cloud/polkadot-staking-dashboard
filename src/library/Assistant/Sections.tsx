@@ -10,7 +10,6 @@ import { pageTitleFromUri } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useAssistant } from 'contexts/Assistant';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import Heading from './Heading';

@@ -12,7 +12,6 @@ import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { planckToUnit } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { NetworkMetricsContextInterface } from 'types';

@@ -3,7 +3,6 @@
 
 import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';

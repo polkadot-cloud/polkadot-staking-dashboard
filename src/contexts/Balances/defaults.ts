@@ -38,3 +38,5 @@ export const nominations: Nominations = {
   targets: [],
   submittedIn: 0,
 };
+
+export const defaultBalancesContext = {};

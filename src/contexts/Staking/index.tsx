@@ -11,7 +11,6 @@ import {
   setStateWithRef,
   planckBnToUnit,
 } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import {
   ConnectContextInterface,
   ExternalAccount,

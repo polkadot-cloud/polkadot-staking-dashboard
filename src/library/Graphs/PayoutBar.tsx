@@ -17,7 +17,6 @@ import {
 import { useApi } from 'contexts/Api';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
-import { APIContextInterface } from 'types/api';
 import { humanNumber } from 'Utils';
 import { PayoutBarProps } from './types';
 

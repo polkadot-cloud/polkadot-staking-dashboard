@@ -6,7 +6,6 @@ import { Doughnut } from 'react-chartjs-2';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
-import { APIContextInterface } from 'types/api';
 import { humanNumber } from 'Utils';
 import { GraphWrapper } from './Wrappers';
 import { BondedProps } from './types';

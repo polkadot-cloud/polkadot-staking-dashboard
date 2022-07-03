@@ -5,7 +5,6 @@ import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { AnyApi, MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import {

@@ -10,7 +10,6 @@ import { clipAddress, convertRemToPixels } from 'Utils';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes, networkColors } from 'theme/default';
 import { StatusLabel } from 'library/StatusLabel';
-import { APIContextInterface } from 'types/api';
 import { useApi } from 'contexts/Api';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
 import { AccountSelectProps, InputItem } from '../types';

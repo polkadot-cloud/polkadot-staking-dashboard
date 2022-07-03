@@ -15,7 +15,6 @@ import {
 import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { EraPointsProps } from './types';
 
 ChartJS.register(

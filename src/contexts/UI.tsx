@@ -5,7 +5,6 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { MaybeAccount, NetworkMetricsContextInterface } from 'types';
 import { BalancesContextInterface } from 'types/balances';

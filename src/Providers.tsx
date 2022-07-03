@@ -5,7 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
 import Router from 'Router';
 import { withProviders } from 'library/Hooks';
-import { APIContextInterface } from 'types/api';
 import { AccountProvider } from './contexts/Account';
 import { APIProvider, useApi } from './contexts/Api';
 import { AssistantProvider } from './contexts/Assistant';

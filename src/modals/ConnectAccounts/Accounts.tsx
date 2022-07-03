@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { BalancesContextInterface } from 'types/balances';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import {
   AccountWrapper,
   AccountGroupWrapper,

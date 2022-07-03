@@ -11,7 +11,6 @@ import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';

@@ -4,7 +4,6 @@
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Number } from 'library/StatBoxList/Number';
-import { APIContextInterface } from 'types/api';
 import { StakingContextInterface } from 'types/staking';
 import { planckBnToUnit } from 'Utils';
 

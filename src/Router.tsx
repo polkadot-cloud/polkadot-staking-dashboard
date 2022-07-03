@@ -29,7 +29,6 @@ import Notifications from 'library/Notifications';
 import { TITLE_DEFAULT } from 'consts';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 
 export const RouterInner = () => {
   const { network } = useApi();

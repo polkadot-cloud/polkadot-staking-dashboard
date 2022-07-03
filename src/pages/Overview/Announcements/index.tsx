@@ -12,7 +12,6 @@ import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { APIContextInterface } from 'types/api';
 import { BondedPoolsContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContextInterface } from 'types/staking';

@@ -4,7 +4,6 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, u8aConcat } from '@polkadot/util';
-import { APIContextInterface } from 'types/api';
 import {
   BondedPoolsContextState,
   MaybePool,

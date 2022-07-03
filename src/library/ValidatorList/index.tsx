@@ -12,7 +12,6 @@ import { useValidators } from 'contexts/Validators';
 import { useUi } from 'contexts/UI';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { APIContextInterface } from 'types/api';
 import { Validator } from 'library/ValidatorList/Validator';
 import {
   List,

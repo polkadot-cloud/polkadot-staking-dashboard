@@ -10,7 +10,6 @@ import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
 import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { Warning } from 'library/Form/Warning';
 import { SummaryWrapper } from './Wrapper';

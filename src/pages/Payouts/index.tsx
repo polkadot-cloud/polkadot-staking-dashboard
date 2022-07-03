@@ -25,7 +25,6 @@ import {
 import { StatusLabel } from 'library/StatusLabel';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';

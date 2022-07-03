@@ -12,7 +12,6 @@ import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';

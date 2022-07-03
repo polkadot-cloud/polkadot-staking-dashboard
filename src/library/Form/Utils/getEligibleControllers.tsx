@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { APIContextInterface } from 'types/api';
 import { BalancesContextInterface } from 'types/balances';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { planckBnToUnit } from 'Utils';

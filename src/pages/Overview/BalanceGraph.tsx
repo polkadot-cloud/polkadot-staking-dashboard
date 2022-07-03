@@ -23,7 +23,6 @@ import {
 } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
-import { APIContextInterface } from 'types/api';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface, BondOptions } from 'types/balances';

@@ -22,7 +22,6 @@ import {
 } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
-import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 

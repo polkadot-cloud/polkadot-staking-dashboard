@@ -13,7 +13,6 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface, ImportedAccount } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
 import { Warning } from 'library/Form/Warning';

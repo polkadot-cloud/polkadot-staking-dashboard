@@ -9,7 +9,6 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BalancesContextInterface, BondOptions } from 'types/balances';

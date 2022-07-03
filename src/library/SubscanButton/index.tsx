@@ -8,7 +8,6 @@ import { useUi } from 'contexts/UI';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 
 const Wrapper = styled.div<any>`
   position: absolute;

@@ -4,7 +4,6 @@
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useApi } from './Api';
 import { useConnect } from './Connect';

@@ -4,7 +4,6 @@
 import { Number } from 'library/StatBoxList/Number';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { PoolsConfigContextState } from 'types/pools';
 

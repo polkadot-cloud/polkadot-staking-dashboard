@@ -7,7 +7,6 @@ import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useUi } from 'contexts/UI';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import { Container } from 'library/Filter/Container';

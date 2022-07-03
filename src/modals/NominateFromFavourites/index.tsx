@@ -6,7 +6,6 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {
   ActivePoolContextState,

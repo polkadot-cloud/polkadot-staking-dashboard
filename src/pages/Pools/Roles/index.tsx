@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { useAccount } from 'contexts/Account';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useActivePool } from 'contexts/Pools/ActivePool';

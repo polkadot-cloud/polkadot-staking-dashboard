@@ -11,7 +11,6 @@ import {
   planckBnToUnit,
   toFixedIfNecessary,
 } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { ActivePoolContextState } from 'types/pools';
 import { BalancesContextInterface } from 'types/balances';

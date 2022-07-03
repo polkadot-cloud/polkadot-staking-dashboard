@@ -4,7 +4,6 @@
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { AnyApi } from 'types';
-import { APIContextInterface } from 'types/api';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 

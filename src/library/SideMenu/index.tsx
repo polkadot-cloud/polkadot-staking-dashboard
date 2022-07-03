@@ -20,7 +20,6 @@ import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
-import { APIContextInterface } from 'types/api';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { ConnectContextInterface } from 'types/connect';
 import { usePalette } from 'contexts/Palette';

@@ -9,7 +9,6 @@ import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { APIContextInterface } from 'types/api';
 import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { useBondedPools } from 'contexts/Pools/BondedPools';

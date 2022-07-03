@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {

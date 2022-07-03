@@ -14,7 +14,6 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface, BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { APIContextInterface } from 'types/api';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 

@@ -8,7 +8,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ActivePoolContextState } from 'types/pools';

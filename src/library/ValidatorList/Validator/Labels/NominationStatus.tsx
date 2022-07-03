@@ -4,7 +4,6 @@
 import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
-import { APIContextInterface } from 'types/api';
 import { ActivePoolContextState } from 'types/pools';
 import { StakingContextInterface } from 'types/staking';
 import { capitalizeFirstLetter, humanNumber } from 'Utils';

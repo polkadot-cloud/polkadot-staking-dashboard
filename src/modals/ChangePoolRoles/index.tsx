@@ -9,7 +9,6 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';

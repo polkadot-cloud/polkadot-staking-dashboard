@@ -5,7 +5,6 @@ import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Pie } from 'library/StatBoxList/Pie';
-import { APIContextInterface } from 'types/api';
 import { StakingContextInterface } from 'types/staking';
 import { toFixedIfNecessary } from 'Utils';
 

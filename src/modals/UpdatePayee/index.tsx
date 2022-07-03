@@ -15,7 +15,6 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { BalancesContextInterface } from 'types/balances';
 import { StakingContextInterface } from 'types/staking';

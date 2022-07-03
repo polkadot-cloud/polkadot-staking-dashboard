@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import {
   PoolMembershipsContextState,

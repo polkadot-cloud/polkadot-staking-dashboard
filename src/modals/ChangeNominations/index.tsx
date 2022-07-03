@@ -12,7 +12,6 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
-import { APIContextInterface } from 'types/api';
 import { ConnectContextInterface } from 'types/connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {

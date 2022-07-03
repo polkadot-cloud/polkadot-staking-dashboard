@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import { APIContextInterface } from 'types/api';
 import { ValidatorsContextInterface } from 'types/validators';
 import { OversubscribedProps } from '../types';
 

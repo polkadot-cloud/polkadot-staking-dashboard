@@ -8,7 +8,6 @@ import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
-import { APIContextInterface } from 'types/api';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 import { DropdownProps, DropdownInput } from '../types';
 
