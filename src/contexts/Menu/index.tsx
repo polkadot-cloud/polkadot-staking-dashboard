@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { defaultMenuContext } from './defaults';
 
-export interface MenuContextState {
+export interface MenuContextInterface {
   openMenu: () => any;
   closeMenu: () => any;
   setMenuPosition: (ref: any) => void;
@@ -15,19 +16,8 @@ export interface MenuContextState {
   items: any;
 }
 
-export const MenuContext: React.Context<MenuContextState> = React.createContext(
-  {
-    openMenu: () => {},
-    closeMenu: () => {},
-    setMenuPosition: (ref: any) => {},
-    checkMenuPosition: (ref: any) => {},
-    setMenuItems: (items: any) => {},
-    open: 0,
-    show: 0,
-    position: [0, 0],
-    items: [],
-  }
-);
+export const MenuContext =
+  React.createContext<MenuContextInterface>(defaultMenuContext);
 
 export const useMenu = () => React.useContext(MenuContext);
 
