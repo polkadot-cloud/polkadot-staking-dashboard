@@ -1,10 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  ValidatorAddresses,
-  ValidatorsContextInterface,
-} from 'contexts/Validators/types';
+import { ValidatorsContextInterface } from 'contexts/Validators/types';
 
 export const sessionValidators = {
   list: [],
@@ -13,15 +10,15 @@ export const sessionValidators = {
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   // eslint-disable-next-line
-  fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => {},
+  fetchValidatorMetaBatch: (k, v, r) => {},
   // eslint-disable-next-line
-  removeValidatorMetaBatch: (k: string) => {},
+  removeValidatorMetaBatch: (k) => {},
   // eslint-disable-next-line
-  fetchValidatorPrefs: async (v: ValidatorAddresses) => null,
+  fetchValidatorPrefs: async (v) => null,
   // eslint-disable-next-line
-  addFavourite: (a: string) => {},
+  addFavourite: (a) => {},
   // eslint-disable-next-line
-  removeFavourite: (a: string) => {},
+  removeFavourite: (a) => {},
   validators: [],
   meta: {},
   session: sessionValidators,

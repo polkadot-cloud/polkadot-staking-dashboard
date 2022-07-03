@@ -1,16 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalContextInterface } from '.';
+import { ModalContextInterface } from './types';
 
 export const defaultModalContext: ModalContextInterface = {
   status: 0,
   // eslint-disable-next-line
   setStatus: (status) => {},
   // eslint-disable-next-line
-  openModalWith: (modal: string, _config?: any, size?: string) => {},
+  openModalWith: (m, c, s) => {},
   // eslint-disable-next-line
-  setModalHeight: (v: any) => {},
+  setModalHeight: (v) => {},
   setResize: () => {},
   modal: 'ConnectAccounts',
   config: {},

@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AccountContextInterface } from '.';
+import { AccountContextInterface } from './types';
 
 export const defaultAccountContext: AccountContextInterface = {
   // eslint-disable-next-line
-  fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => {},
+  fetchAccountMetaBatch: (k, v ,r) => {},
   // eslint-disable-next-line
-  removeAccountMetaBatch: (k: string) => {},
+  removeAccountMetaBatch: (k) => {},
   meta: {},
 };

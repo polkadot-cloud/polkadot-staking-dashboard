@@ -2,13 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
-import {
-  AnyApi,
-  NetworkMetricsContextInterface,
-  NetworkMetricsState,
-} from 'types';
+import { AnyApi } from 'types';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
+import { NetworkMetricsContextInterface, NetworkMetricsState } from './types';
 
 export const NetworkMetricsContext =
   React.createContext<NetworkMetricsContextInterface>(

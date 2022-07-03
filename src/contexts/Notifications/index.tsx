@@ -4,12 +4,7 @@
 import React, { useState, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultNotificationsContext } from './defaults';
-
-export interface NotificationsContextInterface {
-  addNotification: (n: any) => any;
-  removeNotification: (n: any) => void;
-  notifications: any;
-}
+import { NotificationsContextInterface } from './types';
 
 export const NotificationsContext =
   React.createContext<NotificationsContextInterface>(

@@ -8,7 +8,6 @@ import {
   ConnectionStatus,
 } from 'contexts/Api/types';
 import BN from 'bn.js';
-import { NetworkName } from 'types';
 import { NODE_ENDPOINTS } from 'consts';
 
 export const consts: APIConstants = {
@@ -24,12 +23,12 @@ export const consts: APIConstants = {
 
 export const defaultApiContext: APIContextInterface = {
   // eslint-disable-next-line
-  connect: async () : Promise<void> => {
+  connect: async () => {
     await new Promise((resolve) => resolve(null));
   },
   fetchDotPrice: () => {},
   // eslint-disable-next-line
-  switchNetwork: async (_network: NetworkName) : Promise<void> => {
+  switchNetwork: async (_network) => {
     await new Promise((resolve) => resolve(null));
   },
   api: null,

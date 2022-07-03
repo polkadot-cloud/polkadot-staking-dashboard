@@ -4,38 +4,37 @@
 import React, { useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultThemeContext } from './defaults';
+import { ThemeContextInterface } from './types';
 
-export const ThemeContext = React.createContext<any>(defaultThemeContext);
+export const ThemeContext =
+  React.createContext<ThemeContextInterface>(defaultThemeContext);
 
 export const useTheme = () => React.useContext(ThemeContext);
 
 export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   // get the current theme
-  let localTheme = localStorage.getItem('theme');
-  let localCard = localStorage.getItem('card');
+  let localTheme = localStorage.getItem('theme') || '';
+  let localCard = localStorage.getItem('card') || '';
 
   // provide default theme if not set
-  if (localTheme !== 'light' && localTheme !== 'dark') {
+  if (!['light', 'dark'].includes(localTheme)) {
     // check system theme
-    if (
+    localTheme =
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      localTheme = 'dark';
-    } else {
-      localTheme = 'light';
-    }
+        ? 'dark'
+        : 'light';
     localStorage.setItem('theme', localTheme);
   }
 
   // provide default card if not set
-  if (!['flat', 'border', 'shadow'].includes(localCard || '')) {
+  if (!['flat', 'border', 'shadow'].includes(localCard)) {
     localCard = 'shadow';
     localStorage.setItem('card', localCard);
   }
 
   // the theme state
-  const [state, setState] = React.useState({
+  const [state, setState] = React.useState<{ mode: string; card: string }>({
     mode: localTheme,
     card: localCard,
   });

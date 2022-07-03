@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { MaybeAccount } from 'types';
 import {
   BalanceLedger,
   Balance,
@@ -43,23 +42,23 @@ export const nominations: Nominations = {
 
 export const defaultBalancesContext: BalancesContextInterface = {
   // eslint-disable-next-line
-  getAccount: (address: MaybeAccount) => null,
+  getAccount: (address) => null,
   // eslint-disable-next-line
-  getAccountBalance: (address: MaybeAccount) => balance,
+  getAccountBalance: (address) => balance,
   // eslint-disable-next-line
-  getLedgerForStash: (address: MaybeAccount) => ledger,
+  getLedgerForStash: (address) => ledger,
   // eslint-disable-next-line
-  getLedgerForController: (address: MaybeAccount) => null,
+  getLedgerForController: (address) => null,
   // eslint-disable-next-line
-  getAccountLocks: (address: MaybeAccount) => [],
+  getAccountLocks: (address) => [],
   // eslint-disable-next-line
-  getBondedAccount: (address: MaybeAccount) => null,
+  getBondedAccount: (address) => null,
   // eslint-disable-next-line
-  getAccountNominations: (address: MaybeAccount) => [],
+  getAccountNominations: (address) => [],
   // eslint-disable-next-line
-  getBondOptions: (address: MaybeAccount | null) => bondOptions,
+  getBondOptions: (address) => bondOptions,
   // eslint-disable-next-line
-  isController: (address: MaybeAccount) => false,
+  isController: (address) => false,
   accounts: [],
   minReserve: new BN(0),
   ledgers: [],

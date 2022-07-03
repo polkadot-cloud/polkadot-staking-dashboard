@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { MaybeAccount } from 'types';
 import {
   StakingMetrics,
   EraStakers,
@@ -43,10 +42,10 @@ export const nominationStatus: NominationStatuses = {};
 export const defaultStakingContext: StakingContextInterface = {
   getNominationsStatus: () => nominationStatus,
   // eslint-disable-next-line
-  setTargets: (t: any) => {},
+  setTargets: (t) => {},
   hasController: () => false,
   // eslint-disable-next-line
-  getControllerNotImported: (a: MaybeAccount) => null,
+  getControllerNotImported: (a) => null,
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => true,

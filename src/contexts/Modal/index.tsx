@@ -3,19 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { defaultModalContext } from './defaults';
-
-export interface ModalContextInterface {
-  status: number;
-  setStatus: (status: number) => void;
-  openModalWith: (modal: string, config?: any, size?: string) => void;
-  setModalHeight: (v: any) => void;
-  setResize: () => void;
-  modal: string;
-  config: any;
-  size: string;
-  height: any;
-  resize: number;
-}
+import { ModalContextInterface } from './types';
 
 // default modal content
 const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';

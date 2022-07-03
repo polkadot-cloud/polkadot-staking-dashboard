@@ -73,27 +73,6 @@ export type PagesConfig = Array<{
 
 export type MaybeAccount = string | null;
 
-export interface NetworkMetricsContextInterface {
-  metrics: NetworkMetrics;
-}
-
-export interface NetworkMetrics {
-  activeEra: {
-    index: number;
-    start: number;
-  };
-  totalIssuance: BN;
-}
-
-export interface NetworkMetricsState {
-  activeEra: {
-    index: number;
-    start: number;
-  };
-  totalIssuance: BN;
-  unsub: { (): void } | undefined;
-}
-
 // any types to compress compiler warnings
 // eslint-disable-next-line
 export type AnyApi = any;

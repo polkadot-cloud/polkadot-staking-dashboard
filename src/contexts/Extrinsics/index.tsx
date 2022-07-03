@@ -5,12 +5,7 @@ import { Index } from '@polkadot/types/interfaces';
 import React, { useState, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultExtrinsicsContext } from './defaults';
-
-export interface ExtrinsicsContextInterface {
-  addPending: (n: Index) => void;
-  removePending: (n: Index) => void;
-  pending: Index[];
-}
+import { ExtrinsicsContextInterface } from './types';
 
 export const ExtrinsicsContext =
   React.createContext<ExtrinsicsContextInterface>(defaultExtrinsicsContext);

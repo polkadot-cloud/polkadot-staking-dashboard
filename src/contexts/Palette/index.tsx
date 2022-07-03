@@ -3,16 +3,7 @@
 
 import React, { useState } from 'react';
 import { defaultPaletteContext } from './defaults';
-
-export interface PaletteContextInterface {
-  openPalette: () => any;
-  closePalette: () => any;
-  setPalettePosition: (ref: any) => void;
-  checkPalettePosition: (ref: any) => void;
-  open: number;
-  show: number;
-  position: [number, number];
-}
+import { PaletteContextInterface } from './types';
 
 export const PaletteContext = React.createContext<PaletteContextInterface>(
   defaultPaletteContext

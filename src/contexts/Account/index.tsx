@@ -6,13 +6,7 @@ import { setStateWithRef } from 'Utils';
 import { AnyApi, AnyMetaBatch } from 'types';
 import { useApi } from '../Api';
 import { defaultAccountContext } from './defaults';
-
-// context type
-export interface AccountContextInterface {
-  fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
-  removeAccountMetaBatch: (k: string) => void;
-  meta: AnyMetaBatch;
-}
+import { AccountContextInterface } from './types';
 
 // context definition
 export const AccountContext = React.createContext<AccountContextInterface>(

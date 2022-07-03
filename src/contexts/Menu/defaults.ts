@@ -7,9 +7,9 @@ export const defaultMenuContext: MenuContextInterface = {
   openMenu: () => {},
   closeMenu: () => {},
   // eslint-disable-next-line
-  setMenuPosition: (ref) => {},
+  setMenuPosition: (r) => {},
   // eslint-disable-next-line
-  checkMenuPosition: (ref) => {},
+  checkMenuPosition: (r) => {},
   // eslint-disable-next-line
   setMenuItems: (items) => {},
   open: 0,

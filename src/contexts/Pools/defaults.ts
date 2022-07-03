@@ -54,7 +54,7 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   getPoolBondOptions: (a: MaybeAccount) => null,
   getPoolUnlocking: () => [],
   // eslint-disable-next-line
-  setTargets: (targest: any) => {},
+  setTargets: (targest) => {},
   getNominationsStatus: () => nominationStatus,
   activeBondedPool: {},
   targets: [],
@@ -63,11 +63,11 @@ export const defaultActivePoolContext: ActivePoolContextState = {
 
 export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line
-  fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => {},
+  fetchPoolsMetaBatch: (k, v: [], r) => {},
   // eslint-disable-next-line
-  createAccounts: (p: number) => {},
+  createAccounts: (p) => {},
   // eslint-disable-next-line
-  getBondedPool: (p: number) => [],
+  getBondedPool: (p) => [],
   bondedPools: [],
   meta: {},
 };

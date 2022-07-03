@@ -8,11 +8,7 @@ import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useUi } from '../UI';
 import { defaultSubscanContext } from './defaults';
-
-export interface SubscanContextInterface {
-  fetchEraPoints: (v: string, e: number) => void;
-  payouts: any;
-}
+import { SubscanContextInterface } from './types';
 
 export const SubscanContext = React.createContext<SubscanContextInterface>(
   defaultSubscanContext

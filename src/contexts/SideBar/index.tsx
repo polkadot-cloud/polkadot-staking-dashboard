@@ -3,12 +3,7 @@
 
 import React, { useState } from 'react';
 import { defaultSideBarContext } from './defaults';
-
-export interface SideBarContextInterface {
-  openSideBar: () => void;
-  closeSideBar: () => void;
-  open: number;
-}
+import { SideBarContextInterface } from './types';
 
 export const SideBarContext = React.createContext<SideBarContextInterface>(
   defaultSideBarContext

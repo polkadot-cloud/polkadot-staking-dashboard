@@ -1,11 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export const defaultThemeContext: any = {
+import { ThemeContextInterface } from './types';
+
+export const defaultThemeContext: ThemeContextInterface = {
   // eslint-disable-next-line
-  toggleTheme: (str?: string) => {},
+  toggleTheme: (str) => {},
   // eslint-disable-next-line
-  toggleCard: (c: string) => {},
+  toggleCard: (c) => {},
   mode: 'light',
   card: 'flat',
 };

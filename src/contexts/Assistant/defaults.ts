@@ -14,22 +14,22 @@ export const definition: AssistantDefinition = {
 
 export const defaultAssistantContext: AssistantContextInterface = {
   // eslint-disable-next-line
-  fillDefinitionVariables: (d: AssistantDefinition) => definition,
+  fillDefinitionVariables: (d) => definition,
   toggle: () => {},
   // eslint-disable-next-line
-  setPage: (page: string) => {},
+  setPage: (page) => {},
   // eslint-disable-next-line
-  setInnerDefinition: (meta: AssistantDefinition) => {},
+  setInnerDefinition: (meta) => {},
   // eslint-disable-next-line
-  getDefinition: (k: string, t: string) => undefined,
+  getDefinition: (k, t) => undefined,
   openAssistant: () => {},
   closeAssistant: () => {},
   // eslint-disable-next-line
-  setActiveSection: (i: number) => {},
+  setActiveSection: (i) => {},
   // eslint-disable-next-line
-  goToDefinition: (k: string, t: string) => {},
+  goToDefinition: (k, t) => {},
   // eslint-disable-next-line
-  setAssistantHeight: (v: number) => {},
+  setAssistantHeight: (v) => {},
   activeSection: 0,
   open: Toggle.Closed,
   page: 'overview',
