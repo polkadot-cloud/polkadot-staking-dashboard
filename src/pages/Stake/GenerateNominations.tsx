@@ -7,7 +7,6 @@ import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useUi } from 'contexts/UI';
-import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
@@ -24,8 +23,7 @@ export const GenerateNominations = (props: any) => {
 
   const { openModalWith } = useModal();
   const { isReady } = useApi();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
   const { applyValidatorOrder, applyValidatorFilters } = useUi();
 

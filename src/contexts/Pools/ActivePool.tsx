@@ -5,7 +5,6 @@ import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { ConnectContextInterface } from 'types/connect';
 import { AnyApi, MaybeAccount } from 'types';
 import { ActivePoolContextState } from 'types/pools';
 import { useBalances } from '../Balances';
@@ -31,7 +30,7 @@ export const ActivePoolProvider = ({
   const { api, network, isReady, consts } = useApi();
   const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { getAccountBalance } = useBalances();
   const { enabled } = usePoolsConfig();
   const { membership } = usePoolMemberships();

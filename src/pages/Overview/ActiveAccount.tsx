@@ -9,12 +9,11 @@ import { useConnect } from 'contexts/Connect';
 import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
-import { ConnectContextInterface } from 'types/connect';
 import { Separator, AccountWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
-  const { activeAccount, getAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount, getAccount } = useConnect();
   const accountData = getAccount(activeAccount);
 
   // click to copy notification

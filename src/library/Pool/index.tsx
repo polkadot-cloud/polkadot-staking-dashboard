@@ -16,7 +16,6 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/context';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import _ from 'window-or-global';
 import { Wrapper } from './Wrapper';
 import { PoolProps } from './types';
@@ -25,8 +24,7 @@ export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
   const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { meta } = useBondedPools();
   const { isBonding } = useActivePool();
   // assumes component is under `PoolsTabsProvider` (Pools page)

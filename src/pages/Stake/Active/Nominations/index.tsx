@@ -12,7 +12,6 @@ import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Wrapper } from './Wrapper';
@@ -22,8 +21,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { isReady } = useApi();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getAccountNominations } = useBalances();
   const { nominated: stakeNominated, poolNominated }: any = useValidators();
   let { favouritesList } = useValidators();

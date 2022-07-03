@@ -6,7 +6,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { isNumeric } from 'Utils';
 import { Button } from 'library/Button';
-import { ConnectContextInterface } from 'types/connect';
 import { InputWrapper, RowWrapper } from './Wrappers';
 import { BondInputProps } from '../types';
 
@@ -23,7 +22,7 @@ export const BondInput = (props: BondInputProps) => {
   const _value = props.value ?? 0;
 
   const { network } = useApi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
 
   // the current local bond value
   const [bond, setBond] = useState(_value);

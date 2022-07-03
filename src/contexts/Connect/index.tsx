@@ -17,10 +17,12 @@ import {
   ExternalAccount,
 } from 'types/connect';
 import { MaybeAccount, Unsub, Unsubs } from 'types';
-import { useApi } from './Api';
+import { useApi } from '../Api';
+import { defaultConnectContext } from './defaults';
 
-export const ConnectContext =
-  React.createContext<ConnectContextInterface | null>(null);
+export const ConnectContext = React.createContext<ConnectContextInterface>(
+  defaultConnectContext
+);
 
 export const useConnect = () => React.useContext(ConnectContext);
 

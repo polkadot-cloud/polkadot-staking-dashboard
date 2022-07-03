@@ -8,7 +8,6 @@ import { useApi } from 'contexts/Api';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ConnectContextInterface } from 'types/connect';
 import Button from 'library/Button';
 import {
   faEdit,
@@ -30,8 +29,7 @@ export type RoleEdit = {
 
 export const Roles = () => {
   const { isReady } = useApi();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
   const { activeBondedPool, isOwner } = useActivePool();
   const { isSyncing } = useUi();

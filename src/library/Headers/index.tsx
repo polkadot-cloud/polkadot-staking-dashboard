@@ -8,7 +8,6 @@ import { useExtrinsics } from 'contexts/Extrinsics';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { pageFromUri } from 'Utils';
-import { ConnectContextInterface } from 'types/connect';
 import { SideBar } from './SideBar';
 import { Spinner } from './Spinner';
 import { Wrapper, HeadingWrapper, Item, LargeScreensOnly } from './Wrappers';
@@ -20,7 +19,7 @@ import { SideMenuToggle } from './SideMenuToggle';
 export const Headers = () => {
   const { pathname } = useLocation();
   const assistant = useAssistant();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { validators } = useValidators();
   const { pending } = useExtrinsics();
   const { isSyncing } = useUi();

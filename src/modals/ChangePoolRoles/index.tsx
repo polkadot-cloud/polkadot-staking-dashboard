@@ -9,7 +9,6 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';
-import { ConnectContextInterface } from 'types/connect';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
@@ -17,8 +16,7 @@ import { RoleChange } from './RoleChange';
 export const ChangePoolRoles = () => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { config } = useModal();
   const { poolId, roleEdits } = config;
 

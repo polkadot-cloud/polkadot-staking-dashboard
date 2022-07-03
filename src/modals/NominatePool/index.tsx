@@ -12,7 +12,6 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
-import { ConnectContextInterface } from 'types/connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {
   HeadingWrapper,
@@ -25,8 +24,7 @@ import {
 export const NominatePool = () => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
   const { isNominator, targets } = useActivePool();
   const { nominations } = targets;

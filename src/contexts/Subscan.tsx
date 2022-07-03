@@ -4,7 +4,6 @@
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
-import { ConnectContextInterface } from 'types/connect';
 import { useApi } from './Api';
 import { useConnect } from './Connect';
 import { useUi } from './UI';
@@ -29,7 +28,7 @@ export const SubscanProvider = ({
 }) => {
   const { network, isReady } = useApi();
   const { services, getServices }: any = useUi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
 
   const [payouts, setPayouts]: any = useState([]);
 

@@ -15,12 +15,11 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
-import { ConnectContextInterface } from 'types/connect';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { api } = useApi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { getBondedAccount } = useBalances();
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);

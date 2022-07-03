@@ -8,7 +8,6 @@ import { defaultThemes } from 'theme/default';
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import Wrapper from './Wrapper';
@@ -18,7 +17,7 @@ import { PoolAccountProps } from './types';
 export const PoolAccount = (props: PoolAccountProps) => {
   const { mode } = useTheme();
   const { isReady } = useApi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { fetchPoolsMetaBatch, meta } = useBondedPools();
 
   const { label }: any = props;

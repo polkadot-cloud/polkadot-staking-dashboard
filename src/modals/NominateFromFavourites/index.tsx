@@ -9,7 +9,6 @@ import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { useBalances } from 'contexts/Balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
@@ -22,8 +21,7 @@ import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavourites = () => {
   const { consts, api } = useApi();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators();

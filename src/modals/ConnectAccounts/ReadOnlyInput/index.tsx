@@ -4,13 +4,12 @@
 import React, { useState } from 'react';
 import Button from 'library/Button';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'types/connect';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const ReadOnlyInput = () => {
-  const { formatAccountSs58, accounts, addExternalAccount } =
-    useConnect() as ConnectContextInterface;
+  const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
 
   // store current input value
   const [value, setValue] = useState('');

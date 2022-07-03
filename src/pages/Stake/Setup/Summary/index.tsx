@@ -10,7 +10,6 @@ import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
 import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { ConnectContextInterface } from 'types/connect';
 import { Warning } from 'library/Form/Warning';
 import { SummaryWrapper } from './Wrapper';
 import { MotionContainer } from '../MotionContainer';
@@ -21,8 +20,7 @@ export const Summary = (props: any) => {
 
   const { api, network } = useApi();
   const { units } = network;
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(activeAccount);
 

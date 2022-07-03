@@ -15,7 +15,6 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
@@ -23,8 +22,7 @@ import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { api, network } = useApi();
-    const { activeAccount, accountHasSigner } =
-      useConnect() as ConnectContextInterface;
+    const { activeAccount, accountHasSigner } = useConnect();
     const { staking } = useStaking();
     const { activeBondedPool } = useActivePool();
     const { setStatus: setModalStatus, config } = useModal();

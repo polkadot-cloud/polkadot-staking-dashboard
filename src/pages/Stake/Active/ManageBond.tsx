@@ -13,7 +13,6 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { ConnectContextInterface } from 'types/connect';
 import { BondOptions } from 'types/balances';
 import BN from 'bn.js';
 
@@ -21,8 +20,7 @@ export const ManageBond = () => {
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getLedgerForStash, getBondOptions } = useBalances();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();

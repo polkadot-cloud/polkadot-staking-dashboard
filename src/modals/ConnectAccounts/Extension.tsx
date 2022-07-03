@@ -7,14 +7,13 @@ import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { useConnect } from 'contexts/Connect';
-import { ConnectContextInterface } from 'types/connect';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
   const { meta } = props;
   const { extensionName } = meta;
 
-  const { extensionsStatus } = useConnect() as ConnectContextInterface;
+  const { extensionsStatus } = useConnect();
   const status = extensionsStatus[extensionName];
 
   // determine message to be displayed based on extension status.
@@ -59,7 +58,7 @@ export const ExtensionButton = (props: any) => {
   const { meta, setSection } = props;
   const { extensionName, status } = meta;
 
-  const { connectExtensionAccounts } = useConnect() as ConnectContextInterface;
+  const { connectExtensionAccounts } = useConnect();
 
   // force re-render on click
   const [increment, setIncrement] = useState(0);

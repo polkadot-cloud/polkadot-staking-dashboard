@@ -5,15 +5,14 @@ import { useEffect, useState } from 'react';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'types/connect';
 import { planckBnToUnit } from 'Utils';
 import { useConnect } from 'contexts/Connect';
 import { InputItem } from '../types';
 
 export const getEligibleControllers = (): Array<InputItem> => {
   const { network } = useApi();
-  const { activeAccount, accounts: connectAccounts } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts: connectAccounts } = useConnect();
   const { isController, getAccountBalance, minReserve } = useBalances();
 
   const [accounts, setAccounts] = useState<Array<InputItem>>([]);

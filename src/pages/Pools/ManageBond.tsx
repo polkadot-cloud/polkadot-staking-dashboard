@@ -12,13 +12,12 @@ import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { ConnectContextInterface } from 'types/connect';
 
 export const ManageBond = () => {
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { getPoolBondOptions, isBonding } = useActivePool();
 

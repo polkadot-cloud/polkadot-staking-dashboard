@@ -13,7 +13,6 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ConnectContextInterface } from 'types/connect';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -25,8 +24,7 @@ export const ClaimReward = () => {
   const { api, network } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeBondedPool } = useActivePool();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { units, unit } = network;
   const { unclaimedReward } = activeBondedPool || {};
 

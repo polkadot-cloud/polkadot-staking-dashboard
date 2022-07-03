@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ConnectContextInterface } from 'types/connect';
 import { PoolState } from 'types/pools';
 import BN from 'bn.js';
 import { useUi } from 'contexts/UI';
@@ -28,8 +27,7 @@ import { usePoolsTabs } from './context';
 
 export const Status = () => {
   const { network, isReady } = useApi();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();

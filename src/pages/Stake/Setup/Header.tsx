@@ -5,11 +5,10 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { ConnectContextInterface } from 'types/connect';
 import { HeaderWrapper } from '../Wrappers';
 
 export const Header = (props: any) => {
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useUi();
   const setup = getSetupProgress(activeAccount);
 

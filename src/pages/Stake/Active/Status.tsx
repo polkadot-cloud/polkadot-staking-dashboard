@@ -18,14 +18,12 @@ import { PAYEE_STATUS } from 'consts';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
-import { ConnectContextInterface } from 'types/connect';
 
 export const Status = () => {
   const { isReady } = useApi();
   const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
   const { getNominationsStatus, staking, inSetup } = useStaking();
   const { getAccountNominations } = useBalances();

@@ -11,11 +11,7 @@ import {
   setStateWithRef,
   planckBnToUnit,
 } from 'Utils';
-import {
-  ConnectContextInterface,
-  ExternalAccount,
-  ImportedAccount,
-} from 'types/connect';
+import { ExternalAccount, ImportedAccount } from 'types/connect';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   EraStakers,
@@ -45,7 +41,7 @@ export const StakingProvider = ({
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
-  } = useConnect() as ConnectContextInterface;
+  } = useConnect();
   const { isReady, api, consts, status, network } = useApi();
   const { metrics } = useNetworkMetrics();
   const {

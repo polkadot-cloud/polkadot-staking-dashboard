@@ -7,7 +7,6 @@ import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { BondStatusBar } from 'library/Form/BondStatusBar';
-import { ConnectContextInterface } from 'types/connect';
 import { BondOptions } from 'types/balances';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
@@ -19,7 +18,7 @@ export const Bond = (props: any) => {
   const { network } = useApi();
   const { units } = network;
   const { section } = props;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { getBondOptions } = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);

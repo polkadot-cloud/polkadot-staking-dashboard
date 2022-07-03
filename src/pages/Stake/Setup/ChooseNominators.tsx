@@ -3,7 +3,6 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { ConnectContextInterface } from 'types/connect';
 import { useApi } from 'contexts/Api';
 import { GenerateNominations } from '../GenerateNominations';
 import { Header } from './Header';
@@ -13,7 +12,7 @@ import { MotionContainer } from './MotionContainer';
 export const ChooseNominators = (props: any) => {
   const { consts } = useApi();
   const { section } = props;
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(activeAccount);
   const { maxNominations } = consts;

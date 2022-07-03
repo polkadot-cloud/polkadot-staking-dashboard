@@ -5,7 +5,6 @@ import { useState, useEffect, forwardRef } from 'react';
 import { faCog, faChartLine, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import Button from 'library/Button';
-import { ConnectContextInterface } from 'types/connect';
 import { useBalances } from 'contexts/Balances';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,8 +22,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
   const { isReady } = useApi();
-  const { getAccount, activeAccount }: any =
-    useConnect() as ConnectContextInterface;
+  const { getAccount, activeAccount }: any = useConnect();
   const {
     getLedgerForController,
     getAccountLocks,
@@ -32,9 +30,9 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     accounts: balanceAccounts,
     ledgers,
   } = useBalances();
-  const { connectToAccount } = useConnect() as ConnectContextInterface;
+  const { connectToAccount } = useConnect();
   const { setStatus } = useModal();
-  const { accounts } = useConnect() as ConnectContextInterface;
+  const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
 
   const _controllers: any = [];

@@ -11,7 +11,6 @@ import {
   planckBnToUnit,
   toFixedIfNecessary,
 } from 'Utils';
-import { ConnectContextInterface } from 'types/connect';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { MIN_BOND_PRECISION } from 'consts';
 import {
@@ -41,7 +40,7 @@ export const ValidatorsProvider = ({
   children: React.ReactNode;
 }) => {
   const { isReady, api, network, consts } = useApi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
   const { accounts, getAccountNominations } = useBalances();
   const { poolNominations } = useActivePool();

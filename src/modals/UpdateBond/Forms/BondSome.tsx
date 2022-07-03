@@ -8,7 +8,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondOptions } from 'types/balances';
@@ -21,8 +20,7 @@ export const BondSome = (props: any) => {
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { getBondOptions } = useBalances();
   const { bondType } = config;
   const { getPoolBondOptions } = useActivePool();

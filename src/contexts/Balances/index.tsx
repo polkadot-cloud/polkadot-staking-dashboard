@@ -13,7 +13,7 @@ import {
   BalancesContextInterface,
   BondOptions,
 } from 'types/balances';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'types/connect';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -31,8 +31,7 @@ export const BalancesProvider = ({
 }) => {
   const { api, isReady, network, consts } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { accounts: connectAccounts, addExternalAccount } =
-    useConnect() as ConnectContextInterface;
+  const { accounts: connectAccounts, addExternalAccount } = useConnect();
   const { activeEra } = metrics;
 
   // existential amount of unit for an account

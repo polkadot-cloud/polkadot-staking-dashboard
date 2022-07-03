@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'types/connect';
 import { MaybeAccount } from 'types';
 import { useConnect } from './Connect';
 import { useNetworkMetrics } from './Network';
@@ -70,8 +70,7 @@ export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady, consts, network } = useApi();
-  const { accounts: connectAccounts, activeAccount } =
-    useConnect() as ConnectContextInterface;
+  const { accounts: connectAccounts, activeAccount } = useConnect();
   const { staking, eraStakers, inSetup } = useStaking();
   const { meta, session } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;

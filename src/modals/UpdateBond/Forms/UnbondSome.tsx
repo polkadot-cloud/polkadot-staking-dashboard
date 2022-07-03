@@ -10,7 +10,6 @@ import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BondOptions } from 'types/balances';
@@ -23,8 +22,7 @@ export const UnbondSome = (props: any) => {
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getBondOptions, getBondedAccount } = useBalances();
   const { bondType } = config;

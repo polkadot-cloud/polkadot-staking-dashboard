@@ -10,7 +10,6 @@ import { pageTitleFromUri } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useAssistant } from 'contexts/Assistant';
-import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import Heading from './Heading';
 import Definition from './Items/Definition';
@@ -23,7 +22,7 @@ import { SectionProps } from './types';
 export const Sections = ({ pageMeta }: SectionProps) => {
   const { openModalWith } = useModal();
   const { network } = useApi();
-  const { activeAccount, accounts } = useConnect() as ConnectContextInterface;
+  const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
   const assistant = useAssistant();
 

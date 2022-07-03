@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { ConnectContextInterface, ImportedAccount } from 'types/connect';
+import { ImportedAccount } from 'types/connect';
 import { PoolMembershipsContextState } from 'types/pools';
 import { AnyApi, Fn } from 'types';
 import * as defaults from './defaults';
@@ -26,8 +26,7 @@ export const PoolMembershipsProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, network, isReady } = useApi();
-  const { accounts: connectAccounts, activeAccount } =
-    useConnect() as ConnectContextInterface;
+  const { accounts: connectAccounts, activeAccount } = useConnect();
 
   const { enabled } = usePoolsConfig();
 

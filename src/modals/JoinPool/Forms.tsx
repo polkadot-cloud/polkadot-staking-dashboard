@@ -11,7 +11,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { ConnectContextInterface } from 'types/connect';
 import { BondOptions } from 'types/balances';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { ContentWrapper } from './Wrapper';
@@ -22,8 +21,7 @@ export const Forms = () => {
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { id: poolId, setActiveTab } = config;
-  const { activeAccount, accountHasSigner } =
-    useConnect() as ConnectContextInterface;
+  const { activeAccount, accountHasSigner } = useConnect();
 
   const { getBondOptions } = useBalances();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);

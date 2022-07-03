@@ -9,7 +9,6 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { ConnectContextInterface } from 'types/connect';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import BN from 'bn.js';
 import { BondInput } from '../BondInput';
@@ -28,7 +27,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const listenIsValid: any = props.listenIsValid ?? (() => {});
 
   const { network } = useApi();
-  const { activeAccount } = useConnect() as ConnectContextInterface;
+  const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
   const { getPoolBondOptions } = useActivePool();
