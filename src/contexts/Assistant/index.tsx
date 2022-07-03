@@ -11,10 +11,12 @@ import {
 } from 'types/assistant';
 import { ASSISTANT_CONFIG } from 'config/assistant';
 import { replaceAll } from 'Utils';
-import { useApi } from './Api';
+import { useApi } from '../Api';
+import { defaultAssistantContext } from './defaults';
 
-export const AssistantContext =
-  React.createContext<AssistantContextInterface | null>(null);
+export const AssistantContext = React.createContext<AssistantContextInterface>(
+  defaultAssistantContext
+);
 
 export const useAssistant = () => React.useContext(AssistantContext);
 

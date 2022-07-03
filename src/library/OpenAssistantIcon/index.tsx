@@ -3,12 +3,11 @@
 
 import { useAssistant } from 'contexts/Assistant';
 import { ReactComponent as IconSVG } from 'img/assistant.svg';
-import { AssistantContextInterface } from 'types/assistant';
 import { Wrapper } from './Wrapper';
 import { OpenAssistantIconProps } from './types';
 
 export const OpenAssistantIcon = (props: OpenAssistantIconProps) => {
-  const { goToDefinition } = useAssistant() as AssistantContextInterface;
+  const { goToDefinition } = useAssistant();
 
   const { page, title } = props;
 
