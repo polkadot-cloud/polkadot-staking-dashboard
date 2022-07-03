@@ -11,9 +11,8 @@ export interface ExtrinsicsContextInterface {
   pending: any;
 }
 
-export const ExtrinsicsContext = React.createContext<ExtrinsicsContextInterface>(
-  defaultExtrinsicsContext
-);
+export const ExtrinsicsContext =
+  React.createContext<ExtrinsicsContextInterface>(defaultExtrinsicsContext);
 
 export const useExtrinsics = () => React.useContext(ExtrinsicsContext);
 
