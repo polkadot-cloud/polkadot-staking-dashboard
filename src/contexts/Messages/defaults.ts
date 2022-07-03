@@ -1,7 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export const defaultMessagesContext = {
+import { MessagesContextInterface } from '.';
+
+export const defaultMessagesContext: MessagesContextInterface = {
   messages: [],
   // eslint-disable-next-line
   setMessage: (k: string, m: any) => {},

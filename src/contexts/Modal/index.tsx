@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
+import { defaultModalContext } from './defaults';
 
-export interface ModalContextState {
+export interface ModalContextInterface {
   status: number;
   setStatus: (status: number) => void;
   openModalWith: (modal: string, config?: any, size?: string) => void;
@@ -19,19 +20,8 @@ export interface ModalContextState {
 // default modal content
 const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';
 
-export const ModalContext: React.Context<ModalContextState> =
-  React.createContext({
-    status: 0,
-    setStatus: (status) => {},
-    openModalWith: (modal: string, _config?: any, size?: string) => {},
-    setModalHeight: (v: any) => {},
-    setResize: () => {},
-    modal: DEFAULT_MODAL_COMPONENT,
-    config: {},
-    size: 'large',
-    height: 0,
-    resize: 0,
-  });
+export const ModalContext =
+  React.createContext<ModalContextInterface>(defaultModalContext);
 
 export const useModal = () => React.useContext(ModalContext);
 
