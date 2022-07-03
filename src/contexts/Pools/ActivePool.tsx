@@ -199,7 +199,7 @@ export const ActivePoolProvider = ({
             unclaimedReward,
             addresses,
           };
-          setActiveBondedPool({ pool, unsub });
+          setActiveBondedPool({ pool, unsub: null });
 
           if (addresses?.stash) {
             // set pool staking targets
@@ -214,6 +214,11 @@ export const ActivePoolProvider = ({
         }
       }
     );
+
+    setActiveBondedPool({
+      pool: activeBondedPool.pool,
+      unsub,
+    });
     return unsub;
   };
 
