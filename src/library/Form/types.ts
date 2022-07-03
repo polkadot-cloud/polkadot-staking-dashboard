@@ -3,17 +3,17 @@
 
 import { ExternalAccount } from 'contexts/Connect/types';
 import { WalletAccount } from '@talisman-connect/wallets';
-import { Balance } from 'contexts/Balances/types';
+import { BondOptions } from 'contexts/Balances/types';
 
 export interface WalletAccountItem extends WalletAccount {
   active?: boolean;
   alert?: string;
-  balance?: Balance;
+  bondOptions?: BondOptions;
 }
 export interface ExternalAccountItem extends ExternalAccount {
   active?: boolean;
   alert?: string;
-  balance?: Balance;
+  bondOptions?: BondOptions;
 }
 export type ImportedAccountItem = WalletAccountItem | ExternalAccountItem;
 

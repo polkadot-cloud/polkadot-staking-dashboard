@@ -13,7 +13,7 @@ import { InputItem } from '../types';
 export const getEligibleControllers = (): Array<InputItem> => {
   const { network } = useApi();
   const { activeAccount, accounts: connectAccounts } = useConnect();
-  const { isController, getAccountBalance, minReserve } = useBalances();
+  const { isController, minReserve, getBondOptions } = useBalances();
 
   const [accounts, setAccounts] = useState<Array<InputItem>>([]);
 
@@ -39,12 +39,12 @@ export const getEligibleControllers = (): Array<InputItem> => {
     // inject balances and whether account can be an active item
     let _accountsAsInput: Array<InputItem> = _accounts.map(
       (acc: ImportedAccount) => {
-        const balance = getAccountBalance(acc?.address ?? null);
+        const bondOptions = getBondOptions(acc?.address ?? null);
         return {
           ...acc,
-          balance,
+          bondOptions,
           active:
-            planckBnToUnit(balance.free, network.units) >=
+            planckBnToUnit(bondOptions.freeToBond, network.units) >=
             planckBnToUnit(minReserve, network.units),
           alert: `Not Enough ${network.unit}`,
         };
@@ -53,8 +53,8 @@ export const getEligibleControllers = (): Array<InputItem> => {
 
     // sort accounts with at least free balance first
     _accountsAsInput = _accountsAsInput.sort((a: InputItem, b: InputItem) => {
-      const aFree = a?.balance?.free ?? new BN(0);
-      const bFree = b?.balance?.free ?? new BN(0);
+      const aFree = a?.bondOptions?.freeToBond ?? new BN(0);
+      const bFree = b?.bondOptions?.freeToBond ?? new BN(0);
       return bFree.sub(aFree).toNumber();
     });
 
