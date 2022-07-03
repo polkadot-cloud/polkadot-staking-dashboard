@@ -17,7 +17,7 @@ import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 /*
  * Global Constants
  */
-export const URI_PREFIX = '/dashboard';
+export const URI_PREFIX = '/polkadot-staking-dashboard';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
 export const DAPP_NAME = 'polkadot_staking_dashboard';
 
