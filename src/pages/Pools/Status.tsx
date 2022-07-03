@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ConnectContextInterface } from 'types/connect';
-import { PoolMembershipsContextState, PoolState } from 'types/pools';
+import { PoolState } from 'types/pools';
 import BN from 'bn.js';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
@@ -32,7 +32,7 @@ export const Status = () => {
     useConnect() as ConnectContextInterface;
   const { units, unit } = network;
   const { isSyncing } = useUi();
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
 
   const {

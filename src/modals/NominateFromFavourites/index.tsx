@@ -7,7 +7,6 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { PoolMembershipsContextState } from 'types/pools';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { ConnectContextInterface } from 'types/connect';
@@ -30,7 +29,7 @@ export const NominateFromFavourites = () => {
   const { favouritesList } = useValidators() as ValidatorsContextInterface;
   const { isNominator, isOwner } = useActivePool();
   const controller = getBondedAccount(activeAccount);
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { membership } = usePoolMemberships();
   const { maxNominations } = consts;
   const { bondType, nominations }: any = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;

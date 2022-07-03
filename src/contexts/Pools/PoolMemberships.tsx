@@ -16,7 +16,9 @@ import { usePoolsConfig } from './PoolsConfig';
 import { rmCommas, setStateWithRef } from '../../Utils';
 
 export const PoolMembershipsContext =
-  React.createContext<PoolMembershipsContextState | null>(null);
+  React.createContext<PoolMembershipsContextState>(
+    defaults.defaultPoolMembershipsContext
+  );
 
 export const usePoolMemberships = () =>
   React.useContext(PoolMembershipsContext);

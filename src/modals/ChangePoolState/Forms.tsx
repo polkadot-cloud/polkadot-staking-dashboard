@@ -27,7 +27,7 @@ export const Forms = () => {
   const { state } = config;
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { membership } = usePoolMemberships();
   const { isOwner } = useActivePool();
   const poolId = membership?.poolId;
 

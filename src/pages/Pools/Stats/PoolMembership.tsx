@@ -4,10 +4,9 @@
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Text } from 'library/StatBoxList/Text';
-import { PoolMembershipsContextState } from 'types/pools';
 
 const PoolMembership = () => {
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { membership } = usePoolMemberships();
   const { isOwner } = useActivePool();
 
   const params = {

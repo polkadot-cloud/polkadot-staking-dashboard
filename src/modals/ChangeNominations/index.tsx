@@ -14,7 +14,6 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { ConnectContextInterface } from 'types/connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { PoolMembershipsContextState } from 'types/pools';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import {
   HeadingWrapper,
@@ -30,7 +29,7 @@ export const ChangeNominations = () => {
     useConnect() as ConnectContextInterface;
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { setStatus: setModalStatus, config } = useModal();
-  const { membership } = usePoolMemberships() as PoolMembershipsContextState;
+  const { membership } = usePoolMemberships();
   const { poolNominations, isNominator } = useActivePool();
 
   const { nominations: newNominations, provider, bondType } = config;

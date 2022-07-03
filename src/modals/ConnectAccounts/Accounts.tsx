@@ -7,7 +7,6 @@ import { useConnect } from 'contexts/Connect';
 import Button from 'library/Button';
 import { ConnectContextInterface } from 'types/connect';
 import { useBalances } from 'contexts/Balances';
-import { PoolMembershipsContextState } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
@@ -36,7 +35,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { connectToAccount } = useConnect() as ConnectContextInterface;
   const { setStatus } = useModal();
   const { accounts } = useConnect() as ConnectContextInterface;
-  const { memberships } = usePoolMemberships() as PoolMembershipsContextState;
+  const { memberships } = usePoolMemberships();
 
   const _controllers: any = [];
   const _stashes: any = [];

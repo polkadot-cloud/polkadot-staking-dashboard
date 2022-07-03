@@ -65,3 +65,8 @@ export const defaultBondedPoolsContext = {
   bondedPools: [],
   meta: {},
 };
+
+export const defaultPoolMembershipsContext = {
+  memberships: [],
+  membership: null,
+};
