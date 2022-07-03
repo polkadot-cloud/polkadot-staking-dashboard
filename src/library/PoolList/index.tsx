@@ -25,7 +25,7 @@ export const PoolListInner = (props: PoolListProps) => {
 
   const { mode } = useTheme();
   const { isReady, network } = useApi();
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics();
   const { fetchPoolsMetaBatch }: any = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
 

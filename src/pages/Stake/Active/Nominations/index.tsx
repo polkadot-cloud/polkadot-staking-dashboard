@@ -23,7 +23,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getAccountNominations } = useBalances();
-  const { nominated: stakeNominated, poolNominated }: any = useValidators();
+  const { nominated: stakeNominated, poolNominated } = useValidators();
   let { favouritesList } = useValidators();
   if (favouritesList === null) {
     favouritesList = [];

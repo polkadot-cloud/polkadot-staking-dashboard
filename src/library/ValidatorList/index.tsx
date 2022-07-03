@@ -30,7 +30,7 @@ export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { activeAccount } = useConnect();
-  const { metrics }: any = useNetworkMetrics();
+  const { metrics } = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useValidatorList();
   const modal = useModal();
