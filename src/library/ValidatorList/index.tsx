@@ -24,7 +24,6 @@ import { ConnectContextInterface } from 'types/connect';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
-import { ValidatorsContextInterface } from 'types/validators';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
@@ -33,8 +32,7 @@ export const ValidatorListInner = (props: any) => {
   const { isReady, network } = useApi();
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics }: any = useNetworkMetrics();
-  const { fetchValidatorMetaBatch } =
-    useValidators() as ValidatorsContextInterface;
+  const { fetchValidatorMetaBatch } = useValidators();
   const provider = useValidatorList();
   const modal = useModal();
 

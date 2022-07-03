@@ -28,7 +28,9 @@ import * as defaults from './defaults';
 import { useActivePool } from '../Pools/ActivePool';
 
 export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface | null>(null);
+  React.createContext<ValidatorsContextInterface>(
+    defaults.defaultValidatorsContext
+  );
 
 export const useValidators = () => React.useContext(ValidatorsContext);
 

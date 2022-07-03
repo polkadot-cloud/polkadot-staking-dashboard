@@ -16,7 +16,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
-import { Validator, ValidatorsContextInterface } from 'types/validators';
+import { Validator } from 'types/validators';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -26,7 +26,7 @@ export const NominateFromFavourites = () => {
     useConnect() as ConnectContextInterface;
   const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
-  const { favouritesList } = useValidators() as ValidatorsContextInterface;
+  const { favouritesList } = useValidators();
   const { isNominator, isOwner } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships();

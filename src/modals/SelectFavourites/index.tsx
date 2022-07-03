@@ -6,14 +6,14 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
-import { Validator, ValidatorsContextInterface } from 'types/validators';
+import { Validator } from 'types/validators';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
 export const SelectFavourites = () => {
   const { consts } = useApi();
   const { config, setStatus, setResize } = useModal();
-  const { favouritesList } = useValidators() as ValidatorsContextInterface;
+  const { favouritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback }: any = config;
 

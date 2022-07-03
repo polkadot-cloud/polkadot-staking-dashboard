@@ -8,7 +8,6 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
-import { ValidatorsContextInterface } from 'types/validators';
 import ActiveEraStatBox from '../Stake/Active/Stats/ActiveEra';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
@@ -19,7 +18,7 @@ export const Validators = (props: PageProps) => {
   const { title } = page;
 
   const { isReady } = useApi();
-  const { validators } = useValidators() as ValidatorsContextInterface;
+  const { validators } = useValidators();
 
   return (
     <>

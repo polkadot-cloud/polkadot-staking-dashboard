@@ -7,14 +7,13 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
-import { ValidatorsContextInterface } from 'types/validators';
 import { PageProps } from '../types';
 
 export const Favourites = (props: PageProps) => {
   const { isReady } = useApi();
   const { page } = props;
   const { title } = page;
-  const { favouritesList } = useValidators() as ValidatorsContextInterface;
+  const { favouritesList } = useValidators();
 
   const batchKey = 'favourite_validators';
 

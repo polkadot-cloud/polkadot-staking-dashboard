@@ -10,7 +10,6 @@ import { useValidators } from 'contexts/Validators';
 import { AssistantContextInterface } from 'types/assistant';
 import { pageFromUri } from 'Utils';
 import { ConnectContextInterface } from 'types/connect';
-import { ValidatorsContextInterface } from 'types/validators';
 import { SideBar } from './SideBar';
 import { Spinner } from './Spinner';
 import { Wrapper, HeadingWrapper, Item, LargeScreensOnly } from './Wrappers';
@@ -23,7 +22,7 @@ export const Headers = () => {
   const { pathname } = useLocation();
   const assistant = useAssistant() as AssistantContextInterface;
   const { activeAccount } = useConnect() as ConnectContextInterface;
-  const { validators } = useValidators() as ValidatorsContextInterface;
+  const { validators } = useValidators();
   const { pending } = useExtrinsics();
   const { isSyncing } = useUi();
 
