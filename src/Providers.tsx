@@ -13,7 +13,6 @@ import { ConnectProvider } from './contexts/Connect';
 import { ExtrinsicsProvider } from './contexts/Extrinsics';
 import { MenuProvider } from './contexts/Menu';
 import { PaletteProvider } from './contexts/Palette';
-import { MessagesProvider } from './contexts/Messages';
 import { ModalProvider } from './contexts/Modal';
 import { NetworkMetricsProvider } from './contexts/Network';
 import { NotificationsProvider } from './contexts/Notifications';
@@ -62,7 +61,6 @@ export const Providers = withProviders(
   ActivePoolProvider,
   ValidatorsProvider,
   UIProvider,
-  MessagesProvider,
   SubscanProvider,
   MenuProvider,
   PaletteProvider,
