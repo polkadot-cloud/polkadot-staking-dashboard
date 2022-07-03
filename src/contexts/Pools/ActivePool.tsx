@@ -9,7 +9,6 @@ import { ConnectContextInterface } from 'types/connect';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   PoolsConfigContextState,
-  BondedPoolsContextState,
   PoolMembershipsContextState,
   ActivePoolContextState,
 } from 'types/pools';
@@ -41,7 +40,7 @@ export const ActivePoolProvider = ({
   const { getAccountBalance } = useBalances();
   const { enabled } = usePoolsConfig() as PoolsConfigContextState;
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
-  const { createAccounts } = useBondedPools() as BondedPoolsContextState;
+  const { createAccounts } = useBondedPools();
 
   const { activeEra } = metrics;
   const { existentialDeposit } = consts;

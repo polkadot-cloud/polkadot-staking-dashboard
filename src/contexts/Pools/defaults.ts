@@ -54,3 +54,14 @@ export const defaultActivePoolContext = {
   targets: [],
   poolNominations: [],
 };
+
+export const defaultBondedPools = {
+  // eslint-disable-next-line
+  fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => {},
+  // eslint-disable-next-line
+  createAccounts: (p: number) => {},
+  // eslint-disable-next-line
+  getBondedPool: (p: number) => [],
+  bondedPools: [],
+  meta: {},
+};

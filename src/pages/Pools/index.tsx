@@ -15,7 +15,6 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BondedPoolsContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
@@ -33,7 +32,7 @@ export const PoolsInner = (props: PageProps) => {
   const { title } = page;
   const { network } = useApi();
   const navigate = useNavigate();
-  const { bondedPools } = useBondedPools() as BondedPoolsContextState;
+  const { bondedPools } = useBondedPools();
   const { isBonding } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 

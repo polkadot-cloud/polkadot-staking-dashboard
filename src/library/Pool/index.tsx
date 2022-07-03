@@ -13,7 +13,6 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { BondedPoolsContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/context';
 import { useConnect } from 'contexts/Connect';
@@ -28,7 +27,7 @@ export const Pool = (props: PoolProps) => {
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
-  const { meta } = useBondedPools() as BondedPoolsContextState;
+  const { meta } = useBondedPools();
   const { isBonding } = useActivePool();
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
