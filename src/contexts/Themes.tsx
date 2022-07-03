@@ -20,15 +20,14 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
 
   // provide default theme if not set
   if (localTheme !== 'light' && localTheme !== 'dark') {
-    localTheme = 'light';
     // check system theme
     if (
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
-      localTheme = 'light';
-    } else {
       localTheme = 'dark';
+    } else {
+      localTheme = 'light';
     }
     localStorage.setItem('theme', localTheme);
   }
