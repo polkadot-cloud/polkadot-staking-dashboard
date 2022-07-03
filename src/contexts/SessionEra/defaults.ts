@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { SessionEraContextInterface } from '.';
+
 export const state = {
   eraLength: 0,
   eraProgress: 0,
@@ -10,7 +12,7 @@ export const state = {
   unsub: undefined,
 };
 
-export const defaultSessionEraContext = {
+export const defaultSessionEraContext: SessionEraContextInterface = {
   getEraTimeLeft: () => 0,
   sessionEra: {},
 };

@@ -2,14 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Toggle } from 'types';
-import { AssistantDefinition } from 'types/assistant';
+import {
+  AssistantContextInterface,
+  AssistantDefinition,
+} from 'types/assistant';
 
 export const definition: AssistantDefinition = {
   title: '',
   description: [],
 };
 
-export const defaultAssistantContext = {
+export const defaultAssistantContext: AssistantContextInterface = {
   // eslint-disable-next-line
   fillDefinitionVariables: (d: AssistantDefinition) => definition,
   toggle: () => {},

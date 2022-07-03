@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { stringToU8a } from '@polkadot/util';
-import { APIConstants, ConnectionStatus } from 'types/api';
+import { APIConstants, APIContextInterface, ConnectionStatus } from 'types/api';
 import BN from 'bn.js';
 import { NetworkName } from 'types';
 import { NODE_ENDPOINTS } from 'consts';
@@ -18,7 +18,7 @@ export const consts: APIConstants = {
   poolsPalletId: stringToU8a('0'),
 };
 
-export const defaultApiContext = {
+export const defaultApiContext: APIContextInterface = {
   // eslint-disable-next-line
   connect: async () : Promise<void> => {
     await new Promise((resolve) => resolve(null));

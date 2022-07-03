@@ -3,6 +3,12 @@
 
 import BN from 'bn.js';
 import { MaybeAccount } from 'types';
+import {
+  ActivePoolContextState,
+  BondedPoolsContextState,
+  PoolMembershipsContextState,
+  PoolsConfigContextState,
+} from 'types/pools';
 
 export const stats = {
   counterForPoolMembers: new BN(0),
@@ -38,7 +44,7 @@ export const poolBondOptions = {
 
 export const nominationStatus = {};
 
-export const defaultActivePoolContext = {
+export const defaultActivePoolContext: ActivePoolContextState = {
   isBonding: () => false,
   isNominator: () => false,
   isOwner: () => false,
@@ -55,7 +61,7 @@ export const defaultActivePoolContext = {
   poolNominations: [],
 };
 
-export const defaultBondedPoolsContext = {
+export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => {},
   // eslint-disable-next-line
@@ -66,12 +72,12 @@ export const defaultBondedPoolsContext = {
   meta: {},
 };
 
-export const defaultPoolMembershipsContext = {
+export const defaultPoolMembershipsContext: PoolMembershipsContextState = {
   memberships: [],
   membership: null,
 };
 
-export const defaultPoolsConfigContext = {
+export const defaultPoolsConfigContext: PoolsConfigContextState = {
   enabled: 0,
   stats: {},
 };

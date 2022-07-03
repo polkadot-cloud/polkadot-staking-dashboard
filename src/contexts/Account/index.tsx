@@ -8,14 +8,14 @@ import { useApi } from '../Api';
 import { defaultAccountContext } from './defaults';
 
 // context type
-export interface AccountContextState {
+export interface AccountContextInterface {
   fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
   removeAccountMetaBatch: (k: string) => void;
   meta: AnyMetaBatch;
 }
 
 // context definition
-export const AccountContext = React.createContext<AccountContextState>(
+export const AccountContext = React.createContext<AccountContextInterface>(
   defaultAccountContext
 );
 

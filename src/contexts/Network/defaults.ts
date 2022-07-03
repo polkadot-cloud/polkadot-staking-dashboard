@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { NetworkMetricsState } from 'types';
+import { NetworkMetricsContextInterface, NetworkMetricsState } from 'types';
 
 export const metrics: NetworkMetricsState = {
   activeEra: {
@@ -13,6 +13,6 @@ export const metrics: NetworkMetricsState = {
   unsub: undefined,
 };
 
-export const defaultNetworkContext = {
+export const defaultNetworkContext: NetworkMetricsContextInterface = {
   metrics,
 };

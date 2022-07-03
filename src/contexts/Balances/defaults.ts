@@ -8,6 +8,7 @@ import {
   Balance,
   BondOptions,
   Nominations,
+  BalancesContextInterface,
 } from 'types/balances';
 
 export const balance: Balance = {
@@ -40,7 +41,7 @@ export const nominations: Nominations = {
   submittedIn: 0,
 };
 
-export const defaultBalancesContext = {
+export const defaultBalancesContext: BalancesContextInterface = {
   // eslint-disable-next-line
   getAccount: (address: MaybeAccount) => null,
   // eslint-disable-next-line

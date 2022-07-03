@@ -5,13 +5,13 @@ import React, { useState, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultExtrinsicsContext } from './defaults';
 
-export interface ExtrinsicsContextState {
+export interface ExtrinsicsContextInterface {
   addPending: (t: any) => void;
   removePending: (t: any) => void;
   pending: any;
 }
 
-export const ExtrinsicsContext = React.createContext<ExtrinsicsContextState>(
+export const ExtrinsicsContext = React.createContext<ExtrinsicsContextInterface>(
   defaultExtrinsicsContext
 );
 

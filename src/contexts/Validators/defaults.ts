@@ -1,14 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ValidatorAddresses } from 'types/validators';
+import {
+  ValidatorAddresses,
+  ValidatorsContextInterface,
+} from 'types/validators';
 
 export const sessionValidators = {
   list: [],
   unsub: null,
 };
 
-export const defaultValidatorsContext = {
+export const defaultValidatorsContext: ValidatorsContextInterface = {
   // eslint-disable-next-line
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => {},
   // eslint-disable-next-line

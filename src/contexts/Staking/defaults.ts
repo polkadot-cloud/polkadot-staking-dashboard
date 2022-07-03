@@ -8,6 +8,7 @@ import {
   EraStakers,
   StakingTargets,
   NominationStatuses,
+  StakingContextInterface,
 } from 'types/staking';
 
 export const stakingMetrics: StakingMetrics = {
@@ -39,7 +40,7 @@ export const targets: StakingTargets = {
 
 export const nominationStatus: NominationStatuses = {};
 
-export const defaultStakingContext = {
+export const defaultStakingContext: StakingContextInterface = {
   getNominationsStatus: () => nominationStatus,
   // eslint-disable-next-line
   setTargets: (t: any) => {},

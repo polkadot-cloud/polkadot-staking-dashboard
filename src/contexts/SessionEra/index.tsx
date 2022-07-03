@@ -7,12 +7,12 @@ import { AnyApi } from 'types';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 
-export interface SessionEraContextState {
+export interface SessionEraContextInterface {
   getEraTimeLeft: () => number;
   sessionEra: any;
 }
 
-export const SessionEraContext = React.createContext<SessionEraContextState>(
+export const SessionEraContext = React.createContext<SessionEraContextInterface>(
   defaults.defaultSessionEraContext
 );
 
