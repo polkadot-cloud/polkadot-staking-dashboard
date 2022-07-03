@@ -33,7 +33,7 @@ export const Forms = () => {
   const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected membership and targests are valid
-  const isValid = membership && isOwner();
+  const isValid = (membership && isOwner()) ?? false;
   useEffect(() => {
     setValid(isValid);
   }, [isValid]);

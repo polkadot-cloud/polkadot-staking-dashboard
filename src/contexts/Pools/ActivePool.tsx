@@ -6,7 +6,12 @@ import React, { useState, useEffect } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { AnyApi, MaybeAccount } from 'types';
-import { ActivePoolContextState } from 'contexts/Pools/types';
+import {
+  ActiveBondedPoolState,
+  ActivePoolContextState,
+  BondedPool,
+  PoolAddresses,
+} from 'contexts/Pools/types';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -40,14 +45,15 @@ export const ActivePoolProvider = ({
   const { existentialDeposit } = consts;
 
   // stores member's bonded pool
-  const [activeBondedPool, setActiveBondedPool]: any = useState({
-    pool: undefined,
-    unsub: null,
-  });
+  const [activeBondedPool, setActiveBondedPool] =
+    useState<ActiveBondedPoolState>({
+      pool: undefined,
+      unsub: null,
+    });
 
   // currently nominated validators by the activeBonded pool.
-  const [poolNominations, setPoolNominations]: any = useState({
-    noominations: defaults.nominations,
+  const [poolNominations, setPoolNominations] = useState<any>({
+    nominations: defaults.nominations,
     unsub: null,
   });
 
@@ -111,10 +117,12 @@ export const ActivePoolProvider = ({
   };
 
   const calculatePayout = (
-    bondedPool: any,
+    bondedPool: BondedPool,
     rewardPool: any,
     rewardAccountBalance: BN
   ): BN => {
+    if (!membership) return new BN(0);
+
     // calculate the latest reward account balance minus the existential deposit
     const newRewardPoolBalance = BN.max(
       new BN(0),
@@ -129,7 +137,7 @@ export const ActivePoolProvider = ({
 
     // the pool total earning the last time the member claimed his rewards
     const poolTotalEarningsAtLastClaim = new BN(
-      rmCommas(membership.rewardPoolTotalEarnings)
+      rmCommas(membership.rewardPoolTotalEarnings || '')
     );
 
     // new generated earning
@@ -171,7 +179,7 @@ export const ActivePoolProvider = ({
       return;
     }
     const { poolId } = membership;
-    const addresses = createAccounts(poolId);
+    const addresses: PoolAddresses = createAccounts(poolId);
     const unsub = await api.queryMulti<[AnyApi, AnyApi, AnyApi, AnyApi]>(
       [
         [api.query.nominationPools.bondedPools, poolId],
@@ -294,7 +302,7 @@ export const ActivePoolProvider = ({
 
   // get the stash address of the bonded pool that the member is participating in.
   const getPoolBondedAccount = () => {
-    return activeBondedPool.pool?.addresses?.stash;
+    return activeBondedPool.pool?.addresses?.stash || null;
   };
 
   // get the bond and unbond amounts available to the user

@@ -34,7 +34,8 @@ export const NominatePool = () => {
   const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected membership and targests are valid
-  const isValid = membership && isNominator() && nominations.length > 0;
+  const isValid =
+    (membership && isNominator() && nominations.length > 0) ?? false;
   useEffect(() => {
     setValid(isValid);
   }, [isValid]);

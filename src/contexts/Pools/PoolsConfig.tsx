@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import React, { useState, useEffect } from 'react';
-import { PoolsConfigContextState } from 'contexts/Pools/types';
+import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
 import { AnyApi } from 'types';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -27,7 +27,7 @@ export const PoolsConfigProvider = ({
   const [enabled, setEnabled] = useState(0);
 
   // store pool metadata
-  const [poolsConfig, setPoolsConfig]: any = useState({
+  const [poolsConfig, setPoolsConfig] = useState<PoolConfigState>({
     stats: defaults.stats,
     unsub: null,
   });

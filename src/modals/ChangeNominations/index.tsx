@@ -55,7 +55,8 @@ export const ChangeNominations = () => {
   // ensure selected membership and targests are valid
   let isValid = nominations.length > 0;
   if (isPool) {
-    isValid = membership && isNominator() && newNominations.length > 0;
+    isValid =
+      (membership && isNominator() && newNominations.length > 0) ?? false;
   }
   useEffect(() => {
     setValid(isValid);
@@ -64,7 +65,7 @@ export const ChangeNominations = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!valid || !api) {
+    if (!valid || !api || !membership) {
       return _tx;
     }
 

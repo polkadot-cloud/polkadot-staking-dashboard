@@ -4,7 +4,11 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { bnToU8a, u8aConcat } from '@polkadot/util';
-import { BondedPoolsContextState, MaybePool } from 'contexts/Pools/types';
+import {
+  BondedPool,
+  BondedPoolsContextState,
+  MaybePool,
+} from 'contexts/Pools/types';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { useApi } from '../Api';
@@ -38,7 +42,7 @@ export const BondedPoolsProvider = ({
   const poolSubsRef = useRef(poolSubs);
 
   // store bonded pools
-  const [bondedPools, setBondedPools]: any = useState([]);
+  const [bondedPools, setBondedPools] = useState<Array<BondedPool>>([]);
 
   useEffect(() => {
     if (isReady && enabled) {
@@ -172,7 +176,7 @@ export const BondedPoolsProvider = ({
   /*
    *  Helper: to add addresses to pool record.
    */
-  const getPoolWithAddresses = (id: number, pool: any) => {
+  const getPoolWithAddresses = (id: number, pool: BondedPool) => {
     return {
       ...pool,
       id,
@@ -206,7 +210,7 @@ export const BondedPoolsProvider = ({
   };
 
   const getBondedPool = (poolId: MaybePool) => {
-    const pool = bondedPools.find((p: any) => p.id === poolId) ?? null;
+    const pool = bondedPools.find((p: BondedPool) => p.id === poolId) ?? null;
     return pool;
   };
 

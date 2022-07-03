@@ -4,7 +4,10 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { ImportedAccount } from 'contexts/Connect/types';
-import { PoolMembershipsContextState } from 'contexts/Pools/types';
+import {
+  PoolMembership,
+  PoolMembershipsContextState,
+} from 'contexts/Pools/types';
 import { AnyApi, Fn } from 'types';
 import * as defaults from './defaults';
 import { useApi } from '../Api';
@@ -31,8 +34,10 @@ export const PoolMembershipsProvider = ({
   const { enabled } = usePoolsConfig();
 
   // stores pool membership
-  const [poolMemberships, setPoolMemberships]: any = useState([]);
-  const poolMembershipsRef = useRef<any>(poolMemberships);
+  const [poolMemberships, setPoolMemberships] = useState<Array<PoolMembership>>(
+    []
+  );
+  const poolMembershipsRef = useRef(poolMemberships);
 
   // stores pool subscription objects
   const [poolMembershipUnsubs, setpoolMembershipUnsubs] = useState<Array<Fn>>(
@@ -108,7 +113,7 @@ export const PoolMembershipsProvider = ({
 
           // remove stale membership if it's already in list
           _poolMemberships = _poolMemberships
-            .filter((m: any) => m.address !== address)
+            .filter((m: PoolMembership) => m.address !== address)
             .concat(membership);
 
           setStateWithRef(
@@ -131,7 +136,7 @@ export const PoolMembershipsProvider = ({
       return defaults.poolMembership;
     }
     const poolMembership = poolMembershipsRef.current.find(
-      (m: any) => m.address === activeAccount
+      (m: PoolMembership) => m.address === activeAccount
     );
     if (poolMembership === undefined) {
       return defaults.poolMembership;

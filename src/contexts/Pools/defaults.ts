@@ -6,11 +6,14 @@ import { MaybeAccount } from 'types';
 import {
   ActivePoolContextState,
   BondedPoolsContextState,
+  PoolAddresses,
+  PoolMembership,
   PoolMembershipsContextState,
   PoolsConfigContextState,
+  PoolStats,
 } from 'contexts/Pools/types';
 
-export const stats = {
+export const stats: PoolStats = {
   counterForPoolMembers: new BN(0),
   counterForBondedPools: new BN(0),
   counterForRewardPools: new BN(0),
@@ -30,7 +33,12 @@ export const nominations = {
   submittedIn: 0,
 };
 
-export const poolMembership = null;
+export const poolMembership: PoolMembership | null = null;
+
+export const poolAddresses: PoolAddresses = {
+  stash: '',
+  reward: '',
+};
 
 export const poolBondOptions = {
   active: new BN(0),
@@ -54,7 +62,7 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   getPoolBondOptions: (a: MaybeAccount) => null,
   getPoolUnlocking: () => [],
   // eslint-disable-next-line
-  setTargets: (targest) => {},
+  setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
   activeBondedPool: {},
   targets: [],
@@ -65,9 +73,9 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line
   fetchPoolsMetaBatch: (k, v: [], r) => {},
   // eslint-disable-next-line
-  createAccounts: (p) => {},
+  createAccounts: (p) => poolAddresses,
   // eslint-disable-next-line
-  getBondedPool: (p) => [],
+  getBondedPool: (p) => null,
   bondedPools: [],
   meta: {},
 };
@@ -79,5 +87,5 @@ export const defaultPoolMembershipsContext: PoolMembershipsContextState = {
 
 export const defaultPoolsConfigContext: PoolsConfigContextState = {
   enabled: 0,
-  stats: {},
+  stats,
 };
