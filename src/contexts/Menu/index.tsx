@@ -1,20 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import { defaultMenuContext } from './defaults';
-
-export interface MenuContextInterface {
-  openMenu: () => any;
-  closeMenu: () => any;
-  setMenuPosition: (ref: any) => void;
-  checkMenuPosition: (ref: any) => void;
-  setMenuItems: (items: any) => void;
-  open: number;
-  show: number;
-  position: [number, number];
-  items: any;
-}
+import { MenuContextInterface } from './types';
 
 export const MenuContext =
   React.createContext<MenuContextInterface>(defaultMenuContext);
@@ -24,7 +13,7 @@ export const useMenu = () => React.useContext(MenuContext);
 export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(0);
   const [show, setShow] = useState(0);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<React.ReactNode[]>([]);
 
   const [position, setPosition] = useState<[number, number]>([0, 0]);
 
@@ -40,10 +29,10 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     }, 100);
   };
 
-  const setMenuPosition = (posRef: any) => {
-    if (open) return;
+  const setMenuPosition = (ref: RefObject<HTMLDivElement>) => {
+    if (open || !ref?.current) return;
     const bodyRect = document.body.getBoundingClientRect();
-    const elemRect = posRef.current.getBoundingClientRect();
+    const elemRect = ref.current.getBoundingClientRect();
 
     const x = elemRect.left - bodyRect.left;
     const y = elemRect.top - bodyRect.top;
@@ -52,9 +41,11 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     openMenu();
   };
 
-  const checkMenuPosition = (menuRef: any) => {
+  const checkMenuPosition = (ref: RefObject<HTMLDivElement>) => {
+    if (!ref?.current) return;
+
     const bodyRect = document.body.getBoundingClientRect();
-    const menuRect = menuRef.current.getBoundingClientRect();
+    const menuRect = ref.current.getBoundingClientRect();
 
     let x = menuRect.left - bodyRect.left;
     let y = menuRect.top - bodyRect.top;
@@ -67,17 +58,16 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     const documentPadding = 20;
 
     if (right > bodyRect.right) {
-      x = bodyRect.right - menuRef.current.offsetWidth - documentPadding;
+      x = bodyRect.right - ref.current.offsetWidth - documentPadding;
     }
     if (bottom > bodyRect.bottom) {
-      y = bodyRect.bottom - menuRef.current.offsetHeight - documentPadding;
+      y = bodyRect.bottom - ref.current.offsetHeight - documentPadding;
     }
-
     setPosition([x, y]);
     setShow(1);
   };
 
-  const setMenuItems = (_items: any) => {
+  const setMenuItems = (_items: React.ReactNode[]) => {
     setItems(_items);
   };
 
