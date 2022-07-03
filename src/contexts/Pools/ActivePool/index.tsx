@@ -12,14 +12,14 @@ import {
   BondedPool,
   PoolAddresses,
 } from 'contexts/Pools/types';
-import { useBalances } from '../Balances';
+import { useBalances } from '../../Balances';
 import * as defaults from './defaults';
-import { useApi } from '../Api';
-import { useConnect } from '../Connect';
-import { usePoolsConfig } from './PoolsConfig';
-import { rmCommas, localStorageOrDefault } from '../../Utils';
-import { useBondedPools } from './BondedPools';
-import { usePoolMemberships } from './PoolMemberships';
+import { useApi } from '../../Api';
+import { useConnect } from '../../Connect';
+import { usePoolsConfig } from '../PoolsConfig';
+import { rmCommas, localStorageOrDefault } from '../../../Utils';
+import { useBondedPools } from '../BondedPools';
+import { usePoolMemberships } from '../PoolMemberships';
 
 export const ActivePoolContext = React.createContext<ActivePoolContextState>(
   defaults.defaultActivePoolContext

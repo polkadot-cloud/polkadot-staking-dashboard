@@ -6,8 +6,8 @@ import React, { useState, useEffect } from 'react';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
 import { AnyApi } from 'types';
 import * as defaults from './defaults';
-import { useApi } from '../Api';
-import { rmCommas } from '../../Utils';
+import { useApi } from '../../Api';
+import { rmCommas } from '../../../Utils';
 
 export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
   defaults.defaultPoolsConfigContext
