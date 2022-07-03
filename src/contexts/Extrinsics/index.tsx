@@ -1,14 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { Index } from '@polkadot/types/interfaces';
 import React, { useState, useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultExtrinsicsContext } from './defaults';
 
 export interface ExtrinsicsContextInterface {
-  addPending: (n: number) => void;
-  removePending: (n: number) => void;
-  pending: number[];
+  addPending: (n: Index) => void;
+  removePending: (n: Index) => void;
+  pending: Index[];
 }
 
 export const ExtrinsicsContext =
@@ -21,17 +22,17 @@ export const ExtrinsicsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [pending, setPending] = useState<number[]>([]);
+  const [pending, setPending] = useState<Index[]>([]);
   const pendingRef = useRef(pending);
 
-  const addPending = (nonce: number) => {
-    const _pending: number[] = [...pendingRef.current];
+  const addPending = (nonce: Index) => {
+    const _pending: Index[] = [...pendingRef.current];
     _pending.push(nonce);
     setStateWithRef(_pending, setPending, pendingRef);
   };
 
-  const removePending = (nonce: number) => {
-    const _pending = pendingRef.current.filter((n: number) => n !== nonce);
+  const removePending = (nonce: Index) => {
+    const _pending = pendingRef.current.filter((n: Index) => n !== nonce);
     setStateWithRef(_pending, setPending, pendingRef);
   };
 
