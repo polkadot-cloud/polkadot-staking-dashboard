@@ -17,7 +17,6 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ActivePoolContextState } from 'types/pools';
 import { StakingContextInterface } from 'types/staking';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
@@ -28,7 +27,7 @@ export const Forms = forwardRef(
     const { activeAccount, accountHasSigner } =
       useConnect() as ConnectContextInterface;
     const { staking } = useStaking() as StakingContextInterface;
-    const { activeBondedPool } = useActivePool() as ActivePoolContextState;
+    const { activeBondedPool } = useActivePool();
     const { setStatus: setModalStatus, config } = useModal();
     const { bondType } = config || {};
     const { getBondedAccount } = useBalances();

@@ -12,7 +12,6 @@ import {
   toFixedIfNecessary,
 } from 'Utils';
 import { ConnectContextInterface } from 'types/connect';
-import { ActivePoolContextState } from 'types/pools';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { MIN_BOND_PRECISION } from 'consts';
 import {
@@ -43,7 +42,7 @@ export const ValidatorsProvider = ({
   const { activeAccount } = useConnect() as ConnectContextInterface;
   const { metrics } = useNetworkMetrics();
   const { accounts, getAccountNominations } = useBalances();
-  const { poolNominations } = useActivePool() as ActivePoolContextState;
+  const { poolNominations } = useActivePool();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
 

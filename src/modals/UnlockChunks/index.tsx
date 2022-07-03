@@ -9,7 +9,6 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ConnectContextInterface } from 'types/connect';
-import { ActivePoolContextState } from 'types/pools';
 import { HeadingWrapper } from '../Wrappers';
 import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';
@@ -20,7 +19,7 @@ export const UnlockChunks = () => {
   const { config, setModalHeight } = useModal();
   const { bondType } = config || {};
   const { getLedgerForStash } = useBalances();
-  const { getPoolUnlocking } = useActivePool() as ActivePoolContextState;
+  const { getPoolUnlocking } = useActivePool();
 
   // get the unlocking per bondType
   const _getUnlocking = () => {

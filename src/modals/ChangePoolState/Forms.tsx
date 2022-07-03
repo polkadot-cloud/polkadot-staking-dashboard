@@ -15,11 +15,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Separator } from 'Wrappers';
-import {
-  PoolState,
-  ActivePoolContextState,
-  PoolMembershipsContextState,
-} from 'types/pools';
+import { PoolState, PoolMembershipsContextState } from 'types/pools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
 import { ContentWrapper } from './Wrapper';
@@ -32,7 +28,7 @@ export const Forms = () => {
   const { activeAccount, accountHasSigner } =
     useConnect() as ConnectContextInterface;
   const { membership } = usePoolMemberships() as PoolMembershipsContextState;
-  const { isOwner } = useActivePool() as ActivePoolContextState;
+  const { isOwner } = useActivePool();
   const poolId = membership?.poolId;
 
   // valid to submit transaction

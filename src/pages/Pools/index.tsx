@@ -15,7 +15,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BondedPoolsContextState, ActivePoolContextState } from 'types/pools';
+import { BondedPoolsContextState } from 'types/pools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
@@ -34,7 +34,7 @@ export const PoolsInner = (props: PageProps) => {
   const { network } = useApi();
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools() as BondedPoolsContextState;
-  const { isBonding } = useActivePool() as ActivePoolContextState;
+  const { isBonding } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
   // back to overview if pools are not supported on network

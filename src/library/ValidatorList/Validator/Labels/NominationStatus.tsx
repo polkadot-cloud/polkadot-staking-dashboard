@@ -4,7 +4,6 @@
 import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
-import { ActivePoolContextState } from 'types/pools';
 import { StakingContextInterface } from 'types/staking';
 import { capitalizeFirstLetter, humanNumber } from 'Utils';
 import { NominationStatusWrapper } from '../Wrappers';
@@ -13,8 +12,7 @@ import { NominationStatusProps } from '../types';
 export const NominationStatus = (props: NominationStatusProps) => {
   const { getNominationsStatus, eraStakers, erasStakersSyncing } =
     useStaking() as StakingContextInterface;
-  const { getNominationsStatus: poolsGetNominationsStatus } =
-    useActivePool() as ActivePoolContextState;
+  const { getNominationsStatus: poolsGetNominationsStatus } = useActivePool();
   const {
     network: { unit },
   } = useApi();

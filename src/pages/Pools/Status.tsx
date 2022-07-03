@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ConnectContextInterface } from 'types/connect';
-import {
-  PoolMembershipsContextState,
-  ActivePoolContextState,
-  PoolState,
-} from 'types/pools';
+import { PoolMembershipsContextState, PoolState } from 'types/pools';
 import BN from 'bn.js';
 import { useUi } from 'contexts/UI';
 import { Separator } from 'Wrappers';
@@ -45,7 +41,7 @@ export const Status = () => {
     isOwner,
     getNominationsStatus,
     getPoolBondOptions,
-  } = useActivePool() as ActivePoolContextState;
+  } = useActivePool();
   const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
   const nominationStatuses = getNominationsStatus();

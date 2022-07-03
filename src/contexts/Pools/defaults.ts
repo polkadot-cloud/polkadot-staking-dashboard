@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { MaybeAccount } from 'types';
 
 export const stats = {
   counterForPoolMembers: new BN(0),
@@ -36,3 +37,20 @@ export const poolBondOptions = {
 };
 
 export const nominationStatus = {};
+
+export const defaultActivePoolContext = {
+  isBonding: () => false,
+  isNominator: () => false,
+  isOwner: () => false,
+  isDepositor: () => false,
+  getPoolBondedAccount: () => null,
+  // eslint-disable-next-line
+  getPoolBondOptions: (a: MaybeAccount) => null,
+  getPoolUnlocking: () => [],
+  // eslint-disable-next-line
+  setTargets: (targest: any) => {},
+  getNominationsStatus: () => nominationStatus,
+  activeBondedPool: {},
+  targets: [],
+  poolNominations: [],
+};

@@ -10,11 +10,9 @@ import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import Nominations from 'pages/Stake/Active/Nominations';
 import { GenerateNominations } from 'pages/Stake/GenerateNominations';
-import { ActivePoolContextState } from 'types/pools';
 
 export const ManagePool = () => {
-  const { isNominator, setTargets, targets, poolNominations } =
-    useActivePool() as ActivePoolContextState;
+  const { isNominator, setTargets, targets, poolNominations } = useActivePool();
   const { openModalWith } = useModal();
 
   const isNominating = !!poolNominations?.targets?.length;

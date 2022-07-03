@@ -12,7 +12,6 @@ import { useStaking } from 'contexts/Staking';
 import { ConnectContextInterface } from 'types/connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BondOptions } from 'types/balances';
-import { ActivePoolContextState } from 'types/pools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { StakingContextInterface } from 'types/staking';
 import { Separator, NotesWrapper } from '../../Wrappers';
@@ -30,7 +29,7 @@ export const UnbondAll = (props: any) => {
   const { getBondOptions, getBondedAccount, getAccountNominations } =
     useBalances();
   const { bondType } = config;
-  const { getPoolBondOptions } = useActivePool() as ActivePoolContextState;
+  const { getPoolBondOptions } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);

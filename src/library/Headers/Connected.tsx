@@ -9,7 +9,6 @@ import { useBalances } from 'contexts/Balances';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useUi } from 'contexts/UI';
 import { ConnectContextInterface } from 'types/connect';
-import { ActivePoolContextState } from 'types/pools';
 import { StakingContextInterface } from 'types/staking';
 import { clipAddress } from 'Utils';
 import { Account } from '../Account';
@@ -23,7 +22,7 @@ export const Connected = () => {
     useStaking() as StakingContextInterface;
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const { activeBondedPool } = useActivePool() as ActivePoolContextState;
+  const { activeBondedPool } = useActivePool();
   const { isSyncing } = useUi();
 
   let poolAddress = '';

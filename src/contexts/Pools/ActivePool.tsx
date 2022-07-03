@@ -23,8 +23,9 @@ import { rmCommas, localStorageOrDefault } from '../../Utils';
 import { useBondedPools } from './BondedPools';
 import { usePoolMemberships } from './PoolMemberships';
 
-export const ActivePoolContext =
-  React.createContext<ActivePoolContextState | null>(null);
+export const ActivePoolContext = React.createContext<ActivePoolContextState>(
+  defaults.defaultActivePoolContext
+);
 
 export const useActivePool = () => React.useContext(ActivePoolContext);
 

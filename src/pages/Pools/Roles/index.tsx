@@ -9,7 +9,6 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { ConnectContextInterface } from 'types/connect';
-import { ActivePoolContextState } from 'types/pools';
 import Button from 'library/Button';
 import {
   faEdit,
@@ -34,8 +33,7 @@ export const Roles = () => {
   const { activeAccount, isReadOnlyAccount } =
     useConnect() as ConnectContextInterface;
   const { fetchAccountMetaBatch } = useAccount();
-  const { activeBondedPool, isOwner } =
-    useActivePool() as ActivePoolContextState;
+  const { activeBondedPool, isOwner } = useActivePool();
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const activePool = activeBondedPool;

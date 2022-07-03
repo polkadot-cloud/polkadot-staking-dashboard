@@ -15,7 +15,6 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { ConnectContextInterface } from 'types/connect';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { ActivePoolContextState } from 'types/pools';
 import { StakingContextInterface } from 'types/staking';
 import { ValidatorsContextInterface } from 'types/validators';
 import { Wrapper } from './Wrapper';
@@ -35,8 +34,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
     favouritesList = [];
   }
 
-  const { poolNominations, isNominator: isPoolNominator } =
-    useActivePool() as ActivePoolContextState;
+  const { poolNominations, isNominator: isPoolNominator } = useActivePool();
 
   const isPool = bondType === 'pool';
   const nominations = isPool
