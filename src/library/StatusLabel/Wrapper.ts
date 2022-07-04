@@ -17,8 +17,8 @@ export const Wrapper = styled.div<any>`
   > div {
     background: ${backgroundLabel};
     opacity: 0.75;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
 
     h3 {
       padding: 0;
