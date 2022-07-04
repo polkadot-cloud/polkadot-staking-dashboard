@@ -34,8 +34,8 @@ export const defaultThemes: any = {
       'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)'
     ),
     label: v(
-      'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.7) 100%)',
-      'linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.5) 100%)'
+      'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.95) 100%)',
+      'linear-gradient(90deg, rgba(18,18,18,0.1) 0%, rgba(18,18,18,0.95) 100%)'
     ),
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),

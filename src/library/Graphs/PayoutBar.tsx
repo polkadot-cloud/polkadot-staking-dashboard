@@ -37,14 +37,14 @@ export const PayoutBar = (props: PayoutBarProps) => {
   const { payouts, height } = props;
 
   const data = {
-    labels: payouts.map((item: any, index: number) => {
+    labels: payouts.map((item: any) => {
       return moment.unix(item.block_timestamp).format('Do MMM');
     }),
     datasets: [
       {
         label: 'Price',
         // data: empty_data,
-        data: payouts.map((item: any, index: number) => {
+        data: payouts.map((item: any) => {
           return item.amount;
         }),
         borderColor: networkColors[`${network.name}-${mode}`],
