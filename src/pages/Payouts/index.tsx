@@ -95,9 +95,14 @@ export const Payouts = (props: PageProps) => {
                 status="active_service"
                 statusFor="subscan"
                 title="Subscan Disabled"
+                topOffset="30%"
               />
             ) : (
-              <StatusLabel status="sync_or_setup" title="Not Staking" />
+              <StatusLabel
+                status="sync_or_setup"
+                title="Not Staking"
+                topOffset="30%"
+              />
             )}
 
             <div
