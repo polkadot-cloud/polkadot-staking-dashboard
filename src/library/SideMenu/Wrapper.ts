@@ -22,7 +22,7 @@ export const Wrapper = styled.div<any>`
   box-sizing: border-box;
   border-radius: ${(props) => (props.minimised ? '0.7rem' : 0)};
   background: none;
-  padding: 1rem 1.5rem 1rem 0.5rem;
+  padding: 1rem 1rem 1rem 0.5rem;
   overflow: auto;
   flex-grow: 1;
   margin: 0.75rem 0 3.35rem 1rem;
@@ -127,13 +127,14 @@ export const HeadingWrapper = styled.div<any>`
 `;
 
 export const ItemWrapper = styled(motion.div)<any>`
-  border-radius: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
   padding: 0.9rem 0.5rem;
-  margin: 0.3rem 0;
+  margin: 0.3rem 0.2rem 0.3rem 0;
   font-size: 1.04rem;
   position: relative;
 
@@ -150,6 +151,7 @@ export const ItemWrapper = styled(motion.div)<any>`
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
+    margin-right: 0.3rem;
   }
 
   &.active {
