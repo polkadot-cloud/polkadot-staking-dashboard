@@ -13,9 +13,15 @@ import {
   Legend,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
-import { defaultThemes, networkColors } from 'theme/default';
+import {
+  defaultThemes,
+  networkColors,
+  networkColorsTransparent,
+} from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { humanNumber } from 'Utils';
+import { useUi } from 'contexts/UI';
+import { useStaking } from 'contexts/Staking';
 import { PayoutLineProps } from './types';
 
 ChartJS.register(
@@ -31,7 +37,14 @@ ChartJS.register(
 export const PayoutLine = (props: PayoutLineProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
+  const { isSyncing } = useUi();
+  const { inSetup } = useStaking();
+  const notStaking = !isSyncing && inSetup();
   const { payouts, height, background } = props;
+
+  const color = notStaking
+    ? networkColorsTransparent[`${network.name}-${mode}`]
+    : networkColors[`${network.name}-${mode}`];
 
   const options = {
     responsive: true,
@@ -99,8 +112,8 @@ export const PayoutLine = (props: PayoutLineProps) => {
         data: payouts.map((item: any, index: number) => {
           return item.amount;
         }),
-        borderColor: networkColors[`${network.name}-${mode}`],
-        backgroundColor: defaultThemes.graphs.colors[1][mode],
+        borderColor: color,
+        backgroundColor: color,
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,

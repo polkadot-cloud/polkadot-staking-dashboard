@@ -106,7 +106,7 @@ export const Payouts = (props: PageProps) => {
                 height: `${height}px`,
                 width: `${width}px`,
                 position: 'absolute',
-                opacity: notStaking ? 0.2 : 1,
+                opacity: notStaking ? 0.75 : 1,
                 transition: 'opacity 0.5s',
               }}
             >
