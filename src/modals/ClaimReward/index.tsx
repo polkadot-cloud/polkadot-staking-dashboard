@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { formatBalance } from '@polkadot/util';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
@@ -13,6 +12,8 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { planckBnToUnit } from 'Utils';
+import { BN } from 'bn.js';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -26,7 +27,8 @@ export const ClaimReward = () => {
   const { activeBondedPool } = useActivePool();
   const { activeAccount, accountHasSigner } = useConnect();
   const { units, unit } = network;
-  const { unclaimedReward } = activeBondedPool || {};
+  let { unclaimedReward } = activeBondedPool || {};
+  unclaimedReward = unclaimedReward ?? new BN(0);
 
   // ensure selected payout is valid
   useEffect(() => {
@@ -80,11 +82,7 @@ export const ClaimReward = () => {
           <Warning text="You have no rewards to claim." />
         )}
         <h2>
-          {formatBalance(unclaimedReward, {
-            decimals: units,
-            withSiFull: true,
-            withUnit: unit,
-          })}
+          {planckBnToUnit(unclaimedReward, units)} {unit}
         </h2>
         <Separator />
         <div className="notes">
