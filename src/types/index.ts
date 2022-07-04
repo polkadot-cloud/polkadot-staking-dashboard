@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import React, { FunctionComponent, SVGProps } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
