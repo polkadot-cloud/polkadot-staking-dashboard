@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/polkadot-staking-dashboard/static/css/main.f7bc8272.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.1a2259f1.js",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.525a01d4.js",
     "static/js/787.0a38be7b.chunk.js": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js",
     "static/media/WorkSans-VariableFont_wght.ttf": "/polkadot-staking-dashboard/static/media/WorkSans-VariableFont_wght.bb6e3e8193f32a7fc502.ttf",
     "static/js/stakers.52b9363b.worker.js": "/polkadot-staking-dashboard/static/js/stakers.52b9363b.worker.js",
@@ -21,11 +21,11 @@
     "static/media/moon-outline.svg": "/polkadot-staking-dashboard/static/media/moon-outline.ed14e62383eee27a57c447e80da2f840.svg",
     "static/media/assistant.svg": "/polkadot-staking-dashboard/static/media/assistant.710ee0b66a632101a3e85de51b365ddb.svg",
     "main.f7bc8272.css.map": "/polkadot-staking-dashboard/static/css/main.f7bc8272.css.map",
-    "main.1a2259f1.js.map": "/polkadot-staking-dashboard/static/js/main.1a2259f1.js.map",
+    "main.525a01d4.js.map": "/polkadot-staking-dashboard/static/js/main.525a01d4.js.map",
     "787.0a38be7b.chunk.js.map": "/polkadot-staking-dashboard/static/js/787.0a38be7b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f7bc8272.css",
-    "static/js/main.1a2259f1.js"
+    "static/js/main.525a01d4.js"
   ]
 }
