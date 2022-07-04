@@ -1027,7 +1027,7 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.8", "@babel/runtime@^7.17.9", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.6", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.3", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.6", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.18.6"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.18.6.tgz#6a1ef59f838debd670421f8c7f2cbb8da9751580"
   integrity sha512-t9wi7/AW6XtKahAe20Yw0/mMljKq0B1r2fPdvaAdV/KPDZewFXdaaa6K7lxmZBZ8FBNpCiAT6iHPmd6QO9bKfQ==
@@ -2085,20 +2085,6 @@
     bn.js "^5.2.0"
     ip-regex "^4.3.0"
 
-"@polkadot/util@9.2.1":
-  version "9.2.1"
-  resolved "https://registry.npmjs.org/@polkadot/util/-/util-9.2.1.tgz#cf1af36418ea6f351cceaac747162707c6a00a36"
-  integrity sha512-6B+NWfibxKNlWv67dJygjxZsNtjp9nERYZ+EaulOST9/KrnGLyKEh5ZRxP9lTSXeo+kuZhEfQFl3VQk13xgmJg==
-  dependencies:
-    "@babel/runtime" "^7.17.9"
-    "@polkadot/x-bigint" "9.2.1"
-    "@polkadot/x-global" "9.2.1"
-    "@polkadot/x-textdecoder" "9.2.1"
-    "@polkadot/x-textencoder" "9.2.1"
-    "@types/bn.js" "^5.1.0"
-    bn.js "^5.2.0"
-    ip-regex "^4.3.0"
-
 "@polkadot/util@9.7.2", "@polkadot/util@^9.7.2":
   version "9.7.2"
   resolved "https://registry.npmjs.org/@polkadot/util/-/util-9.7.2.tgz#0f97fa92b273e6ce4b53fe869a957ac99342007d"
@@ -2195,14 +2181,6 @@
     "@babel/runtime" "^7.17.8"
     "@polkadot/x-global" "8.7.1"
 
-"@polkadot/x-bigint@9.2.1":
-  version "9.2.1"
-  resolved "https://registry.npmjs.org/@polkadot/x-bigint/-/x-bigint-9.2.1.tgz#78efd6058277ad95fda7470283399f2e4c76be8d"
-  integrity sha512-R1PJHVu8NqWyaUrMrGSr2reGCVNdSxKFbJr6M7Fli5UWewjoLue1CuG1Mv0fjb6+ko1XcTjFmdNpfOs3L0PYbQ==
-  dependencies:
-    "@babel/runtime" "^7.17.9"
-    "@polkadot/x-global" "9.2.1"
-
 "@polkadot/x-bigint@9.7.2", "@polkadot/x-bigint@^9.7.2":
   version "9.7.2"
   resolved "https://registry.npmjs.org/@polkadot/x-bigint/-/x-bigint-9.7.2.tgz#ec79977335dce173a81e45247bdfd46f3b301702"
@@ -2238,13 +2216,6 @@
   dependencies:
     "@babel/runtime" "^7.17.8"
 
-"@polkadot/x-global@9.2.1":
-  version "9.2.1"
-  resolved "https://registry.npmjs.org/@polkadot/x-global/-/x-global-9.2.1.tgz#470efdf6715f87bddddd365e5c2fc10da7fa266d"
-  integrity sha512-t1zXdfrFIt83Be1i7uQuj2JRgvdxMxPBVXhCycpAV0eApeThXh8irBSxzw6QisDdPBnC+yX/kIlXuQAHUmr/7g==
-  dependencies:
-    "@babel/runtime" "^7.17.9"
-
 "@polkadot/x-global@9.7.2", "@polkadot/x-global@^9.7.2":
   version "9.7.2"
   resolved "https://registry.npmjs.org/@polkadot/x-global/-/x-global-9.7.2.tgz#9847fd1da13989f321ca621e85477ba70fd8d55a"
@@ -2276,14 +2247,6 @@
     "@babel/runtime" "^7.17.8"
     "@polkadot/x-global" "8.7.1"
 
-"@polkadot/x-textdecoder@9.2.1":
-  version "9.2.1"
-  resolved "https://registry.npmjs.org/@polkadot/x-textdecoder/-/x-textdecoder-9.2.1.tgz#e83c25bd52f62cf680439d96d71d9d1f37224257"
-  integrity sha512-n9ejoDUnX935zfxgJMcOpvJaifRKniPEKKmCWUazv9IEygB16bXRQ+Ecg8KYKtpmxTVQwj6lW4QOf4d4LGIdqA==
-  dependencies:
-    "@babel/runtime" "^7.17.9"
-    "@polkadot/x-global" "9.2.1"
-
 "@polkadot/x-textdecoder@9.7.2":
   version "9.7.2"
   resolved "https://registry.npmjs.org/@polkadot/x-textdecoder/-/x-textdecoder-9.7.2.tgz#c94ea6c8f510fdf579659248ede9421854e32b42"
@@ -2299,14 +2262,6 @@
   dependencies:
     "@babel/runtime" "^7.17.8"
     "@polkadot/x-global" "8.7.1"
-
-"@polkadot/x-textencoder@9.2.1":
-  version "9.2.1"
-  resolved "https://registry.npmjs.org/@polkadot/x-textencoder/-/x-textencoder-9.2.1.tgz#b00363d1afa0cdd928e2869b7df7b3d92a7610fd"
-  integrity sha512-VBCdK9vieYqbH7B4ceiahuW1bOvgETdaz9Ur4QtZLA2YUO7YB+mPuiySO4mU6hx97mV9PSJLHyyOs7oGCsbDBg==
-  dependencies:
-    "@babel/runtime" "^7.17.9"
-    "@polkadot/x-global" "9.2.1"
 
 "@polkadot/x-textencoder@9.7.2":
   version "9.7.2"
