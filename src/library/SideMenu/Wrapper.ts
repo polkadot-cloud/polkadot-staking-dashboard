@@ -169,7 +169,7 @@ export const MinimisedItemWrapper = styled(motion.div)`
   justify-content: center;
   align-items: center;
   padding: 0.9rem 0rem;
-  margin: 0.3rem 0;
+  margin: 0.3rem 0.2rem 0.3rem 0;
   font-size: 1.04rem;
   position: relative;
 
@@ -188,7 +188,7 @@ export const MinimisedItemWrapper = styled(motion.div)`
         flex: 0;
         position: absolute;
         top: -4px;
-        right: -4px;
+        right: -3px;
       }
     }
   }
