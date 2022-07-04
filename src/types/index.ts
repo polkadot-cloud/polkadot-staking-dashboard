@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import React, { FunctionComponent, SVGProps } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
@@ -18,7 +17,11 @@ export enum Toggle {
   Closed = 'closed',
 }
 
-export interface NodeEndpoint {
+export interface Networks {
+  [key: string]: Network;
+}
+
+export interface Network {
   name: string;
   colors: {
     primary: {
@@ -26,6 +29,10 @@ export interface NodeEndpoint {
       dark: string;
     };
     secondary: {
+      light: string;
+      dark: string;
+    };
+    transparent: {
       light: string;
       dark: string;
     };
@@ -51,10 +58,6 @@ export interface NodeEndpoint {
   features: {
     pools: boolean;
   };
-}
-
-export interface NodeEndpoints {
-  [key: string]: NodeEndpoint;
 }
 
 export type PageCategories = Array<{

@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NODE_ENDPOINTS } from 'consts';
-import { NodeEndpoint } from 'types';
+import { NETWORKS } from 'config/networks';
+import { Network } from 'types';
 
 // configure theme
 const v = (light: string, dark: string) => ({
@@ -34,8 +34,8 @@ export const defaultThemes: any = {
       'linear-gradient(90deg, rgba(28,28,28.8) 0%, rgba(28,28,28,0.5) 100%)'
     ),
     label: v(
-      'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.7) 100%)',
-      'linear-gradient(90deg, rgba(18,18,18,0.8) 0%, rgba(18,18,18,0.5) 100%)'
+      'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.95) 100%)',
+      'linear-gradient(90deg, rgba(18,18,18,0.1) 0%, rgba(18,18,18,0.95) 100%)'
     ),
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),
@@ -107,14 +107,18 @@ export const cardThemes: any = {
 // configure network colors
 export const networkColors: { [key: string]: string } = {};
 export const networkColorsSecondary: { [key: string]: string } = {};
+export const networkColorsTransparent: { [key: string]: string } = {};
 
-Object.values(NODE_ENDPOINTS).forEach((node: NodeEndpoint) => {
+Object.values(NETWORKS).forEach((node: Network) => {
   const { name, colors } = node;
-  const { primary, secondary } = colors;
+  const { primary, secondary, transparent } = colors;
 
   networkColors[`${name}-light`] = primary.light;
   networkColors[`${name}-dark`] = primary.dark;
 
   networkColorsSecondary[`${name}-light`] = secondary.light;
   networkColorsSecondary[`${name}-dark`] = secondary.dark;
+
+  networkColorsTransparent[`${name}-light`] = transparent.light;
+  networkColorsTransparent[`${name}-dark`] = transparent.dark;
 });

@@ -5,7 +5,8 @@ import { useState, useRef } from 'react';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { usePrices } from 'library/Hooks/usePrices';
-import { CONNECTION_SYMBOL_COLORS, NODE_ENDPOINTS } from 'consts';
+import { CONNECTION_SYMBOL_COLORS } from 'consts';
+import { NETWORKS } from 'config/networks';
 import { ConnectionStatus } from 'contexts/Api/types';
 import { useOutsideAlerter } from 'library/Hooks';
 import {
@@ -130,22 +131,20 @@ export const NetworkBar = () => {
           <h2>Switch Network</h2>
         </div>
         <div className="row">
-          {Object.entries(NODE_ENDPOINTS).map(
-            ([key, item]: any, index: number) => (
-              <button
-                type="button"
-                key={`switch_network_${index}`}
-                onClick={() => {
-                  if (network.name.toLowerCase() !== key) {
-                    switchNetwork(key);
-                    setOpen(false);
-                  }
-                }}
-              >
-                <h3>{item.name}</h3>
-              </button>
-            )
-          )}
+          {Object.entries(NETWORKS).map(([key, item]: any, index: number) => (
+            <button
+              type="button"
+              key={`switch_network_${index}`}
+              onClick={() => {
+                if (network.name.toLowerCase() !== key) {
+                  switchNetwork(key);
+                  setOpen(false);
+                }
+              }}
+            >
+              <h3>{item.name}</h3>
+            </button>
+          ))}
         </div>
       </NetworkInfo>
     </Wrapper>

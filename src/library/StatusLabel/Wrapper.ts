@@ -17,15 +17,17 @@ export const Wrapper = styled.div<any>`
   > div {
     background: ${backgroundLabel};
     opacity: 0.75;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
 
-    h3 {
+    h2 {
       padding: 0;
       margin: 0;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
+      font-size: 1.2rem;
+      opacity: 0.75;
     }
   }
 `;

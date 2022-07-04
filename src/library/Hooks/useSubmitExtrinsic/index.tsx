@@ -8,6 +8,7 @@ import { useExtrinsics } from 'contexts/Extrinsics';
 import { useConnect } from 'contexts/Connect';
 import { getWalletBySource, Wallet } from '@talisman-connect/wallets';
 import { DAPP_NAME } from 'consts';
+import { AnyApi } from 'types';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (
@@ -56,7 +57,9 @@ export const useSubmitExtrinsic = (
       return;
     }
 
-    const accountNonce = await api.rpc.system.accountNextIndex(submitAddress);
+    const _accountNonce = await api.rpc.system.accountNextIndex(submitAddress);
+    const accountNonce = _accountNonce.toHuman();
+
     const { signer, source } = account;
 
     // get extension
@@ -75,7 +78,7 @@ export const useSubmitExtrinsic = (
       const unsub = await tx.signAndSend(
         from,
         { signer },
-        ({ status, nonce, events = [] }: any) => {
+        ({ status, events = [] }: AnyApi) => {
           // extrinsic is ready ( has been signed), add to pending
           if (status.isReady) {
             addPending(accountNonce);
@@ -99,25 +102,23 @@ export const useSubmitExtrinsic = (
 
           // let user know outcome of transaction
           if (status.isFinalized) {
-            events.forEach(
-              ({ phase, event: { data, method, section } }: any) => {
-                if (method === 'ExtrinsicSuccess') {
-                  addNotification({
-                    title: 'Finalized',
-                    subtitle: 'Transaction successful',
-                  });
-                  unsub();
-                } else if (method === 'ExtrinsicFailed') {
-                  addNotification({
-                    title: 'Failed',
-                    subtitle: 'Error with transaction',
-                  });
-                  setSubmitting(false);
-                  removePending(accountNonce);
-                  unsub();
-                }
+            events.forEach(({ event: { method } }: AnyApi) => {
+              if (method === 'ExtrinsicSuccess') {
+                addNotification({
+                  title: 'Finalized',
+                  subtitle: 'Transaction successful',
+                });
+                unsub();
+              } else if (method === 'ExtrinsicFailed') {
+                addNotification({
+                  title: 'Failed',
+                  subtitle: 'Error with transaction',
+                });
+                setSubmitting(false);
+                removePending(accountNonce);
+                unsub();
               }
-            );
+            });
           }
         }
       );

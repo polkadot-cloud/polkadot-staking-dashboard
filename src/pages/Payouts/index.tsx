@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import { useRef } from 'react';
 import moment from 'moment';
 import { StatBoxList } from 'library/StatBoxList';
 import { useSubscan } from 'contexts/Subscan';
@@ -25,6 +25,7 @@ import {
 import { StatusLabel } from 'library/StatusLabel';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
+import { useStaking } from 'contexts/Staking';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
@@ -32,12 +33,15 @@ import LastEraPayoutStatBox from './Stats/LastEraPayout';
 export const Payouts = (props: PageProps) => {
   const { network } = useApi();
   const { payouts } = useSubscan();
-  const { services } = useUi();
+  const { isSyncing, services } = useUi();
+  const { inSetup } = useStaking();
+  const notStaking = !isSyncing && inSetup();
+
   const { units } = network;
   const { page } = props;
   const { title } = page;
 
-  const ref: any = React.useRef();
+  const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 250);
 
@@ -91,9 +95,14 @@ export const Payouts = (props: PageProps) => {
                 status="active_service"
                 statusFor="subscan"
                 title="Subscan Disabled"
+                topOffset="30%"
               />
             ) : (
-              <StatusLabel status="sync_or_setup" title="Not Staking" />
+              <StatusLabel
+                status="sync_or_setup"
+                title="Not Staking"
+                topOffset="30%"
+              />
             )}
 
             <div
@@ -102,6 +111,8 @@ export const Payouts = (props: PageProps) => {
                 height: `${height}px`,
                 width: `${width}px`,
                 position: 'absolute',
+                opacity: notStaking ? 0.75 : 1,
+                transition: 'opacity 0.5s',
               }}
             >
               <PayoutBar payouts={payoutsByDay} height="120px" />
