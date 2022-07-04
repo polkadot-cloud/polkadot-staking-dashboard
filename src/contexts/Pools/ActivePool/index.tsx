@@ -12,16 +12,12 @@ import {
   BondedPool,
   PoolAddresses,
 } from 'contexts/Pools/types';
+import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useBalances } from '../../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { usePoolsConfig } from '../PoolsConfig';
-import {
-  rmCommas,
-  localStorageOrDefault,
-  setStateWithRef,
-} from '../../../Utils';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMemberships } from '../PoolMemberships';
 

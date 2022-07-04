@@ -5,9 +5,9 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
 import { AnyApi } from 'types';
+import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import { useApi } from '../../Api';
-import { rmCommas, setStateWithRef } from '../../../Utils';
 
 export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
   defaults.defaultPoolsConfigContext

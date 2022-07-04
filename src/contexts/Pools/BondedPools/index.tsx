@@ -11,9 +11,9 @@ import {
 } from 'contexts/Pools/types';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
+import { setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
-import { setStateWithRef } from '../../../Utils';
 import { defaultBondedPoolsContext } from './defaults';
 
 export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
