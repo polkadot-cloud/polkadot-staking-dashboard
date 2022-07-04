@@ -32,6 +32,10 @@ export interface Network {
       light: string;
       dark: string;
     };
+    transparent: {
+      light: string;
+      dark: string;
+    };
   };
   endpoint: string;
   subscanEndpoint: string;

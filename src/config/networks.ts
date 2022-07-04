@@ -24,6 +24,10 @@ export const NETWORKS: Networks = {
         light: '#e474bc',
         dark: '#e474bc',
       },
+      transparent: {
+        light: 'rgb(211, 48, 121, 0.2)',
+        dark: 'rgb(211, 48, 121, 0.2)',
+      },
     },
     endpoint: 'wss://rpc.polkadot.io',
     subscanEndpoint: 'https://polkadot.api.subscan.io',
@@ -54,6 +58,10 @@ export const NETWORKS: Networks = {
         light: '#888',
         dark: '#888',
       },
+      transparent: {
+        light: 'rgb(51,51,51,0.2)',
+        dark: 'rgb(102,102,102, 0.2)',
+      },
     },
     endpoint: 'wss://kusama-rpc.polkadot.io',
     subscanEndpoint: 'https://kusama.api.subscan.io',
@@ -83,6 +91,10 @@ export const NETWORKS: Networks = {
       secondary: {
         light: '#Ec8f6e',
         dark: '#Ec8f6e',
+      },
+      transparent: {
+        light: 'rgb(236,110,121,0.2)',
+        dark: 'rgb(236,110,121, 0.2)',
       },
     },
     endpoint: 'wss://westend-rpc.polkadot.io',

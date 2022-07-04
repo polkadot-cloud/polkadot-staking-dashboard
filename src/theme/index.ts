@@ -7,6 +7,7 @@ import {
   cardThemes,
   networkColors,
   networkColorsSecondary,
+  networkColorsTransparent,
 } from './default';
 
 /* Aggregates all theme configurations and serves the currently
@@ -190,4 +191,9 @@ export const networkColor: theme.ThemeSet = theme(n, networkColors);
 export const networkColorSecondary: theme.ThemeSet = theme(
   n,
   networkColorsSecondary
+);
+
+export const networkColorTransparent: theme.ThemeSet = theme(
+  n,
+  networkColorsTransparent
 );

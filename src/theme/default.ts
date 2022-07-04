@@ -107,14 +107,18 @@ export const cardThemes: any = {
 // configure network colors
 export const networkColors: { [key: string]: string } = {};
 export const networkColorsSecondary: { [key: string]: string } = {};
+export const networkColorsTransparent: { [key: string]: string } = {};
 
 Object.values(NETWORKS).forEach((node: Network) => {
   const { name, colors } = node;
-  const { primary, secondary } = colors;
+  const { primary, secondary, transparent } = colors;
 
   networkColors[`${name}-light`] = primary.light;
   networkColors[`${name}-dark`] = primary.dark;
 
   networkColorsSecondary[`${name}-light`] = secondary.light;
   networkColorsSecondary[`${name}-dark`] = secondary.dark;
+
+  networkColorsTransparent[`${name}-light`] = transparent.light;
+  networkColorsTransparent[`${name}-dark`] = transparent.dark;
 });
