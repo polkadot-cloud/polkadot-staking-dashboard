@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
 import { AnyApi } from 'types';
+import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import { useApi } from '../../Api';
-import { rmCommas } from '../../../Utils';
 
 export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
   defaults.defaultPoolsConfigContext
@@ -31,6 +31,7 @@ export const PoolsConfigProvider = ({
     stats: defaults.stats,
     unsub: null,
   });
+  const poolsConfigRef = useRef(poolsConfig);
 
   // disable pools if network does not support them
   useEffect(() => {
@@ -52,8 +53,8 @@ export const PoolsConfigProvider = ({
   }, [network, isReady, enabled]);
 
   const unsubscribe = () => {
-    if (poolsConfig.unsub !== null) {
-      poolsConfig.unsub();
+    if (poolsConfigRef.current.unsub !== null) {
+      poolsConfigRef.current.unsub();
     }
   };
 
@@ -96,32 +97,41 @@ export const PoolsConfigProvider = ({
           _maxPools = new BN(rmCommas(_maxPools));
         }
 
-        setPoolsConfig({
-          ...poolsConfig,
-          stats: {
-            counterForPoolMembers: _counterForPoolMembers.toBn(),
-            counterForBondedPools: _counterForBondedPools.toBn(),
-            counterForRewardPools: _counterForRewardPools.toBn(),
-            maxPoolMembers: _maxPoolMembers,
-            maxPoolMembersPerPool: _maxPoolMembersPerPool,
-            maxPools: _maxPools,
-            minCreateBond: _minCreateBond.toBn(),
-            minJoinBond: _minJoinBond.toBn(),
+        setStateWithRef(
+          {
+            ...poolsConfigRef.current,
+            stats: {
+              counterForPoolMembers: _counterForPoolMembers.toBn(),
+              counterForBondedPools: _counterForBondedPools.toBn(),
+              counterForRewardPools: _counterForRewardPools.toBn(),
+              maxPoolMembers: _maxPoolMembers,
+              maxPoolMembersPerPool: _maxPoolMembersPerPool,
+              maxPools: _maxPools,
+              minCreateBond: _minCreateBond.toBn(),
+              minJoinBond: _minJoinBond.toBn(),
+            },
           },
-        });
+          setPoolsConfig,
+          poolsConfigRef
+        );
       }
     );
-    setPoolsConfig({
-      ...poolsConfig,
-      unsub,
-    });
+
+    setStateWithRef(
+      {
+        ...poolsConfigRef.current,
+        unsub,
+      },
+      setPoolsConfig,
+      poolsConfigRef
+    );
   };
 
   return (
     <PoolsConfigContext.Provider
       value={{
         enabled,
-        stats: poolsConfig.stats,
+        stats: poolsConfigRef.current.stats,
       }}
     >
       {children}

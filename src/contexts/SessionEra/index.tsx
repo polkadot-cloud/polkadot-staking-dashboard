@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import moment from 'moment';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AnyApi } from 'types';
+import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import { SessionEraContextInterface } from './types';
+import { SessionEraContextInterface, SessionEra } from './types';
 
 export const SessionEraContext =
   React.createContext<SessionEraContextInterface>(
@@ -27,19 +28,23 @@ export const SessionEraProvider = ({
 
   useEffect(() => {
     if (status === 'connecting') {
-      setState(defaults.state);
+      setStateWithRef(defaults.sessionEra, setSessioEra, sessionEraRef);
     }
   }, [status]);
 
   // store network metrics in state
-  const [state, setState]: any = useState(defaults.state);
+  const [sessionEra, setSessioEra] = useState<SessionEra>(defaults.sessionEra);
+  const sessionEraRef = useRef(sessionEra);
+
+  const [unsub, setUnsub] = useState<AnyApi>(null);
+  const unsubRef = useRef(unsub);
 
   // manage unsubscribe
   useEffect(() => {
     subscribeToSessionProgress();
     return () => {
-      if (state.unsub !== undefined) {
-        state.unsub();
+      if (unsubRef.current !== null) {
+        unsubRef.current();
       }
     };
   }, [isReady]);
@@ -47,24 +52,26 @@ export const SessionEraProvider = ({
   // active subscription
   const subscribeToSessionProgress = async () => {
     if (isReady && api !== null) {
-      const unsub = await api.derive.session.progress((session: AnyApi) => {
-        const _state = {
-          eraLength: session.eraLength.toNumber(),
-          eraProgress: session.eraProgress.toNumber(),
-          sessionLength: session.sessionLength.toNumber(),
-          sessionProgress: session.sessionProgress.toNumber(),
-          sessionsPerEra: session.sessionsPerEra.toNumber(),
-          unsub,
-        };
-        setState(_state);
+      const _unsub = await api.derive.session.progress((session: AnyApi) => {
+        setStateWithRef(
+          {
+            eraLength: session.eraLength.toNumber(),
+            eraProgress: session.eraProgress.toNumber(),
+            sessionLength: session.sessionLength.toNumber(),
+            sessionProgress: session.sessionProgress.toNumber(),
+            sessionsPerEra: session.sessionsPerEra.toNumber(),
+          },
+          setSessioEra,
+          sessionEraRef
+        );
       });
-      return unsub;
+      setStateWithRef(_unsub, setUnsub, unsubRef);
     }
-    return undefined;
   };
 
   const getEraTimeLeft = () => {
-    const eraBlocksLeft = state.eraLength - state.eraProgress;
+    const eraBlocksLeft =
+      sessionEraRef.current.eraLength - sessionEraRef.current.eraProgress;
     const eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
     const eventTime = moment().unix() + eraTimeLeftSeconds;
     const diffTime = eventTime - moment().unix();
@@ -75,13 +82,7 @@ export const SessionEraProvider = ({
     <SessionEraContext.Provider
       value={{
         getEraTimeLeft,
-        sessionEra: {
-          eraLength: state.eraLength,
-          eraProgress: state.eraProgress,
-          sessionLength: state.sessionLength,
-          sessionProgress: state.sessionProgress,
-          sessionsPerEra: state.sessionsPerEra,
-        },
+        sessionEra,
       }}
     >
       {children}
