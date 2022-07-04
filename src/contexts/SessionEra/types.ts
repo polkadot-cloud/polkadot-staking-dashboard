@@ -3,5 +3,13 @@
 
 export interface SessionEraContextInterface {
   getEraTimeLeft: () => number;
-  sessionEra: any;
+  sessionEra: SessionEra;
+}
+
+export interface SessionEra {
+  eraLength: number;
+  eraProgress: number;
+  sessionLength: number;
+  sessionProgress: number;
+  sessionsPerEra: number;
 }

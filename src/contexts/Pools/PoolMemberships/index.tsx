@@ -9,11 +9,11 @@ import {
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
 import { AnyApi, Fn } from 'types';
+import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { usePoolsConfig } from '../PoolsConfig';
-import { rmCommas, setStateWithRef } from '../../../Utils';
 
 export const PoolMembershipsContext =
   React.createContext<PoolMembershipsContextState>(
