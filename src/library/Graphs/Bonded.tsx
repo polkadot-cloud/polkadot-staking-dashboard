@@ -25,7 +25,7 @@ export const Bonded = (props: BondedProps) => {
   let graphFree = free;
 
   let zeroBalance = false;
-  if (graphActive === 0 && graphUnlocking === 0 && graphFree === 0) {
+  if (inactive) {
     graphActive = -1;
     graphUnlocking = -1;
     graphFree = -1;
