@@ -26,9 +26,14 @@ export const PayoutsInner = (props: any) => {
           status="active_service"
           statusFor="subscan"
           title="Subscan Disabled"
+          topOffset="37%"
         />
       ) : (
-        <StatusLabel status="sync_or_setup" title="Not Staking" />
+        <StatusLabel
+          status="sync_or_setup"
+          title="Not Staking"
+          topOffset="37%"
+        />
       )}
 
       <div
@@ -37,7 +42,7 @@ export const PayoutsInner = (props: any) => {
           height: `${height}px`,
           width: `${width}px`,
           position: 'absolute',
-          opacity: notStaking ? 0.2 : 1,
+          opacity: notStaking ? 0.75 : 1,
           transition: 'opacity 0.5s',
         }}
       >

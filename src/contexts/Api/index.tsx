@@ -10,17 +10,17 @@ import {
   MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
   MAX_NOMINATIONS,
   API_ENDPOINTS,
-  NODE_ENDPOINTS,
   MAX_ELECTING_VOTERS,
   EXPECTED_BLOCK_TIME,
 } from 'consts';
+import { NETWORKS } from 'config/networks';
 import {
   APIContextInterface,
   NetworkState,
   APIConstants,
   ConnectionStatus,
 } from 'contexts/Api/types';
-import { NodeEndpoint, NetworkName } from 'types';
+import { Network, NetworkName } from 'types';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
@@ -42,7 +42,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [network, setNetwork] = useState<NetworkState>({
     name: _name,
-    meta: NODE_ENDPOINTS[localStorage.getItem('network') as NetworkName],
+    meta: NETWORKS[localStorage.getItem('network') as NetworkName],
   });
 
   // constants state
@@ -146,12 +146,12 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // connect function sets provider and updates active network.
   const connect = async (_network: NetworkName) => {
-    const nodeEndpoint: NodeEndpoint = NODE_ENDPOINTS[_network];
+    const nodeEndpoint: Network = NETWORKS[_network];
     const _provider = new WsProvider(nodeEndpoint.endpoint);
 
     setNetwork({
       name: _network,
-      meta: NODE_ENDPOINTS[_network],
+      meta: NETWORKS[_network],
     });
     setProvider(_provider);
   };
@@ -169,9 +169,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // handles fetching of DOT price and updates context state.
   const fetchDotPrice = async () => {
     const urls = [
-      `${API_ENDPOINTS.priceChange}${
-        NODE_ENDPOINTS[network.name].api.priceTicker
-      }`,
+      `${API_ENDPOINTS.priceChange}${NETWORKS[network.name].api.priceTicker}`,
     ];
     const responses = await Promise.all(
       urls.map((u) => fetch(u, { method: 'GET' }))

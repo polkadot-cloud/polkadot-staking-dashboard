@@ -135,8 +135,7 @@ export const SideInterfaceWrapper = styled.div<any>`
     props.minimised
       ? `${SIDE_MENU_MINIMISED_WIDTH}px`
       : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
-  padding-right: ${(props) => (!props.minimised ? 0 : '1.25rem')};
-  transition: all 0.2s ease-in-out;
+  transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     position: fixed;

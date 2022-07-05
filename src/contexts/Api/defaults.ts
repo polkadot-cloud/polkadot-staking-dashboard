@@ -8,7 +8,7 @@ import {
   ConnectionStatus,
 } from 'contexts/Api/types';
 import BN from 'bn.js';
-import { NODE_ENDPOINTS } from 'consts';
+import { NETWORKS } from 'config/networks';
 
 export const consts: APIConstants = {
   bondDuration: 0,
@@ -35,5 +35,5 @@ export const defaultApiContext: APIContextInterface = {
   consts,
   isReady: false,
   status: ConnectionStatus.Disconnected,
-  network: NODE_ENDPOINTS.polkadot,
+  network: NETWORKS.polkadot,
 };

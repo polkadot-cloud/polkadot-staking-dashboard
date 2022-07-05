@@ -17,7 +17,11 @@ export enum Toggle {
   Closed = 'closed',
 }
 
-export interface NodeEndpoint {
+export interface Networks {
+  [key: string]: Network;
+}
+
+export interface Network {
   name: string;
   colors: {
     primary: {
@@ -25,6 +29,10 @@ export interface NodeEndpoint {
       dark: string;
     };
     secondary: {
+      light: string;
+      dark: string;
+    };
+    transparent: {
       light: string;
       dark: string;
     };
@@ -50,10 +58,6 @@ export interface NodeEndpoint {
   features: {
     pools: boolean;
   };
-}
-
-export interface NodeEndpoints {
-  [key: string]: NodeEndpoint;
 }
 
 export type PageCategories = Array<{
