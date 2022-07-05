@@ -5,7 +5,7 @@ import React from 'react';
 
 export interface HeadingProps {
   title: string;
-  minimised: boolean;
+  minimised: number;
 }
 
 export interface ItemProps {
@@ -14,5 +14,5 @@ export interface ItemProps {
   to: string;
   icon: React.ReactNode;
   action: boolean;
-  minimised: boolean;
+  minimised: number;
 }

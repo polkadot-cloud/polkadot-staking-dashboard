@@ -24,12 +24,12 @@ export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
   getSetupProgress: (a) => {},
   // eslint-disable-next-line
-  getSetupProgressPercent: (a) => {},
+  getSetupProgressPercent: (a) => 0,
   // eslint-disable-next-line
   setActiveAccountSetup: (p) => {},
   // eslint-disable-next-line
   setActiveAccountSetupSection: (s) => {},
-  getServices: () => {},
+  getServices: () => [],
   // eslint-disable-next-line
   setOnSetup: (v) => {},
   sideMenuOpen: 0,

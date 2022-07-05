@@ -10,7 +10,6 @@ import { StatusLabelProps } from './types';
 
 export const StatusLabel = (props: StatusLabelProps) => {
   const status = props.status ?? 'sync_or_setup';
-  const statusFor = props.statusFor ?? false;
 
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
@@ -22,7 +21,7 @@ export const StatusLabel = (props: StatusLabelProps) => {
   }
 
   if (status === 'active_service') {
-    if (services.includes(statusFor)) {
+    if (services.includes(props.statusFor || '')) {
       return <></>;
     }
   }

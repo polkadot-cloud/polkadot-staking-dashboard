@@ -81,3 +81,5 @@ export type MaybeAccount = string | null;
 export type AnyApi = any;
 // eslint-disable-next-line
 export type AnyMetaBatch = any;
+// eslint-disable-next-line
+export type AnySubscan = any;

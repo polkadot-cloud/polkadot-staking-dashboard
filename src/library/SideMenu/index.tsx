@@ -22,6 +22,7 @@ import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { usePalette } from 'contexts/Palette';
+import { UIContextInterface } from 'contexts/UI/types';
 import Item from './Item';
 import Heading from './Heading';
 import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
@@ -42,7 +43,7 @@ export const SideMenu = () => {
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
-  }: any = useUi();
+  }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
 
   const [pageConfig, setPageConfig]: any = useState({
