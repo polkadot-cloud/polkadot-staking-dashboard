@@ -103,7 +103,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.55,
+    barPercentage: 0.4,
     maxBarThickness: 11,
     scales: {
       x: {
