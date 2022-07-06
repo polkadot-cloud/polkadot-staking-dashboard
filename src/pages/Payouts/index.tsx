@@ -22,12 +22,13 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useStaking } from 'contexts/Staking';
 import { MAX_PAYOUT_DAYS } from 'consts';
 import { AnySubscan } from 'types';
+import { BN } from 'bn.js';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
-  const { payouts } = useSubscan();
+  const { payouts, poolClaims } = useSubscan();
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
@@ -39,11 +40,17 @@ export const Payouts = (props: PageProps) => {
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 250);
 
-  // take non-zero payouts in most-recent order
-  // TODO: inject pool claims too
-  const payoutsList = [
-    ...payouts.filter((p: AnySubscan) => p.amount > 0),
+  // take non-zero rewards in most-recent order
+  let payoutsList: AnySubscan = [
+    ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
   ].slice(0, MAX_PAYOUT_DAYS);
+
+  // re-order rewards based on block timestamp
+  payoutsList = payoutsList.sort((a: AnySubscan, b: AnySubscan) => {
+    const x = new BN(a.block_timestamp);
+    const y = new BN(b.block_timestamp);
+    return y.sub(x);
+  });
 
   return (
     <>

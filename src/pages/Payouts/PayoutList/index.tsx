@@ -14,6 +14,7 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { planckToUnit } from 'Utils';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
+import { AnySubscan } from 'types';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 
@@ -167,8 +168,15 @@ export const PayoutListInner = (props: any) => {
             },
           }}
         >
-          {listPayouts.map((payout: any, index: number) => {
+          {listPayouts.map((payout: AnySubscan, index: number) => {
             const { amount, block_timestamp, event_id } = payout;
+            const label = event_id === 'PaidOut' ? 'Pool Claim' : event_id;
+            const labelClass =
+              event_id === 'PaidOut'
+                ? 'claim'
+                : event_id === 'Reward'
+                ? 'reward'
+                : undefined;
 
             return (
               <motion.div
@@ -188,11 +196,11 @@ export const PayoutListInner = (props: any) => {
                 <ItemWrapper>
                   <div>
                     <div>
-                      <span className={event_id.toLowerCase()}>
-                        <h4>{event_id}</h4>
+                      <span className={labelClass}>
+                        <h4>{label}</h4>
                       </span>
-                      <h4 className={event_id.toLowerCase()}>
-                        {event_id === 'Reward' ? '+' : '-'}
+                      <h4 className={labelClass}>
+                        {event_id === 'Slash' ? '-' : '+'}
                         {planckToUnit(amount, units)} {network.unit}
                       </h4>
                     </div>
