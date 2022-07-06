@@ -74,7 +74,6 @@ export const SubscanProvider = ({
       const results = await Promise.all([
         handleFetch(activeAccount, 0, API_ENDPOINTS.subscanRewardSlash),
         handleFetch(activeAccount, 1, API_ENDPOINTS.subscanRewardSlash),
-        handleFetch(activeAccount, 2, API_ENDPOINTS.subscanRewardSlash),
       ]);
 
       // user may have turned off service while results were fetching.
@@ -125,7 +124,6 @@ export const SubscanProvider = ({
       const results = await Promise.all([
         handleFetch(activeAccount, 0, API_ENDPOINTS.subscanPoolRewards),
         handleFetch(activeAccount, 1, API_ENDPOINTS.subscanPoolRewards),
-        handleFetch(activeAccount, 2, API_ENDPOINTS.subscanPoolRewards),
       ]);
 
       // user may have turned off service while results were fetching.

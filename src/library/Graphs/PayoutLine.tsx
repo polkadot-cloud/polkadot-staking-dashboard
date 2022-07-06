@@ -27,7 +27,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { AnySubscan } from 'types';
 import { useSubscan } from 'contexts/Subscan';
 import { PayoutLineProps } from './types';
-import { formatRewardsForGraphs } from './Utils';
+import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -60,14 +60,14 @@ export const PayoutLine = (props: PayoutLineProps) => {
     poolClaims
   );
 
-  // determine color for payouts
-  const colorPayouts = notStaking
-    ? networkColorsTransparent[`${network.name}-${mode}`]
-    : networkColors[`${network.name}-${mode}`];
+  // combine payouts and pool claims into one dataset
+  const combinedPayouts = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
 
-  // determine color for poolClaims
-  const colorPoolClaims = notStaking
+  // determine color for payouts
+  const color = notStaking
     ? networkColorsTransparent[`${network.name}-${mode}`]
+    : stakingAndPooling
+    ? networkColors[`${network.name}-${mode}`]
     : networkColorsSecondary[`${network.name}-${mode}`];
 
   // configure graph options
@@ -107,7 +107,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
         text: `${network.unit} Payouts`,
       },
       tooltip: {
-        displayColors: stakingAndPooling,
+        displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
@@ -126,34 +126,20 @@ export const PayoutLine = (props: PayoutLineProps) => {
     },
   };
 
-  // configure payout dataset
+  // configure  dataset
   let datasets = [
     {
       label: 'Payout',
-      data: payoutsByDay.map((item: AnySubscan) => {
+      data: combinedPayouts.map((item: AnySubscan) => {
         return item.amount;
       }),
-      borderColor: colorPayouts,
-      backgroundColor: colorPayouts,
+      borderColor: color,
+      backgroundColor: color,
       pointStyle: undefined,
       pointRadius: 0,
       borderWidth: 2,
     },
   ];
-  // if finished syncing and pooling, add pools dataset
-  if (!isSyncing && membership !== null) {
-    datasets.push({
-      label: 'Pool Claim',
-      data: poolClaimsByDay.map((item: AnySubscan) => {
-        return item.amount;
-      }),
-      borderColor: colorPoolClaims,
-      backgroundColor: colorPoolClaims,
-      pointStyle: undefined,
-      pointRadius: 0,
-      borderWidth: 2,
-    });
-  }
   // if synced, pooling and not staking, remove payout dataset
   if (!isSyncing && membership !== null && inSetup()) {
     datasets = datasets.filter((d: AnySubscan) => d.label !== 'Payout');

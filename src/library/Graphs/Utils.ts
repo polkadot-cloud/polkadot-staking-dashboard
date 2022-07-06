@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import React from 'react';
 import throttle from 'lodash.throttle';
 import { planckBnToUnit } from 'Utils';
@@ -269,4 +269,101 @@ export const formatRewardsForGraphs = (
     poolClaimsByDay,
     lastReward,
   };
+};
+
+// combine payouts and pool claims into daily records
+export const combineRewardsByDay = (
+  payoutsByDay: AnySubscan,
+  poolClaimsByDay: AnySubscan
+) => {
+  if (!payoutsByDay && !poolClaimsByDay) return [];
+
+  // check if pool claims exists
+  const lastPoolClaim =
+    poolClaimsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ??
+    null;
+
+  // check if payouts exists
+  const lastPayout =
+    payoutsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ??
+    null;
+
+  if (!lastPoolClaim) {
+    return payoutsByDay.map((p: AnySubscan) => {
+      return {
+        amount: p.amount,
+        block_timestamp: p.block_timestamp,
+      };
+    });
+  }
+  if (!lastPayout) {
+    return poolClaimsByDay.map((p: AnySubscan) => {
+      return {
+        amount: p.amount,
+        block_timestamp: p.block_timestamp,
+      };
+    });
+  }
+
+  let rewards: AnySubscan = [];
+
+  // loop pool claims and consume / combine payouts
+  poolClaimsByDay.forEach((p: AnySubscan) => {
+    let { amount } = p;
+    const { block_timestamp } = p;
+
+    // check payouts exist on this day
+    const payoutsThisDay = payoutsByDay.filter((q: AnySubscan) => {
+      return unixSameDay(q.block_timestamp, p.block_timestamp);
+    });
+
+    // add amounts
+    if (payoutsThisDay.length) {
+      for (const payout of payoutsThisDay) {
+        amount += payout.amount;
+      }
+    }
+    // consume used payouts
+    payoutsByDay = payoutsByDay.filter((q: AnySubscan) => {
+      return unixSameDay(q.block_timestamp, p.block_timestamp);
+    });
+    rewards.push({
+      amount,
+      block_timestamp,
+    });
+  });
+
+  // add remaining payouts
+  if (payoutsByDay.length) {
+    rewards = rewards.concat(
+      payoutsByDay.forEach((p: AnySubscan) => {
+        return {
+          amount: p.amount,
+          block_timestamp: p.block_timestamp,
+        };
+      })
+    );
+  }
+
+  // re-order combined rewards based on block timestamp
+  rewards = rewards.sort((a: AnySubscan, b: AnySubscan) => {
+    const x = new BN(a.block_timestamp);
+    const y = new BN(b.block_timestamp);
+    return y.add(x);
+  });
+
+  return rewards;
+};
+
+// calculate whether 2 unix timestamps are on the same day
+export const unixSameDay = (p: number, q: number) => {
+  const dateQ = moment.unix(q);
+  const _dayQ = dateQ.dayOfYear();
+  const _yearQ = dateQ.year();
+
+  const dateP = moment.unix(p);
+  const _dayP = dateP.dayOfYear();
+  const _yearP = dateP.year();
+
+  return _dayQ === _dayP && _yearQ === _yearP;
 };
