@@ -79,7 +79,7 @@ ctx.addEventListener('message', (event: any) => {
   postMessage({
     stakers,
     ownStake,
-    activeNominators: nominators.length,
+    nominators,
     activeValidators,
     minActiveBond,
     _activeAccount: activeAccount,

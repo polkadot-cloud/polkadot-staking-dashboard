@@ -32,6 +32,8 @@ export const StakingContext = React.createContext<StakingContextInterface>(
 
 export const useStaking = () => React.useContext(StakingContext);
 
+const worker = new Worker();
+
 export const StakingProvider = ({
   children,
 }: {
@@ -75,14 +77,12 @@ export const StakingProvider = ({
     ) as StakingTargets
   );
 
-  const worker = new Worker();
-
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
       const {
         stakers,
-        activeNominators,
+        nominators,
         activeValidators,
         minActiveBond,
         ownStake,
@@ -98,7 +98,8 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
-            activeNominators,
+            nominators,
+            totalNominators: nominators.length,
             activeValidators,
             minActiveBond,
             ownStake,
