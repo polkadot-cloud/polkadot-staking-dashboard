@@ -16,7 +16,7 @@ import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
 import { GRAPH_HEIGHT } from 'consts';
-import { prefillToMaxDays, calculatePayoutsByDay } from 'library/Graphs/Utils';
+import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominators';
@@ -30,21 +30,14 @@ export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { activeAccount } = useConnect();
-  const { payouts }: any = useSubscan();
+  const { payouts, poolClaims } = useSubscan();
 
-  // generate payouts by day data
-  const maxDays = 21;
-  let payoutsByDay = prefillToMaxDays(
-    calculatePayoutsByDay(payouts, maxDays, units),
-    maxDays
+  const { payoutsByDay, poolClaimsByDay, lastReward } = formatRewardsForGraphs(
+    21,
+    units,
+    payouts,
+    poolClaims
   );
-
-  // reverse payouts: most recent last
-  payoutsByDay = payoutsByDay.reverse();
-
-  // get most recent payout
-  const lastPayout =
-    payouts.find((p: any) => new BN(p.amount).gt(new BN(0))) ?? null;
 
   return (
     <>
@@ -67,21 +60,25 @@ export const Overview = () => {
             <div className="head">
               <h4>Recent Payouts</h4>
               <h2>
-                {lastPayout === null
+                {lastReward === null
                   ? 0
                   : humanNumber(
-                      planckBnToUnit(new BN(lastPayout.amount), units)
+                      planckBnToUnit(new BN(lastReward.amount), units)
                     )}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">
-                  {lastPayout === null
+                  {lastReward === null
                     ? ''
-                    : moment.unix(lastPayout.block_timestamp).fromNow()}
+                    : moment.unix(lastReward.block_timestamp).fromNow()}
                 </span>
               </h2>
             </div>
-            <Payouts account={activeAccount} payouts={payoutsByDay} />
+            <Payouts
+              account={activeAccount}
+              payoutsByDay={payoutsByDay}
+              poolClaimsByDay={poolClaimsByDay}
+            />
           </GraphWrapper>
         </RowPrimaryWrapper>
       </PageRowWrapper>

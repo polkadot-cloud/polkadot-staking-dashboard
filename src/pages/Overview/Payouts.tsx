@@ -10,7 +10,7 @@ import { StatusLabel } from 'library/StatusLabel';
 import { useStaking } from 'contexts/Staking';
 
 export const PayoutsInner = (props: any) => {
-  const { payouts } = props;
+  const { payoutsByDay, poolClaimsByDay } = props;
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
@@ -46,9 +46,17 @@ export const PayoutsInner = (props: any) => {
           transition: 'opacity 0.5s',
         }}
       >
-        <PayoutBar payouts={payouts} height="170px" />
+        <PayoutBar
+          payouts={payoutsByDay}
+          poolClaims={poolClaimsByDay}
+          height="170px"
+        />
         <div style={{ marginTop: '1rem' }}>
-          <PayoutLine payouts={payouts} height="70px" />
+          <PayoutLine
+            payouts={payoutsByDay}
+            poolClaims={poolClaimsByDay}
+            height="70px"
+          />
         </div>
       </div>
     </div>

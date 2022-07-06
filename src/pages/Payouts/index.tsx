@@ -19,20 +19,21 @@ import { PageTitle } from 'library/PageTitle';
 import {
   useSize,
   formatSize,
-  prefillToMaxDays,
-  calculatePayoutsByDay,
+  formatRewardsForGraphs,
 } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
+import { MAX_PAYOUT_DAYS } from 'consts';
+import { AnySubscan } from 'types';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { network } = useApi();
-  const { payouts } = useSubscan();
+  const { payouts, poolClaims } = useSubscan();
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
@@ -45,21 +46,18 @@ export const Payouts = (props: PageProps) => {
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 250);
 
-  // generate payouts by day data
-  const maxDays = 60;
-  let payoutsByDay = prefillToMaxDays(
-    calculatePayoutsByDay(payouts, maxDays, units),
-    maxDays
+  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
+    21,
+    units,
+    payouts,
+    poolClaims
   );
-
-  // reverse payouts: most recent last
-  payoutsByDay = payoutsByDay.reverse();
 
   // take non-zero payouts in most-recent order
-  const payoutsList = [...payouts.filter((p: any) => p.amount > 0)].slice(
-    0,
-    maxDays
-  );
+  // TODO: inject pool claims too
+  const payoutsList = [
+    ...payouts.filter((p: AnySubscan) => p.amount > 0),
+  ].slice(0, MAX_PAYOUT_DAYS);
 
   return (
     <>
@@ -115,8 +113,16 @@ export const Payouts = (props: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar payouts={payoutsByDay} height="120px" />
-              <PayoutLine payouts={payoutsByDay} height="70px" />
+              <PayoutBar
+                payouts={payoutsByDay}
+                poolClaims={poolClaimsByDay}
+                height="120px"
+              />
+              <PayoutLine
+                payouts={payoutsByDay}
+                poolClaims={poolClaimsByDay}
+                height="70px"
+              />
             </div>
           </div>
         </GraphWrapper>
