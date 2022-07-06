@@ -1,9 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import moment from 'moment';
 import React, { useState, useEffect } from 'react';
-import { API_ENDPOINTS, API_SUBSCAN_KEY, MAX_PAYOUT_DAYS } from 'consts';
+import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
 import { UIContextInterface } from 'contexts/UI/types';
 import { AnySubscan } from 'types';
 import { useApi } from '../Api';
@@ -83,15 +82,6 @@ export const SubscanProvider = ({
           if (!result?.data?.list) {
             break;
           }
-          const { list } = result.data;
-          const last = list[list.length - 1];
-          const timestamp = last.block_timestamp;
-
-          // if we have reached max amount of days needed, break loop early
-          const daysSince = moment().diff(moment.unix(timestamp), 'days');
-          if (daysSince > MAX_PAYOUT_DAYS) {
-            break;
-          }
           _payouts = _payouts.concat(result.data.list);
         }
         setPayouts(_payouts);
@@ -137,14 +127,6 @@ export const SubscanProvider = ({
           // check list has records
           const { list } = result.data;
           if (!list.length) {
-            break;
-          }
-          const last = list[list.length - 1];
-          const timestamp = last.block_timestamp;
-
-          // if we have reached max amount of days needed, break loop early
-          const daysSince = moment().diff(moment.unix(timestamp), 'days');
-          if (daysSince > MAX_PAYOUT_DAYS) {
             break;
           }
           _poolClaims = _poolClaims.concat(result.data.list);
