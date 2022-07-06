@@ -28,10 +28,10 @@ export const SubscanProvider = ({
   const { activeAccount } = useConnect();
 
   // store fetched payouts from Subscan
-  const [payouts, setPayouts]: AnySubscan = useState([]);
+  const [payouts, setPayouts] = useState<AnySubscan>([]);
 
   // store fetched pool claims from Subscan
-  const [poolClaims, setPoolClaims]: AnySubscan = useState([]);
+  const [poolClaims, setPoolClaims] = useState<AnySubscan>([]);
 
   // reset payouts on network switch
   useEffect(() => {
