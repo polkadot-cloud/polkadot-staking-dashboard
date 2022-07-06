@@ -127,7 +127,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
   };
 
   // configure payout dataset
-  const datasets = [
+  let datasets = [
     {
       label: 'Payout',
       data: payoutsByDay.map((item: AnySubscan) => {
@@ -140,7 +140,6 @@ export const PayoutLine = (props: PayoutLineProps) => {
       borderWidth: 2,
     },
   ];
-
   // if finished syncing and pooling, add pools dataset
   if (!isSyncing && membership !== null) {
     datasets.push({
@@ -154,6 +153,10 @@ export const PayoutLine = (props: PayoutLineProps) => {
       pointRadius: 0,
       borderWidth: 2,
     });
+  }
+  // if synced, pooling and not staking, remove payout dataset
+  if (!isSyncing && membership !== null && inSetup()) {
+    datasets = datasets.filter((d: AnySubscan) => d.label !== 'Payout');
   }
 
   const data = {
