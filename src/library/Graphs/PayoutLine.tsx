@@ -46,12 +46,12 @@ export const PayoutLine = (props: PayoutLineProps) => {
   const { network } = useApi();
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const { membership } = usePoolMemberships();
+  const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
 
   const { units } = network;
-  const notStaking = !isSyncing && inSetup() && !membership;
-  const stakingAndPooling = !isSyncing && !inSetup() && membership !== null;
+  const notStaking = !isSyncing && inSetup() && !poolMembership;
+  const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
 
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
@@ -66,7 +66,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
   // determine color for payouts
   const color = notStaking
     ? networkColorsTransparent[`${network.name}-${mode}`]
-    : stakingAndPooling
+    : !poolingOnly
     ? networkColors[`${network.name}-${mode}`]
     : networkColorsSecondary[`${network.name}-${mode}`];
 
@@ -126,30 +126,23 @@ export const PayoutLine = (props: PayoutLineProps) => {
     },
   };
 
-  // configure  dataset
-  let datasets = [
-    {
-      label: 'Payout',
-      data: combinedPayouts.map((item: AnySubscan) => {
-        return item.amount;
-      }),
-      borderColor: color,
-      backgroundColor: color,
-      pointStyle: undefined,
-      pointRadius: 0,
-      borderWidth: 2,
-    },
-  ];
-  // if synced, pooling and not staking, remove payout dataset
-  if (!isSyncing && membership !== null && inSetup()) {
-    datasets = datasets.filter((d: AnySubscan) => d.label !== 'Payout');
-  }
-
   const data = {
     labels: payoutsByDay.map(() => {
       return '';
     }),
-    datasets,
+    datasets: [
+      {
+        label: 'Payout',
+        data: combinedPayouts.map((item: AnySubscan) => {
+          return item.amount;
+        }),
+        borderColor: color,
+        backgroundColor: color,
+        pointStyle: undefined,
+        pointRadius: 0,
+        borderWidth: 2,
+      },
+    ],
   };
 
   return (
