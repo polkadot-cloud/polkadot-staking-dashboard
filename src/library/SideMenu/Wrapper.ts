@@ -100,7 +100,7 @@ export const LogoWrapper = styled.button<any>`
     color: ${networkColor};
     background: ${modalBackground};
     position: absolute;
-    right: -8px;
+    right: 0px;
     z-index: 2;
     font-size: 0.6rem;
     padding: 0.1rem 0.45rem;
