@@ -259,7 +259,7 @@ export const formatRewardsForGraphs = (
   } else {
     // both `lastPayout` and `lastPoolClaim` are present
     lastReward =
-      lastPayout.block_timestamp > lastPoolClaim.block_timeestamp
+      lastPayout.block_timestamp > lastPoolClaim.block_timestamp
         ? lastPayout
         : lastPoolClaim;
   }
