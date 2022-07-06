@@ -168,7 +168,7 @@ export const StakingProvider = ({
       const { data } = message;
       const {
         stakers,
-        nominators,
+        totalNominators,
         activeValidators,
         minActiveBond,
         ownStake,
@@ -185,7 +185,7 @@ export const StakingProvider = ({
             ...eraStakersRef.current,
             stakers,
             // nominators,
-            totalNominators: nominators.length,
+            totalNominators,
             activeValidators,
             minActiveBond,
             ownStake,
