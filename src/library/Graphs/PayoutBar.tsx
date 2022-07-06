@@ -103,10 +103,11 @@ export const PayoutBar = (props: PayoutBarProps) => {
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    barPercentage: 0.4,
+    barPercentage: 0.55,
     maxBarThickness: 11,
     scales: {
       x: {
+        stacked: true,
         grid: {
           display: false,
           drawBorder: true,
@@ -119,6 +120,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
         },
       },
       y: {
+        stacked: true,
         ticks: {
           font: {
             size: 10,
