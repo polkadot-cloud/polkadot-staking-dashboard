@@ -242,26 +242,26 @@ export const formatRewardsForGraphs = (
   poolClaimsByDay = poolClaimsByDay.reverse();
 
   // get most recent payout
-  const lastPayout =
+  const payoutExists =
     payouts.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
-  const lastPoolClaim =
+  const poolClaimExists =
     poolClaims.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
 
   // calculate which payout was most recent
   let lastReward = null;
-  if (!lastPayout || !lastPoolClaim) {
-    if (lastPayout) {
-      lastReward = lastPayout;
+  if (!payoutExists || !poolClaimExists) {
+    if (payoutExists) {
+      lastReward = payoutExists;
     }
-    if (lastPoolClaim) {
-      lastReward = lastPoolClaim;
+    if (poolClaimExists) {
+      lastReward = poolClaimExists;
     }
   } else {
-    // both `lastPayout` and `lastPoolClaim` are present
+    // both `payoutExists` and `poolClaimExists` are present
     lastReward =
-      lastPayout.block_timestamp > lastPoolClaim.block_timestamp
-        ? lastPayout
-        : lastPoolClaim;
+      payoutExists.block_timestamp > poolClaimExists.block_timestamp
+        ? payoutExists
+        : poolClaimExists;
   }
 
   return {
@@ -271,24 +271,29 @@ export const formatRewardsForGraphs = (
   };
 };
 
-// combine payouts and pool claims into daily records
+/* combineRewardsByDay
+ * combines payouts and pool claims into daily records.
+ * removes the `event_id` field from records.
+ */
 export const combineRewardsByDay = (
   payoutsByDay: AnySubscan,
   poolClaimsByDay: AnySubscan
 ) => {
-  if (!payoutsByDay && !poolClaimsByDay) return [];
-
-  // check if pool claims exists
-  const lastPoolClaim =
-    poolClaimsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ??
+  // we first check if actual payouts exist, e.g. there are non-zero payout
+  // amounts present in either payouts or pool claims.
+  const poolClaimExists =
+    poolClaimsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ||
+    null;
+  const payoutExists =
+    payoutsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ||
     null;
 
-  // check if payouts exists
-  const lastPayout =
-    payoutsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ??
-    null;
-
-  if (!lastPoolClaim) {
+  // if no pool claims exist but payouts do, return payouts w.o. event_id
+  // also do this if there are no payouts period.
+  if (
+    (!poolClaimExists && payoutExists) ||
+    (!payoutExists && !poolClaimExists)
+  ) {
     return payoutsByDay.map((p: AnySubscan) => {
       return {
         amount: p.amount,
@@ -296,7 +301,9 @@ export const combineRewardsByDay = (
       };
     });
   }
-  if (!lastPayout) {
+
+  // if no payouts exist but pool claims do, return pool claims w.o. event_id
+  if (!payoutExists && poolClaimExists) {
     return poolClaimsByDay.map((p: AnySubscan) => {
       return {
         amount: p.amount,
@@ -305,6 +312,8 @@ export const combineRewardsByDay = (
     });
   }
 
+  // We now know pool claims *and* payouts exist. We can begin to combine them
+  // into one unified `rewards` array.
   let rewards: AnySubscan = [];
 
   // loop pool claims and consume / combine payouts
@@ -325,7 +334,7 @@ export const combineRewardsByDay = (
     }
     // consume used payouts
     payoutsByDay = payoutsByDay.filter((q: AnySubscan) => {
-      return unixSameDay(q.block_timestamp, p.block_timestamp);
+      return !unixSameDay(q.block_timestamp, p.block_timestamp);
     });
     rewards.push({
       amount,
@@ -345,7 +354,7 @@ export const combineRewardsByDay = (
     );
   }
 
-  // re-order combined rewards based on block timestamp
+  // re-order combined rewards based on block timestamp, oldest first
   rewards = rewards.sort((a: AnySubscan, b: AnySubscan) => {
     const x = new BN(a.block_timestamp);
     const y = new BN(b.block_timestamp);
