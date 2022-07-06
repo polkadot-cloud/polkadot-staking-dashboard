@@ -3,9 +3,14 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { backgroundValidator, textSecondary, networkColor } from 'theme';
+import {
+  backgroundValidator,
+  textSecondary,
+  networkColor,
+  networkColorSecondary,
+} from 'theme';
 
-export const ItemWrapper = styled(motion.div)<any>`
+export const ItemWrapper = styled(motion.div)`
   padding: 0.5rem;
   display: flex;
   flex-flow: row nowrap;
@@ -26,6 +31,10 @@ export const ItemWrapper = styled(motion.div)<any>`
     h4 {
       margin: 0 0.75rem;
       color: ${textSecondary};
+
+      &.claim {
+        color: ${networkColorSecondary};
+      }
 
       &.reward {
         color: ${networkColor};

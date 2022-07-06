@@ -263,10 +263,39 @@ export const ConnectProvider = ({
             // subscribe to accounts
             const _unsubscribe = (await extension.subscribeAccounts(
               (injected) => {
+                if (!injected) {
+                  return;
+                }
+
+                // remove injected if they exist in local external accounts
+                const localExternalAccounts = getLocalExternalAccounts(true);
+                const localAccountsToForget =
+                  localExternalAccounts.filter(
+                    (l: ImportedAccount) =>
+                      (injected || []).find(
+                        (a: WalletAccount) => a.address === l.address
+                      ) === undefined
+                  ) || [];
+
+                if (localAccountsToForget.length) {
+                  forgetAccounts(localAccountsToForget);
+                }
+
                 // update extensions status
                 updateExtensionStatus(extensionName, 'connected');
                 // update local active extensions
                 addToLocalExtensions(extensionName);
+
+                // filter unneeded account properties
+                injected = injected.map((a: WalletAccount) => {
+                  return {
+                    name: a.name,
+                    address: a.address,
+                    signer: a.signer,
+                    source: a.source,
+                    wallet: a.wallet,
+                  };
+                });
 
                 // abort if no accounts
                 if (injected !== undefined && injected.length) {
@@ -345,6 +374,24 @@ export const ConnectProvider = ({
 
         // subscribe to accounts
         const _unsubscribe = (await extension.subscribeAccounts((injected) => {
+          if (!injected) {
+            return;
+          }
+
+          // remove injected if they exist in local external accounts
+          const localExternalAccounts = getLocalExternalAccounts(true);
+          const localAccountsToForget =
+            localExternalAccounts.filter(
+              (l: ImportedAccount) =>
+                (injected || []).find(
+                  (a: WalletAccount) => a.address === l.address
+                ) === undefined
+            ) || [];
+
+          if (localAccountsToForget.length) {
+            forgetAccounts(localAccountsToForget);
+          }
+
           // update extensions status
           updateExtensionStatus(extensionName, 'connected');
           // update local active extensions
@@ -483,13 +530,10 @@ export const ConnectProvider = ({
   };
 
   const getAccount = (addr: MaybeAccount) => {
-    const accs = accountsRef.current.filter(
-      (a: ImportedAccount) => a?.address === addr
-    );
-    if (accs.length) {
-      return accs[0];
-    }
-    return null;
+    const acc =
+      accountsRef.current.find((a: ImportedAccount) => a?.address === addr) ||
+      null;
+    return acc;
   };
 
   const getActiveAccount = () => {

@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import React from 'react';
 import throttle from 'lodash.throttle';
 import { planckBnToUnit } from 'Utils';
+import { AnySubscan } from 'types';
 
 export const getSize = (element: any) => {
   const width = element?.offsetWidth;
@@ -34,9 +35,8 @@ export const useSize = (element: any) => {
 };
 
 export const formatSize = (size: any, minHeight: number) => {
-  const width: any = size.width === undefined ? '100%' : `${size.width}px`;
-  const height: any =
-    size.height === undefined ? minHeight : `${size.height}px`;
+  const width: string | number = size.width === undefined ? '100%' : size.width;
+  const height: number = size.height === undefined ? minHeight : size.height;
 
   return {
     width,
@@ -219,4 +219,158 @@ export const prefillToMaxDays = (payoutsByDay: any, maxDays: number) => {
     }
   }
   return payoutsByDay;
+};
+
+// format rewards and return last payment
+export const formatRewardsForGraphs = (
+  days: number,
+  units: number,
+  payouts: AnySubscan,
+  poolClaims: AnySubscan
+) => {
+  let payoutsByDay = prefillToMaxDays(
+    calculatePayoutsByDay(payouts, days, units),
+    days
+  );
+  let poolClaimsByDay = prefillToMaxDays(
+    calculatePayoutsByDay(poolClaims, days, units),
+    days
+  );
+
+  // reverse rewards: most recent last
+  payoutsByDay = payoutsByDay.reverse();
+  poolClaimsByDay = poolClaimsByDay.reverse();
+
+  // get most recent payout
+  const payoutExists =
+    payouts.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
+  const poolClaimExists =
+    poolClaims.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
+
+  // calculate which payout was most recent
+  let lastReward = null;
+  if (!payoutExists || !poolClaimExists) {
+    if (payoutExists) {
+      lastReward = payoutExists;
+    }
+    if (poolClaimExists) {
+      lastReward = poolClaimExists;
+    }
+  } else {
+    // both `payoutExists` and `poolClaimExists` are present
+    lastReward =
+      payoutExists.block_timestamp > poolClaimExists.block_timestamp
+        ? payoutExists
+        : poolClaimExists;
+  }
+
+  return {
+    payoutsByDay,
+    poolClaimsByDay,
+    lastReward,
+  };
+};
+
+/* combineRewardsByDay
+ * combines payouts and pool claims into daily records.
+ * removes the `event_id` field from records.
+ */
+export const combineRewardsByDay = (
+  payoutsByDay: AnySubscan,
+  poolClaimsByDay: AnySubscan
+) => {
+  // we first check if actual payouts exist, e.g. there are non-zero payout
+  // amounts present in either payouts or pool claims.
+  const poolClaimExists =
+    poolClaimsByDay.find((p: AnySubscan) => p.amount > 0) || null;
+  const payoutExists =
+    payoutsByDay.find((p: AnySubscan) => p.amount > 0) || null;
+
+  // if no pool claims exist but payouts do, return payouts w.o. event_id
+  // also do this if there are no payouts period.
+  if (
+    (!poolClaimExists && payoutExists) ||
+    (!payoutExists && !poolClaimExists)
+  ) {
+    return payoutsByDay.map((p: AnySubscan) => {
+      return {
+        amount: p.amount,
+        block_timestamp: p.block_timestamp,
+      };
+    });
+  }
+
+  // if no payouts exist but pool claims do, return pool claims w.o. event_id
+  if (!payoutExists && poolClaimExists) {
+    return poolClaimsByDay.map((p: AnySubscan) => {
+      return {
+        amount: p.amount,
+        block_timestamp: p.block_timestamp,
+      };
+    });
+  }
+
+  // We now know pool claims *and* payouts exist. We can begin to combine them
+  // into one unified `rewards` array.
+  let rewards: AnySubscan = [];
+
+  // loop pool claims and consume / combine payouts
+  poolClaimsByDay.forEach((p: AnySubscan) => {
+    let { amount } = p;
+    const { block_timestamp } = p;
+
+    // check payouts exist on this day
+    const payoutsThisDay = payoutsByDay.filter((q: AnySubscan) => {
+      return unixSameDay(q.block_timestamp, p.block_timestamp);
+    });
+
+    // add amounts
+    if (payoutsThisDay.length) {
+      for (const payout of payoutsThisDay) {
+        amount += payout.amount;
+      }
+    }
+    // consume used payouts
+    payoutsByDay = payoutsByDay.filter((q: AnySubscan) => {
+      return !unixSameDay(q.block_timestamp, p.block_timestamp);
+    });
+    rewards.push({
+      amount,
+      block_timestamp,
+    });
+  });
+
+  // add remaining payouts
+  if (payoutsByDay.length) {
+    rewards = rewards.concat(
+      payoutsByDay.forEach((p: AnySubscan) => {
+        return {
+          amount: p.amount,
+          block_timestamp: p.block_timestamp,
+        };
+      })
+    );
+  }
+
+  // re-order combined rewards based on block timestamp, oldest first
+  rewards = rewards.sort((a: AnySubscan, b: AnySubscan) => {
+    const x = new BN(a.block_timestamp);
+    const y = new BN(b.block_timestamp);
+    return y.add(x);
+  });
+
+  return rewards;
+};
+
+// calculate whether 2 unix timestamps are on the same day
+export const unixSameDay = (p: number, q: number) => {
+  const dateQ = moment.unix(q);
+  const _dayQ = dateQ.dayOfYear();
+  const _yearQ = dateQ.year();
+
+  const dateP = moment.unix(p);
+  const _dayP = dateP.dayOfYear();
+  const _yearP = dateP.year();
+
+  return _dayQ === _dayP && _yearQ === _yearP;
 };

@@ -7,4 +7,5 @@ export const defaultSubscanContext: SubscanContextInterface = {
   // eslint-disable-next-line
   fetchEraPoints: (v, e) => {},
   payouts: [],
+  poolClaims: [],
 };

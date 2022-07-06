@@ -163,7 +163,7 @@ export const BalanceGraph = () => {
     datasets: [dataSet],
   };
 
-  const ref: any = React.useRef();
+  const ref = React.useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 220);
 

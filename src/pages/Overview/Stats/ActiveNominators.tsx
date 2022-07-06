@@ -11,27 +11,27 @@ export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi();
   const { maxElectingVoters } = consts;
   const { eraStakers } = useStaking();
-  const { activeNominators } = eraStakers;
+  const { totalNominators } = eraStakers;
 
   // active nominators as percent
-  let activeNominatorsAsPercent = 0;
+  let totalNominatorsAsPercent = 0;
   if (maxElectingVoters > 0) {
-    activeNominatorsAsPercent =
-      activeNominators / new BN(maxElectingVoters).div(new BN(100)).toNumber();
+    totalNominatorsAsPercent =
+      totalNominators / new BN(maxElectingVoters).div(new BN(100)).toNumber();
   }
 
   const params = {
     label: 'Active Nominators',
     stat: {
-      value: activeNominators,
+      value: totalNominators,
       total: maxElectingVoters,
       unit: '',
     },
     graph: {
-      value1: activeNominators,
-      value2: maxElectingVoters - activeNominators,
+      value1: totalNominators,
+      value2: maxElectingVoters - totalNominators,
     },
-    tooltip: `${toFixedIfNecessary(activeNominatorsAsPercent, 2)}%`,
+    tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
     assistant: {
       page: 'overview',
       key: 'Active Nominators',

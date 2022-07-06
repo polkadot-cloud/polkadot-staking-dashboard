@@ -154,7 +154,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // eraStakers has synced
-    if (!eraStakers.activeNominators) {
+    if (!eraStakers.totalNominators) {
       syncing = true;
     }
 
