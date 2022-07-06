@@ -24,7 +24,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
   const { isReady } = useApi();
-  const { getAccount, activeAccount }: any = useConnect();
+  const { getAccount, activeAccount } = useConnect();
   const {
     getLedgerForController,
     getAccountLocks,
