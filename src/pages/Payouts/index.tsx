@@ -16,14 +16,9 @@ import { SubscanButton } from 'library/SubscanButton';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PageTitle } from 'library/PageTitle';
-import {
-  useSize,
-  formatSize,
-  formatRewardsForGraphs,
-} from 'library/Graphs/Utils';
+import { useSize, formatSize } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { MAX_PAYOUT_DAYS } from 'consts';
 import { AnySubscan } from 'types';
@@ -32,26 +27,17 @@ import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
-  const { network } = useApi();
-  const { payouts, poolClaims } = useSubscan();
+  const { payouts } = useSubscan();
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
 
-  const { units } = network;
   const { page } = props;
   const { title } = page;
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 250);
-
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
-    21,
-    units,
-    payouts,
-    poolClaims
-  );
 
   // take non-zero payouts in most-recent order
   // TODO: inject pool claims too
@@ -113,16 +99,8 @@ export const Payouts = (props: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar
-                payouts={payoutsByDay}
-                poolClaims={poolClaimsByDay}
-                height="120px"
-              />
-              <PayoutLine
-                payouts={payoutsByDay}
-                poolClaims={poolClaimsByDay}
-                height="70px"
-              />
+              <PayoutBar days={MAX_PAYOUT_DAYS} height="120px" />
+              <PayoutLine days={MAX_PAYOUT_DAYS} height="70px" />
             </div>
           </div>
         </GraphWrapper>

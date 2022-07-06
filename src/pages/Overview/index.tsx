@@ -11,7 +11,6 @@ import {
 } from 'Wrappers';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
@@ -29,15 +28,9 @@ import Payouts from './Payouts';
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
-  const { activeAccount } = useConnect();
   const { payouts, poolClaims } = useSubscan();
 
-  const { payoutsByDay, poolClaimsByDay, lastReward } = formatRewardsForGraphs(
-    21,
-    units,
-    payouts,
-    poolClaims
-  );
+  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
 
   return (
     <>
@@ -74,11 +67,7 @@ export const Overview = () => {
                 </span>
               </h2>
             </div>
-            <Payouts
-              account={activeAccount}
-              payoutsByDay={payoutsByDay}
-              poolClaimsByDay={poolClaimsByDay}
-            />
+            <Payouts />
           </GraphWrapper>
         </RowPrimaryWrapper>
       </PageRowWrapper>

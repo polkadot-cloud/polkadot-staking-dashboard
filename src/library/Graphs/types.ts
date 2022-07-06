@@ -17,14 +17,12 @@ export interface EraPointsProps {
 }
 
 export interface PayoutBarProps {
-  payouts: AnySubscan;
-  poolClaims: AnySubscan;
+  days: number;
   height: string;
 }
 
 export interface PayoutLineProps {
-  payouts: AnySubscan;
-  poolClaims: AnySubscan;
+  days: number;
   height: string;
   background?: string;
 }

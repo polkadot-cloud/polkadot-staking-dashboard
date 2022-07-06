@@ -16,13 +16,18 @@ import { useApi } from 'contexts/Api';
 import {
   defaultThemes,
   networkColors,
+  networkColorsSecondary,
   networkColorsTransparent,
 } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { humanNumber } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { AnySubscan } from 'types';
+import { useSubscan } from 'contexts/Subscan';
 import { PayoutLineProps } from './types';
+import { formatRewardsForGraphs } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -35,17 +40,37 @@ ChartJS.register(
 );
 
 export const PayoutLine = (props: PayoutLineProps) => {
+  const { days, height, background } = props;
+
   const { mode } = useTheme();
   const { network } = useApi();
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const notStaking = !isSyncing && inSetup();
-  const { payouts, height, background } = props;
+  const { membership } = usePoolMemberships();
+  const { payouts, poolClaims } = useSubscan();
 
-  const color = notStaking
+  const { units } = network;
+  const notStaking = !isSyncing && inSetup() && !membership;
+  const stakingAndPooling = !isSyncing && !inSetup() && membership !== null;
+
+  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
+    days,
+    units,
+    payouts,
+    poolClaims
+  );
+
+  // determine color for payouts
+  const colorPayouts = notStaking
     ? networkColorsTransparent[`${network.name}-${mode}`]
     : networkColors[`${network.name}-${mode}`];
 
+  // determine color for poolClaims
+  const colorPoolClaims = notStaking
+    ? networkColorsTransparent[`${network.name}-${mode}`]
+    : networkColorsSecondary[`${network.name}-${mode}`];
+
+  // configure graph options
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -82,7 +107,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
         text: `${network.unit} Payouts`,
       },
       tooltip: {
-        displayColors: false,
+        displayColors: stakingAndPooling,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
@@ -90,7 +115,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
             return [];
           },
           label: (context: any) => {
-            return `${humanNumber(context.parsed.y)} ${network.unit}`;
+            return ` ${humanNumber(context.parsed.y)} ${network.unit}`;
           },
         },
         intersect: false,
@@ -101,24 +126,41 @@ export const PayoutLine = (props: PayoutLineProps) => {
     },
   };
 
+  // configure payout dataset
+  const datasets = [
+    {
+      label: 'Payout',
+      data: payoutsByDay.map((item: AnySubscan) => {
+        return item.amount;
+      }),
+      borderColor: colorPayouts,
+      backgroundColor: colorPayouts,
+      pointStyle: undefined,
+      pointRadius: 0,
+      borderWidth: 2,
+    },
+  ];
+
+  // if finished syncing and pooling, add pools dataset
+  if (!isSyncing && membership !== null) {
+    datasets.push({
+      label: 'Pool Claim',
+      data: poolClaimsByDay.map((item: AnySubscan) => {
+        return item.amount;
+      }),
+      borderColor: colorPoolClaims,
+      backgroundColor: colorPoolClaims,
+      pointStyle: undefined,
+      pointRadius: 0,
+      borderWidth: 2,
+    });
+  }
+
   const data = {
-    labels: payouts.map((item: any, index: number) => {
+    labels: payoutsByDay.map(() => {
       return '';
     }),
-    datasets: [
-      {
-        label: 'Price',
-        // data: empty_data,
-        data: payouts.map((item: any, index: number) => {
-          return item.amount;
-        }),
-        borderColor: color,
-        backgroundColor: color,
-        pointStyle: undefined,
-        pointRadius: 0,
-        borderWidth: 2,
-      },
-    ],
+    datasets,
   };
 
   return (

@@ -9,13 +9,13 @@ import { useSize, formatSize } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 import { useStaking } from 'contexts/Staking';
 
-export const PayoutsInner = (props: any) => {
-  const { payoutsByDay, poolClaimsByDay } = props;
+export const Payouts = () => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
 
   const ref = React.useRef<HTMLDivElement>(null);
+
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 306);
 
@@ -46,34 +46,13 @@ export const PayoutsInner = (props: any) => {
           transition: 'opacity 0.5s',
         }}
       >
-        <PayoutBar
-          payouts={payoutsByDay}
-          poolClaims={poolClaimsByDay}
-          height="170px"
-        />
+        <PayoutBar days={14} height="170px" />
         <div style={{ marginTop: '1rem' }}>
-          <PayoutLine
-            payouts={payoutsByDay}
-            poolClaims={poolClaimsByDay}
-            height="70px"
-          />
+          <PayoutLine days={14} height="70px" />
         </div>
       </div>
     </div>
   );
 };
-
-export class Payouts extends React.Component<any, any> {
-  // stop component refersh triggered by other API updates
-  shouldComponentUpdate(nextProps: any) {
-    const propsChanged = nextProps.account !== this.props.account;
-    const payoutsChanged = nextProps.payouts !== this.props.payouts;
-    return propsChanged || payoutsChanged;
-  }
-
-  render() {
-    return <PayoutsInner {...this.props} />;
-  }
-}
 
 export default Payouts;
