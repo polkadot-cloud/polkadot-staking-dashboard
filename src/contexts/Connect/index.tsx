@@ -271,10 +271,10 @@ export const ConnectProvider = ({
                 const localExternalAccounts = getLocalExternalAccounts(true);
                 const localAccountsToForget =
                   localExternalAccounts.filter(
-                    (l: ImportedAccount) =>
+                    (l: ExternalAccount) =>
                       (injected || []).find(
                         (a: WalletAccount) => a.address === l.address
-                      ) === undefined
+                      ) !== undefined && l.addedBy === 'system'
                   ) || [];
 
                 if (localAccountsToForget.length) {
@@ -382,10 +382,10 @@ export const ConnectProvider = ({
           const localExternalAccounts = getLocalExternalAccounts(true);
           const localAccountsToForget =
             localExternalAccounts.filter(
-              (l: ImportedAccount) =>
+              (l: ExternalAccount) =>
                 (injected || []).find(
                   (a: WalletAccount) => a.address === l.address
-                ) === undefined
+                ) !== undefined && l.addedBy === 'system'
             ) || [];
 
           if (localAccountsToForget.length) {
