@@ -6,6 +6,7 @@ import moment from 'moment';
 import React from 'react';
 import throttle from 'lodash.throttle';
 import { planckBnToUnit } from 'Utils';
+import { AnySubscan } from 'types';
 
 export const getSize = (element: any) => {
   const width = element?.offsetWidth;
@@ -34,9 +35,8 @@ export const useSize = (element: any) => {
 };
 
 export const formatSize = (size: any, minHeight: number) => {
-  const width: any = size.width === undefined ? '100%' : `${size.width}px`;
-  const height: any =
-    size.height === undefined ? minHeight : `${size.height}px`;
+  const width: string | number = size.width === undefined ? '100%' : size.width;
+  const height: number = size.height === undefined ? minHeight : size.height;
 
   return {
     width,
@@ -219,4 +219,54 @@ export const prefillToMaxDays = (payoutsByDay: any, maxDays: number) => {
     }
   }
   return payoutsByDay;
+};
+
+// format rewards and return last payment
+export const formatRewardsForGraphs = (
+  days: number,
+  units: number,
+  payouts: AnySubscan,
+  poolClaims: AnySubscan
+) => {
+  let payoutsByDay = prefillToMaxDays(
+    calculatePayoutsByDay(payouts, days, units),
+    days
+  );
+  let poolClaimsByDay = prefillToMaxDays(
+    calculatePayoutsByDay(poolClaims, days, units),
+    days
+  );
+
+  // reverse rewards: most recent last
+  payoutsByDay = payoutsByDay.reverse();
+  poolClaimsByDay = poolClaimsByDay.reverse();
+
+  // get most recent payout
+  const lastPayout =
+    payouts.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
+  const lastPoolClaim =
+    poolClaims.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
+
+  // calculate which payout was most recent
+  let lastReward = null;
+  if (!lastPayout || !lastPoolClaim) {
+    if (lastPayout) {
+      lastReward = lastPayout;
+    }
+    if (lastPoolClaim) {
+      lastReward = lastPoolClaim;
+    }
+  } else {
+    // both `lastPayout` and `lastPoolClaim` are present
+    lastReward =
+      lastPayout.block_timestamp > lastPoolClaim.block_timeestamp
+        ? lastPayout
+        : lastPoolClaim;
+  }
+
+  return {
+    payoutsByDay,
+    poolClaimsByDay,
+    lastReward,
+  };
 };
