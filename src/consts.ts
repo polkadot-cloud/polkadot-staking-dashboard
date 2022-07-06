@@ -78,6 +78,7 @@ export const RESERVE_AMOUNT_DOT = 0.1;
 export const LIST_ITEMS_PER_PAGE = 50;
 export const LIST_ITEMS_PER_BATCH = 30;
 export const MIN_BOND_PRECISION = 3;
+export const MAX_PAYOUT_DAYS = 60;
 
 /*
  * Third party API keys and endpoints
@@ -87,5 +88,6 @@ export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3';
 export const API_ENDPOINTS = {
   priceChange: `${ENDPOINT_PRICE}/ticker/24hr?symbol=`,
   subscanRewardSlash: '/api/scan/account/reward_slash',
+  subscanPoolRewards: '/api/scan/nomination_pool/rewards',
   subscanEraStat: '/api/scan/staking/era_stat',
 };
