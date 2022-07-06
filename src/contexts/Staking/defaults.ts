@@ -26,7 +26,8 @@ export const stakingMetrics: StakingMetrics = {
 
 export const eraStakers: EraStakers = {
   stakers: [],
-  activeNominators: 0,
+  nominators: undefined,
+  totalNominators: 0,
   activeValidators: 0,
   minActiveBond: 0,
   minStakingActiveBond: 0,

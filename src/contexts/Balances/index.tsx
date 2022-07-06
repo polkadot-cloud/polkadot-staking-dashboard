@@ -283,15 +283,19 @@ export const BalancesProvider = ({
             unlocking: _unlocking,
           };
 
-          // update ledgers in context state
-          let _ledgers = Object.values(ledgersRef.current);
-
           // remove stale account if it's already in list, and concat.
+          let _ledgers = Object.values(ledgersRef.current);
           _ledgers = _ledgers
             .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
             .concat(ledger);
 
-          // update state
+          setStateWithRef(_ledgers, setLedgers, ledgersRef);
+        } else {
+          // no ledger: remove stale account if it's already in list.
+          let _ledgers = Object.values(ledgersRef.current);
+          _ledgers = _ledgers.filter(
+            (_l: BalanceLedger) => _l.address !== address
+          );
           setStateWithRef(_ledgers, setLedgers, ledgersRef);
         }
       }

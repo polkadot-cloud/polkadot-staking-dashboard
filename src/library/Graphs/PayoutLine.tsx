@@ -16,13 +16,18 @@ import { useApi } from 'contexts/Api';
 import {
   defaultThemes,
   networkColors,
+  networkColorsSecondary,
   networkColorsTransparent,
 } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { humanNumber } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { AnySubscan } from 'types';
+import { useSubscan } from 'contexts/Subscan';
 import { PayoutLineProps } from './types';
+import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -35,17 +40,37 @@ ChartJS.register(
 );
 
 export const PayoutLine = (props: PayoutLineProps) => {
+  const { days, height, background } = props;
+
   const { mode } = useTheme();
   const { network } = useApi();
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const notStaking = !isSyncing && inSetup();
-  const { payouts, height, background } = props;
+  const { membership: poolMembership } = usePoolMemberships();
+  const { payouts, poolClaims } = useSubscan();
 
+  const { units } = network;
+  const notStaking = !isSyncing && inSetup() && !poolMembership;
+  const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
+
+  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
+    days,
+    units,
+    payouts,
+    poolClaims
+  );
+
+  // combine payouts and pool claims into one dataset
+  const combinedPayouts = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+
+  // determine color for payouts
   const color = notStaking
     ? networkColorsTransparent[`${network.name}-${mode}`]
-    : networkColors[`${network.name}-${mode}`];
+    : !poolingOnly
+    ? networkColors[`${network.name}-${mode}`]
+    : networkColorsSecondary[`${network.name}-${mode}`];
 
+  // configure graph options
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -90,7 +115,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
             return [];
           },
           label: (context: any) => {
-            return `${humanNumber(context.parsed.y)} ${network.unit}`;
+            return ` ${humanNumber(context.parsed.y)} ${network.unit}`;
           },
         },
         intersect: false,
@@ -102,14 +127,13 @@ export const PayoutLine = (props: PayoutLineProps) => {
   };
 
   const data = {
-    labels: payouts.map((item: any, index: number) => {
+    labels: payoutsByDay.map(() => {
       return '';
     }),
     datasets: [
       {
-        label: 'Price',
-        // data: empty_data,
-        data: payouts.map((item: any, index: number) => {
+        label: 'Payout',
+        data: combinedPayouts.map((item: AnySubscan) => {
           return item.amount;
         }),
         borderColor: color,

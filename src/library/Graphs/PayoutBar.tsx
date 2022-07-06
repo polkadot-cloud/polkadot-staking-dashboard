@@ -18,13 +18,18 @@ import { useApi } from 'contexts/Api';
 import {
   defaultThemes,
   networkColors,
+  networkColorsSecondary,
   networkColorsTransparent,
 } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { humanNumber } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
+import { AnySubscan } from 'types';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useSubscan } from 'contexts/Subscan';
 import { PayoutBarProps } from './types';
+import { formatRewardsForGraphs } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -38,30 +43,57 @@ ChartJS.register(
 );
 
 export const PayoutBar = (props: PayoutBarProps) => {
+  const { days, height } = props;
+
   const { mode } = useTheme();
   const { network } = useApi();
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const notStaking = !isSyncing && inSetup();
-  const { payouts, height } = props;
+  const { membership } = usePoolMemberships();
+  const { payouts, poolClaims } = useSubscan();
 
-  const color = notStaking
+  const { units } = network;
+  const notStaking = !isSyncing && inSetup() && !membership;
+
+  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
+    days,
+    units,
+    payouts,
+    poolClaims
+  );
+
+  // determine color for payouts
+  const colorPayouts = notStaking
     ? networkColorsTransparent[`${network.name}-${mode}`]
     : networkColors[`${network.name}-${mode}`];
 
+  // determine color for poolClaims
+  const colorPoolClaims = notStaking
+    ? networkColorsTransparent[`${network.name}-${mode}`]
+    : networkColorsSecondary[`${network.name}-${mode}`];
+
   const data = {
-    labels: payouts.map((item: any) => {
+    labels: payoutsByDay.map((item: AnySubscan) => {
       return moment.unix(item.block_timestamp).format('Do MMM');
     }),
     datasets: [
       {
-        label: 'Price',
-        // data: empty_data,
-        data: payouts.map((item: any) => {
+        label: 'Payout',
+        data: payoutsByDay.map((item: AnySubscan) => {
           return item.amount;
         }),
-        borderColor: color,
-        backgroundColor: color,
+        borderColor: colorPayouts,
+        backgroundColor: colorPayouts,
+        pointRadius: 0,
+        borderRadius: 3,
+      },
+      {
+        label: 'Pool Claim',
+        data: poolClaimsByDay.map((item: AnySubscan) => {
+          return item.amount;
+        }),
+        borderColor: colorPoolClaims,
+        backgroundColor: colorPoolClaims,
         pointRadius: 0,
         borderRadius: 3,
       },
@@ -75,6 +107,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
     maxBarThickness: 11,
     scales: {
       x: {
+        stacked: true,
         grid: {
           display: false,
           drawBorder: true,
@@ -87,6 +120,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
         },
       },
       y: {
+        stacked: true,
         ticks: {
           font: {
             size: 10,

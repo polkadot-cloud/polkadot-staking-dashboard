@@ -32,6 +32,8 @@ export const StakingContext = React.createContext<StakingContextInterface>(
 
 export const useStaking = () => React.useContext(StakingContext);
 
+const worker = new Worker();
+
 export const StakingProvider = ({
   children,
 }: {
@@ -75,14 +77,98 @@ export const StakingProvider = ({
     ) as StakingTargets
   );
 
-  const worker = new Worker();
+  useEffect(() => {
+    if (status === 'connecting') {
+      setStateWithRef(defaults.eraStakers, setEraStakers, eraStakersRef);
+      setStakingMetrics(defaults.stakingMetrics);
+    }
+  }, [status]);
+
+  // handle staking metrics subscription
+  useEffect(() => {
+    if (isReady) {
+      subscribeToStakingkMetrics();
+    }
+    return () => {
+      // unsubscribe from staking metrics
+      if (stakingMetrics.unsub !== null) {
+        stakingMetrics.unsub();
+      }
+    };
+  }, [isReady, metrics.activeEra]);
+
+  // handle syncing with eraStakers
+  useEffect(() => {
+    if (isReady) {
+      fetchEraStakers();
+    }
+  }, [isReady, metrics.activeEra.index, activeAccount]);
+
+  useEffect(() => {
+    if (activeAccount) {
+      // calculates minimum bond of the user's chosen nominated validators.
+      let _stakingMinActiveBond = new BN(0);
+
+      const stakers = eraStakersRef.current?.stakers ?? null;
+      const nominations = getAccountNominations(activeAccount);
+
+      if (nominations.length && stakers !== null) {
+        for (const n of nominations) {
+          const staker = stakers.find((item: any) => item.address === n);
+
+          if (staker !== undefined) {
+            let { others } = staker;
+
+            // order others by bonded value, largest first.
+            others = others.sort((a: any, b: any) => {
+              const x = new BN(rmCommas(a.value));
+              const y = new BN(rmCommas(b.value));
+              return y.sub(x);
+            });
+
+            if (others.length) {
+              const _minActive = new BN(rmCommas(others[0].value.toString()));
+              // set new minimum active bond if less than current value
+              if (
+                _minActive.lt(_stakingMinActiveBond) ||
+                _stakingMinActiveBond !== new BN(0)
+              ) {
+                _stakingMinActiveBond = _minActive;
+              }
+            }
+          }
+        }
+      }
+
+      // convert _stakingMinActiveBond to base value
+      const stakingMinActiveBond = planckBnToUnit(_stakingMinActiveBond, units);
+
+      setStateWithRef(
+        {
+          ...eraStakersRef.current,
+          minStakingActiveBond: stakingMinActiveBond,
+        },
+        setEraStakers,
+        eraStakersRef
+      );
+
+      // set account's targets
+      _setTargets(
+        localStorageOrDefault(
+          `${activeAccount}_targets`,
+          defaults.targets,
+          true
+        ) as StakingTargets
+      );
+    }
+  }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
       const {
         stakers,
-        activeNominators,
+        totalNominators,
         activeValidators,
         minActiveBond,
         ownStake,
@@ -98,7 +184,8 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
-            activeNominators,
+            // nominators,
+            totalNominators,
             activeValidators,
             minActiveBond,
             ownStake,
@@ -232,92 +319,6 @@ export const StakingProvider = ({
 
     return statuses;
   };
-
-  useEffect(() => {
-    if (status === 'connecting') {
-      setStateWithRef(defaults.eraStakers, setEraStakers, eraStakersRef);
-      setStakingMetrics(defaults.stakingMetrics);
-    }
-  }, [status]);
-
-  // handle staking metrics subscription
-  useEffect(() => {
-    if (isReady) {
-      subscribeToStakingkMetrics();
-    }
-    return () => {
-      // unsubscribe from staking metrics
-      if (stakingMetrics.unsub !== null) {
-        stakingMetrics.unsub();
-      }
-    };
-  }, [isReady, metrics.activeEra]);
-
-  // handle syncing with eraStakers
-  useEffect(() => {
-    if (isReady) {
-      fetchEraStakers();
-    }
-  }, [isReady, metrics.activeEra.index, activeAccount]);
-
-  useEffect(() => {
-    if (activeAccount) {
-      // calculates minimum bond of the user's chosen nominated validators.
-      let _stakingMinActiveBond = new BN(0);
-
-      const stakers = eraStakersRef.current?.stakers ?? null;
-      const nominations = getAccountNominations(activeAccount);
-
-      if (nominations.length && stakers !== null) {
-        for (const n of nominations) {
-          const staker = stakers.find((item: any) => item.address === n);
-
-          if (staker !== undefined) {
-            let { others } = staker;
-
-            // order others by bonded value, largest first.
-            others = others.sort((a: any, b: any) => {
-              const x = new BN(rmCommas(a.value));
-              const y = new BN(rmCommas(b.value));
-              return y.sub(x);
-            });
-
-            if (others.length) {
-              const _minActive = new BN(rmCommas(others[0].value.toString()));
-              // set new minimum active bond if less than current value
-              if (
-                _minActive.lt(_stakingMinActiveBond) ||
-                _stakingMinActiveBond !== new BN(0)
-              ) {
-                _stakingMinActiveBond = _minActive;
-              }
-            }
-          }
-        }
-      }
-
-      // convert _stakingMinActiveBond to base value
-      const stakingMinActiveBond = planckBnToUnit(_stakingMinActiveBond, units);
-
-      setStateWithRef(
-        {
-          ...eraStakersRef.current,
-          minStakingActiveBond: stakingMinActiveBond,
-        },
-        setEraStakers,
-        eraStakersRef
-      );
-
-      // set account's targets
-      _setTargets(
-        localStorageOrDefault(
-          `${activeAccount}_targets`,
-          defaults.targets,
-          true
-        ) as StakingTargets
-      );
-    }
-  }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
 
   /* Sets an account's stored target validators */
   const setTargets = (_targets: StakingTargets) => {
