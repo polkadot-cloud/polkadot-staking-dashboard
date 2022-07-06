@@ -282,11 +282,9 @@ export const combineRewardsByDay = (
   // we first check if actual payouts exist, e.g. there are non-zero payout
   // amounts present in either payouts or pool claims.
   const poolClaimExists =
-    poolClaimsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ||
-    null;
+    poolClaimsByDay.find((p: AnySubscan) => p.amount > 0) || null;
   const payoutExists =
-    payoutsByDay.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ||
-    null;
+    payoutsByDay.find((p: AnySubscan) => p.amount > 0) || null;
 
   // if no pool claims exist but payouts do, return payouts w.o. event_id
   // also do this if there are no payouts period.
