@@ -17,6 +17,7 @@ import { Favourite } from './Labels/Favourite';
 import { Identity } from './Labels/Identity';
 import { Oversubscribed } from './Labels/Oversubscribed';
 import { Blocked } from './Labels/Blocked';
+import { Commission } from './Labels/Commission';
 import { Select } from './Labels/Select';
 import { useValidatorList } from '../context';
 import { DefaultProps } from './types';
@@ -110,7 +111,7 @@ export const Default = (props: DefaultProps) => {
             <Labels>
               <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
               <Blocked prefs={prefs} />
-              <div className="label comm">{commission}%</div>
+              <Commission commission={commission} />
               {toggleFavourites && <Favourite address={address} />}
               {showMenu && (
                 <button

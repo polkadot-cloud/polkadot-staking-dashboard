@@ -56,6 +56,7 @@ export const Wrapper = styled.div<any>`
     }
 
     .label {
+      position: relative;
       margin-left: 0.3rem;
       color: ${textSecondary};
 
@@ -91,6 +92,7 @@ export const Labels = styled.div`
   overflow: hidden;
   flex: 1 1 100%;
   padding: 0 0 0 0.25rem;
+  height: 3.2rem;
 `;
 
 export const IdentityWrapper = styled(motion.div)`
@@ -179,4 +181,23 @@ export const MenuPosition = styled.div`
   height: 0;
   opacity: 0;
 `;
+
+export const TooltipPosition = styled.div`
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  width: 0;
+  height: 0;
+  opacity: 0;
+`;
+
+export const TooltipTrigger = styled.div`
+  z-index: 1;
+  width: 130%;
+  height: 130%;
+  position: absolute;
+  top: -10%;
+  left: -10%;
+`;
+
 export default Wrapper;
