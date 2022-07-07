@@ -18,9 +18,9 @@ import { GRAPH_HEIGHT } from 'consts';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';
 import { ActiveAccount } from './ActiveAccount';
-import TotalNominatorsStatBox from './Stats/TotalNominators';
-import SupplyStakedStatBox from './Stats/SupplyStaked';
+import TotalNominatorsStatBox from './Stats/TotalNominations';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
+import ActiveEraStatBox from './Stats/ActiveEra';
 import Announcements from './Announcements';
 import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
@@ -36,9 +36,9 @@ export const Overview = () => {
     <>
       <PageTitle title="Overview" />
       <StatBoxList>
-        <SupplyStakedStatBox />
         <TotalNominatorsStatBox />
         <ActiveNominatorsStatBox />
+        <ActiveEraStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowSecondaryWrapper hOrder={0} vOrder={0}>

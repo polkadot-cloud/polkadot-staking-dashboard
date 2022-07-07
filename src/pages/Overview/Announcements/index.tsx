@@ -13,6 +13,7 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useNetworkMetrics } from 'contexts/Network';
 import { Wrapper, Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -20,8 +21,24 @@ export const Announcements = () => {
   const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking();
-  const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
+  const { metrics } = useNetworkMetrics();
+  const {
+    minNominatorBond,
+    totalNominators,
+    maxNominatorsCount,
+    lastTotalStake,
+  } = staking;
   const { bondedPools } = useBondedPools();
+  const { totalIssuance } = metrics;
+
+  // total supply as percent
+  let supplyAsPercent = 0;
+  if (totalIssuance.gt(new BN(0))) {
+    supplyAsPercent = lastTotalStake
+      .div(totalIssuance.div(new BN(100)))
+      .toNumber();
+  }
+  const lastTotalStakeBase = lastTotalStake.div(new BN(10 ** units));
 
   const container = {
     hidden: { opacity: 0 },
@@ -97,15 +114,13 @@ export const Announcements = () => {
     } is now ${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
-  // maximum nominators
+  // supply staked
   announcements.push({
     class: 'neutral',
-    title: `The maximum nominator cap is now ${humanNumber(
-      maxNominatorsCount.toNumber()
-    )}.`,
-    subtitle: `A total of ${humanNumber(
-      maxNominatorsCount.toNumber()
-    )} nominators can now join the ${network.name} network.`,
+    title: `${supplyAsPercent}% of total ${network.unit} supply is currently staked.`,
+    subtitle: `A total of ${humanNumber(lastTotalStakeBase.toNumber())} ${
+      network.unit
+    } is actively staking on the network.`,
   });
 
   return (
