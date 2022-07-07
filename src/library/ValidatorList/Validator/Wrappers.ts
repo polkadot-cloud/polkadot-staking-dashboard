@@ -185,7 +185,7 @@ export const MenuPosition = styled.div`
 export const TooltipPosition = styled.div`
   position: absolute;
   top: 0;
-  left: 1rem;
+  left: 0.75rem;
   width: 0;
   height: 0;
   opacity: 0;

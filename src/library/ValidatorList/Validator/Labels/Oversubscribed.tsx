@@ -42,11 +42,11 @@ export const Oversubscribed = (props: OversubscribedProps) => {
 
   const posRef = useRef(null);
 
+  const tooltipText = `Over subscribed: Minimum reward bond is ${lowestReward} ${network.unit}`;
+
   const toggleTooltip = () => {
     if (!open) {
-      setTooltipMeta(
-        `Over subscribed: Minimum reward bond is ${lowestReward} ${network.unit}`
-      );
+      setTooltipMeta(tooltipText);
       setTooltipPosition(posRef);
     }
   };
@@ -62,7 +62,8 @@ export const Oversubscribed = (props: OversubscribedProps) => {
           <div className="label warning">
             <TooltipTrigger
               className="tooltip-trigger-element"
-              onMouseOver={() => toggleTooltip()}
+              data-tooltip-text={tooltipText}
+              onMouseMove={() => toggleTooltip()}
             />
             <TooltipPosition ref={posRef} />
             <FontAwesomeIcon

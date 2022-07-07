@@ -28,9 +28,7 @@ export const TooltipProvider = ({
 
   const closeTooltip = () => {
     setShow(0);
-    setTimeout(() => {
-      setOpen(0);
-    }, 100);
+    setOpen(0);
   };
 
   const setTooltipPosition = (ref: RefObject<HTMLDivElement>) => {

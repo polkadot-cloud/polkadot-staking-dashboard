@@ -12,9 +12,11 @@ export const Commission = (props: { commission: number }) => {
 
   const posRef = useRef<HTMLDivElement>(null);
 
+  const tooltipText = 'Validator Commission';
+
   const toggleTooltip = () => {
     if (!open) {
-      setTooltipMeta('Validator Commission');
+      setTooltipMeta(tooltipText);
       setTooltipPosition(posRef);
     }
   };
@@ -23,7 +25,8 @@ export const Commission = (props: { commission: number }) => {
     <div className="label">
       <TooltipTrigger
         className="tooltip-trigger-element"
-        onMouseOver={() => toggleTooltip()}
+        data-tooltip-text={tooltipText}
+        onMouseMove={() => toggleTooltip()}
       />
       <TooltipPosition ref={posRef} />
       {commission}%

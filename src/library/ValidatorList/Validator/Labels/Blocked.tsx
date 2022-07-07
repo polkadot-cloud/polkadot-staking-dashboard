@@ -15,9 +15,11 @@ export const Blocked = (props: BlockedProps) => {
 
   const posRef = useRef(null);
 
+  const tooltipText = 'Blocking Nominations';
+
   const toggleTooltip = () => {
     if (!open) {
-      setTooltipMeta('Blocking Nominations');
+      setTooltipMeta(tooltipText);
       setTooltipPosition(posRef);
     }
   };
@@ -29,6 +31,7 @@ export const Blocked = (props: BlockedProps) => {
           <div className="label">
             <TooltipTrigger
               className="tooltip-trigger-element"
+              data-tooltip-text={tooltipText}
               onMouseMove={() => toggleTooltip()}
             />
             <TooltipPosition ref={posRef} />

@@ -9,7 +9,7 @@ export const Wrapper = styled.div<any>`
   box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
-  transition: opacity 0.05s;
+  transition: opacity 0.1s;
   border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
   min-width: 100px;

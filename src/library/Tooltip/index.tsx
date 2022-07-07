@@ -27,7 +27,10 @@ export const Tooltip = () => {
     const isTriggerElement = e.target?.classList.contains(
       'tooltip-trigger-element'
     );
+    const dataAttribute = e.target?.getAttribute('data-tooltip-text') ?? false;
     if (!isTriggerElement) {
+      tooltip.closeTooltip();
+    } else if (dataAttribute !== tooltip.text) {
       tooltip.closeTooltip();
     }
   };
