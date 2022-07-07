@@ -14,6 +14,7 @@ import { Blocked } from './Labels/Blocked';
 import { Select } from './Labels/Select';
 import { NominationStatus } from './Labels/NominationStatus';
 import { NominationProps } from './types';
+import { Commission } from './Labels/Commission';
 
 export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();
@@ -49,7 +50,7 @@ export const Nomination = (props: NominationProps) => {
           <Labels>
             <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
             <Blocked prefs={prefs} />
-            <div className="label">{commission}%</div>
+            <Commission commission={commission} />
             <Metrics
               address={address}
               display={getIdentityDisplay(

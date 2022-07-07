@@ -29,6 +29,7 @@ import Notifications from 'library/Notifications';
 import { TITLE_DEFAULT } from 'consts';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
+import { Tooltip } from 'library/Tooltip';
 
 export const RouterInner = () => {
   const { network } = useApi();
@@ -47,6 +48,9 @@ export const RouterInner = () => {
       <BodyInterfaceWrapper>
         {/* Assistant: closed by default */}
         <Assistant />
+
+        {/* Tooltip: invisible by default */}
+        <Tooltip />
 
         {/* Menu: closed by default */}
         <Menu />

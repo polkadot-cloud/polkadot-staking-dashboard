@@ -134,7 +134,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
       {
         label: 'Payout',
         data: combinedPayouts.map((item: AnySubscan) => {
-          return item.amount;
+          return item?.amount ?? 0;
         }),
         borderColor: color,
         backgroundColor: color,

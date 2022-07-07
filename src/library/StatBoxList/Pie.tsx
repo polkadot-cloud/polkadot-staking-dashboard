@@ -23,7 +23,7 @@ export const Pie = (props: PieProps) => {
           <StatPie value={graph?.value1} value2={graph?.value2} />
           {tooltip && (
             <div className="tooltip">
-              <p>{tooltip}</p>
+              <h3>{tooltip}</h3>
             </div>
           )}
         </div>
