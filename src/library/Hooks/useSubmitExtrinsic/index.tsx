@@ -62,9 +62,7 @@ export const useSubmitExtrinsic = (
 
     const { signer, source } = account;
 
-    const extension = extensions.find(
-      (e: Extension) => e.extensionName === source
-    );
+    const extension = extensions.find((e: Extension) => e.id === source);
     if (extension === undefined) {
       throw new Error('wallet not found');
     } else {

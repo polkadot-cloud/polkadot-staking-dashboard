@@ -4,18 +4,15 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { ReactComponent as SubwalletSVG } from 'img/subwallet_icon.svg';
-import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
-import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { useConnect } from 'contexts/Connect';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
   const { meta } = props;
-  const { extensionName } = meta;
+  const { id } = meta;
 
   const { extensionsStatus } = useConnect();
-  const status = extensionsStatus[extensionName];
+  const status = extensionsStatus[id];
 
   // determine message to be displayed based on extension status.
   let message;
@@ -102,24 +99,12 @@ export const ExtensionElement = (props: any) => {
 
 export const ExtensionInner = (props: any) => {
   const { size, message, flag, meta, status } = props;
-  const { extensionName, title } = meta;
+  const { title, icon: Icon } = meta;
 
   return (
     <>
       <div>
-        {extensionName === 'subwallet-js' && (
-          <>
-            <SubwalletSVG width={size} height={size} />
-          </>
-        )}
-        {extensionName === 'talisman' && (
-          <>
-            <TalismanSVG width={size} height={size} />
-          </>
-        )}
-        {extensionName === 'polkadot-js' && (
-          <PolkadotJSSVG width={size} height={size} />
-        )}
+        <Icon width={size} height={size} />
         <h3>
           <span className="name">&nbsp; {title}</span>
         </h3>

@@ -13,6 +13,7 @@ import {
   ExtensionAccount,
 } from 'contexts/Connect/types';
 import { AnyApi, MaybeAccount } from 'types';
+import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
 import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';
 import {
@@ -52,9 +53,7 @@ export const ConnectProvider = ({
   const [extensionsFetched, setExtensionsFetched] = useState(false);
 
   // store the installed extensions in state
-  const [installedExtensions, setInstalledExtensions] = useState<
-    Array<Extension>
-  >([]);
+  const [extensions, setExtensions] = useState<Array<Extension>>([]);
 
   // store extensions metadata in state
   const [extensionsStatus, setExtensionsStatus] = useState<{
@@ -68,36 +67,25 @@ export const ConnectProvider = ({
 
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: any = window;
-    const _exts = [];
-    if (injectedWeb3['subwallet-js'] !== undefined) {
-      _exts.push({
-        extensionName: 'subwallet-js',
-        title: 'SubWallet',
-        ...injectedWeb3['subwallet-js'],
-      });
-    }
-    if (injectedWeb3.talisman !== undefined) {
-      _exts.push({
-        extensionName: 'talisman',
-        title: 'Talisman',
-        ...injectedWeb3.talisman,
-      });
-    }
-    if (injectedWeb3['polkadot-js'] !== undefined) {
-      _exts.push({
-        extensionName: 'polkadot-js',
-        title: 'Polkadot JS',
-        ...injectedWeb3['polkadot-js'],
-      });
-    }
+
+    const _exts: Extension[] = [];
+    EXTENSIONS.forEach((e: ExtensionConfig) => {
+      if (injectedWeb3[e.id] !== undefined) {
+        _exts.push({
+          ...e,
+          ...injectedWeb3[e.id],
+        });
+      }
+    });
+
     return _exts;
   };
 
   // initialise extensions
   useEffect(() => {
-    if (!installedExtensions.length) {
+    if (!extensions.length) {
       // timeout for initialising injectedWeb3
-      setTimeout(() => setInstalledExtensions(getInstalledExtensions()), 200);
+      setTimeout(() => setExtensions(getInstalledExtensions()), 200);
     }
     return () => {
       unsubscribeAll();
@@ -126,12 +114,12 @@ export const ConnectProvider = ({
     setExtensionsFetched(false);
 
     // get account if extensions exist and local extensions exist (previously connected).
-    if (installedExtensions.length && localExtensions.length) {
+    if (extensions.length && localExtensions.length) {
       connectActiveExtensions();
     } else {
       setExtensionsFetched(true);
     }
-  }, [installedExtensions, network]);
+  }, [extensions, network]);
 
   /* once extension accounts are synced, fetch
    * any external accounts present in localStorage.
@@ -266,15 +254,15 @@ export const ConnectProvider = ({
 
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
-    const totalExtensions = installedExtensions.length;
+    const totalExtensions = extensions.length;
     let activeWalletAccount: ImportedAccount | null = null;
 
-    installedExtensions.forEach(async (_extension: Extension) => {
+    extensions.forEach(async (_extension: Extension) => {
       extensionsCount++;
-      const { extensionName, enable } = _extension;
+      const { id, enable } = _extension;
 
       // if extension is found locally, subscribe to accounts
-      if (extensionIsLocal(extensionName)) {
+      if (extensionIsLocal(id)) {
         try {
           // summons extension popup
           const extension: any = await enable(DAPP_NAME);
@@ -282,21 +270,21 @@ export const ConnectProvider = ({
           if (extension !== undefined) {
             // subscribe to accounts
             const _unsubscribe = (await extension.accounts.subscribe(
-              (injected: any) => {
+              (injected: ExtensionAccount[]) => {
                 if (!injected) {
                   return;
                 }
 
                 // update extensions status
-                updateExtensionStatus(extensionName, 'connected');
+                updateExtensionStatus(id, 'connected');
                 // update local active extensions
-                addToLocalExtensions(extensionName);
+                addToLocalExtensions(id);
 
                 // filter unneeded account properties
                 injected = injected.map((a: ExtensionAccount) => {
                   return {
                     address: a.address,
-                    source: extensionName,
+                    source: id,
                     name: a.name,
                     signer: extension.signer,
                   };
@@ -344,7 +332,7 @@ export const ConnectProvider = ({
                   // remove accounts if they already exist
                   let _accounts = [...accountsRef.current].filter(
                     (a: ImportedAccount) => {
-                      return a?.source !== extensionName;
+                      return a?.source !== id;
                     }
                   );
                   // concat accounts and store
@@ -357,7 +345,7 @@ export const ConnectProvider = ({
             // update context state
             setStateWithRef(
               [...unsubscribeRef.current].concat({
-                key: extensionName,
+                key: id,
                 unsub: _unsubscribe,
               }),
               setUnsubscribe,
@@ -365,7 +353,7 @@ export const ConnectProvider = ({
             );
           }
         } catch (err) {
-          handleExtensionError(extensionName, String(err));
+          handleExtensionError(id, String(err));
         }
       }
 
@@ -381,10 +369,10 @@ export const ConnectProvider = ({
    * This is invoked by the user by clicking on an extension.
    * If activeAccount is not found here, it is simply ignored.
    */
-  const connectExtensionAccounts = async (_extension: any) => {
+  const connectExtensionAccounts = async (_extension: Extension) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-    const { extensionName, enable } = _extension;
+    const { id, enable } = _extension;
 
     const _activeAccount = getActiveAccountLocal(network);
     try {
@@ -394,14 +382,14 @@ export const ConnectProvider = ({
       if (extension !== undefined) {
         // subscribe to accounts
         const _unsubscribe = (await extension.accounts.subscribe(
-          (injected: any) => {
+          (injected: ExtensionAccount[]) => {
             if (!injected) {
               return;
             }
             // update extensions status
-            updateExtensionStatus(extensionName, 'connected');
+            updateExtensionStatus(id, 'connected');
             // update local active extensions
-            addToLocalExtensions(extensionName);
+            addToLocalExtensions(id);
 
             // only continue if there are accounts
             if (injected.length) {
@@ -439,7 +427,7 @@ export const ConnectProvider = ({
               // remove accounts if they already exist
               let _accounts = [...accountsRef.current].filter(
                 (a: ImportedAccount) => {
-                  return a?.source !== extensionName;
+                  return a?.source !== id;
                 }
               );
               // concat accounts and store
@@ -452,7 +440,7 @@ export const ConnectProvider = ({
         // update context state
         setStateWithRef(
           [...unsubscribeRef.current].concat({
-            key: extensionName,
+            key: id,
             unsub: _unsubscribe,
           }),
           setUnsubscribe,
@@ -460,26 +448,26 @@ export const ConnectProvider = ({
         );
       }
     } catch (err) {
-      handleExtensionError(extensionName, String(err));
+      handleExtensionError(id, String(err));
     }
   };
 
-  const handleExtensionError = (extensionName: string, err: string) => {
+  const handleExtensionError = (id: string, err: string) => {
     // authentication error (extension not enabled)
     if (err.substring(0, 9) === 'AuthError') {
-      removeFromLocalExtensions(extensionName);
-      updateExtensionStatus(extensionName, 'not_authenticated');
+      removeFromLocalExtensions(id);
+      updateExtensionStatus(id, 'not_authenticated');
     }
 
     // extension not found (does not exist)
     if (err.substring(0, 17) === 'NotInstalledError') {
-      removeFromLocalExtensions(extensionName);
-      updateExtensionStatus(extensionName, 'not_found');
+      removeFromLocalExtensions(id);
+      updateExtensionStatus(id, 'not_found');
     }
 
     // general error (maybe enabled but no accounts trust app)
     if (err.substring(0, 5) === 'Error') {
-      updateExtensionStatus(extensionName, 'no_accounts');
+      updateExtensionStatus(id, 'no_accounts');
     }
   };
 
@@ -506,17 +494,17 @@ export const ConnectProvider = ({
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
-  const updateExtensionStatus = (extensionName: string, status: string) => {
+  const updateExtensionStatus = (id: string, status: string) => {
     setStateWithRef(
       Object.assign(extensionsStatusRef.current, {
-        [extensionName]: status,
+        [id]: status,
       }),
       setExtensionsStatus,
       extensionsStatusRef
     );
   };
 
-  const addToLocalExtensions = (extensionName: string) => {
+  const addToLocalExtensions = (id: string) => {
     const localExtensions = localStorageOrDefault<string[]>(
       `active_extensions`,
       [],
@@ -524,8 +512,8 @@ export const ConnectProvider = ({
     );
 
     if (Array.isArray(localExtensions)) {
-      if (!localExtensions.includes(extensionName)) {
-        localExtensions.push(extensionName);
+      if (!localExtensions.includes(id)) {
+        localExtensions.push(id);
         localStorage.setItem(
           'active_extensions',
           JSON.stringify(localExtensions)
@@ -628,7 +616,7 @@ export const ConnectProvider = ({
         accountHasSigner,
         isReadOnlyAccount,
         forgetAccounts,
-        extensions: installedExtensions,
+        extensions,
         extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
