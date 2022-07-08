@@ -8,7 +8,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
-import ActiveEraStatBox from '../Stake/Active/Stats/ActiveEra';
+import ActiveEraStatBox from '../Overview/Stats/ActiveEra';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
 import { PageProps } from '../types';

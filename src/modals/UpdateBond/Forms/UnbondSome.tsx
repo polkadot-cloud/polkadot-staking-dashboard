@@ -19,7 +19,7 @@ import { FormFooter } from './FormFooter';
 export const UnbondSome = (props: any) => {
   const { setSection } = props;
 
-  const { api, network } = useApi();
+  const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -36,6 +36,7 @@ export const UnbondSome = (props: any) => {
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
   const { minJoinBond: minJoinBondBn } = stats;
+  const { bondDuration } = consts;
 
   const { freeToUnbond: freeToUnbondBn } = isPooling
     ? poolBondOptions
@@ -134,8 +135,8 @@ export const UnbondSome = (props: any) => {
           />
           <NotesWrapper>
             <p>
-              Once unbonding, you must wait 28 days for your funds to become
-              available.
+              Once unbonding, you must wait {bondDuration} eras for your funds
+              to become available.
             </p>
             {TxFee}
           </NotesWrapper>

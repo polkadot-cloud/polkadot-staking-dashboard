@@ -150,7 +150,7 @@ export const Roles = () => {
           <div className="inner">
             <h3>
               Root
-              <OpenAssistantIcon page="pools" title="Joined Pool" />
+              <OpenAssistantIcon page="pools" title="Pool Roles" />
             </h3>
             <PoolAccount
               address={roles?.root ?? null}
@@ -162,7 +162,7 @@ export const Roles = () => {
         <section>
           <div className="inner">
             <h3>
-              Depositor <OpenAssistantIcon page="pools" title="Joined Pool" />
+              Depositor <OpenAssistantIcon page="pools" title="Pool Roles" />
             </h3>
             <PoolAccount
               address={roles?.depositor ?? null}
@@ -174,7 +174,7 @@ export const Roles = () => {
         <section>
           <div className="inner">
             <h3>
-              Nominator <OpenAssistantIcon page="pools" title="Joined Pool" />
+              Nominator <OpenAssistantIcon page="pools" title="Pool Roles" />
             </h3>
             {isEditing ? (
               <RoleEditInput
@@ -199,7 +199,7 @@ export const Roles = () => {
           <div className="inner">
             <h3>
               State Toggler
-              <OpenAssistantIcon page="pools" title="Joined Pool" />
+              <OpenAssistantIcon page="pools" title="Pool Roles" />
             </h3>
             {isEditing ? (
               <RoleEditInput

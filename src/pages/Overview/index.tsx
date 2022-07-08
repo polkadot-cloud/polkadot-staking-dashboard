@@ -11,17 +11,16 @@ import {
 } from 'Wrappers';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
 import { GRAPH_HEIGHT } from 'consts';
-import { prefillToMaxDays, calculatePayoutsByDay } from 'library/Graphs/Utils';
+import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';
 import { ActiveAccount } from './ActiveAccount';
-import TotalNominatorsStatBox from './Stats/TotalNominators';
-import SupplyStakedStatBox from './Stats/SupplyStaked';
+import TotalNominatorsStatBox from './Stats/TotalNominations';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
+import ActiveEraStatBox from './Stats/ActiveEra';
 import Announcements from './Announcements';
 import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
@@ -29,30 +28,17 @@ import Payouts from './Payouts';
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
-  const { activeAccount } = useConnect();
-  const { payouts }: any = useSubscan();
+  const { payouts, poolClaims } = useSubscan();
 
-  // generate payouts by day data
-  const maxDays = 21;
-  let payoutsByDay = prefillToMaxDays(
-    calculatePayoutsByDay(payouts, maxDays, units),
-    maxDays
-  );
-
-  // reverse payouts: most recent last
-  payoutsByDay = payoutsByDay.reverse();
-
-  // get most recent payout
-  const lastPayout =
-    payouts.find((p: any) => new BN(p.amount).gt(new BN(0))) ?? null;
+  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
 
   return (
     <>
       <PageTitle title="Overview" />
       <StatBoxList>
-        <SupplyStakedStatBox />
         <TotalNominatorsStatBox />
         <ActiveNominatorsStatBox />
+        <ActiveEraStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowSecondaryWrapper hOrder={0} vOrder={0}>
@@ -67,21 +53,21 @@ export const Overview = () => {
             <div className="head">
               <h4>Recent Payouts</h4>
               <h2>
-                {lastPayout === null
+                {lastReward === null
                   ? 0
                   : humanNumber(
-                      planckBnToUnit(new BN(lastPayout.amount), units)
+                      planckBnToUnit(new BN(lastReward.amount), units)
                     )}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">
-                  {lastPayout === null
+                  {lastReward === null
                     ? ''
-                    : moment.unix(lastPayout.block_timestamp).fromNow()}
+                    : moment.unix(lastReward.block_timestamp).fromNow()}
                 </span>
               </h2>
             </div>
-            <Payouts account={activeAccount} payouts={payoutsByDay} />
+            <Payouts />
           </GraphWrapper>
         </RowPrimaryWrapper>
       </PageRowWrapper>

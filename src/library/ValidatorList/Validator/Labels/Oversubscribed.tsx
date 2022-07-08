@@ -1,16 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
+import { useTooltip } from 'contexts/Tooltip';
 import { OversubscribedProps } from '../types';
+import { TooltipPosition, TooltipTrigger } from '../Wrappers';
 
 export const Oversubscribed = (props: OversubscribedProps) => {
   const { consts, network } = useApi();
   const { meta } = useValidators();
+  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   const { batchIndex, batchKey } = props;
 
@@ -36,6 +40,17 @@ export const Oversubscribed = (props: OversubscribedProps) => {
     synced.stake &&
     total_nominations >= consts.maxNominatorRewardedPerValidator;
 
+  const posRef = useRef(null);
+
+  const tooltipText = `Over subscribed: Minimum reward bond is ${lowestReward} ${network.unit}`;
+
+  const toggleTooltip = () => {
+    if (!open) {
+      setTooltipMeta(tooltipText);
+      setTooltipPosition(posRef);
+    }
+  };
+
   return (
     <>
       {displayOversubscribed && (
@@ -45,6 +60,12 @@ export const Oversubscribed = (props: OversubscribedProps) => {
           transition={{ duration: 0.1 }}
         >
           <div className="label warning">
+            <TooltipTrigger
+              className="tooltip-trigger-element"
+              data-tooltip-text={tooltipText}
+              onMouseMove={() => toggleTooltip()}
+            />
+            <TooltipPosition ref={posRef} />
             <FontAwesomeIcon
               icon={faExclamationTriangle}
               transform="shrink-2"

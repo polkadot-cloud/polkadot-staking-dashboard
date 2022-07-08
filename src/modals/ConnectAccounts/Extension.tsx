@@ -4,17 +4,15 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
-import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { useConnect } from 'contexts/Connect';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
   const { meta } = props;
-  const { extensionName } = meta;
+  const { id } = meta;
 
   const { extensionsStatus } = useConnect();
-  const status = extensionsStatus[extensionName];
+  const status = extensionsStatus[id];
 
   // determine message to be displayed based on extension status.
   let message;
@@ -56,7 +54,7 @@ export const Extension = (props: any) => {
 
 export const ExtensionButton = (props: any) => {
   const { meta, setSection } = props;
-  const { extensionName, status } = meta;
+  const { status } = meta;
 
   const { connectExtensionAccounts } = useConnect();
 
@@ -68,8 +66,8 @@ export const ExtensionButton = (props: any) => {
     if (status === 'connected') {
       setSection(1);
     } else {
-      (async () => {
-        await connectExtensionAccounts(extensionName);
+      (() => {
+        connectExtensionAccounts(meta);
         // force re-render to display error messages
         setIncrement(increment + 1);
       })();
@@ -101,18 +99,12 @@ export const ExtensionElement = (props: any) => {
 
 export const ExtensionInner = (props: any) => {
   const { size, message, flag, meta, status } = props;
-  const { extensionName, title } = meta;
+  const { title, icon: Icon } = meta;
+
   return (
     <>
       <div>
-        {extensionName === 'talisman' && (
-          <>
-            <TalismanSVG width={size} height={size} />
-          </>
-        )}
-        {extensionName === 'polkadot-js' && (
-          <PolkadotJSSVG width={size} height={size} />
-        )}
+        <Icon width={size} height={size} />
         <h3>
           <span className="name">&nbsp; {title}</span>
         </h3>

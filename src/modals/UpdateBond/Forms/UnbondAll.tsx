@@ -18,7 +18,7 @@ import { FormFooter } from './FormFooter';
 export const UnbondAll = (props: any) => {
   const { setSection } = props;
 
-  const { api, network } = useApi();
+  const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -32,6 +32,7 @@ export const UnbondAll = (props: any) => {
   const controllerNotImported = getControllerNotImported(controller);
   const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
   const poolBondOptions = getPoolBondOptions(activeAccount);
+  const { bondDuration } = consts;
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
@@ -137,8 +138,8 @@ export const UnbondAll = (props: any) => {
           <Separator />
           <NotesWrapper>
             <p>
-              Once unbonding, you must wait 28 days for your funds to become
-              available.
+              Once unbonding, you must wait {bondDuration} eras for your funds
+              to become available.
             </p>
             {bondValid && TxFee}
           </NotesWrapper>

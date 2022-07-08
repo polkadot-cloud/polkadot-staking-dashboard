@@ -5,11 +5,10 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import Identicon from 'library/Identicon';
 import { clipAddress } from 'Utils';
-import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
-import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Extension } from 'contexts/Connect/types';
 import { AccountWrapper } from './Wrappers';
 
 export const AccountElement = (props: any) => {
@@ -27,7 +26,6 @@ export const AccountButton = (props: any) => {
   const disconnect = props.disconnect ?? false;
   const { connectToAccount, disconnectFromAccount }: any = useConnect();
   const { setStatus } = useModal();
-
   const imported = meta !== null;
 
   return (
@@ -54,6 +52,10 @@ export const AccountButton = (props: any) => {
 
 export const AccountInner = (props: any) => {
   const { address, meta } = props;
+
+  const { extensions } = useConnect();
+  const extension = extensions.find((e: Extension) => e.id === meta?.source);
+  const Icon = extension?.icon ?? null;
   const label = props.label ?? null;
   const source = meta?.source ?? null;
   const imported = meta !== null && source !== 'external';
@@ -77,9 +79,8 @@ export const AccountInner = (props: any) => {
 
       <div className={label === null ? `` : label[0]}>
         {label !== null && <h5>{label[1]}</h5>}
+        {Icon !== null && <Icon className="icon" />}
 
-        {source === 'talisman' && <TalismanSVG className="icon" />}
-        {source === 'polkadot-js' && <PolkadotJSSVG className="icon" />}
         {!imported && (
           <FontAwesomeIcon
             icon={faGlasses as IconProp}

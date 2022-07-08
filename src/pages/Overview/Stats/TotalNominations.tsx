@@ -33,7 +33,7 @@ export const TotalNominatorsStatBox = () => {
     tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
     assistant: {
       page: 'overview',
-      key: 'Nominators',
+      key: 'Total Nominators',
     },
   };
 

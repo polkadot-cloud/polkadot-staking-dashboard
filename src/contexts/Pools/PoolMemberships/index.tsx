@@ -108,14 +108,23 @@ export const PoolMembershipsProvider = ({
             unlocking,
           };
 
-          // update membership in context state
-          let _poolMemberships = Object.values(poolMembershipsRef.current);
-
           // remove stale membership if it's already in list
+          let _poolMemberships = Object.values(poolMembershipsRef.current);
           _poolMemberships = _poolMemberships
             .filter((m: PoolMembership) => m.address !== address)
             .concat(membership);
 
+          setStateWithRef(
+            _poolMemberships,
+            setPoolMemberships,
+            poolMembershipsRef
+          );
+        } else {
+          // no membership: remove account membership if present
+          let _poolMemberships = Object.values(poolMembershipsRef.current);
+          _poolMemberships = _poolMemberships.filter(
+            (m: PoolMembership) => m.address !== address
+          );
           setStateWithRef(
             _poolMemberships,
             setPoolMemberships,
