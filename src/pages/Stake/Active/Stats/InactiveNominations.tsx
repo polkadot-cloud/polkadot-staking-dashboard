@@ -33,7 +33,7 @@ export const ActiveNominationsStatBox = () => {
     tooltip: isNominating() ? `${inactiveAsPercent}%` : undefined,
     assistant: {
       page: 'stake',
-      key: 'Nominations',
+      key: 'Inactive Nominations',
     },
   };
 

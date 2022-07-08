@@ -15,16 +15,17 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
-        title: 'Nominators',
+        title: 'Total Nominators',
         description: [
-          'Nominators are accounts who are staking in the network, regardless of whether they are active or earning rewards.',
+          'Accounts who are staking in the network, regardless of whether they are active or inactive in the current session.',
           'In order to stake {NETWORK_UNIT}, you must be a nominator.',
         ],
       },
       {
         title: 'Active Nominators',
         description: [
-          'The amount of nominators in the network who are actively earning rewards.',
+          'Nominators who are active in the current session.',
+          'Being an active nominator does not guarantee rewards, as your nominees may be oversubscribed.',
         ],
       },
       {
@@ -102,6 +103,12 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
           'As long as at least one of your nominations is actively validating in a session, your funds will be staked with that validator and you will receive rewards.',
         ],
       },
+      {
+        title: 'Inactive Nominations',
+        description: [
+          'Nominations that are in the active validator set for the current era, but your bonded funds have not been assigned to these nominations.',
+        ],
+      },
     ],
     external: [],
   },
@@ -117,7 +124,9 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       },
       {
         title: 'Active Pools',
-        description: ['The current amount of active nomination pools.'],
+        description: [
+          'The current amount of active nomination pools on the network.',
+        ],
       },
       {
         title: 'Minimum Join Bond',
@@ -154,6 +163,16 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         title: 'Joined Pool',
         description: [
           'The currently joined pool. Only one pool can be joined per account.',
+        ],
+      },
+      {
+        title: 'Pool Roles',
+        description: [
+          'A pool consists of 4 roles, each of which having different responsibilities in managing the running of the pool.',
+          'Root: Can change the nominator, state-toggler, or itself. Further, it can perform any of the actions the nominator or state-toggler can.',
+          'Depositor: Creates the pool and is the initial member. The depositor can only leave the pool once all other members have left. Once they leave by withdrawing, the pool is fully removed from the system.',
+          'Nominator: Can select the validators the pool nominates.',
+          "State-Toggler: Can change the pool's state and kick (permissionlessly unbond/withdraw) members if the pool is blocked.",
         ],
       },
     ],
