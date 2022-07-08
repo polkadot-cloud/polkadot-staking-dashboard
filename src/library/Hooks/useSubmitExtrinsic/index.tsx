@@ -6,7 +6,6 @@ import { useApi } from 'contexts/Api';
 import { useNotifications } from 'contexts/Notifications';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useConnect } from 'contexts/Connect';
-import { getWalletBySource } from '@talisman-connect/wallets';
 import { DAPP_NAME } from 'consts';
 import { AnyApi } from 'types';
 import { Extension } from 'contexts/Connect/types';
@@ -25,7 +24,7 @@ export const useSubmitExtrinsic = (
   const { api } = useApi();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount } = useConnect();
+  const { getAccount, extensions } = useConnect();
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
@@ -63,13 +62,14 @@ export const useSubmitExtrinsic = (
 
     const { signer, source } = account;
 
-    // get extension
-    const extension: Extension | undefined = getWalletBySource(source);
+    const extension = extensions.find(
+      (e: Extension) => e.extensionName === source
+    );
     if (extension === undefined) {
       throw new Error('wallet not found');
     } else {
       // summons extension popup if not already connected.
-      await extension.enable(DAPP_NAME);
+      extension.enable(DAPP_NAME);
     }
 
     // pre-submission state update
