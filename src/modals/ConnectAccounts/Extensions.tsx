@@ -5,6 +5,7 @@ import { forwardRef } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { EXTENSIONS } from 'config/extensions';
 import {
   ContentWrapper,
   PaddingWrapper,
@@ -17,7 +18,7 @@ import { ReadOnly } from './ReadOnly';
 export const Extensions = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
 
-  const { extensions, accounts } = useConnect();
+  const { accounts } = useConnect();
 
   return (
     <ContentWrapper>
@@ -46,7 +47,7 @@ export const Extensions = forwardRef((props: any, ref: any) => {
           </button>
         </ExtensionWrapper>
         <Separator />
-        {extensions.map((extension: any, i: number) => {
+        {EXTENSIONS.map((extension: any, i: number) => {
           return (
             <Extension
               key={`active_extension_${i}`}
