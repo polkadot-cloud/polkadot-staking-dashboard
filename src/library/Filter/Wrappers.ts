@@ -41,18 +41,19 @@ export const Wrapper = styled.div`
         justify-content: flex-start;
 
         > .head {
+          color: ${textSecondary};
           flex: 1;
           padding-bottom: 0.5rem;
           padding-left: 0.5rem;
           font-size: 0.9rem;
-          color: ${textSecondary};
           display: flex;
           flex-flow: row wrap;
           align-items: center;
 
-          > button {
-            font-size: 0.88rem;
+          button {
             background: ${buttonSecondaryBackground};
+            color: ${textSecondary};
+            font-size: 0.88rem;
             border-radius: 0.5rem;
             margin: 0 0.5rem;
             padding: 0.25rem 0.75rem;
