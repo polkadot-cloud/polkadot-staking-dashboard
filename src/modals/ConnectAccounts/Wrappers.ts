@@ -13,7 +13,6 @@ import {
   borderPrimary,
   modalBackground,
   textSuccess,
-  borderSecondary,
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
@@ -205,8 +204,8 @@ export const AccountWrapper = styled.div`
         }
       }
       .icon {
-        width: 1rem;
-        height: 1rem;
+        width: 1.05rem;
+        height: 1.05rem;
         margin-left: 0.75rem;
       }
 
