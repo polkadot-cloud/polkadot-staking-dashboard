@@ -6,7 +6,7 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
-export const URI_PREFIX = '/dashboard';
+export const URI_PREFIX = '/polkadot-staking-dashboard';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
 export const DAPP_NAME = 'polkadot_staking_dashboard';
 export const POLKADOT_URL = 'https://polkadot.network';
