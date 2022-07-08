@@ -3,12 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Keyring from '@polkadot/keyring';
-import {
-  getWalletBySource,
-  getWallets,
-  WalletAccount,
-  Wallet,
-} from '@talisman-connect/wallets';
+import { WalletAccount, Wallet } from '@talisman-connect/wallets';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { DAPP_NAME } from 'consts';
 import {
@@ -23,6 +18,7 @@ import {
   removeFromLocalExtensions,
   getActiveAccountLocal,
   getLocalExternalAccounts,
+  extensionIsLocal,
 } from './Utils';
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(
@@ -54,10 +50,6 @@ export const ConnectProvider = ({
   // store whether extensions have been fetched
   const [extensionsFetched, setExtensionsFetched] = useState(false);
 
-  // store available extensions in state
-  // TODO: deprecate in favour of installedExtensions
-  const [extensions, setExtensions] = useState<Array<Wallet>>([]);
-
   // store the installed extensions in state
   const [installedExtensions, setInstalledExtensions] = useState<Array<Wallet>>(
     []
@@ -77,23 +69,34 @@ export const ConnectProvider = ({
     const { injectedWeb3 }: any = window;
     const _exts = [];
     if (injectedWeb3['subwallet-js'] !== undefined) {
-      _exts.push(injectedWeb3['polkadot-js']);
+      _exts.push({
+        extensionName: 'subwallet-js',
+        title: 'SubWallet',
+        ...injectedWeb3['subwallet-js'],
+      });
     }
     if (injectedWeb3.talisman !== undefined) {
-      _exts.push(injectedWeb3['polkadot-js']);
+      _exts.push({
+        extensionName: 'talisman',
+        title: 'Talisman',
+        ...injectedWeb3.talisman,
+      });
     }
     if (injectedWeb3['polkadot-js'] !== undefined) {
-      _exts.push(injectedWeb3['polkadot-js']);
+      _exts.push({
+        extensionName: 'polkadot-js',
+        title: 'Polkadot JS',
+        ...injectedWeb3['polkadot-js'],
+      });
     }
     return _exts;
   };
 
   // initialise extensions
   useEffect(() => {
-    if (!extensions.length) {
-      // TODO: deprecate `setExtensions` in favour of `setInstalledExtensions`
-      setExtensions(getWallets());
-      setInstalledExtensions(getInstalledExtensions());
+    if (!installedExtensions.length) {
+      // timeout for initialising injectedWeb3
+      setTimeout(() => setInstalledExtensions(getInstalledExtensions()), 200);
     }
     return () => {
       unsubscribeAll();
@@ -123,8 +126,7 @@ export const ConnectProvider = ({
 
     // get account if extensions exist and local extensions exist (previously connected).
     if (installedExtensions.length && localExtensions.length) {
-      // TODO: once completed, remove timeout and test functionality.
-      setTimeout(() => connectActiveExtensions(), 200);
+      connectActiveExtensions();
     } else {
       setExtensionsFetched(true);
     }
@@ -153,6 +155,7 @@ export const ConnectProvider = ({
    * Unsubscrbe from some account subscriptions and update the resulting state.
    */
   const forgetAccounts = (_accounts: Array<ExternalAccount>) => {
+    if (!accounts.length) return;
     const keys = _accounts.map((a: ExternalAccount) => a.address);
 
     // unsubscribe from provided keys
@@ -258,63 +261,29 @@ export const ConnectProvider = ({
   const connectActiveExtensions = async () => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-
-    // get and format active account if present
     const _activeAccount = getActiveAccountLocal(network);
 
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
-    const totalExtensions = extensions.length;
+    const totalExtensions = installedExtensions.length;
     let activeWalletAccount: ImportedAccount | null = null;
 
-    extensions.forEach(async (_extension: Wallet) => {
+    installedExtensions.forEach(async (_extension: Wallet) => {
       extensionsCount++;
-      const { extensionName } = _extension;
-
-      // connect if extension has been connected to previously
-      const localExtensions = localStorageOrDefault<string[]>(
-        `active_extensions`,
-        [],
-        true
-      );
-      let foundExtensionLocally = false;
-      if (Array.isArray(localExtensions)) {
-        foundExtensionLocally =
-          localExtensions.find((l: string) => l === extensionName) !==
-          undefined;
-      }
+      const { extensionName, enable } = _extension;
 
       // if extension is found locally, subscribe to accounts
-      if (foundExtensionLocally) {
+      if (extensionIsLocal(extensionName)) {
         try {
-          const extension: Wallet | undefined =
-            getWalletBySource(extensionName);
-          if (extension !== undefined) {
-            // summons extension popup
-            await extension.enable(DAPP_NAME);
+          // summons extension popup
+          const extension: any = await enable(DAPP_NAME);
 
+          if (extension !== undefined) {
             // subscribe to accounts
-            const _unsubscribe = (await extension.subscribeAccounts(
-              (injected) => {
+            const _unsubscribe = (await extension.accounts.subscribe(
+              (injected: any) => {
                 if (!injected) {
                   return;
-                }
-
-                // remove injected if they exist in local external accounts
-                const localExternalAccounts = getLocalExternalAccounts(
-                  network,
-                  true
-                );
-                const localAccountsToForget =
-                  localExternalAccounts.filter(
-                    (l: ExternalAccount) =>
-                      (injected || []).find(
-                        (a: WalletAccount) => a.address === l.address
-                      ) !== undefined && l.addedBy === 'system'
-                  ) || [];
-
-                if (localAccountsToForget.length) {
-                  forgetAccounts(localAccountsToForget);
                 }
 
                 // update extensions status
@@ -325,16 +294,30 @@ export const ConnectProvider = ({
                 // filter unneeded account properties
                 injected = injected.map((a: WalletAccount) => {
                   return {
-                    name: a.name,
                     address: a.address,
-                    signer: a.signer,
-                    source: a.source,
-                    wallet: a.wallet,
+                    source: extensionName,
+                    name: a.name,
+                    signer: extension.signer,
                   };
                 });
 
-                // abort if no accounts
-                if (injected !== undefined && injected.length) {
+                // only continue if there are accounts
+                if (injected.length) {
+                  // remove any injected accounts from local external if any exist
+                  const localExternalAccounts = getLocalExternalAccounts(
+                    network,
+                    true
+                  );
+                  const localAccountsToForget =
+                    localExternalAccounts.filter(
+                      (l: ExternalAccount) =>
+                        (injected || []).find(
+                          (a: WalletAccount) => a.address === l.address
+                        ) !== undefined && l.addedBy === 'system'
+                    ) || [];
+
+                  forgetAccounts(localAccountsToForget);
+
                   // reformat address to ensure correct format
                   injected.forEach(async (account: WalletAccount) => {
                     const { address } = keyring.addFromAddress(account.address);
@@ -397,71 +380,73 @@ export const ConnectProvider = ({
    * This is invoked by the user by clicking on an extension.
    * If activeAccount is not found here, it is simply ignored.
    */
-  const connectExtensionAccounts = async (extensionName: string) => {
+  const connectExtensionAccounts = async (_extension: any) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
+    const { extensionName, enable } = _extension;
+
     const _activeAccount = getActiveAccountLocal(network);
     try {
-      const extension: Wallet | undefined = getWalletBySource(extensionName);
+      // summons extension popup
+      const extension: any = await enable(DAPP_NAME);
 
       if (extension !== undefined) {
-        // summons extension popup
-        await extension.enable(DAPP_NAME);
-
         // subscribe to accounts
-        const _unsubscribe = (await extension.subscribeAccounts((injected) => {
-          if (!injected) {
-            return;
-          }
-
-          // remove injected if they exist in local external accounts
-          const localExternalAccounts = getLocalExternalAccounts(network, true);
-          const localAccountsToForget =
-            localExternalAccounts.filter(
-              (l: ExternalAccount) =>
-                (injected || []).find(
-                  (a: WalletAccount) => a.address === l.address
-                ) !== undefined && l.addedBy === 'system'
-            ) || [];
-
-          if (localAccountsToForget.length) {
-            forgetAccounts(localAccountsToForget);
-          }
-
-          // update extensions status
-          updateExtensionStatus(extensionName, 'connected');
-          // update local active extensions
-          addToLocalExtensions(extensionName);
-
-          // abort if no accounts
-          if (injected !== undefined && injected.length) {
-            // reformat address to ensure correct format
-            injected.forEach(async (account: WalletAccount) => {
-              const { address } = keyring.addFromAddress(account.address);
-              account.address = address;
-              return account;
-            });
-
-            // connect to active account if found in extension
-            const activeAccountInWallet =
-              injected.find(
-                (a: WalletAccount) => a.address === _activeAccount
-              ) ?? null;
-            if (activeAccountInWallet !== null) {
-              connectToAccount(activeAccountInWallet);
+        const _unsubscribe = (await extension.accounts.subscribe(
+          (injected: any) => {
+            if (!injected) {
+              return;
             }
+            // update extensions status
+            updateExtensionStatus(extensionName, 'connected');
+            // update local active extensions
+            addToLocalExtensions(extensionName);
 
-            // remove accounts if they already exist
-            let _accounts = [...accountsRef.current].filter(
-              (a: ImportedAccount) => {
-                return a?.source !== extensionName;
+            // only continue if there are accounts
+            if (injected.length) {
+              // remove injected if they exist in local external accounts
+              const localExternalAccounts = getLocalExternalAccounts(
+                network,
+                true
+              );
+              const localAccountsToForget =
+                localExternalAccounts.filter(
+                  (l: ExternalAccount) =>
+                    (injected || []).find(
+                      (a: WalletAccount) => a.address === l.address
+                    ) !== undefined && l.addedBy === 'system'
+                ) || [];
+
+              forgetAccounts(localAccountsToForget);
+
+              // reformat address to ensure correct format
+              injected.forEach(async (account: WalletAccount) => {
+                const { address } = keyring.addFromAddress(account.address);
+                account.address = address;
+                return account;
+              });
+
+              // connect to active account if found in extension
+              const activeAccountInWallet =
+                injected.find(
+                  (a: WalletAccount) => a.address === _activeAccount
+                ) ?? null;
+              if (activeAccountInWallet !== null) {
+                connectToAccount(activeAccountInWallet);
               }
-            );
-            // concat accounts and store
-            _accounts = _accounts.concat(injected);
-            setStateWithRef(_accounts, setAccounts, accountsRef);
+
+              // remove accounts if they already exist
+              let _accounts = [...accountsRef.current].filter(
+                (a: ImportedAccount) => {
+                  return a?.source !== extensionName;
+                }
+              );
+              // concat accounts and store
+              _accounts = _accounts.concat(injected);
+              setStateWithRef(_accounts, setAccounts, accountsRef);
+            }
           }
-        })) as () => void;
+        )) as () => void;
 
         // update context state
         setStateWithRef(
@@ -642,7 +627,7 @@ export const ConnectProvider = ({
         accountHasSigner,
         isReadOnlyAccount,
         forgetAccounts,
-        extensions,
+        extensions: installedExtensions,
         extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,

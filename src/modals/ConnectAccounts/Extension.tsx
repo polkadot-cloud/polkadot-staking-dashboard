@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { ReactComponent as SubwalletSVG } from 'img/subwallet_icon.svg';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { useConnect } from 'contexts/Connect';
@@ -56,7 +57,7 @@ export const Extension = (props: any) => {
 
 export const ExtensionButton = (props: any) => {
   const { meta, setSection } = props;
-  const { extensionName, status } = meta;
+  const { status } = meta;
 
   const { connectExtensionAccounts } = useConnect();
 
@@ -68,8 +69,8 @@ export const ExtensionButton = (props: any) => {
     if (status === 'connected') {
       setSection(1);
     } else {
-      (async () => {
-        await connectExtensionAccounts(extensionName);
+      (() => {
+        connectExtensionAccounts(meta);
         // force re-render to display error messages
         setIncrement(increment + 1);
       })();
@@ -102,9 +103,15 @@ export const ExtensionElement = (props: any) => {
 export const ExtensionInner = (props: any) => {
   const { size, message, flag, meta, status } = props;
   const { extensionName, title } = meta;
+
   return (
     <>
       <div>
+        {extensionName === 'subwallet-js' && (
+          <>
+            <SubwalletSVG width={size} height={size} />
+          </>
+        )}
         {extensionName === 'talisman' && (
           <>
             <TalismanSVG width={size} height={size} />

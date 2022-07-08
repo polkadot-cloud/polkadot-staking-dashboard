@@ -5,6 +5,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import Identicon from 'library/Identicon';
 import { clipAddress } from 'Utils';
+import { ReactComponent as SubwalletSVG } from 'img/subwallet_icon.svg';
 import { ReactComponent as TalismanSVG } from 'img/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from 'img/dot_icon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -78,6 +79,7 @@ export const AccountInner = (props: any) => {
       <div className={label === null ? `` : label[0]}>
         {label !== null && <h5>{label[1]}</h5>}
 
+        {source === 'subwallet-js' && <SubwalletSVG className="icon" />}
         {source === 'talisman' && <TalismanSVG className="icon" />}
         {source === 'polkadot-js' && <PolkadotJSSVG className="icon" />}
         {!imported && (

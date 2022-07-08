@@ -56,3 +56,20 @@ export const getLocalExternalAccounts = (
   }
   return localExternalAccounts;
 };
+
+// check if an extension is in localExtensions (has been used previously)
+export const extensionIsLocal = (extensionName: string) => {
+  // connect if extension has been connected to previously
+  const localExtensions = localStorageOrDefault<string[]>(
+    `active_extensions`,
+    [],
+    true
+  );
+  let foundExtensionLocally = false;
+  if (Array.isArray(localExtensions)) {
+    foundExtensionLocally =
+      localExtensions.find((l: string) => l === extensionName) !== undefined;
+  }
+
+  return foundExtensionLocally;
+};
