@@ -31,13 +31,13 @@ export const NetworkMetricsProvider = ({
   const [metrics, setMetrics] = useState<NetworkMetrics>(defaults.metrics);
 
   // store network metrics unsubscribe
-  const [unsub, setUnsub] = useState<AnyApi>(null);
+  const [unsub, setUnsub] = useState<AnyApi>(undefined);
 
   // manage unsubscribe
   useEffect(() => {
     subscribeToNetworkMetrics();
     return () => {
-      if (unsub !== null) {
+      if (unsub) {
         unsub();
       }
     };
@@ -69,12 +69,8 @@ export const NetworkMetricsProvider = ({
           setMetrics(_metrics);
         }
       );
-
       setUnsub(_unsub);
-
-      return unsub;
     }
-    return undefined;
   };
 
   return (
