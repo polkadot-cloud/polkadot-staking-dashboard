@@ -7,10 +7,6 @@ export interface NetworkMetricsContextInterface {
   metrics: NetworkMetrics;
 }
 
-export interface NetworkMetricsState extends NetworkMetrics {
-  unsub: { (): void } | undefined;
-}
-
 export interface NetworkMetrics {
   activeEra: {
     index: number;

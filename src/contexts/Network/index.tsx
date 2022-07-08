@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { AnyApi } from 'types';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import { NetworkMetricsContextInterface, NetworkMetricsState } from './types';
+import { NetworkMetrics, NetworkMetricsContextInterface } from './types';
 
 export const NetworkMetricsContext =
   React.createContext<NetworkMetricsContextInterface>(
@@ -28,14 +28,17 @@ export const NetworkMetricsProvider = ({
   }, [status]);
 
   // store network metrics in state
-  const [metrics, setMetrics] = useState<NetworkMetricsState>(defaults.metrics);
+  const [metrics, setMetrics] = useState<NetworkMetrics>(defaults.metrics);
+
+  // store network metrics unsubscribe
+  const [unsub, setUnsub] = useState<AnyApi>(null);
 
   // manage unsubscribe
   useEffect(() => {
     subscribeToNetworkMetrics();
     return () => {
-      if (metrics.unsub !== undefined) {
-        metrics.unsub();
+      if (unsub !== null) {
+        unsub();
       }
     };
   }, [isReady]);
@@ -45,7 +48,7 @@ export const NetworkMetricsProvider = ({
     if (!api) return;
 
     if (isReady) {
-      const unsub = await api.queryMulti(
+      const _unsub = await api.queryMulti(
         [api.query.staking.activeEra, api.query.balances.totalIssuance],
         ([activeEra, _totalIssuance]: AnyApi) => {
           // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
@@ -62,11 +65,12 @@ export const NetworkMetricsProvider = ({
           const _metrics = {
             activeEra: _activeEra,
             totalIssuance: _totalIssuance.toBn(),
-            unsub,
           };
           setMetrics(_metrics);
         }
       );
+
+      setUnsub(_unsub);
 
       return unsub;
     }
