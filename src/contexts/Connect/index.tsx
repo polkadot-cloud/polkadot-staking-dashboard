@@ -19,6 +19,11 @@ import {
 import { AnyApi, MaybeAccount } from 'types';
 import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';
+import {
+  removeFromLocalExtensions,
+  getActiveAccountLocal,
+  getLocalExternalAccounts,
+} from './Utils';
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(
   defaultConnectContext
@@ -50,7 +55,13 @@ export const ConnectProvider = ({
   const [extensionsFetched, setExtensionsFetched] = useState(false);
 
   // store available extensions in state
+  // TODO: deprecate in favour of installedExtensions
   const [extensions, setExtensions] = useState<Array<Wallet>>([]);
+
+  // store the installed extensions in state
+  const [installedExtensions, setInstalledExtensions] = useState<Array<Wallet>>(
+    []
+  );
 
   // store extensions metadata in state
   const [extensionsStatus, setExtensionsStatus] = useState<{
@@ -62,10 +73,27 @@ export const ConnectProvider = ({
   const [unsubscribe, setUnsubscribe] = useState<AnyApi>([]);
   const unsubscribeRef = useRef(unsubscribe);
 
+  const getInstalledExtensions = () => {
+    const { injectedWeb3 }: any = window;
+    const _exts = [];
+    if (injectedWeb3['subwallet-js'] !== undefined) {
+      _exts.push(injectedWeb3['polkadot-js']);
+    }
+    if (injectedWeb3.talisman !== undefined) {
+      _exts.push(injectedWeb3['polkadot-js']);
+    }
+    if (injectedWeb3['polkadot-js'] !== undefined) {
+      _exts.push(injectedWeb3['polkadot-js']);
+    }
+    return _exts;
+  };
+
   // initialise extensions
   useEffect(() => {
     if (!extensions.length) {
+      // TODO: deprecate `setExtensions` in favour of `setInstalledExtensions`
       setExtensions(getWallets());
+      setInstalledExtensions(getInstalledExtensions());
     }
     return () => {
       unsubscribeAll();
@@ -76,7 +104,8 @@ export const ConnectProvider = ({
    * do this if activeAccount is present.
    * if activeAccount is present, and extensions have for some
    * reason forgot the site, then all pop-ups will be summoned
-   * here. */
+   * here.
+   */
   useEffect(() => {
     // unsubscribe from all accounts and reset state
     unsubscribeAll();
@@ -93,15 +122,19 @@ export const ConnectProvider = ({
     setExtensionsFetched(false);
 
     // get account if extensions exist and local extensions exist (previously connected).
-    if (extensions.length && localExtensions.length) {
+    if (installedExtensions.length && localExtensions.length) {
+      // TODO: once completed, remove timeout and test functionality.
       setTimeout(() => connectActiveExtensions(), 200);
     } else {
       setExtensionsFetched(true);
     }
-  }, [extensions, network]);
+  }, [installedExtensions, network]);
 
+  /* once extension accounts are synced, fetch
+   * any external accounts present in localStorage.
+   */
   useEffect(() => {
-    // get local external accounts if no extensions
+    // get local external accounts once extension fetching completes
     if (extensionsFetched) {
       importExternalAccounts();
     }
@@ -144,7 +177,7 @@ export const ConnectProvider = ({
     }
 
     // update localStorage
-    let localExternalAccounts = getLocalExternalAccounts(true);
+    let localExternalAccounts = getLocalExternalAccounts(network, true);
 
     // remove forgotten accounts from localStorage
     localExternalAccounts = localExternalAccounts.filter(
@@ -184,11 +217,11 @@ export const ConnectProvider = ({
    */
   const importExternalAccounts = () => {
     // import any local external accounts
-    let localExternalAccounts = getLocalExternalAccounts(true);
+    let localExternalAccounts = getLocalExternalAccounts(network, true);
 
     if (localExternalAccounts.length) {
       // get and format active account if present
-      const _activeAccount = getActiveAccountLocal();
+      const _activeAccount = getActiveAccountLocal(network);
 
       const activeAccountIsExternal =
         localExternalAccounts.find(
@@ -227,7 +260,7 @@ export const ConnectProvider = ({
     keyring.setSS58Format(network.ss58);
 
     // get and format active account if present
-    const _activeAccount = getActiveAccountLocal();
+    const _activeAccount = getActiveAccountLocal(network);
 
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
@@ -268,7 +301,10 @@ export const ConnectProvider = ({
                 }
 
                 // remove injected if they exist in local external accounts
-                const localExternalAccounts = getLocalExternalAccounts(true);
+                const localExternalAccounts = getLocalExternalAccounts(
+                  network,
+                  true
+                );
                 const localAccountsToForget =
                   localExternalAccounts.filter(
                     (l: ExternalAccount) =>
@@ -364,7 +400,7 @@ export const ConnectProvider = ({
   const connectExtensionAccounts = async (extensionName: string) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-    const _activeAccount = getActiveAccountLocal();
+    const _activeAccount = getActiveAccountLocal(network);
     try {
       const extension: Wallet | undefined = getWalletBySource(extensionName);
 
@@ -379,7 +415,7 @@ export const ConnectProvider = ({
           }
 
           // remove injected if they exist in local external accounts
-          const localExternalAccounts = getLocalExternalAccounts(true);
+          const localExternalAccounts = getLocalExternalAccounts(network, true);
           const localAccountsToForget =
             localExternalAccounts.filter(
               (l: ExternalAccount) =>
@@ -512,23 +548,6 @@ export const ConnectProvider = ({
     }
   };
 
-  const removeFromLocalExtensions = (extensionName: string) => {
-    let localExtensions = localStorageOrDefault<string[]>(
-      `active_extensions`,
-      [],
-      true
-    );
-    if (Array.isArray(localExtensions)) {
-      localExtensions = localExtensions.filter(
-        (l: string) => l !== extensionName
-      );
-      localStorage.setItem(
-        'active_extensions',
-        JSON.stringify(localExtensions)
-      );
-    }
-  };
-
   const getAccount = (addr: MaybeAccount) => {
     const acc =
       accountsRef.current.find((a: ImportedAccount) => a?.address === addr) ||
@@ -538,21 +557,6 @@ export const ConnectProvider = ({
 
   const getActiveAccount = () => {
     return activeAccountRef.current;
-  };
-
-  const getActiveAccountLocal = () => {
-    const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
-
-    // get and format active account if present
-    let _activeAccount = localStorageOrDefault(
-      `${network.name.toLowerCase()}_active_account`,
-      null
-    );
-    if (_activeAccount !== null) {
-      _activeAccount = keyring.addFromAddress(_activeAccount).address;
-    }
-    return _activeAccount;
   };
 
   // adds an external account (non-wallet) to accounts
@@ -571,7 +575,7 @@ export const ConnectProvider = ({
     };
 
     // get all external accounts from localStorage
-    const localExternalAccounts = getLocalExternalAccounts(false);
+    const localExternalAccounts = getLocalExternalAccounts(network, false);
     const exists = localExternalAccounts.find(
       (l: ExternalAccount) =>
         l.address === address && l.network === network.name
@@ -589,24 +593,6 @@ export const ConnectProvider = ({
       setAccounts,
       accountsRef
     );
-  };
-
-  // Formats local external accounts using active network ss58 format.
-  const getLocalExternalAccounts = (activeNetworkOnly = false) => {
-    let localExternalAccounts = localStorageOrDefault<Array<ExternalAccount>>(
-      `external_accounts`,
-      [],
-      true
-    ) as Array<ExternalAccount>;
-
-    // only fetch external accounts for active network
-    if (activeNetworkOnly) {
-      localExternalAccounts = localExternalAccounts.filter(
-        (l: ExternalAccount) => l.network === network.name
-      );
-    }
-
-    return localExternalAccounts;
   };
 
   // checks whether an account can sign transactions
