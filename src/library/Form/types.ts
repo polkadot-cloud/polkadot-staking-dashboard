@@ -1,11 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExternalAccount } from 'contexts/Connect/types';
-import { WalletAccount } from '@talisman-connect/wallets';
+import { ExternalAccount, ExtensionAccount } from 'contexts/Connect/types';
 import { BondOptions } from 'contexts/Balances/types';
 
-export interface WalletAccountItem extends WalletAccount {
+export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
   alert?: string;
   bondOptions?: BondOptions;
@@ -15,7 +14,7 @@ export interface ExternalAccountItem extends ExternalAccount {
   alert?: string;
   bondOptions?: BondOptions;
 }
-export type ImportedAccountItem = WalletAccountItem | ExternalAccountItem;
+export type ImportedAccountItem = ExtensionAccountItem | ExternalAccountItem;
 
 export type InputItem = ImportedAccountItem | null;
 

@@ -6,9 +6,10 @@ import { useApi } from 'contexts/Api';
 import { useNotifications } from 'contexts/Notifications';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useConnect } from 'contexts/Connect';
-import { getWalletBySource, Wallet } from '@talisman-connect/wallets';
+import { getWalletBySource } from '@talisman-connect/wallets';
 import { DAPP_NAME } from 'consts';
 import { AnyApi } from 'types';
+import { Extension } from 'contexts/Connect/types';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (
@@ -63,7 +64,7 @@ export const useSubmitExtrinsic = (
     const { signer, source } = account;
 
     // get extension
-    const extension: Wallet | undefined = getWalletBySource(source);
+    const extension: Extension | undefined = getWalletBySource(source);
     if (extension === undefined) {
       throw new Error('wallet not found');
     } else {

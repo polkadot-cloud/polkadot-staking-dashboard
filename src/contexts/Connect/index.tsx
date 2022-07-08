@@ -3,13 +3,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Keyring from '@polkadot/keyring';
-import { WalletAccount, Wallet } from '@talisman-connect/wallets';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { DAPP_NAME } from 'consts';
 import {
   ConnectContextInterface,
   ImportedAccount,
   ExternalAccount,
+  Extension,
+  ExtensionAccount,
 } from 'contexts/Connect/types';
 import { AnyApi, MaybeAccount } from 'types';
 import { useApi } from '../Api';
@@ -51,9 +52,9 @@ export const ConnectProvider = ({
   const [extensionsFetched, setExtensionsFetched] = useState(false);
 
   // store the installed extensions in state
-  const [installedExtensions, setInstalledExtensions] = useState<Array<Wallet>>(
-    []
-  );
+  const [installedExtensions, setInstalledExtensions] = useState<
+    Array<Extension>
+  >([]);
 
   // store extensions metadata in state
   const [extensionsStatus, setExtensionsStatus] = useState<{
@@ -268,7 +269,7 @@ export const ConnectProvider = ({
     const totalExtensions = installedExtensions.length;
     let activeWalletAccount: ImportedAccount | null = null;
 
-    installedExtensions.forEach(async (_extension: Wallet) => {
+    installedExtensions.forEach(async (_extension: Extension) => {
       extensionsCount++;
       const { extensionName, enable } = _extension;
 
@@ -292,7 +293,7 @@ export const ConnectProvider = ({
                 addToLocalExtensions(extensionName);
 
                 // filter unneeded account properties
-                injected = injected.map((a: WalletAccount) => {
+                injected = injected.map((a: ExtensionAccount) => {
                   return {
                     address: a.address,
                     source: extensionName,
@@ -312,14 +313,14 @@ export const ConnectProvider = ({
                     localExternalAccounts.filter(
                       (l: ExternalAccount) =>
                         (injected || []).find(
-                          (a: WalletAccount) => a.address === l.address
+                          (a: ExtensionAccount) => a.address === l.address
                         ) !== undefined && l.addedBy === 'system'
                     ) || [];
 
                   forgetAccounts(localAccountsToForget);
 
                   // reformat address to ensure correct format
-                  injected.forEach(async (account: WalletAccount) => {
+                  injected.forEach(async (account: ExtensionAccount) => {
                     const { address } = keyring.addFromAddress(account.address);
                     account.address = address;
                     return account;
@@ -327,7 +328,7 @@ export const ConnectProvider = ({
                   // connect to active account if found in extension
                   const activeAccountInWallet =
                     injected.find(
-                      (a: WalletAccount) => a.address === _activeAccount
+                      (a: ExtensionAccount) => a.address === _activeAccount
                     ) ?? null;
                   if (activeAccountInWallet !== null) {
                     activeWalletAccount = activeAccountInWallet;
@@ -413,14 +414,14 @@ export const ConnectProvider = ({
                 localExternalAccounts.filter(
                   (l: ExternalAccount) =>
                     (injected || []).find(
-                      (a: WalletAccount) => a.address === l.address
+                      (a: ExtensionAccount) => a.address === l.address
                     ) !== undefined && l.addedBy === 'system'
                 ) || [];
 
               forgetAccounts(localAccountsToForget);
 
               // reformat address to ensure correct format
-              injected.forEach(async (account: WalletAccount) => {
+              injected.forEach(async (account: ExtensionAccount) => {
                 const { address } = keyring.addFromAddress(account.address);
                 account.address = address;
                 return account;
@@ -429,7 +430,7 @@ export const ConnectProvider = ({
               // connect to active account if found in extension
               const activeAccountInWallet =
                 injected.find(
-                  (a: WalletAccount) => a.address === _activeAccount
+                  (a: ExtensionAccount) => a.address === _activeAccount
                 ) ?? null;
               if (activeAccountInWallet !== null) {
                 connectToAccount(activeAccountInWallet);
