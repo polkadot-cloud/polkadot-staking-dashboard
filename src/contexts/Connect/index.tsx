@@ -280,18 +280,18 @@ export const ConnectProvider = ({
                 // update local active extensions
                 addToLocalExtensions(id);
 
-                // filter unneeded account properties
-                injected = injected.map((a: ExtensionAccount) => {
-                  return {
-                    address: a.address,
-                    source: id,
-                    name: a.name,
-                    signer: extension.signer,
-                  };
-                });
-
                 // only continue if there are accounts
                 if (injected.length) {
+                  // format account properties
+                  injected = injected.map((a: ExtensionAccount) => {
+                    return {
+                      address: a.address,
+                      source: id,
+                      name: a.name,
+                      signer: extension.signer,
+                    };
+                  });
+
                   // remove any injected accounts from local external if any exist
                   const localExternalAccounts = getLocalExternalAccounts(
                     network,
@@ -393,6 +393,16 @@ export const ConnectProvider = ({
 
             // only continue if there are accounts
             if (injected.length) {
+              // format account properties
+              injected = injected.map((a: ExtensionAccount) => {
+                return {
+                  address: a.address,
+                  source: id,
+                  name: a.name,
+                  signer: extension.signer,
+                };
+              });
+
               // remove injected if they exist in local external accounts
               const localExternalAccounts = getLocalExternalAccounts(
                 network,
