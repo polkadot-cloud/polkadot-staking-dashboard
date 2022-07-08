@@ -5,14 +5,17 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
+import { Extension as ExtensionInterface } from 'contexts/Connect/types';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: any) => {
+  const { extensions } = useConnect();
+  const { extensionsStatus } = useConnect();
   const { meta } = props;
   const { id } = meta;
 
-  const { extensionsStatus } = useConnect();
-  const status = extensionsStatus[id];
+  const installed = extensions.find((e: ExtensionInterface) => e.id === id);
+  const status = !installed ? 'not_found' : extensionsStatus[id];
 
   // determine message to be displayed based on extension status.
   let message;
@@ -23,17 +26,13 @@ export const Extension = (props: any) => {
     case 'not_authenticated':
       message = 'Not Authenticated. Authenticate and Try Again';
       break;
-
-    case 'not_found':
-      message = 'Not Found. Install and Refresh';
-      break;
     default:
       message = status === 'no_accounts' ? 'No Accounts' : 'Not Connected';
   }
 
   return (
     <ExtensionWrapper>
-      {status === 'connected' ? (
+      {status === 'connected' || !installed ? (
         <ExtensionElement
           {...props}
           message={message}
@@ -46,6 +45,7 @@ export const Extension = (props: any) => {
           message={message}
           status={status}
           size="1.5rem"
+          installed={installed}
         />
       )}
     </ExtensionWrapper>
@@ -53,7 +53,7 @@ export const Extension = (props: any) => {
 };
 
 export const ExtensionButton = (props: any) => {
-  const { meta, setSection } = props;
+  const { meta, setSection, installed } = props;
   const { status } = meta;
 
   const { connectExtensionAccounts } = useConnect();
@@ -67,7 +67,7 @@ export const ExtensionButton = (props: any) => {
       setSection(1);
     } else {
       (() => {
-        connectExtensionAccounts(meta);
+        connectExtensionAccounts(installed);
         // force re-render to display error messages
         setIncrement(increment + 1);
       })();
