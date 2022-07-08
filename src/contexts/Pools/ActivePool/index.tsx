@@ -236,6 +236,8 @@ export const ActivePoolProvider = ({
             // set pool staking targets
             setStateWithRef(_targets, _setTargets, targetsRef);
           }
+        } else {
+          setStateWithRef(defaults.targets, _setTargets, targetsRef);
         }
       }
     );
