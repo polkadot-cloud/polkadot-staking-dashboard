@@ -41,7 +41,7 @@ export const getLocalExternalAccounts = (
   activeNetworkOnly = false
 ) => {
   let localExternalAccounts = localStorageOrDefault<Array<ExternalAccount>>(
-    `external_accounts`,
+    'external_accounts',
     [],
     true
   ) as Array<ExternalAccount>;

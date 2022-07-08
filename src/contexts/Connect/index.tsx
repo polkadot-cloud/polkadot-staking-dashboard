@@ -173,9 +173,11 @@ export const ConnectProvider = ({
 
     // remove forgotten accounts from localStorage
     localExternalAccounts = localExternalAccounts.filter(
-      (l: ImportedAccount) =>
-        _accounts.find((a: ImportedAccount) => a.address === l.address) ===
-        undefined
+      (l: ExternalAccount) =>
+        _accounts.find(
+          (a: ImportedAccount) =>
+            a.address === l.address && l.network === network.name
+        ) === undefined
     );
 
     if (localExternalAccounts.length) {
@@ -183,8 +185,6 @@ export const ConnectProvider = ({
         'external_accounts',
         JSON.stringify(localExternalAccounts)
       );
-    } else {
-      localStorage.removeItem('external_accounts');
     }
 
     // update accounts
@@ -222,7 +222,7 @@ export const ConnectProvider = ({
 
       // remove already-imported accounts (extensions may have already imported)
       localExternalAccounts = localExternalAccounts.filter(
-        (l: ImportedAccount) =>
+        (l: ExternalAccount) =>
           accountsRef.current.find(
             (a: ImportedAccount) => a.address === l.address
           ) === undefined
@@ -398,6 +398,7 @@ export const ConnectProvider = ({
                 network,
                 true
               );
+
               const localAccountsToForget =
                 localExternalAccounts.filter(
                   (l: ExternalAccount) =>
