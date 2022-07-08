@@ -130,18 +130,29 @@ export const AssistantProvider = (props: AssistantContextProps) => {
   const goToDefinition = (_page: string, _title: string) => {
     const definition = getDefinition(_page, _title);
 
+    // close assistant if the same definition is being toggled.
     if (
       innerDefinition.title === definition?.title &&
       open.state === Toggle.Open
     ) {
       closeAssistant();
-    } else if (definition !== undefined) {
-      setPage(_page);
+    }
+    // if definition exists, prepare assistant to display it
+    else if (definition !== undefined) {
+      // if already open, disable transition
+      if (open.state === Toggle.Open) {
+        setOpen({
+          state: open.state,
+          transition: 0,
+        });
+      } else {
+        // open assistant if closed
+        setTimeout(() => openAssistant(), 60);
+      }
+      // ensure on definition page
       setSection(1);
+      // apply definition
       setInnerDefinition(definition);
-
-      // short timeout to hide inner transition
-      setTimeout(() => openAssistant(), 60);
     }
   };
 
