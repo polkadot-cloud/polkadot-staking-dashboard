@@ -9,7 +9,6 @@ import {
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
 import {
-  textPrimary,
   textSecondary,
   highlightPrimary,
   highlightSecondary,
@@ -22,10 +21,10 @@ export const Wrapper = styled.div<any>`
   box-sizing: border-box;
   border-radius: ${(props) => (props.minimised ? '0.7rem' : 0)};
   background: none;
-  padding: 1rem 1rem 1rem 0.5rem;
+  padding: 1rem 1rem 1rem 1.25rem;
   overflow: auto;
   flex-grow: 1;
-  margin: 0.75rem 0 3.35rem 1rem;
+  margin: 0.75rem 0 3.35rem 0rem;
   display: flex;
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
@@ -37,15 +36,7 @@ export const Wrapper = styled.div<any>`
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     background: ${backgroundOverlay};
     transition: all 0.2s;
-    padding-right: 2rem;
-  }
-
-  .close-menu {
-    color: ${textPrimary};
-    display: none;
-    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
-      display: inline;
-    }
+    border-radius: 0.75rem;
   }
 
   section {

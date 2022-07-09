@@ -36,7 +36,7 @@ export const Favourite = (props: FavouriteProps) => {
           addNotification(notificationFavourite);
         }}
       >
-        <FontAwesomeIcon icon={faThumbtack} transform="shrink-1" />
+        <FontAwesomeIcon icon={faThumbtack} transform="shrink-2" />
       </button>
     </div>
   );

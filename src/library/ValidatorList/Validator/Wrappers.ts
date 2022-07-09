@@ -10,6 +10,7 @@ import {
   networkColor,
   modalBackground,
 } from 'theme';
+import { MAX_ASSISTANT_INTERFACE_WIDTH } from 'consts';
 
 export const Wrapper = styled.div<any>`
   display: flex;
@@ -54,33 +55,6 @@ export const Wrapper = styled.div<any>`
         margin: 0;
       }
     }
-
-    .label {
-      position: relative;
-      margin-left: 0.3rem;
-      color: ${textSecondary};
-
-      &.comm {
-        margin: 0 0.3rem;
-      }
-
-      &.warning {
-        color: #d2545d;
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        padding-right: 0.35rem;
-      }
-      button {
-        color: ${textSecondary};
-        &:hover {
-          opacity: 0.75;
-        }
-        &.active {
-          color: ${networkColor};
-        }
-      }
-    }
   }
 `;
 
@@ -93,8 +67,55 @@ export const Labels = styled.div`
   flex: 1 1 100%;
   padding: 0 0 0 0.25rem;
   height: 3.2rem;
+
+  button {
+    padding: 0 0.1rem;
+    @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
+      padding: 0 0.2rem;
+    }
+
+    color: ${textSecondary};
+    &:hover {
+      opacity: 0.75;
+    }
+    &.active {
+      color: ${networkColor};
+    }
+  }
+
+  .label {
+    position: relative;
+    color: ${textSecondary};
+    margin: 0 0.2rem;
+    @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
+      margin: 0 0.3rem;
+    }
+
+    &.warning {
+      color: #d2545d;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      padding-right: 0.35rem;
+    }
+  }
 `;
 
+export const OverSubscribedWrapper = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .warning {
+    margin-right: 0.25rem;
+    @media (max-width: 500px) {
+      display: none;
+    }
+  }
+`;
 export const IdentityWrapper = styled(motion.div)`
   box-sizing: border-box;
   display: flex;
@@ -106,14 +127,19 @@ export const IdentityWrapper = styled(motion.div)`
   flex: 1 1 25%;
   position: relative;
 
+  .inner {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+  }
   h4 {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 3.2rem;
     line-height: 2rem;
-    padding-left: 2.2rem;
+    padding: 0 0 0 0.4rem;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
