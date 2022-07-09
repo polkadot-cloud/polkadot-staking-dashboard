@@ -34,8 +34,8 @@ export const StatusLabel = (props: StatusLabelProps) => {
   return (
     <Wrapper topOffset={topOffset}>
       <div>
+        <FontAwesomeIcon icon={faExclamationTriangle} />
         <h2>
-          <FontAwesomeIcon icon={faExclamationTriangle} />
           &nbsp;&nbsp;
           {title}
         </h2>
