@@ -114,21 +114,6 @@ export const SideMenu = () => {
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
-        <button
-          type="button"
-          className="close-menu"
-          style={{
-            fontVariationSettings: "'wght' 450",
-            margin: '0.2rem 0 1rem 0',
-            opacity: 0.7,
-          }}
-          onClick={() => {
-            setSideMenu(sideMenuOpen ? 0 : 1);
-          }}
-        >
-          Close
-        </button>
-
         <LogoWrapper
           onClick={() => {
             window.open(POLKADOT_URL, '_blank');
