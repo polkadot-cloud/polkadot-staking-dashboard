@@ -25,6 +25,7 @@ export const NetworkBar = () => {
   const prices = usePrices();
 
   const [open, setOpen] = useState(false);
+  const [isLightClient, setIsLightClient] = useState(false);
 
   // handle connection symbol
   const symbolColor =
@@ -73,7 +74,11 @@ export const NetworkBar = () => {
       <Summary>
         <section>
           <network.icon className="network_icon" />
-          <p>{ORGANISATION === undefined ? network.name : ORGANISATION}</p>
+          <p>
+            {ORGANISATION === undefined
+              ? network.name + (isLightClient ? ' Light Client' : '')
+              : ORGANISATION}
+          </p>
           <Separator />
           {PRIVACY_URL !== undefined ? (
             <p>
@@ -132,18 +137,41 @@ export const NetworkBar = () => {
         </div>
         <div className="row">
           {Object.entries(NETWORKS).map(([key, item]: any, index: number) => (
-            <button
-              type="button"
-              key={`switch_network_${index}`}
-              onClick={() => {
-                if (network.name.toLowerCase() !== key) {
-                  switchNetwork(key);
-                  setOpen(false);
-                }
-              }}
-            >
-              <h3>{item.name}</h3>
-            </button>
+            <>
+              <button
+                type="button"
+                key={`switch_network_${index}`}
+                onClick={() => {
+                  if (
+                    network.name.toLowerCase() !== key ||
+                    (network.name.toLowerCase() === key && isLightClient)
+                  ) {
+                    switchNetwork(key);
+                    setOpen(false);
+                    setIsLightClient(false);
+                  }
+                }}
+              >
+                <h3>{item.name}</h3>
+              </button>
+              <button
+                type="button"
+                key={`switch_network_${index}_lc`}
+                onClick={() => {
+                  if (
+                    network.name.toLowerCase() !== key ||
+                    (network.name.toLowerCase() === key && !isLightClient)
+                  ) {
+                    switchNetwork(key, true);
+                    setOpen(false);
+                    setIsLightClient(true);
+                  }
+                }}
+              >
+                <h3>Light Client</h3>
+              </button>
+              {Object.entries(NETWORKS).length - 1 !== index && <span />}
+            </>
           ))}
         </div>
       </NetworkInfo>

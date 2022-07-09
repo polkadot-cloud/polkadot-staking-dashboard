@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
+import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import BN from 'bn.js';
 import {
   BONDING_DURATION,
@@ -31,7 +32,9 @@ export const useApi = () => React.useContext(APIContext);
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // provider instance state
-  const [provider, setProvider] = useState<WsProvider | null>(null);
+  const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
+    null
+  );
 
   // api instance state
   const [api, setApi] = useState<ApiPromise | null>(null);
@@ -75,7 +78,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   }, [provider]);
 
   // connection callback
-  const connectedCallback = async (_provider: WsProvider) => {
+  const connectedCallback = async (_provider: WsProvider | ScProvider) => {
     const _api = new ApiPromise({ provider: _provider });
     await _api.isReady;
 
@@ -145,10 +148,15 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // connect function sets provider and updates active network.
-  const connect = async (_network: NetworkName) => {
+  const connect = async (_network: NetworkName, _isLightClient?: boolean) => {
     const nodeEndpoint: Network = NETWORKS[_network];
-    const _provider = new WsProvider(nodeEndpoint.endpoint);
-
+    let _provider: WsProvider | ScProvider;
+    if (_isLightClient) {
+      _provider = new ScProvider(nodeEndpoint.lightClientEndpoint);
+      await _provider.connect();
+    } else {
+      _provider = new WsProvider(nodeEndpoint.endpoint);
+    }
     setNetwork({
       name: _network,
       meta: NETWORKS[_network],
@@ -157,12 +165,15 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // handle network switching
-  const switchNetwork = async (_network: NetworkName) => {
+  const switchNetwork = async (
+    _network: NetworkName,
+    _isLightClient?: boolean
+  ) => {
     if (api !== null) {
       await api.disconnect();
       setApi(null);
       setConnectionStatus(ConnectionStatus.Connecting);
-      connect(_network);
+      connect(_network, _isLightClient);
     }
   };
 

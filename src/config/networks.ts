@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { Networks } from 'types';
 import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
@@ -29,6 +30,7 @@ export const NETWORKS: Networks = {
         dark: 'rgb(211, 48, 121, 0.2)',
       },
     },
+    lightClientEndpoint: WellKnownChain.polkadot,
     endpoint: 'wss://rpc.polkadot.io',
     subscanEndpoint: 'https://polkadot.api.subscan.io',
     unit: 'DOT',
@@ -63,6 +65,7 @@ export const NETWORKS: Networks = {
         dark: 'rgb(102,102,102, 0.2)',
       },
     },
+    lightClientEndpoint: WellKnownChain.ksmcc3,
     endpoint: 'wss://kusama-rpc.polkadot.io',
     subscanEndpoint: 'https://kusama.api.subscan.io',
     unit: 'KSM',
@@ -97,6 +100,7 @@ export const NETWORKS: Networks = {
         dark: 'rgb(236,110,121, 0.2)',
       },
     },
+    lightClientEndpoint: WellKnownChain.westend2,
     endpoint: 'wss://westend-rpc.polkadot.io',
     subscanEndpoint: 'https://westend.api.subscan.io',
     unit: 'WND',

@@ -28,7 +28,7 @@ export const defaultApiContext: APIContextInterface = {
   },
   fetchDotPrice: () => {},
   // eslint-disable-next-line
-  switchNetwork: async (_network) => {
+  switchNetwork: async (_network, _isLightClient) => {
     await new Promise((resolve) => resolve(null));
   },
   api: null,
