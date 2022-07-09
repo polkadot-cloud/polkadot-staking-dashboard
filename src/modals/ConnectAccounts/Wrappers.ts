@@ -29,7 +29,7 @@ export const ContentWrapper = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
-  flex-basis: 50%;
+  width: 50%;
   height: auto;
   padding: 0 1rem 1rem 1rem;
 `;
@@ -42,6 +42,7 @@ export const Wrapper = styled.div`
   justify-content: flex-start;
   padding: 0;
   width: 100%;
+  overflow: hidden;
 
   h1 {
     padding: 0 0.5rem;
@@ -296,6 +297,7 @@ export const ExtensionWrapper = styled.div<any>`
     }
   }
   > button {
+    padding: 0 0.2rem;
     &:hover {
       background: ${backgroundToggle};
     }
