@@ -232,7 +232,7 @@ export const ExtensionWrapper = styled.div<any>`
     box-sizing: border-box;
     width: 100%;
     margin: ${(props) => (props.noSpacing ? 0 : '1rem 0')};
-    padding: ${(props) => (props.noSpacing ? 0 : '1rem 0.75rem')};
+    padding: ${(props) => (props.noSpacing ? 0 : '1rem 0.25rem')};
     font-size: 1rem;
     background: ${buttonPrimaryBackground};
     border-radius: 0.75rem;
