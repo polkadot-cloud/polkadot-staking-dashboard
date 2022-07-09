@@ -41,11 +41,13 @@ export const Identity = (props: IdentityProps) => {
       transition={{ duration: 0.3 }}
     >
       <Identicon value={address} size={26} />
-      {synced.identities && display !== null ? (
-        <h4>{display}</h4>
-      ) : (
-        <h4>{clipAddress(address)}</h4>
-      )}
+      <div className="inner">
+        {synced.identities && display !== null ? (
+          <h4>{display}</h4>
+        ) : (
+          <h4>{clipAddress(address)}</h4>
+        )}
+      </div>
     </IdentityWrapper>
   );
 };
