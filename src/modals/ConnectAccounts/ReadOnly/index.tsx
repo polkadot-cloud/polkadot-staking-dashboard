@@ -58,13 +58,7 @@ export const ReadOnly = (props: any) => {
                   : ``}
               </span>
             </h3>
-            {!readOnlyOpen && (
-              <FontAwesomeIcon
-                icon={faCog}
-                className="icon"
-                style={{ marginRight: '0.5rem' }}
-              />
-            )}
+            {!readOnlyOpen && <FontAwesomeIcon icon={faCog} className="icon" />}
           </div>
         </button>
       </ExtensionWrapper>
