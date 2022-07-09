@@ -11,6 +11,7 @@ import {
 } from 'theme';
 
 export const Wrapper = styled.div`
+  color: ${textPrimary};
   box-sizing: border-box;
   border-radius: 0.75rem;
   width: 100%;
@@ -18,7 +19,6 @@ export const Wrapper = styled.div`
   border-radius: 0.5rem;
   background: ${buttonPrimaryBackground};
   transition: background 0.15s;
-  color: ${textPrimary};
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
