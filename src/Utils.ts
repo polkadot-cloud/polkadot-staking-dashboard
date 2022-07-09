@@ -202,3 +202,9 @@ export const escapeRegExp = (string: string) => {
 export const replaceAll = (str: string, find: string, replace: string) => {
   return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 };
+
+export const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+};
