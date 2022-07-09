@@ -69,6 +69,10 @@ export const Wrapper = styled.div`
           display: flex;
           flex-flow: row nowrap;
           justify-content: flex-start;
+
+          > button {
+            padding: 0 0.25rem;
+          }
         }
       }
     }
