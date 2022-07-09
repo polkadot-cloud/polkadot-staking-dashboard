@@ -180,12 +180,10 @@ export const ConnectProvider = ({
         ) === undefined
     );
 
-    if (localExternalAccounts.length) {
-      localStorage.setItem(
-        'external_accounts',
-        JSON.stringify(localExternalAccounts)
-      );
-    }
+    localStorage.setItem(
+      'external_accounts',
+      JSON.stringify(localExternalAccounts)
+    );
 
     // update accounts
     const accountsNew = accountsRef.current.filter(
