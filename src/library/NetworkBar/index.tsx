@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { usePrices } from 'library/Hooks/usePrices';
@@ -137,7 +137,7 @@ export const NetworkBar = () => {
         </div>
         <div className="row">
           {Object.entries(NETWORKS).map(([key, item]: any, index: number) => (
-            <>
+            <React.Fragment key={`network_${index}`}>
               <button
                 type="button"
                 key={`switch_network_${index}`}
@@ -171,7 +171,7 @@ export const NetworkBar = () => {
                 <h3>Light Client</h3>
               </button>
               {Object.entries(NETWORKS).length - 1 !== index && <span />}
-            </>
+            </React.Fragment>
           ))}
         </div>
       </NetworkInfo>
