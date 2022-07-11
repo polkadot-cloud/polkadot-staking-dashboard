@@ -42,14 +42,19 @@ export interface Network {
   unit: string;
   units: number;
   ss58: number;
-  icon: FunctionComponent<
-    SVGProps<SVGSVGElement> & { title?: string | undefined }
-  >;
-  logo: {
-    svg: FunctionComponent<
+  brand: {
+    icon: FunctionComponent<
       SVGProps<SVGSVGElement> & { title?: string | undefined }
     >;
-    width: string;
+    logo: {
+      svg: FunctionComponent<
+        SVGProps<SVGSVGElement> & { title?: string | undefined }
+      >;
+      width: string;
+    };
+    inline: FunctionComponent<
+      SVGProps<SVGSVGElement> & { title?: string | undefined }
+    >;
   };
   api: {
     unit: string;

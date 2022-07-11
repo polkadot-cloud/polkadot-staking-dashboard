@@ -3,28 +3,37 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { highlightPrimary, highlightSecondary } from 'theme';
+import {
+  borderPrimary,
+  highlightPrimary,
+  highlightSecondary,
+  textSecondary,
+} from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`
+  border: 1px solid ${borderPrimary};
   box-sizing: border-box;
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.9rem 0.5rem;
+  padding: 0.75rem 0.5rem;
   margin: 0.3rem 0.2rem 0.3rem 0;
   font-size: 1.04rem;
   position: relative;
 
   .icon {
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
-    margin-right: 0.65rem;
+    margin-right: 0.75rem;
+
+    .primary {
+      fill: ${textSecondary};
+    }
   }
   .name {
-    margin: 0;
-    padding: 0;
+    color: ${textSecondary};
   }
   .action {
     flex: 1;
@@ -43,13 +52,14 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 `;
 
 export const MinimisedWrapper = styled(motion.div)`
+  border: 1px solid ${borderPrimary};
   border-radius: 0.5rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  padding: 0.9rem 0rem;
-  margin: 0.3rem 0.2rem 0.3rem 0;
+  padding: 0.5rem 0rem;
+  margin: 0.3rem 0 0.3rem 0;
   font-size: 1.04rem;
   position: relative;
 

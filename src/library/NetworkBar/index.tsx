@@ -72,7 +72,7 @@ export const NetworkBar = () => {
     >
       <Summary>
         <section>
-          <network.icon className="network_icon" />
+          <network.brand.icon className="network_icon" />
           <p>{ORGANISATION === undefined ? network.name : ORGANISATION}</p>
           <Separator />
           {PRIVACY_URL !== undefined ? (

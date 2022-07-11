@@ -12,6 +12,7 @@ import {
   backgroundOverlay,
   networkColor,
   modalBackground,
+  borderPrimary,
 } from 'theme';
 import { MinimisedProps } from './types';
 
@@ -106,4 +107,8 @@ export const PalettePosition = styled.div`
   top: -150px;
 `;
 
-export default Wrapper;
+export const Separator = styled.div`
+  border-bottom: 1px solid ${borderPrimary};
+  width: 100%;
+  margin: 1rem 1rem 1rem 0;
+`;

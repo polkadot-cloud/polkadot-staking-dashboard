@@ -23,9 +23,10 @@ import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { usePalette } from 'contexts/Palette';
 import { UIContextInterface } from 'contexts/UI/types';
+import { Separator, Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
 import { Primary } from './Primary';
+import { Secondary } from './Secondary';
 import Heading from './Heading/Heading';
-import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
 
 export const SideMenu = () => {
   const { network } = useApi();
@@ -127,7 +128,9 @@ export const SideMenu = () => {
               >
                 BETA
               </div>
-              <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
+              <network.brand.icon
+                style={{ maxHeight: '100%', width: '2rem' }}
+              />
             </>
           ) : (
             <>
@@ -144,11 +147,11 @@ export const SideMenu = () => {
               >
                 Staking | BETA
               </div>
-              <network.logo.svg
+              <network.brand.logo.svg
                 style={{
                   maxHeight: '100%',
                   height: '100%',
-                  width: network.logo.width,
+                  width: network.brand.logo.width,
                 }}
               />
             </>
@@ -179,6 +182,17 @@ export const SideMenu = () => {
             ))}
           </React.Fragment>
         ))}
+        <Separator />
+        <Secondary
+          name={network.name}
+          to="/"
+          icon={{
+            Svg: network.brand.inline,
+            width: '1.25rem',
+            height: '1.25rem',
+          }}
+          minimised={sideMenuMinimised}
+        />
       </section>
 
       <section>

@@ -12,7 +12,7 @@ export interface HeadingProps {
   minimised: number;
 }
 
-export interface ItemProps {
+export interface PrimaryProps {
   name: string;
   active: boolean;
   to: string;
