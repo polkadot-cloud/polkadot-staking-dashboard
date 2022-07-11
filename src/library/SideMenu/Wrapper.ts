@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   SIDE_MENU_MAXIMISED_WIDTH,
@@ -10,14 +9,13 @@ import {
 } from 'consts';
 import {
   textSecondary,
-  highlightPrimary,
-  highlightSecondary,
   backgroundOverlay,
   networkColor,
   modalBackground,
 } from 'theme';
+import { MinimisedProps } from './types';
 
-export const Wrapper = styled.div<any>`
+export const Wrapper = styled.div<MinimisedProps>`
   box-sizing: border-box;
   border-radius: ${(props) => (props.minimised ? '0.7rem' : 0)};
   background: none;
@@ -70,7 +68,7 @@ export const Wrapper = styled.div<any>`
   }
 `;
 
-export const LogoWrapper = styled.button<any>`
+export const LogoWrapper = styled.button<MinimisedProps>`
   display: flex;
   flex-flow: row wrap;
   justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
@@ -99,89 +97,6 @@ export const LogoWrapper = styled.button<any>`
   }
   ellipse {
     fill: ${networkColor};
-  }
-`;
-
-export const HeadingWrapper = styled.div<any>`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
-  opacity: ${(props) => (props.minimised ? 0.5 : 1)};
-  align-items: center;
-
-  h5 {
-    color: ${textSecondary};
-    margin: 1.1rem 0 0.2rem 0;
-    padding: 0 0.5rem;
-    opacity: 0.7;
-  }
-`;
-
-export const ItemWrapper = styled(motion.div)<any>`
-  box-sizing: border-box;
-  border-radius: 0.7rem;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0.9rem 0.5rem;
-  margin: 0.3rem 0.2rem 0.3rem 0;
-  font-size: 1.04rem;
-  position: relative;
-
-  .icon {
-    margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
-    margin-right: 0.65rem;
-  }
-  .name {
-    margin: 0;
-    padding: 0;
-  }
-  .action {
-    flex: 1;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-    margin-right: 0.3rem;
-  }
-
-  &.active {
-    background: ${highlightPrimary};
-  }
-  &.inactive:hover {
-    background: ${highlightSecondary};
-  }
-`;
-
-export const MinimisedItemWrapper = styled(motion.div)`
-  border-radius: 0.5rem;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0.9rem 0rem;
-  margin: 0.3rem 0.2rem 0.3rem 0;
-  font-size: 1.04rem;
-  position: relative;
-
-  &.active {
-    background: ${highlightPrimary};
-  }
-  &.inactive:hover {
-    background: ${highlightSecondary};
-  }
-  .icon {
-    margin: 0;
-  }
-  .action {
-    &.minimised {
-      > svg {
-        flex: 0;
-        position: absolute;
-        top: -4px;
-        right: -3px;
-      }
-    }
   }
 `;
 

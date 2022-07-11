@@ -6,15 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
-import { ItemWrapper, MinimisedItemWrapper } from './Wrapper';
-import { ItemProps } from './types';
+import { Wrapper, MinimisedWrapper } from './Wrappers';
+import { ItemProps } from '../types';
 
-export const Item = (props: ItemProps) => {
+export const Primary = (props: ItemProps) => {
   const { setSideMenu } = useUi();
 
   const { name, active, to, icon, action, minimised } = props;
 
-  const StyledWrapper = minimised ? MinimisedItemWrapper : ItemWrapper;
+  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
   return (
     <Link to={to} onClick={() => setSideMenu(0)}>
@@ -43,4 +43,4 @@ export const Item = (props: ItemProps) => {
   );
 };
 
-export default Item;
+export default Primary;

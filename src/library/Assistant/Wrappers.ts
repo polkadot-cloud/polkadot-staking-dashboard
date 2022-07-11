@@ -11,7 +11,7 @@ import {
   assistantBackground,
   networkColor,
 } from 'theme';
-import { HeightWrapperProps, ItemWrapperProps } from './types';
+import { HeightWrapperProps, MinimisedProps } from './types';
 
 export const Wrapper = styled(motion.div)`
   position: fixed;
@@ -197,7 +197,7 @@ export const DefinitionWrapper = styled(motion.div)`
   }
 `;
 
-export const ItemWrapper = styled(motion.div)<ItemWrapperProps>`
+export const ItemWrapper = styled(motion.div)<MinimisedProps>`
   display: flex;
   width: ${(props) => props.width};
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};

@@ -23,8 +23,8 @@ import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { usePalette } from 'contexts/Palette';
 import { UIContextInterface } from 'contexts/UI/types';
-import Item from './Item';
-import Heading from './Heading';
+import { Primary } from './Primary';
+import Heading from './Heading/Heading';
 import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
 
 export const SideMenu = () => {
@@ -39,7 +39,6 @@ export const SideMenu = () => {
   const {
     isSyncing,
     setSideMenu,
-    sideMenuOpen,
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
@@ -167,7 +166,7 @@ export const SideMenu = () => {
             {pagesToDisplay.map((page: any, pageIndex: number) => (
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id && (
-                  <Item
+                  <Primary
                     name={page.title}
                     to={page.hash}
                     active={page.hash === pathname}
