@@ -34,7 +34,7 @@ export interface HeightWrapperProps {
   transition?: number;
 }
 
-export interface ItemWrapperProps {
+export interface MinimisedProps {
   width: number | string;
   height: number | string;
 }
