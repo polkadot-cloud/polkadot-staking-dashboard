@@ -11,7 +11,8 @@ import {
 } from 'theme';
 import { MinimisedProps } from '../types';
 
-export const Wrapper = styled(motion.div)<MinimisedProps>`
+export const Wrapper = styled(motion.button)<MinimisedProps>`
+  width: 100%;
   border: 1px solid ${borderPrimary};
   box-sizing: border-box;
   border-radius: 0.7rem;
@@ -45,7 +46,8 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   }
 `;
 
-export const MinimisedWrapper = styled(motion.div)`
+export const MinimisedWrapper = styled(motion.button)`
+  width: 100%;
   border: 1px solid ${borderPrimary};
   border-radius: 0.5rem;
   display: flex;

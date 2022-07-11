@@ -5,16 +5,16 @@ import { useState, useRef } from 'react';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { usePrices } from 'library/Hooks/usePrices';
-import { NETWORKS } from 'config/networks';
 import { useOutsideAlerter } from 'library/Hooks';
 import { Wrapper, Summary, NetworkInfo, Separator } from './Wrappers';
 import { Status } from './Status';
 
 export const NetworkBar = () => {
   const { services } = useUi();
-  const { switchNetwork, network } = useApi();
+  const { network } = useApi();
   const prices = usePrices();
 
+  // currently not in use
   const [open, setOpen] = useState(false);
 
   // handle expand transitions
@@ -69,15 +69,6 @@ export const NetworkBar = () => {
           )}
         </section>
         <section>
-          <button
-            type="button"
-            className="ignore-network-info-toggle"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            {open ? 'Collapse' : 'Switch Network'}
-          </button>
           <div className="hide-small">
             {services.includes('binance_spot') && (
               <>
@@ -98,34 +89,13 @@ export const NetworkBar = () => {
                 <div className="stat">
                   1 {network.api.unit} / {prices.lastPrice} USD
                 </div>
-                <Separator />
               </>
             )}
           </div>
         </section>
       </Summary>
 
-      <NetworkInfo>
-        <div className="row">
-          <h2>Switch Network</h2>
-        </div>
-        <div className="row">
-          {Object.entries(NETWORKS).map(([key, item]: any, index: number) => (
-            <button
-              type="button"
-              key={`switch_network_${index}`}
-              onClick={() => {
-                if (network.name.toLowerCase() !== key) {
-                  switchNetwork(key);
-                  setOpen(false);
-                }
-              }}
-            >
-              <h3>{item.name}</h3>
-            </button>
-          ))}
-        </div>
-      </NetworkInfo>
+      <NetworkInfo />
     </Wrapper>
   );
 };

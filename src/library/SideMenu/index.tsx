@@ -206,7 +206,6 @@ export const SideMenu = () => {
         <Heading title="Network" minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
-          to="/"
           icon={{
             Svg: network.brand.inline.svg,
             size: network.brand.inline.size,
