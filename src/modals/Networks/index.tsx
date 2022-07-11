@@ -33,10 +33,12 @@ export const Networks = () => {
                   setStatus(0);
                 }}
               >
-                <Svg
-                  width={item.brand.inline.size}
-                  height={item.brand.inline.size}
-                />
+                <div style={{ width: '1.75rem' }}>
+                  <Svg
+                    width={item.brand.inline.size}
+                    height={item.brand.inline.size}
+                  />
+                </div>
                 <h3>{item.name}</h3>
 
                 <div>

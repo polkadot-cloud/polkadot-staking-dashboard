@@ -236,13 +236,13 @@ export const SideMenu = () => {
             )
           }
         >
-          <LogoGithubSVG width="1.45rem" height="1.45rem" />
+          <LogoGithubSVG width="1.4rem" height="1.4rem" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('Settings', {}, 'small')}
         >
-          <CogOutlineSVG width="1.65rem" height="1.65rem" />
+          <CogOutlineSVG width="1.6rem" height="1.6rem" />
         </button>
         <button type="button" onClick={() => togglePalette()}>
           <PalettePosition ref={posRef} />

@@ -45,7 +45,7 @@ export const NETWORKS: Networks = {
       },
       inline: {
         svg: PolkadotInlineSVG,
-        size: '1.1rem',
+        size: '1.2rem',
       },
     },
     api: {
@@ -85,7 +85,7 @@ export const NETWORKS: Networks = {
       },
       inline: {
         svg: KusamaInlineSVG,
-        size: '1.5rem',
+        size: '1.55rem',
       },
     },
     api: {
@@ -125,7 +125,7 @@ export const NETWORKS: Networks = {
       },
       inline: {
         svg: WestendInlineSVG,
-        size: '1.05rem',
+        size: '1.15rem',
       },
     },
     api: {

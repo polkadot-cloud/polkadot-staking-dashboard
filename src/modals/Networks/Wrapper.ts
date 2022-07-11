@@ -60,7 +60,7 @@ export const ContentWrapper = styled.div`
       }
 
       h3 {
-        margin: 0 0.5rem 0 1rem;
+        margin: 0 0.5rem 0 0.75rem;
       }
       > *:last-child {
         flex: 1;
