@@ -19,8 +19,8 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.6rem 0rem 0.6rem 0.5rem;
-  margin: 0.3rem 0.2rem 0.3rem 0;
+  padding: 0.75rem 0rem 0.75rem 0.5rem;
+  margin: 0.55rem 0.2rem 0.55rem 0;
   font-size: 1.04rem;
   position: relative;
 
@@ -52,7 +52,7 @@ export const MinimisedWrapper = styled(motion.div)`
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem 0rem;
+  padding: 0.6rem 0rem;
   margin: 0.3rem 0 0.3rem 0;
   font-size: 1.04rem;
   position: relative;

@@ -203,6 +203,7 @@ export const SideMenu = () => {
           </React.Fragment>
         ))}
         <Separator />
+        <Heading title="Network" minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
           to="/"

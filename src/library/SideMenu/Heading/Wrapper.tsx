@@ -13,7 +13,7 @@ export const Wrapper = styled.div<any>`
 
   h5 {
     color: ${textSecondary};
-    margin: 1.1rem 0 0.2rem 0;
+    margin: 1.1rem 0 0.3rem 0;
     padding: 0 0.5rem;
     opacity: 0.7;
   }

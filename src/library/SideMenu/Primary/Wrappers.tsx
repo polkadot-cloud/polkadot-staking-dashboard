@@ -14,7 +14,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   justify-content: flex-start;
   align-items: center;
   padding: 0.9rem 0.5rem;
-  margin: 0.3rem 0.2rem 0.3rem 0;
+  margin: 0.35rem 0.2rem 0.35rem 0;
   font-size: 1.04rem;
   position: relative;
 

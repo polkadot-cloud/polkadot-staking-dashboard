@@ -40,7 +40,7 @@ export const Projects = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <PageTitle title={title} />
+      <PageTitle title={`${title} Validators`} />
 
       <PageRowWrapper className="page-padding">
         <div>
@@ -51,7 +51,7 @@ export const Projects = (props: PageProps) => {
               whileTap={{ scale: 0.98 }}
               variants={listItem}
             >
-              cool icon here
+              coming soon
             </Item>
           </ItemsWrapper>
 
@@ -62,14 +62,14 @@ export const Projects = (props: PageProps) => {
               whileTap={{ scale: 0.98 }}
               variants={listItem}
             >
-              cool icon here
+              coming soon
             </Item>
             <Item
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               variants={listItem}
             >
-              cool icon here
+              coming soon
             </Item>
           </ItemsWrapper>
         </div>
