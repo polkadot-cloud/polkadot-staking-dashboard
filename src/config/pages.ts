@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  faUserFriends,
+  faHashtag,
   faServer,
   faChartLine,
   faStar,
@@ -37,11 +37,7 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 4,
-    title: 'Explore',
-  },
-  {
-    _id: 5,
-    title: 'Feedback',
+    title: 'Community',
   },
 ];
 
@@ -95,15 +91,15 @@ export const PAGES_CONFIG: PagesConfig = [
     icon: faThumbtack,
   },
   {
-    category: 4,
-    title: 'Community',
-    uri: `${URI_PREFIX}/community`,
-    hash: '/community',
+    category: 3,
+    title: 'Explore',
+    uri: `${URI_PREFIX}/explore`,
+    hash: '/explore',
     Entry: Projects,
-    icon: faUserFriends,
+    icon: faHashtag,
   },
   {
-    category: 5,
+    category: 4,
     title: 'Feedback',
     uri: `${URI_PREFIX}/feedback`,
     hash: '/feedback',
