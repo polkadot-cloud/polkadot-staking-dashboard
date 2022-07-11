@@ -175,6 +175,10 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
           "State-Toggler: Can change the pool's state and kick (permissionlessly unbond/withdraw) members if the pool is blocked.",
         ],
       },
+      {
+        title: 'Reserve Amount',
+        description: ['10 {NETWORK_UNIT}'],
+      },
     ],
     external: [],
   },

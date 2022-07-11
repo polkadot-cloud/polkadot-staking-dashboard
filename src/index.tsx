@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import 'index.css';
 import App from 'App';
 import reportWebVitals from './reportWebVitals';
+import { AppErrorBoundary } from './ErrorsBoundary';
 
 // workaround for supporting react 18 beta types:
 // https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/

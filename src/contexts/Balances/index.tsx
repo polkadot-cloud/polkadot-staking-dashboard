@@ -23,6 +23,7 @@ export const BalancesContext = React.createContext<BalancesContextInterface>(
 );
 
 export const useBalances = () => React.useContext(BalancesContext);
+// export const xistentialAmount = useApi().consts.existentialDeposit;
 
 export const BalancesProvider = ({
   children,
