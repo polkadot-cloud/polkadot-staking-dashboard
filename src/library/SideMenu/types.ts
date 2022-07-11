@@ -4,7 +4,7 @@
 import React from 'react';
 
 export interface MinimisedProps {
-  minimised: boolean;
+  minimised: number;
 }
 
 export interface HeadingProps {
