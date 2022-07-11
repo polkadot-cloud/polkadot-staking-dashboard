@@ -18,18 +18,30 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import {
+  URI_PREFIX,
+  POLKADOT_URL,
+  SIDE_MENU_STICKY_THRESHOLD,
+  CONNECTION_SYMBOL_COLORS,
+} from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { usePalette } from 'contexts/Palette';
 import { UIContextInterface } from 'contexts/UI/types';
-import { Separator, Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
+import { ConnectionStatus } from 'contexts/Api/types';
+import {
+  Separator,
+  Wrapper,
+  LogoWrapper,
+  PalettePosition,
+  ConnectionSymbol,
+} from './Wrapper';
 import { Primary } from './Primary';
 import { Secondary } from './Secondary';
 import Heading from './Heading/Heading';
 
 export const SideMenu = () => {
-  const { network } = useApi();
+  const { network, status } = useApi();
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
@@ -111,6 +123,14 @@ export const SideMenu = () => {
     }
   };
 
+  // handle connection symbol
+  const symbolColor =
+    status === ConnectionStatus.Connecting
+      ? CONNECTION_SYMBOL_COLORS.connecting
+      : status === ConnectionStatus.Connected
+      ? CONNECTION_SYMBOL_COLORS.connected
+      : CONNECTION_SYMBOL_COLORS.disconnected;
+
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
@@ -187,11 +207,11 @@ export const SideMenu = () => {
           name={network.name}
           to="/"
           icon={{
-            Svg: network.brand.inline,
-            width: '1.25rem',
-            height: '1.25rem',
+            Svg: network.brand.inline.svg,
+            size: network.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
+          action={<ConnectionSymbol color={symbolColor} />}
         />
       </section>
 

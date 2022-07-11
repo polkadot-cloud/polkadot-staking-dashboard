@@ -43,7 +43,10 @@ export const NETWORKS: Networks = {
         svg: PolkadotLogoSVG,
         width: '8.5rem',
       },
-      inline: PolkadotInlineSVG,
+      inline: {
+        svg: PolkadotInlineSVG,
+        size: '1.1rem',
+      },
     },
     api: {
       unit: 'DOT',
@@ -80,7 +83,10 @@ export const NETWORKS: Networks = {
         svg: KusamaLogoSVG,
         width: '8.5rem',
       },
-      inline: KusamaInlineSVG,
+      inline: {
+        svg: KusamaInlineSVG,
+        size: '1.5rem',
+      },
     },
     api: {
       unit: 'KSM',
@@ -117,7 +123,10 @@ export const NETWORKS: Networks = {
         svg: WestendLogoSVG,
         width: '8.5rem',
       },
-      inline: WestendInlineSVG,
+      inline: {
+        svg: WestendInlineSVG,
+        size: '1.05rem',
+      },
     },
     api: {
       unit: 'DOT',

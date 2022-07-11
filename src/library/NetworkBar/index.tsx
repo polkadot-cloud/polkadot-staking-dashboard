@@ -5,34 +5,17 @@ import { useState, useRef } from 'react';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { usePrices } from 'library/Hooks/usePrices';
-import { CONNECTION_SYMBOL_COLORS } from 'consts';
 import { NETWORKS } from 'config/networks';
-import { ConnectionStatus } from 'contexts/Api/types';
 import { useOutsideAlerter } from 'library/Hooks';
-import {
-  Wrapper,
-  Summary,
-  ConnectionSymbol,
-  NetworkInfo,
-  Separator,
-} from './Wrappers';
-import { BlockNumber } from './BlockNumber';
+import { Wrapper, Summary, NetworkInfo, Separator } from './Wrappers';
 import { Status } from './Status';
 
 export const NetworkBar = () => {
   const { services } = useUi();
-  const { status, switchNetwork, network } = useApi();
+  const { switchNetwork, network } = useApi();
   const prices = usePrices();
 
   const [open, setOpen] = useState(false);
-
-  // handle connection symbol
-  const symbolColor =
-    status === ConnectionStatus.Connecting
-      ? CONNECTION_SYMBOL_COLORS.connecting
-      : status === ConnectionStatus.Connected
-      ? CONNECTION_SYMBOL_COLORS.connected
-      : CONNECTION_SYMBOL_COLORS.disconnected;
 
   // handle expand transitions
   const variants = {
@@ -95,10 +78,6 @@ export const NetworkBar = () => {
           >
             {open ? 'Collapse' : 'Switch Network'}
           </button>
-          <div className="stat" style={{ marginRight: 0 }}>
-            {status === ConnectionStatus.Connected && <BlockNumber />}
-            <ConnectionSymbol color={symbolColor} />
-          </div>
           <div className="hide-small">
             {services.includes('binance_spot') && (
               <>

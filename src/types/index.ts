@@ -52,9 +52,12 @@ export interface Network {
       >;
       width: string;
     };
-    inline: FunctionComponent<
-      SVGProps<SVGSVGElement> & { title?: string | undefined }
-    >;
+    inline: {
+      svg: FunctionComponent<
+        SVGProps<SVGSVGElement> & { title?: string | undefined }
+      >;
+      size: string;
+    };
   };
   api: {
     unit: string;

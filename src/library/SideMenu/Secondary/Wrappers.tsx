@@ -19,28 +19,22 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.75rem 0.5rem;
+  padding: 0.6rem 0rem 0.6rem 0.5rem;
   margin: 0.3rem 0.2rem 0.3rem 0;
   font-size: 1.04rem;
   position: relative;
 
-  .icon {
-    margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
-    margin-right: 0.75rem;
-
-    .primary {
-      fill: ${textSecondary};
-    }
-  }
   .name {
     color: ${textSecondary};
+    font-size: 1rem;
+    font-variation-settings: 'wght' 480;
   }
   .action {
+    color: ${textSecondary};
     flex: 1;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
-    margin-right: 0.3rem;
   }
 
   &.active {
@@ -74,12 +68,21 @@ export const MinimisedWrapper = styled(motion.div)`
   }
   .action {
     &.minimised {
-      > svg {
-        flex: 0;
-        position: absolute;
-        top: -4px;
-        right: -3px;
-      }
+      flex: 0;
+      position: absolute;
+      top: -2px;
+      right: -13px;
+    }
+  }
+`;
+
+export const IconWrapper = styled.div<any>`
+  margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
+  margin-right: 0.65rem;
+
+  svg {
+    .primary {
+      fill: ${(props) => props.fill};
     }
   }
 `;
