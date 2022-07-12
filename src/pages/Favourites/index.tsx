@@ -7,6 +7,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
+import { ErrorBoundary } from 'ErrorsBoundary';
 import { PageProps } from '../types';
 
 export const Favourites = (props: PageProps) => {
@@ -17,8 +18,10 @@ export const Favourites = (props: PageProps) => {
 
   const batchKey = 'favourite_validators';
 
+  if (!window) throw new Error('Failed To Get The Favourites Page');
+
   return (
-    <>
+    <ErrorBoundary>
       <PageTitle title={title} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
@@ -47,7 +50,7 @@ export const Favourites = (props: PageProps) => {
           )}
         </CardWrapper>
       </PageRowWrapper>
-    </>
+    </ErrorBoundary>
   );
 };
 

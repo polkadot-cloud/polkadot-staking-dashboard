@@ -71,6 +71,8 @@ export const Assistant = () => {
     ['ignore-assistant-outside-alerter']
   );
 
+  if (!assistant || !{ pathname }) throw new Error('Failed to get Assistant');
+
   return (
     <Wrapper
       ref={ref}

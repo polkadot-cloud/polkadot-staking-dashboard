@@ -17,6 +17,7 @@ import { PageTitle } from 'library/PageTitle';
 import { GRAPH_HEIGHT } from 'consts';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';
+import { ErrorBoundary } from 'ErrorsBoundary';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
@@ -32,8 +33,10 @@ export const Overview = () => {
 
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
 
+  if (!network) throw new Error('Failed to load the Overview page');
+
   return (
-    <>
+    <ErrorBoundary>
       <PageTitle title="Overview" />
       <StatBoxList>
         <TotalNominatorsStatBox />
@@ -74,7 +77,7 @@ export const Overview = () => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <Announcements />
       </PageRowWrapper>
-    </>
+    </ErrorBoundary>
   );
 };
 

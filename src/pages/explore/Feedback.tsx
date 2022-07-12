@@ -7,6 +7,7 @@ import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
+import { ErrorBoundary } from 'ErrorsBoundary';
 
 const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 
@@ -46,15 +47,19 @@ const Feedback = (props: PageProps) => {
       basePath: null, // See step 2
       ssoToken: null, // See step 3
     });
+    if ( window == null ) throw new Error('Failed To Get The Feedback Page');
   }, []);
 
+
   return (
-    <Wrapper>
-      <PageTitle title={title} />
-      <PageRowWrapper className='page-padding'>
-        <div data-canny style={{ width: '100%' }} />
-      </PageRowWrapper>
-    </Wrapper>
+    <ErrorBoundary>
+      <Wrapper>
+        <PageTitle title={title} />
+        <PageRowWrapper className='page-padding'>
+          <div data-canny style={{ width: '100%' }} />
+        </PageRowWrapper>
+      </Wrapper>
+    </ErrorBoundary> 
   );
 };
 

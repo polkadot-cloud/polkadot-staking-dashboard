@@ -3,6 +3,7 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
+import { ErrorBoundary } from 'ErrorsBoundary';
 import { PageProps } from '../types';
 import { Wrapper, ItemsWrapper, Item } from './Wrappers';
 
@@ -38,43 +39,47 @@ export const Projects = (props: PageProps) => {
     },
   };
 
+  if (!window) throw new Error('Failed To Get The Community Page');
+
   return (
-    <Wrapper>
-      <PageTitle title={`${title} Validators`} />
+    <ErrorBoundary>
+      <Wrapper>
+        <PageTitle title={`${title} Validators`} />
 
-      <PageRowWrapper className="page-padding">
-        <div>
-          <h2>Validator Programs</h2>
-          <ItemsWrapper variants={container} initial="hidden" animate="show">
-            <Item
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              variants={listItem}
-            >
-              coming soon
-            </Item>
-          </ItemsWrapper>
+        <PageRowWrapper className="page-padding">
+          <div>
+            <h2>Validator Programs</h2>
+            <ItemsWrapper variants={container} initial="hidden" animate="show">
+              <Item
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                variants={listItem}
+              >
+                coming soon
+              </Item>
+            </ItemsWrapper>
 
-          <h2>Staking in the Polkadot Ecosystem</h2>
-          <ItemsWrapper variants={container} initial="hidden" animate="show">
-            <Item
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              variants={listItem}
-            >
-              coming soon
-            </Item>
-            <Item
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              variants={listItem}
-            >
-              coming soon
-            </Item>
-          </ItemsWrapper>
-        </div>
-      </PageRowWrapper>
-    </Wrapper>
+            <h2>Staking in the Polkadot Ecosystem</h2>
+            <ItemsWrapper variants={container} initial="hidden" animate="show">
+              <Item
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                variants={listItem}
+              >
+                coming soon
+              </Item>
+              <Item
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                variants={listItem}
+              >
+                coming soon
+              </Item>
+            </ItemsWrapper>
+          </div>
+        </PageRowWrapper>
+      </Wrapper>
+    </ErrorBoundary>
   );
 };
 

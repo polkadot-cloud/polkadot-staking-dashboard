@@ -30,6 +30,7 @@ import { TITLE_DEFAULT } from 'consts';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import { Tooltip } from 'library/Tooltip';
+import { ErrorBoundary } from 'ErrorsBoundary';
 
 export const RouterInner = () => {
   const { network } = useApi();
@@ -115,9 +116,11 @@ export const RouterInner = () => {
 
 export const Router = () => {
   return (
-    <HashRouter basename="/">
-      <RouterInner />
-    </HashRouter>
+    <ErrorBoundary>
+      <HashRouter basename="/">
+        <RouterInner />
+      </HashRouter>
+    </ErrorBoundary>
   );
 };
 export default Router;

@@ -23,6 +23,7 @@ import { useStaking } from 'contexts/Staking';
 import { MAX_PAYOUT_DAYS } from 'consts';
 import { AnySubscan } from 'types';
 import { BN } from 'bn.js';
+import { ErrorBoundary } from 'ErrorsBoundary';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
@@ -52,8 +53,10 @@ export const Payouts = (props: PageProps) => {
     return y.sub(x);
   });
 
+  if (!window) throw new Error('Failed To Get The Payouts Page');
+
   return (
-    <>
+    <ErrorBoundary>
       <PageTitle title={title} />
       <StatBoxList>
         <LastEraPayoutStatBox />
@@ -125,7 +128,7 @@ export const Payouts = (props: PageProps) => {
           </CardWrapper>
         </PageRowWrapper>
       )}
-    </>
+    </ErrorBoundary>
   );
 };
 

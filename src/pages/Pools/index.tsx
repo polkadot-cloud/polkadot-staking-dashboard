@@ -16,11 +16,11 @@ import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { ErrorBoundary } from 'ErrorsBoundary';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
 import MinCreateBondStatBox from './Stats/MinCreateBond';
-import ReserveAmountBox from './Stats/ReserveAmount';
 import { Status } from './Status';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
@@ -67,7 +67,6 @@ export const PoolsInner = (props: PageProps) => {
             <ActivePoolsStatBox />
             <MinJoinBondStatBox />
             <MinCreateBondStatBox />
-            <ReserveAmountBox />
           </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <RowPrimaryWrapper hOrder={1} vOrder={0}>
@@ -121,10 +120,13 @@ export const PoolsInner = (props: PageProps) => {
 };
 
 export const Pools = (props: PageProps) => {
+  if (!window) throw new Error('Failed To Get The Pools Page');
   return (
-    <PoolsTabsProvider>
-      <PoolsInner {...props} />
-    </PoolsTabsProvider>
+    <ErrorBoundary>
+      <PoolsTabsProvider>
+        <PoolsInner {...props} />
+      </PoolsTabsProvider>
+    </ErrorBoundary>
   );
 };
 

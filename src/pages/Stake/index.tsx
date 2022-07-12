@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useUi } from 'contexts/UI';
+import { ErrorBoundary } from 'ErrorsBoundary';
 import { PageProps } from '../types';
 import { Wrapper } from './Wrappers';
 import { Active } from './Active';
@@ -12,14 +13,18 @@ export const Stake = (props: PageProps) => {
   const { title } = page;
   const { onSetup, setOnSetup } = useUi();
 
+  if (!window) throw new Error('Failed To Get The Stake Page');
+
   return (
-    <Wrapper>
-      {onSetup ? (
-        <Setup title={title} setOnSetup={setOnSetup} />
-      ) : (
-        <Active title={title} setOnSetup={setOnSetup} />
-      )}
-    </Wrapper>
+    <ErrorBoundary>
+      <Wrapper>
+        {onSetup ? (
+          <Setup title={title} setOnSetup={setOnSetup} />
+        ) : (
+          <Active title={title} setOnSetup={setOnSetup} />
+        )}
+      </Wrapper>
+    </ErrorBoundary>
   );
 };
 
