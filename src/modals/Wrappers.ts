@@ -47,7 +47,7 @@ export const ModalWrapper = styled(motion.div)`
 export const HeightWrapper = styled.div<any>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
-  transition: height 0.6s cubic-bezier(0.1, 1, 0.2, 1);
+  transition: height 0.4s cubic-bezier(0.1, 1, 0.2, 1);
   box-sizing: border-box;
   width: 100%;
   max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};

@@ -3,12 +3,16 @@
 
 import React from 'react';
 
+export interface MinimisedProps {
+  minimised: number;
+}
+
 export interface HeadingProps {
   title: string;
   minimised: number;
 }
 
-export interface ItemProps {
+export interface PrimaryProps {
   name: string;
   active: boolean;
   to: string;
