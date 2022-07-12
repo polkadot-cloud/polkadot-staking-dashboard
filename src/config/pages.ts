@@ -37,7 +37,7 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 4,
-    title: 'Community',
+    title: 'Feedback',
   },
 ];
 
@@ -92,9 +92,9 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
-    title: 'Explore',
-    uri: `${URI_PREFIX}/explore`,
-    hash: '/explore',
+    title: 'Community',
+    uri: `${URI_PREFIX}/community`,
+    hash: '/community',
     Entry: Projects,
     icon: faHashtag,
   },
