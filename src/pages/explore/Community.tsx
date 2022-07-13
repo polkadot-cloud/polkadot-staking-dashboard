@@ -17,7 +17,7 @@ export const Community = (props: PageProps) => {
       opacity: 1,
       transition: {
         duration: 0.5,
-        staggerChildren: 0.1,
+        staggerChildren: 0.05,
       },
     },
   };
