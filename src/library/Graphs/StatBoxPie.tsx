@@ -42,7 +42,10 @@ export const StatPie = (props: StatPieProps) => {
     borderColor,
     hoverBorderColor: borderColor,
     backgroundColor,
-    hoverBackgroundColor: backgroundColor,
+    hoverBackgroundColor: [
+      networkColorsTransparent[`${network.name}-${mode}`],
+      defaultThemes.transparent[mode],
+    ],
     responsive: true,
     maintainAspectRatio: false,
     spacing: 0,
@@ -64,7 +67,7 @@ export const StatPie = (props: StatPieProps) => {
           networkColorsTransparent[`${network.name}-${mode}`],
           defaultThemes.transparent[mode],
         ],
-        borderWidth: 1.25,
+        borderWidth: 1.6,
       },
     ],
   };
