@@ -27,11 +27,7 @@ export const Item = () => {
   };
 
   return (
-    <ItemWrapper
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      variants={listItem}
-    >
+    <ItemWrapper whileHover={{ scale: 1.01 }} variants={listItem}>
       <div className="inner">
         <section>
           <KusamaIconSVG width="10rem" />
