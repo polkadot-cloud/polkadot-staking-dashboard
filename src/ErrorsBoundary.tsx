@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-// Can make it a component that can new out a object so that can make different error boundaries
-// for sessions that output specific error content
 export class ErrorBoundary extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
@@ -22,7 +20,7 @@ export class ErrorBoundary extends React.Component<any, any> {
     if (this.state.errorInfo) {
       return (
         <>
-          <h2>Opps, Something Went Wrong.</h2>
+          <h2>{this.props.erromessage}.</h2>
           {this.state.error && this.state.error.toString()}
           <br />
           {this.state.errorInfo.componentStack}

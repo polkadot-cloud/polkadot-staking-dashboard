@@ -47,6 +47,7 @@ const Feedback = (props: PageProps) => {
       basePath: null, // See step 2
       ssoToken: null, // See step 3
     });
+    
     if ( window == null ) throw new Error('Failed To Get The Feedback Page');
   }, []);
 

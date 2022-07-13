@@ -18,7 +18,7 @@ const App: React.FC = () => {
   if (!localStorage) throw new Error('LocalStorage Is Not Supported');
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary message="Opps, Something Went Wrong">
       <ThemesProvider>
         <Providers />
       </ThemesProvider>
