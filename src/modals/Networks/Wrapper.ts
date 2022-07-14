@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, buttonPrimaryBackground, textPrimary } from 'theme';
+import {
+  backgroundToggle,
+  buttonPrimaryBackground,
+  textPrimary,
+  textSecondary,
+} from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -73,6 +78,10 @@ export const ContentWrapper = styled.div`
       }
       .icon {
         margin-right: 0.5rem;
+      }
+
+      svg {
+        fill: ${textSecondary};
       }
       p {
         color: ${textPrimary};
