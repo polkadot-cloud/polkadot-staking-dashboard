@@ -4,9 +4,12 @@
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ItemWrapper } from './Wrappers';
+import { useCommunitySections } from './context';
 
 export const Item = (props: any) => {
   const { name, Thumbnail, validators } = props;
+
+  const { setActiveSection } = useCommunitySections();
 
   const listItem = {
     hidden: {
@@ -35,10 +38,12 @@ export const Item = (props: any) => {
         </section>
         <section>
           <h2>{name}</h2>
-          <h3>
-            <FontAwesomeIcon icon={faServer} /> {validators.length} Validator
-            {validators.length !== 1 && 's'}
-          </h3>
+          <button type="button" onClick={() => setActiveSection(1)}>
+            <h3>
+              <FontAwesomeIcon icon={faServer} /> {validators.length} Validator
+              {validators.length !== 1 && 's'}
+            </h3>
+          </button>
         </section>
       </div>
     </ItemWrapper>
