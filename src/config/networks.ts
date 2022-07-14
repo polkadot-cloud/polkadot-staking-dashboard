@@ -64,8 +64,8 @@ export const NETWORKS: Networks = {
         dark: '#666',
       },
       secondary: {
-        light: '#888',
-        dark: '#888',
+        light: '#999',
+        dark: '#AAA',
       },
       transparent: {
         light: 'rgb(51,51,51,0.05)',

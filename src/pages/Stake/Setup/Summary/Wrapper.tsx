@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { borderPrimary, networkColor } from 'theme';
+import { borderPrimary, networkColor, textSecondary } from 'theme';
 
 export const SummaryWrapper = styled.div`
   display: flex;
@@ -20,6 +20,7 @@ export const SummaryWrapper = styled.div`
     padding: 0.5rem 0 0.75rem 0;
 
     > div:first-child {
+      color: ${textSecondary};
       width: 200px;
       display: flex;
       flex-flow: row wrap;
@@ -31,6 +32,7 @@ export const SummaryWrapper = styled.div`
     }
 
     > div:last-child {
+      color: ${textSecondary};
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;
