@@ -1,12 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ItemWrapper } from './Wrappers';
 
-export const Item = () => {
+export const Item = (props: any) => {
+  const { name, Thumbnail, validators } = props;
+
   const listItem = {
     hidden: {
       opacity: 0,
@@ -30,12 +31,13 @@ export const Item = () => {
     <ItemWrapper whileHover={{ scale: 1.01 }} variants={listItem}>
       <div className="inner">
         <section>
-          <KusamaIconSVG width="10rem" />
+          <Thumbnail />
         </section>
         <section>
-          <h2>Validator Owner Name</h2>
+          <h2>{name}</h2>
           <h3>
-            <FontAwesomeIcon icon={faServer} /> 2 Validators
+            <FontAwesomeIcon icon={faServer} /> {validators.length} Validator
+            {validators.length !== 1 && 's'}
           </h3>
         </section>
       </div>

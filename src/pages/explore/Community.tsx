@@ -3,6 +3,7 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
+import { VALIDATOR_COMMUNITY } from 'config/validators';
 import { PageProps } from '../types';
 import { Wrapper, ItemsWrapper } from './Wrappers';
 import { Item } from './Item';
@@ -25,14 +26,11 @@ export const Community = (props: PageProps) => {
   return (
     <Wrapper>
       <PageTitle title={`${title}`} />
-
       <PageRowWrapper className="page-padding">
         <ItemsWrapper variants={container} initial="hidden" animate="show">
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-          <Item />
+          {VALIDATOR_COMMUNITY.map((item: any, index: number) => {
+            return <Item key={`community_item_${index}`} {...item} />;
+          })}
         </ItemsWrapper>
       </PageRowWrapper>
     </Wrapper>
