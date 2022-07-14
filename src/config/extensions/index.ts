@@ -16,11 +16,6 @@ export interface ExtensionConfig {
 }
 export const EXTENSIONS: ExtensionConfig[] = [
   {
-    id: 'parity-signer-companion',
-    title: 'Parity Signer Companion',
-    icon: SignerSVG,
-  },
-  {
     id: 'subwallet-js',
     title: 'SubWallet',
     icon: SubwalletSVG,
@@ -34,5 +29,10 @@ export const EXTENSIONS: ExtensionConfig[] = [
     id: 'polkadot-js',
     title: 'Polkadot JS',
     icon: PolkadotJSSVG,
+  },
+  {
+    id: 'parity-signer-companion',
+    title: 'Parity Signer Companion',
+    icon: SignerSVG,
   },
 ];
