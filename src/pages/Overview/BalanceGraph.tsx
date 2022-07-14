@@ -98,7 +98,7 @@ export const BalanceGraph = () => {
           padding: 20,
           color: defaultThemes.text.primary[mode],
           font: {
-            size: 14,
+            size: 13,
             weight: '500',
           },
         },
