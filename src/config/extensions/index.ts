@@ -5,6 +5,7 @@ import { FunctionComponent, SVGProps } from 'react';
 import { ReactComponent as TalismanSVG } from './icons/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/dot_icon.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
+import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
 
 export interface ExtensionConfig {
   id: string;
@@ -28,5 +29,10 @@ export const EXTENSIONS: ExtensionConfig[] = [
     id: 'polkadot-js',
     title: 'Polkadot JS',
     icon: PolkadotJSSVG,
+  },
+  {
+    id: 'parity-signer-companion',
+    title: 'Parity Signer Companion',
+    icon: SignerSVG,
   },
 ];
