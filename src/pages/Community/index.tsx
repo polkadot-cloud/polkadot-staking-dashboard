@@ -3,17 +3,22 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
-import { VALIDATOR_COMMUNITY } from 'config/validators';
 import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useValidators } from 'contexts/Validators';
+import ValidatorList from 'library/ValidatorList';
 import { PageProps } from '../types';
 import { Wrapper, ItemsWrapper } from './Wrappers';
 import { Item } from './Item';
 import { CommunitySectionsProvider, useCommunitySections } from './context';
+import { List } from './List';
+import { Entity } from './Entity';
 
 export const CommunityInner = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
+
+  const { validators } = useValidators();
 
   const { activeSection, setActiveSection, activeItem } =
     useCommunitySections();
@@ -32,33 +37,8 @@ export const CommunityInner = (props: PageProps) => {
   return (
     <Wrapper>
       <PageTitle title={`${title}`} />
-      {activeSection === 0 && (
-        <PageRowWrapper className="page-padding">
-          <ItemsWrapper variants={container} initial="hidden" animate="show">
-            {VALIDATOR_COMMUNITY.map((item: any, index: number) => {
-              return (
-                <Item key={`community_item_${index}`} item={item} actionable />
-              );
-            })}
-          </ItemsWrapper>
-        </PageRowWrapper>
-      )}
-      {activeSection === 1 && (
-        <PageRowWrapper className="page-padding">
-          <GoBackWrapper>
-            <Button
-              inline
-              title="Go Back"
-              icon={faChevronLeft}
-              transform="shrink-3"
-              onClick={() => setActiveSection(0)}
-            />
-          </GoBackWrapper>
-          <ItemsWrapper variants={container} initial="hidden" animate="show">
-            <Item item={activeItem} actionable={false} />
-          </ItemsWrapper>
-        </PageRowWrapper>
-      )}
+      {activeSection === 0 && <List />}
+      {activeSection === 1 && <Entity />}
     </Wrapper>
   );
 };

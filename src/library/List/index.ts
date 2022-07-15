@@ -77,6 +77,7 @@ export const Pagination = styled.div<any>`
     justify-content: flex-end;
 
     button {
+      font-size: 0.98rem;
       padding: 0 0.25rem;
       margin-left: 0.5rem;
       &.next {
