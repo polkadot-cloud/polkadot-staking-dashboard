@@ -18,8 +18,8 @@ export const Entity = () => {
   const { setActiveSection, activeItem } = useCommunitySections();
   const { name, validators } = activeItem;
 
-  // todo: ensure batch is fetched.
-  // TODO: create a separate validator batch for this list.
+  // TODO: move filters to ValidatorList context
+  // TODO: wrap ValidatorList context around headless components that need it.
   const entityValidators = allValidators.filter((v: any) =>
     validators.includes(v.address)
   );
@@ -34,6 +34,8 @@ export const Entity = () => {
       },
     },
   };
+
+  const batchKey = 'community_entity_validators';
 
   return (
     <PageRowWrapper className="page-padding">
@@ -64,11 +66,10 @@ export const Entity = () => {
             {validators.length > 0 && (
               <ValidatorList
                 validators={entityValidators}
-                batchKey="validators_browse"
+                batchKey={batchKey}
                 title={`${name}'s Validators`}
                 selectable={false}
                 allowMoreCols
-                allowFilters
                 pagination
                 toggleFavourites
               />

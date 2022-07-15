@@ -20,6 +20,8 @@ export const CommunitySectionsProvider = ({
 
   const [activeItem, setActiveItem] = useState<any>(defaults.item);
 
+  const [scrollPos, setScrollPos] = useState<number>(0);
+
   const setActiveSection = (t: any) => {
     _setActiveSection(t);
   };
@@ -31,6 +33,8 @@ export const CommunitySectionsProvider = ({
         setActiveSection,
         activeItem,
         setActiveItem,
+        scrollPos,
+        setScrollPos,
       }}
     >
       {children}

@@ -10,10 +10,8 @@ export const Item = (props: any) => {
   const { item, actionable } = props;
   const { name, Thumbnail, validators } = item;
 
-  // TODO: inject identity properties (if the validator contains an identity / super identity)
-  // TODO: save scroll position to context when activeSection(2) is visited.
-
-  const { setActiveSection, setActiveItem } = useCommunitySections();
+  const { setActiveSection, setActiveItem, setScrollPos } =
+    useCommunitySections();
 
   const listItem = {
     hidden: {
@@ -50,6 +48,7 @@ export const Item = (props: any) => {
               if (actionable) {
                 setActiveSection(1);
                 setActiveItem(item);
+                setScrollPos(window.scrollY);
               }
             }}
           >
