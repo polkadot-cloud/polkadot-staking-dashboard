@@ -27,10 +27,10 @@ export const ItemWrapper = styled(motion.div)`
   width: 50%;
   margin: 1rem 1rem 0 0;
 
-  height: 170px;
+  height: 14rem;
   @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
     flex-basis: 33%;
-    height: 160px;
+    height: 10rem;
   }
 
   > .inner {
@@ -100,8 +100,8 @@ export const ItemWrapper = styled(motion.div)`
           width: 11rem;
 
           svg {
-            width: 8rem;
-            height: 8rem;
+            width: 7rem;
+            height: 7rem;
           }
         }
         &:last-child {

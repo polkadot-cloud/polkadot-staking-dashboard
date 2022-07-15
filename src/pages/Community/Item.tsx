@@ -7,9 +7,10 @@ import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 
 export const Item = (props: any) => {
-  const { name, Thumbnail, validators } = props;
+  const { item, actionable } = props;
+  const { name, Thumbnail, validators } = item;
 
-  const { setActiveSection } = useCommunitySections();
+  const { setActiveSection, setActiveItem } = useCommunitySections();
 
   const listItem = {
     hidden: {
@@ -33,12 +34,18 @@ export const Item = (props: any) => {
   return (
     <ItemWrapper whileHover={{ scale: 1.01 }} variants={listItem}>
       <div className="inner">
-        <section>
-          <Thumbnail />
-        </section>
+        <section>{Thumbnail !== null && <Thumbnail />}</section>
         <section>
           <h2>{name}</h2>
-          <button type="button" onClick={() => setActiveSection(1)}>
+          <button
+            type="button"
+            onClick={() => {
+              if (actionable) {
+                setActiveSection(1);
+                setActiveItem(item);
+              }
+            }}
+          >
             <h3>
               <FontAwesomeIcon icon={faServer} /> {validators.length} Validator
               {validators.length !== 1 && 's'}

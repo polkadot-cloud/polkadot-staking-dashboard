@@ -5,28 +5,13 @@ import { ReactComponent as Placeholder } from './thumbnails/placeholder.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
-    name: 'Silicon Beach Validation',
+    name: ' Test Validator Entity',
     Thumbnail: Placeholder,
-    validators: ['13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6'],
-  },
-  {
-    name: 'Silicon Beach Validation',
-    Thumbnail: Placeholder,
-    validators: ['13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6'],
-  },
-  {
-    name: 'Silicon Beach Validation',
-    Thumbnail: Placeholder,
-    validators: ['13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6'],
-  },
-  {
-    name: 'Silicon Beach Validation',
-    Thumbnail: Placeholder,
-    validators: ['13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6'],
-  },
-  {
-    name: 'Silicon Beach Validation',
-    Thumbnail: Placeholder,
-    validators: ['13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6'],
+    validators: [
+      '13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6',
+      '148Ta5cWD3wekK3C6EbdDhYrdxC5e71VTKQCjmHUjE1DCG31',
+      '13idDU1EZyPTA1Y57tN9grzmLfQm4TEbvc98QErRbQuZyRVu',
+      '13KoLANqZqUtyfj6hVDzLh3euJZmabuhepT8xG2VrNsF5XjA',
+    ],
   },
 ];

@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import * as defaults from './defaults';
 
 export const CommunitySectionsContext: React.Context<any> = React.createContext(
-  {
-    setActiveSection: (t: number) => {},
-    activeSection: 0,
-  }
+  defaults.defaultContext
 );
 
 export const useCommunitySections = () =>
@@ -20,6 +18,8 @@ export const CommunitySectionsProvider = ({
 }) => {
   const [activeSection, _setActiveSection] = useState<number>(0);
 
+  const [activeItem, setActiveItem] = useState<any>(defaults.item);
+
   const setActiveSection = (t: any) => {
     _setActiveSection(t);
   };
@@ -29,6 +29,8 @@ export const CommunitySectionsProvider = ({
       value={{
         activeSection,
         setActiveSection,
+        activeItem,
+        setActiveItem,
       }}
     >
       {children}

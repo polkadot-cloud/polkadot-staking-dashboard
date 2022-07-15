@@ -17,8 +17,8 @@ import Pools from 'pages/Pools';
 import Browse from 'pages/Validators';
 import Favourites from 'pages/Favourites';
 import Payouts from 'pages/Payouts';
-import Community from 'pages/explore/Community';
-import Feedback from 'pages/explore/Feedback';
+import Community from 'pages/Community';
+import Feedback from 'pages/Feedback';
 import { URI_PREFIX } from 'consts';
 import { PageCategories, PagesConfig } from 'types';
 

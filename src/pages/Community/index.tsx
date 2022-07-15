@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageTitle } from 'library/PageTitle';
-import { PageRowWrapper } from 'Wrappers';
+import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
 import { VALIDATOR_COMMUNITY } from 'config/validators';
+import Button from 'library/Button';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { PageProps } from '../types';
 import { Wrapper, ItemsWrapper } from './Wrappers';
 import { Item } from './Item';
@@ -13,7 +15,8 @@ export const CommunityInner = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
 
-  const { activeSection } = useCommunitySections();
+  const { activeSection, setActiveSection, activeItem } =
+    useCommunitySections();
 
   const container = {
     hidden: { opacity: 0 },
@@ -33,14 +36,27 @@ export const CommunityInner = (props: PageProps) => {
         <PageRowWrapper className="page-padding">
           <ItemsWrapper variants={container} initial="hidden" animate="show">
             {VALIDATOR_COMMUNITY.map((item: any, index: number) => {
-              return <Item key={`community_item_${index}`} {...item} />;
+              return (
+                <Item key={`community_item_${index}`} item={item} actionable />
+              );
             })}
           </ItemsWrapper>
         </PageRowWrapper>
       )}
       {activeSection === 1 && (
         <PageRowWrapper className="page-padding">
-          <ItemsWrapper variants={container} initial="hidden" animate="show" />
+          <GoBackWrapper>
+            <Button
+              inline
+              title="Go Back"
+              icon={faChevronLeft}
+              transform="shrink-3"
+              onClick={() => setActiveSection(0)}
+            />
+          </GoBackWrapper>
+          <ItemsWrapper variants={container} initial="hidden" animate="show">
+            <Item item={activeItem} actionable={false} />
+          </ItemsWrapper>
         </PageRowWrapper>
       )}
     </Wrapper>
