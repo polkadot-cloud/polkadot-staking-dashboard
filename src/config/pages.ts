@@ -84,19 +84,19 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
-    title: 'Favourites',
-    uri: `${URI_PREFIX}/favourites`,
-    hash: '/favourites',
-    Entry: Favourites,
-    icon: faThumbtack,
-  },
-  {
-    category: 3,
     title: 'Community',
     uri: `${URI_PREFIX}/community`,
     hash: '/community',
     Entry: Community,
     icon: faHashtag,
+  },
+  {
+    category: 3,
+    title: 'Favourites',
+    uri: `${URI_PREFIX}/favourites`,
+    hash: '/favourites',
+    Entry: Favourites,
+    icon: faThumbtack,
   },
   {
     category: 4,
