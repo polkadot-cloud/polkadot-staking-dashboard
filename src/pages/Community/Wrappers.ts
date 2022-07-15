@@ -55,6 +55,12 @@ export const ItemWrapper = styled(motion.div)`
       display: flex;
       padding: 0 1rem;
 
+      button {
+        &:disabled {
+          cursor: default;
+        }
+      }
+
       &:first-child {
         box-sizing: border-box;
         flex-flow: row wrap;

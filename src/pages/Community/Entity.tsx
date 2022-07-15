@@ -19,6 +19,7 @@ export const Entity = () => {
   const { name, validators } = activeItem;
 
   // todo: ensure batch is fetched.
+  // TODO: create a separate validator batch for this list.
   const entityValidators = allValidators.filter((v: any) =>
     validators.includes(v.address)
   );

@@ -7,6 +7,10 @@ import { ItemsWrapper } from './Wrappers';
 import { Item } from './Item';
 
 export const List = () => {
+  // TODO: add ordering (random, alphabetically ascending or descending) (larger ValidatorList style buttons).
+  // TODO: ability to pin validator identities to the top of the list (persist to localStorage).
+  // TODO: refer to saveed scroll pos (context) and go to it immediately when activeItem goes back to null.
+
   const container = {
     hidden: { opacity: 0 },
     show: {

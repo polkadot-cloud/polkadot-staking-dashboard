@@ -10,6 +10,9 @@ export const Item = (props: any) => {
   const { item, actionable } = props;
   const { name, Thumbnail, validators } = item;
 
+  // TODO: inject identity properties (if the validator contains an identity / super identity)
+  // TODO: save scroll position to context when activeSection(2) is visited.
+
   const { setActiveSection, setActiveItem } = useCommunitySections();
 
   const listItem = {
@@ -32,12 +35,16 @@ export const Item = (props: any) => {
   };
 
   return (
-    <ItemWrapper whileHover={{ scale: 1.01 }} variants={listItem}>
+    <ItemWrapper
+      whileHover={{ scale: actionable ? 1.01 : 1 }}
+      variants={listItem}
+    >
       <div className="inner">
         <section>{Thumbnail !== null && <Thumbnail />}</section>
         <section>
           <h2>{name}</h2>
           <button
+            disabled={!actionable}
             type="button"
             onClick={() => {
               if (actionable) {
