@@ -16,10 +16,14 @@ export const CommunitySectionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  // store the active section of the community page
   const [activeSection, _setActiveSection] = useState<number>(0);
 
+  // store the active entity item of the community page
   const [activeItem, setActiveItem] = useState<any>(defaults.item);
 
+  // store the Y scroll position when the last entity was visited
+  // used to automatically scroll back down upon returning to the entity lsit.
   const [scrollPos, setScrollPos] = useState<number>(0);
 
   const setActiveSection = (t: any) => {

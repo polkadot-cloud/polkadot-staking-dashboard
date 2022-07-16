@@ -6,16 +6,19 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
-import { useUi } from 'contexts/UI';
 import { useModal } from 'contexts/Modal';
 import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
 import { faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
+import {
+  useValidatorFilter,
+  ValidatorFilterProvider,
+} from 'library/Filter/context';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
 
-export const GenerateNominations = (props: any) => {
+export const GenerateNominationsInner = (props: any) => {
   // functional props
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
@@ -25,7 +28,7 @@ export const GenerateNominations = (props: any) => {
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
-  const { applyValidatorOrder, applyValidatorFilters } = useUi();
+  const { applyValidatorOrder, applyValidatorFilters } = useValidatorFilter();
 
   let { favouritesList } = useValidators();
   if (favouritesList === null) {
@@ -263,6 +266,14 @@ export const GenerateNominations = (props: any) => {
         </>
       )}
     </Wrapper>
+  );
+};
+
+export const GenerateNominations = (props: any) => {
+  return (
+    <ValidatorFilterProvider>
+      <GenerateNominationsInner {...props} />
+    </ValidatorFilterProvider>
   );
 };
 

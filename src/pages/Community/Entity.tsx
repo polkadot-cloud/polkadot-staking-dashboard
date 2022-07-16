@@ -35,9 +35,6 @@ export const Entity = () => {
     setShuffledValidators(shuffle(newShuffledValidators));
   }, [name]);
 
-  // TODO: move filters to ValidatorList context
-  // TODO: wrap ValidatorList context around headless components that need it.
-
   const container = {
     hidden: { opacity: 0 },
     show: {
