@@ -84,7 +84,7 @@ export const IconWrapper = styled.div<any>`
 
   svg {
     .primary {
-      fill: ${(props) => props.fill};
+      fill: ${textSecondary};
     }
   }
 `;

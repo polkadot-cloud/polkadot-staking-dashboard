@@ -211,7 +211,7 @@ export const SideMenu = () => {
             size: network.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
-          action={<ConnectionSymbol color={symbolColor} />}
+          action={<ConnectionSymbol color={[symbolColor.solid]} />}
         />
       </section>
 

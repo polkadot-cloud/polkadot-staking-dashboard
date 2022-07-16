@@ -3,12 +3,11 @@
 
 import { Element } from 'react-scroll';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper } from 'Wrappers';
+import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
-import { GoBackWrapper } from '../Wrappers';
 import { ChooseNominators } from './ChooseNominators';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
