@@ -83,6 +83,7 @@ export const Entity = () => {
                 allowMoreCols
                 pagination
                 toggleFavourites
+                allowFilters
               />
             )}
           </>
