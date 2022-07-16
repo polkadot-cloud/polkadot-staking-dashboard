@@ -351,3 +351,14 @@ export const Separator = styled.div`
   width: 100%;
   margin: 0.75rem 0;
 `;
+
+/* GoBackWrapper
+ *
+ * Positioned under titles for a Go Back button
+ */
+export const GoBackWrapper = styled.div`
+  border-bottom: 1px solid ${borderPrimary};
+  padding-bottom: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+`;

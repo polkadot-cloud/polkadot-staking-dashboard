@@ -28,8 +28,8 @@ export const NETWORKS: Networks = {
         dark: '#e474bc',
       },
       transparent: {
-        light: 'rgb(211, 48, 121, 0.2)',
-        dark: 'rgb(211, 48, 121, 0.2)',
+        light: 'rgb(211, 48, 121, 0.05)',
+        dark: 'rgb(211, 48, 121, 0.05)',
       },
     },
     endpoint: 'wss://rpc.polkadot.io',
@@ -68,8 +68,8 @@ export const NETWORKS: Networks = {
         dark: '#AAA',
       },
       transparent: {
-        light: 'rgb(51,51,51,0.2)',
-        dark: 'rgb(102,102,102, 0.2)',
+        light: 'rgb(51,51,51,0.05)',
+        dark: 'rgb(102,102,102, 0.05)',
       },
     },
     endpoint: 'wss://kusama-rpc.polkadot.io',
@@ -108,8 +108,8 @@ export const NETWORKS: Networks = {
         dark: '#Ec8f6e',
       },
       transparent: {
-        light: 'rgb(236,110,121,0.2)',
-        dark: 'rgb(236,110,121, 0.2)',
+        light: 'rgb(236,110,121,0.05)',
+        dark: 'rgb(236,110,121, 0.05)',
       },
     },
     endpoint: 'wss://westend-rpc.polkadot.io',
