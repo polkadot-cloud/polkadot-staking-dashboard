@@ -3,12 +3,17 @@
 
 import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useApi } from 'contexts/Api';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 
 export const Item = (props: any) => {
+  const { network } = useApi();
+
   const { item, actionable } = props;
-  const { name, Thumbnail, validators } = item;
+  const { name, Thumbnail, validators: entityAllValidators } = item;
+  const validatorCount =
+    entityAllValidators[network.name.toLowerCase()].length ?? 0;
 
   const { setActiveSection, setActiveItem, setScrollPos } =
     useCommunitySections();
@@ -53,8 +58,8 @@ export const Item = (props: any) => {
             }}
           >
             <h3>
-              <FontAwesomeIcon icon={faServer} /> {validators.length} Validator
-              {validators.length !== 1 && 's'}
+              <FontAwesomeIcon icon={faServer} /> {validatorCount} Validator
+              {validatorCount !== 1 && 's'}
             </h3>
           </button>
         </section>

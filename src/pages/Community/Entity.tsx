@@ -15,25 +15,30 @@ import { Item } from './Item';
 import { useCommunitySections } from './context';
 
 export const Entity = () => {
-  const { isReady } = useApi();
+  const { isReady, network } = useApi();
   const { validators: allValidators, removeValidatorMetaBatch } =
     useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
-  const { name, validators } = activeItem;
 
-  const entityValidators = allValidators.filter((v: any) =>
-    validators.includes(v.address)
-  );
+  const { name, validators: entityAllValidators } = activeItem;
+  const validators = entityAllValidators[network.name.toLowerCase()] ?? [];
 
+  // include validators that exist in `erasStakers`
   const [shuffledValidators, setShuffledValidators] = useState(
-    shuffle(entityValidators)
+    shuffle(allValidators.filter((v: any) => validators.includes(v.address)))
   );
+
+  useEffect(() => {
+    setShuffledValidators(
+      allValidators.filter((v: any) => validators.includes(v.address))
+    );
+  }, [allValidators, network]);
 
   useEffect(() => {
     removeValidatorMetaBatch(batchKey);
     const newShuffledValidators = shuffle([...shuffledValidators]);
     setShuffledValidators(shuffle(newShuffledValidators));
-  }, [name]);
+  }, [name, network]);
 
   const container = {
     hidden: { opacity: 0 },

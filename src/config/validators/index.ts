@@ -5,14 +5,23 @@ import { ReactComponent as Placeholder } from './thumbnails/placeholder.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
-    name: ' Test Validator Entity',
+    name: 'Test Validator Entity',
     Thumbnail: Placeholder,
-    validators: [
-      '13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6',
-      '148Ta5cWD3wekK3C6EbdDhYrdxC5e71VTKQCjmHUjE1DCG31',
-      '13idDU1EZyPTA1Y57tN9grzmLfQm4TEbvc98QErRbQuZyRVu',
-      '13KoLANqZqUtyfj6hVDzLh3euJZmabuhepT8xG2VrNsF5XjA',
-      '1zugcag7cJVBtVRnFxv5Qftn7xKAnR6YJ9x4x3XLgGgmNnS',
-    ],
+    validators: {
+      polkadot: [
+        '13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6',
+        '148Ta5cWD3wekK3C6EbdDhYrdxC5e71VTKQCjmHUjE1DCG31',
+        '13idDU1EZyPTA1Y57tN9grzmLfQm4TEbvc98QErRbQuZyRVu',
+        '13KoLANqZqUtyfj6hVDzLh3euJZmabuhepT8xG2VrNsF5XjA',
+        '1zugcag7cJVBtVRnFxv5Qftn7xKAnR6YJ9x4x3XLgGgmNnS',
+      ],
+      kusama: [
+        'GXTJJh2kQJoS9amET2WmZ82uFkm7HYCScoP9bEDV5JyKsWE',
+        'Dm64aaAUyy5dvYCSmyzz3njGrWrVaki9F6BvUDSYjDDoqR2',
+        'GvBUeTDynB9A7fFDPoBt3RGXSjZVeCetoXjYQ44cMNp5myY',
+        'GeejAnVcS68oHMdYzXGSkfahPQRi1Q5jYKuZt7Abi6nQbaK',
+      ],
+      westend: ['5GYaYNVq6e855t5hVCyk4Wuqssaf6ADTrvdPZ3QXyHvFXTip'],
+    },
   },
 ];
