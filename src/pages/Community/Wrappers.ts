@@ -3,7 +3,12 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, borderPrimary } from 'theme';
+import {
+  textSecondary,
+  borderPrimary,
+  backgroundPrimary,
+  modalBackground,
+} from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
 
@@ -55,9 +60,27 @@ export const ItemWrapper = styled(motion.div)`
       display: flex;
       padding: 0 1rem;
 
-      button {
-        &:disabled {
-          cursor: default;
+      > .stats {
+        width: 100%;
+        margin-top: 0.5rem;
+
+        button {
+          border-radius: 1rem;
+          padding: 0.4rem 1.25rem;
+
+          > h3 {
+            margin: 0;
+          }
+          &:disabled {
+            cursor: default;
+          }
+          &.active {
+            background: ${backgroundPrimary};
+            transition: background 0.1s;
+            &:hover {
+              background: ${modalBackground};
+            }
+          }
         }
       }
 
