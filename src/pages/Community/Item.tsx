@@ -39,29 +39,32 @@ export const Item = (props: any) => {
 
   return (
     <ItemWrapper
-      whileHover={{ scale: actionable ? 1.01 : 1 }}
+      whileHover={{ scale: actionable ? 1.005 : 1 }}
       variants={listItem}
     >
       <div className="inner">
         <section>{Thumbnail !== null && <Thumbnail />}</section>
         <section>
           <h2>{name}</h2>
-          <button
-            disabled={!actionable}
-            type="button"
-            onClick={() => {
-              if (actionable) {
-                setActiveSection(1);
-                setActiveItem(item);
-                setScrollPos(window.scrollY);
-              }
-            }}
-          >
-            <h3>
-              <FontAwesomeIcon icon={faServer} /> {validatorCount} Validator
-              {validatorCount !== 1 && 's'}
-            </h3>
-          </button>
+          <div className="stats">
+            <button
+              className={actionable ? 'active' : undefined}
+              disabled={!actionable}
+              type="button"
+              onClick={() => {
+                if (actionable) {
+                  setActiveSection(1);
+                  setActiveItem(item);
+                  setScrollPos(window.scrollY);
+                }
+              }}
+            >
+              <h3>
+                <FontAwesomeIcon icon={faServer} /> {validatorCount} Validator
+                {validatorCount !== 1 && 's'}
+              </h3>
+            </button>
+          </div>
         </section>
       </div>
     </ItemWrapper>
