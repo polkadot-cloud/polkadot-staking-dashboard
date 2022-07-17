@@ -106,7 +106,7 @@ export const ItemWrapper = styled(motion.div)`
             margin-right: 0.5rem;
           }
           .icon-right {
-            margin-left: 0.5rem;
+            margin-left: 0.75rem;
             opacity: 0.5;
           }
         }
