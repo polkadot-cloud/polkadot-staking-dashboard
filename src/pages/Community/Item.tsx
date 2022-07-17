@@ -1,9 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faServer } from '@fortawesome/free-solid-svg-icons';
+import { faServer, faExternalLink } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 
@@ -11,7 +13,13 @@ export const Item = (props: any) => {
   const { network } = useApi();
 
   const { item, actionable } = props;
-  const { name, Thumbnail, validators: entityAllValidators } = item;
+  const {
+    name,
+    twitter,
+    website,
+    Thumbnail,
+    validators: entityAllValidators,
+  } = item;
   const validatorCount =
     entityAllValidators[network.name.toLowerCase()].length ?? 0;
 
@@ -46,6 +54,7 @@ export const Item = (props: any) => {
         <section>{Thumbnail !== null && <Thumbnail />}</section>
         <section>
           <h2>{name}</h2>
+
           <div className="stats">
             <button
               className={actionable ? 'active' : undefined}
@@ -59,11 +68,53 @@ export const Item = (props: any) => {
                 }
               }}
             >
+              <FontAwesomeIcon
+                icon={faServer}
+                className="icon-left"
+                transform="shrink-1"
+              />
               <h3>
-                <FontAwesomeIcon icon={faServer} /> {validatorCount} Validator
+                {validatorCount} Validator
                 {validatorCount !== 1 && 's'}
               </h3>
             </button>
+            {twitter !== undefined && (
+              <button
+                type="button"
+                className="active"
+                onClick={() => {
+                  window.open(`https://twitter.com/@${twitter}`, '_blank');
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faTwitter as IconProp}
+                  className="icon-left"
+                />
+                <h3>{twitter}</h3>
+                <FontAwesomeIcon
+                  icon={faExternalLink}
+                  className="icon-right"
+                  transform="shrink-2"
+                />
+              </button>
+            )}
+
+            {website !== undefined && (
+              <button
+                type="button"
+                className="active"
+                onClick={() => {
+                  window.open(website, '_blank');
+                }}
+              >
+                <h3>website</h3>
+                <FontAwesomeIcon
+                  icon={faExternalLink}
+                  className="icon-right"
+                  transform="shrink-2"
+                />
+              </button>
+            )}
           </div>
         </section>
       </div>
