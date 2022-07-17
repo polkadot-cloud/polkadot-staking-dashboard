@@ -29,12 +29,10 @@ export const ItemWrapper = styled(motion.div)`
   flex-shrink: 0;
   flex-grow: 1;
   flex-basis: 100%;
-  width: 50%;
   margin: 1rem 1rem 0 0;
 
   height: auto;
   @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
-    flex-basis: 33%;
     height: 10rem;
   }
 
@@ -78,17 +76,15 @@ export const ItemWrapper = styled(motion.div)`
           flex-flow: row wrap;
           align-items: center;
           border-radius: 1rem;
-          padding: 0.4rem 1.25rem;
+          padding: 0.4rem 1rem;
 
           margin: 0.5rem 1rem 0.5rem 0;
           @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
             margin: 0.25rem 1rem 0.25rem 0;
           }
-
           > h3 {
             margin: 0;
           }
-
           &:disabled {
             cursor: default;
           }
