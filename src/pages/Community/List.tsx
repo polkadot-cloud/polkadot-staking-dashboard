@@ -3,31 +3,31 @@
 
 import { useEffect, useState } from 'react';
 import { PageRowWrapper } from 'Wrappers';
-import { VALIDATOR_COMMUNITY } from 'config/validators';
-import { shuffle } from 'Utils';
 import { useApi } from 'contexts/Api';
+import { useValidators } from 'contexts/Validators';
 import { ItemsWrapper } from './Wrappers';
 import { Item } from './Item';
 import { useCommunitySections } from './context';
 
 export const List = () => {
   const { network } = useApi();
+  const { validatorCommunity } = useValidators();
   const { scrollPos } = useCommunitySections();
 
-  // Filter VALIDATOR_COMMUNITY for current network
   const [entityItems, setEntityItems] = useState(
-    VALIDATOR_COMMUNITY.filter(
+    validatorCommunity.filter(
       (v: any) => v.validators[network.name.toLowerCase()] !== undefined
     )
   );
 
+  // TODO: move shuffle to UI context and shuffle only on network change
   useEffect(() => {
     setEntityItems(
-      VALIDATOR_COMMUNITY.filter(
+      validatorCommunity.filter(
         (v: any) => v.validators[network.name.toLowerCase()] !== undefined
       )
     );
-  }, [network]);
+  }, [network.name]);
 
   useEffect(() => {
     window.scrollTo(0, scrollPos);
@@ -50,7 +50,7 @@ export const List = () => {
   return (
     <PageRowWrapper className="page-padding">
       <ItemsWrapper variants={container} initial="hidden" animate="show">
-        {shuffle(entityItems).map((item: any, index: number) => {
+        {entityItems.map((item: any, index: number) => {
           return (
             <Item key={`community_item_${index}`} item={item} actionable />
           );
