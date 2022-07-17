@@ -20,7 +20,6 @@ export const List = () => {
     )
   );
 
-  // TODO: move shuffle to UI context and shuffle only on network change
   useEffect(() => {
     setEntityItems(
       validatorCommunity.filter(
