@@ -97,7 +97,9 @@ export const ValidatorsProvider = ({
   );
 
   // stores a shuffled validator community
-  const [validatorCommunity, setValidatorCommunity] = useState<any>([]);
+  const [validatorCommunity, setValidatorCommunity] = useState<any>(
+    shuffle(VALIDATOR_COMMUNITY)
+  );
 
   // reset validators list on network change
   useEffect(() => {

@@ -27,7 +27,7 @@ export const List = () => {
         (v: any) => v.validators[network.name.toLowerCase()] !== undefined
       )
     );
-  }, [network.name]);
+  }, [network]);
 
   useEffect(() => {
     window.scrollTo(0, scrollPos);
