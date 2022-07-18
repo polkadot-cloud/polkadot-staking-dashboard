@@ -10,14 +10,17 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useModal } from 'contexts/Modal';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 
 export const Item = (props: any) => {
+  const { openModalWith } = useModal();
   const { network } = useApi();
 
   const { item, actionable } = props;
   const {
+    bio,
     name,
     email,
     twitter,
@@ -60,7 +63,11 @@ export const Item = (props: any) => {
         <section>
           <h2>
             {name}
-            <button type="button" onClick={() => {}} className="active">
+            <button
+              type="button"
+              onClick={() => openModalWith('Bio', { name, bio }, 'large')}
+              className="active"
+            >
               <span>Bio</span>
             </button>
           </h2>
