@@ -9,6 +9,8 @@ export const VALIDATOR_COMMUNITY = [
     website: 'https://rossbulat.medium.com/',
     twitter: '@rossbulat',
     Thumbnail: Placeholder,
+    email: 'ross@parity.io',
+    bio: 'Summing up my validator identity in a sentence or so. Maximum 300 characters.', // maybe?
     validators: {
       polkadot: [
         '13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6',
