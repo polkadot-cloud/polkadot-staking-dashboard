@@ -1,7 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faServer, faExternalLink } from '@fortawesome/free-solid-svg-icons';
+import {
+  faServer,
+  faExternalLink,
+  faEnvelope,
+} from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
@@ -15,6 +19,7 @@ export const Item = (props: any) => {
   const { item, actionable } = props;
   const {
     name,
+    email,
     twitter,
     website,
     Thumbnail,
@@ -53,7 +58,12 @@ export const Item = (props: any) => {
       <div className="inner">
         <section>{Thumbnail !== null && <Thumbnail />}</section>
         <section>
-          <h2>{name}</h2>
+          <h2>
+            {name}
+            <button type="button" onClick={() => {}} className="active">
+              <span>Bio</span>
+            </button>
+          </h2>
 
           <div className="stats">
             <button
@@ -78,6 +88,27 @@ export const Item = (props: any) => {
                 {validatorCount !== 1 && 's'}
               </h3>
             </button>
+            {email !== undefined && (
+              <button
+                type="button"
+                className="active"
+                onClick={() => {
+                  window.open(email, '_blank');
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  transform="shrink-1"
+                  className="icon-left"
+                />
+                <h3>email</h3>
+                <FontAwesomeIcon
+                  icon={faExternalLink}
+                  className="icon-right"
+                  transform="shrink-3"
+                />
+              </button>
+            )}
             {twitter !== undefined && (
               <button
                 type="button"
@@ -94,11 +125,10 @@ export const Item = (props: any) => {
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
-                  transform="shrink-2"
+                  transform="shrink-3"
                 />
               </button>
             )}
-
             {website !== undefined && (
               <button
                 type="button"
@@ -111,7 +141,7 @@ export const Item = (props: any) => {
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
-                  transform="shrink-2"
+                  transform="shrink-3"
                 />
               </button>
             )}

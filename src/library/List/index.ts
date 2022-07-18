@@ -99,9 +99,9 @@ export const Selectable = styled.div<any>`
   padding: 0.5rem;
 
   > button {
+    background: ${buttonSecondaryBackground};
     font-size: 0.98rem;
     color: ${textSecondary};
-    background: ${buttonSecondaryBackground};
     border-radius: 0.5rem;
     padding: 0.36rem 0.8rem;
     margin-right: 0.5rem;
