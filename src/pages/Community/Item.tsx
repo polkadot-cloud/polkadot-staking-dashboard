@@ -93,7 +93,7 @@ export const Item = (props: any) => {
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(email, '_blank');
+                  window.open(`mailto:${email}`, '_blank');
                 }}
               >
                 <FontAwesomeIcon
