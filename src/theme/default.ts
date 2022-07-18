@@ -21,13 +21,13 @@ export const defaultThemes: any = {
     success: v('green', 'green'),
   },
   background: {
-    primary: v('rgba(248,247,247,1)', 'rgba(27,27,27,1)'),
+    primary: v('rgba(248,247,247,1)', 'rgba(32,32,32,1)'),
     gradient: v(
       'linear-gradient(180deg, rgba(248,247,247,1) 0%, rgba(248,247,247,1) 100px, rgba(233,233,233, 1) 85%, rgba(252,242,241,1) 100%)',
-      'linear-gradient(180deg, rgba(27,27,27,1) 0%, rgba(27,27,27,1) 100px, rgba(21,21,21,1) 100%)'
+      'linear-gradient(180deg, rgba(32,32,32,1) 0%, rgba(32,32,32,1) 100px, rgba(21,21,21,1) 100%)'
     ),
     secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.16)'),
-    network: v('rgba(244,225,225,0.75)', 'rgba(27,27,27,0.75)'),
+    network: v('rgba(244,225,225,0.75)', 'rgba(32,32,32,0.75)'),
     dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
@@ -66,6 +66,7 @@ export const defaultThemes: any = {
     secondary: { background: v('rgba(238, 236, 236, 0.9)', '#111') },
     toggle: { background: v('rgba(242,240,239,0.8)', '#1a1a1a') },
     assistant: { background: v('#ececec', '#242424') },
+    hover: { background: v('rgba(232, 230, 230, 0.9)', '#080808') },
   },
   border: {
     primary: v('#e6e6e6', '#2a2a2a'),
@@ -86,7 +87,7 @@ export const defaultThemes: any = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
-  shadow: v('#e8e8e8', '#141414'),
+  shadow: v('#e8e8e8', '#1f1f1f'),
 };
 
 // configure card style
