@@ -59,7 +59,7 @@ export const defaultThemes: any = {
     inactive: v('#cfcfcf', '#1a1a1a'),
     inactive2: v('#dadada', '#383838'),
     tooltip: v('#333', '#ddd'),
-    grid: v('#eee', '#222'),
+    grid: v('#e8e8e8', '#222'),
   },
   buttons: {
     primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
