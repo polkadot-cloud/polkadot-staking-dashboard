@@ -6,8 +6,13 @@ import { motion } from 'framer-motion';
 import {
   textSecondary,
   borderPrimary,
-  backgroundPrimary,
-  modalBackground,
+  backgroundSecondary,
+  cardBorder,
+  shadowColor,
+  cardShadow,
+  backgroundDropdown,
+  buttonSecondaryBackground,
+  buttonHoverBackground,
 } from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
@@ -38,8 +43,10 @@ export const ItemWrapper = styled(motion.div)`
 
   > .inner {
     color: ${textSecondary};
+    background: ${backgroundSecondary};
+    border: ${cardBorder} ${borderPrimary};
+    box-shadow: ${cardShadow} ${shadowColor};
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.03);
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;
@@ -60,6 +67,64 @@ export const ItemWrapper = styled(motion.div)`
       padding: 0 1rem;
       overflow: hidden;
 
+      h2 {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+
+        > button {
+          &.active {
+            color: ${textSecondary};
+            background: ${backgroundDropdown};
+            &:hover {
+              background: ${backgroundDropdown};
+            }
+          }
+          padding: 0.35rem 0.75rem;
+          margin-left: 0.75rem;
+        }
+      }
+
+      button {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        border-radius: 1rem;
+        padding: 0.4rem 1rem;
+
+        svg {
+          color: ${textSecondary};
+        }
+
+        margin: 0.5rem 1rem 0.5rem 0;
+        @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
+          margin: 0.25rem 1rem 0.25rem 0;
+        }
+        > h3 {
+          margin: 0;
+        }
+        &:disabled {
+          cursor: default;
+        }
+        &.active {
+          background: ${buttonSecondaryBackground};
+          transition: background 0.1s;
+          &:hover {
+            background: ${buttonHoverBackground};
+          }
+        }
+        &:last-child {
+          margin-right: none;
+        }
+        .icon-left {
+          margin-right: 0.5rem;
+        }
+        .icon-right {
+          margin-left: 0.65rem;
+          opacity: 0.75;
+        }
+      }
+
       > .stats {
         display: flex;
         flex-flow: row wrap;
@@ -69,42 +134,6 @@ export const ItemWrapper = styled(motion.div)`
         @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
           margin-top: 0.25rem;
           margin-bottom: 0;
-        }
-
-        button {
-          display: flex;
-          flex-flow: row wrap;
-          align-items: center;
-          border-radius: 1rem;
-          padding: 0.4rem 1rem;
-
-          margin: 0.5rem 1rem 0.5rem 0;
-          @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
-            margin: 0.25rem 1rem 0.25rem 0;
-          }
-          > h3 {
-            margin: 0;
-          }
-          &:disabled {
-            cursor: default;
-          }
-          &.active {
-            background: ${backgroundPrimary};
-            transition: background 0.1s;
-            &:hover {
-              background: ${modalBackground};
-            }
-          }
-          &:last-child {
-            margin-right: none;
-          }
-          .icon-left {
-            margin-right: 0.5rem;
-          }
-          .icon-right {
-            margin-left: 0.75rem;
-            opacity: 0.5;
-          }
         }
       }
 
@@ -150,7 +179,7 @@ export const ItemWrapper = styled(motion.div)`
           align-items: center;
           justify-content: flex-start;
           height: 100%;
-          width: 11rem;
+          width: 9.5rem;
 
           svg {
             width: 7rem;
@@ -167,6 +196,10 @@ export const ItemWrapper = styled(motion.div)`
           border-top: none;
           height: 100%;
           flex: 1;
+
+          h2 {
+            margin-top: 0.25rem;
+          }
         }
       }
     }

@@ -24,6 +24,7 @@ import { ClaimReward } from './ClaimReward';
 import { SelectFavourites } from './SelectFavourites';
 import { NominateFromFavourites } from './NominateFromFavourites';
 import { Networks } from './Networks';
+import { Bio } from './Bio';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -117,6 +118,7 @@ export const Modal = () => {
             {modal === 'SelectFavourites' && <SelectFavourites />}
             {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
             {modal === 'Networks' && <Networks />}
+            {modal === 'Bio' && <Bio />}
           </ContentWrapper>
         </HeightWrapper>
         <button

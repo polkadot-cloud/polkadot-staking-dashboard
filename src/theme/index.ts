@@ -111,6 +111,11 @@ export const buttonAssistantBackground: theme.ThemeSet = theme(
   defaultThemes.buttons.assistant.background
 );
 
+export const buttonHoverBackground: theme.ThemeSet = theme(
+  v,
+  defaultThemes.buttons.hover.background
+);
+
 // labels
 
 export const tagBackground: theme.ThemeSet = theme(
