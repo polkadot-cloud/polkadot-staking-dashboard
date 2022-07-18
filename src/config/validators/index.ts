@@ -6,6 +6,8 @@ import { ReactComponent as Placeholder } from './thumbnails/placeholder.svg';
 export const VALIDATOR_COMMUNITY = [
   {
     name: 'Test Validator Entity',
+    website: 'https://rossbulat.medium.com/',
+    twitter: '@rossbulat',
     Thumbnail: Placeholder,
     validators: {
       polkadot: [
