@@ -3,7 +3,7 @@
 
 import { useConnect } from 'contexts/Connect';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
-import { faGlasses, faCog, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses, faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ExtensionWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
@@ -37,17 +37,16 @@ export const ReadOnly = (props: any) => {
             setReadOnlyOpen(!readOnlyOpen);
           }}
         >
+          <FontAwesomeIcon
+            icon={faGlasses}
+            transform="grow-2"
+            style={{ margin: '0 0.75rem 0 1.25rem' }}
+          />
+          <h3>
+            <span className="name">Read Only Accounts</span>
+          </h3>
+
           <div>
-            <FontAwesomeIcon
-              icon={faGlasses}
-              transform="grow-5"
-              style={{ margin: '0 1rem 0 1rem' }}
-            />
-            <h3>
-              <span className="name">Read Only Accounts</span>
-            </h3>
-          </div>
-          <div className="neutral">
             <h3>
               <span
                 className={`message${
@@ -59,11 +58,7 @@ export const ReadOnly = (props: any) => {
                   : ``}
               </span>
             </h3>
-            <FontAwesomeIcon
-              icon={readOnlyOpen ? faTimes : faCog}
-              className="icon"
-              style={{ marginRight: '0.75rem' }}
-            />
+            {!readOnlyOpen && <FontAwesomeIcon icon={faCog} className="icon" />}
           </div>
         </button>
       </ExtensionWrapper>

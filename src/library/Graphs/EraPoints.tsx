@@ -54,7 +54,7 @@ export const EraPoints = (props: EraPointsProps) => {
           display: true,
           text: 'Era',
           font: {
-            size: 14,
+            size: 13,
           },
         },
       },

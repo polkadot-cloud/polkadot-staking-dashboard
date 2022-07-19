@@ -4,10 +4,13 @@
 import { Networks } from 'types';
 import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
+import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
 import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
+import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
 import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
 import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
+import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 
 /*
  * Network Configuration
@@ -25,8 +28,8 @@ export const NETWORKS: Networks = {
         dark: '#e474bc',
       },
       transparent: {
-        light: 'rgb(211, 48, 121, 0.2)',
-        dark: 'rgb(211, 48, 121, 0.2)',
+        light: 'rgb(211, 48, 121, 0.05)',
+        dark: 'rgb(211, 48, 121, 0.05)',
       },
     },
     endpoint: 'wss://rpc.polkadot.io',
@@ -34,10 +37,16 @@ export const NETWORKS: Networks = {
     unit: 'DOT',
     units: 10,
     ss58: 0,
-    icon: PolkadotIconSVG,
-    logo: {
-      svg: PolkadotLogoSVG,
-      width: '8.5rem',
+    brand: {
+      icon: PolkadotIconSVG,
+      logo: {
+        svg: PolkadotLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: PolkadotInlineSVG,
+        size: '1.2rem',
+      },
     },
     api: {
       unit: 'DOT',
@@ -55,12 +64,12 @@ export const NETWORKS: Networks = {
         dark: '#666',
       },
       secondary: {
-        light: '#888',
-        dark: '#888',
+        light: '#999',
+        dark: '#AAA',
       },
       transparent: {
-        light: 'rgb(51,51,51,0.2)',
-        dark: 'rgb(102,102,102, 0.2)',
+        light: 'rgb(51,51,51,0.05)',
+        dark: 'rgb(102,102,102, 0.05)',
       },
     },
     endpoint: 'wss://kusama-rpc.polkadot.io',
@@ -68,10 +77,16 @@ export const NETWORKS: Networks = {
     unit: 'KSM',
     units: 12,
     ss58: 2,
-    icon: KusamaIconSVG,
-    logo: {
-      svg: KusamaLogoSVG,
-      width: '7rem',
+    brand: {
+      icon: KusamaIconSVG,
+      logo: {
+        svg: KusamaLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: KusamaInlineSVG,
+        size: '1.55rem',
+      },
     },
     api: {
       unit: 'KSM',
@@ -93,8 +108,8 @@ export const NETWORKS: Networks = {
         dark: '#Ec8f6e',
       },
       transparent: {
-        light: 'rgb(236,110,121,0.2)',
-        dark: 'rgb(236,110,121, 0.2)',
+        light: 'rgb(236,110,121,0.05)',
+        dark: 'rgb(236,110,121, 0.05)',
       },
     },
     endpoint: 'wss://westend-rpc.polkadot.io',
@@ -102,10 +117,16 @@ export const NETWORKS: Networks = {
     unit: 'WND',
     units: 12,
     ss58: 42,
-    icon: WestendIconSVG,
-    logo: {
-      svg: WestendLogoSVG,
-      width: '8rem',
+    brand: {
+      icon: WestendIconSVG,
+      logo: {
+        svg: WestendLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: WestendInlineSVG,
+        size: '1.15rem',
+      },
     },
     api: {
       unit: 'DOT',

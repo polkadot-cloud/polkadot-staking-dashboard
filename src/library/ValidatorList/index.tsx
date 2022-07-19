@@ -9,7 +9,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { StakingContext } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
-import { useUi } from 'contexts/UI';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { Validator } from 'library/ValidatorList/Validator';
@@ -23,6 +22,11 @@ import {
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
+import {
+  useValidatorFilter,
+  ValidatorFilterProvider,
+} from 'library/Filter/context';
+import { useUi } from 'contexts/UI';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
@@ -44,13 +48,13 @@ export const ValidatorListInner = (props: any) => {
     selectToggleable,
   } = provider;
 
+  const { isSyncing } = useUi();
   const {
     validatorFilters,
     validatorOrder,
     applyValidatorFilters,
     applyValidatorOrder,
-    isSyncing,
-  } = useUi();
+  } = useValidatorFilter();
 
   const {
     batchKey,
@@ -360,7 +364,9 @@ export const ValidatorList = (props: any) => {
       selectActive={selectActive}
       selectToggleable={selectToggleable}
     >
-      <ValidatorListShouldUpdate {...props} />
+      <ValidatorFilterProvider>
+        <ValidatorListShouldUpdate {...props} />
+      </ValidatorFilterProvider>
     </ValidatorListProvider>
   );
 };
@@ -368,7 +374,7 @@ export const ValidatorList = (props: any) => {
 export class ValidatorListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;
 
-  shouldComponentUpdate(nextProps: any, nextState: any) {
+  shouldComponentUpdate(nextProps: any) {
     return this.props.validators !== nextProps.validators;
   }
 

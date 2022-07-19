@@ -12,6 +12,7 @@ export const Wrapper = styled.div<any>`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  align-items: center;
   z-index: 2;
 
   > div {
@@ -19,6 +20,9 @@ export const Wrapper = styled.div<any>`
     opacity: 0.75;
     padding: 1rem 1.25rem;
     border-radius: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
 
     h2 {
       padding: 0;

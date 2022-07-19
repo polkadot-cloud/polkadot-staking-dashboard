@@ -9,7 +9,11 @@ import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { useTooltip } from 'contexts/Tooltip';
 import { OversubscribedProps } from '../types';
-import { TooltipPosition, TooltipTrigger } from '../Wrappers';
+import {
+  TooltipPosition,
+  TooltipTrigger,
+  OverSubscribedWrapper,
+} from '../Wrappers';
 
 export const Oversubscribed = (props: OversubscribedProps) => {
   const { consts, network } = useApi();
@@ -66,12 +70,16 @@ export const Oversubscribed = (props: OversubscribedProps) => {
               onMouseMove={() => toggleTooltip()}
             />
             <TooltipPosition ref={posRef} />
-            <FontAwesomeIcon
-              icon={faExclamationTriangle}
-              transform="shrink-2"
-            />
-            &nbsp;
-            {lowestReward} {network.unit}
+            <OverSubscribedWrapper>
+              <span className="warning">
+                <FontAwesomeIcon
+                  icon={faExclamationTriangle}
+                  transform="shrink-2"
+                  className="warning"
+                />
+              </span>
+              {lowestReward} {network.unit}
+            </OverSubscribedWrapper>
           </div>
         </motion.div>
       )}

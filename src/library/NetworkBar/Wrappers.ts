@@ -171,12 +171,4 @@ export const Separator = styled.div`
   height: 1rem;
 `;
 
-export const ConnectionSymbol = styled.div<any>`
-  width: 10px;
-  height: 10px;
-  background: ${(props) => props.color};
-  border-radius: 50%;
-  margin: 0 0.7rem;
-`;
-
 export default Wrapper;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  faUserFriends,
+  faHashtag,
   faServer,
   faChartLine,
   faStar,
@@ -17,8 +17,8 @@ import Pools from 'pages/Pools';
 import Browse from 'pages/Validators';
 import Favourites from 'pages/Favourites';
 import Payouts from 'pages/Payouts';
-import Projects from 'pages/explore/Projects';
-import Feedback from 'pages/explore/Feedback';
+import Community from 'pages/Community';
+import Feedback from 'pages/Feedback';
 import { URI_PREFIX } from 'consts';
 import { PageCategories, PagesConfig } from 'types';
 
@@ -37,10 +37,6 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 4,
-    title: 'Explore',
-  },
-  {
-    _id: 5,
     title: 'Feedback',
   },
 ];
@@ -88,6 +84,14 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
+    title: 'Community',
+    uri: `${URI_PREFIX}/community`,
+    hash: '/community',
+    Entry: Community,
+    icon: faHashtag,
+  },
+  {
+    category: 3,
     title: 'Favourites',
     uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
@@ -96,14 +100,6 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 4,
-    title: 'Community',
-    uri: `${URI_PREFIX}/community`,
-    hash: '/community',
-    Entry: Projects,
-    icon: faUserFriends,
-  },
-  {
-    category: 5,
     title: 'Feedback',
     uri: `${URI_PREFIX}/feedback`,
     hash: '/feedback',

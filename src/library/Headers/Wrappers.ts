@@ -77,6 +77,7 @@ export const HeadingWrapper = styled.div`
 export const Item = styled(motion.button)`
   background: ${buttonSecondaryBackground};
   border: 1px solid ${borderPrimary};
+  color: ${textPrimary};
   flex-grow: 1;
   padding: 0 1rem;
   border-radius: 1rem;
@@ -90,9 +91,9 @@ export const Item = styled(motion.button)`
   font-size: 1rem;
 
   .label {
+    color: ${networkColor};
     border: 0.125rem solid ${networkColor};
     border-radius: 0.8rem;
-    color: ${networkColor};
     font-size: 0.85rem;
     font-variation-settings: 'wght' 525;
     margin-right: 0.6rem;

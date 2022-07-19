@@ -18,17 +18,30 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import {
+  URI_PREFIX,
+  POLKADOT_URL,
+  SIDE_MENU_STICKY_THRESHOLD,
+  CONNECTION_SYMBOL_COLORS,
+} from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { usePalette } from 'contexts/Palette';
 import { UIContextInterface } from 'contexts/UI/types';
-import Item from './Item';
-import Heading from './Heading';
-import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
+import { ConnectionStatus } from 'contexts/Api/types';
+import {
+  Separator,
+  Wrapper,
+  LogoWrapper,
+  PalettePosition,
+  ConnectionSymbol,
+} from './Wrapper';
+import { Primary } from './Primary';
+import { Secondary } from './Secondary';
+import Heading from './Heading/Heading';
 
 export const SideMenu = () => {
-  const { network } = useApi();
+  const { network, status } = useApi();
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
@@ -39,7 +52,6 @@ export const SideMenu = () => {
   const {
     isSyncing,
     setSideMenu,
-    sideMenuOpen,
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
@@ -111,24 +123,17 @@ export const SideMenu = () => {
     }
   };
 
+  // handle connection symbol
+  const symbolColor =
+    status === ConnectionStatus.Connecting
+      ? CONNECTION_SYMBOL_COLORS.connecting
+      : status === ConnectionStatus.Connected
+      ? CONNECTION_SYMBOL_COLORS.connected
+      : CONNECTION_SYMBOL_COLORS.disconnected;
+
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
-        <button
-          type="button"
-          className="close-menu"
-          style={{
-            fontVariationSettings: "'wght' 450",
-            margin: '0.2rem 0 1rem 0',
-            opacity: 0.7,
-          }}
-          onClick={() => {
-            setSideMenu(sideMenuOpen ? 0 : 1);
-          }}
-        >
-          Close
-        </button>
-
         <LogoWrapper
           onClick={() => {
             window.open(POLKADOT_URL, '_blank');
@@ -143,7 +148,9 @@ export const SideMenu = () => {
               >
                 BETA
               </div>
-              <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
+              <network.brand.icon
+                style={{ maxHeight: '100%', width: '2rem' }}
+              />
             </>
           ) : (
             <>
@@ -160,11 +167,11 @@ export const SideMenu = () => {
               >
                 Staking | BETA
               </div>
-              <network.logo.svg
+              <network.brand.logo.svg
                 style={{
                   maxHeight: '100%',
                   height: '100%',
-                  width: network.logo.width,
+                  width: network.brand.logo.width,
                 }}
               />
             </>
@@ -182,7 +189,7 @@ export const SideMenu = () => {
             {pagesToDisplay.map((page: any, pageIndex: number) => (
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id && (
-                  <Item
+                  <Primary
                     name={page.title}
                     to={page.hash}
                     active={page.hash === pathname}
@@ -195,6 +202,17 @@ export const SideMenu = () => {
             ))}
           </React.Fragment>
         ))}
+        <Separator />
+        <Heading title="Network" minimised={sideMenuMinimised} />
+        <Secondary
+          name={network.name}
+          icon={{
+            Svg: network.brand.inline.svg,
+            size: network.brand.inline.size,
+          }}
+          minimised={sideMenuMinimised}
+          action={<ConnectionSymbol color={[symbolColor.solid]} />}
+        />
       </section>
 
       <section>
@@ -218,13 +236,13 @@ export const SideMenu = () => {
             )
           }
         >
-          <LogoGithubSVG width="1.45rem" height="1.45rem" />
+          <LogoGithubSVG width="1.4rem" height="1.4rem" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('Settings', {}, 'small')}
         >
-          <CogOutlineSVG width="1.65rem" height="1.65rem" />
+          <CogOutlineSVG width="1.6rem" height="1.6rem" />
         </button>
         <button type="button" onClick={() => togglePalette()}>
           <PalettePosition ref={posRef} />

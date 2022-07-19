@@ -10,10 +10,10 @@ import {
   faClock,
   faUserTag,
 } from '@fortawesome/free-solid-svg-icons';
-import { useUi } from 'contexts/UI';
 import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
+import { useValidatorFilter } from 'library/Filter/context';
 
 export const Filters = () => {
   const {
@@ -22,7 +22,7 @@ export const Filters = () => {
     orderValidators,
     toggleFilterValidators,
     toggleAllValidatorFilters,
-  } = useUi();
+  } = useValidatorFilter();
 
   const handleFilter = (fn: any, filter: string) => {
     fn(filter);
