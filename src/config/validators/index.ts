@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /* Import your SVG Here.
- * Use upper camel-case for your SVG import.
- * import { ReactComponent as ValidatorEntityName } from './thumbnails/ValidatorEntityName.svg';
+ * Use upper camel-case for your SVG import, lower camel case for the svg.
+ * import { ReactComponent as ValidatorEntityName } from './thumbnails/validatorEntityName.svg';
  */
-import { ReactComponent as Placeholder } from './thumbnails/Placeholder.svg';
+import { ReactComponent as Placeholder } from './thumbnails/placeholder.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {

@@ -58,7 +58,7 @@ export const ActiveAccount = () => {
                 >
                   <FontAwesomeIcon
                     icon={faCopy as IconProp}
-                    transform="grow-3"
+                    transform="grow-1"
                   />
                 </button>
               </motion.div>
