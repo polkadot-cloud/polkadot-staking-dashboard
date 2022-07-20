@@ -6,6 +6,74 @@ Staking dashboard is live on [Staking.Polkadot.Network/dashboard](https://stakin
 
 <img width="1703" alt="Screenshot 2022-07-20 at 07 29 56" src="https://user-images.githubusercontent.com/13929023/179912454-fc71e699-2cdc-468a-8cee-d6916cb161f9.png">
 
+# Validator Setup Guide
+
+Validators can add their identity, contact information and validator list to the dashboard’s Community section. The Community feature is designed to give non-biased exposure to validator entities, and to host a fully-featured validator browser just for that entity's validators.
+
+To add your entity, submit a PR with the following changes:
+
+- **Thumbnail SVG:** Add your entity's thumbnail as an SVG file to [this file](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/config/validators/thumbnails).
+- **Entity Details:** Add your entity details to the `VALIDATORS_COMMUNITY`JSON object in [this file](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/validators/index.ts).
+
+## Entity Structure
+ 
+The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
+
+| Element | Key | Required | Notes | Example
+| ------- | --- | -------- | ----- | ------- |
+| Entity Name  | `name` | Yes | The chosen name of your entity. | `Validator Central` |
+| Thumbnail SVG  | `Thumbnail` | Yes | Must be a square SVG file with a non-transparent background, to ensure compatibility with both light and dark theming.  | *See Below* | 
+| Bio  | `bio` | No | A short description of your entity. Maximum 300 characters. | `Summing up my validator identity in a sentence or so.` |
+| Email Address  | `email` | No | A public email address representing your entity. | `validatorcentral@parity.io` |
+| Twitter Handle | `twitter` | No | The Twitter handle representing your entity.  | `@ParityTech` |
+| Website URL | `website` | No |  A live and vlid secure URL to your website. | `https://parity.io` |
+| Validator List | `validators` | Yes |  A list of validators grouped by network. At least 1 validator in 1 network must be defined. | *See Below* |
+
+## Example Entity
+
+ At the top of `config/validators/index.ts`, import the SVG you added in the corresponding `./thumbnails` folder as a React component:
+
+```
+import { ReactComponent as ValidatorCentral } from './thumbnails/validatorCentral.svg';
+```
+
+Then add your entity details to the `VALIDATOR_COMMUNITY` object. Only provide the validator(s) for the particular network(s) you are operating in. If you have no operating validators on Kusama, for example, the `kusama` key can be omitted.
+
+The following example defines 2 validators on the Polkadot network, and 1 on Kusama:
+
+```
+export const VALIDATOR_COMMUNITY = [
+  ...
+  {
+    name: 'Validator Central',
+    Thumbnail: ValidatorCentral,
+    bio: 'Summing up my validator identity in a sentence or so. Maximum 300 characters.',
+    email: 'validatorcentral@parity.io',
+    twitter: '@ParityTech',
+    website: 'https://parity.io',
+    validators: {
+      polkadot: [
+      '1hYiMW8KSfUYChzCQSPGXvMSyKVqmyvMXqohjKr3oU5PCXF', 
+      '14QSBoJMHF2Zn2XEoLNSeWgqBRr8XoKPy4BxToD6yLSeFFYe'
+      ],
+      kusama: ['FykhnPA3pn269LAcQ8VQKDgUQ8ieAaSLwJDhAVhu3dcokVR'],
+    },
+  },
+  ...
+];
+
+```
+
+General requirements for adding a validator entity:
+
+| Requirement | Notes
+| ----------- | ----- |
+| Accuracy | Entity contact details must be working and valid. |
+| Liveness | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama. |
+| Ordering | Please place your entity in alphabetical order within `VALIDATOR_COMMUNITY`. Validator entities (and their validators) are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
+
+Please submit an issue for any queries around adding your validator entity.
+
 # Contribution Guide
 
 ## Introduction
