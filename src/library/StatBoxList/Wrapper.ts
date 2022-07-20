@@ -9,6 +9,10 @@ import {
   textInvert,
   backgroundSecondary,
   tooltipBackground,
+  cardShadow,
+  shadowColor,
+  borderPrimary,
+  cardBorder,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -52,11 +56,13 @@ export const StatBoxWrapper = styled(motion.div)`
   }
 
   .content {
+    border: ${cardBorder} ${borderPrimary};
+    box-shadow: ${cardShadow} ${shadowColor};
     background: ${backgroundSecondary};
     display: flex;
-    border-radius: 0.75rem;
+    border-radius: 0.9rem;
     margin-right: 1.25rem;
-    padding: 1rem 0;
+    padding: 0.95rem 0;
     max-height: 3.4rem;
     flex-flow: row wrap;
 

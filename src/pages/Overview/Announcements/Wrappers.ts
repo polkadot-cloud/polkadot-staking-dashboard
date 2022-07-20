@@ -24,10 +24,10 @@ export const Item = styled(motion.div)`
   justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: 0.75rem;
   border-bottom: 1px solid ${borderPrimary};
 
-  h3 {
+  h4 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
