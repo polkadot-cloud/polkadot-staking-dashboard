@@ -60,9 +60,9 @@ export const StatBoxWrapper = styled(motion.div)`
     box-shadow: ${cardShadow} ${shadowColor};
     background: ${backgroundSecondary};
     display: flex;
-    border-radius: 0.9rem;
+    border-radius: 0.95rem;
     margin-right: 1.25rem;
-    padding: 0.95rem 0;
+    padding: 0.9rem 0;
     max-height: 3.4rem;
     flex-flow: row wrap;
 
