@@ -27,7 +27,6 @@ export const Wrapper = styled.div<any>`
     > svg {
       color: ${textSecondary};
     }
-
     h2 {
       padding: 0;
       margin: 0;
