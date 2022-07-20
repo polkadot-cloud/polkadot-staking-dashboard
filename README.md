@@ -4,7 +4,7 @@
 
 Staking dashboard is live on [Staking.Polkadot.Network/dashboard](https://staking.polkadot.network/dashboard)
 
-<img width="1774" alt="Screenshot 2022-07-11 at 23 33 58" src="https://user-images.githubusercontent.com/13929023/178362556-dd59ad78-20c1-4618-9534-1622dca3657e.png">
+<img width="1703" alt="Screenshot 2022-07-20 at 07 29 56" src="https://user-images.githubusercontent.com/13929023/179912454-fc71e699-2cdc-468a-8cee-d6916cb161f9.png">
 
 # Contribution Guide
 
