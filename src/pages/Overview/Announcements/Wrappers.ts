@@ -30,6 +30,7 @@ export const Item = styled(motion.div)`
 
   &:last-child {
     border-bottom: 0;
+    margin-bottom: 0;
   }
 
   h4 {
