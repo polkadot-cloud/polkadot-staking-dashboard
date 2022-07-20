@@ -25,14 +25,19 @@ export const Item = styled(motion.div)`
   align-items: flex-start;
   margin-bottom: 1rem;
   padding: 0.75rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid ${borderPrimary};
+
+  &:last-child {
+    border-bottom: 0;
+  }
 
   h4 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     margin: 0 0 0.5rem;
-    padding: 0.2rem 0;
+    padding-bottom: 0.2rem;
 
     &.neutral {
       color: ${networkColor};
