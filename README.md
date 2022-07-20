@@ -2,7 +2,7 @@
 
 ## Deployment
 
-Staking dashboard is live on [Staking.Polkadot.Network/dashboard](https://staking.polkadot.network/dashboard)
+Staking dashboard is live on [staking.polkadot.network/dashboard](https://staking.polkadot.network/dashboard)
 
 <img width="1703" alt="Screenshot 2022-07-20 at 07 29 56" src="https://user-images.githubusercontent.com/13929023/179912454-fc71e699-2cdc-468a-8cee-d6916cb161f9.png">
 
@@ -117,21 +117,21 @@ Folders are structured in the [`src/`](https://github.com/rossbulat/polkadot-sta
 - [`library`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/library): reusable components that could eventually be abstracted into a separate UI library.
 - [`modals`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/modals): the various modal pop-ups used in the app.
 - [`pages`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/pages): similar to modals, page components and components that comprise pages.
-- [`theme`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/theme): The theming configuration of the app.
+- [`theme`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/theme): the theming configuration of the app.
 - [`workers`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/workers): web workers that crunch process-heavy scripts. Only one exists right now, that iterates `erasStakers` and calculates active nominators and minimum nomination bond.
 
 ## App Entry
 
 Going from the top-most component, the component hierarchy is set up as follows:
 - [`index.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/index.tsx): DOM render, of little interest.
-- [`App.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/App.tsx): Wraps `<App />` in the theme provider context and determines the active network from local storage.
-- [`Providers.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Providers.tsx): Imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
-- [`Router.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Router.tsx): Contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
+- [`App.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/App.tsx): wraps `<App />` in the theme provider context and determines the active network from local storage.
+- [`Providers.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
+- [`Router.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
   - `<Modal />`: top-level of the modal.
   - `<Assistant />`: top-level of the assistant.
   - `<Headers />`: fixed header of the app containing the stash / controller, assistant and menu toggle buttons.
   - `<NetworkBar />`: fixed network bar at the bottom of the app.
-  - `<Notifications />`: Smaller context-based popups. Currently used on click-to-copy, or to display extrinsic status (pending, success).
+  - `<Notifications />`: smaller context-based popups. Currently used on click-to-copy, or to display extrinsic status (pending, success).
 
 ## Development Patterns
 
