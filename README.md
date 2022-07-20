@@ -64,7 +64,7 @@ export const VALIDATOR_COMMUNITY = [
 
 ```
 
-General requirements for adding a validator entity:
+## General Requirements
 
 | Requirement | Notes
 | ----------- | ----- |
