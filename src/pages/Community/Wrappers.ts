@@ -90,7 +90,7 @@ export const ItemWrapper = styled(motion.div)`
         flex-flow: row wrap;
         align-items: center;
         border-radius: 1rem;
-        padding: 0.4rem 1rem;
+        padding: 0.3rem 1rem;
 
         svg {
           color: ${textSecondary};
@@ -100,7 +100,7 @@ export const ItemWrapper = styled(motion.div)`
         @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
           margin: 0.25rem 1rem 0.25rem 0;
         }
-        > h3 {
+        > h4 {
           margin: 0;
         }
         &:disabled {

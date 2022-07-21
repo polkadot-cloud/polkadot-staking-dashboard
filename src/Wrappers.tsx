@@ -93,7 +93,7 @@ export const EntryWrapper = styled.div`
       padding: 0 3rem 0 1rem;
     }
     @media (min-width: 1500px) {
-      padding: 0 5rem 0 1.5rem;
+      padding: 0 5rem 0 1rem;
     }
   }
 `;
@@ -184,8 +184,9 @@ export const PageTitleWrapper = styled.header<any>`
   background: ${backgroundPrimary};
   position: sticky;
   top: 0px;
-  padding-top: 1.5rem;
+  padding-top: ${(props) => (props.sticky ? '1.5rem' : '0.5rem')};
   margin-bottom: 0.5rem;
+  padding-bottom: ${(props) => (props.sticky ? '0.25rem' : 0)};
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     top: 4rem;
@@ -304,9 +305,9 @@ export const RowPrimaryWrapper = styled.div<any>`
     ${(props) => props.hOrder === 0 && ' padding-right: 0.5rem;'}
     ${(props) => props.hOrder === 1 && 'padding-left: 0.5rem;'}
     order: ${(props) => props.hOrder};
+    flex: 1;
     flex-basis: 50%;
     width: 50%;
-    flex: 1;
   }
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
@@ -330,9 +331,9 @@ export const RowSecondaryWrapper = styled.div<any>`
     ${(props) => props.hOrder === 1 && ' padding-left: 0.5rem;'}
     ${(props) => props.hOrder === 0 && 'padding-right: 0.5rem;'}
     order: ${(props) => props.hOrder};
+    flex: 1;
     flex-basis: 50%;
     width: 50%;
-    flex: 1;
   }
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {

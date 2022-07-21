@@ -90,10 +90,10 @@ export const Item = (props: any) => {
                 className="icon-left"
                 transform="shrink-1"
               />
-              <h3>
+              <h4>
                 {validatorCount} Validator
                 {validatorCount !== 1 && 's'}
-              </h3>
+              </h4>
             </button>
             {email !== undefined && (
               <button
@@ -108,7 +108,7 @@ export const Item = (props: any) => {
                   transform="shrink-1"
                   className="icon-left"
                 />
-                <h3>email</h3>
+                <h4>email</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
@@ -128,7 +128,7 @@ export const Item = (props: any) => {
                   icon={faTwitter as IconProp}
                   className="icon-left"
                 />
-                <h3>{twitter}</h3>
+                <h4>{twitter}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
@@ -144,7 +144,7 @@ export const Item = (props: any) => {
                   window.open(website, '_blank');
                 }}
               >
-                <h3>website</h3>
+                <h4>website</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"

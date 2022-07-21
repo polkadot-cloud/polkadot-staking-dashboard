@@ -60,7 +60,7 @@ export const CardWrapper = styled.div<any>`
   box-sizing: border-box;
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
-  border-radius: 1rem;
+  border-radius: 1.1rem;
   background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
   flex-flow: column nowrap;

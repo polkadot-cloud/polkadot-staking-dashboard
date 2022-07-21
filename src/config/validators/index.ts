@@ -10,11 +10,11 @@ import { ReactComponent as Placeholder } from './thumbnails/placeholder.svg';
 export const VALIDATOR_COMMUNITY = [
   {
     name: 'Test Validator Entity',
-    website: 'https://rossbulat.medium.com/',
-    twitter: '@rossbulat',
     Thumbnail: Placeholder,
-    email: 'ross@parity.io',
     bio: 'Summing up my validator identity in a sentence or so. Maximum 300 characters.',
+    email: 'ross@parity.io',
+    twitter: '@ParityTech',
+    website: 'https://parity.io/',
     validators: {
       polkadot: [
         '13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6',

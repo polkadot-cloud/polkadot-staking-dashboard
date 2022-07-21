@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel } from 'theme';
+import { backgroundLabel, textSecondary } from 'theme';
 
 export const Wrapper = styled.div<any>`
   position: absolute;
@@ -24,6 +24,9 @@ export const Wrapper = styled.div<any>`
     flex-flow: row wrap;
     align-items: center;
 
+    > svg {
+      color: ${textSecondary};
+    }
     h2 {
       padding: 0;
       margin: 0;
