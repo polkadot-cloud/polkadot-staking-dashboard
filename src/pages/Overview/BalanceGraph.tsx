@@ -98,7 +98,7 @@ export const BalanceGraph = () => {
           padding: 20,
           color: defaultThemes.text.primary[mode],
           font: {
-            size: 13,
+            size: window && window.innerWidth && window.innerWidth > 768 ? 11 : 13,
             weight: '500',
           },
         },
@@ -109,9 +109,8 @@ export const BalanceGraph = () => {
         bodyColor: defaultThemes.text.invert[mode],
         callbacks: {
           label: (context: any) => {
-            return `${context.label}: ${
-              context.parsed === -1 ? 0 : humanNumber(context.parsed)
-            } ${network.unit}`;
+            return `${context.label}: ${context.parsed === -1 ? 0 : humanNumber(context.parsed)
+              } ${network.unit}`;
           },
         },
       },
@@ -124,17 +123,17 @@ export const BalanceGraph = () => {
   let _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
   let _colors = zeroBalance
     ? [
-        defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.inactive2[mode],
-        defaultThemes.graphs.inactive2[mode],
-        defaultThemes.graphs.inactive[mode],
-      ]
+      defaultThemes.graphs.colors[1][mode],
+      defaultThemes.graphs.inactive2[mode],
+      defaultThemes.graphs.inactive2[mode],
+      defaultThemes.graphs.inactive[mode],
+    ]
     : [
-        defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.colors[0][mode],
-        networkColors[`${network.name}-${mode}`],
-        networkColorsSecondary[`${network.name}-${mode}`],
-      ];
+      defaultThemes.graphs.colors[1][mode],
+      defaultThemes.graphs.colors[0][mode],
+      networkColors[`${network.name}-${mode}`],
+      networkColorsSecondary[`${network.name}-${mode}`],
+    ];
 
   _data = features.pools ? _data : _data.slice(0, 3);
   _colors = features.pools ? _colors : _colors.slice(0, 3);
