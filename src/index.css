@@ -10,18 +10,18 @@
 
 /* global font size */
 html {
-  font-size: 12px;
+  font-size: 11px;
 }
 
 @media(min-width: 600px) {
   html {
-    font-size: 13px;
+    font-size: 12px;
   }
 }
 
 @media(min-width: 1600px) {
   html {
-    font-size: 13.5px;
+    font-size: 12.5px;
   }
 }
 

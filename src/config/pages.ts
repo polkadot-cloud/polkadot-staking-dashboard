@@ -17,8 +17,8 @@ import Pools from 'pages/Pools';
 import Browse from 'pages/Validators';
 import Favourites from 'pages/Favourites';
 import Payouts from 'pages/Payouts';
-import Projects from 'pages/explore/Projects';
-import Feedback from 'pages/explore/Feedback';
+import Community from 'pages/Community';
+import Feedback from 'pages/Feedback';
 import { URI_PREFIX } from 'consts';
 import { PageCategories, PagesConfig } from 'types';
 
@@ -37,7 +37,7 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 4,
-    title: 'Community',
+    title: 'Feedback',
   },
 ];
 
@@ -84,19 +84,19 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
+    title: 'Community',
+    uri: `${URI_PREFIX}/community`,
+    hash: '/community',
+    Entry: Community,
+    icon: faHashtag,
+  },
+  {
+    category: 3,
     title: 'Favourites',
     uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
     Entry: Favourites,
     icon: faThumbtack,
-  },
-  {
-    category: 3,
-    title: 'Explore',
-    uri: `${URI_PREFIX}/explore`,
-    hash: '/explore',
-    Entry: Projects,
-    icon: faHashtag,
   },
   {
     category: 4,
