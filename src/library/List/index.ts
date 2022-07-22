@@ -77,6 +77,7 @@ export const Pagination = styled.div<any>`
     justify-content: flex-end;
 
     button {
+      font-size: 0.98rem;
       padding: 0 0.25rem;
       margin-left: 0.5rem;
       &.next {
@@ -98,8 +99,9 @@ export const Selectable = styled.div<any>`
   padding: 0.5rem;
 
   > button {
-    color: ${textSecondary};
     background: ${buttonSecondaryBackground};
+    font-size: 0.98rem;
+    color: ${textSecondary};
     border-radius: 0.5rem;
     padding: 0.36rem 0.8rem;
     margin-right: 0.5rem;

@@ -20,3 +20,14 @@ export interface CategoryProps {
   buttons?: Array<ButtonProps>;
   children: React.ReactNode;
 }
+
+export interface ValidatorFilterContextInterface {
+  orderValidators: (v: string) => void;
+  applyValidatorOrder: (l: any, o: string) => any;
+  applyValidatorFilters: (l: any, k: string, f?: string[]) => void;
+  toggleFilterValidators: (v: string, l: any) => void;
+  toggleAllValidatorFilters: (t: number) => void;
+  resetValidatorFilters: () => void;
+  validatorFilters: string[];
+  validatorOrder: string;
+}

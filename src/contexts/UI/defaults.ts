@@ -9,17 +9,6 @@ export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
   setUserSideMenuMinimised: (v) => {},
   // eslint-disable-next-line
-  orderValidators: (v) => {},
-  // eslint-disable-next-line
-  applyValidatorOrder: (l, o) => {},
-  // eslint-disable-next-line
-  applyValidatorFilters: (l, k, f) => {},
-  // eslint-disable-next-line
-  toggleFilterValidators: (v, l) => {},
-  // eslint-disable-next-line
-  toggleAllValidatorFilters: (t) => {},
-  resetValidatorFilters: () => {},
-  // eslint-disable-next-line
   toggleService: (k) => {},
   // eslint-disable-next-line
   getSetupProgress: (a) => {},
@@ -36,8 +25,6 @@ export const defaultUIContext: UIContextInterface = {
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
   services: [],
-  validatorFilters: [],
-  validatorOrder: 'default',
   onSetup: 0,
   isSyncing: false,
 };

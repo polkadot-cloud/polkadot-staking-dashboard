@@ -119,6 +119,7 @@ export const AccountGroupWrapper = styled(motion.button)`
     }
 
     > div {
+      margin: 0.4rem 0;
       > button,
       > div {
         border-radius: 0.75rem;
@@ -166,8 +167,8 @@ export const AccountWrapper = styled.div`
     flex-flow: row nowrap;
     align-items: center;
     min-height: 3.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
 
     > div {
       box-sizing: border-box;

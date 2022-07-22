@@ -4,13 +4,10 @@
 import { useApi } from 'contexts/Api';
 import { CONNECTION_SYMBOL_COLORS } from 'consts';
 import { ConnectionStatus } from 'contexts/Api/types';
-import { defaultThemes } from 'theme/default';
-import { useTheme } from 'contexts/Themes';
 import { useModal } from 'contexts/Modal';
 import { Wrapper, MinimisedWrapper, IconWrapper } from './Wrappers';
 
 export const Secondary = (props: any) => {
-  const { mode } = useTheme();
   const { status } = useApi();
   const { openModalWith } = useModal();
 
@@ -36,9 +33,11 @@ export const Secondary = (props: any) => {
       transition={{
         duration: 0.1,
       }}
+      style={{
+        borderColor: minimised ? symbolColor.transparent : undefined,
+      }}
     >
       <IconWrapper
-        fill={minimised ? symbolColor : defaultThemes.text.secondary[mode]}
         minimised={minimised}
         className="icon"
         style={{ width: size, height: size }}

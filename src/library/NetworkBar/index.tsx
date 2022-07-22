@@ -31,6 +31,7 @@ export const NetworkBar = () => {
   const ref = useRef(null);
 
   const PRIVACY_URL = process.env.REACT_APP_PRIVACY_URL;
+  const DISCLAIMER_URL = process.env.REACT_APP_DISCLAIMER_URL;
   const ORGANISATION = process.env.REACT_APP_ORGANISATION;
 
   useOutsideAlerter(
@@ -66,6 +67,16 @@ export const NetworkBar = () => {
             </p>
           ) : (
             <Status />
+          )}
+          {DISCLAIMER_URL !== undefined && (
+            <>
+              <Separator />
+              <p>
+                <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
+                  Disclaimer
+                </a>
+              </p>
+            </>
           )}
         </section>
         <section>

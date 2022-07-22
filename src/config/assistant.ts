@@ -252,7 +252,14 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
     ],
-    external: [],
+    external: [
+      {
+        subtitle: '',
+        label: 'Validators',
+        title: 'How do I know which validators to choose?',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
+      },
+    ],
   },
   {
     key: 'payouts',

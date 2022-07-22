@@ -6,8 +6,7 @@ import { useEffect } from 'react';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
-import { Wrapper } from './Wrappers';
-import { ErrorBoundary } from 'ErrorsBoundary';
+import { Wrapper } from '../Community/Wrappers';
 
 const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 
@@ -53,14 +52,12 @@ const Feedback = (props: PageProps) => {
 
 
   return (
-    <ErrorBoundary>
       <Wrapper>
         <PageTitle title={title} />
         <PageRowWrapper className='page-padding'>
           <div data-canny style={{ width: '100%' }} />
         </PageRowWrapper>
       </Wrapper>
-    </ErrorBoundary> 
   );
 };
 
