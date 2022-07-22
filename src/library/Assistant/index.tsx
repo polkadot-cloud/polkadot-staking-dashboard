@@ -8,7 +8,6 @@ import { ASSISTANT_CONFIG } from 'config/assistant';
 import { pageFromUri } from 'Utils';
 import { AssistantItem } from 'contexts/Assistant/types';
 import { Toggle } from 'types';
-import { ErrorBoundary } from 'ErrorsBoundary';
 import {
   Wrapper,
   CardsWrapper,
@@ -75,38 +74,36 @@ export const Assistant = () => {
   if (!assistant || !{ pathname }) throw new Error('Failed to get Assistant');
 
   return (
-    <ErrorBoundary>
-      <Wrapper
-        ref={ref}
-        initial={false}
-        animate={animateContainer}
-        transition={{
-          duration: 0.5,
-          type: 'spring',
-          bounce: 0.2,
-        }}
-        variants={containerVariants}
-      >
-        <ContentWrapper>
-          <HeightWrapper
-            style={{ height: assistant.height }}
-            transition={assistant.transition}
+    <Wrapper
+      ref={ref}
+      initial={false}
+      animate={animateContainer}
+      transition={{
+        duration: 0.5,
+        type: 'spring',
+        bounce: 0.2,
+      }}
+      variants={containerVariants}
+    >
+      <ContentWrapper>
+        <HeightWrapper
+          style={{ height: assistant.height }}
+          transition={assistant.transition}
+        >
+          <CardsWrapper
+            animate={animateSections}
+            transition={{
+              duration: 0.5,
+              type: 'spring',
+              bounce: 0.1,
+            }}
+            variants={sectionVariants}
           >
-            <CardsWrapper
-              animate={animateSections}
-              transition={{
-                duration: 0.5,
-                type: 'spring',
-                bounce: 0.1,
-              }}
-              variants={sectionVariants}
-            >
-              <Sections pageMeta={pageMeta} />
-            </CardsWrapper>
-          </HeightWrapper>
-        </ContentWrapper>
-      </Wrapper>
-    </ErrorBoundary>
+            <Sections pageMeta={pageMeta} />
+          </CardsWrapper>
+        </HeightWrapper>
+      </ContentWrapper>
+    </Wrapper>
   );
 };
 

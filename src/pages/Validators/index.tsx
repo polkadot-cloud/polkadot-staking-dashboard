@@ -8,7 +8,6 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
-import { ErrorBoundary } from 'ErrorsBoundary';
 import ActiveEraStatBox from '../Overview/Stats/ActiveEra';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
@@ -24,7 +23,7 @@ export const Validators = (props: PageProps) => {
   if (!window) throw new Error('Failed To Get The Stake Page');
 
   return (
-    <ErrorBoundary>
+    <>
       <PageTitle title={title} />
       <StatBoxList>
         <TotalValidatorsStatBox />
@@ -61,7 +60,7 @@ export const Validators = (props: PageProps) => {
           )}
         </CardWrapper>
       </PageRowWrapper>
-    </ErrorBoundary>
+    </>
   );
 };
 
