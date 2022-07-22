@@ -3,7 +3,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Keyring from '@polkadot/keyring';
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
+import {
+  clipAddress,
+  isValidAddress,
+  localStorageOrDefault,
+  setStateWithRef,
+} from 'Utils';
 import { DAPP_NAME } from 'consts';
 import {
   ConnectContextInterface,
@@ -272,7 +277,6 @@ export const ConnectProvider = ({
                 if (!injected) {
                   return;
                 }
-
                 // update extensions status
                 updateExtensionStatus(id, 'connected');
                 // update local active extensions
@@ -280,6 +284,11 @@ export const ConnectProvider = ({
 
                 // only continue if there are accounts
                 if (injected.length) {
+                  // filter injected with correctly formatted addresses
+                  injected = injected.filter((i: ExtensionAccount) => {
+                    return isValidAddress(i.address);
+                  });
+
                   // format account properties
                   injected = injected.map((a: ExtensionAccount) => {
                     return {
@@ -391,6 +400,11 @@ export const ConnectProvider = ({
 
             // only continue if there are accounts
             if (injected.length) {
+              // filter injected with correctly formatted addresses
+              injected = injected.filter((i: ExtensionAccount) => {
+                return isValidAddress(i.address);
+              });
+
               // format account properties
               injected = injected.map((a: ExtensionAccount) => {
                 return {

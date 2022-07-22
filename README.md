@@ -2,9 +2,77 @@
 
 ## Deployment
 
-Staking dashboard is live on [Staking.Polkadot.Network/dashboard](https://staking.polkadot.network/dashboard)
+Staking dashboard is live on [staking.polkadot.network/dashboard](https://staking.polkadot.network/dashboard)
 
-<img width="1774" alt="Screenshot 2022-07-11 at 23 33 58" src="https://user-images.githubusercontent.com/13929023/178362556-dd59ad78-20c1-4618-9534-1622dca3657e.png">
+<img width="1703" alt="Screenshot 2022-07-20 at 07 29 56" src="https://user-images.githubusercontent.com/13929023/179912454-fc71e699-2cdc-468a-8cee-d6916cb161f9.png">
+
+# Validator Setup Guide
+
+Validators can add their identity, contact information and validator list to the dashboard’s Community section. The Community feature is designed to give non-biased exposure to validator entities, and to host a fully-featured validator browser just for that entity's validators.
+
+To add your entity, submit a PR with the following changes:
+
+- **Thumbnail SVG:** Add your entity's thumbnail as an SVG file to [this file](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/config/validators/thumbnails).
+- **Entity details:** Add your entity details to the `VALIDATORS_COMMUNITY`JSON object in [this file](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/validators/index.ts).
+
+## Entity Structure
+ 
+The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
+
+| Element | Key | Required | Notes | Example
+| ------- | --- | -------- | ----- | ------- |
+| Entity Name  | `name` | Yes | The chosen name of your entity. | `Validator Central` |
+| Thumbnail SVG  | `Thumbnail` | Yes | Must be a square SVG file with a non-transparent background, to ensure compatibility with both light and dark theming.  | *See Below* | 
+| Bio  | `bio` | No | A short description of your entity. Maximum 300 characters. | `Summing up my validator identity in a sentence or so.` |
+| Email Address  | `email` | No | A public email address representing your entity. | `validatorcentral@parity.io` |
+| Twitter Handle | `twitter` | No | The Twitter handle representing your entity.  | `@ParityTech` |
+| Website URL | `website` | No |  A live and vlid secure URL to your website. | `https://parity.io` |
+| Validator List | `validators` | Yes |  A list of validators grouped by network. At least 1 validator in 1 network must be defined. | *See Below* |
+
+## Example Entity
+
+ At the top of `config/validators/index.ts`, import the SVG you added in the corresponding `./thumbnails` folder as a React component:
+
+```
+import { ReactComponent as ValidatorCentral } from './thumbnails/validatorCentral.svg';
+```
+
+Then add your entity details to the `VALIDATOR_COMMUNITY` object. Only provide the validator(s) for the particular network(s) you are operating in. If you have no operating validators on Kusama, for example, the `kusama` key can be omitted.
+
+The following example defines 2 validators on the Polkadot network, and 1 on Kusama:
+
+```
+export const VALIDATOR_COMMUNITY = [
+  ...
+  {
+    name: 'Validator Central',
+    Thumbnail: ValidatorCentral,
+    bio: 'Summing up my validator identity in a sentence or so. Maximum 300 characters.',
+    email: 'validatorcentral@parity.io',
+    twitter: '@ParityTech',
+    website: 'https://parity.io',
+    validators: {
+      polkadot: [
+      '1hYiMW8KSfUYChzCQSPGXvMSyKVqmyvMXqohjKr3oU5PCXF', 
+      '14QSBoJMHF2Zn2XEoLNSeWgqBRr8XoKPy4BxToD6yLSeFFYe'
+      ],
+      kusama: ['FykhnPA3pn269LAcQ8VQKDgUQ8ieAaSLwJDhAVhu3dcokVR'],
+    },
+  },
+  ...
+];
+
+```
+
+## General Requirements
+
+| Requirement | Notes
+| ----------- | ----- |
+| Accuracy | Entity contact details must be working and valid. |
+| Liveness | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama. |
+| Ordering | Please place your entity in alphabetical order within `VALIDATOR_COMMUNITY`. Validator entities (and their validators) are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
+
+Please submit an issue for any queries around adding your validator entity.
 
 # Contribution Guide
 
@@ -49,21 +117,21 @@ Folders are structured in the [`src/`](https://github.com/rossbulat/polkadot-sta
 - [`library`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/library): reusable components that could eventually be abstracted into a separate UI library.
 - [`modals`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/modals): the various modal pop-ups used in the app.
 - [`pages`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/pages): similar to modals, page components and components that comprise pages.
-- [`theme`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/theme): The theming configuration of the app.
+- [`theme`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/theme): the theming configuration of the app.
 - [`workers`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/workers): web workers that crunch process-heavy scripts. Only one exists right now, that iterates `erasStakers` and calculates active nominators and minimum nomination bond.
 
 ## App Entry
 
 Going from the top-most component, the component hierarchy is set up as follows:
 - [`index.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/index.tsx): DOM render, of little interest.
-- [`App.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/App.tsx): Wraps `<App />` in the theme provider context and determines the active network from local storage.
-- [`Providers.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Providers.tsx): Imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
-- [`Router.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Router.tsx): Contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
+- [`App.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/App.tsx): wraps `<App />` in the theme provider context and determines the active network from local storage.
+- [`Providers.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
+- [`Router.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
   - `<Modal />`: top-level of the modal.
   - `<Assistant />`: top-level of the assistant.
   - `<Headers />`: fixed header of the app containing the stash / controller, assistant and menu toggle buttons.
   - `<NetworkBar />`: fixed network bar at the bottom of the app.
-  - `<Notifications />`: Smaller context-based popups. Currently used on click-to-copy, or to display extrinsic status (pending, success).
+  - `<Notifications />`: smaller context-based popups. Currently used on click-to-copy, or to display extrinsic status (pending, success).
 
 ## Development Patterns
 
@@ -95,6 +163,7 @@ Integration tests make sense for the app itself, ensuring the page layout, assis
 
 # Project Updates
 
+- 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
 - 08/04/2022: [[Video] Polkadot Staking Dashboard April 2022 Update](https://www.youtube.com/watch?v=y6AJ6RhKMH0)
 - 09/03/2022: [Representing the Stash and Controller Account](https://medium.com/@paritytech/polkadot-staking-dashboard-representing-the-stack-and-controller-account-2ea76bb54b47)
 - 28/02/2022: [Defining the Polkadot Staking Experience: Phase 0](https://rossbulat.medium.com/defining-the-polkadot-staking-experience-phase-0-211cb2bc113c)

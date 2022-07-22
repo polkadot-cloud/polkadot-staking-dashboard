@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import {
   sleep,
+  shuffle,
   removePercentage,
   rmCommas,
   setStateWithRef,
@@ -19,6 +20,7 @@ import {
   ValidatorAddresses,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
+import { VALIDATOR_COMMUNITY } from 'config/validators';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -92,6 +94,11 @@ export const ValidatorsProvider = ({
   // stores the user's favourites validators as list
   const [favouritesList, setFavouritesList] = useState<Array<Validator> | null>(
     null
+  );
+
+  // stores a shuffled validator community
+  const [validatorCommunity, setValidatorCommunity] = useState<any>(
+    shuffle(VALIDATOR_COMMUNITY)
   );
 
   // reset validators list on network change
@@ -177,8 +184,10 @@ export const ValidatorsProvider = ({
   };
 
   // re-fetch favourites upon network change
+  // re-shuffle validator community on network change
   useEffect(() => {
     setFavourites(getFavourites());
+    setValidatorCommunity(shuffle(VALIDATOR_COMMUNITY));
   }, [network]);
 
   // fetch favourites in validator list format
@@ -573,6 +582,7 @@ export const ValidatorsProvider = ({
         nominated,
         poolNominated,
         favouritesList,
+        validatorCommunity,
       }}
     >
       {children}

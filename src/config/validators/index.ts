@@ -1,12 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* Import your SVG Here.
+ * Use upper camel-case for your SVG import, lower camel case for the svg.
+ * import { ReactComponent as ValidatorEntityName } from './thumbnails/validatorEntityName.svg';
+ */
 import { ReactComponent as Placeholder } from './thumbnails/placeholder.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
     name: 'Test Validator Entity',
     Thumbnail: Placeholder,
+    bio: 'Summing up my validator identity in a sentence or so. Maximum 300 characters.',
+    email: 'ross@parity.io',
+    twitter: '@ParityTech',
+    website: 'https://parity.io/',
     validators: {
       polkadot: [
         '13StYv65m44kLu1mGwHYm4GuXR1vLVamUoSvVfCPoZGFX4S6',

@@ -76,7 +76,11 @@ export const Entity = () => {
           <>
             {shuffledValidators.length === 0 && (
               <div className="item">
-                <h3>Fetching validators...</h3>
+                <h3>
+                  {validators.length
+                    ? 'Fetching validators...'
+                    : 'This entity contains no validators.'}
+                </h3>
               </div>
             )}
             {shuffledValidators.length > 0 && (

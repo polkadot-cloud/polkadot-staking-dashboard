@@ -6,8 +6,13 @@ import { motion } from 'framer-motion';
 import {
   textSecondary,
   borderPrimary,
-  backgroundPrimary,
-  modalBackground,
+  backgroundSecondary,
+  cardBorder,
+  shadowColor,
+  cardShadow,
+  backgroundDropdown,
+  buttonSecondaryBackground,
+  buttonHoverBackground,
 } from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
@@ -29,19 +34,19 @@ export const ItemWrapper = styled(motion.div)`
   flex-shrink: 0;
   flex-grow: 1;
   flex-basis: 100%;
-  width: 50%;
   margin: 1rem 1rem 0 0;
 
-  height: 14rem;
+  height: auto;
   @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
-    flex-basis: 33%;
     height: 10rem;
   }
 
   > .inner {
     color: ${textSecondary};
+    background: ${backgroundSecondary};
+    border: ${cardBorder} ${borderPrimary};
+    box-shadow: ${cardShadow} ${shadowColor};
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.03);
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;
@@ -58,29 +63,77 @@ export const ItemWrapper = styled(motion.div)`
     section {
       box-sizing: border-box;
       display: flex;
+      flex-flow: column wrap;
       padding: 0 1rem;
+      overflow: hidden;
 
-      > .stats {
-        width: 100%;
-        margin-top: 0.5rem;
+      h2 {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
 
-        button {
-          border-radius: 1rem;
-          padding: 0.4rem 1.25rem;
-
-          > h3 {
-            margin: 0;
-          }
-          &:disabled {
-            cursor: default;
-          }
+        > button {
           &.active {
-            background: ${backgroundPrimary};
-            transition: background 0.1s;
+            color: ${textSecondary};
+            background: ${backgroundDropdown};
             &:hover {
-              background: ${modalBackground};
+              background: ${backgroundDropdown};
             }
           }
+          padding: 0.35rem 0.75rem;
+          margin-left: 0.75rem;
+        }
+      }
+
+      button {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        border-radius: 1rem;
+        padding: 0.3rem 1rem;
+
+        svg {
+          color: ${textSecondary};
+        }
+
+        margin: 0.5rem 1rem 0.5rem 0;
+        @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
+          margin: 0.25rem 1rem 0.25rem 0;
+        }
+        > h4 {
+          margin: 0;
+        }
+        &:disabled {
+          cursor: default;
+        }
+        &.active {
+          background: ${buttonSecondaryBackground};
+          transition: background 0.1s;
+          &:hover {
+            background: ${buttonHoverBackground};
+          }
+        }
+        &:last-child {
+          margin-right: none;
+        }
+        .icon-left {
+          margin-right: 0.5rem;
+        }
+        .icon-right {
+          margin-left: 0.65rem;
+          opacity: 0.75;
+        }
+      }
+
+      > .stats {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+        margin-top: 0rem;
+        margin-bottom: 1rem;
+        @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
+          margin-top: 0.25rem;
+          margin-bottom: 0;
         }
       }
 
@@ -126,7 +179,7 @@ export const ItemWrapper = styled(motion.div)`
           align-items: center;
           justify-content: flex-start;
           height: 100%;
-          width: 11rem;
+          width: 9.5rem;
 
           svg {
             width: 7rem;
@@ -143,6 +196,10 @@ export const ItemWrapper = styled(motion.div)`
           border-top: none;
           height: 100%;
           flex: 1;
+
+          h2 {
+            margin-top: 0.25rem;
+          }
         }
       }
     }

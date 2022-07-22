@@ -98,7 +98,7 @@ export const PayoutListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
-          <h3>{props.title}</h3>
+          <h4>{props.title}</h4>
         </div>
         <div>
           <button type="button" onClick={() => setListFormat('row')}>
