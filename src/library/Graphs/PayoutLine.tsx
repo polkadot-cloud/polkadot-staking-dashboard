@@ -110,6 +110,9 @@ export const PayoutLine = (props: PayoutLineProps) => {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
+        bodyFont: {
+          weight: '600',
+        },
         callbacks: {
           title: () => {
             return [];

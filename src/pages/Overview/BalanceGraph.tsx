@@ -99,7 +99,7 @@ export const BalanceGraph = () => {
           color: defaultThemes.text.primary[mode],
           font: {
             size: 13,
-            weight: '500',
+            weight: '600',
           },
         },
       },
@@ -107,6 +107,9 @@ export const BalanceGraph = () => {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
+        bodyFont: {
+          weight: '600',
+        },
         callbacks: {
           label: (context: any) => {
             return `${context.label}: ${
