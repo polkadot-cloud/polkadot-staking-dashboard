@@ -11,7 +11,7 @@ export const Returns = (props: any) => {
     <CardWrapper height={height} flex>
       <CardHeaderWrapper>
         <h4>
-          Estimated Rreturns
+          Estimated Returns
           <OpenAssistantIcon page="overview" title="Your Balance" />
         </h4>
       </CardHeaderWrapper>
