@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { borderPrimary, textPrimary, textSecondary } from 'theme';
 
-export const SectionWrapper = styled.div`
+export const AccountWrapper = styled.div`
   padding: 0 1.25rem 0rem 1.25rem;
   box-sizing: border-box;
   width: 100%;
@@ -74,7 +74,6 @@ export const SectionWrapper = styled.div`
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   margin-top: 0.8rem;
-  margin-bottom: 0.2rem;
   width: 100%;
   height: 1px;
 `;

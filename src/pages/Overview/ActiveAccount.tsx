@@ -10,7 +10,7 @@ import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import { Separator, SectionWrapper } from './Wrappers';
+import { Separator, AccountWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
@@ -27,7 +27,7 @@ export const ActiveAccount = () => {
   }
 
   return (
-    <SectionWrapper>
+    <AccountWrapper>
       <div className="account">
         {accountData !== null && (
           <>
@@ -73,7 +73,7 @@ export const ActiveAccount = () => {
         )}
       </div>
       <Separator />
-    </SectionWrapper>
+    </AccountWrapper>
   );
 };
 
