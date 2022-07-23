@@ -14,7 +14,6 @@ import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
-import { GRAPH_HEIGHT } from 'consts';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';
 import { ActiveAccount } from './ActiveAccount';
@@ -24,6 +23,8 @@ import ActiveEraStatBox from './Stats/ActiveEra';
 import Announcements from './Announcements';
 import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
+import Reserve from './Reserve';
+import APY from './APY';
 
 export const Overview = () => {
   const { network } = useApi();
@@ -31,6 +32,10 @@ export const Overview = () => {
   const { payouts, poolClaims } = useSubscan();
 
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
+
+  const PAYOUTS_HEIGHT = 380;
+  const STATS_HEIGHT = 110;
+  const BALANCE_HEIGHT = PAYOUTS_HEIGHT + STATS_HEIGHT + 13;
 
   return (
     <>
@@ -42,13 +47,15 @@ export const Overview = () => {
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowSecondaryWrapper hOrder={0} vOrder={0}>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
+          <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
             <ActiveAccount />
             <BalanceGraph />
+            <Reserve />
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper hOrder={1} vOrder={1}>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
+          <APY height={STATS_HEIGHT} />
+          <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
               <h4>Recent Payouts</h4>

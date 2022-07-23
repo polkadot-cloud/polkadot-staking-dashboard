@@ -64,7 +64,6 @@ export const SHOW_SIDE_BAR_WIDTH_THRESHOLD = 1000;
 export const MAX_ASSISTANT_INTERFACE_WIDTH = 500;
 export const MAX_SIDE_BAR_INTERFACE_WIDTH = 400;
 export const FLOATING_MENU_WIDTH = 250;
-export const GRAPH_HEIGHT = 390;
 
 /*
  * Toggle-able services

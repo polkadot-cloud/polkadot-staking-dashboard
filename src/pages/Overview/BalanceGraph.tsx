@@ -187,7 +187,7 @@ export const BalanceGraph = () => {
           </span>
         </h2>
       </div>
-      <div style={{ paddingTop: '20px' }} />
+      <div style={{ paddingTop: '1rem' }} />
       <div className="inner" ref={ref} style={{ minHeight }}>
         <div
           className="graph"
@@ -200,7 +200,7 @@ export const BalanceGraph = () => {
           <Doughnut options={options} data={data} />
         </div>
       </div>
-      <div style={{ paddingTop: '25px' }} />
+      <div style={{ paddingTop: '1rem' }} />
     </>
   );
 };
