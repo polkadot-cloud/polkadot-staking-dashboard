@@ -20,6 +20,8 @@ export const Validators = (props: PageProps) => {
   const { isReady } = useApi();
   const { validators } = useValidators();
 
+  if (!window) throw new Error('Failed To Get The Stake Page');
+
   return (
     <>
       <PageTitle title={title} />

@@ -32,6 +32,8 @@ export const Overview = () => {
 
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
 
+  if (!network) throw new Error('Failed to load the Overview page');
+
   return (
     <>
       <PageTitle title="Overview" />

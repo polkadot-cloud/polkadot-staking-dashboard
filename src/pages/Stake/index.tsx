@@ -12,6 +12,8 @@ export const Stake = (props: PageProps) => {
   const { title } = page;
   const { onSetup, setOnSetup } = useUi();
 
+  if (!window) throw new Error('Failed To Get The Stake Page');
+
   return (
     <Wrapper>
       {onSetup ? (

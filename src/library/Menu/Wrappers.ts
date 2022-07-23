@@ -38,6 +38,6 @@ export const ItemWrapper = styled.button`
   .title {
     color: ${textSecondary};
     padding: 0 0 0 0.75rem;
-    font-size: 1rem;
+    font-size: 10;
   }
 `;

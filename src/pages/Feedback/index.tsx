@@ -46,15 +46,18 @@ const Feedback = (props: PageProps) => {
       basePath: null, // See step 2
       ssoToken: null, // See step 3
     });
+    
+    if ( window == null ) throw new Error('Failed To Get The Feedback Page');
   }, []);
 
+
   return (
-    <Wrapper>
-      <PageTitle title={title} />
-      <PageRowWrapper className='page-padding'>
-        <div data-canny style={{ width: '100%' }} />
-      </PageRowWrapper>
-    </Wrapper>
+      <Wrapper>
+        <PageTitle title={title} />
+        <PageRowWrapper className='page-padding'>
+          <div data-canny style={{ width: '100%' }} />
+        </PageRowWrapper>
+      </Wrapper>
   );
 };
 

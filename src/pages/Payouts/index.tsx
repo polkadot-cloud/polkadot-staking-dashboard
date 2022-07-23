@@ -52,6 +52,8 @@ export const Payouts = (props: PageProps) => {
     return y.sub(x);
   });
 
+  if (!window) throw new Error('Failed To Get The Payouts Page');
+
   return (
     <>
       <PageTitle title={title} />

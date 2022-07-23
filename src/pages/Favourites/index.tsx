@@ -17,6 +17,8 @@ export const Favourites = (props: PageProps) => {
 
   const batchKey = 'favourite_validators';
 
+  if (!window) throw new Error('Failed To Get The Favourites Page');
+
   return (
     <>
       <PageTitle title={title} />

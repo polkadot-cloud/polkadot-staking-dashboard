@@ -119,6 +119,7 @@ export const PoolsInner = (props: PageProps) => {
 };
 
 export const Pools = (props: PageProps) => {
+  if (!window) throw new Error('Failed To Get The Pools Page');
   return (
     <PoolsTabsProvider>
       <PoolsInner {...props} />
