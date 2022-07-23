@@ -24,7 +24,7 @@ import Announcements from './Announcements';
 import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
 import Reserve from './Reserve';
-import APY from './APY';
+import Returns from './Returns';
 
 export const Overview = () => {
   const { network } = useApi();
@@ -54,7 +54,7 @@ export const Overview = () => {
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper hOrder={1} vOrder={1}>
-          <APY height={STATS_HEIGHT} />
+          <Returns height={STATS_HEIGHT} />
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">

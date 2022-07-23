@@ -4,14 +4,14 @@
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 
-export const APY = (props: any) => {
+export const Returns = (props: any) => {
   const { height } = props;
 
   return (
     <CardWrapper height={height} flex>
       <CardHeaderWrapper>
         <h4>
-          Estimated APY
+          Estimated Rreturns
           <OpenAssistantIcon page="overview" title="Your Balance" />
         </h4>
       </CardHeaderWrapper>
@@ -19,4 +19,4 @@ export const APY = (props: any) => {
   );
 };
 
-export default APY;
+export default Returns;
