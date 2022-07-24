@@ -8,6 +8,7 @@ import {
   textSecondary,
   networkColor,
   backgroundGradient,
+  buttonSecondaryBackground,
 } from 'theme';
 import { SMALLEST_FONT_SIZE_WIDTH } from 'consts';
 
@@ -99,7 +100,7 @@ export const ReturnsWrapper = styled.div`
     margin-bottom: 0;
 
     .assistant-icon {
-      margin-left: 0.4rem;
+      margin-left: 0.6rem;
     }
   }
 
@@ -163,7 +164,7 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 1.5rem;
+  margin-top: 1.85rem;
   @media (max-width: ${SMALLEST_FONT_SIZE_WIDTH}px) {
     margin-top: 4.5rem;
   }
@@ -178,10 +179,7 @@ export const ReserveWrapper = styled.div`
   > .inner {
     display: flex;
     flex-flow: row wrap;
-    margin-top: 0.25rem;
-    @media (max-width: ${SMALLEST_FONT_SIZE_WIDTH}px) {
-      margin-top: 0.5rem;
-    }
+    margin: 0;
 
     > section {
       display: flex;
@@ -194,7 +192,13 @@ export const ReserveWrapper = styled.div`
         padding-left: 0;
         max-width: 9rem;
         .assistant-icon {
-          margin-left: 0.5rem;
+          margin-left: 0.6rem;
+        }
+
+        > .items > div {
+          background: ${buttonSecondaryBackground};
+          border-radius: 0.75rem;
+          opacity: 0.75;
         }
       }
       &:last-child {
@@ -214,22 +218,15 @@ export const ReserveWrapper = styled.div`
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-        margin-top: 0.4rem;
 
         > div {
           display: flex;
           flex-flow: column wrap;
           justify-content: center;
-          height: 100%;
           box-sizing: border-box;
-          padding: 0 0.75rem;
+          padding: 0.5rem 0.75rem;
           flex: 1 1 100%;
 
-          &.main {
-            border-right: 1px solid ${borderPrimary};
-            padding-right: 1rem;
-            margin-right: 1rem;
-          }
           &.sep {
             flex: 0;
             justify-content: center;
