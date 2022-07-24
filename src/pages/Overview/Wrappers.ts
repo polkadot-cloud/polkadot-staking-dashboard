@@ -137,7 +137,7 @@ export const ReturnsWrapper = styled.div`
 
         > .inner {
           background: ${backgroundToggle};
-          border-radius: 0.85rem;
+          border-radius: 0.8rem;
           width: 100%;
           padding: 0.8rem 1rem;
           display: flex;
