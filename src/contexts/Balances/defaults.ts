@@ -61,5 +61,7 @@ export const defaultBalancesContext: BalancesContextInterface = {
   isController: (address) => false,
   accounts: [],
   minReserve: new BN(0),
+  existentialAmount: new BN(0),
+  reserveAmount: new BN(0),
   ledgers: [],
 };

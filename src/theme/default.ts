@@ -64,7 +64,7 @@ export const defaultThemes: any = {
   buttons: {
     primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
     secondary: { background: v('rgba(238, 236, 236, 0.9)', '#111') },
-    toggle: { background: v('rgba(242,240,239,0.8)', '#1a1a1a') },
+    toggle: { background: v('rgba(244,243,242,1)', '#1a1a1a') },
     assistant: { background: v('#ececec', '#242424') },
     hover: { background: v('rgba(232, 230, 230, 0.9)', '#080808') },
   },

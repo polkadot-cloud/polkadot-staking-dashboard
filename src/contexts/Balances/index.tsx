@@ -38,7 +38,7 @@ export const BalancesProvider = ({
   const existentialAmount = consts.existentialDeposit;
 
   // amount of compulsary reserve balance
-  const reserveAmount: BN = existentialAmount.div(new BN(2));
+  const reserveAmount = new BN(10).pow(new BN(network.units)).div(new BN(2));
 
   // minimum reserve for submitting extrinsics
   const minReserve: BN = reserveAmount.add(existentialAmount);
@@ -476,6 +476,8 @@ export const BalancesProvider = ({
         getBondOptions,
         isController,
         minReserve,
+        existentialAmount,
+        reserveAmount,
         accounts: accountsRef.current,
         ledgers: ledgersRef.current,
       }}
