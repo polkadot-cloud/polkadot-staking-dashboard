@@ -2,9 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textPrimary, textSecondary } from 'theme';
+import {
+  borderPrimary,
+  textPrimary,
+  textSecondary,
+  networkColor,
+  buttonSecondaryBackground,
+  backgroundToggle,
+} from 'theme';
+import { MEDIUM_FONT_SiZE_MAX_WIDTH, SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
-export const AccountWrapper = styled.div`
+export const SectionWrapper = styled.div`
   padding: 0 1.25rem 0rem 1.25rem;
   box-sizing: border-box;
   width: 100%;
@@ -74,6 +82,185 @@ export const AccountWrapper = styled.div`
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   margin-top: 0.8rem;
+  margin-bottom: 0.2rem;
   width: 100%;
   height: 1px;
+`;
+
+export const ReturnsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  height: 100%;
+
+  h4 {
+    color: ${textSecondary};
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 0;
+
+    .assistant-icon {
+      margin-left: 0.6rem;
+    }
+  }
+
+  > section {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    padding: 0 0.5rem;
+
+    &:first-child {
+      flex-basis: 33%;
+      padding-left: 0;
+    }
+    &:last-child {
+      flex-basis: 67%;
+      padding-right: 0;
+    }
+    .items {
+      box-sizing: border-box;
+      flex-grow: 1;
+      display: flex;
+      flex-flow: row wrap;
+
+      > div {
+        box-sizing: border-box;
+        flex-grow: 1;
+        padding-right: 1rem;
+
+        &:last-child {
+          padding-right: 0;
+        }
+
+        > .inner {
+          background: ${backgroundToggle};
+          border-radius: 0.8rem;
+          width: 100%;
+          padding: 0.8rem 1rem;
+          display: flex;
+          flex-flow: row nowrap;
+
+          h2 {
+            color: ${networkColor};
+            margin-top: 0rem;
+            margin-bottom: 0;
+          }
+          h4 {
+            color: ${textSecondary};
+            margin-top: 0.45rem;
+            margin-bottom: 0;
+          }
+          display: flex;
+          flex-flow: column wrap;
+        }
+      }
+    }
+  }
+`;
+
+export const ReserveWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 5rem;
+  @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
+    margin-top: 2.25rem;
+  }
+  @media (min-width: ${MEDIUM_FONT_SiZE_MAX_WIDTH + 1}px) {
+    margin-top: 1.25rem;
+  }
+
+  > h4 {
+    margin-top: 0.75rem;
+    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
+      margin-top: 0.9rem;
+    }
+  }
+
+  > .inner {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+
+    > section {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      padding: 0 0.5rem;
+
+      &:first-child {
+        flex-basis: 33%;
+        padding-left: 0;
+        .assistant-icon {
+          margin-left: 0.6rem;
+        }
+
+        > .items > div {
+          background: ${buttonSecondaryBackground};
+          border-radius: 0.75rem;
+          opacity: 0.75;
+        }
+      }
+      &:last-child {
+        border-radius: 0.5rem;
+        flex-basis: 67%;
+        padding-right: 0;
+        flex-grow: 1;
+        opacity: 0.5;
+        transition: opacity 0.15s;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .items {
+        box-sizing: border-box;
+        flex-grow: 1;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+
+        > div {
+          display: flex;
+          flex-flow: column wrap;
+          justify-content: center;
+          box-sizing: border-box;
+          padding: 0.5rem 0.75rem;
+          flex: 1 1 100%;
+
+          &.sep {
+            flex: 0;
+            justify-content: center;
+          }
+
+          h2,
+          h3 {
+            color: ${textSecondary};
+            margin-top: 0rem;
+            margin-bottom: 0;
+            &.center {
+              justify-content: center;
+            }
+          }
+        }
+        h4,
+        h5 {
+          color: ${textSecondary};
+          margin-top: 0.25rem;
+          margin-bottom: 0;
+          &.center {
+            text-align: center;
+          }
+          &.sec {
+            color: ${textSecondary};
+          }
+        }
+        h4 {
+          margin-top: 0;
+        }
+      }
+    }
+  }
 `;

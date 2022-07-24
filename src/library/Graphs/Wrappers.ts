@@ -77,7 +77,7 @@ export const CardWrapper = styled.div<any>`
         ? '0rem'
         : props.transparent
         ? '0rem 0rem'
-        : '1rem 0.5rem'};
+        : '1rem 0.75rem'};
   }
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {

@@ -66,6 +66,7 @@ export interface Network {
   features: {
     pools: boolean;
   };
+  params: { [key: string]: number };
 }
 
 export type PageCategories = Array<{

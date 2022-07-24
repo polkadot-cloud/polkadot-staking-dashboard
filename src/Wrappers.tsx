@@ -306,8 +306,8 @@ export const RowPrimaryWrapper = styled.div<any>`
     ${(props) => props.hOrder === 1 && 'padding-left: 0.5rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
-    flex-basis: 50%;
-    width: 50%;
+    flex-basis: 56%;
+    width: 56%;
   }
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
@@ -332,8 +332,8 @@ export const RowSecondaryWrapper = styled.div<any>`
     ${(props) => props.hOrder === 0 && 'padding-right: 0.5rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
-    flex-basis: 50%;
-    width: 50%;
+    flex-basis: 44%;
+    width: 44%;
   }
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {

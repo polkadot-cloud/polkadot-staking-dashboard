@@ -42,6 +42,19 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
           'Keep up to date on the state of the network from your Overview.',
         ],
       },
+      {
+        title: 'Inflation',
+        description: [
+          'DOT is inflationary; there is no maximum number of DOT.',
+          'Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury.',
+        ],
+      },
+      {
+        title: 'Estimated APY',
+        description: [
+          'An estimated annual yield based on the {NETWORK_NAME} reward distribution model.',
+        ],
+      },
     ],
   },
   {
