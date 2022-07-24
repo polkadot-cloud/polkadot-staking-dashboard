@@ -476,6 +476,8 @@ export const BalancesProvider = ({
         getBondOptions,
         isController,
         minReserve,
+        existentialAmount,
+        reserveAmount,
         accounts: accountsRef.current,
         ledgers: ledgersRef.current,
       }}

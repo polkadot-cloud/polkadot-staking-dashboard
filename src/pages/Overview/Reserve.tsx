@@ -3,11 +3,16 @@
 
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { planckBnToUnit } from 'Utils';
 import { SectionWrapper, ReserveWrapper, Separator } from './Wrappers';
 
 export const Reserve = (props: any) => {
   const { height } = props;
+  const { network } = useApi();
+  const { minReserve, existentialAmount, reserveAmount } = useBalances();
 
   return (
     <SectionWrapper style={{ height }}>
@@ -24,7 +29,10 @@ export const Reserve = (props: any) => {
               <div className="main">
                 <h2>
                   <FontAwesomeIcon icon={faLock} transform="shrink-4" />
-                  &nbsp;1.5 DOT
+                  &nbsp;
+                  {`${planckBnToUnit(minReserve, network.units)} ${
+                    network.unit
+                  }`}
                 </h2>
               </div>
             </div>
@@ -32,14 +40,20 @@ export const Reserve = (props: any) => {
           <section>
             <div className="items">
               <div style={{ maxWidth: '10rem' }}>
-                <h3 className="sec">1 DOT</h3>
+                <h3 className="sec">
+                  {`${planckBnToUnit(existentialAmount, network.units)} ${
+                    network.unit
+                  }`}
+                </h3>
                 <h5>Existential Deposit</h5>
               </div>
               <div className="sep">
                 <h3>+</h3>
               </div>
               <div>
-                <h3>0.5 DOT</h3>
+                <h3>{`${planckBnToUnit(reserveAmount, network.units)} ${
+                  network.unit
+                }`}</h3>
                 <h5>Reserved for Tx Fees</h5>
               </div>
             </div>
