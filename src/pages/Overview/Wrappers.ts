@@ -7,8 +7,8 @@ import {
   textPrimary,
   textSecondary,
   networkColor,
-  backgroundGradient,
   buttonSecondaryBackground,
+  backgroundToggle,
 } from 'theme';
 import { MEDIUM_FONT_SiZE_MAX_WIDTH, SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
@@ -136,10 +136,10 @@ export const ReturnsWrapper = styled.div`
         }
 
         > .inner {
-          background: ${backgroundGradient};
-          border-radius: 0.75rem;
+          background: ${backgroundToggle};
+          border-radius: 0.85rem;
           width: 100%;
-          padding: 0.75rem 0.9rem;
+          padding: 0.8rem 1rem;
           display: flex;
           flex-flow: row nowrap;
 
