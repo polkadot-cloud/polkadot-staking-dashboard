@@ -165,10 +165,10 @@ export const ReserveWrapper = styled.div`
   flex-flow: column wrap;
   margin-top: 5rem;
   @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
-    margin-top: 2.75rem;
+    margin-top: 2.25rem;
   }
   @media (min-width: ${MEDIUM_FONT_SiZE_MAX_WIDTH + 1}px) {
-    margin-top: 1.75rem;
+    margin-top: 1.25rem;
   }
 
   > h4 {
