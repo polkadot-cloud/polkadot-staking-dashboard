@@ -300,7 +300,7 @@ export const StakingProvider = ({
 
     for (const nomination of nominations) {
       const s = eraStakersRef.current.stakers.find(
-        (_n: any) => _n.address === nomination
+        (_n) => _n.address === nomination
       );
 
       if (s === undefined) {

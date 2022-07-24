@@ -24,7 +24,7 @@ export const AccountElement = (props: any) => {
 export const AccountButton = (props: any) => {
   const { meta } = props;
   const disconnect = props.disconnect ?? false;
-  const { connectToAccount, disconnectFromAccount }: any = useConnect();
+  const { connectToAccount, disconnectFromAccount } = useConnect();
   const { setStatus } = useModal();
   const imported = meta !== null;
 

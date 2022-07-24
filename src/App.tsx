@@ -35,7 +35,7 @@ const ErrorFallback = ({
   resetErrorBoundary,
 }: {
   error: any;
-  resetErrorBoundary: any;
+  resetErrorBoundary: () => void;
 }) => (
   <div>
     <p>Opps, Something Went Wrong:</p>
