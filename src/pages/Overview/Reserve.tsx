@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { SectionWrapper, ReserveWrapper, Separator } from './Wrappers';
 
 export const Reserve = (props: any) => {
@@ -30,9 +30,10 @@ export const Reserve = (props: any) => {
                 <h2>
                   <FontAwesomeIcon icon={faLock} transform="shrink-4" />
                   &nbsp;
-                  {`${planckBnToUnit(minReserve, network.units)} ${
-                    network.unit
-                  }`}
+                  {`${toFixedIfNecessary(
+                    planckBnToUnit(minReserve, network.units),
+                    5
+                  )} ${network.unit}`}
                 </h2>
               </div>
             </div>
@@ -41,9 +42,10 @@ export const Reserve = (props: any) => {
             <div className="items">
               <div style={{ maxWidth: '10rem' }}>
                 <h3 className="sec">
-                  {`${planckBnToUnit(existentialAmount, network.units)} ${
-                    network.unit
-                  }`}
+                  {`${toFixedIfNecessary(
+                    planckBnToUnit(existentialAmount, network.units),
+                    5
+                  )} ${network.unit}`}
                 </h3>
                 <h5>Existential Deposit</h5>
               </div>
@@ -51,9 +53,10 @@ export const Reserve = (props: any) => {
                 <h3>+</h3>
               </div>
               <div>
-                <h3>{`${planckBnToUnit(reserveAmount, network.units)} ${
-                  network.unit
-                }`}</h3>
+                <h3>{`${toFixedIfNecessary(
+                  planckBnToUnit(reserveAmount, network.units),
+                  5
+                )} ${network.unit}`}</h3>
                 <h5>Reserved for Tx Fees</h5>
               </div>
             </div>
