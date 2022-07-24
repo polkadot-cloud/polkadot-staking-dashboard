@@ -8,7 +8,6 @@ import {
   textSecondary,
   networkColor,
   buttonSecondaryBackground,
-  backgroundToggle,
 } from 'theme';
 import { MEDIUM_FONT_SiZE_MAX_WIDTH, SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
@@ -111,30 +110,38 @@ export const ReturnsWrapper = styled.div`
     flex-flow: column wrap;
     justify-content: center;
     padding: 0 0.5rem;
+    flex-basis: 100%;
 
-    &:first-child {
-      flex-basis: 33%;
-      padding-left: 0;
-    }
-    &:last-child {
-      flex-basis: 67%;
-      padding-right: 0;
-    }
     .items {
       box-sizing: border-box;
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;
+      align-items: center;
+      width: 100%;
 
       > div {
         box-sizing: border-box;
         flex-grow: 1;
-        padding-right: 1rem;
+        padding-right: 0;
+        padding-bottom: 0.75rem;
+        flex-basis: 100%;
+        width: 100%;
+        border-bottom: 1px solid ${borderPrimary};
+        margin-bottom: 0.6rem;
 
+        @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
+          flex-basis: 33%;
+          padding-right: 1rem;
+          padding-bottom: 0;
+          border-bottom: 0;
+          margin-bottom: 0;
+        }
         &:last-child {
           padding-right: 0;
+          padding-bottom: 0;
+          border-bottom: 0;
         }
-
         > .inner {
           border-radius: 0.8rem;
           width: 100%;
@@ -148,6 +155,8 @@ export const ReturnsWrapper = styled.div`
             margin-bottom: 0;
           }
           h4 {
+            display: flex;
+            flex-flow: row wrap;
             color: ${textSecondary};
             margin-top: 0.45rem;
             margin-bottom: 0;
@@ -171,14 +180,12 @@ export const ReserveWrapper = styled.div`
   @media (min-width: ${MEDIUM_FONT_SiZE_MAX_WIDTH + 1}px) {
     margin-top: 1.25rem;
   }
-
   > h4 {
     margin-top: 0.75rem;
     @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
       margin-top: 0.9rem;
     }
   }
-
   > .inner {
     display: flex;
     flex-flow: row wrap;

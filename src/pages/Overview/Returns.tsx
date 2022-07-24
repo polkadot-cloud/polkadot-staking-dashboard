@@ -46,10 +46,6 @@ export const Returns = (props: any) => {
                 </h4>
               </div>
             </div>
-          </div>
-        </section>
-        <section>
-          <div className="items">
             <div>
               <div className="inner">
                 <h2>{supplyAsPercent}%</h2>
