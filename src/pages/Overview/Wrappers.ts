@@ -188,9 +188,8 @@ export const ReserveWrapper = styled.div`
       padding: 0 0.5rem;
 
       &:first-child {
-        flex-basis: 30%;
+        flex-basis: 33%;
         padding-left: 0;
-        max-width: 11rem;
         .assistant-icon {
           margin-left: 0.6rem;
         }
@@ -203,7 +202,7 @@ export const ReserveWrapper = styled.div`
       }
       &:last-child {
         border-radius: 0.5rem;
-        flex-basis: 70%;
+        flex-basis: 67%;
         padding-right: 0;
         flex-grow: 1;
         opacity: 0.5;
