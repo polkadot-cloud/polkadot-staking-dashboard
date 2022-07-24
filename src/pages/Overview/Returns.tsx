@@ -41,8 +41,8 @@ export const Returns = (props: any) => {
                   %
                 </h2>
                 <h4>
-                  Estimated Return{' '}
-                  <OpenAssistantIcon page="overview" title="Your Balance" />
+                  Estimated APY{' '}
+                  <OpenAssistantIcon page="overview" title="Estimated APY" />
                 </h4>
               </div>
             </div>
@@ -55,7 +55,7 @@ export const Returns = (props: any) => {
                 <h2>{supplyAsPercent}%</h2>
                 <h4>
                   Supply Staked{' '}
-                  <OpenAssistantIcon page="overview" title="Your Balance" />
+                  <OpenAssistantIcon page="overview" title="Supply Staked" />
                 </h4>
               </div>
             </div>
@@ -69,7 +69,7 @@ export const Returns = (props: any) => {
                 </h2>
                 <h4>
                   Inflation{' '}
-                  <OpenAssistantIcon page="overview" title="Your Balance" />
+                  <OpenAssistantIcon page="overview" title="Inflation" />
                 </h4>
               </div>
             </div>
