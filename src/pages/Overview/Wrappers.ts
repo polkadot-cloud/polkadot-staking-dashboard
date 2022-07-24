@@ -10,7 +10,7 @@ import {
   backgroundGradient,
   buttonSecondaryBackground,
 } from 'theme';
-import { SMALLEST_FONT_SIZE_WIDTH } from 'consts';
+import { MEDIUM_FONT_SiZE_MAX_WIDTH, SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
 export const SectionWrapper = styled.div`
   padding: 0 1.25rem 0rem 1.25rem;
@@ -123,7 +123,6 @@ export const ReturnsWrapper = styled.div`
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;
-      margin-top: 0.7rem;
 
       > div {
         box-sizing: border-box;
@@ -136,7 +135,7 @@ export const ReturnsWrapper = styled.div`
 
         > .inner {
           background: ${backgroundGradient};
-          border-radius: 0.7rem;
+          border-radius: 0.75rem;
           width: 100%;
           padding: 0.75rem 0.9rem;
           display: flex;
@@ -164,14 +163,17 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 2.2rem;
-  @media (max-width: ${SMALLEST_FONT_SIZE_WIDTH}px) {
-    margin-top: 5.5rem;
+  margin-top: 5rem;
+  @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
+    margin-top: 2.75rem;
+  }
+  @media (min-width: ${MEDIUM_FONT_SiZE_MAX_WIDTH + 1}px) {
+    margin-top: 2rem;
   }
 
   > h4 {
     margin-top: 0.75rem;
-    @media (max-width: ${SMALLEST_FONT_SIZE_WIDTH}px) {
+    @media (max-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
       margin-top: 0.75rem;
     }
   }

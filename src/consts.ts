@@ -65,7 +65,9 @@ export const MAX_ASSISTANT_INTERFACE_WIDTH = 500;
 export const MAX_SIDE_BAR_INTERFACE_WIDTH = 400;
 export const FLOATING_MENU_WIDTH = 250;
 export const GRAPH_HEIGHT = 390;
-export const SMALLEST_FONT_SIZE_WIDTH = 600;
+export const SMALL_FONT_SIZE_MAX_WIDTH = 600;
+export const MEDIUM_FONT_SiZE_MAX_WIDTH = 1600;
+
 /*
  * Toggle-able services
  */
