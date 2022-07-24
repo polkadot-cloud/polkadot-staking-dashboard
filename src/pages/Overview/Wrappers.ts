@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textPrimary, textSecondary } from 'theme';
+import {
+  borderPrimary,
+  textPrimary,
+  textSecondary,
+  networkColor,
+  backgroundGradient,
+} from 'theme';
 
 export const SectionWrapper = styled.div`
   padding: 0 1.25rem 0rem 1.25rem;
@@ -76,4 +82,75 @@ export const Separator = styled.div`
   margin-top: 0.8rem;
   width: 100%;
   height: 1px;
+`;
+
+export const ReturnsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+
+  h4 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 0;
+
+    .assistant-icon {
+      margin-left: 0.4rem;
+    }
+  }
+
+  > section {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    padding: 0 0.5rem;
+
+    &:first-child {
+      flex-basis: 33%;
+      padding-left: 0;
+    }
+    &:last-child {
+      flex-basis: 67%;
+      padding-right: 0;
+    }
+    .items {
+      box-sizing: border-box;
+      flex-grow: 1;
+      display: flex;
+      flex-flow: row wrap;
+      margin-top: 0.7rem;
+
+      > div {
+        box-sizing: border-box;
+        flex-grow: 1;
+        padding-right: 1rem;
+
+        &:last-child {
+          padding-right: 0;
+        }
+
+        > .inner {
+          background: ${backgroundGradient};
+          border-radius: 0.7rem;
+          width: 100%;
+          padding: 0.75rem 0.9rem;
+          display: flex;
+          flex-flow: row nowrap;
+
+          h2 {
+            color: ${networkColor};
+            margin-top: 0rem;
+            margin-bottom: 0;
+          }
+          h5 {
+            margin-top: 0.45rem;
+            margin-bottom: 0;
+          }
+          display: flex;
+          flex-flow: column wrap;
+        }
+      }
+    }
+  }
 `;
