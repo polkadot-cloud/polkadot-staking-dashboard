@@ -173,8 +173,8 @@ export const ReserveWrapper = styled.div`
 
   > h4 {
     margin-top: 0.75rem;
-    @media (max-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
-      margin-top: 0.75rem;
+    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
+      margin-top: 0.9rem;
     }
   }
 
