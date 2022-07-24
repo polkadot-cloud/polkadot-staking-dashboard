@@ -3,10 +3,25 @@
 
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
+import { BN } from 'bn.js';
 import { ReturnsWrapper } from './Wrappers';
 
 export const Returns = (props: any) => {
   const { height } = props;
+  const { metrics } = useNetworkMetrics();
+  const { staking } = useStaking();
+  const { lastTotalStake } = staking;
+  const { totalIssuance } = metrics;
+
+  // total supply as percent
+  let supplyAsPercent = 0;
+  if (totalIssuance.gt(new BN(0))) {
+    supplyAsPercent = lastTotalStake
+      .div(totalIssuance.div(new BN(100)))
+      .toNumber();
+  }
 
   return (
     <CardWrapper height={height} flex>
@@ -33,7 +48,7 @@ export const Returns = (props: any) => {
           <div className="items">
             <div>
               <div className="inner">
-                <h2>51%</h2>
+                <h2>{supplyAsPercent}%</h2>
                 <h5>Supply Staked</h5>
               </div>
             </div>
