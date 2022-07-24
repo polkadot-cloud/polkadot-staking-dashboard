@@ -4,7 +4,7 @@
 
 Staking dashboard is live on [staking.polkadot.network/dashboard](https://staking.polkadot.network/dashboard)
 
-<img width="1617" alt="Screenshot 2022-07-24 at 15 23 42" src="https://user-images.githubusercontent.com/13929023/180651481-d503dd4a-77d6-4634-9f2e-c1df864b0c21.png">
+<img width="1737" alt="Screenshot 2022-07-24 at 15 28 30" src="https://user-images.githubusercontent.com/13929023/180651674-34d62f1f-e015-49cd-adf6-6c64a6d907ac.png">
 
 # Validator Setup Guide
 
