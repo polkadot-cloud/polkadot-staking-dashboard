@@ -14,7 +14,7 @@ export const Returns = (props: any) => {
   const { height } = props;
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  const inflation = useInflation();
+  const { inflation, stakedReturn } = useInflation();
 
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;
@@ -34,7 +34,12 @@ export const Returns = (props: any) => {
           <div className="items">
             <div>
               <div className="inner">
-                <h2>14.8%</h2>
+                <h2>
+                  {totalIssuance.toString() === '0'
+                    ? '0'
+                    : toFixedIfNecessary(stakedReturn, 2)}
+                  %
+                </h2>
                 <h4>
                   Estimated Return{' '}
                   <OpenAssistantIcon page="overview" title="Your Balance" />

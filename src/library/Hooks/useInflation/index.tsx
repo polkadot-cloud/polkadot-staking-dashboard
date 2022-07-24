@@ -25,7 +25,7 @@ export const useInflation = () => {
 
   const BN_MILLION = new BN('1000000');
 
-  const calculateInflation = (totalStaked: BN, numAuctions: BN): number => {
+  const calculateInflation = (totalStaked: BN, numAuctions: BN): any => {
     const stakedFraction =
       totalStaked.isZero() || totalIssuance.isZero()
         ? 0
@@ -43,7 +43,13 @@ export const useInflation = () => {
           : (idealInterest * idealStake - minInflation) *
             2 ** ((idealStake - stakedFraction) / falloff)));
 
-    return inflation;
+    return {
+      idealInterest,
+      idealStake,
+      inflation,
+      stakedFraction,
+      stakedReturn: stakedFraction ? inflation / stakedFraction : 0,
+    };
   };
 
   return calculateInflation(lastTotalStake, auctionCounter);
