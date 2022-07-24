@@ -90,6 +90,7 @@ export const ReturnsWrapper = styled.div`
   flex-flow: row wrap;
 
   h4 {
+    color: ${textSecondary};
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -144,6 +145,7 @@ export const ReturnsWrapper = styled.div`
             margin-bottom: 0;
           }
           h5 {
+            color: ${textSecondary};
             margin-top: 0.45rem;
             margin-bottom: 0;
           }
