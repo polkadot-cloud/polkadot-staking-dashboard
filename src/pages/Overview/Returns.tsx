@@ -1,17 +1,21 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { BN } from 'bn.js';
+import useInflation from 'library/Hooks/useInflation';
+import { toFixedIfNecessary } from 'Utils';
 import { ReturnsWrapper } from './Wrappers';
 
 export const Returns = (props: any) => {
   const { height } = props;
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
+  const inflation = useInflation();
+
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;
 
@@ -52,7 +56,12 @@ export const Returns = (props: any) => {
             </div>
             <div>
               <div className="inner">
-                <h2>7.7%</h2>
+                <h2>
+                  {totalIssuance.toString() === '0'
+                    ? '0'
+                    : toFixedIfNecessary(inflation, 2)}
+                  %
+                </h2>
                 <h4>
                   Inflation{' '}
                   <OpenAssistantIcon page="overview" title="Your Balance" />

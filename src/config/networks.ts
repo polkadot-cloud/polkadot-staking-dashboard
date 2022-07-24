@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Networks } from 'types';
+import { DEFAULT_PARAMS } from 'consts';
 import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
 import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
@@ -55,6 +56,10 @@ export const NETWORKS: Networks = {
     features: {
       pools: false,
     },
+    params: {
+      ...DEFAULT_PARAMS,
+      stakeTarget: 0.75,
+    },
   },
   kusama: {
     name: 'Kusama',
@@ -95,6 +100,12 @@ export const NETWORKS: Networks = {
     features: {
       pools: true,
     },
+    params: {
+      ...DEFAULT_PARAMS,
+      auctionAdjust: 0.3 / 60,
+      auctionMax: 60,
+      stakeTarget: 0.75,
+    },
   },
   westend: {
     name: 'Westend',
@@ -134,6 +145,10 @@ export const NETWORKS: Networks = {
     },
     features: {
       pools: true,
+    },
+    params: {
+      ...DEFAULT_PARAMS,
+      stakeTarget: 0.75,
     },
   },
 };
