@@ -35,7 +35,7 @@ export const Returns = (props: any) => {
             <div>
               <div className="inner">
                 <h2>14.8%</h2>
-                <h5>Expected Annual</h5>
+                <h4>Estimated Return</h4>
               </div>
             </div>
           </div>
@@ -49,13 +49,13 @@ export const Returns = (props: any) => {
             <div>
               <div className="inner">
                 <h2>{supplyAsPercent}%</h2>
-                <h5>Supply Staked</h5>
+                <h4>Supply Staked</h4>
               </div>
             </div>
             <div>
               <div className="inner">
                 <h2>7.7%</h2>
-                <h5>Inflation</h5>
+                <h4>Inflation</h4>
               </div>
             </div>
           </div>

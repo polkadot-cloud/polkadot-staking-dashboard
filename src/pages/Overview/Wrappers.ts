@@ -147,7 +147,7 @@ export const ReturnsWrapper = styled.div`
             margin-top: 0rem;
             margin-bottom: 0;
           }
-          h5 {
+          h4 {
             color: ${textSecondary};
             margin-top: 0.45rem;
             margin-bottom: 0;
@@ -164,9 +164,9 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 1.85rem;
+  margin-top: 2.2rem;
   @media (max-width: ${SMALLEST_FONT_SIZE_WIDTH}px) {
-    margin-top: 4.5rem;
+    margin-top: 5.5rem;
   }
 
   > h4 {
