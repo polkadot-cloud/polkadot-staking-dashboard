@@ -91,6 +91,8 @@ export const ReturnsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
+  height: 100%;
 
   h4 {
     color: ${textSecondary};
