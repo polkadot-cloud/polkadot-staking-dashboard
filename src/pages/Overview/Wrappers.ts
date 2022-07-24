@@ -190,7 +190,7 @@ export const ReserveWrapper = styled.div`
       &:first-child {
         flex-basis: 30%;
         padding-left: 0;
-        max-width: 9rem;
+        max-width: 11rem;
         .assistant-icon {
           margin-left: 0.6rem;
         }
