@@ -10,8 +10,9 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Extension } from 'contexts/Connect/types';
 import { AccountWrapper } from './Wrappers';
+import { AccountElementProps } from './types';
 
-export const AccountElement = (props: any) => {
+export const AccountElement = (props: AccountElementProps) => {
   return (
     <AccountWrapper>
       <div>
@@ -21,7 +22,7 @@ export const AccountElement = (props: any) => {
   );
 };
 
-export const AccountButton = (props: any) => {
+export const AccountButton = (props: AccountElementProps) => {
   const { meta } = props;
   const disconnect = props.disconnect ?? false;
   const { connectToAccount, disconnectFromAccount } = useConnect();
@@ -50,7 +51,7 @@ export const AccountButton = (props: any) => {
   );
 };
 
-export const AccountInner = (props: any) => {
+export const AccountInner = (props: AccountElementProps) => {
   const { address, meta } = props;
 
   const { extensions } = useConnect();
