@@ -28,6 +28,7 @@ export const CardHeaderWrapper = styled.div<any>`
 
   h2,
   h3 {
+    color: ${textSecondary};
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -68,7 +69,7 @@ export const CardWrapper = styled.div<any>`
   align-items: flex-start;
   flex: 1;
   width: 100%;
-  margin-top: ${(props) => (props.transparent ? '0rem' : '1rem')};
+  margin-top: ${(props) => (props.transparent ? '0rem' : '1.4rem')};
   position: relative;
 
   @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
@@ -118,7 +119,7 @@ export const GraphWrapper = styled.div<any>`
   align-content: flex-start;
   align-items: flex-start;
   flex: 1;
-  margin-top: ${(props) => (props.noMargin ? 0 : '1rem')};
+  margin-top: ${(props) => (props.noMargin ? 0 : '1.4rem')};
   position: relative;
   overflow: hidden;
 

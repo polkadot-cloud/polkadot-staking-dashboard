@@ -35,7 +35,7 @@ export const Overview = () => {
 
   const PAYOUTS_HEIGHT = 410;
   const STATS_HEIGHT = 80;
-  const BALANCE_HEIGHT = PAYOUTS_HEIGHT + STATS_HEIGHT + 13;
+  const BALANCE_HEIGHT = PAYOUTS_HEIGHT + STATS_HEIGHT + 18;
 
   return (
     <>

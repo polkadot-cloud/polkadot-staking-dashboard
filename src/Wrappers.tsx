@@ -302,8 +302,8 @@ export const RowPrimaryWrapper = styled.div<any>`
   max-width: 100%;
 
   @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-    ${(props) => props.hOrder === 0 && ' padding-right: 0.5rem;'}
-    ${(props) => props.hOrder === 1 && 'padding-left: 0.5rem;'}
+    ${(props) => props.hOrder === 0 && ' padding-right: 0.75rem;'}
+    ${(props) => props.hOrder === 1 && 'padding-left: 0.75rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
     flex-basis: 56%;
@@ -328,8 +328,8 @@ export const RowSecondaryWrapper = styled.div<any>`
   border-radius: 1rem;
 
   @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-    ${(props) => props.hOrder === 1 && ' padding-left: 0.5rem;'}
-    ${(props) => props.hOrder === 0 && 'padding-right: 0.5rem;'}
+    ${(props) => props.hOrder === 1 && ' padding-left: 0.75rem;'}
+    ${(props) => props.hOrder === 0 && 'padding-right: 0.75rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
     flex-basis: 44%;
