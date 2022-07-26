@@ -13,8 +13,9 @@ import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
+import { FormsProps } from '../types';
 
-export const BondAll = (props: any) => {
+export const BondAll = (props: FormsProps) => {
   const { setSection } = props;
 
   const { api, network } = useApi();

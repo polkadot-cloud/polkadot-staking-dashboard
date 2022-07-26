@@ -25,7 +25,7 @@ export const useInflation = () => {
 
   const BN_MILLION = new BN('1000000');
 
-  const calculateInflation = (totalStaked: BN, numAuctions: BN): any => {
+  const calculateInflation = (totalStaked: BN, numAuctions: BN) => {
     const stakedFraction =
       totalStaked.isZero() || totalIssuance.isZero()
         ? 0

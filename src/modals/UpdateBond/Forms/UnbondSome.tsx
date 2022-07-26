@@ -15,8 +15,9 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BondOptions } from 'contexts/Balances/types';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
+import { FormsProps } from '../types';
 
-export const UnbondSome = (props: any) => {
+export const UnbondSome = (props: FormsProps) => {
   const { setSection } = props;
 
   const { api, network, consts } = useApi();
@@ -50,7 +51,7 @@ export const UnbondSome = (props: any) => {
   const [bond, setBond] = useState({ bond: freeToUnbond });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState(false);
 
   // get the max amount available to unbond
   const freeToUnbondToMin = isPooling
