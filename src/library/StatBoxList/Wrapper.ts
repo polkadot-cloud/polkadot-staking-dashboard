@@ -51,7 +51,7 @@ export const StatBoxWrapper = styled(motion.div)`
   @media (min-width: 950px) {
     max-width: 300px;
     h3 {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
     }
   }
 
@@ -142,17 +142,18 @@ export const StatBoxWrapper = styled(motion.div)`
         flex-flow: row wrap;
         justify-content: flex-start;
         align-items: flex-start;
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.3rem;
 
         &.text {
+          color: red;
           margin-top: 0.15rem;
         }
 
         span.total {
           color: ${textSecondary};
-          font-size: 0.88rem;
-          margin-left: 0.3rem;
-          margin-top: 0.2rem;
+          font-size: 0.9rem;
+          margin-left: 0.4rem;
+          margin-top: 0rem;
         }
       }
     }
