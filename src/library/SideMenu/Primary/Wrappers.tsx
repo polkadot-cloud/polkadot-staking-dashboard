@@ -25,6 +25,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   .name {
     margin: 0;
     padding: 0;
+    line-height: 1.35rem;
   }
   .action {
     flex: 1;

@@ -27,7 +27,7 @@ export const Primary = (props: PrimaryProps) => {
         }}
       >
         <div className="icon">{icon}</div>
-        {!minimised && <h3 className="name">{name}</h3>}
+        {!minimised && <h4 className="name">{name}</h4>}
 
         {action && (
           <div className={`action${minimised ? ` minimised` : ``}`}>
