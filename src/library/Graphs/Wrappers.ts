@@ -11,6 +11,7 @@ import {
   cardShadow,
   shadowColor,
   networkColor,
+  textPrimary,
 } from 'theme';
 import {
   CardHeaderWrapperProps,
@@ -32,7 +33,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
 
   h2,
   h3 {
-    color: ${textSecondary};
+    color: ${textPrimary};
     display: flex;
     flex-flow: row wrap;
     align-items: center;
