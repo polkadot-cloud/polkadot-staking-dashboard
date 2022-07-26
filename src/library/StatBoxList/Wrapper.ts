@@ -145,7 +145,6 @@ export const StatBoxWrapper = styled(motion.div)`
         margin-bottom: 0.3rem;
 
         &.text {
-          color: red;
           margin-top: 0.15rem;
         }
 
