@@ -31,3 +31,21 @@ export interface StatPieProps {
   value: number;
   value2: number;
 }
+
+export interface CardHeaderWrapperProps {
+  withAction?: boolean;
+  padded?: boolean;
+}
+
+export interface CardWrapperProps {
+  noPadding?: boolean;
+  transparent?: boolean;
+  height?: string | number;
+  flex?: boolean;
+}
+
+export interface GraphWrapperProps {
+  transparent?: boolean;
+  noMargin?: boolean;
+  flex?: boolean;
+}

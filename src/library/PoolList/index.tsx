@@ -30,7 +30,7 @@ export const PoolListInner = (props: PoolListProps) => {
   const { listFormat, setListFormat } = usePoolList();
 
   // current page
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
 
   // current render iteration
   const [renderIteration, _setRenderIteration] = useState<number>(1);
@@ -42,7 +42,7 @@ export const PoolListInner = (props: PoolListProps) => {
   const [pools, setPools] = useState(props.pools);
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState(false);
+  const [fetched, setFetched] = useState<boolean>(false);
 
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);

@@ -4,12 +4,9 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { textPrimary, textSecondary, borderSecondary } from 'theme';
+import { WrapperProps } from './types';
 
-export const Wrapper = styled(motion.button)<{
-  fill: string;
-  fontSize: string;
-  cursor: string;
-}>`
+export const Wrapper = styled(motion.button)<WrapperProps>`
   border-radius: 1rem;
   box-shadow: none;
   display: flex;

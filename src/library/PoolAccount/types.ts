@@ -12,3 +12,9 @@ export interface PoolAccountProps {
   value?: string;
   title?: string | undefined;
 }
+
+export interface WrapperProps {
+  fill: string;
+  fontSize: string;
+  cursor: string;
+}
