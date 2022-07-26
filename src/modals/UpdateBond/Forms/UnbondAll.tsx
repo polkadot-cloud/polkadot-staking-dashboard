@@ -14,8 +14,9 @@ import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
+import { FormsProps } from '../types';
 
-export const UnbondAll = (props: any) => {
+export const UnbondAll = (props: FormsProps) => {
   const { setSection } = props;
 
   const { api, network, consts } = useApi();
@@ -49,7 +50,7 @@ export const UnbondAll = (props: any) => {
   });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
   const isValid = (() => {

@@ -9,8 +9,9 @@ import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
 import { toFixedIfNecessary } from 'Utils';
 import { ReturnsWrapper } from './Wrappers';
+import { ReturnsProps } from './types';
 
-export const Returns = (props: any) => {
+export const Returns = (props: ReturnsProps) => {
   const { height } = props;
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();

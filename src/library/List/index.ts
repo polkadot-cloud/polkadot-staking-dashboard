@@ -57,7 +57,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Pagination = styled.div<any>`
+export const Pagination = styled.div<{ next: boolean; prev: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
@@ -92,7 +92,7 @@ export const Pagination = styled.div<any>`
   }
 `;
 
-export const Selectable = styled.div<any>`
+export const Selectable = styled.div`
   width: 100%;
   display: flex;
   align-items: center;

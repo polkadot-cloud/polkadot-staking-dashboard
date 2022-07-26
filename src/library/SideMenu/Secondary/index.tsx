@@ -6,8 +6,9 @@ import { CONNECTION_SYMBOL_COLORS } from 'consts';
 import { ConnectionStatus } from 'contexts/Api/types';
 import { useModal } from 'contexts/Modal';
 import { Wrapper, MinimisedWrapper, IconWrapper } from './Wrappers';
+import { SecondaryProps } from '../types';
 
-export const Secondary = (props: any) => {
+export const Secondary = (props: SecondaryProps) => {
   const { status } = useApi();
   const { openModalWith } = useModal();
 
