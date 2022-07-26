@@ -60,10 +60,10 @@ export const Active = ({ title }: any) => {
           ) : (
             <>
               <CardHeaderWrapper withAction>
-                <h2>
+                <h3>
                   Start Nominating
                   <OpenAssistantIcon page="stake" title="Nominations" />
-                </h2>
+                </h3>
                 <div>
                   <Button
                     small

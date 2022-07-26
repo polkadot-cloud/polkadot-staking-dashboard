@@ -119,7 +119,7 @@ export const BalanceGraph = () => {
         },
       },
     },
-    cutout: '80%',
+    cutout: '78%',
   };
 
   // determine stats from network features

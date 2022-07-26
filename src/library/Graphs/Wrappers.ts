@@ -28,8 +28,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   display: flex;
   flex-flow: ${(props) => (props.withAction ? 'row' : 'column')} wrap;
   width: 100%;
-  padding: ${(props) =>
-    props.padded ? '0.75rem 1.2rem 0.5rem 1.2rem' : '0.25rem'};
+  padding: ${(props) => (props.padded ? '0.5rem 1.2rem' : '0.25rem')};
 
   h2,
   h3 {
@@ -146,7 +145,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     opacity: 0.8;
   }
   .head {
-    padding: 0.75rem 1.2rem 0.5rem 1.2rem;
+    padding: 0.5rem 1.2rem;
   }
 
   h2 {

@@ -99,10 +99,10 @@ export const PoolsInner = (props: PageProps) => {
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
               <CardHeaderWrapper>
-                <h2>
+                <h3>
                   All Pools
                   <OpenAssistantIcon page="pools" title="Nomination Pools" />
-                </h2>
+                </h3>
               </CardHeaderWrapper>
               <PoolList
                 pools={bondedPools}

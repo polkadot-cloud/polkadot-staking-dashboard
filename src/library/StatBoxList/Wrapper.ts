@@ -44,13 +44,13 @@ export const StatBoxWrapper = styled(motion.div)`
   }
 
   /* responsive screen sizing */
-  h2 {
+  h3 {
     font-size: 1.2rem;
   }
 
   @media (min-width: 950px) {
     max-width: 300px;
-    h2 {
+    h3 {
       font-size: 1.35rem;
     }
   }
@@ -71,7 +71,7 @@ export const StatBoxWrapper = styled(motion.div)`
       padding: 0.9rem 0;
     }
 
-    h2,
+    h3,
     h4 {
       margin: 0;
     }
@@ -137,12 +137,16 @@ export const StatBoxWrapper = styled(motion.div)`
       justify-content: center;
       overflow: hidden;
 
-      h2 {
+      h3 {
         display: flex;
         flex-flow: row wrap;
         justify-content: flex-start;
         align-items: flex-start;
         margin-bottom: 0.4rem;
+
+        &.text {
+          margin-top: 0.15rem;
+        }
 
         span.total {
           color: ${textSecondary};

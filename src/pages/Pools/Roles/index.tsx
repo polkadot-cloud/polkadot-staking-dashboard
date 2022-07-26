@@ -106,7 +106,7 @@ export const Roles = () => {
   return (
     <>
       <CardHeaderWrapper withAction>
-        <h2>Roles</h2>
+        <h3>Roles</h3>
         {isOwner() ? (
           <>
             {isEditing && (
