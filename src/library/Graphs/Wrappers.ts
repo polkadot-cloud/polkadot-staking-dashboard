@@ -203,7 +203,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     flex-flow: row wrap;
     justify-content: center;
     width: 100%;
-    padding: 1rem 1.2rem;
+    padding: 1rem 1.5rem;
   }
   .graph_line {
     margin-top: 1.5rem;
