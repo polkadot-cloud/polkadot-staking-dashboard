@@ -17,6 +17,10 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  SECTION_FULL_WIDTH_THRESHOLD,
+  SIDE_MENU_STICKY_THRESHOLD,
+} from 'consts';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { GenerateNominations } from '../GenerateNominations';
@@ -44,10 +48,20 @@ export const Active = ({ title }: any) => {
       </StatBoxList>
       <ControllerNotImported />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowPrimaryWrapper hOrder={1} vOrder={0}>
+        <RowPrimaryWrapper
+          hOrder={1}
+          vOrder={0}
+          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+        >
           <Status />
         </RowPrimaryWrapper>
-        <RowSecondaryWrapper hOrder={0} vOrder={1}>
+        <RowSecondaryWrapper
+          hOrder={0}
+          vOrder={1}
+          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+        >
           <CardWrapper height={300}>
             <ManageBond />
           </CardWrapper>
