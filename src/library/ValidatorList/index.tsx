@@ -72,7 +72,7 @@ export const ValidatorListInner = (props: any) => {
   const showMenu = props.showMenu ?? true;
   const inModal = props.inModal ?? false;
 
-  const actionsAll = [...actions].filter((action: any) => !action.onSelected);
+  const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
     (action: any) => action.onSelected
   );
@@ -82,7 +82,7 @@ export const ValidatorListInner = (props: any) => {
     props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
   // current page
-  const [page, setPage]: any = useState(1);
+  const [page, setPage] = useState<number>(1);
 
   // current render iteration
   const [renderIteration, _setRenderIteration] = useState<number>(1);
