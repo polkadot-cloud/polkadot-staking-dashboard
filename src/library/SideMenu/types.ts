@@ -31,7 +31,6 @@ export interface SecondaryProps {
 }
 
 export interface IconProps {
-  Svg: FunctionComponent<
-  SVGProps<SVGSVGElement>>;
+  Svg: FunctionComponent<SVGProps<SVGSVGElement>>;
   size?: string;
 }
