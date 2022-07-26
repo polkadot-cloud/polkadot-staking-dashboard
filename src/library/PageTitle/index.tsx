@@ -11,7 +11,7 @@ export const PageTitle = (props: PageTitleProps) => {
 
   const [sticky, setSticky] = useState(false);
 
-  const ref = useRef<Element | undefined>();
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const cachedRef = ref.current;

@@ -9,5 +9,6 @@ export interface StatusLabelProps {
 }
 
 export interface WrapperProps {
-  topOffset?: string;
+  color: string;
+  opacity: number;
 }

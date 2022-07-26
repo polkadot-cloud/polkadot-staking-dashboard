@@ -3,8 +3,9 @@
 
 import styled from 'styled-components';
 import { backgroundLabel, textSecondary } from 'theme';
+import { WrapperProps } from './types';
 
-export const Wrapper = styled.div<{ topOffset?: string }>`
+export const Wrapper = styled.div<WrapperProps>`
   position: absolute;
   top: ${(props) => (props.topOffset ? props.topOffset : '50%')};
   left: 0;

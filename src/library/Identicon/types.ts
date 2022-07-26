@@ -1,5 +1,4 @@
-
 export interface IdenticonProps {
-    value: string;
-    size: any;
-  }
+  value: string;
+  size: any;
+}

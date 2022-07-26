@@ -15,7 +15,7 @@ export interface HeaderProps {
   assistantPage?: string;
   assistantKey?: string;
   complete?: boolean | null;
-  thisSection?: any;
+  thisSection: number;
 }
 
 export interface FooterProps {

@@ -8,8 +8,9 @@ import { useUi } from 'contexts/UI';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
+import { WrapperProps } from './types';
 
-const Wrapper = styled.div<{ color: string; opacity: number }>`
+const Wrapper = styled.div<WrapperProps>`
   position: absolute;
   right: 10px;
   top: 10px;

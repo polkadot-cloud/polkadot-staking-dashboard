@@ -9,6 +9,7 @@ import {
   textPrimary,
   networkColor,
 } from 'theme';
+import { ListProps, PaginationProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -57,7 +58,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Pagination = styled.div<{ next: boolean; prev: boolean }>`
+export const Pagination = styled.div<PaginationProps>`
   width: 100%;
   display: flex;
   align-items: center;
@@ -116,7 +117,7 @@ export const Selectable = styled.div`
   }
 `;
 
-export const List = styled.div<any>`
+export const List = styled.div<ListProps>`
   margin-top: 1rem;
   width: 100%;
 

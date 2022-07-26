@@ -1,3 +1,3 @@
 export interface FormsProps {
-    setSection?: string;
+  setSection?: string;
 }
