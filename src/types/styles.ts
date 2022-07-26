@@ -20,4 +20,5 @@ export interface PageTitleWrapperProps {
 export interface InterfaceLayoutProps {
   vOrder: number;
   hOrder: number;
+  maxWidth?: string | number;
 }
