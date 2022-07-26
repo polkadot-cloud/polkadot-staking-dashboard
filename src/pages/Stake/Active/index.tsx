@@ -38,6 +38,8 @@ export const Active = ({ title }: any) => {
   const { getAccountNominations } = useBalances();
   const nominations = getAccountNominations(activeAccount);
 
+  const ROW_HEIGHT = 290;
+
   return (
     <>
       <PageTitle title={title} />
@@ -54,7 +56,7 @@ export const Active = ({ title }: any) => {
           thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
           thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
         >
-          <Status />
+          <Status height={ROW_HEIGHT} />
         </RowPrimaryWrapper>
         <RowSecondaryWrapper
           hOrder={0}
@@ -62,7 +64,7 @@ export const Active = ({ title }: any) => {
           thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
           thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
         >
-          <CardWrapper height={300}>
+          <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
         </RowSecondaryWrapper>

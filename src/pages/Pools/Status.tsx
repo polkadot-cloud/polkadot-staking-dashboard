@@ -25,7 +25,7 @@ import {
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsTabs } from './context';
 
-export const Status = () => {
+export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
@@ -190,7 +190,7 @@ export const Status = () => {
     : 'Waiting for Active Nominations';
 
   return (
-    <CardWrapper height="300">
+    <CardWrapper height={height}>
       <Stat
         label="Membership"
         assistant={['pools', 'Pool Status']}

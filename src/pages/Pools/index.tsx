@@ -47,6 +47,8 @@ export const PoolsInner = (props: PageProps) => {
     }
   }, [network]);
 
+  const ROW_HEIGHT = 290;
+
   return (
     <>
       <PageTitle
@@ -78,7 +80,7 @@ export const PoolsInner = (props: PageProps) => {
               thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
               thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
             >
-              <Status />
+              <Status height={ROW_HEIGHT} />
             </RowPrimaryWrapper>
             <RowSecondaryWrapper
               hOrder={0}
@@ -86,7 +88,7 @@ export const PoolsInner = (props: PageProps) => {
               thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
               thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
             >
-              <CardWrapper height={300}>
+              <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />
               </CardWrapper>
             </RowSecondaryWrapper>
