@@ -114,7 +114,7 @@ export const StakingProvider = ({
 
       if (nominations.length && stakers !== null) {
         for (const n of nominations) {
-          const staker = stakers.find((item: any) => item.address === n);
+          const staker = stakers.find((item) => item.address === n);
 
           if (staker !== undefined) {
             let { others } = staker;
@@ -300,7 +300,7 @@ export const StakingProvider = ({
 
     for (const nomination of nominations) {
       const s = eraStakersRef.current.stakers.find(
-        (_n: any) => _n.address === nomination
+        (_n) => _n.address === nomination
       );
 
       if (s === undefined) {

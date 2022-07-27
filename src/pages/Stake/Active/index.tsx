@@ -17,6 +17,10 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  SECTION_FULL_WIDTH_THRESHOLD,
+  SIDE_MENU_STICKY_THRESHOLD,
+} from 'consts';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import { GenerateNominations } from '../GenerateNominations';
@@ -34,6 +38,8 @@ export const Active = ({ title }: any) => {
   const { getAccountNominations } = useBalances();
   const nominations = getAccountNominations(activeAccount);
 
+  const ROW_HEIGHT = 290;
+
   return (
     <>
       <PageTitle title={title} />
@@ -44,11 +50,21 @@ export const Active = ({ title }: any) => {
       </StatBoxList>
       <ControllerNotImported />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowPrimaryWrapper hOrder={1} vOrder={0}>
-          <Status />
+        <RowPrimaryWrapper
+          hOrder={1}
+          vOrder={0}
+          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+        >
+          <Status height={ROW_HEIGHT} />
         </RowPrimaryWrapper>
-        <RowSecondaryWrapper hOrder={0} vOrder={1}>
-          <CardWrapper height={300}>
+        <RowSecondaryWrapper
+          hOrder={0}
+          vOrder={1}
+          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+        >
+          <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
         </RowSecondaryWrapper>
@@ -60,10 +76,10 @@ export const Active = ({ title }: any) => {
           ) : (
             <>
               <CardHeaderWrapper withAction>
-                <h2>
+                <h3>
                   Start Nominating
                   <OpenAssistantIcon page="stake" title="Nominations" />
-                </h2>
+                </h3>
                 <div>
                   <Button
                     small

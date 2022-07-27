@@ -7,8 +7,9 @@ import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { Extension as ExtensionInterface } from 'contexts/Connect/types';
 import { ExtensionWrapper } from './Wrappers';
+import { ExtensionProps } from './types';
 
-export const Extension = (props: any) => {
+export const Extension = (props: ExtensionProps) => {
   const { extensions } = useConnect();
   const { extensionsStatus } = useConnect();
   const { meta } = props;

@@ -38,7 +38,7 @@ export const Payouts = (props: PageProps) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 250);
+  const { width, height, minHeight } = formatSize(size, 270);
 
   // take non-zero rewards in most-recent order
   let payoutsList: AnySubscan = [
@@ -106,7 +106,7 @@ export const Payouts = (props: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar days={MAX_PAYOUT_DAYS} height="120px" />
+              <PayoutBar days={MAX_PAYOUT_DAYS} height="150px" />
               <PayoutLine days={MAX_PAYOUT_DAYS} height="70px" />
             </div>
           </div>

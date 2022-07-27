@@ -8,8 +8,9 @@ import { useBalances } from 'contexts/Balances';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { SectionWrapper, ReserveWrapper, Separator } from './Wrappers';
+import { ReserveProps } from './types';
 
-export const Reserve = (props: any) => {
+export const Reserve = (props: ReserveProps) => {
   const { height } = props;
   const { network } = useApi();
   const { minReserve, existentialAmount, reserveAmount } = useBalances();

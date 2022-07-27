@@ -37,10 +37,10 @@ export interface StakingTargets {
 export interface StakingContextInterface {
   getNominationsStatus: () => any;
   setTargets: (t: any) => any;
-  hasController: () => any;
+  hasController: () => boolean;
   getControllerNotImported: (a: MaybeAccount) => any;
-  isBonding: () => any;
-  isNominating: () => any;
+  isBonding: () => boolean;
+  isNominating: () => boolean;
   inSetup: () => any;
   staking: StakingMetrics;
   eraStakers: EraStakers;

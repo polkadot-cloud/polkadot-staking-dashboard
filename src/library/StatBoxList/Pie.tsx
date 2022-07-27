@@ -29,7 +29,7 @@ export const Pie = (props: PieProps) => {
         </div>
 
         <div className="labels">
-          <h2>
+          <h3>
             {showValue ? (
               <>
                 <NumberEasing
@@ -70,7 +70,7 @@ export const Pie = (props: PieProps) => {
             ) : (
               <>0</>
             )}
-          </h2>
+          </h3>
           <h4>
             {label}
             {assist && <OpenAssistantIcon page={page} title={key} />}

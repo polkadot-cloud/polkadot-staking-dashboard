@@ -40,9 +40,9 @@ export const Roles = () => {
   const batchKey = 'pool_roles';
 
   // role edits
-  const initEditState: any = (() => {
+  const initEditState = (() => {
     const initState: Record<string, RoleEdit> = {};
-    Object.entries(roles || [])?.forEach(([roleName, address]: any) => {
+    Object.entries(roles || [])?.forEach(([roleName, address]) => {
       initState[roleName] = {
         oldAddress: address,
         newAddress: address,
@@ -106,7 +106,7 @@ export const Roles = () => {
   return (
     <>
       <CardHeaderWrapper withAction>
-        <h2>Roles</h2>
+        <h3>Roles</h3>
         {isOwner() ? (
           <>
             {isEditing && (
@@ -148,10 +148,10 @@ export const Roles = () => {
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h3>
+            <h4>
               Root
               <OpenAssistantIcon page="pools" title="Pool Roles" />
-            </h3>
+            </h4>
             <PoolAccount
               address={roles?.root ?? null}
               batchIndex={accounts.indexOf(roles?.root ?? '-1')}
@@ -161,9 +161,9 @@ export const Roles = () => {
         </section>
         <section>
           <div className="inner">
-            <h3>
+            <h4>
               Depositor <OpenAssistantIcon page="pools" title="Pool Roles" />
-            </h3>
+            </h4>
             <PoolAccount
               address={roles?.depositor ?? null}
               batchIndex={accounts.indexOf(roles?.depositor ?? '-1')}
@@ -173,9 +173,9 @@ export const Roles = () => {
         </section>
         <section>
           <div className="inner">
-            <h3>
+            <h4>
               Nominator <OpenAssistantIcon page="pools" title="Pool Roles" />
-            </h3>
+            </h4>
             {isEditing ? (
               <RoleEditInput
                 roleEdit={roleEdits?.nominator}
@@ -197,10 +197,10 @@ export const Roles = () => {
         </section>
         <section>
           <div className="inner">
-            <h3>
+            <h4>
               State Toggler
               <OpenAssistantIcon page="pools" title="Pool Roles" />
-            </h3>
+            </h4>
             {isEditing ? (
               <RoleEditInput
                 roleEdit={roleEdits?.stateToggler}

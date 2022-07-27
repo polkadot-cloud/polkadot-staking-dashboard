@@ -41,7 +41,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {
     const { selected } = provider;
-    const _nominations = [...nominations].filter((n: any) => {
+    const _nominations = [...nominations].filter((n) => {
       return !selected.map((_s: any) => _s.address).includes(n);
     });
     openModalWith(
@@ -71,10 +71,10 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   return (
     <Wrapper>
       <CardHeaderWrapper withAction>
-        <h2>
+        <h3>
           {isPool ? 'Pool Nominations' : 'Nominations'}
           <OpenAssistantIcon page="stake" title="Nominations" />
-        </h2>
+        </h3>
         <div>
           {!isPool && nominations.length ? (
             <div>
@@ -109,11 +109,11 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
       </CardHeaderWrapper>
       {!activeAccount ? (
         <div className="head">
-          <h3>Not Nominating.</h3>
+          <h4>Not Nominating.</h4>
         </div>
       ) : nominated === null || isSyncing ? (
         <div className="head">
-          <h3>Syncing nominations...</h3>
+          <h4>Syncing nominations...</h4>
         </div>
       ) : (
         <>
@@ -155,7 +155,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
                 </div>
               ) : (
                 <div className="head">
-                  <h3>Not Nominating.</h3>
+                  <h4>Not Nominating.</h4>
                 </div>
               )}
             </>

@@ -112,7 +112,7 @@ export const Separator = styled.div`
   margin: 1rem 1rem 0.5rem 0;
 `;
 
-export const ConnectionSymbol = styled.div<any>`
+export const ConnectionSymbol = styled.div<{ color: any }>`
   width: 0.6rem;
   height: 0.6rem;
   background: ${(props) => props.color};
