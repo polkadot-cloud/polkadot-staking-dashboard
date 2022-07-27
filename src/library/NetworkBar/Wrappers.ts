@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { textSecondary, backgroundNetworkBar, networkColor } from 'theme';
 import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 
-export const Wrapper = styled(motion.div)<any>`
+export const Wrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -172,14 +172,6 @@ export const Separator = styled.div`
   margin: 0 0.3rem;
   width: 1px;
   height: 1rem;
-`;
-
-export const ConnectionSymbol = styled.div<any>`
-  width: 10px;
-  height: 10px;
-  background: ${(props) => props.color};
-  border-radius: 50%;
-  margin: 0 0.7rem;
 `;
 
 export default Wrapper;

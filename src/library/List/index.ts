@@ -9,6 +9,7 @@ import {
   textPrimary,
   networkColor,
 } from 'theme';
+import { ListProps, PaginationProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -57,7 +58,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Pagination = styled.div<any>`
+export const Pagination = styled.div<PaginationProps>`
   width: 100%;
   display: flex;
   align-items: center;
@@ -77,6 +78,7 @@ export const Pagination = styled.div<any>`
     justify-content: flex-end;
 
     button {
+      font-size: 0.98rem;
       padding: 0 0.25rem;
       margin-left: 0.5rem;
       &.next {
@@ -91,15 +93,16 @@ export const Pagination = styled.div<any>`
   }
 `;
 
-export const Selectable = styled.div<any>`
+export const Selectable = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   padding: 0.5rem;
 
   > button {
-    color: ${textSecondary};
     background: ${buttonSecondaryBackground};
+    font-size: 0.98rem;
+    color: ${textSecondary};
     border-radius: 0.5rem;
     padding: 0.36rem 0.8rem;
     margin-right: 0.5rem;
@@ -114,7 +117,7 @@ export const Selectable = styled.div<any>`
   }
 `;
 
-export const List = styled.div<any>`
+export const List = styled.div<ListProps>`
   margin-top: 1rem;
   width: 100%;
 

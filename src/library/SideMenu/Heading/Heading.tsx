@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { HeadingWrapper as Wrapper } from './Wrapper';
-import { HeadingProps } from './types';
+import { Wrapper } from './Wrapper';
+import { HeadingProps } from '../types';
 
 export const Heading = (props: HeadingProps) => {
   const { title, minimised } = props;

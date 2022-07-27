@@ -17,8 +17,9 @@ import { useTheme } from 'contexts/Themes';
 import { AnySubscan } from 'types';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
+import { PayoutListProps } from '../types';
 
-export const PayoutListInner = (props: any) => {
+export const PayoutListInner = (props: PayoutListProps) => {
   const { allowMoreCols, pagination } = props;
 
   const { mode } = useTheme();
@@ -36,7 +37,7 @@ export const PayoutListInner = (props: any) => {
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState<any>(props.payouts);
+  const [payouts, setPayouts] = useState(props.payouts);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -98,7 +99,7 @@ export const PayoutListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
-          <h3>{props.title}</h3>
+          <h4>{props.title}</h4>
         </div>
         <div>
           <button type="button" onClick={() => setListFormat('row')}>
@@ -218,7 +219,7 @@ export const PayoutListInner = (props: any) => {
   );
 };
 
-export const PayoutList = (props: any) => {
+export const PayoutList = (props: PayoutListProps) => {
   return (
     <PayoutListProvider>
       <PayoutListShouldUpdate {...props} />
@@ -226,7 +227,7 @@ export const PayoutList = (props: any) => {
   );
 };
 
-export class PayoutListShouldUpdate extends React.Component<any, any> {
+export class PayoutListShouldUpdate extends React.Component {
   static contextType = StakingContext;
 
   render() {

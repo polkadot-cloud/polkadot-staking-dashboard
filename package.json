@@ -5,6 +5,7 @@
   "private": false,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.1.0",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "6.1.0",
     "@fortawesome/react-fontawesome": "^0.1.18",
@@ -83,7 +84,7 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
-    "build:netlify": "REACT_APP_ORGANISATION='© Web3 Foundation' REACT_APP_PRIVACY_URL=https://polkadot.network/privacy/ REACT_APP_DISABLE_FIAT=1 BUILD_PATH='./build/dashboard' react-scripts build",
+    "build:netlify": "REACT_APP_ORGANISATION='© Web3 Foundation' REACT_APP_PRIVACY_URL=https://polkadot.network/privacy/ REACT_APP_DISCLAIMER_URL=https://polkadot.network/disclaimer/ REACT_APP_DISABLE_FIAT=1 BUILD_PATH='./build/dashboard' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src --fix"

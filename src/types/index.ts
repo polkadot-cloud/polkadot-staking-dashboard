@@ -44,14 +44,22 @@ export interface Network {
   unit: string;
   units: number;
   ss58: number;
-  icon: FunctionComponent<
-    SVGProps<SVGSVGElement> & { title?: string | undefined }
-  >;
-  logo: {
-    svg: FunctionComponent<
+  brand: {
+    icon: FunctionComponent<
       SVGProps<SVGSVGElement> & { title?: string | undefined }
     >;
-    width: string;
+    logo: {
+      svg: FunctionComponent<
+        SVGProps<SVGSVGElement> & { title?: string | undefined }
+      >;
+      width: string;
+    };
+    inline: {
+      svg: FunctionComponent<
+        SVGProps<SVGSVGElement> & { title?: string | undefined }
+      >;
+      size: string;
+    };
   };
   api: {
     unit: string;
@@ -60,6 +68,7 @@ export interface Network {
   features: {
     pools: boolean;
   };
+  params: { [key: string]: number };
 }
 
 export type PageCategories = Array<{

@@ -7,3 +7,7 @@ export interface StatusLabelProps {
   title: string;
   topOffset?: string;
 }
+
+export interface WrapperProps {
+  topOffset?: string;
+}

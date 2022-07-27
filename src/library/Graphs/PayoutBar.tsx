@@ -104,7 +104,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
     responsive: true,
     maintainAspectRatio: false,
     barPercentage: 0.4,
-    maxBarThickness: 11,
+    maxBarThickness: 12,
     scales: {
       x: {
         stacked: true,
@@ -143,6 +143,9 @@ export const PayoutBar = (props: PayoutBarProps) => {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
+        bodyFont: {
+          weight: '600',
+        },
         callbacks: {
           title: () => {
             return [];

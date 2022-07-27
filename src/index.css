@@ -10,18 +10,18 @@
 
 /* global font size */
 html {
-  font-size: 12px;
+  font-size: 11px;
 }
 
 @media(min-width: 600px) {
   html {
-    font-size: 13px;
+    font-size: 12.3px;
   }
 }
 
 @media(min-width: 1600px) {
   html {
-    font-size: 13.5px;
+    font-size: 12.8px;
   }
 }
 
@@ -47,22 +47,22 @@ h2 {
 }
 
 h3 {
-  font-variation-settings: 'wght' 560;
+  font-variation-settings: 'wght' 600;
   font-weight: normal;
   font-size: 1.05rem;
-  line-height: 1.3rem;
+  line-height: 1.34rem;
 }
 
 h4 {
   font-variation-settings: 'wght' 540;
   font-weight: normal;
-  font-size: 0.98rem;
-  line-height: 1.4rem;
+  font-size: 1.05rem;
+  line-height: 1.6rem;
 }
 
 h5 {
   color: #333;
-  font-variation-settings: 'wght' 500;
+  font-variation-settings: 'wght' 540;
   font-weight: normal;
   font-size: 0.89rem;
   margin: 1rem 0;

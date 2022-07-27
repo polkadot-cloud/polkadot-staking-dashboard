@@ -12,6 +12,11 @@ import {
   shadowColor,
   networkColor,
 } from 'theme';
+import {
+  CardHeaderWrapperProps,
+  CardWrapperProps,
+  GraphWrapperProps,
+} from './types';
 
 /* CardHeaderWrapper
  *
@@ -19,7 +24,7 @@ import {
  * with a h2. withAction allows a full-width header with a right-side
  * button.
  */
-export const CardHeaderWrapper = styled.div<any>`
+export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   display: flex;
   flex-flow: ${(props) => (props.withAction ? 'row' : 'column')} wrap;
   width: 100%;
@@ -54,13 +59,13 @@ export const CardHeaderWrapper = styled.div<any>`
  *
  * Used to separate the main modules throughout the app.
  */
-export const CardWrapper = styled.div<any>`
+export const CardWrapper = styled.div<CardWrapperProps>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
   box-sizing: border-box;
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
-  border-radius: 1rem;
+  border-radius: 1.1rem;
   background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
   flex-flow: column nowrap;
@@ -77,7 +82,7 @@ export const CardWrapper = styled.div<any>`
         ? '0rem'
         : props.transparent
         ? '0rem 0rem'
-        : '1rem 0.5rem'};
+        : '1rem 0.75rem'};
   }
 
   @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 1}px) {
@@ -107,7 +112,7 @@ export const CardWrapper = styled.div<any>`
  * Acts as a module, but used to wrap graphs.
  */
 
-export const GraphWrapper = styled.div<any>`
+export const GraphWrapper = styled.div<GraphWrapperProps>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
   box-sizing: border-box;

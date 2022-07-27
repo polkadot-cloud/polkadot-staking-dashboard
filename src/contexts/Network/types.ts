@@ -13,4 +13,5 @@ export interface NetworkMetrics {
     start: number;
   };
   totalIssuance: BN;
+  auctionCounter: BN;
 }

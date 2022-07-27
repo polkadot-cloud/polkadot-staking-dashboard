@@ -10,7 +10,7 @@ import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import { Separator, AccountWrapper } from './Wrappers';
+import { Separator, SectionWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
@@ -27,7 +27,7 @@ export const ActiveAccount = () => {
   }
 
   return (
-    <AccountWrapper>
+    <SectionWrapper>
       <div className="account">
         {accountData !== null && (
           <>
@@ -58,7 +58,7 @@ export const ActiveAccount = () => {
                 >
                   <FontAwesomeIcon
                     icon={faCopy as IconProp}
-                    transform="grow-3"
+                    transform="grow-1"
                   />
                 </button>
               </motion.div>
@@ -73,7 +73,7 @@ export const ActiveAccount = () => {
         )}
       </div>
       <Separator />
-    </AccountWrapper>
+    </SectionWrapper>
   );
 };
 

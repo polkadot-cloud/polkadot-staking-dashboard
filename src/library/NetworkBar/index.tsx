@@ -5,35 +5,17 @@ import React, { useState, useRef } from 'react';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { usePrices } from 'library/Hooks/usePrices';
-import { CONNECTION_SYMBOL_COLORS } from 'consts';
-import { NETWORKS } from 'config/networks';
-import { ConnectionStatus } from 'contexts/Api/types';
 import { useOutsideAlerter } from 'library/Hooks';
-import {
-  Wrapper,
-  Summary,
-  ConnectionSymbol,
-  NetworkInfo,
-  Separator,
-} from './Wrappers';
-import { BlockNumber } from './BlockNumber';
+import { Wrapper, Summary, NetworkInfo, Separator } from './Wrappers';
 import { Status } from './Status';
 
 export const NetworkBar = () => {
   const { services } = useUi();
-  const { status, switchNetwork, network } = useApi();
+  const { network } = useApi();
   const prices = usePrices();
 
+  // currently not in use
   const [open, setOpen] = useState(false);
-  const [isLightClient, setIsLightClient] = useState(false);
-
-  // handle connection symbol
-  const symbolColor =
-    status === ConnectionStatus.Connecting
-      ? CONNECTION_SYMBOL_COLORS.connecting
-      : status === ConnectionStatus.Connected
-      ? CONNECTION_SYMBOL_COLORS.connected
-      : CONNECTION_SYMBOL_COLORS.disconnected;
 
   // handle expand transitions
   const variants = {
@@ -49,6 +31,7 @@ export const NetworkBar = () => {
   const ref = useRef(null);
 
   const PRIVACY_URL = process.env.REACT_APP_PRIVACY_URL;
+  const DISCLAIMER_URL = process.env.REACT_APP_DISCLAIMER_URL;
   const ORGANISATION = process.env.REACT_APP_ORGANISATION;
 
   useOutsideAlerter(
@@ -73,12 +56,8 @@ export const NetworkBar = () => {
     >
       <Summary>
         <section>
-          <network.icon className="network_icon" />
-          <p>
-            {ORGANISATION === undefined
-              ? network.name + (isLightClient ? ' Light Client' : '')
-              : ORGANISATION}
-          </p>
+          <network.brand.icon className="network_icon" />
+          <p>{ORGANISATION === undefined ? network.name : ORGANISATION}</p>
           <Separator />
           {PRIVACY_URL !== undefined ? (
             <p>
@@ -89,21 +68,18 @@ export const NetworkBar = () => {
           ) : (
             <Status />
           )}
+          {DISCLAIMER_URL !== undefined && (
+            <>
+              <Separator />
+              <p>
+                <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
+                  Disclaimer
+                </a>
+              </p>
+            </>
+          )}
         </section>
         <section>
-          <button
-            type="button"
-            className="ignore-network-info-toggle"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            {open ? 'Collapse' : 'Switch Network'}
-          </button>
-          <div className="stat" style={{ marginRight: 0 }}>
-            {status === ConnectionStatus.Connected && <BlockNumber />}
-            <ConnectionSymbol color={symbolColor} />
-          </div>
           <div className="hide-small">
             {services.includes('binance_spot') && (
               <>
@@ -124,57 +100,13 @@ export const NetworkBar = () => {
                 <div className="stat">
                   1 {network.api.unit} / {prices.lastPrice} USD
                 </div>
-                <Separator />
               </>
             )}
           </div>
         </section>
       </Summary>
 
-      <NetworkInfo>
-        <div className="row">
-          <h2>Switch Network</h2>
-        </div>
-        <div className="row">
-          {Object.entries(NETWORKS).map(([key, item]: any, index: number) => (
-            <React.Fragment key={`network_${index}`}>
-              <button
-                type="button"
-                key={`switch_network_${index}`}
-                onClick={() => {
-                  if (
-                    network.name.toLowerCase() !== key ||
-                    (network.name.toLowerCase() === key && isLightClient)
-                  ) {
-                    switchNetwork(key);
-                    setOpen(false);
-                    setIsLightClient(false);
-                  }
-                }}
-              >
-                <h3>{item.name}</h3>
-              </button>
-              <button
-                type="button"
-                key={`switch_network_${index}_lc`}
-                onClick={() => {
-                  if (
-                    network.name.toLowerCase() !== key ||
-                    (network.name.toLowerCase() === key && !isLightClient)
-                  ) {
-                    switchNetwork(key, true);
-                    setOpen(false);
-                    setIsLightClient(true);
-                  }
-                }}
-              >
-                <h3>Light Client</h3>
-              </button>
-              {Object.entries(NETWORKS).length - 1 !== index && <span />}
-            </React.Fragment>
-          ))}
-        </div>
-      </NetworkInfo>
+      <NetworkInfo />
     </Wrapper>
   );
 };

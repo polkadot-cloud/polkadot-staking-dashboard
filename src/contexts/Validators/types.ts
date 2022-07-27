@@ -18,6 +18,7 @@ export interface ValidatorsContextInterface {
   nominated: Array<Validator> | null;
   poolNominated: Array<Validator> | null;
   favouritesList: Array<Validator> | null;
+  validatorCommunity: Array<any>;
 }
 
 export type ValidatorAddresses = Array<{

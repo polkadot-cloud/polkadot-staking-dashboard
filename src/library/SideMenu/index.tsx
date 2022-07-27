@@ -18,17 +18,30 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import {
+  URI_PREFIX,
+  POLKADOT_URL,
+  SIDE_MENU_STICKY_THRESHOLD,
+  CONNECTION_SYMBOL_COLORS,
+} from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { usePalette } from 'contexts/Palette';
 import { UIContextInterface } from 'contexts/UI/types';
-import Item from './Item';
-import Heading from './Heading';
-import { Wrapper, LogoWrapper, PalettePosition } from './Wrapper';
+import { ConnectionStatus } from 'contexts/Api/types';
+import {
+  Separator,
+  Wrapper,
+  LogoWrapper,
+  PalettePosition,
+  ConnectionSymbol,
+} from './Wrapper';
+import { Primary } from './Primary';
+import { Secondary } from './Secondary';
+import Heading from './Heading/Heading';
 
 export const SideMenu = () => {
-  const { network } = useApi();
+  const { network, status } = useApi();
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
@@ -39,14 +52,13 @@ export const SideMenu = () => {
   const {
     isSyncing,
     setSideMenu,
-    sideMenuOpen,
     sideMenuMinimised,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
 
-  const [pageConfig, setPageConfig]: any = useState({
+  const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
     pages: Object.assign(PAGES_CONFIG),
   });
@@ -72,7 +84,7 @@ export const SideMenu = () => {
   useEffect(() => {
     // only process account messages and warnings once accounts are connected
     if (accounts.length) {
-      const _pageConfigWithMessages: any = Object.assign(pageConfig.pages);
+      const _pageConfigWithMessages = Object.assign(pageConfig.pages);
       for (let i = 0; i < _pageConfigWithMessages.length; i++) {
         const { uri } = _pageConfigWithMessages[i];
 
@@ -111,6 +123,14 @@ export const SideMenu = () => {
     }
   };
 
+  // handle connection symbol
+  const symbolColor =
+    status === ConnectionStatus.Connecting
+      ? CONNECTION_SYMBOL_COLORS.connecting
+      : status === ConnectionStatus.Connected
+      ? CONNECTION_SYMBOL_COLORS.connected
+      : CONNECTION_SYMBOL_COLORS.disconnected;
+
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
@@ -128,7 +148,9 @@ export const SideMenu = () => {
               >
                 BETA
               </div>
-              <network.icon style={{ maxHeight: '100%', width: '2rem' }} />
+              <network.brand.icon
+                style={{ maxHeight: '100%', width: '2rem' }}
+              />
             </>
           ) : (
             <>
@@ -145,11 +167,11 @@ export const SideMenu = () => {
               >
                 Staking | BETA
               </div>
-              <network.logo.svg
+              <network.brand.logo.svg
                 style={{
                   maxHeight: '100%',
                   height: '100%',
-                  width: network.logo.width,
+                  width: network.brand.logo.width,
                 }}
               />
             </>
@@ -167,7 +189,7 @@ export const SideMenu = () => {
             {pagesToDisplay.map((page: any, pageIndex: number) => (
               <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                 {page.category === category._id && (
-                  <Item
+                  <Primary
                     name={page.title}
                     to={page.hash}
                     active={page.hash === pathname}
@@ -180,6 +202,17 @@ export const SideMenu = () => {
             ))}
           </React.Fragment>
         ))}
+        <Separator />
+        <Heading title="Network" minimised={sideMenuMinimised} />
+        <Secondary
+          name={network.name}
+          icon={{
+            Svg: network.brand.inline.svg,
+            size: network.brand.inline.size,
+          }}
+          minimised={sideMenuMinimised}
+          action={<ConnectionSymbol color={[symbolColor.solid]} />}
+        />
       </section>
 
       <section>
@@ -203,13 +236,13 @@ export const SideMenu = () => {
             )
           }
         >
-          <LogoGithubSVG width="1.45rem" height="1.45rem" />
+          <LogoGithubSVG width="1.4rem" height="1.4rem" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('Settings', {}, 'small')}
         >
-          <CogOutlineSVG width="1.65rem" height="1.65rem" />
+          <CogOutlineSVG width="1.6rem" height="1.6rem" />
         </button>
         <button type="button" onClick={() => togglePalette()}>
           <PalettePosition ref={posRef} />

@@ -55,7 +55,7 @@ export const Wrapper = styled.div`
             color: ${textSecondary};
             font-size: 0.88rem;
             border-radius: 0.5rem;
-            margin: 0 0.5rem;
+            margin: 0 0.25rem;
             padding: 0.25rem 0.75rem;
 
             &:disabled {

@@ -48,8 +48,8 @@ export const Bonded = (props: BondedProps) => {
           padding: 20,
           color: defaultThemes.text.primary[mode],
           font: {
-            size: 14,
-            weight: '500',
+            size: 13,
+            weight: '600',
           },
         },
       },
@@ -57,6 +57,9 @@ export const Bonded = (props: BondedProps) => {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
+        bodyFont: {
+          weight: '600',
+        },
         callbacks: {
           label: (context: any) => {
             if (inactive) {

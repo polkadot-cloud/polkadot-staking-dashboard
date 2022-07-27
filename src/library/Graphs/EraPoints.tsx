@@ -54,7 +54,7 @@ export const EraPoints = (props: EraPointsProps) => {
           display: true,
           text: 'Era',
           font: {
-            size: 14,
+            size: 13,
           },
         },
       },
@@ -82,6 +82,9 @@ export const EraPoints = (props: EraPointsProps) => {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
+        bodyFont: {
+          weight: '600',
+        },
         callbacks: {
           title: () => {
             return [];

@@ -23,10 +23,21 @@ export const EMPTY_H256 = new Uint8Array(32);
 export const MOD_PREFIX = stringToU8a('modl');
 export const U32_OPTS = { bitLength: 32, isLe: true };
 
-export const CONNECTION_SYMBOL_COLORS: { [key: string]: string } = {
-  disconnected: 'red',
-  connecting: 'orange',
-  connected: 'green',
+export const CONNECTION_SYMBOL_COLORS: {
+  [key: string]: { solid: string; transparent: string };
+} = {
+  disconnected: {
+    solid: 'red',
+    transparent: 'rgba(255,0,0,0.25)',
+  },
+  connecting: {
+    solid: 'orange',
+    transparent: 'rgba(255,165,0,0.25)',
+  },
+  connected: {
+    solid: 'green',
+    transparent: 'rgba(0,128,0,0.25)',
+  },
 };
 
 export const PAYEE_STATUS = [
@@ -54,6 +65,8 @@ export const MAX_ASSISTANT_INTERFACE_WIDTH = 500;
 export const MAX_SIDE_BAR_INTERFACE_WIDTH = 400;
 export const FLOATING_MENU_WIDTH = 250;
 export const GRAPH_HEIGHT = 390;
+export const SMALL_FONT_SIZE_MAX_WIDTH = 600;
+export const MEDIUM_FONT_SiZE_MAX_WIDTH = 1600;
 
 /*
  * Toggle-able services
@@ -90,4 +103,16 @@ export const API_ENDPOINTS = {
   subscanRewardSlash: '/api/scan/account/reward_slash',
   subscanPoolRewards: '/api/scan/nomination_pool/rewards',
   subscanEraStat: '/api/scan/staking/era_stat',
+};
+
+/*
+ * default network parameters
+ */
+export const DEFAULT_PARAMS = {
+  auctionAdjust: 0,
+  auctionMax: 0,
+  falloff: 0.05,
+  maxInflation: 0.1,
+  minInflation: 0.025,
+  stakeTarget: 0.5,
 };

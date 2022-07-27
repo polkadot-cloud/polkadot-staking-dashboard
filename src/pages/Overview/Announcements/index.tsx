@@ -143,13 +143,13 @@ export const Announcements = () => {
           ) : (
             announcements.map((item, index) => (
               <Item key={`announcement_${index}`} variants={listItem}>
-                <h3 className={item.class}>
+                <h4 className={item.class}>
                   <FontAwesomeIcon
                     icon={faBack}
                     style={{ marginRight: '0.6rem' }}
                   />
                   {item.title}
-                </h3>
+                </h4>
                 <p>{item.subtitle}</p>
               </Item>
             ))

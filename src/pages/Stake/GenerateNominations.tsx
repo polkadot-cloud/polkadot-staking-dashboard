@@ -6,16 +6,22 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
-import { useUi } from 'contexts/UI';
 import { useModal } from 'contexts/Modal';
 import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
 import { faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
+import {
+  useValidatorFilter,
+  ValidatorFilterProvider,
+} from 'library/Filter/context';
 import { Wrapper } from '../Overview/Announcements/Wrappers';
+import { GenerateNominationsInnerProps, Nominations } from './types';
 
-export const GenerateNominations = (props: any) => {
+export const GenerateNominationsInner = (
+  props: GenerateNominationsInnerProps
+) => {
   // functional props
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
@@ -25,7 +31,7 @@ export const GenerateNominations = (props: any) => {
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
-  const { applyValidatorOrder, applyValidatorFilters } = useUi();
+  const { applyValidatorOrder, applyValidatorFilters } = useValidatorFilter();
 
   let { favouritesList } = useValidators();
   if (favouritesList === null) {
@@ -120,7 +126,7 @@ export const GenerateNominations = (props: any) => {
     }
   });
 
-  const updateSetters = (_nominations: any) => {
+  const updateSetters = (_nominations: Nominations) => {
     for (const s of setters) {
       const { current, set } = s;
       const callable = current?.callable ?? false;
@@ -143,7 +149,7 @@ export const GenerateNominations = (props: any) => {
   const cbAddNominations = ({ setSelectActive }: any) => {
     setSelectActive(false);
 
-    const updateList = (_nominations: Array<any>) => {
+    const updateList = (_nominations: Nominations) => {
       setMethod(null);
       removeValidatorMetaBatch(batchKey);
       setNominations(_nominations);
@@ -263,6 +269,14 @@ export const GenerateNominations = (props: any) => {
         </>
       )}
     </Wrapper>
+  );
+};
+
+export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
+  return (
+    <ValidatorFilterProvider>
+      <GenerateNominationsInner {...props} />
+    </ValidatorFilterProvider>
   );
 };
 

@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { PayoutListContextInterface } from 'pages/Pools/types';
 
-export const PayoutListContext: React.Context<any> = React.createContext({
-  setListFormat: (v: string) => {},
-  listFormat: 'col',
-});
+export const PayoutListContext =
+  React.createContext<PayoutListContextInterface>({
+    setListFormat: (v: string) => {},
+    listFormat: 'col',
+  });
 
 export const usePayoutList = () => React.useContext(PayoutListContext);
 

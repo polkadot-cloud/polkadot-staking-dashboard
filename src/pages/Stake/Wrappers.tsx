@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary, networkColor } from 'theme';
+import { textSecondary, networkColor } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -14,14 +14,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const GoBackWrapper = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
-  padding-bottom: 1rem;
-  width: 100%;
-  margin-top: 1rem;
-`;
-
-export const StakingAccount = styled.div<any>`
+export const StakingAccount = styled.div<{ last: boolean }>`
   margin-bottom: ${(props) => (props.last === true ? 'none' : '1rem')};
   display: flex;
   flex-flow: row wrap;
