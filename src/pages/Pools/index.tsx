@@ -16,6 +16,10 @@ import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import {
+  SECTION_FULL_WIDTH_THRESHOLD,
+  SIDE_MENU_STICKY_THRESHOLD,
+} from 'consts';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -43,6 +47,8 @@ export const PoolsInner = (props: PageProps) => {
     }
   }, [network]);
 
+  const ROW_HEIGHT = 290;
+
   return (
     <>
       <PageTitle
@@ -68,11 +74,21 @@ export const PoolsInner = (props: PageProps) => {
             <MinCreateBondStatBox />
           </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
-            <RowPrimaryWrapper hOrder={1} vOrder={0}>
-              <Status />
+            <RowPrimaryWrapper
+              hOrder={1}
+              vOrder={0}
+              thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+              thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+            >
+              <Status height={ROW_HEIGHT} />
             </RowPrimaryWrapper>
-            <RowSecondaryWrapper hOrder={0} vOrder={1}>
-              <CardWrapper height={300}>
+            <RowSecondaryWrapper
+              hOrder={0}
+              vOrder={1}
+              thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+              thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+            >
+              <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />
               </CardWrapper>
             </RowSecondaryWrapper>
@@ -99,10 +115,10 @@ export const PoolsInner = (props: PageProps) => {
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
               <CardHeaderWrapper>
-                <h2>
+                <h3>
                   All Pools
                   <OpenAssistantIcon page="pools" title="Nomination Pools" />
-                </h2>
+                </h3>
               </CardHeaderWrapper>
               <PoolList
                 pools={bondedPools}
