@@ -314,7 +314,7 @@ export const RowPrimaryWrapper = styled.div<InterfaceLayoutProps>`
     flex: 1;
     flex-basis: 56%;
     width: 56%;
-    max-width: ${(props) => (props.maxWidth ? props.maxWidth : '56%')};
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'none')};
   }
 
   @media (min-width: ${(props) => props.thresholdFullWidth + 400}px) {

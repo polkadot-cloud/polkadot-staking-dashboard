@@ -76,6 +76,13 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   width: 100%;
   margin-top: ${(props) => (props.transparent ? '0rem' : '1.4rem')};
   position: relative;
+  ${(props) =>
+    props.transparent &&
+    `
+    border: none;
+    box-shadow: none;
+    background: none;
+  `}
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
     padding: ${(props) =>
@@ -118,15 +125,22 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   box-shadow: ${cardShadow} ${shadowColor};
   box-sizing: border-box;
   border-radius: 1rem;
-  background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
+  background: ${backgroundSecondary};
   display: flex;
   flex-flow: column nowrap;
   align-content: flex-start;
   align-items: flex-start;
   flex: 1;
-  margin-top: ${(props) => (props.noMargin ? 0 : '1.4rem')};
   position: relative;
   overflow: hidden;
+  margin-top: ${(props) => (props.noMargin ? 0 : '1.4rem')};
+  ${(props) =>
+    props.transparent &&
+    `
+    border: none;
+    box-shadow: none;
+    background: none;
+  `}
 
   .inner {
     width: 100%;
@@ -169,10 +183,11 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     justify-content: flex-start;
 
     .fiat {
-      font-size: 1rem;
       color: ${textSecondary};
+      font-size: 1.1rem;
       margin-top: 0.2rem;
-      font-variation-settings: 'wght' 530;
+      margin-left: 0.1rem;
+      font-variation-settings: 'wght' 600;
     }
   }
   h2 {
