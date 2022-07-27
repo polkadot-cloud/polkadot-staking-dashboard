@@ -37,7 +37,7 @@ export const Overview = () => {
 
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
 
-  const PAYOUTS_HEIGHT = 410;
+  const PAYOUTS_HEIGHT = 380;
   const STATS_HEIGHT = 80;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT + STATS_HEIGHT + 18;
 
