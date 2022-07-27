@@ -56,12 +56,16 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     ConnectionStatus.Disconnected
   );
 
+  const [isLightClient, setIsLightClient] = useState<boolean>(
+    !!localStorage.getItem('isLightClient')
+  );
+
   // initial connection
   useEffect(() => {
     const _network: NetworkName = localStorage.getItem(
       'network'
     ) as NetworkName;
-    connect(_network);
+    connect(_network, isLightClient);
   }, []);
 
   // provider event handlers
@@ -167,9 +171,11 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // handle network switching
   const switchNetwork = async (
     _network: NetworkName,
-    _isLightClient?: boolean
+    _isLightClient: boolean
   ) => {
     if (api !== null) {
+      localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
+      setIsLightClient(_isLightClient);
       await api.disconnect();
       setApi(null);
       setConnectionStatus(ConnectionStatus.Connecting);
@@ -219,6 +225,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
           connectionStatus === ConnectionStatus.Connected && api !== null,
         network: network.meta,
         status: connectionStatus,
+        isLightClient,
       }}
     >
       {children}

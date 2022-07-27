@@ -32,11 +32,12 @@ export interface APIContextInterface {
   fetchDotPrice: () => void;
   switchNetwork: (
     _network: NetworkName,
-    _isLightClient?: boolean
+    _isLightClient: boolean
   ) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;
   isReady: boolean;
+  isLightClient: boolean;
   status: ConnectionStatus;
   network: Network;
 }

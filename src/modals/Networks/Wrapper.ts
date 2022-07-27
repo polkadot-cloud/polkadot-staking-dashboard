@@ -53,12 +53,12 @@ export const ContentWrapper = styled.div`
       cursor: pointer;
       margin-bottom: 1rem;
       border-radius: 0.75rem;
-      display: flex;
+      display: inline-flex;
       flex-flow: row wrap;
       justify-content: flex-start;
       align-items: center;
       transition: all 0.15s;
-      width: 100%;
+      width: 50%;
 
       &:last-child {
         margin-bottom: 0;
