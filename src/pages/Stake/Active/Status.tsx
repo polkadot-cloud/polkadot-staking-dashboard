@@ -19,7 +19,7 @@ import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
 
-export const Status = () => {
+export const Status = ({ height }: { height: number }) => {
   const { isReady } = useApi();
   const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
@@ -47,7 +47,7 @@ export const Status = () => {
     }
   }
   return (
-    <CardWrapper height={300}>
+    <CardWrapper height={height}>
       <Stat
         label="Status"
         assistant={['stake', 'Staking Status']}

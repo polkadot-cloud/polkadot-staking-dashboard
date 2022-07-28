@@ -126,10 +126,10 @@ export const Announcements = () => {
   return (
     <CardWrapper>
       <CardHeaderWrapper>
-        <h2>
+        <h3>
           Announcements
           <OpenAssistantIcon page="overview" title="Announcements" />
-        </h2>
+        </h3>
       </CardHeaderWrapper>
       <Wrapper>
         <motion.div

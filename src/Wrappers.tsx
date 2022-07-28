@@ -307,18 +307,20 @@ export const RowPrimaryWrapper = styled.div<InterfaceLayoutProps>`
   flex-basis: 100%;
   max-width: 100%;
 
-  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-    ${(props) => props.hOrder === 0 && ' padding-right: 0.5rem;'}
-    ${(props) => props.hOrder === 1 && 'padding-left: 0.5rem;'}
+  @media (min-width: ${(props) => props.thresholdStickyMenu + 1}px) {
+    ${(props) => props.hOrder === 0 && ' padding-right: 0.75rem;'}
+    ${(props) => props.hOrder === 1 && 'padding-left: 0.75rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
     flex-basis: 56%;
     width: 56%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'none')};
   }
 
-  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
+  @media (min-width: ${(props) => props.thresholdFullWidth + 400}px) {
     flex-basis: 62%;
     width: 62%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'none')};
   }
 `;
 
@@ -333,18 +335,19 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
   width: 100%;
   border-radius: 1rem;
 
-  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-    ${(props) => props.hOrder === 1 && ' padding-left: 0.5rem;'}
-    ${(props) => props.hOrder === 0 && 'padding-right: 0.5rem;'}
+  @media (min-width: ${(props) => props.thresholdStickyMenu + 1}px) {
+    ${(props) => props.hOrder === 1 && ' padding-left: 0.75rem;'}
+    ${(props) => props.hOrder === 0 && 'padding-right: 0.75rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
     flex-basis: 44%;
     width: 44%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'none')};
   }
 
-  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
+  @media (min-width: ${(props) => props.thresholdFullWidth + 400}px) {
     flex-basis: 38%;
-    max-width: 38%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : '38%')};
   }
 `;
 

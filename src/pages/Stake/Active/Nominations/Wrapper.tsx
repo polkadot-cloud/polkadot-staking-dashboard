@@ -14,8 +14,9 @@ export const Wrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     padding: 0 0.25rem;
+    margin-top: 1rem;
 
-    > h2 {
+    > h3 {
       flex: 1;
     }
   }
