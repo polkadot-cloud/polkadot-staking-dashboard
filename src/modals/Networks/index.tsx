@@ -34,8 +34,8 @@ export const Networks = () => {
                   )}
                   onClick={() => {
                     if (
-                      item.name.toLowerCase() !== key ||
-                      (item.name.toLowerCase() === key && isLightClient)
+                      network.name.toLowerCase() !== key ||
+                      (network.name.toLowerCase() === key && isLightClient)
                     ) {
                       switchNetwork(key, false);
                       setStatus(0);
@@ -65,8 +65,8 @@ export const Networks = () => {
                     key={`switch_network_${index}_lc`}
                     onClick={() => {
                       if (
-                        item.name.toLowerCase() !== key ||
-                        (item.name.toLowerCase() === key && !isLightClient)
+                        network.name.toLowerCase() !== key ||
+                        (network.name.toLowerCase() === key && !isLightClient)
                       ) {
                         switchNetwork(key, true);
                         setStatus(0);
