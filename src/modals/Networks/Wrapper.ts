@@ -46,6 +46,18 @@ export const ContentWrapper = styled.div`
       margin: 0.75rem 0;
     }
 
+    .wo-light-client {
+      width: 100%;
+    }
+
+    .w-light-client {
+      width: 80%;
+    }
+
+    .light-client {
+      width: 20%;
+    }
+
     .action-button {
       background: ${buttonPrimaryBackground};
       box-sizing: border-box;
@@ -58,7 +70,6 @@ export const ContentWrapper = styled.div`
       justify-content: flex-start;
       align-items: center;
       transition: all 0.15s;
-      width: 50%;
 
       &:last-child {
         margin-bottom: 0;

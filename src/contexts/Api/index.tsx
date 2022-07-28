@@ -155,7 +155,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const connect = async (_network: NetworkName, _isLightClient?: boolean) => {
     const nodeEndpoint: Network = NETWORKS[_network];
     let _provider: WsProvider | ScProvider;
-    if (_isLightClient) {
+    if (_isLightClient && nodeEndpoint.lightClientEndpoint) {
       _provider = new ScProvider(nodeEndpoint.lightClientEndpoint);
       await _provider.connect();
     } else {

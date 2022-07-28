@@ -39,7 +39,7 @@ export interface Network {
     };
   };
   endpoint: string;
-  lightClientEndpoint: WellKnownChain;
+  lightClientEndpoint?: WellKnownChain;
   subscanEndpoint: string;
   unit: string;
   units: number;

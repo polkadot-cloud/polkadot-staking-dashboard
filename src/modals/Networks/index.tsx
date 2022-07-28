@@ -27,11 +27,15 @@ export const Networks = () => {
                 <button
                   key={`network_switch_${index}`}
                   type="button"
-                  className="action-button"
+                  className={'action-button '.concat(
+                    item.lightClientEndpoint
+                      ? 'w-light-client'
+                      : 'wo-light-client'
+                  )}
                   onClick={() => {
                     if (
-                      network.name.toLowerCase() !== key ||
-                      (network.name.toLowerCase() === key && isLightClient)
+                      item.name.toLowerCase() !== key ||
+                      (item.name.toLowerCase() === key && isLightClient)
                     ) {
                       switchNetwork(key, false);
                       setStatus(0);
@@ -54,28 +58,30 @@ export const Networks = () => {
                   </div>
                 </button>
                 {/* This is the Light Client button */}
-                <button
-                  type="button"
-                  className="action-button"
-                  key={`switch_network_${index}_lc`}
-                  onClick={() => {
-                    if (
-                      network.name.toLowerCase() !== key ||
-                      (network.name.toLowerCase() === key && !isLightClient)
-                    ) {
-                      switchNetwork(key, true);
-                      setStatus(0);
-                    }
-                  }}
-                >
-                  <h3>Light Client</h3>
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                    />
-                  </div>
-                </button>
+                {item.lightClientEndpoint ? (
+                  <button
+                    type="button"
+                    className="action-button light-client"
+                    key={`switch_network_${index}_lc`}
+                    onClick={() => {
+                      if (
+                        item.name.toLowerCase() !== key ||
+                        (item.name.toLowerCase() === key && !isLightClient)
+                      ) {
+                        switchNetwork(key, true);
+                        setStatus(0);
+                      }
+                    }}
+                  >
+                    <h3>Light Client</h3>
+                    <div>
+                      <FontAwesomeIcon
+                        transform="shrink-2"
+                        icon={faChevronRight}
+                      />
+                    </div>
+                  </button>
+                ) : null}
                 {Object.entries(NETWORKS).length - 1 !== index && <span />}
               </Fragment>
             );
