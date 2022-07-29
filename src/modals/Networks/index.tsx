@@ -22,16 +22,23 @@ export const Networks = () => {
           {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
             const Svg = item.brand.inline.svg;
 
+            const disabledNetworkButton =
+              network.name.toLowerCase() === key && !isLightClient;
+            const disabledLCButton =
+              network.name.toLowerCase() === key && isLightClient;
+
             return (
               <Fragment key={`network_${index}`}>
                 <button
+                  disabled={disabledNetworkButton}
                   key={`network_switch_${index}`}
                   type="button"
-                  className={'action-button '.concat(
+                  className={`action-button 
+                  ${
                     item.lightClientEndpoint
                       ? 'w-light-client'
                       : 'wo-light-client'
-                  )}
+                  } ${disabledLCButton ? ' disabled' : ''}`}
                   onClick={() => {
                     if (
                       network.name.toLowerCase() !== key ||
@@ -60,8 +67,11 @@ export const Networks = () => {
                 {/* This is the Light Client button */}
                 {item.lightClientEndpoint ? (
                   <button
+                    disabled={disabledLCButton}
                     type="button"
-                    className="action-button light-client"
+                    className={`action-button light-client ${
+                      disabledLCButton ? 'disabled' : ''
+                    }`}
                     key={`switch_network_${index}_lc`}
                     onClick={() => {
                       if (
