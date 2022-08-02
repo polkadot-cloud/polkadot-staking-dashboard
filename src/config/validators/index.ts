@@ -41,9 +41,7 @@ export const VALIDATOR_COMMUNITY = [
     twitter: '@amforcag',
     website: 'https://amforc.com/',
     validators: {
-      polkadot: [
-        '1y6CPLgccsysCEii3M7jQF834GZsz9A3HMcZz3w7RjGPpBL',
-      ],
+      polkadot: ['1y6CPLgccsysCEii3M7jQF834GZsz9A3HMcZz3w7RjGPpBL'],
       kusama: [
         'DVUNoinHdSNfismcrFaBwdJfysxc7A48QkNvTDnTSPXPw3q',
         'DpLatoXXBiSAPooF17bzUZGo7huNB7USfRqd2SgL6RBy2zr',
