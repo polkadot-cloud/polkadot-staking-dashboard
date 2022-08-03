@@ -7,6 +7,7 @@
  */
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
+import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
@@ -41,6 +42,16 @@ export const VALIDATOR_COMMUNITY = [
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
       ],
+    },
+  },
+  {
+    name: 'WOJDOT ʕ •ᴥ•ʔ',
+    Thumbnail: Wojdot,
+    bio: 'Independent Polkadot Validator. We run our service on bare metal machines via a cloud service with the ability to spin up validator nodes in different regions within a matter of minutes.',
+    email: 'wojdot@wojdot.com',
+    twitter: '@wojdot',
+    validators: {
+      polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
     },
   },
 ];
