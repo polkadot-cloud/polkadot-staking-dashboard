@@ -25,7 +25,7 @@ export const VALIDATOR_COMMUNITY = [
         'HQuPha82sRy91zZn73XRGJVV3ernBh5HZKftUcoDT8CSUwK',
       ],
     },
-  }, 
+  },
   {
     name: 'Amforc',
     Thumbnail: Amforc,
