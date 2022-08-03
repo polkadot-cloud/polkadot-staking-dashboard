@@ -57,6 +57,7 @@ export const ItemWrapper = styled(motion.div)`
 
     svg {
       border-radius: 0.74rem;
+      color: ${textSecondary};
     }
 
     /* vertical validator thumbnail / content tiling */
@@ -91,11 +92,6 @@ export const ItemWrapper = styled(motion.div)`
         align-items: center;
         border-radius: 1rem;
         padding: 0.3rem 1rem;
-
-        svg {
-          color: ${textSecondary};
-        }
-
         margin: 0.5rem 1rem 0.5rem 0;
         @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
           margin: 0.25rem 1rem 0.25rem 0;
@@ -114,7 +110,7 @@ export const ItemWrapper = styled(motion.div)`
           }
         }
         &:last-child {
-          margin-right: none;
+          margin-right: 0;
         }
         .icon-left {
           margin-right: 0.5rem;
