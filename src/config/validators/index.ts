@@ -42,5 +42,5 @@ export const VALIDATOR_COMMUNITY = [
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
       ],
     },
-  }, 
+  },
 ];
