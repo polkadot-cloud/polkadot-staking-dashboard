@@ -6,8 +6,26 @@
  * import { ReactComponent as ValidatorEntityName } from './thumbnails/validatorEntityName.svg';
  */
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
+import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 
 export const VALIDATOR_COMMUNITY = [
+  {
+    name: '🍁 HIGH/STAKE 🥩',
+    Thumbnail: HighStake,
+    bio: 'We came for the memes, we stay for the tech. Located in Switzerland with 15+ years of experience in running reliable online services. We are exclusively running our validators on dedicated hardware in datacenters across Europe.',
+    email: 'highstake@nexus-informatik.ch',
+    website: 'https://highstake.tech/',
+    validators: {
+      polkadot: [
+        '12bget8jJWnyjqYPiCwkXZjDh5tDBkta1WUcDYyndbXVDmQ1',
+        '12Dw4SzhsxX3fpDiLUYXm9oGbfxcbg1Peq67gc5jkkEo1TKr',
+      ],
+      kusama: [
+        'DbRgw96nMQcFEFZWTLd6LSPNdh8u3NBuUDfAhDmB6UU8cJC',
+        'HQuPha82sRy91zZn73XRGJVV3ernBh5HZKftUcoDT8CSUwK',
+      ],
+    },
+  }, 
   {
     name: 'Amforc',
     Thumbnail: Amforc,
@@ -24,5 +42,5 @@ export const VALIDATOR_COMMUNITY = [
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
       ],
     },
-  },
+  }, 
 ];
