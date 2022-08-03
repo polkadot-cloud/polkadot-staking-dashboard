@@ -6,7 +6,6 @@ import { useConnect } from 'contexts/Connect';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EXTENSIONS, ExtensionConfig } from 'config/extensions';
-import { isMobileDevice } from 'Utils';
 import {
   ContentWrapper,
   PaddingWrapper,
@@ -49,20 +48,15 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
           </button>
         </ExtensionWrapper>
         <Separator />
-        {/* web extensions not available on mobile devices */}
-        {!isMobileDevice() && (
-          <>
-            {EXTENSIONS.map((extension: ExtensionConfig, i: number) => {
-              return (
-                <Extension
-                  key={`active_extension_${i}`}
-                  meta={extension}
-                  setSection={setSection}
-                />
-              );
-            })}
-          </>
-        )}
+        {EXTENSIONS.map((extension: ExtensionConfig, i: number) => {
+          return (
+            <Extension
+              key={`active_extension_${i}`}
+              meta={extension}
+              setSection={setSection}
+            />
+          );
+        })}
         <ReadOnly {...props} />
       </PaddingWrapper>
     </ContentWrapper>
