@@ -122,7 +122,7 @@ export const Item = (props: ItemProps) => {
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(`https://twitter.com/@${twitter}`, '_blank');
+                  window.open(`https://twitter.com/${twitter}`, '_blank');
                 }}
               >
                 <FontAwesomeIcon
