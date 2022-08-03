@@ -8,6 +8,7 @@
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
+import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
@@ -62,6 +63,18 @@ export const VALIDATOR_COMMUNITY = [
         'GZmbAW7rRi2qkMrHYzmeG2a3fS7nTaAZpjdum8QZ7CvmM7H',
         'G1qbViqnm6yCZwEbfB4oE38ro8VqJx21zyvW7QN8zAJC2B7',
       ],
+    },
+  },
+  {
+    name: 'Polkadotters',
+    Thumbnail: Polkadotters,
+    bio: 'We are Polkadot focused node operators and community builders from Czechia.',
+    email: 'polkadotters@protonmail.com',
+    twitter: '@Polkadotters1',
+    website: 'https://polkadotters.com/',
+    validators: {
+      polkadot: ['16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN'],
+      kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
     },
   },
   {
