@@ -30,7 +30,7 @@ export const Item = (props: ItemProps) => {
     validators: entityAllValidators,
   } = item;
   const validatorCount =
-    entityAllValidators[network.name.toLowerCase()].length ?? 0;
+    entityAllValidators[network.name.toLowerCase()]?.length ?? 0;
 
   const { setActiveSection, setActiveItem, setScrollPos } =
     useCommunitySections();
