@@ -9,6 +9,7 @@ import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
+import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
 export const VALIDATOR_COMMUNITY = [
@@ -82,6 +83,23 @@ export const VALIDATOR_COMMUNITY = [
         'Eksma7JmWh8DenpNKi2uCavwaKJ9QrJJbtcnmwJr3hbHSmC',
         'Dm64aaAUyy5dvYCSmyzz3njGrWrVaki9F6BvUDSYjDDoqR2',
         'DfHkfoKa6xzNMWTNGL8SH8VyY69gajen4ijgmegeU4cZm1H',
+      ],
+    },
+  },
+  {
+    name: 'TurboFlakes',
+    Thumbnail: TurboFlakes,
+    bio: 'TurboFlakes provides validators with character running on top of dedicated and high performance servers. Raiden, Coco and Momo are our named validators serving non-stop Polkadot and Kusama. We also provide end-user tooling to help you to interact with substrate blockchain networks. Feel free to reach out.',
+    email: 'hey@turboflakes.io',
+    twitter: '@turboflakes',
+    website: 'https://turboflakes.io',
+    validators: {
+      polkadot: [
+        '12gPFmRqnsDhc9C5DuXyXBFA23io5fSGtKTSAimQtAWgueD2',
+      ],
+      kusama: [
+        'FZsMKYHoQG1dAVhXBMyC7aYFYpASoBrrMYsAn1gJJUAueZX',
+        'GA7j1FHWXpEU4kavowEte6LWR3NgZ8bkv4spWa9joiQF5R2',
       ],
     },
   },

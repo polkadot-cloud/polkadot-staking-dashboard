@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="158px" height="158px" viewBox="0 0 158 158" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>TURBOFLAKES</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="TURBOFLAKES" fill-rule="nonzero">
+            <circle id="Oval" fill="#ED1C24" cx="78.94" cy="78.64" r="78.42"></circle>
+            <g id="Group" transform="translate(41.000000, 35.000000)" fill="#FFFFFF">
+                <circle id="Oval" cx="13.48" cy="73.26" r="13.17"></circle>
+                <path d="M57.23,43.64 C57.23,50.91 51.33,56.81 44.06,56.81 C36.79,56.81 6.42,43.64 6.42,43.64 C6.42,43.64 36.79,30.47 44.06,30.47 C51.33,30.47 57.23,36.36 57.23,43.64 Z" id="Path"></path>
+                <path d="M75.59,14.01 C75.59,21.28 69.69,27.18 62.42,27.18 C55.15,27.18 12.54,14.01 12.54,14.01 C12.54,14.01 55.14,0.84 62.42,0.84 C69.7,0.84 75.59,6.74 75.59,14.01 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>
