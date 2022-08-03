@@ -6,6 +6,7 @@
  * import { ReactComponent as ValidatorEntityName } from './thumbnails/validatorEntityName.svg';
  */
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
+import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
@@ -43,6 +44,21 @@ export const VALIDATOR_COMMUNITY = [
         'DpLatoXXBiSAPooF17bzUZGo7huNB7USfRqd2SgL6RBy2zr',
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
+      ],
+    },
+  },
+  {
+    name: 'Sik | crifferent.de',
+    Thumbnail: Crifferent,
+    bio: 'Crifferent offers reliable and secure staking services made in Germany. Combining professionals from IT, marketing, and finance, they evaluate the best projects and offer services to its full extent.',
+    email: 'simon.kraus@crifferent.de',
+    twitter: '@dev0_sik',
+    website: 'https://crifferent.de/',
+    validators: {
+      polkadot: ['15wepZh1jWNqxBjsgErm8HmYiE21n79c5krQJeTsYAjHddeM'],
+      kusama: [
+        'HWyLYmpW68JGJYoVJcot6JQ1CJbtUQeTdxfY1kUTsvGCB1r',
+        'GLSikJaXTVWvWtUhzB3Bj6xb5TcnhTUp6EuAkxaCohT9UBv',
       ],
     },
   },
