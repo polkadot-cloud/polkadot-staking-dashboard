@@ -6,9 +6,12 @@
  * import { ReactComponent as ValidatorEntityName } from './thumbnails/validatorEntityName.svg';
  */
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
+import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
+import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
+import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
 export const VALIDATOR_COMMUNITY = [
@@ -65,6 +68,33 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'Polkadotters',
+    Thumbnail: Polkadotters,
+    bio: 'We are Polkadot focused node operators and community builders from Czechia.',
+    email: 'polkadotters@protonmail.com',
+    twitter: '@Polkadotters1',
+    website: 'https://polkadotters.com/',
+    validators: {
+      polkadot: ['16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN'],
+      kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
+    },
+  },
+  {
+    name: 'Sik | crifferent.de',
+    Thumbnail: Crifferent,
+    bio: 'Crifferent offers reliable and secure staking services made in Germany. Combining professionals from IT, marketing, and finance, they evaluate the best projects and offer services to its full extent.',
+    email: 'simon.kraus@crifferent.de',
+    twitter: '@dev0_sik',
+    website: 'https://crifferent.de/',
+    validators: {
+      polkadot: ['15wepZh1jWNqxBjsgErm8HmYiE21n79c5krQJeTsYAjHddeM'],
+      kusama: [
+        'HWyLYmpW68JGJYoVJcot6JQ1CJbtUQeTdxfY1kUTsvGCB1r',
+        'GLSikJaXTVWvWtUhzB3Bj6xb5TcnhTUp6EuAkxaCohT9UBv',
+      ],
+    },
+  },
+  {
     name: 'Staker Space',
     Thumbnail: Stakerspace,
     bio: 'Hi! We are an independent and experienced staking provider. Our homebase is the Netherlands, but we have a run across multiple geographical locations dedicated hardware for our validators. We have been running Kusama and Polkadot validators since the start of the network are highly experienced in doing so. If you have any questions, please get in touch with us.',
@@ -82,6 +112,21 @@ export const VALIDATOR_COMMUNITY = [
         'Eksma7JmWh8DenpNKi2uCavwaKJ9QrJJbtcnmwJr3hbHSmC',
         'Dm64aaAUyy5dvYCSmyzz3njGrWrVaki9F6BvUDSYjDDoqR2',
         'DfHkfoKa6xzNMWTNGL8SH8VyY69gajen4ijgmegeU4cZm1H',
+      ],
+    },
+  },
+  {
+    name: 'TurboFlakes',
+    Thumbnail: TurboFlakes,
+    bio: 'TurboFlakes provides validators with character running on top of dedicated and high performance servers. Raiden, Coco and Momo are our named validators serving non-stop Polkadot and Kusama. We also provide end-user tooling to help you to interact with substrate blockchain networks. Feel free to reach out.',
+    email: 'hey@turboflakes.io',
+    twitter: '@turboflakes',
+    website: 'https://turboflakes.io',
+    validators: {
+      polkadot: ['12gPFmRqnsDhc9C5DuXyXBFA23io5fSGtKTSAimQtAWgueD2'],
+      kusama: [
+        'FZsMKYHoQG1dAVhXBMyC7aYFYpASoBrrMYsAn1gJJUAueZX',
+        'GA7j1FHWXpEU4kavowEte6LWR3NgZ8bkv4spWa9joiQF5R2',
       ],
     },
   },
