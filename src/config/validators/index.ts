@@ -13,8 +13,24 @@ import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
+import { ReactComponent as GDOT} from './thumbnails/g-dot.svg';
 
 export const VALIDATOR_COMMUNITY = [
+  {
+    name: 'G-dot Tech',
+    Thumbnail: GDOT,
+    bio: 'G-dot Tech is providing professional staking services on well-maintained bare metal machines with locations across Europe. Feel free to reach out any time if you have questions.',
+    email: 'g-dot.tech@protonmail.com',
+    website: 'https://g-dot.tech/',
+    validators: {
+      polkadot: [
+        '153Fz22gxQP8HM8RbnvEt9XWsXu9nR8jxZC2MbQFmuKhN62f',
+      ],
+      kusama: [
+        'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
+      ],
+    },
+  },
   {
     name: '🍁 HIGH/STAKE 🥩',
     Thumbnail: HighStake,
