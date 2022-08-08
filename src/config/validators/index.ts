@@ -19,12 +19,14 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'G-dot Tech',
     Thumbnail: GDOT,
-    bio: 'G-dot Tech is providing professional staking services on well-maintained bare metal machines with locations across Europe. Feel free to reach out any time if you have questions.',
+    bio: 'G-dot Tech is providing professional staking services on well-maintained bare metal machines with locations across Europe. Our goal is to contribute to the decentralization of Polkadot and Kusama by staying independent with a small share among the active validators. Feel free to reach out any time if you have questions.',
     email: 'g-dot.tech@protonmail.com',
     website: 'https://g-dot.tech/',
     validators: {
       polkadot: [
         '153Fz22gxQP8HM8RbnvEt9XWsXu9nR8jxZC2MbQFmuKhN62f',
+        'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
+        'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
       ],
       kusama: [
         'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
