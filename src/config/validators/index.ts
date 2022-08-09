@@ -8,6 +8,7 @@
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
+import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
@@ -46,6 +47,24 @@ export const VALIDATOR_COMMUNITY = [
         'DpLatoXXBiSAPooF17bzUZGo7huNB7USfRqd2SgL6RBy2zr',
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
+      ],
+    },
+  },
+  {
+    name: 'GATOTECH',
+    Thumbnail: Gatotech,
+    bio: 'Gatotech Ltd is a Scottish IT company focused on the adoption of decentralised ledger technologies (DLT) for the benefit of humankind.',
+    email: 'info@gatotech.uk',
+    twitter: '@gatotech_uk',
+    website: 'gatotech.uk',
+    validators: {
+      polkadot: [
+        '15iA5hpjUecWBbf38Nfegwmtyux25o3LrGaNodfZDxq5nXXE',
+        '14KHzXAZ5admFLXdgbEGpSjCGxiePniHRDM6t5r4o8kbYV7P',
+      ],
+      kusama: [
+        'DrRBkx2Qx4sXRGZDXz6d44QCXqV2eJhn8Rq79V88FpSqAr8',
+        'EeFYYF8zrLXRpfFXLn2T5bMmgiFpDpmAhVzoh9hA3188wTc',
       ],
     },
   },
