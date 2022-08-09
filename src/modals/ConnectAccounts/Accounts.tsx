@@ -64,8 +64,8 @@ export const Accounts = forwardRef((props: any, ref: any) => {
       const locks = getAccountLocks(account.address);
 
       // account is a stash if they have an active `staking` lock
-      const activeLocks = locks.find((l: any) => {
-        const { id }: any = l;
+      const activeLocks = locks.find((l) => {
+        const { id } = l;
         return id.trim() === 'staking';
       });
       if (activeLocks !== undefined) {
@@ -124,7 +124,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
       // if controller, get stash
       if (controller) {
         const applied =
-          _activeStaking.find((a: any) => a.controller === account.address) !==
+          _activeStaking.find((a) => a.controller === account.address) !==
           undefined;
 
         if (!applied) {

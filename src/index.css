@@ -43,14 +43,14 @@ h1 {
 h2 {
   font-variation-settings: 'wght' 580;
   font-weight: normal;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
 }
 
 h3 {
-  font-variation-settings: 'wght' 580;
+  font-variation-settings: 'wght' 560;
   font-weight: normal;
-  font-size: 1.05rem;
-  line-height: 1.34rem;
+  font-size: 1.25rem;
+  line-height: 1.55rem;
 }
 
 h4 {

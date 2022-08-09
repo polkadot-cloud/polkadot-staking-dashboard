@@ -19,6 +19,12 @@ import {
   textSecondary,
   buttonSecondaryBackground,
 } from 'theme';
+import {
+  InterfaceLayoutProps,
+  PageRowWrapperProps,
+  PageTitleWrapperProps,
+  SideInterfaceWrapperProps,
+} from 'types/styles';
 
 /* EntryWrapper
  *
@@ -117,7 +123,7 @@ export const BodyInterfaceWrapper = styled.div`
  * on smaller screens.
  * Used once in Router.
  */
-export const SideInterfaceWrapper = styled.div<any>`
+export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
   box-sizing: border-box;
   height: 100vh;
   display: flex;
@@ -179,7 +185,7 @@ export const PageWrapper = styled(motion.div)`
  * and position relative to top of screen when the element
  * is stuck.
  */
-export const PageTitleWrapper = styled.header<any>`
+export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   box-sizing: border-box;
   background: ${backgroundPrimary};
   position: sticky;
@@ -270,7 +276,7 @@ export const MenuPaddingWrapper = styled.div`
  * Used to separate page content based on rows.
  * Commonly used with RowPrimaryWrapper and RowSecondaryWrapper.
  */
-export const PageRowWrapper = styled.div<any>`
+export const PageRowWrapper = styled.div<PageRowWrapperProps>`
   box-sizing: border-box;
   margin-top: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
   margin-bottom: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
@@ -294,25 +300,27 @@ export const PageRowWrapper = styled.div<any>`
  *
  * The primary module in a PageRow.
  */
-export const RowPrimaryWrapper = styled.div<any>`
+export const RowPrimaryWrapper = styled.div<InterfaceLayoutProps>`
   order: ${(props) => props.vOrder};
   box-sizing: border-box;
   flex: 1;
   flex-basis: 100%;
   max-width: 100%;
 
-  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-    ${(props) => props.hOrder === 0 && ' padding-right: 0.5rem;'}
-    ${(props) => props.hOrder === 1 && 'padding-left: 0.5rem;'}
+  @media (min-width: ${(props) => props.thresholdStickyMenu + 1}px) {
+    ${(props) => props.hOrder === 0 && ' padding-right: 0.75rem;'}
+    ${(props) => props.hOrder === 1 && 'padding-left: 0.75rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
-    flex-basis: 50%;
-    width: 50%;
+    flex-basis: 56%;
+    width: 56%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'none')};
   }
 
-  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
+  @media (min-width: ${(props) => props.thresholdFullWidth + 400}px) {
     flex-basis: 62%;
     width: 62%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'none')};
   }
 `;
 
@@ -320,25 +328,26 @@ export const RowPrimaryWrapper = styled.div<any>`
  *
  * The secondary module in a PageRow.
  */
-export const RowSecondaryWrapper = styled.div<any>`
+export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
   order: ${(props) => props.vOrder};
   box-sizing: border-box;
   flex-basis: 100%;
   width: 100%;
   border-radius: 1rem;
 
-  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
-    ${(props) => props.hOrder === 1 && ' padding-left: 0.5rem;'}
-    ${(props) => props.hOrder === 0 && 'padding-right: 0.5rem;'}
+  @media (min-width: ${(props) => props.thresholdStickyMenu + 1}px) {
+    ${(props) => props.hOrder === 1 && ' padding-left: 0.75rem;'}
+    ${(props) => props.hOrder === 0 && 'padding-right: 0.75rem;'}
     order: ${(props) => props.hOrder};
     flex: 1;
-    flex-basis: 50%;
-    width: 50%;
+    flex-basis: 44%;
+    width: 44%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : 'none')};
   }
 
-  @media (min-width: ${SECTION_FULL_WIDTH_THRESHOLD + 400}px) {
+  @media (min-width: ${(props) => props.thresholdFullWidth + 400}px) {
     flex-basis: 38%;
-    max-width: 38%;
+    max-width: ${(props) => (props.maxWidth ? props.maxWidth : '38%')};
   }
 `;
 

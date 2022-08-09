@@ -19,7 +19,7 @@ export const Number = (props: NumberProps) => {
     <StatBox>
       <div className="content chart">
         <div className="labels">
-          <h2>
+          <h3 className="text">
             <NumberEasing
               ease="quintInOut"
               precision={2}
@@ -35,7 +35,7 @@ export const Number = (props: NumberProps) => {
                 {unit}
               </>
             )}
-          </h2>
+          </h3>
           <h4>
             {label}
             {assist && <OpenAssistantIcon page={page} title={key} />}

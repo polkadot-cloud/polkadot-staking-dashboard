@@ -72,5 +72,7 @@ export interface BalancesContextInterface {
   isController: (address: MaybeAccount) => boolean;
   accounts: Array<BalancesAccount>;
   minReserve: BN;
+  existentialAmount: BN;
+  reserveAmount: BN;
   ledgers: any;
 }

@@ -15,7 +15,7 @@ export const Text = (props: TextProps) => {
     <StatBox>
       <div className="content chart">
         <div className="labels">
-          <h2>{value}</h2>
+          <h3 className="text">{value}</h3>
           <h4>
             {label}
             {assist && <OpenAssistantIcon page={page} title={key} />}

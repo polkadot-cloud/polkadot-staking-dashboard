@@ -45,8 +45,7 @@ export const Wrapper = styled.div<MinimisedProps>`
     /* Footer */
     &:last-child {
       display: flex;
-      flex-flow: ${(props) =>
-        props.minimised ? 'column-reverse wrap' : 'row wrap'};
+      flex-flow: ${(props) => (props.minimised ? 'column wrap' : 'row wrap')};
       align-items: center;
       padding-top: 0.5rem;
 
@@ -113,7 +112,7 @@ export const Separator = styled.div`
   margin: 1rem 1rem 0.5rem 0;
 `;
 
-export const ConnectionSymbol = styled.div<any>`
+export const ConnectionSymbol = styled.div<{ color: any }>`
   width: 0.6rem;
   height: 0.6rem;
   background: ${(props) => props.color};

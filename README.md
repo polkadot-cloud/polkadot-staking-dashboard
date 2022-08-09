@@ -4,15 +4,15 @@
 
 Staking dashboard is live on [staking.polkadot.network/dashboard](https://staking.polkadot.network/dashboard)
 
-<img width="1703" alt="Screenshot 2022-07-20 at 07 29 56" src="https://user-images.githubusercontent.com/13929023/179912454-fc71e699-2cdc-468a-8cee-d6916cb161f9.png">
+<img width="1617" alt="Screenshot 2022-07-24 at 15 34 35" src="https://user-images.githubusercontent.com/13929023/180651950-e7b5e90f-b32c-4c41-85a1-11c01bb05c8e.png">
 
-# Validator Setup Guide
+# Validator Entity Setup Guide
 
 Validators can add their identity, contact information and validator list to the dashboard’s Community section. The Community feature is designed to give non-biased exposure to validator entities, and to host a fully-featured validator browser just for that entity's validators.
 
 To add your entity, submit a PR with the following changes:
 
-- **Thumbnail SVG:** Add your entity's thumbnail as an SVG file to [this file](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/config/validators/thumbnails).
+- **Thumbnail SVG:** Add your entity's thumbnail as an SVG file to [this folder](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/config/validators/thumbnails).
 - **Entity details:** Add your entity details to the `VALIDATORS_COMMUNITY`JSON object in [this file](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/validators/index.ts).
 
 ## Entity Structure

@@ -99,7 +99,7 @@ export const BalanceGraph = () => {
           color: defaultThemes.text.primary[mode],
           font: {
             size: 13,
-            weight: '500',
+            weight: '600',
           },
         },
       },
@@ -107,6 +107,9 @@ export const BalanceGraph = () => {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
         bodyColor: defaultThemes.text.invert[mode],
+        bodyFont: {
+          weight: '600',
+        },
         callbacks: {
           label: (context: any) => {
             return `${context.label}: ${
@@ -116,7 +119,7 @@ export const BalanceGraph = () => {
         },
       },
     },
-    cutout: '75%',
+    cutout: '78%',
   };
 
   // determine stats from network features
@@ -165,7 +168,7 @@ export const BalanceGraph = () => {
 
   const ref = React.useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 220);
+  const { width, height, minHeight } = formatSize(size, 185);
 
   return (
     <>
@@ -184,7 +187,7 @@ export const BalanceGraph = () => {
           </span>
         </h2>
       </div>
-      <div style={{ paddingTop: '20px' }} />
+      <div style={{ paddingTop: '1rem' }} />
       <div className="inner" ref={ref} style={{ minHeight }}>
         <div
           className="graph"
@@ -197,7 +200,7 @@ export const BalanceGraph = () => {
           <Doughnut options={options} data={data} />
         </div>
       </div>
-      <div style={{ paddingTop: '25px' }} />
+      <div style={{ paddingTop: '1rem' }} />
     </>
   );
 };

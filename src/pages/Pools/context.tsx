@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { PoolsTabsContextInterface } from './types';
 
-export const PoolsTabsContext: React.Context<any> = React.createContext({
-  setActiveTab: (t: number) => {},
-  activeTab: 0,
-});
+export const PoolsTabsContext: React.Context<PoolsTabsContextInterface> =
+  React.createContext({
+    setActiveTab: (t: number) => {},
+    activeTab: 0,
+  });
 
 export const usePoolsTabs = () => React.useContext(PoolsTabsContext);
 

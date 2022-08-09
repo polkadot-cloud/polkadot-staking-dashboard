@@ -19,7 +19,7 @@ import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
 
-export const Status = () => {
+export const Status = ({ height }: { height: number }) => {
   const { isReady } = useApi();
   const { setOnSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
@@ -33,11 +33,11 @@ export const Status = () => {
   // get nomination status
   const nominationStatuses = getNominationsStatus();
 
-  const active: any = Object.values(nominationStatuses).filter(
-    (_v: any) => _v === 'active'
+  const active = Object.values(nominationStatuses).filter(
+    (_v) => _v === 'active'
   ).length;
 
-  const payeeStatus: any = PAYEE_STATUS.find((item: any) => item.key === payee);
+  const payeeStatus = PAYEE_STATUS.find((item) => item.key === payee);
 
   let startTitle = 'Start Staking';
   if (inSetup()) {
@@ -47,7 +47,7 @@ export const Status = () => {
     }
   }
   return (
-    <CardWrapper height={300}>
+    <CardWrapper height={height}>
       <Stat
         label="Status"
         assistant={['stake', 'Staking Status']}

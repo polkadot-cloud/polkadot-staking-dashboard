@@ -14,9 +14,12 @@ import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { SubscanButton } from 'library/SubscanButton';
 import { PageTitle } from 'library/PageTitle';
-import { GRAPH_HEIGHT } from 'consts';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { planckBnToUnit, humanNumber } from 'Utils';
+import {
+  SECTION_FULL_WIDTH_THRESHOLD,
+  SIDE_MENU_STICKY_THRESHOLD,
+} from 'consts';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
@@ -24,6 +27,8 @@ import ActiveEraStatBox from './Stats/ActiveEra';
 import Announcements from './Announcements';
 import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
+import Reserve from './Reserve';
+import Returns from './Returns';
 
 export const Overview = () => {
   const { network } = useApi();
@@ -31,6 +36,10 @@ export const Overview = () => {
   const { payouts, poolClaims } = useSubscan();
 
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
+
+  const PAYOUTS_HEIGHT = 380;
+  const STATS_HEIGHT = 80;
+  const BALANCE_HEIGHT = PAYOUTS_HEIGHT + STATS_HEIGHT + 18;
 
   return (
     <>
@@ -41,14 +50,26 @@ export const Overview = () => {
         <ActiveEraStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowSecondaryWrapper hOrder={0} vOrder={0}>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
+        <RowSecondaryWrapper
+          hOrder={0}
+          vOrder={0}
+          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+        >
+          <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
             <ActiveAccount />
             <BalanceGraph />
+            <Reserve />
           </GraphWrapper>
         </RowSecondaryWrapper>
-        <RowPrimaryWrapper hOrder={1} vOrder={1}>
-          <GraphWrapper style={{ minHeight: GRAPH_HEIGHT }} flex>
+        <RowPrimaryWrapper
+          hOrder={1}
+          vOrder={1}
+          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+        >
+          <Returns height={STATS_HEIGHT} />
+          <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
               <h4>Recent Payouts</h4>

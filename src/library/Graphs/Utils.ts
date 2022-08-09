@@ -17,10 +17,11 @@ export const getSize = (element: any) => {
 export const useSize = (element: any) => {
   const [size, setSize] = React.useState(getSize(element));
 
+  const throttleCallback = () => {
+    setSize(getSize(element));
+  };
+
   React.useEffect(() => {
-    const throttleCallback = () => {
-      setSize(getSize(element));
-    };
     const resizeThrottle = throttle(throttleCallback, 100, {
       trailing: true,
       leading: false,

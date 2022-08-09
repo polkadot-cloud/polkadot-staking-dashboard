@@ -13,8 +13,9 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useModal } from 'contexts/Modal';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
+import { ItemProps } from './types';
 
-export const Item = (props: any) => {
+export const Item = (props: ItemProps) => {
   const { openModalWith } = useModal();
   const { network } = useApi();
 
@@ -29,7 +30,7 @@ export const Item = (props: any) => {
     validators: entityAllValidators,
   } = item;
   const validatorCount =
-    entityAllValidators[network.name.toLowerCase()].length ?? 0;
+    entityAllValidators[network.name.toLowerCase()]?.length ?? 0;
 
   const { setActiveSection, setActiveItem, setScrollPos } =
     useCommunitySections();
@@ -121,7 +122,7 @@ export const Item = (props: any) => {
                 type="button"
                 className="active"
                 onClick={() => {
-                  window.open(`https://twitter.com/@${twitter}`, '_blank');
+                  window.open(`https://twitter.com/${twitter}`, '_blank');
                 }}
               >
                 <FontAwesomeIcon
