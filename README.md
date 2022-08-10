@@ -12,7 +12,7 @@ Validators can add their identity, contact information and validator list to the
 
 To add your entity, submit a PR with the following changes:
 
-- **Thumbnail SVG:** Add your entity's thumbnail as an SVG file to [this file](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/config/validators/thumbnails).
+- **Thumbnail SVG:** Add your entity's thumbnail as an SVG file to [this folder](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/config/validators/thumbnails).
 - **Entity details:** Add your entity details to the `VALIDATORS_COMMUNITY`JSON object in [this file](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/validators/index.ts).
 
 ## Entity Structure
