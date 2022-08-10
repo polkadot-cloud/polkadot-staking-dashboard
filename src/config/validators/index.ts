@@ -8,6 +8,7 @@
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
+import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
@@ -65,6 +66,21 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'DrRBkx2Qx4sXRGZDXz6d44QCXqV2eJhn8Rq79V88FpSqAr8',
         'EeFYYF8zrLXRpfFXLn2T5bMmgiFpDpmAhVzoh9hA3188wTc',
+      ],
+    },
+  },
+  {
+    name: 'G-dot Tech',
+    Thumbnail: GDOT,
+    bio: 'G-dot Tech is providing professional staking services on well-maintained bare metal machines with locations across Europe. Our goal is to contribute to the decentralization of Polkadot and Kusama by staying independent with a small share among the active validators. Feel free to reach out any time if you have questions.',
+    email: 'g-dot.tech@protonmail.com',
+    website: 'https://g-dot.tech/',
+    validators: {
+      polkadot: ['153Fz22gxQP8HM8RbnvEt9XWsXu9nR8jxZC2MbQFmuKhN62f'],
+      kusama: [
+        'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
+        'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
+        'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
       ],
     },
   },
