@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NETWORKS } from 'config/networks';
@@ -9,10 +9,19 @@ import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrapper';
+import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 
 export const Networks = () => {
+  const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
+
+  useEffect(() => {
+    // @ts-ignore
+    window.navigator?.brave?.isBrave().then(async (isBrave: any) => {
+      setBraveBrowser(isBrave);
+    });
+  });
 
   return (
     <PaddingWrapper>
@@ -97,6 +106,24 @@ export const Networks = () => {
             );
           })}
         </div>
+        {braveBrowser ? (
+          <div className="brave-note">
+            <BraveIconSVG />
+            <div className="brave-text">
+              <b>To Brave users!</b> Due to a recent update (
+              <i>Brave version 1.36</i>), there may appear issues while using
+              light clients (e.g. not connected).{' '}
+              <a
+                href="https://paritytech.github.io/substrate-connect/#troubleshooting"
+                target="_blank"
+                rel="noreferrer"
+                className="learn-more"
+              >
+                Learn more here.
+              </a>
+            </div>
+          </div>
+        ) : null}
       </ContentWrapper>
     </PaddingWrapper>
   );
