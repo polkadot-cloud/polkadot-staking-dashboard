@@ -8,9 +8,12 @@
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
+import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
+import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
+import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
@@ -46,6 +49,39 @@ export const VALIDATOR_COMMUNITY = [
         'DpLatoXXBiSAPooF17bzUZGo7huNB7USfRqd2SgL6RBy2zr',
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
+      ],
+    },
+  },
+  {
+    name: 'GATOTECH',
+    Thumbnail: Gatotech,
+    bio: 'Gatotech Ltd is a Scottish IT company focused on the adoption of decentralised ledger technologies (DLT) for the benefit of humankind.',
+    email: 'info@gatotech.uk',
+    twitter: '@gatotech_uk',
+    website: 'gatotech.uk',
+    validators: {
+      polkadot: [
+        '15iA5hpjUecWBbf38Nfegwmtyux25o3LrGaNodfZDxq5nXXE',
+        '14KHzXAZ5admFLXdgbEGpSjCGxiePniHRDM6t5r4o8kbYV7P',
+      ],
+      kusama: [
+        'DrRBkx2Qx4sXRGZDXz6d44QCXqV2eJhn8Rq79V88FpSqAr8',
+        'EeFYYF8zrLXRpfFXLn2T5bMmgiFpDpmAhVzoh9hA3188wTc',
+      ],
+    },
+  },
+  {
+    name: 'G-dot Tech',
+    Thumbnail: GDOT,
+    bio: 'G-dot Tech is providing professional staking services on well-maintained bare metal machines with locations across Europe. Our goal is to contribute to the decentralization of Polkadot and Kusama by staying independent with a small share among the active validators. Feel free to reach out any time if you have questions.',
+    email: 'g-dot.tech@protonmail.com',
+    website: 'https://g-dot.tech/',
+    validators: {
+      polkadot: ['153Fz22gxQP8HM8RbnvEt9XWsXu9nR8jxZC2MbQFmuKhN62f'],
+      kusama: [
+        'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
+        'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
+        'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
       ],
     },
   },
@@ -112,6 +148,24 @@ export const VALIDATOR_COMMUNITY = [
         'Eksma7JmWh8DenpNKi2uCavwaKJ9QrJJbtcnmwJr3hbHSmC',
         'Dm64aaAUyy5dvYCSmyzz3njGrWrVaki9F6BvUDSYjDDoqR2',
         'DfHkfoKa6xzNMWTNGL8SH8VyY69gajen4ijgmegeU4cZm1H',
+      ],
+    },
+  },
+  {
+    name: 'STAKEWORLD',
+    Thumbnail: Stakeworld,
+    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
+    email: 'info@stakeworld.nl',
+    website: 'https://stakeworld.nl',
+    validators: {
+      polkadot: [
+        '14kpNbU4XjEHfYdqp95Gq3NkBWbgFd6J8Yjd2SneWNzvf1Yp',
+        '13Jpq4n3PXXaSAbJTMmFD78mXAzs8PzgUUQd5ve8saw7HQS5',
+      ],
+      kusama: [
+        'CtEni6wrP7Kz2KWus9Y6vQWuhLqJpd9mQFTmTvw8T7FLui8',
+        'FZ1GFKR6tYx9gNGHV67h5aV6bfhAbh7ZRdU9ypVvXfseyfg',
+        'Et9M3rrA7H2kHQEGRXHxufcp9HTEmFirMWtKHvjoJ85r1C9',
       ],
     },
   },
