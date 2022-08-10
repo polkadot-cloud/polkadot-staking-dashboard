@@ -13,6 +13,7 @@ import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
+import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
@@ -147,6 +148,24 @@ export const VALIDATOR_COMMUNITY = [
         'Eksma7JmWh8DenpNKi2uCavwaKJ9QrJJbtcnmwJr3hbHSmC',
         'Dm64aaAUyy5dvYCSmyzz3njGrWrVaki9F6BvUDSYjDDoqR2',
         'DfHkfoKa6xzNMWTNGL8SH8VyY69gajen4ijgmegeU4cZm1H',
+      ],
+    },
+  },
+  {
+    name: 'STAKEWORLD',
+    Thumbnail: Stakeworld,
+    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
+    email: 'info@stakeworld.nl',
+    website: 'https://stakeworld.nl',
+    validators: {
+      polkadot: [
+        '14kpNbU4XjEHfYdqp95Gq3NkBWbgFd6J8Yjd2SneWNzvf1Yp',
+        '13Jpq4n3PXXaSAbJTMmFD78mXAzs8PzgUUQd5ve8saw7HQS5',
+      ],
+      kusama: [
+        'CtEni6wrP7Kz2KWus9Y6vQWuhLqJpd9mQFTmTvw8T7FLui8',
+        'FZ1GFKR6tYx9gNGHV67h5aV6bfhAbh7ZRdU9ypVvXfseyfg',
+        'Et9M3rrA7H2kHQEGRXHxufcp9HTEmFirMWtKHvjoJ85r1C9',
       ],
     },
   },
