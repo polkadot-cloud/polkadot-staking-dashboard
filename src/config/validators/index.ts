@@ -12,6 +12,7 @@ import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
+import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
@@ -127,6 +128,21 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'HWyLYmpW68JGJYoVJcot6JQ1CJbtUQeTdxfY1kUTsvGCB1r',
         'GLSikJaXTVWvWtUhzB3Bj6xb5TcnhTUp6EuAkxaCohT9UBv',
+      ],
+    },
+  },
+  {
+    name: 'Stakepile.com',
+    Thumbnail: Stakepile,
+    bio: 'Reliable, independent staking service with low fees to help you earn better yields. We actively participate in all community on-chain governance. Our nodes are geographically distributed across several regions for better redundancy and decentralization.',
+    email: 'stake@stakepile.com',
+    twitter: '@stakepile',
+    website: 'https://stakepile.com',
+    validators: {
+      polkadot: ['124X3VPduasSodAjS6MPd5nEqM8SUdKN5taMUUPtkWqF1fVf'],
+      kusama: [
+        'J6TTn21p46c1XzXAZPVTGuQwBxFG2JfTwRnAFwgcdE2SWdz',
+        'EAChfSL6tQfjy7vD8YgYB8DCn7A9c1aAsERP9Hx8cj1tqxL',
       ],
     },
   },
