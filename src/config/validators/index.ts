@@ -18,6 +18,7 @@ import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
+import { ReactComponent as PDP_project } from './thumbnails/PDP_logo.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
@@ -221,6 +222,21 @@ export const VALIDATOR_COMMUNITY = [
     twitter: '@wojdot',
     validators: {
       polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
+    },
+  },
+{
+    name: 'PDP_Validator',
+    Thumbnail: PDP_logo,
+    bio: 'Our service has its own infrastructure and a team of administrators.  The beneficiaries of our service are investment professionals.  We validate in projects from the top 10.  We will help you earn!',
+    email: 'pavel.butenko@yahoo.com',
+    twitter: '@PaulBAciD',
+    website: 'https://t.me/go300info',
+    validators: {
+      polkadot: ['16Y3FmTiJ3ZYAUZrf5rZtxrQJzcHsDBdscpu2zgMD2xN6NY7'],
+      kusama: [
+        'J7MmkYX4dJzUbNnU9ccemPFbxtsyaSgFVwAGMxx8k9Lf5cu',
+        'HCogweijHTm85qf9cSUqjNmyZZvu61r4SsTcsAT7S7pgpem',
+      ],
     },
   },
 ];
