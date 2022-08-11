@@ -10,6 +10,7 @@ import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
+import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
@@ -221,6 +222,15 @@ export const VALIDATOR_COMMUNITY = [
     twitter: '@wojdot',
     validators: {
       polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
+    },
+  },
+  {
+    name: 'GoOpen',
+    Thumbnail: GoOpen,
+    bio: 'Independent Polkadot Validator. Polkadot teacher on Moralis academy. With strong knowledge of Linux, making sure that the validator is running on an up-to-date system and optimal hardware.',
+    validators: {
+      polkadot: ['16VVNbc4m6aUxwaVwgRra6Ue7fMNGcRQHTFo1TqxmnCyuwwn'],
+      kusama: ['JJiV1xrj1814BVDDG2pFCsgzdbR7K29VcyXQGXEUhn7LWhK'],
     },
   },
 ];
