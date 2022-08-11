@@ -18,6 +18,7 @@ import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
+import { ReactComponent as decentradot } from './thumbnails/decentradot.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
@@ -223,4 +224,18 @@ export const VALIDATOR_COMMUNITY = [
       polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
     },
   },
+  {
+    name: '🌐 decentraDOT.com 🌐',
+    Thumbnail: decentradot,
+    bio: 'decentraDOT is a high-quality Polkadot validator run by blockchain enthusiasts in The Netherlands. In addition to staking services we provide free of charge software such as our validator dashboard.',
+    email: 'admin@decentradot.com',
+    website: 'https://decentradot.com',
+    validators: {
+      polkadot: ['15wznkm7fMaJLFaw7B8KrJWkNcWsDziyTKVjrpPhRLMyXsr5'],
+      kusama: [
+        'GRSWBC1kCuNVp8KTgGyK7Bo3bP7CdLDPwfnx2L5JJLQ41Qj',
+        'Em4HYqVrWX3uCvrC8NWoabfKpV9z8stdRKkXYXcZdWGxdXT',
+      ]
+    },
+  }
 ];
