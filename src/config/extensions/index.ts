@@ -18,7 +18,7 @@ export interface ExtensionConfig {
 export const EXTENSIONS: ExtensionConfig[] = [
   {
     id: 'enkrypt',
-    title: 'enkrypt',
+    title: 'Enkrypt',
     icon: EnkryptSVG,
   },
   {
