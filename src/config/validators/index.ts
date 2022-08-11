@@ -10,6 +10,7 @@ import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
+import { ReactComponent as metaspan } from './thumbnails/metaspan.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
@@ -83,6 +84,18 @@ export const VALIDATOR_COMMUNITY = [
         'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
         'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
       ],
+    },
+  },
+  {
+    name: 'METASPAN',
+    Thumbnail: metaspan,
+    bio: 'End-to-end blockchain solutions, building on Polkadot and Kusama.',
+    email: 'hello@metaspan.com',
+    twitter: '@metaspan_io',
+    website: 'https://metaspan.com/',
+    validators: {
+      polkadot: ['16ce9zrmiuAtdi9qv1tuiQ1RC1xR6y6NgnBcRtMoQeAobqpZ'],
+      kusama: ['HyLisujX7Cr6D7xzb6qadFdedLt8hmArB6ZVGJ6xsCUHqmx'],
     },
   },
   {
