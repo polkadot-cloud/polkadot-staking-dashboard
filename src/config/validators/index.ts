@@ -227,7 +227,7 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'GoOpen',
     Thumbnail: GoOpen,
-    bio: 'Independent Polkadot Validator. Polkadot teacher on Moralis academy. With strong knowledge of Linux, making sure that the validator is running on an up-to-date system and optimal hardware.',
+    bio: 'Independent Polkadot Validator. Polkadot teacher on Moralis academy. With strong knowledge of Linux, making sure that the validator is running on a secure and up-to-date system with optimal hardware.',
     validators: {
       polkadot: ['16VVNbc4m6aUxwaVwgRra6Ue7fMNGcRQHTFo1TqxmnCyuwwn'],
       kusama: ['JJiV1xrj1814BVDDG2pFCsgzdbR7K29VcyXQGXEUhn7LWhK'],
