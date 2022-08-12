@@ -31,7 +31,7 @@ import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import { Tooltip } from 'library/Tooltip';
 import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorFallback } from 'library/ErrorBoundary';
+import { ErrorFallbackRoutes } from 'library/ErrorBoundary';
 
 export const RouterInner = () => {
   const { network } = useApi();
@@ -70,7 +70,7 @@ export const RouterInner = () => {
           {/* Fixed headers */}
           <Headers />
 
-          <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <AnimatePresence>
               <Routes>
                 {PAGES_CONFIG.map((page, pageIndex) => {

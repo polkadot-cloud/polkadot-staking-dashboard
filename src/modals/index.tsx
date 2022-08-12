@@ -4,6 +4,8 @@
 import { useEffect, useRef } from 'react';
 import { useAnimation } from 'framer-motion';
 import { useModal } from 'contexts/Modal';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { ModalWrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import { ConnectAccounts } from './ConnectAccounts';
 import { ValidatorMetrics } from './ValidatorMetrics';
@@ -99,26 +101,28 @@ export const Modal = () => {
           }}
         >
           <ContentWrapper ref={modalRef}>
-            {modal === 'ConnectAccounts' && <ConnectAccounts />}
-            {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
-            {modal === 'Settings' && <Settings />}
-            {modal === 'UpdateController' && <UpdateController />}
-            {modal === 'UpdateBond' && <UpdateBond />}
-            {modal === 'UpdatePayee' && <UpdatePayee />}
-            {modal === 'ChangeNominations' && <ChangeNominations />}
-            {modal === 'Nominate' && <Nominate />}
-            {modal === 'UnlockChunks' && <UnlockChunks />}
-            {modal === 'CreatePool' && <CreatePool />}
-            {modal === 'NominatePool' && <NominatePool />}
-            {modal === 'JoinPool' && <JoinPool />}
-            {modal === 'LeavePool' && <LeavePool />}
-            {modal === 'ChangePoolState' && <ChangePoolState />}
-            {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
-            {modal === 'ClaimReward' && <ClaimReward />}
-            {modal === 'SelectFavourites' && <SelectFavourites />}
-            {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
-            {modal === 'Networks' && <Networks />}
-            {modal === 'Bio' && <Bio />}
+            <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
+              {modal === 'ConnectAccounts' && <ConnectAccounts />}
+              {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
+              {modal === 'Settings' && <Settings />}
+              {modal === 'UpdateController' && <UpdateController />}
+              {modal === 'UpdateBond' && <UpdateBond />}
+              {modal === 'UpdatePayee' && <UpdatePayee />}
+              {modal === 'ChangeNominations' && <ChangeNominations />}
+              {modal === 'Nominate' && <Nominate />}
+              {modal === 'UnlockChunks' && <UnlockChunks />}
+              {modal === 'CreatePool' && <CreatePool />}
+              {modal === 'NominatePool' && <NominatePool />}
+              {modal === 'JoinPool' && <JoinPool />}
+              {modal === 'LeavePool' && <LeavePool />}
+              {modal === 'ChangePoolState' && <ChangePoolState />}
+              {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
+              {modal === 'ClaimReward' && <ClaimReward />}
+              {modal === 'SelectFavourites' && <SelectFavourites />}
+              {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
+              {modal === 'Networks' && <Networks />}
+              {modal === 'Bio' && <Bio />}
+            </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>
         <button

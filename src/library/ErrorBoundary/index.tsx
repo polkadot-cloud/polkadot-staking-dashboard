@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper } from './Wrapper';
 
-export const ErrorFallback = ({
+export const ErrorFallbackRoutes = ({
   resetErrorBoundary,
 }: {
   resetErrorBoundary: () => void;
 }) => (
   <Wrapper>
-    <h3>
+    <h3 className="with-margin">
       <FontAwesomeIcon icon={faBug} transform="grow-25" />
     </h3>
     <h1>Opps, Something Went Wrong</h1>
@@ -20,5 +20,20 @@ export const ErrorFallback = ({
         Click to reload
       </button>
     </h2>
+  </Wrapper>
+);
+
+export const ErrorFallbackModal = ({
+  resetErrorBoundary,
+}: {
+  resetErrorBoundary: () => void;
+}) => (
+  <Wrapper className="modal">
+    <h2>Opps, Something Went Wrong</h2>
+    <h4>
+      <button type="button" onClick={resetErrorBoundary}>
+        Click to reload modal
+      </button>
+    </h4>
   </Wrapper>
 );

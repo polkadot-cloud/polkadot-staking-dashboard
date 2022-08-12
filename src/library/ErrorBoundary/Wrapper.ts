@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { textSecondary, networkColor } from 'theme';
+import { textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -7,25 +7,35 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  margin-top: 10rem;
+
+  &.modal {
+    padding: 0.75rem 0 0 0;
+  }
 
   h1,
   h2 {
     color: ${textSecondary};
-    button {
-      color: ${networkColor};
-      font-size: 1.25rem;
-
-      &:hover {
-        opacity: 0.75;
-      }
-    }
   }
 
   h3 {
-    margin-bottom: 3rem;
+    &.with-margin {
+      margin-top: 10rem;
+      margin-bottom: 3rem;
+    }
     svg {
       color: ${textSecondary};
+    }
+  }
+
+  h4 {
+    margin-top: 0;
+  }
+  button {
+    color: ${textSecondary};
+    font-size: 1.25rem;
+
+    &:hover {
+      opacity: 0.75;
     }
   }
 `;
