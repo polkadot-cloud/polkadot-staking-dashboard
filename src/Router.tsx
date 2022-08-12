@@ -31,7 +31,7 @@ import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import { Tooltip } from 'library/Tooltip';
 import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorFallbackRoutes } from 'library/ErrorBoundary';
+import { ErrorFallbackRoutes, ErrorFallbackApp } from 'library/ErrorBoundary';
 
 export const RouterInner = () => {
   const { network } = useApi();
@@ -44,7 +44,7 @@ export const RouterInner = () => {
   }, [pathname, network]);
 
   return (
-    <>
+    <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       {/* Modal: closed by default */}
       <Modal />
       <BodyInterfaceWrapper>
@@ -113,7 +113,7 @@ export const RouterInner = () => {
 
       {/* Notification popups */}
       <Notifications />
-    </>
+    </ErrorBoundary>
   );
 };
 

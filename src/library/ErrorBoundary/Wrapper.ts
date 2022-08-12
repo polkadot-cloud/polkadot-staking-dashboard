@@ -8,6 +8,9 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  &.app {
+    height: 100vh;
+  }
   &.modal {
     padding: 0.75rem 0 0 0;
   }
@@ -20,8 +23,8 @@ export const Wrapper = styled.div`
   h3 {
     &.with-margin {
       margin-top: 10rem;
-      margin-bottom: 3rem;
     }
+    margin-bottom: 3rem;
     svg {
       color: ${textSecondary};
     }
