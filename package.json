@@ -39,6 +39,7 @@
     "react-content-loader": "^6.2.0",
     "react-custom-checkbox": "^2.0.1",
     "react-dom": "^18.1.0",
+    "react-error-boundary": "^3.1.4",
     "react-helmet": "^6.1.0",
     "react-lorem-ipsum": "^1.4.9",
     "react-router-dom": "^6.2.1",
