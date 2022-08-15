@@ -26,7 +26,7 @@ export const Networks = () => {
 
   useEffect(() => {
     // @ts-ignore
-    window.navigator?.brave?.isBrave().then(async (isBrave: any) => {
+    window.navigator?.brave?.isBrave().then(async (isBrave: boolean) => {
       setBraveBrowser(isBrave);
     });
   });
@@ -39,7 +39,7 @@ export const Networks = () => {
         <div className="items">
           {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
             const Svg = item.brand.inline.svg;
-            const rpcDisabled = networkKey === key && !isLightClient;
+            const rpcDisabled = networkKey === key;
 
             return (
               <NetworkButton
@@ -49,11 +49,8 @@ export const Networks = () => {
                 type="button"
                 className="action-button"
                 onClick={() => {
-                  if (
-                    networkKey !== key ||
-                    (networkKey === key && isLightClient)
-                  ) {
-                    switchNetwork(key, false);
+                  if (networkKey !== key) {
+                    switchNetwork(key, isLightClient);
                     setStatus(0);
                   }
                 }}

@@ -157,7 +157,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const { endpoints } = nodeEndpoint;
 
     let _provider: WsProvider | ScProvider;
-    if (_isLightClient && endpoints.lightClient) {
+    if (_isLightClient) {
       _provider = new ScProvider(endpoints.lightClient);
       await _provider.connect();
     } else {
