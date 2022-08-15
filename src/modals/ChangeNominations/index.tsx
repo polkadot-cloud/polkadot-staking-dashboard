@@ -65,7 +65,7 @@ export const ChangeNominations = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!valid || !api || !membership) {
+    if (!valid || !api || (isPool && !membership)) {
       return _tx;
     }
 
@@ -76,7 +76,8 @@ export const ChangeNominations = () => {
             Id: item,
           }
     );
-    if (isPool && remaining !== 0) {
+
+    if (isPool && remaining !== 0 && membership) {
       _tx = api.tx.nominationPools.nominate(membership.poolId, targetsToSubmit);
     } else if (isStaking && remaining !== 0) {
       _tx = api.tx.staking.nominate(targetsToSubmit);

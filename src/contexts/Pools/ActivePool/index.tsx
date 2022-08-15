@@ -140,11 +140,11 @@ export const ActivePoolProvider = ({
       new BN(rewardAccountBalance).sub(existentialDeposit)
     );
 
-    const lastRewardPoolBalance = new BN(rmCommas(rewardPool.balance));
-    let poolTotalEarnings = new BN(rmCommas(rewardPool.totalEarnings));
-    const rewardPoints = new BN(rmCommas(rewardPool.points));
-    const bondedPoints = new BN(rmCommas(bondedPool.points));
-    const memberPoints = new BN(rmCommas(membership.points));
+    const lastRewardPoolBalance = new BN(rmCommas(rewardPool?.balance ?? '0'));
+    let poolTotalEarnings = new BN(rmCommas(rewardPool?.totalEarnings ?? '0'));
+    const rewardPoints = new BN(rmCommas(rewardPool?.points ?? '0'));
+    const bondedPoints = new BN(rmCommas(bondedPool?.points ?? '0'));
+    const memberPoints = new BN(rmCommas(membership?.points ?? '0'));
 
     // the pool total earning the last time the member claimed his rewards
     const poolTotalEarningsAtLastClaim = new BN(
