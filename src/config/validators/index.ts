@@ -13,6 +13,7 @@ import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
+import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
@@ -136,6 +137,21 @@ export const VALIDATOR_COMMUNITY = [
         'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
         'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
         'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
+      ],
+    },
+  },
+  {
+    name: 'PDP_Validator',
+    Thumbnail: PDP,
+    bio: 'Our service has its own infrastructure and a team of administrators.  The beneficiaries of our service are investment professionals.  We validate in projects from the top 10.  We will help you earn!',
+    email: 'pavel.butenko@yahoo.com',
+    twitter: '@PaulBAciD',
+    website: 'https://t.me/go300info',
+    validators: {
+      polkadot: ['16Y3FmTiJ3ZYAUZrf5rZtxrQJzcHsDBdscpu2zgMD2xN6NY7'],
+      kusama: [
+        'J7MmkYX4dJzUbNnU9ccemPFbxtsyaSgFVwAGMxx8k9Lf5cu',
+        'HCogweijHTm85qf9cSUqjNmyZZvu61r4SsTcsAT7S7pgpem',
       ],
     },
   },
