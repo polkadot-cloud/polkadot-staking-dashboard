@@ -32,7 +32,7 @@ export const ContentWrapper = styled.div`
   > h4 {
     color: ${textSecondary};
     margin: 0.75rem 0;
-    padding-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
     width: 100%;
     border-bottom: 1px solid ${borderPrimary};
   }
@@ -41,7 +41,6 @@ export const ContentWrapper = styled.div`
     box-sizing: border-box;
     position: relative;
     box-sizing: border-box;
-    padding: 0.5rem 0;
     border-bottom: none;
     width: auto;
     border-radius: 0.75rem;
@@ -49,7 +48,7 @@ export const ContentWrapper = styled.div`
     overflow-y: auto;
     z-index: 1;
     width: 100%;
-    margin-bottom: 1.5rem;
+    margin: 1rem 0 1.5rem 0;
 
     h4 {
       margin: 0.2rem 0;
@@ -84,14 +83,14 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   }
 
   h3 {
-    margin: 0 0.5rem 0 0.75rem;
+    margin: 0 0.5rem;
   }
 
   h4 {
     margin: 0;
     &.connected {
       color: ${textSuccess};
-      margin-left: 1rem;
+      margin-left: 0.75rem;
     }
   }
 
@@ -143,7 +142,7 @@ export const ConnectionsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
 `;
 
