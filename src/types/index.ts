@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FunctionComponent, SVGProps } from 'react';
+import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
 
@@ -9,6 +10,7 @@ export type Fn = () => void;
 
 export enum NetworkName {
   Polkadot = 'polkadot',
+  Kusama = 'kusama',
   Westend = 'westend',
 }
 
@@ -23,6 +25,10 @@ export interface Networks {
 
 export interface Network {
   name: string;
+  endpoints: {
+    rpc: string;
+    lightClient: WellKnownChain;
+  };
   colors: {
     primary: {
       light: string;
@@ -37,7 +43,6 @@ export interface Network {
       dark: string;
     };
   };
-  endpoint: string;
   subscanEndpoint: string;
   unit: string;
   units: number;
