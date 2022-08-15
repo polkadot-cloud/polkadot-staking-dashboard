@@ -9,6 +9,7 @@ import {
   buttonPrimaryBackground,
   textPrimary,
   textSecondary,
+  borderPrimary,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -27,6 +28,27 @@ export const Wrapper = styled.div`
 export const ContentWrapper = styled.div`
   box-sizing: border-box;
   width: 100%;
+
+  .brave-note {
+    display: flex;
+    border: 0.2rem solid ${borderPrimary};
+    border-radius: 0.75rem;
+    padding: 1rem;
+
+    .brave-text {
+      width: 90%;
+      padding-left: 1rem;
+      color: ${textPrimary};
+      font-size: 1.2rem;
+      align-self: center;
+
+      .learn-more {
+        color: ${textSecondary};
+        font-weight: bold;
+        text-decoration: underline ${borderPrimary};
+      }
+    }
+  }
 
   .items {
     box-sizing: border-box;
