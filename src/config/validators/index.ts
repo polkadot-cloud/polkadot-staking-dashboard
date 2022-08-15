@@ -13,6 +13,7 @@ import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
+import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
 import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
@@ -137,6 +138,34 @@ export const VALIDATOR_COMMUNITY = [
         'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
         'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
         'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
+      ],
+    },
+  },
+  {
+    name: 'ParaNodes.io',
+    Thumbnail: ParaNodes,
+    bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stablility of operations.',
+    email: 'support@paranodes.io',
+    twitter: '@paranodes',
+    website: 'https://paranodes.io/',
+    validators: {
+      polkadot: ['14hM4oLJCK6wtS7gNfwTDhthRjy5QJ1t3NAcoPjEepo9AH67'],
+      kusama: [
+        'H3DL157HL7DkvV2kXocanmKaGXNyQphUDVW33Fnfk8KNhsv',
+        'HtYny8Eker9VBEKQrtBd6Y5PTkaHQFSvyMFy2bkd66wGBan',
+        'FkWky3r2bryP3aaAwVWykYrKesAwkDyKZWsDyBvck7YawSi',
+        'EsNZHmG4bQMGzQNK4Z2CR7Hdhu4or7p2vsLRChUEJcjJAeU',
+        'EriYFJuqCeBF6SFkKxyQWwaTvT9tcoF9ZGDQ4LX3a1iBsYr',
+        'ESzw1JdRfoBNUKo12qjqu4RMgro3exrit1Tr1GGFjVhyHZf',
+        'DtrDM8ZZpBhTSwptMCgYEzJqbPUFArScxikZfbd9tHA47PZ',
+        'EWxmJtdmRUtpgLiHzFbtQc3E2jDx9j3VYZPmjWCEaSUnCZG',
+        'HyZUEZw5G18KtisetKL274g2Kh6i2XHKtFoheyKJW9vBwXu',
+        'Gu6Jt8TJQ3LF7dJgVLCr1JfoxKTcWhMAoaXr8ATczMAE9vm',
+        'ECLwZzFusnTr6hdztrkVaTKeQoWxKZBh9e8EzdG92QX7PAy',
+        'EjHrXpRHyo1WpWEmFKTYT8wEtTXKnzZDQAth1MErwDmabmq',
+        'GpZgakHH3wR1vCvYFgy8Q1iJWYqxyQiRPyeXhGKWxX88uXP',
+        'CecU9j1rpC6CDSzFjtrUmNqonzVk5n1BNFiTiN9vadA1rMs',
+        'FYiswPLWbZAJSBJ3AcGcXpQYxCJW3eE56QQvnshGUEKJexW',
       ],
     },
   },
