@@ -13,6 +13,7 @@ import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
+import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
@@ -69,6 +70,20 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'DrRBkx2Qx4sXRGZDXz6d44QCXqV2eJhn8Rq79V88FpSqAr8',
         'EeFYYF8zrLXRpfFXLn2T5bMmgiFpDpmAhVzoh9hA3188wTc',
+      ],
+    },
+  },
+  {
+    name: 'Jimmy Tudeski | Stakenode ʕ •ᴥ•ʔ',
+    Thumbnail: Stakenode,
+    bio: 'Stakenode provides validation and staking services for Polkadot and Kusama relay chains and parachain networks. We are independent node operators, experienced Dotsama ambassadors, focused on community, decentralisation and ecosystem development. Come stake and build with us.',
+    email: 'jimmytudeski@stakenode.dev',
+    twitter: '@stakenode_dev',
+    website: 'https://stakenode.medium.com/',
+    validators: {
+      kusama: [
+        'FvdwMNP57nRWEsNZZsrHWKqnbmduy4jBAC8MeLmgi9Yp8sA',
+        'D3Sr3PozgPypkBzKBheGSJbqu8m4idenBPaWtZUXLWPtjJT',
       ],
     },
   },
