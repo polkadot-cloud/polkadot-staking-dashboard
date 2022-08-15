@@ -154,12 +154,14 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // connect function sets provider and updates active network.
   const connect = async (_network: NetworkName, _isLightClient?: boolean) => {
     const nodeEndpoint: Network = NETWORKS[_network];
+    const { endpoints } = nodeEndpoint;
+
     let _provider: WsProvider | ScProvider;
-    if (_isLightClient && nodeEndpoint.lightClientEndpoint) {
-      _provider = new ScProvider(nodeEndpoint.lightClientEndpoint);
+    if (_isLightClient && endpoints.lightClient) {
+      _provider = new ScProvider(endpoints.lightClient);
       await _provider.connect();
     } else {
-      _provider = new WsProvider(nodeEndpoint.endpoint);
+      _provider = new WsProvider(endpoints.rpc);
     }
     setNetwork({
       name: _network,

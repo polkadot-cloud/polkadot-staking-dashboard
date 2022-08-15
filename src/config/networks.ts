@@ -20,6 +20,10 @@ import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 export const NETWORKS: Networks = {
   polkadot: {
     name: 'Polkadot',
+    endpoints: {
+      rpc: 'wss://rpc.polkadot.io',
+      lightClient: WellKnownChain.polkadot,
+    },
     colors: {
       primary: {
         light: 'rgb(211, 48, 121)',
@@ -34,8 +38,6 @@ export const NETWORKS: Networks = {
         dark: 'rgb(211, 48, 121, 0.05)',
       },
     },
-    lightClientEndpoint: WellKnownChain.polkadot,
-    endpoint: 'wss://rpc.polkadot.io',
     subscanEndpoint: 'https://polkadot.api.subscan.io',
     unit: 'DOT',
     units: 10,
@@ -65,6 +67,10 @@ export const NETWORKS: Networks = {
   },
   kusama: {
     name: 'Kusama',
+    endpoints: {
+      rpc: 'wss://kusama-rpc.polkadot.io',
+      lightClient: WellKnownChain.ksmcc3,
+    },
     colors: {
       primary: {
         light: '#333',
@@ -79,8 +85,6 @@ export const NETWORKS: Networks = {
         dark: 'rgb(102,102,102, 0.05)',
       },
     },
-    lightClientEndpoint: WellKnownChain.ksmcc3,
-    endpoint: 'wss://kusama-rpc.polkadot.io',
     subscanEndpoint: 'https://kusama.api.subscan.io',
     unit: 'KSM',
     units: 12,
@@ -112,6 +116,10 @@ export const NETWORKS: Networks = {
   },
   westend: {
     name: 'Westend',
+    endpoints: {
+      rpc: 'wss://westend-rpc.polkadot.io',
+      lightClient: WellKnownChain.westend2,
+    },
     colors: {
       primary: {
         light: '#EC6E79',
@@ -126,8 +134,6 @@ export const NETWORKS: Networks = {
         dark: 'rgb(236,110,121, 0.05)',
       },
     },
-    lightClientEndpoint: WellKnownChain.westend2,
-    endpoint: 'wss://westend-rpc.polkadot.io',
     subscanEndpoint: 'https://westend.api.subscan.io',
     unit: 'WND',
     units: 12,

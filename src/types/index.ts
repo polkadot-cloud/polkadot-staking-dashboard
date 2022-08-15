@@ -24,6 +24,10 @@ export interface Networks {
 
 export interface Network {
   name: string;
+  endpoints: {
+    rpc: string;
+    lightClient: WellKnownChain;
+  };
   colors: {
     primary: {
       light: string;
@@ -38,8 +42,6 @@ export interface Network {
       dark: string;
     };
   };
-  endpoint: string;
-  lightClientEndpoint?: WellKnownChain;
   subscanEndpoint: string;
   unit: string;
   units: number;

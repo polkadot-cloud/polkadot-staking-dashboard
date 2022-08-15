@@ -44,7 +44,7 @@ export const Networks = () => {
                   type="button"
                   className={`action-button 
                   ${
-                    item.lightClientEndpoint
+                    item.endpoints.lightClient
                       ? 'w-light-client'
                       : 'wo-light-client'
                   } ${disabledLCButton ? ' disabled' : ''}`}
@@ -73,8 +73,8 @@ export const Networks = () => {
                     />
                   </div>
                 </button>
-                {/* This is the Light Client button */}
-                {item.lightClientEndpoint ? (
+                {/* Light Client button */}
+                {item.endpoints.lightClient ? (
                   <button
                     disabled={disabledLCButton}
                     type="button"
