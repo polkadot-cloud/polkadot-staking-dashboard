@@ -10,6 +10,7 @@ export type Fn = () => void;
 
 export enum NetworkName {
   Polkadot = 'polkadot',
+  Kusama = 'kusama',
   Westend = 'westend',
 }
 

@@ -46,7 +46,7 @@ export const NetworkBar = () => {
 
   useEffect(() => {
     setNetworkName(
-      isLightClient ? network.name.concat(' light') : network.name
+      isLightClient ? network.name.concat(' Light') : network.name
     );
   }, [network.name, isLightClient]);
 

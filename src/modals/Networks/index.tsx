@@ -1,20 +1,28 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, Fragment, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NETWORKS } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
+import { NetworkName } from 'types';
 import { PaddingWrapper } from '../Wrappers';
-import { ContentWrapper } from './Wrapper';
+import {
+  ContentWrapper,
+  NetworkButton,
+  ConnectionsWrapper,
+  BraveWarning,
+  ConnectionButton,
+} from './Wrapper';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 
 export const Networks = () => {
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
+  const networkKey: string = network.name.toLowerCase();
 
   useEffect(() => {
     // @ts-ignore
@@ -27,87 +35,74 @@ export const Networks = () => {
     <PaddingWrapper>
       <h2>Switch Network</h2>
       <ContentWrapper>
+        <h4>Select Network</h4>
         <div className="items">
           {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
             const Svg = item.brand.inline.svg;
-
-            const disabledNetworkButton =
-              network.name.toLowerCase() === key && !isLightClient;
-            const disabledLCButton =
-              network.name.toLowerCase() === key && isLightClient;
+            const rpcDisabled = networkKey === key && !isLightClient;
 
             return (
-              <Fragment key={`network_${index}`}>
-                <button
-                  disabled={disabledNetworkButton}
-                  key={`network_switch_${index}`}
-                  type="button"
-                  className={`action-button 
-                  ${
-                    item.endpoints.lightClient
-                      ? 'w-light-client'
-                      : 'wo-light-client'
-                  } ${disabledLCButton ? ' disabled' : ''}`}
-                  onClick={() => {
-                    if (
-                      network.name.toLowerCase() !== key ||
-                      (network.name.toLowerCase() === key && isLightClient)
-                    ) {
-                      switchNetwork(key, false);
-                      setStatus(0);
-                    }
-                  }}
-                >
-                  <div style={{ width: '1.75rem' }}>
-                    <Svg
-                      width={item.brand.inline.size}
-                      height={item.brand.inline.size}
-                    />
-                  </div>
-                  <h3>{item.name}</h3>
-
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                    />
-                  </div>
-                </button>
-                {/* Light Client button */}
-                {item.endpoints.lightClient ? (
-                  <button
-                    disabled={disabledLCButton}
-                    type="button"
-                    className={`action-button light-client ${
-                      disabledLCButton ? 'disabled' : ''
-                    }`}
-                    key={`switch_network_${index}_lc`}
-                    onClick={() => {
-                      if (
-                        network.name.toLowerCase() !== key ||
-                        (network.name.toLowerCase() === key && !isLightClient)
-                      ) {
-                        switchNetwork(key, true);
-                        setStatus(0);
-                      }
-                    }}
-                  >
-                    <h3>Light Client</h3>
-                    <div>
-                      <FontAwesomeIcon
-                        transform="shrink-2"
-                        icon={faChevronRight}
-                      />
-                    </div>
-                  </button>
-                ) : null}
-                {Object.entries(NETWORKS).length - 1 !== index && <span />}
-              </Fragment>
+              <NetworkButton
+                connected={networkKey === key}
+                disabled={rpcDisabled}
+                key={`network_switch_${index}`}
+                type="button"
+                className="action-button"
+                onClick={() => {
+                  if (
+                    networkKey !== key ||
+                    (networkKey === key && isLightClient)
+                  ) {
+                    switchNetwork(key, false);
+                    setStatus(0);
+                  }
+                }}
+              >
+                <div style={{ width: '1.75rem' }}>
+                  <Svg
+                    width={item.brand.inline.size}
+                    height={item.brand.inline.size}
+                  />
+                </div>
+                <h3>{item.name}</h3>
+                {networkKey === key && <h4 className="connected">Connected</h4>}
+                <div>
+                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+                </div>
+              </NetworkButton>
             );
           })}
         </div>
+        <h4>Connection Type</h4>
+        <ConnectionsWrapper>
+          <ConnectionButton
+            connected={!isLightClient}
+            disabled={!isLightClient}
+            type="button"
+            onClick={() => {
+              switchNetwork(networkKey as NetworkName, false);
+              setStatus(0);
+            }}
+          >
+            <h3>RPC</h3>
+            {!isLightClient && <h4 className="connected">Selected</h4>}
+          </ConnectionButton>
+          <ConnectionButton
+            connected={isLightClient}
+            disabled={isLightClient}
+            type="button"
+            onClick={() => {
+              switchNetwork(networkKey as NetworkName, true);
+              setStatus(0);
+            }}
+          >
+            <h3>Light Client</h3>
+            {isLightClient && <h4 className="connected">Selected</h4>}
+          </ConnectionButton>
+        </ConnectionsWrapper>
+
         {braveBrowser ? (
-          <div className="brave-note">
+          <BraveWarning>
             <BraveIconSVG />
             <div className="brave-text">
               <b>To Brave users!</b> Due to a recent update (
@@ -122,7 +117,7 @@ export const Networks = () => {
                 Learn more here.
               </a>
             </div>
-          </div>
+          </BraveWarning>
         ) : null}
       </ContentWrapper>
     </PaddingWrapper>
