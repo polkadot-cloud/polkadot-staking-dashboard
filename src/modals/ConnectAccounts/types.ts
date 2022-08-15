@@ -1,5 +1,6 @@
 import { FunctionComponent, SVGProps } from 'react';
 import { ExtensionAccount } from 'contexts/Connect/types';
+import { MaybeAccount } from 'types';
 
 export interface ExtensionProps {
   meta: ExtensionMetaProps;
@@ -22,7 +23,7 @@ export interface ExtensionMetaProps {
 
 export interface AccountElementProps {
   meta: ExtensionAccount | null;
-  address?: string;
+  address: MaybeAccount;
   label?: string[];
   disconnect?: boolean;
   asElement?: boolean;

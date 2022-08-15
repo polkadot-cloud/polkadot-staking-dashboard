@@ -31,9 +31,9 @@ export const ConnectAccounts = () => {
   const resizeModal = () => {
     let _height = 0;
     if (section === 0) {
-      _height = extensionsRef.current?.clientHeight ?? 0;
+      _height = window.innerHeight;
     } else if (section === 1) {
-      _height = accountsRef.current?.clientHeight ?? 0;
+      _height = window.innerHeight;
     }
     modal.setModalHeight(_height);
   };

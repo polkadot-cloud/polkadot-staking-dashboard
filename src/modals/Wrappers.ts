@@ -50,7 +50,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
   transition: height 0.4s cubic-bezier(0.1, 1, 0.2, 1);
   box-sizing: border-box;
   width: 100%;
-  max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
+  max-width: ${(props) => (props.size === 'large' ? '900px' : '600px')};
   max-height: 100%;
   border-radius: 1rem;
   z-index: 9;
@@ -80,6 +80,16 @@ export const ContentWrapper = styled.div`
     > p {
       color: ${textSecondary};
     }
+  }
+  .closed {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    border: 1px solid ${textSecondary};
+    border-radius: 1rem;
+    padding: 0.3rem 0.75rem;
+    margin-right: 0.5rem;
+    font-size: 1rem;
   }
 `;
 

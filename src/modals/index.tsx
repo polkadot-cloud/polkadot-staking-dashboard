@@ -101,6 +101,15 @@ export const Modal = () => {
           }}
         >
           <ContentWrapper ref={modalRef}>
+            <button
+              type="button"
+              className="closed"
+              onClick={() => {
+                onFadeOut();
+              }}
+            >
+              Close
+            </button>
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
               {modal === 'ConnectAccounts' && <ConnectAccounts />}
               {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
@@ -125,15 +134,6 @@ export const Modal = () => {
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>
-        <button
-          type="button"
-          className="close"
-          onClick={() => {
-            onFadeOut();
-          }}
-        >
-          &nbsp;
-        </button>
       </div>
     </ModalWrapper>
   );
