@@ -173,14 +173,15 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     _network: NetworkName,
     _isLightClient: boolean
   ) => {
-    if (api !== null) {
-      localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
-      setIsLightClient(_isLightClient);
+    localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
+    setIsLightClient(_isLightClient);
+    // disconnect api if not null
+    if (api) {
       await api.disconnect();
-      setApi(null);
-      setConnectionStatus(ConnectionStatus.Connecting);
-      connect(_network, _isLightClient);
     }
+    setApi(null);
+    setConnectionStatus(ConnectionStatus.Connecting);
+    connect(_network, _isLightClient);
   };
 
   // handles fetching of DOT price and updates context state.
