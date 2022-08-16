@@ -4,7 +4,7 @@ import { MaybeAccount } from 'types';
 
 export interface ExtensionProps {
   meta: ExtensionMetaProps;
-  setSection: (n: number) => void;
+  setSection?: (n: number) => void;
   installed?: any;
   size?: string;
   message?: string;

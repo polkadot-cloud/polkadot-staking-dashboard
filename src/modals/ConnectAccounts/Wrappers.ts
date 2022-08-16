@@ -16,12 +16,7 @@ import {
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
-  box-sizing: border-box;
   width: 200%;
-  display: flex;
-  flex-flow: row nowrap;
-  overflow: hidden;
-  position: relative;
 `;
 
 export const ContentWrapper = styled.div`

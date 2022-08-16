@@ -32,15 +32,6 @@ export const ModalWrapper = styled(motion.div)`
     justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
-
-    /* click anywhere behind modal content to close */
-    .close {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: 8;
-      cursor: default;
-    }
   }
 `;
 
@@ -82,9 +73,8 @@ export const ContentWrapper = styled.div`
     }
   }
   .closed {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    width: 100%;
+    height: 100%;
     border: 1px solid ${textSecondary};
     border-radius: 1rem;
     padding: 0.3rem 0.75rem;

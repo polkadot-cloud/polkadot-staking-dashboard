@@ -54,7 +54,7 @@ export const Extension = (props: ExtensionProps) => {
 };
 
 export const ExtensionButton = (props: any) => {
-  const { meta, setSection, installed } = props;
+  const { meta, installed } = props;
   const { status } = meta;
 
   const { connectExtensionAccounts } = useConnect();
@@ -65,7 +65,7 @@ export const ExtensionButton = (props: any) => {
   // click to connect to extension
   const handleClick = async () => {
     if (status === 'connected') {
-      setSection(1);
+      console.log('conected');
     } else {
       (() => {
         connectExtensionAccounts(installed);

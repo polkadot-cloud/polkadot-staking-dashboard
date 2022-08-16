@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, forwardRef } from 'react';
-import { faCog, faChartLine, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
-import Button from 'library/Button';
 import { useBalances } from 'contexts/Balances';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,8 +20,6 @@ import {
 import { AccountElement, AccountButton } from './Account';
 
 export const Accounts = forwardRef((props: any, ref: any) => {
-  const { setSection } = props;
-
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
   const {
@@ -167,7 +164,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           <div>
             <h1>Accounts</h1>
           </div>
-          <div>
+          {/* <div>
             <Button
               title="Extensions"
               inline
@@ -175,7 +172,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
               transform="shrink-2"
               onClick={() => setSection(0)}
             />
-          </div>
+          </div> */}
         </div>
         {activeAccount ? (
           <AccountButton
