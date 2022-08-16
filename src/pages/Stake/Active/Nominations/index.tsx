@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
@@ -18,7 +17,6 @@ import { Wrapper } from './Wrapper';
 
 export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const { openModalWith } = useModal();
-  const { isReady } = useApi();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -111,58 +109,58 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
           )}
         </div>
       </CardHeaderWrapper>
-      {!activeAccount ? (
+      {nominated === null || isSyncing ? (
+        <div className="head">
+          <h4>
+            {!isSyncing && nominated === null
+              ? 'Not Nominating.'
+              : 'Syncing nominations...'}
+          </h4>
+        </div>
+      ) : !activeAccount ? (
         <div className="head">
           <h4>Not Nominating.</h4>
         </div>
-      ) : nominated === null || isSyncing ? (
-        <div className="head">
-          <h4>Syncing nominations...</h4>
-        </div>
       ) : (
         <>
-          {isReady && (
-            <>
-              {nominated.length > 0 ? (
-                <div style={{ marginTop: '1rem' }}>
-                  <ValidatorList
-                    validators={nominated}
-                    batchKey={batchKey}
-                    title="Your Nominations"
-                    format="nomination"
-                    bondType={isPool ? 'pool' : 'stake'}
-                    selectable={
-                      !isReadOnlyAccount(activeAccount) &&
-                      (!isPool || isPoolNominator())
-                    }
-                    actions={
-                      isReadOnlyAccount(activeAccount)
-                        ? []
-                        : [
-                            {
-                              title: 'Stop Nominating Selected',
-                              onClick: cbStopNominatingSelected,
-                              onSelected: true,
-                            },
-                            {
-                              disabled: !favouritesList.length,
-                              title: 'Add From Favourites',
-                              onClick: cbAddNominations,
-                              onSelected: false,
-                            },
-                          ]
-                    }
-                    refetchOnListUpdate
-                    allowMoreCols
-                    disableThrottle
-                  />
-                </div>
-              ) : (
-                <div className="head">
-                  <h4>Not Nominating.</h4>
-                </div>
-              )}
-            </>
+          {nominated.length > 0 ? (
+            <div style={{ marginTop: '1rem' }}>
+              <ValidatorList
+                validators={nominated}
+                batchKey={batchKey}
+                title="Your Nominations"
+                format="nomination"
+                bondType={isPool ? 'pool' : 'stake'}
+                selectable={
+                  !isReadOnlyAccount(activeAccount) &&
+                  (!isPool || isPoolNominator())
+                }
+                actions={
+                  isReadOnlyAccount(activeAccount)
+                    ? []
+                    : [
+                        {
+                          title: 'Stop Nominating Selected',
+                          onClick: cbStopNominatingSelected,
+                          onSelected: true,
+                        },
+                        {
+                          disabled: !favouritesList.length,
+                          title: 'Add From Favourites',
+                          onClick: cbAddNominations,
+                          onSelected: false,
+                        },
+                      ]
+                }
+                refetchOnListUpdate
+                allowMoreCols
+                disableThrottle
+              />
+            </div>
+          ) : (
+            <div className="head">
+              <h4>Not Nominating.</h4>
+            </div>
           )}
         </>
       )}
