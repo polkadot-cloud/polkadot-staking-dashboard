@@ -28,7 +28,7 @@ export const ChangeNominations = () => {
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { setStatus: setModalStatus, config } = useModal();
   const { membership } = usePoolMemberships();
-  const { poolNominations, isNominator } = useActivePool();
+  const { poolNominations, isNominator, isOwner } = useActivePool();
 
   const { nominations: newNominations, provider, bondType } = config;
 
@@ -52,11 +52,10 @@ export const ChangeNominations = () => {
     setValid(nominations.length > 0);
   }, [nominations]);
 
-  // ensure selected membership and targests are valid
+  // ensure selected membership and targets are valid
   let isValid = nominations.length > 0;
   if (isPool) {
-    isValid =
-      (membership && isNominator() && newNominations.length > 0) ?? false;
+    isValid = (membership && (isNominator() || isOwner())) ?? false;
   }
   useEffect(() => {
     setValid(isValid);
@@ -69,20 +68,32 @@ export const ChangeNominations = () => {
       return _tx;
     }
 
+    // targets submission differs between staking and pools
     const targetsToSubmit = newNominations.map((item: any) =>
       isPool
-        ? item?.address
+        ? item
         : {
             Id: item,
           }
     );
 
-    if (isPool && remaining !== 0 && membership) {
-      _tx = api.tx.nominationPools.nominate(membership.poolId, targetsToSubmit);
-    } else if (isStaking && remaining !== 0) {
-      _tx = api.tx.staking.nominate(targetsToSubmit);
-    } else if (isStaking && remaining === 0) {
-      _tx = api.tx.staking.chill();
+    if (isPool && membership) {
+      // if nominations remain, call nominate
+      if (remaining !== 0) {
+        _tx = api.tx.nominationPools.nominate(
+          membership.poolId,
+          targetsToSubmit
+        );
+      } else {
+        // wishing to stop all nominations, call chill
+        _tx = api.tx.nominationPools.chill(membership.poolId);
+      }
+    } else if (isStaking) {
+      if (remaining !== 0) {
+        _tx = api.tx.staking.nominate(targetsToSubmit);
+      } else {
+        _tx = api.tx.staking.chill();
+      }
     }
     return _tx;
   };
@@ -117,9 +128,6 @@ export const ChangeNominations = () => {
         }}
       >
         {!nominations.length && <Warning text="You have no nominations set." />}
-        {isPool && !newNominations.length && (
-          <Warning text="A pool needs to have at least one nomination. If the intention is to delete the pool, the pool owner can destroy it." />
-        )}
         {!accountHasSigner(signingAccount) && (
           <Warning
             text={`You must have your${
@@ -129,7 +137,7 @@ export const ChangeNominations = () => {
         )}
         <h2>
           Stop {!remaining ? 'All Nomination' : `${removing} Nomination`}
-          {remaining === 1 ? '' : 's'}
+          {removing === 1 ? '' : 's'}
         </h2>
         <Separator />
         <NotesWrapper>
