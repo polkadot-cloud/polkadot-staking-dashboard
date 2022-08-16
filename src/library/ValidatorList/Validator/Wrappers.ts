@@ -130,15 +130,18 @@ export const IdentityWrapper = styled(motion.div)`
   .inner {
     display: flex;
     flex-flow: row wrap;
+    justify-content: flex-start;
     align-items: center;
+    width: 100%;
+    height: 3.2rem;
+    padding: 0;
   }
   h4 {
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
     height: 3.2rem;
-    line-height: 2rem;
+    line-height: 3.2rem;
     padding: 0 0 0 0.4rem;
     margin: 0;
     overflow: hidden;

@@ -12,7 +12,8 @@ export const ListWrapper = styled.div`
   position: relative;
   width: 100%;
 
-  > div {
+  > div,
+  h3 {
     width: 100%;
   }
 `;
