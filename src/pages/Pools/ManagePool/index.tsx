@@ -10,17 +10,21 @@ import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import Nominations from 'pages/Stake/Active/Nominations';
 import { GenerateNominations } from 'pages/Stake/GenerateNominations';
+import { useUi } from 'contexts/UI';
 
 export const ManagePool = () => {
-  const { isNominator, setTargets, targets, poolNominations } = useActivePool();
+  const { isSyncing } = useUi();
   const { openModalWith } = useModal();
+  const { isNominator, setTargets, targets, poolNominations } = useActivePool();
 
   const isNominating = !!poolNominations?.targets?.length;
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
-        {isNominator() && !isNominating ? (
+        {isSyncing ? (
+          <Nominations bondType="pool" />
+        ) : isNominator() && !isNominating ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>

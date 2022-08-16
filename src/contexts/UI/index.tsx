@@ -7,6 +7,7 @@ import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount } from 'types';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
@@ -26,6 +27,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { staking, eraStakers, inSetup } = useStaking();
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
+  const { synced: activePoolSynced } = useActivePool();
 
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);
@@ -146,6 +148,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
     // eraStakers has synced
     if (!eraStakers.totalActiveNominators) {
+      syncing = true;
+    }
+
+    // nomination pool contexts have synced
+    if (!activePoolSynced) {
       syncing = true;
     }
 
