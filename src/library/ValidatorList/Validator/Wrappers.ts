@@ -227,6 +227,10 @@ export const TooltipTrigger = styled.div`
   position: absolute;
   top: -10%;
   left: -10%;
+
+  &.as-button {
+    cursor: pointer;
+  }
 `;
 
 export default Wrapper;
