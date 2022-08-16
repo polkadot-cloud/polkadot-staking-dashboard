@@ -424,6 +424,7 @@ export const BalancesProvider = ({
     const ledger = getLedgerForStash(address);
     const { freeAfterReserve } = balance;
     const { active, unlocking } = ledger;
+
     // free to unbond balance
     const freeToUnbond = active;
 

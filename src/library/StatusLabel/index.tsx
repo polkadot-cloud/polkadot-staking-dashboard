@@ -16,6 +16,7 @@ export const StatusLabel = (props: StatusLabelProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
 
+  // syncing or not staking
   if (status === 'sync_or_setup') {
     if (isSyncing || !inSetup() || membership !== null) {
       return <></>;
