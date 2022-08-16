@@ -29,7 +29,11 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
     favouritesList = [];
   }
 
-  const { poolNominations, isNominator: isPoolNominator } = useActivePool();
+  const {
+    poolNominations,
+    isNominator: isPoolNominator,
+    isOwner: isPoolOwner,
+  } = useActivePool();
 
   const isPool = bondType === 'pool';
   const nominations = isPool
@@ -68,6 +72,10 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
     );
   };
 
+  // determine whether buttons are disabled
+  const btnsDisabled =
+    (!isPool && inSetup()) || isSyncing || isReadOnlyAccount(activeAccount);
+
   return (
     <Wrapper>
       <CardHeaderWrapper withAction>
@@ -76,34 +84,30 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h3>
         <div>
-          {!isPool && nominations.length ? (
-            <div>
-              <Button
-                small
-                icon={faStopCircle}
-                transform="grow-1"
-                inline
-                primary
-                title="Stop"
-                disabled={
-                  (!isPool && inSetup()) ||
-                  isSyncing ||
-                  isReadOnlyAccount(activeAccount)
-                }
-                onClick={() =>
-                  openModalWith(
-                    'ChangeNominations',
-                    {
-                      nominations: [],
-                      bondType,
-                    },
-                    'small'
-                  )
-                }
-              />
-            </div>
-          ) : (
-            <></>
+          {/* If regular staking and nominating, display stop button.
+              If Pool and account is nominator or root, display stop button.
+          */}
+          {((!isPool && nominations.length) ||
+            (isPool && isPoolNominator() && isPoolOwner())) && (
+            <Button
+              small
+              icon={faStopCircle}
+              transform="grow-1"
+              inline
+              primary
+              title="Stop"
+              disabled={btnsDisabled}
+              onClick={() =>
+                openModalWith(
+                  'ChangeNominations',
+                  {
+                    nominations: [],
+                    bondType,
+                  },
+                  'small'
+                )
+              }
+            />
           )}
         </div>
       </CardHeaderWrapper>
