@@ -11,6 +11,7 @@ import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
+import { ReactComponent as Generic-Chain } from './thumbnails/generic-chain.svg';
 import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
 import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
@@ -88,6 +89,21 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'DrRBkx2Qx4sXRGZDXz6d44QCXqV2eJhn8Rq79V88FpSqAr8',
         'EeFYYF8zrLXRpfFXLn2T5bMmgiFpDpmAhVzoh9hA3188wTc',
+      ],
+    },
+  },
+  {
+    name: 'Generic-Chain',
+    Thumbnail: Generic-Chain,
+    bio: 'Generic-Chain validation servers, by TwoPebbles Ventures, have an outstanding operations team that provides professionally managed infrastructure, maximizing returns with ultra-reliable and secure validation services.',
+    email: 'info@generic-chain.io',
+    twitter: '@generic_chain',
+    validators: {
+      polkadot: ['13pZskDR7Pt67NtcChSr4uFRBf9ZS52nQeyrceSykq8MDrMe'],
+      kusama: [
+        'EiMA69PZWju1jmisAU3ubN4wJQgBexnFXZpWb7aMtftP5rV',
+		    'J6HHWeSmt5PjoDCRzVvB5oJnQMMvCM5iNBd5W42S8L3BbVK',
+		    'EffRLTpaDPBa6G6UUhXCVdn2SNyeMxPJttucrtppEjnHkST',
       ],
     },
   },
