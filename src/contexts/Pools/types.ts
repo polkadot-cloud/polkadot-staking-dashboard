@@ -52,7 +52,6 @@ export interface BondedPoolsContextState {
 
 export interface ActiveBondedPoolState {
   pool: ActiveBondedPool | undefined;
-  unsub: AnyApi;
 }
 
 export interface ActiveBondedPool extends BondedPool {
