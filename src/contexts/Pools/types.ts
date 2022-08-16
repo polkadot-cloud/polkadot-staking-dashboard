@@ -89,6 +89,7 @@ export interface ActivePoolContextState {
   activeBondedPool: ActiveBondedPool | undefined;
   targets: any;
   poolNominations: any;
+  synced: boolean;
 }
 
 // Misc types

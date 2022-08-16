@@ -70,6 +70,12 @@ export const ActivePoolProvider = ({
   const [targets, _setTargets] = useState<any>(defaults.targets);
   const targetsRef = useRef(targets);
 
+  // store whether active pool data has been synced.
+  // this will be true even if no active pool exists for the active account.
+  // We just need confirmation this is the case.
+  const [synced, setSynced] = useState<boolean>(false);
+  const syncedRef = useRef(synced);
+
   useEffect(() => {
     return () => {
       unsubscribeAll();
@@ -87,7 +93,8 @@ export const ActivePoolProvider = ({
 
   // subscribe to active bonded pool deatils for the active account
   useEffect(() => {
-    if (isReady && enabled && membership) {
+    if (isReady && enabled) {
+      setSynced(false);
       subscribeToActiveBondedPool();
     }
     return () => {
@@ -194,9 +201,15 @@ export const ActivePoolProvider = ({
   };
 
   const subscribeToActiveBondedPool = async () => {
-    if (!api || !membership) {
+    if (!api) {
       return;
     }
+    if (!membership) {
+      // no membership to handle: update sycning to complete
+      setStateWithRef(true, setSynced, syncedRef);
+      return;
+    }
+
     const { poolId } = membership;
     const addresses: PoolAddresses = createAccounts(poolId);
     const unsub = await api.queryMulti<[AnyApi, AnyApi, AnyApi, AnyApi]>(
@@ -252,6 +265,7 @@ export const ActivePoolProvider = ({
         }
       }
     );
+
     // set unsub for active bonded pool
     setUnsubActiveBondedPool(unsub);
     return unsub;
@@ -259,6 +273,7 @@ export const ActivePoolProvider = ({
 
   const subscribeToPoolNominations = async (poolBondAddress: string) => {
     if (!api) return;
+
     const unsub = await api.query.staking.nominators(
       poolBondAddress,
       (nominations: AnyApi) => {
@@ -281,8 +296,12 @@ export const ActivePoolProvider = ({
           setPoolNominations,
           poolNominationsRef
         );
+
         // set unsub for pool nominations
         setUnsubPoolNominations(unsub);
+
+        // update sycning to complete
+        setStateWithRef(true, setSynced, syncedRef);
       }
     );
     return unsub;
@@ -430,6 +449,7 @@ export const ActivePoolProvider = ({
         getPoolUnlocking,
         setTargets,
         getNominationsStatus,
+        synced,
         activeBondedPool: activeBondedPoolRef.current.pool,
         targets: targetsRef.current,
         poolNominations: poolNominationsRef.current.nominations,
