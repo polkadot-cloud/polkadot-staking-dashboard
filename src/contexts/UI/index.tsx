@@ -8,6 +8,7 @@ import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount } from 'types';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
@@ -27,6 +28,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { staking, eraStakers, inSetup } = useStaking();
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
+  const { enabled: poolsEnabled } = usePoolsConfig();
   const { synced: activePoolSynced } = useActivePool();
 
   // set whether app is syncing
@@ -152,7 +154,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // nomination pool contexts have synced
-    if (!activePoolSynced) {
+    if (poolsEnabled && !activePoolSynced) {
       syncing = true;
     }
 
