@@ -7,12 +7,17 @@
  */
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
+import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
+import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
+import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
+import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
+import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
@@ -55,6 +60,20 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: '🌐 decentraDOT.com 🌐',
+    Thumbnail: Decentradot,
+    bio: 'decentraDOT is a high-quality Polkadot validator run by blockchain enthusiasts in the Netherlands. In addition to staking services we provide free of charge software such as our validator dashboard.',
+    email: 'admin@decentradot.com',
+    website: 'https://decentradot.com',
+    validators: {
+      polkadot: ['15wznkm7fMaJLFaw7B8KrJWkNcWsDziyTKVjrpPhRLMyXsr5'],
+      kusama: [
+        'GRSWBC1kCuNVp8KTgGyK7Bo3bP7CdLDPwfnx2L5JJLQ41Qj',
+        'Em4HYqVrWX3uCvrC8NWoabfKpV9z8stdRKkXYXcZdWGxdXT',
+      ],
+    },
+  },
+  {
     name: 'GATOTECH',
     Thumbnail: Gatotech,
     bio: 'Gatotech Ltd is a Scottish IT company focused on the adoption of decentralised ledger technologies (DLT) for the benefit of humankind.',
@@ -69,6 +88,29 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'DrRBkx2Qx4sXRGZDXz6d44QCXqV2eJhn8Rq79V88FpSqAr8',
         'EeFYYF8zrLXRpfFXLn2T5bMmgiFpDpmAhVzoh9hA3188wTc',
+      ],
+    },
+  },
+  {
+    name: 'GoOpen',
+    Thumbnail: GoOpen,
+    bio: 'Independent Polkadot Validator. Polkadot teacher on Moralis academy. With strong knowledge of Linux, making sure that the validator is running on a secure and up-to-date system with optimal hardware.',
+    validators: {
+      polkadot: ['16VVNbc4m6aUxwaVwgRra6Ue7fMNGcRQHTFo1TqxmnCyuwwn'],
+      kusama: ['JJiV1xrj1814BVDDG2pFCsgzdbR7K29VcyXQGXEUhn7LWhK'],
+    },
+  },
+  {
+    name: 'Jimmy Tudeski | Stakenode ʕ •ᴥ•ʔ',
+    Thumbnail: Stakenode,
+    bio: 'Stakenode provides validation and staking services for Polkadot and Kusama relay chains and parachain networks. We are independent node operators, experienced Dotsama ambassadors, focused on community, decentralisation and ecosystem development. Come stake and build with us.',
+    email: 'jimmytudeski@stakenode.dev',
+    twitter: '@stakenode_dev',
+    website: 'https://stakenode.medium.com/',
+    validators: {
+      kusama: [
+        'FvdwMNP57nRWEsNZZsrHWKqnbmduy4jBAC8MeLmgi9Yp8sA',
+        'D3Sr3PozgPypkBzKBheGSJbqu8m4idenBPaWtZUXLWPtjJT',
       ],
     },
   },
@@ -96,6 +138,49 @@ export const VALIDATOR_COMMUNITY = [
         'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
         'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
         'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
+      ],
+    },
+  },
+  {
+    name: 'ParaNodes.io',
+    Thumbnail: ParaNodes,
+    bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stablility of operations.',
+    email: 'support@paranodes.io',
+    twitter: '@paranodes',
+    website: 'https://paranodes.io/',
+    validators: {
+      polkadot: ['14hM4oLJCK6wtS7gNfwTDhthRjy5QJ1t3NAcoPjEepo9AH67'],
+      kusama: [
+        'H3DL157HL7DkvV2kXocanmKaGXNyQphUDVW33Fnfk8KNhsv',
+        'HtYny8Eker9VBEKQrtBd6Y5PTkaHQFSvyMFy2bkd66wGBan',
+        'FkWky3r2bryP3aaAwVWykYrKesAwkDyKZWsDyBvck7YawSi',
+        'EsNZHmG4bQMGzQNK4Z2CR7Hdhu4or7p2vsLRChUEJcjJAeU',
+        'EriYFJuqCeBF6SFkKxyQWwaTvT9tcoF9ZGDQ4LX3a1iBsYr',
+        'ESzw1JdRfoBNUKo12qjqu4RMgro3exrit1Tr1GGFjVhyHZf',
+        'DtrDM8ZZpBhTSwptMCgYEzJqbPUFArScxikZfbd9tHA47PZ',
+        'EWxmJtdmRUtpgLiHzFbtQc3E2jDx9j3VYZPmjWCEaSUnCZG',
+        'HyZUEZw5G18KtisetKL274g2Kh6i2XHKtFoheyKJW9vBwXu',
+        'Gu6Jt8TJQ3LF7dJgVLCr1JfoxKTcWhMAoaXr8ATczMAE9vm',
+        'ECLwZzFusnTr6hdztrkVaTKeQoWxKZBh9e8EzdG92QX7PAy',
+        'EjHrXpRHyo1WpWEmFKTYT8wEtTXKnzZDQAth1MErwDmabmq',
+        'GpZgakHH3wR1vCvYFgy8Q1iJWYqxyQiRPyeXhGKWxX88uXP',
+        'CecU9j1rpC6CDSzFjtrUmNqonzVk5n1BNFiTiN9vadA1rMs',
+        'FYiswPLWbZAJSBJ3AcGcXpQYxCJW3eE56QQvnshGUEKJexW',
+      ],
+    },
+  },
+  {
+    name: 'PDP_Validator',
+    Thumbnail: PDP,
+    bio: 'Our service has its own infrastructure and a team of administrators.  The beneficiaries of our service are investment professionals.  We validate in projects from the top 10.  We will help you earn!',
+    email: 'pavel.butenko@yahoo.com',
+    twitter: '@PaulBAciD',
+    website: 'https://t.me/go300info',
+    validators: {
+      polkadot: ['16Y3FmTiJ3ZYAUZrf5rZtxrQJzcHsDBdscpu2zgMD2xN6NY7'],
+      kusama: [
+        'J7MmkYX4dJzUbNnU9ccemPFbxtsyaSgFVwAGMxx8k9Lf5cu',
+        'HCogweijHTm85qf9cSUqjNmyZZvu61r4SsTcsAT7S7pgpem',
       ],
     },
   },
