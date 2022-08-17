@@ -12,7 +12,7 @@ import {
 } from 'theme';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from 'consts';
 
-export const Wrapper = styled.div<{ format?: string; showStatus?: boolean }>`
+export const Wrapper = styled.div<{ format?: string }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
@@ -88,7 +88,7 @@ export const Labels = styled.div`
     color: ${textSecondary};
     margin: 0 0.2rem;
     @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
-      margin: 0 0.3rem;
+      margin: 0 0.4rem;
     }
 
     &.warning {

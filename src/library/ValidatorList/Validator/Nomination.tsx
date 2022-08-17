@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
+import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
 import { useValidatorList } from '../context';
-import { Wrapper, Labels, Separator } from './Wrappers';
 import { getIdentityDisplay } from './Utils';
-import { Favourite } from './Labels/Favourite';
-import { Metrics } from './Labels/Metrics';
-import { Identity } from './Labels/Identity';
-import { CopyAddress } from './Labels/CopyAddress';
-import { Oversubscribed } from './Labels/Oversubscribed';
-import { Blocked } from './Labels/Blocked';
-import { Select } from './Labels/Select';
-import { NominationStatus } from './Labels/NominationStatus';
+import { Favourite } from '../../ListItem/Labels/Favourite';
+import { Metrics } from '../../ListItem/Labels/Metrics';
+import { Identity } from '../../ListItem/Labels/Identity';
+import { CopyAddress } from '../../ListItem/Labels/CopyAddress';
+import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
+import { Blocked } from '../../ListItem/Labels/Blocked';
+import { Select } from '../../ListItem/Labels/Select';
+import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
 import { NominationProps } from './types';
-import { Commission } from './Labels/Commission';
+import { Commission } from '../../ListItem/Labels/Commission';
 
 export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();

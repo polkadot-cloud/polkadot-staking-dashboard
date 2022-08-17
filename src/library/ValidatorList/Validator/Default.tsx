@@ -10,27 +10,20 @@ import { useNotifications } from 'contexts/Notifications';
 import { useModal } from 'contexts/Modal';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { NotificationText } from 'contexts/Notifications/types';
-import { Wrapper, Labels, MenuPosition } from './Wrappers';
+import { Wrapper, Labels, MenuPosition } from 'library/ListItem/Wrappers';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
-import { Favourite } from './Labels/Favourite';
-import { Identity } from './Labels/Identity';
-import { Oversubscribed } from './Labels/Oversubscribed';
-import { Blocked } from './Labels/Blocked';
-import { Commission } from './Labels/Commission';
-import { Select } from './Labels/Select';
+import { Favourite } from '../../ListItem/Labels/Favourite';
+import { Identity } from '../../ListItem/Labels/Identity';
+import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
+import { Blocked } from '../../ListItem/Labels/Blocked';
+import { Commission } from '../../ListItem/Labels/Commission';
+import { Select } from '../../ListItem/Labels/Select';
 import { useValidatorList } from '../context';
 import { DefaultProps } from './types';
 
 export const Default = (props: DefaultProps) => {
-  const {
-    validator,
-    toggleFavourites,
-    batchIndex,
-    batchKey,
-    showStatus,
-    showMenu,
-  } = props;
+  const { validator, toggleFavourites, batchIndex, batchKey, showMenu } = props;
 
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
@@ -43,8 +36,6 @@ export const Default = (props: DefaultProps) => {
 
   const { address, prefs } = validator;
   const commission = prefs?.commission ?? null;
-
-  const posRef = useRef(null);
 
   const identity = getIdentityDisplay(
     identities[batchIndex],
@@ -60,6 +51,8 @@ export const Default = (props: DefaultProps) => {
           subtitle: address,
         };
 
+  // configure floating menu
+  const posRef = useRef(null);
   const menuItems = [
     {
       icon: <FontAwesomeIcon icon={faChartLine as IconProp} />,
@@ -97,7 +90,7 @@ export const Default = (props: DefaultProps) => {
   };
 
   return (
-    <Wrapper showStatus={showStatus}>
+    <Wrapper>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">

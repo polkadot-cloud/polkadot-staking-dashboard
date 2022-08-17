@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faHashtag,
+  faBars,
   faPlusCircle,
-  faUsers,
+  faProjectDiagram,
 } from '@fortawesome/free-solid-svg-icons';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { clipAddress } from 'Utils';
@@ -16,9 +16,22 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/context';
 import { useConnect } from 'contexts/Connect';
-import _ from 'window-or-global';
-import { Wrapper } from './Wrapper';
+import {
+  Wrapper,
+  Labels,
+  Separator,
+  MenuPosition,
+  IdentityWrapper,
+  NominationStatusWrapper,
+} from 'library/ListItem/Wrappers';
+import { useMenu } from 'contexts/Menu';
+import { useRef } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { NotificationText } from 'contexts/Notifications/types';
+import { useNotifications } from 'contexts/Notifications';
 import { PoolProps } from './types';
+import { Members } from '../ListItem/Labels/Members';
+import { PoolId } from '../ListItem/Labels/PoolId';
 
 export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;
@@ -27,8 +40,10 @@ export const Pool = (props: PoolProps) => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { meta } = useBondedPools();
   const { isBonding } = useActivePool();
+  const { addNotification } = useNotifications();
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
+  const { setMenuPosition, setMenuItems, open }: any = useMenu();
 
   const metadata = meta[batchKey]?.metadata ?? [];
 
@@ -50,71 +65,106 @@ export const Pool = (props: PoolProps) => {
     display = defaultDisplay;
   }
 
-  return (
-    <Wrapper>
-      <div>
-        <Identicon value={addresses.stash} size={26} />
-        {!metadataSynced ? (
-          <motion.div
-            className="identity"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h4>{clipAddress(addresses.stash)}</h4>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="identity"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <h4>{display}</h4>
-          </motion.div>
-        )}
+  // configure floating menu position
+  const posRef = useRef(null);
 
-        <div>
-          <div className="labels">
-            <div className="label stat">
-              <FontAwesomeIcon icon={faHashtag} />
-              &nbsp;{id}
+  // copy address notification
+  const notificationCopyAddress: NotificationText | null =
+    addresses.stash == null
+      ? null
+      : {
+          title: 'Address Copied to Clipboard',
+          subtitle: addresses.stash,
+        };
+
+  // consruct pool menu items
+  const menuItems: Array<any> = [];
+
+  // add join pool button to menu if user is not already in a pool, and not ready only
+  if (!isBonding() && !isReadOnlyAccount(activeAccount) && activeAccount) {
+    menuItems.push({
+      icon: (
+        <FontAwesomeIcon icon={faPlusCircle as IconProp} transform="grow-4" />
+      ),
+      wrap: null,
+      title: `Join Pool`,
+      cb: () =>
+        openModalWith(
+          'JoinPool',
+          {
+            id,
+            setActiveTab,
+          },
+          'small'
+        ),
+    });
+  }
+
+  // add view pool nominations button to menu
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faProjectDiagram as IconProp} />,
+    wrap: null,
+    title: `View Pool Nominations`,
+    cb: () => {
+      /* TODO: pool nominations modal */
+    },
+  });
+
+  // add copy pool address button to menu
+  menuItems.push({
+    icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
+    wrap: null,
+    title: `Copy Pool Address`,
+    cb: () => {
+      navigator.clipboard.writeText(addresses.stash);
+      if (notificationCopyAddress) {
+        addNotification(notificationCopyAddress);
+      }
+    },
+  });
+
+  // toggle menu handler
+  const toggleMenu = () => {
+    if (!open) {
+      setMenuItems(menuItems);
+      setMenuPosition(posRef);
+    }
+  };
+
+  return (
+    <Wrapper format="nomination">
+      <div className="inner">
+        <MenuPosition ref={posRef} />
+        <div className="row">
+          <IdentityWrapper className="identity">
+            <Identicon value={addresses.stash} size={26} />
+            <div className="inner">
+              {!metadataSynced ? (
+                <h4>{clipAddress(addresses.stash)}</h4>
+              ) : (
+                <h4>{display}</h4>
+              )}
             </div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.1 }}
-            >
-              <div className="label">
-                <FontAwesomeIcon icon={faUsers} className="icon" />
-                {memberCounter}
-              </div>
-            </motion.div>
-            {!isBonding() && (
-              <div className="label">
-                <button
-                  type="button"
-                  disabled={isReadOnlyAccount(activeAccount) || !activeAccount}
-                  onClick={() =>
-                    openModalWith(
-                      'JoinPool',
-                      {
-                        id,
-                        setActiveTab,
-                      },
-                      'small'
-                    )
-                  }
-                >
-                  <FontAwesomeIcon
-                    icon={faPlusCircle}
-                    transform="grow-4"
-                    className="join"
-                  />
-                </button>
-              </div>
-            )}
+          </IdentityWrapper>
+          <div>
+            <Labels>
+              <PoolId id={id} />
+              <Members members={memberCounter} />
+              <button
+                type="button"
+                className="label"
+                onClick={() => toggleMenu()}
+              >
+                <FontAwesomeIcon icon={faBars} />
+              </button>
+            </Labels>
           </div>
+        </div>
+        <Separator />
+        <div className="row status">
+          <NominationStatusWrapper status="waiting">
+            <h5>Syncing...</h5>
+          </NominationStatusWrapper>
         </div>
       </div>
     </Wrapper>

@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useStaking } from 'contexts/Staking';
 import { capitalizeFirstLetter, humanNumber } from 'Utils';
-import { NominationStatusWrapper } from '../Wrappers';
+import { NominationStatusWrapper } from 'library/ListItem/Wrappers';
 import { NominationStatusProps } from '../types';
 
 export const NominationStatus = (props: NominationStatusProps) => {
