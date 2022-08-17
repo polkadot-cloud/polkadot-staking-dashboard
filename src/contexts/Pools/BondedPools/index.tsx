@@ -119,9 +119,15 @@ export const BondedPoolsProvider = ({
       }
     }
 
+    // aggregate pool ids and addresses
     const ids = [];
+    const addresses = [];
     for (const _p of p) {
       ids.push(Number(_p.id));
+
+      if (_p?.addresses?.stash) {
+        addresses.push(_p.addresses.stash);
+      }
     }
 
     // store batch ids
@@ -134,9 +140,9 @@ export const BondedPoolsProvider = ({
       poolMetaBatchesRef
     );
 
-    const subscribeToMetadata = async (id: AnyApi) => {
+    const subscribeToMetadata = async (_ids: AnyApi) => {
       const unsub = await api.query.nominationPools.metadata.multi(
-        id,
+        _ids,
         (_metadata: AnyApi) => {
           const metadata = [];
           for (let i = 0; i < _metadata.length; i++) {
@@ -155,8 +161,33 @@ export const BondedPoolsProvider = ({
       return unsub;
     };
 
+    const subscribeToNominators = async (_addresses: AnyApi) => {
+      const unsub = await api.query.staking.nominators.multi(
+        _addresses,
+        (_nominations: AnyApi) => {
+          const nominations = [];
+          for (let i = 0; i < _nominations.length; i++) {
+            nominations.push(_nominations[i].toHuman());
+          }
+
+          const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
+          _batchesUpdated[key].nominations = nominations;
+
+          setStateWithRef(
+            { ..._batchesUpdated },
+            setPoolMetaBatch,
+            poolMetaBatchesRef
+          );
+        }
+      );
+      return unsub;
+    };
+
     // initiate subscriptions
-    await Promise.all([subscribeToMetadata(ids)]).then((unsubs: Array<Fn>) => {
+    await Promise.all([
+      subscribeToMetadata(ids),
+      subscribeToNominators(addresses),
+    ]).then((unsubs: Array<Fn>) => {
       addMetaBatchUnsubs(key, unsubs);
     });
   };

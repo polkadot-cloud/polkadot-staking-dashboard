@@ -341,8 +341,12 @@ export const StakingProvider = ({
   /*
    * Gets the nomination statuses of passed in nominations
    */
-  const getNominationsStatusFromTargets = (who: string, _targets: any) => {
+  const getNominationsStatusFromTargets = (who: string, _targets: [any]) => {
     const statuses: { [key: string]: string } = {};
+
+    if (!_targets.length) {
+      return statuses;
+    }
 
     for (const target of _targets) {
       const s = eraStakers.stakers.find((_n: any) => _n.address === target);

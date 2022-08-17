@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
@@ -25,10 +26,10 @@ import {
   NominationStatusWrapper,
 } from 'library/ListItem/Wrappers';
 import { useMenu } from 'contexts/Menu';
-import { useRef } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { NotificationText } from 'contexts/Notifications/types';
 import { useNotifications } from 'contexts/Notifications';
+import { useStaking } from 'contexts/Staking';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -41,11 +42,18 @@ export const Pool = (props: PoolProps) => {
   const { meta } = useBondedPools();
   const { isBonding } = useActivePool();
   const { addNotification } = useNotifications();
+  const { eraStakers, getNominationsStatusFromTargets } = useStaking();
+
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
 
+  // get metadata from pools metabatch
   const metadata = meta[batchKey]?.metadata ?? [];
+  const nominations = meta[batchKey]?.nominations ?? [];
+
+  // get pool targets from nominations metadata
+  const targets = nominations[batchIndex]?.targets ?? [];
 
   // aggregate synced status
   const metadataSynced = metadata.length > 0 ?? false;
@@ -64,6 +72,25 @@ export const Pool = (props: PoolProps) => {
   if (display === '') {
     display = defaultDisplay;
   }
+
+  const [nominationsStatus, setNominationsStatus] = useState(null);
+
+  // update pool nomination status as nominations metadata becomes available.
+  // we cannot add effect dependencies here as this needs to trigger
+  // as soon as the component displays. (upon tab change).
+  useEffect(() => {
+    if (
+      nominationsStatus === null &&
+      eraStakers.stakers.length &&
+      nominations.length
+    ) {
+      const _nominationStatus = getNominationsStatusFromTargets(
+        addresses.stash,
+        targets
+      );
+      setNominationsStatus(_nominationStatus);
+    }
+  });
 
   // configure floating menu position
   const posRef = useRef(null);
@@ -131,6 +158,9 @@ export const Pool = (props: PoolProps) => {
     }
   };
 
+  // configure nominations status
+  // TODO.
+
   return (
     <Wrapper format="nomination">
       <div className="inner">
@@ -163,7 +193,11 @@ export const Pool = (props: PoolProps) => {
         <Separator />
         <div className="row status">
           <NominationStatusWrapper status="waiting">
-            <h5>Syncing...</h5>
+            <h5>
+              {nominationsStatus === null
+                ? `Syncing...`
+                : `Some status to display`}
+            </h5>
           </NominationStatusWrapper>
         </div>
       </div>
