@@ -36,6 +36,7 @@ export interface StakingTargets {
 
 export interface StakingContextInterface {
   getNominationsStatus: () => any;
+  getNominationsStatusFromTargets: (w: string, t: [any]) => any;
   setTargets: (t: any) => any;
   hasController: () => boolean;
   getControllerNotImported: (a: MaybeAccount) => any;

@@ -10,9 +10,7 @@ import { IdentityProps } from '../types';
 
 export const Identity = (props: IdentityProps) => {
   const { meta } = useValidators();
-
   const { validator, batchKey, batchIndex } = props;
-
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
   const stake = meta[batchKey]?.stake ?? [];
