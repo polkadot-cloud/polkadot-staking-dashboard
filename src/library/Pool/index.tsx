@@ -73,7 +73,9 @@ export const Pool = (props: PoolProps) => {
     display = defaultDisplay;
   }
 
-  const [nominationsStatus, setNominationsStatus] = useState(null);
+  const [nominationsStatus, setNominationsStatus] = useState<{
+    [key: string]: string;
+  } | null>(null);
 
   // update pool nomination status as nominations metadata becomes available.
   // we cannot add effect dependencies here as this needs to trigger
@@ -158,9 +160,26 @@ export const Pool = (props: PoolProps) => {
     }
   };
 
-  // configure nominations status
-  // TODO.
+  // determine nominations status and display
+  let statusDisplay = null;
+  let statusCode = 'waiting';
 
+  if (nominationsStatus) {
+    for (const status of Object.values(nominationsStatus)) {
+      if (status === 'active') {
+        statusCode = 'active';
+        statusDisplay = 'Actively Nominating';
+        break;
+      }
+      if (status === 'inactive') {
+        statusCode = 'inactive';
+        statusDisplay = 'Inactive';
+      }
+    }
+    if (!statusDisplay) {
+      statusDisplay = 'Waiting';
+    }
+  }
   return (
     <Wrapper format="nomination">
       <div className="inner">
@@ -192,12 +211,8 @@ export const Pool = (props: PoolProps) => {
         </div>
         <Separator />
         <div className="row status">
-          <NominationStatusWrapper status="waiting">
-            <h5>
-              {nominationsStatus === null
-                ? `Syncing...`
-                : `Some status to display`}
-            </h5>
+          <NominationStatusWrapper status={statusCode}>
+            <h5>{nominationsStatus === null ? `Syncing...` : statusDisplay}</h5>
           </NominationStatusWrapper>
         </div>
       </div>
