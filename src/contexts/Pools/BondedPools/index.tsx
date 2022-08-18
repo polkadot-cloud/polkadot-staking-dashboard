@@ -46,6 +46,11 @@ export const BondedPoolsProvider = ({
 
   useEffect(() => {
     if (isReady && enabled) {
+      // clear existing state for refetch
+      setBondedPools([]);
+      setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
+
+      // fetch bonded pools
       fetchBondedPools();
     }
     return () => {
