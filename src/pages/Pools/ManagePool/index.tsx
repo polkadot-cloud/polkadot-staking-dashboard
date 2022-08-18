@@ -11,10 +11,12 @@ import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import Nominations from 'pages/Stake/Active/Nominations';
 import { GenerateNominations } from 'pages/Stake/GenerateNominations';
 import { useUi } from 'contexts/UI';
+import { useConnect } from 'contexts/Connect';
 
 export const ManagePool = () => {
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
+  const { activeAccount } = useConnect();
   const { isNominator, setTargets, targets, poolNominations } = useActivePool();
 
   const isNominating = !!poolNominations?.targets?.length;
@@ -23,7 +25,7 @@ export const ManagePool = () => {
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
         {isSyncing ? (
-          <Nominations bondType="pool" />
+          <Nominations bondType="pool" nominator={activeAccount} />
         ) : isNominator() && !isNominating ? (
           <>
             <CardHeaderWrapper withAction>
@@ -56,7 +58,7 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <Nominations bondType="pool" />
+          <Nominations bondType="pool" nominator={activeAccount} />
         )}
       </CardWrapper>
     </PageRowWrapper>

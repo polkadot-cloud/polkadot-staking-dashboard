@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { MaybeAccount } from 'types';
+
 export interface BlockedProps {
   prefs: {
     commission: string;
@@ -34,6 +36,7 @@ export interface MetricsProps {
 export interface NominationStatusProps {
   address: string;
   bondType: string;
+  nominator: MaybeAccount;
 }
 
 export interface OversubscribedProps {

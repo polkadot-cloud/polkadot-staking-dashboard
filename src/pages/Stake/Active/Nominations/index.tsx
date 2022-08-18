@@ -13,9 +13,16 @@ import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
-export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
+export const Nominations = ({
+  bondType,
+  nominator,
+}: {
+  bondType: 'pool' | 'stake';
+  nominator: MaybeAccount;
+}) => {
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
@@ -36,7 +43,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
   const isPool = bondType === 'pool';
   const nominations = isPool
     ? poolNominations.targets
-    : getAccountNominations(activeAccount);
+    : getAccountNominations(nominator);
   const nominated = isPool ? poolNominated : stakeNominated;
   const batchKey = isPool ? 'pool_nominations' : 'stake_nominations';
 
@@ -117,7 +124,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
               : 'Syncing nominations...'}
           </h4>
         </div>
-      ) : !activeAccount ? (
+      ) : !nominator ? (
         <div className="head">
           <h4>Not Nominating.</h4>
         </div>
@@ -127,6 +134,7 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
                 validators={nominated}
+                nominator={nominator}
                 batchKey={batchKey}
                 title="Your Nominations"
                 format="nomination"

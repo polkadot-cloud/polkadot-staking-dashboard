@@ -16,11 +16,11 @@ export const NominationStatus = (props: NominationStatusProps) => {
   } = useApi();
 
   const { ownStake } = eraStakers;
-
-  const { address, bondType } = props;
+  const { address, nominator, bondType } = props;
 
   let nominationStatuses;
   if (bondType === 'pool') {
+    // TODO: plug in nominator
     nominationStatuses = poolsGetNominationsStatus();
   } else {
     nominationStatuses = getNominationsStatus();

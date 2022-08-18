@@ -20,7 +20,14 @@ export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();
   const { selectActive } = useValidatorList();
 
-  const { validator, toggleFavourites, batchIndex, batchKey, bondType } = props;
+  const {
+    validator,
+    nominator,
+    toggleFavourites,
+    batchIndex,
+    batchKey,
+    bondType,
+  } = props;
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
 
@@ -46,7 +53,11 @@ export const Nomination = (props: NominationProps) => {
         </div>
         <Separator />
         <div className="row status">
-          <NominationStatus address={address} bondType={bondType} />
+          <NominationStatus
+            address={address}
+            bondType={bondType}
+            nominator={nominator}
+          />
           <Labels>
             <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
             <Blocked prefs={prefs} />
