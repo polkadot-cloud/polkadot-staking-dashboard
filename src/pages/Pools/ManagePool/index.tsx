@@ -17,9 +17,16 @@ export const ManagePool = () => {
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { isNominator, setTargets, targets, poolNominations } = useActivePool();
+  const {
+    isNominator,
+    setTargets,
+    targets,
+    poolNominations,
+    activeBondedPool,
+  } = useActivePool();
 
   const isNominating = !!poolNominations?.targets?.length;
+  const nominator = activeBondedPool?.addresses?.stash ?? null;
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -58,7 +65,7 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <Nominations bondType="pool" nominator={activeAccount} />
+          <Nominations bondType="pool" nominator={nominator} />
         )}
       </CardWrapper>
     </PageRowWrapper>
