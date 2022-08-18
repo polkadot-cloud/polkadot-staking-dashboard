@@ -54,9 +54,11 @@ export const PayoutBar = (props: PayoutBarProps) => {
 
   const { units } = network;
   const notStaking = !isSyncing && inSetup() && !membership;
+  const average = 1;
 
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
+    average,
     units,
     payouts,
     poolClaims

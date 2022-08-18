@@ -107,7 +107,7 @@ export const Payouts = (props: PageProps) => {
               }}
             >
               <PayoutBar days={MAX_PAYOUT_DAYS} height="150px" />
-              <PayoutLine days={MAX_PAYOUT_DAYS} height="70px" />
+              <PayoutLine days={MAX_PAYOUT_DAYS} average={10} height="70px" />
             </div>
           </div>
         </GraphWrapper>

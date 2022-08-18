@@ -23,6 +23,7 @@ export interface PayoutBarProps {
 
 export interface PayoutLineProps {
   days: number;
+  average: number;
   height: string;
   background?: string;
 }

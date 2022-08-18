@@ -35,7 +35,13 @@ export const Overview = () => {
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
 
-  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
+  const { lastReward } = formatRewardsForGraphs(
+    14,
+    1,
+    units,
+    payouts,
+    poolClaims
+  );
 
   const PAYOUTS_HEIGHT = 380;
   const STATS_HEIGHT = 80;

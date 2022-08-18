@@ -40,7 +40,7 @@ ChartJS.register(
 );
 
 export const PayoutLine = (props: PayoutLineProps) => {
-  const { days, height, background } = props;
+  const { days, average, height, background } = props;
 
   const { mode } = useTheme();
   const { network } = useApi();
@@ -55,6 +55,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
 
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
+    average,
     units,
     payouts,
     poolClaims
@@ -103,8 +104,13 @@ export const PayoutLine = (props: PayoutLineProps) => {
         display: false,
       },
       title: {
-        display: false,
-        text: `${network.unit} Payouts`,
+        position: 'left' as const,
+        display: true,
+        text: `${average} Day Average`,
+        padding: 0,
+        font: {
+          size: 10,
+        },
       },
       tooltip: {
         displayColors: false,
