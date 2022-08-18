@@ -44,12 +44,15 @@ export const BondedPoolsProvider = ({
   // store bonded pools
   const [bondedPools, setBondedPools] = useState<Array<BondedPool>>([]);
 
+  // clear existing state for network refresh
+  useEffect(() => {
+    setBondedPools([]);
+    setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
+  }, [network]);
+
+  // initial setup for fetching bonded pools
   useEffect(() => {
     if (isReady && enabled) {
-      // clear existing state for refetch
-      setBondedPools([]);
-      setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
-
       // fetch bonded pools
       fetchBondedPools();
     }
@@ -57,6 +60,13 @@ export const BondedPoolsProvider = ({
       unsubscribe();
     };
   }, [network, isReady, enabled]);
+
+  // after bonded pools have synced, fetch metabatch
+  useEffect(() => {
+    if (bondedPools.length) {
+      fetchPoolsMetaBatch('bonded_pools', bondedPools, false);
+    }
+  }, [bondedPools]);
 
   const unsubscribe = () => {
     Object.values(poolSubsRef.current).map((batch: Array<Fn>) => {
