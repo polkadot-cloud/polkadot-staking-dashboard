@@ -218,10 +218,10 @@ export const BondedPoolsProvider = ({
     nomination: MaybeAccount
   ) => {
     const pool = bondedPools.find((p: any) => p.addresses.stash === nominator);
-    if (!pool) {
-      return {};
-    }
 
+    if (!pool) {
+      return 'waiting';
+    }
     // get pool targets from nominations metadata
     const batchIndex = bondedPools.indexOf(pool);
     const nominations = poolMetaBatches.bonded_pools?.nominations ?? [];

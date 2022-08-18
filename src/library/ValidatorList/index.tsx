@@ -354,6 +354,7 @@ export const ValidatorListInner = (props: any) => {
                   format={format}
                   showMenu={showMenu}
                   bondType={bondType}
+                  inModal={inModal}
                 />
               </motion.div>
             );

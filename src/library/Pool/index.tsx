@@ -30,6 +30,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { NotificationText } from 'contexts/Notifications/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useStaking } from 'contexts/Staking';
+import { useValidators } from 'contexts/Validators';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -43,6 +44,7 @@ export const Pool = (props: PoolProps) => {
   const { isBonding } = useActivePool();
   const { addNotification } = useNotifications();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
+  const { validators } = useValidators();
 
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
@@ -54,6 +56,11 @@ export const Pool = (props: PoolProps) => {
 
   // get pool targets from nominations metadata
   const targets = nominations[batchIndex]?.targets ?? [];
+
+  // extract validator entries from pool targets
+  const targetValidators = validators.filter((v: any) =>
+    targets.includes(v.address)
+  );
 
   // aggregate synced status
   const metadataSynced = metadata.length > 0 ?? false;
@@ -135,7 +142,14 @@ export const Pool = (props: PoolProps) => {
     wrap: null,
     title: `View Pool Nominations`,
     cb: () => {
-      /* TODO: pool nominations modal */
+      openModalWith(
+        'PoolNominations',
+        {
+          nominator: addresses.stash,
+          targets: targetValidators,
+        },
+        'large'
+      );
     },
   });
 
@@ -198,7 +212,9 @@ export const Pool = (props: PoolProps) => {
             <h5>
               {nominationStatus === null
                 ? `Syncing...`
-                : capitalizeFirstLetter(nominationStatus ?? '')}
+                : targets.length
+                ? capitalizeFirstLetter(nominationStatus ?? '')
+                : 'Not Nominating'}
             </h5>
           </NominationStatusWrapper>
         </div>

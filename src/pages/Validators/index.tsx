@@ -44,6 +44,7 @@ export const Validators = (props: PageProps) => {
 
               {validators.length > 0 && (
                 <ValidatorList
+                  bondType="stake"
                   validators={validators}
                   batchKey="validators_browse"
                   title="Network Validators"

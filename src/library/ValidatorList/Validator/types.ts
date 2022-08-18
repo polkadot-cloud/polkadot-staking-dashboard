@@ -10,6 +10,7 @@ export interface NominationProps {
   batchIndex: number;
   batchKey: string;
   bondType: string;
+  inModal: boolean;
 }
 
 export interface DefaultProps {

@@ -238,6 +238,7 @@ export const GenerateNominationsInner = (
           {isReady && nominations.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
+                bondType="stake"
                 validators={nominations}
                 batchKey={batchKey}
                 selectable

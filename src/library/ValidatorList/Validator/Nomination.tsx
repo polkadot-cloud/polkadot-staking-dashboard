@@ -27,7 +27,9 @@ export const Nomination = (props: NominationProps) => {
     batchIndex,
     batchKey,
     bondType,
+    inModal,
   } = props;
+
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
 
@@ -62,13 +64,16 @@ export const Nomination = (props: NominationProps) => {
             <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
             <Blocked prefs={prefs} />
             <Commission commission={commission} />
-            <Metrics
-              address={address}
-              display={getIdentityDisplay(
-                identities[batchIndex],
-                supers[batchIndex]
-              )}
-            />
+            {/* restrict opening another modal within a modal */}
+            {!inModal && (
+              <Metrics
+                address={address}
+                display={getIdentityDisplay(
+                  identities[batchIndex],
+                  supers[batchIndex]
+                )}
+              />
+            )}
           </Labels>
         </div>
       </div>

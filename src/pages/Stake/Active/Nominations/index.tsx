@@ -133,12 +133,12 @@ export const Nominations = ({
           {nominated.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
+                bondType={isPool ? 'pool' : 'stake'}
                 validators={nominated}
                 nominator={nominator}
                 batchKey={batchKey}
                 title="Your Nominations"
                 format="nomination"
-                bondType={isPool ? 'pool' : 'stake'}
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&
                   (!isPool || isPoolNominator())
