@@ -11,7 +11,7 @@ import {
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { clipAddress } from 'Utils';
+import { clipAddress, capitalizeFirstLetter } from 'Utils';
 import Identicon from 'library/Identicon';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -39,7 +39,7 @@ export const Pool = (props: PoolProps) => {
   const { memberCounter, addresses, id } = pool;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { meta } = useBondedPools();
+  const { meta, getPoolNominationStatusCode } = useBondedPools();
   const { isBonding } = useActivePool();
   const { addNotification } = useNotifications();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
@@ -161,25 +161,8 @@ export const Pool = (props: PoolProps) => {
   };
 
   // determine nominations status and display
-  let statusDisplay = null;
-  let statusCode = 'waiting';
+  const nominationStatus = getPoolNominationStatusCode(nominationsStatus);
 
-  if (nominationsStatus) {
-    for (const status of Object.values(nominationsStatus)) {
-      if (status === 'active') {
-        statusCode = 'active';
-        statusDisplay = 'Actively Nominating';
-        break;
-      }
-      if (status === 'inactive') {
-        statusCode = 'inactive';
-        statusDisplay = 'Inactive';
-      }
-    }
-    if (!statusDisplay) {
-      statusDisplay = 'Waiting';
-    }
-  }
   return (
     <Wrapper format="nomination">
       <div className="inner">
@@ -211,8 +194,12 @@ export const Pool = (props: PoolProps) => {
         </div>
         <Separator />
         <div className="row status">
-          <NominationStatusWrapper status={statusCode}>
-            <h5>{nominationsStatus === null ? `Syncing...` : statusDisplay}</h5>
+          <NominationStatusWrapper status={nominationStatus}>
+            <h5>
+              {nominationStatus === null
+                ? `Syncing...`
+                : capitalizeFirstLetter(nominationStatus ?? '')}
+            </h5>
           </NominationStatusWrapper>
         </div>
       </div>

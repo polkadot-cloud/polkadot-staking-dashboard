@@ -341,7 +341,10 @@ export const StakingProvider = ({
   /*
    * Gets the nomination statuses of passed in nominations
    */
-  const getNominationsStatusFromTargets = (who: string, _targets: [any]) => {
+  const getNominationsStatusFromTargets = (
+    who: MaybeAccount,
+    _targets: [any]
+  ) => {
     const statuses: { [key: string]: string } = {};
 
     if (!_targets.length) {

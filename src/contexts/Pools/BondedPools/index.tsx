@@ -8,10 +8,12 @@ import {
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
+  NominationStatuses,
 } from 'contexts/Pools/types';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
-import { AnyApi, AnyMetaBatch, Fn } from 'types';
+import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
+import { useStaking } from 'contexts/Staking';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -29,6 +31,7 @@ export const BondedPoolsProvider = ({
 }) => {
   const { api, network, isReady, consts } = useApi();
   const { enabled } = usePoolsConfig();
+  const { getNominationsStatusFromTargets } = useStaking();
   const { poolsPalletId } = consts;
 
   // stores the meta data batches for pool lists
@@ -208,6 +211,52 @@ export const BondedPoolsProvider = ({
   };
 
   /*
+   * Get bonded pool nomination statuses
+   */
+  const getPoolNominationStatus = (
+    nominator: MaybeAccount,
+    nomination: MaybeAccount
+  ) => {
+    const pool = bondedPools.find((p: any) => p.addresses.stash === nominator);
+    if (!pool) {
+      return {};
+    }
+
+    // get pool targets from nominations metadata
+    const batchIndex = bondedPools.indexOf(pool);
+    const nominations = poolMetaBatches.bonded_pools?.nominations ?? [];
+    const targets = nominations[batchIndex]?.targets ?? [];
+
+    const target = targets.find((t: string) => t === nomination);
+
+    const nominationStatus = getNominationsStatusFromTargets(nominator, [
+      target,
+    ]);
+
+    return getPoolNominationStatusCode(nominationStatus);
+  };
+
+  /*
+   * Determine bonded pool's current nomination statuse
+   */
+  const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
+    let status = 'waiting';
+
+    if (statuses) {
+      for (const _status of Object.values(statuses)) {
+        if (_status === 'active') {
+          status = 'active';
+          break;
+        }
+        if (_status === 'inactive') {
+          status = 'inactive';
+        }
+      }
+    }
+    return status;
+  };
+
+  /*
    * Helper: to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
@@ -266,6 +315,8 @@ export const BondedPoolsProvider = ({
         fetchPoolsMetaBatch,
         createAccounts,
         getBondedPool,
+        getPoolNominationStatus,
+        getPoolNominationStatusCode,
         bondedPools,
         meta: poolMetaBatchesRef.current,
       }}
