@@ -43,7 +43,7 @@ export const Stat = (props: StatProps) => {
                   disabled={btn.disabled ?? false}
                   onClick={() => btn.onClick()}
                 />
-                &nbsp;&nbsp;
+                &nbsp;
               </React.Fragment>
             ))}
           </span>

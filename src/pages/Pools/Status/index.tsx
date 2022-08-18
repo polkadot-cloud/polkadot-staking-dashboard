@@ -14,16 +14,11 @@ import { Stat } from 'library/Stat';
 import { planckBnToUnit } from 'Utils';
 import {
   faPaperPlane,
-  faSignOutAlt,
-  faTimesCircle,
   faLock,
-  faUserPlus,
-  faPlusCircle,
-  faLockOpen,
   faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { usePoolsTabs } from './context';
+import { useStatusButtons } from './useStatusButtons';
 
 export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();
@@ -31,17 +26,9 @@ export const Status = ({ height }: { height: number }) => {
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { setActiveTab } = usePoolsTabs();
-
-  const {
-    activeBondedPool,
-    poolNominations,
-    isOwner,
-    getNominationsStatus,
-    getPoolBondOptions,
-  } = useActivePool();
+  const { activeBondedPool, poolNominations, getNominationsStatus } =
+    useActivePool();
   const { openModalWith } = useModal();
-  const { active } = getPoolBondOptions(activeAccount);
   const nominationStatuses = getNominationsStatus();
   const activeNominations = Object.values(nominationStatuses).filter(
     (_v) => _v === 'active'
@@ -49,95 +36,7 @@ export const Status = ({ height }: { height: number }) => {
   const isNominating = !!poolNominations?.targets?.length;
 
   // Pool status `Stat` props
-  const { label, buttons } = (() => {
-    let _label;
-    let _buttons;
-    const createBtn = {
-      title: 'Create Pool',
-      icon: faPlusCircle,
-      transform: 'grow-1',
-      disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
-      onClick: () => openModalWith('CreatePool', { bondType: 'pool' }, 'small'),
-    };
-    const joinPoolBtn = {
-      title: 'Join Pool',
-      icon: faUserPlus,
-      transform: 'grow-1',
-      disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
-      onClick: () => setActiveTab(1),
-    };
-    const leaveBtn = {
-      title: 'Leave Pool',
-      icon: faSignOutAlt,
-      disabled: !isReady || isReadOnlyAccount(activeAccount),
-      small: true,
-      onClick: () => openModalWith('LeavePool', { bondType: 'pool' }, 'small'),
-    };
-    const destroyBtn = {
-      title: 'Destroy Pool',
-      icon: faTimesCircle,
-      transform: 'grow-1',
-      disabled: !isReady || isReadOnlyAccount(activeAccount),
-      small: true,
-      onClick: () =>
-        openModalWith(
-          'ChangePoolState',
-          { bondType: 'pool', state: PoolState.Destroy },
-          'small'
-        ),
-    };
-    const blockBtn = {
-      title: 'Lock Pool',
-      icon: faLock,
-      transform: 'grow-1',
-      disabled: !isReady || isReadOnlyAccount(activeAccount),
-      small: true,
-      onClick: () =>
-        openModalWith(
-          'ChangePoolState',
-          { bondType: 'pool', state: PoolState.Block },
-          'small'
-        ),
-    };
-    const openBtn = {
-      title: 'Unlock Pool',
-      icon: faLockOpen,
-      transform: 'grow-1',
-      disabled: !isReady || isReadOnlyAccount(activeAccount),
-      small: true,
-      onClick: () =>
-        openModalWith(
-          'ChangePoolState',
-          { bondType: 'pool', state: PoolState.Open },
-          'small'
-        ),
-    };
-
-    if (!membership) {
-      _label = 'Not in a Pool';
-      _buttons = [createBtn, joinPoolBtn];
-    } else if (isOwner()) {
-      _label = `Owner of Pool ${membership.poolId}`;
-      switch (activeBondedPool?.state) {
-        case PoolState.Open:
-          _buttons = [destroyBtn, blockBtn];
-          break;
-        case PoolState.Block:
-          _buttons = [destroyBtn, openBtn];
-          break;
-        default:
-          _buttons = [];
-      }
-    } else if (active?.gtn(0)) {
-      _label = `Active in Pool ${membership.poolId}`;
-      _buttons = [leaveBtn];
-    } else {
-      _label = `Leaving Pool ${membership.poolId}`;
-    }
-    return { label: _label, buttons: _buttons };
-  })();
-
-  const labelMembership = label;
+  const { label, buttons } = useStatusButtons();
 
   // Unclaimed rewards `Stat` props
   let { unclaimedReward } = activeBondedPool || {};
@@ -194,7 +93,7 @@ export const Status = ({ height }: { height: number }) => {
       <Stat
         label="Membership"
         assistant={['pools', 'Pool Status']}
-        stat={labelMembership}
+        stat={label}
         buttons={isSyncing ? [] : buttons}
       />
       <Separator />
