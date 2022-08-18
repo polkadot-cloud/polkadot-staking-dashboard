@@ -11,9 +11,12 @@ import {
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { clipAddress, capitalizeFirstLetter } from 'Utils';
+import {
+  clipAddress,
+  capitalizeFirstLetter,
+  determinePoolDisplay,
+} from 'Utils';
 import Identicon from 'library/Identicon';
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/context';
 import { useConnect } from 'contexts/Connect';
@@ -65,20 +68,8 @@ export const Pool = (props: PoolProps) => {
   // aggregate synced status
   const metadataSynced = metadata.length > 0 ?? false;
 
-  // display value
-  const defaultDisplay = clipAddress(addresses.stash);
-
-  // fallback to address on empty metadata string
-  let display = metadata[batchIndex] ?? defaultDisplay;
-  // check if super identity has been byte encoded
-  const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
-  if (displayAsBytes !== '') {
-    display = displayAsBytes;
-  }
-  // if still empty string, default to clipped address
-  if (display === '') {
-    display = defaultDisplay;
-  }
+  // pool display name
+  const display = determinePoolDisplay(addresses.stash, metadata[batchIndex]);
 
   const [nominationsStatus, setNominationsStatus] = useState<{
     [key: string]: string;
