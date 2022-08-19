@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, forwardRef } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -15,24 +15,48 @@ import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
-  const { setSection, task } = props;
+  const { setSection, task, section } = props;
 
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
-  const { isOwner } = useActivePool();
+  const { isOwner, activeBondedPool } = useActivePool();
+  const { bondedPools, meta } = useBondedPools();
   const poolId = membership?.poolId;
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
+  // updated metadata value
+  const [metadata, setMetadata] = useState<string>('');
+
   // ensure selected membership and targests are valid
   const isValid = (membership && isOwner()) ?? false;
+
+  // determine current pool metadata and set in state
+  useEffect(() => {
+    if (task === 'set_pool_metadata') {
+      let _metadata = '';
+      const pool = bondedPools.find((p: any) => {
+        return p.addresses.stash === activeBondedPool?.addresses.stash;
+      });
+
+      if (pool) {
+        const metadataBatch = meta.bonded_pools?.metadata ?? [];
+        const batchIndex = bondedPools.indexOf(pool);
+        _metadata = metadataBatch[batchIndex];
+        setMetadata(u8aToString(u8aUnwrapBytes(_metadata)));
+      }
+    }
+  }, [section]);
+
   useEffect(() => {
     setValid(isValid);
   }, [isValid]);
@@ -40,12 +64,16 @@ export const Forms = forwardRef((props: any, ref: any) => {
   // tx to submit
   const tx = () => {
     let _tx = null;
+
     if (!valid || !api) {
       return _tx;
     }
 
     // remove decimal errors
     switch (task) {
+      case 'set_pool_metadata':
+        _tx = api.tx.nominationPools.setMetadata(poolId, metadata);
+        break;
       case 'destroy_pool':
         _tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
         break;
@@ -66,6 +94,15 @@ export const Forms = forwardRef((props: any, ref: any) => {
     let title;
     let message;
     switch (task) {
+      case 'set_pool_metadata':
+        title = undefined;
+        message = (
+          <p>
+            Your updated name will be stored on-chain as encoded bytes. The
+            update will take effect immediately.
+          </p>
+        );
+        break;
       case 'destroy_pool':
         title = <h2>Destroying a Pool is Irreversible</h2>;
         message = (
@@ -104,52 +141,85 @@ export const Forms = forwardRef((props: any, ref: any) => {
     <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
 
+  const handleMetadataChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+    setMetadata(newValue);
+    // any string is valid metadata
+    setValid(true);
+  };
+
   return (
-    <ContentWrapper ref={ref}>
-      {!accountHasSigner(activeAccount) && (
-        <Warning text="Your account is read only, and cannot sign transactions." />
-      )}
-      <div>
-        <>
-          {content.title}
-          <Separator />
-          <NotesWrapper>
-            {content.message}
-            {TxFee}
-          </NotesWrapper>
-        </>
+    <ContentWrapper>
+      <div className="items" ref={ref}>
+        {!accountHasSigner(activeAccount) && (
+          <Warning text="Your account is read only, and cannot sign transactions." />
+        )}
+        <div>
+          <>
+            {/* include task title if present */}
+            {content.title !== undefined && (
+              <>
+                {content.title}
+                <Separator />
+              </>
+            )}
+
+            {/* include form element if task is to set metadata */}
+            {task === 'set_pool_metadata' && (
+              <>
+                <h2>Update Pool Name</h2>
+                <input
+                  style={{ width: '100%' }}
+                  placeholder="Pool Name"
+                  type="text"
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    handleMetadataChange(e)
+                  }
+                  value={metadata ?? ''}
+                />
+              </>
+            )}
+
+            <NotesWrapper>
+              {content.message}
+              {TxFee}
+            </NotesWrapper>
+          </>
+        </div>
+        <FooterWrapper>
+          <div>
+            <button
+              type="button"
+              className="submit"
+              onClick={() => setSection(0)}
+              disabled={submitting}
+            >
+              <FontAwesomeIcon
+                transform="grow-2"
+                icon={faChevronLeft as IconProp}
+              />
+              Back
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="submit"
+              onClick={() => submitTx()}
+              disabled={
+                submitting || !accountHasSigner(activeAccount) || !valid
+              }
+            >
+              <FontAwesomeIcon
+                transform="grow-2"
+                icon={faArrowAltCircleUp as IconProp}
+              />
+              Submit
+              {submitting && 'ting'}
+            </button>
+          </div>
+        </FooterWrapper>
       </div>
-      <FooterWrapper>
-        <div>
-          <button
-            type="button"
-            className="submit"
-            onClick={() => setSection(0)}
-            disabled={submitting}
-          >
-            <FontAwesomeIcon
-              transform="grow-2"
-              icon={faChevronLeft as IconProp}
-            />
-            Back
-          </button>
-        </div>
-        <div>
-          <button
-            type="button"
-            className="submit"
-            onClick={() => submitTx()}
-            disabled={submitting || !accountHasSigner(activeAccount)}
-          >
-            <FontAwesomeIcon
-              transform="grow-2"
-              icon={faArrowAltCircleUp as IconProp}
-            />
-            Submit
-            {submitting && 'ting'}
-          </button>
-        </div>
-      </FooterWrapper>
     </ContentWrapper>
   );
 });

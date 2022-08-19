@@ -42,7 +42,7 @@ export const Membership = ({ label }: { label: string }) => {
     <Button
       primary
       inline
-      title="Mange"
+      title="Manage"
       icon={faCog}
       small
       disabled={!isReady || isReadOnlyAccount(activeAccount)}

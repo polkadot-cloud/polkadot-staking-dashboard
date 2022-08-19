@@ -59,7 +59,12 @@ export const ManagePool = () => {
         }}
       >
         <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
-        <Forms setSection={setSection} task={task} ref={formsRef} />
+        <Forms
+          setSection={setSection}
+          task={task}
+          section={section}
+          ref={formsRef}
+        />
       </CardsWrapper>
     </Wrapper>
   );

@@ -23,6 +23,23 @@ export const Tasks = forwardRef((props: any, ref: any) => {
       )}
 
       <div className="items" ref={ref}>
+        <button
+          type="button"
+          className="action-button"
+          disabled={poolDestroying}
+          onClick={() => {
+            setSection(1);
+            setTask('set_pool_metadata');
+          }}
+        >
+          <div>
+            <h3>Rename Pool</h3>
+            <p>Update the public name of your pool.</p>
+          </div>
+          <div>
+            <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+          </div>
+        </button>
         {poolLocked ? (
           <button
             type="button"
