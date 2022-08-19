@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import { MutableRefObject } from 'react';
 import { PagesConfig } from 'types/index';
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
-import { hexToU8a, isHex } from '@polkadot/util';
+import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -201,4 +201,24 @@ export const escapeRegExp = (string: string) => {
 // replace all to work with legacy browsers
 export const replaceAll = (str: string, find: string, replace: string) => {
   return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+};
+
+export const determinePoolDisplay = (adddress: string, batchItem: any) => {
+  // default display value
+  const defaultDisplay = clipAddress(adddress);
+
+  // fallback to address on empty metadata string
+  let display = batchItem ?? defaultDisplay;
+
+  // check if super identity has been byte encoded
+  const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
+  if (displayAsBytes !== '') {
+    display = displayAsBytes;
+  }
+  // if still empty string, default to clipped address
+  if (display === '') {
+    display = defaultDisplay;
+  }
+
+  return display;
 };

@@ -8,10 +8,12 @@ import {
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
+  NominationStatuses,
 } from 'contexts/Pools/types';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
-import { AnyApi, AnyMetaBatch, Fn } from 'types';
+import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
+import { useStaking } from 'contexts/Staking';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -29,6 +31,7 @@ export const BondedPoolsProvider = ({
 }) => {
   const { api, network, isReady, consts } = useApi();
   const { enabled } = usePoolsConfig();
+  const { getNominationsStatusFromTargets } = useStaking();
   const { poolsPalletId } = consts;
 
   // stores the meta data batches for pool lists
@@ -44,14 +47,29 @@ export const BondedPoolsProvider = ({
   // store bonded pools
   const [bondedPools, setBondedPools] = useState<Array<BondedPool>>([]);
 
+  // clear existing state for network refresh
+  useEffect(() => {
+    setBondedPools([]);
+    setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
+  }, [network]);
+
+  // initial setup for fetching bonded pools
   useEffect(() => {
     if (isReady && enabled) {
+      // fetch bonded pools
       fetchBondedPools();
     }
     return () => {
       unsubscribe();
     };
   }, [network, isReady, enabled]);
+
+  // after bonded pools have synced, fetch metabatch
+  useEffect(() => {
+    if (bondedPools.length) {
+      fetchPoolsMetaBatch('bonded_pools', bondedPools, false);
+    }
+  }, [bondedPools]);
 
   const unsubscribe = () => {
     Object.values(poolSubsRef.current).map((batch: Array<Fn>) => {
@@ -119,9 +137,15 @@ export const BondedPoolsProvider = ({
       }
     }
 
+    // aggregate pool ids and addresses
     const ids = [];
+    const addresses = [];
     for (const _p of p) {
       ids.push(Number(_p.id));
+
+      if (_p?.addresses?.stash) {
+        addresses.push(_p.addresses.stash);
+      }
     }
 
     // store batch ids
@@ -134,9 +158,9 @@ export const BondedPoolsProvider = ({
       poolMetaBatchesRef
     );
 
-    const subscribeToMetadata = async (id: AnyApi) => {
+    const subscribeToMetadata = async (_ids: AnyApi) => {
       const unsub = await api.query.nominationPools.metadata.multi(
-        id,
+        _ids,
         (_metadata: AnyApi) => {
           const metadata = [];
           for (let i = 0; i < _metadata.length; i++) {
@@ -155,10 +179,81 @@ export const BondedPoolsProvider = ({
       return unsub;
     };
 
+    const subscribeToNominators = async (_addresses: AnyApi) => {
+      const unsub = await api.query.staking.nominators.multi(
+        _addresses,
+        (_nominations: AnyApi) => {
+          const nominations = [];
+          for (let i = 0; i < _nominations.length; i++) {
+            nominations.push(_nominations[i].toHuman());
+          }
+
+          const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
+          _batchesUpdated[key].nominations = nominations;
+
+          setStateWithRef(
+            { ..._batchesUpdated },
+            setPoolMetaBatch,
+            poolMetaBatchesRef
+          );
+        }
+      );
+      return unsub;
+    };
+
     // initiate subscriptions
-    await Promise.all([subscribeToMetadata(ids)]).then((unsubs: Array<Fn>) => {
+    await Promise.all([
+      subscribeToMetadata(ids),
+      subscribeToNominators(addresses),
+    ]).then((unsubs: Array<Fn>) => {
       addMetaBatchUnsubs(key, unsubs);
     });
+  };
+
+  /*
+   * Get bonded pool nomination statuses
+   */
+  const getPoolNominationStatus = (
+    nominator: MaybeAccount,
+    nomination: MaybeAccount
+  ) => {
+    const pool = bondedPools.find((p: any) => p.addresses.stash === nominator);
+
+    if (!pool) {
+      return 'waiting';
+    }
+    // get pool targets from nominations metadata
+    const batchIndex = bondedPools.indexOf(pool);
+    const nominations = poolMetaBatches.bonded_pools?.nominations ?? [];
+    const targets = nominations[batchIndex]?.targets ?? [];
+
+    const target = targets.find((t: string) => t === nomination);
+
+    const nominationStatus = getNominationsStatusFromTargets(nominator, [
+      target,
+    ]);
+
+    return getPoolNominationStatusCode(nominationStatus);
+  };
+
+  /*
+   * Determine bonded pool's current nomination statuse
+   */
+  const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
+    let status = 'waiting';
+
+    if (statuses) {
+      for (const _status of Object.values(statuses)) {
+        if (_status === 'active') {
+          status = 'active';
+          break;
+        }
+        if (_status === 'inactive') {
+          status = 'inactive';
+        }
+      }
+    }
+    return status;
   };
 
   /*
@@ -220,6 +315,8 @@ export const BondedPoolsProvider = ({
         fetchPoolsMetaBatch,
         createAccounts,
         getBondedPool,
+        getPoolNominationStatus,
+        getPoolNominationStatusCode,
         bondedPools,
         meta: poolMetaBatchesRef.current,
       }}

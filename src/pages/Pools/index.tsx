@@ -121,6 +121,7 @@ export const PoolsInner = (props: PageProps) => {
                 </h3>
               </CardHeaderWrapper>
               <PoolList
+                batchKey="bonded_pools"
                 pools={bondedPools}
                 title="Active Pools"
                 allowMoreCols

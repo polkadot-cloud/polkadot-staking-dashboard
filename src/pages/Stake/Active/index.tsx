@@ -72,7 +72,7 @@ export const Active = ({ title }: any) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {nominations.length || inSetup() || isSyncing ? (
-            <Nominations bondType="stake" />
+            <Nominations bondType="stake" nominator={activeAccount} />
           ) : (
             <>
               <CardHeaderWrapper withAction>

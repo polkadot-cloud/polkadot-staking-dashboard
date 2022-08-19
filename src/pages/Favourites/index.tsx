@@ -30,6 +30,7 @@ export const Favourites = (props: PageProps) => {
                 <>
                   {favouritesList.length > 0 ? (
                     <ValidatorList
+                      bondType="stake"
                       validators={favouritesList}
                       batchKey={batchKey}
                       title="Favourite Validators"

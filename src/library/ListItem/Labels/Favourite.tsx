@@ -9,8 +9,8 @@ import { useNotifications } from 'contexts/Notifications';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useTooltip } from 'contexts/Tooltip';
 import { useRef } from 'react';
+import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { FavouriteProps } from '../types';
-import { TooltipPosition, TooltipTrigger } from '../Wrappers';
 
 export const Favourite = (props: FavouriteProps) => {
   const { addNotification } = useNotifications();

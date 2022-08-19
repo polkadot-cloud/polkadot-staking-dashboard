@@ -214,7 +214,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     return _setup.progress;
   };
 
-  const getSetupProgressPercent = (address: string) => {
+  const getSetupProgressPercent = (address: MaybeAccount) => {
+    if (!address) {
+      return 0;
+    }
     const setupProgress = getSetupProgress(address);
     const p = 25;
     let progress = 0;
