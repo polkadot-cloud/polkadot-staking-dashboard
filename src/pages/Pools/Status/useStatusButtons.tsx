@@ -1,18 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolState } from 'contexts/Pools/types';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
-import {
-  faTimesCircle,
-  faLock,
-  faUserPlus,
-  faPlusCircle,
-  faLockOpen,
-} from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsTabs } from '../context';
 
@@ -42,51 +35,6 @@ export const useStatusButtons = () => {
     transform: 'grow-1',
     disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
     onClick: () => setActiveTab(1),
-  };
-
-  // TODO: migrate to modal
-  const destroyBtn = {
-    title: 'Destroy',
-    icon: faTimesCircle,
-    transform: 'grow-1',
-    disabled: !isReady || isReadOnlyAccount(activeAccount),
-    small: true,
-    onClick: () =>
-      openModalWith(
-        'ChangePoolState',
-        { bondType: 'pool', state: PoolState.Destroy },
-        'small'
-      ),
-  };
-
-  // TODO: migrate to modal
-  const blockBtn = {
-    title: 'Lock',
-    icon: faLock,
-    transform: 'grow-1',
-    disabled: !isReady || isReadOnlyAccount(activeAccount),
-    small: true,
-    onClick: () =>
-      openModalWith(
-        'ChangePoolState',
-        { bondType: 'pool', state: PoolState.Block },
-        'small'
-      ),
-  };
-
-  // TODO: migrate to modal
-  const openBtn = {
-    title: 'Unlock',
-    icon: faLockOpen,
-    transform: 'grow-1',
-    disabled: !isReady || isReadOnlyAccount(activeAccount),
-    small: true,
-    onClick: () =>
-      openModalWith(
-        'ChangePoolState',
-        { bondType: 'pool', state: PoolState.Open },
-        'small'
-      ),
   };
 
   if (!membership) {
