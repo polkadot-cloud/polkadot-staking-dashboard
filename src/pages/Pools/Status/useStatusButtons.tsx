@@ -7,7 +7,6 @@ import { useConnect } from 'contexts/Connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import {
-  faSignOutAlt,
   faTimesCircle,
   faLock,
   faUserPlus,
@@ -22,7 +21,7 @@ export const useStatusButtons = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
-  const { activeBondedPool, isOwner, getPoolBondOptions } = useActivePool();
+  const { isOwner, getPoolBondOptions } = useActivePool();
   const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
 
@@ -45,14 +44,7 @@ export const useStatusButtons = () => {
     onClick: () => setActiveTab(1),
   };
 
-  const leaveBtn = {
-    title: 'Leave Pool',
-    icon: faSignOutAlt,
-    disabled: !isReady || isReadOnlyAccount(activeAccount),
-    small: true,
-    onClick: () => openModalWith('LeavePool', { bondType: 'pool' }, 'small'),
-  };
-
+  // TODO: migrate to modal
   const destroyBtn = {
     title: 'Destroy',
     icon: faTimesCircle,
@@ -67,6 +59,7 @@ export const useStatusButtons = () => {
       ),
   };
 
+  // TODO: migrate to modal
   const blockBtn = {
     title: 'Lock',
     icon: faLock,
@@ -81,6 +74,7 @@ export const useStatusButtons = () => {
       ),
   };
 
+  // TODO: migrate to modal
   const openBtn = {
     title: 'Unlock',
     icon: faLockOpen,
@@ -96,23 +90,12 @@ export const useStatusButtons = () => {
   };
 
   if (!membership) {
-    _label = 'Not in a Pool';
+    _label = 'Pool Membership';
     _buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
     _label = `Owner of Pool ${membership.poolId}`;
-    switch (activeBondedPool?.state) {
-      case PoolState.Open:
-        _buttons = [destroyBtn, blockBtn];
-        break;
-      case PoolState.Block:
-        _buttons = [destroyBtn, openBtn];
-        break;
-      default:
-        _buttons = [];
-    }
   } else if (active?.gtn(0)) {
-    _label = `Active in Pool ${membership.poolId}`;
-    _buttons = [leaveBtn];
+    _label = `Member of Pool ${membership.poolId}`;
   } else {
     _label = `Leaving Pool ${membership.poolId}`;
   }

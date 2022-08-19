@@ -19,6 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStatusButtons } from './useStatusButtons';
+import { Membership } from './Membership';
 
 export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();
@@ -34,9 +35,7 @@ export const Status = ({ height }: { height: number }) => {
     (_v) => _v === 'active'
   ).length;
   const isNominating = !!poolNominations?.targets?.length;
-
-  // Pool status `Stat` props
-  const { label, buttons } = useStatusButtons();
+  const inPool = membership && activeBondedPool;
 
   // Unclaimed rewards `Stat` props
   let { unclaimedReward } = activeBondedPool || {};
@@ -88,14 +87,21 @@ export const Status = ({ height }: { height: number }) => {
     ? 'Actively Nominating with Pool Funds'
     : 'Waiting for Active Nominations';
 
+  const { label, buttons } = useStatusButtons();
+
   return (
     <CardWrapper height={height}>
-      <Stat
-        label="Membership"
-        assistant={['pools', 'Pool Status']}
-        stat={label}
-        buttons={isSyncing ? [] : buttons}
-      />
+      {inPool ? (
+        <Membership label={label} />
+      ) : (
+        <Stat
+          label="Pool Membership"
+          assistant={['pools', 'Pool Status']}
+          stat="Not in Pool"
+          buttons={isSyncing ? [] : buttons}
+        />
+      )}
+
       <Separator />
       <Stat
         label="Unclaimed Rewards"
