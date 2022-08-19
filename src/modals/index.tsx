@@ -21,13 +21,13 @@ import { CreatePool } from './CreatePool';
 import { NominatePool } from './NominatePool';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
-import { ChangePoolState } from './ChangePoolState';
 import { ChangePoolRoles } from './ChangePoolRoles';
 import { ClaimReward } from './ClaimReward';
 import { SelectFavourites } from './SelectFavourites';
 import { NominateFromFavourites } from './NominateFromFavourites';
 import { Networks } from './Networks';
 import { Bio } from './Bio';
+import { ManagePool } from './ManagePool';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -104,25 +104,25 @@ export const Modal = () => {
           <ContentWrapper ref={modalRef}>
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
               {modal === 'Bio' && <Bio />}
+              {modal === 'CreatePool' && <CreatePool />}
               {modal === 'ChangeNominations' && <ChangeNominations />}
-              {modal === 'ChangePoolState' && <ChangePoolState />}
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
               {modal === 'ClaimReward' && <ClaimReward />}
               {modal === 'ConnectAccounts' && <ConnectAccounts />}
-              {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
+              {modal === 'JoinPool' && <JoinPool />}
               {modal === 'Settings' && <Settings />}
               {modal === 'UpdateController' && <UpdateController />}
               {modal === 'UpdateBond' && <UpdateBond />}
               {modal === 'UpdatePayee' && <UpdatePayee />}
+              {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
+              {modal === 'ManagePool' && <ManagePool />}
               {modal === 'Nominate' && <Nominate />}
               {modal === 'UnlockChunks' && <UnlockChunks />}
-              {modal === 'CreatePool' && <CreatePool />}
               {modal === 'NominatePool' && <NominatePool />}
-              {modal === 'JoinPool' && <JoinPool />}
               {modal === 'LeavePool' && <LeavePool />}
               {modal === 'SelectFavourites' && <SelectFavourites />}
-              {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
               {modal === 'Networks' && <Networks />}
+              {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
               {modal === 'PoolNominations' && <PoolNominations />}
             </ErrorBoundary>
           </ContentWrapper>

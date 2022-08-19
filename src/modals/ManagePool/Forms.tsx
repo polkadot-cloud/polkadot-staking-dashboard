@@ -1,12 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowAltCircleUp,
-  faTimesCircle,
-} from '@fortawesome/free-regular-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
@@ -17,13 +14,15 @@ import { Separator } from 'Wrappers';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
-import { ContentWrapper } from './Wrapper';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
-export const Forms = () => {
+export const Forms = forwardRef((props: any, ref: any) => {
+  const { setSection, task } = props;
+
   const { api } = useApi();
-  const { setStatus: setModalStatus, config } = useModal();
-  const { state } = config;
+  const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
   const { isOwner } = useActivePool();
@@ -46,14 +45,14 @@ export const Forms = () => {
     }
 
     // remove decimal errors
-    switch (state) {
-      case PoolState.Destroy:
+    switch (task) {
+      case 'destroy_pool':
         _tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
         break;
-      case PoolState.Open:
+      case 'unlock_pool':
         _tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
         break;
-      case PoolState.Block:
+      case 'lock_pool':
         _tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
         break;
       default:
@@ -66,8 +65,8 @@ export const Forms = () => {
   const content = (() => {
     let title;
     let message;
-    switch (state) {
-      case PoolState.Destroy:
+    switch (task) {
+      case 'destroy_pool':
         title = <h2>Destroying a Pool is Irreversible</h2>;
         message = (
           <p>
@@ -76,11 +75,11 @@ export const Forms = () => {
           </p>
         );
         break;
-      case PoolState.Open:
+      case 'unlock_pool':
         title = <h2>Submit Pool Unlock</h2>;
         message = <p>Once you Unlock the pool new people can join the pool.</p>;
         break;
-      case PoolState.Block:
+      case 'lock_pool':
         title = <h2>Submit Pool Lock</h2>;
         message = <p>Once you Lock the pool no one else can join the pool.</p>;
         break;
@@ -106,7 +105,7 @@ export const Forms = () => {
   );
 
   return (
-    <ContentWrapper>
+    <ContentWrapper ref={ref}>
       {!accountHasSigner(activeAccount) && (
         <Warning text="Your account is read only, and cannot sign transactions." />
       )}
@@ -125,14 +124,14 @@ export const Forms = () => {
           <button
             type="button"
             className="submit"
-            onClick={() => setModalStatus(0)}
+            onClick={() => setSection(0)}
             disabled={submitting}
           >
             <FontAwesomeIcon
               transform="grow-2"
-              icon={faTimesCircle as IconProp}
+              icon={faChevronLeft as IconProp}
             />
-            Cancel
+            Back
           </button>
         </div>
         <div>
@@ -153,6 +152,6 @@ export const Forms = () => {
       </FooterWrapper>
     </ContentWrapper>
   );
-};
+});
 
 export default Forms;
