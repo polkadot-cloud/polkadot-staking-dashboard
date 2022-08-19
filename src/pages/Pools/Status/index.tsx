@@ -37,10 +37,16 @@ export const Status = ({ height }: { height: number }) => {
   const isNominating = !!poolNominations?.targets?.length;
   const inPool = membership && activeBondedPool;
 
+  // Set the minimum unclaimed planck value to prevent e numbers
+  const minUnclaimedDisplay = new BN(10_000);
+
   // Unclaimed rewards `Stat` props
   let { unclaimedReward } = activeBondedPool || {};
   unclaimedReward = unclaimedReward ?? new BN(0);
-  const labelRewards = `${planckBnToUnit(unclaimedReward, units)} ${unit}`;
+
+  const labelRewards = unclaimedReward.gt(minUnclaimedDisplay)
+    ? `${planckBnToUnit(unclaimedReward, units)} ${unit}`
+    : `0 ${unit}`;
 
   const buttonsRewards = unclaimedReward.gtn(0)
     ? [
