@@ -11,10 +11,12 @@ import Button from 'library/Button';
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useApi } from 'contexts/Api';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
-  const { activeAccount } = useConnect();
+  const { isReady } = useApi();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
   const { bondedPools, meta } = useBondedPools();
@@ -37,7 +39,15 @@ export const Membership = ({ label }: { label: string }) => {
   }
 
   const button = isOwner() ? (
-    <Button primary inline title="Mange" icon={faCog} small disabled={false} />
+    <Button
+      primary
+      inline
+      title="Mange"
+      icon={faCog}
+      small
+      disabled={!isReady || isReadOnlyAccount(activeAccount)}
+      onClick={() => openModalWith('ManagePool', {}, 'small')}
+    />
   ) : active?.gtn(0) ? (
     <Button
       primary
@@ -45,7 +55,7 @@ export const Membership = ({ label }: { label: string }) => {
       title="Leave"
       icon={faSignOutAlt}
       small
-      disabled={false}
+      disabled={!isReady || isReadOnlyAccount(activeAccount)}
       onClick={() => openModalWith('LeavePool', { bondType: 'pool' }, 'small')}
     />
   ) : null;
