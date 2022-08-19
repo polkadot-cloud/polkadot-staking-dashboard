@@ -77,6 +77,7 @@ export const calculatePayoutsByDay = (
     return payouts;
   }
 
+  // if we are taking an average, we will need extra days of data.
   if (average > 1) {
     maxDays += average;
   }
@@ -204,14 +205,15 @@ export const calculatePayoutsByDay = (
 
   // create moving average value over `average` days
   const averagePayoutsByDay = [];
-  for (let i = 0; i < payoutsByDay.length - average; i++) {
+  for (let i = 0; i < payoutsByDay.length; i++) {
     let total = 0;
     let num = 0;
     for (let j = 0; j < average; j++) {
       if (payoutsByDay[i + j]) {
         total += payoutsByDay[i + j].amount;
-        num += 1;
       }
+      // increase by one anyway to treat non-existent as zero value
+      num += 1;
     }
 
     averagePayoutsByDay.push({
@@ -221,7 +223,8 @@ export const calculatePayoutsByDay = (
     });
   }
 
-  return averagePayoutsByDay;
+  // return an array with the expected number of items
+  return averagePayoutsByDay.slice(0, maxDays - average);
 };
 
 // fill in the backlog of days up to `maxDays`
