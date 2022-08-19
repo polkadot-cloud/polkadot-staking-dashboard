@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { HeadingWrapper, PaddingWrapper } from '../Wrappers';
 import { Forms } from './Forms';
 
@@ -10,7 +10,7 @@ export const JoinPool = () => {
   return (
     <PaddingWrapper>
       <HeadingWrapper>
-        <FontAwesomeIcon transform="shrink-1" icon={faUsers} />
+        <FontAwesomeIcon transform="shrink-1" icon={faUserPlus} />
         Join Pool
       </HeadingWrapper>
       <Forms />
