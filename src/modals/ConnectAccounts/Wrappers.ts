@@ -16,7 +16,9 @@ import {
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
-  width: 200%;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
 `;
 
 export const ContentWrapper = styled.div`
@@ -24,9 +26,9 @@ export const ContentWrapper = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
-  width: 50%;
+  width: 100%;
   height: auto;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 0.3rem 0.3rem 0.3rem;
 `;
 
 export const Wrapper = styled.div`

@@ -40,12 +40,12 @@ export const ConnectAccounts = () => {
   return (
     <Wrapper>
       <CardsWrapper>
-        <Accounts ref={accountsRef} />
         <Extensions
           readOnlyOpen={readOnlyOpen}
           setReadOnlyOpen={setReadOnlyOpen}
           ref={extensionsRef}
         />
+        <Accounts ref={accountsRef} />
       </CardsWrapper>
     </Wrapper>
   );

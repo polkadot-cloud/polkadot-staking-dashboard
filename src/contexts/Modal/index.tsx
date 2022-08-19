@@ -13,6 +13,19 @@ export const ModalContext =
 
 export const useModal = () => React.useContext(ModalContext);
 
+export const CloseButton = (props: any) => {
+  const { onClick, className, title } = props;
+  return (
+    <button
+      type="button"
+      className={className}
+      onClick={() => onClick !== undefined && onClick()}
+    >
+      {title}
+    </button>
+  );
+};
+
 // wrapper component to provide components with context
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, setState] = useState<ModalContextState>({
@@ -85,6 +98,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         size: state.size,
         height: state.height,
         resize: state.resize,
+        CloseButton,
       }}
     >
       {children}

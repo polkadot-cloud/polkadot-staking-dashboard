@@ -73,13 +73,15 @@ export const ContentWrapper = styled.div`
     }
   }
   .closed {
-    width: 100%;
-    height: 100%;
     border: 1px solid ${textSecondary};
     border-radius: 1rem;
-    padding: 0.3rem 0.75rem;
-    margin-right: 0.5rem;
+    padding: 0.3rem 1rem;
     font-size: 1rem;
+    z-index: 12;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
   }
 `;
 

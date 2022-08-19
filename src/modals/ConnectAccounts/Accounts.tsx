@@ -16,6 +16,7 @@ import {
   AccountGroupWrapper,
   PaddingWrapper,
   ContentWrapper,
+  Separator,
 } from './Wrappers';
 import { AccountElement, AccountButton } from './Account';
 
@@ -161,19 +162,9 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
         <div className="head">
-          <div>
-            <h1>Accounts</h1>
-          </div>
-          {/* <div>
-            <Button
-              title="Extensions"
-              inline
-              icon={faCog}
-              transform="shrink-2"
-              onClick={() => setSection(0)}
-            />
-          </div> */}
+          <h1>Accounts</h1>
         </div>
+        <Separator />
         {activeAccount ? (
           <AccountButton
             address={activeAccount}

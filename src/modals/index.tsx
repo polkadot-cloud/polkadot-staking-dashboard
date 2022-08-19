@@ -29,8 +29,16 @@ import { Networks } from './Networks';
 import { Bio } from './Bio';
 
 export const Modal = () => {
-  const { setModalHeight, setStatus, status, modal, size, height, resize } =
-    useModal();
+  const {
+    setModalHeight,
+    setStatus,
+    status,
+    modal,
+    size,
+    height,
+    resize,
+    CloseButton,
+  } = useModal();
   const controls = useAnimation();
 
   const maxHeight = window.innerHeight * 0.8;
@@ -101,15 +109,13 @@ export const Modal = () => {
           }}
         >
           <ContentWrapper ref={modalRef}>
-            <button
-              type="button"
+            <CloseButton
               className="closed"
+              title="Close"
               onClick={() => {
                 onFadeOut();
               }}
-            >
-              Close
-            </button>
+            />
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
               {modal === 'ConnectAccounts' && <ConnectAccounts />}
               {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
