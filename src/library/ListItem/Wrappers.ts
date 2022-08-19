@@ -90,6 +90,21 @@ export const Labels = styled.div`
     @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
       margin: 0 0.4rem;
     }
+    &.button-with-text {
+      margin-right: 0;
+
+      button {
+        color: ${networkColor};
+        font-size: 0.95rem;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+
+        > svg {
+          margin-left: 0.3rem;
+        }
+      }
+    }
 
     &.warning {
       color: #d2545d;

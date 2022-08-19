@@ -3,11 +3,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faBars,
-  faPlusCircle,
-  faProjectDiagram,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -36,6 +32,7 @@ import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
+import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { PoolId } from '../ListItem/Labels/PoolId';
 
 export const Pool = (props: PoolProps) => {
@@ -106,26 +103,6 @@ export const Pool = (props: PoolProps) => {
 
   // consruct pool menu items
   const menuItems: Array<any> = [];
-
-  // add join pool button to menu if user is not already in a pool, and not ready only
-  if (!isBonding() && !isReadOnlyAccount(activeAccount) && activeAccount) {
-    menuItems.push({
-      icon: (
-        <FontAwesomeIcon icon={faPlusCircle as IconProp} transform="grow-4" />
-      ),
-      wrap: null,
-      title: `Join Pool`,
-      cb: () =>
-        openModalWith(
-          'JoinPool',
-          {
-            id,
-            setActiveTab,
-          },
-          'small'
-        ),
-    });
-  }
 
   // add view pool nominations button to menu
   menuItems.push({
@@ -208,6 +185,11 @@ export const Pool = (props: PoolProps) => {
                 : 'Not Nominating'}
             </h5>
           </NominationStatusWrapper>
+          {!isBonding() && !isReadOnlyAccount(activeAccount) && activeAccount && (
+            <Labels>
+              <JoinPool id={id} setActiveTab={setActiveTab} />
+            </Labels>
+          )}
         </div>
       </div>
     </Wrapper>
