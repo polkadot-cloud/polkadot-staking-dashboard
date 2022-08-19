@@ -46,13 +46,14 @@ export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   createAccounts: (p: number) => PoolAddresses;
   getBondedPool: (p: number) => BondedPool | null;
+  getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
+  getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
   bondedPools: Array<BondedPool>;
   meta: AnyMetaBatch;
 }
 
 export interface ActiveBondedPoolState {
   pool: ActiveBondedPool | undefined;
-  unsub: AnyApi;
 }
 
 export interface ActiveBondedPool extends BondedPool {
@@ -90,6 +91,7 @@ export interface ActivePoolContextState {
   activeBondedPool: ActiveBondedPool | undefined;
   targets: any;
   poolNominations: any;
+  synced: boolean;
 }
 
 // Misc types

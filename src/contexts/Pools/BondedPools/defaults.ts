@@ -10,6 +10,10 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   createAccounts: (p) => poolAddresses,
   // eslint-disable-next-line
   getBondedPool: (p) => null,
+  // eslint-disable-next-line
+  getPoolNominationStatus: (n, o) => {},
+  // eslint-disable-next-line
+  getPoolNominationStatusCode: (t) => '',
   bondedPools: [],
   meta: {},
 };

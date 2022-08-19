@@ -8,12 +8,12 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { useTooltip } from 'contexts/Tooltip';
-import { OversubscribedProps } from '../types';
 import {
   TooltipPosition,
   TooltipTrigger,
   OverSubscribedWrapper,
-} from '../Wrappers';
+} from 'library/ListItem/Wrappers';
+import { OversubscribedProps } from '../types';
 
 export const Oversubscribed = (props: OversubscribedProps) => {
   const { consts, network } = useApi();

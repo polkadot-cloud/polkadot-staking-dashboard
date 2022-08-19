@@ -10,17 +10,30 @@ import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import Nominations from 'pages/Stake/Active/Nominations';
 import { GenerateNominations } from 'pages/Stake/GenerateNominations';
+import { useUi } from 'contexts/UI';
+import { useConnect } from 'contexts/Connect';
 
 export const ManagePool = () => {
-  const { isNominator, setTargets, targets, poolNominations } = useActivePool();
+  const { isSyncing } = useUi();
   const { openModalWith } = useModal();
+  const { activeAccount } = useConnect();
+  const {
+    isNominator,
+    setTargets,
+    targets,
+    poolNominations,
+    activeBondedPool,
+  } = useActivePool();
 
   const isNominating = !!poolNominations?.targets?.length;
+  const nominator = activeBondedPool?.addresses?.stash ?? null;
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
-        {isNominator() && !isNominating ? (
+        {isSyncing ? (
+          <Nominations bondType="pool" nominator={activeAccount} />
+        ) : isNominator() && !isNominating ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>
@@ -52,7 +65,7 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <Nominations bondType="pool" />
+          <Nominations bondType="pool" nominator={nominator} />
         )}
       </CardWrapper>
     </PageRowWrapper>

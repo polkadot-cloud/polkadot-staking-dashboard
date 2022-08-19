@@ -85,6 +85,7 @@ export const Entity = () => {
             )}
             {shuffledValidators.length > 0 && (
               <ValidatorList
+                bondType="stake"
                 validators={shuffledValidators}
                 batchKey={batchKey}
                 title={`${name}'s Validators`}

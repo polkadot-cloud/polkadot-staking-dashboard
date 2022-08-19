@@ -7,8 +7,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import Checkbox from 'react-custom-checkbox';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'styled-components';
-import { useValidatorList } from '../../context';
-import { SelectWrapper } from '../Wrappers';
+import { SelectWrapper } from 'library/ListItem/Wrappers';
+import { useValidatorList } from '../../ValidatorList/context';
 import { SelectProps } from '../types';
 
 export const Select = (props: SelectProps) => {

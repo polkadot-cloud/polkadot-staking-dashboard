@@ -339,6 +339,36 @@ export const StakingProvider = ({
   };
 
   /*
+   * Gets the nomination statuses of passed in nominations
+   */
+  const getNominationsStatusFromTargets = (
+    who: MaybeAccount,
+    _targets: [any]
+  ) => {
+    const statuses: { [key: string]: string } = {};
+
+    if (!_targets.length) {
+      return statuses;
+    }
+
+    for (const target of _targets) {
+      const s = eraStakers.stakers.find((_n: any) => _n.address === target);
+
+      if (s === undefined) {
+        statuses[target] = 'waiting';
+        continue;
+      }
+      const exists = (s.others ?? []).find((_o: any) => _o.who === who);
+      if (exists === undefined) {
+        statuses[target] = 'inactive';
+        continue;
+      }
+      statuses[target] = 'active';
+    }
+    return statuses;
+  };
+
+  /*
    * Helper function to determine whether the controller account
    * has been imported.
    */
@@ -416,6 +446,7 @@ export const StakingProvider = ({
     <StakingContext.Provider
       value={{
         getNominationsStatus,
+        getNominationsStatusFromTargets,
         setTargets,
         hasController,
         getControllerNotImported,

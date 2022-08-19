@@ -12,7 +12,7 @@ import {
 } from 'theme';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from 'consts';
 
-export const Wrapper = styled.div<{ format?: string; showStatus?: boolean }>`
+export const Wrapper = styled.div<{ format?: string }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
@@ -88,7 +88,22 @@ export const Labels = styled.div`
     color: ${textSecondary};
     margin: 0 0.2rem;
     @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
-      margin: 0 0.3rem;
+      margin: 0 0.4rem;
+    }
+    &.button-with-text {
+      margin-right: 0;
+
+      button {
+        color: ${networkColor};
+        font-size: 0.95rem;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+
+        > svg {
+          margin-left: 0.3rem;
+        }
+      }
     }
 
     &.warning {
@@ -130,15 +145,18 @@ export const IdentityWrapper = styled(motion.div)`
   .inner {
     display: flex;
     flex-flow: row wrap;
+    justify-content: flex-start;
     align-items: center;
+    width: 100%;
+    height: 3.2rem;
+    padding: 0;
   }
   h4 {
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
     height: 3.2rem;
-    line-height: 2rem;
+    line-height: 3.2rem;
     padding: 0 0 0 0.4rem;
     margin: 0;
     overflow: hidden;
@@ -224,6 +242,10 @@ export const TooltipTrigger = styled.div`
   position: absolute;
   top: -10%;
   left: -10%;
+
+  &.as-button {
+    cursor: pointer;
+  }
 `;
 
 export default Wrapper;

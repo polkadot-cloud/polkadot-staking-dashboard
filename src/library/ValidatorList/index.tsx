@@ -39,6 +39,12 @@ export const ValidatorListInner = (props: any) => {
   const provider = useValidatorList();
   const modal = useModal();
 
+  // determine the nominator of the validator list.
+  // By default this will be the activeAccount. But for pools,
+  // the pool stash address should be the nominator. This affects
+  // the `nomination` format.
+  const nominator = props.nominator ?? activeAccount;
+
   const {
     selectActive,
     setSelectActive,
@@ -118,7 +124,7 @@ export const ValidatorListInner = (props: any) => {
     if (props.validators !== validatorsDefault) {
       setFetched(false);
     }
-  }, [props.validators, activeAccount]);
+  }, [props.validators, nominator]);
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
@@ -341,12 +347,14 @@ export const ValidatorListInner = (props: any) => {
               >
                 <Validator
                   validator={validator}
+                  nominator={nominator}
                   toggleFavourites={toggleFavourites}
                   batchIndex={batchIndex}
                   batchKey={batchKey}
                   format={format}
                   showMenu={showMenu}
                   bondType={bondType}
+                  inModal={inModal}
                 />
               </motion.div>
             );

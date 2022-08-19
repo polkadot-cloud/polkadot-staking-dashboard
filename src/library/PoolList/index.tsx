@@ -11,7 +11,6 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
@@ -20,13 +19,10 @@ import { PoolListProps } from './types';
 export const PoolListInner = (props: PoolListProps) => {
   const { allowMoreCols, pagination, batchKey }: any = props;
   const disableThrottle = props.disableThrottle ?? false;
-  const refetchOnListUpdate =
-    props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { fetchPoolsMetaBatch }: any = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
 
   // current page
@@ -80,7 +76,6 @@ export const PoolListInner = (props: PoolListProps) => {
     setPoolsDefault(props.pools);
     setPools(props.pools);
     setFetched(true);
-    fetchPoolsMetaBatch(batchKey, props.pools, refetchOnListUpdate);
   };
 
   // render throttle
