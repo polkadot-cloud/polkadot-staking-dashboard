@@ -34,7 +34,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
         >
           <div>
             <h3>Rename Pool</h3>
-            <p>Update the public name of your pool.</p>
+            <p>Update the public name of the pool.</p>
           </div>
           <div>
             <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
