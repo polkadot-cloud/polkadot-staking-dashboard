@@ -30,6 +30,7 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
+import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
@@ -162,6 +163,7 @@ export const Pool = (props: PoolProps) => {
           </IdentityWrapper>
           <div>
             <Labels>
+              <FavouritePool address={addresses.stash} />
               <PoolId id={id} />
               <Members members={memberCounter} />
               <button
