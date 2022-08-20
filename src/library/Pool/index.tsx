@@ -76,19 +76,30 @@ export const Pool = (props: PoolProps) => {
   // update pool nomination status as nominations metadata becomes available.
   // we cannot add effect dependencies here as this needs to trigger
   // as soon as the component displays. (upon tab change).
+  const handleNominationsStatus = () => {
+    const _nominationStatus = getNominationsStatusFromTargets(
+      addresses.stash,
+      targets
+    );
+    setNominationsStatus(_nominationStatus);
+  };
+
+  // recalculate nominations status as app syncs
   useEffect(() => {
     if (
       nominationsStatus === null &&
       eraStakers.stakers.length &&
       nominations.length
     ) {
-      const _nominationStatus = getNominationsStatusFromTargets(
-        addresses.stash,
-        targets
-      );
-      setNominationsStatus(_nominationStatus);
+      handleNominationsStatus();
     }
   });
+
+  // metadata has changed, which means pool items may have been added.
+  // recalculate nominations status
+  useEffect(() => {
+    handleNominationsStatus();
+  }, [meta]);
 
   // configure floating menu position
   const posRef = useRef(null);

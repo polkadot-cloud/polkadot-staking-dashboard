@@ -30,6 +30,7 @@ import { ManagePool } from './ManagePool';
 import { PageProps } from '../types';
 import { Roles } from './Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
+import { Favourites } from './Favourites';
 
 export const PoolsInner = (props: PageProps) => {
   const { page } = props;
@@ -141,23 +142,7 @@ export const PoolsInner = (props: PageProps) => {
       )}
       {activeTab === 2 && (
         <>
-          <PageRowWrapper className="page-padding" noVerticalSpacer>
-            <CardWrapper>
-              <CardHeaderWrapper>
-                <h3>
-                  Favourite Pools
-                  <OpenAssistantIcon page="pools" title="Nomination Pools" />
-                </h3>
-              </CardHeaderWrapper>
-              <PoolList
-                batchKey="favourite_pools"
-                pools={favouritePools}
-                title="Favourites"
-                allowMoreCols
-                pagination
-              />
-            </CardWrapper>
-          </PageRowWrapper>
+          <Favourites />
         </>
       )}
     </>
