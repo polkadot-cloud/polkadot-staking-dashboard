@@ -40,7 +40,7 @@ ChartJS.register(
 );
 
 export const PayoutLine = (props: PayoutLineProps) => {
-  const { days, average, height, background } = props;
+  const { days, average, height, background, expected } = props;
 
   const { mode } = useTheme();
   const { network } = useApi();
@@ -63,6 +63,17 @@ export const PayoutLine = (props: PayoutLineProps) => {
 
   // combine payouts and pool claims into one dataset
   const combinedPayouts = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+
+  // create an expected value graph
+  const expectedValue = [];
+  if (expected) {
+    for (const payout of combinedPayouts) {
+      expectedValue.push({
+        amount: expected,
+        block_timestamp: payout.block_timestamp,
+      });
+    }
+  }
 
   // determine color for payouts
   const color = notStaking
@@ -146,6 +157,18 @@ export const PayoutLine = (props: PayoutLineProps) => {
           return item?.amount ?? 0;
         }),
         borderColor: color,
+        backgroundColor: color,
+        pointStyle: undefined,
+        pointRadius: 0,
+        borderWidth: 2,
+      },
+      {
+        label: 'Expected',
+        data: expectedValue.map((item: AnySubscan) => {
+          return item?.amount ?? 0;
+        }),
+        borderDash: [10, 5],
+        borderColor: 'grey',
         backgroundColor: color,
         pointStyle: undefined,
         pointRadius: 0,

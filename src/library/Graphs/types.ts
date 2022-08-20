@@ -26,6 +26,7 @@ export interface PayoutLineProps {
   average: number;
   height: string;
   background?: string;
+  expected?: number;
 }
 
 export interface StatPieProps {
