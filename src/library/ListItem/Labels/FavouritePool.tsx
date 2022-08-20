@@ -4,17 +4,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
-import { useValidators } from 'contexts/Validators';
 import { useNotifications } from 'contexts/Notifications';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useTooltip } from 'contexts/Tooltip';
 import { useRef } from 'react';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { FavouriteProps } from '../types';
 
-export const Favourite = (props: FavouriteProps) => {
+export const FavouritePool = (props: FavouriteProps) => {
   const { addNotification } = useNotifications();
-  const { favourites, addFavourite, removeFavourite } = useValidators();
+  const { favourites, addFavourite, removeFavourite } = usePoolsConfig();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   const { address } = props;
@@ -22,11 +22,11 @@ export const Favourite = (props: FavouriteProps) => {
 
   const notificationFavourite = !isFavourite
     ? {
-        title: 'Favourite Validator Added',
+        title: 'Favourite Pool Added',
         subtitle: address,
       }
     : {
-        title: 'Favourite Validator Removed',
+        title: 'Favourite Pool Removed',
         subtitle: address,
       };
 
@@ -68,5 +68,3 @@ export const Favourite = (props: FavouriteProps) => {
     </div>
   );
 };
-
-export default Favourite;

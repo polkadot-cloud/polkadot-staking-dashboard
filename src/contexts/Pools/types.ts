@@ -7,6 +7,9 @@ import { AnyApi, AnyMetaBatch, MaybeAccount } from 'types';
 // PoolsConfig types
 export interface PoolsConfigContextState {
   enabled: number;
+  addFavourite: (a: string) => void;
+  removeFavourite: (a: string) => void;
+  favourites: string[];
   stats: PoolStats;
 }
 
