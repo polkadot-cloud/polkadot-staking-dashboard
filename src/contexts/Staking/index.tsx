@@ -20,6 +20,8 @@ import {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
+import useInflation from 'library/Hooks/useInflation';
+
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
@@ -54,6 +56,9 @@ export const StakingProvider = ({
   } = useBalances();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
+  const { stakedReturn } = useInflation();
+
+  console.log('shawn stk', stakedReturn);
 
   // store staking metrics in state
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -378,6 +383,29 @@ export const StakingProvider = ({
   };
 
   /*
+   * Helper function to determine how much the active account
+   * has bonded.
+   */
+  const bondedAmount = () => {
+    if (!hasController() || !activeAccount) {
+      return new BN(0);
+    }
+
+    const ledger = getLedgerForStash(activeAccount);
+    return ledger.active;
+  };
+
+  /*
+   * Helper function to determine how much the active account
+   * is expected to receive in yearly rewards
+   */
+  const estimatedYearlyRewards = () => {
+    console.log('shawn', stakedReturn, bondedAmount().toString());
+    const numAmount = planckBnToUnit(bondedAmount(), units);
+    return (stakedReturn / 100) * numAmount;
+  };
+
+  /*
    * Helper function to determine whether the active account
    * has funds unlocking.
    */
@@ -420,6 +448,8 @@ export const StakingProvider = ({
         hasController,
         getControllerNotImported,
         isBonding,
+        bondedAmount,
+        estimatedYearlyRewards,
         isNominating,
         inSetup,
         staking: stakingMetrics,

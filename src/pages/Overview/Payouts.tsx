@@ -8,31 +8,18 @@ import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 import { useStaking } from 'contexts/Staking';
-import useInflation from 'library/Hooks/useInflation';
-import { useConnect } from 'contexts/Connect';
-import { planckBnToUnit, humanNumber } from 'Utils';
-import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
-import BN from 'bn.js';
 
 export const Payouts = () => {
-  const { network } = useApi();
-  const { units } = network;
   const { isSyncing, services } = useUi();
-  const { inSetup } = useStaking();
+  const { inSetup, estimatedYearlyRewards } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { stakedReturn } = useInflation();
-  const { activeAccount } = useConnect();
-  const { getLedgerForStash } = useBalances();
-  const ledger = getLedgerForStash(activeAccount);
-  const { active }: { active: BN } = ledger;
 
   const ref = React.useRef<HTMLDivElement>(null);
 
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 306);
 
-  const bondedAmount = planckBnToUnit(active, units);
+  console.log('hi shawn', estimatedYearlyRewards());
 
   return (
     <div className="inner" ref={ref} style={{ minHeight }}>
@@ -67,7 +54,7 @@ export const Payouts = () => {
             days={19}
             average={10}
             height="90px"
-            expected={((stakedReturn / 100) * bondedAmount) / 365}
+            expected={estimatedYearlyRewards() / 365}
           />
         </div>
       </div>

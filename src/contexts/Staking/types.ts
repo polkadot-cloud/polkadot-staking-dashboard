@@ -40,6 +40,8 @@ export interface StakingContextInterface {
   hasController: () => boolean;
   getControllerNotImported: (a: MaybeAccount) => any;
   isBonding: () => boolean;
+  bondedAmount: () => BN;
+  estimatedYearlyRewards: () => number;
   isNominating: () => boolean;
   inSetup: () => any;
   staking: StakingMetrics;

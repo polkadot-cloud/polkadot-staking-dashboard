@@ -48,6 +48,8 @@ export const defaultStakingContext: StakingContextInterface = {
   // eslint-disable-next-line
   getControllerNotImported: (a) => null,
   isBonding: () => false,
+  bondedAmount: () => new BN(0),
+  estimatedYearlyRewards: () => 0,
   isNominating: () => false,
   inSetup: () => true,
   staking: stakingMetrics,
