@@ -31,6 +31,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
 import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
+import { useUi } from 'contexts/UI';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
@@ -46,6 +47,7 @@ export const Pool = (props: PoolProps) => {
   const { addNotification } = useNotifications();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { validators } = useValidators();
+  const { isSyncing } = useUi();
 
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
@@ -198,11 +200,14 @@ export const Pool = (props: PoolProps) => {
                 : 'Not Nominating'}
             </h5>
           </NominationStatusWrapper>
-          {!isBonding() && !isReadOnlyAccount(activeAccount) && activeAccount && (
-            <Labels>
-              <JoinPool id={id} setActiveTab={setActiveTab} />
-            </Labels>
-          )}
+          {!isSyncing &&
+            !isBonding() &&
+            !isReadOnlyAccount(activeAccount) &&
+            activeAccount && (
+              <Labels>
+                <JoinPool id={id} setActiveTab={setActiveTab} />
+              </Labels>
+            )}
         </div>
       </div>
     </Wrapper>
