@@ -13,6 +13,7 @@ import { Pool } from 'library/Pool';
 import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -23,6 +24,7 @@ export const PoolListInner = (props: PoolListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
+  const { fetchPoolsMetaBatch } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
 
   // current page
@@ -76,6 +78,7 @@ export const PoolListInner = (props: PoolListProps) => {
     setPoolsDefault(props.pools);
     setPools(props.pools);
     setFetched(true);
+    fetchPoolsMetaBatch(batchKey, props.pools, true);
   };
 
   // render throttle

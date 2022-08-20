@@ -30,6 +30,8 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
+import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
+import { useUi } from 'contexts/UI';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
@@ -45,6 +47,7 @@ export const Pool = (props: PoolProps) => {
   const { addNotification } = useNotifications();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { validators } = useValidators();
+  const { isSyncing } = useUi();
 
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
@@ -75,19 +78,30 @@ export const Pool = (props: PoolProps) => {
   // update pool nomination status as nominations metadata becomes available.
   // we cannot add effect dependencies here as this needs to trigger
   // as soon as the component displays. (upon tab change).
+  const handleNominationsStatus = () => {
+    const _nominationStatus = getNominationsStatusFromTargets(
+      addresses.stash,
+      targets
+    );
+    setNominationsStatus(_nominationStatus);
+  };
+
+  // recalculate nominations status as app syncs
   useEffect(() => {
     if (
       nominationsStatus === null &&
       eraStakers.stakers.length &&
       nominations.length
     ) {
-      const _nominationStatus = getNominationsStatusFromTargets(
-        addresses.stash,
-        targets
-      );
-      setNominationsStatus(_nominationStatus);
+      handleNominationsStatus();
     }
   });
+
+  // metadata has changed, which means pool items may have been added.
+  // recalculate nominations status
+  useEffect(() => {
+    handleNominationsStatus();
+  }, [meta]);
 
   // configure floating menu position
   const posRef = useRef(null);
@@ -162,6 +176,7 @@ export const Pool = (props: PoolProps) => {
           </IdentityWrapper>
           <div>
             <Labels>
+              <FavouritePool address={addresses.stash} />
               <PoolId id={id} />
               <Members members={memberCounter} />
               <button
@@ -185,11 +200,14 @@ export const Pool = (props: PoolProps) => {
                 : 'Not Nominating'}
             </h5>
           </NominationStatusWrapper>
-          {!isBonding() && !isReadOnlyAccount(activeAccount) && activeAccount && (
-            <Labels>
-              <JoinPool id={id} setActiveTab={setActiveTab} />
-            </Labels>
-          )}
+          {!isSyncing &&
+            !isBonding() &&
+            !isReadOnlyAccount(activeAccount) &&
+            activeAccount && (
+              <Labels>
+                <JoinPool id={id} setActiveTab={setActiveTab} />
+              </Labels>
+            )}
         </div>
       </div>
     </Wrapper>

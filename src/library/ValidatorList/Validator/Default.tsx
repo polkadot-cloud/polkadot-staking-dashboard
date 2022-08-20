@@ -13,7 +13,7 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { Wrapper, Labels, MenuPosition } from 'library/ListItem/Wrappers';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
-import { Favourite } from '../../ListItem/Labels/Favourite';
+import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -105,7 +105,7 @@ export const Default = (props: DefaultProps) => {
               <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
-              {toggleFavourites && <Favourite address={address} />}
+              {toggleFavourites && <FavouriteValidator address={address} />}
               {showMenu && (
                 <button
                   type="button"
