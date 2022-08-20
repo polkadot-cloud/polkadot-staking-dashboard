@@ -12,7 +12,7 @@ import { useRef } from 'react';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { FavouriteProps } from '../types';
 
-export const Favourite = (props: FavouriteProps) => {
+export const FavouriteValidator = (props: FavouriteProps) => {
   const { addNotification } = useNotifications();
   const { favourites, addFavourite, removeFavourite } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
@@ -68,5 +68,3 @@ export const Favourite = (props: FavouriteProps) => {
     </div>
   );
 };
-
-export default Favourite;
