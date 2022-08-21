@@ -104,10 +104,15 @@ export const ReturnsWrapper = styled.div`
 
         @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 150}px) {
           flex-basis: 25%;
+          max-width: 300px;
           padding-left: 1rem;
           padding-right: 1rem;
           margin-bottom: 0;
           border-right: 1px solid ${borderPrimary};
+
+          &:last-child {
+            max-width: none;
+          }
         }
 
         > .inner {
