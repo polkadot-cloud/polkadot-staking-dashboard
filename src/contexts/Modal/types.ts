@@ -15,7 +15,6 @@ export interface ModalContextState {
   size: string;
   height: number;
   resize: number;
-  CloseButton?: any;
 }
 
 export type ModalConfig = Record<string, string | any>;

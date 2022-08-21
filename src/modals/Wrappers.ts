@@ -56,6 +56,15 @@ export const ContentWrapper = styled.div`
   height: auto;
   overflow: hidden;
   position: relative;
+
+  .close {
+    box-sizing: border-box;
+    width: 100;
+    display: flex;
+    flex-flow: row-reverse wrap;
+    padding: 0.75rem 0.5rem;
+  }
+
   .header {
     width: 100%;
     display: flex;
