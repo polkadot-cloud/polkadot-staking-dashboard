@@ -3,13 +3,12 @@
 
 import styled from 'styled-components';
 import {
-  borderPrimary,
   textPrimary,
   textSecondary,
-  networkColor,
+  borderPrimary,
   buttonSecondaryBackground,
 } from 'theme';
-import { MEDIUM_FONT_SiZE_MAX_WIDTH, SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
+import { SMALL_FONT_SIZE_MAX_WIDTH, MEDIUM_FONT_SiZE_MAX_WIDTH } from 'consts';
 
 export const SectionWrapper = styled.div`
   padding: 0 1.25rem 0rem 1.25rem;
@@ -84,89 +83,6 @@ export const Separator = styled.div`
   margin-bottom: 0.2rem;
   width: 100%;
   height: 1px;
-`;
-
-export const ReturnsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  height: 100%;
-
-  h4 {
-    color: ${textSecondary};
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    margin-bottom: 0;
-
-    .assistant-icon {
-      margin-left: 0.6rem;
-    }
-  }
-
-  > section {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    padding: 0 0.5rem;
-    flex-basis: 100%;
-
-    .items {
-      box-sizing: border-box;
-      flex-grow: 1;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      width: 100%;
-
-      > div {
-        box-sizing: border-box;
-        flex-grow: 1;
-        padding-right: 0;
-        padding-bottom: 0.75rem;
-        flex-basis: 100%;
-        width: 100%;
-        border-bottom: 1px solid ${borderPrimary};
-        margin-bottom: 0.6rem;
-
-        @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
-          flex-basis: 33%;
-          padding-right: 1rem;
-          padding-bottom: 0;
-          border-bottom: 0;
-          margin-bottom: 0;
-        }
-        &:last-child {
-          padding-right: 0;
-          padding-bottom: 0;
-          border-bottom: 0;
-        }
-        > .inner {
-          border-radius: 0.8rem;
-          width: 100%;
-          padding: 0rem 1rem;
-          display: flex;
-          flex-flow: row nowrap;
-
-          h2 {
-            color: ${networkColor};
-            margin-top: 0rem;
-            margin-bottom: 0;
-          }
-          h4 {
-            display: flex;
-            flex-flow: row wrap;
-            color: ${textSecondary};
-            margin-top: 0.45rem;
-            margin-bottom: 0;
-          }
-          display: flex;
-          flex-flow: column wrap;
-        }
-      }
-    }
-  }
 `;
 
 export const ReserveWrapper = styled.div`

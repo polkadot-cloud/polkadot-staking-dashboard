@@ -9,12 +9,10 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useNetworkMetrics } from 'contexts/Network';
-import { Wrapper, Item } from './Wrappers';
+import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
@@ -124,40 +122,28 @@ export const Announcements = () => {
   });
 
   return (
-    <CardWrapper>
-      <CardHeaderWrapper>
-        <h3>
-          Announcements
-          <OpenAssistantIcon page="overview" title="Announcements" />
-        </h3>
-      </CardHeaderWrapper>
-      <Wrapper>
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          style={{ width: '100%' }}
-        >
-          {isSyncing ? (
-            <AnnouncementLoader />
-          ) : (
-            announcements.map((item, index) => (
-              <Item key={`announcement_${index}`} variants={listItem}>
-                <h4 className={item.class}>
-                  <FontAwesomeIcon
-                    icon={faBack}
-                    style={{ marginRight: '0.6rem' }}
-                  />
-                  {item.title}
-                </h4>
-                <p>{item.subtitle}</p>
-              </Item>
-            ))
-          )}
-        </motion.div>
-      </Wrapper>
-    </CardWrapper>
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      style={{ width: '100%' }}
+    >
+      {isSyncing ? (
+        <AnnouncementLoader />
+      ) : (
+        announcements.map((item, index) => (
+          <Item key={`announcement_${index}`} variants={listItem}>
+            <h4 className={item.class}>
+              <FontAwesomeIcon
+                icon={faBack}
+                style={{ marginRight: '0.6rem' }}
+              />
+              {item.title}
+            </h4>
+            <p>{item.subtitle}</p>
+          </Item>
+        ))
+      )}
+    </motion.div>
   );
 };
-
-export default Announcements;
