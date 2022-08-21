@@ -7,7 +7,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
 import { toFixedIfNecessary } from 'Utils';
-import { ReturnsWrapper } from '../Wrappers';
+import { ReturnsWrapper } from './Wrappers';
 
 export const Returns = () => {
   const { metrics } = useNetworkMetrics();
