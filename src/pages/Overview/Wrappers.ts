@@ -91,15 +91,9 @@ export const ReturnsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  height: 100%;
+  margin-bottom: 0.75rem;
 
   h4 {
-    color: ${textSecondary};
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    margin-bottom: 0;
-
     .assistant-icon {
       margin-left: 0.6rem;
     }
@@ -109,7 +103,6 @@ export const ReturnsWrapper = styled.div`
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    padding: 0 0.5rem;
     flex-basis: 100%;
 
     .items {
@@ -123,31 +116,33 @@ export const ReturnsWrapper = styled.div`
       > div {
         box-sizing: border-box;
         flex-grow: 1;
-        padding-right: 0;
-        padding-bottom: 0.75rem;
         flex-basis: 100%;
         width: 100%;
-        border-bottom: 1px solid ${borderPrimary};
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.5rem;
+        border-right: 0;
 
-        @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
-          flex-basis: 33%;
-          padding-right: 1rem;
-          padding-bottom: 0;
-          border-bottom: 0;
-          margin-bottom: 0;
-        }
         &:last-child {
-          padding-right: 0;
-          padding-bottom: 0;
-          border-bottom: 0;
+          border-right: 0;
         }
+
+        @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 150}px) {
+          flex-basis: 25%;
+          padding-left: 1rem;
+          padding-right: 1rem;
+          margin-bottom: 0;
+          border-right: 1px solid ${borderPrimary};
+        }
+
         > .inner {
-          border-radius: 0.8rem;
           width: 100%;
-          padding: 0rem 1rem;
+          padding: 0.5rem 1rem 1rem 1rem;
           display: flex;
           flex-flow: row nowrap;
+          border-bottom: 1px solid ${borderPrimary};
+
+          @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 150}px) {
+            margin-bottom: 0;
+          }
 
           h2 {
             color: ${networkColor};
@@ -163,6 +158,13 @@ export const ReturnsWrapper = styled.div`
           }
           display: flex;
           flex-flow: column wrap;
+        }
+
+        &:first-child {
+          padding-left: 0;
+        }
+        &:last-child {
+          padding-right: 0;
         }
       }
     }

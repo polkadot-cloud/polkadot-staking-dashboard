@@ -46,9 +46,9 @@ export const Payouts = () => {
           transition: 'opacity 0.5s',
         }}
       >
-        <PayoutBar days={19} height="170px" />
+        <PayoutBar days={19} height="230px" />
         <div style={{ marginTop: '1rem' }}>
-          <PayoutLine days={19} average={10} height="75px" />
+          <PayoutLine days={19} average={10} height="100px" />
         </div>
       </div>
     </div>
