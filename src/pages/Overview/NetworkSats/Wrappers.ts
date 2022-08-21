@@ -117,7 +117,7 @@ export const ReturnsWrapper = styled.div`
 
         > .inner {
           width: 100%;
-          padding: 0.5rem 1rem 1rem 1rem;
+          padding: 0.5rem 0.5rem 1rem 0.5rem;
           display: flex;
           flex-flow: row nowrap;
           border-bottom: 1px solid ${borderPrimary};
