@@ -63,7 +63,7 @@ export const Item = styled(motion.div)`
   }
 `;
 
-export const ReturnsWrapper = styled.div`
+export const InflationWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: row wrap;

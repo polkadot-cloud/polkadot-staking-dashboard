@@ -4,7 +4,7 @@
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Wrapper } from './Wrappers';
-import { Returns } from './Returns';
+import { Inflation } from './Inflation';
 import { Announcements } from './Announcements';
 
 export const NetworkStats = () => {
@@ -17,7 +17,7 @@ export const NetworkStats = () => {
         </h3>
       </CardHeaderWrapper>
       <Wrapper>
-        <Returns />
+        <Inflation />
         <Announcements />
       </Wrapper>
     </CardWrapper>

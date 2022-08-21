@@ -7,9 +7,9 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
 import { toFixedIfNecessary } from 'Utils';
-import { ReturnsWrapper } from './Wrappers';
+import { InflationWrapper } from './Wrappers';
 
-export const Returns = () => {
+export const Inflation = () => {
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
   const { inflation, stakedReturn, idealStake } = useInflation();
@@ -26,7 +26,7 @@ export const Returns = () => {
   }
 
   return (
-    <ReturnsWrapper>
+    <InflationWrapper>
       <section>
         <div className="items">
           <div>
@@ -82,8 +82,6 @@ export const Returns = () => {
           </div>
         </div>
       </section>
-    </ReturnsWrapper>
+    </InflationWrapper>
   );
 };
-
-export default Returns;
