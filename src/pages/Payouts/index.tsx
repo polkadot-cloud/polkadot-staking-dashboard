@@ -38,7 +38,7 @@ export const Payouts = (props: PageProps) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 270);
+  const { width, height, minHeight } = formatSize(size, 290);
 
   // take non-zero rewards in most-recent order
   let payoutsList: AnySubscan = [
@@ -107,7 +107,7 @@ export const Payouts = (props: PageProps) => {
               }}
             >
               <PayoutBar days={MAX_PAYOUT_DAYS} height="150px" />
-              <PayoutLine days={MAX_PAYOUT_DAYS} average={10} height="70px" />
+              <PayoutLine days={MAX_PAYOUT_DAYS} average={10} height="75px" />
             </div>
           </div>
         </GraphWrapper>
