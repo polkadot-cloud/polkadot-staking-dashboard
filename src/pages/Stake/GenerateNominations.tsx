@@ -17,7 +17,7 @@ import {
   ValidatorFilterProvider,
 } from 'library/Filter/context';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Wrapper } from '../Overview/Announcements/Wrappers';
+import { Wrapper } from '../Overview/NetworkSats/Wrappers';
 import { GenerateNominationsInnerProps, Nominations } from './types';
 
 export const GenerateNominationsInner = (

@@ -140,7 +140,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
         backgroundColor: color,
         pointStyle: undefined,
         pointRadius: 0,
-        borderWidth: 2,
+        borderWidth: 2.3,
       },
     ],
   };

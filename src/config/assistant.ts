@@ -36,7 +36,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
-        title: 'Announcements',
+        title: 'Network Stats',
         description: [
           'Real time network statistics that may affect your staking positions.',
           'Keep up to date on the state of the network from your Overview.',
@@ -53,6 +53,12 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         title: 'Estimated APY',
         description: [
           'An estimated annual yield based on the {NETWORK_NAME} reward distribution model.',
+        ],
+      },
+      {
+        title: 'Ideal Staked',
+        description: [
+          'The percentage of staked total supply in ideal network conditions.',
         ],
       },
     ],
