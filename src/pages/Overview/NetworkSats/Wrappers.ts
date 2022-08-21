@@ -34,7 +34,7 @@ export const Item = styled(motion.div)`
     margin-bottom: 0;
   }
 
-  h4 {
+  h3 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -55,7 +55,7 @@ export const Item = styled(motion.div)`
     }
   }
 
-  p {
+  h4 {
     margin: 0;
     color: ${textSecondary};
     line-height: 1.2rem;
