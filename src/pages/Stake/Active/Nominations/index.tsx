@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
@@ -14,11 +13,17 @@ import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
-export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
+export const Nominations = ({
+  bondType,
+  nominator,
+}: {
+  bondType: 'pool' | 'stake';
+  nominator: MaybeAccount;
+}) => {
   const { openModalWith } = useModal();
-  const { isReady } = useApi();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -29,12 +34,16 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
     favouritesList = [];
   }
 
-  const { poolNominations, isNominator: isPoolNominator } = useActivePool();
+  const {
+    poolNominations,
+    isNominator: isPoolNominator,
+    isOwner: isPoolOwner,
+  } = useActivePool();
 
   const isPool = bondType === 'pool';
   const nominations = isPool
     ? poolNominations.targets
-    : getAccountNominations(activeAccount);
+    : getAccountNominations(nominator);
   const nominated = isPool ? poolNominated : stakeNominated;
   const batchKey = isPool ? 'pool_nominations' : 'stake_nominations';
 
@@ -68,6 +77,10 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
     );
   };
 
+  // determine whether buttons are disabled
+  const btnsDisabled =
+    (!isPool && inSetup()) || isSyncing || isReadOnlyAccount(activeAccount);
+
   return (
     <Wrapper>
       <CardHeaderWrapper withAction>
@@ -76,89 +89,86 @@ export const Nominations = ({ bondType }: { bondType: 'pool' | 'stake' }) => {
           <OpenAssistantIcon page="stake" title="Nominations" />
         </h3>
         <div>
-          {!isPool && nominations.length ? (
-            <div>
-              <Button
-                small
-                icon={faStopCircle}
-                transform="grow-1"
-                inline
-                primary
-                title="Stop"
-                disabled={
-                  (!isPool && inSetup()) ||
-                  isSyncing ||
-                  isReadOnlyAccount(activeAccount)
-                }
-                onClick={() =>
-                  openModalWith(
-                    'ChangeNominations',
-                    {
-                      nominations: [],
-                      bondType,
-                    },
-                    'small'
-                  )
-                }
-              />
-            </div>
-          ) : (
-            <></>
+          {/* If regular staking and nominating, display stop button.
+              If Pool and account is nominator or root, display stop button.
+          */}
+          {((!isPool && nominations.length) ||
+            (isPool && isPoolNominator() && isPoolOwner())) && (
+            <Button
+              small
+              icon={faStopCircle}
+              transform="grow-1"
+              inline
+              primary
+              title="Stop"
+              disabled={btnsDisabled}
+              onClick={() =>
+                openModalWith(
+                  'ChangeNominations',
+                  {
+                    nominations: [],
+                    bondType,
+                  },
+                  'small'
+                )
+              }
+            />
           )}
         </div>
       </CardHeaderWrapper>
-      {!activeAccount ? (
+      {nominated === null || isSyncing ? (
+        <div className="head">
+          <h4>
+            {!isSyncing && nominated === null
+              ? 'Not Nominating.'
+              : 'Syncing nominations...'}
+          </h4>
+        </div>
+      ) : !nominator ? (
         <div className="head">
           <h4>Not Nominating.</h4>
         </div>
-      ) : nominated === null || isSyncing ? (
-        <div className="head">
-          <h4>Syncing nominations...</h4>
-        </div>
       ) : (
         <>
-          {isReady && (
-            <>
-              {nominated.length > 0 ? (
-                <div style={{ marginTop: '1rem' }}>
-                  <ValidatorList
-                    validators={nominated}
-                    batchKey={batchKey}
-                    title="Your Nominations"
-                    format="nomination"
-                    bondType={isPool ? 'pool' : 'stake'}
-                    selectable={
-                      !isReadOnlyAccount(activeAccount) &&
-                      (!isPool || isPoolNominator())
-                    }
-                    actions={
-                      isReadOnlyAccount(activeAccount)
-                        ? []
-                        : [
-                            {
-                              title: 'Stop Nominating Selected',
-                              onClick: cbStopNominatingSelected,
-                              onSelected: true,
-                            },
-                            {
-                              disabled: !favouritesList.length,
-                              title: 'Add From Favourites',
-                              onClick: cbAddNominations,
-                              onSelected: false,
-                            },
-                          ]
-                    }
-                    refetchOnListUpdate
-                    allowMoreCols
-                    disableThrottle
-                  />
-                </div>
-              ) : (
-                <div className="head">
-                  <h4>Not Nominating.</h4>
-                </div>
-              )}
-            </>
+          {nominated.length > 0 ? (
+            <div style={{ marginTop: '1rem' }}>
+              <ValidatorList
+                bondType={isPool ? 'pool' : 'stake'}
+                validators={nominated}
+                nominator={nominator}
+                batchKey={batchKey}
+                title="Your Nominations"
+                format="nomination"
+                selectable={
+                  !isReadOnlyAccount(activeAccount) &&
+                  (!isPool || isPoolNominator())
+                }
+                actions={
+                  isReadOnlyAccount(activeAccount)
+                    ? []
+                    : [
+                        {
+                          title: 'Stop Nominating Selected',
+                          onClick: cbStopNominatingSelected,
+                          onSelected: true,
+                        },
+                        {
+                          disabled: !favouritesList.length,
+                          title: 'Add From Favourites',
+                          onClick: cbAddNominations,
+                          onSelected: false,
+                        },
+                      ]
+                }
+                refetchOnListUpdate
+                allowMoreCols
+                disableThrottle
+              />
+            </div>
+          ) : (
+            <div className="head">
+              <h4>Not Nominating.</h4>
+            </div>
           )}
         </>
       )}

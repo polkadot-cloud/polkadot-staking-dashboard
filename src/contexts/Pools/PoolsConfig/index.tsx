@@ -33,6 +33,17 @@ export const PoolsConfigProvider = ({
   });
   const poolsConfigRef = useRef(poolsConfig);
 
+  // get favourite pools from local storage
+  const getFavourites = () => {
+    const _favourites = localStorage.getItem(
+      `${network.name.toLowerCase()}_favourite_pools`
+    );
+    return _favourites !== null ? JSON.parse(_favourites) : [];
+  };
+
+  // stores the user's favourite pools
+  const [favourites, setFavourites] = useState<string[]>(getFavourites());
+
   // disable pools if network does not support them
   useEffect(() => {
     if (features.pools) {
@@ -127,10 +138,44 @@ export const PoolsConfigProvider = ({
     );
   };
 
+  /*
+   * Adds a favourite validator.
+   */
+  const addFavourite = (address: string) => {
+    const _favourites: any = Object.assign(favourites);
+    if (!_favourites.includes(address)) {
+      _favourites.push(address);
+    }
+
+    localStorage.setItem(
+      `${network.name.toLowerCase()}_favourite_pools`,
+      JSON.stringify(_favourites)
+    );
+    setFavourites([..._favourites]);
+  };
+
+  /*
+   * Removes a favourite validator if they exist.
+   */
+  const removeFavourite = (address: string) => {
+    let _favourites = Object.assign(favourites);
+    _favourites = _favourites.filter(
+      (validator: string) => validator !== address
+    );
+    localStorage.setItem(
+      `${network.name.toLowerCase()}_favourite_pools`,
+      JSON.stringify(_favourites)
+    );
+    setFavourites([..._favourites]);
+  };
+
   return (
     <PoolsConfigContext.Provider
       value={{
         enabled,
+        addFavourite,
+        removeFavourite,
+        favourites,
         stats: poolsConfigRef.current.stats,
       }}
     >

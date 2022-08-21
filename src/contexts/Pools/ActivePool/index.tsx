@@ -48,9 +48,12 @@ export const ActivePoolProvider = ({
   const [activeBondedPool, setActiveBondedPool] =
     useState<ActiveBondedPoolState>({
       pool: undefined,
-      unsub: null,
     });
   const activeBondedPoolRef = useRef(activeBondedPool);
+
+  // store active bonded pool unsub object
+  const [unsubActiveBondedPool, setUnsubActiveBondedPool] =
+    useState<AnyApi>(null);
 
   // currently nominated validators by the activeBonded pool.
   const [poolNominations, setPoolNominations] = useState<any>({
@@ -59,9 +62,19 @@ export const ActivePoolProvider = ({
   });
   const poolNominationsRef = useRef(poolNominations);
 
+  // store pool nomination unsub object
+  const [unsubPoolNominations, setUnsubPoolNominations] =
+    useState<AnyApi>(null);
+
   // store account target validators
-  const [targets, _setTargets]: any = useState(defaults.targets);
+  const [targets, _setTargets] = useState<any>(defaults.targets);
   const targetsRef = useRef(targets);
+
+  // store whether active pool data has been synced.
+  // this will be true even if no active pool exists for the active account.
+  // We just need confirmation this is the case.
+  const [synced, setSynced] = useState<boolean>(false);
+  const syncedRef = useRef(synced);
 
   useEffect(() => {
     return () => {
@@ -70,17 +83,18 @@ export const ActivePoolProvider = ({
   }, [network, isReady, enabled]);
 
   const unsubscribeAll = () => {
-    if (activeBondedPoolRef.current.unsub !== null) {
-      activeBondedPoolRef.current.unsub();
+    if (unsubActiveBondedPool) {
+      unsubActiveBondedPool();
     }
-    if (poolNominationsRef.current.unsub !== null) {
-      poolNominationsRef.current.unsub();
+    if (unsubPoolNominations) {
+      unsubPoolNominations();
     }
   };
 
   // subscribe to active bonded pool deatils for the active account
   useEffect(() => {
-    if (isReady && enabled && membership) {
+    if (isReady && enabled) {
+      setSynced(false);
       subscribeToActiveBondedPool();
     }
     return () => {
@@ -89,17 +103,18 @@ export const ActivePoolProvider = ({
   }, [network, isReady, enabled, membership]);
 
   const unsubscribeActiveBondedPool = () => {
-    if (activeBondedPoolRef.current.unsub) {
-      activeBondedPoolRef.current.unsub();
+    if (unsubActiveBondedPool) {
+      unsubActiveBondedPool();
     }
+    // reset state
     setStateWithRef(
       {
         pool: undefined,
-        unsub: null,
       },
       setActiveBondedPool,
       activeBondedPoolRef
     );
+    setUnsubActiveBondedPool(null);
   };
 
   // subscribe to pool nominations
@@ -114,17 +129,17 @@ export const ActivePoolProvider = ({
   }, [network, isReady, bondedAddress, enabled]);
 
   const unsubscribePoolNominations = () => {
-    if (poolNominationsRef.current.unsub) {
-      poolNominationsRef.current.unsub();
+    if (unsubPoolNominations) {
+      unsubPoolNominations();
     }
     setStateWithRef(
       {
         nominations: defaults.poolNominations,
-        unsub: null,
       },
       setPoolNominations,
       poolNominationsRef
     );
+    setUnsubPoolNominations(null);
   };
 
   const calculatePayout = (
@@ -186,9 +201,15 @@ export const ActivePoolProvider = ({
   };
 
   const subscribeToActiveBondedPool = async () => {
-    if (!api || !membership) {
+    if (!api) {
       return;
     }
+    if (!membership) {
+      // no membership to handle: update sycning to complete
+      setStateWithRef(true, setSynced, syncedRef);
+      return;
+    }
+
     const { poolId } = membership;
     const addresses: PoolAddresses = createAccounts(poolId);
     const unsub = await api.queryMulti<[AnyApi, AnyApi, AnyApi, AnyApi]>(
@@ -201,6 +222,7 @@ export const ActivePoolProvider = ({
       ([bondedPool, rewardPool, slashingSpans, { data: balance }]) => {
         bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
         rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
+
         if (rewardPool && bondedPool) {
           const slashingSpansCount = slashingSpans.isNone
             ? 0
@@ -218,6 +240,8 @@ export const ActivePoolProvider = ({
             unclaimedReward,
             addresses,
           };
+
+          // set active pool state
           setStateWithRef(
             {
               ...activeBondedPoolRef.current,
@@ -226,7 +250,7 @@ export const ActivePoolProvider = ({
             setActiveBondedPool,
             activeBondedPoolRef
           );
-
+          // get pool target nominations and set in state
           if (addresses?.stash) {
             const _targets = localStorageOrDefault(
               `${addresses?.stash}_pool_targets`,
@@ -242,19 +266,14 @@ export const ActivePoolProvider = ({
       }
     );
 
-    setStateWithRef(
-      {
-        ...activeBondedPoolRef.current,
-        unsub,
-      },
-      setActiveBondedPool,
-      activeBondedPoolRef
-    );
+    // set unsub for active bonded pool
+    setUnsubActiveBondedPool(unsub);
     return unsub;
   };
 
   const subscribeToPoolNominations = async (poolBondAddress: string) => {
     if (!api) return;
+
     const unsub = await api.query.staking.nominators(
       poolBondAddress,
       (nominations: AnyApi) => {
@@ -268,14 +287,21 @@ export const ActivePoolProvider = ({
             submittedIn: _nominations.submittedIn.toHuman(),
           };
         }
+
+        // set pool nominations state
         setStateWithRef(
           {
             nominations: _nominations,
-            unsub,
           },
           setPoolNominations,
           poolNominationsRef
         );
+
+        // set unsub for pool nominations
+        setUnsubPoolNominations(unsub);
+
+        // update sycning to complete
+        setStateWithRef(true, setSynced, syncedRef);
       }
     );
     return unsub;
@@ -423,6 +449,7 @@ export const ActivePoolProvider = ({
         getPoolUnlocking,
         setTargets,
         getNominationsStatus,
+        synced,
         activeBondedPool: activeBondedPoolRef.current.pool,
         targets: targetsRef.current,
         poolNominations: poolNominationsRef.current.nominations,
