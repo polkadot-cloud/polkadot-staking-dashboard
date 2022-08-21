@@ -38,7 +38,7 @@ export const Payouts = (props: PageProps) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 290);
+  const { width, height, minHeight } = formatSize(size, 300);
 
   // take non-zero rewards in most-recent order
   let payoutsList: AnySubscan = [
