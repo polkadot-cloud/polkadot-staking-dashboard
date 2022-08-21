@@ -19,6 +19,7 @@ import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
+import { ReactComponent as Stakely } from './thumbnails/stakely.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
@@ -228,6 +229,18 @@ export const VALIDATOR_COMMUNITY = [
     validators: {
       polkadot: ['16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN'],
       kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
+    },
+  },
+  {
+    name: 'Stakely',
+    Thumbnail: Stakely,
+    bio: '🔥 Professional validator highly experienced in PoS 🔥 Slashing protection & Eligible for airdrops | Learn with our staking guides, video tutorials and FAQs | Part of the commission of our nodes will go to our Multicoin Faucet funds and other tools 🌱 Carbon Neutral 🌱',
+    email: 'nodes@stakely.io',
+    twitter: '@stakely_io',
+    website: 'https://stakely.io',
+    validators: {
+      polkadot: ['15R1Th3ULXAq81QPGeEDfE1ywbw19AjZiARxH7czm83wS2w2'],
+      kusama: ['EfcQCKZJaNu2vcrpnJDCoh1ub4mGWcHVzeU8ghUH7Co9rui'],
     },
   },
   {
