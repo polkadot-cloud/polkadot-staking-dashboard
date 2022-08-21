@@ -102,7 +102,7 @@ export const Modal = () => {
         >
           <ContentWrapper ref={modalRef}>
             <div className="close">
-              <button type="button" onClick={() => setStatus(0)}>
+              <button type="button" onClick={() => onFadeOut()}>
                 Close
               </button>
             </div>
