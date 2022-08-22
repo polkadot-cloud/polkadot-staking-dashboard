@@ -33,7 +33,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking();
         break;
       default:
-        console.error(`unlocking modal bond-type ${bondType} is not defined.`);
+      // console.error(`unlocking modal bond-type ${bondType} is not defined.`);
     }
     return unlocking;
   };
