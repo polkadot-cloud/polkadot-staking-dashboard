@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Overview from 'pages/Overview';
 import Stake from 'pages/Stake';
-import Pools from 'pages/Pools';
+import Pools from 'pages/Pools/Home';
 import Browse from 'pages/Validators';
 import Favourites from 'pages/Favourites';
 import Payouts from 'pages/Payouts';

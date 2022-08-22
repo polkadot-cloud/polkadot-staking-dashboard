@@ -21,10 +21,13 @@ export const defaultUIContext: UIContextInterface = {
   getServices: () => [],
   // eslint-disable-next-line
   setOnNominatorSetup: (v) => {},
+  // eslint-disable-next-line
+  setOnPoolSetup: (v) => {},
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
   services: [],
   onNominatorSetup: 0,
+  onPoolSetup: 0,
   isSyncing: false,
 };

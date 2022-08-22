@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import { useModal } from 'contexts/Modal';
-import { PoolAccount } from '../PoolAccount';
+import { PoolAccount } from '../../PoolAccount';
 import { RolesWrapper } from '../ManagePool/Wrappers';
 import RoleEditInput from './RoleEditInput';
 

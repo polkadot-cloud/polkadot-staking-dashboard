@@ -78,6 +78,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // is the user actively on the setup page
   const [onNominatorSetup, setOnNominatorSetup] = useState(0);
 
+  // is the user actively on the pool creation page
+  const [onPoolSetup, setOnPoolSetup] = useState(0);
+
   // services
   const [services, setServices] = useState(getAvailableServices());
   const servicesRef = useRef(services);
@@ -319,11 +322,13 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         setActiveAccountSetupSection,
         getServices,
         setOnNominatorSetup,
+        setOnPoolSetup,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
         services: servicesRef.current,
         onNominatorSetup,
+        onPoolSetup,
         isSyncing,
       }}
     >

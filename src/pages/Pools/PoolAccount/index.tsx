@@ -11,8 +11,8 @@ import { useNotifications } from 'contexts/Notifications';
 import { useAccount } from 'contexts/Account';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
 import { NotificationText } from 'contexts/Notifications/types';
-import { AccountWrapper } from './Wrappers';
-import { PoolAccountProps } from './types';
+import { Wrapper } from './Wrapper';
+import { PoolAccountProps } from '../types';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { address, last, batchKey, batchIndex } = props;
@@ -41,7 +41,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   }
 
   return (
-    <AccountWrapper last={last}>
+    <Wrapper last={last}>
       <motion.div
         className="account"
         initial={{ opacity: 0.5 }}
@@ -87,7 +87,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
           </motion.div>
         </div>
       </motion.div>
-    </AccountWrapper>
+    </Wrapper>
   );
 };
 
