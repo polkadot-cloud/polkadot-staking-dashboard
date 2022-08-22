@@ -30,7 +30,7 @@ import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import { ControllerNotImported } from './ControllerNotImported';
 import { Status } from './Status';
 
-export const Active = ({ title }: any) => {
+export const Active = ({ title }: { title: string }) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();

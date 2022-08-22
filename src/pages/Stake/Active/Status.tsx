@@ -21,7 +21,7 @@ import Stat from 'library/Stat';
 
 export const Status = ({ height }: { height: number }) => {
   const { isReady } = useApi();
-  const { setOnSetup, getSetupProgressPercent }: any = useUi();
+  const { setOnNominatorSetup, getSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
@@ -72,7 +72,7 @@ export const Status = ({ height }: { height: number }) => {
                     !isReady ||
                     isReadOnlyAccount(activeAccount) ||
                     !activeAccount,
-                  onClick: () => setOnSetup(true),
+                  onClick: () => setOnNominatorSetup(true),
                 },
               ]
         }

@@ -76,7 +76,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   // is the user actively on the setup page
-  const [onSetup, setOnSetup] = useState(0);
+  const [onNominatorSetup, setOnNominatorSetup] = useState(0);
 
   // services
   const [services, setServices] = useState(getAvailableServices());
@@ -98,7 +98,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // go to active page once staking setup completes / network change
   useEffect(() => {
     if (!inSetup()) {
-      setOnSetup(0);
+      setOnNominatorSetup(0);
     }
   }, [inSetup(), network]);
 
@@ -318,12 +318,12 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         setActiveAccountSetup,
         setActiveAccountSetupSection,
         getServices,
-        setOnSetup,
+        setOnNominatorSetup,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
         services: servicesRef.current,
-        onSetup,
+        onNominatorSetup,
         isSyncing,
       }}
     >

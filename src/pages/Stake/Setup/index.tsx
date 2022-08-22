@@ -14,8 +14,8 @@ import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';
 
-export const Setup = ({ title }: any) => {
-  const { setOnSetup } = useUi();
+export const Setup = ({ title }: { title: string }) => {
+  const { setOnNominatorSetup } = useUi();
 
   return (
     <>
@@ -27,7 +27,7 @@ export const Setup = ({ title }: any) => {
             title="Go Back"
             icon={faChevronLeft}
             transform="shrink-3"
-            onClick={() => setOnSetup(0)}
+            onClick={() => setOnNominatorSetup(0)}
           />
         </GoBackWrapper>
       </PageRowWrapper>

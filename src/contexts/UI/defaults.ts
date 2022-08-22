@@ -20,11 +20,11 @@ export const defaultUIContext: UIContextInterface = {
   setActiveAccountSetupSection: (s) => {},
   getServices: () => [],
   // eslint-disable-next-line
-  setOnSetup: (v) => {},
+  setOnNominatorSetup: (v) => {},
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
   services: [],
-  onSetup: 0,
+  onNominatorSetup: 0,
   isSyncing: false,
 };

@@ -12,11 +12,11 @@ export interface UIContextInterface {
   setActiveAccountSetup: (p: any) => void;
   setActiveAccountSetupSection: (s: number) => void;
   getServices: () => string[];
-  setOnSetup: (v: any) => void;
+  setOnNominatorSetup: (v: any) => void;
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;
   services: string[];
-  onSetup: number;
+  onNominatorSetup: number;
   isSyncing: boolean;
 }
