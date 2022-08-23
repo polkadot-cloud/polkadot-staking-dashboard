@@ -109,37 +109,58 @@ export const ReserveWrapper = styled.div`
 
     > section {
       display: flex;
-      flex-flow: column wrap;
-      justify-content: center;
-      padding: 0 0.5rem;
+      flex-flow: row wrap;
+      align-items: center;
+      position: relative;
 
       &:first-child {
-        flex-basis: 33%;
-        padding-left: 0;
-        .assistant-icon {
-          margin-left: 0.6rem;
-        }
+        box-sizing: border-box;
+        flex: 1 1 40%;
+        max-width: 200px;
+        overflow: hidden;
 
-        > .items > div {
+        .reserve {
+          display: block;
+          box-sizing: border-box;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          position: relative;
           background: ${buttonSecondaryBackground};
           border-radius: 0.75rem;
           opacity: 0.75;
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+          padding-left: 2.5rem;
+          padding-right: 1rem;
+          width: 100%;
+
+          .icon {
+            position: absolute;
+            top: 0.6rem;
+            left: 0.5rem;
+          }
         }
       }
+
       &:last-child {
         border-radius: 0.5rem;
-        flex-basis: 67%;
-        padding-right: 0;
-        flex-grow: 1;
+        padding-left: 1rem;
+        flex: 1 1 60%;
         opacity: 0.5;
         transition: opacity 0.15s;
         &:hover {
           opacity: 1;
         }
       }
+
+      .assistant-icon {
+        margin-left: 0.6rem;
+      }
+
       .items {
         box-sizing: border-box;
-        flex-grow: 1;
+        flex: 1 1 40%;
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
@@ -149,8 +170,7 @@ export const ReserveWrapper = styled.div`
           flex-flow: column wrap;
           justify-content: center;
           box-sizing: border-box;
-          padding: 0.5rem 0.75rem;
-          flex: 1 1 100%;
+          padding: 0.5rem 0.6rem;
 
           &.sep {
             flex: 0;
