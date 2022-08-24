@@ -289,7 +289,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
     // update local storage
     localStorage.setItem(
-      `${network.name.toLowerCase()}_stake_setup_${activeAccount}`,
+      `${network.name.toLowerCase()}_${type}_setup_${activeAccount}`,
       JSON.stringify(_accountSetup.progress)
     );
 
