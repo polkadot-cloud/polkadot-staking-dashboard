@@ -234,7 +234,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     if (setupProgress.bond > 0) progress += p;
     if (setupProgress.controller !== null) progress += p;
     if (setupProgress.nominations.length) progress += p;
-    if (setupProgress.payee !== null) progress += p;
+    if (setupProgress.payee !== null) progress += p - 1;
     return progress;
   };
 
@@ -250,7 +250,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     if (setupProgress.metadata !== null) progress += p;
     if (setupProgress.bond > 0) progress += p;
     if (setupProgress.nominations.length) progress += p;
-    if (setupProgress.roles !== null) progress += p;
+    if (setupProgress.roles !== null) progress += p - 1;
     return progress;
   };
 

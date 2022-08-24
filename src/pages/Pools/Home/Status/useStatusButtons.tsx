@@ -23,7 +23,7 @@ export const useStatusButtons = () => {
   let _buttons;
 
   const createBtn = {
-    title: 'Create Pool',
+    title: `Create Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
     transform: 'grow-1',
     disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
@@ -31,7 +31,7 @@ export const useStatusButtons = () => {
   };
 
   const joinPoolBtn = {
-    title: `Join Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
+    title: `Join Pool`,
     icon: faUserPlus,
     transform: 'grow-1',
     disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
