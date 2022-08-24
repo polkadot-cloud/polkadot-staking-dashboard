@@ -11,12 +11,13 @@ import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { isReady } = useApi();
-  const { setOnPoolSetup } = useUi();
+  const { setOnPoolSetup, getPoolSetupProgressPercent } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
   const { isOwner, getPoolBondOptions } = useActivePool();
   const { active } = getPoolBondOptions(activeAccount);
+  const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
 
   let _label;
   let _buttons;
@@ -30,7 +31,7 @@ export const useStatusButtons = () => {
   };
 
   const joinPoolBtn = {
-    title: 'Join Pool',
+    title: `Join Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faUserPlus,
     transform: 'grow-1',
     disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,

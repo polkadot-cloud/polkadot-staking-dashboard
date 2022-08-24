@@ -193,7 +193,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
           : defaults.defaultStakeSetup;
 
       const poolProgress =
-        localPoolSetup !== null ? JSON.parse(localPoolSetup) : null;
+        localPoolSetup !== null
+          ? JSON.parse(localPoolSetup)
+          : defaults.defaultPoolSetup;
 
       return {
         address: item.address,
@@ -213,7 +215,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     const _setup = setupRef.current.find((s: any) => s.address === address);
 
     if (_setup === undefined) {
-      return defaults.defaultStakeSetup;
+      return type === SetupType.Stake
+        ? defaults.defaultStakeSetup
+        : defaults.defaultPoolSetup;
     }
     return _setup.progress[type];
   };
@@ -222,9 +226,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    * Gets the stake setup progress as a percentage for an address.
    */
   const getStakeSetupProgressPercent = (address: MaybeAccount) => {
-    if (!address) {
-      return 0;
-    }
+    if (!address) return 0;
     const setupProgress = getSetupProgress(SetupType.Stake, address);
 
     const p = 25;
@@ -240,8 +242,16 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    * Gets the stake setup progress as a percentage for an address.
    */
   const getPoolSetupProgressPercent = (address: MaybeAccount) => {
-    // TODO: implement
-    return 0;
+    if (!address) return 0;
+    const setupProgress = getSetupProgress(SetupType.Pool, address);
+
+    const p = 25;
+    let progress = 0;
+    if (setupProgress.metadata !== null) progress += p;
+    if (setupProgress.bond > 0) progress += p;
+    if (setupProgress.nominations.length) progress += p;
+    if (setupProgress.roles !== null) progress += p;
+    return progress;
   };
 
   /*

@@ -11,6 +11,14 @@ export const defaultStakeSetup = {
   section: 1,
 };
 
+export const defaultPoolSetup = {
+  metadata: null,
+  bond: 0,
+  nominations: [],
+  roles: null,
+  section: 1,
+};
+
 export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
   setSideMenu: (v) => {},
