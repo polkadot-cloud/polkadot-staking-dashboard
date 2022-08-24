@@ -5,9 +5,9 @@ import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import { SetupType } from 'contexts/UI/types';
+import { Header } from 'library/SetupSteps/Header';
+import { Footer } from 'library/SetupSteps/Footer';
 import { GenerateNominations } from '../GenerateNominations';
-import { Header } from './Header';
-import { Footer } from './Footer';
 import { MotionContainer } from './MotionContainer';
 import { ChooseNominatorsProps } from '../types';
 
@@ -31,6 +31,7 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
         title="Nominate"
         assistantPage="stake"
         assistantKey="Nominating"
+        setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '0.5rem' }}>
@@ -52,7 +53,10 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
             nominations={setup.nominations}
           />
         </div>
-        <Footer complete={setup.nominations.length > 0} />
+        <Footer
+          complete={setup.nominations.length > 0}
+          setupType={SetupType.Stake}
+        />
       </MotionContainer>
     </>
   );

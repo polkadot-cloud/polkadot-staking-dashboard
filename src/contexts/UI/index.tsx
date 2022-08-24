@@ -184,16 +184,22 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       const localStakeSetup = localStorage.getItem(
         `${network.name.toLowerCase()}_stake_setup_${item.address}`
       );
+      const localPoolSetup = localStorage.getItem(
+        `${network.name.toLowerCase()}_pool_setup_${item.address}`
+      );
       const stakeProgress =
         localStakeSetup !== null
           ? JSON.parse(localStakeSetup)
           : defaults.defaultStakeSetup;
 
+      const poolProgress =
+        localPoolSetup !== null ? JSON.parse(localPoolSetup) : null;
+
       return {
         address: item.address,
         progress: {
           stake: stakeProgress,
-          pool: null,
+          pool: poolProgress,
         },
       };
     });

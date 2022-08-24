@@ -8,8 +8,8 @@ import { AccountSelect } from 'library/Form/AccountSelect';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { InputItem } from 'library/Form/types';
 import { SetupType } from 'contexts/UI/types';
-import { Header } from './Header';
-import { Footer } from './Footer';
+import { Header } from 'library/SetupSteps/Header';
+import { Footer } from 'library/SetupSteps/Footer';
 import { Spacer } from '../Wrappers';
 import { MotionContainer } from './MotionContainer';
 import { SetControllerProps } from '../types';
@@ -54,6 +54,7 @@ export const SetController = (props: SetControllerProps) => {
         assistantPage="stake"
         assistantKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
+        setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
@@ -63,7 +64,10 @@ export const SetController = (props: SetControllerProps) => {
           placeholder="Search Account"
           value={selected}
         />
-        <Footer complete={setup.controller !== null} />
+        <Footer
+          complete={setup.controller !== null}
+          setupType={SetupType.Stake}
+        />
       </MotionContainer>
     </>
   );

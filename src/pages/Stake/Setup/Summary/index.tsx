@@ -13,9 +13,9 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { SummaryProps } from 'pages/Stake/types';
 import { SetupType } from 'contexts/UI/types';
+import { Header } from 'library/SetupSteps/Header';
 import { SummaryWrapper } from './Wrapper';
 import { MotionContainer } from '../MotionContainer';
-import { Header } from '../Header';
 
 export const Summary = (props: SummaryProps) => {
   const { section } = props;
@@ -64,7 +64,12 @@ export const Summary = (props: SummaryProps) => {
 
   return (
     <>
-      <Header thisSection={section} complete={null} title="Summary" />
+      <Header
+        thisSection={section}
+        complete={null}
+        title="Summary"
+        setupType={SetupType.Stake}
+      />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
           <Warning text="Your account is read only, and cannot sign transactions." />

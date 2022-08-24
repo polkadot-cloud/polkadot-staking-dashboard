@@ -7,9 +7,9 @@ import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
 import { PayeeProps } from 'pages/Stake/types';
 import { SetupType } from 'contexts/UI/types';
+import { Header } from 'library/SetupSteps/Header';
+import { Footer } from 'library/SetupSteps/Footer';
 import { Spacer } from '../../Wrappers';
-import { Header } from '../Header';
-import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
 import { Items, Item } from './Wrappers';
 
@@ -74,6 +74,7 @@ export const Payee = (props: PayeeProps) => {
         title="Reward Destination"
         assistantPage="stake"
         assistantKey="Reward Destination"
+        setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
@@ -93,7 +94,7 @@ export const Payee = (props: PayeeProps) => {
             );
           })}
         </Items>
-        <Footer complete={setup.payee !== null} />
+        <Footer complete={setup.payee !== null} setupType={SetupType.Stake} />
       </MotionContainer>
     </>
   );

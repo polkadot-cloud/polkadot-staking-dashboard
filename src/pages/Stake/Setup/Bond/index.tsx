@@ -12,8 +12,8 @@ import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { BondProps } from 'pages/Stake/types';
 import { SetupType } from 'contexts/UI/types';
-import { Header } from '../Header';
-import { Footer } from '../Footer';
+import { Header } from 'library/SetupSteps/Header';
+import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from '../MotionContainer';
 
 export const Bond = (props: BondProps) => {
@@ -64,6 +64,7 @@ export const Bond = (props: BondProps) => {
         title="Bond"
         assistantPage="stake"
         assistantKey="Bonding"
+        setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondInputWithFeedback
@@ -84,7 +85,7 @@ export const Bond = (props: BondProps) => {
           ]}
         />
         <BondStatusBar value={bond.bond} />
-        <Footer complete={bondValid} />
+        <Footer complete={bondValid} setupType={SetupType.Stake} />
       </MotionContainer>
     </>
   );
