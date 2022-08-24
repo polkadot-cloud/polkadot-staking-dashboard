@@ -26,18 +26,17 @@ export const Reserve = (props: ReserveProps) => {
 
         <div className="inner">
           <section>
-            <div className="items">
-              <div className="main">
-                <h2>
-                  <FontAwesomeIcon icon={faLock} transform="shrink-4" />
-                  &nbsp;
-                  {`${toFixedIfNecessary(
-                    planckBnToUnit(minReserve, network.units),
-                    5
-                  )} ${network.unit}`}
-                </h2>
-              </div>
-            </div>
+            <h2 className="reserve">
+              <FontAwesomeIcon
+                icon={faLock}
+                transform="shrink-4"
+                className="icon"
+              />
+              {`${toFixedIfNecessary(
+                planckBnToUnit(minReserve, network.units),
+                5
+              )} ${network.unit}`}
+            </h2>
           </section>
           <section>
             <div className="items">
@@ -58,7 +57,7 @@ export const Reserve = (props: ReserveProps) => {
                   planckBnToUnit(reserveAmount, network.units),
                   5
                 )} ${network.unit}`}</h3>
-                <h5>Reserved for Tx Fees</h5>
+                <h5>For Tx Fees</h5>
               </div>
             </div>
           </section>
