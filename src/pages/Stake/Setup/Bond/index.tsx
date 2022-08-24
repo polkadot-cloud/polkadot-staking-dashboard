@@ -74,7 +74,7 @@ export const Bond = (props: BondProps) => {
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondInputWithFeedback
           bondType="stake"
-          nominating
+          inSetup
           unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
