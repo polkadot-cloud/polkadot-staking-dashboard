@@ -21,7 +21,7 @@ import Stat from 'library/Stat';
 
 export const Status = ({ height }: { height: number }) => {
   const { isReady } = useApi();
-  const { setOnNominatorSetup, getSetupProgressPercent }: any = useUi();
+  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
@@ -41,7 +41,7 @@ export const Status = ({ height }: { height: number }) => {
 
   let startTitle = 'Start Staking';
   if (inSetup()) {
-    const progress = getSetupProgressPercent(activeAccount);
+    const progress = getStakeSetupProgressPercent(activeAccount);
     if (progress > 0) {
       startTitle += `: ${progress}%`;
     }

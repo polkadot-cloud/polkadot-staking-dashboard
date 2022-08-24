@@ -6,6 +6,7 @@ import { isNumeric } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
 import { PayeeProps } from 'pages/Stake/types';
+import { SetupType } from 'contexts/UI/types';
 import { Spacer } from '../../Wrappers';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
@@ -17,7 +18,7 @@ export const Payee = (props: PayeeProps) => {
 
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
@@ -59,7 +60,7 @@ export const Payee = (props: PayeeProps) => {
     // set local value to update input element
     setPayee(options[i]);
     // set setup payee
-    setActiveAccountSetup({
+    setActiveAccountSetup(SetupType.Stake, {
       ...setup,
       payee: options[i],
     });

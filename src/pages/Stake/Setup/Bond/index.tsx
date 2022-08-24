@@ -11,6 +11,7 @@ import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { BondProps } from 'pages/Stake/types';
+import { SetupType } from 'contexts/UI/types';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import { MotionContainer } from '../MotionContainer';
@@ -23,7 +24,7 @@ export const Bond = (props: BondProps) => {
   const { getBondOptions } = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   // either free to bond or existing setup value
   const initialBondValue =
@@ -48,7 +49,7 @@ export const Bond = (props: BondProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === 4) {
-      setActiveAccountSetup({
+      setActiveAccountSetup(SetupType.Stake, {
         ...setup,
         bond: initialBondValue,
       });

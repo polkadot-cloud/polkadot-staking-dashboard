@@ -4,13 +4,14 @@
 import { Button } from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
+import { SetupType } from 'contexts/UI/types';
 import { FooterWrapper } from '../Wrappers';
 import { FooterProps } from '../types';
 
 export const Footer = (props: FooterProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   const { complete } = props;
 
@@ -22,7 +23,9 @@ export const Footer = (props: FooterProps) => {
             inline
             primary
             title="Continue"
-            onClick={() => setActiveAccountSetupSection(setup.section + 1)}
+            onClick={() =>
+              setActiveAccountSetupSection(SetupType.Stake, setup.section + 1)
+            }
           />
         ) : (
           <div style={{ opacity: 0.5 }}>

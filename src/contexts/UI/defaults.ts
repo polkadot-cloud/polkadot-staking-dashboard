@@ -3,6 +3,14 @@
 
 import { UIContextInterface } from './types';
 
+export const defaultStakeSetup = {
+  controller: null,
+  payee: null,
+  nominations: [],
+  bond: 0,
+  section: 1,
+};
+
 export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
   setSideMenu: (v) => {},
@@ -11,13 +19,15 @@ export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
   toggleService: (k) => {},
   // eslint-disable-next-line
-  getSetupProgress: (a) => {},
+  getSetupProgress: (a, b) => {},
   // eslint-disable-next-line
-  getSetupProgressPercent: (a) => 0,
+  getStakeSetupProgressPercent: (a) => 0,
   // eslint-disable-next-line
-  setActiveAccountSetup: (p) => {},
+  getPoolSetupProgressPercent: (a) => 0,
   // eslint-disable-next-line
-  setActiveAccountSetupSection: (s) => {},
+  setActiveAccountSetup: (t, p) => {},
+  // eslint-disable-next-line
+  setActiveAccountSetupSection: (t, s) => {},
   getServices: () => [],
   // eslint-disable-next-line
   setOnNominatorSetup: (v) => {},

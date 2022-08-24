@@ -7,6 +7,7 @@ import { useUi } from 'contexts/UI';
 import { AccountSelect } from 'library/Form/AccountSelect';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { InputItem } from 'library/Form/types';
+import { SetupType } from 'contexts/UI/types';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Spacer } from '../Wrappers';
@@ -18,7 +19,7 @@ export const SetController = (props: SetControllerProps) => {
 
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   // store the currently selected controller account
   const _selected = setup.controller !== null ? setup.controller : null;
@@ -39,7 +40,7 @@ export const SetController = (props: SetControllerProps) => {
 
   const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
     setSelected(selectedItem);
-    setActiveAccountSetup({
+    setActiveAccountSetup(SetupType.Stake, {
       ...setup,
       controller: selectedItem?.address ?? null,
     });

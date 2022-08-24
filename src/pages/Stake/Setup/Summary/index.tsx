@@ -12,6 +12,7 @@ import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { SummaryProps } from 'pages/Stake/types';
+import { SetupType } from 'contexts/UI/types';
 import { SummaryWrapper } from './Wrapper';
 import { MotionContainer } from '../MotionContainer';
 import { Header } from '../Header';
@@ -23,7 +24,7 @@ export const Summary = (props: SummaryProps) => {
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
 

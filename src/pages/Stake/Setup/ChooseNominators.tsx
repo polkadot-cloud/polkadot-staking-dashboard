@@ -4,6 +4,7 @@
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
+import { SetupType } from 'contexts/UI/types';
 import { GenerateNominations } from '../GenerateNominations';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -15,11 +16,11 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
   const { maxNominations } = consts;
 
   const setterFn = () => {
-    return getSetupProgress(activeAccount);
+    return getSetupProgress(SetupType.Stake, activeAccount);
   };
 
   return (
