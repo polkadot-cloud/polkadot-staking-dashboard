@@ -18,6 +18,7 @@ import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
 import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
+import { ReactComponent as PythagorasCapitalInvestment } from './thumbnails/pythagorascapitalinvestment.svg';
 import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
 import { ReactComponent as Stakely } from './thumbnails/stakely.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
@@ -229,6 +230,21 @@ export const VALIDATOR_COMMUNITY = [
     validators: {
       polkadot: ['16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN'],
       kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
+    },
+  },
+  {
+    name: '🍀ARISTOPHANES🍀',
+    Thumbnail: PythagorasCapitalInvestment,
+    bio: 'Our motto is responsibility and transparency. We never go offline willfully or negligently, or impose exorbitant commission rates. Our record proves the trust people have placed on us. Being a Tokyo-based node, staking at us strengthens geological resistance of the network to disruptions.',
+    email: 'subscr3zp@tutanota.com',
+    twitter: '@PythagorasCI',
+    website: 'https://pythagoras-capital.net/',
+    validators: {
+      polkadot: ['128iAScPNNZcoSXQuFp1VkgW376KqvZs61g9Y36MuUX78ZZ6'],
+      kusama: [
+        'HU6TSsvA84GKrTiyArBHiFDVBSLHNr5Ki3qPV7T8WKyVJaz',
+        'JHbMAHJw6nnQPD3Zth13DGoPxLjYUPWC71AMbErt817nK9y',
+      ],
     },
   },
   {
