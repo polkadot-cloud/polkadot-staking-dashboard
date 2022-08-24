@@ -14,8 +14,8 @@ import { Warning } from 'library/Form/Warning';
 import { SummaryProps } from 'pages/Stake/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SummaryWrapper } from './Wrapper';
-import { MotionContainer } from '../MotionContainer';
 
 export const Summary = (props: SummaryProps) => {
   const { section } = props;

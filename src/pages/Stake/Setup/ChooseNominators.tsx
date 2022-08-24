@@ -7,8 +7,8 @@ import { useApi } from 'contexts/Api';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { GenerateNominations } from '../GenerateNominations';
-import { MotionContainer } from './MotionContainer';
 import { ChooseNominatorsProps } from '../types';
 
 export const ChooseNominators = (props: ChooseNominatorsProps) => {
@@ -21,6 +21,11 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
 
   const setterFn = () => {
     return getSetupProgress(SetupType.Stake, activeAccount);
+  };
+
+  // handler for updating bond
+  const handleSetupUpdate = (value: any) => {
+    setActiveAccountSetup(SetupType.Stake, value);
   };
 
   return (
@@ -47,7 +52,7 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
                   callable: true,
                   fn: setterFn,
                 },
-                set: setActiveAccountSetup,
+                set: handleSetupUpdate,
               },
             ]}
             nominations={setup.nominations}

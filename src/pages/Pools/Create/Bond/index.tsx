@@ -24,7 +24,7 @@ export const Bond = (props: BondProps) => {
   const { getBondOptions } = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
   // either free to bond or existing setup value
   const initialBondValue =
@@ -54,7 +54,7 @@ export const Bond = (props: BondProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === 4) {
-      setActiveAccountSetup(SetupType.Stake, {
+      setActiveAccountSetup(SetupType.Pool, {
         ...setup,
         bond: initialBondValue,
       });
@@ -69,7 +69,7 @@ export const Bond = (props: BondProps) => {
         title="Bond"
         assistantPage="stake"
         assistantKey="Bonding"
-        setupType={SetupType.Stake}
+        setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondInputWithFeedback
@@ -90,7 +90,7 @@ export const Bond = (props: BondProps) => {
           ]}
         />
         <BondStatusBar value={bond.bond} />
-        <Footer complete={bondValid} setupType={SetupType.Stake} />
+        <Footer complete={bondValid} setupType={SetupType.Pool} />
       </MotionContainer>
     </>
   );

@@ -10,8 +10,8 @@ import { InputItem } from 'library/Form/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { Spacer } from '../Wrappers';
-import { MotionContainer } from './MotionContainer';
 import { SetControllerProps } from '../types';
 
 export const SetController = (props: SetControllerProps) => {

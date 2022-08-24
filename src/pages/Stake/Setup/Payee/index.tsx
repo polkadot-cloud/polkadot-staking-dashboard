@@ -9,8 +9,8 @@ import { PayeeProps } from 'pages/Stake/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { Spacer } from '../../Wrappers';
-import { MotionContainer } from '../MotionContainer';
 import { Items, Item } from './Wrappers';
 
 export const Payee = (props: PayeeProps) => {
