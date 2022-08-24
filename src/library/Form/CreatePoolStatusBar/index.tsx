@@ -29,7 +29,7 @@ export const CreatePoolStatusBar = (props: NominateStatusBarProps) => {
         <section className={gtMinCreateBond && !isSyncing ? 'invert' : ''}>
           <h4>&nbsp;</h4>
           <div className="bar">
-            <h5>Inactive</h5>
+            <h5>0 {unit}</h5>
           </div>
         </section>
         <section className={gtMinCreateBond && !isSyncing ? 'invert' : ''}>

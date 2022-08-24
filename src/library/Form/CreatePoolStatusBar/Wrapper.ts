@@ -22,10 +22,10 @@ export const Wrapper = styled.div`
       padding: 0 0.15rem;
 
       &:nth-child(1) {
-        flex-basis: 30%;
+        flex-basis: 20%;
       }
       &:nth-child(2) {
-        flex-basis: 70%;
+        flex-basis: 80%;
       }
       h4,
       h5 {
