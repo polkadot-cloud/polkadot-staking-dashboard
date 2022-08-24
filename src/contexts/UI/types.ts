@@ -12,8 +12,8 @@ export interface UIContextInterface {
   setActiveAccountSetup: (p: any) => void;
   setActiveAccountSetupSection: (s: number) => void;
   getServices: () => string[];
-  setOnNominatorSetup: (v: any) => void;
-  setOnPoolSetup: (v: any) => void;
+  setOnNominatorSetup: (v: number) => void;
+  setOnPoolSetup: (v: number) => void;
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;

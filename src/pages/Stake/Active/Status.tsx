@@ -72,7 +72,7 @@ export const Status = ({ height }: { height: number }) => {
                     !isReady ||
                     isReadOnlyAccount(activeAccount) ||
                     !activeAccount,
-                  onClick: () => setOnNominatorSetup(true),
+                  onClick: () => setOnNominatorSetup(1),
                 },
               ]
         }

@@ -9,6 +9,7 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount } from 'types';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
@@ -29,6 +30,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
   const { enabled: poolsEnabled } = usePoolsConfig();
+  const { membership: poolMembership } = usePoolMemberships();
   const { synced: activePoolSynced } = useActivePool();
 
   // set whether app is syncing
@@ -98,12 +100,15 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // go to active page once staking setup completes / network change
+  // move away from setup pages on completion / network change
   useEffect(() => {
     if (!inSetup()) {
       setOnNominatorSetup(0);
     }
-  }, [inSetup(), network]);
+    if (poolMembership) {
+      setOnPoolSetup(0);
+    }
+  }, [inSetup(), network, poolMembership]);
 
   // resize event listener
   useEffect(() => {

@@ -2,14 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // import { useUi } from 'contexts/UI';
+import { useUi } from 'contexts/UI';
 import { PageProps } from '../types';
 import { Home } from './Home';
+import { Create } from './Create';
 
 export const Stake = (props: PageProps) => {
   const { page } = props;
-  // const { onNominatorSetup } = useUi();
+  const { onPoolSetup } = useUi();
 
-  return <Home page={page} />;
+  return <>{onPoolSetup ? <Create /> : <Home page={page} />}</>;
 };
 
 export default Stake;
