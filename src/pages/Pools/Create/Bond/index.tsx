@@ -6,7 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
-import { BondStatusBar } from 'library/Form/BondStatusBar';
+import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
 import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
@@ -36,7 +36,7 @@ export const Bond = (props: BondProps) => {
   });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState<boolean>(false);
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
@@ -73,8 +73,8 @@ export const Bond = (props: BondProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondInputWithFeedback
-          bondType="stake"
-          nominating
+          bondType="pool"
+          inSetup
           unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
@@ -89,7 +89,7 @@ export const Bond = (props: BondProps) => {
             },
           ]}
         />
-        <BondStatusBar value={bond.bond} />
+        <CreatePoolStatusBar value={bond.bond} />
         <Footer complete={bondValid} setupType={SetupType.Pool} />
       </MotionContainer>
     </>

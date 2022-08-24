@@ -1,11 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { Element } from 'react-scroll';
 import { useUi } from 'contexts/UI';
 import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { Bond } from './Bond';
 
 export const Create = () => {
   const { setOnPoolSetup } = useUi();
@@ -23,6 +26,12 @@ export const Create = () => {
             onClick={() => setOnPoolSetup(0)}
           />
         </GoBackWrapper>
+      </PageRowWrapper>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <CardWrapper>
+          <Element name="bond" style={{ position: 'absolute' }} />
+          <Bond section={1} />
+        </CardWrapper>
       </PageRowWrapper>
     </>
   );

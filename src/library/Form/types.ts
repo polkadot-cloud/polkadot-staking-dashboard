@@ -59,7 +59,7 @@ export interface BondInputWithFeedbackProps {
   warnings?: string[];
 }
 
-export interface BondStatusBarProps {
+export interface NominateStatusBarProps {
   value: number;
 }
 

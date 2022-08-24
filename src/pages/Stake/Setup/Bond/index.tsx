@@ -6,7 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
-import { BondStatusBar } from 'library/Form/BondStatusBar';
+import { NominateStatusBar } from 'library/Form/NominateStatusBar';
 import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
@@ -89,7 +89,7 @@ export const Bond = (props: BondProps) => {
             },
           ]}
         />
-        <BondStatusBar value={bond.bond} />
+        <NominateStatusBar value={bond.bond} />
         <Footer complete={bondValid} setupType={SetupType.Stake} />
       </MotionContainer>
     </>
