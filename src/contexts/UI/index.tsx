@@ -226,6 +226,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       return 0;
     }
     const setupProgress = getSetupProgress(SetupType.Stake, address);
+
     const p = 25;
     let progress = 0;
     if (setupProgress.bond > 0) progress += p;
@@ -296,7 +297,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     // update local storage
     localStorage.setItem(
       `${network.name.toLowerCase()}_${type}_setup_${activeAccount}`,
-      JSON.stringify(_accountSetup.progress)
+      JSON.stringify(_accountSetup.progress[type])
     );
 
     // update context
