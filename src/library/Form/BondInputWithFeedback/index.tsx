@@ -82,7 +82,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   // bond amount to minimum threshold
   const minBondBase =
     bondType === 'pool'
-      ? inSetup
+      ? inSetup || isOwner()
         ? planckBnToUnit(minCreateBond, units)
         : planckBnToUnit(minJoinBond, units)
       : planckBnToUnit(minNominatorBond, units);
@@ -160,8 +160,12 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
 
       if (Number(bond.bond) > freeToUnbondToMin) {
         _errors.push(
-          `A minimum bond of ${minBondBase} ${network.unit} is required when ${
-            bondType === 'stake' ? `actively nominating` : `in your pool`
+          `A minimum bond of ${minBondBase} ${network.unit} is required ${
+            bondType === 'stake'
+              ? `when actively nominating`
+              : isOwner()
+              ? `as a pool owner`
+              : `as a pool member`
           }.`
         );
       }
