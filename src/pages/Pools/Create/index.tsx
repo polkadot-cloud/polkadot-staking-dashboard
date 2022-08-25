@@ -12,6 +12,7 @@ import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
 import { SetupType } from 'contexts/UI/types';
 import { PoolName } from './PoolName';
 import { Bond } from './Bond';
+import { PoolRoles } from './PoolRoles';
 
 export const Create = () => {
   const { setOnPoolSetup } = useUi();
@@ -50,6 +51,12 @@ export const Create = () => {
             setupType={SetupType.Pool}
             section={3}
           />
+        </CardWrapper>
+      </PageRowWrapper>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <CardWrapper>
+          <Element name="nominate" style={{ position: 'absolute' }} />
+          <PoolRoles section={4} />
         </CardWrapper>
       </PageRowWrapper>
     </>
