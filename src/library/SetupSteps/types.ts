@@ -30,3 +30,7 @@ export interface HeaderProps {
 }
 
 export type Nominations = string[];
+
+export interface SetupStepProps {
+  section: number;
+}

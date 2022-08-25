@@ -10,13 +10,13 @@ import { NominateStatusBar } from 'library/Form/NominateStatusBar';
 import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
-import { BondProps } from 'pages/Stake/types';
+import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 
-export const Bond = (props: BondProps) => {
+export const Bond = (props: SetupStepProps) => {
   const { network } = useApi();
   const { units } = network;
   const { section } = props;

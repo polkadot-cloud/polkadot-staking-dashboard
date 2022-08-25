@@ -11,13 +11,13 @@ import { Button } from 'library/Button';
 import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
-import { SummaryProps } from 'pages/Stake/types';
+import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = (props: SummaryProps) => {
+export const Summary = (props: SetupStepProps) => {
   const { section } = props;
 
   const { api, network } = useApi();

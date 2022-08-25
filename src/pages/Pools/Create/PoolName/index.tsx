@@ -4,14 +4,14 @@
 import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { BondProps } from 'pages/Stake/types';
+import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { Input } from './Input';
 
-export const PoolName = (props: BondProps) => {
+export const PoolName = (props: SetupStepProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();

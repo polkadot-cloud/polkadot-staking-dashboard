@@ -11,10 +11,10 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { SetupStepProps } from 'library/SetupSteps/types';
 import { Spacer } from '../Wrappers';
-import { SetControllerProps } from '../types';
 
-export const SetController = (props: SetControllerProps) => {
+export const SetController = (props: SetupStepProps) => {
   const { section } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
