@@ -6,14 +6,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { planckBnToUnit } from 'Utils';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {
-  const { setSection, setTask } = props;
+  const { setSection, setTask, bondType } = props;
 
   const { network } = useApi();
+  const { units, unit } = network;
   const { config } = useModal();
   const { fn } = config;
+  const { isOwner } = useActivePool();
+  const { stats } = usePoolsConfig();
+  const { minCreateBond, minJoinBond } = stats;
+
+  const minJoinBondBase = planckBnToUnit(minJoinBond, units);
+  const minCreateBondBase = planckBnToUnit(minCreateBond, units);
 
   return (
     <ContentWrapper>
@@ -72,22 +82,46 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
               </div>
             </button>
-            <button
-              type="button"
-              className="action-button"
-              onClick={() => {
-                setSection(1);
-                setTask('unbond_all');
-              }}
-            >
-              <div>
-                <h3>Unbond All</h3>
-                <p>Exit your staking position.</p>
-              </div>
-              <div>
-                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-              </div>
-            </button>
+            {bondType === 'stake' && (
+              <button
+                type="button"
+                className="action-button"
+                onClick={() => {
+                  setSection(1);
+                  setTask('unbond_all');
+                }}
+              >
+                <div>
+                  <h3>Unbond All</h3>
+                  <p>Exit your staking position.</p>
+                </div>
+                <div>
+                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+                </div>
+              </button>
+            )}
+            {bondType === 'pool' && (
+              <button
+                type="button"
+                className="action-button"
+                onClick={() => {
+                  setSection(1);
+                  setTask('unbond_pool_to_minimum');
+                }}
+              >
+                <div>
+                  <h3>Unbond To Minimum</h3>
+                  <p>
+                    {isOwner()
+                      ? `Unbond up to the ${minCreateBondBase} ${unit} minimum bond for pool owners.`
+                      : `Unbond up to the ${minJoinBondBase} ${unit} minimum to maintain your pool membership`}
+                  </p>
+                </div>
+                <div>
+                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+                </div>
+              </button>
+            )}
           </>
         )}
       </div>
