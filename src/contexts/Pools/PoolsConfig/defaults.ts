@@ -12,6 +12,7 @@ export const stats: PoolStats = {
   counterForPoolMembers: new BN(0),
   counterForBondedPools: new BN(0),
   counterForRewardPools: new BN(0),
+  lastPoolId: new BN(0),
   maxPoolMembers: new BN(0),
   maxPoolMembersPerPool: new BN(0),
   maxPools: new BN(0),

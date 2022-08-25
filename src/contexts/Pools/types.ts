@@ -23,6 +23,7 @@ export interface PoolStats {
   counterForPoolMembers: BN;
   counterForBondedPools: BN;
   counterForRewardPools: BN;
+  lastPoolId: BN;
   maxPoolMembers: BN;
   maxPoolMembersPerPool: BN;
   maxPools: BN;

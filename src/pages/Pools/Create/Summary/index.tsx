@@ -15,15 +15,19 @@ import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { BN } from 'bn.js';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
   const { section } = props;
-
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress } = useUi();
+  const { stats } = usePoolsConfig();
+  const { lastPoolId } = stats;
+
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
   const { metadata, bond, roles, nominations } = setup;
@@ -40,8 +44,10 @@ export const Summary = (props: SetupStepProps) => {
       return null;
     }
     const bondToSubmit = bond * 10 ** units;
+    const poolId = lastPoolId.add(new BN(1)).toString();
+    const targetsToSubmit = nominations.map((item: any) => item.address);
 
-    // // construct a batch of transactions
+    // construct a batch of transactions
     const _txs = [
       api.tx.nominationPools.create(
         bondToSubmit,
@@ -49,6 +55,8 @@ export const Summary = (props: SetupStepProps) => {
         roles.nominator,
         roles.stateToggler
       ),
+      api.tx.nominationPools.nominate(poolId, targetsToSubmit),
+      api.tx.nominationPools.setMetadata(poolId, metadata),
     ];
     return api.tx.utility.batch(_txs);
   };
