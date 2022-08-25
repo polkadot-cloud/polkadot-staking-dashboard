@@ -53,7 +53,7 @@ export const Bond = (props: BondProps) => {
   // apply initial bond value to setup progress
   useEffect(() => {
     // only update if Bond is currently active
-    if (setup.section === 4) {
+    if (setup.section === section) {
       setActiveAccountSetup(SetupType.Pool, {
         ...setup,
         bond: initialBondValue,
@@ -95,5 +95,3 @@ export const Bond = (props: BondProps) => {
     </>
   );
 };
-
-export default Bond;
