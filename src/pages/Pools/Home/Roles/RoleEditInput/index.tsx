@@ -8,6 +8,7 @@ import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleEdit }: any) => {
   const { formatAccountSs58 } = useConnect();
+
   const getRoleEdit = (newAddress: string) => {
     let edit = {
       newAddress,

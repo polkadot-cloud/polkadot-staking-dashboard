@@ -89,6 +89,7 @@ export interface ActivePoolContextState {
   getPoolBondedAccount: () => MaybeAccount;
   getPoolBondOptions: (a: MaybeAccount) => any;
   getPoolUnlocking: () => any;
+  getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
   activeBondedPool: ActiveBondedPool | undefined;

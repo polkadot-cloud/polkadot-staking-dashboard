@@ -307,7 +307,10 @@ export const ActivePoolProvider = ({
     return unsub;
   };
 
-  /* Sets pools target validators in storage */
+  /*
+   * setTargets
+   * Sets pools target validators in storage.
+   */
   const setTargets = (_targets: any) => {
     const stashAddress = getPoolBondedAccount();
     if (stashAddress) {
@@ -319,14 +322,27 @@ export const ActivePoolProvider = ({
     }
   };
 
+  /*
+   * getPoolUnlocking
+   * Checks the current membership unlocking status.
+   */
   const getPoolUnlocking = () => {
     return membership?.unlocking || [];
   };
 
+  /*
+   * isBonding
+   * Returns whether active pool exists
+   */
   const isBonding = () => {
     return !!activeBondedPoolRef.current.pool;
   };
 
+  /*
+   * isNominator
+   * Returns whether the active account is
+   * the nominator in the active pool.
+   */
   const isNominator = () => {
     const roles = activeBondedPoolRef.current.pool?.roles;
     if (!activeAccount || !roles) {
@@ -337,6 +353,11 @@ export const ActivePoolProvider = ({
     return result;
   };
 
+  /*
+   * isOwner
+   * Returns whether the active account is
+   * the owner of the active pool.
+   */
   const isOwner = () => {
     const roles = activeBondedPoolRef.current.pool?.roles;
     if (!activeAccount || !roles) {
@@ -347,6 +368,11 @@ export const ActivePoolProvider = ({
     return result;
   };
 
+  /*
+   * isDepositor
+   * Returns whether the active account is
+   * the depositor of the active pool.
+   */
   const isDepositor = () => {
     const roles = activeBondedPoolRef.current.pool?.roles;
     if (!activeAccount || !roles) {
@@ -356,12 +382,20 @@ export const ActivePoolProvider = ({
     return result;
   };
 
-  // get the stash address of the bonded pool that the member is participating in.
+  /*
+   * getPoolBondedAccount
+   * get the stash address of the bonded pool
+   * that the member is participating in.
+   */
   const getPoolBondedAccount = () => {
     return activeBondedPoolRef.current.pool?.addresses?.stash || null;
   };
 
-  // get the bond and unbond amounts available to the user
+  /*
+   * getPoolBondOptions
+   * get the bond and unbond amounts available
+   * to the user.
+   */
   const getPoolBondOptions = (address: MaybeAccount) => {
     if (!address) {
       return defaults.poolBondOptions;
@@ -437,6 +471,18 @@ export const ActivePoolProvider = ({
     return statuses;
   };
 
+  /*
+   * getPoolRoles
+   * Returns the active pool's roles or a default roles object.
+   */
+  const getPoolRoles = () => {
+    const roles = activeBondedPoolRef.current.pool?.roles ?? null;
+    if (!roles) {
+      return defaults.poolRoles;
+    }
+    return roles;
+  };
+
   return (
     <ActivePoolContext.Provider
       value={{
@@ -447,6 +493,7 @@ export const ActivePoolProvider = ({
         getPoolBondedAccount,
         getPoolBondOptions,
         getPoolUnlocking,
+        getPoolRoles,
         setTargets,
         getNominationsStatus,
         synced,
