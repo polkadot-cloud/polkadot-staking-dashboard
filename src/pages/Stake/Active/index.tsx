@@ -21,9 +21,9 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { GenerateNominations } from 'library/SetupSteps/GenerateNominations';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
-import { GenerateNominations } from '../GenerateNominations';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import InacctiveNominationsStatBox from './Stats/InactiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';

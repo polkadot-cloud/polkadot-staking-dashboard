@@ -8,7 +8,8 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
-import { ChooseNominations } from './ChooseNominations';
+import { SetupType } from 'contexts/UI/types';
+import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
@@ -46,7 +47,11 @@ export const Setup = ({ title }: { title: string }) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <ChooseNominations section={3} />
+          <ChooseNominations
+            batchKey="generate_nominations_inactive"
+            setupType={SetupType.Stake}
+            section={3}
+          />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
