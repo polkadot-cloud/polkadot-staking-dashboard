@@ -9,7 +9,7 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { poolRoles as defaultPoolRoles } from 'contexts/Pools/ActivePool/defaults';
+import { Roles } from '../../Roles';
 
 export const PoolRoles = (props: SetupStepProps) => {
   const { section } = props;
@@ -17,14 +17,15 @@ export const PoolRoles = (props: SetupStepProps) => {
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
-  // if no roles in setup already, inject activeAccount to be
+  // if no roles in setup already, inject `activeAccount` to be
   // root and depositor roles.
   const initialValue =
     setup.roles === null
       ? {
-          ...defaultPoolRoles,
           root: activeAccount,
           depositor: activeAccount,
+          nominator: activeAccount,
+          stateToggler: activeAccount,
         }
       : setup.roles;
 
@@ -33,13 +34,8 @@ export const PoolRoles = (props: SetupStepProps) => {
     roles: initialValue,
   });
 
-  // TODO: implement check if roles are valid.
-  const poolRolesValid = () => {
-    return false;
-  };
-
   // pool name valid
-  const [rolesValid, setRolesValid] = useState<boolean>(poolRolesValid());
+  const [rolesValid, setRolesValid] = useState<boolean>(true);
 
   // handler for updating pool roles
   const handleSetupUpdate = (value: any) => {
@@ -75,9 +71,15 @@ export const PoolRoles = (props: SetupStepProps) => {
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        {/* Uncomment when component is ready
-        <RolesEdit
-          listenValid={setRolesValid}
+        <h4 style={{ margin: '0.5rem 0' }}>
+          You will consume your pool&apos;s Root and Depositor roles.
+        </h4>
+        <h4 style={{ marginTop: 0 }}>
+          Your Nominator and State Toggler roles can be assigned to any account.
+        </h4>
+        <Roles
+          batchKey="pool_roles_create"
+          listenIsValid={setRolesValid}
           defaultRoles={initialValue}
           setters={[
             {
@@ -89,8 +91,7 @@ export const PoolRoles = (props: SetupStepProps) => {
               current: roles,
             },
           ]}
-        /> */}
-
+        />
         <Footer complete={rolesValid} setupType={SetupType.Pool} />
       </MotionContainer>
     </>

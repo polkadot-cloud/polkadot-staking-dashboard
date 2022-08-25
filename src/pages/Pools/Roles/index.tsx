@@ -16,27 +16,29 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import { useModal } from 'contexts/Modal';
-import { PoolAccount } from '../../PoolAccount';
-import { RolesWrapper } from '../ManagePool/Wrappers';
+import { PoolAccount } from '../PoolAccount';
+import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import RoleEditInput from './RoleEditInput';
-import { RoleEdit } from './types';
+import { RolesProps, RoleEditEntry } from './types';
 
-export const Roles = () => {
+export const Roles = (props: RolesProps) => {
+  const { batchKey, defaultRoles, title } = props;
+
+  const listenIsValid = props.listenIsValid ?? (() => {});
+  const setters = props.setters ?? [];
+
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
-  const { activeBondedPool, isOwner, getPoolRoles } = useActivePool();
+  const { isOwner, activeBondedPool } = useActivePool();
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
-  const { id } = activeBondedPool || {};
-  const roles = getPoolRoles();
+  const { id } = activeBondedPool || { id: 0 };
+  const roles = defaultRoles;
 
-  const batchKey = 'pool_roles';
-
-  // role edits
-  const initEditState = (() => {
-    const initState: Record<string, RoleEdit> = {};
-    Object.entries(roles).forEach(([role, who]) => {
+  const initialiseEdits = (() => {
+    const initState: Record<string, RoleEditEntry> = {};
+    Object.entries(defaultRoles).forEach(([role, who]) => {
       initState[role] = {
         oldAddress: who,
         newAddress: who,
@@ -47,11 +49,11 @@ export const Roles = () => {
     return initState;
   })();
 
+  // store any role edits that take place
+  const [roleEdits, setRoleEdits] = useState(initialiseEdits);
+
   // store whether roles are being edited
   const [isEditing, setIsEditing] = useState(false);
-
-  // store role edits pre-submission
-  const [roleEdits, setRoleEdits] = useState(initEditState);
 
   // store role accounts
   const [accounts, setAccounts] = useState(Object.values(roles));
@@ -62,6 +64,7 @@ export const Roles = () => {
   // update default roles on account switch
   useEffect(() => {
     setAccounts(Object.values(roles));
+    setRoleEdits(initialiseEdits);
     setFetched(false);
   }, [activeAccount]);
 
@@ -74,7 +77,7 @@ export const Roles = () => {
   }, [isReady, fetched]);
 
   const isRoleEditsValid = () => {
-    for (const roleEdit of Object.values<RoleEdit>(roleEdits)) {
+    for (const roleEdit of Object.values<RoleEditEntry>(roleEdits)) {
       if (roleEdit?.valid === false) {
         return false;
       }
@@ -84,35 +87,56 @@ export const Roles = () => {
 
   // logic for saving edit state
   const saveHandler = () => {
-    openModalWith('ChangePoolRoles', { id, roleEdits }, 'small');
     setIsEditing(false);
+
+    // if setters available, use those to update
+    // parent component state.
+    if (setters.length) {
+      if (listenIsValid) {
+        listenIsValid(isRoleEditsValid());
+      }
+      const rolesUpdated: any = {};
+      for (const [k, v] of Object.entries(roleEdits)) {
+        rolesUpdated[k] = v.newAddress;
+      }
+      for (const s of setters) {
+        s.set({
+          ...s.current,
+          roles: rolesUpdated,
+        });
+      }
+    } else {
+      // else, open modal with role edits data to update pool roles.
+      openModalWith('ChangePoolRoles', { id, roleEdits }, 'small');
+    }
   };
 
   // enter edit state
   const editHandler = () => {
-    setRoleEdits(initEditState);
+    setRoleEdits(initialiseEdits);
     setIsEditing(true);
   };
 
   // cancel editing and revert edit state
   const cancelHandler = () => {
-    setRoleEdits(initEditState);
+    setRoleEdits(initialiseEdits);
     setIsEditing(false);
   };
 
   // passed down to `RoleEditInput` to update roleEdits
-  const setRoleEditHandler = (role: string, edit: RoleEdit) => {
-    setRoleEdits((values: Record<string, RoleEdit>) => ({
-      ...values,
+  const setRoleEditHandler = (role: string, edit: RoleEditEntry) => {
+    const newEdit = {
+      ...roleEdits,
       [role]: edit,
-    }));
+    };
+    setRoleEdits(newEdit);
   };
 
   return (
     <>
       <CardHeaderWrapper withAction>
-        <h3>Roles</h3>
-        {isOwner() === true && (
+        <h3>{title || ``}</h3>
+        {(isOwner() === true || setters.length) && (
           <>
             {isEditing && (
               <div>
@@ -220,5 +244,3 @@ export const Roles = () => {
     </>
   );
 };
-
-export default Roles;

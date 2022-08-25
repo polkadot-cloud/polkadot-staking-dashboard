@@ -28,7 +28,7 @@ import { Status } from './Status';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { PageProps } from '../../types';
-import { Roles } from './Roles';
+import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
 
@@ -38,7 +38,7 @@ export const HomeInner = (props: PageProps) => {
   const { network } = useApi();
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools();
-  const { isBonding } = useActivePool();
+  const { isBonding, getPoolRoles } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
   // back to overview if pools are not supported on network
@@ -104,7 +104,11 @@ export const HomeInner = (props: PageProps) => {
               <ManagePool />
               <PageRowWrapper className="page-padding" noVerticalSpacer>
                 <CardWrapper>
-                  <Roles />
+                  <Roles
+                    batchKey="pool_roles_manage"
+                    title="Roles"
+                    defaultRoles={getPoolRoles()}
+                  />
                 </CardWrapper>
               </PageRowWrapper>
             </>
