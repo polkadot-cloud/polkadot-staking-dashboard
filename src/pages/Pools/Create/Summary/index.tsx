@@ -26,10 +26,17 @@ export const Summary = (props: SetupStepProps) => {
   const { getSetupProgress } = useUi();
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
-  const { metadata, bond, roles } = setup;
+  const { metadata, bond, roles, nominations } = setup;
 
   const txs = () => {
-    if (!activeAccount || !api || !metadata || bond === 0 || !roles) {
+    if (
+      !activeAccount ||
+      !api ||
+      !metadata ||
+      bond === 0 ||
+      !roles ||
+      !nominations.length
+    ) {
       return null;
     }
     const bondToSubmit = bond * 10 ** units;
@@ -88,6 +95,16 @@ export const Summary = (props: SetupStepProps) => {
             <div>
               {humanNumber(bond)} {network.unit}
             </div>
+          </section>
+          <section>
+            <div>
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Nominations:
+            </div>
+            <div>{nominations.length}</div>
           </section>
           <section>
             <div>
