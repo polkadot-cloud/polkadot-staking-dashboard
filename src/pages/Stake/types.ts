@@ -13,7 +13,7 @@ export interface SetControllerProps {
   section: number;
 }
 
-export interface ChooseNominatorsProps {
+export interface ChooseNominationsProps {
   section: number;
 }
 

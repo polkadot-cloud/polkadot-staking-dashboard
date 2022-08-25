@@ -9,9 +9,9 @@ import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { GenerateNominations } from '../GenerateNominations';
-import { ChooseNominatorsProps } from '../types';
+import { ChooseNominationsProps } from '../types';
 
-export const ChooseNominators = (props: ChooseNominatorsProps) => {
+export const ChooseNominations = (props: ChooseNominationsProps) => {
   const { consts } = useApi();
   const { section } = props;
   const { activeAccount } = useConnect();
@@ -66,5 +66,3 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
     </>
   );
 };
-
-export default ChooseNominators;
