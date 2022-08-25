@@ -30,11 +30,6 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
 
   const { freeToUnbond: freeToUnbondBn } = poolBondOptions;
 
-  // convert BN values to number
-  // TODO: if pool, determine amount to unbond (member vs owner min bond).
-  // Unbond All -> Unbond Maximum and update subtitle for pools.
-  // May need an additional modal for leaving the pool.
-  // const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
   // unbond amount to minimum threshold
   const freeToUnbond = isOwner()
     ? planckBnToUnit(
