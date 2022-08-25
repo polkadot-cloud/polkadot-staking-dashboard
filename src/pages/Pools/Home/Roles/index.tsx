@@ -11,7 +11,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import Button from 'library/Button';
 import {
   faEdit,
-  faFloppyDisk,
+  faCheckCircle,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
@@ -31,29 +31,54 @@ export const Roles = () => {
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
-  const { activeBondedPool, isOwner } = useActivePool();
+  const { activeBondedPool, isOwner, getPoolRoles } = useActivePool();
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
-  const activePool = activeBondedPool;
-  const { id: poolId, roles } = activePool || {};
+  const { id } = activeBondedPool || {};
+  const roles = getPoolRoles();
 
   const batchKey = 'pool_roles';
 
   // role edits
   const initEditState = (() => {
     const initState: Record<string, RoleEdit> = {};
-    Object.entries(roles || [])?.forEach(([roleName, address]) => {
-      initState[roleName] = {
-        oldAddress: address,
-        newAddress: address,
+    Object.entries(roles).forEach(([role, who]) => {
+      initState[role] = {
+        oldAddress: who,
+        newAddress: who,
         valid: true,
         reformatted: false,
       };
     });
     return initState;
   })();
+
+  // store whether roles are being edited
   const [isEditing, setIsEditing] = useState(false);
+
+  // store role edits pre-submission
   const [roleEdits, setRoleEdits] = useState(initEditState);
+
+  // store role accounts
+  const [accounts, setAccounts] = useState(Object.values(roles));
+
+  // is this the initial fetch
+  const [fetched, setFetched] = useState(false);
+
+  // update default roles on account switch
+  useEffect(() => {
+    setAccounts(Object.values(roles));
+    setFetched(false);
+  }, [activeAccount]);
+
+  // fetch accounts meta batch
+  useEffect(() => {
+    if (isReady && !fetched) {
+      setFetched(true);
+      fetchAccountMetaBatch(batchKey, Object.values(roles), false);
+    }
+  }, [isReady, fetched]);
+
   const isRoleEditsValid = () => {
     for (const roleEdit of Object.values<RoleEdit>(roleEdits)) {
       if (roleEdit?.valid === false) {
@@ -63,42 +88,19 @@ export const Roles = () => {
     return true;
   };
 
-  const _accounts: string[] = [
-    roles?.root ?? '',
-    roles?.depositor ?? '',
-    roles?.nominator ?? '',
-    roles?.stateToggler ?? '',
-  ];
-
-  // store role accounts
-  const [accounts, setAccounts] = useState(_accounts);
-
-  // is this the initial fetch
-  const [fetched, setFetched] = useState(false);
-
-  // update default roles on account switch
-  useEffect(() => {
-    setAccounts(_accounts);
-    setFetched(false);
-  }, [activeAccount]);
-
-  // fetch accounts meta batch
-  useEffect(() => {
-    if (isReady && !fetched) {
-      // setAccounts(_accounts);
-      setFetched(true);
-      fetchAccountMetaBatch(batchKey, _accounts, false);
-    }
-  }, [isReady, fetched]);
-
+  // logic for saving edit state
   const saveHandler = () => {
-    openModalWith('ChangePoolRoles', { poolId, roleEdits }, 'small');
+    openModalWith('ChangePoolRoles', { id, roleEdits }, 'small');
     setIsEditing(false);
   };
+
+  // enter edit state
   const editHandler = () => {
     setRoleEdits(initEditState);
     setIsEditing(true);
   };
+
+  // cancel editing and revert edit state
   const cancelHandler = () => {
     setRoleEdits(initEditState);
     setIsEditing(false);
@@ -107,7 +109,7 @@ export const Roles = () => {
     <>
       <CardHeaderWrapper withAction>
         <h3>Roles</h3>
-        {isOwner() ? (
+        {isOwner() === true && (
           <>
             {isEditing && (
               <div>
@@ -127,7 +129,7 @@ export const Roles = () => {
             <div>
               <Button
                 small
-                icon={isEditing ? faFloppyDisk : faEdit}
+                icon={isEditing ? faCheckCircle : faEdit}
                 transform="grow-1"
                 inline
                 primary
@@ -141,8 +143,6 @@ export const Roles = () => {
               />
             </div>
           </>
-        ) : (
-          <></>
         )}
       </CardHeaderWrapper>
       <RolesWrapper>
@@ -153,8 +153,8 @@ export const Roles = () => {
               <OpenAssistantIcon page="pools" title="Pool Roles" />
             </h4>
             <PoolAccount
-              address={roles?.root ?? null}
-              batchIndex={accounts.indexOf(roles?.root ?? '-1')}
+              address={roles.root ?? null}
+              batchIndex={accounts.indexOf(roles.root ?? '-1')}
               batchKey={batchKey}
             />
           </div>
@@ -165,8 +165,8 @@ export const Roles = () => {
               Depositor <OpenAssistantIcon page="pools" title="Pool Roles" />
             </h4>
             <PoolAccount
-              address={roles?.depositor ?? null}
-              batchIndex={accounts.indexOf(roles?.depositor ?? '-1')}
+              address={roles.depositor ?? null}
+              batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
               batchKey={batchKey}
             />
           </div>
@@ -188,8 +188,8 @@ export const Roles = () => {
               />
             ) : (
               <PoolAccount
-                address={roles?.nominator ?? null}
-                batchIndex={accounts.indexOf(roles?.nominator ?? '-1')}
+                address={roles.nominator ?? null}
+                batchIndex={accounts.indexOf(roles.nominator ?? '-1')}
                 batchKey={batchKey}
               />
             )}
@@ -213,8 +213,8 @@ export const Roles = () => {
               />
             ) : (
               <PoolAccount
-                address={roles?.stateToggler ?? null}
-                batchIndex={accounts.indexOf(roles?.stateToggler ?? '-1')}
+                address={roles.stateToggler ?? null}
+                batchIndex={accounts.indexOf(roles.stateToggler ?? '-1')}
                 batchKey={batchKey}
                 last
               />
