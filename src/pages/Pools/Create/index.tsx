@@ -8,6 +8,7 @@ import { PageTitle } from 'library/PageTitle';
 import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { PoolName } from './PoolName';
 import { Bond } from './Bond';
 
 export const Create = () => {
@@ -29,8 +30,14 @@ export const Create = () => {
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
+          <Element name="metadata" style={{ position: 'absolute' }} />
+          <PoolName section={1} />
+        </CardWrapper>
+      </PageRowWrapper>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
-          <Bond section={1} />
+          <Bond section={2} />
         </CardWrapper>
       </PageRowWrapper>
     </>
