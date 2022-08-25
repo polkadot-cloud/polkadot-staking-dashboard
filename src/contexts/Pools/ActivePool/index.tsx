@@ -18,7 +18,6 @@ import * as defaults from './defaults';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { usePoolsConfig } from '../PoolsConfig';
-import { useBondedPools } from '../BondedPools';
 import { usePoolMemberships } from '../PoolMemberships';
 
 export const ActivePoolContext = React.createContext<ActivePoolContextState>(
@@ -37,9 +36,8 @@ export const ActivePoolProvider = ({
   const { eraStakers } = useStaking();
   const { activeAccount } = useConnect();
   const { getAccountBalance } = useBalances();
-  const { enabled } = usePoolsConfig();
+  const { enabled, createAccounts } = usePoolsConfig();
   const { membership } = usePoolMemberships();
-  const { createAccounts } = useBondedPools();
 
   const { activeEra } = metrics;
   const { existentialDeposit } = consts;

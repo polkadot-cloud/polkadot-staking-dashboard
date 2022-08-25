@@ -30,7 +30,6 @@ export const PoolMembershipsProvider = ({
 }) => {
   const { api, network, isReady } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
-
   const { enabled } = usePoolsConfig();
 
   // stores pool membership
