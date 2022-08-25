@@ -19,13 +19,7 @@ import { useModal } from 'contexts/Modal';
 import { PoolAccount } from '../../PoolAccount';
 import { RolesWrapper } from '../ManagePool/Wrappers';
 import RoleEditInput from './RoleEditInput';
-
-export type RoleEdit = {
-  oldAddress: string;
-  newAddress: string;
-  valid: boolean;
-  reformatted: boolean;
-};
+import { RoleEdit } from './types';
 
 export const Roles = () => {
   const { isReady } = useApi();
@@ -105,6 +99,15 @@ export const Roles = () => {
     setRoleEdits(initEditState);
     setIsEditing(false);
   };
+
+  // passed down to `RoleEditInput` to update roleEdits
+  const setRoleEditHandler = (role: string, edit: RoleEdit) => {
+    setRoleEdits((values: Record<string, RoleEdit>) => ({
+      ...values,
+      [role]: edit,
+    }));
+  };
+
   return (
     <>
       <CardHeaderWrapper withAction>
@@ -178,13 +181,9 @@ export const Roles = () => {
             </h4>
             {isEditing ? (
               <RoleEditInput
+                roleKey="nominator"
                 roleEdit={roleEdits?.nominator}
-                setRoleEdit={(nominator: RoleEdit) => {
-                  setRoleEdits((values: Record<string, RoleEdit>) => ({
-                    ...values,
-                    nominator,
-                  }));
-                }}
+                setRoleEdit={setRoleEditHandler}
               />
             ) : (
               <PoolAccount
@@ -203,13 +202,9 @@ export const Roles = () => {
             </h4>
             {isEditing ? (
               <RoleEditInput
+                roleKey="stateToggler"
                 roleEdit={roleEdits?.stateToggler}
-                setRoleEdit={(stateToggler: RoleEdit) => {
-                  setRoleEdits((values: Record<string, RoleEdit>) => ({
-                    ...values,
-                    stateToggler,
-                  }));
-                }}
+                setRoleEdit={setRoleEditHandler}
               />
             ) : (
               <PoolAccount

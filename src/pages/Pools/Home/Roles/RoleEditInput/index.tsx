@@ -6,10 +6,10 @@ import { useConnect } from 'contexts/Connect';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
-export const RoleEditInput = ({ setRoleEdit, roleEdit }: any) => {
+export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   const { formatAccountSs58 } = useConnect();
 
-  const getRoleEdit = (newAddress: string) => {
+  const processRoleEdit = (newAddress: string) => {
     let edit = {
       newAddress,
       valid: newAddress === '', // empty address is valid and removes the role
@@ -33,8 +33,8 @@ export const RoleEditInput = ({ setRoleEdit, roleEdit }: any) => {
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     // set value on key change
-    const edit = getRoleEdit(newValue);
-    setRoleEdit(edit);
+    const edit = processRoleEdit(newValue);
+    setRoleEdit(roleKey, edit);
   };
 
   let label;
