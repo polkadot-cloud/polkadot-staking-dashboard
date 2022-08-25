@@ -28,7 +28,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { getBondOptions, getBondedAccount } = useBalances();
   const { bondType } = config;
   const { stats } = usePoolsConfig();
-  const { getPoolBondOptions, isOwner } = useActivePool();
+  const { getPoolBondOptions, isDepositor } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;
@@ -57,7 +57,7 @@ export const UnbondSome = (props: FormsProps) => {
 
   // get the max amount available to unbond
   const freeToUnbondToMin = isPooling
-    ? isOwner()
+    ? isDepositor()
       ? Math.max(freeToUnbond - minCreateBond, 0)
       : Math.max(freeToUnbond - minJoinBond, 0)
     : Math.max(freeToUnbond - minNominatorBond, 0);

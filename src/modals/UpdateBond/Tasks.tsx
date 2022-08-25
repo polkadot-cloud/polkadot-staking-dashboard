@@ -18,7 +18,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { units, unit } = network;
   const { config } = useModal();
   const { fn } = config;
-  const { isOwner } = useActivePool();
+  const { isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minCreateBond, minJoinBond } = stats;
 
@@ -112,8 +112,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 <div>
                   <h3>Unbond To Minimum</h3>
                   <p>
-                    {isOwner()
-                      ? `Unbond up to the ${minCreateBondBase} ${unit} minimum bond for pool owners.`
+                    {isDepositor()
+                      ? `Unbond up to the ${minCreateBondBase} ${unit} minimum bond for pool depositors.`
                       : `Unbond up to the ${minJoinBondBase} ${unit} minimum to maintain your pool membership`}
                   </p>
                 </div>

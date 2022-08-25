@@ -22,7 +22,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getPoolBondOptions, isOwner } = useActivePool();
+  const { getPoolBondOptions, isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const poolBondOptions = getPoolBondOptions(activeAccount);
@@ -31,7 +31,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { freeToUnbond: freeToUnbondBn } = poolBondOptions;
 
   // unbond amount to minimum threshold
-  const freeToUnbond = isOwner()
+  const freeToUnbond = isDepositor()
     ? planckBnToUnit(
         BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
         units

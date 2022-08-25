@@ -27,7 +27,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
-  const { getPoolBondOptions, isOwner } = useActivePool();
+  const { getPoolBondOptions, isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
@@ -82,7 +82,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   // bond amount to minimum threshold
   const minBondBase =
     bondType === 'pool'
-      ? inSetup || isOwner()
+      ? inSetup || isDepositor()
         ? planckBnToUnit(minCreateBond, units)
         : planckBnToUnit(minJoinBond, units)
       : planckBnToUnit(minNominatorBond, units);
@@ -90,7 +90,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   // unbond amount to minimum threshold
   const freeToUnbondToMin =
     bondType === 'pool'
-      ? inSetup || isOwner()
+      ? inSetup || isDepositor()
         ? planckBnToUnit(
             BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
             units
@@ -163,8 +163,8 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
           `A minimum bond of ${minBondBase} ${network.unit} is required ${
             bondType === 'stake'
               ? `when actively nominating`
-              : isOwner()
-              ? `as a pool owner`
+              : isDepositor()
+              ? `as the pool depositor`
               : `as a pool member`
           }.`
         );
