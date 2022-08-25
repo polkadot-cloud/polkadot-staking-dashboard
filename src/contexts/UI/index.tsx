@@ -245,12 +245,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     if (!address) return 0;
     const setupProgress = getSetupProgress(SetupType.Pool, address);
 
-    const p = 25;
+    const p = 33;
     let progress = 0;
     if (setupProgress.metadata !== null) progress += p;
     if (setupProgress.bond > 0) progress += p;
-    if (setupProgress.nominations.length) progress += p;
-    if (setupProgress.roles !== null) progress += p - 1;
+    if (setupProgress.roles !== null) progress += p;
     return progress;
   };
 
