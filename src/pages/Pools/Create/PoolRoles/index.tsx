@@ -29,15 +29,17 @@ export const PoolRoles = (props: SetupStepProps) => {
       : setup.roles;
 
   // store local pool name for form control
-  const [poolRoles, setPoolRoles] = useState({
+  const [roles, setRoles] = useState({
     roles: initialValue,
   });
 
   // TODO: implement check if roles are valid.
-  const poolRolesValid = () => false;
+  const poolRolesValid = () => {
+    return false;
+  };
 
   // pool name valid
-  const [valid, setValid] = useState<boolean>(poolRolesValid());
+  const [rolesValid, setRolesValid] = useState<boolean>(poolRolesValid());
 
   // handler for updating pool roles
   const handleSetupUpdate = (value: any) => {
@@ -46,7 +48,7 @@ export const PoolRoles = (props: SetupStepProps) => {
 
   // update pool roles on account change
   useEffect(() => {
-    setPoolRoles({
+    setRoles({
       roles: initialValue,
     });
   }, [activeAccount]);
@@ -73,7 +75,23 @@ export const PoolRoles = (props: SetupStepProps) => {
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <Footer complete={valid} setupType={SetupType.Pool} />
+        {/* Uncomment when component is ready
+        <RolesEdit
+          listenValid={setRolesValid}
+          defaultRoles={initialValue}
+          setters={[
+            {
+              set: handleSetupUpdate,
+              current: setup,
+            },
+            {
+              set: setRoles,
+              current: roles,
+            },
+          ]}
+        /> */}
+
+        <Footer complete={rolesValid} setupType={SetupType.Pool} />
       </MotionContainer>
     </>
   );
