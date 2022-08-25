@@ -69,7 +69,7 @@ export const PoolRoles = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.roles !== null}
-        title="Pool Roles"
+        title="Roles"
         // assistantPage="stake"
         // assistantKey="Bonding"
         setupType={SetupType.Pool}
