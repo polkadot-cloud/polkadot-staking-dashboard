@@ -168,7 +168,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setIsSyncing(syncing);
-  }, [isReady, staking, metrics, accounts, eraStakers]);
+  }, [isReady, staking, metrics, accounts, eraStakers, activePoolSynced]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);

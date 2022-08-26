@@ -80,6 +80,18 @@ export const ActivePoolProvider = ({
     };
   }, [network, isReady, enabled]);
 
+  // subscribe to active bonded pool deatils for the active account
+  useEffect(() => {
+    if (isReady && enabled) {
+      setStateWithRef(false, setSynced, syncedRef);
+      unsubscribeAll();
+      subscribeToActiveBondedPool();
+    }
+    return () => {
+      unsubscribeActiveBondedPool();
+    };
+  }, [network, isReady, enabled, membership]);
+
   const unsubscribeAll = () => {
     if (unsubActiveBondedPool) {
       unsubActiveBondedPool();
@@ -88,17 +100,6 @@ export const ActivePoolProvider = ({
       unsubPoolNominations();
     }
   };
-
-  // subscribe to active bonded pool deatils for the active account
-  useEffect(() => {
-    if (isReady && enabled) {
-      setSynced(false);
-      subscribeToActiveBondedPool();
-    }
-    return () => {
-      unsubscribeActiveBondedPool();
-    };
-  }, [network, isReady, enabled, membership]);
 
   const unsubscribeActiveBondedPool = () => {
     if (unsubActiveBondedPool) {
@@ -119,6 +120,7 @@ export const ActivePoolProvider = ({
   const bondedAddress = activeBondedPoolRef.current.pool?.addresses?.stash;
   useEffect(() => {
     if (isReady && enabled && bondedAddress) {
+      unsubscribePoolNominations();
       subscribeToPoolNominations(bondedAddress);
     }
     return () => {
@@ -494,7 +496,7 @@ export const ActivePoolProvider = ({
         getPoolRoles,
         setTargets,
         getNominationsStatus,
-        synced,
+        synced: syncedRef.current,
         activeBondedPool: activeBondedPoolRef.current.pool,
         targets: targetsRef.current,
         poolNominations: poolNominationsRef.current.nominations,

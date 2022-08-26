@@ -39,16 +39,16 @@ export const PoolMembershipsProvider = ({
   const poolMembershipsRef = useRef(poolMemberships);
 
   // stores pool subscription objects
-  const [poolMembershipUnsubs, setpoolMembershipUnsubs] = useState<Array<Fn>>(
+  const [poolMembershipUnsubs, setPoolMembershipUnsubs] = useState<Array<Fn>>(
     []
   );
   const poolMembershipUnsubRefs = useRef<Array<AnyApi>>(poolMembershipUnsubs);
 
   useEffect(() => {
     if (isReady && enabled) {
-      (async () => {
+      (() => {
         setStateWithRef([], setPoolMemberships, poolMembershipsRef);
-        await unsubscribeAll();
+        unsubscribeAll();
         getPoolMemberships();
       })();
     }
@@ -71,10 +71,8 @@ export const PoolMembershipsProvider = ({
   }, []);
 
   // unsubscribe from all pool memberships
-  const unsubscribeAll = async () => {
-    Object.values(poolMembershipUnsubRefs.current).forEach(async (v: Fn) => {
-      await v();
-    });
+  const unsubscribeAll = () => {
+    Object.values(poolMembershipUnsubRefs.current).forEach((v: Fn) => v());
   };
 
   // subscribe to an account's pool membership
@@ -134,7 +132,7 @@ export const PoolMembershipsProvider = ({
     );
 
     const _unsubs = poolMembershipUnsubRefs.current.concat(unsub);
-    setStateWithRef(_unsubs, setpoolMembershipUnsubs, poolMembershipUnsubRefs);
+    setStateWithRef(_unsubs, setPoolMembershipUnsubs, poolMembershipUnsubRefs);
     return unsub;
   };
 
