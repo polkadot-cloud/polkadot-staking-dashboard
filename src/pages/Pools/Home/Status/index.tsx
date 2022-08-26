@@ -107,7 +107,6 @@ export const Status = ({ height }: { height: number }) => {
           buttons={isSyncing ? [] : buttons}
         />
       )}
-
       <Separator />
       <Stat
         label="Unclaimed Rewards"

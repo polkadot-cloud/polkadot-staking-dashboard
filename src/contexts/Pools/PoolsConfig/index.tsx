@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { bnToU8a, u8aConcat } from '@polkadot/util';
+import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import React, { useState, useEffect, useRef } from 'react';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
 import { AnyApi } from 'types';
@@ -20,7 +22,8 @@ export const PoolsConfigProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi();
+  const { api, network, isReady, consts } = useApi();
+  const { poolsPalletId } = consts;
   const { features } = network;
 
   // whether pools are enabled
@@ -78,6 +81,7 @@ export const PoolsConfigProvider = ({
         api.query.nominationPools.counterForPoolMembers,
         api.query.nominationPools.counterForBondedPools,
         api.query.nominationPools.counterForRewardPools,
+        api.query.nominationPools.lastPoolId,
         api.query.nominationPools.maxPoolMembers,
         api.query.nominationPools.maxPoolMembersPerPool,
         api.query.nominationPools.maxPools,
@@ -88,6 +92,7 @@ export const PoolsConfigProvider = ({
         _counterForPoolMembers,
         _counterForBondedPools,
         _counterForRewardPools,
+        _lastPoolId,
         _maxPoolMembers,
         _maxPoolMembersPerPool,
         _maxPools,
@@ -115,6 +120,7 @@ export const PoolsConfigProvider = ({
               counterForPoolMembers: _counterForPoolMembers.toBn(),
               counterForBondedPools: _counterForBondedPools.toBn(),
               counterForRewardPools: _counterForRewardPools.toBn(),
+              lastPoolId: _lastPoolId.toBn(),
               maxPoolMembers: _maxPoolMembers,
               maxPoolMembersPerPool: _maxPoolMembersPerPool,
               maxPools: _maxPools,
@@ -169,12 +175,38 @@ export const PoolsConfigProvider = ({
     setFavourites([..._favourites]);
   };
 
+  // Helper: generates pool stash and reward accounts. assumes poolsPalletId is synced.
+  const createAccounts = (poolId: number) => {
+    const poolIdBN = new BN(poolId);
+    return {
+      stash: createAccount(poolIdBN, 0),
+      reward: createAccount(poolIdBN, 1),
+    };
+  };
+
+  const createAccount = (poolId: BN, index: number): string => {
+    if (!api) return '';
+    return api.registry
+      .createType(
+        'AccountId32',
+        u8aConcat(
+          MOD_PREFIX,
+          poolsPalletId,
+          new Uint8Array([index]),
+          bnToU8a(poolId, U32_OPTS),
+          EMPTY_H256
+        )
+      )
+      .toString();
+  };
+
   return (
     <PoolsConfigContext.Provider
       value={{
         enabled,
         addFavourite,
         removeFavourite,
+        createAccounts,
         favourites,
         stats: poolsConfigRef.current.stats,
       }}

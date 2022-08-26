@@ -41,7 +41,7 @@ export const UnbondAll = (props: FormsProps) => {
     ? poolBondOptions
     : stakeBondOptions;
 
-  // conver BN values to number
+  // convert BN values to number
   const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
 
   // local bond value

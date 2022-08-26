@@ -54,12 +54,12 @@ export interface BondInputWithFeedbackProps {
   bondType: string;
   defaultBond: number;
   unbond: boolean;
-  nominating?: boolean;
+  inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
 }
 
-export interface BondStatusBarProps {
+export interface NominateStatusBarProps {
   value: number;
 }
 

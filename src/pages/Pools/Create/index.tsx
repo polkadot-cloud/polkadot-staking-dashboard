@@ -2,25 +2,25 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Element } from 'react-scroll';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
-import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
+import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
+import { PageTitle } from 'library/PageTitle';
+import Button from 'library/Button';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
-import { SetController } from './SetController';
+import { SetupType } from 'contexts/UI/types';
+import { PoolName } from './PoolName';
 import { Bond } from './Bond';
-import { Payee } from './Payee';
+import { PoolRoles } from './PoolRoles';
 import { Summary } from './Summary';
 
-export const Setup = ({ title }: { title: string }) => {
-  const { setOnNominatorSetup } = useUi();
+export const Create = () => {
+  const { setOnPoolSetup } = useUi();
 
   return (
     <>
-      <PageTitle title={`${title} Setup`} />
+      <PageTitle title="Create a Pool" />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <GoBackWrapper>
           <Button
@@ -28,36 +28,36 @@ export const Setup = ({ title }: { title: string }) => {
             title="Go Back"
             icon={faChevronLeft}
             transform="shrink-3"
-            onClick={() => setOnNominatorSetup(0)}
+            onClick={() => setOnPoolSetup(0)}
           />
         </GoBackWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          <Element name="controller" style={{ position: 'absolute' }} />
-          <SetController section={1} />
+          <Element name="metadata" style={{ position: 'absolute' }} />
+          <PoolName section={1} />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          <Element name="payee" style={{ position: 'absolute' }} />
-          <Payee section={2} />
+          <Element name="bond" style={{ position: 'absolute' }} />
+          <Bond section={2} />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <ChooseNominations
-            batchKey="generate_nominations_inactive"
-            setupType={SetupType.Stake}
+            batchKey="generate_nominations_create_pool"
+            setupType={SetupType.Pool}
             section={3}
           />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          <Element name="bond" style={{ position: 'absolute' }} />
-          <Bond section={4} />
+          <Element name="roles" style={{ position: 'absolute' }} />
+          <PoolRoles section={4} />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -69,5 +69,3 @@ export const Setup = ({ title }: { title: string }) => {
     </>
   );
 };
-
-export default Setup;

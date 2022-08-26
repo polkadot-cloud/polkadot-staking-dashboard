@@ -1,16 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
-import { bnToU8a, u8aConcat } from '@polkadot/util';
 import {
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
   NominationStatuses,
 } from 'contexts/Pools/types';
-import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useStaking } from 'contexts/Staking';
@@ -29,10 +26,10 @@ export const BondedPoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady, consts } = useApi();
-  const { enabled } = usePoolsConfig();
+  const { api, network, isReady } = useApi();
   const { getNominationsStatusFromTargets } = useStaking();
-  const { poolsPalletId } = consts;
+  const { enabled, createAccounts, stats } = usePoolsConfig();
+  const { lastPoolId } = stats;
 
   // stores the meta data batches for pool lists
   const [poolMetaBatches, setPoolMetaBatch]: AnyMetaBatch = useState({});
@@ -62,12 +59,12 @@ export const BondedPoolsProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, enabled]);
+  }, [network, isReady, enabled, lastPoolId]);
 
   // after bonded pools have synced, fetch metabatch
   useEffect(() => {
     if (bondedPools.length) {
-      fetchPoolsMetaBatch('bonded_pools', bondedPools, false);
+      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
     }
   }, [bondedPools]);
 
@@ -85,13 +82,11 @@ export const BondedPoolsProvider = ({
     if (!api) return;
 
     const _exposures = await api.query.nominationPools.bondedPools.entries();
-    // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
       const id = _keys.toHuman()[0];
       const pool = _val.toHuman();
       return getPoolWithAddresses(id, pool);
     });
-
     setBondedPools(exposures);
   };
 
@@ -279,31 +274,6 @@ export const BondedPoolsProvider = ({
     };
   };
 
-  // Helper: generates pool stash and reward accounts. assumes poolsPalletId is synced.
-  const createAccounts = (poolId: number) => {
-    const poolIdBN = new BN(poolId);
-    return {
-      stash: createAccount(poolIdBN, 0),
-      reward: createAccount(poolIdBN, 1),
-    };
-  };
-
-  const createAccount = (poolId: BN, index: number): string => {
-    if (!api) return '';
-    return api.registry
-      .createType(
-        'AccountId32',
-        u8aConcat(
-          MOD_PREFIX,
-          poolsPalletId,
-          new Uint8Array([index]),
-          bnToU8a(poolId, U32_OPTS),
-          EMPTY_H256
-        )
-      )
-      .toString();
-  };
-
   const getBondedPool = (poolId: MaybePool) => {
     const pool = bondedPools.find((p: BondedPool) => p.id === poolId) ?? null;
     return pool;
@@ -313,7 +283,6 @@ export const BondedPoolsProvider = ({
     <BondedPoolsContext.Provider
       value={{
         fetchPoolsMetaBatch,
-        createAccounts,
         getBondedPool,
         getPoolNominationStatus,
         getPoolNominationStatusCode,

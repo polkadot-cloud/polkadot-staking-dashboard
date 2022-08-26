@@ -6,7 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
-import { NominateStatusBar } from 'library/Form/NominateStatusBar';
+import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
 import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
@@ -24,7 +24,7 @@ export const Bond = (props: SetupStepProps) => {
   const { getBondOptions } = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
   // either free to bond or existing setup value
   const initialBondValue =
@@ -36,7 +36,7 @@ export const Bond = (props: SetupStepProps) => {
   });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState<boolean>(false);
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
@@ -54,7 +54,7 @@ export const Bond = (props: SetupStepProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === section) {
-      setActiveAccountSetup(SetupType.Stake, {
+      setActiveAccountSetup(SetupType.Pool, {
         ...setup,
         bond: initialBondValue,
       });
@@ -69,11 +69,11 @@ export const Bond = (props: SetupStepProps) => {
         title="Bond"
         assistantPage="stake"
         assistantKey="Bonding"
-        setupType={SetupType.Stake}
+        setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondInputWithFeedback
-          bondType="stake"
+          bondType="pool"
           inSetup
           unbond={false}
           listenIsValid={setBondValid}
@@ -89,11 +89,9 @@ export const Bond = (props: SetupStepProps) => {
             },
           ]}
         />
-        <NominateStatusBar value={bond.bond} />
-        <Footer complete={bondValid} setupType={SetupType.Stake} />
+        <CreatePoolStatusBar value={bond.bond} />
+        <Footer complete={bondValid} setupType={SetupType.Pool} />
       </MotionContainer>
     </>
   );
 };
-
-export default Bond;

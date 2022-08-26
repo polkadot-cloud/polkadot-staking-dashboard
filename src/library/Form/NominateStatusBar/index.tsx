@@ -10,9 +10,9 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useUi } from 'contexts/UI';
 import { planckBnToUnit } from 'Utils';
 import { Wrapper } from './Wrapper';
-import { BondStatusBarProps } from '../types';
+import { NominateStatusBarProps } from '../types';
 
-export const BondStatusBar = (props: BondStatusBarProps) => {
+export const NominateStatusBar = (props: NominateStatusBarProps) => {
   const { value } = props;
 
   const { network } = useApi();
@@ -61,5 +61,3 @@ export const BondStatusBar = (props: BondStatusBarProps) => {
     </Wrapper>
   );
 };
-
-export default BondStatusBar;

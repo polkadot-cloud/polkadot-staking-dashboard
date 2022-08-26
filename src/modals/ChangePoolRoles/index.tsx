@@ -20,7 +20,6 @@ export const ChangePoolRoles = () => {
   const { config } = useModal();
   const { poolId, roleEdits } = config;
 
-  // create roleUpdate types
   // tx to submit
   const tx = () => {
     let _tx = null;

@@ -368,7 +368,11 @@ export const Separator = styled.div`
  */
 export const GoBackWrapper = styled.div`
   border-bottom: 1px solid ${borderPrimary};
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.4rem;
+
+  button {
+    padding: 0.75rem 1rem;
+  }
 `;

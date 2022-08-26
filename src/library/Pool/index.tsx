@@ -14,7 +14,7 @@ import {
 } from 'Utils';
 import Identicon from 'library/Identicon';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsTabs } from 'pages/Pools/context';
+import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useConnect } from 'contexts/Connect';
 import {
   Wrapper,

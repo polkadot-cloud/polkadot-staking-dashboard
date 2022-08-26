@@ -9,7 +9,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import Nominations from 'pages/Stake/Active/Nominations';
-import { GenerateNominations } from 'pages/Stake/GenerateNominations';
+import { GenerateNominations } from 'library/SetupSteps/GenerateNominations';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
 

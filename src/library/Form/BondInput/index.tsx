@@ -10,15 +10,9 @@ import { InputWrapper, RowWrapper } from './Wrappers';
 import { BondInputProps } from '../types';
 
 export const BondInput = (props: BondInputProps) => {
-  // functional props
-  const setters = props.setters ?? [];
-
   const { disabled, freeToBond, freeToUnbondToMin } = props;
-
-  // whether to bond or unbond
+  const setters = props.setters ?? [];
   const task = props.task ?? 'bond';
-
-  // whether a value has been provided already
   const _value = props.value ?? 0;
 
   const { network } = useApi();

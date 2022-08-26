@@ -15,41 +15,48 @@ import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { BN } from 'bn.js';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
   const { section } = props;
-
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress } = useUi();
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const { stats } = usePoolsConfig();
+  const { lastPoolId } = stats;
 
-  const { controller, bond, nominations, payee } = setup;
+  const setup = getSetupProgress(SetupType.Pool, activeAccount);
+
+  const { metadata, bond, roles, nominations } = setup;
 
   const txs = () => {
-    if (!activeAccount || !api) {
+    if (
+      !activeAccount ||
+      !api ||
+      !metadata ||
+      bond === 0 ||
+      !roles ||
+      !nominations.length
+    ) {
       return null;
     }
-    const stashToSubmit = {
-      Id: activeAccount,
-    };
     const bondToSubmit = bond * 10 ** units;
-    const targetsToSubmit = nominations.map((item: any) => {
-      return {
-        Id: item.address,
-      };
-    });
-    const controllerToSubmit = {
-      Id: controller,
-    };
+    const poolId = lastPoolId.add(new BN(1)).toString();
+    const targetsToSubmit = nominations.map((item: any) => item.address);
 
     // construct a batch of transactions
     const _txs = [
-      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
-      api.tx.staking.nominate(targetsToSubmit),
-      api.tx.staking.setController(controllerToSubmit),
+      api.tx.nominationPools.create(
+        bondToSubmit,
+        roles.root,
+        roles.nominator,
+        roles.stateToggler
+      ),
+      api.tx.nominationPools.nominate(poolId, targetsToSubmit),
+      api.tx.nominationPools.setMetadata(poolId, metadata),
     ];
     return api.tx.utility.batch(_txs);
   };
@@ -68,7 +75,7 @@ export const Summary = (props: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title="Summary"
-        setupType={SetupType.Stake}
+        setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
@@ -81,9 +88,9 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Controller:
+              &nbsp; Pool Name:
             </div>
-            <div>{controller}</div>
+            <div>{metadata ?? `Not Set`}</div>
           </section>
           <section>
             <div>
@@ -91,9 +98,11 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Reward Destination:
+              &nbsp; Bond Amount:
             </div>
-            <div>{payee}</div>
+            <div>
+              {humanNumber(bond)} {network.unit}
+            </div>
           </section>
           <section>
             <div>
@@ -111,11 +120,9 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Bond Amount:
+              &nbsp; Roles:
             </div>
-            <div>
-              {humanNumber(bond)} {network.unit}
-            </div>
+            <div>Assigned</div>
           </section>
           <section>
             <div>Estimated Tx Fee:</div>
@@ -134,7 +141,7 @@ export const Summary = (props: SetupStepProps) => {
           <Button
             onClick={() => submitTx()}
             disabled={submitting || !accountHasSigner(activeAccount)}
-            title="Start Staking"
+            title="Create Pool"
             primary
           />
         </div>

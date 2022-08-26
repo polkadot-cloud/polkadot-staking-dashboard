@@ -3,50 +3,60 @@
 
 import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
-import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Warning } from 'library/Form/Warning';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { BondOptions } from 'contexts/Balances/types';
-import { NotesWrapper } from '../../Wrappers';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { BN } from 'bn.js';
+import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
-export const BondSome = (props: FormsProps) => {
+export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { setSection } = props;
 
-  const { api, network } = useApi();
+  const { api, network, consts } = useApi();
   const { units } = network;
-  const { setStatus: setModalStatus, setResize, config } = useModal();
+  const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getBondOptions } = useBalances();
-  const { bondType } = config;
-  const { getPoolBondOptions } = useActivePool();
-
-  const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
+  const { getPoolBondOptions, isDepositor } = useActivePool();
+  const { stats } = usePoolsConfig();
+  const { minJoinBond, minCreateBond } = stats;
   const poolBondOptions = getPoolBondOptions(activeAccount);
-  const isStaking = bondType === 'stake';
-  const isPooling = bondType === 'pool';
+  const { bondDuration } = consts;
 
-  const { freeToBond: freeToBondBn } = isPooling
-    ? poolBondOptions
-    : stakeBondOptions;
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const { freeToUnbond: freeToUnbondBn } = poolBondOptions;
+
+  // unbond amount to minimum threshold
+  const freeToUnbond = isDepositor()
+    ? planckBnToUnit(
+        BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
+        units
+      )
+    : planckBnToUnit(BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)), units);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToBond });
+  const [bond, setBond] = useState({
+    bond: freeToUnbond,
+  });
 
   // bond valid
-  const [bondValid, setBondValid] = useState<boolean>(false);
+  const [bondValid, setBondValid] = useState(false);
+
+  // unbond all validation
+  const isValid = (() => {
+    return freeToUnbond > 0;
+  })();
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToBond;
+    const _bond = freeToUnbond;
     setBond({ bond: _bond });
-  }, [freeToBond]);
+    setBondValid(isValid);
+  }, [freeToUnbond, isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -63,12 +73,7 @@ export const BondSome = (props: FormsProps) => {
     // remove decimal errors
     const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
-    // determine _tx
-    if (isPooling) {
-      _tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
-    } else if (isStaking) {
-      _tx = api.tx.staking.bondExtra(bondToSubmit);
-    }
+    _tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     return _tx;
   };
 
@@ -86,29 +91,25 @@ export const BondSome = (props: FormsProps) => {
     <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
   );
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
-  }
-
   return (
     <>
       <div className="items">
         <>
-          <BondInputWithFeedback
-            bondType={bondType}
-            unbond={false}
-            listenIsValid={setBondValid}
-            defaultBond={freeToBond}
-            setters={[
-              {
-                set: setBond,
-                current: bond,
-              },
-            ]}
-            warnings={warnings}
-          />
-          <NotesWrapper>{TxFee}</NotesWrapper>
+          {!accountHasSigner(activeAccount) && (
+            <Warning text="Your account is read only, and cannot sign transactions." />
+          )}
+          <h4>Amount to unbond:</h4>
+          <h2>
+            {freeToUnbond} {network.unit}
+          </h2>
+          <Separator />
+          <NotesWrapper>
+            <p>
+              Once unbonding, you must wait {bondDuration} eras for your funds
+              to become available.
+            </p>
+            {bondValid && TxFee}
+          </NotesWrapper>
         </>
       </div>
       <FormFooter

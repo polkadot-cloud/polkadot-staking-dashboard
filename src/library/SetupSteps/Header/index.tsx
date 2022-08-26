@@ -5,18 +5,25 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { HeaderWrapper } from '../Wrappers';
+import { Wrapper } from './Wrapper';
 import { HeaderProps } from '../types';
 
 export const Header = (props: HeaderProps) => {
+  const {
+    title,
+    assistantPage,
+    assistantKey,
+    complete,
+    thisSection,
+    setupType,
+  } = props;
+
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useUi();
-  const setup = getSetupProgress(activeAccount);
-
-  const { title, assistantPage, assistantKey, complete, thisSection } = props;
+  const setup = getSetupProgress(setupType, activeAccount);
 
   return (
-    <HeaderWrapper>
+    <Wrapper>
       <section>
         <h2>
           {title}
@@ -35,7 +42,7 @@ export const Header = (props: HeaderProps) => {
                   small
                   title="Update"
                   onClick={() => {
-                    setActiveAccountSetupSection(thisSection);
+                    setActiveAccountSetupSection(setupType, thisSection);
                   }}
                 />
               </span>
@@ -44,7 +51,7 @@ export const Header = (props: HeaderProps) => {
           </>
         )}
       </section>
-    </HeaderWrapper>
+    </Wrapper>
   );
 };
 
