@@ -9,16 +9,18 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount } from 'types';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
 import { useBalances } from '../Balances';
 import { useApi } from '../Api';
-import { defaultUIContext } from './defaults';
-import { UIContextInterface } from './types';
+import * as defaults from './defaults';
+import { SetupType, UIContextInterface } from './types';
 
-export const UIContext =
-  React.createContext<UIContextInterface>(defaultUIContext);
+export const UIContext = React.createContext<UIContextInterface>(
+  defaults.defaultUIContext
+);
 
 export const useUi = () => React.useContext(UIContext);
 
@@ -29,6 +31,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
   const { enabled: poolsEnabled } = usePoolsConfig();
+  const { membership: poolMembership } = usePoolMemberships();
   const { synced: activePoolSynced } = useActivePool();
 
   // set whether app is syncing
@@ -76,7 +79,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   // is the user actively on the setup page
-  const [onSetup, setOnSetup] = useState(0);
+  const [onNominatorSetup, setOnNominatorSetup] = useState(0);
+
+  // is the user actively on the pool creation page
+  const [onPoolSetup, setOnPoolSetup] = useState(0);
 
   // services
   const [services, setServices] = useState(getAvailableServices());
@@ -95,12 +101,15 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // go to active page once staking setup completes / network change
+  // move away from setup pages on completion / network change
   useEffect(() => {
     if (!inSetup()) {
-      setOnSetup(0);
+      setOnNominatorSetup(0);
     }
-  }, [inSetup(), network]);
+    if (poolMembership) {
+      setOnPoolSetup(0);
+    }
+  }, [inSetup(), network, poolMembership]);
 
   // resize event listener
   useEffect(() => {
@@ -159,20 +168,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setIsSyncing(syncing);
-  }, [isReady, staking, metrics, accounts, eraStakers]);
+  }, [isReady, staking, metrics, accounts, eraStakers, activePoolSynced]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
-  };
-
-  // Setup helper functions
-
-  const PROGRESS_DEFAULT = {
-    controller: null,
-    payee: null,
-    nominations: [],
-    bond: 0,
-    section: 1,
   };
 
   /*
@@ -182,81 +181,109 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const setupDefault = () => {
     // generate setup objects from connected accounts
     const _setup = connectAccounts.map((item) => {
-      // if there is existing config for an account, use that.
-      const localSetup = localStorage.getItem(
+      const localStakeSetup = localStorage.getItem(
         `${network.name.toLowerCase()}_stake_setup_${item.address}`
       );
+      const localPoolSetup = localStorage.getItem(
+        `${network.name.toLowerCase()}_pool_setup_${item.address}`
+      );
+      const stakeProgress =
+        localStakeSetup !== null
+          ? JSON.parse(localStakeSetup)
+          : defaults.defaultStakeSetup;
 
-      // otherwise use the default values.
-      const progress =
-        localSetup !== null ? JSON.parse(localSetup) : PROGRESS_DEFAULT;
+      const poolProgress =
+        localPoolSetup !== null
+          ? JSON.parse(localPoolSetup)
+          : defaults.defaultPoolSetup;
 
       return {
         address: item.address,
-        progress,
+        progress: {
+          stake: stakeProgress,
+          pool: poolProgress,
+        },
       };
     });
     return _setup;
   };
 
   /*
-   * Gets the setup progress for a connected account.
+   * Gets the stake setup progress for a connected account.
    */
-  const getSetupProgress = (address: MaybeAccount) => {
-    // find the current setup progress from `setup`.
-    const _setup = setupRef.current.find(
-      (item: any) => item.address === address
-    );
+  const getSetupProgress = (type: SetupType, address: MaybeAccount) => {
+    const _setup = setupRef.current.find((s: any) => s.address === address);
 
     if (_setup === undefined) {
-      return PROGRESS_DEFAULT;
+      return type === SetupType.Stake
+        ? defaults.defaultStakeSetup
+        : defaults.defaultPoolSetup;
     }
-    return _setup.progress;
+    return _setup.progress[type];
   };
 
-  const getSetupProgressPercent = (address: MaybeAccount) => {
-    if (!address) {
-      return 0;
-    }
-    const setupProgress = getSetupProgress(address);
+  /*
+   * Gets the stake setup progress as a percentage for an address.
+   */
+  const getStakeSetupProgressPercent = (address: MaybeAccount) => {
+    if (!address) return 0;
+    const setupProgress = getSetupProgress(SetupType.Stake, address);
+
     const p = 25;
     let progress = 0;
     if (setupProgress.bond > 0) progress += p;
     if (setupProgress.controller !== null) progress += p;
     if (setupProgress.nominations.length) progress += p;
-    if (setupProgress.payee !== null) progress += p;
-
+    if (setupProgress.payee !== null) progress += p - 1;
     return progress;
   };
 
   /*
-   * Sets setup progress for an address
+   * Gets the stake setup progress as a percentage for an address.
    */
-  const setActiveAccountSetup = (progress: any) => {
+  const getPoolSetupProgressPercent = (address: MaybeAccount) => {
+    if (!address) return 0;
+    const setupProgress = getSetupProgress(SetupType.Pool, address);
+
+    const p = 25;
+    let progress = 0;
+    if (setupProgress.metadata !== null) progress += p;
+    if (setupProgress.bond > 0) progress += p;
+    if (setupProgress.nominations.length) progress += p;
+    if (setupProgress.roles !== null) progress += p - 1;
+    return progress;
+  };
+
+  /*
+   * Sets stake setup progress for an address.
+   * Updates localStorage followed by app state.
+   */
+  const setActiveAccountSetup = (type: SetupType, progress: any) => {
     if (!activeAccount) return;
 
-    // update local storage setup
     localStorage.setItem(
-      `${network.name.toLowerCase()}_stake_setup_${activeAccount}`,
+      `${network.name.toLowerCase()}_${type}_setup_${activeAccount}`,
       JSON.stringify(progress)
     );
 
-    // update context setup
-    const _setup = setupRef.current.map((obj: any) =>
+    const setupUpdated = setupRef.current.map((obj: any) =>
       obj.address === activeAccount
         ? {
             ...obj,
-            progress,
+            progress: {
+              ...obj.progress,
+              [type]: progress,
+            },
           }
         : obj
     );
-    setStateWithRef(_setup, setSetup, setupRef);
+    setStateWithRef(setupUpdated, setSetup, setupRef);
   };
 
   /*
    * Sets active setup section for an address
    */
-  const setActiveAccountSetupSection = (section: number) => {
+  const setActiveAccountSetupSection = (type: SetupType, section: number) => {
     if (!activeAccount) return;
 
     // get current progress
@@ -268,8 +295,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     if (_accountSetup === null) {
       return;
     }
+
     // amend section
-    _accountSetup.progress.section = section;
+    _accountSetup.progress[type].section = section;
 
     // update context setup
     const _setup = setupRef.current.map((obj: any) =>
@@ -278,8 +306,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
     // update local storage
     localStorage.setItem(
-      `${network.name.toLowerCase()}_stake_setup_${activeAccount}`,
-      JSON.stringify(_accountSetup.progress)
+      `${network.name.toLowerCase()}_${type}_setup_${activeAccount}`,
+      JSON.stringify(_accountSetup.progress[type])
     );
 
     // update context
@@ -314,16 +342,19 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         setUserSideMenuMinimised,
         toggleService,
         getSetupProgress,
-        getSetupProgressPercent,
+        getStakeSetupProgressPercent,
+        getPoolSetupProgressPercent,
         setActiveAccountSetup,
         setActiveAccountSetupSection,
         getServices,
-        setOnSetup,
+        setOnNominatorSetup,
+        setOnPoolSetup,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
         services: servicesRef.current,
-        onSetup,
+        onNominatorSetup,
+        onPoolSetup,
         isSyncing,
       }}
     >

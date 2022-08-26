@@ -3,20 +3,28 @@
 
 import { MaybeAccount } from 'types';
 
+export enum SetupType {
+  Pool = 'pool',
+  Stake = 'stake',
+}
+
 export interface UIContextInterface {
   setSideMenu: (v: number) => void;
   setUserSideMenuMinimised: (v: number) => void;
   toggleService: (k: string) => void;
-  getSetupProgress: (a: MaybeAccount) => any;
-  getSetupProgressPercent: (a: MaybeAccount) => number;
-  setActiveAccountSetup: (p: any) => void;
-  setActiveAccountSetupSection: (s: number) => void;
+  getSetupProgress: (t: SetupType, a: MaybeAccount) => any;
+  getStakeSetupProgressPercent: (a: MaybeAccount) => number;
+  getPoolSetupProgressPercent: (a: MaybeAccount) => number;
+  setActiveAccountSetup: (t: SetupType, p: any) => void;
+  setActiveAccountSetupSection: (t: SetupType, s: number) => void;
   getServices: () => string[];
-  setOnSetup: (v: any) => void;
+  setOnNominatorSetup: (v: number) => void;
+  setOnPoolSetup: (v: number) => void;
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;
   services: string[];
-  onSetup: number;
+  onNominatorSetup: number;
+  onPoolSetup: number;
   isSyncing: boolean;
 }

@@ -56,6 +56,7 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   // eslint-disable-next-line
   getPoolBondOptions: (a: MaybeAccount) => null,
   getPoolUnlocking: () => [],
+  getPoolRoles: () => poolRoles,
   // eslint-disable-next-line
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,

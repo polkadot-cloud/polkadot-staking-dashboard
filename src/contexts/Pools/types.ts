@@ -9,6 +9,7 @@ export interface PoolsConfigContextState {
   enabled: number;
   addFavourite: (a: string) => void;
   removeFavourite: (a: string) => void;
+  createAccounts: (p: number) => PoolAddresses;
   favourites: string[];
   stats: PoolStats;
 }
@@ -22,6 +23,7 @@ export interface PoolStats {
   counterForPoolMembers: BN;
   counterForBondedPools: BN;
   counterForRewardPools: BN;
+  lastPoolId: BN;
   maxPoolMembers: BN;
   maxPoolMembersPerPool: BN;
   maxPools: BN;
@@ -47,7 +49,6 @@ export interface PoolMembership {
 // BondedPool types
 export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
-  createAccounts: (p: number) => PoolAddresses;
   getBondedPool: (p: number) => BondedPool | null;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
@@ -89,6 +90,7 @@ export interface ActivePoolContextState {
   getPoolBondedAccount: () => MaybeAccount;
   getPoolBondOptions: (a: MaybeAccount) => any;
   getPoolUnlocking: () => any;
+  getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
   activeBondedPool: ActiveBondedPool | undefined;

@@ -17,12 +17,9 @@ import { Warning } from '../Warning';
 import { BondInputWithFeedbackProps } from '../types';
 
 export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
-  // input props
   const { bondType, defaultBond, unbond } = props;
-  const nominating = props.nominating ?? false;
+  const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
-
-  // functional props
   const setters = props.setters ?? [];
   const listenIsValid = props.listenIsValid ?? (() => {});
 
@@ -30,68 +27,25 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
-  const { getPoolBondOptions } = useActivePool();
+  const { getPoolBondOptions, isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
-  const { minJoinBond } = stats;
+  const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
   const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
   const { minNominatorBond } = staking;
 
-  // get bond options for either staking or pooling.
-  const options =
-    bondType === 'pool'
-      ? getPoolBondOptions(activeAccount)
-      : getBondOptions(activeAccount);
-
-  const {
-    freeToBond: freeToBondBn,
-    freeToUnbond: freeToUnbondBn,
-    active: poolsActive,
-  } = options;
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
-
-  const minBondBase =
-    bondType === 'pool'
-      ? planckBnToUnit(minJoinBond, units)
-      : planckBnToUnit(minNominatorBond, units);
-
-  // unbond amount to `minNominatorBond` threshold for staking,
-  // and unbond amount to `minJoinBond` for pools.
-  const freeToUnbondToMin =
-    bondType === 'pool'
-      ? planckBnToUnit(
-          BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)),
-          units
-        )
-      : planckBnToUnit(
-          BN.max(freeToUnbondBn.sub(minNominatorBond), new BN(0)),
-          units
-        );
-
-  // get the actively bonded amount.
-  const activeBase =
-    bondType === 'pool'
-      ? planckBnToUnit(poolsActive, units)
-      : planckBnToUnit(active, units);
-
   // store errors
-  const [errors, setErrors]: any = useState([]);
+  const [errors, setErrors] = useState<Array<string>>([]);
 
   // local bond state
-  const [bond, setBond]: any = useState({
+  const [bond, setBond] = useState<{ bond: number | string }>({
     bond: defaultBond,
   });
 
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState(false);
-
-  // add this setBond to setters
-  setters.push({
-    set: setBond,
-    current: bond,
-  });
 
   // update bond on account change
   useEffect(() => {
@@ -105,10 +59,62 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
     handleErrors();
   }, [bond]);
 
+  // add this component's setBond to setters
+  setters.push({
+    set: setBond,
+    current: bond,
+  });
+
+  // get bond options for either staking or pooling.
+  const bondOptions =
+    bondType === 'pool'
+      ? getPoolBondOptions(activeAccount)
+      : getBondOptions(activeAccount);
+
+  const {
+    freeToBond: freeToBondBn,
+    freeToUnbond: freeToUnbondBn,
+    active: poolsActive,
+  } = bondOptions;
+
+  const freeToBond = planckBnToUnit(freeToBondBn, units);
+
+  // bond amount to minimum threshold
+  const minBondBase =
+    bondType === 'pool'
+      ? inSetup || isDepositor()
+        ? planckBnToUnit(minCreateBond, units)
+        : planckBnToUnit(minJoinBond, units)
+      : planckBnToUnit(minNominatorBond, units);
+
+  // unbond amount to minimum threshold
+  const freeToUnbondToMin =
+    bondType === 'pool'
+      ? inSetup || isDepositor()
+        ? planckBnToUnit(
+            BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
+            units
+          )
+        : planckBnToUnit(
+            BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)),
+            units
+          )
+      : planckBnToUnit(
+          BN.max(freeToUnbondBn.sub(minNominatorBond), new BN(0)),
+          units
+        );
+
+  // get the actively bonded amount.
+  const activeBase =
+    bondType === 'pool'
+      ? planckBnToUnit(poolsActive, units)
+      : planckBnToUnit(active, units);
+
   // handle error updates
   const handleErrors = () => {
     let _bondDisabled = false;
     const _errors = warnings;
+    const _bond = bond.bond;
 
     // bond errors
     if (!unbond) {
@@ -117,20 +123,19 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         _errors.push(`You have no free ${network.unit} to bond.`);
       }
 
-      if (bond.bond !== '' && bond.bond > freeToBond) {
+      if (Number(bond.bond) > freeToBond) {
         _errors.push('Bond amount is more than your free balance.');
       }
 
       // bond errors
-      if (nominating) {
+      if (inSetup) {
         if (freeToBond < minBondBase) {
           _bondDisabled = true;
           _errors.push(
             `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
           );
         }
-
-        if (bond.bond !== '' && bond.bond < minBondBase) {
+        if (Number(bond.bond) < minBondBase) {
           _errors.push(
             `Bond amount must be at least ${minBondBase} ${network.unit}.`
           );
@@ -140,7 +145,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
 
     // unbond errors
     if (unbond) {
-      if (bond.bond !== '' && bond.bond > activeBase) {
+      if (Number(bond.bond) > activeBase) {
         _errors.push('Unbond amount is more than your bonded balance.');
       }
 
@@ -153,15 +158,19 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         }
       }
 
-      if (bond.bond !== '' && bond.bond > freeToUnbondToMin) {
+      if (Number(bond.bond) > freeToUnbondToMin) {
         _errors.push(
-          `A minimum bond of ${minBondBase} ${network.unit} is required when ${
-            bondType === 'stake' ? `actively nominating` : `in your pool`
+          `A minimum bond of ${minBondBase} ${network.unit} is required ${
+            bondType === 'stake'
+              ? `when actively nominating`
+              : isDepositor()
+              ? `as the pool depositor`
+              : `as a pool member`
           }.`
         );
       }
     }
-    const bondValid = !_errors.length && bond.bond !== '';
+    const bondValid = !_errors.length && _bond !== '';
 
     setBondDisabled(_bondDisabled);
     listenIsValid(bondValid);
@@ -177,7 +186,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
           {network.unit}
         </h4>
       </CardHeaderWrapper>
-      {errors.map((err: any, index: number) => (
+      {errors.map((err: string, index: number) => (
         <Warning key={`setup_error_${index}`} text={err} />
       ))}
       <Spacer />

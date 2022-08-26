@@ -13,6 +13,7 @@ import { Forms } from './Forms';
 export const UpdateBond = () => {
   const { config, setModalHeight } = useModal();
   const { fn, bondType } = config;
+
   // modal task
   const [task, setTask] = useState(null);
 
@@ -62,7 +63,12 @@ export const UpdateBond = () => {
           },
         }}
       >
-        <Tasks setSection={setSection} setTask={setTask} ref={tasksRef} />
+        <Tasks
+          bondType={bondType}
+          setSection={setSection}
+          setTask={setTask}
+          ref={tasksRef}
+        />
         <Forms
           setSection={setSection}
           task={task}

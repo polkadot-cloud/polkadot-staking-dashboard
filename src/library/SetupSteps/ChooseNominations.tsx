@@ -4,22 +4,28 @@
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
-import { GenerateNominations } from '../GenerateNominations';
-import { Header } from './Header';
-import { Footer } from './Footer';
-import { MotionContainer } from './MotionContainer';
-import { ChooseNominatorsProps } from '../types';
+import { Header } from 'library/SetupSteps/Header';
+import { Footer } from 'library/SetupSteps/Footer';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { GenerateNominations } from './GenerateNominations';
+import { ChooseNominationsProps } from './types';
 
-export const ChooseNominators = (props: ChooseNominatorsProps) => {
+export const ChooseNominations = (props: ChooseNominationsProps) => {
+  const { batchKey, setupType, section } = props;
+
   const { consts } = useApi();
-  const { section } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(setupType, activeAccount);
   const { maxNominations } = consts;
 
   const setterFn = () => {
-    return getSetupProgress(activeAccount);
+    return getSetupProgress(setupType, activeAccount);
+  };
+
+  // handler for updating bond
+  const handleSetupUpdate = (value: any) => {
+    setActiveAccountSetup(setupType, value);
   };
 
   return (
@@ -30,6 +36,7 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
         title="Nominate"
         assistantPage="stake"
         assistantKey="Nominating"
+        setupType={setupType}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '0.5rem' }}>
@@ -38,23 +45,21 @@ export const ChooseNominators = (props: ChooseNominatorsProps) => {
             nominations automatically or add a selection from your favourites.
           </h4>
           <GenerateNominations
-            batchKey="generate_nominations_inactive"
+            batchKey={batchKey}
             setters={[
               {
                 current: {
                   callable: true,
                   fn: setterFn,
                 },
-                set: setActiveAccountSetup,
+                set: handleSetupUpdate,
               },
             ]}
             nominations={setup.nominations}
           />
         </div>
-        <Footer complete={setup.nominations.length > 0} />
+        <Footer complete={setup.nominations.length > 0} setupType={setupType} />
       </MotionContainer>
     </>
   );
 };
-
-export default ChooseNominators;

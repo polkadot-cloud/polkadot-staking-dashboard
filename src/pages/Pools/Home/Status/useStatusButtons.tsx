@@ -4,33 +4,34 @@
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useModal } from 'contexts/Modal';
 import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useUi } from 'contexts/UI';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { isReady } = useApi();
+  const { setOnPoolSetup, getPoolSetupProgressPercent } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
   const { isOwner, getPoolBondOptions } = useActivePool();
-  const { openModalWith } = useModal();
   const { active } = getPoolBondOptions(activeAccount);
+  const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
 
   let _label;
   let _buttons;
 
   const createBtn = {
-    title: 'Create Pool',
+    title: `Create Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
     transform: 'grow-1',
     disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
-    onClick: () => openModalWith('CreatePool', { bondType: 'pool' }, 'small'),
+    onClick: () => setOnPoolSetup(1),
   };
 
   const joinPoolBtn = {
-    title: 'Join Pool',
+    title: `Join Pool`,
     icon: faUserPlus,
     transform: 'grow-1',
     disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
