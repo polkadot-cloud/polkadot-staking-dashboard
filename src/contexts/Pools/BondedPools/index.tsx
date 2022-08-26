@@ -14,7 +14,6 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
-import { useActivePool } from '../ActivePool';
 
 export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
@@ -29,8 +28,8 @@ export const BondedPoolsProvider = ({
 }) => {
   const { api, network, isReady } = useApi();
   const { getNominationsStatusFromTargets } = useStaking();
-  const { enabled, createAccounts } = usePoolsConfig();
-  const { activeBondedPool } = useActivePool();
+  const { enabled, createAccounts, stats } = usePoolsConfig();
+  const { lastPoolId } = stats;
 
   // stores the meta data batches for pool lists
   const [poolMetaBatches, setPoolMetaBatch]: AnyMetaBatch = useState({});
@@ -60,12 +59,12 @@ export const BondedPoolsProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, enabled, activeBondedPool]);
+  }, [network, isReady, enabled, lastPoolId]);
 
   // after bonded pools have synced, fetch metabatch
   useEffect(() => {
     if (bondedPools.length) {
-      fetchPoolsMetaBatch('bonded_pools', bondedPools, false);
+      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
     }
   }, [bondedPools]);
 
@@ -83,13 +82,11 @@ export const BondedPoolsProvider = ({
     if (!api) return;
 
     const _exposures = await api.query.nominationPools.bondedPools.entries();
-    // humanise exposures to send to worker
     const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
       const id = _keys.toHuman()[0];
       const pool = _val.toHuman();
       return getPoolWithAddresses(id, pool);
     });
-
     setBondedPools(exposures);
   };
 
