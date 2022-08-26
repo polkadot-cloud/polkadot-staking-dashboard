@@ -84,10 +84,12 @@ export const Pagination = styled.div<PaginationProps>`
       &.next {
         color: ${(props) => (props.next ? networkColor : textSecondary)};
         cursor: ${(props) => (props.next ? 'pointer' : 'default')};
+        opacity: ${(props) => (props.next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) => (props.prev ? networkColor : textSecondary)};
         cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
+        opacity: ${(props) => (props.prev ? 1 : 0.4)};
       }
     }
   }

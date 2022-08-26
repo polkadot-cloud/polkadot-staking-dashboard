@@ -65,6 +65,7 @@ export const SelectFavourites = () => {
       <ListWrapper>
         {availableFavourites.length > 0 ? (
           <ValidatorList
+            bondType="stake"
             validators={availableFavourites}
             batchKey={batchKey}
             title="Favourite Validators"

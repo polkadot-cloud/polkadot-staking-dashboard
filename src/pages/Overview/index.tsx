@@ -24,11 +24,10 @@ import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
 import ActiveEraStatBox from './Stats/ActiveEra';
-import Announcements from './Announcements';
+import { NetworkStats } from './NetworkSats';
 import BalanceGraph from './BalanceGraph';
 import Payouts from './Payouts';
 import Reserve from './Reserve';
-import Returns from './Returns';
 
 export const Overview = () => {
   const { network } = useApi();
@@ -43,9 +42,8 @@ export const Overview = () => {
     poolClaims
   );
 
-  const PAYOUTS_HEIGHT = 380;
-  const STATS_HEIGHT = 80;
-  const BALANCE_HEIGHT = PAYOUTS_HEIGHT + STATS_HEIGHT + 18;
+  const PAYOUTS_HEIGHT = 475;
+  const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
   return (
     <>
@@ -74,7 +72,7 @@ export const Overview = () => {
           thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
           thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
         >
-          <Returns height={STATS_HEIGHT} />
+          {/* <Returns height={STATS_HEIGHT} /> */}
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
@@ -99,7 +97,7 @@ export const Overview = () => {
         </RowPrimaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <Announcements />
+        <NetworkStats />
       </PageRowWrapper>
     </>
   );

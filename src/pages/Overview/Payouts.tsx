@@ -46,14 +46,15 @@ export const Payouts = () => {
           position: 'absolute',
           opacity: notStaking ? 0.75 : 1,
           transition: 'opacity 0.5s',
+          marginTop: '1.5rem',
         }}
       >
-        <PayoutBar days={19} height="180px" />
-        <div style={{ marginTop: '1rem' }}>
+        <PayoutBar days={19} height="200px" />
+        <div style={{ marginTop: '2.5rem' }}>
           <PayoutLine
             days={19}
             average={10}
-            height="90px"
+            height="80px"
             expected={estimatedYearlyRewards() / 365}
           />
         </div>

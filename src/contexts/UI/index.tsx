@@ -7,6 +7,8 @@ import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount } from 'types';
+import { useActivePool } from 'contexts/Pools/ActivePool';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
@@ -26,6 +28,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { staking, eraStakers, inSetup } = useStaking();
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
+  const { enabled: poolsEnabled } = usePoolsConfig();
+  const { synced: activePoolSynced } = useActivePool();
 
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);
@@ -149,6 +153,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       syncing = true;
     }
 
+    // nomination pool contexts have synced
+    if (poolsEnabled && !activePoolSynced) {
+      syncing = true;
+    }
+
     setIsSyncing(syncing);
   }, [isReady, staking, metrics, accounts, eraStakers]);
 
@@ -205,7 +214,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     return _setup.progress;
   };
 
-  const getSetupProgressPercent = (address: string) => {
+  const getSetupProgressPercent = (address: MaybeAccount) => {
+    if (!address) {
+      return 0;
+    }
     const setupProgress = getSetupProgress(address);
     const p = 25;
     let progress = 0;

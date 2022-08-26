@@ -30,6 +30,7 @@ import { ManagePool } from './ManagePool';
 import { PageProps } from '../types';
 import { Roles } from './Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
+import { Favourites } from './Favourites';
 
 export const PoolsInner = (props: PageProps) => {
   const { page } = props;
@@ -49,6 +50,9 @@ export const PoolsInner = (props: PageProps) => {
 
   const ROW_HEIGHT = 290;
 
+  // TODO: get favourite pools and extract them from `bondedPools`.
+  const favouritePools: any = [];
+
   return (
     <>
       <PageTitle
@@ -63,6 +67,11 @@ export const PoolsInner = (props: PageProps) => {
             title: 'All Pools',
             active: activeTab === 1,
             onClick: () => setActiveTab(1),
+          },
+          {
+            title: 'Favourites',
+            active: activeTab === 2,
+            onClick: () => setActiveTab(2),
           },
         ]}
       />
@@ -121,6 +130,7 @@ export const PoolsInner = (props: PageProps) => {
                 </h3>
               </CardHeaderWrapper>
               <PoolList
+                batchKey="bonded_pools"
                 pools={bondedPools}
                 title="Active Pools"
                 allowMoreCols
@@ -128,6 +138,11 @@ export const PoolsInner = (props: PageProps) => {
               />
             </CardWrapper>
           </PageRowWrapper>
+        </>
+      )}
+      {activeTab === 2 && (
+        <>
+          <Favourites />
         </>
       )}
     </>

@@ -10,6 +10,7 @@ import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
+import { ReactComponent as GenericChain } from './thumbnails/genericchain.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
@@ -17,7 +18,9 @@ import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
 import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
+import { ReactComponent as PythagorasCapitalInvestment } from './thumbnails/pythagorascapitalinvestment.svg';
 import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
+import { ReactComponent as Stakely } from './thumbnails/stakely.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
@@ -142,6 +145,21 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'Generic-Chain',
+    Thumbnail: GenericChain,
+    bio: 'Generic-Chain validation servers, by TwoPebbles Ventures, have an outstanding operations team that provides professionally managed infrastructure, maximizing returns with ultra-reliable and secure validation services.',
+    email: 'info@generic-chain.io',
+    twitter: '@generic_chain',
+    validators: {
+      polkadot: ['13pZskDR7Pt67NtcChSr4uFRBf9ZS52nQeyrceSykq8MDrMe'],
+      kusama: [
+        'EiMA69PZWju1jmisAU3ubN4wJQgBexnFXZpWb7aMtftP5rV',
+        'J6HHWeSmt5PjoDCRzVvB5oJnQMMvCM5iNBd5W42S8L3BbVK',
+        'EffRLTpaDPBa6G6UUhXCVdn2SNyeMxPJttucrtppEjnHkST',
+      ],
+    },
+  },
+  {
     name: 'ParaNodes.io',
     Thumbnail: ParaNodes,
     bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stablility of operations.',
@@ -212,6 +230,33 @@ export const VALIDATOR_COMMUNITY = [
     validators: {
       polkadot: ['16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN'],
       kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
+    },
+  },
+  {
+    name: '🍀ARISTOPHANES🍀',
+    Thumbnail: PythagorasCapitalInvestment,
+    bio: 'Our motto is responsibility and transparency. We never go offline willfully or negligently, or impose exorbitant commission rates. Our record proves the trust people have placed on us. Being a Tokyo-based node, staking at us strengthens geological resistance of the network to disruptions.',
+    email: 'subscr3zp@tutanota.com',
+    twitter: '@PythagorasCI',
+    website: 'https://pythagoras-capital.net/',
+    validators: {
+      polkadot: ['128iAScPNNZcoSXQuFp1VkgW376KqvZs61g9Y36MuUX78ZZ6'],
+      kusama: [
+        'HU6TSsvA84GKrTiyArBHiFDVBSLHNr5Ki3qPV7T8WKyVJaz',
+        'JHbMAHJw6nnQPD3Zth13DGoPxLjYUPWC71AMbErt817nK9y',
+      ],
+    },
+  },
+  {
+    name: 'Stakely',
+    Thumbnail: Stakely,
+    bio: '🔥 Professional validator highly experienced in PoS 🔥 Slashing protection & Eligible for airdrops | Learn with our staking guides, video tutorials and FAQs | Part of the commission of our nodes will go to our Multicoin Faucet funds and other tools 🌱 Carbon Neutral 🌱',
+    email: 'nodes@stakely.io',
+    twitter: '@stakely_io',
+    website: 'https://stakely.io',
+    validators: {
+      polkadot: ['15R1Th3ULXAq81QPGeEDfE1ywbw19AjZiARxH7czm83wS2w2'],
+      kusama: ['EfcQCKZJaNu2vcrpnJDCoh1ub4mGWcHVzeU8ghUH7Co9rui'],
     },
   },
   {

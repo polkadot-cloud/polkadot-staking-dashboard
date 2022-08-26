@@ -8,7 +8,7 @@ export interface UIContextInterface {
   setUserSideMenuMinimised: (v: number) => void;
   toggleService: (k: string) => void;
   getSetupProgress: (a: MaybeAccount) => any;
-  getSetupProgressPercent: (a: string) => number;
+  getSetupProgressPercent: (a: MaybeAccount) => number;
   setActiveAccountSetup: (p: any) => void;
   setActiveAccountSetupSection: (s: number) => void;
   getServices: () => string[];

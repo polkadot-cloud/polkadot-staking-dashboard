@@ -5,8 +5,8 @@ import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { useTooltip } from 'contexts/Tooltip';
+import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { BlockedProps } from '../types';
-import { TooltipPosition, TooltipTrigger } from '../Wrappers';
 
 export const Blocked = (props: BlockedProps) => {
   const { prefs } = props;

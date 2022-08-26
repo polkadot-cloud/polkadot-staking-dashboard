@@ -114,15 +114,6 @@ export const PayoutLine = (props: PayoutLineProps) => {
       legend: {
         display: false,
       },
-      title: {
-        position: 'left' as const,
-        display: true,
-        text: `${average} Day Average`,
-        padding: 0,
-        font: {
-          size: 10,
-        },
-      },
       tooltip: {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
@@ -160,7 +151,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
         backgroundColor: color,
         pointStyle: undefined,
         pointRadius: 0,
-        borderWidth: 2,
+        borderWidth: 2.3,
       },
       {
         label: 'Expected',
@@ -178,15 +169,20 @@ export const PayoutLine = (props: PayoutLineProps) => {
   };
 
   return (
-    <div
-      className="graph_line"
-      style={{
-        height: height === undefined ? 'auto' : height,
-        background: background === undefined ? 'none' : background,
-      }}
-    >
-      <Line options={options} data={data} />
-    </div>
+    <>
+      <h5 className="secondary">
+        {average > 1 ? `${average} Day Average` : <>&nbsp;</>}
+      </h5>
+      <div
+        className="graph_line"
+        style={{
+          height: height === undefined ? 'auto' : height,
+          background: background === undefined ? 'none' : background,
+        }}
+      >
+        <Line options={options} data={data} />
+      </div>
+    </>
   );
 };
 

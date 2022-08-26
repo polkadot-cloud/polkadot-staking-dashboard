@@ -62,4 +62,5 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   activeBondedPool,
   targets,
   poolNominations,
+  synced: false,
 };

@@ -10,13 +10,14 @@ import { useModal } from 'contexts/Modal';
 import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
-import { faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
 import {
   useValidatorFilter,
   ValidatorFilterProvider,
 } from 'library/Filter/context';
-import { Wrapper } from '../Overview/Announcements/Wrappers';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Wrapper } from '../Overview/NetworkSats/Wrappers';
 import { GenerateNominationsInnerProps, Nominations } from './types';
 
 export const GenerateNominationsInner = (
@@ -200,7 +201,7 @@ export const GenerateNominationsInner = (
               <Category title="Generate Method">
                 <Item
                   label="Most Profitable"
-                  icon={faStar}
+                  icon={faDollarSign as IconProp}
                   transform="grow-2"
                   active={false}
                   onClick={() => {
@@ -213,7 +214,7 @@ export const GenerateNominationsInner = (
                 />
                 <Item
                   label="From Favourites"
-                  icon={faThumbtack}
+                  icon={faStar as IconProp}
                   transform="grow-2"
                   disabled={!favouritesList.length}
                   active={false}
@@ -237,6 +238,7 @@ export const GenerateNominationsInner = (
           {isReady && nominations.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
+                bondType="stake"
                 validators={nominations}
                 batchKey={batchKey}
                 selectable

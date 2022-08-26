@@ -4,15 +4,13 @@
 import { useValidators } from 'contexts/Validators';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
-import { IdentityWrapper } from '../Wrappers';
-import { getIdentityDisplay } from '../Utils';
+import { IdentityWrapper } from 'library/ListItem/Wrappers';
+import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import { IdentityProps } from '../types';
 
 export const Identity = (props: IdentityProps) => {
   const { meta } = useValidators();
-
-  const { validator, batchIndex, batchKey } = props;
-
+  const { validator, batchKey, batchIndex } = props;
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
   const stake = meta[batchKey]?.stake ?? [];

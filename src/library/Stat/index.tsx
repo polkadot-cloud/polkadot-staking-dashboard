@@ -19,7 +19,7 @@ export const Stat = (props: StatProps) => {
           <OpenAssistantIcon page={assistant[0]} title={assistant[1]} />
         )}
       </h4>
-      <h2>
+      <h2 className="stat">
         {icon && (
           <>
             <FontAwesomeIcon icon={icon} transform="shrink-4" />
@@ -43,7 +43,7 @@ export const Stat = (props: StatProps) => {
                   disabled={btn.disabled ?? false}
                   onClick={() => btn.onClick()}
                 />
-                &nbsp;&nbsp;
+                &nbsp;
               </React.Fragment>
             ))}
           </span>

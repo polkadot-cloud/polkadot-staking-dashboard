@@ -207,6 +207,15 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
       margin-left: 0.4rem;
     }
   }
+
+  h5 {
+    &.secondary {
+      color: ${textSecondary};
+      opacity: 0.7;
+      margin-bottom: 0;
+      margin-top: 1.5rem;
+    }
+  }
   .small_button {
     background: #f1f1f1;
     padding: 0.25rem 0.75rem;
@@ -221,9 +230,8 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     padding: 1rem 1.5rem;
   }
   .graph_line {
-    margin-top: 1.5rem;
-    margin-left: 1rem;
-    padding: 1rem 1rem 0.5rem 1rem;
+    margin-top: 0.6rem;
+    padding: 0rem 1rem 0.5rem 0rem;
   }
   .graph_with_extra {
     width: 100%;

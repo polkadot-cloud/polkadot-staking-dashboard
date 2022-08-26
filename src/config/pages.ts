@@ -7,8 +7,8 @@ import {
   faChartLine,
   faStar,
   faUsers,
-  faThumbtack,
   faComment,
+  faChartSimple,
   faBraille,
 } from '@fortawesome/free-solid-svg-icons';
 import Overview from 'pages/Overview';
@@ -72,7 +72,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
-    icon: faStar,
+    icon: faChartSimple,
   },
   {
     category: 3,
@@ -96,7 +96,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
     Entry: Favourites,
-    icon: faThumbtack,
+    icon: faStar,
   },
   {
     category: 4,

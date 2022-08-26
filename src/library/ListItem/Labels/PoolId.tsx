@@ -3,16 +3,16 @@
 
 import { useRef } from 'react';
 import { useTooltip } from 'contexts/Tooltip';
-import { TooltipPosition, TooltipTrigger } from '../Wrappers';
+import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 
-export const Commission = (props: { commission: number }) => {
-  const { commission } = props;
+export const PoolId = (props: { id: number }) => {
+  const { id } = props;
 
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-
   const posRef = useRef<HTMLDivElement>(null);
-
-  const tooltipText = 'Validator Commission';
+  const tooltipText = 'Pool ID';
 
   const toggleTooltip = () => {
     if (!open) {
@@ -29,7 +29,8 @@ export const Commission = (props: { commission: number }) => {
         onMouseMove={() => toggleTooltip()}
       />
       <TooltipPosition ref={posRef} />
-      {commission}%
+      <FontAwesomeIcon icon={faHashtag} />
+      &nbsp;{id}
     </div>
   );
 };
