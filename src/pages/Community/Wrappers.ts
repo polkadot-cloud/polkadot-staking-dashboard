@@ -67,7 +67,7 @@ export const ItemWrapper = styled(motion.div)`
       padding: 0 1rem;
       overflow: hidden;
 
-      h2 {
+      h3 {
         display: flex;
         flex-flow: row wrap;
         align-items: center;
@@ -160,9 +160,9 @@ export const ItemWrapper = styled(motion.div)`
         width: 100%;
         flex: 1;
 
-        h2 {
-          margin-top: 0.75rem;
-          margin-bottom: 0.9rem;
+        h3 {
+          margin-top: 0.5rem;
+          margin-bottom: 0.4rem;
         }
       }
     }
@@ -179,11 +179,11 @@ export const ItemWrapper = styled(motion.div)`
           align-items: center;
           justify-content: flex-start;
           height: 100%;
-          width: 9.5rem;
+          width: 7.5rem;
 
           svg {
-            width: 7rem;
-            height: 7rem;
+            width: 5rem;
+            height: 5rem;
           }
         }
         &:last-child {
@@ -197,7 +197,7 @@ export const ItemWrapper = styled(motion.div)`
           height: 100%;
           flex: 1;
 
-          h2 {
+          h3 {
             margin-top: 0.25rem;
           }
         }
