@@ -138,7 +138,7 @@ export const Nominations = ({
                 nominator={nominator}
                 batchKey={batchKey}
                 title="Your Nominations"
-                format="nomination"
+                format="double"
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&
                   (!isPool || isPoolNominator())

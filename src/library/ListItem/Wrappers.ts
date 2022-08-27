@@ -16,7 +16,7 @@ export const Wrapper = styled.div<{ format?: string }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.format === 'nomination' ? '5.6rem' : '3.2rem')};
+  height: ${(props) => (props.format === 'double' ? '5.6rem' : '3.2rem')};
   position: relative;
   margin: 0.5rem;
 

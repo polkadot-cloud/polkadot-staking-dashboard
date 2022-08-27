@@ -96,7 +96,7 @@ export const Default = (props: DefaultProps) => {
   };
 
   return (
-    <Wrapper format="nomination">
+    <Wrapper format="double">
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
