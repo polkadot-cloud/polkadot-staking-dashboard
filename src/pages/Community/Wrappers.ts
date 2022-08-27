@@ -38,7 +38,7 @@ export const ItemWrapper = styled(motion.div)`
 
   height: auto;
   @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
-    height: 9rem;
+    height: 8.8rem;
   }
 
   > .inner {
@@ -179,11 +179,11 @@ export const ItemWrapper = styled(motion.div)`
           align-items: center;
           justify-content: flex-start;
           height: 100%;
-          width: 7.5rem;
+          width: 7rem;
 
           svg {
-            width: 5rem;
-            height: 5rem;
+            width: 4.5rem;
+            height: 4.5rem;
           }
         }
         &:last-child {
