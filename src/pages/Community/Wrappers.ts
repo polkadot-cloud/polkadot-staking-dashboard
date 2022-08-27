@@ -38,7 +38,7 @@ export const ItemWrapper = styled(motion.div)`
 
   height: auto;
   @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
-    height: 10rem;
+    height: 9rem;
   }
 
   > .inner {
