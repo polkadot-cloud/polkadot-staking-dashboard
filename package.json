@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "polkadot-staking-dashboard",
   "version": "0.1.0",
   "license": "apache-2.0",
   "private": false,
@@ -104,5 +104,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/polkadot-staking-dashboard/"
+  "homepage": "/dashboard/"
 }
