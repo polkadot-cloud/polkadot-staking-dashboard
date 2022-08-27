@@ -16,7 +16,7 @@ export const Wrapper = styled.div<{ format?: string }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.format === 'nomination' ? '5.6rem' : '3.2rem')};
+  height: ${(props) => (props.format === 'nomination' ? '6rem' : '3.2rem')};
   position: relative;
   margin: 0.5rem;
 
@@ -49,7 +49,7 @@ export const Wrapper = styled.div<{ format?: string }>`
       padding: 0 0.5rem;
 
       &.status {
-        height: 2.2rem;
+        height: 2.8rem;
       }
       svg {
         margin: 0;

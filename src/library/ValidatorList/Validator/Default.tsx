@@ -16,6 +16,7 @@ import {
   MenuPosition,
   Separator,
 } from 'library/ListItem/Wrappers';
+import CopyAddress from 'library/ListItem/Labels/CopyAddress';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
@@ -29,7 +30,14 @@ import { useValidatorList } from '../context';
 import { DefaultProps } from './types';
 
 export const Default = (props: DefaultProps) => {
-  const { validator, toggleFavourites, batchIndex, batchKey, showMenu } = props;
+  const {
+    validator,
+    toggleFavourites,
+    batchIndex,
+    batchKey,
+    showMenu,
+    inModal,
+  } = props;
 
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
@@ -127,6 +135,13 @@ export const Default = (props: DefaultProps) => {
         <Separator />
         <div className="row status">
           <EraStatus address={address} />
+          {inModal && (
+            <>
+              <Labels>
+                <CopyAddress validator={validator} />
+              </Labels>
+            </>
+          )}
         </div>
       </div>
     </Wrapper>
