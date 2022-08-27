@@ -160,7 +160,7 @@ export const Pool = (props: PoolProps) => {
   const nominationStatus = getPoolNominationStatusCode(nominationsStatus);
 
   return (
-    <Wrapper format="double">
+    <Wrapper format="nomination">
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
