@@ -19,4 +19,5 @@ export interface DefaultProps {
   batchIndex: number;
   batchKey: string;
   showMenu: boolean;
+  inModal: boolean;
 }

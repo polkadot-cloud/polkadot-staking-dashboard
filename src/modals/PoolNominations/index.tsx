@@ -21,7 +21,6 @@ export const PoolNominations = () => {
             bondType="pool"
             validators={targets}
             nominator={nominator}
-            format="nomination"
             batchKey={batchKey}
             title="Pool Nominations"
             showMenu={false}
