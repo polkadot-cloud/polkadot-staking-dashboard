@@ -165,13 +165,13 @@ export const IdentityWrapper = styled(motion.div)`
   }
 `;
 
-export const NominationStatusWrapper = styled.div<{ status: string }>`
+export const ValidatorStatusWrapper = styled.div<{ status: string }>`
   margin-right: 0.35rem;
   padding: 0 0.5rem;
 
   h5 {
     color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
-    opacity: ${(props) => (props.status === 'active' ? 1 : 0.5)};
+    opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
     margin: 0;
     display: flex;
     flex-flow: row nowrap;
@@ -215,6 +215,7 @@ export const Separator = styled.div`
   width: 100%;
   height: 1px;
   border-bottom: 1px solid ${borderPrimary};
+  opacity: 0.75;
 `;
 
 export const MenuPosition = styled.div`

@@ -41,8 +41,7 @@ export const ValidatorListInner = (props: any) => {
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
-  // the pool stash address should be the nominator. This affects
-  // the `nomination` format.
+  // the pool stash address should be the nominator.
   const nominator = props.nominator ?? activeAccount;
 
   const {

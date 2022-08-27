@@ -22,7 +22,7 @@ import {
   Separator,
   MenuPosition,
   IdentityWrapper,
-  NominationStatusWrapper,
+  ValidatorStatusWrapper,
 } from 'library/ListItem/Wrappers';
 import { useMenu } from 'contexts/Menu';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -191,7 +191,7 @@ export const Pool = (props: PoolProps) => {
         </div>
         <Separator />
         <div className="row status">
-          <NominationStatusWrapper status={nominationStatus}>
+          <ValidatorStatusWrapper status={nominationStatus}>
             <h5>
               {nominationStatus === null
                 ? `Syncing...`
@@ -199,7 +199,7 @@ export const Pool = (props: PoolProps) => {
                 ? capitalizeFirstLetter(nominationStatus ?? '')
                 : 'Not Nominating'}
             </h5>
-          </NominationStatusWrapper>
+          </ValidatorStatusWrapper>
           {!isSyncing &&
             !isBonding() &&
             !isReadOnlyAccount(activeAccount) &&

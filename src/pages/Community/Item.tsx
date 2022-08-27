@@ -62,7 +62,7 @@ export const Item = (props: ItemProps) => {
       <div className="inner">
         <section>{Thumbnail !== null && <Thumbnail />}</section>
         <section>
-          <h2>
+          <h3>
             {name}
             <button
               type="button"
@@ -71,7 +71,7 @@ export const Item = (props: ItemProps) => {
             >
               <span>Bio</span>
             </button>
-          </h2>
+          </h3>
 
           <div className="stats">
             <button
