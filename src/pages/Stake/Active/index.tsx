@@ -38,7 +38,7 @@ export const Active = ({ title }: { title: string }) => {
   const { getAccountNominations } = useBalances();
   const nominations = getAccountNominations(activeAccount);
 
-  const ROW_HEIGHT = 290;
+  const ROW_HEIGHT = 275;
 
   return (
     <>

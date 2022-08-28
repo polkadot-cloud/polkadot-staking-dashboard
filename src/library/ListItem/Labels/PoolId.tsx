@@ -22,7 +22,7 @@ export const PoolId = (props: { id: number }) => {
   };
 
   return (
-    <div className="label">
+    <div className="label pool">
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}

@@ -13,7 +13,7 @@ export const Bio = () => {
     <PaddingWrapper>
       <Wrapper>
         <h2>{name}</h2>
-        {bio !== undefined && <h3>{bio}</h3>}
+        {bio !== undefined && <h4>{bio}</h4>}
       </Wrapper>
     </PaddingWrapper>
   );

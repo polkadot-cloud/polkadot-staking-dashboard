@@ -18,16 +18,16 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.div`
+  border-bottom: 1px solid ${borderPrimary};
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
   padding: 0 0.25rem 0.5rem 0.25rem;
   flex: 1;
-  border-bottom: 1px solid ${borderPrimary};
 
   h4 {
-    margin: 0;
     color: ${textSecondary};
+    margin: 0;
   }
 
   > div {
@@ -45,11 +45,11 @@ export const Header = styled.div`
     flex: 1;
 
     button {
+      color: ${textSecondary};
       font-size: 1.1rem;
       margin-left: 0.4rem;
       opacity: 0.6;
       transition: all 0.2s;
-      color: ${textSecondary};
 
       &:hover {
         opacity: 0.9;

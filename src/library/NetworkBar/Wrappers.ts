@@ -149,7 +149,6 @@ export const NetworkInfo = styled(motion.div)`
     }
     h3 {
       margin: 0.25rem 0;
-      font-variation-settings: 'wght' 575;
       color: #f1f1f1;
       padding: 0.2rem 0;
 

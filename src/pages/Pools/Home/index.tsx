@@ -48,7 +48,7 @@ export const HomeInner = (props: PageProps) => {
     }
   }, [network]);
 
-  const ROW_HEIGHT = 290;
+  const ROW_HEIGHT = 275;
 
   return (
     <>

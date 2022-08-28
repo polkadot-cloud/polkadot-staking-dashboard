@@ -44,7 +44,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     }
   }
   h4 {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.6rem 0;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -152,7 +152,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     right: 10px;
     top: 10px;
     font-size: 0.8rem;
-    font-variation-settings: 'wght' 550;
     background: ${networkColor};
     border-radius: 0.3rem;
     padding: 0.2rem 0.4rem;
@@ -175,7 +174,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   h2,
   h4 {
     margin: 0;
-    padding: 0.25rem 0;
+    padding: 0.25rem 0 0.5rem 0;
     display: flex;
     flex-flow: row wrap;
     align-content: flex-end;
@@ -186,8 +185,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
       color: ${textSecondary};
       font-size: 1.1rem;
       margin-top: 0.2rem;
-      margin-left: 0.1rem;
-      font-variation-settings: 'wght' 600;
+      margin-left: 0.3rem;
     }
   }
   h2 {
@@ -260,7 +258,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     color: white;
     border-radius: 0.75rem;
     padding: 0.15rem 0.5rem;
-    font-variation-settings: 'wght' 550;
     &.pos {
       background: #3eb955;
     }

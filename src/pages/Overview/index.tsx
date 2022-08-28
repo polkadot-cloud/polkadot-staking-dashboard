@@ -42,7 +42,7 @@ export const Overview = () => {
     poolClaims
   );
 
-  const PAYOUTS_HEIGHT = 475;
+  const PAYOUTS_HEIGHT = 460;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
   return (

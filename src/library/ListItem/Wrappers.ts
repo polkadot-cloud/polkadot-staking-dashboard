@@ -4,15 +4,16 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import {
-  backgroundValidator,
   borderPrimary,
   textSecondary,
   networkColor,
   modalBackground,
+  backgroundDropdown,
+  backgroundModalItem,
 } from 'theme';
 import { MAX_ASSISTANT_INTERFACE_WIDTH } from 'consts';
 
-export const Wrapper = styled.div<{ format?: string }>`
+export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
@@ -21,7 +22,8 @@ export const Wrapper = styled.div<{ format?: string }>`
   margin: 0.5rem;
 
   > .inner {
-    background: ${backgroundValidator};
+    background: ${(props) =>
+      props.inModal ? backgroundModalItem : backgroundDropdown};
     box-sizing: border-box;
     flex: 1;
     border-radius: 0.75rem;
@@ -88,7 +90,11 @@ export const Labels = styled.div`
     color: ${textSecondary};
     margin: 0 0.2rem;
     @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
-      margin: 0 0.4rem;
+      margin: 0 0.2rem;
+
+      &.pool {
+        margin: 0 0.4rem;
+      }
     }
     &.button-with-text {
       margin-right: 0;
@@ -215,7 +221,7 @@ export const Separator = styled.div`
   width: 100%;
   height: 1px;
   border-bottom: 1px solid ${borderPrimary};
-  opacity: 0.75;
+  opacity: 0.7;
 `;
 
 export const MenuPosition = styled.div`

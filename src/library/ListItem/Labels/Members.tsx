@@ -22,7 +22,7 @@ export const Members = (props: { members: string }) => {
   };
 
   return (
-    <div className="label">
+    <div className="label pool">
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
