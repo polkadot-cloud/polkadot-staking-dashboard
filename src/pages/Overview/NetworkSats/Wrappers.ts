@@ -59,7 +59,6 @@ export const Item = styled(motion.div)`
     margin: 0;
     color: ${textSecondary};
     line-height: 1.2rem;
-    font-variation-settings: 'wght' 490;
   }
 `;
 

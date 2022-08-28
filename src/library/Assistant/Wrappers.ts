@@ -81,7 +81,6 @@ export const HeaderWrapper = styled.div`
   button {
     color: ${textPrimary};
     font-size: 1rem;
-    font-variation-settings: 'wght' 575;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -150,7 +149,6 @@ export const HeadingWrapper = styled.div`
   > h4 {
     margin: 0.5rem 0 0;
     padding: 0.5rem 0;
-    font-variation-settings: 'wght' 575;
     color: ${textSecondary};
   }
 `;
@@ -185,7 +183,6 @@ export const DefinitionWrapper = styled(motion.div)`
       }
       > p {
         color: ${textPrimary};
-        font-variation-settings: 'wght' 420;
         margin: 0.5rem 0 0 0;
         text-align: left;
       }
@@ -236,7 +233,6 @@ export const ItemWrapper = styled(motion.div)<MinimisedProps>`
 
     > p {
       color: ${textPrimary};
-      font-variation-settings: 'wght' 420;
       text-align: left;
     }
 

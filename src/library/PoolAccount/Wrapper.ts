@@ -13,7 +13,6 @@ export const Wrapper = styled(motion.button)<WrapperProps>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  font-variation-settings: 'wght' 540;
   cursor: ${(props) => props.cursor};
   background: ${(props) => props.fill};
   font-size: ${(props) => props.fontSize};
@@ -29,7 +28,6 @@ export const Wrapper = styled(motion.button)<WrapperProps>`
     border-right: 1px solid ${borderSecondary};
     color: ${textSecondary};
     font-size: 0.8em;
-    font-variation-settings: 'wght' 535;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;

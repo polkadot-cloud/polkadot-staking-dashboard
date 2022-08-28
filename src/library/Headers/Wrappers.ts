@@ -87,7 +87,6 @@ export const Item = styled(motion.button)`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-variation-settings: 'wght' 540;
   font-size: 1rem;
 
   .label {
@@ -95,7 +94,6 @@ export const Item = styled(motion.button)`
     border: 0.125rem solid ${networkColor};
     border-radius: 0.8rem;
     font-size: 0.85rem;
-    font-variation-settings: 'wght' 525;
     margin-right: 0.6rem;
     padding: 0.1rem 0.5rem;
   }
@@ -133,7 +131,6 @@ export const ItemInactive = styled(motion.div)`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  font-variation-settings: 'wght' 540;
   font-size: 1rem;
 
   > span {

@@ -21,7 +21,6 @@ export const Wrapper = styled(motion.button)<any>`
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  font-variation-settings: 'wght' 540;
   padding: 0 1rem;
   max-width: 250px;
   flex: 1;
@@ -34,7 +33,6 @@ export const Wrapper = styled(motion.button)<any>`
     border-right: 1px solid ${borderSecondary};
     color: ${textSecondary};
     font-size: 0.8em;
-    font-variation-settings: 'wght' 535;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
