@@ -57,6 +57,11 @@ export const backgroundDropdown: theme.ThemeSet = theme(
   defaultThemes.background.dropdown
 );
 
+export const backgroundModalItem: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.modalitem
+);
+
 export const backgroundValidator: theme.ThemeSet = theme(
   v,
   defaultThemes.background.validator

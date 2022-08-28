@@ -42,7 +42,7 @@ export const FavouritePool = (props: FavouriteProps) => {
   };
 
   return (
-    <div className="label">
+    <div className="label pool">
       <TooltipTrigger
         className="tooltip-trigger-element as-button"
         data-tooltip-text={tooltipText}

@@ -44,7 +44,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     }
   }
   h4 {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.6rem 0;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -174,7 +174,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   h2,
   h4 {
     margin: 0;
-    padding: 0.25rem 0;
+    padding: 0.25rem 0 0.5rem 0;
     display: flex;
     flex-flow: row wrap;
     align-content: flex-end;
@@ -185,7 +185,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
       color: ${textSecondary};
       font-size: 1.1rem;
       margin-top: 0.2rem;
-      margin-left: 0.1rem;
+      margin-left: 0.3rem;
     }
   }
   h2 {

@@ -15,7 +15,6 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   align-items: center;
   padding: 0.9rem 0.5rem;
   margin: 0.3rem 0.2rem 0.3rem 0;
-  font-size: 1.04rem;
   position: relative;
 
   .icon {
@@ -51,7 +50,7 @@ export const MinimisedWrapper = styled(motion.div)`
   align-items: center;
   padding: 0.9rem 0rem;
   margin: 0.3rem 0.2rem 0.3rem 0;
-  font-size: 1.04rem;
+  font-size: 1.1rem;
   position: relative;
 
   &.active {

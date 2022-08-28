@@ -120,25 +120,25 @@ export const ReserveWrapper = styled.div`
         overflow: hidden;
 
         .reserve {
+          background: ${buttonSecondaryBackground};
           display: block;
           box-sizing: border-box;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
           position: relative;
-          background: ${buttonSecondaryBackground};
           border-radius: 0.75rem;
           opacity: 0.75;
-          padding-top: 0.5rem;
-          padding-bottom: 0.5rem;
+          padding-top: 0.7rem;
+          padding-bottom: 0.7rem;
           padding-left: 2.5rem;
           padding-right: 1rem;
           width: 100%;
 
           .icon {
             position: absolute;
-            top: 0.6rem;
-            left: 0.5rem;
+            top: 0.8rem;
+            left: 0.65rem;
           }
         }
       }

@@ -104,7 +104,7 @@ export const Default = (props: DefaultProps) => {
   };
 
   return (
-    <Wrapper format="nomination">
+    <Wrapper format="nomination" inModal={inModal}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
