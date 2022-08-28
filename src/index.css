@@ -36,36 +36,35 @@ body {
 h1 {
   font-weight: normal;
   font-size: 1.6rem;
-  font-variation-settings: 'wght' 600;
   margin: 0 0 0.4rem 0;
+  font-variation-settings: 'wght' 600;
 }
 
 h2 {
-  font-variation-settings: 'wght' 625;
   font-weight: normal;
   font-size: 1.45rem;
+  font-variation-settings: 'wght' 625;
 }
 
 h3 {
-  font-variation-settings: 'wght' 560;
   font-weight: normal;
   font-size: 1.25rem;
   line-height: 1.55rem;
+  font-variation-settings: 'wght' 560;
 }
 
 h4 {
-  font-variation-settings: 'wght' 500;
   font-weight: normal;
   font-size: 1.1rem;
   line-height: 1.6rem;
+  font-variation-settings: 'wght' 500;
 }
 
 h5 {
-  color: #333;
-  font-variation-settings: 'wght' 540;
   font-weight: normal;
   font-size: 0.92rem;
   margin: 1.25rem 0;
+  font-variation-settings: 'wght' 540;
 }
 
 p {
@@ -85,6 +84,7 @@ button {
   box-shadow: none;
   border: none;
   cursor: pointer;
+  font-variation-settings: 'wght' 625;
 }
 
 .label {

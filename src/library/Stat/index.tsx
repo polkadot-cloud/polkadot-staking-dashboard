@@ -29,7 +29,7 @@ export const Stat = (props: StatProps) => {
         {stat}
         {buttons && (
           <span>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
             {buttons.map((btn: any, index: number) => (
               <React.Fragment key={`stat_${index}`}>
                 <Button
@@ -43,7 +43,7 @@ export const Stat = (props: StatProps) => {
                   disabled={btn.disabled ?? false}
                   onClick={() => btn.onClick()}
                 />
-                &nbsp;
+                &nbsp;&nbsp;
               </React.Fragment>
             ))}
           </span>
