@@ -9,10 +9,13 @@ import { useStaking } from 'contexts/Staking';
 import { PageRowWrapper } from 'Wrappers';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();
   const { isSyncing } = useUi();
+  const { mode } = useTheme();
   const { getControllerNotImported } = useStaking();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getBondedAccount } = useBalances();
@@ -25,7 +28,9 @@ export const ControllerNotImported = () => {
         !isReadOnlyAccount(activeAccount) && (
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper
-              style={{ border: '2px solid rgba(242, 185, 27,0.25)' }}
+              style={{
+                border: `1px solid ${defaultThemes.status.warning.transparent[mode]}`,
+              }}
             >
               <CardHeaderWrapper>
                 <h4>

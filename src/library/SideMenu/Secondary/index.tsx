@@ -2,14 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import { CONNECTION_SYMBOL_COLORS } from 'consts';
 import { ConnectionStatus } from 'contexts/Api/types';
 import { useModal } from 'contexts/Modal';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
 import { Wrapper, MinimisedWrapper, IconWrapper } from './Wrappers';
 import { SecondaryProps } from '../types';
 
 export const Secondary = (props: SecondaryProps) => {
   const { status } = useApi();
+  const { mode } = useTheme();
   const { openModalWith } = useModal();
 
   const { action, name, icon, minimised } = props;
@@ -19,10 +21,10 @@ export const Secondary = (props: SecondaryProps) => {
 
   const symbolColor =
     status === ConnectionStatus.Connecting
-      ? CONNECTION_SYMBOL_COLORS.connecting
+      ? defaultThemes.status.warning.transparent[mode]
       : status === ConnectionStatus.Connected
-      ? CONNECTION_SYMBOL_COLORS.connected
-      : CONNECTION_SYMBOL_COLORS.disconnected;
+      ? defaultThemes.status.success.transparent[mode]
+      : defaultThemes.status.danger.transparent[mode];
 
   return (
     <StyledWrapper
@@ -35,7 +37,7 @@ export const Secondary = (props: SecondaryProps) => {
         duration: 0.1,
       }}
       style={{
-        borderColor: minimised ? symbolColor.transparent : undefined,
+        borderColor: minimised ? symbolColor : undefined,
       }}
     >
       <IconWrapper
@@ -46,9 +48,11 @@ export const Secondary = (props: SecondaryProps) => {
         <Svg width={size} height={size} />
       </IconWrapper>
 
-      {!minimised && <div className="name">{name}</div>}
       {!minimised && (
-        <div className={`action${minimised ? ' minimised' : ''}`}>{action}</div>
+        <>
+          <div className="name">{name}</div>
+          <div className="action">{action}</div>
+        </>
       )}
     </StyledWrapper>
   );

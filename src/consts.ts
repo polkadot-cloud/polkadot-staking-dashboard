@@ -23,23 +23,6 @@ export const EMPTY_H256 = new Uint8Array(32);
 export const MOD_PREFIX = stringToU8a('modl');
 export const U32_OPTS = { bitLength: 32, isLe: true };
 
-export const CONNECTION_SYMBOL_COLORS: {
-  [key: string]: { solid: string; transparent: string };
-} = {
-  disconnected: {
-    solid: 'red',
-    transparent: 'rgba(255,0,0,0.25)',
-  },
-  connecting: {
-    solid: 'orange',
-    transparent: 'rgba(255,165,0,0.25)',
-  },
-  connected: {
-    solid: 'green',
-    transparent: 'rgba(0,128,0,0.25)',
-  },
-};
-
 export const PAYEE_STATUS = [
   {
     key: 'Staked',

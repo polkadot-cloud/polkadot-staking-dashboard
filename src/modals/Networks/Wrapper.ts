@@ -9,8 +9,8 @@ import {
   textSecondary,
   borderPrimary,
   textSuccess,
+  successTransparent,
 } from 'theme';
-import { CONNECTION_SYMBOL_COLORS } from 'consts';
 import { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`
@@ -72,7 +72,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  border: 1px solid ${CONNECTION_SYMBOL_COLORS.connected.transparent};
+  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `
@@ -152,7 +152,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   padding: 0.75rem 0.75rem;
   margin-right: 0.5rem;
   border-radius: 0.5rem;
-  border: 1px solid ${CONNECTION_SYMBOL_COLORS.connected.transparent};
+  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `

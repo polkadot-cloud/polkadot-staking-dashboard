@@ -188,6 +188,38 @@ export const assistantLink: theme.ThemeSet = theme(
   defaultThemes.assistant.link
 );
 
+// status colors
+
+export const danger: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.danger.solid
+);
+
+export const dangerTransparent: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.danger.transparent
+);
+
+export const warning: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.warning.solid
+);
+
+export const warningTransparent: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.warning.transparent
+);
+
+export const success: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.success.solid
+);
+
+export const successTransparent: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.success.transparent
+);
+
 // shadow
 
 export const shadowColor: theme.ThemeSet = theme(v, defaultThemes.shadow);

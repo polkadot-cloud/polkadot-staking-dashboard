@@ -93,6 +93,20 @@ export const defaultThemes: { [key: string]: any } = {
     background: v('#dadada', '#101010'),
   },
   shadow: v('#e5e5e5', '#181818'),
+  status: {
+    danger: {
+      solid: v('red', 'red'),
+      transparent: v('rgba(255,0,0,0.25)', 'rgba(255,0,0,0.25)'),
+    },
+    warning: {
+      solid: v('rgba(242, 185, 27,1)', 'rgba(242, 185, 27,1)'),
+      transparent: v('rgba(255,165,0,0.25)', 'rgba(255,165,0,0.25)'),
+    },
+    success: {
+      solid: v('green', 'green'),
+      transparent: v('rgba(0,128,0,0.25)', 'rgba(0,128,0,0.25)'),
+    },
+  },
 };
 
 // configure card style
