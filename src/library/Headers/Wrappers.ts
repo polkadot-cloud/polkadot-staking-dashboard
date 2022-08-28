@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
   padding: 0 1.25rem;
   transition: all 0.15s;
   z-index: 5;
-  margin: 0.25rem 0;
+  margin: 0.5rem 0;
   height: 4rem;
 
   /* no longer in use */
@@ -79,7 +79,7 @@ export const Item = styled(motion.button)`
   border: 1px solid ${borderPrimary};
   color: ${textPrimary};
   flex-grow: 1;
-  padding: 0 1rem;
+  padding: 0.2rem 1rem;
   border-radius: 1rem;
   box-shadow: none;
   display: flex;
@@ -87,7 +87,7 @@ export const Item = styled(motion.button)`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
 
   .label {
     color: ${networkColor};

@@ -55,7 +55,7 @@ export const Wrapper = styled(motion.button)<any>`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    line-height: 2.2rem;
+    line-height: 2.4rem;
     flex: 1;
 
     &.unassigned {
