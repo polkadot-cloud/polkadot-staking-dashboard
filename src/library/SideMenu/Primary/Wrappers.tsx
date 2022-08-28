@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { highlightPrimary, highlightSecondary } from 'theme';
+import { highlightPrimary, highlightSecondary, success, warning } from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`
@@ -27,11 +27,26 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
     line-height: 1.35rem;
   }
   .action {
+    color: ${success};
     flex: 1;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
     margin-right: 0.3rem;
+    font-size: 0.88rem;
+    opacity: 0.7;
+
+    &.success {
+      svg {
+        color: ${success};
+      }
+    }
+
+    &.warning {
+      svg {
+        color: ${warning};
+      }
+    }
   }
 
   &.active {

@@ -18,17 +18,14 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import {
-  URI_PREFIX,
-  POLKADOT_URL,
-  SIDE_MENU_STICKY_THRESHOLD,
-  CONNECTION_SYMBOL_COLORS,
-} from 'consts';
+import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { usePalette } from 'contexts/Palette';
 import { UIContextInterface } from 'contexts/UI/types';
 import { ConnectionStatus } from 'contexts/Api/types';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
 import {
   Separator,
   Wrapper,
@@ -42,6 +39,7 @@ import Heading from './Heading/Heading';
 
 export const SideMenu = () => {
   const { network, status } = useApi();
+  const { mode } = useTheme();
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
@@ -82,23 +80,26 @@ export const SideMenu = () => {
   });
 
   useEffect(() => {
-    // only process account messages and warnings once accounts are connected
-    if (accounts.length) {
-      const _pageConfigWithMessages = Object.assign(pageConfig.pages);
-      for (let i = 0; i < _pageConfigWithMessages.length; i++) {
-        const { uri } = _pageConfigWithMessages[i];
+    if (!accounts.length) return;
 
-        // on stake menu item, add warning for controller not imported
-        if (uri === `${URI_PREFIX}/stake`) {
-          _pageConfigWithMessages[i].action =
-            !isSyncing && controllerNotImported;
-        }
+    // inject actions into menu items
+    const _pages = Object.assign(pageConfig.pages);
+    for (let i = 0; i < _pages.length; i++) {
+      const { uri } = _pages[i];
+
+      if (uri === `${URI_PREFIX}/stake`) {
+        const warning = !isSyncing && controllerNotImported;
+        _pages[i].action = warning
+          ? {
+              status: 'warning',
+            }
+          : undefined;
       }
-      setPageConfig({
-        categories: pageConfig.categories,
-        pages: _pageConfigWithMessages,
-      });
     }
+    setPageConfig({
+      categories: pageConfig.categories,
+      pages: _pages,
+    });
   }, [network, activeAccount, accounts, controllerNotImported, isSyncing]);
 
   const ref = useRef(null);
@@ -126,10 +127,10 @@ export const SideMenu = () => {
   // handle connection symbol
   const symbolColor =
     status === ConnectionStatus.Connecting
-      ? CONNECTION_SYMBOL_COLORS.connecting
+      ? defaultThemes.status.warning.solid[mode]
       : status === ConnectionStatus.Connected
-      ? CONNECTION_SYMBOL_COLORS.connected
-      : CONNECTION_SYMBOL_COLORS.disconnected;
+      ? defaultThemes.status.success.solid[mode]
+      : defaultThemes.status.danger.solid[mode];
 
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
@@ -211,7 +212,9 @@ export const SideMenu = () => {
             size: network.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
-          action={<ConnectionSymbol color={[symbolColor.solid]} />}
+          action={
+            <ConnectionSymbol color={[symbolColor]} style={{ opacity: 0.7 }} />
+          }
         />
       </section>
 

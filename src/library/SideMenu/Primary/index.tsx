@@ -16,6 +16,11 @@ export const Primary = (props: PrimaryProps) => {
 
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
+  let actionClass = null;
+  if (action) {
+    actionClass = action.status;
+  }
+
   return (
     <Link to={to} onClick={() => setSideMenu(0)}>
       <StyledWrapper
@@ -29,13 +34,9 @@ export const Primary = (props: PrimaryProps) => {
         <div className="icon">{icon}</div>
         {!minimised && <h4 className="name">{name}</h4>}
 
-        {action && (
-          <div className={`action${minimised ? ` minimised` : ``}`}>
-            <FontAwesomeIcon
-              icon={faCircle as IconProp}
-              color="rgba(242, 185, 27,0.75)"
-              transform="shrink-3"
-            />
+        {action && !minimised && (
+          <div className={`action${actionClass && ` ${actionClass}`}`}>
+            <FontAwesomeIcon icon={faCircle as IconProp} transform="shrink-4" />
           </div>
         )}
       </StyledWrapper>
