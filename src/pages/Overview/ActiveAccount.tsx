@@ -34,7 +34,7 @@ export const ActiveAccount = () => {
               {accountData && (
                 <>
                   <div className="icon">
-                    <Identicon value={accountData.address} size="1.6rem" />
+                    <Identicon value={accountData.address} size="1.7rem" />
                   </div>
                   {clipAddress(accountData.address)}
                   <button

@@ -45,6 +45,7 @@ export const ActiveAccounWrapper = styled.div`
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        opacity: 0.75;
       }
     }
 

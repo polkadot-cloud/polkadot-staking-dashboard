@@ -22,7 +22,7 @@ export const Account = (props: AccountProps) => {
   // presentational props
   const { format } = props;
   const filled = props.filled ?? false;
-  const fontSize = props.fontSize ?? '1.1rem';
+  const fontSize = props.fontSize ?? '1.05rem';
   const wallet = props.wallet ?? false;
 
   // functional props

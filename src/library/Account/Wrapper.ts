@@ -3,12 +3,7 @@
 
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import {
-  textPrimary,
-  textSecondary,
-  borderSecondary,
-  borderPrimary,
-} from 'theme';
+import { textSecondary, borderSecondary, borderPrimary } from 'theme';
 
 export const Wrapper = styled(motion.button)<any>`
   border: 1px solid ${borderPrimary};
@@ -50,7 +45,7 @@ export const Wrapper = styled(motion.button)<any>`
   }
 
   .title {
-    color: ${textPrimary};
+    color: ${textSecondary};
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -71,7 +66,7 @@ export const Wrapper = styled(motion.button)<any>`
     opacity: 0.8;
 
     path {
-      fill: ${textPrimary};
+      fill: ${textSecondary};
     }
   }
 `;
