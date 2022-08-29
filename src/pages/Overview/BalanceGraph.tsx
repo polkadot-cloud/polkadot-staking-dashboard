@@ -172,7 +172,7 @@ export const BalanceGraph = () => {
 
   return (
     <>
-      <div className="head" style={{ paddingTop: '0' }}>
+      <div className="head">
         <h4>
           Balance
           <OpenAssistantIcon page="overview" title="Your Balance" />

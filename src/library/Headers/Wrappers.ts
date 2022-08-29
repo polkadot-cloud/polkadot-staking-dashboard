@@ -79,7 +79,7 @@ export const Item = styled(motion.button)`
   border: 1px solid ${borderPrimary};
   color: ${textPrimary};
   flex-grow: 1;
-  padding: 0.2rem 1rem;
+  padding: 0.15rem 1rem;
   border-radius: 1rem;
   box-shadow: none;
   display: flex;
@@ -87,7 +87,7 @@ export const Item = styled(motion.button)`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 
   .label {
     color: ${networkColor};

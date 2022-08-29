@@ -3,7 +3,7 @@
 
 import { Element } from 'react-scroll';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Button } from 'library/Button';
@@ -22,7 +22,7 @@ export const Setup = ({ title }: { title: string }) => {
     <>
       <PageTitle title={`${title} Setup`} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <GoBackWrapper>
+        <TopBarWrapper>
           <Button
             inline
             title="Go Back"
@@ -30,7 +30,7 @@ export const Setup = ({ title }: { title: string }) => {
             transform="shrink-3"
             onClick={() => setOnNominatorSetup(0)}
           />
-        </GoBackWrapper>
+        </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>

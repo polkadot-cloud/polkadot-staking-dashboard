@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import moment from 'moment';
 import { StatBoxList } from 'library/StatBoxList';
 import {
+  TopBarWrapper,
   PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
@@ -42,12 +43,17 @@ export const Overview = () => {
     poolClaims
   );
 
-  const PAYOUTS_HEIGHT = 460;
+  const PAYOUTS_HEIGHT = 415;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
   return (
     <>
       <PageTitle title="Overview" />
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <TopBarWrapper>
+          <ActiveAccount />
+        </TopBarWrapper>
+      </PageRowWrapper>
       <StatBoxList>
         <TotalNominatorsStatBox />
         <ActiveNominatorsStatBox />
@@ -61,7 +67,6 @@ export const Overview = () => {
           thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
         >
           <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
-            <ActiveAccount />
             <BalanceGraph />
             <Reserve />
           </GraphWrapper>
@@ -72,7 +77,6 @@ export const Overview = () => {
           thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
           thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
         >
-          {/* <Returns height={STATS_HEIGHT} /> */}
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
