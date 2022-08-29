@@ -375,4 +375,11 @@ export const GoBackWrapper = styled.div`
   button {
     padding: 0.75rem 1rem;
   }
+
+  h3 {
+    color: ${textSecondary};
+    font-size: 1.15rem;
+    margin: 0.25rem 0;
+    min-height: 2rem;
+  }
 `;
