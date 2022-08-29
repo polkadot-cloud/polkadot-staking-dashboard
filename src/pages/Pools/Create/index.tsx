@@ -3,7 +3,7 @@
 
 import { Element } from 'react-scroll';
 import { useUi } from 'contexts/UI';
-import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +22,7 @@ export const Create = () => {
     <>
       <PageTitle title="Create a Pool" />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <GoBackWrapper>
+        <TopBarWrapper>
           <Button
             inline
             title="Go Back"
@@ -30,7 +30,7 @@ export const Create = () => {
             transform="shrink-3"
             onClick={() => setOnPoolSetup(0)}
           />
-        </GoBackWrapper>
+        </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>

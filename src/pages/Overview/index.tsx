@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import moment from 'moment';
 import { StatBoxList } from 'library/StatBoxList';
 import {
-  GoBackWrapper,
+  TopBarWrapper,
   PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
@@ -50,9 +50,9 @@ export const Overview = () => {
     <>
       <PageTitle title="Overview" />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <GoBackWrapper>
+        <TopBarWrapper>
           <ActiveAccount />
-        </GoBackWrapper>
+        </TopBarWrapper>
       </PageRowWrapper>
       <StatBoxList>
         <TotalNominatorsStatBox />

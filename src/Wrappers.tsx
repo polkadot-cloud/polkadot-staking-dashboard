@@ -362,11 +362,11 @@ export const Separator = styled.div`
   margin: 0.75rem 0;
 `;
 
-/* GoBackWrapper
+/* TopBarWrapper
  *
- * Positioned under titles for a Go Back button
+ * Positioned under titles for a Go Back button and other page header info.
  */
-export const GoBackWrapper = styled.div`
+export const TopBarWrapper = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   padding-bottom: 0.5rem;
   width: 100%;
