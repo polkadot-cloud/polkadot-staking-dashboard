@@ -14,13 +14,14 @@ export const ActiveAccounWrapper = styled.div`
   .account {
     box-sizing: border-box;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: center;
+    overflow: hidden;
 
     .icon {
       position: relative;
       top: 0.1rem;
-      margin: 0 0.5rem;
+      margin-right: 0.5rem;
     }
     .title {
       box-sizing: border-box;
@@ -29,13 +30,30 @@ export const ActiveAccounWrapper = styled.div`
       flex: 1;
       overflow: hidden;
     }
+    .rest {
+      flex: 1;
+      min-height: 1.8rem;
+      overflow: hidden;
+      position: relative;
+
+      .name {
+        position: absolute;
+        left: 0;
+        bottom: 0.1rem;
+        max-width: 100%;
+        display: inline;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
 
     button {
       background: ${buttonSecondaryBackground};
-      width: 2.25rem;
-      height: 2.25rem;
+      width: 2rem;
+      height: 2rem;
       border-radius: 50%;
-      margin: 0 0.5rem;
+      margin-left: 0.75rem;
       padding: 0;
     }
 

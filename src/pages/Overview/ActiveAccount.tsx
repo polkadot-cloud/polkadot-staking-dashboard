@@ -36,8 +36,7 @@ export const ActiveAccount = () => {
                   <div className="icon">
                     <Identicon value={accountData.address} size="1.6rem" />
                   </div>
-                  {clipAddress(accountData.address)} <div className="sep" />
-                  {accountData.name}
+                  {clipAddress(accountData.address)}
                   <button
                     type="button"
                     onClick={() => {
@@ -53,6 +52,14 @@ export const ActiveAccount = () => {
                       transform="shrink-1"
                     />
                   </button>
+                  {accountData.name !== clipAddress(accountData.address) && (
+                    <>
+                      <div className="sep" />
+                      <div className="rest">
+                        <span className="name">{accountData.name}</span>
+                      </div>
+                    </>
+                  )}
                 </>
               )}
 
