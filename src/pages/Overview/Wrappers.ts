@@ -11,12 +11,15 @@ import {
 import { SMALL_FONT_SIZE_MAX_WIDTH, MEDIUM_FONT_SiZE_MAX_WIDTH } from 'consts';
 
 export const ActiveAccounWrapper = styled.div`
+  width: 100%;
+
   .account {
     box-sizing: border-box;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     align-items: center;
     overflow: hidden;
+    width: 100%;
 
     .icon {
       position: relative;
@@ -31,7 +34,7 @@ export const ActiveAccounWrapper = styled.div`
       overflow: hidden;
     }
     .rest {
-      flex: 1;
+      flex: 1 1 0%;
       min-height: 1.8rem;
       overflow: hidden;
       position: relative;

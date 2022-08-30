@@ -26,49 +26,47 @@ export const ActiveAccount = () => {
   }
 
   return (
-    <>
-      <ActiveAccounWrapper>
-        <div className="account">
-          <div className="title">
-            <h3>
-              {accountData && (
-                <>
-                  <div className="icon">
-                    <Identicon value={accountData.address} size="1.7rem" />
-                  </div>
-                  {clipAddress(accountData.address)}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigator.clipboard.writeText(accountData.address);
-                      if (notification) {
-                        addNotification(notification);
-                      }
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      className="copy"
-                      icon={faCopy as IconProp}
-                      transform="shrink-1"
-                    />
-                  </button>
-                  {accountData.name !== clipAddress(accountData.address) && (
-                    <>
-                      <div className="sep" />
-                      <div className="rest">
-                        <span className="name">{accountData.name}</span>
-                      </div>
-                    </>
-                  )}
-                </>
-              )}
+    <ActiveAccounWrapper>
+      <div className="account">
+        <div className="title">
+          <h3>
+            {accountData && (
+              <>
+                <div className="icon">
+                  <Identicon value={accountData.address} size="1.7rem" />
+                </div>
+                {clipAddress(accountData.address)}
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(accountData.address);
+                    if (notification) {
+                      addNotification(notification);
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon
+                    className="copy"
+                    icon={faCopy as IconProp}
+                    transform="shrink-1"
+                  />
+                </button>
+                {accountData.name !== clipAddress(accountData.address) && (
+                  <>
+                    <div className="sep" />
+                    <div className="rest">
+                      <span className="name">{accountData.name}</span>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
 
-              {!accountData && 'No Account Connected'}
-            </h3>
-          </div>
+            {!accountData && 'No Account Connected'}
+          </h3>
         </div>
-      </ActiveAccounWrapper>
-    </>
+      </div>
+    </ActiveAccounWrapper>
   );
 };
 

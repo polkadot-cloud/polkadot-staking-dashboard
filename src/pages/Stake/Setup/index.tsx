@@ -8,6 +8,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
+import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
 import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
 import { SetController } from './SetController';
@@ -16,7 +17,7 @@ import { Payee } from './Payee';
 import { Summary } from './Summary';
 
 export const Setup = ({ title }: { title: string }) => {
-  const { setOnNominatorSetup } = useUi();
+  const { setOnNominatorSetup, setActiveAccountSetup } = useUi();
 
   return (
     <>
@@ -30,6 +31,16 @@ export const Setup = ({ title }: { title: string }) => {
             transform="shrink-3"
             onClick={() => setOnNominatorSetup(0)}
           />
+          <div className="right">
+            <Button
+              inline
+              title="Cancel"
+              onClick={() => {
+                setOnNominatorSetup(0);
+                setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+              }}
+            />
+          </div>
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

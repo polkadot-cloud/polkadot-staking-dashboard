@@ -367,6 +367,9 @@ export const Separator = styled.div`
  * Positioned under titles for a Go Back button and other page header info.
  */
 export const TopBarWrapper = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
   border-bottom: 1px solid ${borderPrimary};
   padding-bottom: 0.5rem;
   width: 100%;
@@ -374,6 +377,7 @@ export const TopBarWrapper = styled.div`
 
   button {
     padding: 0.75rem 1rem;
+    margin-right: 1rem;
   }
 
   h3 {
@@ -381,5 +385,16 @@ export const TopBarWrapper = styled.div`
     font-size: 1.15rem;
     margin: 0.25rem 0;
     min-height: 2rem;
+  }
+
+  .right {
+    flex: 1 1 0%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+
+    button {
+      margin: 0 0 0 1rem;
+    }
   }
 `;

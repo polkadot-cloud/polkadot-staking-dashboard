@@ -10,13 +10,14 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
 import { SetupType } from 'contexts/UI/types';
+import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { PoolName } from './PoolName';
 import { Bond } from './Bond';
 import { PoolRoles } from './PoolRoles';
 import { Summary } from './Summary';
 
 export const Create = () => {
-  const { setOnPoolSetup } = useUi();
+  const { setOnPoolSetup, setActiveAccountSetup } = useUi();
 
   return (
     <>
@@ -30,6 +31,16 @@ export const Create = () => {
             transform="shrink-3"
             onClick={() => setOnPoolSetup(0)}
           />
+          <div className="right">
+            <Button
+              inline
+              title="Cancel"
+              onClick={() => {
+                setOnPoolSetup(0);
+                setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+              }}
+            />
+          </div>
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
