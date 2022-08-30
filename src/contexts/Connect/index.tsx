@@ -58,7 +58,7 @@ export const ConnectProvider = ({
   const [extensionsFetched, setExtensionsFetched] = useState(false);
 
   // store the installed extensions in state
-  const [extensions, setExtensions] = useState<Array<Extension>>([]);
+  const [extensions, setExtensions] = useState<Array<Extension> | null>(null);
 
   // store extensions metadata in state
   const [extensionsStatus, setExtensionsStatus] = useState<{
@@ -88,7 +88,7 @@ export const ConnectProvider = ({
 
   // initialise extensions
   useEffect(() => {
-    if (!extensions.length) {
+    if (!extensions) {
       // timeout for initialising injectedWeb3
       setTimeout(() => setExtensions(getInstalledExtensions()), 200);
     }
@@ -116,15 +116,19 @@ export const ConnectProvider = ({
       [],
       true
     );
+
     setExtensionsFetched(false);
 
-    // get account if extensions exist and local extensions exist (previously connected).
-    if (extensions.length && localExtensions.length) {
-      connectActiveExtensions();
-    } else {
-      setExtensionsFetched(true);
+    // if extensions have been fetched
+    if (extensions) {
+      // get account if extensions exist and local extensions exist (previously connected).
+      if (extensions.length && localExtensions.length) {
+        connectActiveExtensions();
+      } else {
+        setExtensionsFetched(true);
+      }
     }
-  }, [extensions, network]);
+  }, [extensions?.length, network]);
 
   /* once extension accounts are synced, fetch
    * any external accounts present in localStorage.
@@ -257,8 +261,12 @@ export const ConnectProvider = ({
 
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
-    const totalExtensions = extensions.length;
+    const totalExtensions = extensions?.length ?? 0;
     let activeWalletAccount: ImportedAccount | null = null;
+
+    if (!extensions) {
+      return;
+    }
 
     extensions.forEach(async (_extension: Extension) => {
       extensionsCount++;
@@ -639,7 +647,7 @@ export const ConnectProvider = ({
         accountHasSigner,
         isReadOnlyAccount,
         forgetAccounts,
-        extensions,
+        extensions: extensions ?? [],
         extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
