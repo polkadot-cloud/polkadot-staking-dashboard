@@ -26,6 +26,7 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { ConnectionStatus } from 'contexts/Api/types';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import {
   Separator,
   Wrapper,
@@ -44,13 +45,16 @@ export const SideMenu = () => {
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
   const { getBondedAccount } = useBalances();
-  const { getControllerNotImported } = useStaking();
+  const { getControllerNotImported, inSetup: inNominatorSetup } = useStaking();
   const { setPalettePosition, open } = usePalette();
+  const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
     isSyncing,
     setSideMenu,
     sideMenuMinimised,
+    getPoolSetupProgressPercent,
+    getStakeSetupProgressPercent,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
@@ -87,20 +91,70 @@ export const SideMenu = () => {
     for (let i = 0; i < _pages.length; i++) {
       const { uri } = _pages[i];
 
+      // set undefined action as default
+      _pages[i].action = undefined;
+
       if (uri === `${URI_PREFIX}/stake`) {
+        // configure Stake action
         const warning = !isSyncing && controllerNotImported;
-        _pages[i].action = warning
-          ? {
-              status: 'warning',
-            }
-          : undefined;
+        const staking = !inNominatorSetup();
+        const setupPercent = getStakeSetupProgressPercent(activeAccount);
+
+        if (staking) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'success',
+            text: 'Active',
+          };
+        } else if (warning) {
+          _pages[i].action = {
+            type: 'bullet',
+            status: 'warning',
+          };
+        } else if (setupPercent > 0 && !staking) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'warning',
+            text: `${setupPercent}%`,
+          };
+        }
+      }
+
+      if (uri === `${URI_PREFIX}/pools`) {
+        // configure Pools action
+        const inPool = membership;
+        const setupPercent = getPoolSetupProgressPercent(activeAccount);
+
+        if (inPool) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'success',
+            text: 'Active',
+          };
+        } else if (setupPercent > 0 && !inPool) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'warning',
+            text: `${setupPercent}%`,
+          };
+        }
       }
     }
     setPageConfig({
       categories: pageConfig.categories,
       pages: _pages,
     });
-  }, [network, activeAccount, accounts, controllerNotImported, isSyncing]);
+  }, [
+    network,
+    activeAccount,
+    accounts,
+    controllerNotImported,
+    isSyncing,
+    membership,
+    inNominatorSetup(),
+    getStakeSetupProgressPercent(activeAccount),
+    getPoolSetupProgressPercent(activeAccount),
+  ]);
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {

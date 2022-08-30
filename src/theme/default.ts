@@ -99,7 +99,7 @@ export const defaultThemes: { [key: string]: any } = {
       transparent: v('rgba(255,0,0,0.25)', 'rgba(255,0,0,0.25)'),
     },
     warning: {
-      solid: v('rgba(242, 185, 27,1)', 'rgba(242, 185, 27,1)'),
+      solid: v('rgba(219, 161, 0, 1)', 'rgba(219, 161, 0,1)'),
       transparent: v('rgba(255,165,0,0.25)', 'rgba(255,165,0,0.25)'),
     },
     success: {

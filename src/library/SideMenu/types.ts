@@ -17,7 +17,7 @@ export interface PrimaryProps {
   active: boolean;
   to: string;
   icon: React.ReactNode;
-  action: undefined | { status: string };
+  action: undefined | { type: string; status: string; text?: string };
   minimised: number;
 }
 
