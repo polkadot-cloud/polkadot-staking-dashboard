@@ -6,6 +6,7 @@
  * import { ReactComponent as ValidatorEntityName } from './thumbnails/validatorEntityName.svg';
  */
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
+import { ReactComponent as CoinbaseCloud } from './thumbnails/coinbasecloud.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
@@ -59,6 +60,38 @@ export const VALIDATOR_COMMUNITY = [
         'DpLatoXXBiSAPooF17bzUZGo7huNB7USfRqd2SgL6RBy2zr',
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
+      ],
+    },
+  },
+  {
+    name: 'Coinbase Cloud',
+    Thumbnail: CoinbaseCloud,
+    bio: 'Our staking infrastructure powers the leading crypto products and exchanges. We offer the same infrastructure in our public validators and make it available to you.',
+    email: 'cloud-support@coinbase.com',
+    twitter: '@CoinbaseCloud',
+    website: 'https://www.coinbase.com/cloud',
+    validators: {
+      polkadot: [
+        '1VrKDfXunzstY5uxPpjArUbZekirGXcpMDYvCBJmjV1KdEm',
+        '16Dgcx1qJzp8kme1CWsySDf3JWd1oKtbChYVm2yAYqM44woY',
+        '12Yz9HPcF66pAGpwEW5cyFZ59TFeXFGVnkuxTphC3Lrap29z',
+        '12e1tkDgfF3GYdiTkRq1vunXrvvhpKq3BQZYbJ1haXHApQTn',
+        '12eKZbGJKVyHfTPkUs9MrJeGkbFrZRqzhKBBeRJ3G3YoWPun',
+        '12q76RYkETZ6UACiiznBicXgcXZ8EMFAuPv8QtfSrc6KSLYo',
+        '1A2ATy1FEu5yQ9ZzghPLsRckPQ7XLmq5MJQYcTvGnxGvCho',
+        '15V6NjwmKkZihe644Tyr8GVLxjEzBAHktf6ZcJCTx7RPCoYS',
+        '124YFXA3XoRs9Epcx3aRUSk3EKYaznocqMWfrMKtGjx8TJ2W',
+        '12ECDEb18Wiy4MoLn3NTM5zhJfDfpS4mLNvjHpcEr8ogGrMZ',
+        '12HFymxpDmi4XXPHaEMp74CNpRhkqwG5qxnrgikkhon1XMrj',
+        '12WmM98h4Ar6y7ZyyMKPXwSyuP5GSZvXTbEkDXm1tirbZFW4',
+        '13BN4WksoyexwDWhGsMMUbU5okehD19GzdyqL4DMPR2KkQpP',
+        '14XefeqDxiaVQEo7Xv7WBs3Wz8GZPes7DBjQxsNuxu683B9o',
+        '1486kNkPxvF7Pmgfr4MskGnn4p4KXCigMejv5Q7szMowioKK',
+        '14wFkAiTSxhUUdpkN37QMhZv6dYcURJVgSGwqDRd4TK2qhrL',
+      ],
+      kusama: [
+        'EFjHdypk8xLf3ocDEFPaKFWVcfamH8mpvfUeXHvRWpSBk2M',
+        'DXrJrPLLBHuapmYJ6tfuUStKubhykWmpgLckJpgFgjp2JvV',
       ],
     },
   },
