@@ -23,7 +23,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   padding: 0rem 0.5rem;
   margin: 0.4rem 0.2rem 0.3rem 0;
   position: relative;
-  height: 3.3rem;
+  height: 3.2rem;
 
   .icon {
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
@@ -86,7 +86,7 @@ export const MinimisedWrapper = styled(motion.div)`
   justify-content: center;
   align-items: center;
   padding: 0.7rem 0rem;
-  margin: 0.8rem 0.2rem 0.3rem 0;
+  margin: 0.7rem 0.2rem 0.3rem 0;
   font-size: 1.1rem;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0);
