@@ -62,7 +62,7 @@ export const Networks = () => {
                   />
                 </div>
                 <h3>{item.name}</h3>
-                {networkKey === key && <h4 className="connected">Connected</h4>}
+                {networkKey === key && <h4 className="selected">Selected</h4>}
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
                 </div>
@@ -82,7 +82,7 @@ export const Networks = () => {
             }}
           >
             <h3>RPC</h3>
-            {!isLightClient && <h4 className="connected">Selected</h4>}
+            {!isLightClient && <h4 className="selected">Selected</h4>}
           </ConnectionButton>
           <ConnectionButton
             connected={isLightClient}
@@ -94,7 +94,7 @@ export const Networks = () => {
             }}
           >
             <h3>Light Client</h3>
-            {isLightClient && <h4 className="connected">Selected</h4>}
+            {isLightClient && <h4 className="selected">Selected</h4>}
           </ConnectionButton>
         </ConnectionsWrapper>
 
