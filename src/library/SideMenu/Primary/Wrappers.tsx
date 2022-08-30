@@ -10,6 +10,7 @@ import {
   warning,
   successTransparent,
   warningTransparent,
+  networkColor,
 } from 'theme';
 import { MinimisedProps } from '../types';
 
@@ -46,8 +47,8 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 
     > span {
       &.success {
-        color: ${success};
-        border: 1px solid ${successTransparent};
+        color: ${networkColor};
+        border: 1px solid ${networkColor};
       }
       &.warning {
         color: ${warning};
