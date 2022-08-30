@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Routes,
   Route,
@@ -36,12 +36,22 @@ import { ErrorFallbackRoutes, ErrorFallbackApp } from 'library/ErrorBoundary';
 export const RouterInner = () => {
   const { network } = useApi();
   const { pathname } = useLocation();
-  const { sideMenuOpen, sideMenuMinimised } = useUi();
+  const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
+
+  // set references to UI context and make available throughout app
+  useEffect(() => {
+    setContainerRefs({
+      mainInterface: mainInterfaceRef,
+    });
+  }, []);
+
+  // references to outer containers
+  const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
@@ -66,7 +76,7 @@ export const RouterInner = () => {
         </SideInterfaceWrapper>
 
         {/* Main content window */}
-        <MainInterfaceWrapper>
+        <MainInterfaceWrapper ref={mainInterfaceRef}>
           {/* Fixed headers */}
           <Headers />
 

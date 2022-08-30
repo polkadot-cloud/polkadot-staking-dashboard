@@ -20,6 +20,7 @@ export interface UIContextInterface {
   getServices: () => string[];
   setOnNominatorSetup: (v: number) => void;
   setOnPoolSetup: (v: number) => void;
+  setContainerRefs: (v: any) => void;
   sideMenuOpen: number;
   userSideMenuMinimised: number;
   sideMenuMinimised: number;
@@ -27,4 +28,5 @@ export interface UIContextInterface {
   onNominatorSetup: number;
   onPoolSetup: number;
   isSyncing: boolean;
+  containerRefs: any;
 }

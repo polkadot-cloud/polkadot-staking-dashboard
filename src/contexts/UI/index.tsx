@@ -335,6 +335,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     return servicesRef.current;
   };
 
+  const [containerRefs, _setContainerRefs] = useState({});
+  const setContainerRefs = (v: any) => {
+    _setContainerRefs(v);
+  };
+
   return (
     <UIContext.Provider
       value={{
@@ -349,6 +354,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         getServices,
         setOnNominatorSetup,
         setOnPoolSetup,
+        setContainerRefs,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
@@ -356,6 +362,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         onNominatorSetup,
         onPoolSetup,
         isSyncing,
+        containerRefs,
       }}
     >
       {children}

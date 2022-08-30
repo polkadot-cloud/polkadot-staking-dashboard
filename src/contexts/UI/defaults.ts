@@ -41,6 +41,8 @@ export const defaultUIContext: UIContextInterface = {
   setOnNominatorSetup: (v) => {},
   // eslint-disable-next-line
   setOnPoolSetup: (v) => {},
+  // eslint-disable-next-line
+  setContainerRefs: (v) => {},
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
@@ -48,4 +50,5 @@ export const defaultUIContext: UIContextInterface = {
   onNominatorSetup: 0,
   onPoolSetup: 0,
   isSyncing: false,
+  containerRefs: {},
 };

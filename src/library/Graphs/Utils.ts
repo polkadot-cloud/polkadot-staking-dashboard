@@ -7,6 +7,7 @@ import React from 'react';
 import throttle from 'lodash.throttle';
 import { planckBnToUnit } from 'Utils';
 import { AnySubscan } from 'types';
+import { useUi } from 'contexts/UI';
 
 export const getSize = (element: any) => {
   const width = element?.offsetWidth;
@@ -15,6 +16,8 @@ export const getSize = (element: any) => {
 };
 
 export const useSize = (element: any) => {
+  const { containerRefs } = useUi();
+
   const [size, setSize] = React.useState(getSize(element));
 
   const throttleCallback = () => {
@@ -27,9 +30,12 @@ export const useSize = (element: any) => {
       leading: false,
     });
 
-    window.addEventListener('resize', resizeThrottle);
+    // listen to main interface resize if ref is available, otherwise
+    // fall back to window resize.
+    const listenFor = containerRefs?.mainInterface?.current ?? window;
+    listenFor.addEventListener('resize', resizeThrottle);
     return () => {
-      window.removeEventListener('resize', resizeThrottle);
+      listenFor.removeEventListener('resize', resizeThrottle);
     };
   });
   return size;
