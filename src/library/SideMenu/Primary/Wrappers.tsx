@@ -8,7 +8,6 @@ import {
   highlightSecondary,
   success,
   warning,
-  successTransparent,
   warningTransparent,
   networkColor,
 } from 'theme';
@@ -93,7 +92,7 @@ export const MinimisedWrapper = styled(motion.div)`
   border: 1px solid rgba(255, 255, 255, 0);
 
   &.action-success {
-    border: 1px solid ${successTransparent};
+    border: 1px solid ${networkColor};
   }
   &.action-warning {
     border: 1px solid ${warningTransparent};
