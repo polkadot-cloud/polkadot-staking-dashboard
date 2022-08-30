@@ -14,7 +14,6 @@ export const useTheme = () => React.useContext(ThemeContext);
 export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   // get the current theme
   let localTheme = localStorage.getItem('theme') || '';
-  let localCard = localStorage.getItem('card') || '';
 
   // provide default theme if not set
   if (!['light', 'dark'].includes(localTheme)) {
@@ -27,16 +26,10 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem('theme', localTheme);
   }
 
-  // provide default card if not set
-  if (!['flat', 'border', 'shadow'].includes(localCard)) {
-    localCard = 'shadow';
-    localStorage.setItem('card', localCard);
-  }
-
   // the theme state
   const [state, setState] = React.useState<{ mode: string; card: string }>({
     mode: localTheme,
-    card: localCard,
+    card: 'shadow',
   });
   const stateRef = useRef(state);
 
@@ -61,18 +54,11 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     setStateWithRef({ ...stateRef.current, mode: _theme }, setState, stateRef);
   };
 
-  const toggleCard = (_card: string): void => {
-    localStorage.setItem('card', _card);
-    setStateWithRef({ ...stateRef.current, card: _card }, setState, stateRef);
-  };
-
   return (
     <ThemeContext.Provider
       value={{
         toggleTheme,
-        toggleCard,
         mode: stateRef.current.mode,
-        card: stateRef.current.card,
       }}
     >
       {children}
