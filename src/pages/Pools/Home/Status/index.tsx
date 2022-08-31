@@ -18,6 +18,7 @@ import {
   faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
 import { useStatusButtons } from './useStatusButtons';
 import { Membership } from './Membership';
 
@@ -27,10 +28,15 @@ export const Status = ({ height }: { height: number }) => {
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { activeBondedPool, poolNominations, getNominationsStatus } =
-    useActivePool();
+  const { activeBondedPool, poolNominations } = useActivePool();
   const { openModalWith } = useModal();
-  const nominationStatuses = getNominationsStatus();
+  const { getNominationsStatusFromTargets } = useStaking();
+
+  const nominationStatuses = getNominationsStatusFromTargets(
+    activeBondedPool?.addresses?.stash ?? '',
+    poolNominations?.targets ?? []
+  );
+
   const activeNominations = Object.values(nominationStatuses).filter(
     (_v) => _v === 'active'
   ).length;
