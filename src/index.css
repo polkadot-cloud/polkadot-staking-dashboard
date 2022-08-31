@@ -2,96 +2,93 @@
  * SPDX-License-Identifier: Apache-2.0 */
 
 @font-face {
-  font-family: 'Work Sans';
+  font-family: 'Inter';
   font-style: normal;
-  font-weight: 400;
-  src: url('../public/fonts/WorkSans-VariableFont_wght.ttf');
+  src: url('../public/fonts/Inter.ttf');
 }
 
 /* global font size */
 html {
-  font-size: 11px;
+  font-size: 10.7px;
 }
 
 @media(min-width: 600px) {
   html {
-    font-size: 12.3px;
+    font-size: 11.2px;
   }
 }
 
 @media(min-width: 1600px) {
   html {
-    font-size: 12.8px;
+    font-size: 11.7px;
   }
 }
 
 body {
   margin: 0;
-  font-family: 'Work Sans', 'sans-serif', sans-serif;
+  font-family: 'Inter', 'sans-serif', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  font-variation-settings: 'wght' 500;
 }
 
 h1 {
   font-weight: normal;
   font-size: 1.6rem;
-  font-variation-settings: 'wght' 600;
   margin: 0 0 0.4rem 0;
+  font-variation-settings: 'wght' 600;
 }
 
 h2 {
-  font-variation-settings: 'wght' 580;
   font-weight: normal;
-  font-size: 1.5rem;
+  font-size: 1.45rem;
+  font-variation-settings: 'wght' 625;
 }
 
 h3 {
-  font-variation-settings: 'wght' 560;
   font-weight: normal;
   font-size: 1.25rem;
   line-height: 1.55rem;
+  font-variation-settings: 'wght' 560;
 }
 
 h4 {
-  font-variation-settings: 'wght' 540;
   font-weight: normal;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   line-height: 1.6rem;
+  font-variation-settings: 'wght' 500;
 }
 
 h5 {
-  color: #333;
-  font-variation-settings: 'wght' 540;
   font-weight: normal;
-  font-size: 0.89rem;
-  margin: 1rem 0;
+  font-size: 0.92rem;
+  margin: 1.25rem 0;
+  font-variation-settings: 'wght' 540;
 }
 
 p {
   font-size: 0.98rem;
   line-height: 1.4rem;
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
 }
 
 a {
   text-decoration: none;
   cursor: pointer;
-  font-variation-settings: 'wght' 525;
 }
 
 button {
-  font-family: 'Work Sans', 'sans-serif', sans-serif;
+  font-family: 'Inter', 'sans-serif', sans-serif;
   background: none;
   box-shadow: none;
   border: none;
   cursor: pointer;
-  font-variation-settings: 'wght' 525;
+  font-variation-settings: 'wght' 550;
 }
 
 .label {
   font-size: 0.85rem;
-  font-variation-settings: 'wght' 450;
   display: flex;
   flex-flow: row wrap;
   align-items: flex-end;

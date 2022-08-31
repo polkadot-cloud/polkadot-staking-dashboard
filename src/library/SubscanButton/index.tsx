@@ -15,7 +15,6 @@ const Wrapper = styled.div<WrapperProps>`
   right: 10px;
   top: 10px;
   font-size: 0.9rem;
-  font-variation-settings: 'wght' 570;
   border-radius: 0.3rem;
   padding: 0.25rem 0.4rem;
   color: ${(props) => props.color};

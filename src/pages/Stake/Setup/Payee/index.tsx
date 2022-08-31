@@ -5,19 +5,20 @@ import { useState, useEffect } from 'react';
 import { isNumeric } from 'Utils';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
-import { PayeeProps } from 'pages/Stake/types';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { SetupType } from 'contexts/UI/types';
+import { Header } from 'library/SetupSteps/Header';
+import { Footer } from 'library/SetupSteps/Footer';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { Spacer } from '../../Wrappers';
-import { Header } from '../Header';
-import { Footer } from '../Footer';
-import { MotionContainer } from '../MotionContainer';
 import { Items, Item } from './Wrappers';
 
-export const Payee = (props: PayeeProps) => {
+export const Payee = (props: SetupStepProps) => {
   const { section } = props;
 
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
@@ -59,7 +60,7 @@ export const Payee = (props: PayeeProps) => {
     // set local value to update input element
     setPayee(options[i]);
     // set setup payee
-    setActiveAccountSetup({
+    setActiveAccountSetup(SetupType.Stake, {
       ...setup,
       payee: options[i],
     });
@@ -73,6 +74,7 @@ export const Payee = (props: PayeeProps) => {
         title="Reward Destination"
         assistantPage="stake"
         assistantKey="Reward Destination"
+        setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
@@ -92,7 +94,7 @@ export const Payee = (props: PayeeProps) => {
             );
           })}
         </Items>
-        <Footer complete={setup.payee !== null} />
+        <Footer complete={setup.payee !== null} setupType={SetupType.Stake} />
       </MotionContainer>
     </>
   );

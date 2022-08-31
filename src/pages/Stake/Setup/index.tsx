@@ -3,33 +3,45 @@
 
 import { Element } from 'react-scroll';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
-import { ChooseNominators } from './ChooseNominators';
+import { defaultStakeSetup } from 'contexts/UI/defaults';
+import { SetupType } from 'contexts/UI/types';
+import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';
 
-export const Setup = ({ title }: any) => {
-  const { setOnSetup } = useUi();
+export const Setup = ({ title }: { title: string }) => {
+  const { setOnNominatorSetup, setActiveAccountSetup } = useUi();
 
   return (
     <>
       <PageTitle title={`${title} Setup`} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <GoBackWrapper>
+        <TopBarWrapper>
           <Button
             inline
             title="Go Back"
             icon={faChevronLeft}
             transform="shrink-3"
-            onClick={() => setOnSetup(0)}
+            onClick={() => setOnNominatorSetup(0)}
           />
-        </GoBackWrapper>
+          <div className="right">
+            <Button
+              inline
+              title="Cancel"
+              onClick={() => {
+                setOnNominatorSetup(0);
+                setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+              }}
+            />
+          </div>
+        </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
@@ -46,7 +58,11 @@ export const Setup = ({ title }: any) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <ChooseNominators section={3} />
+          <ChooseNominations
+            batchKey="generate_nominations_inactive"
+            setupType={SetupType.Stake}
+            section={3}
+          />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

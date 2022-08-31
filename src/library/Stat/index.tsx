@@ -19,7 +19,7 @@ export const Stat = (props: StatProps) => {
           <OpenAssistantIcon page={assistant[0]} title={assistant[1]} />
         )}
       </h4>
-      <h2>
+      <h2 className="stat">
         {icon && (
           <>
             <FontAwesomeIcon icon={icon} transform="shrink-4" />
@@ -29,7 +29,7 @@ export const Stat = (props: StatProps) => {
         {stat}
         {buttons && (
           <span>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
             {buttons.map((btn: any, index: number) => (
               <React.Fragment key={`stat_${index}`}>
                 <Button

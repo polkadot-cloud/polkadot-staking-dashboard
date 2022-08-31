@@ -3,7 +3,5 @@
 
 export interface ThemeContextInterface {
   toggleTheme: (str?: string) => void;
-  toggleCard: (c: string) => void;
   mode: string;
-  card: string;
 }

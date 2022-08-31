@@ -4,11 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faExpandAlt,
-  faCompressAlt,
-  faPalette,
-} from '@fortawesome/free-solid-svg-icons';
+import { faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
 import throttle from 'lodash.throttle';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
@@ -18,41 +14,37 @@ import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import {
-  URI_PREFIX,
-  POLKADOT_URL,
-  SIDE_MENU_STICKY_THRESHOLD,
-  CONNECTION_SYMBOL_COLORS,
-} from 'consts';
+import { URI_PREFIX, POLKADOT_URL, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
-import { usePalette } from 'contexts/Palette';
 import { UIContextInterface } from 'contexts/UI/types';
 import { ConnectionStatus } from 'contexts/Api/types';
-import {
-  Separator,
-  Wrapper,
-  LogoWrapper,
-  PalettePosition,
-  ConnectionSymbol,
-} from './Wrapper';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
+import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
+import { Separator, Wrapper, LogoWrapper, ConnectionSymbol } from './Wrapper';
 import { Primary } from './Primary';
 import { Secondary } from './Secondary';
 import Heading from './Heading/Heading';
 
 export const SideMenu = () => {
   const { network, status } = useApi();
+  const { mode, toggleTheme } = useTheme();
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
   const { getBondedAccount } = useBalances();
-  const { getControllerNotImported } = useStaking();
-  const { setPalettePosition, open } = usePalette();
+  const { getControllerNotImported, inSetup: inNominatorSetup } = useStaking();
+  const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
     isSyncing,
     setSideMenu,
     sideMenuMinimised,
+    getPoolSetupProgressPercent,
+    getStakeSetupProgressPercent,
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
@@ -82,24 +74,77 @@ export const SideMenu = () => {
   });
 
   useEffect(() => {
-    // only process account messages and warnings once accounts are connected
-    if (accounts.length) {
-      const _pageConfigWithMessages = Object.assign(pageConfig.pages);
-      for (let i = 0; i < _pageConfigWithMessages.length; i++) {
-        const { uri } = _pageConfigWithMessages[i];
+    if (!accounts.length) return;
 
-        // on stake menu item, add warning for controller not imported
-        if (uri === `${URI_PREFIX}/stake`) {
-          _pageConfigWithMessages[i].action =
-            !isSyncing && controllerNotImported;
+    // inject actions into menu items
+    const _pages = Object.assign(pageConfig.pages);
+    for (let i = 0; i < _pages.length; i++) {
+      const { uri } = _pages[i];
+
+      // set undefined action as default
+      _pages[i].action = undefined;
+
+      if (uri === `${URI_PREFIX}/stake`) {
+        // configure Stake action
+        const warning = !isSyncing && controllerNotImported;
+        const staking = !inNominatorSetup();
+        const setupPercent = getStakeSetupProgressPercent(activeAccount);
+
+        if (staking) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'success',
+            text: 'Active',
+          };
+        } else if (warning) {
+          _pages[i].action = {
+            type: 'bullet',
+            status: 'warning',
+          };
+        } else if (setupPercent > 0 && !staking) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'warning',
+            text: `${setupPercent}%`,
+          };
         }
       }
-      setPageConfig({
-        categories: pageConfig.categories,
-        pages: _pageConfigWithMessages,
-      });
+
+      if (uri === `${URI_PREFIX}/pools`) {
+        // configure Pools action
+        const inPool = membership;
+        const setupPercent = getPoolSetupProgressPercent(activeAccount);
+
+        if (inPool) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'success',
+            text: 'Active',
+          };
+        } else if (setupPercent > 0 && !inPool) {
+          _pages[i].action = {
+            type: 'text',
+            status: 'warning',
+            text: `${setupPercent}%`,
+          };
+        }
+      }
     }
-  }, [network, activeAccount, accounts, controllerNotImported, isSyncing]);
+    setPageConfig({
+      categories: pageConfig.categories,
+      pages: _pages,
+    });
+  }, [
+    network,
+    activeAccount,
+    accounts,
+    controllerNotImported,
+    isSyncing,
+    membership,
+    inNominatorSetup(),
+    getStakeSetupProgressPercent(activeAccount),
+    getPoolSetupProgressPercent(activeAccount),
+  ]);
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {
@@ -115,21 +160,13 @@ export const SideMenu = () => {
     );
   }
 
-  // toggle palette
-  const posRef = useRef(null);
-  const togglePalette = () => {
-    if (!open) {
-      setPalettePosition(posRef);
-    }
-  };
-
   // handle connection symbol
   const symbolColor =
     status === ConnectionStatus.Connecting
-      ? CONNECTION_SYMBOL_COLORS.connecting
+      ? defaultThemes.status.warning.solid[mode]
       : status === ConnectionStatus.Connected
-      ? CONNECTION_SYMBOL_COLORS.connected
-      : CONNECTION_SYMBOL_COLORS.disconnected;
+      ? defaultThemes.status.success.solid[mode]
+      : defaultThemes.status.danger.solid[mode];
 
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
@@ -211,7 +248,9 @@ export const SideMenu = () => {
             size: network.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
-          action={<ConnectionSymbol color={[symbolColor.solid]} />}
+          action={
+            <ConnectionSymbol color={[symbolColor]} style={{ opacity: 0.7 }} />
+          }
         />
       </section>
 
@@ -244,10 +283,16 @@ export const SideMenu = () => {
         >
           <CogOutlineSVG width="1.6rem" height="1.6rem" />
         </button>
-        <button type="button" onClick={() => togglePalette()}>
-          <PalettePosition ref={posRef} />
-          <FontAwesomeIcon icon={faPalette} transform="grow-5" />
-        </button>
+
+        {mode === 'light' ? (
+          <button type="button" onClick={() => toggleTheme()}>
+            <SunnyOutlineSVG width="1.7rem" height="1.7rem" />
+          </button>
+        ) : (
+          <button type="button" onClick={() => toggleTheme()}>
+            <MoonOutlineSVG width="1.4rem" height="1.4rem" />
+          </button>
+        )}
       </section>
     </Wrapper>
   );

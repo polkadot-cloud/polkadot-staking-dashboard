@@ -8,7 +8,7 @@ import { stringToU8a } from '@polkadot/util';
  */
 export const URI_PREFIX = '/dashboard';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
-export const DAPP_NAME = 'polkadot_staking_dashboard';
+export const DAPP_NAME = 'Polkadot Staking Dashboard';
 export const POLKADOT_URL = 'https://polkadot.network';
 
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
@@ -22,23 +22,6 @@ export const ACTIVE_NETWORK = 'polkadot';
 export const EMPTY_H256 = new Uint8Array(32);
 export const MOD_PREFIX = stringToU8a('modl');
 export const U32_OPTS = { bitLength: 32, isLe: true };
-
-export const CONNECTION_SYMBOL_COLORS: {
-  [key: string]: { solid: string; transparent: string };
-} = {
-  disconnected: {
-    solid: 'red',
-    transparent: 'rgba(255,0,0,0.25)',
-  },
-  connecting: {
-    solid: 'orange',
-    transparent: 'rgba(255,165,0,0.25)',
-  },
-  connected: {
-    solid: 'green',
-    transparent: 'rgba(0,128,0,0.25)',
-  },
-};
 
 export const PAYEE_STATUS = [
   {

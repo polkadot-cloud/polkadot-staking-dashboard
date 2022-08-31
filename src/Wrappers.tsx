@@ -9,7 +9,6 @@ import {
   INTERFACE_MAXIMUM_WIDTH,
   SIDE_MENU_STICKY_THRESHOLD,
   SHOW_SIDE_BAR_WIDTH_THRESHOLD,
-  SECTION_FULL_WIDTH_THRESHOLD,
 } from 'consts';
 import {
   textPrimary,
@@ -206,7 +205,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   transition: padding 0.3s ease-out;
 
   h1 {
-    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.8rem')};
+    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.9rem')};
     @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
       font-size: 1.5rem;
     }
@@ -362,13 +361,39 @@ export const Separator = styled.div`
   margin: 0.75rem 0;
 `;
 
-/* GoBackWrapper
+/* TopBarWrapper
  *
- * Positioned under titles for a Go Back button
+ * Positioned under titles for a Go Back button and other page header info.
  */
-export const GoBackWrapper = styled.div`
+export const TopBarWrapper = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
   border-bottom: 1px solid ${borderPrimary};
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.4rem;
+
+  button {
+    padding: 0.75rem 1rem;
+    margin-right: 1rem;
+  }
+
+  h3 {
+    color: ${textSecondary};
+    font-size: 1.15rem;
+    margin: 0.25rem 0;
+    min-height: 2rem;
+  }
+
+  .right {
+    flex: 1 1 0%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+
+    button {
+      margin: 0 0 0 1rem;
+    }
+  }
 `;

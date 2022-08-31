@@ -4,13 +4,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { motion } from 'framer-motion';
 import { useConnect } from 'contexts/Connect';
 import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import { Separator, SectionWrapper } from './Wrappers';
+import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
@@ -27,26 +26,16 @@ export const ActiveAccount = () => {
   }
 
   return (
-    <SectionWrapper>
+    <ActiveAccounWrapper>
       <div className="account">
-        {accountData !== null && (
-          <>
-            <div className="icon">
-              <Identicon value={accountData.address} size="1.6rem" />
-            </div>
-            <div className="title">
-              <h4>
+        <div className="title">
+          <h3>
+            {accountData && (
+              <>
+                <div className="icon">
+                  <Identicon value={accountData.address} size="1.7rem" />
+                </div>
                 {clipAddress(accountData.address)}
-                <div className="sep" />{' '}
-                <span className="addr">{accountData.name}</span>
-              </h4>
-            </div>
-            <div>
-              <motion.div
-                className="copy"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-              >
                 <button
                   type="button"
                   onClick={() => {
@@ -57,23 +46,27 @@ export const ActiveAccount = () => {
                   }}
                 >
                   <FontAwesomeIcon
+                    className="copy"
                     icon={faCopy as IconProp}
-                    transform="grow-1"
+                    transform="shrink-1"
                   />
                 </button>
-              </motion.div>
-            </div>
-          </>
-        )}
-        {accountData === null && (
-          <>
-            <h4 style={{ marginLeft: 0 }}>Account Not Connected</h4>
-            <div />
-          </>
-        )}
+                {accountData.name !== clipAddress(accountData.address) && (
+                  <>
+                    <div className="sep" />
+                    <div className="rest">
+                      <span className="name">{accountData.name}</span>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+
+            {!accountData && 'No Account Connected'}
+          </h3>
+        </div>
       </div>
-      <Separator />
-    </SectionWrapper>
+    </ActiveAccounWrapper>
   );
 };
 

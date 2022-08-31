@@ -11,19 +11,20 @@ import { Button } from 'library/Button';
 import { humanNumber } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
-import { SummaryProps } from 'pages/Stake/types';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { SetupType } from 'contexts/UI/types';
+import { Header } from 'library/SetupSteps/Header';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SummaryWrapper } from './Wrapper';
-import { MotionContainer } from '../MotionContainer';
-import { Header } from '../Header';
 
-export const Summary = (props: SummaryProps) => {
+export const Summary = (props: SetupStepProps) => {
   const { section } = props;
 
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
 
@@ -63,7 +64,12 @@ export const Summary = (props: SummaryProps) => {
 
   return (
     <>
-      <Header thisSection={section} complete={null} title="Summary" />
+      <Header
+        thisSection={section}
+        complete={null}
+        title="Summary"
+        setupType={SetupType.Stake}
+      />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
           <Warning text="Your account is read only, and cannot sign transactions." />

@@ -63,7 +63,7 @@ export const StatBoxWrapper = styled(motion.div)`
     border-radius: 0.95rem;
     margin-right: 1.25rem;
     padding: 0.9rem 0;
-    max-height: 3.4rem;
+    max-height: 3.5rem;
     flex-flow: row wrap;
 
     @media (max-width: 749px) {

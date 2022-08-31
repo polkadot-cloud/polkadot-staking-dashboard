@@ -10,15 +10,22 @@ import { useNotifications } from 'contexts/Notifications';
 import { useModal } from 'contexts/Modal';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { NotificationText } from 'contexts/Notifications/types';
-import { Wrapper, Labels, MenuPosition } from './Wrappers';
+import {
+  Wrapper,
+  Labels,
+  MenuPosition,
+  Separator,
+} from 'library/ListItem/Wrappers';
+import CopyAddress from 'library/ListItem/Labels/CopyAddress';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
-import { Favourite } from './Labels/Favourite';
-import { Identity } from './Labels/Identity';
-import { Oversubscribed } from './Labels/Oversubscribed';
-import { Blocked } from './Labels/Blocked';
-import { Commission } from './Labels/Commission';
-import { Select } from './Labels/Select';
+import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
+import { Identity } from '../../ListItem/Labels/Identity';
+import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
+import { Blocked } from '../../ListItem/Labels/Blocked';
+import { Commission } from '../../ListItem/Labels/Commission';
+import { Select } from '../../ListItem/Labels/Select';
+import { EraStatus } from '../../ListItem/Labels/EraStatus';
 import { useValidatorList } from '../context';
 import { DefaultProps } from './types';
 
@@ -28,8 +35,8 @@ export const Default = (props: DefaultProps) => {
     toggleFavourites,
     batchIndex,
     batchKey,
-    showStatus,
     showMenu,
+    inModal,
   } = props;
 
   const { openModalWith } = useModal();
@@ -43,8 +50,6 @@ export const Default = (props: DefaultProps) => {
 
   const { address, prefs } = validator;
   const commission = prefs?.commission ?? null;
-
-  const posRef = useRef(null);
 
   const identity = getIdentityDisplay(
     identities[batchIndex],
@@ -60,6 +65,8 @@ export const Default = (props: DefaultProps) => {
           subtitle: address,
         };
 
+  // configure floating menu
+  const posRef = useRef(null);
   const menuItems = [
     {
       icon: <FontAwesomeIcon icon={faChartLine as IconProp} />,
@@ -97,7 +104,7 @@ export const Default = (props: DefaultProps) => {
   };
 
   return (
-    <Wrapper showStatus={showStatus}>
+    <Wrapper format="nomination" inModal={inModal}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
@@ -112,7 +119,7 @@ export const Default = (props: DefaultProps) => {
               <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
-              {toggleFavourites && <Favourite address={address} />}
+              {toggleFavourites && <FavouriteValidator address={address} />}
               {showMenu && (
                 <button
                   type="button"
@@ -124,6 +131,17 @@ export const Default = (props: DefaultProps) => {
               )}
             </Labels>
           </div>
+        </div>
+        <Separator />
+        <div className="row status">
+          <EraStatus address={address} />
+          {inModal && (
+            <>
+              <Labels>
+                <CopyAddress validator={validator} />
+              </Labels>
+            </>
+          )}
         </div>
       </div>
     </Wrapper>

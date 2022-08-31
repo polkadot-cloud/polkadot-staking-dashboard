@@ -105,7 +105,7 @@ const DropdownItem = ({ c, item, index }: any) => {
     <div className="wrapper" key={item.name} {...itemProps}>
       {!item.active && (
         <StatusLabel
-          status="sync_or_setup"
+          status="not_enough_unit"
           title={item.alert}
           topOffset="40%"
         />

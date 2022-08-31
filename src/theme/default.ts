@@ -11,7 +11,7 @@ const v = (light: string, dark: string) => ({
 });
 
 // eslint-disable-next-line
-export const defaultThemes: { [key: string]:any } = {
+export const defaultThemes: { [key: string]: any } = {
   transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
   text: {
     primary: v('#333', '#ccc'),
@@ -26,9 +26,10 @@ export const defaultThemes: { [key: string]:any } = {
       'linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(226,226,226, 1) 85%, rgba(247,237,230,1) 100%)',
       'linear-gradient(180deg, rgba(37,37,37,1) 0%, rgba(37,37,37,1) 100px, rgba(21,21,21,1) 100%)'
     ),
-    secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.2)'),
+    secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.25)'),
     network: v('rgba(244,225,225,0.75)', 'rgba(37,37,37,0.75)'),
-    dropdown: v('rgba(237,237,237,0.4)', 'rgba(19,19,19,0.4)'),
+    dropdown: v('rgba(237,237,237,0.6)', 'rgba(19,19,19,0.6)'),
+    modalitem: v('rgba(244,244,244,0.6)', 'rgba(22,22,22,0.4)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
       'linear-gradient(90deg, rgba(30,30,30,0.8) 0%, rgba(30,30,30,0.5) 100%)'
@@ -67,6 +68,10 @@ export const defaultThemes: { [key: string]:any } = {
     toggle: { background: v('rgba(244,243,242,1)', '#1a1a1a') },
     assistant: { background: v('#ececec', '#242424') },
     hover: { background: v('rgba(232, 230, 230, 0.9)', '#080808') },
+    disabled: {
+      background: v('#F3F6F4', '#000000'),
+      text: v('#ececec', '#444444'),
+    },
   },
   border: {
     primary: v('#e6e6e6', '#2a2a2a'),
@@ -74,7 +79,7 @@ export const defaultThemes: { [key: string]:any } = {
   },
   modal: {
     overlay: v('rgba(242,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
-    background: v('#fff', '#000'),
+    background: v('#fff', '#0b0b0b'),
   },
   assistant: {
     background: v('rgba(234,230,230,0.93)', 'rgba(18,18,18,0.93)'),
@@ -87,7 +92,21 @@ export const defaultThemes: { [key: string]:any } = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
-  shadow: v('#e8e8e8', '#1f1f1f'),
+  shadow: v('#e5e5e5', '#181818'),
+  status: {
+    danger: {
+      solid: v('red', 'red'),
+      transparent: v('rgba(255,0,0,0.25)', 'rgba(255,0,0,0.25)'),
+    },
+    warning: {
+      solid: v('rgba(219, 161, 0, 1)', 'rgba(219, 161, 0,1)'),
+      transparent: v('rgba(255,165,0,0.5)', 'rgba(255,165,0,0.5)'),
+    },
+    success: {
+      solid: v('green', 'green'),
+      transparent: v('rgba(0,128,0,0.25)', 'rgba(0,128,0,0.25)'),
+    },
+  },
 };
 
 // configure card style
@@ -101,7 +120,7 @@ const c = (flat: string, border: string, shadow: string) => ({
 export const cardThemes = {
   card: {
     border: c('none', '1px solid', 'none'),
-    shadow: c('none', 'none', '-2px 2px 25px'),
+    shadow: c('none', 'none', '-2px 2px 12px'),
   },
 };
 

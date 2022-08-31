@@ -6,6 +6,7 @@ import { ReactComponent as TalismanSVG } from './icons/talisman_icon.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/dot_icon.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
+import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
 
 export interface ExtensionConfig {
   id: string;
@@ -15,6 +16,11 @@ export interface ExtensionConfig {
   >;
 }
 export const EXTENSIONS: ExtensionConfig[] = [
+  {
+    id: 'enkrypt',
+    title: 'Enkrypt',
+    icon: EnkryptSVG,
+  },
   {
     id: 'subwallet-js',
     title: 'SubWallet',

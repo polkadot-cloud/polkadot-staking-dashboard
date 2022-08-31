@@ -18,10 +18,14 @@ export const Wrapper = styled.div`
     }
   }
   h2 {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    margin-bottom: 0;
-    line-height: 2.1rem;
+    &.stat {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      margin: 0;
+      > span {
+        flex-grow: 1;
+      }
+    }
   }
 `;

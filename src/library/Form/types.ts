@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ExternalAccount, ExtensionAccount } from 'contexts/Connect/types';
-import { BondOptions } from 'contexts/Balances/types';
+import { Balance } from 'contexts/Balances/types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
   alert?: string;
-  bondOptions?: BondOptions;
+  balance?: Balance;
 }
 export interface ExternalAccountItem extends ExternalAccount {
   active?: boolean;
   alert?: string;
-  bondOptions?: BondOptions;
+  balance?: Balance;
 }
 export type ImportedAccountItem = ExtensionAccountItem | ExternalAccountItem;
 
@@ -54,12 +54,12 @@ export interface BondInputWithFeedbackProps {
   bondType: string;
   defaultBond: number;
   unbond: boolean;
-  nominating?: boolean;
+  inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
 }
 
-export interface BondStatusBarProps {
+export interface NominateStatusBarProps {
   value: number;
 }
 

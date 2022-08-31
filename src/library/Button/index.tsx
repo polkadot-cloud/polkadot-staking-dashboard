@@ -40,7 +40,6 @@ export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
     padding: ${(props) => props.padding};
     border-radius: 0.75rem;
     font-size: ${(props) => props.fontSize};
-    font-variation-settings: 'wght' 560;
     transition: opacity 0.2s;
 
     .space {
@@ -74,7 +73,7 @@ export const Button = (props: ButtonProps) => {
       type={type}
       margin={inline ? '0' : '0 0.5rem'}
       padding={small ? '0.4rem 0.8rem' : '0.52rem 1.2rem'}
-      fontSize={small ? '0.95rem' : '1.05rem'}
+      fontSize={small ? '1rem' : '1.15rem'}
     >
       <button
         type="button"

@@ -132,7 +132,6 @@ export const NetworkInfo = styled(motion.div)`
 
     > div,
     > button {
-      padding: 0.25rem 1.5rem 0.25rem;
       background: rgba(0, 0, 0, 0.1);
       margin-right: 1rem;
       border-radius: 0.5rem;
@@ -144,9 +143,12 @@ export const NetworkInfo = styled(motion.div)`
         margin-right: 0;
       }
     }
+    > div,
+    > span {
+      padding: 1rem;
+    }
     h3 {
       margin: 0.25rem 0;
-      font-variation-settings: 'wght' 575;
       color: #f1f1f1;
       padding: 0.2rem 0;
 

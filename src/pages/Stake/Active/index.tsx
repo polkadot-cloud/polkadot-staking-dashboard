@@ -21,16 +21,16 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { GenerateNominations } from 'library/SetupSteps/GenerateNominations';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
-import { GenerateNominations } from '../GenerateNominations';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import InacctiveNominationsStatBox from './Stats/InactiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import { ControllerNotImported } from './ControllerNotImported';
 import { Status } from './Status';
 
-export const Active = ({ title }: any) => {
+export const Active = ({ title }: { title: string }) => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
@@ -38,7 +38,7 @@ export const Active = ({ title }: any) => {
   const { getAccountNominations } = useBalances();
   const nominations = getAccountNominations(activeAccount);
 
-  const ROW_HEIGHT = 290;
+  const ROW_HEIGHT = 275;
 
   return (
     <>
@@ -72,7 +72,7 @@ export const Active = ({ title }: any) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {nominations.length || inSetup() || isSyncing ? (
-            <Nominations bondType="stake" />
+            <Nominations bondType="stake" nominator={activeAccount} />
           ) : (
             <>
               <CardHeaderWrapper withAction>

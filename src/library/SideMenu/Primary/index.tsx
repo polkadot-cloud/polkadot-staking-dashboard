@@ -16,10 +16,34 @@ export const Primary = (props: PrimaryProps) => {
 
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
+  let Action = null;
+  const actionStatus = action?.status ?? null;
+
+  switch (action?.type) {
+    case 'text':
+      Action = (
+        <div className="action text">
+          <span className={`${actionStatus}`}>{action?.text ?? ''}</span>
+        </div>
+      );
+      break;
+    case 'bullet':
+      Action = (
+        <div className={`action ${actionStatus}`}>
+          <FontAwesomeIcon icon={faCircle as IconProp} transform="shrink-4" />
+        </div>
+      );
+      break;
+    default:
+      Action = null;
+  }
+
   return (
     <Link to={to} onClick={() => setSideMenu(0)}>
       <StyledWrapper
-        className={active ? 'active' : 'inactive'}
+        className={`${active ? `active` : `inactive`}${
+          action ? ` action-${actionStatus}` : ``
+        }`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{
@@ -27,16 +51,10 @@ export const Primary = (props: PrimaryProps) => {
         }}
       >
         <div className="icon">{icon}</div>
-        {!minimised && <h4 className="name">{name}</h4>}
-
-        {action && (
-          <div className={`action${minimised ? ` minimised` : ``}`}>
-            <FontAwesomeIcon
-              icon={faCircle as IconProp}
-              color="rgba(242, 185, 27,0.75)"
-              transform="shrink-3"
-            />
-          </div>
+        {!minimised && (
+          <>
+            <h4 className="name">{name}</h4> {Action}
+          </>
         )}
       </StyledWrapper>
     </Link>

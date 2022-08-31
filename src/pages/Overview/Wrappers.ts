@@ -3,16 +3,104 @@
 
 import styled from 'styled-components';
 import {
-  borderPrimary,
-  textPrimary,
   textSecondary,
-  networkColor,
+  borderPrimary,
   buttonSecondaryBackground,
+  borderSecondary,
 } from 'theme';
-import { MEDIUM_FONT_SiZE_MAX_WIDTH, SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
+import { SMALL_FONT_SIZE_MAX_WIDTH, MEDIUM_FONT_SiZE_MAX_WIDTH } from 'consts';
 
-export const SectionWrapper = styled.div`
-  padding: 0 1.25rem 0rem 1.25rem;
+export const ActiveAccounWrapper = styled.div`
+  width: 100%;
+
+  .account {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+
+    .icon {
+      position: relative;
+      top: 0.1rem;
+      margin-right: 0.5rem;
+    }
+    .title {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      flex: 1;
+      overflow: hidden;
+    }
+    .rest {
+      flex: 1 1 0%;
+      min-height: 1.8rem;
+      overflow: hidden;
+      position: relative;
+
+      .name {
+        position: absolute;
+        left: 0;
+        bottom: 0.1rem;
+        max-width: 100%;
+        display: inline;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        opacity: 0.75;
+      }
+    }
+
+    button {
+      background: ${buttonSecondaryBackground};
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      margin-left: 0.75rem;
+      padding: 0;
+    }
+
+    h3 {
+      margin: 0;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      flex: 1;
+
+      > .sep {
+        border-right: 1px solid ${borderSecondary};
+        margin: 0 0.8rem;
+        width: 1px;
+        height: 1.25rem;
+      }
+      > .addr {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+
+    > *:last-child {
+      flex-grow: 1;
+      display: flex;
+      flex-flow: row-reverse wrap;
+
+      .copy {
+        color: ${textSecondary};
+        opacity: 0.7;
+        cursor: pointer;
+        transition: opacity 0.1s;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+`;
+
+export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
+  padding: ${(props) => (props.noPadding ? '0' : '0 1.25rem 0rem 1.25rem')};
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -20,16 +108,14 @@ export const SectionWrapper = styled.div`
 
   .account {
     box-sizing: border-box;
-    width: 100%;
-    height: 27px;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     align-items: center;
-    padding: 0;
-    margin-top: 1.25rem;
 
     button {
-      color: ${textPrimary};
+      color: ${textSecondary};
+      margin-left: 0.5rem;
+      opacity: 0.7;
     }
 
     .icon {
@@ -40,14 +126,19 @@ export const SectionWrapper = styled.div`
       box-sizing: border-box;
       margin: 0;
       padding: 0 0.5rem;
-      flex-grow: 1;
+      flex: 1;
       overflow: hidden;
     }
     h4 {
       margin: 0;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      flex: 1;
+
       > .sep {
-        border-right: 1px solid ${borderPrimary};
-        margin: 0 0.7rem;
+        border-right: 1px solid ${borderSecondary};
+        margin: 0 0.8rem;
         width: 1px;
         height: 1.25rem;
       }
@@ -55,7 +146,6 @@ export const SectionWrapper = styled.div`
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        flex: 1;
         opacity: 0.75;
       }
     }
@@ -86,94 +176,11 @@ export const Separator = styled.div`
   height: 1px;
 `;
 
-export const ReturnsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  height: 100%;
-
-  h4 {
-    color: ${textSecondary};
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    margin-bottom: 0;
-
-    .assistant-icon {
-      margin-left: 0.6rem;
-    }
-  }
-
-  > section {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    padding: 0 0.5rem;
-    flex-basis: 100%;
-
-    .items {
-      box-sizing: border-box;
-      flex-grow: 1;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      width: 100%;
-
-      > div {
-        box-sizing: border-box;
-        flex-grow: 1;
-        padding-right: 0;
-        padding-bottom: 0.75rem;
-        flex-basis: 100%;
-        width: 100%;
-        border-bottom: 1px solid ${borderPrimary};
-        margin-bottom: 0.6rem;
-
-        @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
-          flex-basis: 33%;
-          padding-right: 1rem;
-          padding-bottom: 0;
-          border-bottom: 0;
-          margin-bottom: 0;
-        }
-        &:last-child {
-          padding-right: 0;
-          padding-bottom: 0;
-          border-bottom: 0;
-        }
-        > .inner {
-          border-radius: 0.8rem;
-          width: 100%;
-          padding: 0rem 1rem;
-          display: flex;
-          flex-flow: row nowrap;
-
-          h2 {
-            color: ${networkColor};
-            margin-top: 0rem;
-            margin-bottom: 0;
-          }
-          h4 {
-            display: flex;
-            flex-flow: row wrap;
-            color: ${textSecondary};
-            margin-top: 0.45rem;
-            margin-bottom: 0;
-          }
-          display: flex;
-          flex-flow: column wrap;
-        }
-      }
-    }
-  }
-`;
-
 export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 5rem;
+  margin-top: 6rem;
   @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
     margin-top: 2.25rem;
   }
@@ -193,37 +200,58 @@ export const ReserveWrapper = styled.div`
 
     > section {
       display: flex;
-      flex-flow: column wrap;
-      justify-content: center;
-      padding: 0 0.5rem;
+      flex-flow: row wrap;
+      align-items: center;
+      position: relative;
 
       &:first-child {
-        flex-basis: 33%;
-        padding-left: 0;
-        .assistant-icon {
-          margin-left: 0.6rem;
-        }
+        box-sizing: border-box;
+        flex: 1 1 40%;
+        max-width: 200px;
+        overflow: hidden;
 
-        > .items > div {
+        .reserve {
           background: ${buttonSecondaryBackground};
+          display: block;
+          box-sizing: border-box;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          position: relative;
           border-radius: 0.75rem;
           opacity: 0.75;
+          padding-top: 0.7rem;
+          padding-bottom: 0.7rem;
+          padding-left: 2.5rem;
+          padding-right: 1rem;
+          width: 100%;
+
+          .icon {
+            position: absolute;
+            top: 0.8rem;
+            left: 0.65rem;
+          }
         }
       }
+
       &:last-child {
         border-radius: 0.5rem;
-        flex-basis: 67%;
-        padding-right: 0;
-        flex-grow: 1;
+        padding-left: 1rem;
+        flex: 1 1 60%;
         opacity: 0.5;
         transition: opacity 0.15s;
         &:hover {
           opacity: 1;
         }
       }
+
+      .assistant-icon {
+        margin-left: 0.6rem;
+      }
+
       .items {
         box-sizing: border-box;
-        flex-grow: 1;
+        flex: 1 1 40%;
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
@@ -233,8 +261,7 @@ export const ReserveWrapper = styled.div`
           flex-flow: column wrap;
           justify-content: center;
           box-sizing: border-box;
-          padding: 0.5rem 0.75rem;
-          flex: 1 1 100%;
+          padding: 0.5rem 0.6rem;
 
           &.sep {
             flex: 0;

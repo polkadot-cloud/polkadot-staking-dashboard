@@ -40,7 +40,7 @@ export const BondSome = (props: FormsProps) => {
   const [bond, setBond] = useState({ bond: freeToBond });
 
   // bond valid
-  const [bondValid, setBondValid]: any = useState(false);
+  const [bondValid, setBondValid] = useState<boolean>(false);
 
   // update bond value on task change
   useEffect(() => {

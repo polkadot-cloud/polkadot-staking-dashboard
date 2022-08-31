@@ -7,18 +7,19 @@ import { useUi } from 'contexts/UI';
 import { AccountSelect } from 'library/Form/AccountSelect';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { InputItem } from 'library/Form/types';
-import { Header } from './Header';
-import { Footer } from './Footer';
+import { SetupType } from 'contexts/UI/types';
+import { Header } from 'library/SetupSteps/Header';
+import { Footer } from 'library/SetupSteps/Footer';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { SetupStepProps } from 'library/SetupSteps/types';
 import { Spacer } from '../Wrappers';
-import { MotionContainer } from './MotionContainer';
-import { SetControllerProps } from '../types';
 
-export const SetController = (props: SetControllerProps) => {
+export const SetController = (props: SetupStepProps) => {
   const { section } = props;
 
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(activeAccount);
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   // store the currently selected controller account
   const _selected = setup.controller !== null ? setup.controller : null;
@@ -39,7 +40,7 @@ export const SetController = (props: SetControllerProps) => {
 
   const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
     setSelected(selectedItem);
-    setActiveAccountSetup({
+    setActiveAccountSetup(SetupType.Stake, {
       ...setup,
       controller: selectedItem?.address ?? null,
     });
@@ -53,6 +54,7 @@ export const SetController = (props: SetControllerProps) => {
         assistantPage="stake"
         assistantKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
+        setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
@@ -62,7 +64,10 @@ export const SetController = (props: SetControllerProps) => {
           placeholder="Search Account"
           value={selected}
         />
-        <Footer complete={setup.controller !== null} />
+        <Footer
+          complete={setup.controller !== null}
+          setupType={SetupType.Stake}
+        />
       </MotionContainer>
     </>
   );

@@ -22,13 +22,15 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   align-items: center;
   padding: 0.75rem 0rem 0.75rem 0.5rem;
   margin: 0.55rem 0.2rem 0.55rem 0;
-  font-size: 1.04rem;
   position: relative;
 
   .name {
     color: ${textSecondary};
-    font-size: 1rem;
-    font-variation-settings: 'wght' 480;
+    font-size: 1.1rem;
+  }
+  .light {
+    color: ${textSecondary};
+    margin-left: 0.2rem;
   }
   .action {
     color: ${textSecondary};
@@ -56,7 +58,6 @@ export const MinimisedWrapper = styled(motion.button)`
   align-items: center;
   padding: 0.6rem 0rem;
   margin: 0.3rem 0 0.3rem 0;
-  font-size: 1.04rem;
   position: relative;
 
   &.active {

@@ -50,7 +50,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   };
 
   const filled = props.filled ?? false;
-  const fontSize = props.fontSize ?? '0.95rem';
+  const fontSize = props.fontSize ?? '1.05rem';
   const wallet = props.wallet ?? false;
   const { canClick }: { canClick: boolean } = props;
 

@@ -6,11 +6,25 @@
  * import { ReactComponent as ValidatorEntityName } from './thumbnails/validatorEntityName.svg';
  */
 import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
+import { ReactComponent as CoinbaseCloud } from './thumbnails/coinbasecloud.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
+import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
+import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
+import { ReactComponent as GenericChain } from './thumbnails/genericchain.svg';
+import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
+import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
+import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
+import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
+import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
+import { ReactComponent as PythagorasCapitalInvestment } from './thumbnails/pythagorascapitalinvestment.svg';
+import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
+import { ReactComponent as Stakely } from './thumbnails/stakely.svg';
+import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
+import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
@@ -50,6 +64,178 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'Coinbase Cloud',
+    Thumbnail: CoinbaseCloud,
+    bio: 'Our staking infrastructure powers the leading crypto products and exchanges. We offer the same infrastructure in our public validators and make it available to you.',
+    email: 'cloud-support@coinbase.com',
+    twitter: '@CoinbaseCloud',
+    website: 'https://www.coinbase.com/cloud',
+    validators: {
+      polkadot: [
+        '1VrKDfXunzstY5uxPpjArUbZekirGXcpMDYvCBJmjV1KdEm',
+        '16Dgcx1qJzp8kme1CWsySDf3JWd1oKtbChYVm2yAYqM44woY',
+        '12Yz9HPcF66pAGpwEW5cyFZ59TFeXFGVnkuxTphC3Lrap29z',
+        '12e1tkDgfF3GYdiTkRq1vunXrvvhpKq3BQZYbJ1haXHApQTn',
+        '12eKZbGJKVyHfTPkUs9MrJeGkbFrZRqzhKBBeRJ3G3YoWPun',
+        '12q76RYkETZ6UACiiznBicXgcXZ8EMFAuPv8QtfSrc6KSLYo',
+        '1A2ATy1FEu5yQ9ZzghPLsRckPQ7XLmq5MJQYcTvGnxGvCho',
+        '15V6NjwmKkZihe644Tyr8GVLxjEzBAHktf6ZcJCTx7RPCoYS',
+        '124YFXA3XoRs9Epcx3aRUSk3EKYaznocqMWfrMKtGjx8TJ2W',
+        '12ECDEb18Wiy4MoLn3NTM5zhJfDfpS4mLNvjHpcEr8ogGrMZ',
+        '12HFymxpDmi4XXPHaEMp74CNpRhkqwG5qxnrgikkhon1XMrj',
+        '12WmM98h4Ar6y7ZyyMKPXwSyuP5GSZvXTbEkDXm1tirbZFW4',
+        '13BN4WksoyexwDWhGsMMUbU5okehD19GzdyqL4DMPR2KkQpP',
+        '14XefeqDxiaVQEo7Xv7WBs3Wz8GZPes7DBjQxsNuxu683B9o',
+        '1486kNkPxvF7Pmgfr4MskGnn4p4KXCigMejv5Q7szMowioKK',
+        '14wFkAiTSxhUUdpkN37QMhZv6dYcURJVgSGwqDRd4TK2qhrL',
+      ],
+      kusama: [
+        'EFjHdypk8xLf3ocDEFPaKFWVcfamH8mpvfUeXHvRWpSBk2M',
+        'DXrJrPLLBHuapmYJ6tfuUStKubhykWmpgLckJpgFgjp2JvV',
+      ],
+    },
+  },
+  {
+    name: '🌐 decentraDOT.com 🌐',
+    Thumbnail: Decentradot,
+    bio: 'decentraDOT is a high-quality Polkadot validator run by blockchain enthusiasts in the Netherlands. In addition to staking services we provide free of charge software such as our validator dashboard.',
+    email: 'admin@decentradot.com',
+    website: 'https://decentradot.com',
+    validators: {
+      polkadot: ['15wznkm7fMaJLFaw7B8KrJWkNcWsDziyTKVjrpPhRLMyXsr5'],
+      kusama: [
+        'GRSWBC1kCuNVp8KTgGyK7Bo3bP7CdLDPwfnx2L5JJLQ41Qj',
+        'Em4HYqVrWX3uCvrC8NWoabfKpV9z8stdRKkXYXcZdWGxdXT',
+      ],
+    },
+  },
+  {
+    name: 'GATOTECH',
+    Thumbnail: Gatotech,
+    bio: 'Gatotech Ltd is a Scottish IT company focused on the adoption of decentralised ledger technologies (DLT) for the benefit of humankind.',
+    email: 'info@gatotech.uk',
+    twitter: '@gatotech_uk',
+    website: 'gatotech.uk',
+    validators: {
+      polkadot: [
+        '15iA5hpjUecWBbf38Nfegwmtyux25o3LrGaNodfZDxq5nXXE',
+        '14KHzXAZ5admFLXdgbEGpSjCGxiePniHRDM6t5r4o8kbYV7P',
+      ],
+      kusama: [
+        'DrRBkx2Qx4sXRGZDXz6d44QCXqV2eJhn8Rq79V88FpSqAr8',
+        'EeFYYF8zrLXRpfFXLn2T5bMmgiFpDpmAhVzoh9hA3188wTc',
+      ],
+    },
+  },
+  {
+    name: 'GoOpen',
+    Thumbnail: GoOpen,
+    bio: 'Independent Polkadot Validator. Polkadot teacher on Moralis academy. With strong knowledge of Linux, making sure that the validator is running on a secure and up-to-date system with optimal hardware.',
+    validators: {
+      polkadot: ['16VVNbc4m6aUxwaVwgRra6Ue7fMNGcRQHTFo1TqxmnCyuwwn'],
+      kusama: ['JJiV1xrj1814BVDDG2pFCsgzdbR7K29VcyXQGXEUhn7LWhK'],
+    },
+  },
+  {
+    name: 'Jimmy Tudeski | Stakenode ʕ •ᴥ•ʔ',
+    Thumbnail: Stakenode,
+    bio: 'Stakenode provides validation and staking services for Polkadot and Kusama relay chains and parachain networks. We are independent node operators, experienced Dotsama ambassadors, focused on community, decentralisation and ecosystem development. Come stake and build with us.',
+    email: 'jimmytudeski@stakenode.dev',
+    twitter: '@stakenode_dev',
+    website: 'https://stakenode.medium.com/',
+    validators: {
+      kusama: [
+        'FvdwMNP57nRWEsNZZsrHWKqnbmduy4jBAC8MeLmgi9Yp8sA',
+        'D3Sr3PozgPypkBzKBheGSJbqu8m4idenBPaWtZUXLWPtjJT',
+      ],
+    },
+  },
+  {
+    name: 'METASPAN',
+    Thumbnail: Metaspan,
+    bio: 'End-to-end blockchain solutions, building on Polkadot and Kusama.',
+    email: 'hello@metaspan.com',
+    twitter: '@metaspan_io',
+    website: 'https://metaspan.com/',
+    validators: {
+      polkadot: ['16ce9zrmiuAtdi9qv1tuiQ1RC1xR6y6NgnBcRtMoQeAobqpZ'],
+      kusama: ['HyLisujX7Cr6D7xzb6qadFdedLt8hmArB6ZVGJ6xsCUHqmx'],
+    },
+  },
+  {
+    name: 'G-dot Tech',
+    Thumbnail: GDOT,
+    bio: 'G-dot Tech is providing professional staking services on well-maintained bare metal machines with locations across Europe. Our goal is to contribute to the decentralization of Polkadot and Kusama by staying independent with a small share among the active validators. Feel free to reach out any time if you have questions.',
+    email: 'g-dot.tech@protonmail.com',
+    website: 'https://g-dot.tech/',
+    validators: {
+      polkadot: ['153Fz22gxQP8HM8RbnvEt9XWsXu9nR8jxZC2MbQFmuKhN62f'],
+      kusama: [
+        'G9zJwPviHn5qRHCRX4Gm75XtUob9Cagyu4fdrhrzwsbqUwX',
+        'HHvov74Rs8S9zGJifq7HKw4Ua14medsxokDyyCwjSSDfSj7',
+        'DPdkDRzUV56F5R8fNjZwFx2Uctn173c1UJJXjxQMVMZuCqS',
+      ],
+    },
+  },
+  {
+    name: 'Generic-Chain',
+    Thumbnail: GenericChain,
+    bio: 'Generic-Chain validation servers, by TwoPebbles Ventures, have an outstanding operations team that provides professionally managed infrastructure, maximizing returns with ultra-reliable and secure validation services.',
+    email: 'info@generic-chain.io',
+    twitter: '@generic_chain',
+    validators: {
+      polkadot: ['13pZskDR7Pt67NtcChSr4uFRBf9ZS52nQeyrceSykq8MDrMe'],
+      kusama: [
+        'EiMA69PZWju1jmisAU3ubN4wJQgBexnFXZpWb7aMtftP5rV',
+        'J6HHWeSmt5PjoDCRzVvB5oJnQMMvCM5iNBd5W42S8L3BbVK',
+        'EffRLTpaDPBa6G6UUhXCVdn2SNyeMxPJttucrtppEjnHkST',
+      ],
+    },
+  },
+  {
+    name: 'ParaNodes.io',
+    Thumbnail: ParaNodes,
+    bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stablility of operations.',
+    email: 'support@paranodes.io',
+    twitter: '@paranodes',
+    website: 'https://paranodes.io/',
+    validators: {
+      polkadot: ['14hM4oLJCK6wtS7gNfwTDhthRjy5QJ1t3NAcoPjEepo9AH67'],
+      kusama: [
+        'H3DL157HL7DkvV2kXocanmKaGXNyQphUDVW33Fnfk8KNhsv',
+        'HtYny8Eker9VBEKQrtBd6Y5PTkaHQFSvyMFy2bkd66wGBan',
+        'FkWky3r2bryP3aaAwVWykYrKesAwkDyKZWsDyBvck7YawSi',
+        'EsNZHmG4bQMGzQNK4Z2CR7Hdhu4or7p2vsLRChUEJcjJAeU',
+        'EriYFJuqCeBF6SFkKxyQWwaTvT9tcoF9ZGDQ4LX3a1iBsYr',
+        'ESzw1JdRfoBNUKo12qjqu4RMgro3exrit1Tr1GGFjVhyHZf',
+        'DtrDM8ZZpBhTSwptMCgYEzJqbPUFArScxikZfbd9tHA47PZ',
+        'EWxmJtdmRUtpgLiHzFbtQc3E2jDx9j3VYZPmjWCEaSUnCZG',
+        'HyZUEZw5G18KtisetKL274g2Kh6i2XHKtFoheyKJW9vBwXu',
+        'Gu6Jt8TJQ3LF7dJgVLCr1JfoxKTcWhMAoaXr8ATczMAE9vm',
+        'ECLwZzFusnTr6hdztrkVaTKeQoWxKZBh9e8EzdG92QX7PAy',
+        'EjHrXpRHyo1WpWEmFKTYT8wEtTXKnzZDQAth1MErwDmabmq',
+        'GpZgakHH3wR1vCvYFgy8Q1iJWYqxyQiRPyeXhGKWxX88uXP',
+        'CecU9j1rpC6CDSzFjtrUmNqonzVk5n1BNFiTiN9vadA1rMs',
+        'FYiswPLWbZAJSBJ3AcGcXpQYxCJW3eE56QQvnshGUEKJexW',
+      ],
+    },
+  },
+  {
+    name: 'PDP_Validator',
+    Thumbnail: PDP,
+    bio: 'Our service has its own infrastructure and a team of administrators.  The beneficiaries of our service are investment professionals.  We validate in projects from the top 10.  We will help you earn!',
+    email: 'pavel.butenko@yahoo.com',
+    twitter: '@PaulBAciD',
+    website: 'https://t.me/go300info',
+    validators: {
+      polkadot: ['16Y3FmTiJ3ZYAUZrf5rZtxrQJzcHsDBdscpu2zgMD2xN6NY7'],
+      kusama: [
+        'J7MmkYX4dJzUbNnU9ccemPFbxtsyaSgFVwAGMxx8k9Lf5cu',
+        'HCogweijHTm85qf9cSUqjNmyZZvu61r4SsTcsAT7S7pgpem',
+      ],
+    },
+  },
+  {
     name: 'polkachu.com',
     Thumbnail: Polkachu,
     bio: 'Polkachu Validators helps investors compound their crypto investments with low commission and advanced support.',
@@ -77,6 +263,48 @@ export const VALIDATOR_COMMUNITY = [
     validators: {
       polkadot: ['16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN'],
       kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
+    },
+  },
+  {
+    name: '🍀ARISTOPHANES🍀',
+    Thumbnail: PythagorasCapitalInvestment,
+    bio: 'Our motto is responsibility and transparency. We never go offline willfully or negligently, or impose exorbitant commission rates. Our record proves the trust people have placed on us. Being a Tokyo-based node, staking at us strengthens geological resistance of the network to disruptions.',
+    email: 'subscr3zp@tutanota.com',
+    twitter: '@PythagorasCI',
+    website: 'https://pythagoras-capital.net/',
+    validators: {
+      polkadot: ['128iAScPNNZcoSXQuFp1VkgW376KqvZs61g9Y36MuUX78ZZ6'],
+      kusama: [
+        'HU6TSsvA84GKrTiyArBHiFDVBSLHNr5Ki3qPV7T8WKyVJaz',
+        'JHbMAHJw6nnQPD3Zth13DGoPxLjYUPWC71AMbErt817nK9y',
+      ],
+    },
+  },
+  {
+    name: 'Stakely',
+    Thumbnail: Stakely,
+    bio: '🔥 Professional validator highly experienced in PoS 🔥 Slashing protection & Eligible for airdrops | Learn with our staking guides, video tutorials and FAQs | Part of the commission of our nodes will go to our Multicoin Faucet funds and other tools 🌱 Carbon Neutral 🌱',
+    email: 'nodes@stakely.io',
+    twitter: '@stakely_io',
+    website: 'https://stakely.io',
+    validators: {
+      polkadot: ['15R1Th3ULXAq81QPGeEDfE1ywbw19AjZiARxH7czm83wS2w2'],
+      kusama: ['EfcQCKZJaNu2vcrpnJDCoh1ub4mGWcHVzeU8ghUH7Co9rui'],
+    },
+  },
+  {
+    name: 'Stakepile.com',
+    Thumbnail: Stakepile,
+    bio: 'Reliable, independent staking service with low fees to help you earn better yields. We actively participate in all community on-chain governance. Our nodes are geographically distributed across several regions for better redundancy and decentralization.',
+    email: 'stake@stakepile.com',
+    twitter: '@stakepile',
+    website: 'https://stakepile.com',
+    validators: {
+      polkadot: ['124X3VPduasSodAjS6MPd5nEqM8SUdKN5taMUUPtkWqF1fVf'],
+      kusama: [
+        'J6TTn21p46c1XzXAZPVTGuQwBxFG2JfTwRnAFwgcdE2SWdz',
+        'EAChfSL6tQfjy7vD8YgYB8DCn7A9c1aAsERP9Hx8cj1tqxL',
+      ],
     },
   },
   {
@@ -112,6 +340,24 @@ export const VALIDATOR_COMMUNITY = [
         'Eksma7JmWh8DenpNKi2uCavwaKJ9QrJJbtcnmwJr3hbHSmC',
         'Dm64aaAUyy5dvYCSmyzz3njGrWrVaki9F6BvUDSYjDDoqR2',
         'DfHkfoKa6xzNMWTNGL8SH8VyY69gajen4ijgmegeU4cZm1H',
+      ],
+    },
+  },
+  {
+    name: 'STAKEWORLD',
+    Thumbnail: Stakeworld,
+    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
+    email: 'info@stakeworld.nl',
+    website: 'https://stakeworld.nl',
+    validators: {
+      polkadot: [
+        '14kpNbU4XjEHfYdqp95Gq3NkBWbgFd6J8Yjd2SneWNzvf1Yp',
+        '13Jpq4n3PXXaSAbJTMmFD78mXAzs8PzgUUQd5ve8saw7HQS5',
+      ],
+      kusama: [
+        'CtEni6wrP7Kz2KWus9Y6vQWuhLqJpd9mQFTmTvw8T7FLui8',
+        'FZ1GFKR6tYx9gNGHV67h5aV6bfhAbh7ZRdU9ypVvXfseyfg',
+        'Et9M3rrA7H2kHQEGRXHxufcp9HTEmFirMWtKHvjoJ85r1C9',
       ],
     },
   },

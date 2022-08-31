@@ -7,6 +7,7 @@ import React from 'react';
 import throttle from 'lodash.throttle';
 import { planckBnToUnit } from 'Utils';
 import { AnySubscan } from 'types';
+import { useUi } from 'contexts/UI';
 
 export const getSize = (element: any) => {
   const width = element?.offsetWidth;
@@ -15,6 +16,8 @@ export const getSize = (element: any) => {
 };
 
 export const useSize = (element: any) => {
+  const { containerRefs } = useUi();
+
   const [size, setSize] = React.useState(getSize(element));
 
   const throttleCallback = () => {
@@ -27,9 +30,12 @@ export const useSize = (element: any) => {
       leading: false,
     });
 
-    window.addEventListener('resize', resizeThrottle);
+    // listen to main interface resize if ref is available, otherwise
+    // fall back to window resize.
+    const listenFor = containerRefs?.mainInterface?.current ?? window;
+    listenFor.addEventListener('resize', resizeThrottle);
     return () => {
-      window.removeEventListener('resize', resizeThrottle);
+      listenFor.removeEventListener('resize', resizeThrottle);
     };
   });
   return size;
@@ -66,14 +72,20 @@ export const getGradient = (ctx: any, chartArea: any) => {
   return gradient;
 };
 
-// given payouts, calculate daily icome and fill missing days with zero amounts.
+// given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculatePayoutsByDay = (
   payouts: any,
   maxDays: number,
+  average: number,
   units: number
 ) => {
   if (!payouts.length) {
     return payouts;
+  }
+
+  // if we are taking an average, we will need extra days of data.
+  if (average > 1) {
+    maxDays += average;
   }
 
   const payoutsByDay: any = [];
@@ -191,7 +203,34 @@ export const calculatePayoutsByDay = (
       }
     }
   }
-  return payoutsByDay;
+
+  // if we don't need to take an average, just return the `payoutsByDay`.
+  if (average <= 1) {
+    return payoutsByDay;
+  }
+
+  // create moving average value over `average` days
+  const averagePayoutsByDay = [];
+  for (let i = 0; i < payoutsByDay.length; i++) {
+    let total = 0;
+    let num = 0;
+    for (let j = 0; j < average; j++) {
+      if (payoutsByDay[i + j]) {
+        total += payoutsByDay[i + j].amount;
+      }
+      // increase by one anyway to treat non-existent as zero value
+      num += 1;
+    }
+
+    averagePayoutsByDay.push({
+      amount: total / num,
+      event_id: payoutsByDay[i].event_id,
+      block_timestamp: payoutsByDay[i].block_timestamp,
+    });
+  }
+
+  // return an array with the expected number of items
+  return averagePayoutsByDay.slice(0, maxDays - average);
 };
 
 // fill in the backlog of days up to `maxDays`
@@ -225,16 +264,17 @@ export const prefillToMaxDays = (payoutsByDay: any, maxDays: number) => {
 // format rewards and return last payment
 export const formatRewardsForGraphs = (
   days: number,
+  average: number,
   units: number,
   payouts: AnySubscan,
   poolClaims: AnySubscan
 ) => {
   let payoutsByDay = prefillToMaxDays(
-    calculatePayoutsByDay(payouts, days, units),
+    calculatePayoutsByDay(payouts, days, average, units),
     days
   );
   let poolClaimsByDay = prefillToMaxDays(
-    calculatePayoutsByDay(poolClaims, days, units),
+    calculatePayoutsByDay(poolClaims, days, average, units),
     days
   );
 

@@ -28,7 +28,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { getBondOptions, getBondedAccount } = useBalances();
   const { bondType } = config;
   const { stats } = usePoolsConfig();
-  const { getPoolBondOptions } = useActivePool();
+  const { getPoolBondOptions, isDepositor } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;
@@ -36,7 +36,7 @@ export const UnbondSome = (props: FormsProps) => {
   const poolBondOptions = getPoolBondOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
-  const { minJoinBond: minJoinBondBn } = stats;
+  const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
 
   const { freeToUnbond: freeToUnbondBn } = isPooling
@@ -46,16 +46,20 @@ export const UnbondSome = (props: FormsProps) => {
   // convert BN values to number
   const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
   const minJoinBond = planckBnToUnit(minJoinBondBn, units);
+  const minCreateBond = planckBnToUnit(minCreateBondBn, units);
   const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
+
   // local bond value
   const [bond, setBond] = useState({ bond: freeToUnbond });
 
   // bond valid
-  const [bondValid, setBondValid] = useState(false);
+  const [bondValid, setBondValid] = useState<boolean>(false);
 
   // get the max amount available to unbond
   const freeToUnbondToMin = isPooling
-    ? Math.max(freeToUnbond - minJoinBond, 0)
+    ? isDepositor()
+      ? Math.max(freeToUnbond - minCreateBond, 0)
+      : Math.max(freeToUnbond - minJoinBond, 0)
     : Math.max(freeToUnbond - minNominatorBond, 0);
 
   // unbond some validation

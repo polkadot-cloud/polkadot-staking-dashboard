@@ -10,15 +10,11 @@ import { Setup } from './Setup';
 export const Stake = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
-  const { onSetup, setOnSetup } = useUi();
+  const { onNominatorSetup } = useUi();
 
   return (
     <Wrapper>
-      {onSetup ? (
-        <Setup title={title} setOnSetup={setOnSetup} />
-      ) : (
-        <Active title={title} setOnSetup={setOnSetup} />
-      )}
+      {onNominatorSetup ? <Setup title={title} /> : <Active title={title} />}
     </Wrapper>
   );
 };

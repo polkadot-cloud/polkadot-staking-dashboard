@@ -25,7 +25,6 @@ export const Wrapper = styled.button`
     flex-flow: row wrap;
     justify-content: flex-start;
     flex: 1;
-    font-variation-settings: 'wght' 420;
   }
 
   &:hover {

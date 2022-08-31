@@ -32,7 +32,6 @@ export const Wrapper = styled.ul`
       color: ${networkColor};
       box-sizing: border-box;
       margin: 0 0 0.5rem;
-      font-variation-settings: 'wght' 500;
       flex: 1;
     }
     h5 {

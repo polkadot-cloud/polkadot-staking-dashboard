@@ -60,7 +60,7 @@ export const StyledSelect = styled.div`
   width: 100%;
   border-radius: 0.75rem;
   z-index: 1;
-  height: 148px;
+  height: 170px;
   padding: 0.25rem;
   overflow: auto;
   display: flex;
@@ -70,9 +70,11 @@ export const StyledSelect = styled.div`
 
   .wrapper {
     position: relative;
-    width: 240px;
-    height: 130px;
-    margin: 0.25rem;
+    min-width: 240px;
+    height: 125px;
+    flex: 1 1 20%;
+    max-width: 20%;
+    padding: 0.35rem;
 
     .item {
       background: ${backgroundToggle};

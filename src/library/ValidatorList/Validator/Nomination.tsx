@@ -2,25 +2,34 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
+import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
 import { useValidatorList } from '../context';
-import { Wrapper, Labels, Separator } from './Wrappers';
 import { getIdentityDisplay } from './Utils';
-import { Favourite } from './Labels/Favourite';
-import { Metrics } from './Labels/Metrics';
-import { Identity } from './Labels/Identity';
-import { CopyAddress } from './Labels/CopyAddress';
-import { Oversubscribed } from './Labels/Oversubscribed';
-import { Blocked } from './Labels/Blocked';
-import { Select } from './Labels/Select';
-import { NominationStatus } from './Labels/NominationStatus';
+import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
+import { Metrics } from '../../ListItem/Labels/Metrics';
+import { Identity } from '../../ListItem/Labels/Identity';
+import { CopyAddress } from '../../ListItem/Labels/CopyAddress';
+import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
+import { Blocked } from '../../ListItem/Labels/Blocked';
+import { Select } from '../../ListItem/Labels/Select';
+import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
 import { NominationProps } from './types';
-import { Commission } from './Labels/Commission';
+import { Commission } from '../../ListItem/Labels/Commission';
 
 export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();
   const { selectActive } = useValidatorList();
 
-  const { validator, toggleFavourites, batchIndex, batchKey, bondType } = props;
+  const {
+    validator,
+    nominator,
+    toggleFavourites,
+    batchIndex,
+    batchKey,
+    bondType,
+    inModal,
+  } = props;
+
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
 
@@ -28,7 +37,7 @@ export const Nomination = (props: NominationProps) => {
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper format="nomination">
+    <Wrapper format="nomination" inModal={inModal}>
       <div className="inner">
         <div className="row">
           {selectActive && <Select validator={validator} />}
@@ -40,24 +49,31 @@ export const Nomination = (props: NominationProps) => {
           <div>
             <Labels>
               <CopyAddress validator={validator} />
-              {toggleFavourites && <Favourite address={address} />}
+              {toggleFavourites && <FavouriteValidator address={address} />}
             </Labels>
           </div>
         </div>
         <Separator />
         <div className="row status">
-          <NominationStatus address={address} bondType={bondType} />
+          <NominationStatus
+            address={address}
+            bondType={bondType}
+            nominator={nominator}
+          />
           <Labels>
             <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
             <Blocked prefs={prefs} />
             <Commission commission={commission} />
-            <Metrics
-              address={address}
-              display={getIdentityDisplay(
-                identities[batchIndex],
-                supers[batchIndex]
-              )}
-            />
+            {/* restrict opening another modal within a modal */}
+            {!inModal && (
+              <Metrics
+                address={address}
+                display={getIdentityDisplay(
+                  identities[batchIndex],
+                  supers[batchIndex]
+                )}
+              />
+            )}
           </Labels>
         </div>
       </div>

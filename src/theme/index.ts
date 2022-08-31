@@ -57,6 +57,11 @@ export const backgroundDropdown: theme.ThemeSet = theme(
   defaultThemes.background.dropdown
 );
 
+export const backgroundModalItem: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.modalitem
+);
+
 export const backgroundValidator: theme.ThemeSet = theme(
   v,
   defaultThemes.background.validator
@@ -116,6 +121,16 @@ export const buttonHoverBackground: theme.ThemeSet = theme(
   defaultThemes.buttons.hover.background
 );
 
+export const buttonDisabledBackground: theme.ThemeSet = theme(
+  v,
+  defaultThemes.buttons.disabled.background
+);
+
+export const buttonDisabledText: theme.ThemeSet = theme(
+  v,
+  defaultThemes.buttons.disabled.text
+);
+
 // labels
 
 export const tagBackground: theme.ThemeSet = theme(
@@ -171,6 +186,38 @@ export const assistantButton: theme.ThemeSet = theme(
 export const assistantLink: theme.ThemeSet = theme(
   v,
   defaultThemes.assistant.link
+);
+
+// status colors
+
+export const danger: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.danger.solid
+);
+
+export const dangerTransparent: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.danger.transparent
+);
+
+export const warning: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.warning.solid
+);
+
+export const warningTransparent: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.warning.transparent
+);
+
+export const success: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.success.solid
+);
+
+export const successTransparent: theme.ThemeSet = theme(
+  v,
+  defaultThemes.status.success.transparent
 );
 
 // shadow

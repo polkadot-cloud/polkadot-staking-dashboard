@@ -7,14 +7,10 @@ import { useOutsideAlerter } from 'library/Hooks';
 import { useTheme } from 'contexts/Themes';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquare } from '@fortawesome/free-solid-svg-icons';
-import { faSquare as faSquareRegular } from '@fortawesome/free-regular-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper, ItemWrapper } from './Wrappers';
 
 export const Palette = () => {
-  const { mode, card, toggleTheme, toggleCard } = useTheme();
+  const { mode, toggleTheme } = useTheme();
   const palette = usePalette();
   const { position } = palette;
 
@@ -74,30 +70,6 @@ export const Palette = () => {
               disabled={mode === 'dark'}
             >
               <MoonOutlineSVG width="1.25rem" height="1.25rem" />
-            </button>
-          </ItemWrapper>
-          <h4>Card Style</h4>
-          <ItemWrapper>
-            <button
-              type="button"
-              onClick={() => toggleCard('flat')}
-              disabled={card === 'flat'}
-            >
-              &nbsp;
-            </button>
-            <button
-              type="button"
-              onClick={() => toggleCard('border')}
-              disabled={card === 'border'}
-            >
-              <FontAwesomeIcon icon={faSquareRegular as IconProp} />
-            </button>
-            <button
-              type="button"
-              onClick={() => toggleCard('shadow')}
-              disabled={card === 'shadow'}
-            >
-              <FontAwesomeIcon icon={faSquare} />
             </button>
           </ItemWrapper>
         </Wrapper>

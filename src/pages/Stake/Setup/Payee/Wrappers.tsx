@@ -28,9 +28,9 @@ export const Item = styled.button<{ selected?: boolean }>`
     ${(props) => (props.selected ? networkColor : backgroundToggle)};
   box-sizing: border-box;
   width: 240px;
-  height: 120px;
+  height: 95px;
   padding: 1.25rem;
-  margin: 0.25rem;
+  margin: 0.35rem;
   border-radius: 0.75rem;
   display: flex;
   flex-flow: row wrap;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { PageRowWrapper, GoBackWrapper } from 'Wrappers';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useValidators } from 'contexts/Validators';
@@ -55,7 +55,7 @@ export const Entity = () => {
 
   return (
     <PageRowWrapper className="page-padding">
-      <GoBackWrapper>
+      <TopBarWrapper>
         <Button
           inline
           title="Go Back"
@@ -63,7 +63,7 @@ export const Entity = () => {
           transform="shrink-3"
           onClick={() => setActiveSection(0)}
         />
-      </GoBackWrapper>
+      </TopBarWrapper>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         <Item item={activeItem} actionable={false} />
       </ItemsWrapper>
@@ -85,6 +85,7 @@ export const Entity = () => {
             )}
             {shuffledValidators.length > 0 && (
               <ValidatorList
+                bondType="stake"
                 validators={shuffledValidators}
                 batchKey={batchKey}
                 title={`${name}'s Validators`}

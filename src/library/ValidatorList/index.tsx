@@ -39,6 +39,11 @@ export const ValidatorListInner = (props: any) => {
   const provider = useValidatorList();
   const modal = useModal();
 
+  // determine the nominator of the validator list.
+  // By default this will be the activeAccount. But for pools,
+  // the pool stash address should be the nominator.
+  const nominator = props.nominator ?? activeAccount;
+
   const {
     selectActive,
     setSelectActive,
@@ -118,7 +123,7 @@ export const ValidatorListInner = (props: any) => {
     if (props.validators !== validatorsDefault) {
       setFetched(false);
     }
-  }, [props.validators, activeAccount]);
+  }, [props.validators, nominator]);
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
@@ -195,10 +200,6 @@ export const ValidatorListInner = (props: any) => {
     modal.setResize();
   };
 
-  if (!validators.length) {
-    return <></>;
-  }
-
   return (
     <ListWrapper>
       <Header>
@@ -236,7 +237,7 @@ export const ValidatorListInner = (props: any) => {
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowFilters && <Filters />}
 
-        {pagination && (
+        {listValidators.length > 0 && pagination && (
           <Pagination prev={page !== 1} next={page !== totalPages}>
             <div>
               <h4>
@@ -320,37 +321,47 @@ export const ValidatorListInner = (props: any) => {
             },
           }}
         >
-          {listValidators.map((validator: any, index: number) => {
-            // fetch batch data by referring to default list index.
-            const batchIndex = validatorsDefault.indexOf(validator);
+          {listValidators.length ? (
+            <>
+              {listValidators.map((validator: any, index: number) => {
+                // fetch batch data by referring to default list index.
+                const batchIndex = validatorsDefault.indexOf(validator);
 
-            return (
-              <motion.div
-                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                key={`nomination_${index}`}
-                variants={{
-                  hidden: {
-                    y: 15,
-                    opacity: 0,
-                  },
-                  show: {
-                    y: 0,
-                    opacity: 1,
-                  },
-                }}
-              >
-                <Validator
-                  validator={validator}
-                  toggleFavourites={toggleFavourites}
-                  batchIndex={batchIndex}
-                  batchKey={batchKey}
-                  format={format}
-                  showMenu={showMenu}
-                  bondType={bondType}
-                />
-              </motion.div>
-            );
-          })}
+                return (
+                  <motion.div
+                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                    key={`nomination_${index}`}
+                    variants={{
+                      hidden: {
+                        y: 15,
+                        opacity: 0,
+                      },
+                      show: {
+                        y: 0,
+                        opacity: 1,
+                      },
+                    }}
+                  >
+                    <Validator
+                      validator={validator}
+                      nominator={nominator}
+                      toggleFavourites={toggleFavourites}
+                      batchIndex={batchIndex}
+                      batchKey={batchKey}
+                      format={format}
+                      showMenu={showMenu}
+                      bondType={bondType}
+                      inModal={inModal}
+                    />
+                  </motion.div>
+                );
+              })}
+            </>
+          ) : (
+            <h4 style={{ marginTop: '2rem' }}>
+              No validators match this criteria.
+            </h4>
+          )}
         </motion.div>
       </List>
     </ListWrapper>
