@@ -20,6 +20,7 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -31,7 +32,7 @@ import { PageProps } from '../../types';
 import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
-import { Members } from './Members';
+import { MembersList } from './MembersList';
 
 export const HomeInner = (props: PageProps) => {
   const { page } = props;
@@ -39,6 +40,7 @@ export const HomeInner = (props: PageProps) => {
   const { network } = useApi();
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools();
+  const { getMembersOfPool } = usePoolMembers();
   const { isBonding, getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
@@ -143,7 +145,11 @@ export const HomeInner = (props: PageProps) => {
                   <OpenAssistantIcon page="pools" title="Nomination Pools" />
                 </h3>
               </CardHeaderWrapper>
-              <Members />
+              <MembersList
+                title="Pool Members"
+                members={getMembersOfPool(activeBondedPool?.id ?? 0)}
+                pagination
+              />
             </CardWrapper>
           </PageRowWrapper>
         </>
