@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { List, Header, Wrapper as ListWrapper } from 'library/List';
 import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -13,6 +13,7 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { AnyApi } from 'types';
+import { Pagination } from 'library/List/Pagination';
 import { useMembersList, MembersListProvider } from './context';
 
 export const MembersListInner = (props: any) => {
@@ -46,8 +47,6 @@ export const MembersListInner = (props: any) => {
 
   // pagination
   const totalPages = Math.ceil(members.length / LIST_ITEMS_PER_PAGE);
-  const nextPage = page + 1 > totalPages ? totalPages : page + 1;
-  const prevPage = page - 1 < 1 ? 1 : page - 1;
   const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
@@ -121,33 +120,7 @@ export const MembersListInner = (props: any) => {
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {pagination && (
-          <Pagination prev={page !== 1} next={page !== totalPages}>
-            <div>
-              <h4>
-                Page {page} of {totalPages}
-              </h4>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="prev"
-                onClick={() => {
-                  setPage(prevPage);
-                }}
-              >
-                Prev
-              </button>
-              <button
-                type="button"
-                className="next"
-                onClick={() => {
-                  setPage(nextPage);
-                }}
-              >
-                Next
-              </button>
-            </div>
-          </Pagination>
+          <Pagination page={page} total={totalPages} setter={setPage} />
         )}
 
         <motion.div

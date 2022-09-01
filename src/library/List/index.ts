@@ -9,7 +9,7 @@ import {
   textPrimary,
   networkColor,
 } from 'theme';
-import { ListProps, PaginationProps } from './types';
+import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Pagination = styled.div<PaginationProps>`
+export const PaginationWrapper = styled.div<PaginationWrapperProps>`
   width: 100%;
   display: flex;
   align-items: center;

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { List, Header, Wrapper as ListWrapper } from 'library/List';
 import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -15,6 +15,7 @@ import { planckToUnit } from 'Utils';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { AnySubscan } from 'types';
+import { Pagination } from 'library/List/Pagination';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';
@@ -51,8 +52,6 @@ export const PayoutListInner = (props: PayoutListProps) => {
 
   // pagination
   const totalPages = Math.ceil(payouts.length / LIST_ITEMS_PER_PAGE);
-  const nextPage = page + 1 > totalPages ? totalPages : page + 1;
-  const prevPage = page - 1 < 1 ? 1 : page - 1;
   const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
@@ -126,33 +125,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {pagination && (
-          <Pagination prev={page !== 1} next={page !== totalPages}>
-            <div>
-              <h4>
-                Page {page} of {totalPages}
-              </h4>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="prev"
-                onClick={() => {
-                  setPage(prevPage);
-                }}
-              >
-                Prev
-              </button>
-              <button
-                type="button"
-                className="next"
-                onClick={() => {
-                  setPage(nextPage);
-                }}
-              >
-                Next
-              </button>
-            </div>
-          </Pagination>
+          <Pagination page={page} total={totalPages} setter={setPage} />
         )}
 
         <motion.div
