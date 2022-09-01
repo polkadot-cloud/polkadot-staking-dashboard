@@ -13,6 +13,7 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { AnyApi } from 'types';
+import { MotionContainer } from 'library/ListItem/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { useMembersList, MembersListProvider } from './context';
 
@@ -122,21 +123,7 @@ export const MembersListInner = (props: any) => {
         {pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-
-        <motion.div
-          className="transition"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.01,
-              },
-            },
-          }}
-        >
+        <MotionContainer>
           {listMembers.map((member: AnyApi, index: number) => {
             return (
               <motion.div
@@ -160,7 +147,7 @@ export const MembersListInner = (props: any) => {
               </motion.div>
             );
           })}
-        </motion.div>
+        </MotionContainer>
       </List>
     </ListWrapper>
   );

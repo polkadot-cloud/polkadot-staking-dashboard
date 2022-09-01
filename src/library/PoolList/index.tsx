@@ -15,6 +15,7 @@ import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Pagination } from 'library/List/Pagination';
+import { MotionContainer } from 'library/ListItem/MotionContainer';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -136,20 +137,7 @@ export const PoolListInner = (props: PoolListProps) => {
         {pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-        <motion.div
-          className="transition"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.01,
-              },
-            },
-          }}
-        >
+        <MotionContainer>
           {listPools.map((pool: any, index: number) => {
             // fetch batch data by referring to default list index.
             const batchIndex = poolsDefault.indexOf(pool);
@@ -173,7 +161,7 @@ export const PoolListInner = (props: PoolListProps) => {
               </motion.div>
             );
           })}
-        </motion.div>
+        </MotionContainer>
       </List>
     </ListWrapper>
   );

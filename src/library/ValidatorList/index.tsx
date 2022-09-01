@@ -22,6 +22,7 @@ import {
 } from 'library/Filter/context';
 import { useUi } from 'contexts/UI';
 import { Pagination } from 'library/List/Pagination';
+import { MotionContainer } from 'library/ListItem/MotionContainer';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
@@ -274,20 +275,7 @@ export const ValidatorListInner = (props: any) => {
           </Selectable>
         )}
 
-        <motion.div
-          className="transition"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.01,
-              },
-            },
-          }}
-        >
+        <MotionContainer>
           {listValidators.length ? (
             <>
               {listValidators.map((validator: any, index: number) => {
@@ -329,7 +317,7 @@ export const ValidatorListInner = (props: any) => {
               No validators match this criteria.
             </h4>
           )}
-        </motion.div>
+        </MotionContainer>
       </List>
     </ListWrapper>
   );

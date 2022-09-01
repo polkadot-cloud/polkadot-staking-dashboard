@@ -16,6 +16,7 @@ import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { AnySubscan } from 'types';
 import { Pagination } from 'library/List/Pagination';
+import MotionContainer from 'library/SetupSteps/MotionContainer';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';
@@ -128,20 +129,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
 
-        <motion.div
-          className="transition"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.01,
-              },
-            },
-          }}
-        >
+        <MotionContainer>
           {listPayouts.map((payout: AnySubscan, index: number) => {
             const { amount, block_timestamp, event_id } = payout;
             const label = event_id === 'PaidOut' ? 'Pool Claim' : event_id;
@@ -186,7 +174,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
               </motion.div>
             );
           })}
-        </motion.div>
+        </MotionContainer>
       </List>
     </ListWrapper>
   );
