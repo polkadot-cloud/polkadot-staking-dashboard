@@ -128,7 +128,6 @@ export const PayoutListInner = (props: PayoutListProps) => {
         {pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-
         <MotionContainer>
           {listPayouts.map((payout: AnySubscan, index: number) => {
             const { amount, block_timestamp, event_id } = payout;

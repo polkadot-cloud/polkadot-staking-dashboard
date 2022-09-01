@@ -15,7 +15,7 @@ import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Pagination } from 'library/List/Pagination';
-import { MotionContainer } from 'library/ListItem/MotionContainer';
+import { MotionContainer } from 'library/List/MotionContainer';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 

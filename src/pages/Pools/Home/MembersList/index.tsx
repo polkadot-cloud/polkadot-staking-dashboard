@@ -13,7 +13,7 @@ import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { AnyApi } from 'types';
-import { MotionContainer } from 'library/ListItem/MotionContainer';
+import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { useMembersList, MembersListProvider } from './context';
 

@@ -22,7 +22,7 @@ import {
 } from 'library/Filter/context';
 import { useUi } from 'contexts/UI';
 import { Pagination } from 'library/List/Pagination';
-import { MotionContainer } from 'library/ListItem/MotionContainer';
+import { MotionContainer } from 'library/List/MotionContainer';
 import { Filters } from './Filters';
 import { useValidatorList, ValidatorListProvider } from './context';
 
