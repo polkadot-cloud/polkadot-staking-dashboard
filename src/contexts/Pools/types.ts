@@ -99,8 +99,13 @@ export interface ActivePoolContextState {
   synced: boolean;
 }
 
-// Misc types
+// PoolMembers types
+export interface PoolMemberContext {
+  getMembersOfPool: (p: number) => any;
+  poolMembers: any;
+}
 
+// Misc types
 export interface PoolRoles {
   depositor: string;
   nominator: string;
