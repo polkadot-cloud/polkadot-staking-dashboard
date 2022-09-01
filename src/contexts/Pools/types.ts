@@ -41,7 +41,7 @@ export interface PoolMembership {
   address: string;
   poolId: number;
   points: string;
-  rewardPoolTotalEarnings: string;
+  lastRecordedRewardCounter: string;
   unbondingEras: any;
   unlocking: any;
 }

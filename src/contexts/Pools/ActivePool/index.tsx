@@ -149,55 +149,46 @@ export const ActivePoolProvider = ({
   ): BN => {
     if (!membership) return new BN(0);
 
+    const rewardCounterBase = new BN(10).pow(new BN(18));
+
+    // convert needed values into BNs
+    const totalRewardsClaimed = new BN(
+      rmCommas(rewardPool.totalRewardsClaimed)
+    );
+    const lastRecordedTotalPayouts = new BN(
+      rmCommas(rewardPool.lastRecordedTotalPayouts)
+    );
+    const memberLastRecordedRewardCounter = new BN(
+      rmCommas(membership.lastRecordedRewardCounter)
+    );
+    const poolLastRecordedRewardCounter = new BN(
+      rmCommas(rewardPool.lastRecordedRewardCounter)
+    );
+    const bondedPoolPoints = new BN(rmCommas(bondedPool.points));
+    const points = new BN(rmCommas(membership.points));
+
     // calculate the latest reward account balance minus the existential deposit
-    const newRewardPoolBalance = BN.max(
+    const rewardPoolBalance = BN.max(
       new BN(0),
       new BN(rewardAccountBalance).sub(existentialDeposit)
     );
 
-    const lastRewardPoolBalance = new BN(rmCommas(rewardPool?.balance ?? '0'));
-    let poolTotalEarnings = new BN(rmCommas(rewardPool?.totalEarnings ?? '0'));
-    const rewardPoints = new BN(rmCommas(rewardPool?.points ?? '0'));
-    const bondedPoints = new BN(rmCommas(bondedPool?.points ?? '0'));
-    const memberPoints = new BN(rmCommas(membership?.points ?? '0'));
+    // calculate the current reward counter
+    const payoutsSinceLastRecord = rewardPoolBalance
+      .add(totalRewardsClaimed)
+      .sub(lastRecordedTotalPayouts);
 
-    // the pool total earning the last time the member claimed his rewards
-    const poolTotalEarningsAtLastClaim = new BN(
-      rmCommas(membership.rewardPoolTotalEarnings || '')
-    );
+    const currentRewardCounter = payoutsSinceLastRecord
+      .mul(rewardCounterBase)
+      .div(bondedPoolPoints)
+      .add(poolLastRecordedRewardCounter);
 
-    // new generated earning
-    const generatedEarning = BN.max(
-      new BN(0),
-      newRewardPoolBalance.sub(lastRewardPoolBalance)
-    );
+    const pendingRewards = currentRewardCounter
+      .sub(memberLastRecordedRewardCounter)
+      .mul(points)
+      .div(rewardCounterBase);
 
-    // update poolTotalEarning
-    poolTotalEarnings = poolTotalEarnings.add(generatedEarning);
-
-    // The new points that will be added to the pool. For every unit of balance that has been
-    // earned by the reward pool, we inflate the reward pool points by `bonded_pool.points`. In
-    // effect this allows each, single unit of balance (e.g. plank) to be divvied up pro rata
-    // among members based on points.
-    const generatedPoints = bondedPoints.mul(generatedEarning);
-
-    const currentRewardPoints = rewardPoints.add(generatedPoints);
-
-    const generatedEarningSinceLastClaim = BN.max(
-      new BN(0),
-      poolTotalEarnings.sub(poolTotalEarningsAtLastClaim)
-    );
-
-    const memberCurrentRewardPoint = memberPoints.mul(
-      generatedEarningSinceLastClaim
-    );
-    const payout = currentRewardPoints.isZero()
-      ? new BN(0)
-      : memberCurrentRewardPoint
-          .mul(newRewardPoolBalance)
-          .div(currentRewardPoints);
-
-    return payout;
+    return pendingRewards;
   };
 
   const subscribeToActiveBondedPool = async () => {
