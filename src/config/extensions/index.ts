@@ -23,6 +23,11 @@ export const EXTENSIONS: ExtensionConfig[] = [
     icon: EnkryptSVG,
   },
   {
+    id: 'polkadot-js',
+    title: 'Nova Wallet',
+    icon: NovaWalletSVG,
+  },
+  {
     id: 'subwallet-js',
     title: 'SubWallet',
     icon: SubwalletSVG,
@@ -42,9 +47,4 @@ export const EXTENSIONS: ExtensionConfig[] = [
     title: 'Parity Signer Companion',
     icon: SignerSVG,
   },
-  {
-    id: 'polkadot-js',
-    title: 'Nova Wallet',
-    icon: NovaWalletSVG,
-  }
 ];
