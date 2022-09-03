@@ -23,7 +23,7 @@ export const EXTENSIONS: ExtensionConfig[] = [
     icon: EnkryptSVG,
   },
   {
-    id: 'polkadot-js',
+    id: 'nova-wallet',
     title: 'Nova Wallet',
     icon: NovaWalletSVG,
   },
