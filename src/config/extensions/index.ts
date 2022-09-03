@@ -7,6 +7,7 @@ import { ReactComponent as PolkadotJSSVG } from './icons/dot_icon.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
+import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
 
 export interface ExtensionConfig {
   id: string;
@@ -20,6 +21,11 @@ export const EXTENSIONS: ExtensionConfig[] = [
     id: 'enkrypt',
     title: 'Enkrypt',
     icon: EnkryptSVG,
+  },
+  {
+    id: 'nova-wallet',
+    title: 'Nova Wallet',
+    icon: NovaWalletSVG,
   },
   {
     id: 'subwallet-js',
