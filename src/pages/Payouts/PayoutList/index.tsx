@@ -16,7 +16,7 @@ import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { AnySubscan } from 'types';
 import { Pagination } from 'library/List/Pagination';
-import MotionContainer from 'library/SetupSteps/MotionContainer';
+import { MotionContainer } from 'library/List/MotionContainer';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';

@@ -123,7 +123,7 @@ export const List = styled.div<ListProps>`
   margin-top: 1rem;
   width: 100%;
 
-  .transition {
+  > div {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;

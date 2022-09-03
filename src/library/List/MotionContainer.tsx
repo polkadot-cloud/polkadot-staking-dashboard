@@ -11,7 +11,6 @@ export const MotionContainer = ({
 }) => {
   return (
     <motion.div
-      className="transition"
       initial="hidden"
       animate="show"
       variants={{
