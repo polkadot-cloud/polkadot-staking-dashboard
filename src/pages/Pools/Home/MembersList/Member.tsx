@@ -6,6 +6,7 @@ import { useList } from 'library/List/context';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { Select } from 'library/ListItem/Labels/Select';
 import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
+import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
 
 export const Member = (props: any) => {
   const { meta } = usePoolMembers();
@@ -25,14 +26,13 @@ export const Member = (props: any) => {
             batchIndex={batchIndex}
             batchKey={batchKey}
           />
-
           <div>
             <Labels>{/* TODO: Labels here */}</Labels>
           </div>
         </div>
         <Separator />
         <div className="row status">
-          {/* TODO: Membership Status / Actions here */}
+          <PoolMemberBonded member={member} />
         </div>
       </div>
     </Wrapper>
