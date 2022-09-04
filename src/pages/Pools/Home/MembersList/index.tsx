@@ -15,10 +15,9 @@ import { useTheme } from 'contexts/Themes';
 import { AnyApi } from 'types';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
-import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
 import { useList, ListProvider } from 'library/List/context';
-import { Select } from 'library/ListItem/Labels/Select';
 import { Selectable } from 'library/List/Selectable';
+import { Member } from './Member';
 
 export const MembersListInner = (props: any) => {
   const { allowMoreCols, pagination, selectable } = props;
@@ -31,7 +30,7 @@ export const MembersListInner = (props: any) => {
   const { metrics } = useNetworkMetrics();
 
   // get list provider props
-  const { selectActive, selected, listFormat, setListFormat } = provider;
+  const { selected, listFormat, setListFormat } = provider;
 
   // get actions
   const actionsAll = [...actions].filter((action) => !action.onSelected);
@@ -167,55 +166,7 @@ export const MembersListInner = (props: any) => {
                   },
                 }}
               >
-                <Wrapper format="nomination">
-                  <div className="inner">
-                    <div className="row">
-                      {selectActive && <Select validator={member} />}
-                      {/*
-                      <Identity
-                        validator={validator}
-                        batchIndex={batchIndex}
-                        batchKey={batchKey}
-                      />
-                      */}
-                      <div>
-                        <Labels>
-                          {/*
-                          <Oversubscribed
-                            batchIndex={batchIndex}
-                            batchKey={batchKey}
-                          />
-                          <Blocked prefs={prefs} />
-                          <Commission commission={commission} />
-                          {toggleFavourites && (
-                            <FavouriteValidator address={address} />
-                          )}
-                          {showMenu && (
-                            <button
-                              type="button"
-                              className="label"
-                              onClick={() => toggleMenu()}
-                            >
-                              <FontAwesomeIcon icon={faBars} />
-                            </button>
-                          )}
-                          */}
-                        </Labels>
-                      </div>
-                    </div>
-                    <Separator />
-                    <div className="row status">
-                      {/* <EraStatus address={address} />
-                      {inModal && (
-                        <>
-                          <Labels>
-                            <CopyAddress validator={validator} />
-                          </Labels>
-                        </>
-                      )} */}
-                    </div>
-                  </div>
-                </Wrapper>
+                <Member member={member} />
               </motion.div>
             );
           })}
