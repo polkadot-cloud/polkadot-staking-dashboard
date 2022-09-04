@@ -12,7 +12,7 @@ import { useValidators } from 'contexts/Validators';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { Validator } from 'library/ValidatorList/Validator';
-import { List, Header, Wrapper as ListWrapper, Selectable } from 'library/List';
+import { List, Header, Wrapper as ListWrapper } from 'library/List';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
@@ -23,6 +23,7 @@ import {
 import { useUi } from 'contexts/UI';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
+import { Selectable } from 'library/List/Selectable';
 import { Filters } from './Filters';
 import { useList, ListProvider } from '../List/context';
 
@@ -40,14 +41,7 @@ export const ValidatorListInner = (props: any) => {
   // the pool stash address should be the nominator.
   const nominator = props.nominator ?? activeAccount;
 
-  const {
-    selectActive,
-    setSelectActive,
-    selected,
-    listFormat,
-    setListFormat,
-    selectToggleable,
-  } = provider;
+  const { selected, listFormat, setListFormat } = provider;
 
   const { isSyncing } = useUi();
   const {
@@ -236,43 +230,10 @@ export const ValidatorListInner = (props: any) => {
         )}
 
         {selectable && (
-          <Selectable>
-            {actionsAll.map((a: any, i: number) => (
-              <button
-                key={`a_all_${i}`}
-                disabled={a.disabled ?? false}
-                type="button"
-                onClick={() => a.onClick(provider)}
-              >
-                {a.title}
-              </button>
-            ))}
-            {selectToggleable === true && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectActive(!selectActive);
-                }}
-              >
-                {selectActive ? 'Cancel Selection' : 'Select'}
-              </button>
-            )}
-
-            {selected.length > 0 && (
-              <>
-                {actionsSelected.map((a: any, i: number) => (
-                  <button
-                    key={`a_selected_${i}`}
-                    disabled={a.disabled ?? false}
-                    type="button"
-                    onClick={() => a.onClick(provider)}
-                  >
-                    {a.title}
-                  </button>
-                ))}
-              </>
-            )}
-          </Selectable>
+          <Selectable
+            actionsAll={actionsAll}
+            actionsSelected={actionsSelected}
+          />
         )}
 
         <MotionContainer>

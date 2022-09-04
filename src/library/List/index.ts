@@ -95,7 +95,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
   }
 `;
 
-export const Selectable = styled.div`
+export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
