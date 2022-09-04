@@ -20,7 +20,7 @@ import CopyAddress from 'library/ListItem/Labels/CopyAddress';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
-import { ValidatorIdentity } from '../../ListItem/Labels/ValidatorIdentity';
+import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
@@ -109,7 +109,8 @@ export const Default = (props: DefaultProps) => {
         <MenuPosition ref={posRef} />
         <div className="row">
           {selectActive && <Select item={validator} />}
-          <ValidatorIdentity
+          <Identity
+            meta={meta}
             address={address}
             batchIndex={batchIndex}
             batchKey={batchKey}

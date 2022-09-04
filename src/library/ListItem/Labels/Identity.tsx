@@ -1,16 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useValidators } from 'contexts/Validators';
 import { clipAddress } from 'Utils';
 import Identicon from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import { IdentityProps } from '../types';
 
-export const ValidatorIdentity = (props: IdentityProps) => {
-  const { meta } = useValidators();
-  const { address, batchKey, batchIndex } = props;
+export const Identity = (props: IdentityProps) => {
+  const { address, batchKey, batchIndex, meta } = props;
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
   const stake = meta[batchKey]?.stake ?? [];

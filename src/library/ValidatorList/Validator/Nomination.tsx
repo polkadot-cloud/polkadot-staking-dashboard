@@ -7,7 +7,7 @@ import { useList } from '../../List/context';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
 import { Metrics } from '../../ListItem/Labels/Metrics';
-import { ValidatorIdentity } from '../../ListItem/Labels/ValidatorIdentity';
+import { Identity } from '../../ListItem/Labels/Identity';
 import { CopyAddress } from '../../ListItem/Labels/CopyAddress';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -41,7 +41,8 @@ export const Nomination = (props: NominationProps) => {
       <div className="inner">
         <div className="row">
           {selectActive && <Select item={validator} />}
-          <ValidatorIdentity
+          <Identity
+            meta={meta}
             address={address}
             batchIndex={batchIndex}
             batchKey={batchKey}
