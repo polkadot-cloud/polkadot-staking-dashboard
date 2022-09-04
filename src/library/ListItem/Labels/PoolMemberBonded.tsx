@@ -38,14 +38,14 @@ export const PoolMemberBonded = ({ member }: { member: any }) => {
       {bonded > 0 && (
         <ValidatorStatusWrapper status={status}>
           <h5>
-            Bonded / {humanNumber(toFixedIfNecessary(bonded, 3))} {unit}
+            Bonded: {humanNumber(toFixedIfNecessary(bonded, 3))} {unit}
           </h5>
         </ValidatorStatusWrapper>
       )}
       {totalUnbonding > 0 && (
         <ValidatorStatusWrapper status="inactive">
           <h5>
-            Unbonding / {humanNumber(toFixedIfNecessary(totalUnbonding, 3))}{' '}
+            Unbonding {humanNumber(toFixedIfNecessary(totalUnbonding, 3))}{' '}
             {unit}
           </h5>
         </ValidatorStatusWrapper>
