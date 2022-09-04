@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { MaybeAccount } from 'types';
+import { AnyMetaBatch, MaybeAccount } from 'types';
 
 export interface BlockedProps {
   prefs: {
@@ -24,6 +24,7 @@ export interface IdentityProps {
   address: string;
   batchIndex: number;
   batchKey: string;
+  meta: AnyMetaBatch;
 }
 
 export interface MetricsProps {

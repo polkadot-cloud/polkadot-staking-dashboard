@@ -89,6 +89,11 @@ export const HomeInner = (props: PageProps) => {
     }
   );
 
+  const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
+  const poolMembersTitle = `${poolMembers.length} Member${
+    poolMembers.length === 1 ? `` : `s`
+  }`;
+
   return (
     <>
       <PageTitle title={title} tabs={tabs} />
@@ -141,14 +146,14 @@ export const HomeInner = (props: PageProps) => {
             <CardWrapper>
               <CardHeaderWrapper>
                 <h3>
-                  Members
+                  {poolMembersTitle}
                   <OpenAssistantIcon page="pools" title="Nomination Pools" />
                 </h3>
               </CardHeaderWrapper>
               <MembersList
                 title="Pool Members"
                 batchKey="active_pool_members"
-                members={getMembersOfPool(activeBondedPool?.id ?? 0)}
+                members={poolMembers}
                 pagination
                 selectToggleable={false}
               />
