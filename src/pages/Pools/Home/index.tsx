@@ -149,6 +149,7 @@ export const HomeInner = (props: PageProps) => {
                 title="Pool Members"
                 members={getMembersOfPool(activeBondedPool?.id ?? 0)}
                 pagination
+                selectToggleable={false}
               />
             </CardWrapper>
           </PageRowWrapper>

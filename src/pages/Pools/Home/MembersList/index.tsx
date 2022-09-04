@@ -15,15 +15,29 @@ import { useTheme } from 'contexts/Themes';
 import { AnyApi } from 'types';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
-import { useMembersList, MembersListProvider } from './context';
+import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
+import { useList, ListProvider } from 'library/List/context';
+import { Select } from 'library/ListItem/Labels/Select';
+import { Selectable } from 'library/List/Selectable';
 
 export const MembersListInner = (props: any) => {
-  const { allowMoreCols, pagination } = props;
+  const { allowMoreCols, pagination, selectable } = props;
+
+  const actions = props.actions ?? [];
 
   const { mode } = useTheme();
+  const provider = useList();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { listFormat, setListFormat } = useMembersList();
+
+  // get list provider props
+  const { selectActive, selected, listFormat, setListFormat } = provider;
+
+  // get actions
+  const actionsAll = [...actions].filter((action) => !action.onSelected);
+  const actionsSelected = [...actions].filter(
+    (action: any) => action.onSelected
+  );
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -76,6 +90,13 @@ export const MembersListInner = (props: any) => {
     }
   }, [renderIterationRef.current]);
 
+  // trigger onSelected when selection changes
+  useEffect(() => {
+    if (props.onSelected) {
+      props.onSelected(provider);
+    }
+  }, [selected]);
+
   // get list items to render
   let listMembers = [];
 
@@ -120,8 +141,14 @@ export const MembersListInner = (props: any) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {pagination && (
+        {listMembers.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
+        )}
+        {selectable && (
+          <Selectable
+            actionsAll={actionsAll}
+            actionsSelected={actionsSelected}
+          />
         )}
         <MotionContainer>
           {listMembers.map((member: AnyApi, index: number) => {
@@ -140,10 +167,55 @@ export const MembersListInner = (props: any) => {
                   },
                 }}
               >
-                {/* Was ItemWrapper */}
-                <div>
-                  <p>Member</p>
-                </div>
+                <Wrapper format="nomination">
+                  <div className="inner">
+                    <div className="row">
+                      {selectActive && <Select validator={member} />}
+                      {/*
+                      <Identity
+                        validator={validator}
+                        batchIndex={batchIndex}
+                        batchKey={batchKey}
+                      />
+                      */}
+                      <div>
+                        <Labels>
+                          {/*
+                          <Oversubscribed
+                            batchIndex={batchIndex}
+                            batchKey={batchKey}
+                          />
+                          <Blocked prefs={prefs} />
+                          <Commission commission={commission} />
+                          {toggleFavourites && (
+                            <FavouriteValidator address={address} />
+                          )}
+                          {showMenu && (
+                            <button
+                              type="button"
+                              className="label"
+                              onClick={() => toggleMenu()}
+                            >
+                              <FontAwesomeIcon icon={faBars} />
+                            </button>
+                          )}
+                          */}
+                        </Labels>
+                      </div>
+                    </div>
+                    <Separator />
+                    <div className="row status">
+                      {/* <EraStatus address={address} />
+                      {inModal && (
+                        <>
+                          <Labels>
+                            <CopyAddress validator={validator} />
+                          </Labels>
+                        </>
+                      )} */}
+                    </div>
+                  </div>
+                </Wrapper>
               </motion.div>
             );
           })}
@@ -154,10 +226,15 @@ export const MembersListInner = (props: any) => {
 };
 
 export const MembersList = (props: any) => {
+  const { selectActive, selectToggleable } = props;
+
   return (
-    <MembersListProvider>
+    <ListProvider
+      selectActive={selectActive}
+      selectToggleable={selectToggleable}
+    >
       <MembersListShouldUpdate {...props} />
-    </MembersListProvider>
+    </ListProvider>
   );
 };
 
