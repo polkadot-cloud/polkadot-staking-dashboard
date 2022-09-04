@@ -129,6 +129,7 @@ export const ValidatorListInner = (props: any) => {
     }
   }, [renderIterationRef.current]);
 
+  // trigger onSelected when selection changes
   useEffect(() => {
     if (props.onSelected) {
       props.onSelected(provider);
