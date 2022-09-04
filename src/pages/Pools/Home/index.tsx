@@ -156,6 +156,7 @@ export const HomeInner = (props: PageProps) => {
                 members={poolMembers}
                 pagination
                 selectToggleable={false}
+                allowMoreCols
               />
             </CardWrapper>
           </PageRowWrapper>
