@@ -14,7 +14,7 @@ export const Member = (props: any) => {
     <Wrapper format="nomination">
       <div className="inner">
         <div className="row">
-          {selectActive && <Select validator={member} />}
+          {selectActive && <Select item={member} />}
           {/*
           <Identity
             validator={validator}

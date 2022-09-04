@@ -12,7 +12,7 @@ import { useList } from '../../List/context';
 import { SelectProps } from '../types';
 
 export const Select = (props: SelectProps) => {
-  const { validator } = props;
+  const { item } = props;
 
   const { mode }: any = useTheme();
   const { addToSelected, removeFromSelected, selected } = useList();
@@ -21,10 +21,10 @@ export const Select = (props: SelectProps) => {
     <SelectWrapper>
       <Checkbox
         onChange={() => {
-          if (selected.includes(validator)) {
-            removeFromSelected([validator]);
+          if (selected.includes(item)) {
+            removeFromSelected([item]);
           } else {
-            addToSelected(validator);
+            addToSelected(item);
           }
         }}
         icon={

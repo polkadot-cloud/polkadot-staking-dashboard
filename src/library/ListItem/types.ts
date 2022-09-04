@@ -45,7 +45,7 @@ export interface OversubscribedProps {
 }
 
 export interface SelectProps {
-  validator: {
+  item: {
     address: string;
   };
 }

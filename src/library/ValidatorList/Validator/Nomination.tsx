@@ -40,7 +40,7 @@ export const Nomination = (props: NominationProps) => {
     <Wrapper format="nomination" inModal={inModal}>
       <div className="inner">
         <div className="row">
-          {selectActive && <Select validator={validator} />}
+          {selectActive && <Select item={validator} />}
           <Identity
             validator={validator}
             batchIndex={batchIndex}

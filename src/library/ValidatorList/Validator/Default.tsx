@@ -108,7 +108,7 @@ export const Default = (props: DefaultProps) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
-          {selectActive && <Select validator={validator} />}
+          {selectActive && <Select item={validator} />}
           <Identity
             validator={validator}
             batchIndex={batchIndex}
