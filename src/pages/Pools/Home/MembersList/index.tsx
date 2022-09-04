@@ -17,6 +17,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { useList, ListProvider } from 'library/List/context';
 import { Selectable } from 'library/List/Selectable';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Member } from './Member';
 
 export const MembersListInner = (props: any) => {
@@ -28,6 +29,7 @@ export const MembersListInner = (props: any) => {
   const provider = useList();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
+  const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
   // get list provider props
   const { selected, listFormat, setListFormat } = provider;
@@ -102,10 +104,10 @@ export const MembersListInner = (props: any) => {
 
   // handle validator list bootstrapping
   const setupMembersList = () => {
+    setFetched(true);
     setMembersDefault(props.members);
     setMembers(props.members);
-    setFetched(true);
-    // fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
+    fetchPoolMembersMetaBatch(batchKey, props.members, false);
   };
 
   // get list items to render

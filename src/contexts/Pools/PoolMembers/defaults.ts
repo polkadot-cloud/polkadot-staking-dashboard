@@ -5,6 +5,9 @@ import { PoolMemberContext } from '../types';
 
 export const defaultPoolMembers: PoolMemberContext = {
   // eslint-disable-next-line
+  fetchPoolMembersMetaBatch: (k, v, r) => {},
+  // eslint-disable-next-line
   getMembersOfPool: (p) => {},
   poolMembers: [],
+  meta: {},
 };

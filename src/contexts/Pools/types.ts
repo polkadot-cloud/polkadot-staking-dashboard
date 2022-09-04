@@ -101,8 +101,10 @@ export interface ActivePoolContextState {
 
 // PoolMembers types
 export interface PoolMemberContext {
+  fetchPoolMembersMetaBatch: (k: string, v: [], r: boolean) => void;
   getMembersOfPool: (p: number) => any;
   poolMembers: any;
+  meta: AnyMetaBatch;
 }
 
 // Misc types
