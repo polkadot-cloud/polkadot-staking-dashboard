@@ -147,6 +147,7 @@ export const HomeInner = (props: PageProps) => {
               </CardHeaderWrapper>
               <MembersList
                 title="Pool Members"
+                batchKey="active_pool_members"
                 members={getMembersOfPool(activeBondedPool?.id ?? 0)}
                 pagination
                 selectToggleable={false}

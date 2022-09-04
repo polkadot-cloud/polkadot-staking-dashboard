@@ -20,7 +20,7 @@ import { Selectable } from 'library/List/Selectable';
 import { Member } from './Member';
 
 export const MembersListInner = (props: any) => {
-  const { allowMoreCols, pagination, selectable } = props;
+  const { allowMoreCols, pagination, selectable, batchKey } = props;
 
   const actions = props.actions ?? [];
 
@@ -46,6 +46,9 @@ export const MembersListInner = (props: any) => {
   // current render iteration
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
+  // default list of validators
+  const [membersDefault, setMembersDefault] = useState(props.members);
+
   // manipulated list (ordering, filtering) of payouts
   const [members, setMembers] = useState(props.members);
 
@@ -69,14 +72,15 @@ export const MembersListInner = (props: any) => {
 
   // refetch list when list changes
   useEffect(() => {
-    setFetched(false);
+    if (props.members !== membersDefault) {
+      setFetched(false);
+    }
   }, [props.members]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
-      setMembers(props.members);
-      setFetched(true);
+      setupMembersList();
     }
   }, [isReady, fetched, metrics.activeEra.index]);
 
@@ -95,6 +99,14 @@ export const MembersListInner = (props: any) => {
       props.onSelected(provider);
     }
   }, [selected]);
+
+  // handle validator list bootstrapping
+  const setupMembersList = () => {
+    setMembersDefault(props.members);
+    setMembers(props.members);
+    setFetched(true);
+    // fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
+  };
 
   // get list items to render
   let listMembers = [];
@@ -151,6 +163,9 @@ export const MembersListInner = (props: any) => {
         )}
         <MotionContainer>
           {listMembers.map((member: AnyApi, index: number) => {
+            // fetch batch data by referring to default list index.
+            const batchIndex = membersDefault.indexOf(member);
+
             return (
               <motion.div
                 className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
@@ -166,7 +181,11 @@ export const MembersListInner = (props: any) => {
                   },
                 }}
               >
-                <Member member={member} />
+                <Member
+                  member={member}
+                  batchKey={batchKey}
+                  batchIndex={batchIndex}
+                />
               </motion.div>
             );
           })}

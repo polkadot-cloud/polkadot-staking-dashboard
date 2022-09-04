@@ -6,7 +6,7 @@ import { Select } from 'library/ListItem/Labels/Select';
 import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
 
 export const Member = (props: any) => {
-  const { member } = props;
+  const { member, batchKey, batchIndex } = props;
 
   const { selectActive } = useList();
 
