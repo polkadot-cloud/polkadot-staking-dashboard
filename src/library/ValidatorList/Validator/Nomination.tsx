@@ -3,7 +3,7 @@
 
 import { useValidators } from 'contexts/Validators';
 import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
-import { useValidatorList } from '../context';
+import { useValidatorList } from '../../List/context';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
 import { Metrics } from '../../ListItem/Labels/Metrics';

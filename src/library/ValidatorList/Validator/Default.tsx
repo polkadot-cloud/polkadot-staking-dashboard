@@ -26,7 +26,7 @@ import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
 import { Select } from '../../ListItem/Labels/Select';
 import { EraStatus } from '../../ListItem/Labels/EraStatus';
-import { useValidatorList } from '../context';
+import { useValidatorList } from '../../List/context';
 import { DefaultProps } from './types';
 
 export const Default = (props: DefaultProps) => {

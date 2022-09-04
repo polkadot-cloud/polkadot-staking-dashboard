@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import * as defaults from './defaults';
+import * as defaults from '../ValidatorList/defaults';
 
 export const ValidatorListContext: React.Context<any> = React.createContext(
   defaults.defaultContext

@@ -8,7 +8,7 @@ import Checkbox from 'react-custom-checkbox';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'styled-components';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
-import { useValidatorList } from '../../ValidatorList/context';
+import { useValidatorList } from '../../List/context';
 import { SelectProps } from '../types';
 
 export const Select = (props: SelectProps) => {

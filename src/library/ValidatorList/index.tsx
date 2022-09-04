@@ -24,7 +24,7 @@ import { useUi } from 'contexts/UI';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Filters } from './Filters';
-import { useValidatorList, ValidatorListProvider } from './context';
+import { useValidatorList, ValidatorListProvider } from '../List/context';
 
 export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
