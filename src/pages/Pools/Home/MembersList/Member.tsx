@@ -10,6 +10,8 @@ export const Member = (props: any) => {
 
   const { selectActive } = useList();
 
+  const { who } = member;
+
   return (
     <Wrapper format="nomination">
       <div className="inner">
@@ -21,7 +23,7 @@ export const Member = (props: any) => {
             batchIndex={batchIndex}
             batchKey={batchKey}
           />
-          */}
+        */}
           <div>
             <Labels>
               {/*

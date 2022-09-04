@@ -21,9 +21,7 @@ export interface FavouriteProps {
 }
 
 export interface IdentityProps {
-  validator: {
-    address: string;
-  };
+  address: string;
   batchIndex: number;
   batchKey: string;
 }
