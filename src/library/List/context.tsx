@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import * as defaults from '../ValidatorList/defaults';
+import * as defaults from './defaults';
 
-export const ValidatorListContext: React.Context<any> = React.createContext(
+export const ListContext: React.Context<any> = React.createContext(
   defaults.defaultContext
 );
 
-export const useValidatorList = () => React.useContext(ValidatorListContext);
+export const useList = () => React.useContext(ListContext);
 
-export const ValidatorListProvider = (props: any) => {
+export const ListProvider = (props: any) => {
   const selectToggleable = props.selectToggleable ?? true;
 
   // store the currently selected validators from the list
@@ -47,7 +47,7 @@ export const ValidatorListProvider = (props: any) => {
   };
 
   return (
-    <ValidatorListContext.Provider
+    <ListContext.Provider
       value={{
         setSelectActive,
         addToSelected,
@@ -61,6 +61,6 @@ export const ValidatorListProvider = (props: any) => {
       }}
     >
       {props.children}
-    </ValidatorListContext.Provider>
+    </ListContext.Provider>
   );
 };

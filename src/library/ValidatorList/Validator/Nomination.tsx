@@ -3,7 +3,7 @@
 
 import { useValidators } from 'contexts/Validators';
 import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
-import { useValidatorList } from '../../List/context';
+import { useList } from '../../List/context';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
 import { Metrics } from '../../ListItem/Labels/Metrics';
@@ -18,7 +18,7 @@ import { Commission } from '../../ListItem/Labels/Commission';
 
 export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();
-  const { selectActive } = useValidatorList();
+  const { selectActive } = useList();
 
   const {
     validator,

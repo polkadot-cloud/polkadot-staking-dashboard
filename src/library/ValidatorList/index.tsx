@@ -24,7 +24,7 @@ import { useUi } from 'contexts/UI';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Filters } from './Filters';
-import { useValidatorList, ValidatorListProvider } from '../List/context';
+import { useList, ListProvider } from '../List/context';
 
 export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
@@ -32,7 +32,7 @@ export const ValidatorListInner = (props: any) => {
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
-  const provider = useValidatorList();
+  const provider = useList();
   const modal = useModal();
 
   // determine the nominator of the validator list.
@@ -326,14 +326,14 @@ export const ValidatorListInner = (props: any) => {
 export const ValidatorList = (props: any) => {
   const { selectActive, selectToggleable } = props;
   return (
-    <ValidatorListProvider
+    <ListProvider
       selectActive={selectActive}
       selectToggleable={selectToggleable}
     >
       <ValidatorFilterProvider>
         <ValidatorListShouldUpdate {...props} />
       </ValidatorFilterProvider>
-    </ValidatorListProvider>
+    </ListProvider>
   );
 };
 
