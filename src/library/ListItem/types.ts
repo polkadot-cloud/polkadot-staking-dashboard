@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import React from 'react';
 import { AnyMetaBatch, MaybeAccount } from 'types';
 
 export interface BlockedProps {
@@ -28,7 +29,7 @@ export interface IdentityProps {
 }
 
 export interface MetricsProps {
-  display: string;
+  display: React.ReactNode | null;
   address: string;
 }
 

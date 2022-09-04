@@ -3,41 +3,54 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 
-export const getIdentityDisplay = (identity: any, _superIdentity: any) => {
-  // first check identity of validator
+export const getIdentityDisplay = (_identity: any, _superIdentity: any) => {
+  let displayFinal = '';
+  let foundSuper = false;
 
-  // display.Raw
-  let display = identity?.info?.display?.Raw ?? null;
-  // legal.Raw
-  display = display === null ? identity?.info?.legal.Raw ?? null : display;
-
-  // check if identity has been byte encoded
-  const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
-
-  if (displayAsBytes !== '') {
-    return displayAsBytes;
-  }
-  if (display !== null) {
-    return display;
-  }
-
-  // if still null, check super identity
+  // check super identity exists, get display.Raw if it does
   const superIdentity = _superIdentity?.identity ?? null;
+  const superRaw = _superIdentity?.[1]?.Raw ?? null;
+  const superDisplay = superIdentity?.info?.display?.Raw ?? null;
 
-  // display.Raw
-  display = superIdentity?.info?.display?.Raw ?? null;
-  // legal.Raw
-  display = display === null ? superIdentity?.info?.legal.Raw ?? null : display;
+  // check if super raw has been encoded
+  const superRawAsBytes = u8aToString(u8aUnwrapBytes(superRaw));
 
   // check if super identity has been byte encoded
-  const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(display));
+  const superIdentityAsBytes = u8aToString(u8aUnwrapBytes(superDisplay));
 
   if (superIdentityAsBytes !== '') {
-    return superIdentityAsBytes;
-  }
-  if (display !== null) {
-    return display;
+    displayFinal = superIdentityAsBytes;
+    foundSuper = true;
+  } else if (superDisplay !== null) {
+    displayFinal = superDisplay;
+    foundSuper = true;
   }
 
-  return display;
+  if (!foundSuper) {
+    // cehck sub identity exists, get display.Raw if it does
+    const identity = _identity?.info?.display?.Raw ?? null;
+
+    // check if identity has been byte encoded
+    const subIdentityAsBytes = u8aToString(u8aUnwrapBytes(identity));
+
+    if (subIdentityAsBytes !== '') {
+      displayFinal = subIdentityAsBytes;
+    } else if (identity !== null) {
+      displayFinal = identity;
+    }
+  }
+  if (displayFinal === '') {
+    return null;
+  }
+
+  return (
+    <>
+      {displayFinal}
+      {superRawAsBytes !== '' ? (
+        <span>/ {superRawAsBytes}</span>
+      ) : superRaw !== null ? (
+        <span>/ {superRaw}</span>
+      ) : null}
+    </>
+  );
 };
