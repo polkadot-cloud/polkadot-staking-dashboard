@@ -85,7 +85,7 @@ export const Status = ({ height }: { height: number }) => {
   // determine pool status - left side
   const poolStatusLeft =
     poolState === PoolState.Block
-      ? 'Blocked / '
+      ? 'Locked / '
       : poolState === PoolState.Destroy
       ? 'Destroying / '
       : '';
