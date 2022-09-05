@@ -20,7 +20,6 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -32,7 +31,7 @@ import { PageProps } from '../../types';
 import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
-import { MembersList } from './MembersList';
+import { Members } from './Members';
 
 export const HomeInner = (props: PageProps) => {
   const { page } = props;
@@ -40,7 +39,6 @@ export const HomeInner = (props: PageProps) => {
   const { network } = useApi();
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools();
-  const { getMembersOfPool } = usePoolMembers();
   const { isBonding, getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
@@ -89,11 +87,6 @@ export const HomeInner = (props: PageProps) => {
     }
   );
 
-  const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
-  const poolMembersTitle = `${poolMembers.length} Member${
-    poolMembers.length === 1 ? `` : `s`
-  }`;
-
   return (
     <>
       <PageTitle title={title} tabs={tabs} />
@@ -140,28 +133,7 @@ export const HomeInner = (props: PageProps) => {
           )}
         </>
       )}
-      {activeTab === 1 && (
-        <>
-          <PageRowWrapper className="page-padding" noVerticalSpacer>
-            <CardWrapper>
-              <CardHeaderWrapper>
-                <h3>
-                  {poolMembersTitle}
-                  <OpenAssistantIcon page="pools" title="Nomination Pools" />
-                </h3>
-              </CardHeaderWrapper>
-              <MembersList
-                title="Pool Members"
-                batchKey="active_pool_members"
-                members={poolMembers}
-                pagination
-                selectToggleable={false}
-                allowMoreCols
-              />
-            </CardWrapper>
-          </PageRowWrapper>
-        </>
-      )}
+      {activeTab === 1 && <Members />}
       {activeTab === 2 && (
         <>
           <StatBoxList>
