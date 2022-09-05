@@ -77,7 +77,7 @@ export const EntryWrapper = styled.div`
   }
 
   input::placeholder {
-    color: #bbb;
+    color: #aaa;
   }
 
   input:focus,
