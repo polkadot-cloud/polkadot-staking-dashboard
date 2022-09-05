@@ -143,12 +143,6 @@ export const HomeInner = (props: PageProps) => {
           </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
-              <CardHeaderWrapper>
-                <h3>
-                  All Pools
-                  <OpenAssistantIcon page="pools" title="Nomination Pools" />
-                </h3>
-              </CardHeaderWrapper>
               <PoolList
                 batchKey="bonded_pools"
                 pools={bondedPools}

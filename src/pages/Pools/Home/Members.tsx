@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageRowWrapper } from 'Wrappers';
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -20,7 +19,7 @@ export const Members = () => {
   const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
 
   const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
-  const poolMembersTitle = `${poolMembers.length} Member${
+  const poolMembersTitle = `${poolMembers.length} Pool Member${
     poolMembers.length === 1 ? `` : `s`
   }`;
 
@@ -70,14 +69,8 @@ export const Members = () => {
 
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          <CardHeaderWrapper>
-            <h3>
-              {poolMembersTitle}
-              <OpenAssistantIcon page="pools" title="Nomination Pools" />
-            </h3>
-          </CardHeaderWrapper>
           <MembersList
-            title="Pool Members"
+            title={poolMembersTitle}
             batchKey="active_pool_members"
             members={poolMembers}
             pagination
