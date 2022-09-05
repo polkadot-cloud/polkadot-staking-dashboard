@@ -374,6 +374,20 @@ export const ActivePoolProvider = ({
   };
 
   /*
+   * isStateToggler
+   * Returns whether the active account is
+   * the depositor of the active pool.
+   */
+  const isStateToggler = () => {
+    const roles = activeBondedPoolRef.current.pool?.roles;
+    if (!activeAccount || !roles) {
+      return false;
+    }
+    const result = activeAccount === roles?.stateToggler;
+    return result;
+  };
+
+  /*
    * getPoolBondedAccount
    * get the stash address of the bonded pool
    * that the member is participating in.
@@ -480,6 +494,7 @@ export const ActivePoolProvider = ({
         isNominator,
         isOwner,
         isDepositor,
+        isStateToggler,
         isBonding,
         getPoolBondedAccount,
         getPoolBondOptions,

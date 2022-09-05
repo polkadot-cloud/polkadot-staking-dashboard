@@ -52,6 +52,7 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   isNominator: () => false,
   isOwner: () => false,
   isDepositor: () => false,
+  isStateToggler: () => false,
   getPoolBondedAccount: () => null,
   // eslint-disable-next-line
   getPoolBondOptions: (a: MaybeAccount) => null,

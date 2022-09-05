@@ -87,6 +87,7 @@ export interface ActivePoolContextState {
   isNominator: () => boolean;
   isOwner: () => boolean;
   isDepositor: () => boolean;
+  isStateToggler: () => boolean;
   getPoolBondedAccount: () => MaybeAccount;
   getPoolBondOptions: (a: MaybeAccount) => any;
   getPoolUnlocking: () => any;
