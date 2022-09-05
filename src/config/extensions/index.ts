@@ -42,11 +42,6 @@ export const EXTENSIONS: ExtensionConfig[] = [
     icon: TalismanSVG,
   },
   {
-    id: 'polkadot-js',
-    title: 'Polkadot JS',
-    icon: PolkadotJSSVG,
-  },
-  {
     id: 'parity-signer-companion',
     title: 'Parity Signer Companion',
     icon: SignerSVG,
