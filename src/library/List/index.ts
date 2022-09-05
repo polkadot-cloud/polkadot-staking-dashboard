@@ -123,6 +123,20 @@ export const List = styled.div<ListProps>`
   margin-top: 1rem;
   width: 100%;
 
+  .search {
+    width: 100%;
+    margin: 0.25rem 0 0.75rem 0;
+    display: flex;
+    flex-flow: row wrap;
+
+    > input {
+      border: 1px solid ${borderPrimary};
+      border-radius: 1.75rem;
+      padding: 1rem 1rem;
+      font-size: 1.25rem;
+    }
+  }
+
   > div {
     display: flex;
     flex-flow: row wrap;

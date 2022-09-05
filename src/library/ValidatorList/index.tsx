@@ -49,6 +49,7 @@ export const ValidatorListInner = (props: any) => {
     validatorOrder,
     applyValidatorFilters,
     applyValidatorOrder,
+    validatorSearchFilter,
   } = useValidatorFilter();
 
   const {
@@ -157,9 +158,10 @@ export const ValidatorListInner = (props: any) => {
   };
 
   // handle filter / order update
-  const handleValidatorsFilterUpdate = () => {
+  const handleValidatorsFilterUpdate = (
+    filteredValidators: any = Object.assign(validatorsDefault)
+  ) => {
     if (allowFilters) {
-      let filteredValidators = Object.assign(validatorsDefault);
       if (validatorOrder !== 'default') {
         filteredValidators = applyValidatorOrder(
           filteredValidators,
@@ -189,6 +191,19 @@ export const ValidatorListInner = (props: any) => {
     modal.setResize();
   };
 
+  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+    // update validator list
+    let filteredValidators = Object.assign(validatorsDefault);
+    filteredValidators = validatorSearchFilter(
+      filteredValidators,
+      batchKey,
+      newValue
+    );
+    handleValidatorsFilterUpdate(filteredValidators);
+    setPage(1);
+    setRenderIteration(1);
+  };
   return (
     <ListWrapper>
       <Header>
@@ -224,6 +239,16 @@ export const ValidatorListInner = (props: any) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+        <div className="search">
+          <input
+            type="text"
+            className="search"
+            placeholder="Search Address or Identity Name"
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              handleSearchChange(e)
+            }
+          />
+        </div>
         {allowFilters && <Filters />}
 
         {listValidators.length > 0 && pagination && (
