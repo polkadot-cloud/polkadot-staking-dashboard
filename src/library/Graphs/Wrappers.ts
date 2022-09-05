@@ -97,6 +97,18 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
   }
 
+  .content {
+    padding: 0 0.5rem;
+
+    h3 {
+      margin-bottom: 0.75rem;
+    }
+    h4 {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
   .inner {
     padding: 1rem;
     display: flex;
