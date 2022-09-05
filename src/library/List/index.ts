@@ -132,7 +132,7 @@ export const List = styled.div<ListProps>`
     > input {
       border: 1px solid ${borderPrimary};
       border-radius: 1.75rem;
-      padding: 1rem 1rem;
+      padding: 1rem 1.25rem;
       font-size: 1.25rem;
     }
   }

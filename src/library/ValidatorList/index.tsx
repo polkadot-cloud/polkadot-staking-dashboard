@@ -67,6 +67,7 @@ export const ValidatorListInner = (props: any) => {
   const actions = props.actions ?? [];
   const showMenu = props.showMenu ?? true;
   const inModal = props.inModal ?? false;
+  const allowSearch = props.allowSearch ?? false;
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
@@ -239,16 +240,18 @@ export const ValidatorListInner = (props: any) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        <div className="search">
-          <input
-            type="text"
-            className="search"
-            placeholder="Search Address or Identity Name"
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              handleSearchChange(e)
-            }
-          />
-        </div>
+        {allowSearch && (
+          <div className="search">
+            <input
+              type="text"
+              className="search"
+              placeholder="Search Address or Identity Name"
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                handleSearchChange(e)
+              }
+            />
+          </div>
+        )}
         {allowFilters && <Filters />}
 
         {listValidators.length > 0 && pagination && (
