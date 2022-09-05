@@ -24,8 +24,12 @@ export const EXTENSIONS: ExtensionConfig[] = [
   },
   {
     id: 'polkadot-js',
-    title: 'Nova Wallet',
-    icon: NovaWalletSVG,
+    title: (window as any)?.walletExtension?.isNovaWallet
+      ? 'Nova Wallet'
+      : 'Polkadot JS',
+    icon: (window as any)?.walletExtension?.isNovaWallet
+      ? NovaWalletSVG
+      : PolkadotJSSVG,
   },
   {
     id: 'subwallet-js',
