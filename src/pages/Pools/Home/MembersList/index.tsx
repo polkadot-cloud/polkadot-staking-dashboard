@@ -54,7 +54,7 @@ export const MembersListInner = (props: any) => {
   const [members, setMembers] = useState(props.members);
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState<boolean>(false);
+  const [fetched, setFetched] = useState<number>(0);
 
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
@@ -74,13 +74,13 @@ export const MembersListInner = (props: any) => {
   // refetch list when list changes
   useEffect(() => {
     if (props.members !== membersDefault) {
-      setFetched(false);
+      setFetched(0);
     }
   }, [props.members]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && metrics.activeEra.index !== 0 && fetched === 0) {
       setupMembersList();
     }
   }, [isReady, fetched, metrics.activeEra.index]);
@@ -103,10 +103,11 @@ export const MembersListInner = (props: any) => {
 
   // handle validator list bootstrapping
   const setupMembersList = () => {
-    setFetched(true);
+    setFetched(1);
     setMembersDefault(props.members);
     setMembers(props.members);
     fetchPoolMembersMetaBatch(batchKey, props.members, false);
+    setFetched(2);
   };
 
   // get list items to render

@@ -21,19 +21,16 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import BN from 'bn.js';
 import { useNetworkMetrics } from 'contexts/Network';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useStaking } from 'contexts/Staking';
 
 export const WithdrawPoolMember = () => {
   const { api, network } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { staking } = useStaking();
-  const { getPoolMember } = usePoolMembers();
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
   const { activeEra } = metrics;
-  const { who } = config;
-  const member = getPoolMember(who);
+  const { member, who } = config;
   const { historyDepth } = staking;
   const { unbondingEras } = member;
 
