@@ -9,7 +9,7 @@ import {
   textPrimary,
   networkColor,
 } from 'theme';
-import { ListProps, PaginationProps } from './types';
+import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ export const Header = styled.div`
   }
 `;
 
-export const Pagination = styled.div<PaginationProps>`
+export const PaginationWrapper = styled.div<PaginationWrapperProps>`
   width: 100%;
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@ export const Pagination = styled.div<PaginationProps>`
   }
 `;
 
-export const Selectable = styled.div`
+export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -123,7 +123,21 @@ export const List = styled.div<ListProps>`
   margin-top: 1rem;
   width: 100%;
 
-  .transition {
+  .search {
+    width: 100%;
+    margin: 0.25rem 0 0.75rem 0;
+    display: flex;
+    flex-flow: row wrap;
+
+    > input {
+      border: 1px solid ${borderPrimary};
+      border-radius: 1.75rem;
+      padding: 0.85rem 1.25rem;
+      font-size: 1.25rem;
+    }
+  }
+
+  > div {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;

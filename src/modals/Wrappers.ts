@@ -84,7 +84,9 @@ export const ContentWrapper = styled.div`
 `;
 
 // generic wrapper for modal padding
-export const PaddingWrapper = styled.div<{ verticalOnly?: boolean }>`
+export const PaddingWrapper = styled.div<{
+  verticalOnly?: boolean;
+}>`
   box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;

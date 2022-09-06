@@ -13,11 +13,13 @@ import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 import { planckBnToUnit } from 'Utils';
 import {
-  faPaperPlane,
   faLock,
   faExclamationTriangle,
+  faPlus,
+  faShare,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
 import { useStatusButtons } from './useStatusButtons';
 import { Membership } from './Membership';
 
@@ -27,10 +29,15 @@ export const Status = ({ height }: { height: number }) => {
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { activeBondedPool, poolNominations, getNominationsStatus } =
-    useActivePool();
+  const { activeBondedPool, poolNominations } = useActivePool();
   const { openModalWith } = useModal();
-  const nominationStatuses = getNominationsStatus();
+  const { getNominationsStatusFromTargets } = useStaking();
+
+  const nominationStatuses = getNominationsStatusFromTargets(
+    activeBondedPool?.addresses?.stash ?? '',
+    poolNominations?.targets ?? []
+  );
+
   const activeNominations = Object.values(nominationStatuses).filter(
     (_v) => _v === 'active'
   ).length;
@@ -51,12 +58,20 @@ export const Status = ({ height }: { height: number }) => {
   const buttonsRewards = unclaimedReward.gt(minUnclaimedDisplay)
     ? [
         {
-          title: 'Claim',
-          icon: faPaperPlane,
+          title: 'Withdraw',
+          icon: faShare,
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { bondType: 'pool' }, 'small'),
+            openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
+        },
+        {
+          title: 'Bond',
+          icon: faPlus,
+          disabled: !isReady || isReadOnlyAccount(activeAccount),
+          small: true,
+          onClick: () =>
+            openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
         },
       ]
     : undefined;
@@ -79,7 +94,7 @@ export const Status = ({ height }: { height: number }) => {
   // determine pool status - left side
   const poolStatusLeft =
     poolState === PoolState.Block
-      ? 'Blocked / '
+      ? 'Locked / '
       : poolState === PoolState.Destroy
       ? 'Destroying / '
       : '';

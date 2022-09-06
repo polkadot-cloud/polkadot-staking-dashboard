@@ -51,6 +51,7 @@ export const Validators = (props: PageProps) => {
                   selectable={false}
                   allowMoreCols
                   allowFilters
+                  allowSearch
                   pagination
                   toggleFavourites
                 />

@@ -136,7 +136,9 @@ export const Roles = (props: RolesProps) => {
     <>
       <CardHeaderWrapper withAction>
         <h3>{title || ``}</h3>
-        {(isOwner() === true || setters.length) && (
+        {!(isOwner() === true || setters.length) ? (
+          <></>
+        ) : (
           <>
             {isEditing && (
               <div>

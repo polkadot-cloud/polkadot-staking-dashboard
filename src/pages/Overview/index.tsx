@@ -34,7 +34,6 @@ export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
-
   const { lastReward } = formatRewardsForGraphs(
     14,
     1,

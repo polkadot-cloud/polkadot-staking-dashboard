@@ -3,7 +3,7 @@
 
 import { useValidators } from 'contexts/Validators';
 import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
-import { useValidatorList } from '../context';
+import { useList } from '../../List/context';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
 import { Metrics } from '../../ListItem/Labels/Metrics';
@@ -18,7 +18,7 @@ import { Commission } from '../../ListItem/Labels/Commission';
 
 export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();
-  const { selectActive } = useValidatorList();
+  const { selectActive } = useList();
 
   const {
     validator,
@@ -40,9 +40,10 @@ export const Nomination = (props: NominationProps) => {
     <Wrapper format="nomination" inModal={inModal}>
       <div className="inner">
         <div className="row">
-          {selectActive && <Select validator={validator} />}
+          {selectActive && <Select item={validator} />}
           <Identity
-            validator={validator}
+            meta={meta}
+            address={address}
             batchIndex={batchIndex}
             batchKey={batchKey}
           />

@@ -7,11 +7,7 @@ import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import {
-  clipAddress,
-  capitalizeFirstLetter,
-  determinePoolDisplay,
-} from 'Utils';
+import { clipAddress, determinePoolDisplay } from 'Utils';
 import Identicon from 'library/Identicon';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
@@ -22,7 +18,6 @@ import {
   Separator,
   MenuPosition,
   IdentityWrapper,
-  ValidatorStatusWrapper,
 } from 'library/ListItem/Wrappers';
 import { useMenu } from 'contexts/Menu';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -32,6 +27,7 @@ import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
 import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
 import { useUi } from 'contexts/UI';
+import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
@@ -40,9 +36,10 @@ import { PoolId } from '../ListItem/Labels/PoolId';
 export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id } = pool;
+
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { meta, getPoolNominationStatusCode } = useBondedPools();
+  const { meta } = useBondedPools();
   const { isBonding } = useActivePool();
   const { addNotification } = useNotifications();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
@@ -156,9 +153,6 @@ export const Pool = (props: PoolProps) => {
     }
   };
 
-  // determine nominations status and display
-  const nominationStatus = getPoolNominationStatusCode(nominationsStatus);
-
   return (
     <Wrapper format="nomination">
       <div className="inner">
@@ -191,15 +185,7 @@ export const Pool = (props: PoolProps) => {
         </div>
         <Separator />
         <div className="row status">
-          <ValidatorStatusWrapper status={nominationStatus}>
-            <h5>
-              {nominationStatus === null
-                ? `Syncing...`
-                : targets.length
-                ? capitalizeFirstLetter(nominationStatus ?? '')
-                : 'Not Nominating'}
-            </h5>
-          </ValidatorStatusWrapper>
+          <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!isSyncing &&
             !isBonding() &&
             !isReadOnlyAccount(activeAccount) &&

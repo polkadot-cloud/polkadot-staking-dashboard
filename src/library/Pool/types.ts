@@ -4,12 +4,13 @@
 import { PoolAddresses } from 'contexts/Pools/types';
 
 export interface PoolProps {
-  pool: Props;
+  pool: Pool;
   batchKey: string;
   batchIndex: number;
 }
 
-export interface Props {
+export interface Pool {
+  points: string;
   memberCounter: string;
   addresses: PoolAddresses;
   id: number;
