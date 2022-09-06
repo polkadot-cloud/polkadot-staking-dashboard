@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { PoolMemberContext } from 'contexts/Pools/types';
-import { AnyApi, AnyMetaBatch, Fn } from 'types';
+import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
 import { defaultPoolMembers } from './defaults';
 import { useApi } from '../../Api';
@@ -80,8 +80,11 @@ export const PoolMembersProvider = ({
   };
 
   const getMembersOfPool = (poolId: number) => {
-    const members = poolMembers.filter((p: any) => p.poolId === String(poolId));
-    return members;
+    return poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
+  };
+
+  const getPoolMember = (who: MaybeAccount) => {
+    return poolMembers.filter((p: any) => p.who === who) ?? null;
   };
 
   /*
@@ -239,6 +242,7 @@ export const PoolMembersProvider = ({
       value={{
         fetchPoolMembersMetaBatch,
         getMembersOfPool,
+        getPoolMember,
         poolMembers,
         meta: poolMembersMetaBatchesRef.current,
       }}
