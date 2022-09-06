@@ -31,6 +31,7 @@ import { PageProps } from '../../types';
 import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
+import { Members } from './Members';
 
 export const HomeInner = (props: PageProps) => {
   const { page } = props;
@@ -38,7 +39,7 @@ export const HomeInner = (props: PageProps) => {
   const { network } = useApi();
   const navigate = useNavigate();
   const { bondedPools } = useBondedPools();
-  const { isBonding, getPoolRoles } = useActivePool();
+  const { isBonding, getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
   // back to overview if pools are not supported on network
@@ -48,30 +49,47 @@ export const HomeInner = (props: PageProps) => {
     }
   }, [network]);
 
+  // back to tab 0 if not in a pool
+  useEffect(() => {
+    if (activeBondedPool === undefined) {
+      setActiveTab(0);
+    }
+  }, [activeBondedPool]);
+
   const ROW_HEIGHT = 275;
+
+  let tabs = [
+    {
+      title: 'Overview',
+      active: activeTab === 0,
+      onClick: () => setActiveTab(0),
+    },
+  ];
+
+  if (activeBondedPool) {
+    tabs = tabs.concat({
+      title: 'Members',
+      active: activeTab === 1,
+      onClick: () => setActiveTab(1),
+    });
+  }
+
+  tabs = tabs.concat(
+    {
+      title: 'All Pools',
+      active: activeTab === 2,
+      onClick: () => setActiveTab(2),
+    },
+    {
+      title: 'Favourites',
+      active: activeTab === 3,
+      onClick: () => setActiveTab(3),
+    }
+  );
 
   return (
     <>
-      <PageTitle
-        title={title}
-        tabs={[
-          {
-            title: 'Overview',
-            active: activeTab === 0,
-            onClick: () => setActiveTab(0),
-          },
-          {
-            title: 'All Pools',
-            active: activeTab === 1,
-            onClick: () => setActiveTab(1),
-          },
-          {
-            title: 'Favourites',
-            active: activeTab === 2,
-            onClick: () => setActiveTab(2),
-          },
-        ]}
-      />
+      <PageTitle title={title} tabs={tabs} />
       {activeTab === 0 && (
         <>
           <StatBoxList>
@@ -115,7 +133,8 @@ export const HomeInner = (props: PageProps) => {
           )}
         </>
       )}
-      {activeTab === 1 && (
+      {activeTab === 1 && <Members />}
+      {activeTab === 2 && (
         <>
           <StatBoxList>
             <PoolMembershipBox />
@@ -124,12 +143,6 @@ export const HomeInner = (props: PageProps) => {
           </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
-              <CardHeaderWrapper>
-                <h3>
-                  All Pools
-                  <OpenAssistantIcon page="pools" title="Nomination Pools" />
-                </h3>
-              </CardHeaderWrapper>
               <PoolList
                 batchKey="bonded_pools"
                 pools={bondedPools}
@@ -141,7 +154,7 @@ export const HomeInner = (props: PageProps) => {
           </PageRowWrapper>
         </>
       )}
-      {activeTab === 2 && (
+      {activeTab === 3 && (
         <>
           <Favourites />
         </>

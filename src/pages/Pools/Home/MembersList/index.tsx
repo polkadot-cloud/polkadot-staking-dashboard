@@ -1,34 +1,43 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
-import moment from 'moment';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { List, Header, Wrapper as ListWrapper } from 'library/List';
 import { useApi } from 'contexts/Api';
-import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { planckToUnit } from 'Utils';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
-import { AnySubscan } from 'types';
-import { Pagination } from 'library/List/Pagination';
+import { AnyApi } from 'types';
 import { MotionContainer } from 'library/List/MotionContainer';
-import { usePayoutList, PayoutListProvider } from './context';
-import { ItemWrapper } from '../Wrappers';
-import { PayoutListProps } from '../types';
+import { Pagination } from 'library/List/Pagination';
+import { useList, ListProvider } from 'library/List/context';
+import { Selectable } from 'library/List/Selectable';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { Member } from './Member';
 
-export const PayoutListInner = (props: PayoutListProps) => {
-  const { allowMoreCols, pagination } = props;
+export const MembersListInner = (props: any) => {
+  const { allowMoreCols, pagination, selectable, batchKey } = props;
+
+  const actions = props.actions ?? [];
 
   const { mode } = useTheme();
+  const provider = useList();
   const { isReady, network } = useApi();
-  const { units } = network;
   const { metrics } = useNetworkMetrics();
-  const { listFormat, setListFormat } = usePayoutList();
+  const { fetchPoolMembersMetaBatch } = usePoolMembers();
+
+  // get list provider props
+  const { selected, listFormat, setListFormat } = provider;
+
+  // get actions
+  const actionsAll = [...actions].filter((action) => !action.onSelected);
+  const actionsSelected = [...actions].filter(
+    (action: any) => action.onSelected
+  );
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -38,8 +47,11 @@ export const PayoutListInner = (props: PayoutListProps) => {
   // current render iteration
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
+  // default list of validators
+  const [membersDefault, setMembersDefault] = useState(props.members);
+
   // manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState(props.payouts);
+  const [members, setMembers] = useState(props.members);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -52,7 +64,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   };
 
   // pagination
-  const totalPages = Math.ceil(payouts.length / LIST_ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(members.length / LIST_ITEMS_PER_PAGE);
   const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
@@ -61,14 +73,15 @@ export const PayoutListInner = (props: PayoutListProps) => {
 
   // refetch list when list changes
   useEffect(() => {
-    setFetched(false);
-  }, [props.payouts]);
+    if (props.members !== membersDefault) {
+      setFetched(false);
+    }
+  }, [props.members]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
-      setPayouts(props.payouts);
-      setFetched(true);
+      setupMembersList();
     }
   }, [isReady, fetched, metrics.activeEra.index]);
 
@@ -81,17 +94,32 @@ export const PayoutListInner = (props: PayoutListProps) => {
     }
   }, [renderIterationRef.current]);
 
+  // trigger onSelected when selection changes
+  useEffect(() => {
+    if (props.onSelected) {
+      props.onSelected(provider);
+    }
+  }, [selected]);
+
+  // handle validator list bootstrapping
+  const setupMembersList = () => {
+    setFetched(true);
+    setMembersDefault(props.members);
+    setMembers(props.members);
+    fetchPoolMembersMetaBatch(batchKey, props.members, false);
+  };
+
   // get list items to render
-  let listPayouts = [];
+  let listMembers = [];
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listPayouts = payouts.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listMembers = members.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
   } else {
-    listPayouts = payouts;
+    listMembers = members;
   }
 
-  if (!payouts.length) {
+  if (!members.length) {
     return <></>;
   }
 
@@ -125,19 +153,19 @@ export const PayoutListInner = (props: PayoutListProps) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {pagination && (
+        {listMembers.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
+        {selectable && (
+          <Selectable
+            actionsAll={actionsAll}
+            actionsSelected={actionsSelected}
+          />
+        )}
         <MotionContainer>
-          {listPayouts.map((payout: AnySubscan, index: number) => {
-            const { amount, block_timestamp, event_id } = payout;
-            const label = event_id === 'PaidOut' ? 'Pool Claim' : event_id;
-            const labelClass =
-              event_id === 'PaidOut'
-                ? 'claim'
-                : event_id === 'Reward'
-                ? 'reward'
-                : undefined;
+          {listMembers.map((member: AnyApi, index: number) => {
+            // fetch batch data by referring to default list index.
+            const batchIndex = membersDefault.indexOf(member);
 
             return (
               <motion.div
@@ -154,22 +182,11 @@ export const PayoutListInner = (props: PayoutListProps) => {
                   },
                 }}
               >
-                <ItemWrapper>
-                  <div>
-                    <div>
-                      <span className={labelClass}>
-                        <h4>{label}</h4>
-                      </span>
-                      <h4 className={labelClass}>
-                        {event_id === 'Slash' ? '-' : '+'}
-                        {planckToUnit(amount, units)} {network.unit}
-                      </h4>
-                    </div>
-                    <div>
-                      <h4>{moment.unix(block_timestamp).fromNow()}</h4>
-                    </div>
-                  </div>
-                </ItemWrapper>
+                <Member
+                  who={member.who}
+                  batchKey={batchKey}
+                  batchIndex={batchIndex}
+                />
               </motion.div>
             );
           })}
@@ -179,20 +196,15 @@ export const PayoutListInner = (props: PayoutListProps) => {
   );
 };
 
-export const PayoutList = (props: PayoutListProps) => {
+export const MembersList = (props: any) => {
+  const { selectActive, selectToggleable } = props;
+
   return (
-    <PayoutListProvider>
-      <PayoutListShouldUpdate {...props} />
-    </PayoutListProvider>
+    <ListProvider
+      selectActive={selectActive}
+      selectToggleable={selectToggleable}
+    >
+      <MembersListInner {...props} />
+    </ListProvider>
   );
 };
-
-export class PayoutListShouldUpdate extends React.Component {
-  static contextType = StakingContext;
-
-  render() {
-    return <PayoutListInner {...this.props} />;
-  }
-}
-
-export default PayoutList;

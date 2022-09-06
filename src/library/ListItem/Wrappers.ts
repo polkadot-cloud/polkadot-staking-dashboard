@@ -168,6 +168,15 @@ export const IdentityWrapper = styled(motion.div)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    > span {
+      color: ${textSecondary};
+      opacity: 0.75;
+      font-size: 0.88rem;
+      margin-left: 0.35rem;
+      position: relative;
+      top: -0.1rem;
+    }
   }
 `;
 

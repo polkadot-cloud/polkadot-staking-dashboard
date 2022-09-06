@@ -77,7 +77,7 @@ export const EntryWrapper = styled.div`
   }
 
   input::placeholder {
-    color: #bbb;
+    color: #aaa;
   }
 
   input:focus,
@@ -214,12 +214,21 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
 
   > .tabs {
     box-sizing: border-box;
-    overflow: auto;
+    overflow: hidden;
     max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
     margin-top: ${(props) => (props.sticky ? '0' : '0.75rem')};
     transition: margin 0.2s;
+    height: 3.5rem;
 
-    > .inner {
+    > .scroll {
+      box-sizing: border-box;
+      width: 100%;
+      height: 4.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .inner {
       display: flex;
       flex-flow: row nowrap;
       border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
@@ -237,11 +246,9 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
         &.active {
           background: ${buttonSecondaryBackground};
         }
-
         &:last-child {
           margin-right: 0;
         }
-
         &:hover {
           opacity: 0.8;
         }

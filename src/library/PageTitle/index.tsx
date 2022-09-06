@@ -40,17 +40,19 @@ export const PageTitle = (props: PageTitleProps) => {
         <h1 className="page-padding">{title}</h1>
         {tabs.length > 0 && (
           <section className="tabs page-padding">
-            <div className="inner">
-              {tabs.map((tab: any, i: number) => (
-                <button
-                  className={tab.active ? `active` : ``}
-                  key={`page_tab_${i}`}
-                  type="button"
-                  onClick={() => tab.onClick()}
-                >
-                  {tab.title}
-                </button>
-              ))}
+            <div className="scroll">
+              <div className="inner">
+                {tabs.map((tab: any, i: number) => (
+                  <button
+                    className={tab.active ? `active` : ``}
+                    key={`page_tab_${i}`}
+                    type="button"
+                    onClick={() => tab.onClick()}
+                  >
+                    {tab.title}
+                  </button>
+                ))}
+              </div>
             </div>
           </section>
         )}

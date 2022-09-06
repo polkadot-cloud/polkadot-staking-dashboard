@@ -41,7 +41,7 @@ export interface PoolMembership {
   address: string;
   poolId: number;
   points: string;
-  rewardPoolTotalEarnings: string;
+  lastRecordedRewardCounter: string;
   unbondingEras: any;
   unlocking: any;
 }
@@ -87,6 +87,7 @@ export interface ActivePoolContextState {
   isNominator: () => boolean;
   isOwner: () => boolean;
   isDepositor: () => boolean;
+  isStateToggler: () => boolean;
   getPoolBondedAccount: () => MaybeAccount;
   getPoolBondOptions: (a: MaybeAccount) => any;
   getPoolUnlocking: () => any;
@@ -99,8 +100,16 @@ export interface ActivePoolContextState {
   synced: boolean;
 }
 
-// Misc types
+// PoolMembers types
+export interface PoolMemberContext {
+  fetchPoolMembersMetaBatch: (k: string, v: [], r: boolean) => void;
+  getMembersOfPool: (p: number) => any;
+  getPoolMember: (w: MaybeAccount) => any | null;
+  poolMembers: any;
+  meta: AnyMetaBatch;
+}
 
+// Misc types
 export interface PoolRoles {
   depositor: string;
   nominator: string;

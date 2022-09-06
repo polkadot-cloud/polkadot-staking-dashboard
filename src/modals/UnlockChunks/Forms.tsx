@@ -59,7 +59,7 @@ export const Forms = forwardRef(
       } else if (task === 'withdraw' && isPooling && activeBondedPool) {
         _tx = api.tx.nominationPools.withdrawUnbonded(
           activeAccount,
-          activeBondedPool?.slashingSpansCount
+          historyDepth
         );
       }
       return _tx;
