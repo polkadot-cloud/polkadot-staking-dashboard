@@ -84,7 +84,7 @@ export const PoolMembersProvider = ({
   };
 
   const getPoolMember = (who: MaybeAccount) => {
-    return poolMembers.filter((p: any) => p.who === who) ?? null;
+    return poolMembers.find((p: any) => p.who === who) ?? null;
   };
 
   /*
