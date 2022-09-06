@@ -13,9 +13,10 @@ import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 import { planckBnToUnit } from 'Utils';
 import {
-  faPaperPlane,
   faLock,
   faExclamationTriangle,
+  faPlus,
+  faShare,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
@@ -57,12 +58,20 @@ export const Status = ({ height }: { height: number }) => {
   const buttonsRewards = unclaimedReward.gt(minUnclaimedDisplay)
     ? [
         {
-          title: 'Claim',
-          icon: faPaperPlane,
+          title: 'Withdraw',
+          icon: faShare,
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { bondType: 'pool' }, 'small'),
+            openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
+        },
+        {
+          title: 'Bond',
+          icon: faPlus,
+          disabled: !isReady || isReadOnlyAccount(activeAccount),
+          small: true,
+          onClick: () =>
+            openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
         },
       ]
     : undefined;
