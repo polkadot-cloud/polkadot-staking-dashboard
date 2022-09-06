@@ -24,13 +24,16 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { PoolState } from 'contexts/Pools/types';
+import { useNetworkMetrics } from 'contexts/Network';
 
 export const Member = (props: any) => {
   const { meta } = usePoolMembers();
   const { openModalWith } = useModal();
   const { selectActive } = useList();
+  const { metrics } = useNetworkMetrics();
   const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { activeEra } = metrics;
   const { state, roles } = activeBondedPool || {};
 
   const { member, batchKey, batchIndex } = props;
@@ -66,17 +69,25 @@ export const Member = (props: any) => {
       });
     }
 
-    // TOOD: only show withdraw if unlock chunks are ready
     if (Object.values(unbondingEras).length) {
-      menuItems.push({
-        icon: <FontAwesomeIcon icon={faShare as IconProp} />,
-        wrap: null,
-        title: `Withdraw Funds`,
-        cb: () => {
-          // TODO: configure modal
-          // openModalWith('ValidatorMetrics', {}, 'large');
-        },
-      });
+      let canWithdraw = false;
+
+      for (const k of Object.keys(unbondingEras)) {
+        if (Number(k) > Number(activeEra.index)) {
+          canWithdraw = true;
+        }
+      }
+
+      if (canWithdraw) {
+        menuItems.push({
+          icon: <FontAwesomeIcon icon={faShare as IconProp} />,
+          wrap: null,
+          title: `Withdraw Funds`,
+          cb: () => {
+            openModalWith('WithdrawPoolMember', { member }, 'small');
+          },
+        });
+      }
     }
   }
 
