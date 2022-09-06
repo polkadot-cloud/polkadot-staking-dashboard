@@ -29,6 +29,7 @@ import { Networks } from './Networks';
 import { Bio } from './Bio';
 import { ManagePool } from './ManagePool';
 import { UnbondPoolMember } from './UnbondPoolMember';
+import { WithdrawPoolMember } from './WithdrawPoolMember';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -126,6 +127,7 @@ export const Modal = () => {
               {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
               {modal === 'PoolNominations' && <PoolNominations />}
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
+              {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>

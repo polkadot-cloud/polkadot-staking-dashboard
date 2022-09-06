@@ -27,7 +27,7 @@ import { PoolState } from 'contexts/Pools/types';
 import { useNetworkMetrics } from 'contexts/Network';
 
 export const Member = (props: any) => {
-  const { meta } = usePoolMembers();
+  const { meta, getPoolMember } = usePoolMembers();
   const { openModalWith } = useModal();
   const { selectActive } = useList();
   const { metrics } = useNetworkMetrics();
@@ -36,8 +36,10 @@ export const Member = (props: any) => {
   const { activeEra } = metrics;
   const { state, roles } = activeBondedPool || {};
 
-  const { member, batchKey, batchIndex } = props;
-  const { who, unbondingEras, points } = member;
+  const { who, batchKey, batchIndex } = props;
+
+  const member = getPoolMember(who);
+  const { unbondingEras, points } = member;
   const { stateToggler, root, depositor } = roles || {};
 
   // configure floating menu
@@ -61,7 +63,7 @@ export const Member = (props: any) => {
           openModalWith(
             'UnbondPoolMember',
             {
-              member,
+              who,
             },
             'small'
           );
@@ -71,9 +73,8 @@ export const Member = (props: any) => {
 
     if (Object.values(unbondingEras).length) {
       let canWithdraw = false;
-
       for (const k of Object.keys(unbondingEras)) {
-        if (Number(k) > Number(activeEra.index)) {
+        if (Number(activeEra.index) > Number(k)) {
           canWithdraw = true;
         }
       }
@@ -84,7 +85,7 @@ export const Member = (props: any) => {
           wrap: null,
           title: `Withdraw Funds`,
           cb: () => {
-            openModalWith('WithdrawPoolMember', { member }, 'small');
+            openModalWith('WithdrawPoolMember', { who }, 'small');
           },
         });
       }

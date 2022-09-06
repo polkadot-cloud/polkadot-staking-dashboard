@@ -183,7 +183,7 @@ export const MembersListInner = (props: any) => {
                 }}
               >
                 <Member
-                  member={member}
+                  who={member.who}
                   batchKey={batchKey}
                   batchIndex={batchIndex}
                 />
