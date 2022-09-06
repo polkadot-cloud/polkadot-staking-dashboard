@@ -104,7 +104,7 @@ export interface ActivePoolContextState {
 export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: [], r: boolean) => void;
   getMembersOfPool: (p: number) => any;
-  getPoolMember: (w: MaybeAccount) => string | null;
+  getPoolMember: (w: MaybeAccount) => any | null;
   poolMembers: any;
   meta: AnyMetaBatch;
 }
