@@ -26,11 +26,14 @@ export const Members = () => {
   const networkColorsSecondary: any = network.colors.secondary;
   const annuncementBorderColor = networkColorsSecondary[mode];
 
+  const showBlockedPrompt =
+    activeBondedPool?.state === PoolState.Block &&
+    (isOwner() || isStateToggler());
+
   return (
     <>
       {/* Pool in Blocked state: allow root & stage toggler to unbond & withdraw members */}
-      {((activeBondedPool?.state === PoolState.Block && isOwner()) ||
-        isStateToggler()) && (
+      {showBlockedPrompt && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
