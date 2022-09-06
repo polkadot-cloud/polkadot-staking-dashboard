@@ -1,13 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { List, Header, Wrapper as ListWrapper } from 'library/List';
 import { useApi } from 'contexts/Api';
-import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { networkColors } from 'theme/default';
@@ -205,15 +204,7 @@ export const MembersList = (props: any) => {
       selectActive={selectActive}
       selectToggleable={selectToggleable}
     >
-      <MembersListShouldUpdate {...props} />
+      <MembersListInner {...props} />
     </ListProvider>
   );
 };
-
-export class MembersListShouldUpdate extends React.Component {
-  static contextType = StakingContext;
-
-  render() {
-    return <MembersListInner {...this.props} />;
-  }
-}

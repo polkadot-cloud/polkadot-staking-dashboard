@@ -31,27 +31,37 @@ export const Member = (props: any) => {
   const { selectActive } = useList();
   const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { state } = activeBondedPool || {};
+  const { state, roles } = activeBondedPool || {};
 
   const { member, batchKey, batchIndex } = props;
   const { who, unbondingEras, points } = member;
+  const { stateToggler, root, depositor } = roles || {};
 
   // configure floating menu
   const posRef = useRef(null);
   const menuItems: Array<any> = [];
 
   const canUnbondBlocked =
-    state === PoolState.Block && (isOwner() || isStateToggler());
+    state === PoolState.Block &&
+    (isOwner() || isStateToggler()) &&
+    ![root, stateToggler].includes(who);
 
-  if (canUnbondBlocked || state === PoolState.Destroy) {
+  const canUnbondDestroying = state === PoolState.Destroy && who !== depositor;
+
+  if (canUnbondBlocked || canUnbondDestroying) {
     if (points !== '0') {
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt as IconProp} />,
         wrap: null,
         title: `Unbond Funds`,
         cb: () => {
-          // TODO: configure modal
-          // openModalWith('ValidatorMetrics', {}, 'large');
+          openModalWith(
+            'UnbondPoolMember',
+            {
+              member,
+            },
+            'small'
+          );
         },
       });
     }
