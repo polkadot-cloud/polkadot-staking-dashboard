@@ -17,6 +17,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { SearchInput } from 'library/List/SearchInput';
+import { useUi } from 'contexts/UI';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -30,6 +31,7 @@ export const PoolListInner = (props: PoolListProps) => {
   const { metrics } = useNetworkMetrics();
   const { fetchPoolsMetaBatch, poolSearchFilter } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
+  const { isSyncing } = useUi();
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -184,7 +186,9 @@ export const PoolListInner = (props: PoolListProps) => {
             </>
           ) : (
             <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
-              No pools match this criteria.
+              {isSyncing
+                ? 'Syncing Pool list...'
+                : 'No pools match this criteria.'}
             </h4>
           )}
         </MotionContainer>
