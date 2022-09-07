@@ -34,7 +34,7 @@ export const WithdrawPoolMember = () => {
   const { activeEra } = metrics;
   const { member, who } = config;
   const { historyDepth } = staking;
-  const { unbondingEras } = member;
+  const { unbondingEras, points } = member;
 
   // calculate total for withdraw
   let totalWithdrawBase: BN = new BN(0);
@@ -45,6 +45,8 @@ export const WithdrawPoolMember = () => {
       totalWithdrawBase = totalWithdrawBase.add(new BN(rmCommas(amount)));
     }
   });
+
+  const bonded = planckBnToUnit(new BN(rmCommas(points)), network.units);
 
   const totalWithdraw = planckBnToUnit(
     new BN(totalWithdrawBase),
@@ -71,8 +73,10 @@ export const WithdrawPoolMember = () => {
       setModalStatus(0);
     },
     callbackInBlock: () => {
-      // important: remove the pool member from context
-      removePoolMember(who);
+      // important: remove the pool member from context if no more funds bonded
+      if (bonded === 0) {
+        removePoolMember(who);
+      }
     },
   });
 
