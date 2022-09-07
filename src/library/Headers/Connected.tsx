@@ -22,7 +22,7 @@ export const Connected = () => {
   const { isSyncing } = useUi();
 
   let poolAddress = '';
-  if (activeBondedPool !== undefined) {
+  if (activeBondedPool) {
     const { addresses } = activeBondedPool;
     poolAddress = addresses.stash;
   }
@@ -84,7 +84,7 @@ export const Connected = () => {
           )}
 
           {/* pool account display / hide if not in pool */}
-          {activeBondedPool !== undefined && !isSyncing && (
+          {activeBondedPool !== null && !isSyncing && (
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}

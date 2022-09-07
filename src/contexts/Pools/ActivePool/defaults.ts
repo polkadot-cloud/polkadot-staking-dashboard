@@ -25,7 +25,6 @@ export const activeBondedPool: ActiveBondedPool = {
   memberCounter: '0',
   points: '0',
   state: PoolState.Open,
-  slashingSpansCount: 0,
 };
 
 export const targets = {

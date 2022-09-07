@@ -56,14 +56,11 @@ export interface BondedPoolsContextState {
   meta: AnyMetaBatch;
 }
 
-export interface ActiveBondedPoolState {
-  pool: ActiveBondedPool | undefined;
-}
+export type ActiveBondedPoolState = ActiveBondedPool | null;
 
 export interface ActiveBondedPool extends BondedPool {
   roles: PoolRoles;
   unclaimedReward: BN;
-  slashingSpansCount: 0;
 }
 
 export interface BondedPool {
@@ -94,7 +91,7 @@ export interface ActivePoolContextState {
   getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
-  activeBondedPool: ActiveBondedPool | undefined;
+  activeBondedPool: ActiveBondedPool | null;
   targets: any;
   poolNominations: any;
   synced: Sync;
