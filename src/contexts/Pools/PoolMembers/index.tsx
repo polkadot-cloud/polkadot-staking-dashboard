@@ -264,6 +264,14 @@ export const PoolMembersProvider = ({
   };
 
   /*
+   * Removes a member from the member list and updates state.
+   */
+  const removePoolMember = (who: MaybeAccount) => {
+    const newMembers = poolMembers.filter((p: any) => p.who !== who);
+    setPoolMembers(newMembers);
+  };
+
+  /*
    * Helper: to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
@@ -280,6 +288,7 @@ export const PoolMembersProvider = ({
         fetchPoolMembersMetaBatch,
         getMembersOfPool,
         getPoolMember,
+        removePoolMember,
         poolMembers,
         meta: poolMembersMetaBatchesRef.current,
       }}

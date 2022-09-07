@@ -102,6 +102,7 @@ export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: [], r: boolean) => void;
   getMembersOfPool: (p: number) => any;
   getPoolMember: (w: MaybeAccount) => any | null;
+  removePoolMember: (w: MaybeAccount) => void;
   poolMembers: any;
   meta: AnyMetaBatch;
 }
