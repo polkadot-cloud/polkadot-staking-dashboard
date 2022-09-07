@@ -147,6 +147,7 @@ export const HomeInner = (props: PageProps) => {
                 pools={bondedPools}
                 title="Active Pools"
                 allowMoreCols
+                allowSearch
                 pagination
               />
             </CardWrapper>

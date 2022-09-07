@@ -23,6 +23,7 @@ import { PoolListProps } from './types';
 export const PoolListInner = (props: PoolListProps) => {
   const { allowMoreCols, pagination, batchKey }: any = props;
   const disableThrottle = props.disableThrottle ?? false;
+  const allowSearch = props.allowSearch ?? false;
 
   const { mode } = useTheme();
   const { isReady, network } = useApi();
@@ -141,7 +142,7 @@ export const PoolListInner = (props: PoolListProps) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {poolsDefault.length > 0 && (
+        {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
             handleChange={handleSearchChange}
             placeholder="Search Pool Name or Address"
