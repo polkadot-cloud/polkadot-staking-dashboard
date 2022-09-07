@@ -11,6 +11,7 @@ import {
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useStaking } from 'contexts/Staking';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -279,6 +280,58 @@ export const BondedPoolsProvider = ({
     return pool;
   };
 
+  /*
+   * poolSearchFilter
+   * Iterates through the supplied list and refers to the meta
+   * batch of the list to filter those list items that match
+   * the search term.
+   * Returns the updated filtered list.
+   */
+  const poolSearchFilter = (
+    list: any,
+    batchKey: string,
+    searchTerm: string
+  ) => {
+    const meta = poolMetaBatchesRef.current;
+
+    if (meta[batchKey] === undefined) {
+      return list;
+    }
+    const filteredList: any = [];
+
+    for (const pool of list) {
+      const batchIndex = meta[batchKey].ids?.indexOf(Number(pool.id)) ?? -1;
+
+      // if we cannot derive data, fallback to include pool in filtered list
+      if (batchIndex === -1) {
+        filteredList.push(pool);
+        continue;
+      }
+
+      const metadatas = meta[batchKey]?.metadata ?? false;
+      if (!metadatas) {
+        filteredList.push(pool);
+        continue;
+      }
+
+      const address = pool?.addresses?.stash ?? '';
+      const metadata = metadatas[batchIndex] ?? '';
+
+      const metadataAsBytes = u8aToString(u8aUnwrapBytes(metadata));
+      const metadataSearch = (
+        metadataAsBytes === '' ? metadata : metadataAsBytes
+      ).toLowerCase();
+
+      if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
+        filteredList.push(pool);
+      }
+      if (metadataSearch.includes(searchTerm.toLowerCase())) {
+        filteredList.push(pool);
+      }
+    }
+    return filteredList;
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
@@ -286,6 +339,7 @@ export const BondedPoolsProvider = ({
         getBondedPool,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
+        poolSearchFilter,
         bondedPools,
         meta: poolMetaBatchesRef.current,
       }}

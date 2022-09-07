@@ -16,6 +16,7 @@ import { networkColors } from 'theme/default';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
+import { SearchInput } from 'library/List/SearchInput';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -26,7 +27,7 @@ export const PoolListInner = (props: PoolListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { fetchPoolsMetaBatch } = useBondedPools();
+  const { fetchPoolsMetaBatch, poolSearchFilter } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
 
   // current page
@@ -100,9 +101,15 @@ export const PoolListInner = (props: PoolListProps) => {
     listPools = pools;
   }
 
-  if (!pools.length) {
-    return <></>;
-  }
+  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+
+    let filteredPools = Object.assign(poolsDefault);
+    filteredPools = poolSearchFilter(filteredPools, batchKey, newValue);
+    setPage(1);
+    setRenderIteration(1);
+    setPools(filteredPools);
+  };
 
   return (
     <ListWrapper>
@@ -134,33 +141,51 @@ export const PoolListInner = (props: PoolListProps) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {pagination && (
+        {poolsDefault.length > 0 && (
+          <SearchInput
+            handleChange={handleSearchChange}
+            placeholder="Search Pool Name or Address"
+          />
+        )}
+        {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
-          {listPools.map((pool: any, index: number) => {
-            // fetch batch data by referring to default list index.
-            const batchIndex = poolsDefault.indexOf(pool);
+          {listPools.length ? (
+            <>
+              {listPools.map((pool: any, index: number) => {
+                // fetch batch data by referring to default list index.
+                const batchIndex = poolsDefault.indexOf(pool);
 
-            return (
-              <motion.div
-                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                key={`nomination_${index}`}
-                variants={{
-                  hidden: {
-                    y: 15,
-                    opacity: 0,
-                  },
-                  show: {
-                    y: 0,
-                    opacity: 1,
-                  },
-                }}
-              >
-                <Pool pool={pool} batchKey={batchKey} batchIndex={batchIndex} />
-              </motion.div>
-            );
-          })}
+                return (
+                  <motion.div
+                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                    key={`nomination_${index}`}
+                    variants={{
+                      hidden: {
+                        y: 15,
+                        opacity: 0,
+                      },
+                      show: {
+                        y: 0,
+                        opacity: 1,
+                      },
+                    }}
+                  >
+                    <Pool
+                      pool={pool}
+                      batchKey={batchKey}
+                      batchIndex={batchIndex}
+                    />
+                  </motion.div>
+                );
+              })}
+            </>
+          ) : (
+            <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
+              No pools match this criteria.
+            </h4>
+          )}
         </MotionContainer>
       </List>
     </ListWrapper>
