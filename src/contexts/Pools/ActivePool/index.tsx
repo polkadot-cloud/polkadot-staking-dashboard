@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { AnyApi, MaybeAccount } from 'types';
+import { AnyApi, MaybeAccount, Sync } from 'types';
 import {
   ActiveBondedPoolState,
   ActivePoolContextState,
@@ -54,10 +54,9 @@ export const ActivePoolProvider = ({
     useState<AnyApi>(null);
 
   // currently nominated validators by the activeBonded pool.
-  const [poolNominations, setPoolNominations] = useState<any>({
-    nominations: defaults.poolNominations,
-    unsub: null,
-  });
+  const [poolNominations, setPoolNominations] = useState<any>(
+    defaults.poolNominations
+  );
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nomination unsub object
@@ -69,51 +68,52 @@ export const ActivePoolProvider = ({
   const targetsRef = useRef(targets);
 
   // store whether active pool data has been synced.
-  // this will be true even if no active pool exists for the active account.
+  // this will be true if no active pool exists for the active account.
   // We just need confirmation this is the case.
-  const [synced, setSynced] = useState<boolean>(false);
+  const [synced, setSynced] = useState<Sync>(Sync.Unsynced);
   const syncedRef = useRef(synced);
 
+  // re-sync when membership changes
+  useEffect(() => {
+    unsubscribeAll();
+    setStateWithRef(Sync.Unsynced, setSynced, syncedRef);
+  }, [activeAccount, membership]);
+
+  // subscribe to active bonded pool deatils for the active account
+  useEffect(() => {
+    if (isReady && enabled && synced === Sync.Unsynced) {
+      setStateWithRef(Sync.Syncing, setSynced, syncedRef);
+      subscribeToActiveBondedPool();
+    }
+  }, [network, isReady, enabled, synced]);
+
+  // unsubscribe all on component unmount
   useEffect(() => {
     return () => {
       unsubscribeAll();
     };
   }, [network, isReady, enabled]);
 
-  // subscribe to active bonded pool deatils for the active account
-  useEffect(() => {
-    if (isReady && enabled) {
-      setStateWithRef(false, setSynced, syncedRef);
-      unsubscribeAll();
-      subscribeToActiveBondedPool();
-    }
-    return () => {
-      unsubscribeActiveBondedPool();
-    };
-  }, [network, isReady, enabled, membership]);
-
   const unsubscribeAll = () => {
     if (unsubActiveBondedPool) {
       unsubActiveBondedPool();
+      setStateWithRef(
+        {
+          pool: undefined,
+        },
+        setActiveBondedPool,
+        activeBondedPoolRef
+      );
+      setUnsubActiveBondedPool(null);
     }
     if (unsubPoolNominations) {
+      setStateWithRef(
+        defaults.poolNominations,
+        setPoolNominations,
+        poolNominationsRef
+      );
       unsubPoolNominations();
     }
-  };
-
-  const unsubscribeActiveBondedPool = () => {
-    if (unsubActiveBondedPool) {
-      unsubActiveBondedPool();
-    }
-    // reset state
-    setStateWithRef(
-      {
-        pool: undefined,
-      },
-      setActiveBondedPool,
-      activeBondedPoolRef
-    );
-    setUnsubActiveBondedPool(null);
   };
 
   // subscribe to pool nominations
@@ -133,9 +133,7 @@ export const ActivePoolProvider = ({
       unsubPoolNominations();
     }
     setStateWithRef(
-      {
-        nominations: defaults.poolNominations,
-      },
+      defaults.poolNominations,
       setPoolNominations,
       poolNominationsRef
     );
@@ -195,9 +193,10 @@ export const ActivePoolProvider = ({
     if (!api) {
       return;
     }
+
     if (!membership) {
       // no membership to handle: update sycning to complete
-      setStateWithRef(true, setSynced, syncedRef);
+      setStateWithRef(Sync.Synced, setSynced, syncedRef);
       return;
     }
 
@@ -256,8 +255,6 @@ export const ActivePoolProvider = ({
         }
       }
     );
-
-    // set unsub for active bonded pool
     setUnsubActiveBondedPool(unsub);
     return unsub;
   };
@@ -280,19 +277,13 @@ export const ActivePoolProvider = ({
         }
 
         // set pool nominations state
-        setStateWithRef(
-          {
-            nominations: _nominations,
-          },
-          setPoolNominations,
-          poolNominationsRef
-        );
+        setStateWithRef(_nominations, setPoolNominations, poolNominationsRef);
 
         // set unsub for pool nominations
         setUnsubPoolNominations(unsub);
 
         // update sycning to complete
-        setStateWithRef(true, setSynced, syncedRef);
+        setStateWithRef(Sync.Synced, setSynced, syncedRef);
       }
     );
     return unsub;
@@ -505,7 +496,7 @@ export const ActivePoolProvider = ({
         synced: syncedRef.current,
         activeBondedPool: activeBondedPoolRef.current.pool,
         targets: targetsRef.current,
-        poolNominations: poolNominationsRef.current.nominations,
+        poolNominations: poolNominationsRef.current,
       }}
     >
       {children}

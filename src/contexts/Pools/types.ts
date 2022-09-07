@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { AnyApi, AnyMetaBatch, MaybeAccount } from 'types';
+import { AnyApi, AnyMetaBatch, MaybeAccount, Sync } from 'types';
 
 // PoolsConfig types
 export interface PoolsConfigContextState {
@@ -97,7 +97,7 @@ export interface ActivePoolContextState {
   activeBondedPool: ActiveBondedPool | undefined;
   targets: any;
   poolNominations: any;
-  synced: boolean;
+  synced: Sync;
 }
 
 // PoolMembers types

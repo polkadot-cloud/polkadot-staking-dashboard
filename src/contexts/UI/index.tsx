@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ImportedAccount } from 'contexts/Connect/types';
-import { MaybeAccount } from 'types';
+import { MaybeAccount, Sync } from 'types';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -163,7 +163,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // nomination pool contexts have synced
-    if (poolsEnabled && !activePoolSynced) {
+    if (poolsEnabled && activePoolSynced !== Sync.Synced) {
       syncing = true;
     }
 
