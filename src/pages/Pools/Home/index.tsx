@@ -50,7 +50,7 @@ export const HomeInner = (props: PageProps) => {
 
   // back to tab 0 if not in a pool
   useEffect(() => {
-    if (activeBondedPool === undefined) {
+    if (!activeBondedPool) {
       setActiveTab(0);
     }
   }, [activeBondedPool]);
