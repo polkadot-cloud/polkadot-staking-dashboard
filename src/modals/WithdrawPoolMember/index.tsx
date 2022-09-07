@@ -22,6 +22,7 @@ import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import BN from 'bn.js';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 
 export const WithdrawPoolMember = () => {
   const { api, network } = useApi();
@@ -29,6 +30,7 @@ export const WithdrawPoolMember = () => {
   const { staking } = useStaking();
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
+  const { removePoolMember } = usePoolMembers();
   const { activeEra } = metrics;
   const { member, who } = config;
   const { historyDepth } = staking;
@@ -68,7 +70,10 @@ export const WithdrawPoolMember = () => {
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      // important: remove the pool member from context
+      removePoolMember(who);
+    },
   });
 
   return (
