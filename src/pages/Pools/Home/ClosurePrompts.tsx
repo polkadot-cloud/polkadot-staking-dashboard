@@ -66,7 +66,9 @@ export const ClosurePrompts = () => {
                   primary
                   inline
                   title="Unbond"
-                  disabled={isSyncing}
+                  disabled={
+                    isSyncing || (!depositorCanWithdraw && !depositorCanUnbond)
+                  }
                   onClick={() =>
                     openModalWith(
                       'UnbondPoolMember',
@@ -83,19 +85,6 @@ export const ClosurePrompts = () => {
                   disabled={isSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
-                  }
-                />
-                <Button
-                  small
-                  primary
-                  title="Withdraw &amp; Close Pool"
-                  disabled={isSyncing || true}
-                  onClick={() =>
-                    openModalWith(
-                      'UnbondPoolMember',
-                      { who: activeAccount, member: membership },
-                      'small'
-                    )
                   }
                 />
               </ButtonRow>
