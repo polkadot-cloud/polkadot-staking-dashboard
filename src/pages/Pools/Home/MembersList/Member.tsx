@@ -27,7 +27,7 @@ import { PoolState } from 'contexts/Pools/types';
 import { useNetworkMetrics } from 'contexts/Network';
 
 export const Member = (props: any) => {
-  const { meta, getPoolMember } = usePoolMembers();
+  const { meta } = usePoolMembers();
   const { openModalWith } = useModal();
   const { selectActive } = useList();
   const { metrics } = useNetworkMetrics();
@@ -35,16 +35,9 @@ export const Member = (props: any) => {
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { activeEra } = metrics;
   const { state, roles } = activeBondedPool || {};
-
-  const { who, batchKey, batchIndex } = props;
-
-  const member = getPoolMember(who);
-  const { unbondingEras, points } = member;
   const { stateToggler, root, depositor } = roles || {};
 
-  // configure floating menu
-  const posRef = useRef(null);
-  const menuItems: Array<any> = [];
+  const { who, batchKey, batchIndex } = props;
 
   const canUnbondBlocked =
     state === PoolState.Block &&
@@ -53,7 +46,14 @@ export const Member = (props: any) => {
 
   const canUnbondDestroying = state === PoolState.Destroy && who !== depositor;
 
-  if (canUnbondBlocked || canUnbondDestroying) {
+  const poolMembers = meta[batchKey]?.poolMembers ?? [];
+  const member = poolMembers[batchIndex] ?? null;
+
+  const menuItems: Array<any> = [];
+
+  if (member && (canUnbondBlocked || canUnbondDestroying)) {
+    const { points, unbondingEras } = member;
+
     if (points !== '0') {
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt as IconProp} />,
@@ -64,6 +64,7 @@ export const Member = (props: any) => {
             'UnbondPoolMember',
             {
               who,
+              member,
             },
             'small'
           );
@@ -85,13 +86,15 @@ export const Member = (props: any) => {
           wrap: null,
           title: `Withdraw Funds`,
           cb: () => {
-            openModalWith('WithdrawPoolMember', { who }, 'small');
+            openModalWith('WithdrawPoolMember', { who, member }, 'small');
           },
         });
       }
     }
   }
 
+  // configure floating menu
+  const posRef = useRef(null);
   const toggleMenu = () => {
     if (!open) {
       setMenuItems(menuItems);
@@ -104,7 +107,7 @@ export const Member = (props: any) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
-          {selectActive && <Select item={member} />}
+          {selectActive && <Select item={who} />}
           <Identity
             meta={meta}
             address={who}
@@ -117,6 +120,7 @@ export const Member = (props: any) => {
                 <button
                   type="button"
                   className="label"
+                  disabled={!member}
                   onClick={() => toggleMenu()}
                 >
                   <FontAwesomeIcon icon={faBars} />
@@ -127,7 +131,12 @@ export const Member = (props: any) => {
         </div>
         <Separator />
         <div className="row status">
-          <PoolMemberBonded member={member} />
+          <PoolMemberBonded
+            who={who}
+            meta={meta}
+            batchKey={batchKey}
+            batchIndex={batchIndex}
+          />
         </div>
       </div>
     </Wrapper>

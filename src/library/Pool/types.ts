@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolAddresses } from 'contexts/Pools/types';
+import { PoolAddresses, PoolState } from 'contexts/Pools/types';
 
 export interface PoolProps {
   pool: Pool;
@@ -14,4 +14,5 @@ export interface Pool {
   memberCounter: string;
   addresses: PoolAddresses;
   id: number;
+  state: PoolState;
 }

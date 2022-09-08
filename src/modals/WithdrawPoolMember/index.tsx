@@ -21,21 +21,20 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import BN from 'bn.js';
 import { useNetworkMetrics } from 'contexts/Network';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useStaking } from 'contexts/Staking';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 
 export const WithdrawPoolMember = () => {
   const { api, network } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { staking } = useStaking();
-  const { getPoolMember } = usePoolMembers();
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
+  const { removePoolMember } = usePoolMembers();
   const { activeEra } = metrics;
-  const { who } = config;
-  const member = getPoolMember(who);
+  const { member, who } = config;
   const { historyDepth } = staking;
-  const { unbondingEras } = member;
+  const { unbondingEras, points } = member;
 
   // calculate total for withdraw
   let totalWithdrawBase: BN = new BN(0);
@@ -46,6 +45,8 @@ export const WithdrawPoolMember = () => {
       totalWithdrawBase = totalWithdrawBase.add(new BN(rmCommas(amount)));
     }
   });
+
+  const bonded = planckBnToUnit(new BN(rmCommas(points)), network.units);
 
   const totalWithdraw = planckBnToUnit(
     new BN(totalWithdrawBase),
@@ -71,7 +72,12 @@ export const WithdrawPoolMember = () => {
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      // important: remove the pool member from context if no more funds bonded
+      if (bonded === 0) {
+        removePoolMember(who);
+      }
+    },
   });
 
   return (

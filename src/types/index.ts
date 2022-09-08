@@ -97,3 +97,10 @@ export type AnyApi = any;
 export type AnyMetaBatch = any;
 // eslint-disable-next-line
 export type AnySubscan = any;
+
+// track the status of a syncing / fetching process.
+export enum Sync {
+  Unsynced,
+  Syncing,
+  Synced,
+}

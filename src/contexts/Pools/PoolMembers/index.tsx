@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PoolMemberContext } from 'contexts/Pools/types';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
+import { useConnect } from 'contexts/Connect';
 import { defaultPoolMembers } from './defaults';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
@@ -20,6 +21,7 @@ export const PoolMembersProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, network, isReady } = useApi();
+  const { activeAccount } = useConnect();
   const { enabled } = usePoolsConfig();
 
   // store pool members
@@ -39,8 +41,13 @@ export const PoolMembersProvider = ({
   // clear existing state for network refresh
   useEffect(() => {
     setPoolMembers([]);
-    setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
+    unsubscribeAndResetMeta();
   }, [network]);
+
+  // clear meta state when activeAccount changes
+  useEffect(() => {
+    unsubscribeAndResetMeta();
+  }, [activeAccount]);
 
   // initial setup for fetching members
   useEffect(() => {
@@ -54,12 +61,17 @@ export const PoolMembersProvider = ({
   }, [network, isReady, enabled]);
 
   const unsubscribe = () => {
+    unsubscribeAndResetMeta();
+    setPoolMembers([]);
+  };
+
+  const unsubscribeAndResetMeta = () => {
     Object.values(poolMembersSubsRef.current).map((batch: Array<Fn>) => {
       return Object.entries(batch).map(([, v]) => {
         return v();
       });
     });
-    setPoolMembers([]);
+    setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
   };
 
   // fetch all pool members entries
@@ -70,9 +82,11 @@ export const PoolMembersProvider = ({
     const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
       const who = _keys.toHuman()[0];
       const membership = _val.toHuman();
+      const { poolId } = membership;
+
       return {
-        ...membership,
         who,
+        poolId,
       };
     });
 
@@ -148,6 +162,28 @@ export const PoolMembersProvider = ({
       poolMembersMetaBatchesRef
     );
 
+    const subscribeToPoolMembers = async (addr: string[]) => {
+      const unsub = await api.query.nominationPools.poolMembers.multi<AnyApi>(
+        addr,
+        (_pools) => {
+          const pools = [];
+          for (let i = 0; i < _pools.length; i++) {
+            pools.push(_pools[i].toHuman());
+          }
+          const _batchesUpdated = Object.assign(
+            poolMembersMetaBatchesRef.current
+          );
+          _batchesUpdated[key].poolMembers = pools;
+          setStateWithRef(
+            { ..._batchesUpdated },
+            setPoolMembersMetaBatch,
+            poolMembersMetaBatchesRef
+          );
+        }
+      );
+      return unsub;
+    };
+
     const subscribeToIdentities = async (addr: string[]) => {
       const unsub = await api.query.identity.identityOf.multi<AnyApi>(
         addr,
@@ -221,9 +257,18 @@ export const PoolMembersProvider = ({
     await Promise.all([
       subscribeToIdentities(addresses),
       subscribeToSuperIdentities(addresses),
+      subscribeToPoolMembers(addresses),
     ]).then((unsubs: Array<Fn>) => {
       addMetaBatchUnsubs(key, unsubs);
     });
+  };
+
+  /*
+   * Removes a member from the member list and updates state.
+   */
+  const removePoolMember = (who: MaybeAccount) => {
+    const newMembers = poolMembers.filter((p: any) => p.who !== who);
+    setPoolMembers(newMembers);
   };
 
   /*
@@ -243,6 +288,7 @@ export const PoolMembersProvider = ({
         fetchPoolMembersMetaBatch,
         getMembersOfPool,
         getPoolMember,
+        removePoolMember,
         poolMembers,
         meta: poolMembersMetaBatchesRef.current,
       }}

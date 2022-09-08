@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BN } from 'bn.js';
-import { MaybeAccount } from 'types';
+import { MaybeAccount, Sync } from 'types';
 import { ActiveBondedPool, ActivePoolContextState, PoolState } from '../types';
 
 export const nominationStatus = {};
@@ -25,7 +25,6 @@ export const activeBondedPool: ActiveBondedPool = {
   memberCounter: '0',
   points: '0',
   state: PoolState.Open,
-  slashingSpansCount: 0,
 };
 
 export const targets = {
@@ -64,5 +63,5 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   activeBondedPool,
   targets,
   poolNominations,
-  synced: false,
+  synced: Sync.Unsynced,
 };

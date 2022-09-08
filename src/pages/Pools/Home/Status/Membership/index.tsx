@@ -23,7 +23,7 @@ export const Membership = ({ label }: { label: string }) => {
   const { activeBondedPool, isOwner, getPoolBondOptions } = useActivePool();
   const { active } = getPoolBondOptions(activeAccount);
 
-  const inPool = membership !== null && activeBondedPool !== undefined;
+  const inPool = membership !== null && activeBondedPool !== null;
 
   let display = 'Not in Pool';
   if (membership && activeBondedPool) {

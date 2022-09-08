@@ -20,18 +20,14 @@ import { Warning } from 'library/Form/Warning';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import BN from 'bn.js';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 
 export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
-  const { getPoolMember } = usePoolMembers();
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { units } = network;
   const { bondDuration } = consts;
-
-  const { who } = config;
-  const member = getPoolMember(who);
+  const { member, who } = config;
   const { points } = member;
   const freeToUnbond = planckBnToUnit(new BN(rmCommas(points)), units);
 

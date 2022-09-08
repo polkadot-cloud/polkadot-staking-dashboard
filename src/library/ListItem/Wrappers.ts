@@ -83,6 +83,9 @@ export const Labels = styled.div`
     &.active {
       color: ${networkColor};
     }
+    &:disabled {
+      opacity: 0.35;
+    }
   }
 
   .label {

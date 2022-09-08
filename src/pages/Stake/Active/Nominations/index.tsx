@@ -14,6 +14,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { MaybeAccount } from 'types';
+import { PoolState } from 'contexts/Pools/types';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -38,6 +39,7 @@ export const Nominations = ({
     poolNominations,
     isNominator: isPoolNominator,
     isOwner: isPoolOwner,
+    activeBondedPool,
   } = useActivePool();
 
   const isPool = bondType === 'pool';
@@ -46,6 +48,8 @@ export const Nominations = ({
     : getAccountNominations(nominator);
   const nominated = isPool ? poolNominated : stakeNominated;
   const batchKey = isPool ? 'pool_nominations' : 'stake_nominations';
+
+  const nominating = nominated?.length ?? false;
 
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {
@@ -78,8 +82,14 @@ export const Nominations = ({
   };
 
   // determine whether buttons are disabled
-  const btnsDisabled =
-    (!isPool && inSetup()) || isSyncing || isReadOnlyAccount(activeAccount);
+  const poolDestroying =
+    isPool && activeBondedPool?.state === PoolState.Destroy && !nominating;
+
+  const stopBtnDisabled =
+    (!isPool && inSetup()) ||
+    isSyncing ||
+    isReadOnlyAccount(activeAccount) ||
+    poolDestroying;
 
   return (
     <Wrapper>
@@ -101,7 +111,7 @@ export const Nominations = ({
               inline
               primary
               title="Stop"
-              disabled={btnsDisabled}
+              disabled={stopBtnDisabled}
               onClick={() =>
                 openModalWith(
                   'ChangeNominations',
@@ -167,7 +177,13 @@ export const Nominations = ({
             </div>
           ) : (
             <div className="head">
-              <h4>Not Nominating.</h4>
+              {poolDestroying ? (
+                <h4>
+                  Pool is being destroyed and nominating is no longer possible.
+                </h4>
+              ) : (
+                <h4>Not Nominating.</h4>
+              )}
             </div>
           )}
         </>

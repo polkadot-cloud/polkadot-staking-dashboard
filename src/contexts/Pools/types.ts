@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { AnyApi, AnyMetaBatch, MaybeAccount } from 'types';
+import { AnyApi, AnyMetaBatch, MaybeAccount, Sync } from 'types';
 
 // PoolsConfig types
 export interface PoolsConfigContextState {
@@ -52,18 +52,16 @@ export interface BondedPoolsContextState {
   getBondedPool: (p: number) => BondedPool | null;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
+  poolSearchFilter: (l: any, k: string, v: string) => void;
   bondedPools: Array<BondedPool>;
   meta: AnyMetaBatch;
 }
 
-export interface ActiveBondedPoolState {
-  pool: ActiveBondedPool | undefined;
-}
+export type ActiveBondedPoolState = ActiveBondedPool | null;
 
 export interface ActiveBondedPool extends BondedPool {
   roles: PoolRoles;
   unclaimedReward: BN;
-  slashingSpansCount: 0;
 }
 
 export interface BondedPool {
@@ -94,10 +92,10 @@ export interface ActivePoolContextState {
   getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
-  activeBondedPool: ActiveBondedPool | undefined;
+  activeBondedPool: ActiveBondedPool | null;
   targets: any;
   poolNominations: any;
-  synced: boolean;
+  synced: Sync;
 }
 
 // PoolMembers types
@@ -105,6 +103,7 @@ export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: [], r: boolean) => void;
   getMembersOfPool: (p: number) => any;
   getPoolMember: (w: MaybeAccount) => any | null;
+  removePoolMember: (w: MaybeAccount) => void;
   poolMembers: any;
   meta: AnyMetaBatch;
 }
