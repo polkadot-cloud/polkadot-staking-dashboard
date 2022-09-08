@@ -60,8 +60,9 @@ export const ActivePoolProvider = ({
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nomination unsub object
-  const [unsubPoolNominations, setUnsubPoolNominations] =
-    useState<AnyApi>(null);
+  const [unsubPoolNominations, setUnsubPoolNominations] = useState<
+    Array<AnyApi>
+  >([]);
   const unsubPoolNominationsRef = useRef(unsubPoolNominations);
 
   // store account target validators
@@ -109,15 +110,17 @@ export const ActivePoolProvider = ({
 
   // unsubscribe and reset poolNominations
   const unsubscribePoolNominations = () => {
-    if (unsubPoolNominationsRef.current) {
-      unsubPoolNominationsRef.current();
+    if (unsubPoolNominationsRef.current.length) {
+      for (const unsub of unsubPoolNominationsRef.current) {
+        unsub();
+      }
     }
     setStateWithRef(
       defaults.poolNominations,
       setPoolNominations,
       poolNominationsRef
     );
-    setStateWithRef(null, setUnsubPoolNominations, unsubPoolNominationsRef);
+    setStateWithRef([], setUnsubPoolNominations, unsubPoolNominationsRef);
   };
 
   // unsubscribe and reset activePool and poolNominations
@@ -209,32 +212,39 @@ export const ActivePoolProvider = ({
   const subscribeToPoolNominations = async (poolBondAddress: string) => {
     if (!api) return;
 
-    const unsub = await api.query.staking.nominators(
-      poolBondAddress,
-      (nominations: AnyApi) => {
-        // set pool nominations
-        let _nominations = nominations.unwrapOr(null);
-        if (_nominations === null) {
-          _nominations = defaults.poolNominations;
-        } else {
-          _nominations = {
-            targets: _nominations.targets.toHuman(),
-            submittedIn: _nominations.submittedIn.toHuman(),
-          };
+    const subscribePoolNominations = async (_poolBondAddress: string) => {
+      const unsub = await api.query.staking.nominators(
+        _poolBondAddress,
+        (nominations: AnyApi) => {
+          // set pool nominations
+          let _nominations = nominations.unwrapOr(null);
+          if (_nominations === null) {
+            _nominations = defaults.poolNominations;
+          } else {
+            _nominations = {
+              targets: _nominations.targets.toHuman(),
+              submittedIn: _nominations.submittedIn.toHuman(),
+            };
+          }
+
+          // set pool nominations state
+          setStateWithRef(_nominations, setPoolNominations, poolNominationsRef);
+
+          // update sycning to complete
+          setStateWithRef(Sync.Synced, setSynced, syncedRef);
         }
+      );
+      return unsub;
+    };
 
-        // set pool nominations state
-        setStateWithRef(_nominations, setPoolNominations, poolNominationsRef);
-
-        // set unsub for pool nominations
+    // initiate subscription, treat unsubs as array.
+    await Promise.all([subscribePoolNominations(poolBondAddress)]).then(
+      (unsubs: any) => {
         setStateWithRef(
-          unsub,
+          unsubs,
           setUnsubPoolNominations,
           unsubPoolNominationsRef
         );
-
-        // update sycning to complete
-        setStateWithRef(Sync.Synced, setSynced, syncedRef);
       }
     );
   };
