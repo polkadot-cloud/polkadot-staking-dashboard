@@ -19,6 +19,14 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { useTheme } from 'contexts/Themes';
+import { PoolState } from 'contexts/Pools/types';
+import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { Button, ButtonRow } from 'library/Button';
+import { useModal } from 'contexts/Modal';
+import { useConnect } from 'contexts/Connect';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useUi } from 'contexts/UI';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -36,10 +44,26 @@ export const HomeInner = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network } = useApi();
+  const { activeAccount } = useConnect();
+  const { mode } = useTheme();
   const navigate = useNavigate();
+  const { openModalWith } = useModal();
   const { bondedPools } = useBondedPools();
-  const { isBonding, getPoolRoles, activeBondedPool } = useActivePool();
+  const { membership } = usePoolMemberships();
+  const { isSyncing } = useUi();
+  const {
+    isBonding,
+    getPoolRoles,
+    activeBondedPool,
+    isDepositor,
+    getPoolBondOptions,
+  } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
+
+  const { state, memberCounter } = activeBondedPool || {};
+  const { active, totalUnlockChuncks } = getPoolBondOptions(activeAccount);
+  const networkColorsSecondary: any = network.colors.secondary;
+  const annuncementBorderColor = networkColorsSecondary[mode];
 
   // back to overview if pools are not supported on network
   useEffect(() => {
@@ -86,6 +110,20 @@ export const HomeInner = (props: PageProps) => {
     }
   );
 
+  // is the pool in a state for the depositor to close
+  const depositorCanClose =
+    !isSyncing &&
+    isDepositor() &&
+    state === PoolState.Destroy &&
+    memberCounter === '1';
+
+  // depositor needs to unbond funds
+  const depositorCanUnbond = active.toNumber() > 0;
+
+  // depositor can withdraw & close pool
+  const depositorCanWithdraw =
+    active.toNumber() === 0 && totalUnlockChuncks === 0;
+
   return (
     <>
       <PageTitle title={title} tabs={tabs} />
@@ -96,6 +134,69 @@ export const HomeInner = (props: PageProps) => {
             <MinJoinBondStatBox />
             <MinCreateBondStatBox />
           </StatBoxList>
+          {depositorCanClose && (
+            <PageRowWrapper className="page-padding" noVerticalSpacer>
+              <CardWrapper
+                style={{ border: `1px solid ${annuncementBorderColor}` }}
+              >
+                <div className="content">
+                  <h3>Destroy Pool</h3>
+                  <h4>
+                    All members have now left the pool.
+                    {depositorCanWithdraw
+                      ? 'You can now withdraw and close the pool.'
+                      : depositorCanUnbond
+                      ? 'You can now unbond your funds.'
+                      : 'Withdraw your unlock chunk to proceed with pool closure.'}
+                  </h4>
+                  <ButtonRow verticalSpacing>
+                    <Button
+                      small
+                      primary
+                      inline
+                      title="Unbond"
+                      disabled={isSyncing}
+                      onClick={() =>
+                        openModalWith(
+                          'UnbondPoolMember',
+                          { who: activeAccount, member: membership },
+                          'small'
+                        )
+                      }
+                    />
+                    <Button
+                      small
+                      primary
+                      icon={faLockOpen}
+                      title={String(totalUnlockChuncks ?? 0)}
+                      disabled={isSyncing || !isBonding()}
+                      onClick={() =>
+                        openModalWith(
+                          'UnlockChunks',
+                          { bondType: 'pool' },
+                          'small'
+                        )
+                      }
+                    />
+                    <Button
+                      small
+                      primary
+                      title="Withdraw &amp; Close Pool"
+                      disabled={isSyncing || true}
+                      onClick={() =>
+                        openModalWith(
+                          'UnbondPoolMember',
+                          { who: activeAccount, member: membership },
+                          'small'
+                        )
+                      }
+                    />
+                  </ButtonRow>
+                </div>
+              </CardWrapper>
+            </PageRowWrapper>
+          )}
+
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <RowPrimaryWrapper
               hOrder={1}

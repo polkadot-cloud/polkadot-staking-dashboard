@@ -12,10 +12,11 @@ import {
 } from 'theme';
 import { ButtonProps, ButtonWrapperProps } from './types';
 
-export const ButtonRow = styled.div`
+export const ButtonRow = styled.div<{ verticalSpacing?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-top: ${(props) => (props.verticalSpacing ? '1rem' : 0)};
 `;
 
 export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
