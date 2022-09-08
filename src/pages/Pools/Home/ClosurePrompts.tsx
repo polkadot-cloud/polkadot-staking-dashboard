@@ -61,7 +61,7 @@ export const ClosurePrompts = () => {
             <div className="content">
               <h3>Destroy Pool</h3>
               <h4>
-                All members have now left the pool.
+                All members have now left the pool.{' '}
                 {targets.length > 0
                   ? 'To continue with pool closure, stop nominating.'
                   : depositorCanWithdraw
