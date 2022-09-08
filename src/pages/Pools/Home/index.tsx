@@ -19,6 +19,7 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -38,8 +39,9 @@ export const HomeInner = (props: PageProps) => {
   const { title } = page;
   const { network } = useApi();
   const navigate = useNavigate();
+  const { membership } = usePoolMemberships();
   const { bondedPools } = useBondedPools();
-  const { isBonding, getPoolRoles, activeBondedPool } = useActivePool();
+  const { getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
   // back to overview if pools are not supported on network
@@ -120,7 +122,7 @@ export const HomeInner = (props: PageProps) => {
               </CardWrapper>
             </RowSecondaryWrapper>
           </PageRowWrapper>
-          {isBonding() && (
+          {membership !== null && (
             <>
               <ManagePool />
               <PageRowWrapper className="page-padding" noVerticalSpacer>

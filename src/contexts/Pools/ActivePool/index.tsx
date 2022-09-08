@@ -465,10 +465,11 @@ export const ActivePoolProvider = ({
       .add(totalRewardsClaimed)
       .sub(lastRecordedTotalPayouts);
 
-    const currentRewardCounter = payoutsSinceLastRecord
-      .mul(rewardCounterBase)
-      .div(bondedPoolPoints)
-      .add(poolLastRecordedRewardCounter);
+    const currentRewardCounter = (
+      bondedPoolPoints.eq(new BN(0))
+        ? new BN(0)
+        : payoutsSinceLastRecord.mul(rewardCounterBase).div(bondedPoolPoints)
+    ).add(poolLastRecordedRewardCounter);
 
     const pendingRewards = currentRewardCounter
       .sub(memberLastRecordedRewardCounter)
