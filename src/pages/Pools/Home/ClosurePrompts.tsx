@@ -21,11 +21,18 @@ export const ClosurePrompts = () => {
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
   const { isSyncing } = useUi();
-  const { isBonding, activeBondedPool, isDepositor, getPoolBondOptions } =
-    useActivePool();
+  const {
+    isBonding,
+    activeBondedPool,
+    isDepositor,
+    getPoolBondOptions,
+    poolNominations,
+  } = useActivePool();
 
   const { state, memberCounter } = activeBondedPool || {};
   const { active, totalUnlockChuncks } = getPoolBondOptions(activeAccount);
+  const targets = poolNominations?.targets ?? [];
+
   const networkColorsSecondary: any = network.colors.secondary;
   const annuncementBorderColor = networkColorsSecondary[mode];
 
@@ -34,14 +41,15 @@ export const ClosurePrompts = () => {
     !isSyncing &&
     isDepositor() &&
     state === PoolState.Destroy &&
-    memberCounter === '1';
+    memberCounter === '1' &&
+    !targets.length;
 
   // depositor needs to unbond funds
-  const depositorCanUnbond = active.toNumber() > 0;
+  const depositorCanUnbond = active.toNumber() > 0 && !targets.length;
 
   // depositor can withdraw & close pool
   const depositorCanWithdraw =
-    active.toNumber() === 0 && totalUnlockChuncks === 0;
+    active.toNumber() === 0 && totalUnlockChuncks === 0 && !targets.length;
 
   return (
     <>
@@ -54,7 +62,9 @@ export const ClosurePrompts = () => {
               <h3>Destroy Pool</h3>
               <h4>
                 All members have now left the pool.
-                {depositorCanWithdraw
+                {targets.length > 0
+                  ? 'To continue with pool closure, stop nominating.'
+                  : depositorCanWithdraw
                   ? 'You can now withdraw and close the pool.'
                   : depositorCanUnbond
                   ? 'You can now unbond your funds.'
