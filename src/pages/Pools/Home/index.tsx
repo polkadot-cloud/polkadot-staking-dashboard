@@ -8,10 +8,9 @@ import {
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -20,6 +19,7 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -32,14 +32,16 @@ import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
 import { Members } from './Members';
+import { ClosurePrompts } from './ClosurePrompts';
 
 export const HomeInner = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network } = useApi();
   const navigate = useNavigate();
+  const { membership } = usePoolMemberships();
   const { bondedPools } = useBondedPools();
-  const { isBonding, getPoolRoles, activeBondedPool } = useActivePool();
+  const { getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
   // back to overview if pools are not supported on network
@@ -51,7 +53,7 @@ export const HomeInner = (props: PageProps) => {
 
   // back to tab 0 if not in a pool
   useEffect(() => {
-    if (activeBondedPool === undefined) {
+    if (!activeBondedPool) {
       setActiveTab(0);
     }
   }, [activeBondedPool]);
@@ -97,6 +99,9 @@ export const HomeInner = (props: PageProps) => {
             <MinJoinBondStatBox />
             <MinCreateBondStatBox />
           </StatBoxList>
+
+          <ClosurePrompts />
+
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <RowPrimaryWrapper
               hOrder={1}
@@ -117,7 +122,7 @@ export const HomeInner = (props: PageProps) => {
               </CardWrapper>
             </RowSecondaryWrapper>
           </PageRowWrapper>
-          {isBonding() && (
+          {membership !== null && (
             <>
               <ManagePool />
               <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -148,6 +153,7 @@ export const HomeInner = (props: PageProps) => {
                 pools={bondedPools}
                 title="Active Pools"
                 allowMoreCols
+                allowSearch
                 pagination
               />
             </CardWrapper>

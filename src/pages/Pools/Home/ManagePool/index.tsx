@@ -12,6 +12,7 @@ import Nominations from 'pages/Stake/Active/Nominations';
 import { GenerateNominations } from 'library/SetupSteps/GenerateNominations';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
+import { PoolState } from 'contexts/Pools/types';
 
 export const ManagePool = () => {
   const { isSyncing } = useUi();
@@ -27,13 +28,14 @@ export const ManagePool = () => {
 
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = activeBondedPool?.addresses?.stash ?? null;
+  const { state } = activeBondedPool || {};
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondType="pool" nominator={activeAccount} />
-        ) : isNominator() && !isNominating ? (
+        ) : isNominator() && !isNominating && state !== PoolState.Destroy ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>

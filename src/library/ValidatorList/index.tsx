@@ -24,6 +24,7 @@ import { useUi } from 'contexts/UI';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Selectable } from 'library/List/Selectable';
+import { SearchInput } from 'library/List/SearchInput';
 import { Filters } from './Filters';
 import { useList, ListProvider } from '../List/context';
 
@@ -205,6 +206,7 @@ export const ValidatorListInner = (props: any) => {
     setPage(1);
     setRenderIteration(1);
   };
+
   return (
     <ListWrapper>
       <Header>
@@ -241,17 +243,12 @@ export const ValidatorListInner = (props: any) => {
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && (
-          <div className="search">
-            <input
-              type="text"
-              className="search"
-              placeholder="Search Address or Identity Name"
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                handleSearchChange(e)
-              }
-            />
-          </div>
+          <SearchInput
+            handleChange={handleSearchChange}
+            placeholder="Search Address or Identity"
+          />
         )}
+
         {allowFilters && <Filters />}
 
         {listValidators.length > 0 && pagination && (
@@ -303,7 +300,7 @@ export const ValidatorListInner = (props: any) => {
               })}
             </>
           ) : (
-            <h4 style={{ marginTop: '2rem' }}>
+            <h4 style={{ marginTop: '1rem' }}>
               No validators match this criteria.
             </h4>
           )}

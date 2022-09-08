@@ -11,7 +11,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
-import { AnyApi } from 'types';
+import { AnyApi, Sync } from 'types';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { useList, ListProvider } from 'library/List/context';
@@ -54,7 +54,7 @@ export const MembersListInner = (props: any) => {
   const [members, setMembers] = useState(props.members);
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState<boolean>(false);
+  const [fetched, setFetched] = useState<Sync>(Sync.Unsynced);
 
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
@@ -74,13 +74,13 @@ export const MembersListInner = (props: any) => {
   // refetch list when list changes
   useEffect(() => {
     if (props.members !== membersDefault) {
-      setFetched(false);
+      setFetched(Sync.Unsynced);
     }
   }, [props.members]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && metrics.activeEra.index !== 0 && fetched === Sync.Unsynced) {
       setupMembersList();
     }
   }, [isReady, fetched, metrics.activeEra.index]);
@@ -103,10 +103,10 @@ export const MembersListInner = (props: any) => {
 
   // handle validator list bootstrapping
   const setupMembersList = () => {
-    setFetched(true);
     setMembersDefault(props.members);
     setMembers(props.members);
     fetchPoolMembersMetaBatch(batchKey, props.members, false);
+    setFetched(Sync.Synced);
   };
 
   // get list items to render

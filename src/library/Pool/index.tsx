@@ -28,6 +28,7 @@ import { useValidators } from 'contexts/Validators';
 import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
 import { useUi } from 'contexts/UI';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
+import { PoolState } from 'contexts/Pools/types';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
@@ -35,7 +36,7 @@ import { PoolId } from '../ListItem/Labels/PoolId';
 
 export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;
-  const { memberCounter, addresses, id } = pool;
+  const { memberCounter, addresses, id, state } = pool;
 
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -187,6 +188,7 @@ export const Pool = (props: PoolProps) => {
         <div className="row status">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!isSyncing &&
+            state === PoolState.Open &&
             !isBonding() &&
             !isReadOnlyAccount(activeAccount) &&
             activeAccount && (

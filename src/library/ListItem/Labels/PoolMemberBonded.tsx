@@ -11,38 +11,51 @@ import {
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import BN from 'bn.js';
 
-export const PoolMemberBonded = ({ member }: { member: any }) => {
+export const PoolMemberBonded = (props: any) => {
+  const { meta, batchKey, batchIndex, who } = props;
   const { network } = useApi();
   const { units, unit } = network;
-  const { points } = member;
 
-  const bonded = planckBnToUnit(new BN(rmCommas(points)), units);
-  const status = bonded > 0 ? 'active' : 'inactive';
+  const poolMembers = meta[batchKey]?.poolMembers ?? [];
+  const poolMember = poolMembers[batchIndex] ?? null;
 
-  const { unbondingEras } = member;
+  let bonded = 0;
+  let status = '';
+  let totalUnbonding = 0;
+  if (poolMember) {
+    const { points, unbondingEras } = poolMember;
 
-  // converting unbonding eras from points to units
-  let totalUnbondingBase: BN = new BN(0);
-  Object.values(unbondingEras).forEach((amount: any) => {
-    const amountBn: BN = new BN(rmCommas(amount));
-    totalUnbondingBase = totalUnbondingBase.add(amountBn);
-  });
+    bonded = planckBnToUnit(new BN(rmCommas(points)), units);
+    status = bonded > 0 ? 'active' : 'inactive';
 
-  const totalUnbonding = planckBnToUnit(
-    new BN(totalUnbondingBase),
-    network.units
-  );
+    // converting unbonding eras from points to units
+    let totalUnbondingBase: BN = new BN(0);
+    Object.values(unbondingEras).forEach((amount: any) => {
+      const amountBn: BN = new BN(rmCommas(amount));
+      totalUnbondingBase = totalUnbondingBase.add(amountBn);
+    });
+    totalUnbonding = planckBnToUnit(new BN(totalUnbondingBase), network.units);
+  }
 
   return (
     <>
-      {bonded > 0 && (
-        <ValidatorStatusWrapper status={status}>
-          <h5>
-            Bonded: {humanNumber(toFixedIfNecessary(bonded, 3))} {unit}
-          </h5>
+      {!poolMember ? (
+        <ValidatorStatusWrapper status="inactive">
+          <h5>Syncing...</h5>
         </ValidatorStatusWrapper>
+      ) : (
+        <>
+          {bonded > 0 && (
+            <ValidatorStatusWrapper status={status}>
+              <h5>
+                Bonded: {humanNumber(toFixedIfNecessary(bonded, 3))} {unit}
+              </h5>
+            </ValidatorStatusWrapper>
+          )}
+        </>
       )}
-      {totalUnbonding > 0 && (
+
+      {poolMember && totalUnbonding > 0 && (
         <ValidatorStatusWrapper status="inactive">
           <h5>
             Unbonding {humanNumber(toFixedIfNecessary(totalUnbonding, 3))}{' '}

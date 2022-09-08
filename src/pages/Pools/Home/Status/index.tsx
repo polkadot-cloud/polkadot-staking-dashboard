@@ -42,7 +42,7 @@ export const Status = ({ height }: { height: number }) => {
     (_v) => _v === 'active'
   ).length;
   const isNominating = !!poolNominations?.targets?.length;
-  const inPool = membership && activeBondedPool;
+  const inPool = membership;
 
   // Set the minimum unclaimed planck value to prevent e numbers
   const minUnclaimedDisplay = new BN(1_000_000);
