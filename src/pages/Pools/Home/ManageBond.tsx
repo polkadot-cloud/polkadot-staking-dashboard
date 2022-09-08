@@ -12,6 +12,7 @@ import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { PoolState } from 'contexts/Pools/types';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -19,7 +20,7 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
-  const { getPoolBondOptions, isBonding } = useActivePool();
+  const { getPoolBondOptions, isBonding, activeBondedPool } = useActivePool();
 
   const {
     active,
@@ -28,6 +29,8 @@ export const ManageBond = () => {
     totalUnlocked,
     totalUnlockChuncks,
   } = getPoolBondOptions(activeAccount);
+
+  const { state } = activeBondedPool || {};
 
   return (
     <>
@@ -45,7 +48,7 @@ export const ManageBond = () => {
             primary
             inline
             title="+"
-            disabled={isSyncing || !isBonding()}
+            disabled={isSyncing || !isBonding() || state === PoolState.Destroy}
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -58,7 +61,7 @@ export const ManageBond = () => {
             small
             primary
             title="-"
-            disabled={isSyncing || !isBonding()}
+            disabled={isSyncing || !isBonding() || state === PoolState.Destroy}
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -73,7 +76,7 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={isSyncing || !isBonding()}
+            disabled={isSyncing || !isBonding() || state === PoolState.Destroy}
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
             }
