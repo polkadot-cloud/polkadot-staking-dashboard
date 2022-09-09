@@ -38,6 +38,9 @@ export const Status = ({ height }: { height: number }) => {
     poolNominations?.targets ?? []
   );
 
+  // determine pool state
+  const poolState = activeBondedPool?.state ?? null;
+
   const activeNominations = Object.values(nominationStatuses).filter(
     (_v) => _v === 'active'
   ).length;
@@ -68,16 +71,16 @@ export const Status = ({ height }: { height: number }) => {
         {
           title: 'Bond',
           icon: faPlus,
-          disabled: !isReady || isReadOnlyAccount(activeAccount),
+          disabled:
+            !isReady ||
+            isReadOnlyAccount(activeAccount) ||
+            poolState === PoolState.Destroy,
           small: true,
           onClick: () =>
             openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
         },
       ]
     : undefined;
-
-  // determine pool state icon
-  const poolState = activeBondedPool?.state ?? null;
 
   let poolStateIcon;
   switch (poolState) {
