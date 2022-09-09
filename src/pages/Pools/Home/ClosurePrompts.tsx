@@ -94,7 +94,11 @@ export const ClosurePrompts = () => {
                   title={String(totalUnlockChuncks ?? 0)}
                   disabled={isSyncing || !isBonding()}
                   onClick={() =>
-                    openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
+                    openModalWith(
+                      'UnlockChunks',
+                      { bondType: 'pool', poolClosure: true },
+                      'small'
+                    )
                   }
                 />
               </ButtonRow>

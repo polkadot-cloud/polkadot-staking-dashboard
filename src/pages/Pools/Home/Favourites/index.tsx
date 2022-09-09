@@ -12,7 +12,7 @@ import { useUi } from 'contexts/UI';
 
 export const Favourites = () => {
   const { isReady } = useApi();
-  const { favourites } = usePoolsConfig();
+  const { favourites, removeFavourite } = usePoolsConfig();
   const { bondedPools } = useBondedPools();
   const { isSyncing } = useUi();
 
@@ -20,9 +20,18 @@ export const Favourites = () => {
   const [favouritesList, setFavouritesList] = useState<Array<any>>([]);
 
   useEffect(() => {
-    const _favouritesList = favourites.map((f: any) =>
-      bondedPools.find((b: any) => b.addresses.stash === f)
-    );
+    // map favourites to bonded pools
+    let _favouritesList = favourites.map((f: any) => {
+      const pool = bondedPools.find((b: any) => b.addresses.stash === f);
+      if (!pool) {
+        removeFavourite(f);
+      }
+      return pool;
+    });
+
+    // filter not found bonded pools
+    _favouritesList = _favouritesList.filter((f: any) => f !== undefined);
+
     setFavouritesList(_favouritesList);
   }, [favourites]);
 

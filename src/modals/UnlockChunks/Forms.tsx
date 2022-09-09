@@ -16,6 +16,7 @@ import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
@@ -24,9 +25,10 @@ export const Forms = forwardRef(
     const { api, network } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
     const { staking } = useStaking();
+    const { removeFavourite: removeFavouritePool } = usePoolsConfig();
     const { activeBondedPool } = useActivePool();
     const { setStatus: setModalStatus, config } = useModal();
-    const { bondType } = config || {};
+    const { bondType, poolClosure } = config || {};
     const { getBondedAccount } = useBalances();
     const { historyDepth } = staking;
     const { units } = network;
@@ -72,7 +74,11 @@ export const Forms = forwardRef(
       callbackSubmit: () => {
         setModalStatus(0);
       },
-      callbackInBlock: () => {},
+      callbackInBlock: () => {
+        if (poolClosure) {
+          removeFavouritePool(activeBondedPool?.addresses?.stash ?? '');
+        }
+      },
     });
 
     const value = unlock?.value ?? new BN(0);
