@@ -7,7 +7,11 @@ export const defaultPoolMembers: PoolMemberContext = {
   // eslint-disable-next-line
   fetchPoolMembersMetaBatch: (k, v, r) => {},
   // eslint-disable-next-line
+  queryPoolMember: (w) => {},
+  // eslint-disable-next-line
   getMembersOfPool: (p) => {},
+  // eslint-disable-next-line
+  addToPoolMembers: (m) => {},
   // eslint-disable-next-line
   getPoolMember: (w) => null,
   // eslint-disable-next-line

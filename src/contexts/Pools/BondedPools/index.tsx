@@ -371,6 +371,8 @@ export const BondedPoolsProvider = ({
   // adds a record to bondedPools.
   // currently only used when a new pool is created.
   const addToBondedPools = (pool: BondedPool) => {
+    if (!pool) return;
+
     const exists = bondedPools.find((b: BondedPool) => b.id === pool.id);
     if (!exists) {
       const _bondedPools = bondedPools.concat(pool);
