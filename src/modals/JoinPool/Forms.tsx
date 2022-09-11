@@ -14,6 +14,9 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { useUi } from 'contexts/UI';
+import { defaultPoolSetup } from 'contexts/UI/defaults';
+import { SetupType } from 'contexts/UI/types';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -24,6 +27,7 @@ export const Forms = () => {
   const { id: poolId, setActiveTab } = config;
   const { activeAccount, accountHasSigner } = useConnect();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
+  const { setActiveAccountSetup } = useUi();
 
   const { getBondOptions } = useBalances();
   const { freeToBond }: BondOptions = getBondOptions(activeAccount);
@@ -65,6 +69,9 @@ export const Forms = () => {
       // query and add account to poolMembers list
       const member = await queryPoolMember(activeAccount);
       addToPoolMembers(member);
+
+      // reset localStorage setup progress
+      setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
     },
   });
 
