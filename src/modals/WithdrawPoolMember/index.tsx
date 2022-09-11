@@ -73,7 +73,7 @@ export const WithdrawPoolMember = () => {
       setModalStatus(0);
     },
     callbackInBlock: () => {
-      // important: remove the pool member from context if no more funds bonded
+      // remove the pool member from context if no more funds bonded
       if (bonded === 0) {
         removePoolMember(who);
       }
