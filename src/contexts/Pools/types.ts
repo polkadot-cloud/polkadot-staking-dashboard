@@ -50,6 +50,7 @@ export interface PoolMembership {
 export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   getBondedPool: (p: number) => BondedPool | null;
+  updateBondedPools: (p: Array<BondedPool>) => void;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
   poolSearchFilter: (l: any, k: string, v: string) => void;

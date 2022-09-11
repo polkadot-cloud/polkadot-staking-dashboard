@@ -9,6 +9,8 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line
   getBondedPool: (p) => null,
   // eslint-disable-next-line
+  updateBondedPools: (p) => {},
+  // eslint-disable-next-line
   getPoolNominationStatus: (n, o) => {},
   // eslint-disable-next-line
   getPoolNominationStatusCode: (t) => '',

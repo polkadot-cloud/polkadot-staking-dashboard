@@ -332,11 +332,25 @@ export const BondedPoolsProvider = ({
     return filteredList;
   };
 
+  const updateBondedPools = (updatedPools: Array<BondedPool>) => {
+    if (!updatedPools) {
+      return;
+    }
+    const _bondedPools = bondedPools.map(
+      (original: BondedPool) =>
+        updatedPools.find(
+          (updated: BondedPool) => updated.id === original.id
+        ) || original
+    );
+    setBondedPools(_bondedPools);
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
         fetchPoolsMetaBatch,
         getBondedPool,
+        updateBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
         poolSearchFilter,
