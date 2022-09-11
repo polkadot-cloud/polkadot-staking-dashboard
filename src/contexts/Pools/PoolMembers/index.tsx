@@ -268,7 +268,7 @@ export const PoolMembersProvider = ({
    */
   const removePoolMember = (who: MaybeAccount) => {
     const newMembers = poolMembers.filter((p: any) => p.who !== who);
-    setPoolMembers(newMembers);
+    setPoolMembers(newMembers ?? []);
   };
 
   /*
