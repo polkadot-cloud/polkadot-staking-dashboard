@@ -15,6 +15,7 @@ import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -23,7 +24,8 @@ export const Summary = (props: SetupStepProps) => {
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
+
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
@@ -59,7 +61,10 @@ export const Summary = (props: SetupStepProps) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {},
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      // reset localStorage setup progress
+      setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+    },
   });
 
   return (
