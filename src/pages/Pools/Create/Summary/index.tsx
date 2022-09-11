@@ -18,6 +18,7 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -27,6 +28,7 @@ export const Summary = (props: SetupStepProps) => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress } = useUi();
   const { stats } = usePoolsConfig();
+  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
   const poolId = lastPoolId.add(new BN(1));
@@ -72,6 +74,9 @@ export const Summary = (props: SetupStepProps) => {
       // query and add created pool to bondedPools list
       const pool = await queryBondedPool(poolId.toNumber());
       addToBondedPools(pool);
+      // query and add account to poolMembers list
+      const member = await queryPoolMember(activeAccount);
+      addToPoolMembers(member);
     },
   });
 
