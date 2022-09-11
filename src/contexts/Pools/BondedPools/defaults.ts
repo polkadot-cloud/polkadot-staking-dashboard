@@ -7,9 +7,15 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line
   fetchPoolsMetaBatch: (k, v: [], r) => {},
   // eslint-disable-next-line
+  queryBondedPool: (p) => {},
+  // eslint-disable-next-line
   getBondedPool: (p) => null,
   // eslint-disable-next-line
   updateBondedPools: (p) => {},
+  // eslint-disable-next-line
+  addToBondedPools: (p) => {},
+  // eslint-disable-next-line
+  removeFromBondedPools: (p) => {},
   // eslint-disable-next-line
   getPoolNominationStatus: (n, o) => {},
   // eslint-disable-next-line

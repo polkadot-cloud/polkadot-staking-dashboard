@@ -49,8 +49,11 @@ export interface PoolMembership {
 // BondedPool types
 export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
+  queryBondedPool: (p: number) => any;
   getBondedPool: (p: number) => BondedPool | null;
   updateBondedPools: (p: Array<BondedPool>) => void;
+  addToBondedPools: (p: BondedPool) => void;
+  removeFromBondedPools: (p: number) => void;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
   poolSearchFilter: (l: any, k: string, v: string) => void;
