@@ -49,7 +49,11 @@ export interface PoolMembership {
 // BondedPool types
 export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
+  queryBondedPool: (p: number) => any;
   getBondedPool: (p: number) => BondedPool | null;
+  updateBondedPools: (p: Array<BondedPool>) => void;
+  addToBondedPools: (p: BondedPool) => void;
+  removeFromBondedPools: (p: number) => void;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
   poolSearchFilter: (l: any, k: string, v: string) => void;
@@ -59,9 +63,13 @@ export interface BondedPoolsContextState {
 
 export type ActiveBondedPoolState = ActiveBondedPool | null;
 
-export interface ActiveBondedPool extends BondedPool {
-  roles: PoolRoles;
-  unclaimedReward: BN;
+export interface ActiveBondedPool {
+  id: number;
+  addresses: PoolAddresses;
+  bondedPool: any;
+  rewardPool: any;
+  rewardAccountBalance: any;
+  unclaimedRewards: any;
 }
 
 export interface BondedPool {
@@ -101,7 +109,9 @@ export interface ActivePoolContextState {
 // PoolMembers types
 export interface PoolMemberContext {
   fetchPoolMembersMetaBatch: (k: string, v: [], r: boolean) => void;
+  queryPoolMember: (w: MaybeAccount) => any;
   getMembersOfPool: (p: number) => any;
+  addToPoolMembers: (m: any) => void;
   getPoolMember: (w: MaybeAccount) => any | null;
   removePoolMember: (w: MaybeAccount) => void;
   poolMembers: any;

@@ -91,6 +91,24 @@ export const BondedPoolsProvider = ({
     setBondedPools(exposures);
   };
 
+  // queries a bonded pool and injects ID and addresses to a result.
+  const queryBondedPool = async (id: number) => {
+    if (!api) return null;
+
+    const bondedPool: AnyApi = (
+      await api.query.nominationPools.bondedPools(id)
+    ).toHuman();
+
+    if (!bondedPool) {
+      return null;
+    }
+    return {
+      id,
+      addresses: createAccounts(id),
+      ...bondedPool,
+    };
+  };
+
   /*
     Fetches a new batch of pool metadata.
     Fetches the metadata of a pool that we assume to be a string.
@@ -332,11 +350,45 @@ export const BondedPoolsProvider = ({
     return filteredList;
   };
 
+  const updateBondedPools = (updatedPools: Array<BondedPool>) => {
+    if (!updatedPools) {
+      return;
+    }
+    const _bondedPools = bondedPools.map(
+      (original: BondedPool) =>
+        updatedPools.find(
+          (updated: BondedPool) => updated.id === original.id
+        ) || original
+    );
+    setBondedPools(_bondedPools);
+  };
+
+  const removeFromBondedPools = (id: number) => {
+    const _bondedPools = bondedPools.filter((b: BondedPool) => b.id !== id);
+    setBondedPools(_bondedPools);
+  };
+
+  // adds a record to bondedPools.
+  // currently only used when a new pool is created.
+  const addToBondedPools = (pool: BondedPool) => {
+    if (!pool) return;
+
+    const exists = bondedPools.find((b: BondedPool) => b.id === pool.id);
+    if (!exists) {
+      const _bondedPools = bondedPools.concat(pool);
+      setBondedPools(_bondedPools);
+    }
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
         fetchPoolsMetaBatch,
+        queryBondedPool,
         getBondedPool,
+        updateBondedPools,
+        addToBondedPools,
+        removeFromBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
         poolSearchFilter,

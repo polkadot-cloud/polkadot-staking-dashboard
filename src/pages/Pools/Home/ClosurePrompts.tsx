@@ -29,7 +29,7 @@ export const ClosurePrompts = () => {
     poolNominations,
   } = useActivePool();
 
-  const { state, memberCounter } = activeBondedPool || {};
+  const { state, memberCounter } = activeBondedPool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getPoolBondOptions(activeAccount);
   const targets = poolNominations?.targets ?? [];
 
@@ -94,7 +94,11 @@ export const ClosurePrompts = () => {
                   title={String(totalUnlockChuncks ?? 0)}
                   disabled={isSyncing || !isBonding()}
                   onClick={() =>
-                    openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
+                    openModalWith(
+                      'UnlockChunks',
+                      { bondType: 'pool', poolClosure: true },
+                      'small'
+                    )
                   }
                 />
               </ButtonRow>

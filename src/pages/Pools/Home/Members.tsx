@@ -27,7 +27,7 @@ export const Members = () => {
   const annuncementBorderColor = networkColorsSecondary[mode];
 
   const showBlockedPrompt =
-    activeBondedPool?.state === PoolState.Block &&
+    activeBondedPool?.bondedPool?.state === PoolState.Block &&
     (isOwner() || isStateToggler());
 
   return (
@@ -52,7 +52,7 @@ export const Members = () => {
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {activeBondedPool?.state === PoolState.Destroy && (
+      {activeBondedPool?.bondedPool?.state === PoolState.Destroy && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}

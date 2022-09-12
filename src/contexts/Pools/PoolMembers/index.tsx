@@ -101,6 +101,23 @@ export const PoolMembersProvider = ({
     return poolMembers.find((p: any) => p.who === who) ?? null;
   };
 
+  // queries a  pool member and formats to `poolMembers`.
+  const queryPoolMember = async (who: MaybeAccount) => {
+    if (!api) return null;
+
+    const poolMember: AnyApi = (
+      await api.query.nominationPools.poolMembers(who)
+    ).toHuman();
+
+    if (!poolMember) {
+      return null;
+    }
+    return {
+      who,
+      poolId: poolMember.poolId,
+    };
+  };
+
   /*
     Fetches a new batch of pool member metadata.
     structure:
@@ -268,7 +285,7 @@ export const PoolMembersProvider = ({
    */
   const removePoolMember = (who: MaybeAccount) => {
     const newMembers = poolMembers.filter((p: any) => p.who !== who);
-    setPoolMembers(newMembers);
+    setPoolMembers(newMembers ?? []);
   };
 
   /*
@@ -282,11 +299,25 @@ export const PoolMembersProvider = ({
     setStateWithRef(_unsubs, setPoolMembersSubs, poolMembersSubsRef);
   };
 
+  // adds a record to poolMembers.
+  // currently only used when an account joins or creates a pool.
+  const addToPoolMembers = (member: any) => {
+    if (!member) return;
+
+    const exists = poolMembers.find((m: any) => m.who === member.who);
+    if (!exists) {
+      const _poolMembers = poolMembers.concat(member);
+      setPoolMembers(_poolMembers);
+    }
+  };
+
   return (
     <PoolMembersContext.Provider
       value={{
         fetchPoolMembersMetaBatch,
+        queryPoolMember,
         getMembersOfPool,
+        addToPoolMembers,
         getPoolMember,
         removePoolMember,
         poolMembers,

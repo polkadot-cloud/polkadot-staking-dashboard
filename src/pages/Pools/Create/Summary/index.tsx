@@ -17,6 +17,9 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -24,9 +27,12 @@ export const Summary = (props: SetupStepProps) => {
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { stats } = usePoolsConfig();
+  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
+  const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
+  const poolId = lastPoolId.add(new BN(1));
 
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
@@ -44,7 +50,6 @@ export const Summary = (props: SetupStepProps) => {
       return null;
     }
     const bondToSubmit = bond * 10 ** units;
-    const poolId = lastPoolId.add(new BN(1)).toString();
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
     // construct a batch of transactions
@@ -55,8 +60,8 @@ export const Summary = (props: SetupStepProps) => {
         roles.nominator,
         roles.stateToggler
       ),
-      api.tx.nominationPools.nominate(poolId, targetsToSubmit),
-      api.tx.nominationPools.setMetadata(poolId, metadata),
+      api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
+      api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
     ];
     return api.tx.utility.batch(_txs);
   };
@@ -66,7 +71,18 @@ export const Summary = (props: SetupStepProps) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {},
-    callbackInBlock: () => {},
+    callbackInBlock: async () => {
+      // query and add created pool to bondedPools list
+      const pool = await queryBondedPool(poolId.toNumber());
+      addToBondedPools(pool);
+
+      // query and add account to poolMembers list
+      const member = await queryPoolMember(activeAccount);
+      addToPoolMembers(member);
+
+      // reset localStorage setup progress
+      setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+    },
   });
 
   return (

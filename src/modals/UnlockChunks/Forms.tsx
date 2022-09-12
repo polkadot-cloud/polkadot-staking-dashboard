@@ -14,8 +14,12 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, rmCommas } from 'Utils';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
@@ -24,9 +28,13 @@ export const Forms = forwardRef(
     const { api, network } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
     const { staking } = useStaking();
+    const { removeFavourite: removeFavouritePool } = usePoolsConfig();
+    const { membership } = usePoolMemberships();
     const { activeBondedPool } = useActivePool();
+    const { removeFromBondedPools } = useBondedPools();
+    const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
-    const { bondType } = config || {};
+    const { bondType, poolClosure } = config || {};
     const { getBondedAccount } = useBalances();
     const { historyDepth } = staking;
     const { units } = network;
@@ -72,7 +80,22 @@ export const Forms = forwardRef(
       callbackSubmit: () => {
         setModalStatus(0);
       },
-      callbackInBlock: () => {},
+      callbackInBlock: () => {
+        // if pool is being closed, remove from static lists
+        if (poolClosure) {
+          removeFavouritePool(activeBondedPool?.addresses?.stash ?? '');
+          removeFromBondedPools(activeBondedPool?.id ?? 0);
+        }
+
+        // if no more bonded funds from pool, remove from poolMembers list
+        if (bondType === 'pool') {
+          const points = membership?.points ? rmCommas(membership.points) : 0;
+          const bonded = planckBnToUnit(new BN(points), network.units);
+          if (bonded === 0) {
+            removePoolMember(activeAccount);
+          }
+        }
+      },
     });
 
     const value = unlock?.value ?? new BN(0);

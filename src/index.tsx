@@ -6,8 +6,6 @@ import 'index.css';
 import App from 'App';
 import reportWebVitals from './reportWebVitals';
 
-// workaround for supporting react 18 beta types:
-// https://blog.logrocket.com/how-to-use-typescript-with-react-18-alpha/
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
 const root = createRoot(rootElement);
