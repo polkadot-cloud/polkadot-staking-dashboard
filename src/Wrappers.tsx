@@ -190,7 +190,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   position: sticky;
   top: 0px;
   padding-top: ${(props) => (props.sticky ? '1.5rem' : '0.5rem')};
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   padding-bottom: ${(props) => (props.sticky ? '0.25rem' : 0)};
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
@@ -380,6 +380,7 @@ export const TopBarWrapper = styled.div`
   padding-bottom: 0.5rem;
   width: 100%;
   margin-top: 0.4rem;
+  margin-bottom: 0.25rem;
 
   button {
     padding: 0.75rem 1rem;
