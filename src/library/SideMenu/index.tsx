@@ -270,7 +270,7 @@ export const SideMenu = () => {
           type="button"
           onClick={() =>
             window.open(
-              'https://github.com/rossbulat/polkadot-staking-experience',
+              'https://github.com/paritytech/polkadot-staking-dashboard',
               '_blank'
             )
           }
