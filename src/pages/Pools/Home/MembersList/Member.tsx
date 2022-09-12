@@ -34,7 +34,7 @@ export const Member = (props: any) => {
   const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { activeEra } = metrics;
-  const { state, roles } = activeBondedPool || {};
+  const { state, roles } = activeBondedPool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
 
   const { who, batchKey, batchIndex } = props;

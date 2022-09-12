@@ -28,7 +28,7 @@ export const ManagePool = () => {
 
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = activeBondedPool?.addresses?.stash ?? null;
-  const { state } = activeBondedPool || {};
+  const { state } = activeBondedPool?.bondedPool || {};
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>

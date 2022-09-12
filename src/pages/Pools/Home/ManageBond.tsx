@@ -32,7 +32,7 @@ export const ManageBond = () => {
     totalUnlockChuncks,
   } = getPoolBondOptions(activeAccount);
 
-  const { state } = activeBondedPool || {};
+  const { state } = activeBondedPool?.bondedPool || {};
 
   return (
     <>

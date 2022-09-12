@@ -27,13 +27,13 @@ export const ClaimReward = () => {
   const { activeBondedPool } = useActivePool();
   const { activeAccount, accountHasSigner } = useConnect();
   const { units, unit } = network;
-  let { unclaimedReward } = activeBondedPool || {};
-  unclaimedReward = unclaimedReward ?? new BN(0);
+  let { unclaimedRewards } = activeBondedPool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
   const { claimType } = config;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (unclaimedReward?.gtn(0)) {
+    if (unclaimedRewards?.gtn(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -84,11 +84,11 @@ export const ClaimReward = () => {
         {!accountHasSigner(activeAccount) && (
           <Warning text="Your account is read only, and cannot sign transactions." />
         )}
-        {!unclaimedReward?.gtn(0) && (
+        {!unclaimedRewards?.gtn(0) && (
           <Warning text="You have no rewards to claim." />
         )}
         <h2>
-          {planckBnToUnit(unclaimedReward, units)} {unit}
+          {planckBnToUnit(unclaimedRewards, units)} {unit}
         </h2>
         <Separator />
         <div className="notes">

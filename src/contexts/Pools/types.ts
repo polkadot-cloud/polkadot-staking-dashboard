@@ -63,9 +63,13 @@ export interface BondedPoolsContextState {
 
 export type ActiveBondedPoolState = ActiveBondedPool | null;
 
-export interface ActiveBondedPool extends BondedPool {
-  roles: PoolRoles;
-  unclaimedReward: BN;
+export interface ActiveBondedPool {
+  id: number;
+  addresses: PoolAddresses;
+  bondedPool: any;
+  rewardPool: any;
+  rewardAccountBalance: any;
+  unclaimedRewards: any;
 }
 
 export interface BondedPool {
