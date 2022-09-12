@@ -39,7 +39,7 @@ export const Status = ({ height }: { height: number }) => {
   );
 
   // determine pool state
-  const poolState = activeBondedPool?.state ?? null;
+  const poolState = activeBondedPool?.bondedPool?.state ?? null;
 
   const activeNominations = Object.values(nominationStatuses).filter(
     (_v) => _v === 'active'
@@ -51,14 +51,14 @@ export const Status = ({ height }: { height: number }) => {
   const minUnclaimedDisplay = new BN(1_000_000);
 
   // Unclaimed rewards `Stat` props
-  let { unclaimedReward } = activeBondedPool || {};
-  unclaimedReward = unclaimedReward ?? new BN(0);
+  let { unclaimedRewards } = activeBondedPool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
 
-  const labelRewards = unclaimedReward.gt(minUnclaimedDisplay)
-    ? `${planckBnToUnit(unclaimedReward, units)} ${unit}`
+  const labelRewards = unclaimedRewards.gt(minUnclaimedDisplay)
+    ? `${planckBnToUnit(unclaimedRewards, units)} ${unit}`
     : `0 ${unit}`;
 
-  const buttonsRewards = unclaimedReward.gt(minUnclaimedDisplay)
+  const buttonsRewards = unclaimedRewards.gt(minUnclaimedDisplay)
     ? [
         {
           title: 'Withdraw',

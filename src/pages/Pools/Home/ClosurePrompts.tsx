@@ -29,7 +29,7 @@ export const ClosurePrompts = () => {
     poolNominations,
   } = useActivePool();
 
-  const { state, memberCounter } = activeBondedPool || {};
+  const { state, memberCounter } = activeBondedPool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getPoolBondOptions(activeAccount);
   const targets = poolNominations?.targets ?? [];
 
