@@ -23,7 +23,7 @@ export const defaultThemes: { [key: string]: any } = {
   background: {
     primary: v('rgba(245,244,244,1)', 'rgba(37,37,37,1)'),
     gradient: v(
-      'linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(226,226,226, 1) 85%, rgba(247,237,230,1) 100%)',
+      'linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(231,231,231, 1) 85%, rgba(250,240,234,1) 100%)',
       'linear-gradient(180deg, rgba(37,37,37,1) 0%, rgba(37,37,37,1) 100px, rgba(21,21,21,1) 100%)'
     ),
     secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.25)'),
@@ -92,7 +92,7 @@ export const defaultThemes: { [key: string]: any } = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
-  shadow: v('#e5e5e5', '#181818'),
+  shadow: v('#e4e4e4', '#181818'),
   status: {
     danger: {
       solid: v('red', 'red'),
