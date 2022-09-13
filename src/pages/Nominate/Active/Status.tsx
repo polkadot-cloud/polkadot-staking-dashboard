@@ -18,24 +18,65 @@ import { PAYEE_STATUS } from 'consts';
 import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
+import { useValidators } from 'contexts/Validators';
+import { planckBnToUnit, rmCommas } from 'Utils';
+import { BN } from 'bn.js';
 
 export const Status = ({ height }: { height: number }) => {
-  const { isReady } = useApi();
+  const { isReady, network } = useApi();
   const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
-  const { getNominationsStatus, staking, inSetup } = useStaking();
+  const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
   const { getAccountNominations } = useBalances();
+  const { stakers } = eraStakers;
   const { payee } = staking;
+  const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
 
   // get nomination status
   const nominationStatuses = getNominationsStatus();
 
-  const active = Object.values(nominationStatuses).filter(
-    (_v) => _v === 'active'
-  ).length;
+  // get active nominations
+  const activeNominees = Object.entries(nominationStatuses)
+    .map(([k, v]: any) => (v === 'active' ? k : false))
+    .filter((v) => v !== false);
+
+  // check if rewards are being earned
+  const stake = meta.validators_browse?.stake ?? [];
+  const stakeSynced = stake.length > 0 ?? false;
+
+  let earningRewards = false;
+  if (stakeSynced) {
+    for (const nominee of activeNominees) {
+      const validator = validators.find((v: any) => v.address === nominee);
+      if (validator) {
+        const batchIndex = validators.indexOf(validator);
+        const nomineeMeta = stake[batchIndex];
+        const { lowestReward } = nomineeMeta;
+
+        const validatorInEra =
+          stakers.find((s: any) => s.address === nominee) || null;
+
+        if (validatorInEra) {
+          const { others } = validatorInEra;
+          const stakedValue =
+            others?.find((o: any) => o.who === activeAccount)?.value ?? false;
+          if (stakedValue) {
+            const stakedValueBase = planckBnToUnit(
+              new BN(rmCommas(stakedValue)),
+              network.units
+            );
+            if (stakedValueBase >= lowestReward) {
+              earningRewards = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
 
   const payeeStatus = PAYEE_STATUS.find((item) => item.key === payee);
 
@@ -56,8 +97,10 @@ export const Status = ({ height }: { height: number }) => {
             ? 'Not Nominating'
             : !nominations.length
             ? 'Inactive: No Nominations Set'
-            : active
-            ? 'Actively Nominating with Bonded Funds'
+            : activeNominees.length
+            ? `Nominating and ${
+                earningRewards ? 'Earning Rewards' : 'Not Earning Rewards'
+              }`
             : 'Waiting for Active Nominations'
         }
         buttons={
