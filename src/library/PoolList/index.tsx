@@ -147,7 +147,7 @@ export const PoolListInner = (props: PoolListProps) => {
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Pool Name or Address"
+            placeholder="Search Pool ID, Name or Address"
           />
         )}
         {pagination && listPools.length > 0 && (
