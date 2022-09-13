@@ -3,19 +3,25 @@
 
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
-import { capitalizeFirstLetter, humanNumber } from 'Utils';
+import {
+  capitalizeFirstLetter,
+  humanNumber,
+  planckBnToUnit,
+  rmCommas,
+} from 'Utils';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { BN } from 'bn.js';
 import { NominationStatusProps } from '../types';
 
 export const NominationStatus = (props: NominationStatusProps) => {
   const { getNominationsStatus, eraStakers, erasStakersSyncing } = useStaking();
   const { getPoolNominationStatus } = useBondedPools();
   const {
-    network: { unit },
+    network: { unit, units },
   } = useApi();
 
-  const { ownStake } = eraStakers;
+  const { ownStake, stakers } = eraStakers;
   const { address, nominator, bondType } = props;
 
   let nominationStatus;
@@ -29,20 +35,29 @@ export const NominationStatus = (props: NominationStatusProps) => {
     nominationStatus = nominationStatuses[address];
   }
 
-  // TODO: this only works as staker, not as a pool. Expand to find pool's
-  // bonded amount within the validator.
-  const ownStaked =
-    nominationStatus === 'active'
-      ? ownStake?.find((_own: any) => _own.address)?.value ?? 0
-      : 0;
+  // determine staked amount
+  let stakedAmount = 0;
+  if (bondType === 'stake') {
+    // bonded amount within the validator.
+    stakedAmount =
+      nominationStatus === 'active'
+        ? ownStake?.find((_own: any) => _own.address)?.value ?? 0
+        : 0;
+  } else {
+    const s = stakers?.find((_n: any) => _n.address === address);
+    const exists = (s?.others ?? []).find((_o: any) => _o.who === nominator);
+    if (exists) {
+      stakedAmount = planckBnToUnit(new BN(rmCommas(exists.value)), units);
+    }
+  }
 
   return (
     <ValidatorStatusWrapper status={nominationStatus}>
       <h5>
         {capitalizeFirstLetter(nominationStatus ?? '')}
-        {ownStaked > 0 &&
+        {stakedAmount > 0 &&
           ` / ${
-            erasStakersSyncing ? '...' : `${humanNumber(ownStaked)} ${unit}`
+            erasStakersSyncing ? '...' : `${humanNumber(stakedAmount)} ${unit}`
           }`}
       </h5>
     </ValidatorStatusWrapper>

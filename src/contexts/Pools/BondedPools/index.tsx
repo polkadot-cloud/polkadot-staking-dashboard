@@ -326,12 +326,15 @@ export const BondedPoolsProvider = ({
         continue;
       }
 
+      const ids = meta[batchKey].ids ?? false;
       const metadatas = meta[batchKey]?.metadata ?? false;
-      if (!metadatas) {
+
+      if (!metadatas || !ids) {
         filteredList.push(pool);
         continue;
       }
 
+      const id = ids[batchIndex] ?? 0;
       const address = pool?.addresses?.stash ?? '';
       const metadata = metadatas[batchIndex] ?? '';
 
@@ -340,6 +343,9 @@ export const BondedPoolsProvider = ({
         metadataAsBytes === '' ? metadata : metadataAsBytes
       ).toLowerCase();
 
+      if (String(id).includes(searchTerm.toLowerCase())) {
+        filteredList.push(pool);
+      }
       if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
         filteredList.push(pool);
       }

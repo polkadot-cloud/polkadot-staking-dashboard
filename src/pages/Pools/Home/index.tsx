@@ -33,6 +33,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
 import { Members } from './Members';
 import { ClosurePrompts } from './ClosurePrompts';
+import { PoolStats } from './PoolStats';
 
 export const HomeInner = (props: PageProps) => {
   const { page } = props;
@@ -133,6 +134,9 @@ export const HomeInner = (props: PageProps) => {
                     defaultRoles={getPoolRoles()}
                   />
                 </CardWrapper>
+              </PageRowWrapper>
+              <PageRowWrapper className="page-padding" noVerticalSpacer>
+                <PoolStats />
               </PageRowWrapper>
             </>
           )}
