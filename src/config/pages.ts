@@ -60,19 +60,19 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Nominate',
-    uri: `${URI_PREFIX}/nominate`,
-    hash: '/nominate',
-    Entry: Nominate,
-    icon: faProjectDiagram,
-  },
-  {
-    category: 2,
     title: 'Pools',
     uri: `${URI_PREFIX}/pools`,
     hash: '/pools',
     Entry: Pools,
     icon: faUsers,
+  },
+  {
+    category: 2,
+    title: 'Nominate',
+    uri: `${URI_PREFIX}/nominate`,
+    hash: '/nominate',
+    Entry: Nominate,
+    icon: faProjectDiagram,
   },
   {
     category: 3,
