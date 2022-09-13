@@ -7,6 +7,13 @@
   src: url('../public/fonts/Inter.ttf');
 }
 
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  src: url('../public/fonts/Unbounded.ttf');
+}
+
+
 /* global font size */
 html {
   font-size: 10.7px;

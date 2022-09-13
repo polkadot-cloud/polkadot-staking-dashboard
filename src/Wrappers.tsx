@@ -205,7 +205,8 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   transition: padding 0.3s ease-out;
 
   h1 {
-    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.9rem')};
+    font-family: 'Unbounded', 'sans-serif', sans-serif;
+    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.75rem')};
     @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
       font-size: 1.5rem;
     }
