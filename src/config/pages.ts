@@ -29,7 +29,7 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 2,
-    title: 'Staking',
+    title: 'Stake',
   },
   {
     _id: 3,
@@ -51,12 +51,12 @@ export const PAGES_CONFIG: PagesConfig = [
     icon: faBraille,
   },
   {
-    category: 2,
-    title: 'Pools',
-    uri: `${URI_PREFIX}/pools`,
-    hash: '/pools',
-    Entry: Pools,
-    icon: faUsers,
+    category: 1,
+    title: 'Payouts',
+    uri: `${URI_PREFIX}/payouts`,
+    hash: '/payouts',
+    Entry: Payouts,
+    icon: faChartSimple,
   },
   {
     category: 2,
@@ -68,11 +68,11 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Payouts',
-    uri: `${URI_PREFIX}/payouts`,
-    hash: '/payouts',
-    Entry: Payouts,
-    icon: faChartSimple,
+    title: 'Pools',
+    uri: `${URI_PREFIX}/pools`,
+    hash: '/pools',
+    Entry: Pools,
+    icon: faUsers,
   },
   {
     category: 3,

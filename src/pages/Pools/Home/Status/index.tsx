@@ -104,9 +104,9 @@ export const Status = ({ height }: { height: number }) => {
 
   // determine pool status - right side
   const poolStatusRight = isSyncing
-    ? 'Inactive: Not Nominating'
+    ? 'Inactive: Pool Not Nominating'
     : !isNominating
-    ? 'Inactive: Not Nominating'
+    ? 'Inactive: Pool Not Nominating'
     : activeNominations
     ? 'Actively Nominating with Pool Funds'
     : 'Waiting for Active Nominations';

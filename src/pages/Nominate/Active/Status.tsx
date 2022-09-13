@@ -39,7 +39,7 @@ export const Status = ({ height }: { height: number }) => {
 
   const payeeStatus = PAYEE_STATUS.find((item) => item.key === payee);
 
-  let startTitle = 'Start Staking';
+  let startTitle = 'Start Nominating';
   if (inSetup()) {
     const progress = getStakeSetupProgressPercent(activeAccount);
     if (progress > 0) {
@@ -53,9 +53,9 @@ export const Status = ({ height }: { height: number }) => {
         assistant={['stake', 'Staking Status']}
         stat={
           inSetup() || isSyncing
-            ? 'Not Staking'
+            ? 'Not Nominating'
             : !nominations.length
-            ? 'Inactive: Not Nominating'
+            ? 'Inactive: No Nominations Set'
             : active
             ? 'Actively Nominating with Bonded Funds'
             : 'Waiting for Active Nominations'

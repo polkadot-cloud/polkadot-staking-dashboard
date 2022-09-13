@@ -13,9 +13,7 @@ export const Nominate = (props: PageProps) => {
   const { onNominatorSetup } = useUi();
 
   return (
-    <Wrapper>
-      {onNominatorSetup ? <Setup title={title} /> : <Active title={title} />}
-    </Wrapper>
+    <Wrapper>{onNominatorSetup ? <Setup /> : <Active title={title} />}</Wrapper>
   );
 };
 

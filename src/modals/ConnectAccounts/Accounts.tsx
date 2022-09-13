@@ -198,7 +198,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           <>
             <h2>
               <FontAwesomeIcon icon={faChartLine} transform="shrink-4" />{' '}
-              Actively Staking
+              Nominating
             </h2>
             {activeStaking.map((item: any, i: number) => {
               const { stash, controller } = item;
