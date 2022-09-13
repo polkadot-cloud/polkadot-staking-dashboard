@@ -7,16 +7,14 @@ import { Wrapper } from './Wrappers';
 import { Active } from './Active';
 import { Setup } from './Setup';
 
-export const Stake = (props: PageProps) => {
+export const Nominate = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { onNominatorSetup } = useUi();
 
   return (
-    <Wrapper>
-      {onNominatorSetup ? <Setup title={title} /> : <Active title={title} />}
-    </Wrapper>
+    <Wrapper>{onNominatorSetup ? <Setup /> : <Active title={title} />}</Wrapper>
   );
 };
 
-export default Stake;
+export default Nominate;

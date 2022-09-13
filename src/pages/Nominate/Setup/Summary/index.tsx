@@ -139,7 +139,7 @@ export const Summary = (props: SetupStepProps) => {
           <Button
             onClick={() => submitTx()}
             disabled={submitting || !accountHasSigner(activeAccount)}
-            title="Start Staking"
+            title="Start Nominating"
             primary
           />
         </div>

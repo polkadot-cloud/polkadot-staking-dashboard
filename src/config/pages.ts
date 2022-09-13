@@ -4,15 +4,15 @@
 import {
   faHashtag,
   faServer,
-  faChartLine,
   faStar,
   faUsers,
   faComment,
   faChartSimple,
   faBraille,
+  faProjectDiagram,
 } from '@fortawesome/free-solid-svg-icons';
 import Overview from 'pages/Overview';
-import Stake from 'pages/Stake';
+import Nominate from 'pages/Nominate';
 import Pools from 'pages/Pools';
 import Browse from 'pages/Validators';
 import Favourites from 'pages/Favourites';
@@ -29,7 +29,7 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 2,
-    title: 'Staking',
+    title: 'Stake',
   },
   {
     _id: 3,
@@ -51,12 +51,12 @@ export const PAGES_CONFIG: PagesConfig = [
     icon: faBraille,
   },
   {
-    category: 2,
-    title: 'Stake',
-    uri: `${URI_PREFIX}/stake`,
-    hash: '/stake',
-    Entry: Stake,
-    icon: faChartLine,
+    category: 1,
+    title: 'Payouts',
+    uri: `${URI_PREFIX}/payouts`,
+    hash: '/payouts',
+    Entry: Payouts,
+    icon: faChartSimple,
   },
   {
     category: 2,
@@ -68,11 +68,11 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Payouts',
-    uri: `${URI_PREFIX}/payouts`,
-    hash: '/payouts',
-    Entry: Payouts,
-    icon: faChartSimple,
+    title: 'Nominate',
+    uri: `${URI_PREFIX}/nominate`,
+    hash: '/nominate',
+    Entry: Nominate,
+    icon: faProjectDiagram,
   },
   {
     category: 3,

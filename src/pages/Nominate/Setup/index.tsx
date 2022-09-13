@@ -16,12 +16,12 @@ import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';
 
-export const Setup = ({ title }: { title: string }) => {
+export const Setup = () => {
   const { setOnNominatorSetup, setActiveAccountSetup } = useUi();
 
   return (
     <>
-      <PageTitle title={`${title} Setup`} />
+      <PageTitle title="Start Nominating" />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <Button
