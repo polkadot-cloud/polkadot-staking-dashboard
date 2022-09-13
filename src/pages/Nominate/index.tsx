@@ -7,7 +7,7 @@ import { Wrapper } from './Wrappers';
 import { Active } from './Active';
 import { Setup } from './Setup';
 
-export const Stake = (props: PageProps) => {
+export const Nominate = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { onNominatorSetup } = useUi();
@@ -19,4 +19,4 @@ export const Stake = (props: PageProps) => {
   );
 };
 
-export default Stake;
+export default Nominate;

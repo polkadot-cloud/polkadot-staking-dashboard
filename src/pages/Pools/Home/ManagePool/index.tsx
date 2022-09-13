@@ -8,7 +8,7 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import Nominations from 'pages/Stake/Active/Nominations';
+import Nominations from 'pages/Nominate/Active/Nominations';
 import { GenerateNominations } from 'library/SetupSteps/GenerateNominations';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
