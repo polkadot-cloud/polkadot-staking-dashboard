@@ -180,7 +180,7 @@ export const Status = ({ height }: { height: number }) => {
           <Stat
             icon={isSyncing ? undefined : poolStateIcon}
             label="Pool Status"
-            assistant={['stake', 'Staking Status']}
+            assistant={['nominate', 'Staking Status']}
             stat={`${poolStatusLeft}${poolStatusRight}`}
           />
         </>

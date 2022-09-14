@@ -91,7 +91,7 @@ export const Status = ({ height }: { height: number }) => {
     <CardWrapper height={height}>
       <Stat
         label="Status"
-        assistant={['stake', 'Staking Status']}
+        assistant={['nominate', 'Staking Status']}
         stat={
           inSetup() || isSyncing
             ? 'Not Nominating'
@@ -122,8 +122,37 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
+        label="Controller Account"
+        assistant={['nominate', 'Reward Destination']}
+        icon={
+          (payee === null
+            ? faCircle
+            : payee === 'Staked'
+            ? faRedoAlt
+            : payee === 'None'
+            ? faCircle
+            : faWallet) as IconProp
+        }
+        stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
+        buttons={
+          payeeStatus
+            ? [
+                {
+                  title: 'Update',
+                  icon: faWallet,
+                  small: true,
+                  disabled:
+                    inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
+                  onClick: () => openModalWith('UpdatePayee', {}, 'small'),
+                },
+              ]
+            : []
+        }
+      />
+      <Separator />
+      <Stat
         label="Reward Destination"
-        assistant={['stake', 'Reward Destination']}
+        assistant={['nominate', 'Reward Destination']}
         icon={
           (payee === null
             ? faCircle

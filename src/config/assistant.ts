@@ -64,7 +64,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
     ],
   },
   {
-    key: 'stake',
+    key: 'nominate',
     definitions: [
       {
         title: 'Staking Status',
