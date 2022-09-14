@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
@@ -10,9 +11,12 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { TransferOptions } from 'contexts/Balances/types';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckBnToUnit } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
+import { BN_ZERO } from '@polkadot/util';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -20,6 +24,7 @@ import { FormsProps } from '../types';
 export const BondAll = (props: FormsProps) => {
   const { setSection } = props;
 
+  const { mode } = useTheme();
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
@@ -44,10 +49,18 @@ export const BondAll = (props: FormsProps) => {
 
   // convert BN values to number
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
-  const totalPossibleBond = planckBnToUnit(totalPossibleBondBn, units);
 
   // local bond value
   const [bond, setBond] = useState({ bond: freeBalance });
+
+  // bond minus tx fees
+  const bondAfterTxFees = BN.max(freeBalanceBn.sub(txFees), BN_ZERO);
+
+  // total possible bond after tx fees
+  const totalPossibleBond = planckBnToUnit(
+    BN.max(totalPossibleBondBn.sub(txFees), BN_ZERO),
+    units
+  );
 
   // bond valid
   const [bondValid, setBondValid] = useState(false);
@@ -56,12 +69,12 @@ export const BondAll = (props: FormsProps) => {
   useEffect(() => {
     const _bond = freeBalance;
     setBond({ bond: _bond });
-    if (_bond > 0) {
+    if (_bond > 0 && bondAfterTxFees.gt(BN_ZERO)) {
       setBondValid(true);
     } else {
       setBondValid(false);
     }
-  }, [freeBalance]);
+  }, [freeBalance, txFees]);
 
   // modal resize on form update
   useEffect(() => {
@@ -75,8 +88,8 @@ export const BondAll = (props: FormsProps) => {
       return _tx;
     }
 
-    // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    // convert to submittable string
+    const bondToSubmit = bondAfterTxFees.toString();
 
     // determine _tx
     if (isPooling) {
@@ -109,7 +122,7 @@ export const BondAll = (props: FormsProps) => {
           )}
           <h4>Amount to bond:</h4>
           <h2>
-            {freeBalance} {network.unit}
+            {planckBnToUnit(bondAfterTxFees, units)} {network.unit}
           </h2>
           <p>
             This amount of {network.unit} will be added to your current bonded
@@ -121,6 +134,11 @@ export const BondAll = (props: FormsProps) => {
             {totalPossibleBond} {network.unit}
           </h2>
           <NotesWrapper>
+            {txFees.gt(BN_ZERO) && (
+              <p style={{ color: defaultThemes.text.warning[mode] }}>
+                Transaction fees have been deducted from your total bond amount.
+              </p>
+            )}
             <EstimatedTxFee />
           </NotesWrapper>
         </>
