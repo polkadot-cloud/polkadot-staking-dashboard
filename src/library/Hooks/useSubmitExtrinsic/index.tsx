@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { useNotifications } from 'contexts/Notifications';
@@ -9,6 +10,7 @@ import { useConnect } from 'contexts/Connect';
 import { DAPP_NAME } from 'consts';
 import { AnyApi } from 'types';
 import { Extension } from 'contexts/Connect/types';
+import { useTxFees } from 'contexts/TxFees';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (
@@ -22,6 +24,7 @@ export const useSubmitExtrinsic = (
   const submitAddress: string = from ?? '';
 
   const { api } = useApi();
+  const { setTxFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
@@ -42,9 +45,13 @@ export const useSubmitExtrinsic = (
       return;
     }
     // get payment info
-    const info = await tx.paymentInfo(submitAddress);
-    // convert fee to unit
-    setEstimatedFee(info.partialFee.toHuman());
+    const { partialFee } = await tx.paymentInfo(submitAddress);
+
+    // store fee locally
+    setEstimatedFee(partialFee.toHuman());
+
+    // give tx fees to global useTxFees context
+    setTxFees(new BN(partialFee.toString()));
   };
 
   // submit extrinsic

@@ -6,6 +6,7 @@ import { EntryWrapper as Wrapper } from 'Wrappers';
 import Router from 'Router';
 import { withProviders } from 'library/Hooks';
 import { TooltipProvider } from 'contexts/Tooltip';
+import { TxFeesProvider } from 'contexts/TxFees';
 import { AccountProvider } from './contexts/Account';
 import { APIProvider, useApi } from './contexts/Api';
 import { AssistantProvider } from './contexts/Assistant';
@@ -69,6 +70,7 @@ export const Providers = withProviders(
   TooltipProvider,
   PaletteProvider,
   NotificationsProvider,
+  TxFeesProvider,
   ExtrinsicsProvider,
   SessionEraProvider
 )(ThemedRouter);
