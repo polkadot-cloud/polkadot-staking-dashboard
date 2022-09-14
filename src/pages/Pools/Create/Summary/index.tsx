@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
-import { humanNumber } from 'Utils';
+import { humanNumber, unitToPlanckBn } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { SetupStepProps } from 'library/SetupSteps/types';
@@ -52,7 +52,8 @@ export const Summary = (props: SetupStepProps) => {
     ) {
       return null;
     }
-    const bondToSubmit = bond * 10 ** units;
+
+    const bondToSubmit = unitToPlanckBn(bond, units).toString();
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
     // construct a batch of transactions

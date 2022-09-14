@@ -3,13 +3,9 @@
 
 import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
-import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { NominateStatusBar } from 'library/Form/NominateStatusBar';
-import { TransferOptions } from 'contexts/Balances/types';
-import { planckBnToUnit } from 'Utils';
-import { useApi } from 'contexts/Api';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
@@ -17,18 +13,13 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 
 export const Bond = (props: SetupStepProps) => {
-  const { network } = useApi();
-  const { units } = network;
   const { section } = props;
   const { activeAccount } = useConnect();
-  const { getTransferOptions } = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   // either free to bond or existing setup value
-  const initialBondValue =
-    setup.bond === 0 ? planckBnToUnit(freeBalance, units) : setup.bond;
+  const initialBondValue = setup.bond === 0 ? 0 : setup.bond;
 
   // store local bond amount for form control
   const [bond, setBond] = useState({
@@ -78,7 +69,6 @@ export const Bond = (props: SetupStepProps) => {
           unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
-          disableTxFeeUpdate
           setters={[
             {
               set: handleSetupUpdate,

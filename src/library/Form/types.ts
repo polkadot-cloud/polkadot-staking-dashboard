@@ -43,7 +43,7 @@ export interface BondInputProps {
   setters: any;
   value: any;
   task: string;
-  defaultValue: number;
+  defaultValue: number | string;
   disabled: boolean;
   freeBalance: number;
   freeToUnbondToMin: number;
@@ -53,12 +53,13 @@ export interface BondInputProps {
 export interface BondInputWithFeedbackProps {
   setters: any;
   bondType: string;
-  defaultBond: number;
+  defaultBond: number | null;
   unbond: boolean;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
   disableTxFeeUpdate?: boolean;
+  setLocalResize?: () => void;
 }
 
 export interface NominateStatusBarProps {

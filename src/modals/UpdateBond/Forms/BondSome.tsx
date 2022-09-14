@@ -53,19 +53,8 @@ export const BondSome = (props: FormsProps) => {
     bondAfterTxFees = BN_ZERO;
   }
 
-  const bondAfterTxFeesBase = planckBnToUnit(bondAfterTxFees, units);
-
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
-
-  // update bond value on tx fee change
-  useEffect(() => {
-    if (bondAfterTxFees.gt(BN_ZERO)) {
-      setBondValid(true);
-    } else {
-      setBondValid(false);
-    }
-  }, [txFees]);
 
   // update bond value on task change
   useEffect(() => {
@@ -117,21 +106,20 @@ export const BondSome = (props: FormsProps) => {
   return (
     <>
       <div className="items">
-        <div style={{ height: 105, overflow: 'hidden' }}>
-          <BondInputWithFeedback
-            bondType={bondType}
-            unbond={false}
-            listenIsValid={setBondValid}
-            defaultBond={bondAfterTxFeesBase}
-            setters={[
-              {
-                set: setBond,
-                current: bond,
-              },
-            ]}
-            warnings={warnings}
-          />
-        </div>
+        <BondInputWithFeedback
+          bondType={bondType}
+          unbond={false}
+          listenIsValid={setBondValid}
+          defaultBond={null}
+          setLocalResize={setLocalResize}
+          setters={[
+            {
+              set: setBond,
+              current: bond,
+            },
+          ]}
+          warnings={warnings}
+        />
         <NotesWrapper>
           {txFees.gt(BN_ZERO) && (
             <p style={{ color: defaultThemes.text.success[mode] }}>

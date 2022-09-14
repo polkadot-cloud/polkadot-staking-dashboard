@@ -19,12 +19,13 @@ import { Warning } from '../Warning';
 import { BondInputWithFeedbackProps } from '../types';
 
 export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
-  const { bondType, defaultBond, unbond } = props;
+  const { bondType, unbond } = props;
   const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
   const setters = props.setters ?? [];
   const listenIsValid = props.listenIsValid ?? (() => {});
   const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
+  const defaultBond = props.defaultBond || '';
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
@@ -54,7 +55,6 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   } = transferOptions;
 
   // if we are bonding, subtract tx fees from bond amount
-  // TODO: disable this
   const freeBondAmount = unbond
     ? freeBalanceBn
     : !disableTxFeeUpdate
@@ -87,10 +87,17 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
     handleErrors();
   }, [bond, txFees]);
 
+  // if resize is present, handle on error change
+  useEffect(() => {
+    if (props.setLocalResize) props.setLocalResize();
+  }, [errors]);
+
   // update max bond after txFee sync
   useEffect(() => {
     if (!unbond && !disableTxFeeUpdate) {
-      setBond({ bond: freeBalance });
+      if (bond.bond > freeBalance) {
+        setBond({ bond: freeBalance });
+      }
     }
   }, [txFees]);
 
@@ -215,7 +222,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         task={unbond ? 'unbond' : 'bond'}
         value={bond.bond}
         defaultValue={defaultBond}
-        disabled={bondDisabled || (!unbond && txFees.isZero())}
+        disabled={bondDisabled}
         setters={setters}
         freeBalance={freeBalance}
         freeToUnbondToMin={freeToUnbondToMin}
