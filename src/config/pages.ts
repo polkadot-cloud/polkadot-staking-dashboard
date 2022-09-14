@@ -29,7 +29,7 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 2,
-    title: 'stake',
+    title: 'Stake',
   },
   {
     _id: 3,
