@@ -20,8 +20,8 @@ export const Membership = ({ label }: { label: string }) => {
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
   const { bondedPools, meta } = useBondedPools();
-  const { activeBondedPool, isOwner, getPoolBondOptions } = useActivePool();
-  const { active } = getPoolBondOptions(activeAccount);
+  const { activeBondedPool, isOwner, getPoolTransferOptions } = useActivePool();
+  const { active } = getPoolTransferOptions(activeAccount);
 
   const inPool = membership !== null && activeBondedPool !== null;
 

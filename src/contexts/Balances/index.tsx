@@ -11,7 +11,7 @@ import {
   BalanceLedger,
   BalancesAccount,
   BalancesContextInterface,
-  BondOptions,
+  TransferOptions,
 } from 'contexts/Balances/types';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useApi } from '../Api';
@@ -415,10 +415,10 @@ export const BalancesProvider = ({
   };
 
   // get the bond and unbond amounts available to the user
-  const getBondOptions = (address: MaybeAccount): BondOptions => {
+  const getTransferOptions = (address: MaybeAccount): TransferOptions => {
     const account = getAccount(address);
     if (account === null) {
-      return defaults.bondOptions;
+      return defaults.transferOptions;
     }
     const balance = getAccountBalance(address);
     const ledger = getLedgerForStash(address);
@@ -474,7 +474,7 @@ export const BalancesProvider = ({
         getAccountLocks,
         getBondedAccount,
         getAccountNominations,
-        getBondOptions,
+        getTransferOptions,
         isController,
         minReserve,
         existentialAmount,

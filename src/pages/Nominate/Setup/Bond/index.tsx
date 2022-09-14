@@ -7,7 +7,7 @@ import { useBalances } from 'contexts/Balances';
 import { useUi } from 'contexts/UI';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { NominateStatusBar } from 'library/Form/NominateStatusBar';
-import { BondOptions } from 'contexts/Balances/types';
+import { TransferOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { SetupStepProps } from 'library/SetupSteps/types';
@@ -21,9 +21,9 @@ export const Bond = (props: SetupStepProps) => {
   const { units } = network;
   const { section } = props;
   const { activeAccount } = useConnect();
-  const { getBondOptions } = useBalances();
+  const { getTransferOptions } = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const { freeBalance }: BondOptions = getBondOptions(activeAccount);
+  const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
   // either free to bond or existing setup value

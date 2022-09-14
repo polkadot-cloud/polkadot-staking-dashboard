@@ -11,7 +11,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { BondOptions } from 'contexts/Balances/types';
+import { TransferOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
@@ -30,8 +30,8 @@ export const Forms = () => {
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setActiveAccountSetup } = useUi();
 
-  const { getBondOptions } = useBalances();
-  const { freeBalance }: BondOptions = getBondOptions(activeAccount);
+  const { getTransferOptions } = useBalances();
+  const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
 
   // local bond value
   const [bond, setBond] = useState({

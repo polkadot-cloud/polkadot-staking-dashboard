@@ -26,8 +26,9 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
-  const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
-  const { getPoolBondOptions, isDepositor } = useActivePool();
+  const { getLedgerForStash, getBondedAccount, getTransferOptions } =
+    useBalances();
+  const { getPoolTransferOptions, isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
@@ -66,16 +67,16 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   });
 
   // get bond options for either staking or pooling.
-  const bondOptions =
+  const transferOptions =
     bondType === 'pool'
-      ? getPoolBondOptions(activeAccount)
-      : getBondOptions(activeAccount);
+      ? getPoolTransferOptions(activeAccount)
+      : getTransferOptions(activeAccount);
 
   const {
     freeBalance: freeBalanceBn,
     freeToUnbond: freeToUnbondBn,
     active: poolsActive,
-  } = bondOptions;
+  } = transferOptions;
 
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
 

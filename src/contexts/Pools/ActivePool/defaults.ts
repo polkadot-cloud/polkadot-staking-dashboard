@@ -48,7 +48,7 @@ export const poolNominations = {
   submittedIn: 0,
 };
 
-export const poolBondOptions = {
+export const poolTransferOptions = {
   active: new BN(0),
   freeBalance: new BN(0),
   freeToUnbond: new BN(0),
@@ -66,7 +66,7 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   isStateToggler: () => false,
   getPoolBondedAccount: () => null,
   // eslint-disable-next-line
-  getPoolBondOptions: (a: MaybeAccount) => null,
+  getPoolTransferOptions: (a: MaybeAccount) => null,
   getPoolUnlocking: () => [],
   getPoolRoles: () => poolRoles,
   // eslint-disable-next-line

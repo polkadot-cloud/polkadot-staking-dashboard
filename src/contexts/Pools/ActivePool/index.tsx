@@ -378,13 +378,13 @@ export const ActivePoolProvider = ({
   };
 
   /*
-   * getPoolBondOptions
+   * getPoolTransferOptions
    * get the bond and unbond amounts available
    * to the user.
    */
-  const getPoolBondOptions = (address: MaybeAccount) => {
+  const getPoolTransferOptions = (address: MaybeAccount) => {
     if (!address) {
-      return defaults.poolBondOptions;
+      return defaults.poolTransferOptions;
     }
     const { freeAfterReserve, miscFrozen } = getAccountBalance(address);
     const unlocking = membership?.unlocking || [];
@@ -528,7 +528,7 @@ export const ActivePoolProvider = ({
         isStateToggler,
         isBonding,
         getPoolBondedAccount,
-        getPoolBondOptions,
+        getPoolTransferOptions,
         getPoolUnlocking,
         getPoolRoles,
         setTargets,

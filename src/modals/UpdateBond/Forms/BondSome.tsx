@@ -10,7 +10,7 @@ import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { BondOptions } from 'contexts/Balances/types';
+import { TransferOptions } from 'contexts/Balances/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
@@ -23,18 +23,18 @@ export const BondSome = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getBondOptions } = useBalances();
+  const { getTransferOptions } = useBalances();
   const { bondType } = config;
-  const { getPoolBondOptions } = useActivePool();
+  const { getPoolTransferOptions } = useActivePool();
 
-  const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
-  const poolBondOptions = getPoolBondOptions(activeAccount);
+  const stakeTransferOptions: TransferOptions = getTransferOptions(activeAccount);
+  const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
   const { freeBalance: freeBalanceBn } = isPooling
-    ? poolBondOptions
-    : stakeBondOptions;
+    ? poolTransferOptions
+    : stakeTransferOptions;
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
 
   // local bond value

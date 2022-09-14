@@ -13,7 +13,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { BondOptions } from 'contexts/Balances/types';
+import { TransferOptions } from 'contexts/Balances/types';
 import BN from 'bn.js';
 
 export const ManageBond = () => {
@@ -21,7 +21,7 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getLedgerForStash, getBondOptions } = useBalances();
+  const { getLedgerForStash, getTransferOptions } = useBalances();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
@@ -31,7 +31,7 @@ export const ManageBond = () => {
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
-  }: BondOptions = getBondOptions(activeAccount);
+  }: TransferOptions = getTransferOptions(activeAccount);
 
   return (
     <>

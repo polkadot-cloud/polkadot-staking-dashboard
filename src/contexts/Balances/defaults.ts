@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import {
   BalanceLedger,
   Balance,
-  BondOptions,
+  TransferOptions,
   Nominations,
   BalancesContextInterface,
 } from 'contexts/Balances/types';
@@ -26,7 +26,7 @@ export const ledger: BalanceLedger = {
   unlocking: [],
 };
 
-export const bondOptions: BondOptions = {
+export const transferOptions: TransferOptions = {
   freeBalance: new BN(0),
   freeToUnbond: new BN(0),
   totalUnlocking: new BN(0),
@@ -56,7 +56,7 @@ export const defaultBalancesContext: BalancesContextInterface = {
   // eslint-disable-next-line
   getAccountNominations: (address) => [],
   // eslint-disable-next-line
-  getBondOptions: (address) => bondOptions,
+  getTransferOptions: (address) => transferOptions,
   // eslint-disable-next-line
   isController: (address) => false,
   accounts: [],

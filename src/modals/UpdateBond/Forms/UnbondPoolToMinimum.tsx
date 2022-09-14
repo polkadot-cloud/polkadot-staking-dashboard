@@ -23,13 +23,13 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getPoolBondOptions, isDepositor } = useActivePool();
+  const { getPoolTransferOptions, isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const poolBondOptions = getPoolBondOptions(activeAccount);
+  const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const { bondDuration } = consts;
 
-  const { freeToUnbond: freeToUnbondBn } = poolBondOptions;
+  const { freeToUnbond: freeToUnbondBn } = poolTransferOptions;
 
   // unbond amount to minimum threshold
   const freeToUnbond = isDepositor()
