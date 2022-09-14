@@ -189,6 +189,7 @@ export const ReserveWrapper = styled.div`
   }
   > h4 {
     margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
     @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
       margin-top: 0.9rem;
     }
@@ -209,6 +210,7 @@ export const ReserveWrapper = styled.div`
         flex: 1 1 40%;
         max-width: 200px;
         overflow: hidden;
+        padding-left: 0;
 
         .reserve {
           background: ${buttonSecondaryBackground};
@@ -234,65 +236,8 @@ export const ReserveWrapper = styled.div`
         }
       }
 
-      &:last-child {
-        border-radius: 0.5rem;
-        padding-left: 1rem;
-        flex: 1 1 60%;
-        opacity: 0.5;
-        transition: opacity 0.15s;
-        &:hover {
-          opacity: 1;
-        }
-      }
-
       .assistant-icon {
         margin-left: 0.6rem;
-      }
-
-      .items {
-        box-sizing: border-box;
-        flex: 1 1 40%;
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-
-        > div {
-          display: flex;
-          flex-flow: column wrap;
-          justify-content: center;
-          box-sizing: border-box;
-          padding: 0.5rem 0.6rem;
-
-          &.sep {
-            flex: 0;
-            justify-content: center;
-          }
-
-          h2,
-          h3 {
-            color: ${textSecondary};
-            margin-top: 0rem;
-            margin-bottom: 0;
-            &.center {
-              justify-content: center;
-            }
-          }
-        }
-        h4,
-        h5 {
-          color: ${textSecondary};
-          margin-top: 0.25rem;
-          margin-bottom: 0;
-          &.center {
-            text-align: center;
-          }
-          &.sec {
-            color: ${textSecondary};
-          }
-        }
-        h4 {
-          margin-top: 0;
-        }
       }
     }
   }
