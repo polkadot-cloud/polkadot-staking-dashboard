@@ -70,6 +70,7 @@ export const UpdateBond = () => {
           ref={tasksRef}
         />
         <Forms
+          section={section}
           setSection={setSection}
           task={task}
           ref={formsRef}
