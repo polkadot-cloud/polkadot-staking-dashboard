@@ -12,10 +12,14 @@ export const TxFeesContext = React.createContext<any>({
 export const useTxFees = () => React.useContext(TxFeesContext);
 
 export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
-  const [txFees, _setTxFees] = useState(0);
+  const [txFees, _setTxFees] = useState(new BN(0));
 
   const setTxFees = (fees: any) => {
     _setTxFees(fees);
+  };
+
+  const resetTxFees = () => {
+    _setTxFees(new BN(0));
   };
 
   return (
@@ -23,6 +27,7 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         txFees,
         setTxFees,
+        resetTxFees,
       }}
     >
       {children}

@@ -24,7 +24,7 @@ export const useSubmitExtrinsic = (
   const submitAddress: string = from ?? '';
 
   const { api } = useApi();
-  const { setTxFees } = useTxFees();
+  const { setTxFees, resetTxFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
@@ -99,6 +99,7 @@ export const useSubmitExtrinsic = (
           if (status.isInBlock) {
             setSubmitting(false);
             removePending(accountNonce);
+            resetTxFees();
             addNotification({
               title: 'In Block',
               subtitle: 'Transaction in block',
@@ -131,6 +132,7 @@ export const useSubmitExtrinsic = (
     } catch (e) {
       setSubmitting(false);
       removePending(accountNonce);
+      resetTxFees();
       addNotification({
         title: 'Cancelled',
         subtitle: 'Transaction was cancelled',
