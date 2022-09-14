@@ -120,7 +120,7 @@ export const Status = ({ height }: { height: number }) => {
               ]
         }
       />
-      <Separator />
+      {/* <Separator />
       <Stat
         label="Controller Account"
         assistant={['nominate', 'Reward Destination']}
@@ -148,7 +148,7 @@ export const Status = ({ height }: { height: number }) => {
               ]
             : []
         }
-      />
+      /> */}
       <Separator />
       <Stat
         label="Reward Destination"
