@@ -21,6 +21,17 @@ export const BondInput = (props: BondInputProps) => {
   // the current local bond value
   const [bond, setBond] = useState(_value);
 
+  // reset value to default when changing account
+  useEffect(() => {
+    setBond(props.defaultValue ?? 0);
+  }, [activeAccount]);
+
+  useEffect(() => {
+    if (task === 'bond') {
+      setBond(_value.toString());
+    }
+  }, [_value]);
+
   // handle change for bonding
   const handleChangeBond = (e: any) => {
     const { value } = e.target;
@@ -54,11 +65,6 @@ export const BondInput = (props: BondInputProps) => {
       });
     }
   };
-
-  // reset value to default when changing account
-  useEffect(() => {
-    setBond(props.defaultValue ?? 0);
-  }, [activeAccount]);
 
   return (
     <RowWrapper>

@@ -22,12 +22,12 @@ import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
 export const BondAll = (props: FormsProps) => {
-  const { setSection } = props;
+  const { setSection, setLocalResize } = props;
 
   const { mode } = useTheme();
   const { api, network } = useApi();
   const { units } = network;
-  const { setStatus: setModalStatus, setResize, config } = useModal();
+  const { setStatus: setModalStatus, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useBalances();
   const { bondType } = config;
@@ -78,7 +78,7 @@ export const BondAll = (props: FormsProps) => {
 
   // modal resize on form update
   useEffect(() => {
-    setResize();
+    if (setLocalResize) setLocalResize();
   }, [bond]);
 
   // tx to submit
@@ -135,7 +135,7 @@ export const BondAll = (props: FormsProps) => {
           </h2>
           <NotesWrapper>
             {txFees.gt(BN_ZERO) && (
-              <p style={{ color: defaultThemes.text.warning[mode] }}>
+              <p style={{ color: defaultThemes.text.success[mode] }}>
                 Transaction fees have been deducted from your total bond amount.
               </p>
             )}
