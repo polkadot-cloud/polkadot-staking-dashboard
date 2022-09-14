@@ -8,10 +8,9 @@ import { useExtrinsics } from 'contexts/Extrinsics';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { pageFromUri } from 'Utils';
-import { SideBar } from './SideBar';
 import { Spinner } from './Spinner';
 import { Wrapper, HeadingWrapper, Item, LargeScreensOnly } from './Wrappers';
-import { Toggle as SideBarToggle } from './SideBar/Toggle';
+import { AccountsButton } from './AccountsButton';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
@@ -35,11 +34,6 @@ export const Headers = () => {
 
   return (
     <>
-      {/* side bar: closed by default, available on smaller screens */}
-      <SideBar>
-        <Connected />
-      </SideBar>
-
       <Wrapper>
         {/* side menu toggle: shows on small screens */}
         <SideMenuToggle />
@@ -47,8 +41,8 @@ export const Headers = () => {
         {/* spinner to show app syncing */}
         {syncing || pending.length > 0 ? <Spinner /> : <></>}
 
-        {/* side bar toggle: shows on small screens */}
-        <SideBarToggle />
+        {/* account button: shows on small screens */}
+        <AccountsButton />
 
         {/* connected accounts */}
         <LargeScreensOnly>

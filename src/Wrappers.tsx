@@ -8,7 +8,7 @@ import {
   SIDE_MENU_MINIMISED_WIDTH,
   INTERFACE_MAXIMUM_WIDTH,
   SIDE_MENU_STICKY_THRESHOLD,
-  SHOW_SIDE_BAR_WIDTH_THRESHOLD,
+  SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD,
 } from 'consts';
 import {
   textPrimary,
@@ -90,7 +90,7 @@ export const EntryWrapper = styled.div`
     padding-left: 1.25rem;
     padding-right: 1.25rem;
 
-    @media (min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
+    @media (min-width: ${SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD + 1}px) {
       padding-left: 1.75rem;
       padding-right: 1.75rem;
     }
