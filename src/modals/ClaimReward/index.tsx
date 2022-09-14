@@ -28,7 +28,7 @@ export const ClaimReward = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { activeBondedPool } = useActivePool();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
   const { units, unit } = network;
   let { unclaimedRewards } = activeBondedPool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
@@ -119,7 +119,7 @@ export const ClaimReward = () => {
                 !valid ||
                 submitting ||
                 !accountHasSigner(activeAccount) ||
-                txFees.isZero()
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

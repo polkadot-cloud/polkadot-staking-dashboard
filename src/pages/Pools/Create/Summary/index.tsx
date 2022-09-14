@@ -35,7 +35,7 @@ export const Summary = (props: SetupStepProps) => {
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
   const poolId = lastPoolId.add(new BN(1));
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
@@ -160,7 +160,7 @@ export const Summary = (props: SetupStepProps) => {
           <Button
             onClick={() => submitTx()}
             disabled={
-              submitting || !accountHasSigner(activeAccount) || txFees.isZero()
+              submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
             title="Create Pool"
             primary

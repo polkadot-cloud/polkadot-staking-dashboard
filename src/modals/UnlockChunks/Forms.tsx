@@ -37,7 +37,7 @@ export const Forms = forwardRef(
     const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBalances();
-    const { txFees } = useTxFees();
+    const { txFeesValid } = useTxFees();
 
     const { bondType, poolClosure } = config || {};
     const { historyDepth } = staking;
@@ -146,7 +146,7 @@ export const Forms = forwardRef(
                   !valid ||
                   submitting ||
                   !accountHasSigner(signingAccount) ||
-                  !txFees
+                  !txFeesValid
                 }
               >
                 <FontAwesomeIcon

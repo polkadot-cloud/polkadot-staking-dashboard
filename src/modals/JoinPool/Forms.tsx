@@ -30,7 +30,7 @@ export const Forms = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setActiveAccountSetup } = useUi();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const { getTransferOptions } = useBalances();
   const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
@@ -117,7 +117,7 @@ export const Forms = () => {
               submitting ||
               !bondValid ||
               !accountHasSigner(activeAccount) ||
-              txFees.isZero()
+              !txFeesValid
             }
           >
             <FontAwesomeIcon

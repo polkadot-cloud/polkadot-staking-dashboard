@@ -39,7 +39,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
           </p>
           {notEnoughFunds === true && (
             <p style={{ color: defaultThemes.text.danger[mode] }}>
-              You do not have enough funds to complete this transaction.
+              You do not have enough {unit} to submit this transaction.
             </p>
           )}
         </>

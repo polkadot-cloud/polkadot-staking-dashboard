@@ -31,7 +31,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { bondType } = config;
   const { stats } = usePoolsConfig();
   const { getPoolTransferOptions, isDepositor } = useActivePool();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
@@ -152,9 +152,7 @@ export const UnbondSome = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={
-          bondValid && accountHasSigner(signingAccount) && !txFees.isZero()
-        }
+        isValid={bondValid && accountHasSigner(signingAccount) && txFeesValid}
       />
     </>
   );

@@ -32,7 +32,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { isOwner, activeBondedPool } = useActivePool();
   const { bondedPools, meta, updateBondedPools, getBondedPool } =
     useBondedPools();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
   const poolId = membership?.poolId;
 
   // valid to submit transaction
@@ -238,7 +238,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 submitting ||
                 !accountHasSigner(activeAccount) ||
                 !valid ||
-                txFees.isZero()
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

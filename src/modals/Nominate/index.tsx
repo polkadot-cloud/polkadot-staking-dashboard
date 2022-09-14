@@ -30,7 +30,7 @@ export const Nominate = () => {
   const { targets, staking, getControllerNotImported } = useStaking();
   const { getBondedAccount, getLedgerForStash } = useBalances();
   const { setStatus: setModalStatus } = useModal();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
   const { units } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
@@ -120,7 +120,7 @@ export const Nominate = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                !valid || submitting || warnings.length > 0 || txFees.isZero()
+                !valid || submitting || warnings.length > 0 || !txFeesValid
               }
             >
               <FontAwesomeIcon

@@ -26,7 +26,7 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -106,7 +106,7 @@ export const UpdateController = () => {
                 selected === null ||
                 submitting ||
                 !accountHasSigner(activeAccount) ||
-                txFees.isZero()
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

@@ -26,7 +26,7 @@ export const UpdatePayee = () => {
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const { payee } = staking;
 
@@ -115,7 +115,7 @@ export const UpdatePayee = () => {
                 !valid ||
                 submitting ||
                 getControllerNotImported(controller) ||
-                txFees.isZero()
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

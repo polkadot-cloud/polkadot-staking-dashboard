@@ -20,7 +20,7 @@ export const ChangePoolRoles = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { config } = useModal();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
   const { poolId, roleEdits } = config;
 
   // tx to submit
@@ -82,9 +82,7 @@ export const ChangePoolRoles = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                submitting ||
-                !accountHasSigner(activeAccount) ||
-                txFees.isZero()
+                submitting || !accountHasSigner(activeAccount) || !txFeesValid
               }
             >
               <FontAwesomeIcon

@@ -13,6 +13,7 @@ export interface EstimatedFeeContext {
   notEnoughFunds: boolean;
   setTxFees: (f: BN) => void;
   resetTxFees: () => void;
+  txFeesValid: boolean;
 }
 
 export const TxFeesContext = React.createContext<EstimatedFeeContext>(
@@ -44,6 +45,13 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
     _setTxFees(new BN(0));
   };
 
+  const txFeesValid = (() => {
+    if (txFees.isZero() || notEnoughFunds) {
+      return false;
+    }
+    return true;
+  })();
+
   return (
     <TxFeesContext.Provider
       value={{
@@ -51,6 +59,7 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
         notEnoughFunds,
         setTxFees,
         resetTxFees,
+        txFeesValid,
       }}
     >
       {children}

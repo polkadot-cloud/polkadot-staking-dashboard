@@ -27,7 +27,7 @@ export const Summary = (props: SetupStepProps) => {
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
@@ -141,7 +141,7 @@ export const Summary = (props: SetupStepProps) => {
           <Button
             onClick={() => submitTx()}
             disabled={
-              submitting || !accountHasSigner(activeAccount) || txFees.isZero()
+              submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
             title="Start Nominating"
             primary

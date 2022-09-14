@@ -31,7 +31,7 @@ export const ChangeNominations = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { membership } = usePoolMemberships();
   const { poolNominations, isNominator, isOwner } = useActivePool();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const { nominations: newNominations, provider, bondType } = config;
 
@@ -161,7 +161,7 @@ export const ChangeNominations = () => {
                 !valid ||
                 submitting ||
                 !accountHasSigner(signingAccount) ||
-                txFees.isZero()
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

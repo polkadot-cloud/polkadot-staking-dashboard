@@ -26,7 +26,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { getPoolTransferOptions, isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const { minJoinBond, minCreateBond } = stats;
   const poolTransferOptions = getPoolTransferOptions(activeAccount);
@@ -116,9 +116,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={
-          bondValid && accountHasSigner(activeAccount) && !txFees.isZero()
-        }
+        isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
       />
     </>
   );

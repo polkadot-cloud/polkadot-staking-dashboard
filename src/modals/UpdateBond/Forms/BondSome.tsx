@@ -31,7 +31,7 @@ export const BondSome = (props: FormsProps) => {
   const { getTransferOptions } = useBalances();
   const { bondType } = config;
   const { getPoolTransferOptions } = useActivePool();
-  const { txFees } = useTxFees();
+  const { txFees, txFeesValid } = useTxFees();
 
   const stakeTransferOptions: TransferOptions =
     getTransferOptions(activeAccount);
@@ -133,9 +133,7 @@ export const BondSome = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={
-          bondValid && accountHasSigner(activeAccount) && !txFees.isZero()
-        }
+        isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
       />
     </>
   );

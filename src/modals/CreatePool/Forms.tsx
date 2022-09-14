@@ -23,7 +23,7 @@ export const Forms = () => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const { getTransferOptions } = useBalances();
   const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
@@ -106,7 +106,7 @@ export const Forms = () => {
               submitting ||
               !bondValid ||
               !accountHasSigner(activeAccount) ||
-              txFees.isZero()
+              !txFeesValid
             }
           >
             <FontAwesomeIcon

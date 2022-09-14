@@ -30,7 +30,7 @@ export const NominateFromFavourites = () => {
   const { isNominator, isOwner } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const { maxNominations } = consts;
   const { bondType, nominations } = config;
@@ -187,7 +187,7 @@ export const NominateFromFavourites = () => {
               submitting ||
               (bondType === 'pool' && !isNominator() && !isOwner()) ||
               !accountHasSigner(signingAccount) ||
-              txFees.isZero()
+              !txFeesValid
             }
           >
             <FontAwesomeIcon

@@ -33,7 +33,7 @@ export const WithdrawPoolMember = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const { activeEra } = metrics;
   const { member, who } = config;
@@ -118,7 +118,7 @@ export const WithdrawPoolMember = () => {
                   !valid ||
                   submitting ||
                   !accountHasSigner(activeAccount) ||
-                  txFees.isZero()
+                  !txFeesValid
                 }
               >
                 <FontAwesomeIcon

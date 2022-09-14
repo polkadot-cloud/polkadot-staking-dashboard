@@ -29,7 +29,7 @@ export const NominatePool = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
   const { isNominator, targets } = useActivePool();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
   const { nominations } = targets;
   const poolId = membership?.poolId;
 
@@ -110,7 +110,7 @@ export const NominatePool = () => {
                 submitting ||
                 warnings.length > 0 ||
                 !accountHasSigner(activeAccount) ||
-                txFees.isZero()
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

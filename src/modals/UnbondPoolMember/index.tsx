@@ -27,7 +27,7 @@ export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
   const { units } = network;
   const { bondDuration } = consts;
   const { member, who } = config;
@@ -119,7 +119,7 @@ export const UnbondPoolMember = () => {
                 submitting ||
                 !bondValid ||
                 !accountHasSigner(activeAccount) ||
-                txFees.isZero()
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

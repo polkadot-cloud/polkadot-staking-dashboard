@@ -30,7 +30,7 @@ export const UnbondAll = (props: FormsProps) => {
     useBalances();
   const { bondType } = config;
   const { getPoolTransferOptions } = useActivePool();
-  const { txFees } = useTxFees();
+  const { txFeesValid } = useTxFees();
 
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
@@ -151,9 +151,7 @@ export const UnbondAll = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={
-          bondValid && accountHasSigner(signingAccount) && !txFees.isZero()
-        }
+        isValid={bondValid && accountHasSigner(signingAccount) && txFeesValid}
       />
     </>
   );
