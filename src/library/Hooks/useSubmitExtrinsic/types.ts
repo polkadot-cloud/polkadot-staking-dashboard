@@ -13,6 +13,5 @@ export interface UseSubmitExtrinsicProps {
 
 export interface UseSubmitExtrinsic {
   submitTx: { (): void };
-  estimatedFee: string | null;
   submitting: boolean;
 }

@@ -59,7 +59,7 @@ export const Summary = (props: SetupStepProps) => {
     return api.tx.utility.batch(_txs);
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,

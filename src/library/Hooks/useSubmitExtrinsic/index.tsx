@@ -24,7 +24,7 @@ export const useSubmitExtrinsic = (
   const submitAddress: string = from ?? '';
 
   const { api } = useApi();
-  const { setTxFees } = useTxFees();
+  const { setTxFees, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
@@ -32,13 +32,10 @@ export const useSubmitExtrinsic = (
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
 
-  // get the estimated fee for submitting the transaction
-  const [estimatedFee, setEstimatedFee] = useState(null);
-
   // calculate fee upon setup changes and initial render
   useEffect(() => {
     calculateEstimatedFee();
-  }, [extrinsic]);
+  }, [tx]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
@@ -46,12 +43,12 @@ export const useSubmitExtrinsic = (
     }
     // get payment info
     const { partialFee } = await tx.paymentInfo(submitAddress);
-
-    // store fee locally
-    setEstimatedFee(partialFee.toHuman());
+    const partialFeeBn = new BN(partialFee.toString());
 
     // give tx fees to global useTxFees context
-    setTxFees(new BN(partialFee.toString()));
+    if (partialFeeBn.toString() !== txFees.toString()) {
+      setTxFees(partialFeeBn);
+    }
   };
 
   // submit extrinsic
@@ -140,7 +137,6 @@ export const useSubmitExtrinsic = (
 
   return {
     submitTx,
-    estimatedFee,
     submitting,
   };
 };
