@@ -37,12 +37,6 @@ export const BalancesProvider = ({
   // existential amount of unit for an account
   const existentialAmount = consts.existentialDeposit;
 
-  // amount of compulsary reserve balance
-  const reserveAmount = new BN(10).pow(new BN(network.units)).div(new BN(2));
-
-  // minimum reserve for submitting extrinsics
-  const minReserve: BN = reserveAmount.add(existentialAmount);
-
   // balance accounts state
   const [accounts, setAccounts] = useState<Array<BalancesAccount>>([]);
   const accountsRef = useRef(accounts);
@@ -183,7 +177,7 @@ export const BalancesProvider = ({
         const { free, reserved, miscFrozen, feeFrozen } = data;
 
         // calculate free balance after app reserve
-        let freeAfterReserve = new BN(free).sub(minReserve);
+        let freeAfterReserve = new BN(free).sub(existentialAmount);
         freeAfterReserve = freeAfterReserve.lt(new BN(0))
           ? new BN(0)
           : freeAfterReserve;
@@ -476,9 +470,7 @@ export const BalancesProvider = ({
         getAccountNominations,
         getTransferOptions,
         isController,
-        minReserve,
         existentialAmount,
-        reserveAmount,
         accounts: accountsRef.current,
         ledgers: ledgersRef.current,
       }}

@@ -60,8 +60,6 @@ export const defaultBalancesContext: BalancesContextInterface = {
   // eslint-disable-next-line
   isController: (address) => false,
   accounts: [],
-  minReserve: new BN(0),
   existentialAmount: new BN(0),
-  reserveAmount: new BN(0),
   ledgers: [],
 };

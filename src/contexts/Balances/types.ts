@@ -71,8 +71,6 @@ export interface BalancesContextInterface {
   getTransferOptions: (address: MaybeAccount | null) => TransferOptions;
   isController: (address: MaybeAccount) => boolean;
   accounts: Array<BalancesAccount>;
-  minReserve: BN;
   existentialAmount: BN;
-  reserveAmount: BN;
   ledgers: any;
 }

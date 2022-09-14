@@ -13,7 +13,7 @@ import { ReserveProps } from './types';
 export const Reserve = (props: ReserveProps) => {
   const { height } = props;
   const { network } = useApi();
-  const { minReserve, existentialAmount, reserveAmount } = useBalances();
+  const { existentialAmount } = useBalances();
 
   return (
     <SectionWrapper style={{ height }}>
@@ -33,33 +33,10 @@ export const Reserve = (props: ReserveProps) => {
                 className="icon"
               />
               {`${toFixedIfNecessary(
-                planckBnToUnit(minReserve, network.units),
+                planckBnToUnit(existentialAmount, network.units),
                 5
               )} ${network.unit}`}
             </h2>
-          </section>
-          <section>
-            <div className="items">
-              <div style={{ maxWidth: '10rem' }}>
-                <h3 className="sec">
-                  {`${toFixedIfNecessary(
-                    planckBnToUnit(existentialAmount, network.units),
-                    5
-                  )} ${network.unit}`}
-                </h3>
-                <h5>Existential Deposit</h5>
-              </div>
-              <div className="sep">
-                <h3>+</h3>
-              </div>
-              <div>
-                <h3>{`${toFixedIfNecessary(
-                  planckBnToUnit(reserveAmount, network.units),
-                  5
-                )} ${network.unit}`}</h3>
-                <h5>For Tx Fees</h5>
-              </div>
-            </div>
           </section>
         </div>
       </ReserveWrapper>
