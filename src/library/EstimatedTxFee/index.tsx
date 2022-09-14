@@ -5,13 +5,16 @@ import React, { useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { useTxFees, TxFeesContext, EstimatedFeeContext } from 'contexts/TxFees';
 import { humanNumber, planckBnToUnit } from 'Utils';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
 import { EstimatedTxFeeProps } from './types';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const {
     network: { unit, units },
   } = useApi();
-  const { txFees, resetTxFees } = useTxFees();
+  const { mode } = useTheme();
+  const { txFees, resetTxFees, notEnoughFunds } = useTxFees();
 
   useEffect(() => {
     return () => {
@@ -29,9 +32,17 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
           <div>{txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}</div>
         </>
       ) : (
-        <p>
-          Estimated Tx Fee: {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}
-        </p>
+        <>
+          <p>
+            Estimated Tx Fee:{' '}
+            {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}
+          </p>
+          {notEnoughFunds === true && (
+            <p style={{ color: defaultThemes.text.danger[mode] }}>
+              You do not have enough funds to complete this transaction.
+            </p>
+          )}
+        </>
       )}
     </>
   );
