@@ -5,10 +5,7 @@ import React, { useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { useTxFees, TxFeesContext, EstimatedFeeContext } from 'contexts/TxFees';
 import { humanNumber, planckBnToUnit } from 'Utils';
-
-interface EstimatedTxFeeProps {
-  format?: string;
-}
+import { EstimatedTxFeeProps } from './types';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const {
