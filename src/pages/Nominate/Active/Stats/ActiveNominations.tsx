@@ -26,7 +26,7 @@ export const ActiveNominationsStatBox = () => {
     },
     tooltip: active ? 'Active' : undefined,
     assistant: {
-      page: 'stake',
+      page: 'nominate',
       key: 'Nominations',
     },
   };

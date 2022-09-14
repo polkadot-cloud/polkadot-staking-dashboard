@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   SIDE_MENU_STICKY_THRESHOLD,
-  SHOW_SIDE_BAR_WIDTH_THRESHOLD,
+  SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD,
 } from 'consts';
 import {
   backgroundDropdown,
@@ -141,7 +141,7 @@ export const ItemInactive = styled(motion.div)`
 
 export const LargeScreensOnly = styled.div`
   display: flex;
-  @media (max-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD}px) {
+  @media (max-width: ${SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD}px) {
     display: none;
   }
 `;

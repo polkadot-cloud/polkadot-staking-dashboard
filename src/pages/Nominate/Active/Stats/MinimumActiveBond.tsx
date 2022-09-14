@@ -15,7 +15,7 @@ export const MinimumActiveBondStatBox = () => {
     value: minActiveBond,
     unit: network.unit,
     assistant: {
-      page: 'stake',
+      page: 'nominate',
       key: 'Bonding',
     },
   };

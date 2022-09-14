@@ -72,12 +72,7 @@ export const Connected = () => {
                 }
                 format="name"
                 label="Controller"
-                canClick={hasController()}
-                onClick={() => {
-                  if (hasController()) {
-                    openModalWith('UpdateController', {}, 'large');
-                  }
-                }}
+                canClick={false}
                 filled
               />
             </HeadingWrapper>

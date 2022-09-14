@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ReactComponent as WalletSVG } from 'img/wallet.svg';
-import { useSideBar } from 'contexts/SideBar';
 import { useConnect } from 'contexts/Connect';
-import { ToggleWrapper } from './Wrappers';
+import { useModal } from 'contexts/Modal';
+import { Wrapper } from './Wrappers';
 import { Item } from '../Wrappers';
 
-export const Toggle = () => {
-  const { activeAccount } = useConnect();
-  const { openSideBar, open } = useSideBar();
+export const AccountsButton = () => {
+  const { activeAccount, accounts } = useConnect();
+  const { openModalWith } = useModal();
 
   const style = { flex: 0 };
 
@@ -27,19 +27,22 @@ export const Toggle = () => {
   );
 
   return (
-    <ToggleWrapper>
-      {!open && activeAccount && (
+    <Wrapper>
+      {activeAccount && (
         <Item
           style={style}
           onClick={() => {
-            openSideBar();
+            openModalWith(
+              'ConnectAccounts',
+              { section: accounts.length ? 1 : 0 },
+              'large'
+            );
           }}
           whileHover={{ scale: '1.01' }}
         >
-          {svg} Wallet
+          {svg} Accounts
         </Item>
       )}
-      {open ? <Item style={style}>{svg} Wallet</Item> : <></>}
-    </ToggleWrapper>
+    </Wrapper>
   );
 };

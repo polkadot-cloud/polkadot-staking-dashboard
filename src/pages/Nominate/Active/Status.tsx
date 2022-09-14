@@ -21,6 +21,7 @@ import Stat from 'library/Stat';
 import { useValidators } from 'contexts/Validators';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { BN } from 'bn.js';
+import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
   const { isReady, network } = useApi();
@@ -91,7 +92,7 @@ export const Status = ({ height }: { height: number }) => {
     <CardWrapper height={height}>
       <Stat
         label="Status"
-        assistant={['stake', 'Staking Status']}
+        assistant={['nominate', 'Staking Status']}
         stat={
           inSetup() || isSyncing
             ? 'Not Nominating'
@@ -123,7 +124,7 @@ export const Status = ({ height }: { height: number }) => {
       <Separator />
       <Stat
         label="Reward Destination"
-        assistant={['stake', 'Reward Destination']}
+        assistant={['nominate', 'Reward Destination']}
         icon={
           (payee === null
             ? faCircle
@@ -149,6 +150,8 @@ export const Status = ({ height }: { height: number }) => {
             : []
         }
       />
+      <Separator />
+      <Controller label="Controller Account" />
     </CardWrapper>
   );
 };
