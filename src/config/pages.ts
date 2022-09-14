@@ -9,7 +9,7 @@ import {
   faComment,
   faChartSimple,
   faBraille,
-  faProjectDiagram,
+  faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import Overview from 'pages/Overview';
 import Nominate from 'pages/Nominate';
@@ -29,7 +29,7 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     _id: 2,
-    title: 'nominate',
+    title: 'stake',
   },
   {
     _id: 3,
@@ -60,19 +60,19 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
+    title: 'Nominate',
+    uri: `${URI_PREFIX}/nominate`,
+    hash: '/nominate',
+    Entry: Nominate,
+    icon: faUserAlt,
+  },
+  {
+    category: 2,
     title: 'Pools',
     uri: `${URI_PREFIX}/pools`,
     hash: '/pools',
     Entry: Pools,
     icon: faUsers,
-  },
-  {
-    category: 2,
-    title: 'Nominate',
-    uri: `${URI_PREFIX}/nominate`,
-    hash: '/nominate',
-    Entry: Nominate,
-    icon: faProjectDiagram,
   },
   {
     category: 3,
