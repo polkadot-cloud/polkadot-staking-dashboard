@@ -7,6 +7,7 @@ import { textSecondary, borderSecondary, borderPrimary } from 'theme';
 
 export const Wrapper = styled(motion.button)<any>`
   border: 1px solid ${borderPrimary};
+  cursor: ${(props) => props.cursor};
   background: ${(props) => props.fill};
   font-size: ${(props) => props.fontSize};
   box-sizing: border-box;

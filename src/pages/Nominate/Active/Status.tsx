@@ -21,6 +21,7 @@ import Stat from 'library/Stat';
 import { useValidators } from 'contexts/Validators';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { BN } from 'bn.js';
+import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
   const { isReady, network } = useApi();
@@ -120,35 +121,6 @@ export const Status = ({ height }: { height: number }) => {
               ]
         }
       />
-      {/* <Separator />
-      <Stat
-        label="Controller Account"
-        assistant={['nominate', 'Reward Destination']}
-        icon={
-          (payee === null
-            ? faCircle
-            : payee === 'Staked'
-            ? faRedoAlt
-            : payee === 'None'
-            ? faCircle
-            : faWallet) as IconProp
-        }
-        stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
-        buttons={
-          payeeStatus
-            ? [
-                {
-                  title: 'Update',
-                  icon: faWallet,
-                  small: true,
-                  disabled:
-                    inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
-                  onClick: () => openModalWith('UpdatePayee', {}, 'small'),
-                },
-              ]
-            : []
-        }
-      /> */}
       <Separator />
       <Stat
         label="Reward Destination"
@@ -178,6 +150,8 @@ export const Status = ({ height }: { height: number }) => {
             : []
         }
       />
+      <Separator />
+      <Controller label="Controller Account" />
     </CardWrapper>
   );
 };
