@@ -16,6 +16,7 @@ import { useApi } from 'contexts/Api';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { Warning } from 'library/Form/Warning';
 import { InputItem } from 'library/Form/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
@@ -57,7 +58,7 @@ export const UpdateController = () => {
   };
 
   // handle extrinsic
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -90,10 +91,7 @@ export const UpdateController = () => {
           height="17rem"
         />
         <NotesWrapper>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
           <div>

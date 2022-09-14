@@ -14,6 +14,7 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -108,10 +109,7 @@ export const Nominate = () => {
           <p>
             Once submitted, you will start nominating your chosen validators.
           </p>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
           <div>

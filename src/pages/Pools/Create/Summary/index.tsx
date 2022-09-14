@@ -20,6 +20,7 @@ import { BN } from 'bn.js';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -141,8 +142,7 @@ export const Summary = (props: SetupStepProps) => {
             <div>Assigned</div>
           </section>
           <section>
-            <div>Estimated Tx Fee:</div>
-            <div>{estimatedFee === null ? '...' : `${estimatedFee}`}</div>
+            <EstimatedTxFee format="table" />
           </section>
         </SummaryWrapper>
         <div

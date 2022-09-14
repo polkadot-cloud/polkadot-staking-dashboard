@@ -14,6 +14,7 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -98,7 +99,7 @@ export const ChangeNominations = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -146,10 +147,7 @@ export const ChangeNominations = () => {
             immediately, and will not be nominated from the start of the next
             era.
           </p>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
           <div>

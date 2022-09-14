@@ -14,6 +14,7 @@ import { Warning } from 'library/Form/Warning';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit } from 'Utils';
 import { BN } from 'bn.js';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -58,7 +59,7 @@ export const ClaimReward = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -104,10 +105,7 @@ export const ClaimReward = () => {
               as free balance.
             </p>
           )}
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </div>
         <FooterWrapper>
           <div>

@@ -6,7 +6,11 @@ import { useApi } from 'contexts/Api';
 import { useTxFees, TxFeesContext, EstimatedFeeContext } from 'contexts/TxFees';
 import { humanNumber, planckBnToUnit } from 'Utils';
 
-export const EstimatedTxFeeInner = () => {
+interface EstimatedTxFeeProps {
+  format?: string;
+}
+
+export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const {
     network: { unit, units },
   } = useApi();
@@ -21,11 +25,22 @@ export const EstimatedTxFeeInner = () => {
   const txFeesBase = humanNumber(planckBnToUnit(txFees, units));
 
   return (
-    <p>Estimated Tx Fee: {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}</p>
+    <>
+      {format === 'table' ? (
+        <>
+          <div>Estimated Tx Fee:</div>
+          <div>{txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}</div>
+        </>
+      ) : (
+        <p>
+          Estimated Tx Fee: {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}
+        </p>
+      )}
+    </>
   );
 };
 
-export class EstimatedTxFee extends React.Component<any, any> {
+export class EstimatedTxFee extends React.Component<EstimatedTxFeeProps> {
   static contextType = TxFeesContext;
 
   componentDidMount(): void {
@@ -39,6 +54,6 @@ export class EstimatedTxFee extends React.Component<any, any> {
   }
 
   render() {
-    return <EstimatedTxFeeInner />;
+    return <EstimatedTxFeeInner {...this.props} />;
   }
 }

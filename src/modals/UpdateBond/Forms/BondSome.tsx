@@ -11,6 +11,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondOptions } from 'contexts/Balances/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -72,7 +73,7 @@ export const BondSome = (props: FormsProps) => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -81,10 +82,6 @@ export const BondSome = (props: FormsProps) => {
     },
     callbackInBlock: () => {},
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
@@ -108,7 +105,9 @@ export const BondSome = (props: FormsProps) => {
             ]}
             warnings={warnings}
           />
-          <NotesWrapper>{TxFee}</NotesWrapper>
+          <NotesWrapper>
+            <EstimatedTxFee />
+          </NotesWrapper>
         </>
       </div>
       <FormFooter

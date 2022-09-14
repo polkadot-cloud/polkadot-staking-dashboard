@@ -20,6 +20,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
@@ -73,7 +74,7 @@ export const Forms = forwardRef(
       return _tx;
     };
     const signingAccount = isStaking ? controller : activeAccount;
-    const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+    const { submitTx, submitting } = useSubmitExtrinsic({
       tx: tx(),
       from: signingAccount,
       shouldSubmit: valid,
@@ -119,10 +120,7 @@ export const Forms = forwardRef(
             )}
             <Separator />
             <NotesWrapper>
-              <p>
-                Estimated Tx Fee:{' '}
-                {estimatedFee === null ? '...' : `${estimatedFee}`}
-              </p>
+              <EstimatedTxFee />
             </NotesWrapper>
           </div>
           <FooterWrapper>

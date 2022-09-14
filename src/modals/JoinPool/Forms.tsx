@@ -17,6 +17,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -57,7 +58,7 @@ export const Forms = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -74,10 +75,6 @@ export const Forms = () => {
       setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
     },
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
@@ -101,7 +98,9 @@ export const Forms = () => {
             ]}
             warnings={warnings}
           />
-          <NotesWrapper>{TxFee}</NotesWrapper>
+          <NotesWrapper>
+            <EstimatedTxFee />
+          </NotesWrapper>
         </>
       </div>
       <FooterWrapper>

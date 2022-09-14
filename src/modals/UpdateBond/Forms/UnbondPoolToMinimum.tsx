@@ -11,6 +11,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -77,7 +78,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -86,10 +87,6 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     },
     callbackInBlock: () => {},
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   return (
     <>
@@ -108,7 +105,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
               Once unbonding, you must wait {bondDuration} eras for your funds
               to become available.
             </p>
-            {bondValid && TxFee}
+            {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>
       </div>

@@ -17,6 +17,7 @@ import { Warning } from 'library/Form/Warning';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -139,7 +140,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -165,10 +166,6 @@ export const Forms = forwardRef((props: any, ref: any) => {
       }
     },
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   const handleMetadataChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
@@ -211,7 +208,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
 
             <NotesWrapper>
               {content.message}
-              {TxFee}
+              <EstimatedTxFee />
             </NotesWrapper>
           </>
         </div>

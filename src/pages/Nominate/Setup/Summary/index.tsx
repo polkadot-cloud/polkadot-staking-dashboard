@@ -16,6 +16,7 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -123,8 +124,7 @@ export const Summary = (props: SetupStepProps) => {
             </div>
           </section>
           <section>
-            <div>Estimated Tx Fee:</div>
-            <div>{estimatedFee === null ? '...' : `${estimatedFee}`}</div>
+            <EstimatedTxFee format="table" />
           </section>
         </SummaryWrapper>
         <div

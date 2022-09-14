@@ -12,6 +12,7 @@ import { useStaking } from 'contexts/Staking';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { BondOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -101,7 +102,7 @@ export const UnbondAll = (props: FormsProps) => {
 
   const signingAccount = isPooling ? activeAccount : controller;
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: signingAccount,
     shouldSubmit: bondValid,
@@ -110,10 +111,6 @@ export const UnbondAll = (props: FormsProps) => {
     },
     callbackInBlock: () => {},
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   return (
     <>
@@ -142,7 +139,7 @@ export const UnbondAll = (props: FormsProps) => {
               Once unbonding, you must wait {bondDuration} eras for your funds
               to become available.
             </p>
-            {bondValid && TxFee}
+            {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>
       </div>

@@ -16,6 +16,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -112,7 +113,7 @@ export const NominateFromFavourites = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -154,9 +155,7 @@ export const NominateFromFavourites = () => {
         )}
       </ListWrapper>
       <NotesWrapper style={{ paddingBottom: 0 }}>
-        <p style={{ textAlign: 'right' }}>
-          Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}
-        </p>
+        <EstimatedTxFee />
       </NotesWrapper>
       <FooterWrapper>
         <h3
