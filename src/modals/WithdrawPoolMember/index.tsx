@@ -24,6 +24,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 
 export const WithdrawPoolMember = () => {
   const { api, network } = useApi();
@@ -32,6 +33,8 @@ export const WithdrawPoolMember = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
+  const { txFees } = useTxFees();
+
   const { activeEra } = metrics;
   const { member, who } = config;
   const { historyDepth } = staking;
@@ -112,7 +115,10 @@ export const WithdrawPoolMember = () => {
                 className="submit"
                 onClick={() => submitTx()}
                 disabled={
-                  !valid || submitting || !accountHasSigner(activeAccount)
+                  !valid ||
+                  submitting ||
+                  !accountHasSigner(activeAccount) ||
+                  txFees.isZero()
                 }
               >
                 <FontAwesomeIcon

@@ -21,6 +21,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -34,6 +35,7 @@ export const Summary = (props: SetupStepProps) => {
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
   const poolId = lastPoolId.add(new BN(1));
+  const { txFees } = useTxFees();
 
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
@@ -67,7 +69,7 @@ export const Summary = (props: SetupStepProps) => {
     return api.tx.utility.batch(_txs);
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
@@ -156,7 +158,9 @@ export const Summary = (props: SetupStepProps) => {
         >
           <Button
             onClick={() => submitTx()}
-            disabled={submitting || !accountHasSigner(activeAccount)}
+            disabled={
+              submitting || !accountHasSigner(activeAccount) || txFees.isZero()
+            }
             title="Create Pool"
             primary
           />

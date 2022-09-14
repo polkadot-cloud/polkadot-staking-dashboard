@@ -17,6 +17,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -26,6 +27,7 @@ export const Summary = (props: SetupStepProps) => {
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { txFees } = useTxFees();
 
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
@@ -138,7 +140,9 @@ export const Summary = (props: SetupStepProps) => {
         >
           <Button
             onClick={() => submitTx()}
-            disabled={submitting || !accountHasSigner(activeAccount)}
+            disabled={
+              submitting || !accountHasSigner(activeAccount) || txFees.isZero()
+            }
             title="Start Nominating"
             primary
           />

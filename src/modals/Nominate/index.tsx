@@ -15,6 +15,7 @@ import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -29,6 +30,7 @@ export const Nominate = () => {
   const { targets, staking, getControllerNotImported } = useStaking();
   const { getBondedAccount, getLedgerForStash } = useBalances();
   const { setStatus: setModalStatus } = useModal();
+  const { txFees } = useTxFees();
   const { units } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
@@ -62,7 +64,7 @@ export const Nominate = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: controller,
     shouldSubmit: valid,
@@ -98,7 +100,7 @@ export const Nominate = () => {
         style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
       >
         {warnings.map((text: any, index: number) => (
-          <Warning text={text} />
+          <Warning key={index} text={text} />
         ))}
         <h2>
           You Have {nominations.length} Nomination
@@ -117,7 +119,9 @@ export const Nominate = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={!valid || submitting || warnings.length > 0}
+              disabled={
+                !valid || submitting || warnings.length > 0 || txFees.isZero()
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"

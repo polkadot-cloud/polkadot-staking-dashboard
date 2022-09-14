@@ -17,6 +17,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -29,6 +30,8 @@ export const NominateFromFavourites = () => {
   const { isNominator, isOwner } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships();
+  const { txFees } = useTxFees();
+
   const { maxNominations } = consts;
   const { bondType, nominations } = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;
@@ -183,7 +186,8 @@ export const NominateFromFavourites = () => {
               !valid ||
               submitting ||
               (bondType === 'pool' && !isNominator() && !isOwner()) ||
-              !accountHasSigner(signingAccount)
+              !accountHasSigner(signingAccount) ||
+              txFees.isZero()
             }
           >
             <FontAwesomeIcon

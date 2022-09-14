@@ -18,6 +18,7 @@ import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -29,6 +30,7 @@ export const Forms = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setActiveAccountSetup } = useUi();
+  const { txFees } = useTxFees();
 
   const { getTransferOptions } = useBalances();
   const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
@@ -112,7 +114,10 @@ export const Forms = () => {
             className="submit"
             onClick={() => submitTx()}
             disabled={
-              submitting || !bondValid || !accountHasSigner(activeAccount)
+              submitting ||
+              !bondValid ||
+              !accountHasSigner(activeAccount) ||
+              txFees.isZero()
             }
           >
             <FontAwesomeIcon

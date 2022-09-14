@@ -13,6 +13,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { TransferOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -29,6 +30,8 @@ export const UnbondAll = (props: FormsProps) => {
     useBalances();
   const { bondType } = config;
   const { getPoolTransferOptions } = useActivePool();
+  const { txFees } = useTxFees();
+
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
@@ -148,7 +151,9 @@ export const UnbondAll = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid && accountHasSigner(signingAccount)}
+        isValid={
+          bondValid && accountHasSigner(signingAccount) && !txFees.isZero()
+        }
       />
     </>
   );

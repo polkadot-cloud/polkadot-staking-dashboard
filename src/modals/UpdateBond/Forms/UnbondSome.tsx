@@ -14,6 +14,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { TransferOptions } from 'contexts/Balances/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -30,10 +31,13 @@ export const UnbondSome = (props: FormsProps) => {
   const { bondType } = config;
   const { stats } = usePoolsConfig();
   const { getPoolTransferOptions, isDepositor } = useActivePool();
+  const { txFees } = useTxFees();
+
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;
-  const stakeTransferOptions: TransferOptions = getTransferOptions(activeAccount);
+  const stakeTransferOptions: TransferOptions =
+    getTransferOptions(activeAccount);
   const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
@@ -148,7 +152,9 @@ export const UnbondSome = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid && accountHasSigner(signingAccount)}
+        isValid={
+          bondValid && accountHasSigner(signingAccount) && !txFees.isZero()
+        }
       />
     </>
   );

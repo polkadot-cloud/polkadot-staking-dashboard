@@ -14,6 +14,7 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -28,6 +29,7 @@ export const NominatePool = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
   const { isNominator, targets } = useActivePool();
+  const { txFees } = useTxFees();
   const { nominations } = targets;
   const poolId = membership?.poolId;
 
@@ -107,7 +109,8 @@ export const NominatePool = () => {
                 !valid ||
                 submitting ||
                 warnings.length > 0 ||
-                !accountHasSigner(activeAccount)
+                !accountHasSigner(activeAccount) ||
+                txFees.isZero()
               }
             >
               <FontAwesomeIcon

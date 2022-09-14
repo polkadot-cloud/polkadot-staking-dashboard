@@ -15,6 +15,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit } from 'Utils';
 import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -27,6 +28,7 @@ export const ClaimReward = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { activeBondedPool } = useActivePool();
   const { activeAccount, accountHasSigner } = useConnect();
+  const { txFees } = useTxFees();
   const { units, unit } = network;
   let { unclaimedRewards } = activeBondedPool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
@@ -114,7 +116,10 @@ export const ClaimReward = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                !valid || submitting || !accountHasSigner(activeAccount)
+                !valid ||
+                submitting ||
+                !accountHasSigner(activeAccount) ||
+                txFees.isZero()
               }
             >
               <FontAwesomeIcon

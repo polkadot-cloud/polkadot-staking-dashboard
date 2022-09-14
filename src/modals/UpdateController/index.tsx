@@ -17,6 +17,7 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { Warning } from 'library/Form/Warning';
 import { InputItem } from 'library/Form/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
@@ -25,6 +26,8 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
+  const { txFees } = useTxFees();
+
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
@@ -102,7 +105,8 @@ export const UpdateController = () => {
               disabled={
                 selected === null ||
                 submitting ||
-                !accountHasSigner(activeAccount)
+                !accountHasSigner(activeAccount) ||
+                txFees.isZero()
               }
             >
               <FontAwesomeIcon

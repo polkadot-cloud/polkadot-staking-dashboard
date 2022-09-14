@@ -14,6 +14,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { TransferOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -22,6 +23,7 @@ export const Forms = () => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
+  const { txFees } = useTxFees();
 
   const { getTransferOptions } = useBalances();
   const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
@@ -101,7 +103,10 @@ export const Forms = () => {
             className="submit"
             onClick={() => submitTx()}
             disabled={
-              submitting || !bondValid || !accountHasSigner(activeAccount)
+              submitting ||
+              !bondValid ||
+              !accountHasSigner(activeAccount) ||
+              txFees.isZero()
             }
           >
             <FontAwesomeIcon

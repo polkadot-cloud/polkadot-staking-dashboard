@@ -18,6 +18,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -31,6 +32,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { isOwner, activeBondedPool } = useActivePool();
   const { bondedPools, meta, updateBondedPools, getBondedPool } =
     useBondedPools();
+  const { txFees } = useTxFees();
   const poolId = membership?.poolId;
 
   // valid to submit transaction
@@ -233,7 +235,10 @@ export const Forms = forwardRef((props: any, ref: any) => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                submitting || !accountHasSigner(activeAccount) || !valid
+                submitting ||
+                !accountHasSigner(activeAccount) ||
+                !valid ||
+                txFees.isZero()
               }
             >
               <FontAwesomeIcon

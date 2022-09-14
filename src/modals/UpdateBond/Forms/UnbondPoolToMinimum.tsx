@@ -12,6 +12,7 @@ import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -25,6 +26,8 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { getPoolTransferOptions, isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
+  const { txFees } = useTxFees();
+
   const { minJoinBond, minCreateBond } = stats;
   const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const { bondDuration } = consts;
@@ -113,7 +116,9 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid && accountHasSigner(activeAccount)}
+        isValid={
+          bondValid && accountHasSigner(activeAccount) && !txFees.isZero()
+        }
       />
     </>
   );

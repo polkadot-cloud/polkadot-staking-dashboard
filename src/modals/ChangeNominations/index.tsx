@@ -15,6 +15,7 @@ import { Warning } from 'library/Form/Warning';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -30,6 +31,7 @@ export const ChangeNominations = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { membership } = usePoolMemberships();
   const { poolNominations, isNominator, isOwner } = useActivePool();
+  const { txFees } = useTxFees();
 
   const { nominations: newNominations, provider, bondType } = config;
 
@@ -156,7 +158,10 @@ export const ChangeNominations = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                !valid || submitting || !accountHasSigner(signingAccount)
+                !valid ||
+                submitting ||
+                !accountHasSigner(signingAccount) ||
+                txFees.isZero()
               }
             >
               <FontAwesomeIcon

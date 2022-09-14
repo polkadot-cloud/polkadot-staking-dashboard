@@ -21,11 +21,13 @@ import { Warning } from 'library/Form/Warning';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 
 export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
+  const { txFees } = useTxFees();
   const { units } = network;
   const { bondDuration } = consts;
   const { member, who } = config;
@@ -114,7 +116,10 @@ export const UnbondPoolMember = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                submitting || !bondValid || !accountHasSigner(activeAccount)
+                submitting ||
+                !bondValid ||
+                !accountHasSigner(activeAccount) ||
+                txFees.isZero()
               }
             >
               <FontAwesomeIcon
