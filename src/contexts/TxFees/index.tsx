@@ -4,9 +4,16 @@
 import BN from 'bn.js';
 import React, { useState } from 'react';
 
-export const TxFeesContext = React.createContext<any>({
+export interface EstimatedFeeContext {
+  txFees: BN;
+  setTxFees: (f: BN) => void;
+  resetTxFees: () => void;
+}
+
+export const TxFeesContext = React.createContext<EstimatedFeeContext>({
   txFees: new BN(0),
-  setTxFees: () => {},
+  setTxFees: (f) => {},
+  resetTxFees: () => {},
 });
 
 export const useTxFees = () => React.useContext(TxFeesContext);
@@ -14,7 +21,7 @@ export const useTxFees = () => React.useContext(TxFeesContext);
 export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
   const [txFees, _setTxFees] = useState(new BN(0));
 
-  const setTxFees = (fees: any) => {
+  const setTxFees = (fees: BN) => {
     _setTxFees(fees);
   };
 
