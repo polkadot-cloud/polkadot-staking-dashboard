@@ -47,6 +47,7 @@ export interface BondInputProps {
   disabled: boolean;
   freeBalance: number;
   freeToUnbondToMin: number;
+  disableTxFeeUpdate?: boolean;
 }
 
 export interface BondInputWithFeedbackProps {
@@ -57,6 +58,7 @@ export interface BondInputWithFeedbackProps {
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
+  disableTxFeeUpdate?: boolean;
 }
 
 export interface NominateStatusBarProps {

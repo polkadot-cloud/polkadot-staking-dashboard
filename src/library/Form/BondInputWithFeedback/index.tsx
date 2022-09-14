@@ -24,6 +24,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const warnings = props.warnings ?? [];
   const setters = props.setters ?? [];
   const listenIsValid = props.listenIsValid ?? (() => {});
+  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
@@ -53,9 +54,12 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   } = transferOptions;
 
   // if we are bonding, subtract tx fees from bond amount
+  // TODO: disable this
   const freeBondAmount = unbond
     ? freeBalanceBn
-    : BN.max(freeBalanceBn.sub(txFees), BN_ZERO);
+    : !disableTxFeeUpdate
+    ? BN.max(freeBalanceBn.sub(txFees), BN_ZERO)
+    : freeBalanceBn;
 
   // the default bond balance
   const freeBalance = planckBnToUnit(freeBondAmount, units);
@@ -85,7 +89,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
 
   // update max bond after txFee sync
   useEffect(() => {
-    if (!unbond) {
+    if (!unbond && !disableTxFeeUpdate) {
       setBond({ bond: freeBalance });
     }
   }, [txFees]);
@@ -215,6 +219,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         setters={setters}
         freeBalance={freeBalance}
         freeToUnbondToMin={freeToUnbondToMin}
+        disableTxFeeUpdate={disableTxFeeUpdate}
       />
     </>
   );

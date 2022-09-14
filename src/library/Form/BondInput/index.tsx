@@ -14,6 +14,7 @@ export const BondInput = (props: BondInputProps) => {
   const setters = props.setters ?? [];
   const task = props.task ?? 'bond';
   const _value = props.value ?? 0;
+  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
@@ -27,7 +28,7 @@ export const BondInput = (props: BondInputProps) => {
   }, [activeAccount]);
 
   useEffect(() => {
-    if (task === 'bond') {
+    if (task === 'bond' && !disableTxFeeUpdate) {
       setBond(_value.toString());
     }
   }, [_value]);

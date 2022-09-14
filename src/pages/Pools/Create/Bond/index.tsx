@@ -78,6 +78,7 @@ export const Bond = (props: SetupStepProps) => {
           unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
+          disableTxFeeUpdate
           setters={[
             {
               set: handleSetupUpdate,
