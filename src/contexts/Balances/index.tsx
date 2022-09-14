@@ -443,7 +443,7 @@ export const BalancesProvider = ({
     }
 
     // free to bond balance
-    const freeToBond = BN.max(
+    const freeBalance = BN.max(
       freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
       new BN(0)
     );
@@ -455,7 +455,7 @@ export const BalancesProvider = ({
     );
 
     return {
-      freeToBond,
+      freeBalance,
       freeToUnbond,
       totalUnlocking,
       totalUnlocked,

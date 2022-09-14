@@ -32,7 +32,7 @@ export const BondAll = (props: FormsProps) => {
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeToBond: freeToBondBn } = isPooling
+  const { freeBalance: freeBalanceBn } = isPooling
     ? poolBondOptions
     : stakeBondOptions;
   const { totalPossibleBond: totalPossibleBondBn } = isPooling
@@ -40,25 +40,25 @@ export const BondAll = (props: FormsProps) => {
     : stakeBondOptions;
 
   // convert BN values to number
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const freeBalance = planckBnToUnit(freeBalanceBn, units);
   const totalPossibleBond = planckBnToUnit(totalPossibleBondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToBond });
+  const [bond, setBond] = useState({ bond: freeBalance });
 
   // bond valid
   const [bondValid, setBondValid] = useState(false);
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToBond;
+    const _bond = freeBalance;
     setBond({ bond: _bond });
     if (_bond > 0) {
       setBondValid(true);
     } else {
       setBondValid(false);
     }
-  }, [freeToBond]);
+  }, [freeBalance]);
 
   // modal resize on form update
   useEffect(() => {
@@ -101,12 +101,12 @@ export const BondAll = (props: FormsProps) => {
           {!accountHasSigner(activeAccount) && (
             <Warning text="Your account is read only, and cannot sign transactions." />
           )}
-          {freeToBond === 0 && (
+          {freeBalance === 0 && (
             <Warning text={`You have no free ${network.unit} to bond.`} />
           )}
           <h4>Amount to bond:</h4>
           <h2>
-            {freeToBond} {network.unit}
+            {freeBalance} {network.unit}
           </h2>
           <p>
             This amount of {network.unit} will be added to your current bonded

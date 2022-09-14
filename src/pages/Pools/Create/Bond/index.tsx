@@ -23,12 +23,12 @@ export const Bond = (props: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getBondOptions } = useBalances();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const { freeToBond }: BondOptions = getBondOptions(activeAccount);
+  const { freeBalance }: BondOptions = getBondOptions(activeAccount);
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
   // either free to bond or existing setup value
   const initialBondValue =
-    setup.bond === 0 ? planckBnToUnit(freeToBond, units) : setup.bond;
+    setup.bond === 0 ? planckBnToUnit(freeBalance, units) : setup.bond;
 
   // store local bond amount for form control
   const [bond, setBond] = useState({

@@ -31,10 +31,12 @@ export const Forms = () => {
   const { setActiveAccountSetup } = useUi();
 
   const { getBondOptions } = useBalances();
-  const { freeToBond }: BondOptions = getBondOptions(activeAccount);
+  const { freeBalance }: BondOptions = getBondOptions(activeAccount);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: planckBnToUnit(freeToBond, units) });
+  const [bond, setBond] = useState({
+    bond: planckBnToUnit(freeBalance, units),
+  });
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(true);
@@ -89,7 +91,7 @@ export const Forms = () => {
             bondType="pool"
             unbond={false}
             listenIsValid={setBondValid}
-            defaultBond={planckBnToUnit(freeToBond, units)}
+            defaultBond={planckBnToUnit(freeBalance, units)}
             setters={[
               {
                 set: setBond,

@@ -32,22 +32,22 @@ export const BondSome = (props: FormsProps) => {
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeToBond: freeToBondBn } = isPooling
+  const { freeBalance: freeBalanceBn } = isPooling
     ? poolBondOptions
     : stakeBondOptions;
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const freeBalance = planckBnToUnit(freeBalanceBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToBond });
+  const [bond, setBond] = useState({ bond: freeBalance });
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToBond;
+    const _bond = freeBalance;
     setBond({ bond: _bond });
-  }, [freeToBond]);
+  }, [freeBalance]);
 
   // modal resize on form update
   useEffect(() => {
@@ -96,7 +96,7 @@ export const BondSome = (props: FormsProps) => {
             bondType={bondType}
             unbond={false}
             listenIsValid={setBondValid}
-            defaultBond={freeToBond}
+            defaultBond={freeBalance}
             setters={[
               {
                 set: setBond,

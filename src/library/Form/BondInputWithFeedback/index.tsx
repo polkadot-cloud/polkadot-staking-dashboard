@@ -72,12 +72,12 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
       : getBondOptions(activeAccount);
 
   const {
-    freeToBond: freeToBondBn,
+    freeBalance: freeBalanceBn,
     freeToUnbond: freeToUnbondBn,
     active: poolsActive,
   } = bondOptions;
 
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const freeBalance = planckBnToUnit(freeBalanceBn, units);
 
   // bond amount to minimum threshold
   const minBondBase =
@@ -118,18 +118,18 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
 
     // bond errors
     if (!unbond) {
-      if (freeToBond === 0) {
+      if (freeBalance === 0) {
         _bondDisabled = true;
         _errors.push(`You have no free ${network.unit} to bond.`);
       }
 
-      if (Number(bond.bond) > freeToBond) {
+      if (Number(bond.bond) > freeBalance) {
         _errors.push('Bond amount is more than your free balance.');
       }
 
       // bond errors
       if (inSetup) {
-        if (freeToBond < minBondBase) {
+        if (freeBalance < minBondBase) {
           _bondDisabled = true;
           _errors.push(
             `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
@@ -182,7 +182,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
       <CardHeaderWrapper>
         <h4>
           {unbond ? 'Bonded' : 'Available'}:{' '}
-          {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)}{' '}
+          {unbond ? humanNumber(activeBase) : humanNumber(freeBalance)}{' '}
           {network.unit}
         </h4>
       </CardHeaderWrapper>
@@ -196,7 +196,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         defaultValue={defaultBond}
         disabled={bondDisabled}
         setters={setters}
-        freeToBond={freeToBond}
+        freeBalance={freeBalance}
         freeToUnbondToMin={freeToUnbondToMin}
       />
     </>

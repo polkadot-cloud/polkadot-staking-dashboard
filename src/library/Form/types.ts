@@ -45,7 +45,7 @@ export interface BondInputProps {
   task: string;
   defaultValue: number;
   disabled: boolean;
-  freeToBond: number;
+  freeBalance: number;
   freeToUnbondToMin: number;
 }
 

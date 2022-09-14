@@ -26,7 +26,7 @@ export const ManageBond = () => {
 
   const {
     active,
-    freeToBond,
+    freeBalance,
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
@@ -89,7 +89,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeToBond, units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={!membership}
       />
     </>

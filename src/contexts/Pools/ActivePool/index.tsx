@@ -408,7 +408,7 @@ export const ActivePoolProvider = ({
     }
 
     // free transferrable balance that can be bonded in the pool
-    const freeToBond = BN.max(
+    const freeBalance = BN.max(
       freeAfterReserve.sub(miscFrozen).sub(totalUnlocking).sub(totalUnlocked),
       new BN(0)
     );
@@ -421,7 +421,7 @@ export const ActivePoolProvider = ({
 
     return {
       active,
-      freeToBond,
+      freeBalance,
       freeToUnbond,
       totalUnlocking,
       totalUnlocked,

@@ -38,7 +38,7 @@ export const BalanceGraph = () => {
   const { services } = useUi();
   const prices = usePrices();
   const {
-    freeToBond,
+    freeBalance,
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
@@ -57,14 +57,11 @@ export const BalanceGraph = () => {
   const freeBase = planckBnToUnit(free, units);
 
   // convert balance to fiat value
-  const freeBalance = toFixedIfNecessary(
-    Number(freeBase * prices.lastPrice),
-    2
-  );
+  const freeFiat = toFixedIfNecessary(Number(freeBase * prices.lastPrice), 2);
 
   // graph data
   let graphStaked = planckBnToUnit(staked, units);
-  let graphFreeToStake = planckBnToUnit(freeToBond, units);
+  let graphFreeToStake = planckBnToUnit(freeBalance, units);
   let graphInPool = planckBnToUnit(poolBondOpions.active, units);
   let graphUnlocking = planckBnToUnit(unlocking, units);
 
@@ -182,7 +179,7 @@ export const BalanceGraph = () => {
           {network.unit}
           <span className="fiat">
             {services.includes('binance_spot') && (
-              <>&nbsp;{usdFormatter.format(Number(freeBalance))}</>
+              <>&nbsp;{usdFormatter.format(Number(freeFiat))}</>
             )}
           </span>
         </h2>

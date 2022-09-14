@@ -10,7 +10,7 @@ import { InputWrapper, RowWrapper } from './Wrappers';
 import { BondInputProps } from '../types';
 
 export const BondInput = (props: BondInputProps) => {
-  const { disabled, freeToBond, freeToUnbondToMin } = props;
+  const { disabled, freeBalance, freeToUnbondToMin } = props;
   const setters = props.setters ?? [];
   const task = props.task ?? 'bond';
   const _value = props.value ?? 0;
@@ -91,7 +91,7 @@ export const BondInput = (props: BondInputProps) => {
             small
             title="Max"
             onClick={() => {
-              const value = task === 'bond' ? freeToBond : freeToUnbondToMin;
+              const value = task === 'bond' ? freeBalance : freeToUnbondToMin;
               setBond(value);
               updateParentState(value);
             }}

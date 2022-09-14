@@ -27,7 +27,7 @@ export const ledger: BalanceLedger = {
 };
 
 export const bondOptions: BondOptions = {
-  freeToBond: new BN(0),
+  freeBalance: new BN(0),
   freeToUnbond: new BN(0),
   totalUnlocking: new BN(0),
   totalUnlocked: new BN(0),

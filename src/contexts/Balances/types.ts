@@ -45,7 +45,7 @@ export interface BalancesAccount {
 }
 
 export interface BondOptions {
-  freeToBond: BN;
+  freeBalance: BN;
   freeToUnbond: BN;
   totalUnlocking: BN;
   totalUnlocked: BN;

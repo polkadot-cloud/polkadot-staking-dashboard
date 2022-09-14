@@ -27,7 +27,7 @@ export const ManageBond = () => {
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
   const {
-    freeToBond,
+    freeBalance,
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
@@ -94,7 +94,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeToBond, units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={inSetup()}
       />
     </>

@@ -50,7 +50,7 @@ export const poolNominations = {
 
 export const poolBondOptions = {
   active: new BN(0),
-  freeToBond: new BN(0),
+  freeBalance: new BN(0),
   freeToUnbond: new BN(0),
   totalUnlocking: new BN(0),
   totalUnlocked: new BN(0),
