@@ -8,10 +8,9 @@ import {
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -20,6 +19,7 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -31,14 +31,18 @@ import { PageProps } from '../../types';
 import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
+import { Members } from './Members';
+import { ClosurePrompts } from './ClosurePrompts';
+import { PoolStats } from './PoolStats';
 
 export const HomeInner = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { network } = useApi();
   const navigate = useNavigate();
+  const { membership } = usePoolMemberships();
   const { bondedPools } = useBondedPools();
-  const { isBonding, getPoolRoles } = useActivePool();
+  const { getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
 
   // back to overview if pools are not supported on network
@@ -48,30 +52,47 @@ export const HomeInner = (props: PageProps) => {
     }
   }, [network]);
 
+  // back to tab 0 if not in a pool
+  useEffect(() => {
+    if (!activeBondedPool) {
+      setActiveTab(0);
+    }
+  }, [activeBondedPool]);
+
   const ROW_HEIGHT = 275;
+
+  let tabs = [
+    {
+      title: 'Overview',
+      active: activeTab === 0,
+      onClick: () => setActiveTab(0),
+    },
+  ];
+
+  if (activeBondedPool) {
+    tabs = tabs.concat({
+      title: 'Members',
+      active: activeTab === 1,
+      onClick: () => setActiveTab(1),
+    });
+  }
+
+  tabs = tabs.concat(
+    {
+      title: 'All Pools',
+      active: activeTab === 2,
+      onClick: () => setActiveTab(2),
+    },
+    {
+      title: 'Favourites',
+      active: activeTab === 3,
+      onClick: () => setActiveTab(3),
+    }
+  );
 
   return (
     <>
-      <PageTitle
-        title={title}
-        tabs={[
-          {
-            title: 'Overview',
-            active: activeTab === 0,
-            onClick: () => setActiveTab(0),
-          },
-          {
-            title: 'All Pools',
-            active: activeTab === 1,
-            onClick: () => setActiveTab(1),
-          },
-          {
-            title: 'Favourites',
-            active: activeTab === 2,
-            onClick: () => setActiveTab(2),
-          },
-        ]}
-      />
+      <PageTitle title={title} tabs={tabs} />
       {activeTab === 0 && (
         <>
           <StatBoxList>
@@ -79,6 +100,9 @@ export const HomeInner = (props: PageProps) => {
             <MinJoinBondStatBox />
             <MinCreateBondStatBox />
           </StatBoxList>
+
+          <ClosurePrompts />
+
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <RowPrimaryWrapper
               hOrder={1}
@@ -99,7 +123,7 @@ export const HomeInner = (props: PageProps) => {
               </CardWrapper>
             </RowSecondaryWrapper>
           </PageRowWrapper>
-          {isBonding() && (
+          {membership !== null && (
             <>
               <ManagePool />
               <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -111,11 +135,15 @@ export const HomeInner = (props: PageProps) => {
                   />
                 </CardWrapper>
               </PageRowWrapper>
+              <PageRowWrapper className="page-padding" noVerticalSpacer>
+                <PoolStats />
+              </PageRowWrapper>
             </>
           )}
         </>
       )}
-      {activeTab === 1 && (
+      {activeTab === 1 && <Members />}
+      {activeTab === 2 && (
         <>
           <StatBoxList>
             <PoolMembershipBox />
@@ -124,24 +152,19 @@ export const HomeInner = (props: PageProps) => {
           </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
-              <CardHeaderWrapper>
-                <h3>
-                  All Pools
-                  <OpenAssistantIcon page="pools" title="Nomination Pools" />
-                </h3>
-              </CardHeaderWrapper>
               <PoolList
                 batchKey="bonded_pools"
                 pools={bondedPools}
                 title="Active Pools"
                 allowMoreCols
+                allowSearch
                 pagination
               />
             </CardWrapper>
           </PageRowWrapper>
         </>
       )}
-      {activeTab === 2 && (
+      {activeTab === 3 && (
         <>
           <Favourites />
         </>

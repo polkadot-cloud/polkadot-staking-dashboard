@@ -3,6 +3,7 @@
 
 export interface PoolListProps {
   allowMoreCols?: string;
+  allowSearch?: boolean;
   pagination?: number;
   batchKey?: string;
   disableThrottle?: boolean;

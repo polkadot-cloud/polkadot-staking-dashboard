@@ -26,7 +26,7 @@ import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
 import { Select } from '../../ListItem/Labels/Select';
 import { EraStatus } from '../../ListItem/Labels/EraStatus';
-import { useValidatorList } from '../context';
+import { useList } from '../../List/context';
 import { DefaultProps } from './types';
 
 export const Default = (props: DefaultProps) => {
@@ -43,7 +43,7 @@ export const Default = (props: DefaultProps) => {
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { meta } = useValidators();
-  const { selectActive } = useValidatorList();
+  const { selectActive } = useList();
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -108,9 +108,10 @@ export const Default = (props: DefaultProps) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
-          {selectActive && <Select validator={validator} />}
+          {selectActive && <Select item={validator} />}
           <Identity
-            validator={validator}
+            meta={meta}
+            address={address}
             batchIndex={batchIndex}
             batchKey={batchKey}
           />

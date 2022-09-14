@@ -11,6 +11,7 @@ import {
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useStaking } from 'contexts/Staking';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -88,6 +89,24 @@ export const BondedPoolsProvider = ({
       return getPoolWithAddresses(id, pool);
     });
     setBondedPools(exposures);
+  };
+
+  // queries a bonded pool and injects ID and addresses to a result.
+  const queryBondedPool = async (id: number) => {
+    if (!api) return null;
+
+    const bondedPool: AnyApi = (
+      await api.query.nominationPools.bondedPools(id)
+    ).toHuman();
+
+    if (!bondedPool) {
+      return null;
+    }
+    return {
+      id,
+      addresses: createAccounts(id),
+      ...bondedPool,
+    };
   };
 
   /*
@@ -279,13 +298,106 @@ export const BondedPoolsProvider = ({
     return pool;
   };
 
+  /*
+   * poolSearchFilter
+   * Iterates through the supplied list and refers to the meta
+   * batch of the list to filter those list items that match
+   * the search term.
+   * Returns the updated filtered list.
+   */
+  const poolSearchFilter = (
+    list: any,
+    batchKey: string,
+    searchTerm: string
+  ) => {
+    const meta = poolMetaBatchesRef.current;
+
+    if (meta[batchKey] === undefined) {
+      return list;
+    }
+    const filteredList: any = [];
+
+    for (const pool of list) {
+      const batchIndex = meta[batchKey].ids?.indexOf(Number(pool.id)) ?? -1;
+
+      // if we cannot derive data, fallback to include pool in filtered list
+      if (batchIndex === -1) {
+        filteredList.push(pool);
+        continue;
+      }
+
+      const ids = meta[batchKey].ids ?? false;
+      const metadatas = meta[batchKey]?.metadata ?? false;
+
+      if (!metadatas || !ids) {
+        filteredList.push(pool);
+        continue;
+      }
+
+      const id = ids[batchIndex] ?? 0;
+      const address = pool?.addresses?.stash ?? '';
+      const metadata = metadatas[batchIndex] ?? '';
+
+      const metadataAsBytes = u8aToString(u8aUnwrapBytes(metadata));
+      const metadataSearch = (
+        metadataAsBytes === '' ? metadata : metadataAsBytes
+      ).toLowerCase();
+
+      if (String(id).includes(searchTerm.toLowerCase())) {
+        filteredList.push(pool);
+      }
+      if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
+        filteredList.push(pool);
+      }
+      if (metadataSearch.includes(searchTerm.toLowerCase())) {
+        filteredList.push(pool);
+      }
+    }
+    return filteredList;
+  };
+
+  const updateBondedPools = (updatedPools: Array<BondedPool>) => {
+    if (!updatedPools) {
+      return;
+    }
+    const _bondedPools = bondedPools.map(
+      (original: BondedPool) =>
+        updatedPools.find(
+          (updated: BondedPool) => updated.id === original.id
+        ) || original
+    );
+    setBondedPools(_bondedPools);
+  };
+
+  const removeFromBondedPools = (id: number) => {
+    const _bondedPools = bondedPools.filter((b: BondedPool) => b.id !== id);
+    setBondedPools(_bondedPools);
+  };
+
+  // adds a record to bondedPools.
+  // currently only used when a new pool is created.
+  const addToBondedPools = (pool: BondedPool) => {
+    if (!pool) return;
+
+    const exists = bondedPools.find((b: BondedPool) => b.id === pool.id);
+    if (!exists) {
+      const _bondedPools = bondedPools.concat(pool);
+      setBondedPools(_bondedPools);
+    }
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
         fetchPoolsMetaBatch,
+        queryBondedPool,
         getBondedPool,
+        updateBondedPools,
+        addToBondedPools,
+        removeFromBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
+        poolSearchFilter,
         bondedPools,
         meta: poolMetaBatchesRef.current,
       }}

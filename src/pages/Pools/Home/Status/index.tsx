@@ -11,13 +11,16 @@ import { useConnect } from 'contexts/Connect';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, rmCommas } from 'Utils';
 import {
-  faPaperPlane,
   faLock,
   faExclamationTriangle,
+  faPlus,
+  faShare,
 } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
+import { useValidators } from 'contexts/Validators';
 import { useStatusButtons } from './useStatusButtons';
 import { Membership } from './Membership';
 
@@ -27,42 +30,62 @@ export const Status = ({ height }: { height: number }) => {
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { activeBondedPool, poolNominations, getNominationsStatus } =
-    useActivePool();
+  const { activeBondedPool, poolNominations } = useActivePool();
   const { openModalWith } = useModal();
-  const nominationStatuses = getNominationsStatus();
-  const activeNominations = Object.values(nominationStatuses).filter(
-    (_v) => _v === 'active'
-  ).length;
+  const { getNominationsStatusFromTargets, eraStakers } = useStaking();
+  const { meta, validators } = useValidators();
+  const { stakers } = eraStakers;
+  const poolStash = activeBondedPool?.addresses?.stash || '';
+
+  const nominationStatuses = getNominationsStatusFromTargets(
+    poolStash,
+    poolNominations?.targets ?? []
+  );
+
+  // determine pool state
+  const poolState = activeBondedPool?.bondedPool?.state ?? null;
+
+  const activeNominees = Object.entries(nominationStatuses)
+    .map(([k, v]: any) => (v === 'active' ? k : false))
+    .filter((v) => v !== false);
+
   const isNominating = !!poolNominations?.targets?.length;
-  const inPool = membership && activeBondedPool;
+  const inPool = membership;
 
   // Set the minimum unclaimed planck value to prevent e numbers
   const minUnclaimedDisplay = new BN(1_000_000);
 
   // Unclaimed rewards `Stat` props
-  let { unclaimedReward } = activeBondedPool || {};
-  unclaimedReward = unclaimedReward ?? new BN(0);
+  let { unclaimedRewards } = activeBondedPool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
 
-  const labelRewards = unclaimedReward.gt(minUnclaimedDisplay)
-    ? `${planckBnToUnit(unclaimedReward, units)} ${unit}`
+  const labelRewards = unclaimedRewards.gt(minUnclaimedDisplay)
+    ? `${planckBnToUnit(unclaimedRewards, units)} ${unit}`
     : `0 ${unit}`;
 
-  const buttonsRewards = unclaimedReward.gt(minUnclaimedDisplay)
+  const buttonsRewards = unclaimedRewards.gt(minUnclaimedDisplay)
     ? [
         {
-          title: 'Claim',
-          icon: faPaperPlane,
+          title: 'Withdraw',
+          icon: faShare,
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { bondType: 'pool' }, 'small'),
+            openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
+        },
+        {
+          title: 'Bond',
+          icon: faPlus,
+          disabled:
+            !isReady ||
+            isReadOnlyAccount(activeAccount) ||
+            poolState === PoolState.Destroy,
+          small: true,
+          onClick: () =>
+            openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
         },
       ]
     : undefined;
-
-  // determine pool state icon
-  const poolState = activeBondedPool?.state ?? null;
 
   let poolStateIcon;
   switch (poolState) {
@@ -76,21 +99,58 @@ export const Status = ({ height }: { height: number }) => {
       poolStateIcon = undefined;
   }
 
+  // check if rewards are being earned
+  const stake = meta.validators_browse?.stake ?? [];
+  const stakeSynced = stake.length > 0 ?? false;
+
+  let earningRewards = false;
+  if (stakeSynced) {
+    for (const nominee of activeNominees) {
+      const validator = validators.find((v: any) => v.address === nominee);
+      if (validator) {
+        const batchIndex = validators.indexOf(validator);
+        const nomineeMeta = stake[batchIndex];
+        const { lowestReward } = nomineeMeta;
+
+        const validatorInEra =
+          stakers.find((s: any) => s.address === nominee) || null;
+
+        if (validatorInEra) {
+          const { others } = validatorInEra;
+          const stakedValue =
+            others?.find((o: any) => o.who === poolStash)?.value ?? false;
+          if (stakedValue) {
+            const stakedValueBase = planckBnToUnit(
+              new BN(rmCommas(stakedValue)),
+              network.units
+            );
+            if (stakedValueBase >= lowestReward) {
+              earningRewards = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // determine pool status - left side
   const poolStatusLeft =
     poolState === PoolState.Block
-      ? 'Blocked / '
+      ? 'Locked / '
       : poolState === PoolState.Destroy
       ? 'Destroying / '
       : '';
 
   // determine pool status - right side
   const poolStatusRight = isSyncing
-    ? 'Inactive: Not Nominating'
+    ? 'Inactive: Pool Not Nominating'
     : !isNominating
-    ? 'Inactive: Not Nominating'
-    : activeNominations
-    ? 'Actively Nominating with Pool Funds'
+    ? 'Inactive: Pool Not Nominating'
+    : activeNominees.length
+    ? `Nominating and ${
+        earningRewards ? 'Earning Rewards' : 'Not Earning Rewards'
+      }`
     : 'Waiting for Active Nominations';
 
   const { label, buttons } = useStatusButtons();
@@ -120,7 +180,7 @@ export const Status = ({ height }: { height: number }) => {
           <Stat
             icon={isSyncing ? undefined : poolStateIcon}
             label="Pool Status"
-            assistant={['stake', 'Staking Status']}
+            assistant={['nominate', 'Staking Status']}
             stat={`${poolStatusLeft}${poolStatusRight}`}
           />
         </>

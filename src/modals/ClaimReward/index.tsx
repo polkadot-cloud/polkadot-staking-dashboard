@@ -23,16 +23,17 @@ import {
 
 export const ClaimReward = () => {
   const { api, network } = useApi();
-  const { setStatus: setModalStatus } = useModal();
+  const { setStatus: setModalStatus, config } = useModal();
   const { activeBondedPool } = useActivePool();
   const { activeAccount, accountHasSigner } = useConnect();
   const { units, unit } = network;
-  let { unclaimedReward } = activeBondedPool || {};
-  unclaimedReward = unclaimedReward ?? new BN(0);
+  let { unclaimedRewards } = activeBondedPool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  const { claimType } = config;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (unclaimedReward?.gtn(0)) {
+    if (unclaimedRewards?.gtn(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -48,7 +49,12 @@ export const ClaimReward = () => {
     if (!api) {
       return _tx;
     }
-    _tx = api.tx.nominationPools.claimPayout();
+
+    if (claimType === 'bond') {
+      _tx = api.tx.nominationPools.bondExtra('Rewards');
+    } else {
+      _tx = api.tx.nominationPools.claimPayout();
+    }
     return _tx;
   };
 
@@ -66,7 +72,7 @@ export const ClaimReward = () => {
     <PaddingWrapper verticalOnly>
       <HeadingWrapper>
         <FontAwesomeIcon transform="grow-2" icon={faWallet} />
-        Claim Payout
+        {claimType === 'bond' ? 'Bond' : 'Withdraw'} Rewards
       </HeadingWrapper>
       <div
         style={{
@@ -78,14 +84,26 @@ export const ClaimReward = () => {
         {!accountHasSigner(activeAccount) && (
           <Warning text="Your account is read only, and cannot sign transactions." />
         )}
-        {!unclaimedReward?.gtn(0) && (
+        {!unclaimedRewards?.gtn(0) && (
           <Warning text="You have no rewards to claim." />
         )}
         <h2>
-          {planckBnToUnit(unclaimedReward, units)} {unit}
+          {planckBnToUnit(unclaimedRewards, units)} {unit}
         </h2>
         <Separator />
         <div className="notes">
+          {claimType === 'bond' ? (
+            <p>
+              Once submitted, your rewards will be bonded back into the pool.
+              You own these additional bonded funds and will be able to withdraw
+              them at any time.
+            </p>
+          ) : (
+            <p>
+              Withdrawing rewards will immediately transfer them to your account
+              as free balance.
+            </p>
+          )}
           <p>
             Estimated Tx Fee:{' '}
             {estimatedFee === null ? '...' : `${estimatedFee}`}

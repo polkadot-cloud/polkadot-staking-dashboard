@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, forwardRef } from 'react';
-import { faCog, faChartLine, faUsers } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCog,
+  faProjectDiagram,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import Button from 'library/Button';
 import { useBalances } from 'contexts/Balances';
@@ -197,8 +201,8 @@ export const Accounts = forwardRef((props: any, ref: any) => {
         {activeStaking.length > 0 && (
           <>
             <h2>
-              <FontAwesomeIcon icon={faChartLine} transform="shrink-4" />{' '}
-              Actively Staking
+              <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
+              Nominating
             </h2>
             {activeStaking.map((item: any, i: number) => {
               const { stash, controller } = item;

@@ -13,8 +13,9 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;
 
   const { activeBondedPool } = useActivePool();
-  const poolLocked = activeBondedPool?.state === PoolState.Block;
-  const poolDestroying = activeBondedPool?.state === PoolState.Destroy;
+  const poolLocked = activeBondedPool?.bondedPool?.state === PoolState.Block;
+  const poolDestroying =
+    activeBondedPool?.bondedPool?.state === PoolState.Destroy;
 
   return (
     <ContentWrapper>

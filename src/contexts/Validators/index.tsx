@@ -53,7 +53,7 @@ export const ValidatorsProvider = ({
   const [validators, setValidators] = useState<Array<Validator>>([]);
 
   // track whether the validator list has been fetched yet
-  const [fetchedValidators, setFetchedValidators] = useState<boolean>(false);
+  const [fetchedValidators, setFetchedValidators] = useState<number>(0);
 
   // stores the currently active validator set
   const [sessionValidators, setSessionValidators] = useState<SessionValidators>(
@@ -103,7 +103,7 @@ export const ValidatorsProvider = ({
 
   // reset validators list on network change
   useEffect(() => {
-    setFetchedValidators(false);
+    setFetchedValidators(0);
     setSessionValidators(defaults.sessionValidators);
     removeValidatorMetaBatch('validators_browse');
     setValidators([]);
@@ -219,9 +219,13 @@ export const ValidatorsProvider = ({
     if (!isReady || !api) {
       return;
     }
-    if (fetchedValidators) {
+
+    // return if fetching not started
+    if ([1, 2].includes(fetchedValidators)) {
       return;
     }
+
+    setFetchedValidators(1);
 
     // fetch validator set
     const v: Array<Validator> = [];
@@ -241,8 +245,10 @@ export const ValidatorsProvider = ({
       });
     });
 
-    setFetchedValidators(true);
-    setValidators(v);
+    setFetchedValidators(2);
+
+    // shuffle validators before setting them
+    setValidators(shuffle(v));
   };
 
   /*

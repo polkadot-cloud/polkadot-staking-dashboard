@@ -7,6 +7,7 @@ import { ReactComponent as PolkadotJSSVG } from './icons/dot_icon.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
+import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
 
 export interface ExtensionConfig {
   id: string;
@@ -22,6 +23,15 @@ export const EXTENSIONS: ExtensionConfig[] = [
     icon: EnkryptSVG,
   },
   {
+    id: 'polkadot-js',
+    title: (window as any)?.walletExtension?.isNovaWallet
+      ? 'Nova Wallet'
+      : 'Polkadot JS',
+    icon: (window as any)?.walletExtension?.isNovaWallet
+      ? NovaWalletSVG
+      : PolkadotJSSVG,
+  },
+  {
     id: 'subwallet-js',
     title: 'SubWallet',
     icon: SubwalletSVG,
@@ -30,11 +40,6 @@ export const EXTENSIONS: ExtensionConfig[] = [
     id: 'talisman',
     title: 'Talisman',
     icon: TalismanSVG,
-  },
-  {
-    id: 'polkadot-js',
-    title: 'Polkadot JS',
-    icon: PolkadotJSSVG,
   },
   {
     id: 'parity-signer-companion',

@@ -28,6 +28,7 @@ export interface ValidatorFilterContextInterface {
   toggleFilterValidators: (v: string, l: any) => void;
   toggleAllValidatorFilters: (t: number) => void;
   resetValidatorFilters: () => void;
+  validatorSearchFilter: (l: any, k: string, v: string) => void;
   validatorFilters: string[];
   validatorOrder: string;
 }

@@ -19,9 +19,9 @@ import { NetworkMetricsProvider } from './contexts/Network';
 import { NotificationsProvider } from './contexts/Notifications';
 import { PoolsConfigProvider } from './contexts/Pools/PoolsConfig';
 import { BondedPoolsProvider } from './contexts/Pools/BondedPools';
+import { PoolMembersProvider } from './contexts/Pools/PoolMembers';
 import { PoolMembershipsProvider } from './contexts/Pools/PoolMemberships';
 import { ActivePoolProvider } from './contexts/Pools/ActivePool';
-import { SideBarProvider } from './contexts/SideBar';
 import { StakingProvider } from './contexts/Staking';
 import { SubscanProvider } from './contexts/Subscan';
 import { ValidatorsProvider } from './contexts/Validators';
@@ -53,7 +53,6 @@ export const Providers = withProviders(
   ModalProvider,
   ConnectProvider,
   AssistantProvider,
-  SideBarProvider,
   NetworkMetricsProvider,
   AccountProvider,
   BalancesProvider,
@@ -62,6 +61,7 @@ export const Providers = withProviders(
   PoolMembershipsProvider,
   ActivePoolProvider,
   BondedPoolsProvider,
+  PoolMembersProvider,
   ValidatorsProvider,
   UIProvider,
   SubscanProvider,

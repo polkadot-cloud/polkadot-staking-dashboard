@@ -25,6 +25,7 @@ import { ReactComponent as Stakely } from './thumbnails/stakely.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
+import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilities.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
@@ -358,6 +359,25 @@ export const VALIDATOR_COMMUNITY = [
         'CtEni6wrP7Kz2KWus9Y6vQWuhLqJpd9mQFTmTvw8T7FLui8',
         'FZ1GFKR6tYx9gNGHV67h5aV6bfhAbh7ZRdU9ypVvXfseyfg',
         'Et9M3rrA7H2kHQEGRXHxufcp9HTEmFirMWtKHvjoJ85r1C9',
+        'Dh2ZNKbQMdusURjfZZj7Bczb57PGEoCVmDHdq8hjnH5PZ4E',
+      ],
+    },
+  },
+  {
+    name: 'Staking Facilities',
+    Thumbnail: StakingFacilities,
+    bio: "Staking Facilities is your trusted staking provider. Our international team operates highly secure, physical infrastructure with guaranteed uptimes in certified data centers based in Germany. We offer you non-custodial staking services, personal support, and tools for a variety of hand-selected public Proof-of-Stake blockchains for which we always put down a substantial self-bond in order to best align everybody's incentives.",
+    email: 'info@stakingfacilities.com',
+    twitter: '@StakingFac',
+    website: 'https://stakingfacilities.com/',
+    validators: {
+      polkadot: [
+        '15Sf82YbMQjtpgnExXFxzrwTsAXJKHVU9tzQV6WizAPo1dfL',
+        '165JpxmCRi28GwbFAjjrD74FTfGdLfHi1LUGMaYLjziDvi4r',
+      ],
+      kusama: [
+        'H1ye1dQ7zVM8obAmb21kfUKA8otRekWXn6fiToKusamaJK9',
+        'HedLwr1CHmab4QAyoVtxub6kdZDT2YkPDaXawpwfhuCVFjN',
       ],
     },
   },

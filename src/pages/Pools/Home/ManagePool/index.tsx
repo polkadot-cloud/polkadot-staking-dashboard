@@ -8,10 +8,11 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import Nominations from 'pages/Stake/Active/Nominations';
+import Nominations from 'pages/Nominate/Active/Nominations';
 import { GenerateNominations } from 'library/SetupSteps/GenerateNominations';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
+import { PoolState } from 'contexts/Pools/types';
 
 export const ManagePool = () => {
   const { isSyncing } = useUi();
@@ -27,13 +28,14 @@ export const ManagePool = () => {
 
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = activeBondedPool?.addresses?.stash ?? null;
+  const { state } = activeBondedPool?.bondedPool || {};
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondType="pool" nominator={activeAccount} />
-        ) : isNominator() && !isNominating ? (
+        ) : isNominator() && !isNominating && state !== PoolState.Destroy ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>

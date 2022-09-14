@@ -10,22 +10,28 @@ import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
 import { Pool } from 'library/Pool';
-import { List, Header, Wrapper as ListWrapper, Pagination } from 'library/List';
+import { List, Header, Wrapper as ListWrapper } from 'library/List';
 import { useTheme } from 'contexts/Themes';
 import { networkColors } from 'theme/default';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { Pagination } from 'library/List/Pagination';
+import { MotionContainer } from 'library/List/MotionContainer';
+import { SearchInput } from 'library/List/SearchInput';
+import { useUi } from 'contexts/UI';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
 export const PoolListInner = (props: PoolListProps) => {
   const { allowMoreCols, pagination, batchKey }: any = props;
   const disableThrottle = props.disableThrottle ?? false;
+  const allowSearch = props.allowSearch ?? false;
 
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { fetchPoolsMetaBatch } = useBondedPools();
+  const { fetchPoolsMetaBatch, poolSearchFilter } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
+  const { isSyncing } = useUi();
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -51,8 +57,6 @@ export const PoolListInner = (props: PoolListProps) => {
 
   // pagination
   const totalPages = Math.ceil(pools.length / LIST_ITEMS_PER_PAGE);
-  const nextPage = page + 1 > totalPages ? totalPages : page + 1;
-  const prevPage = page - 1 < 1 ? 1 : page - 1;
   const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
@@ -100,9 +104,15 @@ export const PoolListInner = (props: PoolListProps) => {
     listPools = pools;
   }
 
-  if (!pools.length) {
-    return <></>;
-  }
+  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+
+    let filteredPools = Object.assign(poolsDefault);
+    filteredPools = poolSearchFilter(filteredPools, batchKey, newValue);
+    setPage(1);
+    setRenderIteration(1);
+    setPools(filteredPools);
+  };
 
   return (
     <ListWrapper>
@@ -134,74 +144,54 @@ export const PoolListInner = (props: PoolListProps) => {
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {pagination && (
-          <Pagination prev={page !== 1} next={page !== totalPages}>
-            <div>
-              <h4>
-                Page
-                {page} of {totalPages}
-              </h4>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="prev"
-                onClick={() => {
-                  setPage(prevPage);
-                }}
-              >
-                Prev
-              </button>
-              <button
-                type="button"
-                className="next"
-                onClick={() => {
-                  setPage(nextPage);
-                }}
-              >
-                Next
-              </button>
-            </div>
-          </Pagination>
+        {allowSearch && poolsDefault.length > 0 && (
+          <SearchInput
+            handleChange={handleSearchChange}
+            placeholder="Search Pool ID, Name or Address"
+          />
         )}
-        <motion.div
-          className="transition"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.01,
-              },
-            },
-          }}
-        >
-          {listPools.map((pool: any, index: number) => {
-            // fetch batch data by referring to default list index.
-            const batchIndex = poolsDefault.indexOf(pool);
+        {pagination && listPools.length > 0 && (
+          <Pagination page={page} total={totalPages} setter={setPage} />
+        )}
+        <MotionContainer>
+          {listPools.length ? (
+            <>
+              {listPools.map((pool: any, index: number) => {
+                // fetch batch data by referring to default list index.
+                const batchIndex = poolsDefault.indexOf(pool);
 
-            return (
-              <motion.div
-                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                key={`nomination_${index}`}
-                variants={{
-                  hidden: {
-                    y: 15,
-                    opacity: 0,
-                  },
-                  show: {
-                    y: 0,
-                    opacity: 1,
-                  },
-                }}
-              >
-                <Pool pool={pool} batchKey={batchKey} batchIndex={batchIndex} />
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                return (
+                  <motion.div
+                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                    key={`nomination_${index}`}
+                    variants={{
+                      hidden: {
+                        y: 15,
+                        opacity: 0,
+                      },
+                      show: {
+                        y: 0,
+                        opacity: 1,
+                      },
+                    }}
+                  >
+                    <Pool
+                      pool={pool}
+                      batchKey={batchKey}
+                      batchIndex={batchIndex}
+                    />
+                  </motion.div>
+                );
+              })}
+            </>
+          ) : (
+            <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
+              {isSyncing
+                ? 'Syncing Pool list...'
+                : 'No pools match this criteria.'}
+            </h4>
+          )}
+        </MotionContainer>
       </List>
     </ListWrapper>
   );

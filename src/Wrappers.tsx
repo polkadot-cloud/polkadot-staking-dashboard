@@ -8,7 +8,7 @@ import {
   SIDE_MENU_MINIMISED_WIDTH,
   INTERFACE_MAXIMUM_WIDTH,
   SIDE_MENU_STICKY_THRESHOLD,
-  SHOW_SIDE_BAR_WIDTH_THRESHOLD,
+  SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD,
 } from 'consts';
 import {
   textPrimary,
@@ -77,7 +77,7 @@ export const EntryWrapper = styled.div`
   }
 
   input::placeholder {
-    color: #bbb;
+    color: #aaa;
   }
 
   input:focus,
@@ -90,7 +90,7 @@ export const EntryWrapper = styled.div`
     padding-left: 1.25rem;
     padding-right: 1.25rem;
 
-    @media (min-width: ${SHOW_SIDE_BAR_WIDTH_THRESHOLD + 1}px) {
+    @media (min-width: ${SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD + 1}px) {
       padding-left: 1.75rem;
       padding-right: 1.75rem;
     }
@@ -190,7 +190,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   position: sticky;
   top: 0px;
   padding-top: ${(props) => (props.sticky ? '1.5rem' : '0.5rem')};
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   padding-bottom: ${(props) => (props.sticky ? '0.25rem' : 0)};
 
   @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
@@ -205,7 +205,8 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   transition: padding 0.3s ease-out;
 
   h1 {
-    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.9rem')};
+    font-family: 'Unbounded', 'sans-serif', sans-serif;
+    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.75rem')};
     @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
       font-size: 1.5rem;
     }
@@ -214,12 +215,21 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
 
   > .tabs {
     box-sizing: border-box;
-    overflow: auto;
+    overflow: hidden;
     max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
     margin-top: ${(props) => (props.sticky ? '0' : '0.75rem')};
     transition: margin 0.2s;
+    height: 3.5rem;
 
-    > .inner {
+    > .scroll {
+      box-sizing: border-box;
+      width: 100%;
+      height: 4.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .inner {
       display: flex;
       flex-flow: row nowrap;
       border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
@@ -237,11 +247,9 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
         &.active {
           background: ${buttonSecondaryBackground};
         }
-
         &:last-child {
           margin-right: 0;
         }
-
         &:hover {
           opacity: 0.8;
         }
@@ -373,6 +381,7 @@ export const TopBarWrapper = styled.div`
   padding-bottom: 0.5rem;
   width: 100%;
   margin-top: 0.4rem;
+  margin-bottom: 0.25rem;
 
   button {
     padding: 0.75rem 1rem;

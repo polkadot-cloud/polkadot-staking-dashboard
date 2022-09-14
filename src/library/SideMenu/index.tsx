@@ -84,7 +84,7 @@ export const SideMenu = () => {
       // set undefined action as default
       _pages[i].action = undefined;
 
-      if (uri === `${URI_PREFIX}/stake`) {
+      if (uri === `${URI_PREFIX}/nominate`) {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
@@ -270,7 +270,7 @@ export const SideMenu = () => {
           type="button"
           onClick={() =>
             window.open(
-              'https://github.com/rossbulat/polkadot-staking-experience',
+              'https://github.com/paritytech/polkadot-staking-dashboard',
               '_blank'
             )
           }

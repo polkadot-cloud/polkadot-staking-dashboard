@@ -11,7 +11,7 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Separator } from 'Wrappers';
-import { PoolState } from 'contexts/Pools/types';
+import { BondedPool, PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,8 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
   const { isOwner, activeBondedPool } = useActivePool();
-  const { bondedPools, meta } = useBondedPools();
+  const { bondedPools, meta, updateBondedPools, getBondedPool } =
+    useBondedPools();
   const poolId = membership?.poolId;
 
   // valid to submit transaction
@@ -60,35 +61,6 @@ export const Forms = forwardRef((props: any, ref: any) => {
   useEffect(() => {
     setValid(isValid);
   }, [isValid]);
-
-  // tx to submit
-  const tx = () => {
-    let _tx = null;
-
-    if (!valid || !api) {
-      return _tx;
-    }
-
-    // remove decimal errors
-    switch (task) {
-      case 'set_pool_metadata':
-        _tx = api.tx.nominationPools.setMetadata(poolId, metadata);
-        break;
-      case 'destroy_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
-        break;
-      case 'unlock_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
-        break;
-      case 'lock_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
-        break;
-      default:
-        _tx = null;
-    }
-
-    return _tx;
-  };
 
   const content = (() => {
     let title;
@@ -127,6 +99,46 @@ export const Forms = forwardRef((props: any, ref: any) => {
     return { title, message };
   })();
 
+  const poolStateFromTask = (t: string) => {
+    switch (t) {
+      case 'destroy_pool':
+        return PoolState.Destroy;
+      case 'lock_pool':
+        return PoolState.Block;
+      default:
+        return PoolState.Open;
+    }
+  };
+
+  // tx to submit
+  const tx = () => {
+    let _tx = null;
+
+    if (!valid || !api) {
+      return _tx;
+    }
+
+    // remove decimal errors
+    switch (task) {
+      case 'set_pool_metadata':
+        _tx = api.tx.nominationPools.setMetadata(poolId, metadata);
+        break;
+      case 'destroy_pool':
+        _tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
+        break;
+      case 'unlock_pool':
+        _tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
+        break;
+      case 'lock_pool':
+        _tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
+        break;
+      default:
+        _tx = null;
+    }
+
+    return _tx;
+  };
+
   const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
@@ -134,7 +146,24 @@ export const Forms = forwardRef((props: any, ref: any) => {
     callbackSubmit: () => {
       setModalStatus(0);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      // reflect updated state in bondedPools list
+      if (
+        ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task) &&
+        poolId
+      ) {
+        const pool: BondedPool | null = getBondedPool(poolId);
+
+        if (pool) {
+          updateBondedPools([
+            {
+              ...pool,
+              state: poolStateFromTask(task),
+            },
+          ]);
+        }
+      }
+    },
   });
 
   const TxFee = (

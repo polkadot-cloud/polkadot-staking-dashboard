@@ -35,7 +35,7 @@ export const useStatusButtons = () => {
     icon: faUserPlus,
     transform: 'grow-1',
     disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
-    onClick: () => setActiveTab(1),
+    onClick: () => setActiveTab(2),
   };
 
   if (!membership) {
