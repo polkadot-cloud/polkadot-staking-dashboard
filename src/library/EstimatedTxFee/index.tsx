@@ -3,7 +3,7 @@
 
 import React, { useEffect } from 'react';
 import { useApi } from 'contexts/Api';
-import { useTxFees, TxFeesContext } from 'contexts/TxFees';
+import { useTxFees, TxFeesContext, EstimatedFeeContext } from 'contexts/TxFees';
 import { humanNumber, planckBnToUnit } from 'Utils';
 
 export const EstimatedTxFeeInner = () => {
@@ -29,7 +29,7 @@ export class EstimatedTxFee extends React.Component<any, any> {
   static contextType = TxFeesContext;
 
   componentDidMount(): void {
-    const { resetTxFees }: any = this.context;
+    const { resetTxFees } = this.context as EstimatedFeeContext;
     resetTxFees();
   }
 
