@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
@@ -19,12 +20,14 @@ import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { Warning } from 'library/Form/Warning';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
-import BN from 'bn.js';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 
 export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
+  const { txFeesValid } = useTxFees();
   const { units } = network;
   const { bondDuration } = consts;
   const { member, who } = config;
@@ -70,7 +73,7 @@ export const UnbondPoolMember = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -79,10 +82,6 @@ export const UnbondPoolMember = () => {
     },
     callbackInBlock: () => {},
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   return (
     <>
@@ -107,7 +106,7 @@ export const UnbondPoolMember = () => {
               Once unbonding, your funds to become available after{' '}
               {bondDuration} eras.
             </p>
-            {bondValid && TxFee}
+            {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </div>
         <FooterWrapper>
@@ -117,7 +116,10 @@ export const UnbondPoolMember = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                submitting || !bondValid || !accountHasSigner(activeAccount)
+                submitting ||
+                !bondValid ||
+                !accountHasSigner(activeAccount) ||
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

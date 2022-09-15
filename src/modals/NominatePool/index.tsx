@@ -13,6 +13,8 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -27,6 +29,7 @@ export const NominatePool = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
   const { isNominator, targets } = useActivePool();
+  const { txFeesValid } = useTxFees();
   const { nominations } = targets;
   const poolId = membership?.poolId;
 
@@ -51,7 +54,7 @@ export const NominatePool = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -94,10 +97,7 @@ export const NominatePool = () => {
           <p>
             Once submitted, you will start nominating your chosen validators.
           </p>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
           <div>
@@ -109,7 +109,8 @@ export const NominatePool = () => {
                 !valid ||
                 submitting ||
                 warnings.length > 0 ||
-                !accountHasSigner(activeAccount)
+                !accountHasSigner(activeAccount) ||
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

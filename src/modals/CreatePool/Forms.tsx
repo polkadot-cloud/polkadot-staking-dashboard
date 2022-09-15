@@ -11,8 +11,10 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { BondOptions } from 'contexts/Balances/types';
+import { TransferOptions } from 'contexts/Balances/types';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -21,12 +23,15 @@ export const Forms = () => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
+  const { txFeesValid } = useTxFees();
 
-  const { getBondOptions } = useBalances();
-  const { freeToBond }: BondOptions = getBondOptions(activeAccount);
+  const { getTransferOptions } = useBalances();
+  const { freeBalance }: TransferOptions = getTransferOptions(activeAccount);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: planckBnToUnit(freeToBond, units) });
+  const [bond, setBond] = useState({
+    bond: planckBnToUnit(freeBalance, units),
+  });
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(true);
@@ -54,7 +59,7 @@ export const Forms = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -63,10 +68,6 @@ export const Forms = () => {
     },
     callbackInBlock: () => {},
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
@@ -81,7 +82,7 @@ export const Forms = () => {
             bondType="pool"
             unbond={false}
             listenIsValid={setBondValid}
-            defaultBond={planckBnToUnit(freeToBond, units)}
+            defaultBond={planckBnToUnit(freeBalance, units)}
             setters={[
               {
                 set: setBond,
@@ -90,7 +91,9 @@ export const Forms = () => {
             ]}
             warnings={warnings}
           />
-          <NotesWrapper>{TxFee}</NotesWrapper>
+          <NotesWrapper>
+            <EstimatedTxFee />
+          </NotesWrapper>
         </>
       </div>
       <FooterWrapper>
@@ -100,7 +103,10 @@ export const Forms = () => {
             className="submit"
             onClick={() => submitTx()}
             disabled={
-              submitting || !bondValid || !accountHasSigner(activeAccount)
+              submitting ||
+              !bondValid ||
+              !accountHasSigner(activeAccount) ||
+              !txFeesValid
             }
           >
             <FontAwesomeIcon

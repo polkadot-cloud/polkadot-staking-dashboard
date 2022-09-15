@@ -100,12 +100,6 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   }
 `;
 
-export const PalettePosition = styled.div`
-  position: absolute;
-  right: 10px;
-  top: -150px;
-`;
-
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   width: 100%;

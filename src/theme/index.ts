@@ -26,6 +26,8 @@ export const textSecondary: theme.ThemeSet = theme(
 
 export const textInvert: theme.ThemeSet = theme(v, defaultThemes.text.invert);
 
+export const textWarning: theme.ThemeSet = theme(v, defaultThemes.text.warning);
+
 export const textDanger: theme.ThemeSet = theme(v, defaultThemes.text.danger);
 
 export const textSuccess: theme.ThemeSet = theme(v, defaultThemes.text.success);

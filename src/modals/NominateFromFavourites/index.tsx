@@ -16,6 +16,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -28,6 +30,8 @@ export const NominateFromFavourites = () => {
   const { isNominator, isOwner } = useActivePool();
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships();
+  const { txFeesValid } = useTxFees();
+
   const { maxNominations } = consts;
   const { bondType, nominations } = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;
@@ -112,7 +116,7 @@ export const NominateFromFavourites = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -154,9 +158,7 @@ export const NominateFromFavourites = () => {
         )}
       </ListWrapper>
       <NotesWrapper style={{ paddingBottom: 0 }}>
-        <p style={{ textAlign: 'right' }}>
-          Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}
-        </p>
+        <EstimatedTxFee />
       </NotesWrapper>
       <FooterWrapper>
         <h3
@@ -184,7 +186,8 @@ export const NominateFromFavourites = () => {
               !valid ||
               submitting ||
               (bondType === 'pool' && !isNominator() && !isOwner()) ||
-              !accountHasSigner(signingAccount)
+              !accountHasSigner(signingAccount) ||
+              !txFeesValid
             }
           >
             <FontAwesomeIcon

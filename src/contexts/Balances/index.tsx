@@ -11,7 +11,7 @@ import {
   BalanceLedger,
   BalancesAccount,
   BalancesContextInterface,
-  BondOptions,
+  TransferOptions,
 } from 'contexts/Balances/types';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useApi } from '../Api';
@@ -36,12 +36,6 @@ export const BalancesProvider = ({
 
   // existential amount of unit for an account
   const existentialAmount = consts.existentialDeposit;
-
-  // amount of compulsary reserve balance
-  const reserveAmount = new BN(10).pow(new BN(network.units)).div(new BN(2));
-
-  // minimum reserve for submitting extrinsics
-  const minReserve: BN = reserveAmount.add(existentialAmount);
 
   // balance accounts state
   const [accounts, setAccounts] = useState<Array<BalancesAccount>>([]);
@@ -183,7 +177,7 @@ export const BalancesProvider = ({
         const { free, reserved, miscFrozen, feeFrozen } = data;
 
         // calculate free balance after app reserve
-        let freeAfterReserve = new BN(free).sub(minReserve);
+        let freeAfterReserve = new BN(free).sub(existentialAmount);
         freeAfterReserve = freeAfterReserve.lt(new BN(0))
           ? new BN(0)
           : freeAfterReserve;
@@ -415,10 +409,10 @@ export const BalancesProvider = ({
   };
 
   // get the bond and unbond amounts available to the user
-  const getBondOptions = (address: MaybeAccount): BondOptions => {
+  const getTransferOptions = (address: MaybeAccount): TransferOptions => {
     const account = getAccount(address);
     if (account === null) {
-      return defaults.bondOptions;
+      return defaults.transferOptions;
     }
     const balance = getAccountBalance(address);
     const ledger = getLedgerForStash(address);
@@ -443,7 +437,7 @@ export const BalancesProvider = ({
     }
 
     // free to bond balance
-    const freeToBond = BN.max(
+    const freeBalance = BN.max(
       freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
       new BN(0)
     );
@@ -455,7 +449,7 @@ export const BalancesProvider = ({
     );
 
     return {
-      freeToBond,
+      freeBalance,
       freeToUnbond,
       totalUnlocking,
       totalUnlocked,
@@ -474,11 +468,9 @@ export const BalancesProvider = ({
         getAccountLocks,
         getBondedAccount,
         getAccountNominations,
-        getBondOptions,
+        getTransferOptions,
         isController,
-        minReserve,
         existentialAmount,
-        reserveAmount,
         accounts: accountsRef.current,
         ledgers: ledgersRef.current,
       }}

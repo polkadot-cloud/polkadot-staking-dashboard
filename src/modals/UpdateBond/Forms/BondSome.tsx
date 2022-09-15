@@ -9,49 +9,65 @@ import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { BondOptions } from 'contexts/Balances/types';
+import { planckBnToUnit } from 'Utils';
+import { TransferOptions } from 'contexts/Balances/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
+import { BN_ZERO } from '@polkadot/util';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
 export const BondSome = (props: FormsProps) => {
-  const { setSection } = props;
+  const { section, setSection, setLocalResize } = props;
 
   const { api, network } = useApi();
+  const { mode } = useTheme();
   const { units } = network;
-  const { setStatus: setModalStatus, setResize, config } = useModal();
+  const { setStatus: setModalStatus, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getBondOptions } = useBalances();
+  const { getTransferOptions } = useBalances();
   const { bondType } = config;
-  const { getPoolBondOptions } = useActivePool();
+  const { getPoolTransferOptions } = useActivePool();
+  const { txFees, txFeesValid } = useTxFees();
 
-  const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
-  const poolBondOptions = getPoolBondOptions(activeAccount);
+  const stakeTransferOptions: TransferOptions =
+    getTransferOptions(activeAccount);
+  const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeToBond: freeToBondBn } = isPooling
-    ? poolBondOptions
-    : stakeBondOptions;
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
+  const { freeBalance: freeBalanceBn } = isPooling
+    ? poolTransferOptions
+    : stakeTransferOptions;
+  const freeBalance = planckBnToUnit(freeBalanceBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToBond });
+  const [bond, setBond] = useState({ bond: freeBalance });
+
+  // bond minus tx fees
+  let bondAfterTxFees = freeBalanceBn.sub(txFees);
+  if (bondAfterTxFees.isNeg()) {
+    bondAfterTxFees = BN_ZERO;
+  }
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToBond;
+    const _bond = freeBalance;
     setBond({ bond: _bond });
-  }, [freeToBond]);
+  }, [freeBalance]);
 
   // modal resize on form update
   useEffect(() => {
-    setResize();
-  }, [bond]);
+    if (section === 1) {
+      if (setLocalResize) setLocalResize();
+    }
+  }, [bond, txFees, bondValid]);
 
   // tx to submit
   const tx = () => {
@@ -60,8 +76,8 @@ export const BondSome = (props: FormsProps) => {
       return _tx;
     }
 
-    // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    // convert to submittable string
+    const bondToSubmit = bondAfterTxFees.toString();
 
     // determine _tx
     if (isPooling) {
@@ -72,7 +88,7 @@ export const BondSome = (props: FormsProps) => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -82,10 +98,6 @@ export const BondSome = (props: FormsProps) => {
     callbackInBlock: () => {},
   });
 
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
-
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
     warnings.push('Your account is read only, and cannot sign transactions.');
@@ -94,28 +106,34 @@ export const BondSome = (props: FormsProps) => {
   return (
     <>
       <div className="items">
-        <>
-          <BondInputWithFeedback
-            bondType={bondType}
-            unbond={false}
-            listenIsValid={setBondValid}
-            defaultBond={freeToBond}
-            setters={[
-              {
-                set: setBond,
-                current: bond,
-              },
-            ]}
-            warnings={warnings}
-          />
-          <NotesWrapper>{TxFee}</NotesWrapper>
-        </>
+        <BondInputWithFeedback
+          bondType={bondType}
+          unbond={false}
+          listenIsValid={setBondValid}
+          defaultBond={null}
+          setLocalResize={setLocalResize}
+          setters={[
+            {
+              set: setBond,
+              current: bond,
+            },
+          ]}
+          warnings={warnings}
+        />
+        <NotesWrapper>
+          {txFees.gt(BN_ZERO) && (
+            <p style={{ color: defaultThemes.text.success[mode] }}>
+              Transaction fees have been deducted from maximum bond.
+            </p>
+          )}
+          <EstimatedTxFee />
+        </NotesWrapper>
       </div>
       <FormFooter
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid && accountHasSigner(activeAccount)}
+        isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
       />
     </>
   );

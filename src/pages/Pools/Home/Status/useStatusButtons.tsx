@@ -15,8 +15,8 @@ export const useStatusButtons = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
-  const { isOwner, getPoolBondOptions } = useActivePool();
-  const { active } = getPoolBondOptions(activeAccount);
+  const { isOwner, getPoolTransferOptions } = useActivePool();
+  const { active } = getPoolTransferOptions(activeAccount);
   const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
 
   let _label;

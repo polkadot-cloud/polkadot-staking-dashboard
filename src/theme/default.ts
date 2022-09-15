@@ -17,6 +17,7 @@ export const defaultThemes: { [key: string]: any } = {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
+    warning: v('#be7900', '#be7900'),
     danger: v('#ae2324', '#d14445'),
     success: v('green', 'green'),
   },

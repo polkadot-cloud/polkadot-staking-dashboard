@@ -8,10 +8,16 @@ import { motion } from 'framer-motion';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
-import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
+import {
+  humanNumber,
+  planckBnToUnit,
+  rmCommas,
+  toFixedIfNecessary,
+} from 'Utils';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useNetworkMetrics } from 'contexts/Network';
+import { BondedPool } from 'contexts/Pools/types';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -28,6 +34,14 @@ export const Announcements = () => {
   } = staking;
   const { bondedPools } = useBondedPools();
   const { totalIssuance } = metrics;
+
+  let totalPoolPoints = new BN(0);
+  bondedPools.forEach((b: BondedPool) => {
+    totalPoolPoints = totalPoolPoints.add(new BN(rmCommas(b.points)));
+  });
+  const totalPoolPointsBase = humanNumber(
+    toFixedIfNecessary(planckBnToUnit(totalPoolPoints, units), 0)
+  );
 
   // total supply as percent
   let supplyAsPercent = 0;
@@ -96,10 +110,18 @@ export const Announcements = () => {
 
   // bonded pools available
   if (bondedPools.length) {
+    // total pools active
     announcements.push({
       class: 'pools',
       title: `${bondedPools.length} nomination pools are active.`,
       subtitle: `Nomination pools are available to join on the ${network.name} network.`,
+    });
+
+    // total locked in pols
+    announcements.push({
+      class: 'pools',
+      title: `${totalPoolPointsBase} ${network.unit} is currently bonded in pools.`,
+      subtitle: `The total ${network.unit} currently bonded in nomination pools.`,
     });
   }
 

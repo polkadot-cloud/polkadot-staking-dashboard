@@ -25,6 +25,7 @@
         "prefer-arrow-functions"
     ],
     "rules": {
+        "react/require-default-props": "off",
         "react/no-access-state-in-setstate": "off",
         "react/destructuring-assignment": "off",
         "react/function-component-definition": "off",

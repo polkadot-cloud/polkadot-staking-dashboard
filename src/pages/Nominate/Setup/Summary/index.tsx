@@ -16,6 +16,8 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -25,6 +27,7 @@ export const Summary = (props: SetupStepProps) => {
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
@@ -56,7 +59,7 @@ export const Summary = (props: SetupStepProps) => {
     return api.tx.utility.batch(_txs);
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
@@ -123,8 +126,7 @@ export const Summary = (props: SetupStepProps) => {
             </div>
           </section>
           <section>
-            <div>Estimated Tx Fee:</div>
-            <div>{estimatedFee === null ? '...' : `${estimatedFee}`}</div>
+            <EstimatedTxFee format="table" />
           </section>
         </SummaryWrapper>
         <div
@@ -138,7 +140,9 @@ export const Summary = (props: SetupStepProps) => {
         >
           <Button
             onClick={() => submitTx()}
-            disabled={submitting || !accountHasSigner(activeAccount)}
+            disabled={
+              submitting || !accountHasSigner(activeAccount) || !txFeesValid
+            }
             title="Start Nominating"
             primary
           />

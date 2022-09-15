@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { textPrimary, buttonPrimaryBackground, backgroundToggle } from 'theme';
 
 export const Wrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
@@ -17,6 +18,7 @@ export const FixedContentWrapper = styled.div`
   padding-top: 1rem;
   box-sizing: border-box;
   flex-basis: 50%;
+  width: 100%;
 `;
 
 export const CardsWrapper = styled(motion.div)`
@@ -36,8 +38,9 @@ export const ContentWrapper = styled.div`
   flex-basis: 50%;
   min-width: 50%;
   height: auto;
+  flex: 1;
+  max-height: 100%;
   padding: 0 1rem 1rem 1rem;
-  flex-grow: 1;
 
   .items {
     box-sizing: border-box;

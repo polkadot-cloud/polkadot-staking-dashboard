@@ -10,16 +10,28 @@ import { InputWrapper, RowWrapper } from './Wrappers';
 import { BondInputProps } from '../types';
 
 export const BondInput = (props: BondInputProps) => {
-  const { disabled, freeToBond, freeToUnbondToMin } = props;
+  const { disabled, freeBalance, freeToUnbondToMin } = props;
   const setters = props.setters ?? [];
   const task = props.task ?? 'bond';
   const _value = props.value ?? 0;
+  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
   // the current local bond value
   const [bond, setBond] = useState(_value);
+
+  // reset value to default when changing account
+  useEffect(() => {
+    setBond(props.defaultValue ?? 0);
+  }, [activeAccount]);
+
+  useEffect(() => {
+    if (task === 'bond' && !disableTxFeeUpdate) {
+      setBond(_value.toString());
+    }
+  }, [_value]);
 
   // handle change for bonding
   const handleChangeBond = (e: any) => {
@@ -55,11 +67,6 @@ export const BondInput = (props: BondInputProps) => {
     }
   };
 
-  // reset value to default when changing account
-  useEffect(() => {
-    setBond(props.defaultValue ?? 0);
-  }, [activeAccount]);
-
   return (
     <RowWrapper>
       <div>
@@ -91,7 +98,7 @@ export const BondInput = (props: BondInputProps) => {
             small
             title="Max"
             onClick={() => {
-              const value = task === 'bond' ? freeToBond : freeToUnbondToMin;
+              const value = task === 'bond' ? freeBalance : freeToUnbondToMin;
               setBond(value);
               updateParentState(value);
             }}
