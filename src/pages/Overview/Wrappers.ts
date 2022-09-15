@@ -171,7 +171,6 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   margin-top: 0.8rem;
-  margin-bottom: 0.2rem;
   width: 100%;
   height: 1px;
 `;
@@ -180,12 +179,12 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 6rem;
+  margin-top: 3rem;
   @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
-    margin-top: 2.25rem;
+    margin-top: 2rem;
   }
   @media (min-width: ${MEDIUM_FONT_SiZE_MAX_WIDTH + 1}px) {
-    margin-top: 2rem;
+    margin-top: 1.25rem;
   }
   > h4 {
     margin-top: 0.75rem;
