@@ -202,6 +202,13 @@ export const ValidatorListInner = (props: any) => {
       batchKey,
       newValue
     );
+
+    // ensure no duplicates
+    filteredValidators = filteredValidators.filter(
+      (value: any, index: any, self: any) =>
+        index === self.findIndex((t: any) => t.address === value.address)
+    );
+
     handleValidatorsFilterUpdate(filteredValidators);
     setPage(1);
     setRenderIteration(1);

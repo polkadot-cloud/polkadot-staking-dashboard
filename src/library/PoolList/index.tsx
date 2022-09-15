@@ -109,6 +109,13 @@ export const PoolListInner = (props: PoolListProps) => {
 
     let filteredPools = Object.assign(poolsDefault);
     filteredPools = poolSearchFilter(filteredPools, batchKey, newValue);
+
+    // ensure no duplicates
+    filteredPools = filteredPools.filter(
+      (value: any, index: any, self: any) =>
+        index === self.findIndex((t: any) => t.id === value.id)
+    );
+
     setPage(1);
     setRenderIteration(1);
     setPools(filteredPools);
