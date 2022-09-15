@@ -209,8 +209,10 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {unbond ? 'Bonded' : 'Available'}:{' '}
-          {unbond ? humanNumber(activeBase) : humanNumber(freeBalance)}{' '}
+          {unbond
+            ? 'Bonded'
+            : `${txFees.isZero() ? `Available` : `Available after Tx Fees`}`}
+          : {unbond ? humanNumber(activeBase) : humanNumber(freeBalance)}{' '}
           {network.unit}
         </h4>
       </CardHeaderWrapper>
