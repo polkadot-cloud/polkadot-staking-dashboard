@@ -17,7 +17,7 @@ export const PoolName = (props: SetupStepProps) => {
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
-  const initialValue = setup.metadata === null ? '' : setup.metadata;
+  const initialValue = setup.metadata;
 
   // store local pool name for form control
   const [metadata, setMetadata] = useState({
@@ -54,7 +54,7 @@ export const PoolName = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={setup.metadata !== null}
+        complete={setup.metadata !== ''}
         title="Pool Name"
         // assistantPage="stake"
         // assistantKey="Bonding"

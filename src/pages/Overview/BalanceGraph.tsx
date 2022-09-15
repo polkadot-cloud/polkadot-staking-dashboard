@@ -24,7 +24,7 @@ import {
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { BondOptions } from 'contexts/Balances/types';
+import { TransferOptions } from 'contexts/Balances/types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,19 +33,19 @@ export const BalanceGraph = () => {
   const { network } = useApi();
   const { units, features } = network;
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getBondOptions } = useBalances();
+  const { getAccountBalance, getTransferOptions } = useBalances();
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
   const {
-    freeToBond,
+    freeBalance,
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
-  }: BondOptions = getBondOptions(activeAccount) || {};
-  const { getPoolBondOptions } = useActivePool();
+  }: TransferOptions = getTransferOptions(activeAccount) || {};
+  const { getPoolTransferOptions } = useActivePool();
 
-  const poolBondOpions = getPoolBondOptions(activeAccount);
+  const poolBondOpions = getPoolTransferOptions(activeAccount);
   const unlocking = poolBondOpions.totalUnlocking
     .add(poolBondOpions.totalUnlocked)
     .add(totalUnlocked)
@@ -57,14 +57,11 @@ export const BalanceGraph = () => {
   const freeBase = planckBnToUnit(free, units);
 
   // convert balance to fiat value
-  const freeBalance = toFixedIfNecessary(
-    Number(freeBase * prices.lastPrice),
-    2
-  );
+  const freeFiat = toFixedIfNecessary(Number(freeBase * prices.lastPrice), 2);
 
   // graph data
   let graphStaked = planckBnToUnit(staked, units);
-  let graphFreeToStake = planckBnToUnit(freeToBond, units);
+  let graphFreeToStake = planckBnToUnit(freeBalance, units);
   let graphInPool = planckBnToUnit(poolBondOpions.active, units);
   let graphUnlocking = planckBnToUnit(unlocking, units);
 
@@ -182,7 +179,7 @@ export const BalanceGraph = () => {
           {network.unit}
           <span className="fiat">
             {services.includes('binance_spot') && (
-              <>&nbsp;{usdFormatter.format(Number(freeBalance))}</>
+              <>&nbsp;{usdFormatter.format(Number(freeFiat))}</>
             )}
           </span>
         </h2>

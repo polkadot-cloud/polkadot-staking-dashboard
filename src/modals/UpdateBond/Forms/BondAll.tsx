@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
@@ -9,59 +10,75 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { BondOptions } from 'contexts/Balances/types';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { TransferOptions } from 'contexts/Balances/types';
+import { planckBnToUnit } from 'Utils';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { defaultThemes } from 'theme/default';
+import { useTheme } from 'contexts/Themes';
+import { BN_ZERO } from '@polkadot/util';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
 export const BondAll = (props: FormsProps) => {
-  const { setSection } = props;
+  const { setSection, setLocalResize } = props;
 
+  const { mode } = useTheme();
   const { api, network } = useApi();
   const { units } = network;
-  const { setStatus: setModalStatus, setResize, config } = useModal();
+  const { setStatus: setModalStatus, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getBondOptions } = useBalances();
+  const { getTransferOptions } = useBalances();
   const { bondType } = config;
-  const { getPoolBondOptions } = useActivePool();
+  const { getPoolTransferOptions } = useActivePool();
+  const { txFees, txFeesValid } = useTxFees();
 
-  const stakeBondOptions: BondOptions = getBondOptions(activeAccount);
-  const poolBondOptions = getPoolBondOptions(activeAccount);
+  const stakeTransferOptions: TransferOptions =
+    getTransferOptions(activeAccount);
+  const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeToBond: freeToBondBn } = isPooling
-    ? poolBondOptions
-    : stakeBondOptions;
+  const { freeBalance: freeBalanceBn } = isPooling
+    ? poolTransferOptions
+    : stakeTransferOptions;
   const { totalPossibleBond: totalPossibleBondBn } = isPooling
-    ? poolBondOptions
-    : stakeBondOptions;
+    ? poolTransferOptions
+    : stakeTransferOptions;
 
   // convert BN values to number
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
-  const totalPossibleBond = planckBnToUnit(totalPossibleBondBn, units);
+  const freeBalance = planckBnToUnit(freeBalanceBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToBond });
+  const [bond, setBond] = useState({ bond: freeBalance });
+
+  // bond minus tx fees
+  const bondAfterTxFees = BN.max(freeBalanceBn.sub(txFees), BN_ZERO);
+
+  // total possible bond after tx fees
+  const totalPossibleBond = planckBnToUnit(
+    BN.max(totalPossibleBondBn.sub(txFees), BN_ZERO),
+    units
+  );
 
   // bond valid
   const [bondValid, setBondValid] = useState(false);
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToBond;
+    const _bond = freeBalance;
     setBond({ bond: _bond });
-    if (_bond > 0) {
+    if (_bond > 0 && bondAfterTxFees.gt(BN_ZERO)) {
       setBondValid(true);
     } else {
       setBondValid(false);
     }
-  }, [freeToBond]);
+  }, [freeBalance, txFees]);
 
   // modal resize on form update
   useEffect(() => {
-    setResize();
+    if (setLocalResize) setLocalResize();
   }, [bond]);
 
   // tx to submit
@@ -71,8 +88,8 @@ export const BondAll = (props: FormsProps) => {
       return _tx;
     }
 
-    // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    // convert to submittable string
+    const bondToSubmit = bondAfterTxFees.toString();
 
     // determine _tx
     if (isPooling) {
@@ -83,7 +100,7 @@ export const BondAll = (props: FormsProps) => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -93,10 +110,6 @@ export const BondAll = (props: FormsProps) => {
     callbackInBlock: () => {},
   });
 
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
-
   return (
     <>
       <div className="items">
@@ -104,12 +117,12 @@ export const BondAll = (props: FormsProps) => {
           {!accountHasSigner(activeAccount) && (
             <Warning text="Your account is read only, and cannot sign transactions." />
           )}
-          {freeToBond === 0 && (
+          {freeBalance === 0 && (
             <Warning text={`You have no free ${network.unit} to bond.`} />
           )}
           <h4>Amount to bond:</h4>
           <h2>
-            {freeToBond} {network.unit}
+            {planckBnToUnit(bondAfterTxFees, units)} {network.unit}
           </h2>
           <p>
             This amount of {network.unit} will be added to your current bonded
@@ -120,14 +133,21 @@ export const BondAll = (props: FormsProps) => {
           <h2>
             {totalPossibleBond} {network.unit}
           </h2>
-          <NotesWrapper>{TxFee}</NotesWrapper>
+          <NotesWrapper>
+            {txFees.gt(BN_ZERO) && (
+              <p style={{ color: defaultThemes.text.success[mode] }}>
+                Transaction fees have been deducted from your total bond amount.
+              </p>
+            )}
+            <EstimatedTxFee />
+          </NotesWrapper>
         </>
       </div>
       <FormFooter
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid && accountHasSigner(activeAccount)}
+        isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
       />
     </>
   );

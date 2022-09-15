@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { useNotifications } from 'contexts/Notifications';
@@ -9,6 +10,7 @@ import { useConnect } from 'contexts/Connect';
 import { DAPP_NAME } from 'consts';
 import { AnyApi } from 'types';
 import { Extension } from 'contexts/Connect/types';
+import { useTxFees } from 'contexts/TxFees';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (
@@ -22,6 +24,7 @@ export const useSubmitExtrinsic = (
   const submitAddress: string = from ?? '';
 
   const { api } = useApi();
+  const { setTxFees, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
@@ -29,22 +32,23 @@ export const useSubmitExtrinsic = (
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
 
-  // get the estimated fee for submitting the transaction
-  const [estimatedFee, setEstimatedFee] = useState(null);
-
   // calculate fee upon setup changes and initial render
   useEffect(() => {
     calculateEstimatedFee();
-  }, [extrinsic]);
+  }, [tx]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
       return;
     }
     // get payment info
-    const info = await tx.paymentInfo(submitAddress);
-    // convert fee to unit
-    setEstimatedFee(info.partialFee.toHuman());
+    const { partialFee } = await tx.paymentInfo(submitAddress);
+    const partialFeeBn = new BN(partialFee.toString());
+
+    // give tx fees to global useTxFees context
+    if (partialFeeBn.toString() !== txFees.toString()) {
+      setTxFees(partialFeeBn);
+    }
   };
 
   // submit extrinsic
@@ -133,7 +137,6 @@ export const useSubmitExtrinsic = (
 
   return {
     submitTx,
-    estimatedFee,
     submitting,
   };
 };

@@ -14,6 +14,8 @@ import { Warning } from 'library/Form/Warning';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit } from 'Utils';
 import { BN } from 'bn.js';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import {
   HeadingWrapper,
   FooterWrapper,
@@ -26,6 +28,7 @@ export const ClaimReward = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { activeBondedPool } = useActivePool();
   const { activeAccount, accountHasSigner } = useConnect();
+  const { txFeesValid } = useTxFees();
   const { units, unit } = network;
   let { unclaimedRewards } = activeBondedPool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
@@ -58,7 +61,7 @@ export const ClaimReward = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -104,10 +107,7 @@ export const ClaimReward = () => {
               as free balance.
             </p>
           )}
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </div>
         <FooterWrapper>
           <div>
@@ -116,7 +116,10 @@ export const ClaimReward = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                !valid || submitting || !accountHasSigner(activeAccount)
+                !valid ||
+                submitting ||
+                !accountHasSigner(activeAccount) ||
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

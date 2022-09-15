@@ -12,7 +12,7 @@ export const defaultStakeSetup = {
 };
 
 export const defaultPoolSetup = {
-  metadata: null,
+  metadata: '',
   bond: 0,
   nominations: [],
   roles: null,

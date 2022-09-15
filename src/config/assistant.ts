@@ -36,6 +36,13 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
+        title: 'Reserve Balance',
+        description: [
+          'In {NETWORK_NAME}, you must have a balance above a certain amount for your account to exist on-chain. This amount is called your "existential deposit".',
+          'Staking dashboard ensures that this amount of {NETWORK_UNIT} is never touched.',
+        ],
+      },
+      {
         title: 'Network Stats',
         description: [
           'Real time network statistics that may affect your staking positions.',

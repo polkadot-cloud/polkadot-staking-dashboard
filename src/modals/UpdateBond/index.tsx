@@ -20,6 +20,12 @@ export const UpdateBond = () => {
   // active modal section
   const [section, setSection] = useState(0);
 
+  // increment to resize modal
+  const [localResize, _setLocalResize] = useState(0);
+  const setLocalResize = () => {
+    _setLocalResize(localResize + 1);
+  };
+
   // refs for wrappers
   const headerRef = useRef<HTMLDivElement>(null);
   const tasksRef = useRef<HTMLDivElement>(null);
@@ -34,7 +40,7 @@ export const UpdateBond = () => {
       _height += formsRef.current?.clientHeight ?? 0;
     }
     setModalHeight(_height);
-  }, [section, task]);
+  }, [section, task, localResize]);
 
   return (
     <Wrapper>
@@ -70,10 +76,12 @@ export const UpdateBond = () => {
           ref={tasksRef}
         />
         <Forms
+          section={section}
           setSection={setSection}
           task={task}
           ref={formsRef}
           bondType={bondType}
+          setLocalResize={setLocalResize}
         />
       </CardsWrapper>
     </Wrapper>

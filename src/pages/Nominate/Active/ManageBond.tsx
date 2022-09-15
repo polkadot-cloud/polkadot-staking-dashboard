@@ -13,7 +13,7 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { BondOptions } from 'contexts/Balances/types';
+import { TransferOptions } from 'contexts/Balances/types';
 import BN from 'bn.js';
 
 export const ManageBond = () => {
@@ -21,17 +21,17 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getLedgerForStash, getBondOptions } = useBalances();
+  const { getLedgerForStash, getTransferOptions } = useBalances();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
   const {
-    freeToBond,
+    freeBalance,
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
-  }: BondOptions = getBondOptions(activeAccount);
+  }: TransferOptions = getTransferOptions(activeAccount);
 
   return (
     <>
@@ -94,7 +94,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeToBond, units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={inSetup()}
       />
     </>

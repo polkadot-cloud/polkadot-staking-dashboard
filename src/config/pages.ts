@@ -9,6 +9,7 @@ import {
   faComment,
   faChartSimple,
   faBraille,
+  // faUserAlt,
   faProjectDiagram,
 } from '@fortawesome/free-solid-svg-icons';
 import Overview from 'pages/Overview';
@@ -56,6 +57,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
+    // icon: faUserAlt,
     icon: faProjectDiagram,
   },
   {

@@ -15,6 +15,8 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
@@ -24,6 +26,8 @@ export const UpdatePayee = () => {
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
+  const { txFeesValid } = useTxFees();
+
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item) => item.key === payee);
@@ -59,7 +63,7 @@ export const UpdatePayee = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: controller,
     shouldSubmit: valid,
@@ -99,10 +103,7 @@ export const UpdatePayee = () => {
           height="17rem"
         />
         <div>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </div>
         <FooterWrapper>
           <div>
@@ -111,7 +112,10 @@ export const UpdatePayee = () => {
               className="submit"
               onClick={() => submitTx()}
               disabled={
-                !valid || submitting || getControllerNotImported(controller)
+                !valid ||
+                submitting ||
+                getControllerNotImported(controller) ||
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

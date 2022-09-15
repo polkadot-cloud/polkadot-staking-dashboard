@@ -22,15 +22,16 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { getPoolBondOptions, isBonding, activeBondedPool } = useActivePool();
+  const { getPoolTransferOptions, isBonding, activeBondedPool } =
+    useActivePool();
 
   const {
     active,
-    freeToBond,
+    freeBalance,
     totalUnlocking,
     totalUnlocked,
     totalUnlockChuncks,
-  } = getPoolBondOptions(activeAccount);
+  } = getPoolTransferOptions(activeAccount);
 
   const { state } = activeBondedPool?.bondedPool || {};
 
@@ -89,7 +90,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeToBond, units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={!membership}
       />
     </>

@@ -16,6 +16,8 @@ import { useApi } from 'contexts/Api';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { Warning } from 'library/Form/Warning';
 import { InputItem } from 'library/Form/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
@@ -24,6 +26,8 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
+  const { txFeesValid } = useTxFees();
+
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
@@ -57,7 +61,7 @@ export const UpdateController = () => {
   };
 
   // handle extrinsic
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -90,10 +94,7 @@ export const UpdateController = () => {
           height="17rem"
         />
         <NotesWrapper>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
           <div>
@@ -104,7 +105,8 @@ export const UpdateController = () => {
               disabled={
                 selected === null ||
                 submitting ||
-                !accountHasSigner(activeAccount)
+                !accountHasSigner(activeAccount) ||
+                !txFeesValid
               }
             >
               <FontAwesomeIcon

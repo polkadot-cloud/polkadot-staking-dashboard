@@ -25,12 +25,12 @@ export const ClosurePrompts = () => {
     isBonding,
     activeBondedPool,
     isDepositor,
-    getPoolBondOptions,
+    getPoolTransferOptions,
     poolNominations,
   } = useActivePool();
 
   const { state, memberCounter } = activeBondedPool?.bondedPool || {};
-  const { active, totalUnlockChuncks } = getPoolBondOptions(activeAccount);
+  const { active, totalUnlockChuncks } = getPoolTransferOptions(activeAccount);
   const targets = poolNominations?.targets ?? [];
 
   const networkColorsSecondary: any = network.colors.secondary;

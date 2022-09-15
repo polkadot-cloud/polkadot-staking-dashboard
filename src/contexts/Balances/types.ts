@@ -44,8 +44,8 @@ export interface BalancesAccount {
   nominations?: Nominations;
 }
 
-export interface BondOptions {
-  freeToBond: BN;
+export interface TransferOptions {
+  freeBalance: BN;
   freeToUnbond: BN;
   totalUnlocking: BN;
   totalUnlocked: BN;
@@ -68,11 +68,9 @@ export interface BalancesContextInterface {
   getAccountLocks: (address: MaybeAccount) => Array<Lock>;
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;
-  getBondOptions: (address: MaybeAccount | null) => BondOptions;
+  getTransferOptions: (address: MaybeAccount | null) => TransferOptions;
   isController: (address: MaybeAccount) => boolean;
   accounts: Array<BalancesAccount>;
-  minReserve: BN;
   existentialAmount: BN;
-  reserveAmount: BN;
   ledgers: any;
 }

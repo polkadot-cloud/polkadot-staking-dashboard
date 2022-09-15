@@ -51,26 +51,27 @@ export const Create = () => {
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          <Element name="bond" style={{ position: 'absolute' }} />
-          <Bond section={2} />
-        </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <ChooseNominations
             batchKey="generate_nominations_create_pool"
             setupType={SetupType.Pool}
-            section={3}
+            section={2}
           />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="roles" style={{ position: 'absolute' }} />
-          <PoolRoles section={4} />
+          <PoolRoles section={3} />
         </CardWrapper>
       </PageRowWrapper>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <CardWrapper>
+          <Element name="bond" style={{ position: 'absolute' }} />
+          <Bond section={4} />
+        </CardWrapper>
+      </PageRowWrapper>
+
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />

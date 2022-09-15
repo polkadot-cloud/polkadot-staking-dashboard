@@ -9,6 +9,8 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
@@ -18,6 +20,7 @@ export const ChangePoolRoles = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { config } = useModal();
+  const { txFeesValid } = useTxFees();
   const { poolId, roleEdits } = config;
 
   // tx to submit
@@ -40,7 +43,7 @@ export const ChangePoolRoles = () => {
   };
 
   // handle extrinsic
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -70,10 +73,7 @@ export const ChangePoolRoles = () => {
           newAddress={roleEdits?.stateToggler?.newAddress}
         />
         <NotesWrapper>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
+          <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
           <div>
@@ -81,7 +81,9 @@ export const ChangePoolRoles = () => {
               type="button"
               className="submit"
               onClick={() => submitTx()}
-              disabled={submitting || !accountHasSigner(activeAccount)}
+              disabled={
+                submitting || !accountHasSigner(activeAccount) || !txFeesValid
+              }
             >
               <FontAwesomeIcon
                 transform="grow-2"
