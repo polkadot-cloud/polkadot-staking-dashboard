@@ -179,12 +179,12 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 3rem;
+  margin-top: 4rem;
   @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 1}px) {
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
   @media (min-width: ${MEDIUM_FONT_SiZE_MAX_WIDTH + 1}px) {
-    margin-top: 1.25rem;
+    margin-top: 2.25rem;
   }
   > h4 {
     margin-top: 0.75rem;
