@@ -21,12 +21,12 @@ export const Reserve = (props: ReserveProps) => {
         <Separator />
         <h4>
           Reserved
-          <OpenAssistantIcon page="overview" title="Your Balance" />
+          <OpenAssistantIcon page="overview" title="Reserve Balance" />
         </h4>
 
         <div className="inner">
           <section>
-            <h2 className="reserve">
+            <h3 className="reserve">
               <FontAwesomeIcon
                 icon={faLock}
                 transform="shrink-4"
@@ -36,7 +36,7 @@ export const Reserve = (props: ReserveProps) => {
                 planckBnToUnit(existentialAmount, network.units),
                 5
               )} ${network.unit}`}
-            </h2>
+            </h3>
           </section>
         </div>
       </ReserveWrapper>
