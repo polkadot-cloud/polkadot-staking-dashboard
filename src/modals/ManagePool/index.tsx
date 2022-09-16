@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
-import { HeadingWrapper } from '../Wrappers';
+import { Title } from 'library/Modal/Title';
 import { Wrapper, CardsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';
@@ -37,10 +36,7 @@ export const ManagePool = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <HeadingWrapper>
-          <FontAwesomeIcon icon={faCog} />
-          Manage Pool
-        </HeadingWrapper>
+        <Title title="Manage Pool" icon={faCog} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}

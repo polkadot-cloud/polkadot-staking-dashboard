@@ -9,7 +9,6 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { planckBnToUnit, rmCommas, unitToPlanckBn } from 'Utils';
 import {
-  HeadingWrapper,
   NotesWrapper,
   PaddingWrapper,
   Separator,
@@ -22,6 +21,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
 
 export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
@@ -85,12 +85,8 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <PaddingWrapper verticalOnly>
-        <HeadingWrapper>
-          <FontAwesomeIcon transform="grow-2" icon={faMinus} />
-          Unbond Member Funds
-        </HeadingWrapper>
-      </PaddingWrapper>
+      <Title title="Unbond Member Funds" icon={faMinus} />
+      <PaddingWrapper verticalOnly />
       <ContentWrapper>
         {!accountHasSigner(activeAccount) && (
           <Warning text="Your account is read only, and cannot sign transactions." />
