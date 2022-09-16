@@ -398,16 +398,6 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
-    name: 'WOJDOT ʕ •ᴥ•ʔ',
-    Thumbnail: Wojdot,
-    bio: 'Independent Polkadot Validator. We run our service on bare metal machines via a cloud service with the ability to spin up validator nodes in different regions within a matter of minutes.',
-    email: 'wojdot@wojdot.com',
-    twitter: '@wojdot',
-    validators: {
-      polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
-    },
-  },
-  {
     name: 'validierung.cc',
     Thumbnail: Validierungcc,
     bio: 'We are crypto enthusiasts from Germany and offer independent and reliable validation and staking returns.',
@@ -421,6 +411,16 @@ export const VALIDATOR_COMMUNITY = [
         'JHamburgTPv9fRKwTPeBEjyVHmbQK2ayRBpBujb4rx2sHzJ',
         'GHd1brgDS29LhSUMYSorgEWFb2n1M3H4EMz6mcpt8TTdHho',
       ],
+    },
+  },  
+  {
+    name: 'WOJDOT ʕ •ᴥ•ʔ',
+    Thumbnail: Wojdot,
+    bio: 'Independent Polkadot Validator. We run our service on bare metal machines via a cloud service with the ability to spin up validator nodes in different regions within a matter of minutes.',
+    email: 'wojdot@wojdot.com',
+    twitter: '@wojdot',
+    validators: {
+      polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
     },
   },
 ];
