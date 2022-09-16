@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faShare, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useApi } from 'contexts/Api';
@@ -16,12 +16,8 @@ import { planckBnToUnit } from 'Utils';
 import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
-import {
-  HeadingWrapper,
-  FooterWrapper,
-  Separator,
-  PaddingWrapper,
-} from '../Wrappers';
+import { Title } from 'library/Modal/Title';
+import { FooterWrapper, Separator, PaddingWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { api, network } = useApi();
@@ -72,66 +68,67 @@ export const ClaimReward = () => {
   });
 
   return (
-    <PaddingWrapper verticalOnly>
-      <HeadingWrapper>
-        <FontAwesomeIcon transform="grow-2" icon={faWallet} />
-        {claimType === 'bond' ? 'Bond' : 'Withdraw'} Rewards
-      </HeadingWrapper>
-      <div
-        style={{
-          padding: '0 1rem',
-          width: '100%',
-          boxSizing: 'border-box',
-        }}
-      >
-        {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
-        )}
-        {!unclaimedRewards?.gtn(0) && (
-          <Warning text="You have no rewards to claim." />
-        )}
-        <h2>
-          {planckBnToUnit(unclaimedRewards, units)} {unit}
-        </h2>
-        <Separator />
-        <div className="notes">
-          {claimType === 'bond' ? (
-            <p>
-              Once submitted, your rewards will be bonded back into the pool.
-              You own these additional bonded funds and will be able to withdraw
-              them at any time.
-            </p>
-          ) : (
-            <p>
-              Withdrawing rewards will immediately transfer them to your account
-              as free balance.
-            </p>
+    <>
+      <Title
+        title={`${claimType === 'bond' ? 'Bond' : 'Withdraw'} Rewards`}
+        icon={claimType === 'bond' ? faPlus : faShare}
+      />
+      <PaddingWrapper>
+        <div
+          style={{
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        >
+          {!accountHasSigner(activeAccount) && (
+            <Warning text="Your account is read only, and cannot sign transactions." />
           )}
-          <EstimatedTxFee />
-        </div>
-        <FooterWrapper>
-          <div>
-            <button
-              type="button"
-              className="submit"
-              onClick={() => submitTx()}
-              disabled={
-                !valid ||
-                submitting ||
-                !accountHasSigner(activeAccount) ||
-                !txFeesValid
-              }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-            </button>
+          {!unclaimedRewards?.gtn(0) && (
+            <Warning text="You have no rewards to claim." />
+          )}
+          <h2>
+            {planckBnToUnit(unclaimedRewards, units)} {unit}
+          </h2>
+          <Separator />
+          <div className="notes">
+            {claimType === 'bond' ? (
+              <p>
+                Once submitted, your rewards will be bonded back into the pool.
+                You own these additional bonded funds and will be able to
+                withdraw them at any time.
+              </p>
+            ) : (
+              <p>
+                Withdrawing rewards will immediately transfer them to your
+                account as free balance.
+              </p>
+            )}
+            <EstimatedTxFee />
           </div>
-        </FooterWrapper>
-      </div>
-    </PaddingWrapper>
+          <FooterWrapper>
+            <div>
+              <button
+                type="button"
+                className="submit"
+                onClick={() => submitTx()}
+                disabled={
+                  !valid ||
+                  submitting ||
+                  !accountHasSigner(activeAccount) ||
+                  !txFeesValid
+                }
+              >
+                <FontAwesomeIcon
+                  transform="grow-2"
+                  icon={faArrowAltCircleUp as IconProp}
+                />
+                Submit
+              </button>
+            </div>
+          </FooterWrapper>
+        </div>
+      </PaddingWrapper>
+    </>
   );
 };
 

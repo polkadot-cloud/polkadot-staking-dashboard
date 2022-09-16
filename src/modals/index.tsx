@@ -17,7 +17,6 @@ import { UpdatePayee } from './UpdatePayee';
 import { ChangeNominations } from './ChangeNominations';
 import { Nominate } from './Nominate';
 import { UnlockChunks } from './UnlockChunks';
-import { CreatePool } from './CreatePool';
 import { NominatePool } from './NominatePool';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
@@ -95,7 +94,7 @@ export const Modal = () => {
       }}
       variants={variants}
     >
-      <div className="content_wrapper">
+      <div>
         <HeightWrapper
           size={size}
           style={{
@@ -106,7 +105,6 @@ export const Modal = () => {
           <ContentWrapper ref={modalRef}>
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
               {modal === 'Bio' && <Bio />}
-              {modal === 'CreatePool' && <CreatePool />}
               {modal === 'ChangeNominations' && <ChangeNominations />}
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
               {modal === 'ClaimReward' && <ClaimReward />}

@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 1rem 0;
+  padding: 1.25rem 0;
 `;
 
 export const RoleChangeWrapper = styled.div`

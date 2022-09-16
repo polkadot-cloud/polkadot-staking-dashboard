@@ -20,4 +20,8 @@ export const Wrapper = styled.div`
   h3 {
     margin-bottom: 0.5rem;
   }
+
+  h4 {
+    margin: 0;
+  }
 `;

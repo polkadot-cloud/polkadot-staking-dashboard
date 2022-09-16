@@ -16,8 +16,8 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
 import {
-  HeadingWrapper,
   FooterWrapper,
   Separator,
   NotesWrapper,
@@ -91,48 +91,47 @@ export const Nominate = () => {
   }
 
   return (
-    <PaddingWrapper verticalOnly>
-      <HeadingWrapper>
-        <FontAwesomeIcon transform="grow-2" icon={faPlayCircle} />
-        Nominate
-      </HeadingWrapper>
-      <div
-        style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
-      >
-        {warnings.map((text: any, index: number) => (
-          <Warning key={index} text={text} />
-        ))}
-        <h2>
-          You Have {nominations.length} Nomination
-          {nominations.length === 1 ? '' : 's'}
-        </h2>
-        <Separator />
-        <NotesWrapper>
-          <p>
-            Once submitted, you will start nominating your chosen validators.
-          </p>
-          <EstimatedTxFee />
-        </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <button
-              type="button"
-              className="submit"
-              onClick={() => submitTx()}
-              disabled={
-                !valid || submitting || warnings.length > 0 || !txFeesValid
-              }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-            </button>
-          </div>
-        </FooterWrapper>
-      </div>
-    </PaddingWrapper>
+    <>
+      <Title title="Nominate" icon={faPlayCircle} />
+      <PaddingWrapper verticalOnly>
+        <div
+          style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
+        >
+          {warnings.map((text: any, index: number) => (
+            <Warning key={index} text={text} />
+          ))}
+          <h2>
+            You Have {nominations.length} Nomination
+            {nominations.length === 1 ? '' : 's'}
+          </h2>
+          <Separator />
+          <NotesWrapper>
+            <p>
+              Once submitted, you will start nominating your chosen validators.
+            </p>
+            <EstimatedTxFee />
+          </NotesWrapper>
+          <FooterWrapper>
+            <div>
+              <button
+                type="button"
+                className="submit"
+                onClick={() => submitTx()}
+                disabled={
+                  !valid || submitting || warnings.length > 0 || !txFeesValid
+                }
+              >
+                <FontAwesomeIcon
+                  transform="grow-2"
+                  icon={faArrowAltCircleUp as IconProp}
+                />
+                Submit
+              </button>
+            </div>
+          </FooterWrapper>
+        </div>
+      </PaddingWrapper>
+    </>
   );
 };
 

@@ -18,6 +18,7 @@ import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -127,78 +128,80 @@ export const NominateFromFavourites = () => {
   });
 
   return (
-    <PaddingWrapper>
-      <h2>Nominate From Favourites</h2>
-      <div style={{ marginBottom: '1rem' }}>
-        {!accountHasSigner(signingAccount) && (
-          <Warning
-            text={`You must have your${
-              bondType === 'stake' ? ' controller' : ' '
-            }account imported to add nominations.`}
-          />
-        )}
-      </div>
-      <ListWrapper>
-        {availableFavourites.length > 0 ? (
-          <ValidatorList
-            bondType="stake"
-            validators={availableFavourites}
-            batchKey={batchKey}
-            title="Favourite Validators / Not Nominated"
-            selectable
-            selectActive
-            selectToggleable={false}
-            onSelected={onSelected}
-            refetchOnListUpdate
-            showMenu={false}
-            inModal
-          />
-        ) : (
-          <h3>No Favourites Available.</h3>
-        )}
-      </ListWrapper>
-      <NotesWrapper style={{ paddingBottom: 0 }}>
-        <EstimatedTxFee />
-      </NotesWrapper>
-      <FooterWrapper>
-        <h3
-          className={
-            selectedFavourites.length === 0 ||
-            nominationsToSubmit.length > maxNominations
-              ? ''
-              : 'active'
-          }
-        >
-          {selectedFavourites.length > 0
-            ? overMaxNominations
-              ? `Adding this many favourites will surpass ${maxNominations} nominations.`
-              : `Adding ${selectedFavourites.length} Nomination${
-                  selectedFavourites.length !== 1 ? `s` : ``
-                }`
-            : `No Favourites Selected`}
-        </h3>
-        <div>
-          <button
-            type="button"
-            className="submit"
-            onClick={() => submitTx()}
-            disabled={
-              !valid ||
-              submitting ||
-              (bondType === 'pool' && !isNominator() && !isOwner()) ||
-              !accountHasSigner(signingAccount) ||
-              !txFeesValid
+    <>
+      <Title title="Nominate Favourites" />
+      <PaddingWrapper>
+        <div style={{ marginBottom: '1rem' }}>
+          {!accountHasSigner(signingAccount) && (
+            <Warning
+              text={`You must have your${
+                bondType === 'stake' ? ' controller' : ' '
+              }account imported to add nominations.`}
+            />
+          )}
+        </div>
+        <ListWrapper>
+          {availableFavourites.length > 0 ? (
+            <ValidatorList
+              bondType="stake"
+              validators={availableFavourites}
+              batchKey={batchKey}
+              title="Favourite Validators / Not Nominated"
+              selectable
+              selectActive
+              selectToggleable={false}
+              onSelected={onSelected}
+              refetchOnListUpdate
+              showMenu={false}
+              inModal
+            />
+          ) : (
+            <h3>No Favourites Available.</h3>
+          )}
+        </ListWrapper>
+        <NotesWrapper style={{ paddingBottom: 0 }}>
+          <EstimatedTxFee />
+        </NotesWrapper>
+        <FooterWrapper>
+          <h3
+            className={
+              selectedFavourites.length === 0 ||
+              nominationsToSubmit.length > maxNominations
+                ? ''
+                : 'active'
             }
           >
-            <FontAwesomeIcon
-              transform="grow-2"
-              icon={faArrowAltCircleUp as IconProp}
-            />
-            Submit
-          </button>
-        </div>
-      </FooterWrapper>
-    </PaddingWrapper>
+            {selectedFavourites.length > 0
+              ? overMaxNominations
+                ? `Adding this many favourites will surpass ${maxNominations} nominations.`
+                : `Adding ${selectedFavourites.length} Nomination${
+                    selectedFavourites.length !== 1 ? `s` : ``
+                  }`
+              : `No Favourites Selected`}
+          </h3>
+          <div>
+            <button
+              type="button"
+              className="submit"
+              onClick={() => submitTx()}
+              disabled={
+                !valid ||
+                submitting ||
+                (bondType === 'pool' && !isNominator() && !isOwner()) ||
+                !accountHasSigner(signingAccount) ||
+                !txFeesValid
+              }
+            >
+              <FontAwesomeIcon
+                transform="grow-2"
+                icon={faArrowAltCircleUp as IconProp}
+              />
+              Submit
+            </button>
+          </div>
+        </FooterWrapper>
+      </PaddingWrapper>
+    </>
   );
 };
 
