@@ -11,11 +11,11 @@ export const defaultBalancesContext: TransferOptionsContextInterface = {
 
 export const transferOptions: TransferOptions = {
   freeBalance: new BN(0),
-  totalPossibleBond: new BN(0),
   nominate: {
     freeToUnbond: new BN(0),
     totalUnlocking: new BN(0),
     totalUnlocked: new BN(0),
+    totalPossibleBond: new BN(0),
     totalUnlockChuncks: 0,
   },
   pool: {
@@ -23,6 +23,7 @@ export const transferOptions: TransferOptions = {
     freeToUnbond: new BN(0),
     totalUnlocking: new BN(0),
     totalUnlocked: new BN(0),
+    totalPossibleBond: new BN(0),
     totalUnlockChuncks: 0,
   },
 };

@@ -10,11 +10,11 @@ export interface TransferOptionsContextInterface {
 
 export interface TransferOptions {
   freeBalance: BN;
-  totalPossibleBond: BN;
   nominate: {
     freeToUnbond: BN;
     totalUnlocking: BN;
     totalUnlocked: BN;
+    totalPossibleBond: BN;
     totalUnlockChuncks: number;
   };
   pool: {
@@ -22,6 +22,7 @@ export interface TransferOptions {
     freeToUnbond: BN;
     totalUnlocking: BN;
     totalUnlocked: BN;
+    totalPossibleBond: BN;
     totalUnlockChuncks: number;
   };
 }
