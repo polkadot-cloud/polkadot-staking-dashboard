@@ -105,8 +105,8 @@ export const SelectableWrapper = styled.div`
     background: ${buttonSecondaryBackground};
     font-size: 0.98rem;
     color: ${textSecondary};
-    border-radius: 0.5rem;
-    padding: 0.36rem 0.8rem;
+    border-radius: 1rem;
+    padding: 0.4rem 0.9rem;
     margin-right: 0.5rem;
 
     &:disabled {
