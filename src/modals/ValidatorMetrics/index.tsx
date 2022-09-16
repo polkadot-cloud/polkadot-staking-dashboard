@@ -12,6 +12,7 @@ import Identicon from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StatusLabel } from 'library/StatusLabel';
+import { Title } from 'library/Modal/Title';
 
 export const ValidatorMetrics = () => {
   const { config } = useModal();
@@ -36,15 +37,16 @@ export const ValidatorMetrics = () => {
 
   return (
     <>
-      <SubscanButton />
+      <Title title="Validator Metrics" />
       <div className="header">
-        <Identicon value={address} size={40} />
-        <h1>
-          &nbsp;
+        <Identicon value={address} size={33} />
+        <h2>
+          &nbsp;&nbsp;
           {identity === null ? clipAddress(address) : identity}
-        </h1>
+        </h2>
       </div>
-      <div className="body">
+      <div className="body" style={{ position: 'relative' }}>
+        <SubscanButton />
         <GraphWrapper
           style={{
             margin: '0 0.5rem',

@@ -40,7 +40,7 @@ export const ContentWrapper = styled.div`
   height: auto;
   flex: 1;
   max-height: 100%;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 1.25rem 1rem 1.25rem;
 
   .items {
     box-sizing: border-box;

@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
-import { HeadingWrapper } from '../Wrappers';
+import { Title } from 'library/Modal/Title';
 import { Wrapper, CardsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';
@@ -45,13 +44,11 @@ export const UpdateBond = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <HeadingWrapper>
-          <FontAwesomeIcon
-            transform="grow-2"
-            icon={fn === 'add' ? faPlus : faMinus}
-          />
-          {fn === 'add' ? 'Add To' : 'Remove'} Bond
-        </HeadingWrapper>
+        <Title
+          title={`${fn === 'add' ? 'Add To' : 'Remove'} Bond`}
+          icon={fn === 'add' ? faPlus : faMinus}
+          fixed
+        />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}

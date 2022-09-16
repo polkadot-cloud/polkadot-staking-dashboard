@@ -54,7 +54,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
         border: 1px solid ${warningTransparent};
       }
       box-sizing: border-box;
-      border-radius: 0.35rem;
+      border-radius: 0.5rem;
       padding: 0.15rem 0.5rem;
     }
 

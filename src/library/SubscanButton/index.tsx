@@ -19,6 +19,7 @@ const Wrapper = styled.div<WrapperProps>`
   padding: 0.25rem 0.4rem;
   color: ${(props) => props.color};
   opacity: ${(props) => props.opacity};
+  z-index: 10;
 `;
 
 export const SubscanButton = () => {

@@ -9,7 +9,6 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import {
-  HeadingWrapper,
   NotesWrapper,
   PaddingWrapper,
   Separator,
@@ -25,6 +24,7 @@ import { useStaking } from 'contexts/Staking';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
 
 export const WithdrawPoolMember = () => {
   const { api, network } = useApi();
@@ -86,13 +86,8 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <PaddingWrapper verticalOnly>
-        <HeadingWrapper>
-          <FontAwesomeIcon transform="grow-2" icon={faMinus} />
-          Withdraw Member Funds
-        </HeadingWrapper>
-      </PaddingWrapper>
-
+      <Title title="Withdraw Member Funds" icon={faMinus} />
+      <PaddingWrapper verticalOnly />
       <ContentWrapper>
         <div>
           <div>
