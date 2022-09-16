@@ -441,7 +441,6 @@ export const BalancesProvider = ({
       freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
       new BN(0)
     );
-
     // total possible balance that can be bonded
     const totalPossibleBond = BN.max(
       freeAfterReserve.sub(totalUnlocking).sub(totalUnlocked),
