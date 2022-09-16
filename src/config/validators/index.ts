@@ -27,8 +27,8 @@ import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilities.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
-import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
+import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
@@ -412,7 +412,7 @@ export const VALIDATOR_COMMUNITY = [
         'GHd1brgDS29LhSUMYSorgEWFb2n1M3H4EMz6mcpt8TTdHho',
       ],
     },
-  },  
+  },
   {
     name: 'WOJDOT ʕ •ᴥ•ʔ',
     Thumbnail: Wojdot,
