@@ -46,15 +46,19 @@ export const BalanceGraph = () => {
   const { getPoolTransferOptions } = useActivePool();
 
   const poolBondOpions = getPoolTransferOptions(activeAccount);
-  const unlocking = poolBondOpions.totalUnlocking
-    .add(poolBondOpions.totalUnlocked)
-    .add(totalUnlocked)
-    .add(totalUnlocking);
+  const unlockingPools = poolBondOpions.totalUnlocking.add(
+    poolBondOpions.totalUnlocked
+  );
+
+  const unlocking = unlockingPools.add(totalUnlocked).add(totalUnlocking);
 
   const { free } = balance;
 
-  // get user's total free balance
-  const freeBase = planckBnToUnit(free, units);
+  // get user's total balance
+  const freeBase = planckBnToUnit(
+    free.add(poolBondOpions.active).add(unlockingPools),
+    units
+  );
 
   // convert balance to fiat value
   const freeFiat = toFixedIfNecessary(Number(freeBase * prices.lastPrice), 2);
