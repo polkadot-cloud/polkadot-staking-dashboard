@@ -61,7 +61,10 @@ export const BalanceGraph = () => {
 
   // graph data
   let graphStaked = planckBnToUnit(staked, units);
-  let graphFreeToStake = planckBnToUnit(freeBalance, units);
+  let graphFreeToStake = planckBnToUnit(
+    freeBalance.sub(poolBondOpions.active),
+    units
+  );
   let graphInPool = planckBnToUnit(poolBondOpions.active, units);
   let graphUnlocking = planckBnToUnit(unlocking, units);
 
