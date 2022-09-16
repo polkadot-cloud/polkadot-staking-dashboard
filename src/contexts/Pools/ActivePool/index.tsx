@@ -414,7 +414,7 @@ export const ActivePoolProvider = ({
     for (const u of unlocking) {
       const { value, era } = u;
       if (activeEra.index > era) {
-        totalUnlockedPool = totalUnlocked.add(value);
+        totalUnlockedPool = totalUnlockedPool.add(value);
       } else {
         totalUnlockingPool = totalUnlockingPool.add(value);
       }
