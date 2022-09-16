@@ -15,6 +15,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { TransferOptions } from 'contexts/Balances/types';
 import BN from 'bn.js';
+import { useActivePool } from 'contexts/Pools/ActivePool';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -26,6 +27,9 @@ export const ManageBond = () => {
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
+  const { getPoolTransferOptions } = useActivePool();
+  const { active: activePool } = getPoolTransferOptions(activeAccount);
+
   const {
     freeBalance,
     totalUnlocking,
@@ -94,7 +98,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeBalance, units)}
+        free={planckBnToUnit(freeBalance.sub(activePool), units)}
         inactive={inSetup()}
       />
     </>

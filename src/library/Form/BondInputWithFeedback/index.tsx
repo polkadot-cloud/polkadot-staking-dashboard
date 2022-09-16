@@ -95,7 +95,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   // update max bond after txFee sync
   useEffect(() => {
     if (!unbond && !disableTxFeeUpdate) {
-      if (bond.bond > freeBalance) {
+      if (Number(bond.bond) > freeBalance) {
         setBond({ bond: freeBalance });
       }
     }
