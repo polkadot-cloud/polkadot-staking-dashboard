@@ -31,7 +31,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Your Balance',
         description: [
-          'Your balance represents total amount you have staked in addition to the total amount you have bonded in a Pool.',
+          'Your balance represents the total {NETWORK_UNIT} you have available in addition to your total staked amount, that includes the amount you have bonded in a Pool.',
           'Unlike your staked balance, your bonded pool balance is held and locked in the pool itself.',
         ],
       },
