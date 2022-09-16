@@ -7,6 +7,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
@@ -15,8 +16,10 @@ export const useStatusButtons = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
-  const { isOwner, getPoolTransferOptions } = useActivePool();
-  const { active } = getPoolTransferOptions(activeAccount);
+  const { isOwner } = useActivePool();
+  const { getTransferOptions } = useTransferOptions();
+
+  const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
 
   let _label;

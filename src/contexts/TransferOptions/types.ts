@@ -11,6 +11,7 @@ export interface TransferOptionsContextInterface {
 export interface TransferOptions {
   freeBalance: BN;
   nominate: {
+    active: BN;
     freeToUnbond: BN;
     totalUnlocking: BN;
     totalUnlocked: BN;

@@ -3,19 +3,17 @@
 
 import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
-import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit } from 'Utils';
-import { TransferOptions } from 'contexts/Balances/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { BN_ZERO } from '@polkadot/util';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -28,20 +26,14 @@ export const BondSome = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getTransferOptions } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const { bondType } = config;
-  const { getPoolTransferOptions } = useActivePool();
   const { txFees, txFeesValid } = useTxFees();
 
-  const stakeTransferOptions: TransferOptions =
-    getTransferOptions(activeAccount);
-  const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeBalance: freeBalanceBn } = isPooling
-    ? poolTransferOptions
-    : stakeTransferOptions;
+  const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
 
   // local bond value

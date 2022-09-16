@@ -95,7 +95,6 @@ export interface ActivePoolContextState {
   isDepositor: () => boolean;
   isStateToggler: () => boolean;
   getPoolBondedAccount: () => MaybeAccount;
-  getPoolTransferOptions: (a: MaybeAccount) => any;
   getPoolUnlocking: () => any;
   getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;

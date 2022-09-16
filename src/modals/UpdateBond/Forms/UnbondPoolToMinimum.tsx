@@ -13,6 +13,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -24,15 +25,16 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getPoolTransferOptions, isDepositor } = useActivePool();
+  const { isDepositor } = useActivePool();
+  const { getTransferOptions } = useTransferOptions();
   const { stats } = usePoolsConfig();
   const { txFeesValid } = useTxFees();
 
   const { minJoinBond, minCreateBond } = stats;
-  const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const { bondDuration } = consts;
 
-  const { freeToUnbond: freeToUnbondBn } = poolTransferOptions;
+  const { freeToUnbond: freeToUnbondBn } =
+    getTransferOptions(activeAccount).pool;
 
   // unbond amount to minimum threshold
   const freeToUnbond = isDepositor()

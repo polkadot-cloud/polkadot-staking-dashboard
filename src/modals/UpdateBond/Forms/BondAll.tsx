@@ -4,19 +4,17 @@
 import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
-import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { TransferOptions } from 'contexts/Balances/types';
 import { planckBnToUnit } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { BN_ZERO } from '@polkadot/util';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -29,23 +27,18 @@ export const BondAll = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getTransferOptions } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const { bondType } = config;
-  const { getPoolTransferOptions } = useActivePool();
   const { txFees, txFeesValid } = useTxFees();
 
-  const stakeTransferOptions: TransferOptions =
-    getTransferOptions(activeAccount);
-  const poolTransferOptions = getPoolTransferOptions(activeAccount);
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
 
-  const { freeBalance: freeBalanceBn } = isPooling
-    ? poolTransferOptions
-    : stakeTransferOptions;
+  const allTransferOptions = getTransferOptions(activeAccount);
+  const { freeBalance: freeBalanceBn } = allTransferOptions;
   const { totalPossibleBond: totalPossibleBondBn } = isPooling
-    ? poolTransferOptions
-    : stakeTransferOptions;
+    ? allTransferOptions.pool
+    : allTransferOptions.nominate;
 
   // convert BN values to number
   const freeBalance = planckBnToUnit(freeBalanceBn, units);

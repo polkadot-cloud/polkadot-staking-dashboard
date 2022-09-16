@@ -14,6 +14,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useTransferOptions } from 'contexts/TransferOptions';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -22,16 +23,13 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { getPoolTransferOptions, isBonding, activeBondedPool } =
-    useActivePool();
+  const { isBonding, activeBondedPool } = useActivePool();
+  const { getTransferOptions } = useTransferOptions();
 
-  const {
-    active,
-    freeBalance,
-    totalUnlocking,
-    totalUnlocked,
-    totalUnlockChuncks,
-  } = getPoolTransferOptions(activeAccount);
+  const allTransferOptions = getTransferOptions(activeAccount);
+  const { freeBalance } = allTransferOptions;
+  const { active, totalUnlocking, totalUnlocked, totalUnlockChuncks } =
+    allTransferOptions.pool;
 
   const { state } = activeBondedPool?.bondedPool || {};
 

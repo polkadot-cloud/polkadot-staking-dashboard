@@ -4,8 +4,7 @@
 import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
-import { useNetworkMetrics } from 'contexts/Network';
-import { AnyApi, MaybeAccount, Sync } from 'types';
+import { AnyApi, Sync } from 'types';
 import {
   ActiveBondedPoolState,
   ActivePoolContextState,
@@ -13,7 +12,6 @@ import {
   PoolAddresses,
 } from 'contexts/Pools/types';
 import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
-import { useBalances } from '../../Balances';
 import * as defaults from './defaults';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
@@ -32,14 +30,11 @@ export const ActivePoolProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, network, isReady, consts } = useApi();
-  const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getLedgerForStash } = useBalances();
   const { enabled, createAccounts } = usePoolsConfig();
   const { membership } = usePoolMemberships();
 
-  const { activeEra } = metrics;
   const { existentialDeposit } = consts;
 
   // stores member's bonded pool
@@ -378,72 +373,6 @@ export const ActivePoolProvider = ({
   };
 
   /*
-   * getPoolTransferOptions
-   * get the bond and unbond amounts available
-   * to the user.
-   */
-  const getPoolTransferOptions = (address: MaybeAccount) => {
-    if (!address) {
-      return defaults.poolTransferOptions;
-    }
-    const { freeAfterReserve } = getAccountBalance(address);
-    const ledger = getLedgerForStash(address);
-    const { active: activeLedger, unlocking: unlockingLedger } = ledger;
-    const unlocking = membership?.unlocking || [];
-    const points = membership?.points;
-
-    // point to balance ratio is 1
-    const active = points ? new BN(points) : new BN(0);
-    const freeToUnbond = active;
-
-    // total amount actively unlocking
-    let totalUnlocking = new BN(0);
-    let totalUnlocked = new BN(0);
-    for (const u of unlockingLedger) {
-      const { value, era } = u;
-      if (activeEra.index > era) {
-        totalUnlocked = totalUnlocked.add(value);
-      } else {
-        totalUnlocking = totalUnlocking.add(value);
-      }
-    }
-
-    // total amount actively unlocking in pool
-    let totalUnlockingPool = new BN(0);
-    let totalUnlockedPool = new BN(0);
-    for (const u of unlocking) {
-      const { value, era } = u;
-      if (activeEra.index > era) {
-        totalUnlockedPool = totalUnlockedPool.add(value);
-      } else {
-        totalUnlockingPool = totalUnlockingPool.add(value);
-      }
-    }
-
-    // free transferrable balance that can be bonded in the pool
-    const freeBalance = BN.max(
-      freeAfterReserve.sub(active).sub(activeLedger).sub(totalUnlocking),
-      new BN(0)
-    );
-
-    // total possible balance that can be bonded in the pool
-    const totalPossibleBond = BN.max(
-      freeAfterReserve.sub(activeLedger).sub(totalUnlocking).sub(totalUnlocked),
-      new BN(0)
-    );
-
-    return {
-      active,
-      freeBalance,
-      freeToUnbond,
-      totalUnlocking: totalUnlockingPool,
-      totalUnlocked: totalUnlockedPool,
-      totalPossibleBond,
-      totalUnlockChuncks: unlocking.length,
-    };
-  };
-
-  /*
    * Get the status of nominations.
    * Possible statuses: waiting, inactive, active.
    */
@@ -541,7 +470,6 @@ export const ActivePoolProvider = ({
         isStateToggler,
         isBonding,
         getPoolBondedAccount,
-        getPoolTransferOptions,
         getPoolUnlocking,
         getPoolRoles,
         setTargets,

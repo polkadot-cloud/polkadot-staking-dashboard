@@ -4,7 +4,6 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
@@ -24,7 +23,7 @@ import {
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { TransferOptions } from 'contexts/Balances/types';
+import { useTransferOptions } from 'contexts/TransferOptions';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,28 +32,30 @@ export const BalanceGraph = () => {
   const { network } = useApi();
   const { units, features } = network;
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getTransferOptions } = useBalances();
+  const { getAccountBalance } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
+
+  const allTransferOptions = getTransferOptions(activeAccount);
+  const { freeBalance } = allTransferOptions;
+
   const {
-    freeBalance,
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
-  }: TransferOptions = getTransferOptions(activeAccount) || {};
-  const { getPoolTransferOptions } = useActivePool();
+  } = allTransferOptions.nominate;
 
-  const poolBondOpions = getPoolTransferOptions(activeAccount);
+  const poolBondOpions = allTransferOptions.pool;
   const unlockingPools = poolBondOpions.totalUnlocking.add(
     poolBondOpions.totalUnlocked
   );
 
   const unlocking = unlockingPools.add(totalUnlocked).add(totalUnlocking);
 
-  const { free } = balance;
-
   // get user's total balance
+  const { free } = balance;
   const freeBase = planckBnToUnit(
     free.add(poolBondOpions.active).add(unlockingPools),
     units

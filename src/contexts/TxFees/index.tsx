@@ -4,8 +4,8 @@
 import BN from 'bn.js';
 import React, { useEffect, useState } from 'react';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import * as defaults from './defaults';
 
 export interface EstimatedFeeContext {
@@ -25,7 +25,7 @@ export const useTxFees = () => React.useContext(TxFeesContext);
 export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
   const { consts } = useApi();
   const { activeAccount } = useConnect();
-  const { getTransferOptions } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(activeAccount);
   const { existentialDeposit } = consts;
 

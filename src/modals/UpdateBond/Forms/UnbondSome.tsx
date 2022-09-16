@@ -12,9 +12,9 @@ import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { TransferOptions } from 'contexts/Balances/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -27,26 +27,26 @@ export const UnbondSome = (props: FormsProps) => {
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
-  const { getTransferOptions, getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBalances();
   const { bondType } = config;
   const { stats } = usePoolsConfig();
-  const { getPoolTransferOptions, isDepositor } = useActivePool();
+  const { isDepositor } = useActivePool();
   const { txFeesValid } = useTxFees();
+  const { getTransferOptions } = useTransferOptions();
 
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;
-  const stakeTransferOptions: TransferOptions =
-    getTransferOptions(activeAccount);
-  const poolTransferOptions = getPoolTransferOptions(activeAccount);
-  const isStaking = bondType === 'stake';
-  const isPooling = bondType === 'pool';
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
 
+  const isStaking = bondType === 'stake';
+  const isPooling = bondType === 'pool';
+
+  const allTransferOptions = getTransferOptions(activeAccount);
   const { freeToUnbond: freeToUnbondBn } = isPooling
-    ? poolTransferOptions
-    : stakeTransferOptions;
+    ? allTransferOptions.pool
+    : allTransferOptions.nominate;
 
   // convert BN values to number
   const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);

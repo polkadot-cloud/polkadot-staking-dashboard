@@ -13,6 +13,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import BN from 'bn.js';
 import { useTxFees } from 'contexts/TxFees';
 import { BN_ZERO } from '@polkadot/util';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
@@ -30,29 +31,24 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
-  const { getLedgerForStash, getBondedAccount, getTransferOptions } =
-    useBalances();
-  const { getPoolTransferOptions, isDepositor } = useActivePool();
+  const { getBondedAccount } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
+  const { isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
-  const ledger = getLedgerForStash(activeAccount);
   const { txFees } = useTxFees();
-  const { active } = ledger;
   const { minNominatorBond } = staking;
 
-  // get bond options for either staking or pooling.
-  const transferOptions =
-    bondType === 'pool'
-      ? getPoolTransferOptions(activeAccount)
-      : getTransferOptions(activeAccount);
+  const allTransferOptions = getTransferOptions(activeAccount);
 
-  const {
-    freeBalance: freeBalanceBn,
-    freeToUnbond: freeToUnbondBn,
-    active: poolsActive,
-  } = transferOptions;
+  // get bond options for either staking or pooling.
+  const { freeBalance: freeBalanceBn } = allTransferOptions;
+  const transferOptions =
+    bondType === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
+
+  const { freeToUnbond: freeToUnbondBn, active } = transferOptions;
 
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = unbond
@@ -133,10 +129,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         );
 
   // get the actively bonded amount.
-  const activeBase =
-    bondType === 'pool'
-      ? planckBnToUnit(poolsActive, units)
-      : planckBnToUnit(active, units);
+  const activeBase = planckBnToUnit(active, units);
 
   // handle error updates
   const handleErrors = () => {

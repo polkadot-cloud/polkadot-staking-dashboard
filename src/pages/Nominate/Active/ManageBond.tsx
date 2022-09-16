@@ -13,29 +13,27 @@ import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { TransferOptions } from 'contexts/Balances/types';
 import BN from 'bn.js';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useTransferOptions } from 'contexts/TransferOptions';
 
 export const ManageBond = () => {
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getLedgerForStash, getTransferOptions } = useBalances();
+  const { getLedgerForStash } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
-  const { getPoolTransferOptions } = useActivePool();
-  const { active: activePool } = getPoolTransferOptions(activeAccount);
 
-  const {
-    freeBalance,
-    totalUnlocking,
-    totalUnlocked,
-    totalUnlockChuncks,
-  }: TransferOptions = getTransferOptions(activeAccount);
+  const allTransferOptions = getTransferOptions(activeAccount);
+
+  const { freeBalance } = allTransferOptions;
+  const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
+    allTransferOptions.nominate;
+  const { active: activePool } = allTransferOptions.pool;
 
   return (
     <>
