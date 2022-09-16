@@ -7,6 +7,7 @@ import Router from 'Router';
 import { withProviders } from 'library/Hooks';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TxFeesProvider } from 'contexts/TxFees';
+import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { AccountProvider } from './contexts/Account';
 import { APIProvider, useApi } from './contexts/Api';
 import { AssistantProvider } from './contexts/Assistant';
@@ -62,6 +63,7 @@ export const Providers = withProviders(
   ActivePoolProvider,
   BondedPoolsProvider,
   PoolMembersProvider,
+  TransferOptionsProvider,
   ValidatorsProvider,
   UIProvider,
   SubscanProvider,
