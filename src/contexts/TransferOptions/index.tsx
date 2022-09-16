@@ -71,6 +71,7 @@ export const TransferOptionsProvider = ({
       );
 
       return {
+        active,
         freeToUnbond,
         totalUnlocking,
         totalUnlocked,
@@ -85,7 +86,11 @@ export const TransferOptionsProvider = ({
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BN.max(
-        freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
+        freeAfterReserve
+          .sub(active)
+          .sub(totalUnlocking)
+          .sub(totalUnlocked)
+          .add(activePool),
         new BN(0)
       );
 
