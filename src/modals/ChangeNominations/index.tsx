@@ -123,7 +123,7 @@ export const ChangeNominations = () => {
       <PaddingWrapper verticalOnly>
         <div
           style={{
-            padding: '0 1rem',
+            padding: '0 1.25rem',
             width: '100%',
             boxSizing: 'border-box',
           }}

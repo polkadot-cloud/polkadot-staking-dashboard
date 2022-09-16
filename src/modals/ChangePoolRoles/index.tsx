@@ -59,7 +59,11 @@ export const ChangePoolRoles = () => {
       <Title title="Change Pool Roles" icon={faExchangeAlt} />
       <Wrapper>
         <div
-          style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
+          style={{
+            padding: '0 1.25rem',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
         >
           <RoleChange
             roleName="Nominator"

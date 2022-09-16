@@ -85,7 +85,8 @@ export const UpdatePayee = () => {
       <PaddingWrapper verticalOnly>
         <div
           style={{
-            padding: '0 1rem',
+            padding: '0 1.25rem',
+            marginTop: '1rem',
             width: '100%',
             boxSizing: 'border-box',
           }}

@@ -93,7 +93,7 @@ export const PaddingWrapper = styled.div<{
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  padding: ${(props) => (props.verticalOnly ? '1rem 0' : '1rem 1.5rem')};
+  padding: ${(props) => (props.verticalOnly ? '1rem 0' : '1rem 1.25rem')};
 `;
 
 // modal header, used for extrinsics forms
