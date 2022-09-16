@@ -8,7 +8,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
   box-sizing: border-box;
   width: 100%;
   padding: ${(props) =>
-    props.fixed ? '0.7rem 1rem 1.5rem 1rem' : '1.7rem 1rem 0 1rem'};
+    props.fixed ? '0.6rem 1rem 1.5rem 1rem' : '1.6rem 1rem 0 1rem'};
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
