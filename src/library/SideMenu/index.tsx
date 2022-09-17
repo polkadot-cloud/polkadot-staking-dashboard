@@ -233,7 +233,15 @@ export const SideMenu = () => {
                         name={page.title}
                         to={page.hash}
                         active={page.hash === pathname}
-                        icon={<FontAwesomeIcon icon={page.icon} />}
+                        icon={
+                          page.icon ? (
+                            <FontAwesomeIcon
+                              icon={page.icon}
+                              transform="grow-1"
+                              className="fa-icon"
+                            />
+                          ) : undefined
+                        }
                         animate={page.animate}
                         action={page.action}
                         minimised={sideMenuMinimised}

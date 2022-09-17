@@ -78,8 +78,8 @@ export const Primary = (props: PrimaryProps) => {
           ) : (
             <Lottie
               options={animateOptions}
-              width={minimised ? '1.5rem' : '1.2rem'}
-              height={minimised ? '1.5rem' : '1.2rem'}
+              width={minimised ? '1.5rem' : '1.4rem'}
+              height={minimised ? '1.5rem' : '1.4rem'}
               isStopped={isStopped}
               isPaused={isStopped}
               eventListeners={[

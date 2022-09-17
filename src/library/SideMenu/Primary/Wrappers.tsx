@@ -30,7 +30,12 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
     margin-right: 0.65rem;
 
-    .primary-color {
+    .fa-icon {
+      margin: 0 0.2rem;
+    }
+
+    .lottie-pri-col {
+      stroke: ${textPrimary};
       fill: ${textPrimary};
     }
   }
@@ -90,7 +95,7 @@ export const MinimisedWrapper = styled(motion.div)`
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  padding: 0.7rem 0rem;
+  padding: 0.65rem 0rem;
   margin: 0.7rem 0.2rem 0.3rem 0;
   font-size: 1.1rem;
   position: relative;
@@ -110,6 +115,10 @@ export const MinimisedWrapper = styled(motion.div)`
   }
   .icon {
     margin: 0;
+
+    .lottie-pri-col {
+      fill: ${textPrimary};
+    }
   }
   .action {
     &.minimised {

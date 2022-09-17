@@ -88,7 +88,7 @@ export interface PageItem {
   uri: string;
   hash: string;
   Entry: React.FC<PageProps>;
-  icon: IconDefinition;
+  icon?: IconDefinition;
   animate?: AnyJson;
   action?: {
     type: string;
