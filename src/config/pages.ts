@@ -22,6 +22,7 @@ import Community from 'pages/Community';
 import Feedback from 'pages/Feedback';
 import { URI_PREFIX } from 'consts';
 import { PageCategories, PagesConfig } from 'types';
+import * as analyticsJson from 'img/json/analytics-solid.json';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
@@ -75,6 +76,7 @@ export const PAGES_CONFIG: PagesConfig = [
     hash: '/payouts',
     Entry: Payouts,
     icon: faChartSimple,
+    animate: analyticsJson,
   },
   {
     category: 3,

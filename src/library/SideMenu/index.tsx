@@ -225,20 +225,23 @@ export const SideMenu = () => {
               )}
 
               {/* display category links */}
-              {pagesToDisplay.map((page: PageItem, pageIndex: number) => (
-                <React.Fragment key={`sidemenu_page_${pageIndex}`}>
-                  {page.category === category._id && (
-                    <Primary
-                      name={page.title}
-                      to={page.hash}
-                      active={page.hash === pathname}
-                      icon={<FontAwesomeIcon icon={page.icon} />}
-                      action={page.action}
-                      minimised={sideMenuMinimised}
-                    />
-                  )}
-                </React.Fragment>
-              ))}
+              {pagesToDisplay.map((page: PageItem, pageIndex: number) => {
+                return (
+                  <React.Fragment key={`sidemenu_page_${pageIndex}`}>
+                    {page.category === category._id && (
+                      <Primary
+                        name={page.title}
+                        to={page.hash}
+                        active={page.hash === pathname}
+                        icon={<FontAwesomeIcon icon={page.icon} />}
+                        animate={page.animate}
+                        action={page.action}
+                        minimised={sideMenuMinimised}
+                      />
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </React.Fragment>
           )
         )}
