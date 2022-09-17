@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { AnyJson } from '@polkadot/types-codec/types';
 import React, { FunctionComponent, SVGProps } from 'react';
 
 export interface MinimisedProps {
@@ -16,7 +17,8 @@ export interface PrimaryProps {
   name: string;
   active: boolean;
   to: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
+  animate?: AnyJson;
   action: undefined | { type: string; status: string; text?: string };
   minimised: number;
 }
