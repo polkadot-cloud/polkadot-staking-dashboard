@@ -34,9 +34,11 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
       margin: 0 0.2rem;
     }
 
-    .lottie-pri-col {
-      stroke: ${textPrimary};
+    .lpf {
       fill: ${textPrimary};
+    }
+    .lps {
+      stroke: ${textPrimary};
     }
   }
   .name {
@@ -116,8 +118,11 @@ export const MinimisedWrapper = styled(motion.div)`
   .icon {
     margin: 0;
 
-    .lottie-pri-col {
+    .lpf {
       fill: ${textPrimary};
+    }
+    .lps {
+      stroke: ${textPrimary};
     }
   }
   .action {
