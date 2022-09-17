@@ -24,6 +24,7 @@ import { useTheme } from 'contexts/Themes';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
+import { PageCategory, PageItem, PagesConfig } from 'types';
 import { Separator, Wrapper, LogoWrapper, ConnectionSymbol } from './Wrapper';
 import { Primary } from './Primary';
 import { Secondary } from './Secondary';
@@ -152,11 +153,11 @@ export const SideMenu = () => {
   });
 
   // remove pages that network does not support
-  let pagesToDisplay = Object.values(pageConfig.pages);
+  let pagesToDisplay: PagesConfig = Object.values(pageConfig.pages);
   if (!network.features.pools) {
     // remove pools
     pagesToDisplay = pagesToDisplay.filter(
-      (page: any) => page.hash !== '/pools'
+      (page: PageItem) => page.hash !== '/pools'
     );
   }
 
@@ -215,30 +216,32 @@ export const SideMenu = () => {
           )}
         </LogoWrapper>
 
-        {pageConfig.categories.map((category: any, categoryIndex: number) => (
-          <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
-            {/* display heading if not `default` (used for top links) */}
-            {category.title !== 'default' && (
-              <Heading title={category.title} minimised={sideMenuMinimised} />
-            )}
+        {pageConfig.categories.map(
+          (category: PageCategory, categoryIndex: number) => (
+            <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
+              {/* display heading if not `default` (used for top links) */}
+              {category.title !== 'default' && (
+                <Heading title={category.title} minimised={sideMenuMinimised} />
+              )}
 
-            {/* display category links */}
-            {pagesToDisplay.map((page: any, pageIndex: number) => (
-              <React.Fragment key={`sidemenu_page_${pageIndex}`}>
-                {page.category === category._id && (
-                  <Primary
-                    name={page.title}
-                    to={page.hash}
-                    active={page.hash === pathname}
-                    icon={<FontAwesomeIcon icon={page.icon} />}
-                    action={page.action}
-                    minimised={sideMenuMinimised}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </React.Fragment>
-        ))}
+              {/* display category links */}
+              {pagesToDisplay.map((page: PageItem, pageIndex: number) => (
+                <React.Fragment key={`sidemenu_page_${pageIndex}`}>
+                  {page.category === category._id && (
+                    <Primary
+                      name={page.title}
+                      to={page.hash}
+                      active={page.hash === pathname}
+                      icon={<FontAwesomeIcon icon={page.icon} />}
+                      action={page.action}
+                      minimised={sideMenuMinimised}
+                    />
+                  )}
+                </React.Fragment>
+              ))}
+            </React.Fragment>
+          )
+        )}
         <Separator />
         <Heading title="Network" minimised={sideMenuMinimised} />
         <Secondary

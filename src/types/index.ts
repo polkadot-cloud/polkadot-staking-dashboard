@@ -5,6 +5,7 @@ import React, { FunctionComponent, SVGProps } from 'react';
 import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
+import { AnyJson } from '@polkadot/types-codec/types';
 
 export type Fn = () => void;
 
@@ -74,19 +75,29 @@ export interface Network {
   params: { [key: string]: number };
 }
 
-export type PageCategories = Array<{
+export interface PageCategory {
   _id: number;
   title: string;
-}>;
+}
 
-export type PagesConfig = Array<{
+export type PageCategories = Array<PageCategory>;
+
+export interface PageItem {
   category: number;
   title: string;
   uri: string;
   hash: string;
   Entry: React.FC<PageProps>;
   icon: IconDefinition;
-}>;
+  animate?: AnyJson;
+  action?: {
+    type: string;
+    status: string;
+    text?: string | undefined;
+  };
+}
+
+export type PagesConfig = Array<PageItem>;
 
 export type MaybeAccount = string | null;
 
