@@ -10,6 +10,7 @@ import {
   warning,
   warningTransparent,
   networkColor,
+  textPrimary,
 } from 'theme';
 import { MinimisedProps } from '../types';
 
@@ -28,6 +29,10 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   .icon {
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
     margin-right: 0.65rem;
+
+    .primary-color {
+      fill: ${textPrimary};
+    }
   }
   .name {
     margin: 0;
