@@ -10,7 +10,7 @@ import { useModal } from 'contexts/Modal';
 import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
-import { faStar, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
 import {
   useValidatorFilter,
@@ -214,7 +214,7 @@ export const GenerateNominationsInner = (
                 />
                 <Item
                   label="From Favourites"
-                  icon={faStar as IconProp}
+                  icon={faHeart as IconProp}
                   transform="grow-2"
                   disabled={!favouritesList.length}
                   active={false}

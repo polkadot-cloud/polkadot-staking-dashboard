@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { useValidators } from 'contexts/Validators';
 import { useNotifications } from 'contexts/Notifications';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -60,7 +60,7 @@ export const FavouriteValidator = (props: FavouriteProps) => {
       <button type="button" className={isFavourite ? 'active' : undefined}>
         <FontAwesomeIcon
           icon={
-            !isFavourite ? (faStarRegular as IconProp) : (faStar as IconProp)
+            !isFavourite ? (faHeartRegular as IconProp) : (faHeart as IconProp)
           }
           transform="shrink-2"
         />
