@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faStar, faHashtag } from '@fortawesome/free-solid-svg-icons';
+import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import Overview from 'pages/Overview';
 import Nominate from 'pages/Nominate';
 import Pools from 'pages/Pools';
@@ -18,6 +18,7 @@ import * as view1SolidJson from 'img/json/view-1-solid.json';
 import * as viewGroupJson from 'img/json/groups-solid-edited.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
 import * as viewForumJson from 'img/json/forum-solid.json';
+import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
@@ -93,7 +94,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
     Entry: Favourites,
-    icon: faStar,
+    animate: favoriteHeartJson,
   },
   {
     category: 4,
