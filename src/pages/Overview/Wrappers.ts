@@ -235,7 +235,7 @@ export const ReserveWrapper = styled.div`
         }
       }
 
-      .assistant-icon {
+      .help-icon {
         margin-left: 0.6rem;
       }
     }

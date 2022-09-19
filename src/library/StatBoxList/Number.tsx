@@ -8,10 +8,7 @@ import { NumberProps } from './types';
 
 export const Number = (props: NumberProps) => {
   const { label, value, unit, assistant } = props;
-
   const assist = assistant !== undefined;
-  const page = assistant?.page ?? '';
-  const key = assistant?.key ?? '';
 
   const currency = props.currency ?? '';
 
@@ -38,7 +35,7 @@ export const Number = (props: NumberProps) => {
           </h3>
           <h4>
             {label}
-            {assist && <OpenAssistantIcon page={page} title={key} />}
+            {assist && <OpenAssistantIcon title={assistant} />}
           </h4>
         </div>
       </div>

@@ -34,7 +34,6 @@ export const ChooseNominations = (props: ChooseNominationsProps) => {
         thisSection={section}
         complete={setup.nominations.length > 0}
         title="Nominate"
-        assistantPage="stake"
         assistantKey="Nominating"
         setupType={setupType}
       />

@@ -32,11 +32,7 @@ export const Controller = ({ label }: { label: string }) => {
   return (
     <StatWrapper>
       <h4>
-        {label}{' '}
-        <OpenAssistantIcon
-          page="nominate"
-          title="Stash and Controller Accounts"
-        />
+        {label} <OpenAssistantIcon title="Stash and Controller Accounts" />
       </h4>
       <Wrapper paddingLeft={hasController()} paddingRight>
         <h2 className="hide-with-padding">

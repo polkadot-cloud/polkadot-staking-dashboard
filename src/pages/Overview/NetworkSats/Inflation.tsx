@@ -38,8 +38,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Estimated APY{' '}
-                <OpenAssistantIcon page="overview" title="Estimated APY" />
+                Estimated APY <OpenAssistantIcon title="Estimated APY" />
               </h4>
             </div>
           </div>
@@ -52,8 +51,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Inflation{' '}
-                <OpenAssistantIcon page="overview" title="Inflation" />
+                Inflation <OpenAssistantIcon title="Inflation" />
               </h4>
             </div>
           </div>
@@ -61,8 +59,7 @@ export const Inflation = () => {
             <div className="inner">
               <h2>{supplyAsPercent}%</h2>
               <h4>
-                Supply Staked{' '}
-                <OpenAssistantIcon page="overview" title="Supply Staked" />
+                Supply Staked <OpenAssistantIcon title="Supply Staked" />
               </h4>
             </div>
           </div>
@@ -75,8 +72,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Ideal Staked{' '}
-                <OpenAssistantIcon page="overview" title="Ideal Staked" />
+                Ideal Staked <OpenAssistantIcon title="Ideal Staked" />
               </h4>
             </div>
           </div>

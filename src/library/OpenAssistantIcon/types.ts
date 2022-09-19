@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export interface OpenAssistantIconProps {
-  page: string;
   title: string;
   size?: string;
 }

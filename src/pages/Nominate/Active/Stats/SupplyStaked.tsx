@@ -41,10 +41,7 @@ export const SupplyStakedStatBox = () => {
     },
 
     tooltip: `${toFixedIfNecessary(supplyAsPercent, 2)}%`,
-    assistant: {
-      page: 'overview',
-      key: 'Supply Staked',
-    },
+    assistant: 'Supply Staked',
   };
 
   return <Pie {...params} />;

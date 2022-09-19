@@ -58,7 +58,6 @@ export const Bond = (props: SetupStepProps) => {
         thisSection={section}
         complete={setup.bond !== 0}
         title="Bond"
-        assistantPage="stake"
         assistantKey="Bonding"
         setupType={SetupType.Pool}
       />

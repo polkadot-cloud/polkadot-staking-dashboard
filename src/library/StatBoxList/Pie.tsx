@@ -10,8 +10,6 @@ import { PieProps } from './types';
 export const Pie = (props: PieProps) => {
   const { label, stat, graph, tooltip, assistant } = props;
   const assist = assistant !== undefined;
-  const page = assistant?.page ?? '';
-  const key = assistant?.key ?? '';
 
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
@@ -73,7 +71,7 @@ export const Pie = (props: PieProps) => {
           </h3>
           <h4>
             {label}
-            {assist && <OpenAssistantIcon page={page} title={key} />}
+            {assist && <OpenAssistantIcon title={assistant} />}
           </h4>
         </div>
       </div>

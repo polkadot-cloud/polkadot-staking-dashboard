@@ -64,7 +64,7 @@ export const Payouts = (props: PageProps) => {
           <CardHeaderWrapper padded>
             <h4>
               Payout History
-              <OpenAssistantIcon page="payouts" title="Payout History" />
+              <OpenAssistantIcon title="Payout History" />
             </h4>
             <h2>
               {payouts.length ? (

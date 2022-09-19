@@ -50,7 +50,7 @@ export const RolesWrapper = styled.div`
         align-items: center;
         margin-bottom: 0rem;
 
-        > .assistant-icon {
+        > .help-icon {
           margin-left: 0.5rem;
         }
       }

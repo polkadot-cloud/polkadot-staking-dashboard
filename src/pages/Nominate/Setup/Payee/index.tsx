@@ -72,7 +72,6 @@ export const Payee = (props: SetupStepProps) => {
         thisSection={section}
         complete={setup.payee !== null}
         title="Reward Destination"
-        assistantPage="stake"
         assistantKey="Reward Destination"
         setupType={SetupType.Stake}
       />

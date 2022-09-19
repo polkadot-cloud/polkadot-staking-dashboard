@@ -9,14 +9,7 @@ import { Wrapper } from './Wrapper';
 import { HeaderProps } from '../types';
 
 export const Header = (props: HeaderProps) => {
-  const {
-    title,
-    assistantPage,
-    assistantKey,
-    complete,
-    thisSection,
-    setupType,
-  } = props;
+  const { title, assistantKey, complete, thisSection, setupType } = props;
 
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useUi();
@@ -27,8 +20,8 @@ export const Header = (props: HeaderProps) => {
       <section>
         <h2>
           {title}
-          {assistantPage !== undefined && assistantKey !== undefined && (
-            <OpenAssistantIcon page={assistantPage} title={assistantKey} />
+          {assistantKey !== undefined && (
+            <OpenAssistantIcon title={assistantKey} />
           )}
         </h2>
       </section>

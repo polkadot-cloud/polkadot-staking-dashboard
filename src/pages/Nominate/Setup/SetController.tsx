@@ -51,7 +51,6 @@ export const SetController = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         title="Set Controller Account"
-        assistantPage="stake"
         assistantKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
         setupType={SetupType.Stake}

@@ -9,8 +9,7 @@ export const Text = (props: TextProps) => {
   const { label, value, assistant } = props;
 
   const assist = assistant !== undefined;
-  const page = assistant?.page ?? '';
-  const key = assistant?.key ?? '';
+
   return (
     <StatBox>
       <div className="content chart">
@@ -18,7 +17,7 @@ export const Text = (props: TextProps) => {
           <h3 className="text">{value}</h3>
           <h4>
             {label}
-            {assist && <OpenAssistantIcon page={page} title={key} />}
+            {assist && <OpenAssistantIcon title={assistant} />}
           </h4>
         </div>
       </div>

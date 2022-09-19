@@ -44,7 +44,7 @@ export const Wrapper = styled.div`
     justify-content: flex-start;
     align-items: center;
 
-    .assistant-icon {
+    .help-icon {
       margin-left: 0.6rem;
     }
   }

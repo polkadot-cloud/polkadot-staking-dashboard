@@ -40,7 +40,7 @@ export const ManageBond = () => {
       <CardHeaderWrapper>
         <h4>
           Bonded Funds
-          <OpenAssistantIcon page="stake" title="Bonding" />
+          <OpenAssistantIcon title="Bonding" />
         </h4>
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}

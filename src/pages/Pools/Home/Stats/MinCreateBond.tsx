@@ -15,10 +15,7 @@ const MinCreateBondStatBox = () => {
     label: 'Minimum Create Bond',
     value: planckBnToUnit(stats.minCreateBond, units),
     unit: network.unit,
-    assistant: {
-      page: 'pools',
-      key: 'Minimum Create Bond',
-    },
+    assistant: 'Minimum Create Bond',
   };
   return <Number {...params} />;
 };

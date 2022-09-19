@@ -56,7 +56,6 @@ export const PoolName = (props: SetupStepProps) => {
         thisSection={section}
         complete={setup.metadata !== ''}
         title="Pool Name"
-        // assistantPage="stake"
         // assistantKey="Bonding"
         setupType={SetupType.Pool}
       />

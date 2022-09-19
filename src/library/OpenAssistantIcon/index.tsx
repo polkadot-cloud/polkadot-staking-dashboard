@@ -15,7 +15,7 @@ export const OpenAssistantIcon = (props: OpenAssistantIconProps) => {
 
   return (
     <Wrapper
-      className="assistant-icon ignore-assistant-outside-alerter"
+      className="help-icon ignore-assistant-outside-alerter"
       onClick={() => {
         openHelpWith(title, {});
       }}
