@@ -5,7 +5,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { SectionWrapper, ReserveWrapper, Separator } from './Wrappers';
 import { ReserveProps } from './types';
@@ -21,7 +21,7 @@ export const Reserve = (props: ReserveProps) => {
         <Separator />
         <h4>
           Reserved
-          <OpenAssistantIcon title="Reserve Balance" />
+          <OpenHelpIcon title="Reserve Balance" />
         </h4>
 
         <div className="inner">

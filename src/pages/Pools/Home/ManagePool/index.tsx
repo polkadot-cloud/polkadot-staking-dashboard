@@ -5,7 +5,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { PageRowWrapper } from 'Wrappers';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import Nominations from 'pages/Nominate/Active/Nominations';
@@ -40,7 +40,7 @@ export const ManagePool = () => {
             <CardHeaderWrapper withAction>
               <h3>
                 Generate Nominations
-                <OpenAssistantIcon title="Nominations" />
+                <OpenHelpIcon title="Nominations" />
               </h3>
               <div>
                 <Button

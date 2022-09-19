@@ -22,7 +22,7 @@ import {
 } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTransferOptions } from 'contexts/TransferOptions';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -178,7 +178,7 @@ export const BalanceGraph = () => {
       <div className="head">
         <h4>
           Balance
-          <OpenAssistantIcon title="Your Balance" />
+          <OpenHelpIcon title="Your Balance" />
         </h4>
         <h2>
           <span className="amount">{humanNumber(freeBase)}</span>&nbsp;

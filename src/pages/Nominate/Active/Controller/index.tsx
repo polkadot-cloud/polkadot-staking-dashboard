@@ -11,7 +11,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
-import OpenAssistantIcon from 'library/OpenAssistantIcon';
+import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper } from './Wrapper';
 
 export const Controller = ({ label }: { label: string }) => {
@@ -32,7 +32,7 @@ export const Controller = ({ label }: { label: string }) => {
   return (
     <StatWrapper>
       <h4>
-        {label} <OpenAssistantIcon title="Stash and Controller Accounts" />
+        {label} <OpenHelpIcon title="Stash and Controller Accounts" />
       </h4>
       <Wrapper paddingLeft={hasController()} paddingRight>
         <h2 className="hide-with-padding">

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { NumberProps } from './types';
 
@@ -35,7 +35,7 @@ export const Number = (props: NumberProps) => {
           </h3>
           <h4>
             {label}
-            {assist && <OpenAssistantIcon title={assistant} />}
+            {assist && <OpenHelpIcon title={assistant} />}
           </h4>
         </div>
       </div>

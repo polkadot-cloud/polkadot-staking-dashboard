@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
@@ -38,7 +38,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Estimated APY <OpenAssistantIcon title="Estimated APY" />
+                Estimated APY <OpenHelpIcon title="Estimated APY" />
               </h4>
             </div>
           </div>
@@ -51,7 +51,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Inflation <OpenAssistantIcon title="Inflation" />
+                Inflation <OpenHelpIcon title="Inflation" />
               </h4>
             </div>
           </div>
@@ -59,7 +59,7 @@ export const Inflation = () => {
             <div className="inner">
               <h2>{supplyAsPercent}%</h2>
               <h4>
-                Supply Staked <OpenAssistantIcon title="Supply Staked" />
+                Supply Staked <OpenHelpIcon title="Supply Staked" />
               </h4>
             </div>
           </div>
@@ -72,7 +72,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Ideal Staked <OpenAssistantIcon title="Ideal Staked" />
+                Ideal Staked <OpenHelpIcon title="Ideal Staked" />
               </h4>
             </div>
           </div>

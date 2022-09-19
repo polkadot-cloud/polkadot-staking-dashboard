@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Button } from 'library/Button';
 import React from 'react';
 import { Wrapper } from './Wrapper';
@@ -15,7 +15,7 @@ export const Stat = (props: StatProps) => {
     <Wrapper>
       <h4>
         {label}
-        {assistant.length && <OpenAssistantIcon title={assistant[1]} />}
+        {assistant.length && <OpenHelpIcon title={assistant[1]} />}
       </h4>
       <h2 className="stat">
         {icon && (

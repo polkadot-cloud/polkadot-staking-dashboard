@@ -4,9 +4,9 @@
 import { ReactComponent as IconSVG } from 'img/assistant.svg';
 import { useHelp } from 'contexts/Help';
 import { Wrapper } from './Wrapper';
-import { OpenAssistantIconProps } from './types';
+import { OpenHelpIconProps } from './types';
 
-export const OpenAssistantIcon = (props: OpenAssistantIconProps) => {
+export const OpenHelpIcon = (props: OpenHelpIconProps) => {
   const { openHelpWith } = useHelp();
 
   const { title } = props;
@@ -26,4 +26,4 @@ export const OpenAssistantIcon = (props: OpenAssistantIconProps) => {
   );
 };
 
-export default OpenAssistantIcon;
+export default OpenHelpIcon;

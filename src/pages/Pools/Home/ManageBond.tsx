@@ -7,7 +7,7 @@ import { planckBnToUnit, humanNumber } from 'Utils';
 import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
 import { Button, ButtonRow } from 'library/Button';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { useActivePool } from 'contexts/Pools/ActivePool';
@@ -38,7 +38,7 @@ export const ManageBond = () => {
       <CardHeaderWrapper>
         <h4>
           Bonded Funds
-          <OpenAssistantIcon title="Bonded in Pool" />
+          <OpenHelpIcon title="Bonded in Pool" />
         </h4>
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}

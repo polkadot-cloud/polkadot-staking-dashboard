@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Button } from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
@@ -20,9 +20,7 @@ export const Header = (props: HeaderProps) => {
       <section>
         <h2>
           {title}
-          {assistantKey !== undefined && (
-            <OpenAssistantIcon title={assistantKey} />
-          )}
+          {assistantKey !== undefined && <OpenHelpIcon title={assistantKey} />}
         </h2>
       </section>
       <section>

@@ -18,7 +18,7 @@ import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PageTitle } from 'library/PageTitle';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useStaking } from 'contexts/Staking';
 import { MAX_PAYOUT_DAYS } from 'consts';
 import { AnySubscan } from 'types';
@@ -64,7 +64,7 @@ export const Payouts = (props: PageProps) => {
           <CardHeaderWrapper padded>
             <h4>
               Payout History
-              <OpenAssistantIcon title="Payout History" />
+              <OpenHelpIcon title="Payout History" />
             </h4>
             <h2>
               {payouts.length ? (

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
 import { PieProps } from './types';
@@ -71,7 +71,7 @@ export const Pie = (props: PieProps) => {
           </h3>
           <h4>
             {label}
-            {assist && <OpenAssistantIcon title={assistant} />}
+            {assist && <OpenHelpIcon title={assistant} />}
           </h4>
         </div>
       </div>

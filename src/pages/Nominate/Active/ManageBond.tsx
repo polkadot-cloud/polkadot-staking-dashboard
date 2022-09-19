@@ -9,7 +9,7 @@ import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { Button, ButtonRow } from 'library/Button';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
@@ -40,7 +40,7 @@ export const ManageBond = () => {
       <CardHeaderWrapper>
         <h4>
           Bonded Funds
-          <OpenAssistantIcon title="Bonding" />
+          <OpenHelpIcon title="Bonding" />
         </h4>
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
