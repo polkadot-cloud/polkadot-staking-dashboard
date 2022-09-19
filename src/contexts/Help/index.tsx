@@ -14,30 +14,15 @@ export const HelpProvider = (props: HelpContextProps) => {
   const { network, consts } = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
 
-  // store the current page of assistant
-  const [page, _setPage] = useState<string>('overview');
+  // store the current active help category
+  const [category, _setCategory] = useState<string | null>(null);
 
   // to abstract out into individual state items
   const [state, setState] = useState<any>({
     status: 0,
     definition: null,
     config: {},
-    height: 0, // remove height function
-    resize: 0,
   });
-
-  // new functions
-
-  const setHelpHeight = (h: number) => {
-    if (state.status === 0) return;
-    // set maximum height to 80% of window height
-    const maxHeight = window.innerHeight * 0.8;
-    h = h > maxHeight ? maxHeight : h;
-    setState({
-      ...state,
-      height: h,
-    });
-  };
 
   const setDefinition = (definition: string | null) => {
     const _state = {
@@ -51,8 +36,6 @@ export const HelpProvider = (props: HelpContextProps) => {
     const _state = {
       ...state,
       status: newStatus,
-      resize: state.resize + 1,
-      height: newStatus === 0 ? 0 : state.height,
     };
     setState(_state);
   };
@@ -63,7 +46,6 @@ export const HelpProvider = (props: HelpContextProps) => {
       definition,
       status: 1,
       config: _config,
-      resize: state.resize + 1,
     });
   };
 
@@ -74,8 +56,8 @@ export const HelpProvider = (props: HelpContextProps) => {
       definition: null,
     });
   };
-  const setPage = (newPage: string) => {
-    _setPage(newPage);
+  const setCategory = (_category: string) => {
+    _setCategory(_category);
   };
 
   const fillDefinitionVariables = (d: HelpDefinition) => {
@@ -106,18 +88,15 @@ export const HelpProvider = (props: HelpContextProps) => {
   return (
     <HelpContext.Provider
       value={{
-        setHelpHeight,
         openHelpWith,
         closeHelp,
         setStatus,
-        setPage,
+        setCategory,
         setDefinition,
         fillDefinitionVariables,
         status: state.status,
-        height: state.height,
-        resize: state.resize,
         definition: state.definition,
-        page,
+        category,
       }}
     >
       {props.children}
