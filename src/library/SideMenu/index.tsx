@@ -19,7 +19,7 @@ import { useTheme } from 'contexts/Themes';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import * as infoOutlineJson from 'img/json/info-outline.json';
-import { useAssistant } from 'contexts/Assistant';
+import { useHelp } from 'contexts/Help';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
 import Heading from './Heading/Heading';
@@ -35,7 +35,7 @@ export const SideMenu = () => {
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
-  const assistant = useAssistant();
+  const { openHelpWith } = useHelp();
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -98,7 +98,7 @@ export const SideMenu = () => {
         <Heading title="Help" minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
-            assistant.toggle();
+            openHelpWith('', {});
           }}
           name="Assistant"
           animate={infoOutlineJson}

@@ -29,6 +29,7 @@ import { ValidatorsProvider } from './contexts/Validators';
 import { UIProvider } from './contexts/UI';
 import { useTheme } from './contexts/Themes';
 import { SessionEraProvider } from './contexts/SessionEra';
+import { HelpProvider } from './contexts/Help';
 
 export const WrappedRouter = () => (
   <Wrapper>
@@ -53,7 +54,8 @@ export const Providers = withProviders(
   APIProvider,
   ModalProvider,
   ConnectProvider,
-  AssistantProvider,
+  AssistantProvider, // to remove
+  HelpProvider,
   NetworkMetricsProvider,
   AccountProvider,
   BalancesProvider,
