@@ -15,12 +15,9 @@ export const defaultHelpContext: HelpContextInterface = {
   // eslint-disable-next-line
   setStatus: (s) => {},
   // eslint-disable-next-line
-  setCategory: (c) => {},
-  // eslint-disable-next-line
   setDefinition: (d) => {},
   // eslint-disable-next-line
   fillDefinitionVariables: (d) => definition,
   status: 0,
   definition: null,
-  category: null,
 };

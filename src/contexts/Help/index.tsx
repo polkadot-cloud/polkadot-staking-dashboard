@@ -24,9 +24,6 @@ export const HelpProvider = (props: HelpContextProps) => {
   const { network, consts } = useApi();
   const { maxNominatorRewardedPerValidator } = consts;
 
-  // store the current active help category
-  const [category, _setCategory] = useState<MaybeString>(null);
-
   // help module state
   const [state, setState] = useState<HelpContextState>({
     status: 0,
@@ -66,9 +63,6 @@ export const HelpProvider = (props: HelpContextProps) => {
       definition: null,
     });
   };
-  const setCategory = (_category: MaybeString) => {
-    _setCategory(_category);
-  };
 
   const fillDefinitionVariables = (d: HelpDefinition) => {
     let { title, description } = d;
@@ -101,12 +95,10 @@ export const HelpProvider = (props: HelpContextProps) => {
         openHelpWith,
         closeHelp,
         setStatus,
-        setCategory,
         setDefinition,
         fillDefinitionVariables,
         status: state.status,
         definition: state.definition,
-        category,
       }}
     >
       {props.children}

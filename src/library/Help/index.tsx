@@ -1,11 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
-import { pageFromUri } from 'Utils';
-import { useLocation } from 'react-router-dom';
 import { ASSISTANT_CONFIG } from 'config/assistant';
 import {
   AssistantItem,
@@ -24,8 +22,6 @@ export const Help = () => {
   const {
     setStatus,
     status,
-    setCategory,
-    category,
     fillDefinitionVariables,
     definition,
     closeHelp,
@@ -62,27 +58,20 @@ export const Help = () => {
     }
   }, [status]);
 
-  const { pathname } = useLocation();
-
-  const setCategoryOnPathname = useCallback(() => {
-    setCategory(pageFromUri(pathname));
-  }, [pathname]);
-
-  useEffect(() => setCategoryOnPathname(), [setCategoryOnPathname]);
-
   // render early if help not open
   if (status === 0) {
     return <></>;
   }
 
   let meta: AssistantItem | undefined;
+
   if (definition) {
     // get items for active category
-    meta = Object.values(ASSISTANT_CONFIG).find(
-      (item: AssistantItem) => item.key === category
+    meta = Object.values(ASSISTANT_CONFIG).find((item: AssistantItem) =>
+      item?.definitions?.find((d: any) => d.title === definition)
     );
   } else {
-    // get all category items
+    // get all items
     let _definitions: HelpDefinitions = [];
     let _external: HelpExternals = [];
 
