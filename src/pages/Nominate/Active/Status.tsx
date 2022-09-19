@@ -92,7 +92,7 @@ export const Status = ({ height }: { height: number }) => {
     <CardWrapper height={height}>
       <Stat
         label="Status"
-        assistant="Staking Status"
+        helpKey="Staking Status"
         stat={
           inSetup() || isSyncing
             ? 'Not Nominating'
@@ -124,7 +124,7 @@ export const Status = ({ height }: { height: number }) => {
       <Separator />
       <Stat
         label="Reward Destination"
-        assistant="Reward Destination"
+        helpKey="Reward Destination"
         icon={
           (payee === null
             ? faCircle

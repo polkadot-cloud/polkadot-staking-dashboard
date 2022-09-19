@@ -7,8 +7,8 @@ import { StatBox } from './Item';
 import { NumberProps } from './types';
 
 export const Number = (props: NumberProps) => {
-  const { label, value, unit, assistant } = props;
-  const assist = assistant !== undefined;
+  const { label, value, unit, helpKey } = props;
+  const help = helpKey !== undefined;
 
   const currency = props.currency ?? '';
 
@@ -35,7 +35,7 @@ export const Number = (props: NumberProps) => {
           </h3>
           <h4>
             {label}
-            {assist && <OpenHelpIcon key={assistant} />}
+            {help && <OpenHelpIcon key={helpKey} />}
           </h4>
         </div>
       </div>

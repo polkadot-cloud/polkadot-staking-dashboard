@@ -30,7 +30,7 @@ const TotalValidatorsStatBox = () => {
       value2: maxValidatorsCount.sub(totalValidators).toNumber(),
     },
     tooltip: `${toFixedIfNecessary(totalValidatorsAsPercent, 2)}%`,
-    assistant: 'Validator',
+    helpKey: 'Validator',
   };
   return <Pie {...params} />;
 };

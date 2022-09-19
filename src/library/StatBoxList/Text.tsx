@@ -6,9 +6,9 @@ import { StatBox } from './Item';
 import { TextProps } from './types';
 
 export const Text = (props: TextProps) => {
-  const { label, value, assistant } = props;
+  const { label, value, helpKey } = props;
 
-  const assist = assistant !== undefined;
+  const help = helpKey !== undefined;
 
   return (
     <StatBox>
@@ -17,7 +17,7 @@ export const Text = (props: TextProps) => {
           <h3 className="text">{value}</h3>
           <h4>
             {label}
-            {assist && <OpenHelpIcon key={assistant} />}
+            {help && <OpenHelpIcon key={helpKey} />}
           </h4>
         </div>
       </div>

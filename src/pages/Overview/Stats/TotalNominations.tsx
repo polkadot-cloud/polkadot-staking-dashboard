@@ -31,7 +31,7 @@ export const TotalNominatorsStatBox = () => {
     },
 
     tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
-    assistant: 'Total Nominators',
+    helpKey: 'Total Nominators',
   };
 
   return <Pie {...params} />;

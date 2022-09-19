@@ -30,7 +30,7 @@ const ActiveValidatorsStatBox = () => {
       value2: validatorCount.sub(new BN(activeValidators)).toNumber(),
     },
     tooltip: `${toFixedIfNecessary(activeValidatorsAsPercent, 2)}%`,
-    assistant: 'Active Validator',
+    helpKey: 'Active Validator',
   };
 
   return <Pie {...params} />;

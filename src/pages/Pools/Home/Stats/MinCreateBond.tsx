@@ -15,7 +15,7 @@ const MinCreateBondStatBox = () => {
     label: 'Minimum Create Bond',
     value: planckBnToUnit(stats.minCreateBond, units),
     unit: network.unit,
-    assistant: 'Minimum Create Bond',
+    helpKey: 'Minimum Create Bond',
   };
   return <Number {...params} />;
 };

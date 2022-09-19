@@ -8,8 +8,8 @@ import { StatBox } from './Item';
 import { PieProps } from './types';
 
 export const Pie = (props: PieProps) => {
-  const { label, stat, graph, tooltip, assistant } = props;
-  const assist = assistant !== undefined;
+  const { label, stat, graph, tooltip, helpKey } = props;
+  const help = helpKey !== undefined;
 
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
@@ -71,7 +71,7 @@ export const Pie = (props: PieProps) => {
           </h3>
           <h4>
             {label}
-            {assist && <OpenHelpIcon key={assistant} />}
+            {help && <OpenHelpIcon key={helpKey} />}
           </h4>
         </div>
       </div>

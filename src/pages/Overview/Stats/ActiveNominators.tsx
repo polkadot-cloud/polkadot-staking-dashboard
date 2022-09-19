@@ -33,7 +33,7 @@ export const ActiveNominatorsStatBox = () => {
       value2: maxElectingVoters - totalActiveNominators,
     },
     tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
-    assistant: 'Active Nominators',
+    helpKey: 'Active Nominators',
   };
 
   return <Pie {...params} />;

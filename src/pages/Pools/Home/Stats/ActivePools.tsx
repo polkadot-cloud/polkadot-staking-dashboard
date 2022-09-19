@@ -11,7 +11,7 @@ const ActivePoolsStatBox = () => {
     label: 'Active Pools',
     value: stats.counterForBondedPools.toNumber(),
     unit: '',
-    assistant: 'Active Pools',
+    helpKey: 'Active Pools',
   };
   return <Number {...params} />;
 };

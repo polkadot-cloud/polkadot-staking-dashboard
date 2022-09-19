@@ -9,13 +9,13 @@ import { Wrapper } from './Wrapper';
 import { StatProps } from './types';
 
 export const Stat = (props: StatProps) => {
-  const { label, stat, buttons, assistant, icon } = props;
+  const { label, stat, buttons, helpKey, icon } = props;
 
   return (
     <Wrapper>
       <h4>
         {label}
-        {assistant.length && <OpenHelpIcon key={assistant[1]} />}
+        {helpKey !== undefined && <OpenHelpIcon key={helpKey} />}
       </h4>
       <h2 className="stat">
         {icon && (
