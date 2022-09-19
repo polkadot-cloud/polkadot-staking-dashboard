@@ -57,7 +57,7 @@ export const Item = styled(motion.button)`
   border: 1px solid ${borderPrimary};
   color: ${textPrimary};
   flex-grow: 1;
-  padding: 0rem 1rem;
+  padding: 0.05rem 1rem;
   border-radius: 1.5rem;
   box-shadow: none;
   display: flex;
