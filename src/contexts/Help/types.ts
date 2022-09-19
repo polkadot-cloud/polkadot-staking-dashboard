@@ -4,9 +4,9 @@
 import { ReactNode } from 'react';
 import { Toggle } from '../../types';
 
-export type HelpConfig = Array<HelpItem>;
+export type AssistantConfig = Array<AssistantItem>;
 
-export interface HelpItem {
+export interface AssistantItem {
   key: string;
   definitions?: HelpDefinitions;
   external?: HelpExternals;
