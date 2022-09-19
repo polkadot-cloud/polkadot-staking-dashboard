@@ -18,7 +18,7 @@ export const Wrapper = styled(motion.div)`
   width: 100%;
   height: 100%;
   z-index: 9;
-  backdrop-filter: blur(13px);
+  backdrop-filter: blur(14px);
 
   > div {
     box-sizing: border-box;
@@ -63,6 +63,26 @@ export const ContentWrapper = styled.div`
   overflow: hidden;
   position: relative;
   padding: 4rem 0;
+
+  > .buttons {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 1.75rem;
+    position: relative;
+
+    > button {
+      > svg {
+        margin-right: 0.5rem;
+      }
+      color: ${networkColor};
+      border: 1px solid ${networkColor};
+      border-radius: 1.5rem;
+      padding: 0.4rem 0.8rem;
+      margin-right: 1.25rem;
+      margin-left: 0;
+    }
+  }
 
   h1 {
     font-family: 'Unbounded', 'sans-serif', sans-serif;
