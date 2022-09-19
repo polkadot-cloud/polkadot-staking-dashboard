@@ -27,7 +27,7 @@ export const Wrapper = styled(motion.div)`
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
 
     /* click anywhere behind modal content to close */
     .close {
