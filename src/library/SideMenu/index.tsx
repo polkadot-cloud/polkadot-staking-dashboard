@@ -81,6 +81,18 @@ export const SideMenu = () => {
       <section>
         <Main />
         <Separator />
+        <Heading title="Support" minimised={sideMenuMinimised} />
+        <Secondary
+          onClick={() => {
+            openHelpWith(null, {});
+          }}
+          name="Help"
+          minimised={sideMenuMinimised}
+          icon={{
+            Svg: InfoSVG,
+            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
+          }}
+        />
         <Heading title="Network" minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
@@ -94,18 +106,6 @@ export const SideMenu = () => {
           action={
             <ConnectionSymbol color={[symbolColor]} style={{ opacity: 0.7 }} />
           }
-        />
-        <Heading title="Support" minimised={sideMenuMinimised} />
-        <Secondary
-          onClick={() => {
-            openHelpWith(null, {});
-          }}
-          name="Help"
-          minimised={sideMenuMinimised}
-          icon={{
-            Svg: InfoSVG,
-            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
-          }}
         />
       </section>
 

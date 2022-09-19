@@ -70,8 +70,7 @@ export const Pie = (props: PieProps) => {
             )}
           </h3>
           <h4>
-            {label}
-            {help && <OpenHelpIcon key={helpKey} />}
+            {label} {help && <OpenHelpIcon key={helpKey} />}
           </h4>
         </div>
       </div>

@@ -18,6 +18,7 @@ export const OpenHelpIcon = (props: OpenHelpIconProps) => {
       onClick={() => {
         openHelpWith(key, {});
       }}
+      className="help-icon"
       style={{ width: size, height: size }}
     >
       <IconSVG />
