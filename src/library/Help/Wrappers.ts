@@ -62,7 +62,7 @@ export const ContentWrapper = styled.div`
   height: auto;
   overflow: hidden;
   position: relative;
-  padding: 4rem 0;
+  padding: 5rem 0;
 
   > .buttons {
     width: 100%;

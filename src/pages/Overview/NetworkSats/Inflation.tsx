@@ -38,7 +38,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Estimated APY <OpenHelpIcon key="Estimated APY" />
+                Estimated APY <OpenHelpIcon helpKey="Estimated APY" />
               </h4>
             </div>
           </div>
@@ -51,7 +51,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Inflation <OpenHelpIcon key="Inflation" />
+                Inflation <OpenHelpIcon helpKey="Inflation" />
               </h4>
             </div>
           </div>
@@ -59,7 +59,7 @@ export const Inflation = () => {
             <div className="inner">
               <h2>{supplyAsPercent}%</h2>
               <h4>
-                Supply Staked <OpenHelpIcon key="Supply Staked" />
+                Supply Staked <OpenHelpIcon helpKey="Supply Staked" />
               </h4>
             </div>
           </div>
@@ -72,7 +72,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Ideal Staked <OpenHelpIcon key="Ideal Staked" />
+                Ideal Staked <OpenHelpIcon helpKey="Ideal Staked" />
               </h4>
             </div>
           </div>

@@ -35,7 +35,7 @@ export const Number = (props: NumberProps) => {
           </h3>
           <h4>
             {label}
-            {help && <OpenHelpIcon key={helpKey} />}
+            {help && <OpenHelpIcon helpKey={helpKey} />}
           </h4>
         </div>
       </div>

@@ -98,7 +98,7 @@ export const Nominations = ({
       <CardHeaderWrapper withAction>
         <h3>
           {isPool ? 'Pool Nominations' : 'Nominations'}
-          <OpenHelpIcon key="Nominations" />
+          <OpenHelpIcon helpKey="Nominations" />
         </h3>
         <div>
           {/* If regular staking and nominating, display stop button.

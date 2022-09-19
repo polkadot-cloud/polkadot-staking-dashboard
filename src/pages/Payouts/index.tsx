@@ -64,7 +64,7 @@ export const Payouts = (props: PageProps) => {
           <CardHeaderWrapper padded>
             <h4>
               Payout History
-              <OpenHelpIcon key="Payout History" />
+              <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
               {payouts.length ? (

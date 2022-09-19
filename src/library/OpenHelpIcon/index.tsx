@@ -9,14 +9,14 @@ import { OpenHelpIconProps } from './types';
 export const OpenHelpIcon = (props: OpenHelpIconProps) => {
   const { openHelpWith } = useHelp();
 
-  const { key } = props;
+  const { helpKey } = props;
 
   const size = props.size ?? '1.3em';
 
   return (
     <Wrapper
       onClick={() => {
-        openHelpWith(key, {});
+        openHelpWith(helpKey, {});
       }}
       className="help-icon"
       style={{ width: size, height: size }}

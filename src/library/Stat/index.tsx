@@ -14,7 +14,7 @@ export const Stat = (props: StatProps) => {
   return (
     <Wrapper>
       <h4>
-        {label} {helpKey !== undefined && <OpenHelpIcon key={helpKey} />}
+        {label} {helpKey !== undefined && <OpenHelpIcon helpKey={helpKey} />}
       </h4>
       <h2 className="stat">
         {icon && (

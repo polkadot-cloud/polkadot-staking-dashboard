@@ -20,7 +20,7 @@ export const Header = (props: HeaderProps) => {
       <section>
         <h2>
           {title}
-          {helpKey !== undefined && <OpenHelpIcon key={helpKey} />}
+          {helpKey !== undefined && <OpenHelpIcon helpKey={helpKey} />}
         </h2>
       </section>
       <section>

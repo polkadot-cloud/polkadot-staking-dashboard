@@ -39,7 +39,7 @@ export const NominateStatusBar = (props: NominateStatusBarProps) => {
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp; Nominate &nbsp;
-            <OpenHelpIcon key="Nominating" />
+            <OpenHelpIcon helpKey="Nominating" />
           </h4>
           <div className="bar">
             <h5>
@@ -51,7 +51,7 @@ export const NominateStatusBar = (props: NominateStatusBarProps) => {
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp;Active &nbsp;
-            <OpenHelpIcon key="Active Bond Threshold" />
+            <OpenHelpIcon helpKey="Active Bond Threshold" />
           </h4>
           <div className="bar">
             <h5>{isSyncing ? '...' : `${minActiveBond} ${unit}`}</h5>
