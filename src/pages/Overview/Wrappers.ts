@@ -206,8 +206,6 @@ export const ReserveWrapper = styled.div`
 
       &:first-child {
         box-sizing: border-box;
-        flex: 1 1 40%;
-        max-width: 200px;
         overflow: hidden;
         padding-left: 0;
 
@@ -219,23 +217,23 @@ export const ReserveWrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           position: relative;
-          border-radius: 0.75rem;
+          border-radius: 1rem;
           opacity: 0.75;
           padding-top: 0.7rem;
           padding-bottom: 0.7rem;
-          padding-left: 2.5rem;
-          padding-right: 1rem;
+          padding-left: 2.75rem;
+          padding-right: 1.5rem;
           width: 100%;
 
           .icon {
             position: absolute;
             top: 0.8rem;
-            left: 0.65rem;
+            left: 0.95rem;
           }
         }
       }
 
-      .assistant-icon {
+      .help-icon {
         margin-left: 0.6rem;
       }
     }

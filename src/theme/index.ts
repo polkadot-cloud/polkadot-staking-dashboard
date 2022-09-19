@@ -113,9 +113,9 @@ export const backgroundToggle: theme.ThemeSet = theme(
   defaultThemes.buttons.toggle.background
 );
 
-export const buttonAssistantBackground: theme.ThemeSet = theme(
+export const buttonHelpBackground: theme.ThemeSet = theme(
   v,
-  defaultThemes.buttons.assistant.background
+  defaultThemes.buttons.help.background
 );
 
 export const buttonHoverBackground: theme.ThemeSet = theme(
@@ -173,21 +173,11 @@ export const modalBackground: theme.ThemeSet = theme(
   defaultThemes.modal.background
 );
 
-// assistant
+// help
 
-export const assistantBackground: theme.ThemeSet = theme(
+export const helpButton: theme.ThemeSet = theme(
   v,
-  defaultThemes.assistant.background
-);
-
-export const assistantButton: theme.ThemeSet = theme(
-  v,
-  defaultThemes.assistant.button.background
-);
-
-export const assistantLink: theme.ThemeSet = theme(
-  v,
-  defaultThemes.assistant.link
+  defaultThemes.help.button.background
 );
 
 // status colors

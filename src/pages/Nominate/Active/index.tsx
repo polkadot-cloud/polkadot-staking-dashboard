@@ -13,7 +13,7 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
 import { PageTitle } from 'library/PageTitle';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
@@ -78,7 +78,7 @@ export const Active = ({ title }: { title: string }) => {
               <CardHeaderWrapper withAction>
                 <h3>
                   Start Nominating
-                  <OpenAssistantIcon page="stake" title="Nominations" />
+                  <OpenHelpIcon helpKey="Nominations" />
                 </h3>
                 <div>
                   <Button

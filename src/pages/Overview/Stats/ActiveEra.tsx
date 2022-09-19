@@ -27,10 +27,7 @@ const ActiveEraStatBox = () => {
       value2: sessionEra.eraLength - sessionEra.eraProgress,
     },
     tooltip: metrics.activeEra.index === 0 ? undefined : timeleft,
-    assistant: {
-      page: 'validators',
-      key: 'Era',
-    },
+    helpKey: 'Era',
   };
   return <Pie {...params} />;
 };

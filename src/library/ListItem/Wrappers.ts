@@ -11,7 +11,7 @@ import {
   backgroundDropdown,
   backgroundModalItem,
 } from 'theme';
-import { MAX_ASSISTANT_INTERFACE_WIDTH } from 'consts';
+import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
 export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
@@ -72,7 +72,7 @@ export const Labels = styled.div`
 
   button {
     padding: 0 0.1rem;
-    @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
+    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
       padding: 0 0.2rem;
     }
 
@@ -92,7 +92,7 @@ export const Labels = styled.div`
     position: relative;
     color: ${textSecondary};
     margin: 0 0.2rem;
-    @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
+    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
       margin: 0 0.2rem;
 
       &.pool {

@@ -31,10 +31,7 @@ export const ActiveNominationsStatBox = () => {
       value2: total - inactive,
     },
     tooltip: isNominating() ? `${inactiveAsPercent}%` : undefined,
-    assistant: {
-      page: 'nominate',
-      key: 'Inactive Nominations',
-    },
+    helpKey: 'Inactive Nominations',
   };
 
   return <Pie {...params} />;

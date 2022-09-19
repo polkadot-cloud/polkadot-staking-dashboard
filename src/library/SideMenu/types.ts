@@ -25,11 +25,14 @@ export interface PrimaryProps {
 
 export interface SecondaryProps {
   name: string;
+  borderColor?: string;
+  onClick: () => void;
   active?: boolean;
   to?: string;
-  icon: IconProps;
+  icon?: IconProps;
   action?: React.ReactNode;
-  minimised?: any;
+  minimised: number;
+  animate?: AnyJson;
 }
 
 export interface IconProps {

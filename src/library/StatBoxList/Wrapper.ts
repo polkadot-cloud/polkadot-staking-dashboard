@@ -82,7 +82,7 @@ export const StatBoxWrapper = styled(motion.div)`
       flex-flow: row wrap;
       align-items: center;
 
-      .assistant-icon {
+      .help-icon {
         margin-left: 0.6rem;
       }
     }

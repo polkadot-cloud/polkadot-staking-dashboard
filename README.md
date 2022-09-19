@@ -127,8 +127,8 @@ Going from the top-most component, the component hierarchy is set up as follows:
 - [`Providers.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
 - [`Router.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
   - `<Modal />`: top-level of the modal.
-  - `<Assistant />`: top-level of the assistant.
-  - `<Headers />`: fixed header of the app containing the stash / controller, assistant and menu toggle buttons.
+  - `<Help />`: top-level of the help module.
+  - `<Headers />`: fixed header of the app containing the stash / controller and accounts toggle buttons.
   - `<NetworkBar />`: fixed network bar at the bottom of the app.
   - `<Notifications />`: smaller context-based popups. Currently used on click-to-copy, or to display extrinsic status (pending, success).
 
@@ -154,7 +154,7 @@ We develop in strict mode, so types are always required for objects. Use any ini
 
 Testing could be initialised on a per-component basis, such as isolating library components and testing them within a storybook environment.
 
-Integration tests make sense for the app itself, ensuring the page layout, assistant, and modals display the correct content at various app states. These states currently persist of:
+Integration tests make sense for the app itself, ensuring the page layout, help module, and modals display the correct content at various app states. These states currently persist of:
 
 - Connecting to the network, fetching from API, fully synced.
 - Actively staking, not actively staking.

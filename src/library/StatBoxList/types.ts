@@ -5,7 +5,7 @@ export interface NumberProps {
   label: string;
   value: string | number;
   unit: string;
-  assistant: any;
+  helpKey: string;
   currency?: string;
 }
 
@@ -14,11 +14,11 @@ export interface PieProps {
   stat: any;
   graph: any;
   tooltip: any;
-  assistant: any;
+  helpKey: string;
 }
 
 export interface TextProps {
   label: string;
   value: string;
-  assistant: any;
+  helpKey: string;
 }

@@ -70,7 +70,7 @@ export const HeaderWrapper = styled.div`
   margin-bottom: 0.75rem;
 
   h4 {
-    .assistant-icon {
+    .help-icon {
       margin-left: 0.6rem;
     }
   }

@@ -10,7 +10,6 @@ import { TxFeesProvider } from 'contexts/TxFees';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { AccountProvider } from './contexts/Account';
 import { APIProvider, useApi } from './contexts/Api';
-import { AssistantProvider } from './contexts/Assistant';
 import { BalancesProvider } from './contexts/Balances';
 import { ConnectProvider } from './contexts/Connect';
 import { ExtrinsicsProvider } from './contexts/Extrinsics';
@@ -29,6 +28,7 @@ import { ValidatorsProvider } from './contexts/Validators';
 import { UIProvider } from './contexts/UI';
 import { useTheme } from './contexts/Themes';
 import { SessionEraProvider } from './contexts/SessionEra';
+import { HelpProvider } from './contexts/Help';
 
 export const WrappedRouter = () => (
   <Wrapper>
@@ -53,7 +53,7 @@ export const Providers = withProviders(
   APIProvider,
   ModalProvider,
   ConnectProvider,
-  AssistantProvider,
+  HelpProvider,
   NetworkMetricsProvider,
   AccountProvider,
   BalancesProvider,

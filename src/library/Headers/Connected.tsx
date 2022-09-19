@@ -40,20 +40,12 @@ export const Connected = () => {
           {/* default account display / stash label if actively nominating */}
           <HeadingWrapper>
             <Account
-              canClick
-              onClick={() => {
-                openModalWith(
-                  'ConnectAccounts',
-                  { section: accounts.length ? 1 : 0 },
-                  'large'
-                );
-              }}
+              canClick={false}
               value={activeAccount}
               readOnly={!accountHasSigner(activeAccount)}
               label={activeAccountLabel}
               format="name"
               filled
-              wallet
             />
           </HeadingWrapper>
 

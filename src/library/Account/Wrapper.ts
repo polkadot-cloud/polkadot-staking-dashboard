@@ -11,14 +11,14 @@ export const Wrapper = styled(motion.button)<any>`
   background: ${(props) => props.fill};
   font-size: ${(props) => props.fontSize};
   box-sizing: border-box;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   box-shadow: none;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
   padding: 0 1rem;
-  max-width: 250px;
+  max-width: 225px;
   flex: 1;
 
   .identicon {
@@ -51,7 +51,7 @@ export const Wrapper = styled(motion.button)<any>`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    line-height: 2.4rem;
+    line-height: 2.15rem;
     flex: 1;
 
     &.unassigned {

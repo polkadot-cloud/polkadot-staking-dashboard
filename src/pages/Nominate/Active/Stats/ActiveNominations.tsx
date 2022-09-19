@@ -25,10 +25,7 @@ export const ActiveNominationsStatBox = () => {
       value2: active ? 0 : 1,
     },
     tooltip: active ? 'Active' : undefined,
-    assistant: {
-      page: 'nominate',
-      key: 'Nominations',
-    },
+    helpKey: 'Nominations',
   };
 
   return <Pie {...params} />;
