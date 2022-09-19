@@ -101,6 +101,8 @@ export type PagesConfig = Array<PageItem>;
 
 export type MaybeAccount = string | null;
 
+export type MaybeString = string | null;
+
 // any types to compress compiler warnings
 // eslint-disable-next-line
 export type AnyApi = any;

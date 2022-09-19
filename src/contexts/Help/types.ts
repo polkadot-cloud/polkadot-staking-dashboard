@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ReactNode } from 'react';
-import { Toggle } from '../../types';
+import { MaybeString } from 'types';
 
 export type AssistantConfig = Array<AssistantItem>;
 
@@ -30,24 +30,25 @@ export interface HelpExternal {
 }
 
 export interface HelpContextInterface {
-  fillDefinitionVariables: (d: HelpDefinition) => HelpDefinition;
-  toggle: () => void;
-  setPage: (page: string) => void;
-  setInnerDefinition: (meta: HelpDefinition) => void;
-  getDefinition: (k: string, t: string) => HelpDefinition | undefined;
-  openHelp: () => void;
+  openHelpWith: (d: MaybeString, c: HelpConfig) => void;
   closeHelp: () => void;
-  setActiveSection: (i: number) => void;
-  goToDefinition: (k: string, t: string) => void;
-  setHelpHeight: (v: number) => void;
-  activeSection: number;
-  open: Toggle;
-  page: string;
-  innerDefinition: HelpDefinition;
-  height: number;
-  transition: number;
+  setStatus: (s: number) => void;
+  setCategory: (c: MaybeString) => void;
+  setDefinition: (d: MaybeString) => void;
+  fillDefinitionVariables: (d: HelpDefinition) => HelpDefinition;
+  status: number;
+  definition: MaybeString;
+  category: MaybeString;
+}
+
+export interface HelpContextState {
+  status: number;
+  definition: MaybeString;
+  config: HelpConfig;
 }
 
 export interface HelpContextProps {
   children: ReactNode;
 }
+
+export type HelpConfig = Record<string, string | any>;

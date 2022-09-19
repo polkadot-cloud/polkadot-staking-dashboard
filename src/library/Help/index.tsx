@@ -85,6 +85,7 @@ export const Help = () => {
     // get all category items
     let _definitions: HelpDefinitions = [];
     let _external: HelpExternals = [];
+
     Object.values(ASSISTANT_CONFIG).forEach((c: AssistantItem) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
@@ -96,10 +97,13 @@ export const Help = () => {
   let definitions = meta?.definitions ?? [];
 
   // get active definiton
-  const activeDefinition = definition
-    ? fillDefinitionVariables(
-        definitions.find((d: HelpDefinition) => d.title === definition)
-      )
+  let activeDefinition = definition
+    ? definitions.find((d: HelpDefinition) => d.title === definition)
+    : null;
+
+  // fill placeholder variables
+  activeDefinition = activeDefinition
+    ? fillDefinitionVariables(activeDefinition)
     : null;
 
   // filter active definition

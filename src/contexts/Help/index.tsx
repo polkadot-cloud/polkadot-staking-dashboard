@@ -4,9 +4,19 @@
 import { useApi } from 'contexts/Api';
 import React, { useState } from 'react';
 import { replaceAll } from 'Utils';
-import { HelpContextProps, HelpDefinition } from './types';
+import { MaybeString } from 'types';
+import {
+  HelpConfig,
+  HelpContextInterface,
+  HelpContextProps,
+  HelpContextState,
+  HelpDefinition,
+} from './types';
+import * as defaults from './defaults';
 
-export const HelpContext = React.createContext<any>(null);
+export const HelpContext = React.createContext<HelpContextInterface>(
+  defaults.defaultHelpContext
+);
 
 export const useHelp = () => React.useContext(HelpContext);
 
@@ -15,16 +25,16 @@ export const HelpProvider = (props: HelpContextProps) => {
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store the current active help category
-  const [category, _setCategory] = useState<string | null>(null);
+  const [category, _setCategory] = useState<MaybeString>(null);
 
-  // to abstract out into individual state items
-  const [state, setState] = useState<any>({
+  // help module state
+  const [state, setState] = useState<HelpContextState>({
     status: 0,
     definition: null,
     config: {},
   });
 
-  const setDefinition = (definition: string | null) => {
+  const setDefinition = (definition: MaybeString) => {
     const _state = {
       ...state,
       definition,
@@ -40,7 +50,7 @@ export const HelpProvider = (props: HelpContextProps) => {
     setState(_state);
   };
 
-  const openHelpWith = (definition: string, _config: any = {}) => {
+  const openHelpWith = (definition: MaybeString, _config: HelpConfig = {}) => {
     setState({
       ...state,
       definition,
@@ -56,7 +66,7 @@ export const HelpProvider = (props: HelpContextProps) => {
       definition: null,
     });
   };
-  const setCategory = (_category: string) => {
+  const setCategory = (_category: MaybeString) => {
     _setCategory(_category);
   };
 
