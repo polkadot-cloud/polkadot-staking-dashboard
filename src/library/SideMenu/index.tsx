@@ -104,7 +104,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
-            size: '1.4rem',
+            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
       </section>
