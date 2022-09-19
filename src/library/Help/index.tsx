@@ -7,7 +7,7 @@ import { useHelp } from 'contexts/Help';
 import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 
 export const Help = () => {
-  const { setHelpHeight, setStatus, status, size, height, resize } = useHelp();
+  const { setHelpHeight, setStatus, status, resize } = useHelp();
   const controls = useAnimation();
 
   const maxHeight = window.innerHeight * 0.8;
@@ -65,18 +65,12 @@ export const Help = () => {
       }}
       animate={controls}
       transition={{
-        duration: 0.15,
+        duration: 0.25,
       }}
       variants={variants}
     >
       <div>
-        <HeightWrapper
-          size={size}
-          style={{
-            height,
-            overflow: height >= maxHeight ? 'scroll' : 'hidden',
-          }}
-        >
+        <HeightWrapper>
           <ContentWrapper ref={modalRef}>
             <h1>Help Content</h1>
           </ContentWrapper>

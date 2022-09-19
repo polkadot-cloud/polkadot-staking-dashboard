@@ -14,7 +14,7 @@ export const HelpProvider = (props: HelpContextProps) => {
     status: 0,
     definition: null,
     config: {},
-    height: 0,
+    height: 0, // remove height function
     resize: 0,
   });
 
@@ -58,7 +58,6 @@ export const HelpProvider = (props: HelpContextProps) => {
         openHelpWith,
         setStatus,
         status: state.status,
-        size: state.size,
         height: state.height,
         resize: state.resize,
       }}
