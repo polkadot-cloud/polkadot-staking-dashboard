@@ -26,6 +26,7 @@ export interface HelpExternal {
   title: string;
   subtitle: string;
   url: string;
+  website?: string;
 }
 
 export interface HelpContextInterface {

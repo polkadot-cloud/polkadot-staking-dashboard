@@ -26,6 +26,7 @@ export interface AssistantExternal {
   title: string;
   subtitle: string;
   url: string;
+  website?: string;
 }
 
 export interface AssistantContextInterface {

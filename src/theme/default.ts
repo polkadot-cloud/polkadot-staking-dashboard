@@ -86,7 +86,7 @@ export const defaultThemes: { [key: string]: any } = {
     background: v('rgba(234,230,230,0.93)', 'rgba(18,18,18,0.93)'),
     link: v('#d33079', '#d33079'),
     button: {
-      background: v('rgba(255,255,255,0.60)', 'rgba(0,0,0,0.4)'),
+      background: v('rgba(255,255,255,0.90)', 'rgba(0,0,0,0.4)'),
     },
   },
   loader: {

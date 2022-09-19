@@ -98,9 +98,9 @@ export const SideMenu = () => {
         <Heading title="Help" minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
-            openHelpWith('', {});
+            openHelpWith(null, {});
           }}
-          name="Assistant"
+          name="Help"
           animate={infoOutlineJson}
           minimised={sideMenuMinimised}
         />
