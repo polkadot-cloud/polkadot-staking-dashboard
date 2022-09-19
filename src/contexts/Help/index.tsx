@@ -39,6 +39,14 @@ export const HelpProvider = (props: HelpContextProps) => {
     });
   };
 
+  const setDefinition = (definition: string | null) => {
+    const _state = {
+      ...state,
+      definition,
+    };
+    setState(_state);
+  };
+
   const setStatus = (newStatus: number) => {
     const _state = {
       ...state,
@@ -103,6 +111,7 @@ export const HelpProvider = (props: HelpContextProps) => {
         closeHelp,
         setStatus,
         setPage,
+        setDefinition,
         fillDefinitionVariables,
         status: state.status,
         height: state.height,

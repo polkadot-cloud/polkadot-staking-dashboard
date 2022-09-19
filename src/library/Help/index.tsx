@@ -4,10 +4,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
-import { capitalizeFirstLetter, pageFromUri } from 'Utils';
+import { pageFromUri } from 'Utils';
 import { useLocation } from 'react-router-dom';
 import { ASSISTANT_CONFIG } from 'config/assistant';
 import { HelpDefinition, HelpExternal } from 'contexts/Help/types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import Definition from './Items/Definition';
 import External from './Items/External';
@@ -23,6 +25,7 @@ export const Help = () => {
     fillDefinitionVariables,
     definition,
     closeHelp,
+    setDefinition,
   } = useHelp();
   const controls = useAnimation();
 
@@ -98,9 +101,6 @@ export const Help = () => {
     pageMeta = { definitions: _definitions, external: _external };
   }
 
-  // get active section
-  const activeSection = capitalizeFirstLetter(page);
-
   // resources to display
   let definitions = pageMeta?.definitions ?? [];
 
@@ -131,6 +131,18 @@ export const Help = () => {
       <div>
         <HeightWrapper>
           <ContentWrapper ref={modalRef}>
+            <div className="buttons">
+              {definition && (
+                <button type="button" onClick={() => setDefinition(null)}>
+                  <FontAwesomeIcon icon={faReplyAll} />
+                  All Resources
+                </button>
+              )}
+              <button type="button" onClick={() => closeHelp()}>
+                <FontAwesomeIcon icon={faTimes} />
+                Close
+              </button>
+            </div>
             <h1>
               {activeDefinition
                 ? `${activeDefinition.title}`
