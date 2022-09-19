@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import {
-  assistantButton,
+  helpButton,
   modalOverlayBackground,
   networkColor,
   textPrimary,
@@ -130,7 +130,7 @@ export const DefinitionWrapper = styled(motion.div)`
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  background: ${assistantButton};
+  background: ${helpButton};
   border-radius: 1.5rem;
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.5rem 0 1.5rem;
@@ -181,7 +181,7 @@ export const ItemWrapper = styled(motion.div)<any>`
   justify-content: flex-start;
 
   > * {
-    background: ${assistantButton};
+    background: ${helpButton};
     border-radius: 1.5rem;
     flex: 1;
     padding: 1.5rem;

@@ -67,7 +67,7 @@ export const defaultThemes: { [key: string]: any } = {
     primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
     secondary: { background: v('rgba(238, 236, 236, 0.9)', '#111') },
     toggle: { background: v('rgba(244,243,242,1)', '#1a1a1a') },
-    assistant: { background: v('#ececec', '#242424') },
+    help: { background: v('#ececec', '#242424') },
     hover: { background: v('rgba(232, 230, 230, 0.9)', '#080808') },
     disabled: {
       background: v('#F3F6F4', '#000000'),
@@ -82,9 +82,7 @@ export const defaultThemes: { [key: string]: any } = {
     overlay: v('rgba(242,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
     background: v('#fff', '#0b0b0b'),
   },
-  assistant: {
-    background: v('rgba(234,230,230,0.93)', 'rgba(18,18,18,0.93)'),
-    link: v('#d33079', '#d33079'),
+  help: {
     button: {
       background: v('rgba(255,255,255,0.90)', 'rgba(0,0,0,0.4)'),
     },
