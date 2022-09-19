@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AssistantConfig } from 'contexts/Assistant/types';
+import { AssistantConfig } from 'contexts/Help/types';
 
 export const ASSISTANT_CONFIG: AssistantConfig = [
   {
@@ -278,6 +278,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         label: 'Validators',
         title: 'How do I know which validators to choose?',
         url: 'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
+        website: 'polkadot.network',
       },
     ],
   },

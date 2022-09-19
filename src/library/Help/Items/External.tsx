@@ -4,21 +4,20 @@
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
-import { ItemWrapper as Wrapper } from '../Wrappers';
-import { ExternalProps } from '../types';
+import { ItemWrapper } from '../Wrappers';
 
-export const External = (props: ExternalProps) => {
-  const { width, height, subtitle, label, title, url } = props;
+export const External = (props: any) => {
+  const { width, height, subtitle, label, title, url, website } = props;
 
   const handleClick = () => {
     window.open(url, '_blank');
   };
 
   return (
-    <Wrapper width={`${width}%`} height={height || 'auto'}>
+    <ItemWrapper width={`${width}%`} height={height || 'auto'}>
       <motion.button
         className="item"
-        whileHover={{ scale: 1.015 }}
+        whileHover={{ scale: 1.004 }}
         whileTap={{ scale: 0.99 }}
         transition={{
           duration: 0.5,
@@ -27,14 +26,14 @@ export const External = (props: ExternalProps) => {
         }}
         onClick={handleClick}
       >
-        <h4>{label}</h4>
-        <h3>{title}</h3>
-        {width > 50 && <p>{subtitle}</p>}
+        <h2>{title}</h2>
+        {subtitle}
         <p className="icon">
           <FontAwesomeIcon icon={faExt} className="ext" />
+          {website !== undefined && website}
         </p>
       </motion.button>
-    </Wrapper>
+    </ItemWrapper>
   );
 };
 

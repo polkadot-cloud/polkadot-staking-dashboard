@@ -2,16 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { NumberProps } from './types';
 
 export const Number = (props: NumberProps) => {
-  const { label, value, unit, assistant } = props;
-
-  const assist = assistant !== undefined;
-  const page = assistant?.page ?? '';
-  const key = assistant?.key ?? '';
+  const { label, value, unit, helpKey } = props;
+  const help = helpKey !== undefined;
 
   const currency = props.currency ?? '';
 
@@ -38,7 +35,7 @@ export const Number = (props: NumberProps) => {
           </h3>
           <h4>
             {label}
-            {assist && <OpenAssistantIcon page={page} title={key} />}
+            {help && <OpenHelpIcon helpKey={helpKey} />}
           </h4>
         </div>
       </div>

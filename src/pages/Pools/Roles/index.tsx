@@ -6,7 +6,7 @@ import { useAccount } from 'contexts/Account';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import Button from 'library/Button';
 import {
@@ -179,7 +179,7 @@ export const Roles = (props: RolesProps) => {
           <div className="inner">
             <h4>
               Root
-              <OpenAssistantIcon page="pools" title="Pool Roles" />
+              <OpenHelpIcon helpKey="Pool Roles" />
             </h4>
             <PoolAccount
               address={roles.root ?? null}
@@ -191,7 +191,7 @@ export const Roles = (props: RolesProps) => {
         <section>
           <div className="inner">
             <h4>
-              Depositor <OpenAssistantIcon page="pools" title="Pool Roles" />
+              Depositor <OpenHelpIcon helpKey="Pool Roles" />
             </h4>
             <PoolAccount
               address={roles.depositor ?? null}
@@ -203,7 +203,7 @@ export const Roles = (props: RolesProps) => {
         <section>
           <div className="inner">
             <h4>
-              Nominator <OpenAssistantIcon page="pools" title="Pool Roles" />
+              Nominator <OpenHelpIcon helpKey="Pool Roles" />
             </h4>
             {isEditing ? (
               <RoleEditInput
@@ -224,7 +224,7 @@ export const Roles = (props: RolesProps) => {
           <div className="inner">
             <h4>
               State Toggler
-              <OpenAssistantIcon page="pools" title="Pool Roles" />
+              <OpenHelpIcon helpKey="Pool Roles" />
             </h4>
             {isEditing ? (
               <RoleEditInput

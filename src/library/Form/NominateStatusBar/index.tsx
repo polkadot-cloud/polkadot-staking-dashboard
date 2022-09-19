@@ -6,7 +6,7 @@ import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useUi } from 'contexts/UI';
 import { planckBnToUnit } from 'Utils';
 import { Wrapper } from './Wrapper';
@@ -39,7 +39,7 @@ export const NominateStatusBar = (props: NominateStatusBarProps) => {
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp; Nominate &nbsp;
-            <OpenAssistantIcon page="stake" title="Nominating" />
+            <OpenHelpIcon helpKey="Nominating" />
           </h4>
           <div className="bar">
             <h5>
@@ -51,7 +51,7 @@ export const NominateStatusBar = (props: NominateStatusBarProps) => {
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp;Active &nbsp;
-            <OpenAssistantIcon page="stake" title="Active Bond Threshold" />
+            <OpenHelpIcon helpKey="Active Bond Threshold" />
           </h4>
           <div className="bar">
             <h5>{isSyncing ? '...' : `${minActiveBond} ${unit}`}</h5>

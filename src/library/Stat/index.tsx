@@ -2,22 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Button } from 'library/Button';
 import React from 'react';
 import { Wrapper } from './Wrapper';
 import { StatProps } from './types';
 
 export const Stat = (props: StatProps) => {
-  const { label, stat, buttons, assistant, icon } = props;
+  const { label, stat, buttons, helpKey, icon } = props;
 
   return (
     <Wrapper>
       <h4>
-        {label}
-        {assistant.length && (
-          <OpenAssistantIcon page={assistant[0]} title={assistant[1]} />
-        )}
+        {label} {helpKey !== undefined && <OpenHelpIcon helpKey={helpKey} />}
       </h4>
       <h2 className="stat">
         {icon && (

@@ -23,7 +23,7 @@ import { NetworkBar } from 'library/NetworkBar';
 import { Modal } from 'modals';
 import { Headers } from 'library/Headers';
 import SideMenu from 'library/SideMenu';
-import Assistant from 'library/Assistant';
+import { Help } from 'library/Help';
 import Notifications from 'library/Notifications';
 import { TITLE_DEFAULT } from 'consts';
 import { useUi } from 'contexts/UI';
@@ -57,8 +57,8 @@ export const RouterInner = () => {
       {/* Modal: closed by default */}
       <Modal />
       <BodyInterfaceWrapper>
-        {/* Assistant: closed by default */}
-        <Assistant />
+        {/* Help: closed by default */}
+        <Help />
 
         {/* Tooltip: invisible by default */}
         <Tooltip />
