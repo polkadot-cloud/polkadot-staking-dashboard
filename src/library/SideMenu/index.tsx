@@ -25,6 +25,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { PageCategory, PageItem, PagesConfig } from 'types';
+import * as infoOutlineJson from 'img/json/info-outline.json';
 import { Separator, Wrapper, LogoWrapper, ConnectionSymbol } from './Wrapper';
 import { Primary } from './Primary';
 import { Secondary } from './Secondary';
@@ -169,6 +170,14 @@ export const SideMenu = () => {
       ? defaultThemes.status.success.solid[mode]
       : defaultThemes.status.danger.solid[mode];
 
+  // handle transparent border color
+  const borderColor =
+    status === ConnectionStatus.Connecting
+      ? defaultThemes.status.warning.transparent[mode]
+      : status === ConnectionStatus.Connected
+      ? defaultThemes.status.success.transparent[mode]
+      : defaultThemes.status.danger.transparent[mode];
+
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
@@ -257,6 +266,8 @@ export const SideMenu = () => {
         <Heading title="Network" minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
+          borderColor={borderColor}
+          onClick={() => openModalWith('Networks')}
           icon={{
             Svg: network.brand.inline.svg,
             size: network.brand.inline.size,
@@ -265,6 +276,13 @@ export const SideMenu = () => {
           action={
             <ConnectionSymbol color={[symbolColor]} style={{ opacity: 0.7 }} />
           }
+        />
+        <Heading title="Help" minimised={sideMenuMinimised} />
+        <Secondary
+          onClick={() => {}}
+          name="Assistant"
+          animate={infoOutlineJson}
+          minimised={sideMenuMinimised}
         />
       </section>
 
