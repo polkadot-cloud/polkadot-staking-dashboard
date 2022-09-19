@@ -15,13 +15,12 @@ export const OpenHelpIcon = (props: OpenHelpIconProps) => {
 
   return (
     <Wrapper
-      className="help-icon ignore-assistant-outside-alerter"
       onClick={() => {
         openHelpWith(key, {});
       }}
       style={{ width: size, height: size }}
     >
-      <IconSVG className="ignore-assistant-outside-alerter" />
+      <IconSVG />
     </Wrapper>
   );
 };
