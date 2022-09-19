@@ -10,6 +10,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
+import { ReactComponent as InfoSVG } from 'img/info.svg';
 import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { UIContextInterface } from 'contexts/UI/types';
@@ -18,7 +19,6 @@ import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
-import * as infoOutlineJson from 'img/json/info-outline.json';
 import { useHelp } from 'contexts/Help';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
@@ -95,14 +95,17 @@ export const SideMenu = () => {
             <ConnectionSymbol color={[symbolColor]} style={{ opacity: 0.7 }} />
           }
         />
-        <Heading title="Help" minimised={sideMenuMinimised} />
+        <Heading title="Support" minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
             openHelpWith(null, {});
           }}
           name="Help"
-          animate={infoOutlineJson}
           minimised={sideMenuMinimised}
+          icon={{
+            Svg: InfoSVG,
+            size: '1.4rem',
+          }}
         />
       </section>
 
