@@ -18,7 +18,7 @@ import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
-import * as helpCenterOutlineJson from 'img/json/help-center-outline.json';
+import * as infoOutlineJson from 'img/json/info-outline.json';
 import { useHelp } from 'contexts/Help';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
@@ -101,7 +101,7 @@ export const SideMenu = () => {
             openHelpWith('', {});
           }}
           name="Assistant"
-          animate={helpCenterOutlineJson}
+          animate={infoOutlineJson}
           minimised={sideMenuMinimised}
         />
       </section>
