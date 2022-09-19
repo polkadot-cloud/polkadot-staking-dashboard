@@ -178,7 +178,7 @@ export const BalanceGraph = () => {
       <div className="head">
         <h4>
           Balance
-          <OpenHelpIcon title="Your Balance" />
+          <OpenHelpIcon key="Your Balance" />
         </h4>
         <h2>
           <span className="amount">{humanNumber(freeBase)}</span>&nbsp;

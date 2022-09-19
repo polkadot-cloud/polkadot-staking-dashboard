@@ -179,7 +179,7 @@ export const Roles = (props: RolesProps) => {
           <div className="inner">
             <h4>
               Root
-              <OpenHelpIcon title="Pool Roles" />
+              <OpenHelpIcon key="Pool Roles" />
             </h4>
             <PoolAccount
               address={roles.root ?? null}
@@ -191,7 +191,7 @@ export const Roles = (props: RolesProps) => {
         <section>
           <div className="inner">
             <h4>
-              Depositor <OpenHelpIcon title="Pool Roles" />
+              Depositor <OpenHelpIcon key="Pool Roles" />
             </h4>
             <PoolAccount
               address={roles.depositor ?? null}
@@ -203,7 +203,7 @@ export const Roles = (props: RolesProps) => {
         <section>
           <div className="inner">
             <h4>
-              Nominator <OpenHelpIcon title="Pool Roles" />
+              Nominator <OpenHelpIcon key="Pool Roles" />
             </h4>
             {isEditing ? (
               <RoleEditInput
@@ -224,7 +224,7 @@ export const Roles = (props: RolesProps) => {
           <div className="inner">
             <h4>
               State Toggler
-              <OpenHelpIcon title="Pool Roles" />
+              <OpenHelpIcon key="Pool Roles" />
             </h4>
             {isEditing ? (
               <RoleEditInput

@@ -13,7 +13,7 @@ export const NetworkStats = () => {
       <CardHeaderWrapper>
         <h3>
           Network Stats
-          <OpenHelpIcon title="Network Stats" />
+          <OpenHelpIcon key="Network Stats" />
         </h3>
       </CardHeaderWrapper>
       <Wrapper>

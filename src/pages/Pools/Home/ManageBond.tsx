@@ -38,7 +38,7 @@ export const ManageBond = () => {
       <CardHeaderWrapper>
         <h4>
           Bonded Funds
-          <OpenHelpIcon title="Bonded in Pool" />
+          <OpenHelpIcon key="Bonded in Pool" />
         </h4>
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}

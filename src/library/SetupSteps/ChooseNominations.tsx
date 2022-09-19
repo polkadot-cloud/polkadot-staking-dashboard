@@ -34,7 +34,7 @@ export const ChooseNominations = (props: ChooseNominationsProps) => {
         thisSection={section}
         complete={setup.nominations.length > 0}
         title="Nominate"
-        assistantKey="Nominating"
+        helpKey="Nominating"
         setupType={setupType}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

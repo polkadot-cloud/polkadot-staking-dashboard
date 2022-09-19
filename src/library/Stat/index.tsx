@@ -15,7 +15,7 @@ export const Stat = (props: StatProps) => {
     <Wrapper>
       <h4>
         {label}
-        {assistant.length && <OpenHelpIcon title={assistant[1]} />}
+        {assistant.length && <OpenHelpIcon key={assistant[1]} />}
       </h4>
       <h2 className="stat">
         {icon && (

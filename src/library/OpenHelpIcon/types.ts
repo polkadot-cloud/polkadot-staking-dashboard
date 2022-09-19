@@ -2,6 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export interface OpenHelpIconProps {
-  title: string;
+  key: string;
   size?: string;
 }

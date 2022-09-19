@@ -78,7 +78,7 @@ export const Active = ({ title }: { title: string }) => {
               <CardHeaderWrapper withAction>
                 <h3>
                   Start Nominating
-                  <OpenHelpIcon title="Nominations" />
+                  <OpenHelpIcon key="Nominations" />
                 </h3>
                 <div>
                   <Button

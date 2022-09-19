@@ -21,7 +21,7 @@ export const Reserve = (props: ReserveProps) => {
         <Separator />
         <h4>
           Reserved
-          <OpenHelpIcon title="Reserve Balance" />
+          <OpenHelpIcon key="Reserve Balance" />
         </h4>
 
         <div className="inner">

@@ -22,7 +22,7 @@ export interface GenerateNominationsInnerProps {
 
 export interface HeaderProps {
   title?: string;
-  assistantKey?: string;
+  helpKey?: string;
   complete?: boolean | null;
   thisSection: number;
   setupType: SetupType;

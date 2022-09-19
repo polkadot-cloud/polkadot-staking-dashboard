@@ -72,7 +72,7 @@ export const Payee = (props: SetupStepProps) => {
         thisSection={section}
         complete={setup.payee !== null}
         title="Reward Destination"
-        assistantKey="Reward Destination"
+        helpKey="Reward Destination"
         setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
