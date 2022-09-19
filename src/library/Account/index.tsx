@@ -5,7 +5,6 @@ import { clipAddress, convertRemToPixels } from 'Utils';
 import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
-import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Wrapper from './Wrapper';
@@ -23,7 +22,6 @@ export const Account = (props: AccountProps) => {
   const { format } = props;
   const filled = props.filled ?? false;
   const fontSize = props.fontSize ?? '1.05rem';
-  const wallet = props.wallet ?? false;
 
   // functional props
   const { canClick }: { canClick: boolean } = props;
@@ -82,18 +80,12 @@ export const Account = (props: AccountProps) => {
             <span className="identicon">
               <Identicon
                 value={value}
-                size={convertRemToPixels(fontSize) * 1.45}
+                size={convertRemToPixels(fontSize) * 1.4}
               />
             </span>
           )}
           <span className="title">{displayValue || clipAddress(value)}</span>
         </>
-      )}
-
-      {wallet && (
-        <div className="wallet">
-          <WalletSVG />
-        </div>
       )}
     </Wrapper>
   );

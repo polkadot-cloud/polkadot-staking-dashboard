@@ -11,25 +11,21 @@ export const Connect = () => {
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
   return (
-    <>
-      {!activeAccount && (
-        <HeadingWrapper>
-          <Item
-            className="connect"
-            onClick={() => {
-              openModalWith(
-                'ConnectAccounts',
-                { section: accounts.length ? 1 : 0 },
-                'large'
-              );
-            }}
-            whileHover={{ scale: 1.02 }}
-          >
-            <FontAwesomeIcon icon={faWallet} className="icon" />
-            <span>Connect</span>
-          </Item>
-        </HeadingWrapper>
-      )}
-    </>
+    <HeadingWrapper>
+      <Item
+        className="connect"
+        onClick={() => {
+          openModalWith(
+            'ConnectAccounts',
+            { section: accounts.length ? 1 : 0 },
+            'large'
+          );
+        }}
+        whileHover={{ scale: 1.02 }}
+      >
+        <FontAwesomeIcon icon={faWallet} className="icon" />
+        <span>{activeAccount ? 'Accounts' : 'Connect'}</span>
+      </Item>
+    </HeadingWrapper>
   );
 };

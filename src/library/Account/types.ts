@@ -9,7 +9,6 @@ export interface AccountProps {
   canClick: boolean;
   filled: boolean;
   fontSize?: string;
-  wallet?: boolean;
   title?: string;
   readOnly?: boolean;
 }

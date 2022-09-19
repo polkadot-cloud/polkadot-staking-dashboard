@@ -49,29 +49,7 @@ export const HeadingWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
-  margin-left: 0.75rem;
-
-  /* accounts dropdown */
-  .accounts {
-    background: ${backgroundDropdown};
-    position: absolute;
-    border-radius: 1rem;
-    backdrop-filter: blur(4px);
-    top: 3rem;
-    right: 0;
-    width: 100%;
-    min-width: 250px;
-    list-style: none;
-    margin: 0;
-    padding: 0rem 0.25rem;
-    display: flex;
-    flex-flow: column wrap;
-    box-sizing: border-box;
-
-    > button {
-      margin: 0.25rem 0;
-    }
-  }
+  margin-left: 0.9rem;
 `;
 
 export const Item = styled(motion.button)`
@@ -79,8 +57,8 @@ export const Item = styled(motion.button)`
   border: 1px solid ${borderPrimary};
   color: ${textPrimary};
   flex-grow: 1;
-  padding: 0.15rem 1rem;
-  border-radius: 1rem;
+  padding: 0.08rem 1rem;
+  border-radius: 1.5rem;
   box-shadow: none;
   display: flex;
   flex-flow: row nowrap;
@@ -111,7 +89,7 @@ export const Item = styled(motion.button)`
       }
     }
     .icon {
-      margin-right: 0.4rem;
+      margin-right: 0.6rem;
       path {
         fill: ${textInvert};
       }
