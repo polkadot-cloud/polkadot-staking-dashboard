@@ -68,7 +68,7 @@ export const ContentWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
     position: relative;
 
     > button {
