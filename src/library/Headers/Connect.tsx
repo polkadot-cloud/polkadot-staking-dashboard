@@ -23,7 +23,11 @@ export const Connect = () => {
         }}
         whileHover={{ scale: 1.02 }}
       >
-        <FontAwesomeIcon icon={faWallet} className="icon" />
+        <FontAwesomeIcon
+          icon={faWallet}
+          className="icon"
+          transform="shrink-2"
+        />
         <span>{activeAccount ? 'Accounts' : 'Connect'}</span>
       </Item>
     </HeadingWrapper>
