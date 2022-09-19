@@ -1,13 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
 import { pageFromUri } from 'Utils';
 import { useLocation } from 'react-router-dom';
 import { ASSISTANT_CONFIG } from 'config/assistant';
-import { HelpDefinition, HelpExternal } from 'contexts/Help/types';
+import {
+  AssistantItem,
+  HelpDefinition,
+  HelpDefinitions,
+  HelpExternal,
+  HelpExternals,
+} from 'contexts/Help/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
@@ -16,20 +22,16 @@ import External from './Items/External';
 
 export const Help = () => {
   const {
-    setHelpHeight,
     setStatus,
     status,
-    resize,
-    setPage,
-    page,
+    setCategory,
+    category,
     fillDefinitionVariables,
     definition,
     closeHelp,
     setDefinition,
   } = useHelp();
   const controls = useAnimation();
-
-  const maxHeight = window.innerHeight * 0.8;
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -62,60 +64,51 @@ export const Help = () => {
 
   const { pathname } = useLocation();
 
-  const setPageOnPathname = useCallback(() => {
-    setPage(pageFromUri(pathname));
+  const setCategoryOnPathname = useCallback(() => {
+    setCategory(pageFromUri(pathname));
   }, [pathname]);
 
-  useEffect(() => setPageOnPathname(), [setPageOnPathname]);
+  useEffect(() => setCategoryOnPathname(), [setCategoryOnPathname]);
 
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  // resize on status or resize change
-  useEffect(() => {
-    handleResize();
-  }, [resize]);
-
-  const handleResize = () => {
-    let _height = modalRef.current?.clientHeight ?? 0;
-    _height = _height > maxHeight ? maxHeight : _height;
-    setHelpHeight(_height);
-  };
-
+  // render early if help not open
   if (status === 0) {
     return <></>;
   }
 
-  let pageMeta: any;
+  let meta: AssistantItem | undefined;
   if (definition) {
-    // get page meta from active page
-    pageMeta = Object.values(ASSISTANT_CONFIG).find(
-      (item: any) => item.key === page
+    // get items for active category
+    meta = Object.values(ASSISTANT_CONFIG).find(
+      (item: AssistantItem) => item.key === category
     );
   } else {
-    let _definitions: any = [];
-    let _external: any = [];
-    Object.values(ASSISTANT_CONFIG).forEach((category: any) => {
-      _definitions = _definitions.concat([...(category.definitions || [])]);
-      _external = _external.concat([...(category.external || [])]);
+    // get all category items
+    let _definitions: HelpDefinitions = [];
+    let _external: HelpExternals = [];
+    Object.values(ASSISTANT_CONFIG).forEach((c: AssistantItem) => {
+      _definitions = _definitions.concat([...(c.definitions || [])]);
+      _external = _external.concat([...(c.external || [])]);
     });
-    pageMeta = { definitions: _definitions, external: _external };
+    meta = { definitions: _definitions, external: _external };
   }
 
   // resources to display
-  let definitions = pageMeta?.definitions ?? [];
+  let definitions = meta?.definitions ?? [];
 
   // get active definiton
   const activeDefinition = definition
     ? fillDefinitionVariables(
-        definitions.find((d: any) => d.title === definition)
+        definitions.find((d: HelpDefinition) => d.title === definition)
       )
     : null;
 
   // filter active definition
-  definitions = definitions.filter((d: any) => d.title !== definition);
+  definitions = definitions.filter(
+    (d: HelpDefinition) => d.title !== definition
+  );
 
   // get external resources
-  const external = pageMeta?.external ?? [];
+  const external = meta?.external ?? [];
 
   return (
     <Wrapper
@@ -130,7 +123,7 @@ export const Help = () => {
     >
       <div>
         <HeightWrapper>
-          <ContentWrapper ref={modalRef}>
+          <ContentWrapper>
             <div className="buttons">
               {definition && (
                 <button type="button" onClick={() => setDefinition(null)}>

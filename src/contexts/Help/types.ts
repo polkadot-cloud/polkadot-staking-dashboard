@@ -7,7 +7,7 @@ import { Toggle } from '../../types';
 export type AssistantConfig = Array<AssistantItem>;
 
 export interface AssistantItem {
-  key: string;
+  key?: string;
   definitions?: HelpDefinitions;
   external?: HelpExternals;
 }
