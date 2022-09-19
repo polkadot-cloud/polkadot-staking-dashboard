@@ -18,7 +18,7 @@ export const LastEraPayoutStatBox = () => {
     label: 'Last Era Payout',
     value: lastRewardBase,
     unit,
-    helpKey: 'payouts',
+    helpKey: 'Last Era Payout',
   };
   return <Number {...params} />;
 };
