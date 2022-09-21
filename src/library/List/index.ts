@@ -99,7 +99,7 @@ export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 
   > button {
     background: ${buttonSecondaryBackground};
