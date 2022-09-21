@@ -131,12 +131,15 @@ export const LargeItemWrapper = styled.div`
     flex-flow: row wrap;
   }
   .icon {
-    color: ${textSecondary};
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
     margin-right: 0.75rem;
+
+    > svg {
+      color: ${networkColor};
+    }
   }
   p {
     color: ${textSecondary};
