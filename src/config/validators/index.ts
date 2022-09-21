@@ -9,6 +9,7 @@ import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as CoinbaseCloud } from './thumbnails/coinbasecloud.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
+import { ReactComponent as Dionysus } from './thumbnails/dionysus.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as GenericChain } from './thumbnails/genericchain.svg';
@@ -107,6 +108,24 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'GRSWBC1kCuNVp8KTgGyK7Bo3bP7CdLDPwfnx2L5JJLQ41Qj',
         'Em4HYqVrWX3uCvrC8NWoabfKpV9z8stdRKkXYXcZdWGxdXT',
+      ],
+    },
+  },
+  {
+    name: 'Dionysus🍇',
+    Thumbnail: Dionysus,
+    bio: 'an independent secure validation service for Polkadot and Kusama Networks operated by Web3 researchers and engineers with a proven record in running reliable secure infrastructure',
+    email: '',
+    website: 'https://dionysus.network',
+    validators: {
+      polkadot: ['12CJw9KNkC7FzVVg3dvny4PWHjjkvdyM17mmNfXyfucp8JfM'],
+      kusama: [
+        'FWz717J6ATaYSNy2tRHAskEC9SP4uKHNJYC9mvfvimkB8GT',
+        'DrymfiuRSkpVCqy3tFxAsYEUUiXVNeghCkhcsWor6RA1K7c',
+        'DYLJXVDuT3wNfnYZ1nQoTXcpguX4hk2y93q4RnCEMuU9jTr',
+        'GjndRb4VKJatuFpxgSVULRGRULFcwxNHubrnoGZzGwfK4YT',
+        'FFAatME5P5gMazo9AywhqmeqVLTNMPrDtJsT9saxuy2BYpE',
+        'FyL5TJXFEWDHC1yuBGwtngo3LRg4nEQ4ua47p1szMQdh8HR',
       ],
     },
   },
