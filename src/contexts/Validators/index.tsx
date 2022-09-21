@@ -112,6 +112,7 @@ export const ValidatorsProvider = ({
   useEffect(() => {
     if (isReady) {
       fetchValidators();
+      subscribeParachainValidators(api);
       subscribeSessionValidators(api);
     }
 
@@ -265,6 +266,24 @@ export const ValidatorsProvider = ({
           });
         }
       );
+    }
+  };
+
+  /*
+   * subscribe to active parachain validators
+   */
+  const subscribeParachainValidators = async (_api: AnyApi) => {
+    if (isReady) {
+      // const unsub = await _api.query.paraSessionInfo.accountKeys(
+      //   (_validators: AnyApi) => {
+      //     console.log(_validators.toHuman());
+      //     // setSessionValidators({
+      //     //   ...sessionValidators,
+      //     //   list: _validators.toHuman(),
+      //     //   unsub,
+      //     // });
+      //   }
+      // );
     }
   };
 
