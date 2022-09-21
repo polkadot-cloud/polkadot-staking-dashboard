@@ -12,6 +12,7 @@ import {
   faHeart,
   faDollarSign,
   faUserEdit,
+  faChartPie,
 } from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
 import {
@@ -76,11 +77,14 @@ export const GenerateNominationsInner = (
     let _nominations;
     if (fetching) {
       switch (method) {
-        case 'Favourites':
-          _nominations = fetchFavourites();
+        case 'Optimal':
+          _nominations = fetchOptimal();
           break;
         case 'Lowest Commission':
           _nominations = fetchLowCommission();
+          break;
+        case 'Favourites':
+          _nominations = fetchFavourites();
           break;
         default:
           return;
@@ -130,6 +134,41 @@ export const GenerateNominationsInner = (
       ).slice(0, 16);
     }
     return _nominations;
+  };
+
+  const fetchOptimal = () => {
+    let _nominationsActive = Object.assign(validators);
+    let _nominationsWaiting = Object.assign(validators);
+
+    // filter validators to find waiting candidates
+    _nominationsWaiting = applyValidatorFilters(
+      _nominationsWaiting,
+      rawBatchKey,
+      [
+        'all_commission',
+        'blocked_nominations',
+        'missing_identity',
+        'in_session',
+      ]
+    );
+
+    // filter validators to find active candidates
+    _nominationsActive = applyValidatorFilters(
+      _nominationsActive,
+      rawBatchKey,
+      ['all_commission', 'blocked_nominations', 'missing_identity', 'inactive']
+    );
+
+    // choose shuffled subset of waiting
+    if (_nominationsWaiting.length) {
+      _nominationsWaiting = shuffle(_nominationsWaiting).slice(0, 4);
+    }
+    // choose shuffled subset of active
+    if (_nominationsWaiting.length) {
+      _nominationsActive = shuffle(_nominationsActive).slice(0, 12);
+    }
+
+    return shuffle(_nominationsWaiting.concat(_nominationsActive));
   };
 
   const updateSetters = (_nominations: Nominations) => {
@@ -203,8 +242,21 @@ export const GenerateNominationsInner = (
           <>
             <div className="motion-buttons">
               <LargeItem
-                title="Low Commission"
-                subtitle="Gets a set of validators with low commission."
+                title="Optimal"
+                subtitle="Selects a mix active and inactive validators."
+                icon={faChartPie as IconProp}
+                transform="grow-2"
+                active={false}
+                onClick={() => {
+                  setMethod('Optimal');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
+                }}
+              />
+              <LargeItem
+                title="Active Low Commission "
+                subtitle="Gets a set of active validators with low commission."
                 icon={faDollarSign as IconProp}
                 transform="grow-2"
                 active={false}
@@ -230,7 +282,7 @@ export const GenerateNominationsInner = (
                 }}
               />
               <LargeItem
-                title="Manual Only"
+                title="Manual Selection"
                 subtitle="Add validators from scratch."
                 icon={faUserEdit as IconProp}
                 transform="grow-2"
