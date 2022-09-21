@@ -78,6 +78,7 @@ export const SelectFavourites = () => {
               refetchOnListUpdate
               showMenu={false}
               inModal
+              allowMoreCols
             />
           ) : (
             <h3>No Favourites Available.</h3>

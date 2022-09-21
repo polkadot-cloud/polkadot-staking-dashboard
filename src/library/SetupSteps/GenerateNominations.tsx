@@ -205,7 +205,7 @@ export const GenerateNominationsInner = (
         nominations,
         callback: updateList,
       },
-      'large'
+      'xl'
     );
   };
 

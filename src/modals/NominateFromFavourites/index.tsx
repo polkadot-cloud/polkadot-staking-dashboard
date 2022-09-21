@@ -154,6 +154,7 @@ export const NominateFromFavourites = () => {
               refetchOnListUpdate
               showMenu={false}
               inModal
+              allowMoreCols
             />
           ) : (
             <h3>No Favourites Available.</h3>
