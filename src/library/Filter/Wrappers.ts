@@ -112,7 +112,7 @@ export const ItemWrapper = styled.div<any>`
 
 export const LargeItemWrapper = styled.div`
   border: 1px solid ${borderPrimary};
-  border-radius: 0.7rem;
+  border-radius: 0.9rem;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;

@@ -31,7 +31,7 @@ export const Item = styled.button<{ selected?: boolean }>`
   height: 95px;
   padding: 1.25rem;
   margin: 0.35rem;
-  border-radius: 0.75rem;
+  border-radius: 0.9rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;

@@ -24,9 +24,15 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   > .inner {
     background: ${(props) =>
       props.inModal ? backgroundModalItem : backgroundDropdown};
+    border: 1px solid ${borderPrimary};
+
+    ${(props) =>
+      props.inModal &&
+      `
+      border: none;`}
     box-sizing: border-box;
     flex: 1;
-    border-radius: 0.75rem;
+    border-radius: 0.9rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
