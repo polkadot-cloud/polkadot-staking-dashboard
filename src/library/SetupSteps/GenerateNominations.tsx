@@ -73,31 +73,36 @@ export const GenerateNominationsInner = (
       return;
     }
 
-    // fetch nominations based on method
-    let _nominations;
     if (fetching) {
-      switch (method) {
-        case 'Optimal':
-          _nominations = fetchOptimal();
-          break;
-        case 'Lowest Commission':
-          _nominations = fetchLowCommission();
-          break;
-        case 'Favourites':
-          _nominations = fetchFavourites();
-          break;
-        default:
-          return;
-      }
-
-      // update component state
-      setNominations(_nominations);
-      setFetching(false);
-
-      // apply update to setters
-      updateSetters(_nominations);
+      fetchNominationsForMethod();
     }
   });
+
+  // fetch nominations based on method
+  const fetchNominationsForMethod = () => {
+    let _nominations;
+
+    switch (method) {
+      case 'Optimal':
+        _nominations = fetchOptimal();
+        break;
+      case 'Lowest Commission':
+        _nominations = fetchLowCommission();
+        break;
+      case 'Favourites':
+        _nominations = fetchFavourites();
+        break;
+      default:
+        return;
+    }
+
+    // update component state
+    setNominations(_nominations);
+    setFetching(false);
+
+    // apply update to setters
+    updateSetters(_nominations);
+  };
 
   const fetchFavourites = () => {
     let _favs: Array<Validator> = [];
@@ -235,6 +240,40 @@ export const GenerateNominationsInner = (
     resetSelected();
   };
 
+  // accumulate actions
+  let actions = [
+    {
+      title: 'Start Again',
+      onClick: cbClearNominations,
+      onSelected: false,
+    },
+    {
+      disabled: !favouritesList.length,
+      title: 'Add From Favourites',
+      onClick: cbAddNominations,
+      onSelected: false,
+    },
+    {
+      title: `Remove Selected`,
+      onClick: cbRemoveSelected,
+      onSelected: true,
+    },
+  ];
+
+  // determine re-generate buttons
+  if (['Lowest Commission', 'Optimal'].includes(method || '')) {
+    actions.reverse().push({
+      title: 'Re-Generate',
+      onClick: () => {
+        removeValidatorMetaBatch(batchKey);
+        setNominations([]);
+        setFetching(true);
+      },
+      onSelected: false,
+    });
+    actions = actions.reverse();
+  }
+
   return (
     <Wrapper>
       <div>
@@ -308,24 +347,7 @@ export const GenerateNominationsInner = (
                 validators={nominations}
                 batchKey={batchKey}
                 selectable
-                actions={[
-                  {
-                    title: 'Start Again',
-                    onClick: cbClearNominations,
-                    onSelected: false,
-                  },
-                  {
-                    disabled: !favouritesList.length,
-                    title: 'Add From Favourites',
-                    onClick: cbAddNominations,
-                    onSelected: false,
-                  },
-                  {
-                    title: `Remove Selected`,
-                    onClick: cbRemoveSelected,
-                    onSelected: true,
-                  },
-                ]}
+                actions={actions}
                 allowMoreCols
               />
             </div>
