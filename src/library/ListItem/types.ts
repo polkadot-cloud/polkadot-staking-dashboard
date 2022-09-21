@@ -49,3 +49,7 @@ export interface SelectProps {
     address: string;
   };
 }
+
+export interface ParaValidatorProps {
+  address: MaybeAccount;
+}

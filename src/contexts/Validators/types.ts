@@ -14,7 +14,7 @@ export interface ValidatorsContextInterface {
   validators: Array<Validator>;
   meta: AnyMetaBatch;
   session: SessionValidators;
-  sessionParachain: SessionParachainValidators;
+  sessionParachain: string[];
   favourites: string[];
   nominated: Array<Validator> | null;
   poolNominated: Array<Validator> | null;

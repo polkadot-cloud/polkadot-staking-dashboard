@@ -27,7 +27,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   validators: [],
   meta: {},
   session: sessionValidators,
-  sessionParachain: sessionParachainValidators,
+  sessionParachain: [],
   favourites: [],
   nominated: null,
   poolNominated: null,
