@@ -5,7 +5,7 @@ import { SelectableWrapper } from '.';
 import { useList } from './context';
 
 export const Selectable = (props: any) => {
-  const { actionsAll, actionsSelected } = props;
+  const { actionsAll, actionsSelected, canSelect } = props;
 
   const provider = useList();
   // get list provider props
@@ -27,6 +27,7 @@ export const Selectable = (props: any) => {
       {selectToggleable === true && (
         <button
           type="button"
+          disabled={!canSelect}
           onClick={() => {
             setSelectActive(!selectActive);
           }}

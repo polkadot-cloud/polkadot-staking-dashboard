@@ -110,4 +110,43 @@ export const ItemWrapper = styled.div<any>`
   }
 `;
 
+export const LargeItemWrapper = styled.div`
+  border: 1px solid ${borderPrimary};
+  border-radius: 0.9rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  position: relative;
+  padding: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  > section {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+  }
+  .icon {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.75rem;
+
+    > svg {
+      color: ${networkColor};
+    }
+  }
+  p {
+    color: ${textSecondary};
+    margin: 0;
+    text-align: left;
+    padding-top: 0.5rem;
+  }
+`;
+
 export default Wrapper;

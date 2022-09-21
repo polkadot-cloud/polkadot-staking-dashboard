@@ -58,7 +58,7 @@ export const StyledSelect = styled.div`
   box-sizing: border-box;
   margin: 0.75rem 0 0;
   width: 100%;
-  border-radius: 0.75rem;
+  border-radius: 0.9rem;
   z-index: 1;
   height: 170px;
   padding: 0.25rem;
@@ -84,7 +84,7 @@ export const StyledSelect = styled.div`
       height: 100%;
       padding: 0.65rem 1rem;
       cursor: pointer;
-      border-radius: 0.75rem;
+      border-radius: 0.9rem;
       display: flex;
       flex-flow: column wrap;
       justify-content: center;

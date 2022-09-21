@@ -85,9 +85,11 @@ export const Payee = (props: SetupStepProps) => {
                 selected={payee === options[item.index]}
                 onClick={() => handleChangePayee(item.index)}
               >
-                <h3>{item.title}</h3>
                 <div>
-                  <p>{item.subtitle}</p>
+                  <h3>{item.title}</h3>
+                  <div>
+                    <p>{item.subtitle}</p>
+                  </div>
                 </div>
               </Item>
             );

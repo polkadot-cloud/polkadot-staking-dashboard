@@ -41,6 +41,7 @@ export const ValidatorFilterProvider = ({
   /*
    * toggleAllValidaorFilters
    * Either turns all filters on or all filters off.
+   * This does not use the 'in_session' filter.
    */
   const toggleAllValidatorFilters = (toggle: number) => {
     if (toggle) {
@@ -101,6 +102,9 @@ export const ValidatorFilterProvider = ({
     }
     if (filter.includes('inactive')) {
       list = filterInactive(list);
+    }
+    if (filter.includes('in_session')) {
+      list = filterInSession(list);
     }
     return list;
   };
@@ -225,6 +229,22 @@ export const ValidatorFilterProvider = ({
     }
     list = list.filter((validator: any) =>
       session.list.includes(validator.address)
+    );
+    return list;
+  };
+
+  /*
+   * filterInSession
+   * Filters the supplied list and removes items that are in the current session.
+   * Returns the updated filtered list.
+   */
+  const filterInSession = (list: any) => {
+    // if list has not yet been populated, return original list
+    if (session.list.length === 0) {
+      return list;
+    }
+    list = list.filter(
+      (validator: any) => !session.list.includes(validator.address)
     );
     return list;
   };

@@ -8,7 +8,6 @@ import {
   SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD,
 } from 'consts';
 import {
-  backgroundDropdown,
   textPrimary,
   textInvert,
   buttonSecondaryBackground,

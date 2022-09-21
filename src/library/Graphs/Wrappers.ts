@@ -179,7 +179,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      flex: 1;
     }
   }
 

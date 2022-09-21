@@ -7,10 +7,13 @@ import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useModal } from 'contexts/Modal';
-import { Container } from 'library/Filter/Container';
-import { Category } from 'library/Filter/Category';
-import { Item } from 'library/Filter/Item';
-import { faHeart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { LargeItem } from 'library/Filter/LargeItem';
+import {
+  faHeart,
+  faUserEdit,
+  faChartPie,
+  faCoins,
+} from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
 import {
   useValidatorFilter,
@@ -18,6 +21,7 @@ import {
 } from 'library/Filter/context';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { shuffle } from 'Utils';
 import { GenerateNominationsInnerProps, Nominations } from './types';
 
 export const GenerateNominationsInner = (
@@ -54,42 +58,7 @@ export const GenerateNominationsInner = (
     setNominations(defaultNominations);
   }, [activeAccount, defaultNominations]);
 
-  const fetchFavourites = () => {
-    let _favs: Array<Validator> = [];
-
-    if (!favouritesList) {
-      return _favs;
-    }
-
-    if (favouritesList.length) {
-      // take subset of up to 16 favourites
-      _favs = favouritesList.slice(0, 16);
-    }
-    return _favs;
-  };
-
-  const fetchMostProfitable = () => {
-    // generate nominations from validator list
-    let _nominations = Object.assign(validators);
-    // filter validators to find profitable candidates
-    _nominations = applyValidatorFilters(_nominations, rawBatchKey, [
-      'all_commission',
-      'blocked_nominations',
-      'over_subscribed',
-      'inactive',
-      'missing_identity',
-    ]);
-    // order validators to find profitable candidates
-    _nominations = applyValidatorOrder(_nominations, 'commission');
-    // TODO: unbiased shuffle resulting validators
-    // _nominations = shuffle(_nominations);
-    // choose subset of validators
-    if (_nominations.length) {
-      _nominations = _nominations.slice(0, 16);
-    }
-    return _nominations;
-  };
-
+  // refetch if fetching is triggered
   useEffect(() => {
     if (!isReady || !validators.length) {
       return;
@@ -104,28 +73,108 @@ export const GenerateNominationsInner = (
       return;
     }
 
-    // fetch nominations based on method
-    let _nominations;
     if (fetching) {
-      switch (method) {
-        case 'Favourites':
-          _nominations = fetchFavourites();
-          break;
-        case 'Most Profitable':
-          _nominations = fetchMostProfitable();
-          break;
-        default:
-          return;
-      }
-
-      // update component state
-      setNominations(_nominations);
-      setFetching(false);
-
-      // apply update to setters
-      updateSetters(_nominations);
+      fetchNominationsForMethod();
     }
   });
+
+  // fetch nominations based on method
+  const fetchNominationsForMethod = () => {
+    let _nominations;
+
+    switch (method) {
+      case 'Optimal':
+        _nominations = fetchOptimal();
+        break;
+      case 'Lowest Commission':
+        _nominations = fetchLowCommission();
+        break;
+      case 'Favourites':
+        _nominations = fetchFavourites();
+        break;
+      default:
+        return;
+    }
+
+    // update component state
+    setNominations(_nominations);
+    setFetching(false);
+
+    // apply update to setters
+    updateSetters(_nominations);
+  };
+
+  const fetchFavourites = () => {
+    let _favs: Array<Validator> = [];
+
+    if (!favouritesList) {
+      return _favs;
+    }
+
+    if (favouritesList.length) {
+      // take subset of up to 16 favourites
+      _favs = favouritesList.slice(0, 16);
+    }
+    return _favs;
+  };
+
+  const fetchLowCommission = () => {
+    let _nominations = Object.assign(validators);
+
+    // filter validators to find active candidates
+    _nominations = applyValidatorFilters(_nominations, rawBatchKey, [
+      'all_commission',
+      'blocked_nominations',
+      'inactive',
+      'missing_identity',
+    ]);
+
+    // order validators to find profitable candidates
+    _nominations = applyValidatorOrder(_nominations, 'commission');
+
+    // choose shuffled subset of validators
+    if (_nominations.length) {
+      _nominations = shuffle(
+        _nominations.slice(0, _nominations.length * 0.5)
+      ).slice(0, 16);
+    }
+    return _nominations;
+  };
+
+  const fetchOptimal = () => {
+    let _nominationsActive = Object.assign(validators);
+    let _nominationsWaiting = Object.assign(validators);
+
+    // filter validators to find waiting candidates
+    _nominationsWaiting = applyValidatorFilters(
+      _nominationsWaiting,
+      rawBatchKey,
+      [
+        'all_commission',
+        'blocked_nominations',
+        'missing_identity',
+        'in_session',
+      ]
+    );
+
+    // filter validators to find active candidates
+    _nominationsActive = applyValidatorFilters(
+      _nominationsActive,
+      rawBatchKey,
+      ['all_commission', 'blocked_nominations', 'missing_identity', 'inactive']
+    );
+
+    // choose shuffled subset of waiting
+    if (_nominationsWaiting.length) {
+      _nominationsWaiting = shuffle(_nominationsWaiting).slice(0, 4);
+    }
+    // choose shuffled subset of active
+    if (_nominationsWaiting.length) {
+      _nominationsActive = shuffle(_nominationsActive).slice(0, 12);
+    }
+
+    return shuffle(_nominationsWaiting.concat(_nominationsActive));
+  };
 
   const updateSetters = (_nominations: Nominations) => {
     for (const s of setters) {
@@ -151,7 +200,6 @@ export const GenerateNominationsInner = (
     setSelectActive(false);
 
     const updateList = (_nominations: Nominations) => {
-      setMethod(null);
       removeValidatorMetaBatch(batchKey);
       setNominations(_nominations);
       updateSetters(_nominations);
@@ -162,7 +210,7 @@ export const GenerateNominationsInner = (
         nominations,
         callback: updateList,
       },
-      'large'
+      'xl'
     );
   };
 
@@ -192,42 +240,99 @@ export const GenerateNominationsInner = (
     resetSelected();
   };
 
+  // accumulate actions
+  let actions = [
+    {
+      title: 'Start Again',
+      onClick: cbClearNominations,
+      onSelected: false,
+    },
+    {
+      disabled: !favouritesList.length,
+      title: 'Add From Favourites',
+      onClick: cbAddNominations,
+      onSelected: false,
+    },
+    {
+      title: `Remove Selected`,
+      onClick: cbRemoveSelected,
+      onSelected: true,
+    },
+  ];
+
+  // determine re-generate buttons
+  if (['Lowest Commission', 'Optimal'].includes(method || '')) {
+    actions.reverse().push({
+      title: 'Re-Generate',
+      onClick: () => {
+        removeValidatorMetaBatch(batchKey);
+        setNominations([]);
+        setFetching(true);
+      },
+      onSelected: false,
+    });
+    actions = actions.reverse();
+  }
+
   return (
     <Wrapper>
       <div>
-        {!isReadOnlyAccount(activeAccount) && !nominations.length && (
+        {!isReadOnlyAccount(activeAccount) && !method && (
           <>
-            <Container>
-              <Category title="Generate Method">
-                <Item
-                  label="Most Profitable"
-                  icon={faDollarSign as IconProp}
-                  transform="grow-2"
-                  active={false}
-                  onClick={() => {
-                    setMethod('Most Profitable');
-                    removeValidatorMetaBatch(batchKey);
-                    setNominations([]);
-                    setFetching(true);
-                  }}
-                  width={175}
-                />
-                <Item
-                  label="From Favourites"
-                  icon={faHeart as IconProp}
-                  transform="grow-2"
-                  disabled={!favouritesList.length}
-                  active={false}
-                  onClick={() => {
-                    setMethod('Favourites');
-                    removeValidatorMetaBatch(batchKey);
-                    setNominations([]);
-                    setFetching(true);
-                  }}
-                  width={175}
-                />
-              </Category>
-            </Container>
+            <div className="motion-buttons">
+              <LargeItem
+                title="Optimal"
+                subtitle="Selects a mix of majority active and inactive validators."
+                icon={faChartPie as IconProp}
+                transform="grow-2"
+                active={false}
+                onClick={() => {
+                  setMethod('Optimal');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
+                }}
+              />
+              <LargeItem
+                title="Active Low Commission "
+                subtitle="Gets a set of active validators with low commission."
+                icon={faCoins as IconProp}
+                transform="grow-2"
+                active={false}
+                onClick={() => {
+                  setMethod('Lowest Commission');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
+                }}
+              />
+              <LargeItem
+                title="From Favourites"
+                subtitle="Gets a set of your favourite validators."
+                icon={faHeart as IconProp}
+                transform="grow-2"
+                disabled={!favouritesList.length}
+                active={false}
+                onClick={() => {
+                  setMethod('Favourites');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
+                }}
+              />
+              <LargeItem
+                title="Manual Selection"
+                subtitle="Add validators from scratch."
+                icon={faUserEdit as IconProp}
+                transform="grow-2"
+                active={false}
+                onClick={() => {
+                  setMethod('Manual');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                }}
+              />
+            </div>
           </>
         )}
       </div>
@@ -235,37 +340,16 @@ export const GenerateNominationsInner = (
         <></>
       ) : (
         <>
-          {isReady && nominations.length > 0 ? (
+          {isReady && method !== null && (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
                 bondType="stake"
                 validators={nominations}
                 batchKey={batchKey}
                 selectable
-                actions={[
-                  {
-                    title: 'Start Again',
-                    onClick: cbClearNominations,
-                    onSelected: false,
-                  },
-                  {
-                    disabled: !favouritesList.length,
-                    title: 'Add From Favourites',
-                    onClick: cbAddNominations,
-                    onSelected: false,
-                  },
-                  {
-                    title: `Remove Selected`,
-                    onClick: cbRemoveSelected,
-                    onSelected: true,
-                  },
-                ]}
+                actions={actions}
                 allowMoreCols
               />
-            </div>
-          ) : (
-            <div className="head">
-              <h3>No Nominations.</h3>
             </div>
           )}
         </>

@@ -38,7 +38,8 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Estimated APY <OpenHelpIcon helpKey="Estimated APY" />
+                Historical Rewards Rate{' '}
+                <OpenHelpIcon helpKey="Historical Rewards Rate" />
               </h4>
             </div>
           </div>

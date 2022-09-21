@@ -41,7 +41,7 @@ export const ChooseNominations = (props: ChooseNominationsProps) => {
         <div style={{ marginTop: '0.5rem' }}>
           <h4>
             Choose up to {maxNominations} validators to nominate. Generate your
-            nominations automatically or add a selection from your favourites.
+            nominations automatically or manually insert them.
           </h4>
           <GenerateNominations
             batchKey={batchKey}
