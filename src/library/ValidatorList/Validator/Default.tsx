@@ -17,6 +17,7 @@ import {
   Separator,
 } from 'library/ListItem/Wrappers';
 import CopyAddress from 'library/ListItem/Labels/CopyAddress';
+import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
@@ -120,6 +121,8 @@ export const Default = (props: DefaultProps) => {
               <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
+              <ParaValidator address={address} />
+
               {toggleFavourites && <FavouriteValidator address={address} />}
               {showMenu && (
                 <button

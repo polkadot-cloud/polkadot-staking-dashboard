@@ -9,13 +9,31 @@ import {
   networkColor,
   networkColorSecondary,
 } from 'theme';
-import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
+import {
+  SMALL_FONT_SIZE_MAX_WIDTH,
+  SECTION_FULL_WIDTH_THRESHOLD,
+} from 'consts';
 
 export const Wrapper = styled.div`
   flex: 1;
   display: flex;
   flex-flow: column wrap;
   width: 100%;
+
+  .motion-buttons {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    margin-top: 1rem;
+  }
+
+  .motion-button {
+    flex-basis: 33%;
+
+    @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
+      flex-basis: 100%;
+    }
+  }
 `;
 
 export const Item = styled(motion.div)`

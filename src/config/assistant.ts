@@ -57,7 +57,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
-        title: 'Estimated APY',
+        title: 'Historical Rewards Rate',
         description: [
           'An estimated annual yield based on the {NETWORK_NAME} reward distribution model.',
         ],

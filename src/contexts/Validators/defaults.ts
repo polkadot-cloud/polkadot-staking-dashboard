@@ -8,6 +8,11 @@ export const sessionValidators = {
   unsub: null,
 };
 
+export const sessionParachainValidators = {
+  list: [],
+  unsub: null,
+};
+
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   // eslint-disable-next-line
   fetchValidatorMetaBatch: (k, v, r) => {},
@@ -22,6 +27,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   validators: [],
   meta: {},
   session: sessionValidators,
+  sessionParachain: [],
   favourites: [],
   nominated: null,
   poolNominated: null,

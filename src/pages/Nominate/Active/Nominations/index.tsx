@@ -77,7 +77,7 @@ export const Nominations = ({
         nominations,
         bondType,
       },
-      'large'
+      'xl'
     );
   };
 

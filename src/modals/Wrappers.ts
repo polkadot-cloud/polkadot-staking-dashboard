@@ -50,7 +50,12 @@ export const HeightWrapper = styled.div<{ size: string }>`
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   box-sizing: border-box;
   width: 100%;
-  max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
+  max-width: ${(props) =>
+    props.size === 'xl'
+      ? '1250px'
+      : props.size === 'large'
+      ? '800px'
+      : '600px'};
   max-height: 100%;
   border-radius: 1.5rem;
   z-index: 9;
