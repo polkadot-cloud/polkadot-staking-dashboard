@@ -26,7 +26,7 @@ export const Metrics = (props: MetricsProps) => {
           )
         }
       >
-        <FontAwesomeIcon icon={faChartLine} />
+        <FontAwesomeIcon icon={faChartLine} transform="shrink-2" />
       </button>
     </div>
   );
