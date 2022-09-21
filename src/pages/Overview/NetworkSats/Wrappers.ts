@@ -20,6 +20,13 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   width: 100%;
 
+  .motion-buttons {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    margin-top: 1rem;
+  }
+
   .motion-button {
     flex-basis: 33%;
 

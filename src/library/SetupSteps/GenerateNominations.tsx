@@ -199,59 +199,50 @@ export const GenerateNominationsInner = (
   return (
     <Wrapper>
       <div>
-        {!isReadOnlyAccount(activeAccount) && !nominations.length && (
+        {!isReadOnlyAccount(activeAccount) && !method && (
           <>
-            <div className="category">
-              <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  flexFlow: 'row wrap',
-                  marginTop: '1rem',
+            <div className="motion-buttons">
+              <LargeItem
+                title="Most Profitable"
+                subtitle="Gets a set of validators with low commission."
+                icon={faDollarSign as IconProp}
+                transform="grow-2"
+                active={false}
+                onClick={() => {
+                  setMethod('Most Profitable');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
                 }}
-              >
-                <LargeItem
-                  title="Most Profitable"
-                  subtitle="Gets a set of validators with low commission."
-                  icon={faDollarSign as IconProp}
-                  transform="grow-2"
-                  active={false}
-                  onClick={() => {
-                    setMethod('Most Profitable');
-                    removeValidatorMetaBatch(batchKey);
-                    setNominations([]);
-                    setFetching(true);
-                  }}
-                />
-                <LargeItem
-                  title="From Favourites"
-                  subtitle="Gets a set of your favourite validators."
-                  icon={faHeart as IconProp}
-                  transform="grow-2"
-                  disabled={!favouritesList.length}
-                  active={false}
-                  onClick={() => {
-                    setMethod('Favourites');
-                    removeValidatorMetaBatch(batchKey);
-                    setNominations([]);
-                    setFetching(true);
-                  }}
-                />
-                <LargeItem
-                  title="Manual Only"
-                  subtitle="Add validators from scratch."
-                  icon={faUserEdit as IconProp}
-                  transform="grow-2"
-                  disabled={!favouritesList.length}
-                  active={false}
-                  onClick={() => {
-                    setMethod('Favourites');
-                    removeValidatorMetaBatch(batchKey);
-                    setNominations([]);
-                    setFetching(true);
-                  }}
-                />
-              </div>
+              />
+              <LargeItem
+                title="From Favourites"
+                subtitle="Gets a set of your favourite validators."
+                icon={faHeart as IconProp}
+                transform="grow-2"
+                disabled={!favouritesList.length}
+                active={false}
+                onClick={() => {
+                  setMethod('Favourites');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
+                }}
+              />
+              <LargeItem
+                title="Manual Only"
+                subtitle="Add validators from scratch."
+                icon={faUserEdit as IconProp}
+                transform="grow-2"
+                disabled={!favouritesList.length}
+                active={false}
+                onClick={() => {
+                  setMethod('Favourites');
+                  removeValidatorMetaBatch(batchKey);
+                  setNominations([]);
+                  setFetching(true);
+                }}
+              />
             </div>
           </>
         )}
@@ -289,9 +280,13 @@ export const GenerateNominationsInner = (
               />
             </div>
           ) : (
-            <div className="head">
-              <h3>No Nominations.</h3>
-            </div>
+            <>
+              {method && (
+                <div className="head">
+                  <h3>No Nominations.</h3>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
