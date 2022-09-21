@@ -20,6 +20,7 @@ import {
 } from 'library/Filter/context';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { shuffle } from 'Utils';
 import { GenerateNominationsInnerProps, Nominations } from './types';
 
 export const GenerateNominationsInner = (
@@ -79,7 +80,7 @@ export const GenerateNominationsInner = (
           _nominations = fetchFavourites();
           break;
         case 'Lowest Commission':
-          _nominations = fetchMostProfitable();
+          _nominations = fetchLowCommission();
           break;
         default:
           return;
@@ -108,26 +109,25 @@ export const GenerateNominationsInner = (
     return _favs;
   };
 
-  // TODO: expand to low commission
-
-  const fetchMostProfitable = () => {
-    // generate nominations from validator list
+  const fetchLowCommission = () => {
     let _nominations = Object.assign(validators);
-    // filter validators to find profitable candidates
+
+    // filter validators to find active candidates
     _nominations = applyValidatorFilters(_nominations, rawBatchKey, [
       'all_commission',
       'blocked_nominations',
-      'over_subscribed',
       'inactive',
       'missing_identity',
     ]);
+
     // order validators to find profitable candidates
     _nominations = applyValidatorOrder(_nominations, 'commission');
-    // TODO: unbiased shuffle resulting validators
-    // _nominations = shuffle(_nominations);
-    // choose subset of validators
+
+    // choose shuffled subset of validators
     if (_nominations.length) {
-      _nominations = _nominations.slice(0, 16);
+      _nominations = shuffle(
+        _nominations.slice(0, _nominations.length * 0.5)
+      ).slice(0, 16);
     }
     return _nominations;
   };
@@ -203,7 +203,7 @@ export const GenerateNominationsInner = (
           <>
             <div className="motion-buttons">
               <LargeItem
-                title="Lowest Commission"
+                title="Low Commission"
                 subtitle="Gets a set of validators with low commission."
                 icon={faDollarSign as IconProp}
                 transform="grow-2"
