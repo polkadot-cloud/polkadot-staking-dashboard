@@ -39,7 +39,6 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^4.2.0",
     "react-content-loader": "^6.2.0",
-    "react-custom-checkbox": "^2.0.1",
     "react-dom": "^18.1.0",
     "react-error-boundary": "^3.1.4",
     "react-helmet": "^6.1.0",

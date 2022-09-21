@@ -8331,11 +8331,6 @@ react-copy-to-clipboard@^5.1.0:
     copy-to-clipboard "^3.3.1"
     prop-types "^15.8.1"
 
-react-custom-checkbox@^2.0.1:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-custom-checkbox/-/react-custom-checkbox-2.0.2.tgz#f4a46150eaf0c255aaca64e2a6b8e476eea3dd39"
-  integrity sha512-J0yV3VftcKre+R2fvABLt3ufuuFjCAyohjMhpXEQzSq5E8loutDc5ZwRe+r0FLM+I8k/Oz1pr0+KyZI/CCAdAQ==
-
 react-dev-utils@^12.0.0:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-12.0.1.tgz#ba92edb4a1f379bd46ccd6bcd4e7bc398df33e73"
