@@ -7,10 +7,12 @@ import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useModal } from 'contexts/Modal';
-import { Container } from 'library/Filter/Container';
-import { Category } from 'library/Filter/Category';
-import { Item } from 'library/Filter/Item';
-import { faHeart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { LargeItem } from 'library/Filter/LargeItem';
+import {
+  faHeart,
+  faDollarSign,
+  faUserEdit,
+} from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
 import {
   useValidatorFilter,
@@ -67,6 +69,8 @@ export const GenerateNominationsInner = (
     }
     return _favs;
   };
+
+  // TODO: expand to low commission
 
   const fetchMostProfitable = () => {
     // generate nominations from validator list
@@ -197,10 +201,18 @@ export const GenerateNominationsInner = (
       <div>
         {!isReadOnlyAccount(activeAccount) && !nominations.length && (
           <>
-            <Container>
-              <Category title="Generate Method">
-                <Item
-                  label="Most Profitable"
+            <div className="category">
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexFlow: 'row wrap',
+                  marginTop: '1rem',
+                }}
+              >
+                <LargeItem
+                  title="Most Profitable"
+                  subtitle="Gets a set of validators with low commission."
                   icon={faDollarSign as IconProp}
                   transform="grow-2"
                   active={false}
@@ -210,10 +222,10 @@ export const GenerateNominationsInner = (
                     setNominations([]);
                     setFetching(true);
                   }}
-                  width={175}
                 />
-                <Item
-                  label="From Favourites"
+                <LargeItem
+                  title="From Favourites"
+                  subtitle="Gets a set of your favourite validators."
                   icon={faHeart as IconProp}
                   transform="grow-2"
                   disabled={!favouritesList.length}
@@ -224,10 +236,23 @@ export const GenerateNominationsInner = (
                     setNominations([]);
                     setFetching(true);
                   }}
-                  width={175}
                 />
-              </Category>
-            </Container>
+                <LargeItem
+                  title="Manual Only"
+                  subtitle="Add validators from scratch."
+                  icon={faUserEdit as IconProp}
+                  transform="grow-2"
+                  disabled={!favouritesList.length}
+                  active={false}
+                  onClick={() => {
+                    setMethod('Favourites');
+                    removeValidatorMetaBatch(batchKey);
+                    setNominations([]);
+                    setFetching(true);
+                  }}
+                />
+              </div>
+            </div>
           </>
         )}
       </div>
