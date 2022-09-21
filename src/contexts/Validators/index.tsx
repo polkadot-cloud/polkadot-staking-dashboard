@@ -15,6 +15,7 @@ import {
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { MIN_BOND_PRECISION } from 'consts';
 import {
+  SessionParachainValidators,
   SessionValidators,
   Validator,
   ValidatorAddresses,
@@ -48,6 +49,7 @@ export const ValidatorsProvider = ({
   const { poolNominations } = useActivePool();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
+  const { activeEra, earliestStoredSession } = metrics;
 
   // stores the total validator entries
   const [validators, setValidators] = useState<Array<Validator>>([]);
@@ -59,6 +61,9 @@ export const ValidatorsProvider = ({
   const [sessionValidators, setSessionValidators] = useState<SessionValidators>(
     defaults.sessionValidators
   );
+  // stores the currently active parachain validator set
+  const [sessionParachainValidators, setSessionParachainValidators] =
+    useState<SessionParachainValidators>(defaults.sessionParachainValidators);
 
   // stores the meta data batches for validator lists
   const [validatorMetaBatches, setValidatorMetaBatch] = useState<AnyMetaBatch>(
@@ -105,14 +110,15 @@ export const ValidatorsProvider = ({
   useEffect(() => {
     setFetchedValidators(0);
     setSessionValidators(defaults.sessionValidators);
+    setSessionParachainValidators(defaults.sessionParachainValidators);
     removeValidatorMetaBatch('validators_browse');
     setValidators([]);
   }, [network]);
 
+  // fetch validators and session validators when activeEra ready
   useEffect(() => {
     if (isReady) {
       fetchValidators();
-      subscribeParachainValidators(api);
       subscribeSessionValidators(api);
     }
 
@@ -124,7 +130,14 @@ export const ValidatorsProvider = ({
         });
       });
     };
-  }, [isReady, metrics.activeEra]);
+  }, [isReady, activeEra]);
+
+  // fetch parachain session validators when earliestStoredSession ready
+  useEffect(() => {
+    if (isReady && earliestStoredSession.gt(new BN(0))) {
+      subscribeParachainValidators(api);
+    }
+  }, [isReady, earliestStoredSession]);
 
   // pre-populating validator meta batches. Needed for generating nominations
   useEffect(() => {
@@ -274,16 +287,16 @@ export const ValidatorsProvider = ({
    */
   const subscribeParachainValidators = async (_api: AnyApi) => {
     if (isReady) {
-      // const unsub = await _api.query.paraSessionInfo.accountKeys(
-      //   (_validators: AnyApi) => {
-      //     console.log(_validators.toHuman());
-      //     // setSessionValidators({
-      //     //   ...sessionValidators,
-      //     //   list: _validators.toHuman(),
-      //     //   unsub,
-      //     // });
-      //   }
-      // );
+      const unsub = await _api.query.paraSessionInfo.accountKeys(
+        earliestStoredSession.toString(),
+        (_validators: AnyApi) => {
+          setSessionParachainValidators({
+            ...sessionParachainValidators,
+            list: _validators.toHuman(),
+            unsub,
+          });
+        }
+      );
     }
   };
 
@@ -464,7 +477,7 @@ export const ValidatorsProvider = ({
     const args: AnyApi = [];
 
     for (let i = 0; i < v.length; i++) {
-      args.push([metrics.activeEra.index, v[i].address]);
+      args.push([activeEra.index, v[i].address]);
     }
 
     const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
@@ -603,6 +616,7 @@ export const ValidatorsProvider = ({
         validators,
         meta: validatorMetaBatchesRef.current,
         session: sessionValidators,
+        sessionParachain: sessionParachainValidators,
         favourites,
         nominated,
         poolNominated,
