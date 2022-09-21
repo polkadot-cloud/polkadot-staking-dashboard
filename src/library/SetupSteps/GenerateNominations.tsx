@@ -115,7 +115,7 @@ export const GenerateNominationsInner = (
         case 'Favourites':
           _nominations = fetchFavourites();
           break;
-        case 'Most Profitable':
+        case 'Lowest Commission':
           _nominations = fetchMostProfitable();
           break;
         default:
@@ -203,13 +203,13 @@ export const GenerateNominationsInner = (
           <>
             <div className="motion-buttons">
               <LargeItem
-                title="Most Profitable"
+                title="Lowest Commission"
                 subtitle="Gets a set of validators with low commission."
                 icon={faDollarSign as IconProp}
                 transform="grow-2"
                 active={false}
                 onClick={() => {
-                  setMethod('Most Profitable');
+                  setMethod('Lowest Commission');
                   removeValidatorMetaBatch(batchKey);
                   setNominations([]);
                   setFetching(true);
