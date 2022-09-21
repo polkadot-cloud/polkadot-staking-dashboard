@@ -94,6 +94,9 @@ export const ValidatorListInner = (props: any) => {
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
 
+  // store whether the search bar is being used
+  const [isSearching, setIsSearching] = useState(false);
+
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
   const setRenderIteration = (iter: number) => {
@@ -211,6 +214,7 @@ export const ValidatorListInner = (props: any) => {
 
     handleValidatorsFilterUpdate(filteredValidators);
     setPage(1);
+    setIsSearching(e.currentTarget.value !== '');
     setRenderIteration(1);
   };
 
@@ -264,6 +268,7 @@ export const ValidatorListInner = (props: any) => {
 
         {selectable && (
           <Selectable
+            canSelect={listValidators.length > 0}
             actionsAll={actionsAll}
             actionsSelected={actionsSelected}
           />
@@ -308,7 +313,9 @@ export const ValidatorListInner = (props: any) => {
             </>
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
-              No validators match this criteria.
+              {isSearching
+                ? 'No validators match this criteria.'
+                : 'No Validators.'}
             </h4>
           )}
         </MotionContainer>
