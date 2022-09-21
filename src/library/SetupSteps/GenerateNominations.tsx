@@ -10,9 +10,9 @@ import { useModal } from 'contexts/Modal';
 import { LargeItem } from 'library/Filter/LargeItem';
 import {
   faHeart,
-  faDollarSign,
   faUserEdit,
   faChartPie,
+  faCoins,
 } from '@fortawesome/free-solid-svg-icons';
 import { Validator } from 'contexts/Validators/types';
 import {
@@ -243,7 +243,7 @@ export const GenerateNominationsInner = (
             <div className="motion-buttons">
               <LargeItem
                 title="Optimal"
-                subtitle="Selects a mix active and inactive validators."
+                subtitle="Selects a mix of majority active and inactive validators."
                 icon={faChartPie as IconProp}
                 transform="grow-2"
                 active={false}
@@ -257,7 +257,7 @@ export const GenerateNominationsInner = (
               <LargeItem
                 title="Active Low Commission "
                 subtitle="Gets a set of active validators with low commission."
-                icon={faDollarSign as IconProp}
+                icon={faCoins as IconProp}
                 transform="grow-2"
                 active={false}
                 onClick={() => {
