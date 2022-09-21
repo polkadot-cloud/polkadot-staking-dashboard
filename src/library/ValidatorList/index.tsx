@@ -315,7 +315,7 @@ export const ValidatorListInner = (props: any) => {
             <h4 style={{ marginTop: '1rem' }}>
               {isSearching
                 ? 'No validators match this criteria.'
-                : 'No Validators.'}
+                : 'No validators.'}
             </h4>
           )}
         </MotionContainer>

@@ -56,6 +56,44 @@ export const GenerateNominationsInner = (
     setNominations(defaultNominations);
   }, [activeAccount, defaultNominations]);
 
+  // refetch if fetching is triggered
+  useEffect(() => {
+    if (!isReady || !validators.length) {
+      return;
+    }
+
+    // wait for validator meta data to be fetched
+    const batch = meta[rawBatchKey];
+    if (batch === undefined) {
+      return;
+    }
+    if (batch.stake === undefined) {
+      return;
+    }
+
+    // fetch nominations based on method
+    let _nominations;
+    if (fetching) {
+      switch (method) {
+        case 'Favourites':
+          _nominations = fetchFavourites();
+          break;
+        case 'Lowest Commission':
+          _nominations = fetchMostProfitable();
+          break;
+        default:
+          return;
+      }
+
+      // update component state
+      setNominations(_nominations);
+      setFetching(false);
+
+      // apply update to setters
+      updateSetters(_nominations);
+    }
+  });
+
   const fetchFavourites = () => {
     let _favs: Array<Validator> = [];
 
@@ -93,43 +131,6 @@ export const GenerateNominationsInner = (
     }
     return _nominations;
   };
-
-  useEffect(() => {
-    if (!isReady || !validators.length) {
-      return;
-    }
-
-    // wait for validator meta data to be fetched
-    const batch = meta[rawBatchKey];
-    if (batch === undefined) {
-      return;
-    }
-    if (batch.stake === undefined) {
-      return;
-    }
-
-    // fetch nominations based on method
-    let _nominations;
-    if (fetching) {
-      switch (method) {
-        case 'Favourites':
-          _nominations = fetchFavourites();
-          break;
-        case 'Lowest Commission':
-          _nominations = fetchMostProfitable();
-          break;
-        default:
-          return;
-      }
-
-      // update component state
-      setNominations(_nominations);
-      setFetching(false);
-
-      // apply update to setters
-      updateSetters(_nominations);
-    }
-  });
 
   const updateSetters = (_nominations: Nominations) => {
     for (const s of setters) {
@@ -236,10 +237,9 @@ export const GenerateNominationsInner = (
                 disabled={!favouritesList.length}
                 active={false}
                 onClick={() => {
-                  setMethod('Favourites');
+                  setMethod('Manual');
                   removeValidatorMetaBatch(batchKey);
                   setNominations([]);
-                  setFetching(true);
                 }}
               />
             </div>
