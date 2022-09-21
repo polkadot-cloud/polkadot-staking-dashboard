@@ -155,7 +155,6 @@ export const GenerateNominationsInner = (
     setSelectActive(false);
 
     const updateList = (_nominations: Nominations) => {
-      setMethod(null);
       removeValidatorMetaBatch(batchKey);
       setNominations(_nominations);
       updateSetters(_nominations);
@@ -251,7 +250,7 @@ export const GenerateNominationsInner = (
         <></>
       ) : (
         <>
-          {isReady && nominations.length > 0 ? (
+          {isReady && method !== null && (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
                 bondType="stake"
@@ -279,14 +278,6 @@ export const GenerateNominationsInner = (
                 allowMoreCols
               />
             </div>
-          ) : (
-            <>
-              {method && (
-                <div className="head">
-                  <h3>No Nominations.</h3>
-                </div>
-              )}
-            </>
           )}
         </>
       )}
