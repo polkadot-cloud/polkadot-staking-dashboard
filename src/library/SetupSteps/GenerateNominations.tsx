@@ -286,7 +286,6 @@ export const GenerateNominationsInner = (
                 subtitle="Add validators from scratch."
                 icon={faUserEdit as IconProp}
                 transform="grow-2"
-                disabled={!favouritesList.length}
                 active={false}
                 onClick={() => {
                   setMethod('Manual');
