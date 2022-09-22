@@ -101,6 +101,7 @@ export const GenerateNominationsInner = (
     }
   }, [nominations, method]);
 
+  // reset fixed height on window size change
   useEffect(() => {
     window.addEventListener('resize', resizeCallback);
     return () => {
@@ -109,9 +110,7 @@ export const GenerateNominationsInner = (
   }, []);
 
   const resizeCallback = () => {
-    if (height) {
-      setHeight(null);
-    }
+    setHeight(null);
   };
 
   // fetch nominations based on method
