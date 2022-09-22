@@ -23,6 +23,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { shuffle } from 'Utils';
 import { GenerateNominationsInnerProps, Nominations } from './types';
+import { GenerateOptionsWrapper } from './Wrappers';
 
 export const GenerateNominationsInner = (
   props: GenerateNominationsInnerProps
@@ -279,7 +280,7 @@ export const GenerateNominationsInner = (
       <div>
         {!isReadOnlyAccount(activeAccount) && !method && (
           <>
-            <div className="motion-buttons">
+            <GenerateOptionsWrapper>
               <LargeItem
                 title="Optimal"
                 subtitle="Selects a mix of majority active and inactive validators."
@@ -332,7 +333,7 @@ export const GenerateNominationsInner = (
                   setNominations([]);
                 }}
               />
-            </div>
+            </GenerateOptionsWrapper>
           </>
         )}
       </div>

@@ -7,6 +7,7 @@ import {
   borderPrimary,
   networkColor,
   buttonSecondaryBackground,
+  buttonPrimaryBackground,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -112,7 +113,8 @@ export const ItemWrapper = styled.div<any>`
 
 export const LargeItemWrapper = styled.div`
   border: 1px solid ${borderPrimary};
-  border-radius: 0.9rem;
+  background: ${buttonPrimaryBackground};
+  border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -129,23 +131,23 @@ export const LargeItemWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-  }
-  .icon {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
     align-items: center;
-    margin-right: 0.75rem;
 
-    > svg {
-      color: ${networkColor};
+    h3 {
+      margin: 0;
     }
   }
+
+  svg {
+    color: ${networkColor};
+    margin-right: 0.75rem;
+  }
+
   p {
     color: ${textSecondary};
     margin: 0;
     text-align: left;
-    padding-top: 0.5rem;
+    padding: 0.5rem 0 0 0;
   }
 `;
 

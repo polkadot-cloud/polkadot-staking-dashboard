@@ -32,7 +32,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
       border: none;`}
     box-sizing: border-box;
     flex: 1;
-    border-radius: 0.9rem;
+    border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;

@@ -36,7 +36,7 @@ export const Item = styled.button<{ selected?: boolean }>`
     border: 2px solid
       ${(props) => (props.selected ? networkColor : backgroundToggle)};
     width: 100%;
-    border-radius: 0.9rem;
+    border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
