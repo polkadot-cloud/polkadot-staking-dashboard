@@ -13,6 +13,7 @@ import {
   faUserEdit,
   faChartPie,
   faCoins,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { ValidatorFilterProvider } from 'library/Filter/context';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -33,10 +34,11 @@ export const GenerateNominationsInner = (
   const { batchKey } = props;
 
   const { openModalWith } = useModal();
-  const { isReady } = useApi();
+  const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
   const { fetch: fetchFromMethod } = useFetchMehods();
+  const { maxNominations } = consts;
 
   let { favouritesList } = useValidators();
   if (favouritesList === null) {
@@ -195,7 +197,7 @@ export const GenerateNominationsInner = (
       onSelected: false,
     },
     {
-      disabled: !favouritesList.length,
+      disabled: !favouritesList.length || nominations.length >= maxNominations,
       title: 'Add From Favourites',
       onClick: cbAddNominations,
       onSelected: false,
@@ -204,6 +206,20 @@ export const GenerateNominationsInner = (
       title: `Remove Selected`,
       onClick: cbRemoveSelected,
       onSelected: true,
+    },
+    {
+      title: 'Add Parachain Validator',
+      onClick: () => {},
+      onSelected: false,
+      icon: faPlus,
+      disabled: nominations.length >= maxNominations,
+    },
+    {
+      title: 'Add Active Validator',
+      onClick: () => {},
+      onSelected: false,
+      icon: faPlus,
+      disabled: nominations.length >= maxNominations,
     },
   ];
 
@@ -227,7 +243,7 @@ export const GenerateNominationsInner = (
           <>
             <GenerateOptionsWrapper>
               <LargeItem
-                title="Optimal"
+                title="Optimal Selection"
                 subtitle="Selects a mix of majority active and inactive validators."
                 icon={faChartPie as IconProp}
                 transform="grow-2"
