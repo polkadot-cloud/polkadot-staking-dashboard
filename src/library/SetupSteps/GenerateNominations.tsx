@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useValidators } from 'contexts/Validators';
@@ -52,6 +52,12 @@ export const GenerateNominationsInner = (
   // store the currently selected set of nominations
   const [nominations, setNominations] = useState(defaultNominations);
 
+  // store the height of the container
+  const [height, setHeight] = useState<number | null>(null);
+
+  // ref for the height of the container
+  const heightRef = useRef<HTMLDivElement>(null);
+
   const rawBatchKey = 'validators_browse';
 
   // update selected value on account switch
@@ -78,6 +84,34 @@ export const GenerateNominationsInner = (
       fetchNominationsForMethod();
     }
   });
+
+  useEffect(() => {
+    if (
+      !['Lowest Commission', 'Optimal'].includes(method || '') ||
+      method === null
+    ) {
+      setHeight(null);
+    } else {
+      const _height = heightRef?.current?.clientHeight;
+      if (_height) {
+        if (_height > 0) {
+          setHeight(_height + 10);
+        }
+      }
+    }
+  }, [nominations, method]);
+
+  // reset fixed height on window size change
+  useEffect(() => {
+    window.addEventListener('resize', resizeCallback);
+    return () => {
+      window.removeEventListener('resize', resizeCallback);
+    };
+  }, []);
+
+  const resizeCallback = () => {
+    setHeight(null);
+  };
 
   // fetch nominations based on method
   const fetchNominationsForMethod = () => {
@@ -267,7 +301,6 @@ export const GenerateNominationsInner = (
       title: 'Re-Generate',
       onClick: () => {
         removeValidatorMetaBatch(batchKey);
-        setNominations([]);
         setFetching(true);
       },
       onSelected: false,
@@ -276,7 +309,7 @@ export const GenerateNominationsInner = (
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={{ height: height ? `${height}px` : 'auto' }}>
       <div>
         {!isReadOnlyAccount(activeAccount) && !method && (
           <>
@@ -295,7 +328,7 @@ export const GenerateNominationsInner = (
                 }}
               />
               <LargeItem
-                title="Active Low Commission "
+                title="Active Low Commission"
                 subtitle="Gets a set of active validators with low commission."
                 icon={faCoins as IconProp}
                 transform="grow-2"
@@ -342,7 +375,7 @@ export const GenerateNominationsInner = (
       ) : (
         <>
           {isReady && method !== null && (
-            <div style={{ marginTop: '1rem' }}>
+            <div ref={heightRef}>
               <ValidatorList
                 bondType="stake"
                 validators={nominations}

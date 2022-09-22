@@ -12,7 +12,7 @@ import { ParaValidatorProps } from '../types';
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { sessionParachain } = useValidators();
 
-  if (!sessionParachain.includes(address || '')) {
+  if (!sessionParachain?.includes(address || '')) {
     return <></>;
   }
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();

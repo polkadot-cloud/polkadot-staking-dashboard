@@ -20,7 +20,7 @@ export const LargeItem = (props: any) => {
       onClick={() => {
         onClick();
       }}
-      className="motion-button"
+      className="item"
       style={{
         opacity: disabled ? 0.5 : 1,
       }}

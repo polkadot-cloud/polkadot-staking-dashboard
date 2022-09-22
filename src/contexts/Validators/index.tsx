@@ -405,12 +405,16 @@ export const ValidatorsProvider = ({
           const _batchesUpdated = Object.assign(
             validatorMetaBatchesRef.current
           );
-          _batchesUpdated[key].identities = identities;
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setValidatorMetaBatch,
-            validatorMetaBatchesRef
-          );
+
+          // check if batch still exists before updating
+          if (_batchesUpdated[key]) {
+            _batchesUpdated[key].identities = identities;
+            setStateWithRef(
+              { ..._batchesUpdated },
+              setValidatorMetaBatch,
+              validatorMetaBatchesRef
+            );
+          }
         }
       );
       return unsub;
@@ -452,12 +456,16 @@ export const ValidatorsProvider = ({
           const _batchesUpdated = Object.assign(
             validatorMetaBatchesRef.current
           );
-          _batchesUpdated[key].supers = supers;
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setValidatorMetaBatch,
-            validatorMetaBatchesRef
-          );
+
+          // check if batch still exists before updating
+          if (_batchesUpdated[key]) {
+            _batchesUpdated[key].supers = supers;
+            setStateWithRef(
+              { ..._batchesUpdated },
+              setValidatorMetaBatch,
+              validatorMetaBatchesRef
+            );
+          }
         }
       );
       return unsub;
@@ -537,13 +545,16 @@ export const ValidatorsProvider = ({
 
         // commit update
         const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-        _batchesUpdated[key].stake = stake;
 
-        setStateWithRef(
-          { ..._batchesUpdated },
-          setValidatorMetaBatch,
-          validatorMetaBatchesRef
-        );
+        // check if batch still exists before updating
+        if (_batchesUpdated[key]) {
+          _batchesUpdated[key].stake = stake;
+          setStateWithRef(
+            { ..._batchesUpdated },
+            setValidatorMetaBatch,
+            validatorMetaBatchesRef
+          );
+        }
       }
     );
 
