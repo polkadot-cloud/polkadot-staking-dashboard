@@ -27,13 +27,12 @@ export const LargeItem = (props: any) => {
     >
       <LargeItemWrapper>
         <section>
-          <div className="icon">
-            <FontAwesomeIcon
-              icon={icon}
-              transform={transform}
-              opacity={props.active ? 1 : 0.7}
-            />
-          </div>
+          <FontAwesomeIcon
+            icon={icon}
+            transform={transform}
+            opacity={props.active ? 1 : 0.7}
+          />
+
           <h3>{title}</h3>
         </section>
         <section>

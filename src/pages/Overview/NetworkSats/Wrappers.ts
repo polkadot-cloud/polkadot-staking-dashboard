@@ -29,7 +29,6 @@ export const Wrapper = styled.div`
 
   .motion-button {
     flex-basis: 33%;
-
     @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
       flex-basis: 100%;
     }
