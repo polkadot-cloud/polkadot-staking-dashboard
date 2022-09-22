@@ -37,7 +37,11 @@ export const GenerateNominationsInner = (
   const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
-  const { fetch: fetchFromMethod, add: addNomination } = useFetchMehods();
+  const {
+    fetch: fetchFromMethod,
+    add: addNomination,
+    available: availableToNominate,
+  } = useFetchMehods();
   const { maxNominations } = consts;
 
   let { favouritesList } = useValidators();
@@ -232,21 +236,27 @@ export const GenerateNominationsInner = (
       onClick: () => addNominationByType('Parachain Validator'),
       onSelected: false,
       icon: faPlus,
-      isDisabled: disabledMaxNominations,
+      isDisabled: () =>
+        disabledMaxNominations() ||
+        !availableToNominate(nominations).parachainValidators.length,
     },
     {
       title: 'Active Validator',
       onClick: () => addNominationByType('Active Validator'),
       onSelected: false,
       icon: faPlus,
-      isDisabled: disabledMaxNominations,
+      isDisabled: () =>
+        disabledMaxNominations() ||
+        !availableToNominate(nominations).activeValidators.length,
     },
     {
       title: 'Random Validator',
       onClick: () => addNominationByType('Random Validator'),
       onSelected: false,
       icon: faPlus,
-      isDisabled: disabledMaxNominations,
+      isDisabled: () =>
+        disabledMaxNominations() ||
+        !availableToNominate(nominations).randomValidators.length,
     },
   ];
 

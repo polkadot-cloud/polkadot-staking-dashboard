@@ -123,26 +123,43 @@ export const useFetchMehods = () => {
     return shuffle(_nominationsWaiting.concat(_nominationsActive));
   };
 
-  const addActiveValidator = (nominations: any) => {
-    let _nominations = Object.assign(validators);
+  const available = (nominations: any) => {
+    const _nominations = Object.assign(validators);
 
-    // filter validators to find active candidates
-    _nominations = applyValidatorFilters(_nominations, rawBatchKey, [
+    const _parachainValidators = applyValidatorFilters(
+      _nominations,
+      rawBatchKey,
+      [
+        'all_commission',
+        'blocked_nominations',
+        'inactive',
+        'missing_identity',
+        'non_parachain_validator',
+      ]
+    ).filter(
+      (n: any) => !nominations.find((o: any) => o.address === n.address)
+    );
+
+    const _activeValidators = applyValidatorFilters(_nominations, rawBatchKey, [
       'all_commission',
       'blocked_nominations',
       'inactive',
       'missing_identity',
-    ]);
+    ])
+      .filter(
+        (n: any) => !nominations.find((o: any) => o.address === n.address)
+      )
+      .filter((n: any) => !sessionParachain.includes(n.address));
 
-    // remove parachain validators
-    _nominations = _nominations.filter(
-      (n: any) => !sessionParachain.includes(n.address)
-    );
+    return {
+      parachainValidators: _parachainValidators,
+      activeValidators: _activeValidators,
+      randomValidators: _parachainValidators.concat(_activeValidators),
+    };
+  };
 
-    // remove currently selected nominations
-    _nominations = _nominations.filter(
-      (n: any) => !nominations.find((o: any) => o.address === n.address)
-    );
+  const addActiveValidator = (nominations: any) => {
+    const _nominations = available(nominations).activeValidators;
 
     // take one validator
     const validator = shuffle(_nominations).slice(0, 1)[0] || null;
@@ -153,21 +170,7 @@ export const useFetchMehods = () => {
   };
 
   const addParachainValidator = (nominations: any) => {
-    let _nominations = Object.assign(validators);
-
-    // filter validators to find active candidates
-    _nominations = applyValidatorFilters(_nominations, rawBatchKey, [
-      'all_commission',
-      'blocked_nominations',
-      'inactive',
-      'missing_identity',
-      'non_parachain_validator',
-    ]);
-
-    // remove currently selected nominations
-    _nominations = _nominations.filter(
-      (n: any) => !nominations.find((o: any) => o.address === n.address)
-    );
+    const _nominations = available(nominations).parachainValidators;
 
     // take one validator
     const validator = shuffle(_nominations).slice(0, 1)[0] || null;
@@ -178,14 +181,7 @@ export const useFetchMehods = () => {
   };
 
   const addRandomValidator = (nominations: any) => {
-    let _nominations = Object.assign(validators);
-
-    // filter validators to find active candidates
-    _nominations = applyValidatorFilters(_nominations, rawBatchKey, [
-      'all_commission',
-      'blocked_nominations',
-      'missing_identity',
-    ]);
+    const _nominations = available(nominations).randomValidators;
 
     // take one validator
     const validator = shuffle(_nominations).slice(0, 1)[0] || null;
@@ -199,5 +195,6 @@ export const useFetchMehods = () => {
   return {
     fetch,
     add,
+    available,
   };
 };
