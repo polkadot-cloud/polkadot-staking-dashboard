@@ -22,7 +22,10 @@ import {
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { shuffle } from 'Utils';
-import { GenerateNominationsInnerProps, Nominations } from './types';
+import {
+  GenerateNominationsInnerProps,
+  Nominations,
+} from '../SetupSteps/types';
 import { GenerateOptionsWrapper } from './Wrappers';
 
 export const GenerateNominationsInner = (
