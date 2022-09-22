@@ -37,7 +37,7 @@ export const GenerateNominationsInner = (
   const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
-  const { fetch: fetchFromMethod } = useFetchMehods();
+  const { fetch: fetchFromMethod, add: addNomination } = useFetchMehods();
   const { maxNominations } = consts;
 
   let { favouritesList } = useValidators();
@@ -89,7 +89,8 @@ export const GenerateNominationsInner = (
   useEffect(() => {
     if (
       !['Lowest Commission', 'Optimal'].includes(method || '') ||
-      method === null
+      method === null ||
+      !nominations.length
     ) {
       setHeight(null);
     } else {
@@ -121,6 +122,16 @@ export const GenerateNominationsInner = (
       // update component state
       setNominations(_nominations);
       setFetching(false);
+      updateSetters(_nominations);
+    }
+  };
+
+  // add nominations based on method
+  const addNominationByType = (type: string) => {
+    if (method) {
+      const _nominations = addNomination(nominations, type);
+      removeValidatorMetaBatch(batchKey);
+      setNominations(_nominations);
       updateSetters(_nominations);
     }
   };
@@ -189,37 +200,53 @@ export const GenerateNominationsInner = (
     resetSelected();
   };
 
+  const disabledMaxNominations = () => {
+    return nominations.length >= maxNominations;
+  };
+  const disabledAddFavourites = () => {
+    return !favouritesList?.length || nominations.length >= maxNominations;
+  };
+
   // accumulate actions
   let actions = [
     {
       title: 'Start Again',
       onClick: cbClearNominations,
       onSelected: false,
+      isDisabled: () => false,
     },
     {
-      disabled: !favouritesList.length || nominations.length >= maxNominations,
       title: 'Add From Favourites',
       onClick: cbAddNominations,
       onSelected: false,
+      isDisabled: disabledAddFavourites,
     },
     {
       title: `Remove Selected`,
       onClick: cbRemoveSelected,
       onSelected: true,
+      isDisabled: () => false,
     },
     {
-      title: 'Add Parachain Validator',
-      onClick: () => {},
+      title: 'Parachain Validator',
+      onClick: () => addNominationByType('Parachain Validator'),
       onSelected: false,
       icon: faPlus,
-      disabled: nominations.length >= maxNominations,
+      isDisabled: disabledMaxNominations,
     },
     {
-      title: 'Add Active Validator',
-      onClick: () => {},
+      title: 'Active Validator',
+      onClick: () => addNominationByType('Active Validator'),
       onSelected: false,
       icon: faPlus,
-      disabled: nominations.length >= maxNominations,
+      isDisabled: disabledMaxNominations,
+    },
+    {
+      title: 'Random Validator',
+      onClick: () => addNominationByType('Random Validator'),
+      onSelected: false,
+      icon: faPlus,
+      isDisabled: disabledMaxNominations,
     },
   ];
 
@@ -232,6 +259,7 @@ export const GenerateNominationsInner = (
         setFetching(true);
       },
       onSelected: false,
+      isDisabled: () => false,
     });
     actions = actions.reverse();
   }

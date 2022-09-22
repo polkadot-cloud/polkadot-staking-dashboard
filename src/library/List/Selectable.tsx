@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
@@ -32,7 +31,7 @@ export const Selectable = (props: any) => {
           {actionsSelected.map((a: any, i: number) => (
             <button
               key={`a_selected_${i}`}
-              disabled={a.disabled ?? false}
+              disabled={a?.isDisabled() ?? false}
               type="button"
               onClick={() => a.onClick(provider)}
             >
@@ -41,17 +40,19 @@ export const Selectable = (props: any) => {
           ))}
         </>
       )}
-      {actionsAll.map((a: any, i: number) => (
-        <button
-          key={`a_all_${i}`}
-          disabled={a.disabled ?? false}
-          type="button"
-          onClick={() => a.onClick(provider)}
-        >
-          {a.icon && <FontAwesomeIcon icon={a.icon} />}
-          {a.title}
-        </button>
-      ))}
+      {actionsAll.map((a: any, i: number) => {
+        return (
+          <button
+            key={`a_all_${i}`}
+            disabled={a?.isDisabled() ?? false}
+            type="button"
+            onClick={() => a.onClick(provider)}
+          >
+            {a.icon && <FontAwesomeIcon icon={a.icon} />}
+            {a.title}
+          </button>
+        );
+      })}
     </SelectableWrapper>
   );
 };
