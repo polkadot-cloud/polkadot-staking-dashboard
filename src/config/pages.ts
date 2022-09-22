@@ -1,16 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faHashtag,
-  faServer,
-  faStar,
-  faUsers,
-  faComment,
-  faChartSimple,
-  faBraille,
-  faProjectDiagram,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import Overview from 'pages/Overview';
 import Nominate from 'pages/Nominate';
 import Pools from 'pages/Pools';
@@ -21,6 +12,13 @@ import Community from 'pages/Community';
 import Feedback from 'pages/Feedback';
 import { URI_PREFIX } from 'consts';
 import { PageCategories, PagesConfig } from 'types';
+import * as analyticsJson from 'img/json/analytics-solid.json';
+import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
+import * as view1SolidJson from 'img/json/view-1-solid.json';
+import * as viewGroupJson from 'img/json/groups-solid-edited.json';
+import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
+import * as viewForumJson from 'img/json/forum-solid.json';
+import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
@@ -48,7 +46,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/`,
     hash: '/overview',
     Entry: Overview,
-    icon: faBraille,
+    animate: view1SolidJson,
   },
   {
     category: 2,
@@ -56,7 +54,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
-    icon: faProjectDiagram,
+    animate: viewTrendingUpJson,
   },
   {
     category: 2,
@@ -64,7 +62,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/pools`,
     hash: '/pools',
     Entry: Pools,
-    icon: faUsers,
+    animate: viewGroupJson,
   },
   {
     category: 2,
@@ -72,7 +70,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
-    icon: faChartSimple,
+    animate: analyticsJson,
   },
   {
     category: 3,
@@ -80,7 +78,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/validators`,
     hash: '/validators',
     Entry: Browse,
-    icon: faServer,
+    animate: viewAgendaJson,
   },
   {
     category: 3,
@@ -96,7 +94,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
     Entry: Favourites,
-    icon: faStar,
+    animate: favoriteHeartJson,
   },
   {
     category: 4,
@@ -104,7 +102,7 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${URI_PREFIX}/feedback`,
     hash: '/feedback',
     Entry: Feedback,
-    icon: faComment,
+    animate: viewForumJson,
   },
 ];
 

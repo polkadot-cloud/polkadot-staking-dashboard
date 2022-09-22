@@ -4,7 +4,6 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
@@ -23,8 +22,8 @@ import {
 } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
-import { BondOptions } from 'contexts/Balances/types';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTransferOptions } from 'contexts/TransferOptions';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,38 +32,42 @@ export const BalanceGraph = () => {
   const { network } = useApi();
   const { units, features } = network;
   const { activeAccount } = useConnect();
-  const { getAccountBalance, getBondOptions } = useBalances();
+  const { getAccountBalance } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
+
+  const allTransferOptions = getTransferOptions(activeAccount);
+  const { freeBalance } = allTransferOptions;
+
   const {
-    freeToBond,
     freeToUnbond: staked,
     totalUnlocking,
     totalUnlocked,
-  }: BondOptions = getBondOptions(activeAccount) || {};
-  const { getPoolBondOptions } = useActivePool();
+  } = allTransferOptions.nominate;
 
-  const poolBondOpions = getPoolBondOptions(activeAccount);
-  const unlocking = poolBondOpions.totalUnlocking
-    .add(poolBondOpions.totalUnlocked)
-    .add(totalUnlocked)
-    .add(totalUnlocking);
+  const poolBondOpions = allTransferOptions.pool;
+  const unlockingPools = poolBondOpions.totalUnlocking.add(
+    poolBondOpions.totalUnlocked
+  );
 
+  const unlocking = unlockingPools.add(totalUnlocked).add(totalUnlocking);
+
+  // get user's total balance
   const { free } = balance;
-
-  // get user's total free balance
-  const freeBase = planckBnToUnit(free, units);
+  const freeBase = planckBnToUnit(
+    free.add(poolBondOpions.active).add(unlockingPools),
+    units
+  );
 
   // convert balance to fiat value
-  const freeBalance = toFixedIfNecessary(
-    Number(freeBase * prices.lastPrice),
-    2
-  );
+  const freeFiat = toFixedIfNecessary(Number(freeBase * prices.lastPrice), 2);
 
   // graph data
   let graphStaked = planckBnToUnit(staked, units);
-  let graphFreeToStake = planckBnToUnit(freeToBond, units);
+  let graphFreeToStake = planckBnToUnit(freeBalance, units);
+
   let graphInPool = planckBnToUnit(poolBondOpions.active, units);
   let graphUnlocking = planckBnToUnit(unlocking, units);
 
@@ -175,14 +178,14 @@ export const BalanceGraph = () => {
       <div className="head">
         <h4>
           Balance
-          <OpenAssistantIcon page="overview" title="Your Balance" />
+          <OpenHelpIcon helpKey="Your Balance" />
         </h4>
         <h2>
           <span className="amount">{humanNumber(freeBase)}</span>&nbsp;
           {network.unit}
           <span className="fiat">
             {services.includes('binance_spot') && (
-              <>&nbsp;{usdFormatter.format(Number(freeBalance))}</>
+              <>&nbsp;{usdFormatter.format(Number(freeFiat))}</>
             )}
           </span>
         </h2>

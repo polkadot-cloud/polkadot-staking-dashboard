@@ -3,7 +3,7 @@
 
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Button } from 'library/Button';
 import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
@@ -77,7 +77,7 @@ export const Nominations = ({
         nominations,
         bondType,
       },
-      'large'
+      'xl'
     );
   };
 
@@ -98,7 +98,7 @@ export const Nominations = ({
       <CardHeaderWrapper withAction>
         <h3>
           {isPool ? 'Pool Nominations' : 'Nominations'}
-          <OpenAssistantIcon page="stake" title="Nominations" />
+          <OpenHelpIcon helpKey="Nominations" />
         </h3>
         <div>
           {/* If regular staking and nominating, display stop button.

@@ -7,13 +7,14 @@ import { planckBnToUnit, humanNumber } from 'Utils';
 import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
 import { Button, ButtonRow } from 'library/Button';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useTransferOptions } from 'contexts/TransferOptions';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -22,15 +23,13 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { getPoolBondOptions, isBonding, activeBondedPool } = useActivePool();
+  const { isBonding, activeBondedPool } = useActivePool();
+  const { getTransferOptions } = useTransferOptions();
 
-  const {
-    active,
-    freeToBond,
-    totalUnlocking,
-    totalUnlocked,
-    totalUnlockChuncks,
-  } = getPoolBondOptions(activeAccount);
+  const allTransferOptions = getTransferOptions(activeAccount);
+  const { freeBalance } = allTransferOptions;
+  const { active, totalUnlocking, totalUnlocked, totalUnlockChuncks } =
+    allTransferOptions.pool;
 
   const { state } = activeBondedPool?.bondedPool || {};
 
@@ -39,7 +38,7 @@ export const ManageBond = () => {
       <CardHeaderWrapper>
         <h4>
           Bonded Funds
-          <OpenAssistantIcon page="pools" title="Bonded in Pool" />
+          <OpenHelpIcon helpKey="Bonded in Pool" />
         </h4>
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
@@ -89,7 +88,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeToBond, units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={!membership}
       />
     </>

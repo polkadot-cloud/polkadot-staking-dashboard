@@ -9,7 +9,10 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useApi } from 'contexts/Api';
-import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
+import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
 
@@ -18,6 +21,7 @@ export const ChangePoolRoles = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { config } = useModal();
+  const { txFeesValid } = useTxFees();
   const { poolId, roleEdits } = config;
 
   // tx to submit
@@ -40,7 +44,7 @@ export const ChangePoolRoles = () => {
   };
 
   // handle extrinsic
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -51,48 +55,50 @@ export const ChangePoolRoles = () => {
   });
 
   return (
-    <Wrapper>
-      <HeadingWrapper>
-        <FontAwesomeIcon transform="grow-2" icon={faExchangeAlt} />
-        Change Pool Role
-      </HeadingWrapper>
-      <div
-        style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
-      >
-        <RoleChange
-          roleName="Nominator"
-          oldAddress={roleEdits?.nominator?.oldAddress}
-          newAddress={roleEdits?.nominator?.newAddress}
-        />
-        <RoleChange
-          roleName="State Toggler"
-          oldAddress={roleEdits?.stateToggler?.oldAddress}
-          newAddress={roleEdits?.stateToggler?.newAddress}
-        />
-        <NotesWrapper>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
-        </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <button
-              type="button"
-              className="submit"
-              onClick={() => submitTx()}
-              disabled={submitting || !accountHasSigner(activeAccount)}
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-            </button>
-          </div>
-        </FooterWrapper>
-      </div>
-    </Wrapper>
+    <>
+      <Title title="Change Pool Roles" icon={faExchangeAlt} />
+      <Wrapper>
+        <div
+          style={{
+            padding: '0 1.25rem',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        >
+          <RoleChange
+            roleName="Nominator"
+            oldAddress={roleEdits?.nominator?.oldAddress}
+            newAddress={roleEdits?.nominator?.newAddress}
+          />
+          <RoleChange
+            roleName="State Toggler"
+            oldAddress={roleEdits?.stateToggler?.oldAddress}
+            newAddress={roleEdits?.stateToggler?.newAddress}
+          />
+          <NotesWrapper>
+            <EstimatedTxFee />
+          </NotesWrapper>
+          <FooterWrapper>
+            <div>
+              <button
+                type="button"
+                className="submit"
+                onClick={() => submitTx()}
+                disabled={
+                  submitting || !accountHasSigner(activeAccount) || !txFeesValid
+                }
+              >
+                <FontAwesomeIcon
+                  transform="grow-2"
+                  icon={faArrowAltCircleUp as IconProp}
+                />
+                Submit
+              </button>
+            </div>
+          </FooterWrapper>
+        </div>
+      </Wrapper>
+    </>
   );
 };
 

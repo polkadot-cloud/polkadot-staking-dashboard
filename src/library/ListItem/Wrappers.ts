@@ -11,7 +11,7 @@ import {
   backgroundDropdown,
   backgroundModalItem,
 } from 'theme';
-import { MAX_ASSISTANT_INTERFACE_WIDTH } from 'consts';
+import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
 export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
@@ -24,9 +24,15 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   > .inner {
     background: ${(props) =>
       props.inModal ? backgroundModalItem : backgroundDropdown};
+    border: 1px solid ${borderPrimary};
+
+    ${(props) =>
+      props.inModal &&
+      `
+      border: none;`}
     box-sizing: border-box;
     flex: 1;
-    border-radius: 0.75rem;
+    border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -72,7 +78,7 @@ export const Labels = styled.div`
 
   button {
     padding: 0 0.1rem;
-    @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
+    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
       padding: 0 0.2rem;
     }
 
@@ -92,7 +98,7 @@ export const Labels = styled.div`
     position: relative;
     color: ${textSecondary};
     margin: 0 0.2rem;
-    @media (min-width: ${MAX_ASSISTANT_INTERFACE_WIDTH}px) {
+    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
       margin: 0 0.2rem;
 
       &.pool {
@@ -199,17 +205,21 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
   }
 `;
 
-export const SelectWrapper = styled.div`
+export const SelectWrapper = styled.button`
+  background: ${modalBackground};
   margin: 0 0.75rem 0 0.25rem;
   overflow: hidden;
-  display: block;
-  background: ${modalBackground};
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
   border-radius: 0.25rem;
   width: 1.1rem;
   height: 1.1rem;
+  padding: 0;
   * {
     cursor: pointer;
     width: 100%;
+    padding: 0;
   }
 
   span {

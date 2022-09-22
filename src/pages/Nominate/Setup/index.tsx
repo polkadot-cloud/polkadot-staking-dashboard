@@ -10,7 +10,7 @@ import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
-import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
+import { Nominate } from 'library/SetupSteps/Nominate';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
@@ -58,7 +58,7 @@ export const Setup = () => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <ChooseNominations
+          <Nominate
             batchKey="generate_nominations_inactive"
             setupType={SetupType.Stake}
             section={3}

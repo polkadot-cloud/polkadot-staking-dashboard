@@ -12,7 +12,7 @@ import {
 import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
 export const Wrapper = styled.div`
-  flex: 1;
+  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   width: 100%;
@@ -70,7 +70,7 @@ export const InflationWrapper = styled.div`
   margin-bottom: 0.75rem;
 
   h4 {
-    .assistant-icon {
+    .help-icon {
       margin-left: 0.6rem;
     }
   }

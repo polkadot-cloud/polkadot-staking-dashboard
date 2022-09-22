@@ -247,7 +247,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
     const p = 25;
     let progress = 0;
-    if (setupProgress.metadata !== null) progress += p;
+    if (setupProgress.metadata !== '') progress += p;
     if (setupProgress.bond > 0) progress += p;
     if (setupProgress.nominations.length) progress += p;
     if (setupProgress.roles !== null) progress += p - 1;

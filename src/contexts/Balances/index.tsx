@@ -5,13 +5,11 @@ import BN from 'bn.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import { Option } from '@polkadot/types-codec';
-import { useNetworkMetrics } from 'contexts/Network';
 import { rmCommas, setStateWithRef } from 'Utils';
 import {
   BalanceLedger,
   BalancesAccount,
   BalancesContextInterface,
-  BondOptions,
 } from 'contexts/Balances/types';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useApi } from '../Api';
@@ -30,18 +28,10 @@ export const BalancesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network, consts } = useApi();
-  const { metrics } = useNetworkMetrics();
   const { accounts: connectAccounts, addExternalAccount } = useConnect();
-  const { activeEra } = metrics;
 
   // existential amount of unit for an account
   const existentialAmount = consts.existentialDeposit;
-
-  // amount of compulsary reserve balance
-  const reserveAmount = new BN(10).pow(new BN(network.units)).div(new BN(2));
-
-  // minimum reserve for submitting extrinsics
-  const minReserve: BN = reserveAmount.add(existentialAmount);
 
   // balance accounts state
   const [accounts, setAccounts] = useState<Array<BalancesAccount>>([]);
@@ -183,7 +173,7 @@ export const BalancesProvider = ({
         const { free, reserved, miscFrozen, feeFrozen } = data;
 
         // calculate free balance after app reserve
-        let freeAfterReserve = new BN(free).sub(minReserve);
+        let freeAfterReserve = new BN(free).sub(existentialAmount);
         freeAfterReserve = freeAfterReserve.lt(new BN(0))
           ? new BN(0)
           : freeAfterReserve;
@@ -414,56 +404,6 @@ export const BalancesProvider = ({
     return existsAsController.length > 0;
   };
 
-  // get the bond and unbond amounts available to the user
-  const getBondOptions = (address: MaybeAccount): BondOptions => {
-    const account = getAccount(address);
-    if (account === null) {
-      return defaults.bondOptions;
-    }
-    const balance = getAccountBalance(address);
-    const ledger = getLedgerForStash(address);
-    const { freeAfterReserve } = balance;
-    const { active, unlocking } = ledger;
-
-    // free to unbond balance
-    const freeToUnbond = active;
-
-    // total amount actively unlocking
-    let totalUnlocking = new BN(0);
-    let totalUnlocked = new BN(0);
-
-    for (const u of unlocking) {
-      const { value, era } = u;
-
-      if (activeEra.index > era) {
-        totalUnlocked = totalUnlocked.add(value);
-      } else {
-        totalUnlocking = totalUnlocking.add(value);
-      }
-    }
-
-    // free to bond balance
-    const freeToBond = BN.max(
-      freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
-      new BN(0)
-    );
-
-    // total possible balance that can be bonded
-    const totalPossibleBond = BN.max(
-      freeAfterReserve.sub(totalUnlocking).sub(totalUnlocked),
-      new BN(0)
-    );
-
-    return {
-      freeToBond,
-      freeToUnbond,
-      totalUnlocking,
-      totalUnlocked,
-      totalPossibleBond,
-      totalUnlockChuncks: unlocking.length,
-    };
-  };
-
   return (
     <BalancesContext.Provider
       value={{
@@ -474,11 +414,8 @@ export const BalancesProvider = ({
         getAccountLocks,
         getBondedAccount,
         getAccountNominations,
-        getBondOptions,
         isController,
-        minReserve,
         existentialAmount,
-        reserveAmount,
         accounts: accountsRef.current,
         ledgers: ledgersRef.current,
       }}

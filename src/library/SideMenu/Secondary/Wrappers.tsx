@@ -7,6 +7,7 @@ import {
   borderPrimary,
   highlightPrimary,
   highlightSecondary,
+  textPrimary,
   textSecondary,
 } from 'theme';
 import { MinimisedProps } from '../types';
@@ -23,6 +24,7 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   padding: 0.75rem 0rem 0.75rem 0.5rem;
   margin: 0.55rem 0.2rem 0.55rem 0;
   position: relative;
+  height: 3.2rem;
 
   .name {
     color: ${textSecondary};
@@ -56,9 +58,10 @@ export const MinimisedWrapper = styled(motion.button)`
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  padding: 0.6rem 0rem;
+  padding: 0rem 0rem;
   margin: 0.3rem 0 0.3rem 0;
   position: relative;
+  min-height: 2.8rem;
 
   &.active {
     background: ${highlightPrimary};
@@ -81,7 +84,14 @@ export const MinimisedWrapper = styled(motion.button)`
 
 export const IconWrapper = styled.div<{ minimised: number }>`
   margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
-  margin-right: 0.65rem;
+  margin-right: ${(props) => (props.minimised ? 0 : '0.65rem')};
+
+  .lpf {
+    fill: ${textPrimary};
+  }
+  .lps {
+    stroke: ${textPrimary};
+  }
 
   svg {
     .primary {

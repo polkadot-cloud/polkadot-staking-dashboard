@@ -16,6 +16,9 @@ import { useApi } from 'contexts/Api';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { Warning } from 'library/Form/Warning';
 import { InputItem } from 'library/Form/types';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
@@ -24,6 +27,8 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
+  const { txFeesValid } = useTxFees();
+
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
@@ -57,7 +62,7 @@ export const UpdateController = () => {
   };
 
   // handle extrinsic
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -68,55 +73,52 @@ export const UpdateController = () => {
   });
 
   return (
-    <Wrapper>
-      <HeadingWrapper>
-        <FontAwesomeIcon transform="grow-2" icon={faExchangeAlt} />
-        Change Controller Account
-      </HeadingWrapper>
-      <div
-        style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
-      >
-        <div style={{ marginBottom: '1.5rem' }}>
-          {!accountHasSigner(activeAccount) && (
-            <Warning text="Your stash account is read only and cannot sign transactions." />
-          )}
-        </div>
-        <AccountDropdown
-          items={items}
-          onChange={handleOnChange}
-          placeholder="Search Account"
-          current={account}
-          value={selected}
-          height="17rem"
-        />
-        <NotesWrapper>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
-        </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <button
-              type="button"
-              className="submit"
-              onClick={() => submitTx()}
-              disabled={
-                selected === null ||
-                submitting ||
-                !accountHasSigner(activeAccount)
-              }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-            </button>
+    <>
+      <Title title="Change Controller Account" icon={faExchangeAlt} />
+      <Wrapper>
+        <div
+          style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
+        >
+          <div style={{ marginBottom: '1.5rem' }}>
+            {!accountHasSigner(activeAccount) && (
+              <Warning text="Your stash account is read only and cannot sign transactions." />
+            )}
           </div>
-        </FooterWrapper>
-      </div>
-    </Wrapper>
+          <AccountDropdown
+            items={items}
+            onChange={handleOnChange}
+            placeholder="Search Account"
+            current={account}
+            value={selected}
+            height="17rem"
+          />
+          <NotesWrapper>
+            <EstimatedTxFee />
+          </NotesWrapper>
+          <FooterWrapper>
+            <div>
+              <button
+                type="button"
+                className="submit"
+                onClick={() => submitTx()}
+                disabled={
+                  selected === null ||
+                  submitting ||
+                  !accountHasSigner(activeAccount) ||
+                  !txFeesValid
+                }
+              >
+                <FontAwesomeIcon
+                  transform="grow-2"
+                  icon={faArrowAltCircleUp as IconProp}
+                />
+                Submit
+              </button>
+            </div>
+          </FooterWrapper>
+        </div>
+      </Wrapper>
+    </>
   );
 };
 

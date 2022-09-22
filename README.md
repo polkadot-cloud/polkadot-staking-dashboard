@@ -1,10 +1,9 @@
 # Polkadot Staking Dashboard [Beta]
 
 ## Deployment
-
 Staking dashboard is live on [staking.polkadot.network/dashboard](https://staking.polkadot.network/dashboard)
 
-<img width="1617" alt="Screenshot 2022-07-24 at 15 34 35" src="https://user-images.githubusercontent.com/13929023/180651950-e7b5e90f-b32c-4c41-85a1-11c01bb05c8e.png">
+<img width="1737" alt="Screenshot 2022-09-15 at 11 23 14" src="https://user-images.githubusercontent.com/13929023/190313914-ec750ca4-1be0-4d46-b2c5-2968dbe98fb4.png">
 
 # Validator Entity Setup Guide
 
@@ -128,8 +127,8 @@ Going from the top-most component, the component hierarchy is set up as follows:
 - [`Providers.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
 - [`Router.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
   - `<Modal />`: top-level of the modal.
-  - `<Assistant />`: top-level of the assistant.
-  - `<Headers />`: fixed header of the app containing the stash / controller, assistant and menu toggle buttons.
+  - `<Help />`: top-level of the help module.
+  - `<Headers />`: fixed header of the app containing the stash / controller and accounts toggle buttons.
   - `<NetworkBar />`: fixed network bar at the bottom of the app.
   - `<Notifications />`: smaller context-based popups. Currently used on click-to-copy, or to display extrinsic status (pending, success).
 
@@ -155,7 +154,7 @@ We develop in strict mode, so types are always required for objects. Use any ini
 
 Testing could be initialised on a per-component basis, such as isolating library components and testing them within a storybook environment.
 
-Integration tests make sense for the app itself, ensuring the page layout, assistant, and modals display the correct content at various app states. These states currently persist of:
+Integration tests make sense for the app itself, ensuring the page layout, help module, and modals display the correct content at various app states. These states currently persist of:
 
 - Connecting to the network, fetching from API, fully synced.
 - Actively staking, not actively staking.

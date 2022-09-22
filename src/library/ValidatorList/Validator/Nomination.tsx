@@ -3,6 +3,7 @@
 
 import { useValidators } from 'contexts/Validators';
 import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
+import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import { useList } from '../../List/context';
 import { getIdentityDisplay } from './Utils';
 import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
@@ -65,6 +66,8 @@ export const Nomination = (props: NominationProps) => {
             <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
             <Blocked prefs={prefs} />
             <Commission commission={commission} />
+            <ParaValidator address={address} />
+
             {/* restrict opening another modal within a modal */}
             {!inModal && (
               <Metrics

@@ -16,11 +16,12 @@
     "@polkadot/types": "^9.3.3",
     "@polkadot/types-codec": "^9.3.3",
     "@polkadot/util": "^10.1.7",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/lodash.throttle": "^4.1.6",
     "@types/react-helmet": "^6.1.5",
+    "@types/react-lottie": "^1.2.6",
     "@types/react-scroll": "^1.8.3",
     "@types/styled-theming": "^2.2.5",
     "add": "^2.0.6",
@@ -38,11 +39,11 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^4.2.0",
     "react-content-loader": "^6.2.0",
-    "react-custom-checkbox": "^2.0.1",
     "react-dom": "^18.1.0",
     "react-error-boundary": "^3.1.4",
     "react-helmet": "^6.1.0",
     "react-lorem-ipsum": "^1.4.9",
+    "react-lottie": "^1.2.3",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-scroll": "^1.8.6",
@@ -85,7 +86,7 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
-    "build:netlify": "REACT_APP_ORGANISATION='© Web3 Foundation' REACT_APP_PRIVACY_URL=https://polkadot.network/privacy/ REACT_APP_DISCLAIMER_URL=https://polkadot.network/disclaimer/ REACT_APP_DISABLE_FIAT=1 BUILD_PATH='./build/dashboard' react-scripts build",
+    "build:netlify": "REACT_APP_ORGANISATION='© Web3 Foundation' REACT_APP_PRIVACY_URL=https://polkadot.network/privacy/ REACT_APP_DISCLAIMER_URL=https://polkadot.network/disclaimer/ REACT_APP_DISABLE_FIAT=1 BUILD_PATH='./build' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src --fix"
@@ -104,5 +105,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/dashboard/"
+  "homepage": "/"
 }

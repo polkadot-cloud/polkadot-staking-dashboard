@@ -3,7 +3,7 @@
 
 import { SetupType } from 'contexts/UI/types';
 
-export interface ChooseNominationsProps {
+export interface NominationsProps {
   batchKey: string;
   setupType: SetupType;
   section: number;
@@ -22,8 +22,7 @@ export interface GenerateNominationsInnerProps {
 
 export interface HeaderProps {
   title?: string;
-  assistantPage?: string;
-  assistantKey?: string;
+  helpKey?: string;
   complete?: boolean | null;
   thisSection: number;
   setupType: SetupType;

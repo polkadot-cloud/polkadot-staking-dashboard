@@ -72,8 +72,7 @@ export const Payee = (props: SetupStepProps) => {
         thisSection={section}
         complete={setup.payee !== null}
         title="Reward Destination"
-        assistantPage="stake"
-        assistantKey="Reward Destination"
+        helpKey="Reward Destination"
         setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
@@ -86,9 +85,11 @@ export const Payee = (props: SetupStepProps) => {
                 selected={payee === options[item.index]}
                 onClick={() => handleChangePayee(item.index)}
               >
-                <h3>{item.title}</h3>
                 <div>
-                  <p>{item.subtitle}</p>
+                  <h3>{item.title}</h3>
+                  <div>
+                    <p>{item.subtitle}</p>
+                  </div>
                 </div>
               </Item>
             );

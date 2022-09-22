@@ -13,6 +13,7 @@ import { useModal } from 'contexts/Modal';
 import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
+import { useTransferOptions } from 'contexts/TransferOptions';
 
 export const ClosurePrompts = () => {
   const { network } = useApi();
@@ -21,16 +22,12 @@ export const ClosurePrompts = () => {
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
   const { isSyncing } = useUi();
-  const {
-    isBonding,
-    activeBondedPool,
-    isDepositor,
-    getPoolBondOptions,
-    poolNominations,
-  } = useActivePool();
+  const { isBonding, activeBondedPool, isDepositor, poolNominations } =
+    useActivePool();
+  const { getTransferOptions } = useTransferOptions();
 
   const { state, memberCounter } = activeBondedPool?.bondedPool || {};
-  const { active, totalUnlockChuncks } = getPoolBondOptions(activeAccount);
+  const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
 
   const networkColorsSecondary: any = network.colors.secondary;
@@ -41,8 +38,7 @@ export const ClosurePrompts = () => {
     !isSyncing &&
     isDepositor() &&
     state === PoolState.Destroy &&
-    memberCounter === '1' &&
-    !targets.length;
+    memberCounter === '1';
 
   // depositor needs to unbond funds
   const depositorCanUnbond = active.toNumber() > 0 && !targets.length;

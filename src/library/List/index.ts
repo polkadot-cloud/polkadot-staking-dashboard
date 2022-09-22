@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  textSecondary,
-  borderPrimary,
-  buttonSecondaryBackground,
-  textPrimary,
-  networkColor,
-} from 'theme';
+import { textSecondary, borderPrimary, textPrimary, networkColor } from 'theme';
 import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
@@ -99,14 +93,14 @@ export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 
   > button {
-    background: ${buttonSecondaryBackground};
-    font-size: 0.98rem;
+    border: 1px solid ${borderPrimary};
+    font-size: 1rem;
     color: ${textSecondary};
-    border-radius: 0.5rem;
-    padding: 0.36rem 0.8rem;
+    border-radius: 1rem;
+    padding: 0.45rem 1rem;
     margin-right: 0.5rem;
 
     &:disabled {

@@ -39,7 +39,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     align-items: center;
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
 
-    .assistant-icon {
+    .help-icon {
       margin-left: 0.6rem;
     }
   }
@@ -50,7 +50,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     align-items: center;
     justify-content: flex-start;
 
-    .assistant-icon {
+    .help-icon {
       margin-left: 0.5rem;
     }
   }
@@ -179,7 +179,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      flex: 1;
     }
   }
 
@@ -213,7 +212,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     align-items: center;
     margin-top: 0.4rem;
 
-    .assistant-icon {
+    .help-icon {
       margin-left: 0.4rem;
     }
   }

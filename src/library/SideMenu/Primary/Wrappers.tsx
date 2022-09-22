@@ -10,6 +10,7 @@ import {
   warning,
   warningTransparent,
   networkColor,
+  textPrimary,
 } from 'theme';
 import { MinimisedProps } from '../types';
 
@@ -28,6 +29,17 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   .icon {
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
     margin-right: 0.65rem;
+
+    .fa-icon {
+      margin: 0 0.15rem;
+    }
+
+    .lpf {
+      fill: ${textPrimary};
+    }
+    .lps {
+      stroke: ${textPrimary};
+    }
   }
   .name {
     margin: 0;
@@ -54,7 +66,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
         border: 1px solid ${warningTransparent};
       }
       box-sizing: border-box;
-      border-radius: 0.35rem;
+      border-radius: 0.5rem;
       padding: 0.15rem 0.5rem;
     }
 
@@ -85,7 +97,7 @@ export const MinimisedWrapper = styled(motion.div)`
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  padding: 0.7rem 0rem;
+  padding: 0.65rem 0rem;
   margin: 0.7rem 0.2rem 0.3rem 0;
   font-size: 1.1rem;
   position: relative;
@@ -105,6 +117,13 @@ export const MinimisedWrapper = styled(motion.div)`
   }
   .icon {
     margin: 0;
+
+    .lpf {
+      fill: ${textPrimary};
+    }
+    .lps {
+      stroke: ${textPrimary};
+    }
   }
   .action {
     &.minimised {

@@ -24,7 +24,7 @@ export const ModalWrapper = styled(motion.div)`
   backdrop-filter: blur(4px);
 
   /* modal content wrapper */
-  .content_wrapper {
+  > div {
     box-sizing: border-box;
     height: 100%;
     display: flex;
@@ -47,12 +47,17 @@ export const ModalWrapper = styled(motion.div)`
 export const HeightWrapper = styled.div<{ size: string }>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
-  transition: height 0.4s cubic-bezier(0.1, 1, 0.2, 1);
+  transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   box-sizing: border-box;
   width: 100%;
-  max-width: ${(props) => (props.size === 'large' ? '800px' : '600px')};
+  max-width: ${(props) =>
+    props.size === 'xl'
+      ? '1250px'
+      : props.size === 'large'
+      ? '800px'
+      : '600px'};
   max-height: 100%;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   z-index: 9;
   position: relative;
 `;
@@ -93,7 +98,7 @@ export const PaddingWrapper = styled.div<{
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  padding: ${(props) => (props.verticalOnly ? '1rem 0' : '1rem')};
+  padding: ${(props) => (props.verticalOnly ? '1rem 0' : '1rem 1.25rem')};
 `;
 
 // modal header, used for extrinsics forms

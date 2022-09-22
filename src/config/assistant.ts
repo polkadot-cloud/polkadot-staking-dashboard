@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AssistantConfig } from 'contexts/Assistant/types';
+import { AssistantConfig } from 'contexts/Help/types';
 
 export const ASSISTANT_CONFIG: AssistantConfig = [
   {
@@ -31,8 +31,15 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Your Balance',
         description: [
-          'Your balance represents total amount you have staked in addition to the total amount you have bonded in a Pool.',
+          'Your balance represents the total {NETWORK_UNIT} you have available in addition to your total staked amount, that includes the amount you have bonded in a Pool.',
           'Unlike your staked balance, your bonded pool balance is held and locked in the pool itself.',
+        ],
+      },
+      {
+        title: 'Reserve Balance',
+        description: [
+          'In {NETWORK_NAME}, you must have a balance above a certain amount for your account to exist on-chain. This amount is called your "existential deposit".',
+          'Staking dashboard ensures that this amount of {NETWORK_UNIT} is never touched.',
         ],
       },
       {
@@ -50,7 +57,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
-        title: 'Estimated APY',
+        title: 'Historical Rewards Rate',
         description: [
           'An estimated annual yield based on the {NETWORK_NAME} reward distribution model.',
         ],
@@ -271,6 +278,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         label: 'Validators',
         title: 'How do I know which validators to choose?',
         url: 'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
+        website: 'polkadot.network',
       },
     ],
   },

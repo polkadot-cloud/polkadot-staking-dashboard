@@ -7,6 +7,7 @@ import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { Validator } from 'contexts/Validators/types';
+import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
@@ -60,43 +61,46 @@ export const SelectFavourites = () => {
   const overMaxNominations = totalAfterSelection > maxNominations;
 
   return (
-    <PaddingWrapper>
-      <h2>Add From Favourites</h2>
-      <ListWrapper>
-        {availableFavourites.length > 0 ? (
-          <ValidatorList
-            bondType="stake"
-            validators={availableFavourites}
-            batchKey={batchKey}
-            title="Favourite Validators"
-            selectable
-            selectActive
-            selectToggleable={false}
-            onSelected={onSelected}
-            refetchOnListUpdate
-            showMenu={false}
-            inModal
-          />
-        ) : (
-          <h3>No Favourites Available.</h3>
-        )}
-      </ListWrapper>
-      <FooterWrapper>
-        <button
-          type="button"
-          disabled={!selectedFavourites.length || overMaxNominations}
-          onClick={() => submitSelectedFavourites()}
-        >
-          {selectedFavourites.length > 0
-            ? overMaxNominations
-              ? `Adding this many favourites will surpass ${maxNominations} nominations.`
-              : `Add ${selectedFavourites.length} Favourite${
-                  selectedFavourites.length !== 1 ? `s` : ``
-                } to Nominations`
-            : `No Favourites Selected`}
-        </button>
-      </FooterWrapper>
-    </PaddingWrapper>
+    <>
+      <Title title="Add From Favourites" />
+      <PaddingWrapper>
+        <ListWrapper>
+          {availableFavourites.length > 0 ? (
+            <ValidatorList
+              bondType="stake"
+              validators={availableFavourites}
+              batchKey={batchKey}
+              title="Favourite Validators"
+              selectable
+              selectActive
+              selectToggleable={false}
+              onSelected={onSelected}
+              refetchOnListUpdate
+              showMenu={false}
+              inModal
+              allowMoreCols
+            />
+          ) : (
+            <h3>No Favourites Available.</h3>
+          )}
+        </ListWrapper>
+        <FooterWrapper>
+          <button
+            type="button"
+            disabled={!selectedFavourites.length || overMaxNominations}
+            onClick={() => submitSelectedFavourites()}
+          >
+            {selectedFavourites.length > 0
+              ? overMaxNominations
+                ? `Adding this many favourites will surpass ${maxNominations} nominations.`
+                : `Add ${selectedFavourites.length} Favourite${
+                    selectedFavourites.length !== 1 ? `s` : ``
+                  } to Nominations`
+              : `No Favourites Selected`}
+          </button>
+        </FooterWrapper>
+      </PaddingWrapper>
+    </>
   );
 };
 

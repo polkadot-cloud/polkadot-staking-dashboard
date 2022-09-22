@@ -11,6 +11,9 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -22,13 +25,16 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getPoolBondOptions, isDepositor } = useActivePool();
+  const { isDepositor } = useActivePool();
+  const { getTransferOptions } = useTransferOptions();
   const { stats } = usePoolsConfig();
+  const { txFeesValid } = useTxFees();
+
   const { minJoinBond, minCreateBond } = stats;
-  const poolBondOptions = getPoolBondOptions(activeAccount);
   const { bondDuration } = consts;
 
-  const { freeToUnbond: freeToUnbondBn } = poolBondOptions;
+  const { freeToUnbond: freeToUnbondBn } =
+    getTransferOptions(activeAccount).pool;
 
   // unbond amount to minimum threshold
   const freeToUnbond = isDepositor()
@@ -77,7 +83,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -86,10 +92,6 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     },
     callbackInBlock: () => {},
   });
-
-  const TxFee = (
-    <p>Estimated Tx Fee: {estimatedFee === null ? '...' : `${estimatedFee}`}</p>
-  );
 
   return (
     <>
@@ -108,7 +110,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
               Once unbonding, you must wait {bondDuration} eras for your funds
               to become available.
             </p>
-            {bondValid && TxFee}
+            {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>
       </div>
@@ -116,7 +118,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
         setSection={setSection}
         submitTx={submitTx}
         submitting={submitting}
-        isValid={bondValid && accountHasSigner(activeAccount)}
+        isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
       />
     </>
   );

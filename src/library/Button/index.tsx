@@ -39,7 +39,7 @@ export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
         : textSecondary};
 
     padding: ${(props) => props.padding};
-    border-radius: 0.75rem;
+    border-radius: 1.25rem;
     font-size: ${(props) => props.fontSize};
     transition: opacity 0.2s;
 
@@ -73,7 +73,7 @@ export const Button = (props: ButtonProps) => {
       whileTap={{ scale: !disabled ? 0.98 : 1 }}
       type={type}
       margin={inline ? '0' : '0 0.5rem'}
-      padding={small ? '0.4rem 0.8rem' : '0.52rem 1.2rem'}
+      padding={small ? '0.42rem 0.9rem' : '0.52rem 1.2rem'}
       fontSize={small ? '1rem' : '1.15rem'}
     >
       <button

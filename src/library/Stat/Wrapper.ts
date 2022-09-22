@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     justify-content: flex-start;
     margin: 0 0 0.5rem 0;
 
-    .assistant-icon {
+    .help-icon {
       margin-left: 0.5rem;
     }
   }

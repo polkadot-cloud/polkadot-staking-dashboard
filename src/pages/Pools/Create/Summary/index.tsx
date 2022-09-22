@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
-import { humanNumber } from 'Utils';
+import { humanNumber, unitToPlanckBn } from 'Utils';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { SetupStepProps } from 'library/SetupSteps/types';
@@ -20,6 +20,8 @@ import { BN } from 'bn.js';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -33,6 +35,7 @@ export const Summary = (props: SetupStepProps) => {
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
   const poolId = lastPoolId.add(new BN(1));
+  const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
@@ -49,7 +52,8 @@ export const Summary = (props: SetupStepProps) => {
     ) {
       return null;
     }
-    const bondToSubmit = bond * 10 ** units;
+
+    const bondToSubmit = unitToPlanckBn(bond, units).toString();
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
     // construct a batch of transactions
@@ -66,7 +70,7 @@ export const Summary = (props: SetupStepProps) => {
     return api.tx.utility.batch(_txs);
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
@@ -141,8 +145,7 @@ export const Summary = (props: SetupStepProps) => {
             <div>Assigned</div>
           </section>
           <section>
-            <div>Estimated Tx Fee:</div>
-            <div>{estimatedFee === null ? '...' : `${estimatedFee}`}</div>
+            <EstimatedTxFee format="table" />
           </section>
         </SummaryWrapper>
         <div
@@ -156,7 +159,9 @@ export const Summary = (props: SetupStepProps) => {
         >
           <Button
             onClick={() => submitTx()}
-            disabled={submitting || !accountHasSigner(activeAccount)}
+            disabled={
+              submitting || !accountHasSigner(activeAccount) || !txFeesValid
+            }
             title="Create Pool"
             primary
           />

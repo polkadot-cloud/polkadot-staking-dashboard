@@ -15,10 +15,7 @@ const MinJoinBondStatBox = () => {
     label: 'Minimum Join Bond',
     value: planckBnToUnit(stats.minJoinBond, units),
     unit: network.unit,
-    assistant: {
-      page: 'pools',
-      key: 'Minimum Join Bond',
-    },
+    helpKey: 'Minimum Join Bond',
   };
   return <Number {...params} />;
 };

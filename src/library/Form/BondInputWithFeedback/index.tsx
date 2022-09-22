@@ -11,30 +11,54 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import BN from 'bn.js';
+import { useTxFees } from 'contexts/TxFees';
+import { BN_ZERO } from '@polkadot/util';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondInput } from '../BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
 import { BondInputWithFeedbackProps } from '../types';
 
 export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
-  const { bondType, defaultBond, unbond } = props;
+  const { bondType, unbond } = props;
   const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
   const setters = props.setters ?? [];
   const listenIsValid = props.listenIsValid ?? (() => {});
+  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
+  const defaultBond = props.defaultBond || '';
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
-  const { getLedgerForStash, getBondedAccount, getBondOptions } = useBalances();
-  const { getPoolBondOptions, isDepositor } = useActivePool();
+  const { getBondedAccount } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
+  const { isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
-  const ledger = getLedgerForStash(activeAccount);
-  const { active } = ledger;
+  const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
+
+  const allTransferOptions = getTransferOptions(activeAccount);
+
+  // get bond options for either staking or pooling.
+  const { freeBalance: freeBalanceBn } = allTransferOptions;
+  const transferOptions =
+    bondType === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
+
+  const { freeToUnbond: freeToUnbondBn, active } = transferOptions;
+
+  // if we are bonding, subtract tx fees from bond amount
+  const freeBondAmount = unbond
+    ? freeBalanceBn
+    : !disableTxFeeUpdate
+    ? BN.max(freeBalanceBn.sub(txFees), BN_ZERO)
+    : freeBalanceBn;
+
+  // the default bond balance
+  const freeBalance = planckBnToUnit(freeBondAmount, units);
 
   // store errors
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -57,27 +81,27 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   // handle errors on input change
   useEffect(() => {
     handleErrors();
-  }, [bond]);
+  }, [bond, txFees]);
+
+  // if resize is present, handle on error change
+  useEffect(() => {
+    if (props.setLocalResize) props.setLocalResize();
+  }, [errors]);
+
+  // update max bond after txFee sync
+  useEffect(() => {
+    if (!unbond && !disableTxFeeUpdate) {
+      if (Number(bond.bond) > freeBalance) {
+        setBond({ bond: freeBalance });
+      }
+    }
+  }, [txFees]);
 
   // add this component's setBond to setters
   setters.push({
     set: setBond,
     current: bond,
   });
-
-  // get bond options for either staking or pooling.
-  const bondOptions =
-    bondType === 'pool'
-      ? getPoolBondOptions(activeAccount)
-      : getBondOptions(activeAccount);
-
-  const {
-    freeToBond: freeToBondBn,
-    freeToUnbond: freeToUnbondBn,
-    active: poolsActive,
-  } = bondOptions;
-
-  const freeToBond = planckBnToUnit(freeToBondBn, units);
 
   // bond amount to minimum threshold
   const minBondBase =
@@ -105,10 +129,7 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         );
 
   // get the actively bonded amount.
-  const activeBase =
-    bondType === 'pool'
-      ? planckBnToUnit(poolsActive, units)
-      : planckBnToUnit(active, units);
+  const activeBase = planckBnToUnit(active, units);
 
   // handle error updates
   const handleErrors = () => {
@@ -118,18 +139,18 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
 
     // bond errors
     if (!unbond) {
-      if (freeToBond === 0) {
+      if (freeBalance === 0) {
         _bondDisabled = true;
         _errors.push(`You have no free ${network.unit} to bond.`);
       }
 
-      if (Number(bond.bond) > freeToBond) {
+      if (Number(bond.bond) > freeBalance) {
         _errors.push('Bond amount is more than your free balance.');
       }
 
       // bond errors
       if (inSetup) {
-        if (freeToBond < minBondBase) {
+        if (freeBalance < minBondBase) {
           _bondDisabled = true;
           _errors.push(
             `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
@@ -181,8 +202,10 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {unbond ? 'Bonded' : 'Available'}:{' '}
-          {unbond ? humanNumber(activeBase) : humanNumber(freeToBond)}{' '}
+          {unbond
+            ? 'Bonded'
+            : `${txFees.isZero() ? `Available` : `Available after Tx Fees`}`}
+          : {unbond ? humanNumber(activeBase) : humanNumber(freeBalance)}{' '}
           {network.unit}
         </h4>
       </CardHeaderWrapper>
@@ -196,8 +219,9 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
         defaultValue={defaultBond}
         disabled={bondDisabled}
         setters={setters}
-        freeToBond={freeToBond}
+        freeBalance={freeBalance}
         freeToUnbondToMin={freeToUnbondToMin}
+        disableTxFeeUpdate={disableTxFeeUpdate}
       />
     </>
   );

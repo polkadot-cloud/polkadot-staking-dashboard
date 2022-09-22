@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useState } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
@@ -8,7 +9,6 @@ import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import {
-  HeadingWrapper,
   NotesWrapper,
   PaddingWrapper,
   Separator,
@@ -19,10 +19,12 @@ import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { Warning } from 'library/Form/Warning';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
-import BN from 'bn.js';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
 
 export const WithdrawPoolMember = () => {
   const { api, network } = useApi();
@@ -31,6 +33,8 @@ export const WithdrawPoolMember = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
+  const { txFeesValid } = useTxFees();
+
   const { activeEra } = metrics;
   const { member, who } = config;
   const { historyDepth } = staking;
@@ -65,7 +69,7 @@ export const WithdrawPoolMember = () => {
     _tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth);
     return _tx;
   };
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -82,13 +86,8 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <PaddingWrapper verticalOnly>
-        <HeadingWrapper>
-          <FontAwesomeIcon transform="grow-2" icon={faMinus} />
-          Withdraw Member Funds
-        </HeadingWrapper>
-      </PaddingWrapper>
-
+      <Title title="Withdraw Member Funds" icon={faMinus} />
+      <PaddingWrapper verticalOnly />
       <ContentWrapper>
         <div>
           <div>
@@ -101,10 +100,7 @@ export const WithdrawPoolMember = () => {
 
             <Separator />
             <NotesWrapper>
-              <p>
-                Estimated Tx Fee:{' '}
-                {estimatedFee === null ? '...' : `${estimatedFee}`}
-              </p>
+              <EstimatedTxFee />
             </NotesWrapper>
           </div>
           <FooterWrapper>
@@ -114,7 +110,10 @@ export const WithdrawPoolMember = () => {
                 className="submit"
                 onClick={() => submitTx()}
                 disabled={
-                  !valid || submitting || !accountHasSigner(activeAccount)
+                  !valid ||
+                  submitting ||
+                  !accountHasSigner(activeAccount) ||
+                  !txFeesValid
                 }
               >
                 <FontAwesomeIcon

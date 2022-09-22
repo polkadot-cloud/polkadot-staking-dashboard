@@ -53,7 +53,6 @@ export const Wrapper = styled.div<MinimisedProps>`
         position: relative;
         color: ${textSecondary};
         transition: color 0.2s;
-        margin-right: ${(props) => (props.minimised ? 0 : '0.25rem')};
         margin-top: ${(props) => (props.minimised ? '1.25rem' : 0)};
         opacity: 0.75;
 
@@ -98,12 +97,6 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   ellipse {
     fill: ${networkColor};
   }
-`;
-
-export const PalettePosition = styled.div`
-  position: absolute;
-  right: 10px;
-  top: -150px;
 `;
 
 export const Separator = styled.div`

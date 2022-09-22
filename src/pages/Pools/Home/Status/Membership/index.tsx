@@ -12,6 +12,7 @@ import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
@@ -20,8 +21,10 @@ export const Membership = ({ label }: { label: string }) => {
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
   const { bondedPools, meta } = useBondedPools();
-  const { activeBondedPool, isOwner, getPoolBondOptions } = useActivePool();
-  const { active } = getPoolBondOptions(activeAccount);
+  const { activeBondedPool, isOwner } = useActivePool();
+  const { getTransferOptions } = useTransferOptions();
+
+  const { active } = getTransferOptions(activeAccount).pool;
 
   const inPool = membership !== null && activeBondedPool !== null;
 

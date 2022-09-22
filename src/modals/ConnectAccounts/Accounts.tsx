@@ -200,10 +200,10 @@ export const Accounts = forwardRef((props: any, ref: any) => {
         )}
         {activeStaking.length > 0 && (
           <>
-            <h2>
+            <h3 className="heading">
               <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
               Nominating
-            </h2>
+            </h3>
             {activeStaking.map((item: any, i: number) => {
               const { stash, controller } = item;
               const stashAccount = getAccount(stash);
@@ -243,9 +243,9 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
         {activePooling.length > 0 && (
           <>
-            <h2>
+            <h3 className="heading">
               <FontAwesomeIcon icon={faUsers} transform="shrink-4" /> In Pool
-            </h2>
+            </h3>
             {activePooling.map((item: PoolMembership, i: number) => {
               const { address } = item;
               const account = getAccount(address);
@@ -263,7 +263,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
         {inactive.length > 0 && (
           <>
-            <h2>Not Staking</h2>
+            <h3 className="heading">Not Staking</h3>
             {inactive.map((item: string, i: number) => {
               const account = getAccount(item);
               const address = account?.address ?? '';

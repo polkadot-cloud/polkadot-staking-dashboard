@@ -4,7 +4,6 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Checkbox from 'react-custom-checkbox';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'styled-components';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
@@ -17,30 +16,25 @@ export const Select = (props: SelectProps) => {
   const { mode }: any = useTheme();
   const { addToSelected, removeFromSelected, selected } = useList();
 
+  const isSelected = selected.includes(item);
+
   return (
-    <SelectWrapper>
-      <Checkbox
-        onChange={() => {
-          if (selected.includes(item)) {
-            removeFromSelected([item]);
-          } else {
-            addToSelected(item);
-          }
-        }}
-        icon={
-          <FontAwesomeIcon
-            icon={faCheck as IconProp}
-            transform="shrink-2"
-            color={defaultThemes.text.secondary[mode]}
-          />
+    <SelectWrapper
+      onClick={() => {
+        if (isSelected) {
+          removeFromSelected([item]);
+        } else {
+          addToSelected(item);
         }
-        borderColor="rgba(0,0,0,0)"
-        style={{
-          overflow: 'hidden',
-          cursor: 'pointer',
-        }}
-        size={18}
-      />
+      }}
+    >
+      {isSelected && (
+        <FontAwesomeIcon
+          icon={faCheck as IconProp}
+          transform="shrink-2"
+          color={defaultThemes.text.primary[mode]}
+        />
+      )}
     </SelectWrapper>
   );
 };

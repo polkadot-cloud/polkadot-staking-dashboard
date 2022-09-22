@@ -66,7 +66,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
 
   // determine color for payouts
   const color = notStaking
-    ? networkColorsTransparent[`${network.name}-${mode}`]
+    ? networkColors[`${network.name}-${mode}`]
     : !poolingOnly
     ? networkColors[`${network.name}-${mode}`]
     : networkColorsSecondary[`${network.name}-${mode}`];

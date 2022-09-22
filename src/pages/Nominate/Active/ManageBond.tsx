@@ -9,36 +9,38 @@ import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { useStaking } from 'contexts/Staking';
 import { Button, ButtonRow } from 'library/Button';
-import { OpenAssistantIcon } from 'library/OpenAssistantIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { BondOptions } from 'contexts/Balances/types';
 import BN from 'bn.js';
+import { useTransferOptions } from 'contexts/TransferOptions';
 
 export const ManageBond = () => {
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getLedgerForStash, getBondOptions } = useBalances();
+  const { getLedgerForStash } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
-  const {
-    freeToBond,
-    totalUnlocking,
-    totalUnlocked,
-    totalUnlockChuncks,
-  }: BondOptions = getBondOptions(activeAccount);
+
+  const allTransferOptions = getTransferOptions(activeAccount);
+
+  const { freeBalance } = allTransferOptions;
+  const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
+    allTransferOptions.nominate;
+  const { active: activePool } = allTransferOptions.pool;
 
   return (
     <>
       <CardHeaderWrapper>
         <h4>
           Bonded Funds
-          <OpenAssistantIcon page="stake" title="Bonding" />
+          <OpenHelpIcon helpKey="Bonding" />
         </h4>
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
@@ -94,7 +96,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeToBond, units)}
+        free={planckBnToUnit(freeBalance.sub(activePool), units)}
         inactive={inSetup()}
       />
     </>

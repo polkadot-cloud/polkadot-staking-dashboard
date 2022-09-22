@@ -14,8 +14,10 @@ import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
 import {
-  HeadingWrapper,
   FooterWrapper,
   Separator,
   NotesWrapper,
@@ -29,6 +31,7 @@ export const ChangeNominations = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { membership } = usePoolMemberships();
   const { poolNominations, isNominator, isOwner } = useActivePool();
+  const { txFeesValid } = useTxFees();
 
   const { nominations: newNominations, provider, bondType } = config;
 
@@ -98,7 +101,7 @@ export const ChangeNominations = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -115,62 +118,63 @@ export const ChangeNominations = () => {
   });
 
   return (
-    <PaddingWrapper verticalOnly>
-      <HeadingWrapper>
-        <FontAwesomeIcon transform="grow-2" icon={faStopCircle} />
-        Stop Nominating
-      </HeadingWrapper>
-      <div
-        style={{
-          padding: '0 1rem',
-          width: '100%',
-          boxSizing: 'border-box',
-        }}
-      >
-        {!nominations.length && <Warning text="You have no nominations set." />}
-        {!accountHasSigner(signingAccount) && (
-          <Warning
-            text={`You must have your${
-              bondType === 'stake' ? ' controller ' : ' '
-            }account imported to stop nominating.`}
-          />
-        )}
-        <h2>
-          Stop {!remaining ? 'All Nomination' : `${removing} Nomination`}
-          {removing === 1 ? '' : 's'}
-        </h2>
-        <Separator />
-        <NotesWrapper>
-          <p>
-            Once submitted, your nominations will be removed from your dashboard
-            immediately, and will not be nominated from the start of the next
-            era.
-          </p>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
-        </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <button
-              type="button"
-              className="submit"
-              onClick={() => submitTx()}
-              disabled={
-                !valid || submitting || !accountHasSigner(signingAccount)
-              }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-            </button>
-          </div>
-        </FooterWrapper>
-      </div>
-    </PaddingWrapper>
+    <>
+      <Title title="Stop Nominating" icon={faStopCircle} />
+      <PaddingWrapper verticalOnly>
+        <div
+          style={{
+            padding: '0 1.25rem',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        >
+          {!nominations.length && (
+            <Warning text="You have no nominations set." />
+          )}
+          {!accountHasSigner(signingAccount) && (
+            <Warning
+              text={`You must have your${
+                bondType === 'stake' ? ' controller ' : ' '
+              }account imported to stop nominating.`}
+            />
+          )}
+          <h2>
+            Stop {!remaining ? 'All Nomination' : `${removing} Nomination`}
+            {removing === 1 ? '' : 's'}
+          </h2>
+          <Separator />
+          <NotesWrapper>
+            <p>
+              Once submitted, your nominations will be removed from your
+              dashboard immediately, and will not be nominated from the start of
+              the next era.
+            </p>
+            <EstimatedTxFee />
+          </NotesWrapper>
+          <FooterWrapper>
+            <div>
+              <button
+                type="button"
+                className="submit"
+                onClick={() => submitTx()}
+                disabled={
+                  !valid ||
+                  submitting ||
+                  !accountHasSigner(signingAccount) ||
+                  !txFeesValid
+                }
+              >
+                <FontAwesomeIcon
+                  transform="grow-2"
+                  icon={faArrowAltCircleUp as IconProp}
+                />
+                Submit
+              </button>
+            </div>
+          </FooterWrapper>
+        </div>
+      </PaddingWrapper>
+    </>
   );
 };
 

@@ -15,7 +15,10 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { PAYEE_STATUS } from 'consts';
 import { Warning } from 'library/Form/Warning';
-import { HeadingWrapper, FooterWrapper, PaddingWrapper } from '../Wrappers';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useTxFees } from 'contexts/TxFees';
+import { Title } from 'library/Modal/Title';
+import { FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { api } = useApi();
@@ -24,6 +27,8 @@ export const UpdatePayee = () => {
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
+  const { txFeesValid } = useTxFees();
+
   const { payee } = staking;
 
   const _selected: any = PAYEE_STATUS.find((item) => item.key === payee);
@@ -59,7 +64,7 @@ export const UpdatePayee = () => {
     return _tx;
   };
 
-  const { submitTx, estimatedFee, submitting } = useSubmitExtrinsic({
+  const { submitTx, submitting } = useSubmitExtrinsic({
     tx: tx(),
     from: controller,
     shouldSubmit: valid,
@@ -75,55 +80,55 @@ export const UpdatePayee = () => {
   });
 
   return (
-    <PaddingWrapper verticalOnly>
-      <HeadingWrapper>
-        <FontAwesomeIcon transform="grow-2" icon={faWallet} />
-        Update Reward Destination
-      </HeadingWrapper>
-      <div
-        style={{
-          padding: '0 1rem',
-          width: '100%',
-          boxSizing: 'border-box',
-        }}
-      >
-        {getControllerNotImported(controller) && (
-          <Warning text="You must have your controller account imported to update your reward destination" />
-        )}
-        <Dropdown
-          items={payeeItems}
-          onChange={handleOnChange}
-          placeholder="Reward Destination"
-          value={selected}
-          current={_selected}
-          height="17rem"
-        />
-        <div>
-          <p>
-            Estimated Tx Fee:{' '}
-            {estimatedFee === null ? '...' : `${estimatedFee}`}
-          </p>
-        </div>
-        <FooterWrapper>
+    <>
+      <Title title="Updated Reward Destination" icon={faWallet} />
+      <PaddingWrapper verticalOnly>
+        <div
+          style={{
+            padding: '0 1.25rem',
+            marginTop: '1rem',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        >
+          {getControllerNotImported(controller) && (
+            <Warning text="You must have your controller account imported to update your reward destination" />
+          )}
+          <Dropdown
+            items={payeeItems}
+            onChange={handleOnChange}
+            placeholder="Reward Destination"
+            value={selected}
+            current={_selected}
+            height="17rem"
+          />
           <div>
-            <button
-              type="button"
-              className="submit"
-              onClick={() => submitTx()}
-              disabled={
-                !valid || submitting || getControllerNotImported(controller)
-              }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-            </button>
+            <EstimatedTxFee />
           </div>
-        </FooterWrapper>
-      </div>
-    </PaddingWrapper>
+          <FooterWrapper>
+            <div>
+              <button
+                type="button"
+                className="submit"
+                onClick={() => submitTx()}
+                disabled={
+                  !valid ||
+                  submitting ||
+                  getControllerNotImported(controller) ||
+                  !txFeesValid
+                }
+              >
+                <FontAwesomeIcon
+                  transform="grow-2"
+                  icon={faArrowAltCircleUp as IconProp}
+                />
+                Submit
+              </button>
+            </div>
+          </FooterWrapper>
+        </div>
+      </PaddingWrapper>
+    </>
   );
 };
 

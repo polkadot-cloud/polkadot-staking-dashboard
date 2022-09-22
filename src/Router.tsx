@@ -12,7 +12,6 @@ import {
 import { AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Menu } from 'library/Menu';
-import { Palette } from 'library/Palette';
 import {
   PageWrapper,
   SideInterfaceWrapper,
@@ -24,7 +23,7 @@ import { NetworkBar } from 'library/NetworkBar';
 import { Modal } from 'modals';
 import { Headers } from 'library/Headers';
 import SideMenu from 'library/SideMenu';
-import Assistant from 'library/Assistant';
+import { Help } from 'library/Help';
 import Notifications from 'library/Notifications';
 import { TITLE_DEFAULT } from 'consts';
 import { useUi } from 'contexts/UI';
@@ -58,17 +57,14 @@ export const RouterInner = () => {
       {/* Modal: closed by default */}
       <Modal />
       <BodyInterfaceWrapper>
-        {/* Assistant: closed by default */}
-        <Assistant />
+        {/* Help: closed by default */}
+        <Help />
 
         {/* Tooltip: invisible by default */}
         <Tooltip />
 
         {/* Menu: closed by default */}
         <Menu />
-
-        {/* Palette: closed by default */}
-        <Palette />
 
         {/* Left side menu */}
         <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>

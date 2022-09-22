@@ -6,7 +6,7 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
-export const URI_PREFIX = '/dashboard';
+export const URI_PREFIX = '/';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
 export const DAPP_NAME = 'Polkadot Staking Dashboard';
 export const POLKADOT_URL = 'https://polkadot.network';
@@ -39,13 +39,11 @@ export const PAYEE_STATUS = [
 ];
 
 export const INTERFACE_MAXIMUM_WIDTH = 1800;
-export const SIDE_MENU_MAXIMISED_WIDTH = 185;
+export const SIDE_MENU_MAXIMISED_WIDTH = 175;
 export const SIDE_MENU_MINIMISED_WIDTH = 75;
 export const SIDE_MENU_STICKY_THRESHOLD = 1175;
 export const SECTION_FULL_WIDTH_THRESHOLD = 1050;
 export const SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD = 1000;
-export const MAX_ASSISTANT_INTERFACE_WIDTH = 500;
-export const MAX_SIDE_BAR_INTERFACE_WIDTH = 400;
 export const FLOATING_MENU_WIDTH = 250;
 export const GRAPH_HEIGHT = 390;
 export const SMALL_FONT_SIZE_MAX_WIDTH = 600;
