@@ -18,6 +18,8 @@ import {
 import { ValidatorFilterProvider } from 'library/Filter/context';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { SelectableWrapper } from 'library/List';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   GenerateNominationsInnerProps,
   Nominations,
@@ -69,7 +71,7 @@ export const GenerateNominationsInner = (
 
   // update selected value on account switch
   useEffect(() => {
-    setNominations(defaultNominations);
+    setNominations([...defaultNominations]);
   }, [activeAccount, defaultNominations]);
 
   // refetch if fetching is triggered
@@ -92,23 +94,6 @@ export const GenerateNominationsInner = (
     }
   });
 
-  useEffect(() => {
-    if (
-      !['Lowest Commission', 'Optimal'].includes(method || '') ||
-      method === null ||
-      !nominations.length
-    ) {
-      setHeight(null);
-    } else {
-      const _height = heightRef?.current?.clientHeight;
-      if (_height) {
-        if (_height > 0) {
-          setHeight(_height + 10);
-        }
-      }
-    }
-  }, [nominations, method]);
-
   // reset fixed height on window size change
   useEffect(() => {
     window.addEventListener('resize', resizeCallback);
@@ -126,7 +111,7 @@ export const GenerateNominationsInner = (
     if (method) {
       const _nominations = fetchFromMethod(method);
       // update component state
-      setNominations(_nominations);
+      setNominations([..._nominations]);
       setFetching(false);
       updateSetters(_nominations);
     }
@@ -136,9 +121,10 @@ export const GenerateNominationsInner = (
   const addNominationByType = (type: string) => {
     if (method) {
       const _nominations = addNomination(nominations, type);
+      setHeight(null);
       removeValidatorMetaBatch(batchKey);
-      setNominations(_nominations);
-      updateSetters(_nominations);
+      setNominations([..._nominations]);
+      updateSetters([..._nominations]);
     }
   };
 
@@ -167,7 +153,7 @@ export const GenerateNominationsInner = (
 
     const updateList = (_nominations: Nominations) => {
       removeValidatorMetaBatch(batchKey);
-      setNominations(_nominations);
+      setNominations([..._nominations]);
       updateSetters(_nominations);
     };
     openModalWith(
@@ -180,13 +166,13 @@ export const GenerateNominationsInner = (
     );
   };
 
-  // callback function for clearing nomination list
-  const cbClearNominations = ({ resetSelected }: any) => {
+  // function for clearing nomination list
+  const clearNominations = () => {
     setMethod(null);
+    setHeight(null);
     removeValidatorMetaBatch(batchKey);
     setNominations([]);
     updateSetters([]);
-    resetSelected();
   };
 
   // callback function for removing selected validators
@@ -195,13 +181,12 @@ export const GenerateNominationsInner = (
     resetSelected,
     setSelectActive,
   }: any) => {
-    setMethod('From List');
     removeValidatorMetaBatch(batchKey);
     const _nominations = [...nominations].filter((n: any) => {
       return !selected.map((_s: any) => _s.address).includes(n.address);
     });
-    setNominations(_nominations);
-    updateSetters(_nominations);
+    setNominations([..._nominations]);
+    updateSetters([..._nominations]);
     setSelectActive(false);
     resetSelected();
   };
@@ -213,14 +198,55 @@ export const GenerateNominationsInner = (
     return !favouritesList?.length || nominations.length >= maxNominations;
   };
 
-  // accumulate actions
-  let actions = [
+  // accumulate generation methods
+  const methods = [
     {
-      title: 'Start Again',
-      onClick: cbClearNominations,
-      onSelected: false,
-      isDisabled: () => false,
+      title: 'Optimal Selection',
+      subtitle: 'Selects a mix of majority active and inactive validators.',
+      icon: faChartPie as IconProp,
+      onClick: () => {
+        setMethod('Optimal Selection');
+        removeValidatorMetaBatch(batchKey);
+        setNominations([]);
+        setFetching(true);
+      },
     },
+    {
+      title: 'Active Low Commission',
+      subtitle: 'Gets a set of active validators with low commission.',
+      icon: faCoins as IconProp,
+      onClick: () => {
+        setMethod('Active Low Commission');
+        removeValidatorMetaBatch(batchKey);
+        setNominations([]);
+        setFetching(true);
+      },
+    },
+    {
+      title: 'From Favourites',
+      subtitle: 'Gets a set of your favourite validators.',
+      icon: faHeart as IconProp,
+      onClick: () => {
+        setMethod('From Favourites');
+        removeValidatorMetaBatch(batchKey);
+        setNominations([]);
+        setFetching(true);
+      },
+    },
+    {
+      title: 'Manual Selection',
+      subtitle: 'Add validators from scratch.',
+      icon: faUserEdit as IconProp,
+      onClick: () => {
+        setMethod('Manual');
+        removeValidatorMetaBatch(batchKey);
+        setNominations([]);
+      },
+    },
+  ];
+
+  // accumulate actions
+  const actions = [
     {
       title: 'Add From Favourites',
       onClick: cbAddNominations,
@@ -262,103 +288,96 @@ export const GenerateNominationsInner = (
     },
   ];
 
-  // determine re-generate buttons
-  if (['Lowest Commission', 'Optimal'].includes(method || '')) {
-    actions.reverse().push({
-      title: 'Re-Generate',
-      onClick: () => {
-        removeValidatorMetaBatch(batchKey);
-        setFetching(true);
-      },
-      onSelected: false,
-      isDisabled: () => false,
-    });
-    actions = actions.reverse();
-  }
+  // get the icon of the current method
+  const methodIcon =
+    methods.find((m: any) => m.title === method)?.icon || faPlus;
 
   return (
-    <Wrapper style={{ height: height ? `${height}px` : 'auto' }}>
-      <div>
-        {!isReadOnlyAccount(activeAccount) && !method && (
+    <>
+      {method && (
+        <SelectableWrapper>
+          <button type="button" onClick={() => {}} disabled>
+            <FontAwesomeIcon icon={methodIcon as IconProp} />
+            {method}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              clearNominations();
+            }}
+          >
+            Cancel
+          </button>
+          {['Active Low Commission', 'Optimal Selection'].includes(
+            method || ''
+          ) && (
+            <button
+              type="button"
+              onClick={() => {
+                // set a temporary height to prevent height snapping on re-renders.
+                setHeight(heightRef?.current?.clientHeight || null);
+                setTimeout(() => setHeight(null), 200);
+                removeValidatorMetaBatch(batchKey);
+                setFetching(true);
+              }}
+            >
+              Re-Generate
+            </button>
+          )}
+        </SelectableWrapper>
+      )}
+      <Wrapper
+        style={{
+          height: height ? `${height}px` : 'auto',
+          marginTop: method ? '1rem' : 0,
+        }}
+      >
+        <div>
+          {!isReadOnlyAccount(activeAccount) && !method && (
+            <>
+              <GenerateOptionsWrapper>
+                {methods.map((m: any, n: number) => (
+                  <LargeItem
+                    key={`gen_method_${n}`}
+                    title={m.title}
+                    subtitle={m.subtitle}
+                    icon={m.icon}
+                    transform="grow-2"
+                    active={false}
+                    onClick={m.onClick}
+                  />
+                ))}
+              </GenerateOptionsWrapper>
+            </>
+          )}
+        </div>
+
+        {fetching ? (
+          <></>
+        ) : (
           <>
-            <GenerateOptionsWrapper>
-              <LargeItem
-                title="Optimal Selection"
-                subtitle="Selects a mix of majority active and inactive validators."
-                icon={faChartPie as IconProp}
-                transform="grow-2"
-                active={false}
-                onClick={() => {
-                  setMethod('Optimal');
-                  removeValidatorMetaBatch(batchKey);
-                  setNominations([]);
-                  setFetching(true);
+            {isReady && method !== null && (
+              <div
+                ref={heightRef}
+                style={{
+                  width: '100%',
                 }}
-              />
-              <LargeItem
-                title="Active Low Commission"
-                subtitle="Gets a set of active validators with low commission."
-                icon={faCoins as IconProp}
-                transform="grow-2"
-                active={false}
-                onClick={() => {
-                  setMethod('Lowest Commission');
-                  removeValidatorMetaBatch(batchKey);
-                  setNominations([]);
-                  setFetching(true);
-                }}
-              />
-              <LargeItem
-                title="From Favourites"
-                subtitle="Gets a set of your favourite validators."
-                icon={faHeart as IconProp}
-                transform="grow-2"
-                disabled={!favouritesList.length}
-                active={false}
-                onClick={() => {
-                  setMethod('Favourites');
-                  removeValidatorMetaBatch(batchKey);
-                  setNominations([]);
-                  setFetching(true);
-                }}
-              />
-              <LargeItem
-                title="Manual Selection"
-                subtitle="Add validators from scratch."
-                icon={faUserEdit as IconProp}
-                transform="grow-2"
-                active={false}
-                onClick={() => {
-                  setMethod('Manual');
-                  removeValidatorMetaBatch(batchKey);
-                  setNominations([]);
-                }}
-              />
-            </GenerateOptionsWrapper>
+              >
+                <ValidatorList
+                  bondType="stake"
+                  validators={nominations}
+                  batchKey={batchKey}
+                  selectable
+                  actions={actions}
+                  allowMoreCols
+                  allowListFormat={false}
+                />
+              </div>
+            )}
           </>
         )}
-      </div>
-      {fetching ? (
-        <></>
-      ) : (
-        <>
-          {isReady && method !== null && (
-            <div ref={heightRef}>
-              <ValidatorList
-                bondType="stake"
-                validators={nominations}
-                batchKey={batchKey}
-                selectable
-                selectActive
-                selectToggleable={false}
-                actions={actions}
-                allowMoreCols
-              />
-            </div>
-          )}
-        </>
-      )}
-    </Wrapper>
+      </Wrapper>
+    </>
   );
 };
 

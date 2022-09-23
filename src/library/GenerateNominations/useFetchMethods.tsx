@@ -19,13 +19,13 @@ export const useFetchMehods = () => {
   const fetch = (method: string) => {
     let nominations;
     switch (method) {
-      case 'Optimal':
+      case 'Optimal Selection':
         nominations = fetchOptimal();
         break;
-      case 'Lowest Commission':
+      case 'Active Low Commission':
         nominations = fetchLowCommission();
         break;
-      case 'Favourites':
+      case 'From Favourites':
         nominations = fetchFavourites();
         break;
       default:
