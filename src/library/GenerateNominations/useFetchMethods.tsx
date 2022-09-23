@@ -134,7 +134,7 @@ export const useFetchMehods = () => {
         'blocked_nominations',
         'inactive',
         'missing_identity',
-        'non_parachain_validator',
+        'not_parachain_validator',
       ]
     ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)

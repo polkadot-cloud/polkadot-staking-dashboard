@@ -14,6 +14,7 @@ import {
   faChartPie,
   faCoins,
   faPlus,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { ValidatorFilterProvider } from 'library/Filter/context';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -287,26 +288,15 @@ export const GenerateNominationsInner = (
     },
   ];
 
-  // get the icon of the current method
-  const methodIcon =
-    methods.find((m: any) => m.title === method)?.icon || faPlus;
-
   return (
     <>
       {method && (
         <SelectableWrapper>
-          <button type="button" onClick={() => {}} disabled>
-            <FontAwesomeIcon icon={methodIcon as IconProp} />
+          <button type="button" onClick={() => clearNominations()}>
+            <FontAwesomeIcon icon={faTimes as IconProp} />
             {method}
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              clearNominations();
-            }}
-          >
-            Cancel
-          </button>
+
           {['Active Low Commission', 'Optimal Selection'].includes(
             method || ''
           ) && (
