@@ -27,6 +27,7 @@ import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilities.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
+import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
 export const VALIDATOR_COMMUNITY = [
@@ -393,6 +394,22 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'FZsMKYHoQG1dAVhXBMyC7aYFYpASoBrrMYsAn1gJJUAueZX',
         'GA7j1FHWXpEU4kavowEte6LWR3NgZ8bkv4spWa9joiQF5R2',
+      ],
+    },
+  },
+  {
+    name: 'validierung.cc',
+    Thumbnail: Validierungcc,
+    bio: 'We are crypto enthusiasts from Germany and offer independent and reliable validation and staking returns.',
+    email: 'contact@validierung.cc',
+    twitter: '@validierungcc',
+    website: 'https://www.validierung.cc',
+    validators: {
+      polkadot: ['15x643ScnbVQM3zGcyRw3qVtaCoddmAfDv5LZVfU8fNxkVaR'],
+      kusama: [
+        'HhBer1indmu4m1A1fMKRsCEQ8pfWGHUMskWjD2HLpspJTuW',
+        'JHamburgTPv9fRKwTPeBEjyVHmbQK2ayRBpBujb4rx2sHzJ',
+        'GHd1brgDS29LhSUMYSorgEWFb2n1M3H4EMz6mcpt8TTdHho',
       ],
     },
   },
