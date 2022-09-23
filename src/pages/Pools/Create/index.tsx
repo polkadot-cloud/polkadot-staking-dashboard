@@ -8,7 +8,7 @@ import { PageTitle } from 'library/PageTitle';
 import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { ChooseNominations } from 'library/SetupSteps/ChooseNominations';
+import { Nominate } from 'library/SetupSteps/Nominate';
 import { SetupType } from 'contexts/UI/types';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { PoolName } from './PoolName';
@@ -52,7 +52,7 @@ export const Create = () => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
-          <ChooseNominations
+          <Nominate
             batchKey="generate_nominations_create_pool"
             setupType={SetupType.Pool}
             section={2}

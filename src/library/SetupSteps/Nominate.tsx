@@ -7,10 +7,10 @@ import { useApi } from 'contexts/Api';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { GenerateNominations } from './GenerateNominations';
-import { ChooseNominationsProps } from './types';
+import { GenerateNominations } from '../GenerateNominations';
+import { NominationsProps } from './types';
 
-export const ChooseNominations = (props: ChooseNominationsProps) => {
+export const Nominate = (props: NominationsProps) => {
   const { batchKey, setupType, section } = props;
 
   const { consts } = useApi();

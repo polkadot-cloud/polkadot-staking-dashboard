@@ -21,7 +21,7 @@ export const ValidatorFilterProvider = ({
   children: React.ReactNode;
 }) => {
   const { consts } = useApi();
-  const { meta, session } = useValidators();
+  const { meta, session, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store validator filters that are currently active
@@ -102,6 +102,9 @@ export const ValidatorFilterProvider = ({
     }
     if (filter.includes('inactive')) {
       list = filterInactive(list);
+    }
+    if (filter.includes('not_parachain_validator')) {
+      list = filterNonParachainValidator(list);
     }
     if (filter.includes('in_session')) {
       list = filterInSession(list);
@@ -229,6 +232,22 @@ export const ValidatorFilterProvider = ({
     }
     list = list.filter((validator: any) =>
       session.list.includes(validator.address)
+    );
+    return list;
+  };
+
+  /*
+   * filterNonParachainValidator
+   * Filters the supplied list and removes items that are inactive.
+   * Returns the updated filtered list.
+   */
+  const filterNonParachainValidator = (list: any) => {
+    // if list has not yet been populated, return original list
+    if (sessionParachain.length === 0) {
+      return list;
+    }
+    list = list.filter((validator: any) =>
+      sessionParachain.includes(validator.address)
     );
     return list;
   };

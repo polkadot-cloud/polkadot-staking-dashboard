@@ -3,7 +3,7 @@
 
 import { SetupType } from 'contexts/UI/types';
 
-export interface ChooseNominationsProps {
+export interface NominationsProps {
   batchKey: string;
   setupType: SetupType;
   section: number;
