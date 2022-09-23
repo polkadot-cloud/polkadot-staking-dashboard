@@ -49,7 +49,9 @@ export const GenerateNominationsInner = (
     favouritesList = [];
   }
   // store the method of fetching validators
-  const [method, setMethod] = useState<string | null>(null);
+  const [method, setMethod] = useState<string | null>(
+    defaultNominations.length ? 'Manual' : null
+  );
 
   // store whether validators are being fetched
   const [fetching, setFetching] = useState<boolean>(false);
@@ -347,6 +349,8 @@ export const GenerateNominationsInner = (
                 validators={nominations}
                 batchKey={batchKey}
                 selectable
+                selectActive
+                selectToggleable={false}
                 actions={actions}
                 allowMoreCols
               />
