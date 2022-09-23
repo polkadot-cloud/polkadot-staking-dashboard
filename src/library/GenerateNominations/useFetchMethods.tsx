@@ -149,7 +149,7 @@ export const useFetchMehods = () => {
       .filter(
         (n: any) => !nominations.find((o: any) => o.address === n.address)
       )
-      .filter((n: any) => !sessionParachain.includes(n.address));
+      .filter((n: any) => !sessionParachain?.includes(n.address) || false);
 
     return {
       parachainValidators: _parachainValidators,
