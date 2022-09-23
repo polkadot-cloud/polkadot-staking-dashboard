@@ -17,9 +17,7 @@ export const LargeItem = (props: any) => {
       transition={{
         duration: 0.3,
       }}
-      onClick={() => {
-        onClick();
-      }}
+      onClick={() => onClick()}
       className="item"
       style={{
         opacity: disabled ? 0.5 : 1,

@@ -12,7 +12,6 @@ import {
 import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
 export const Wrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   width: 100%;

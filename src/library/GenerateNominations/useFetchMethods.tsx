@@ -7,7 +7,7 @@ import { useValidatorFilter } from 'library/Filter/context';
 import { shuffle } from 'Utils';
 
 export const useFetchMehods = () => {
-  const { validators } = useValidators();
+  const { validators, sessionParachain } = useValidators();
   const { applyValidatorOrder, applyValidatorFilters } = useValidatorFilter();
   let { favouritesList } = useValidators();
   if (favouritesList === null) {
@@ -19,17 +19,34 @@ export const useFetchMehods = () => {
   const fetch = (method: string) => {
     let nominations;
     switch (method) {
-      case 'Optimal':
+      case 'Optimal Selection':
         nominations = fetchOptimal();
         break;
-      case 'Lowest Commission':
+      case 'Active Low Commission':
         nominations = fetchLowCommission();
         break;
-      case 'Favourites':
+      case 'From Favourites':
         nominations = fetchFavourites();
         break;
       default:
         return [];
+    }
+    return nominations;
+  };
+
+  const add = (nominations: any, type: string) => {
+    switch (type) {
+      case 'Parachain Validator':
+        nominations = addParachainValidator(nominations);
+        break;
+      case 'Active Validator':
+        nominations = addActiveValidator(nominations);
+        break;
+      case 'Random Validator':
+        nominations = addRandomValidator(nominations);
+        break;
+      default:
+        return nominations;
     }
     return nominations;
   };
@@ -106,7 +123,78 @@ export const useFetchMehods = () => {
     return shuffle(_nominationsWaiting.concat(_nominationsActive));
   };
 
+  const available = (nominations: any) => {
+    const _nominations = Object.assign(validators);
+
+    const _parachainValidators = applyValidatorFilters(
+      _nominations,
+      rawBatchKey,
+      [
+        'all_commission',
+        'blocked_nominations',
+        'inactive',
+        'missing_identity',
+        'not_parachain_validator',
+      ]
+    ).filter(
+      (n: any) => !nominations.find((o: any) => o.address === n.address)
+    );
+
+    const _activeValidators = applyValidatorFilters(_nominations, rawBatchKey, [
+      'all_commission',
+      'blocked_nominations',
+      'inactive',
+      'missing_identity',
+    ])
+      .filter(
+        (n: any) => !nominations.find((o: any) => o.address === n.address)
+      )
+      .filter((n: any) => !sessionParachain?.includes(n.address) || false);
+
+    return {
+      parachainValidators: _parachainValidators,
+      activeValidators: _activeValidators,
+      randomValidators: _parachainValidators.concat(_activeValidators),
+    };
+  };
+
+  const addActiveValidator = (nominations: any) => {
+    const _nominations = available(nominations).activeValidators;
+
+    // take one validator
+    const validator = shuffle(_nominations).slice(0, 1)[0] || null;
+    if (validator) {
+      nominations.push(validator);
+    }
+    return nominations;
+  };
+
+  const addParachainValidator = (nominations: any) => {
+    const _nominations = available(nominations).parachainValidators;
+
+    // take one validator
+    const validator = shuffle(_nominations).slice(0, 1)[0] || null;
+    if (validator) {
+      nominations.push(validator);
+    }
+    return nominations;
+  };
+
+  const addRandomValidator = (nominations: any) => {
+    const _nominations = available(nominations).randomValidators;
+
+    // take one validator
+    const validator = shuffle(_nominations).slice(0, 1)[0] || null;
+
+    if (validator) {
+      nominations.push(validator);
+    }
+    return nominations;
+  };
+
   return {
     fetch,
+    add,
+    available,
   };
 };

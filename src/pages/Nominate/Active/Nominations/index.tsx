@@ -133,7 +133,7 @@ export const Nominations = ({
           <h4>
             {!isSyncing && nominated === null
               ? 'Not Nominating.'
-              : 'Syncing nominations...'}
+              : 'Syncing...'}
           </h4>
         </div>
       ) : !nominator ? (

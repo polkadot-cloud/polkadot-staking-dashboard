@@ -24,7 +24,7 @@ export interface CategoryProps {
 export interface ValidatorFilterContextInterface {
   orderValidators: (v: string) => void;
   applyValidatorOrder: (l: any, o: string) => any;
-  applyValidatorFilters: (l: any, k: string, f?: string[]) => void;
+  applyValidatorFilters: (l: any, k: string, f?: string[]) => any;
   toggleFilterValidators: (v: string, l: any) => void;
   toggleAllValidatorFilters: (t: number) => void;
   resetValidatorFilters: () => void;

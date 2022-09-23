@@ -24,7 +24,11 @@ export const EraStatus = (props: any) => {
 
   // flag whether validator is active
 
-  const validatorStatus = validatorInEra ? 'active' : 'waiting';
+  const validatorStatus = isSyncing
+    ? 'waiting'
+    : validatorInEra
+    ? 'active'
+    : 'waiting';
 
   let totalStakePlanck = new BN(0);
   if (validatorInEra) {

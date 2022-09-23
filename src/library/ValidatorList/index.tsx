@@ -69,6 +69,7 @@ export const ValidatorListInner = (props: any) => {
   const showMenu = props.showMenu ?? true;
   const inModal = props.inModal ?? false;
   const allowSearch = props.allowSearch ?? false;
+  const allowListFormat = props.allowListFormat ?? true;
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
@@ -230,26 +231,30 @@ export const ValidatorListInner = (props: any) => {
           </h4>
         </div>
         <div>
-          <button type="button" onClick={() => setListFormat('row')}>
-            <FontAwesomeIcon
-              icon={faBars}
-              color={
-                listFormat === 'row'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
-            />
-          </button>
-          <button type="button" onClick={() => setListFormat('col')}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={
-                listFormat === 'col'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
-            />
-          </button>
+          {allowListFormat === true && (
+            <>
+              <button type="button" onClick={() => setListFormat('row')}>
+                <FontAwesomeIcon
+                  icon={faBars}
+                  color={
+                    listFormat === 'row'
+                      ? networkColors[`${network.name}-${mode}`]
+                      : 'inherit'
+                  }
+                />
+              </button>
+              <button type="button" onClick={() => setListFormat('col')}>
+                <FontAwesomeIcon
+                  icon={faGripVertical}
+                  color={
+                    listFormat === 'col'
+                      ? networkColors[`${network.name}-${mode}`]
+                      : 'inherit'
+                  }
+                />
+              </button>
+            </>
+          )}
         </div>
       </Header>
       <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
