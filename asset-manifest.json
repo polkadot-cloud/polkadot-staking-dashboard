@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/polkadot-staking-dashboard/static/css/main.0f59cb8e.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.6c99a6aa.js",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.eafda3c6.js",
     "static/js/197.6e8a3e4e.chunk.js": "/polkadot-staking-dashboard/static/js/197.6e8a3e4e.chunk.js",
     "static/js/514.ce2e15b3.chunk.js": "/polkadot-staking-dashboard/static/js/514.ce2e15b3.chunk.js",
     "static/js/569.989a026c.chunk.js": "/polkadot-staking-dashboard/static/js/569.989a026c.chunk.js",
@@ -19,6 +19,7 @@
     "static/media/stakenode.svg": "/polkadot-staking-dashboard/static/media/stakenode.a9f390dfab454a80c49b47de0c581fb8.svg",
     "static/media/pythagorascapitalinvestment.svg": "/polkadot-staking-dashboard/static/media/pythagorascapitalinvestment.4d326aa814319d09dbb05af77e4aee72.svg",
     "static/media/stakerspace.svg": "/polkadot-staking-dashboard/static/media/stakerspace.a9c973eb84b6a554f1c6ac49fff42c67.svg",
+    "static/media/validierungcc.svg": "/polkadot-staking-dashboard/static/media/validierungcc.5c3a02761b42ad80588f102b4a4612ca.svg",
     "static/media/subwallet_icon.svg": "/polkadot-staking-dashboard/static/media/subwallet_icon.637b860fce4059c3a3b6b7c876a13601.svg",
     "static/media/stakepile.svg": "/polkadot-staking-dashboard/static/media/stakepile.e2db9320f6cb52b28934f4ae97adccc8.svg",
     "static/media/polkadot_logo.svg": "/polkadot-staking-dashboard/static/media/polkadot_logo.d44934f45079f7a3ebbc50f7acc34427.svg",
@@ -59,7 +60,7 @@
     "static/media/decentradot.svg": "/polkadot-staking-dashboard/static/media/decentradot.55e51b4842821f8f7f289af7082ba3e5.svg",
     "static/media/info-outline.svg": "/polkadot-staking-dashboard/static/media/info-outline.710ee0b66a632101a3e85de51b365ddb.svg",
     "main.0f59cb8e.css.map": "/polkadot-staking-dashboard/static/css/main.0f59cb8e.css.map",
-    "main.6c99a6aa.js.map": "/polkadot-staking-dashboard/static/js/main.6c99a6aa.js.map",
+    "main.eafda3c6.js.map": "/polkadot-staking-dashboard/static/js/main.eafda3c6.js.map",
     "197.6e8a3e4e.chunk.js.map": "/polkadot-staking-dashboard/static/js/197.6e8a3e4e.chunk.js.map",
     "514.ce2e15b3.chunk.js.map": "/polkadot-staking-dashboard/static/js/514.ce2e15b3.chunk.js.map",
     "569.989a026c.chunk.js.map": "/polkadot-staking-dashboard/static/js/569.989a026c.chunk.js.map",
@@ -69,6 +70,6 @@
   },
   "entrypoints": [
     "static/css/main.0f59cb8e.css",
-    "static/js/main.6c99a6aa.js"
+    "static/js/main.eafda3c6.js"
   ]
 }
