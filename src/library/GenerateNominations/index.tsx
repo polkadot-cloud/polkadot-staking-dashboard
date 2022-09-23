@@ -71,6 +71,7 @@ export const GenerateNominationsInner = (
 
   // update selected value on account switch
   useEffect(() => {
+    removeValidatorMetaBatch(batchKey);
     setNominations([...defaultNominations]);
   }, [activeAccount, defaultNominations]);
 
@@ -121,7 +122,6 @@ export const GenerateNominationsInner = (
   const addNominationByType = (type: string) => {
     if (method) {
       const _nominations = addNomination(nominations, type);
-      setHeight(null);
       removeValidatorMetaBatch(batchKey);
       setNominations([..._nominations]);
       updateSetters([..._nominations]);
@@ -169,7 +169,6 @@ export const GenerateNominationsInner = (
   // function for clearing nomination list
   const clearNominations = () => {
     setMethod(null);
-    setHeight(null);
     removeValidatorMetaBatch(batchKey);
     setNominations([]);
     updateSetters([]);
