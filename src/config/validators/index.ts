@@ -349,13 +349,13 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'STAKEWORLD',
     Thumbnail: Stakeworld,
-    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
+    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable, low commission Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
     email: 'info@stakeworld.nl',
     website: 'https://stakeworld.nl',
     validators: {
       polkadot: [
         '14kpNbU4XjEHfYdqp95Gq3NkBWbgFd6J8Yjd2SneWNzvf1Yp',
-        '13Jpq4n3PXXaSAbJTMmFD78mXAzs8PzgUUQd5ve8saw7HQS5',
+        '14ebRSbCJepTp2X3YwDsyE3wRRQ1RZYa8nEFnLxLe19qdHna',
       ],
       kusama: [
         'CtEni6wrP7Kz2KWus9Y6vQWuhLqJpd9mQFTmTvw8T7FLui8',
