@@ -243,7 +243,7 @@ export const ValidatorFilterProvider = ({
    */
   const filterNonParachainValidator = (list: any) => {
     // if list has not yet been populated, return original list
-    if (sessionParachain.length === 0) {
+    if ((sessionParachain?.length ?? 0) === 0) {
       return list;
     }
     list = list.filter((validator: any) =>
