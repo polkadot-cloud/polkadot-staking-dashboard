@@ -114,8 +114,8 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'Dionysus🍇',
     Thumbnail: Dionysus,
-    bio: 'an independent secure validation service for Polkadot and Kusama Networks operated by Web3 researchers and engineers with a proven record in running reliable secure infrastructure',
-    email: '',
+    bio: 'an independent secure rigorously monitored validation service for Polkadot and Kusama Networks operated by Web3 researchers and engineers with a proven record in running reliable secure infrastructure',
+    email: 'hi@dionysus.network',
     website: 'https://dionysus.network',
     validators: {
       polkadot: ['12CJw9KNkC7FzVVg3dvny4PWHjjkvdyM17mmNfXyfucp8JfM'],
