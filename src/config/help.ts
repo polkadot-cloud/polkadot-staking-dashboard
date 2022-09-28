@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AssistantConfig } from 'contexts/Help/types';
+import { HelpContentRaw } from 'contexts/Help/types';
 
-export const ASSISTANT_CONFIG: AssistantConfig = [
+export const HELP_CONFIG: HelpContentRaw = [
   {
     key: 'overview',
     definitions: [
