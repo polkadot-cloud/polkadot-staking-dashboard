@@ -251,9 +251,9 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
-        title: 'Others Stake',
+        title: 'Nominator Stake',
         description: [
-          'The amount of {NETWORK_UNIT} backed by the validator from its nominators.',
+          'The amount of {NETWORK_UNIT} backing the validator from its nominators.',
           "This value is added to the validator's self stake to form the total stake of the validator.",
           'Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session.',
         ],
