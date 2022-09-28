@@ -7,7 +7,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
-import { planckBnToUnit } from 'Utils';
+import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
@@ -145,7 +145,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
       <CardHeaderWrapper>
         <h4>
           {`${txFees.isZero() ? `Available` : `Available after Tx Fees`}`}:{' '}
-          humanNumber(freeBalance) {network.unit}
+          {humanNumber(freeBalance)} {network.unit}
         </h4>
       </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
