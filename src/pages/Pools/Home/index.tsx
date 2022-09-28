@@ -25,7 +25,6 @@ import MinCreateBondStatBox from './Stats/MinCreateBond';
 import { Status } from './Status';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
-import { PageProps } from '../../types';
 import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favourites } from './Favourites';
