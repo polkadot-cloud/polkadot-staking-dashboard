@@ -12,6 +12,7 @@ export interface ValidatorsContextInterface {
   addFavourite: (a: string) => void;
   removeFavourite: (a: string) => void;
   validators: Array<Validator>;
+  avgCommission: number;
   meta: AnyMetaBatch;
   session: SessionValidators;
   sessionParachain: string[];
