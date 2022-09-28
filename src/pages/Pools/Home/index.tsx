@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
@@ -11,7 +10,6 @@ import {
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
-import { useApi } from 'contexts/Api';
 import { PoolList } from 'library/PoolList';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -35,22 +33,11 @@ import { Members } from './Members';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolStats } from './PoolStats';
 
-export const HomeInner = (props: PageProps) => {
-  const { page } = props;
-  const { title } = page;
-  const { network } = useApi();
-  const navigate = useNavigate();
+export const HomeInner = () => {
   const { membership } = usePoolMemberships();
   const { bondedPools } = useBondedPools();
   const { getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
-
-  // back to overview if pools are not supported on network
-  useEffect(() => {
-    if (!network.features.pools) {
-      navigate('/#/overview', { replace: true });
-    }
-  }, [network]);
 
   // back to tab 0 if not in a pool
   useEffect(() => {
@@ -92,7 +79,7 @@ export const HomeInner = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={title} tabs={tabs} />
+      <PageTitle title="Pools" tabs={tabs} />
       {activeTab === 0 && (
         <>
           <StatBoxList>
@@ -172,10 +159,10 @@ export const HomeInner = (props: PageProps) => {
   );
 };
 
-export const Home = (props: PageProps) => {
+export const Home = () => {
   return (
     <PoolsTabsProvider>
-      <HomeInner {...props} />
+      <HomeInner />
     </PoolsTabsProvider>
   );
 };

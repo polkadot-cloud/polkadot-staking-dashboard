@@ -30,7 +30,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export const BalanceGraph = () => {
   const { mode } = useTheme();
   const { network } = useApi();
-  const { units, features } = network;
+  const { units } = network;
   const { activeAccount } = useConnect();
   const { getAccountBalance } = useBalances();
   const { getTransferOptions } = useTransferOptions();
@@ -125,10 +125,10 @@ export const BalanceGraph = () => {
     cutout: '78%',
   };
 
-  // determine stats from network features
-  let _labels = ['Available', 'Unlocking', 'Staking', 'In Pool'];
-  let _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
-  let _colors = zeroBalance
+  // determine stats
+  const _labels = ['Available', 'Unlocking', 'Staking', 'In Pool'];
+  const _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
+  const _colors = zeroBalance
     ? [
         defaultThemes.graphs.colors[1][mode],
         defaultThemes.graphs.inactive2[mode],
@@ -141,10 +141,6 @@ export const BalanceGraph = () => {
         networkColors[`${network.name}-${mode}`],
         networkColorsSecondary[`${network.name}-${mode}`],
       ];
-
-  _data = features.pools ? _data : _data.slice(0, 3);
-  _colors = features.pools ? _colors : _colors.slice(0, 3);
-  _labels = features.pools ? _labels : _labels.slice(0, 3);
 
   // default to a greyscale 50/50 donut on zero balance
   let dataSet;

@@ -13,7 +13,6 @@ import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
-import { usePoolsConfig } from '../PoolsConfig';
 
 export const PoolMembershipsContext =
   React.createContext<PoolMembershipsContextState>(
@@ -30,7 +29,6 @@ export const PoolMembershipsProvider = ({
 }) => {
   const { api, network, isReady } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
-  const { enabled } = usePoolsConfig();
 
   // stores pool membership
   const [poolMemberships, setPoolMemberships] = useState<Array<PoolMembership>>(
@@ -45,14 +43,14 @@ export const PoolMembershipsProvider = ({
   const poolMembershipUnsubRefs = useRef<Array<AnyApi>>(poolMembershipUnsubs);
 
   useEffect(() => {
-    if (isReady && enabled) {
+    if (isReady) {
       (() => {
         setStateWithRef([], setPoolMemberships, poolMembershipsRef);
         unsubscribeAll();
         getPoolMemberships();
       })();
     }
-  }, [network, isReady, connectAccounts, enabled]);
+  }, [network, isReady, connectAccounts]);
 
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {

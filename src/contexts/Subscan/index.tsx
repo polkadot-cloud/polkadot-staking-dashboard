@@ -97,10 +97,6 @@ export const SubscanProvider = ({
    * Stores resulting claims in context state.
    */
   const fetchPoolClaims = async () => {
-    if (!network.features.pools) {
-      setPoolClaims([]);
-      return;
-    }
     if (activeAccount === null || !services.includes('subscan')) {
       setPoolClaims([]);
       return;

@@ -24,10 +24,6 @@ export const PoolsConfigProvider = ({
 }) => {
   const { api, network, isReady, consts } = useApi();
   const { poolsPalletId } = consts;
-  const { features } = network;
-
-  // whether pools are enabled
-  const [enabled, setEnabled] = useState(0);
 
   // store pool metadata
   const [poolsConfig, setPoolsConfig] = useState<PoolConfigState>({
@@ -47,24 +43,14 @@ export const PoolsConfigProvider = ({
   // stores the user's favourite pools
   const [favourites, setFavourites] = useState<string[]>(getFavourites());
 
-  // disable pools if network does not support them
   useEffect(() => {
-    if (features.pools) {
-      setEnabled(1);
-    } else {
-      setEnabled(0);
-      unsubscribe();
-    }
-  }, [network]);
-
-  useEffect(() => {
-    if (isReady && enabled) {
+    if (isReady) {
       subscribeToPoolConfig();
     }
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, enabled]);
+  }, [network, isReady]);
 
   const unsubscribe = () => {
     if (poolsConfigRef.current.unsub !== null) {
@@ -203,7 +189,6 @@ export const PoolsConfigProvider = ({
   return (
     <PoolsConfigContext.Provider
       value={{
-        enabled,
         addFavourite,
         removeFavourite,
         createAccounts,

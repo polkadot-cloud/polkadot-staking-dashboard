@@ -8,7 +8,6 @@ import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount, Sync } from 'types';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -30,7 +29,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { staking, eraStakers, inSetup } = useStaking();
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
-  const { enabled: poolsEnabled } = usePoolsConfig();
   const { membership: poolMembership } = usePoolMemberships();
   const { synced: activePoolSynced } = useActivePool();
 
@@ -163,7 +161,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // nomination pool contexts have synced
-    if (poolsEnabled && activePoolSynced !== Sync.Synced) {
+    if (activePoolSynced !== Sync.Synced) {
       syncing = true;
     }
 

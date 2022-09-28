@@ -8,7 +8,6 @@ import { setStateWithRef } from 'Utils';
 import { useConnect } from 'contexts/Connect';
 import { defaultPoolMembers } from './defaults';
 import { useApi } from '../../Api';
-import { usePoolsConfig } from '../PoolsConfig';
 
 export const PoolMembersContext =
   React.createContext<PoolMemberContext>(defaultPoolMembers);
@@ -22,7 +21,6 @@ export const PoolMembersProvider = ({
 }) => {
   const { api, network, isReady } = useApi();
   const { activeAccount } = useConnect();
-  const { enabled } = usePoolsConfig();
 
   // store pool members
   const [poolMembers, setPoolMembers] = useState<Array<any>>([]);
@@ -51,14 +49,14 @@ export const PoolMembersProvider = ({
 
   // initial setup for fetching members
   useEffect(() => {
-    if (isReady && enabled) {
+    if (isReady) {
       // fetch bonded pools
       fetchPoolMembers();
     }
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, enabled]);
+  }, [network, isReady]);
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
