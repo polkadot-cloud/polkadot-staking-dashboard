@@ -101,7 +101,10 @@ export const ValidatorMetrics = () => {
           )}
         </StatsWrapper>
       </PaddingWrapper>
-      <div className="body" style={{ position: 'relative' }}>
+      <div
+        className="body"
+        style={{ position: 'relative', marginTop: '0.5rem' }}
+      >
         <SubscanButton />
         <GraphWrapper
           style={{

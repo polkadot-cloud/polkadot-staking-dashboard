@@ -37,9 +37,10 @@ export const StatWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
-  flex-basis: 50%;
   margin-bottom: 0.5rem;
   padding: 0 0.5rem;
+  flex-basis: 50%;
+  flex-grow: 1;
 
   @media (max-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
     flex-basis: 100%;
