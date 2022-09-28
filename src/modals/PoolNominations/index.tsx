@@ -28,7 +28,7 @@ export const PoolNominations = () => {
               inModal
             />
           ) : (
-            <h3>Pool is Not Nominating.</h3>
+            <h3>This pool is not nominating.</h3>
           )}
         </ListWrapper>
       </PaddingWrapper>

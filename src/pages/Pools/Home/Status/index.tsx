@@ -162,7 +162,7 @@ export const Status = ({ height }: { height: number }) => {
       ) : (
         <Stat
           label="Pool Membership"
-          helpKey="Pool Status"
+          helpKey="Pool Membership"
           stat="Not in Pool"
           buttons={isSyncing ? [] : buttons}
         />
@@ -180,7 +180,7 @@ export const Status = ({ height }: { height: number }) => {
           <Stat
             icon={isSyncing ? undefined : poolStateIcon}
             label="Pool Status"
-            helpKey="Staking Status"
+            helpKey="Nomination Status"
             stat={`${poolStatusLeft}${poolStatusRight}`}
           />
         </>

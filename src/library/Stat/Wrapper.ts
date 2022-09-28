@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
     margin: 0 0 0.5rem 0;
 
     .help-icon {
-      margin-left: 0.5rem;
+      margin-left: 0.55rem;
     }
   }
   h2 {

@@ -13,6 +13,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
@@ -65,7 +66,9 @@ export const Membership = ({ label }: { label: string }) => {
 
   return (
     <StatWrapper>
-      <h4>{label}</h4>
+      <h4>
+        {label} <OpenHelpIcon helpKey="Pool Membership" />
+      </h4>
       <Wrapper paddingLeft={inPool} paddingRight={button !== null}>
         <h2 className="hide-with-padding">
           <div className="icon">

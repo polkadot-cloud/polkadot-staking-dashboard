@@ -130,7 +130,6 @@ export const HomeInner = (props: PageProps) => {
                 <CardWrapper>
                   <Roles
                     batchKey="pool_roles_manage"
-                    title="Roles"
                     defaultRoles={getPoolRoles()}
                   />
                 </CardWrapper>

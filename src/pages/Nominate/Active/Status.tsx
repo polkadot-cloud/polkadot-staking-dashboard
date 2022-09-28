@@ -92,7 +92,7 @@ export const Status = ({ height }: { height: number }) => {
     <CardWrapper height={height}>
       <Stat
         label="Status"
-        helpKey="Staking Status"
+        helpKey="Nomination Status"
         stat={
           inSetup() || isSyncing
             ? 'Not Nominating'
