@@ -223,6 +223,13 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
+        title: 'Average Commission',
+        description: [
+          'The average validator commission rate on {NETWORK_NAME}.',
+          'This metric excludes validators who host a 100% commission, as these nodes usually block nominations are are run for the purposes of staking on central exchange platforms.',
+        ],
+      },
+      {
         title: 'Era',
         description: [
           'At the end of each era, validators are rewarded {NETWORK_UNIT} based on how many era points they accumulated in that era. This {NETWORK_UNIT} reward is then distributed amongst the nominators of the validator via a payout.',
