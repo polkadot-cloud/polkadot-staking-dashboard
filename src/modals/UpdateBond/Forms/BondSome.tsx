@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { BondFeedback } from 'library/Form/Bonding/BondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { planckBnToUnit } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -98,7 +98,7 @@ export const BondSome = (props: FormsProps) => {
   return (
     <>
       <div className="items">
-        <BondInputWithFeedback
+        <BondFeedback
           bondType={bondType}
           unbond={false}
           listenIsValid={setBondValid}

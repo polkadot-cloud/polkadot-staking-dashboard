@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { BondFeedback } from 'library/Form/Bonding/BondFeedback';
 import { NominateStatusBar } from 'library/Form/NominateStatusBar';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
@@ -62,7 +62,7 @@ export const Bond = (props: SetupStepProps) => {
         setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <BondInputWithFeedback
+        <BondFeedback
           bondType="stake"
           inSetup
           unbond={false}

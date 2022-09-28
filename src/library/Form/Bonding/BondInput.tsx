@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { isNumeric } from 'Utils';
 import { Button } from 'library/Button';
-import { InputWrapper, RowWrapper } from './Wrappers';
+import { InputWrapper, RowWrapper } from '../Wrappers';
 import { BondInputProps } from '../types';
 
 export const BondInput = (props: BondInputProps) => {

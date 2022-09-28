@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
@@ -10,22 +11,19 @@ import { useStaking } from 'contexts/Staking';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import BN from 'bn.js';
 import { useTxFees } from 'contexts/TxFees';
-import { BN_ZERO } from '@polkadot/util';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { BondInput } from '../BondInput';
+import { UnbondInput } from './UnbondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
-import { BondInputWithFeedbackProps } from '../types';
+import { UnbondFeedbackProps } from '../types';
 
-export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
-  const { bondType, unbond } = props;
+export const UnbondFeedback = (props: UnbondFeedbackProps) => {
+  const { bondType } = props;
   const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
   const setters = props.setters ?? [];
   const listenIsValid = props.listenIsValid ?? (() => {});
-  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
   const defaultBond = props.defaultBond || '';
 
   const { network } = useApi();
@@ -40,25 +38,13 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const controller = getBondedAccount(activeAccount);
   const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
-
   const allTransferOptions = getTransferOptions(activeAccount);
 
   // get bond options for either staking or pooling.
-  const { freeBalance: freeBalanceBn } = allTransferOptions;
   const transferOptions =
     bondType === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
 
   const { freeToUnbond: freeToUnbondBn, active } = transferOptions;
-
-  // if we are bonding, subtract tx fees from bond amount
-  const freeBondAmount = unbond
-    ? freeBalanceBn
-    : !disableTxFeeUpdate
-    ? BN.max(freeBalanceBn.sub(txFees), BN_ZERO)
-    : freeBalanceBn;
-
-  // the default bond balance
-  const freeBalance = planckBnToUnit(freeBondAmount, units);
 
   // store errors
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -67,9 +53,6 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   const [bond, setBond] = useState<{ bond: number | string }>({
     bond: defaultBond,
   });
-
-  // whether bond is disabled
-  const [bondDisabled, setBondDisabled] = useState(false);
 
   // update bond on account change
   useEffect(() => {
@@ -87,15 +70,6 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
   useEffect(() => {
     if (props.setLocalResize) props.setLocalResize();
   }, [errors]);
-
-  // update max bond after txFee sync
-  useEffect(() => {
-    if (!unbond && !disableTxFeeUpdate) {
-      if (Number(bond.bond) > freeBalance) {
-        setBond({ bond: freeBalance });
-      }
-    }
-  }, [txFees]);
 
   // add this component's setBond to setters
   setters.push({
@@ -133,67 +107,36 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
 
   // handle error updates
   const handleErrors = () => {
-    let _bondDisabled = false;
     const _errors = warnings;
     const _bond = bond.bond;
 
-    // bond errors
-    if (!unbond) {
-      if (freeBalance === 0) {
-        _bondDisabled = true;
-        _errors.push(`You have no free ${network.unit} to bond.`);
-      }
-
-      if (Number(bond.bond) > freeBalance) {
-        _errors.push('Bond amount is more than your free balance.');
-      }
-
-      // bond errors
-      if (inSetup) {
-        if (freeBalance < minBondBase) {
-          _bondDisabled = true;
-          _errors.push(
-            `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
-          );
-        }
-        if (Number(bond.bond) < minBondBase) {
-          _errors.push(
-            `Bond amount must be at least ${minBondBase} ${network.unit}.`
-          );
-        }
-      }
+    // unbond errors
+    if (Number(bond.bond) > activeBase) {
+      _errors.push('Unbond amount is more than your bonded balance.');
     }
 
-    // unbond errors
-    if (unbond) {
-      if (Number(bond.bond) > activeBase) {
-        _errors.push('Unbond amount is more than your bonded balance.');
-      }
-
-      // unbond errors for staking only
-      if (bondType === 'stake') {
-        if (getControllerNotImported(controller)) {
-          _errors.push(
-            'You must have your controller account imported to unbond.'
-          );
-        }
-      }
-
-      if (Number(bond.bond) > freeToUnbondToMin) {
+    // unbond errors for staking only
+    if (bondType === 'stake') {
+      if (getControllerNotImported(controller)) {
         _errors.push(
-          `A minimum bond of ${minBondBase} ${network.unit} is required ${
-            bondType === 'stake'
-              ? `when actively nominating`
-              : isDepositor()
-              ? `as the pool depositor`
-              : `as a pool member`
-          }.`
+          'You must have your controller account imported to unbond.'
         );
       }
     }
+
+    if (Number(bond.bond) > freeToUnbondToMin) {
+      _errors.push(
+        `A minimum bond of ${minBondBase} ${network.unit} is required ${
+          bondType === 'stake'
+            ? `when actively nominating`
+            : isDepositor()
+            ? `as the pool depositor`
+            : `as a pool member`
+        }.`
+      );
+    }
     const bondValid = !_errors.length && _bond !== '';
 
-    setBondDisabled(_bondDisabled);
     listenIsValid(bondValid);
     setErrors(_errors);
   };
@@ -202,29 +145,22 @@ export const BondInputWithFeedback = (props: BondInputWithFeedbackProps) => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {unbond
-            ? 'Bonded'
-            : `${txFees.isZero() ? `Available` : `Available after Tx Fees`}`}
-          : {unbond ? humanNumber(activeBase) : humanNumber(freeBalance)}{' '}
-          {network.unit}
+          Bonded: {humanNumber(activeBase)} {network.unit}
         </h4>
       </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
-        <Warning key={`setup_error_${index}`} text={err} />
+        <Warning key={`unbond_error_${index}`} text={err} />
       ))}
       <Spacer />
-      <BondInput
-        task={unbond ? 'unbond' : 'bond'}
-        value={bond.bond}
+      <UnbondInput
         defaultValue={defaultBond}
-        disabled={bondDisabled}
-        setters={setters}
-        freeBalance={freeBalance}
+        disabled={false}
         freeToUnbondToMin={freeToUnbondToMin}
-        disableTxFeeUpdate={disableTxFeeUpdate}
+        setters={setters}
+        value={bond.bond}
       />
     </>
   );
 };
 
-export default BondInputWithFeedback;
+export default UnbondFeedback;
