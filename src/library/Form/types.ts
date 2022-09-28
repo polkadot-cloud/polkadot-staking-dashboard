@@ -66,7 +66,6 @@ export interface UnbondFeedbackProps {
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
-  disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
 }
 
