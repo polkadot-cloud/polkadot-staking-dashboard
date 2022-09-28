@@ -91,6 +91,7 @@ export const ContentWrapper = styled.div`
 // generic wrapper for modal padding
 export const PaddingWrapper = styled.div<{
   verticalOnly?: boolean;
+  horizontalOnly?: boolean;
 }>`
   box-sizing: border-box;
   display: flex;
@@ -98,7 +99,12 @@ export const PaddingWrapper = styled.div<{
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  padding: ${(props) => (props.verticalOnly ? '1rem 0' : '1rem 1.25rem')};
+  padding: ${(props) =>
+    props.verticalOnly
+      ? '1rem 0'
+      : props.horizontalOnly
+      ? '0 1rem'
+      : '1rem 1.25rem'};
 `;
 
 // modal header, used for extrinsics forms

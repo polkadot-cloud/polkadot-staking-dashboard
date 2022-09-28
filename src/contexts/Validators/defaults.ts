@@ -25,6 +25,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   // eslint-disable-next-line
   removeFavourite: (a) => {},
   validators: [],
+  avgCommission: 0,
   meta: {},
   session: sessionValidators,
   sessionParachain: [],

@@ -57,9 +57,6 @@ export const NETWORKS: Networks = {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
     },
-    features: {
-      pools: false,
-    },
     params: {
       ...DEFAULT_PARAMS,
       stakeTarget: 0.75,
@@ -103,9 +100,6 @@ export const NETWORKS: Networks = {
     api: {
       unit: 'KSM',
       priceTicker: 'KSMUSDT',
-    },
-    features: {
-      pools: true,
     },
     params: {
       ...DEFAULT_PARAMS,
@@ -152,9 +146,6 @@ export const NETWORKS: Networks = {
     api: {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
-    },
-    features: {
-      pools: true,
     },
     params: {
       ...DEFAULT_PARAMS,

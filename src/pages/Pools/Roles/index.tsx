@@ -22,7 +22,7 @@ import RoleEditInput from './RoleEditInput';
 import { RolesProps, RoleEditEntry } from './types';
 
 export const Roles = (props: RolesProps) => {
-  const { batchKey, defaultRoles, title } = props;
+  const { batchKey, defaultRoles } = props;
 
   const listenIsValid = props.listenIsValid ?? (() => {});
   const setters = props.setters ?? [];
@@ -135,7 +135,9 @@ export const Roles = (props: RolesProps) => {
   return (
     <>
       <CardHeaderWrapper withAction>
-        <h3>{title || ``}</h3>
+        <h3>
+          Roles <OpenHelpIcon helpKey="Pool Roles" />
+        </h3>
         {!(isOwner() === true || setters.length) ? (
           <></>
         ) : (
@@ -177,10 +179,7 @@ export const Roles = (props: RolesProps) => {
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h4>
-              Root
-              <OpenHelpIcon helpKey="Pool Roles" />
-            </h4>
+            <h4>Root</h4>
             <PoolAccount
               address={roles.root ?? null}
               batchIndex={accounts.indexOf(roles.root ?? '-1')}
@@ -190,9 +189,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>
-              Depositor <OpenHelpIcon helpKey="Pool Roles" />
-            </h4>
+            <h4>Depositor</h4>
             <PoolAccount
               address={roles.depositor ?? null}
               batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
@@ -202,9 +199,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>
-              Nominator <OpenHelpIcon helpKey="Pool Roles" />
-            </h4>
+            <h4>Nominator</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="nominator"
@@ -222,10 +217,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>
-              State Toggler
-              <OpenHelpIcon helpKey="Pool Roles" />
-            </h4>
+            <h4>State Toggler</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="stateToggler"

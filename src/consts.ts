@@ -9,7 +9,7 @@ import { stringToU8a } from '@polkadot/util';
 export const URI_PREFIX = '/polkadot-staking-dashboard';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
 export const DAPP_NAME = 'Polkadot Staking Dashboard';
-export const POLKADOT_URL = 'https://polkadot.network';
+export const POLKADOT_URL = 'https://polkadot.network/staking/';
 
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
 export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';

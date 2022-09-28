@@ -30,7 +30,7 @@ import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import { ControllerNotImported } from './ControllerNotImported';
 import { Status } from './Status';
 
-export const Active = ({ title }: { title: string }) => {
+export const Active = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
@@ -42,7 +42,7 @@ export const Active = ({ title }: { title: string }) => {
 
   return (
     <>
-      <PageTitle title={title} />
+      <PageTitle title="Solo Stake" />
       <StatBoxList>
         <MinimumActiveBondStatBox />
         <ActiveNominationsStatBox />

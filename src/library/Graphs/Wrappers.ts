@@ -213,7 +213,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     margin-top: 0.4rem;
 
     .help-icon {
-      margin-left: 0.4rem;
+      margin-left: 0.55rem;
     }
   }
 
