@@ -6,7 +6,7 @@ import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { UnbondFeedback } from 'library/Form/Bonding/UnbondFeedback';
+import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
