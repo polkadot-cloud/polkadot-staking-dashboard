@@ -43,7 +43,6 @@ export interface BondFeedbackProps {
   setters: any;
   bondType: string;
   defaultBond: number | null;
-  unbond: boolean;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
@@ -54,11 +53,9 @@ export interface BondFeedbackProps {
 export interface BondInputProps {
   setters: any;
   value: any;
-  task?: string;
   defaultValue: number | string;
   disabled: boolean;
   freeBalance: number;
-  freeToUnbondToMin: number;
   disableTxFeeUpdate?: boolean;
 }
 

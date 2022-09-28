@@ -10,9 +10,8 @@ import { InputWrapper, RowWrapper } from '../Wrappers';
 import { BondInputProps } from '../types';
 
 export const BondInput = (props: BondInputProps) => {
-  const { disabled, freeBalance, freeToUnbondToMin } = props;
+  const { disabled, freeBalance } = props;
   const setters = props.setters ?? [];
-  const task = props.task ?? 'bond';
   const _value = props.value ?? 0;
   const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
 
@@ -20,49 +19,35 @@ export const BondInput = (props: BondInputProps) => {
   const { activeAccount } = useConnect();
 
   // the current local bond value
-  const [bond, setBond] = useState(_value);
+  const [value, setValue] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setBond(props.defaultValue ?? 0);
+    setValue(props.defaultValue ?? 0);
   }, [activeAccount]);
 
   useEffect(() => {
-    if (task === 'bond' && !disableTxFeeUpdate) {
-      setBond(_value.toString());
+    if (!disableTxFeeUpdate) {
+      setValue(_value.toString());
     }
   }, [_value]);
 
   // handle change for bonding
   const handleChangeBond = (e: any) => {
-    const { value } = e.target;
-    if (!isNumeric(value) && value !== '') {
+    const val = e.target.value;
+    if (!isNumeric(val) && val !== '') {
       return;
     }
-    setBond(value);
-    updateParentState(value);
-  };
-
-  // handle change for unbonding
-  const handleChangeUnbond = (e: React.ChangeEvent) => {
-    if (!e) return;
-
-    const element = e.currentTarget as HTMLInputElement;
-    const value = element.value;
-
-    if (!isNumeric(value) && value !== '') {
-      return;
-    }
-    setBond(value);
-    updateParentState(value);
+    setValue(val);
+    updateParentState(val);
   };
 
   // apply bond to parent setters
-  const updateParentState = (value: any) => {
+  const updateParentState = (val: any) => {
     for (const s of setters) {
       s.set({
         ...s.current,
-        bond: value,
+        bond: val,
       });
     }
   };
@@ -72,19 +57,13 @@ export const BondInput = (props: BondInputProps) => {
       <div>
         <InputWrapper>
           <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>
-              {task === 'unbond' ? 'Unbond' : 'Bond'} {network.unit}:
-            </h3>
+            <h3>Bond {network.unit}:</h3>
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
-              value={bond}
+              value={value}
               onChange={(e) => {
-                if (task === 'bond') {
-                  handleChangeBond(e);
-                } else {
-                  handleChangeUnbond(e);
-                }
+                handleChangeBond(e);
               }}
               disabled={disabled}
             />
@@ -98,9 +77,8 @@ export const BondInput = (props: BondInputProps) => {
             small
             title="Max"
             onClick={() => {
-              const value = task === 'bond' ? freeBalance : freeToUnbondToMin;
-              setBond(value);
-              updateParentState(value);
+              setValue(freeBalance);
+              updateParentState(freeBalance);
             }}
           />
         </div>

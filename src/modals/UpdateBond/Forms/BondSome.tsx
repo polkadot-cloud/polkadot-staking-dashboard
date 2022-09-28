@@ -100,7 +100,6 @@ export const BondSome = (props: FormsProps) => {
       <div className="items">
         <BondFeedback
           bondType={bondType}
-          unbond={false}
           listenIsValid={setBondValid}
           defaultBond={null}
           setLocalResize={setLocalResize}

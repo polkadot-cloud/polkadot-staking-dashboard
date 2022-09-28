@@ -65,7 +65,6 @@ export const Bond = (props: SetupStepProps) => {
         <BondFeedback
           bondType="pool"
           inSetup
-          unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
           setters={[

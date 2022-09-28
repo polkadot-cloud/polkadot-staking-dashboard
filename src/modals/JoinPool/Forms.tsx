@@ -89,7 +89,6 @@ export const Forms = () => {
         <>
           <BondFeedback
             bondType="pool"
-            unbond={false}
             listenIsValid={setBondValid}
             defaultBond={planckBnToUnit(freeBalance, units)}
             setters={[
