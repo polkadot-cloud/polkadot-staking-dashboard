@@ -244,6 +244,21 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
       {
+        title: 'Self Stake',
+        description: [
+          'The amount of {NETWORK_UNIT} the validator has bonded themself.',
+          'This value is added to the amount of {NETWORK_UNIT} bonded by nominators to form the total stake of the validator.',
+        ],
+      },
+      {
+        title: 'Others Stake',
+        description: [
+          'The amount of {NETWORK_UNIT} backed by the validator from its nominators.',
+          "This value is added to the validator's self stake to form the total stake of the validator.",
+          'Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session.',
+        ],
+      },
+      {
         title: 'Minimum Nomination Bond',
         description: [
           'The minimum amount you need bonded in order to nominate.',
