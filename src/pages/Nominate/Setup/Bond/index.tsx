@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { NominateStatusBar } from 'library/Form/NominateStatusBar';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
@@ -31,7 +31,7 @@ export const Bond = (props: SetupStepProps) => {
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(SetupType.Pool, value);
+    setActiveAccountSetup(SetupType.Stake, value);
   };
 
   // update bond on account change
@@ -62,10 +62,9 @@ export const Bond = (props: SetupStepProps) => {
         setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <BondInputWithFeedback
+        <BondFeedback
           bondType="stake"
           inSetup
-          unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
           setters={[

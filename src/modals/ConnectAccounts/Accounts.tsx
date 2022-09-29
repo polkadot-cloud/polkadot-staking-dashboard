@@ -60,7 +60,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
   useEffect(() => {
     getStakingStatuses();
-  }, [localAccounts, balanceAccounts, ledgers]);
+  }, [localAccounts, balanceAccounts, ledgers, accounts, memberships]);
 
   const getStakingStatuses = () => {
     // accumulate imported stash accounts

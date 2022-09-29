@@ -6,7 +6,7 @@ import { useModal } from 'contexts/Modal';
 import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
@@ -126,9 +126,8 @@ export const UnbondSome = (props: FormsProps) => {
     <>
       <div className="items">
         <>
-          <BondInputWithFeedback
+          <UnbondFeedback
             bondType={bondType}
-            unbond
             listenIsValid={setBondValid}
             defaultBond={freeToUnbondToMin}
             setters={[

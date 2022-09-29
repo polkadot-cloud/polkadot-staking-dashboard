@@ -39,27 +39,42 @@ export interface AccountSelectProps {
   value: InputItem;
 }
 
-export interface BondInputProps {
-  setters: any;
-  value: any;
-  task: string;
-  defaultValue: number | string;
-  disabled: boolean;
-  freeBalance: number;
-  freeToUnbondToMin: number;
-  disableTxFeeUpdate?: boolean;
-}
-
-export interface BondInputWithFeedbackProps {
+export interface BondFeedbackProps {
   setters: any;
   bondType: string;
   defaultBond: number | null;
-  unbond: boolean;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
+}
+
+export interface BondInputProps {
+  setters: any;
+  value: any;
+  defaultValue: number | string;
+  disabled: boolean;
+  freeBalance: number;
+  disableTxFeeUpdate?: boolean;
+}
+
+export interface UnbondFeedbackProps {
+  setters: any;
+  bondType: string;
+  defaultBond: number | null;
+  inSetup?: boolean;
+  listenIsValid: { (v: boolean): void } | { (): void };
+  warnings?: string[];
+  setLocalResize?: () => void;
+}
+
+export interface UnbondInputProps {
+  freeToUnbondToMin: number;
+  defaultValue: number | string;
+  disabled: boolean;
+  setters: any;
+  value: any;
 }
 
 export interface NominateStatusBarProps {
