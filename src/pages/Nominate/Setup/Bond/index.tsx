@@ -31,7 +31,7 @@ export const Bond = (props: SetupStepProps) => {
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(SetupType.Pool, value);
+    setActiveAccountSetup(SetupType.Stake, value);
   };
 
   // update bond on account change
