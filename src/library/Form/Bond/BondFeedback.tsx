@@ -107,6 +107,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     let _bondDisabled = false;
     const _errors = warnings;
     const _bond = bond.bond;
+    const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // bond errors
     if (freeBalance === 0) {
@@ -118,7 +119,10 @@ export const BondFeedback = (props: BondFeedbackProps) => {
       _errors.push('Bond amount is more than your free balance.');
     }
 
-    // bond errors
+    if (bond.bond !== '' && Number(bond.bond) < _planck) {
+      _errors.push('Value is too small');
+    }
+
     if (inSetup) {
       if (freeBalance < minBondBase) {
         _bondDisabled = true;

@@ -109,6 +109,7 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
   const handleErrors = () => {
     const _errors = warnings;
     const _bond = bond.bond;
+    const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // unbond errors
     if (Number(bond.bond) > activeBase) {
@@ -122,6 +123,10 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
           'You must have your controller account imported to unbond.'
         );
       }
+    }
+
+    if (bond.bond !== '' && Number(bond.bond) < _planck) {
+      _errors.push('Value is too small');
     }
 
     if (Number(bond.bond) > freeToUnbondToMin) {
