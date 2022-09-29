@@ -102,7 +102,7 @@ export const UpdatePayee = () => {
             current={_selected}
             height="17rem"
           />
-          <div>
+          <div style={{ marginTop: '1rem' }}>
             <EstimatedTxFee />
           </div>
           <FooterWrapper>
