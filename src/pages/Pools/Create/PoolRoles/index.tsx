@@ -19,15 +19,12 @@ export const PoolRoles = (props: SetupStepProps) => {
 
   // if no roles in setup already, inject `activeAccount` to be
   // root and depositor roles.
-  const initialValue =
-    setup.roles === null
-      ? {
-          root: activeAccount,
-          depositor: activeAccount,
-          nominator: activeAccount,
-          stateToggler: activeAccount,
-        }
-      : setup.roles;
+  const initialValue = setup.roles ?? {
+    root: activeAccount,
+    depositor: activeAccount,
+    nominator: activeAccount,
+    stateToggler: activeAccount,
+  };
 
   // store local pool name for form control
   const [roles, setRoles] = useState({
