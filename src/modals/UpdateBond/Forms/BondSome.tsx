@@ -117,8 +117,8 @@ export const BondSome = (props: FormsProps) => {
               Transaction fees have been deducted from maximum bond.
             </p>
           )}
-          <EstimatedTxFee />
         </NotesWrapper>
+        <EstimatedTxFee />
       </div>
       <FormFooter
         setSection={setSection}

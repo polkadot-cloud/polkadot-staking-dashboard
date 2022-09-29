@@ -8,6 +8,7 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { EstimatedTxFeeProps } from './types';
+import { Wrapper } from './Wrapper';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const {
@@ -32,7 +33,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
           <div>{txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}</div>
         </>
       ) : (
-        <>
+        <Wrapper>
           <p>
             Estimated Tx Fee:{' '}
             {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}
@@ -42,7 +43,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
               You do not have enough {unit} to submit this transaction.
             </p>
           )}
-        </>
+        </Wrapper>
       )}
     </>
   );
