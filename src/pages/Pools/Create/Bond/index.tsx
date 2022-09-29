@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { SetupType } from 'contexts/UI/types';
@@ -62,10 +62,9 @@ export const Bond = (props: SetupStepProps) => {
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <BondInputWithFeedback
+        <BondFeedback
           bondType="pool"
           inSetup
-          unbond={false}
           listenIsValid={setBondValid}
           defaultBond={initialBondValue}
           setters={[

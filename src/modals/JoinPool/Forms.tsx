@@ -8,7 +8,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -87,9 +87,8 @@ export const Forms = () => {
     <ContentWrapper>
       <div>
         <>
-          <BondInputWithFeedback
+          <BondFeedback
             bondType="pool"
-            unbond={false}
             listenIsValid={setBondValid}
             defaultBond={planckBnToUnit(freeBalance, units)}
             setters={[

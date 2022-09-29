@@ -151,10 +151,18 @@ export const useFetchMehods = () => {
       )
       .filter((n: any) => !sessionParachain?.includes(n.address) || false);
 
+    const _randomValidator = applyValidatorFilters(_nominations, rawBatchKey, [
+      'all_commission',
+      'blocked_nominations',
+      'missing_identity',
+    ]).filter(
+      (n: any) => !nominations.find((o: any) => o.address === n.address)
+    );
+
     return {
       parachainValidators: _parachainValidators,
       activeValidators: _activeValidators,
-      randomValidators: _parachainValidators.concat(_activeValidators),
+      randomValidators: _randomValidator,
     };
   };
 
