@@ -176,9 +176,7 @@ export const Help = () => {
                     <External
                       key={`ext_${index}`}
                       width="100%"
-                      label={item.label}
                       title={item.title}
-                      subtitle={item.subtitle}
                       url={item.url}
                       website={item.website}
                     />
