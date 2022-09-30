@@ -15,6 +15,7 @@ import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { MaybeAccount } from 'types';
 import { PoolState } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -48,6 +49,7 @@ export const Nominations = ({
     : getAccountNominations(nominator);
   const nominated = isPool ? poolNominated : stakeNominated;
   const batchKey = isPool ? 'pool_nominations' : 'stake_nominations';
+  const { t } = useTranslation('common');
 
   const nominating = nominated?.length ?? false;
 
@@ -138,7 +140,7 @@ export const Nominations = ({
         </div>
       ) : !nominator ? (
         <div className="head">
-          <h4>Not Nominating.</h4>
+          <h4>{t('pages.Nominate.not_nominating')}</h4>
         </div>
       ) : (
         <>
@@ -180,11 +182,9 @@ export const Nominations = ({
           ) : (
             <div className="head">
               {poolDestroying ? (
-                <h4>
-                  Pool is being destroyed and nominating is no longer possible.
-                </h4>
+                <h4>{t('pages.Nominate.pool_destroy')}</h4>
               ) : (
-                <h4>Not Nominating.</h4>
+                <h4>{t('pages.Nominate.not_nominating')}</h4>
               )}
             </div>
           )}

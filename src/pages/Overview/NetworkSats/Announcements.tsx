@@ -18,6 +18,7 @@ import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useNetworkMetrics } from 'contexts/Network';
 import { BondedPool } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -34,6 +35,7 @@ export const Announcements = () => {
   } = staking;
   const { bondedPools } = useBondedPools();
   const { totalIssuance } = metrics;
+  const { t } = useTranslation('common');
 
   let totalPoolPoints = new BN(0);
   bondedPools.forEach((b: BondedPool) => {

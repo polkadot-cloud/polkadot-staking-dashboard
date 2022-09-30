@@ -17,6 +17,7 @@ import { useTheme } from 'contexts/Themes';
 import { AnySubscan } from 'types';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
+import { useTranslation } from 'react-i18next';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';
@@ -29,6 +30,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { units } = network;
   const { metrics } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
+  const { t } = useTranslation('common');
 
   const disableThrottle = props.disableThrottle ?? false;
 

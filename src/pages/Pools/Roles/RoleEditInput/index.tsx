@@ -4,10 +4,12 @@
 import React from 'react';
 import { useConnect } from 'contexts/Connect';
 import { isValidAddress } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   const { formatAccountSs58 } = useConnect();
+  const { t } = useTranslation('common');
 
   const processRoleEdit = (newAddress: string) => {
     let edit = {
@@ -40,10 +42,10 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   let label;
   let labelClass;
   if (!roleEdit?.valid) {
-    label = 'Address Invalid';
+    label = t('pages.Pools.address_invalid');
     labelClass = 'danger';
   } else if (roleEdit?.reformatted) {
-    label = 'Address was reformatted';
+    label = t('pages.Pools.reformatted');
     labelClass = 'neutral';
   }
 
@@ -52,7 +54,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
       <div className="input">
         <section>
           <input
-            placeholder="Address"
+            placeholder={t('pages.Pools.address')}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={roleEdit?.newAddress}

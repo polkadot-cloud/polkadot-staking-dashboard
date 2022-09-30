@@ -7,6 +7,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
+import { useTranslation } from 'react-i18next';
 import { PageProps } from '../types';
 
 export const Favourites = (props: PageProps) => {
@@ -14,6 +15,7 @@ export const Favourites = (props: PageProps) => {
   const { page } = props;
   const { title } = page;
   const { favouritesList } = useValidators();
+  const { t } = useTranslation('common');
 
   const batchKey = 'favourite_validators';
 
@@ -23,7 +25,7 @@ export const Favourites = (props: PageProps) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favouritesList === null ? (
-            <h3>Fetching favourite validators...</h3>
+            <h3>{t('pages.Favourites.fetching_favourite_validators')}</h3>
           ) : (
             <>
               {isReady && (
@@ -33,14 +35,14 @@ export const Favourites = (props: PageProps) => {
                       bondType="stake"
                       validators={favouritesList}
                       batchKey={batchKey}
-                      title="Favourite Validators"
+                      title={t('pages.Favourites.favourite_validators')}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavourites
                     />
                   ) : (
-                    <h3>No Favourites.</h3>
+                    <h3>{t('pages.Favourites.no_favourites')}</h3>
                   )}
                 </>
               )}

@@ -22,6 +22,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { useTranslation } from 'react-i18next';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -36,6 +37,7 @@ export const Summary = (props: SetupStepProps) => {
   const { lastPoolId } = stats;
   const poolId = lastPoolId.add(new BN(1));
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('common');
 
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
@@ -94,12 +96,12 @@ export const Summary = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title="Summary"
+        title={t('pages.Pools.summary')}
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
+          <Warning text={t('pages.Pools.w1')} />
         )}
         <SummaryWrapper>
           <section>
@@ -108,7 +110,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Pool Name:
+              &nbsp; {t('pages.Pools.pool_name')}
             </div>
             <div>{metadata ?? `Not Set`}</div>
           </section>
@@ -118,7 +120,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Bond Amount:
+              &nbsp; {t('pages.Pools.bond_amount')}
             </div>
             <div>
               {humanNumber(bond)} {network.unit}
@@ -130,7 +132,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Nominations:
+              &nbsp; {t('pages.Pools.nominations')}
             </div>
             <div>{nominations.length}</div>
           </section>
@@ -140,9 +142,9 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Roles:
+              &nbsp; {t('pages.Pools.roles')}
             </div>
-            <div>Assigned</div>
+            <div>{t('pages.Pools.assigned')}</div>
           </section>
           <section>
             <EstimatedTxFee format="table" />
@@ -162,7 +164,7 @@ export const Summary = (props: SetupStepProps) => {
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            title="Create Pool"
+            title={t('pages.Pools.create_pool')}
             primary
           />
         </div>

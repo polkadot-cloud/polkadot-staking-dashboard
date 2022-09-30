@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { SectionWrapper, ReserveWrapper, Separator } from './Wrappers';
 import { ReserveProps } from './types';
 
@@ -14,13 +15,14 @@ export const Reserve = (props: ReserveProps) => {
   const { height } = props;
   const { network } = useApi();
   const { existentialAmount } = useBalances();
+  const { t } = useTranslation('common');
 
   return (
     <SectionWrapper style={{ height }}>
       <ReserveWrapper>
         <Separator />
         <h4>
-          Reserved
+          {t('pages.Overview.reserved')}
           <OpenHelpIcon helpKey="Reserve Balance" />
         </h4>
 

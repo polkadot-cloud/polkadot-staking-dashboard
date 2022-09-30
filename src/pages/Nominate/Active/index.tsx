@@ -22,6 +22,7 @@ import {
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
 import { GenerateNominations } from 'library/GenerateNominations';
+import { useTranslation } from 'react-i18next';
 import { Nominations } from './Nominations';
 import { ManageBond } from './ManageBond';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
@@ -37,6 +38,7 @@ export const Active = () => {
   const { targets, setTargets, inSetup } = useStaking();
   const { getAccountNominations } = useBalances();
   const nominations = getAccountNominations(activeAccount);
+  const { t } = useTranslation('common');
 
   const ROW_HEIGHT = 275;
 
@@ -77,7 +79,7 @@ export const Active = () => {
             <>
               <CardHeaderWrapper withAction>
                 <h3>
-                  Start Nominating
+                  {t('pages.Nominate.start_nominating')}
                   <OpenHelpIcon helpKey="Nominations" />
                 </h3>
                 <div>
@@ -85,7 +87,7 @@ export const Active = () => {
                     small
                     inline
                     primary
-                    title="Nominate"
+                    title={t('pages.Nominate.nominate')}
                     icon={faChevronCircleRight}
                     transform="grow-1"
                     disabled={targets.length === 0 || inSetup() || isSyncing}

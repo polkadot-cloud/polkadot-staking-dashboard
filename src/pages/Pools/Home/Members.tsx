@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'contexts/Themes';
 import { PoolState } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
 import { MembersList } from './MembersList';
 
 export const Members = () => {
@@ -17,11 +18,15 @@ export const Members = () => {
   const { mode } = useTheme();
   const { getMembersOfPool } = usePoolMembers();
   const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
+  const { t, i18n } = useTranslation('common');
 
   const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
-  const poolMembersTitle = `${poolMembers.length} Pool Member${
-    poolMembers.length === 1 ? `` : `s`
-  }`;
+  const poolMembersTitle =
+    i18n.resolvedLanguage === 'en'
+      ? `${poolMembers.length} Pool Member${
+          poolMembers.length === 1 ? `` : `s`
+        }`
+      : `${poolMembers.length} 成员`;
 
   const networkColorsSecondary: any = network.colors.secondary;
   const annuncementBorderColor = networkColorsSecondary[mode];
@@ -39,7 +44,7 @@ export const Members = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>Pool Currently Locked</h3>
+              <h3>{t('pages.Pools.pool_currently_locked')}</h3>
               <h4>
                 You have permission to unbond and withdraw funds of any pool
                 member. Use a member&apos;s menu ({' '}
@@ -58,7 +63,7 @@ export const Members = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>Pool in Destroying State</h3>
+              <h3>{t('pages.Pools.pool_in_destroying_state')}</h3>
               <h4>
                 You have permission to unbond and withdraw funds of any pool
                 member. Use a member&apos;s menu ({' '}

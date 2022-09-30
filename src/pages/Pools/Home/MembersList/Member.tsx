@@ -25,6 +25,7 @@ import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { PoolState } from 'contexts/Pools/types';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useTranslation } from 'react-i18next';
 
 export const Member = (props: any) => {
   const { meta } = usePoolMembers();
@@ -36,6 +37,7 @@ export const Member = (props: any) => {
   const { activeEra } = metrics;
   const { state, roles } = activeBondedPool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
+  const { t } = useTranslation('common');
 
   const { who, batchKey, batchIndex } = props;
 

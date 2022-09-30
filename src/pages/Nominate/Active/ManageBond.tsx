@@ -15,6 +15,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import BN from 'bn.js';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -27,6 +28,7 @@ export const ManageBond = () => {
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
+  const { t } = useTranslation('common');
 
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -39,7 +41,7 @@ export const ManageBond = () => {
     <>
       <CardHeaderWrapper>
         <h4>
-          Bonded Funds
+          {t('pages.Nominate.bonded_funds')}
           <OpenHelpIcon helpKey="Bonding" />
         </h4>
         <h2>

@@ -11,6 +11,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
+import { useTranslation } from 'react-i18next';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
@@ -23,6 +24,7 @@ export const useStatusButtons = () => {
   const { bondedPools } = useBondedPools();
   const { isOwner } = useActivePool();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('common');
 
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);

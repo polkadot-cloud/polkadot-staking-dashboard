@@ -11,6 +11,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useAccount } from 'contexts/Account';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
 import { NotificationText } from 'contexts/Notifications/types';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 import { PoolAccountProps } from '../types';
 
@@ -19,6 +20,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
   const { addNotification } = useNotifications();
   const { meta } = useAccount();
+  const { t } = useTranslation('common');
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -49,7 +51,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
         transition={{ duration: 0.3 }}
       >
         {address === null ? (
-          <h4>Not Set</h4>
+          <h4>{t('pages.Pools.not_set')}</h4>
         ) : synced && display !== null ? (
           <>
             <div className="icon">

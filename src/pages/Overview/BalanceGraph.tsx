@@ -24,6 +24,7 @@ import { useTheme } from 'contexts/Themes';
 import { usePrices } from 'library/Hooks/usePrices';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -37,6 +38,7 @@ export const BalanceGraph = () => {
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
+  const { t } = useTranslation('common');
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -173,7 +175,7 @@ export const BalanceGraph = () => {
     <>
       <div className="head">
         <h4>
-          Balance
+          {t('pages.Overview.balance')}
           <OpenHelpIcon helpKey="Your Balance" />
         </h4>
         <h2>

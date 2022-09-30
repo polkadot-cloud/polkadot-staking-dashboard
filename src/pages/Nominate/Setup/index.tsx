@@ -11,6 +11,7 @@ import { useUi } from 'contexts/UI';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
 import { Nominate } from 'library/SetupSteps/Nominate';
+import { useTranslation } from 'react-i18next';
 import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
@@ -18,6 +19,7 @@ import { Summary } from './Summary';
 
 export const Setup = () => {
   const { setOnNominatorSetup, setActiveAccountSetup } = useUi();
+  const { t } = useTranslation('common');
 
   return (
     <>

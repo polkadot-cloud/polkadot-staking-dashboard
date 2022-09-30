@@ -14,6 +14,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import OpenHelpIcon from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
@@ -24,6 +25,7 @@ export const Membership = ({ label }: { label: string }) => {
   const { bondedPools, meta } = useBondedPools();
   const { activeBondedPool, isOwner } = useActivePool();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('common');
 
   const { active } = getTransferOptions(activeAccount).pool;
 

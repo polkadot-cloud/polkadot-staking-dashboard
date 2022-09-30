@@ -9,6 +9,7 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { useTranslation } from 'react-i18next';
 import { Roles } from '../../Roles';
 
 export const PoolRoles = (props: SetupStepProps) => {
@@ -16,6 +17,7 @@ export const PoolRoles = (props: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const { t } = useTranslation('common');
 
   // if no roles in setup already, inject `activeAccount` to be
   // root and depositor roles.
@@ -62,17 +64,13 @@ export const PoolRoles = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.roles !== null}
-        title="Roles"
+        title={t('pages.Pools.roles')}
         // helpKey="Bonding"
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ margin: '0.5rem 0' }}>
-          You will consume your pool&apos;s Root and Depositor roles.
-        </h4>
-        <h4 style={{ marginTop: 0 }}>
-          Your Nominator and State Toggler roles can be assigned to any account.
-        </h4>
+        <h4 style={{ margin: '0.5rem 0' }}>{t('pages.Pools.pool_role1')}</h4>
+        <h4 style={{ marginTop: 0 }}>{t('pages.Pools.pool_role2')}</h4>
         <Roles
           batchKey="pool_roles_create"
           listenIsValid={setRolesValid}

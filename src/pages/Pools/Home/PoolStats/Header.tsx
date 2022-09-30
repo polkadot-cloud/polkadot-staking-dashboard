@@ -7,12 +7,14 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useApi } from 'contexts/Api';
+import { useTranslation } from 'react-i18next';
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {
   const { network } = useApi();
   const { activeBondedPool } = useActivePool();
   const { getMembersOfPool } = usePoolMembers();
+  const { t } = useTranslation('common');
 
   const { state, points } = activeBondedPool?.bondedPool || {};
   const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
@@ -45,13 +47,13 @@ export const Header = () => {
           <div>
             <div className="inner">
               <h2>{stateDisplay}</h2>
-              <h4>Pool State</h4>
+              <h4>{t('pages.Pools.pool_state')}</h4>
             </div>
           </div>
           <div>
             <div className="inner">
               <h2>{poolMembers.length}</h2>
-              <h4>Pool Members</h4>
+              <h4>{t('pages.Pools.pool_members')}</h4>
             </div>
           </div>
           <div>
@@ -59,7 +61,7 @@ export const Header = () => {
               <h2>
                 {bonded} {network.unit}
               </h2>
-              <h4>Total Bonded</h4>
+              <h4>{t('pages.Pools.total_bonded')}</h4>
             </div>
           </div>
         </div>

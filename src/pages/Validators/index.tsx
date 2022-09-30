@@ -8,6 +8,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
+import { useTranslation } from 'react-i18next';
 import AverageCommissionStatBox from './Stats/AverageCommission';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
@@ -19,6 +20,7 @@ export const Validators = (props: PageProps) => {
 
   const { isReady } = useApi();
   const { validators } = useValidators();
+  const { t } = useTranslation('common');
 
   return (
     <>
@@ -32,13 +34,13 @@ export const Validators = (props: PageProps) => {
         <CardWrapper>
           {!isReady ? (
             <div className="item">
-              <h3>Connecting...</h3>
+              <h3>{t('pages.Validators.connecting')}</h3>
             </div>
           ) : (
             <>
               {validators.length === 0 && (
                 <div className="item">
-                  <h3>Fetching validators...</h3>
+                  <h3>{t('pages.Validators.fetching_validators')}</h3>
                 </div>
               )}
 

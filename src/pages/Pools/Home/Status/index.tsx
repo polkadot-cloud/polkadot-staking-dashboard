@@ -21,6 +21,7 @@ import {
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
+import { useTranslation } from 'react-i18next';
 import { useStatusButtons } from './useStatusButtons';
 import { Membership } from './Membership';
 
@@ -36,6 +37,7 @@ export const Status = ({ height }: { height: number }) => {
   const { meta, validators } = useValidators();
   const { stakers } = eraStakers;
   const poolStash = activeBondedPool?.addresses?.stash || '';
+  const { t } = useTranslation('common');
 
   const nominationStatuses = getNominationsStatusFromTargets(
     poolStash,
@@ -161,7 +163,7 @@ export const Status = ({ height }: { height: number }) => {
         <Membership label={label} />
       ) : (
         <Stat
-          label="Pool Membership"
+          label={t('pages.Pools.pool_membership')}
           helpKey="Pool Membership"
           stat="Not in Pool"
           buttons={isSyncing ? [] : buttons}
@@ -169,7 +171,7 @@ export const Status = ({ height }: { height: number }) => {
       )}
       <Separator />
       <Stat
-        label="Unclaimed Rewards"
+        label={t('pages.Pools.unclaimed_rewards')}
         helpKey="Pool Rewards"
         stat={labelRewards}
         buttons={isSyncing ? [] : buttonsRewards}
@@ -179,7 +181,7 @@ export const Status = ({ height }: { height: number }) => {
           <Separator />
           <Stat
             icon={isSyncing ? undefined : poolStateIcon}
-            label="Pool Status"
+            label={t('pages.Pools.pool_status')}
             helpKey="Nomination Status"
             stat={`${poolStatusLeft}${poolStatusRight}`}
           />

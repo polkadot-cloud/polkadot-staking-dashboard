@@ -18,6 +18,7 @@ import {
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useTranslation } from 'react-i18next';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -37,6 +38,7 @@ export const HomeInner = () => {
   const { bondedPools } = useBondedPools();
   const { getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { t } = useTranslation('common');
 
   // back to tab 0 if not in a pool
   useEffect(() => {
@@ -140,7 +142,7 @@ export const HomeInner = () => {
               <PoolList
                 batchKey="bonded_pools"
                 pools={bondedPools}
-                title="Active Pools"
+                title={t('pages.Pools.active_pools')}
                 allowMoreCols
                 allowSearch
                 pagination

@@ -13,11 +13,13 @@ import { GenerateNominations } from 'library/GenerateNominations';
 import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
 import { PoolState } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
 
 export const ManagePool = () => {
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
+  const { t } = useTranslation('common');
   const {
     isNominator,
     setTargets,
@@ -39,7 +41,7 @@ export const ManagePool = () => {
           <>
             <CardHeaderWrapper withAction>
               <h3>
-                Generate Nominations
+                {t('pages.Pools.generate_nominations')}
                 <OpenHelpIcon helpKey="Nominations" />
               </h3>
               <div>
@@ -49,7 +51,7 @@ export const ManagePool = () => {
                   primary
                   icon={faChevronCircleRight}
                   transform="grow-1"
-                  title="Nominate"
+                  title={t('pages.Pools.nominate')}
                   disabled={!isNominator()}
                   onClick={() => openModalWith('NominatePool', {}, 'small')}
                 />

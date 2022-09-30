@@ -15,6 +15,7 @@ import {
 } from 'Utils';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -25,6 +26,7 @@ export const Announcements = () => {
   const { rewardAccountBalance } = activeBondedPool || {};
   const { totalRewardsClaimed } = activeBondedPool?.rewardPool || {};
   const { existentialDeposit } = consts;
+  const { t } = useTranslation('common');
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BN.max(
