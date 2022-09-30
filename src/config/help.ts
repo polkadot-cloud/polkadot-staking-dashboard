@@ -69,6 +69,23 @@ export const HELP_CONFIG: HelpContentRaw = [
         ],
       },
     ],
+    external: [
+      {
+        title: 'How to Connect Your Accounts',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182121-how-to-use-the-staking-dashboard-connecting-your-account',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'How to Use the Staking Dashboard: Overview',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Saking your DOT',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
+        website: 'polkadot.network',
+      },
+    ],
   },
   {
     key: 'nominate',
@@ -138,7 +155,38 @@ export const HELP_CONFIG: HelpContentRaw = [
         ],
       },
     ],
-    external: [],
+    external: [
+      {
+        title: 'Changing Your Reward Destination',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182220-how-to-use-the-staking-dashboard-changing-reward-destination',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Bond More Tokens to Your Existing Stake',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182207-how-to-use-the-staking-dashboard-bond-more-tokens-to-your-existing-stake',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Unbonding Your Tokens',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182201-how-to-use-the-staking-dashboard-unbonding-your-tokens',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Rebonding',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182221-how-to-use-the-staking-dashboard-rebonding',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Changing your Controller Account',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182218-how-to-use-the-staking-dashboard-changing-your-controller-account',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Changing Your Nominations',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182518-how-to-use-the-staking-dashboard-changing-your-nominations',
+        website: 'polkadot.network',
+      },
+    ],
   },
   {
     key: 'pools',
@@ -205,7 +253,18 @@ export const HELP_CONFIG: HelpContentRaw = [
         ],
       },
     ],
-    external: [],
+    external: [
+      {
+        title: 'Creating Nomination Pools',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182388-how-to-use-the-staking-dashboard-creating-nomination-pools',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Claiming Nomination Pool Rewards',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182399-how-to-use-staking-dashboard-claiming-nomination-pool-rewards',
+        website: 'polkadot.network',
+      },
+    ],
   },
   {
     key: 'validators',
@@ -299,9 +358,7 @@ export const HELP_CONFIG: HelpContentRaw = [
     ],
     external: [
       {
-        subtitle: '',
-        label: 'Validators',
-        title: 'How do I know which validators to choose?',
+        title: 'How do I Know Which Validators to Choose?',
         url: 'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
         website: 'polkadot.network',
       },
