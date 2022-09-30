@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/polkadot-staking-dashboard/static/css/main.0f59cb8e.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.702344ad.js",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.e489eb5c.js",
     "static/js/545.07ee3820.chunk.js": "/polkadot-staking-dashboard/static/js/545.07ee3820.chunk.js",
     "static/js/514.4ae9c9dd.chunk.js": "/polkadot-staking-dashboard/static/js/514.4ae9c9dd.chunk.js",
     "static/js/569.c8b80d7a.chunk.js": "/polkadot-staking-dashboard/static/js/569.c8b80d7a.chunk.js",
@@ -56,11 +56,12 @@
     "static/media/sunny-outline.svg": "/polkadot-staking-dashboard/static/media/sunny-outline.1d11bc314beb185514e6818f10d444be.svg",
     "static/media/coinbasecloud.svg": "/polkadot-staking-dashboard/static/media/coinbasecloud.16e0eecdbc59374e35aa73ec2a914f2c.svg",
     "static/media/westend_inline.svg": "/polkadot-staking-dashboard/static/media/westend_inline.1bb84c910aef4a21a0aca11eb238e130.svg",
+    "static/media/cross.svg": "/polkadot-staking-dashboard/static/media/cross.44b6831a86dd83fe53b3ced9f768d363.svg",
     "static/media/moon-outline.svg": "/polkadot-staking-dashboard/static/media/moon-outline.ed14e62383eee27a57c447e80da2f840.svg",
     "static/media/decentradot.svg": "/polkadot-staking-dashboard/static/media/decentradot.55e51b4842821f8f7f289af7082ba3e5.svg",
     "static/media/info-outline.svg": "/polkadot-staking-dashboard/static/media/info-outline.710ee0b66a632101a3e85de51b365ddb.svg",
     "main.0f59cb8e.css.map": "/polkadot-staking-dashboard/static/css/main.0f59cb8e.css.map",
-    "main.702344ad.js.map": "/polkadot-staking-dashboard/static/js/main.702344ad.js.map",
+    "main.e489eb5c.js.map": "/polkadot-staking-dashboard/static/js/main.e489eb5c.js.map",
     "545.07ee3820.chunk.js.map": "/polkadot-staking-dashboard/static/js/545.07ee3820.chunk.js.map",
     "514.4ae9c9dd.chunk.js.map": "/polkadot-staking-dashboard/static/js/514.4ae9c9dd.chunk.js.map",
     "569.c8b80d7a.chunk.js.map": "/polkadot-staking-dashboard/static/js/569.c8b80d7a.chunk.js.map",
@@ -70,6 +71,6 @@
   },
   "entrypoints": [
     "static/css/main.0f59cb8e.css",
-    "static/js/main.702344ad.js"
+    "static/js/main.e489eb5c.js"
   ]
 }
