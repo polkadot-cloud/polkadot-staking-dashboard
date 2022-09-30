@@ -3,6 +3,8 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useModal } from 'contexts/Modal';
+import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {
@@ -12,10 +14,19 @@ interface TitleProps {
 }
 
 export const Title = ({ title, icon, fixed }: TitleProps) => {
+  const { setStatus } = useModal();
+
   return (
     <TitleWrapper fixed={fixed || false}>
-      {icon && <FontAwesomeIcon transform="grow-3" icon={icon} />}
-      <h2>{title}</h2>
+      <div>
+        {icon && <FontAwesomeIcon transform="grow-3" icon={icon} />}
+        <h2>{title}</h2>
+      </div>
+      <div>
+        <button type="button" onClick={() => setStatus(2)}>
+          <CrossSVG style={{ width: '1.4rem', height: '1.4rem' }} />
+        </button>
+      </div>
     </TitleWrapper>
   );
 };

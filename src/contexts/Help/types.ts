@@ -22,9 +22,7 @@ export type HelpDefinition = {
 };
 
 export interface HelpExternal {
-  label: string;
   title: string;
-  subtitle: string;
   url: string;
   website?: string;
 }

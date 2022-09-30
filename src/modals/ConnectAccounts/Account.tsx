@@ -40,7 +40,7 @@ export const AccountButton = (props: AccountElementProps) => {
               disconnectFromAccount();
             } else {
               connectToAccount(meta);
-              setStatus(0);
+              setStatus(2);
             }
           }
         }}

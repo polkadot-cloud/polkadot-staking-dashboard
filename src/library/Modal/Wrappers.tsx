@@ -8,23 +8,44 @@ import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 // title wrapper for modals
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
   box-sizing: border-box;
-  width: 100%;
   padding: ${(props) =>
     props.fixed ? '0.6rem 1rem 1.5rem 1rem' : '2rem 1.5rem 0 1.5rem'};
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  flex: 1;
+  width: 100%;
 
-  > h2 {
-    font-family: 'Unbounded', 'sans-serif', sans-serif;
-    font-size: 1.3rem;
-    margin: 0;
-  }
+  > div {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0 0.5rem;
 
-  > svg {
-    margin-right: 0.9rem;
+    button {
+      padding: 0;
+    }
+
+    &:first-child {
+      flex-grow: 1;
+
+      > h2 {
+        font-family: 'Unbounded', 'sans-serif', sans-serif;
+        font-size: 1.3rem;
+        margin: 0;
+      }
+      > svg {
+        margin-right: 0.9rem;
+      }
+    }
+
+    &:last-child {
+      button {
+        opacity: 0.25;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
   }
 `;
 

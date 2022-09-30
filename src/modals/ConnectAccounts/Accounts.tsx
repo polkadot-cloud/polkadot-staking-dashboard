@@ -215,7 +215,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
                   onClick={() => {
                     if (stashAccount) {
                       connectToAccount(stashAccount);
-                      setStatus(0);
+                      setStatus(2);
                     }
                   }}
                 >
