@@ -20,6 +20,7 @@ import { useTheme } from 'contexts/Themes';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useHelp } from 'contexts/Help';
+import { TranslationButtons } from 'translation';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
 import Heading from './Heading/Heading';
@@ -148,6 +149,7 @@ export const SideMenu = () => {
             <MoonOutlineSVG width="1.4rem" height="1.4rem" />
           </button>
         )}
+        <TranslationButtons />
       </section>
     </Wrapper>
   );

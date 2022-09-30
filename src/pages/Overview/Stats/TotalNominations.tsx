@@ -5,10 +5,12 @@ import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { toFixedIfNecessary } from 'Utils';
+import { useTranslation } from 'react-i18next';
 
 export const TotalNominatorsStatBox = () => {
   const { staking } = useStaking();
   const { totalNominators, maxNominatorsCount } = staking;
+  const { t } = useTranslation('common');
 
   // total active nominators as percent
   let totalNominatorsAsPercent = 0;
@@ -19,7 +21,7 @@ export const TotalNominatorsStatBox = () => {
   }
 
   const params = {
-    label: 'Total Nominators',
+    label: t('pages.Overview.total_nominators'),
     stat: {
       value: totalNominators.toNumber(),
       total: maxNominatorsCount,
@@ -32,6 +34,7 @@ export const TotalNominatorsStatBox = () => {
 
     tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
     helpKey: 'Total Nominators',
+    chelpKey: '总提名人数',
   };
 
   return <Pie {...params} />;

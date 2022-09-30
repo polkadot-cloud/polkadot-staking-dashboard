@@ -24,18 +24,22 @@ export const PAGE_CATEGORIES: PageCategories = [
   {
     _id: 1,
     title: 'default',
+    ctitle: 'default',
   },
   {
     _id: 2,
     title: 'Stake',
+    ctitle: '抵押',
   },
   {
     _id: 3,
     title: 'Validators',
+    ctitle: '验证人',
   },
   {
     _id: 4,
     title: 'Feedback',
+    ctitle: '反馈',
   },
 ];
 
@@ -43,6 +47,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 1,
     title: 'Overview',
+    ctitle: '总览',
     uri: `${URI_PREFIX}/`,
     hash: '/overview',
     Entry: Overview,
@@ -51,6 +56,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 2,
     title: 'Solo',
+    ctitle: '个人抵押',
     uri: `${URI_PREFIX}/solo`,
     hash: '/solo',
     Entry: Nominate,
@@ -59,6 +65,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 2,
     title: 'Pools',
+    ctitle: '提名池',
     uri: `${URI_PREFIX}/pools`,
     hash: '/pools',
     Entry: Pools,
@@ -67,6 +74,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 2,
     title: 'Payouts',
+    ctitle: '收益',
     uri: `${URI_PREFIX}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
@@ -75,6 +83,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 3,
     title: 'Validators',
+    ctitle: '验证人',
     uri: `${URI_PREFIX}/validators`,
     hash: '/validators',
     Entry: Browse,
@@ -83,6 +92,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 3,
     title: 'Community',
+    ctitle: '社区',
     uri: `${URI_PREFIX}/community`,
     hash: '/community',
     Entry: Community,
@@ -91,6 +101,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 3,
     title: 'Favourites',
+    ctitle: '收藏夹',
     uri: `${URI_PREFIX}/favourites`,
     hash: '/favourites',
     Entry: Favourites,
@@ -99,6 +110,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 4,
     title: 'Feedback',
+    ctitle: '反馈',
     uri: `${URI_PREFIX}/feedback`,
     hash: '/feedback',
     Entry: Feedback,

@@ -5,10 +5,12 @@ import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { toFixedIfNecessary } from 'Utils';
+import { useTranslation } from 'react-i18next';
 
 const TotalValidatorsStatBox = () => {
   const { staking } = useStaking();
   const { totalValidators, maxValidatorsCount } = staking;
+  const { t } = useTranslation('common');
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;
@@ -19,7 +21,7 @@ const TotalValidatorsStatBox = () => {
   }
 
   const params = {
-    label: 'Total Validators',
+    label: t('pages.Validators.total_validators'),
     stat: {
       value: totalValidators.toNumber(),
       total: maxValidatorsCount.toNumber(),
@@ -31,6 +33,7 @@ const TotalValidatorsStatBox = () => {
     },
     tooltip: `${toFixedIfNecessary(totalValidatorsAsPercent, 2)}%`,
     helpKey: 'Validator',
+    chelpKey: '验证人',
   };
   return <Pie {...params} />;
 };

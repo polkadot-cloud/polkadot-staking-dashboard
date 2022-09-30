@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
-import { HELP_CONFIG } from 'config/help';
+import { HELP_CONFIG, C_HELP_CONFIG } from 'config/help';
 import {
   HelpItemRaw,
   HelpDefinition,
@@ -14,6 +14,7 @@ import {
 } from 'contexts/Help/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import Definition from './Items/Definition';
 import External from './Items/External';
@@ -28,6 +29,7 @@ export const Help = () => {
     setDefinition,
   } = useHelp();
   const controls = useAnimation();
+  const { t, i18n } = useTranslation('common');
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -67,15 +69,26 @@ export const Help = () => {
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
-      item?.definitions?.find((d: HelpDefinition) => d.title === definition)
-    );
+    meta =
+      i18n.resolvedLanguage === 'en'
+        ? Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
+            item?.definitions?.find(
+              (d: HelpDefinition) => d.title === definition
+            )
+          )
+        : Object.values(C_HELP_CONFIG).find((item: HelpItemRaw) =>
+            item?.definitions?.find(
+              (d: HelpDefinition) => d.title === definition
+            )
+          );
   } else {
     // get all items
     let _definitions: HelpDefinitions = [];
     let _external: HelpExternals = [];
 
-    Object.values(HELP_CONFIG).forEach((c: HelpItemRaw) => {
+    Object.values(
+      i18n.resolvedLanguage === 'en' ? HELP_CONFIG : C_HELP_CONFIG
+    ).forEach((c: HelpItemRaw) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });

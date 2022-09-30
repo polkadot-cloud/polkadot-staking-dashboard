@@ -6,12 +6,14 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Pie } from 'library/StatBoxList/Pie';
 import { toFixedIfNecessary } from 'Utils';
+import { useTranslation } from 'react-i18next';
 
 export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi();
   const { maxElectingVoters } = consts;
   const { eraStakers } = useStaking();
   const { totalActiveNominators } = eraStakers;
+  const { t } = useTranslation('common');
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0;
@@ -22,7 +24,7 @@ export const ActiveNominatorsStatBox = () => {
   }
 
   const params = {
-    label: 'Active Nominators',
+    label: t('pages.Overview.active_nominators'),
     stat: {
       value: totalActiveNominators,
       total: maxElectingVoters,
@@ -34,6 +36,7 @@ export const ActiveNominatorsStatBox = () => {
     },
     tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
     helpKey: 'Active Nominators',
+    chelpKey: '活跃提名人',
   };
 
   return <Pie {...params} />;

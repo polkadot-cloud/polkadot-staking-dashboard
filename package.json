@@ -52,7 +52,10 @@
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.4",
     "window-or-global": "^1.0.1",
-    "yarn": "^1.22.18"
+    "yarn": "^1.22.18",
+    "i18next": "^21.9.2",
+    "i18next-browser-languagedetector": "^6.1.5",
+    "react-i18next": "^11.18.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",

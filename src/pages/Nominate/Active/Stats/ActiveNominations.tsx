@@ -3,10 +3,12 @@
 
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 
 export const ActiveNominationsStatBox = () => {
   const { getNominationsStatus } = useStaking();
   const nominationStatuses = getNominationsStatus();
+  const { t } = useTranslation('common');
 
   const total = Object.values(nominationStatuses).length;
   const active =
@@ -14,7 +16,7 @@ export const ActiveNominationsStatBox = () => {
     0;
 
   const params = {
-    label: 'Active Nominations',
+    label: t('pages.Nominate.active_nominations'),
     stat: {
       value: active,
       total,
@@ -26,6 +28,7 @@ export const ActiveNominationsStatBox = () => {
     },
     tooltip: active ? 'Active' : undefined,
     helpKey: 'Nominations',
+    chelpKey: '提名',
   };
 
   return <Pie {...params} />;

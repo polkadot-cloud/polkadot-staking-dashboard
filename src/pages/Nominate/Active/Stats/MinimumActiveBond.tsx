@@ -4,17 +4,20 @@
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
+import { useTranslation } from 'react-i18next';
 
 export const MinimumActiveBondStatBox = () => {
   const { network } = useApi();
   const { eraStakers } = useStaking();
   const { minActiveBond } = eraStakers;
+  const { t } = useTranslation('common');
 
   const params = {
-    label: 'Minimum Active Bond',
+    label: t('pages.Nominate.minimum_active_bond'),
     value: minActiveBond,
     unit: network.unit,
     helpKey: 'Bonding',
+    chelpKey: '质押',
   };
 
   return <Number {...params} />;

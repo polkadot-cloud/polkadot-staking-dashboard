@@ -14,6 +14,7 @@ import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { UIContextInterface } from 'contexts/UI/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PageCategory, PageItem, PagesConfig } from 'types';
+import { useTranslation } from 'react-i18next';
 import { LogoWrapper } from './Wrapper';
 import { Primary } from './Primary';
 import Heading from './Heading/Heading';
@@ -33,6 +34,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
+  const { i18n } = useTranslation('common');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -164,7 +166,14 @@ export const Main = () => {
           <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
             {/* display heading if not `default` (used for top links) */}
             {category.title !== 'default' && (
-              <Heading title={category.title} minimised={sideMenuMinimised} />
+              <Heading
+                title={
+                  i18n.resolvedLanguage === 'en'
+                    ? category.title
+                    : category.ctitle
+                }
+                minimised={sideMenuMinimised}
+              />
             )}
 
             {/* display category links */}
@@ -173,7 +182,11 @@ export const Main = () => {
                 <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                   {page.category === category._id && (
                     <Primary
-                      name={page.title}
+                      name={
+                        i18n.resolvedLanguage === 'en'
+                          ? page.title
+                          : page.ctitle
+                      }
                       to={page.hash}
                       active={page.hash === pathname}
                       icon={

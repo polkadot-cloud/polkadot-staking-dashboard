@@ -6,6 +6,7 @@ export interface NumberProps {
   value: string | number;
   unit: string;
   helpKey: string;
+  chelpKey: string;
   currency?: string;
 }
 
@@ -15,10 +16,12 @@ export interface PieProps {
   graph: any;
   tooltip: any;
   helpKey: string;
+  chelpKey: string;
 }
 
 export interface TextProps {
   label: string;
   value: string;
   helpKey: string;
+  chelpKey: string;
 }
