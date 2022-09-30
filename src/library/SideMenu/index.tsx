@@ -21,6 +21,7 @@ import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useHelp } from 'contexts/Help';
 import { TranslationButtons } from 'translation';
+import { useTranslation } from 'react-i18next';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
 import Heading from './Heading/Heading';
@@ -37,6 +38,7 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
+  const { t } = useTranslation('common');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -82,19 +84,19 @@ export const SideMenu = () => {
       <section>
         <Main />
         <Separator />
-        <Heading title="Support" minimised={sideMenuMinimised} />
+        <Heading title={t('library.support')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
             openHelpWith(null, {});
           }}
-          name="Help"
+          name={t('library.help')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
             size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
-        <Heading title="Network" minimised={sideMenuMinimised} />
+        <Heading title={t('library.network')} minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
           borderColor={borderColor}

@@ -187,7 +187,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           <AccountButton
             address={activeAccount}
             meta={getAccount(activeAccount)}
-            label={['danger', 'Disconnect']}
+            label={['danger', t('modals.disconnect')]}
             disconnect
           />
         ) : (

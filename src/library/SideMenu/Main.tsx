@@ -15,6 +15,7 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PageCategory, PageItem, PagesConfig } from 'types';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import { LogoWrapper } from './Wrapper';
 import { Primary } from './Primary';
 import Heading from './Heading/Heading';
@@ -34,7 +35,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { i18n } = useTranslation('common');
+  const { i18n, t } = useTranslation('common');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -62,7 +63,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: 'Active',
+            text: t('library.active'),
           };
         } else if (warning) {
           _pages[i].action = {
@@ -87,7 +88,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: 'Active',
+            text: t('library.active'),
           };
         } else if (setupPercent > 0 && !inPool) {
           _pages[i].action = {

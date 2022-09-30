@@ -7,6 +7,7 @@ import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EXTENSIONS, ExtensionConfig } from 'config/extensions';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import {
   ContentWrapper,
   PaddingWrapper,
@@ -38,10 +39,14 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
           >
             <div>
               <h3>
-                <span className="name">
-                  {accounts.length} Imported Account
-                  {accounts.length !== 1 && 's'}
-                </span>
+                {i18next.resolvedLanguage === 'en' ? (
+                  <span className="name">
+                    {accounts.length} Imported Account
+                    {accounts.length !== 1 && 's'}
+                  </span>
+                ) : (
+                  <span className="name">{accounts.length} 个导入帐户</span>
+                )}
               </h3>
             </div>
             <div className="neutral">
