@@ -21,6 +21,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { SelectableWrapper } from 'library/List';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import {
   GenerateNominationsInnerProps,
   Nominations,
@@ -35,6 +36,7 @@ export const GenerateNominationsInner = (
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
   const { batchKey } = props;
+  const { t } = useTranslation('common');
 
   const { openModalWith } = useModal();
   const { isReady, consts } = useApi();
@@ -310,7 +312,7 @@ export const GenerateNominationsInner = (
                 setFetching(true);
               }}
             >
-              Re-Generate
+              {t('library.re-generate')}
             </button>
           )}
         </SelectableWrapper>

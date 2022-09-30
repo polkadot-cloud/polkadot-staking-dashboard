@@ -7,6 +7,7 @@ import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import Wrapper from './Wrapper';
 import Identicon from '../Identicon';
 import { AccountProps } from './types';
@@ -14,6 +15,7 @@ import { AccountProps } from './types';
 export const Account = (props: AccountProps) => {
   const { mode } = useTheme();
   const { getAccount } = useConnect();
+  const { t } = useTranslation('common');
 
   // data props
   const { value, label, readOnly } = props;
@@ -73,7 +75,7 @@ export const Account = (props: AccountProps) => {
       )}
 
       {unassigned ? (
-        <span className="title unassigned">Not Staking</span>
+        <span className="title unassigned">{t('library.not_staking')}</span>
       ) : (
         <>
           {format !== 'text' && (

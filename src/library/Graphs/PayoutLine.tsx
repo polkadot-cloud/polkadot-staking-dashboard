@@ -26,6 +26,7 @@ import { useStaking } from 'contexts/Staking';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { AnySubscan } from 'types';
 import { useSubscan } from 'contexts/Subscan';
+import { useTranslation } from 'react-i18next';
 import { PayoutLineProps } from './types';
 import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
 
@@ -41,6 +42,7 @@ ChartJS.register(
 
 export const PayoutLine = (props: PayoutLineProps) => {
   const { days, average, height, background } = props;
+  const { t } = useTranslation('common');
 
   const { mode } = useTheme();
   const { network } = useApi();
@@ -148,7 +150,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
   return (
     <>
       <h5 className="secondary">
-        {average > 1 ? `${average} Day Average` : <>&nbsp;</>}
+        {average > 1 ? `${average} ${t('library.day_average')}` : <>&nbsp;</>}
       </h5>
       <div
         className="graph_line"

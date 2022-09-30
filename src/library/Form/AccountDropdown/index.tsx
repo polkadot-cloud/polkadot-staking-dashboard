@@ -10,11 +10,13 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { convertRemToPixels } from 'Utils';
 import Identicon from 'library/Identicon';
 import { useApi } from 'contexts/Api';
+import { useTranslation } from 'react-i18next';
 import { StyledDownshift, StyledDropdown, StyledController } from './Wrappers';
 import { AccountDropdownProps, InputItem } from '../types';
 
 export const AccountDropdown = (props: AccountDropdownProps) => {
   const { items, onChange, placeholder, value, current, height } = props;
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     setInputItems(items);
@@ -47,7 +49,7 @@ export const AccountDropdown = (props: AccountDropdownProps) => {
     <StyledDownshift>
       <div>
         <div className="label" {...c.getLabelProps()}>
-          Currently Selected:
+          {t('library.currently_selected')}
         </div>
         <div>
           <div className="current">
@@ -126,6 +128,7 @@ const DropdownItem = ({ c, item, index }: any) => {
     : {};
   const opacity = item.active ? 1 : 0.5;
   const cursor = item.active ? 'pointer' : 'default';
+  const { t } = useTranslation('common');
 
   return (
     <div
@@ -136,7 +139,11 @@ const DropdownItem = ({ c, item, index }: any) => {
       <div className="icon">
         <Identicon value={item.address} size={26} />
       </div>
-      {!item.active && <span>Not Enough {network.unit}</span>}
+      {!item.active && (
+        <span>
+          {t('library.not_enough')} {network.unit}
+        </span>
+      )}
       <p>{item.name}</p>
     </div>
   );

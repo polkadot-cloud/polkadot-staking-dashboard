@@ -8,11 +8,13 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { planckBnToUnit } from 'Utils';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 import { NominateStatusBarProps } from '../types';
 
 export const CreatePoolStatusBar = (props: NominateStatusBarProps) => {
   const { value } = props;
+  const { t } = useTranslation('common');
 
   const { network } = useApi();
   const { stats } = usePoolsConfig();
@@ -35,7 +37,7 @@ export const CreatePoolStatusBar = (props: NominateStatusBarProps) => {
         <section className={gtMinCreateBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp;Create Pool
+            &nbsp;{t('library.create_pool')}
           </h4>
           <div className="bar">
             <h5>{isSyncing ? '...' : `${minCreateBondBase} ${unit}`}</h5>

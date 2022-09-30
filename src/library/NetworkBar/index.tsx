@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useOutsideAlerter } from 'library/Hooks';
+import { useTranslation } from 'react-i18next';
 import { Wrapper, Summary, NetworkInfo, Separator } from './Wrappers';
 import { Status } from './Status';
 
@@ -13,6 +14,7 @@ export const NetworkBar = () => {
   const { services } = useUi();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
+  const { t } = useTranslation('common');
 
   // currently not in use
   const [open, setOpen] = useState(false);
@@ -70,7 +72,7 @@ export const NetworkBar = () => {
           {PRIVACY_URL !== undefined ? (
             <p>
               <a href={PRIVACY_URL} target="_blank" rel="noreferrer">
-                Privacy
+                {t('library.privacy')}
               </a>
             </p>
           ) : (
@@ -81,7 +83,7 @@ export const NetworkBar = () => {
               <Separator />
               <p>
                 <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
-                  Disclaimer
+                  {t('library.disclaimer')}
                 </a>
               </p>
             </>

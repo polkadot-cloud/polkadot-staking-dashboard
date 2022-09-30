@@ -134,18 +134,18 @@ export const Help = () => {
               {definition && (
                 <button type="button" onClick={() => setDefinition(null)}>
                   <FontAwesomeIcon icon={faReplyAll} />
-                  All Resources
+                  {t('library.all_resources')}
                 </button>
               )}
               <button type="button" onClick={() => closeHelp()}>
                 <FontAwesomeIcon icon={faTimes} />
-                Close
+                {t('library.close')}
               </button>
             </div>
             <h1>
               {activeDefinition
                 ? `${activeDefinition.title}`
-                : `Help Resources`}
+                : `${t('library.help_resources')}`}
             </h1>
 
             {activeDefinition !== null && (
@@ -164,7 +164,7 @@ export const Help = () => {
               <>
                 <h3>
                   {activeDefinition ? `Related ` : ''}
-                  Definitions
+                  {t('library.definitions')}
                 </h3>
                 {definitions.map((item: HelpDefinition, index: number) => {
                   item = fillDefinitionVariables(item);
@@ -183,7 +183,7 @@ export const Help = () => {
             {/* Display external */}
             {external.length > 0 && (
               <>
-                <h3>Articles</h3>
+                <h3>{t('library.articles')}</h3>
                 {external.map((item: HelpExternal, index: number) => {
                   const thisRteturn = (
                     <External

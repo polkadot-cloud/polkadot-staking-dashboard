@@ -3,6 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons';
+import i18next from 'i18next';
 import { Wrapper } from './Wrapper';
 
 export const ErrorFallbackApp = ({
@@ -14,10 +15,14 @@ export const ErrorFallbackApp = ({
     <h3>
       <FontAwesomeIcon icon={faBug} transform="grow-25" />
     </h3>
-    <h1>Opps, Something Went Wrong</h1>
+    {i18next.resolvedLanguage === 'en' ? (
+      <h1>Opps, Something Went Wrong</h1>
+    ) : (
+      <h1>抱歉，页面出现点小问题哦</h1>
+    )}
     <h2>
       <button type="button" onClick={resetErrorBoundary}>
-        Click to reload
+        {i18next.resolvedLanguage === 'en' ? 'Click to reload' : '重新下载'}
       </button>
     </h2>
   </Wrapper>
