@@ -17,6 +17,7 @@ import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, Separator, PaddingWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
@@ -29,6 +30,7 @@ export const ClaimReward = () => {
   let { unclaimedRewards } = activeBondedPool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
   const { claimType } = config;
+  const { t } = useTranslation('common');
 
   // ensure selected payout is valid
   useEffect(() => {
@@ -81,27 +83,18 @@ export const ClaimReward = () => {
           }}
         >
           {!accountHasSigner(activeAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
+            <Warning text={t('modals.w1')} />
           )}
-          {!unclaimedRewards?.gtn(0) && (
-            <Warning text="You have no rewards to claim." />
-          )}
+          {!unclaimedRewards?.gtn(0) && <Warning text={t('modals.w2')} />}
           <h2>
             {planckBnToUnit(unclaimedRewards, units)} {unit}
           </h2>
           <Separator />
           <div className="notes">
             {claimType === 'bond' ? (
-              <p>
-                Once submitted, your rewards will be bonded back into the pool.
-                You own these additional bonded funds and will be able to
-                withdraw them at any time.
-              </p>
+              <p>{t('modals.claim_reward1')}</p>
             ) : (
-              <p>
-                Withdrawing rewards will immediately transfer them to your
-                account as free balance.
-              </p>
+              <p>{t('modals.claim_reward2')}</p>
             )}
             <EstimatedTxFee />
           </div>
@@ -122,7 +115,7 @@ export const ClaimReward = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

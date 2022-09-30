@@ -6,6 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EXTENSIONS, ExtensionConfig } from 'config/extensions';
+import { useTranslation } from 'react-i18next';
 import {
   ContentWrapper,
   PaddingWrapper,
@@ -18,6 +19,7 @@ import { forwardRefProps } from './types';
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
   const { setSection } = props;
+  const { t } = useTranslation('common');
 
   const { accounts } = useConnect();
 
@@ -25,7 +27,7 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
         <div className="head">
-          <h1>Extensions</h1>
+          <h1>{t('modals.extensions')}</h1>
         </div>
         <ExtensionWrapper>
           <button

@@ -6,10 +6,12 @@ import Button from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { isValidAddress } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 
 export const ReadOnlyInput = () => {
   const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
+  const { t } = useTranslation('common');
 
   // store current input value
   const [value, setValue] = useState('');
@@ -68,24 +70,24 @@ export const ReadOnlyInput = () => {
   let labelClass;
   switch (valid) {
     case 'confirm_reformat':
-      label = 'Address was reformatted. Please confirm.';
+      label = t('modals.confirm_reformat');
       labelClass = 'neutral';
 
       break;
     case 'already_imported':
-      label = 'Address Already Imported';
+      label = t('modals.already_imported');
       labelClass = 'danger';
       break;
     case 'not_valid':
-      label = 'Address Invalid';
+      label = t('modals.not_valid');
       labelClass = 'danger';
       break;
     case 'valid':
-      label = 'Valid Address';
+      label = t('modals.valid');
       labelClass = 'success';
       break;
     default:
-      label = 'Input Address';
+      label = t('modals.input_address');
       labelClass = 'neutral';
   }
 
@@ -101,7 +103,7 @@ export const ReadOnlyInput = () => {
       <div className="input">
         <section>
           <input
-            placeholder="Address"
+            placeholder={t('modals.address')}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={value}
@@ -112,11 +114,15 @@ export const ReadOnlyInput = () => {
             <Button
               inline
               onClick={() => handleImport()}
-              title="Import"
+              title={t('modals.import')}
               disabled={valid !== 'valid'}
             />
           ) : (
-            <Button inline onClick={() => handleConfirm()} title="Confirm" />
+            <Button
+              inline
+              onClick={() => handleConfirm()}
+              title={t('modals.confirm')}
+            />
           )}
         </section>
       </div>

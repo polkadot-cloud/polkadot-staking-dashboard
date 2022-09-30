@@ -13,12 +13,14 @@ import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
 export const UnbondAll = (props: FormsProps) => {
   const { setSection } = props;
+  const { t } = useTranslation('common');
 
   const { api, network, consts } = useApi();
   const { units } = network;
@@ -118,28 +120,25 @@ export const UnbondAll = (props: FormsProps) => {
       <div className="items">
         <>
           {!accountHasSigner(signingAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
+            <Warning text={t('modals.w1')} />
           )}
           {isStaking && controllerNotImported ? (
-            <Warning text="You must have your controller account imported to unbond." />
+            <Warning text={t('modals.w9')} />
           ) : (
             <></>
           )}
           {isStaking && nominations.length ? (
-            <Warning text="Stop nominating before unbonding all funds." />
+            <Warning text={t('modals.w10')} />
           ) : (
             <></>
           )}
-          <h4>Amount to unbond:</h4>
+          <h4>{t('modals.amount_to_unbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once unbonding, you must wait {bondDuration} eras for your funds
-              to become available.
-            </p>
+            <p>{t('modals.update_bond4', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>

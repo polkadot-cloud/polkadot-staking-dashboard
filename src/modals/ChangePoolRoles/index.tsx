@@ -12,6 +12,7 @@ import { useApi } from 'contexts/Api';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
@@ -23,6 +24,7 @@ export const ChangePoolRoles = () => {
   const { config } = useModal();
   const { txFeesValid } = useTxFees();
   const { poolId, roleEdits } = config;
+  const { t } = useTranslation('common');
 
   // tx to submit
   const tx = () => {
@@ -56,7 +58,7 @@ export const ChangePoolRoles = () => {
 
   return (
     <>
-      <Title title="Change Pool Roles" icon={faExchangeAlt} />
+      <Title title={t('modals.change_pool_roles')} icon={faExchangeAlt} />
       <Wrapper>
         <div
           style={{
@@ -66,12 +68,12 @@ export const ChangePoolRoles = () => {
           }}
         >
           <RoleChange
-            roleName="Nominator"
+            roleName={t('modals.nominator')}
             oldAddress={roleEdits?.nominator?.oldAddress}
             newAddress={roleEdits?.nominator?.newAddress}
           />
           <RoleChange
-            roleName="State Toggler"
+            roleName={t('modals.state_toggler')}
             oldAddress={roleEdits?.stateToggler?.oldAddress}
             newAddress={roleEdits?.stateToggler?.newAddress}
           />
@@ -92,7 +94,7 @@ export const ChangePoolRoles = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

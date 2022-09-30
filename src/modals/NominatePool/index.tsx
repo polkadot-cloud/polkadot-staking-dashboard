@@ -16,6 +16,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import {
   FooterWrapper,
   Separator,
@@ -32,6 +33,7 @@ export const NominatePool = () => {
   const { txFeesValid } = useTxFees();
   const { nominations } = targets;
   const poolId = membership?.poolId;
+  const { t } = useTranslation('common');
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -67,13 +69,13 @@ export const NominatePool = () => {
   // warnings
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('modals.w1'));
   }
   if (!nominations.length) {
-    warnings.push('You have no nominations set.');
+    warnings.push(t('modals.w6'));
   }
   if (!membership || !isNominator()) {
-    warnings.push(`You do not have a nominator role in any pools.`);
+    warnings.push(t('modals.w8'));
   }
 
   return (
@@ -92,9 +94,7 @@ export const NominatePool = () => {
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once submitted, you will start nominating your chosen validators.
-            </p>
+            <p>{t('modals.nominate')} </p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>
@@ -115,7 +115,7 @@ export const NominatePool = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

@@ -15,12 +15,14 @@ import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { BN_ZERO } from '@polkadot/util';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
 export const BondAll = (props: FormsProps) => {
   const { setSection, setLocalResize } = props;
+  const { t } = useTranslation('common');
 
   const { mode } = useTheme();
   const { api, network } = useApi();
@@ -108,12 +110,12 @@ export const BondAll = (props: FormsProps) => {
       <div className="items">
         <>
           {!accountHasSigner(activeAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
+            <Warning text={t('modals.w1')} />
           )}
           {freeBalance === 0 && (
             <Warning text={`You have no free ${network.unit} to bond.`} />
           )}
-          <h4>Amount to bond:</h4>
+          <h4>{t('modals.amount_to_bond')}</h4>
           <h2>
             {planckBnToUnit(bondAfterTxFees, units)} {network.unit}
           </h2>
@@ -122,14 +124,14 @@ export const BondAll = (props: FormsProps) => {
             funds.
           </p>
           <Separator />
-          <h4>New total bond:</h4>
+          <h4>{t('modals.new_total_bond')}</h4>
           <h2>
             {totalPossibleBond} {network.unit}
           </h2>
           <NotesWrapper>
             {txFees.gt(BN_ZERO) && (
               <p style={{ color: defaultThemes.text.success[mode] }}>
-                Transaction fees have been deducted from your total bond amount.
+                {t('modals.update_bond2')}
               </p>
             )}
             <EstimatedTxFee />

@@ -5,6 +5,7 @@ import { useConnect } from 'contexts/Connect';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { faGlasses, faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { ExtensionWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
 import { ReadOnlyInput } from '../ReadOnlyInput';
@@ -12,6 +13,7 @@ import { ReadOnlyProps } from '../types';
 
 export const ReadOnly = (props: ReadOnlyProps) => {
   const { setReadOnlyOpen, readOnlyOpen } = props;
+  const { t } = useTranslation('common');
 
   const { accounts, forgetAccounts } = useConnect();
 
@@ -44,7 +46,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
             style={{ margin: '0 0.75rem 0 1.25rem' }}
           />
           <h3>
-            <span className="name">Read Only Accounts</span>
+            <span className="name">{t('modals.read_only_accounts')}</span>
           </h3>
 
           <div>
@@ -68,7 +70,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
           <ReadOnlyInput />
           {externalAccountsByUser.length > 0 && (
             <h5>
-              {externalAccountsByUser.length} Read Only Account
+              {externalAccountsByUser.length} {t('modals.read_only_accounts')}
               {externalAccountsByUser.length === 1 ? '' : 's'}
             </h5>
           )}
@@ -82,7 +84,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
                     forgetAccount(a);
                   }}
                 >
-                  Forget
+                  {t('modals.forget')}
                 </button>
               </div>
             ))}

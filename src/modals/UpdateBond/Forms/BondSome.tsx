@@ -14,12 +14,14 @@ import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { BN_ZERO } from '@polkadot/util';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
 export const BondSome = (props: FormsProps) => {
   const { section, setSection, setLocalResize } = props;
+  const { t } = useTranslation('common');
 
   const { api, network } = useApi();
   const { mode } = useTheme();
@@ -92,7 +94,7 @@ export const BondSome = (props: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('modals.w1'));
   }
 
   return (
@@ -114,7 +116,7 @@ export const BondSome = (props: FormsProps) => {
         <NotesWrapper>
           {txFees.gt(BN_ZERO) && (
             <p style={{ color: defaultThemes.text.success[mode] }}>
-              Transaction fees have been deducted from maximum bond.
+              {t('modals.update_bond3')}
             </p>
           )}
         </NotesWrapper>

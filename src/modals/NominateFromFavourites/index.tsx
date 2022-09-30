@@ -19,6 +19,7 @@ import { Validator } from 'contexts/Validators/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -32,6 +33,7 @@ export const NominateFromFavourites = () => {
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('common');
 
   const { maxNominations } = consts;
   const { bondType, nominations } = config;
@@ -129,7 +131,7 @@ export const NominateFromFavourites = () => {
 
   return (
     <>
-      <Title title="Nominate Favourites" />
+      <Title title={t('modals.nominate_favourites')} />
       <PaddingWrapper>
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
@@ -146,7 +148,7 @@ export const NominateFromFavourites = () => {
               bondType="stake"
               validators={availableFavourites}
               batchKey={batchKey}
-              title="Favourite Validators / Not Nominated"
+              title={t('modals.f_not_nominated')}
               selectable
               selectActive
               selectToggleable={false}
@@ -157,7 +159,7 @@ export const NominateFromFavourites = () => {
               allowMoreCols
             />
           ) : (
-            <h3>No Favourites Available.</h3>
+            <h3>{t('modals.no_favourites_available')}</h3>
           )}
         </ListWrapper>
         <NotesWrapper style={{ paddingBottom: 0 }}>
@@ -197,7 +199,7 @@ export const NominateFromFavourites = () => {
                 transform="grow-2"
                 icon={faArrowAltCircleUp as IconProp}
               />
-              Submit
+              {t('modals.submit')}
             </button>
           </div>
         </FooterWrapper>

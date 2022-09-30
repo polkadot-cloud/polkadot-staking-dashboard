@@ -17,6 +17,7 @@ import { planckBnToUnit } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import {
   FooterWrapper,
   Separator,
@@ -37,6 +38,7 @@ export const Nominate = () => {
   const { nominations } = targets;
   const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
+  const { t } = useTranslation('common');
 
   const activeBase = planckBnToUnit(active, units);
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
@@ -77,12 +79,10 @@ export const Nominate = () => {
   // warnings
   const warnings = [];
   if (getControllerNotImported(controller)) {
-    warnings.push(
-      'You must have your controller account imported to start nominating'
-    );
+    warnings.push(t('modals.w5'));
   }
   if (!nominations.length) {
-    warnings.push('You have no nominations set.');
+    warnings.push(t('modals.w6'));
   }
   if (activeBase < minNominatorBondBase) {
     warnings.push(
@@ -92,7 +92,7 @@ export const Nominate = () => {
 
   return (
     <>
-      <Title title="Nominate" icon={faPlayCircle} />
+      <Title title={t('modals.nominate1')} icon={faPlayCircle} />
       <PaddingWrapper verticalOnly>
         <div
           style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
@@ -106,9 +106,7 @@ export const Nominate = () => {
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once submitted, you will start nominating your chosen validators.
-            </p>
+            <p>{t('modals.nominate')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>
@@ -125,7 +123,7 @@ export const Nominate = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

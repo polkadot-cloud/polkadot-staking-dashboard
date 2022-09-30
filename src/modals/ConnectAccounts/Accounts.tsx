@@ -16,6 +16,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { PoolMembership } from 'contexts/Pools/types';
 import { ImportedAccount } from 'contexts/Connect/types';
+import { useTranslation } from 'react-i18next';
 import {
   AccountWrapper,
   AccountGroupWrapper,
@@ -26,6 +27,7 @@ import { AccountElement, AccountButton } from './Account';
 
 export const Accounts = forwardRef((props: any, ref: any) => {
   const { setSection } = props;
+  const { t } = useTranslation('common');
 
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
@@ -169,11 +171,11 @@ export const Accounts = forwardRef((props: any, ref: any) => {
       <PaddingWrapper ref={ref}>
         <div className="head">
           <div>
-            <h1>Accounts</h1>
+            <h1>{t('modals.accounts')}</h1>
           </div>
           <div>
             <Button
-              title="Extensions"
+              title={t('modals.extensions')}
               inline
               icon={faCog}
               transform="shrink-2"
@@ -192,7 +194,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           <AccountWrapper>
             <div>
               <div>
-                <h3>No Account Connected</h3>
+                <h3>{t('modals.no_account_connected')}</h3>
               </div>
               <div />
             </div>
@@ -202,7 +204,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
           <>
             <h3 className="heading">
               <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
-              Nominating
+              {t('modals.nominating')}
             </h3>
             {activeStaking.map((item: any, i: number) => {
               const { stash, controller } = item;
@@ -244,7 +246,8 @@ export const Accounts = forwardRef((props: any, ref: any) => {
         {activePooling.length > 0 && (
           <>
             <h3 className="heading">
-              <FontAwesomeIcon icon={faUsers} transform="shrink-4" /> In Pool
+              <FontAwesomeIcon icon={faUsers} transform="shrink-4" />{' '}
+              {t('modals.in_pool')}
             </h3>
             {activePooling.map((item: PoolMembership, i: number) => {
               const { address } = item;
@@ -263,7 +266,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
         {inactive.length > 0 && (
           <>
-            <h3 className="heading">Not Staking</h3>
+            <h3 className="heading">{t('modals.not_staking')}</h3>
             {inactive.map((item: string, i: number) => {
               const account = getAccount(item);
               const address = account?.address ?? '';

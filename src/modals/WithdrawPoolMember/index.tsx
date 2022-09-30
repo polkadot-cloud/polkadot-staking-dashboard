@@ -25,6 +25,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 
 export const WithdrawPoolMember = () => {
   const { api, network } = useApi();
@@ -34,6 +35,7 @@ export const WithdrawPoolMember = () => {
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('common');
 
   const { activeEra } = metrics;
   const { member, who } = config;
@@ -86,16 +88,16 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <Title title="Withdraw Member Funds" icon={faMinus} />
+      <Title title={t('modals.withdraw_member_funds')} icon={faMinus} />
       <PaddingWrapper verticalOnly />
       <ContentWrapper>
         <div>
           <div>
             {!accountHasSigner(activeAccount) && (
-              <Warning text="Your account is read only, and cannot sign transactions." />
+              <Warning text={t('modals.w1')} />
             )}
             <h2>
-              Withdraw {totalWithdraw} {network.unit}
+              {t('modals.withdraw')} {totalWithdraw} {network.unit}
             </h2>
 
             <Separator />
@@ -120,7 +122,7 @@ export const WithdrawPoolMember = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

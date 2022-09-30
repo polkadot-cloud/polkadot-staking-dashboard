@@ -22,6 +22,7 @@ import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 
 export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
@@ -33,6 +34,7 @@ export const UnbondPoolMember = () => {
   const { member, who } = config;
   const { points } = member;
   const freeToUnbond = planckBnToUnit(new BN(rmCommas(points)), units);
+  const { t } = useTranslation('common');
 
   // local bond value
   const [bond, setBond] = useState({
@@ -85,23 +87,18 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <Title title="Unbond Member Funds" icon={faMinus} />
+      <Title title={t('modals.unbond_member_funds')} icon={faMinus} />
       <PaddingWrapper verticalOnly />
       <ContentWrapper>
-        {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
-        )}
+        {!accountHasSigner(activeAccount) && <Warning text={t('modals.w1')} />}
         <div className="items">
-          <h4>Amount to unbond:</h4>
+          <h4>{t('modals.amount_to_unbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once unbonding, your funds to become available after{' '}
-              {bondDuration} eras.
-            </p>
+            <p>{t('modals.unbound_pool_member', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </div>

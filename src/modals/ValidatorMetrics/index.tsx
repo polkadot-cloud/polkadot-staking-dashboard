@@ -19,6 +19,7 @@ import { PaddingWrapper } from 'modals/Wrappers';
 import { useApi } from 'contexts/Api';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 
 export const ValidatorMetrics = () => {
   const {
@@ -30,6 +31,7 @@ export const ValidatorMetrics = () => {
   const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
   const { stakers } = eraStakers;
+  const { t } = useTranslation('common');
 
   // is the validator in the active era
   const validatorInEra =
@@ -76,7 +78,7 @@ export const ValidatorMetrics = () => {
   ];
   return (
     <>
-      <Title title="Validator Metrics" />
+      <Title title={t('modals.validator_metrics')} />
       <div className="header">
         <Identicon value={address} size={33} />
         <h2>
@@ -116,13 +118,14 @@ export const ValidatorMetrics = () => {
           flex
         >
           <h4>
-            Recent Era Points <OpenHelpIcon helpKey="Era Points" />
+            {t('modals.recent_era_points')}{' '}
+            <OpenHelpIcon helpKey="Era Points" />
           </h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"
               statusFor="subscan"
-              title="Subscan Disabled"
+              title={t('modals.subscan_disabled')}
             />
             <div
               className="graph"
