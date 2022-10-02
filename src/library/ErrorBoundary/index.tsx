@@ -37,10 +37,14 @@ export const ErrorFallbackRoutes = ({
     <h3 className="with-margin">
       <FontAwesomeIcon icon={faBug} transform="grow-25" />
     </h3>
-    <h1>Opps, Something Went Wrong</h1>
+    {i18next.resolvedLanguage === 'en' ? (
+      <h1>Opps, Something Went Wrong</h1>
+    ) : (
+      <h1>抱歉，页面出现点小问题哦</h1>
+    )}
     <h2>
       <button type="button" onClick={resetErrorBoundary}>
-        Click to reload
+        {i18next.resolvedLanguage === 'en' ? 'Click to reload' : '重新下载'}
       </button>
     </h2>
   </Wrapper>
@@ -52,10 +56,14 @@ export const ErrorFallbackModal = ({
   resetErrorBoundary: () => void;
 }) => (
   <Wrapper className="modal">
-    <h2>Opps, Something Went Wrong</h2>
+    {i18next.resolvedLanguage === 'en' ? (
+      <h2>Opps, Something Went Wrong</h2>
+    ) : (
+      <h2>抱歉，页面出现点小问题哦</h2>
+    )}
     <h4>
       <button type="button" onClick={resetErrorBoundary}>
-        Click to reload modal
+        {i18next.resolvedLanguage === 'en' ? 'Click to reload' : '重新下载'}
       </button>
     </h4>
   </Wrapper>

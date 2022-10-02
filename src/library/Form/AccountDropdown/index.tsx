@@ -85,7 +85,7 @@ export const AccountDropdown = (props: AccountDropdownProps) => {
               {c.selectedItem && (
                 <StyledController
                   onClick={() => c.reset()}
-                  aria-label="clear selection"
+                  aria-label={t('library.clear_selection')}
                 >
                   <FontAwesomeIcon transform="grow-2" icon={faTimes} />
                 </StyledController>
