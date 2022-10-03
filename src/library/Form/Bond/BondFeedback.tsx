@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BN, { max } from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
@@ -34,7 +34,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const { isDepositor } = useActivePool();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units } = network;
+  const { units, unit } = network;
   const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
 
@@ -61,6 +61,14 @@ export const BondFeedback = (props: BondFeedbackProps) => {
 
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState(false);
+
+  // bond minus tx fees if too much
+  const enoughToCoverTxFees: boolean =
+    freeBalance - Number(bond.bond) > planckBnToUnit(txFees, units);
+
+  const bondAfterTxFees = enoughToCoverTxFees
+    ? unitToPlanckBn(Number(bond.bond), units)
+    : max(unitToPlanckBn(Number(bond.bond), units).sub(txFees), new BN(0));
 
   // update bond on account change
   useEffect(() => {
@@ -120,7 +128,11 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     }
 
     if (bond.bond !== '' && Number(bond.bond) < _planck) {
-      _errors.push('Value is too small');
+      _errors.push('Bond amount is too small.');
+    }
+
+    if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
+      _errors.push(`Not enough ${unit} to bond after transaction fees.`);
     }
 
     if (inSetup) {
