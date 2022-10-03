@@ -125,29 +125,10 @@ export const Main = () => {
       >
         {sideMenuMinimised ? (
           <>
-            <div
-              className="beta-min"
-              style={{ top: network.name === 'Westend' ? '-5px' : '-10px' }}
-            >
-              BETA
-            </div>
             <network.brand.icon style={{ maxHeight: '100%', width: '2rem' }} />
           </>
         ) : (
           <>
-            <div
-              className="beta"
-              style={{
-                right:
-                  network.name === 'Kusama'
-                    ? '1.6rem'
-                    : network.name === 'Westend'
-                    ? '1.25rem'
-                    : '0.25rem',
-              }}
-            >
-              Staking | BETA
-            </div>
             <network.brand.logo.svg
               style={{
                 maxHeight: '100%',
