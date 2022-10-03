@@ -25,8 +25,7 @@ export const GoToFeedback = () => {
               <a href="https://canny.io/" target="_blank" rel="noreferrer">
                 Canny.io
               </a>{' '}
-              so anyone can leave feedback. Bug reports, feature requests and
-              improvements are all welcome.
+              Bug reports, feature requests and improvements are all welcome.
             </p>
           </NotesWrapper>
           <h2 style={{ marginTop: 0 }}>
