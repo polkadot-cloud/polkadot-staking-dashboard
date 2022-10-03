@@ -7,11 +7,11 @@ import {
   textSecondary,
   modalOverlayBackground,
   modalBackground,
-  networkColor,
   cardShadow,
   shadowColor,
   cardBorder,
   borderPrimary,
+  networkColor,
 } from 'theme';
 
 // Blurred background modal wrapper
@@ -70,6 +70,10 @@ export const ContentWrapper = styled.div`
   height: auto;
   overflow: hidden;
   position: relative;
+
+  a {
+    color: ${networkColor};
+  }
   .header {
     width: 100%;
     display: flex;
