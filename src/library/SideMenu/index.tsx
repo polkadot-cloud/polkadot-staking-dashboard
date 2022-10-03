@@ -81,16 +81,6 @@ export const SideMenu = () => {
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
         <Main />
-        <Heading title="Feedback" minimised={sideMenuMinimised} />
-        <Secondary
-          onClick={() => openModalWith('GoToFeedback')}
-          name="Feedback"
-          minimised={sideMenuMinimised}
-          icon={{
-            Svg: ForumSVG,
-            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
-          }}
-        />
         <Heading title="Support" minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
@@ -100,6 +90,16 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
+            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
+          }}
+        />
+        <Heading title="Feedback" minimised={sideMenuMinimised} />
+        <Secondary
+          onClick={() => openModalWith('GoToFeedback')}
+          name="Feedback"
+          minimised={sideMenuMinimised}
+          icon={{
+            Svg: ForumSVG,
             size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
