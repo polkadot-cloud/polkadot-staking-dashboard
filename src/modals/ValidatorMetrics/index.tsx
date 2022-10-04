@@ -41,7 +41,7 @@ export const ValidatorMetrics = () => {
     const { others, own } = validatorInEra;
 
     others.forEach((o: any) => {
-      otherStake = new BN(rmCommas(o.value));
+      otherStake = otherStake.add(new BN(rmCommas(o.value)));
     });
     if (own) {
       ownStake = new BN(rmCommas(own));
