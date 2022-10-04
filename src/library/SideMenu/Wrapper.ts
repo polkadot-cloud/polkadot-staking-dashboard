@@ -10,9 +10,9 @@ import {
 import {
   textSecondary,
   backgroundOverlay,
+  borderPrimary,
   networkColor,
   modalBackground,
-  borderPrimary,
 } from 'theme';
 import { MinimisedProps } from './types';
 
@@ -76,6 +76,26 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   padding: ${(props) => (props.minimised ? '0' : '0.4rem 0.5rem')};
   margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
   position: relative;
+
+  > .beta {
+    color: ${networkColor};
+    position: absolute;
+    top: -7px;
+    font-size: 0.7rem;
+  }
+  > .beta-min {
+    color: ${networkColor};
+    background: ${modalBackground};
+    position: absolute;
+    right: 0px;
+    z-index: 2;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 0.5rem;
+  }
+  ellipse {
+    fill: ${networkColor};
+  }
 `;
 
 export const Separator = styled.div`
