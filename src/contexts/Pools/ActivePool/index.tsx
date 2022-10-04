@@ -101,7 +101,7 @@ export const ActivePoolProvider = ({
     return () => {
       unsubscribePoolNominations();
     };
-  }, [network, isReady, activeBondedPool]);
+  }, [network, isReady, activeBondedPool?.addresses?.stash]);
 
   // re-calculate unclaimed payout when membership changes
   useEffect(() => {
