@@ -7,8 +7,6 @@ import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { useActivePool } from 'contexts/Pools/ActivePool';
-import { clipAddress, determinePoolDisplay } from 'Utils';
-import Identicon from 'library/Identicon';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useConnect } from 'contexts/Connect';
@@ -17,7 +15,6 @@ import {
   Labels,
   Separator,
   MenuPosition,
-  IdentityWrapper,
 } from 'library/ListItem/Wrappers';
 import { useMenu } from 'contexts/Menu';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -29,6 +26,7 @@ import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
 import { useUi } from 'contexts/UI';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 import { PoolState } from 'contexts/Pools/types';
+import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { PoolProps } from './types';
 import { Members } from '../ListItem/Labels/Members';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
@@ -52,7 +50,6 @@ export const Pool = (props: PoolProps) => {
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
 
   // get metadata from pools metabatch
-  const metadata = meta[batchKey]?.metadata ?? [];
   const nominations = meta[batchKey]?.nominations ?? [];
 
   // get pool targets from nominations metadata
@@ -62,12 +59,6 @@ export const Pool = (props: PoolProps) => {
   const targetValidators = validators.filter((v: any) =>
     targets.includes(v.address)
   );
-
-  // aggregate synced status
-  const metadataSynced = metadata.length > 0 ?? false;
-
-  // pool display name
-  const display = determinePoolDisplay(addresses.stash, metadata[batchIndex]);
 
   const [nominationsStatus, setNominationsStatus] = useState<{
     [key: string]: string;
@@ -159,16 +150,11 @@ export const Pool = (props: PoolProps) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
-          <IdentityWrapper className="identity">
-            <Identicon value={addresses.stash} size={26} />
-            <div className="inner">
-              {!metadataSynced ? (
-                <h4>{clipAddress(addresses.stash)}</h4>
-              ) : (
-                <h4>{display}</h4>
-              )}
-            </div>
-          </IdentityWrapper>
+          <PoolIdentity
+            batchKey={batchKey}
+            batchIndex={batchIndex}
+            pool={pool}
+          />
           <div>
             <Labels>
               <FavouritePool address={addresses.stash} />
