@@ -135,7 +135,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
             const labelClass =
               event_id === 'PaidOut'
                 ? 'claim'
-                : event_id === 'Reward'
+                : event_id === 'Rewarded'
                 ? 'reward'
                 : undefined;
 
@@ -161,7 +161,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                         <h4>{label}</h4>
                       </span>
                       <h4 className={labelClass}>
-                        {event_id === 'Slash' ? '-' : '+'}
+                        {event_id === 'Slashed' ? '-' : '+'}
                         {planckToUnit(amount, units)} {network.unit}
                       </h4>
                     </div>
