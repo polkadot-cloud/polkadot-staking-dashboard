@@ -51,7 +51,6 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
   const filled = props.filled ?? false;
   const fontSize = props.fontSize ?? '1.05rem';
-  const wallet = props.wallet ?? false;
   const { canClick }: { canClick: boolean } = props;
 
   const metaBatch = meta[batchKey];
@@ -91,12 +90,6 @@ export const PoolAccount = (props: PoolAccountProps) => {
       <span className={`title${syncing === true ? ` syncing` : ``}`}>
         {display}
       </span>
-
-      {wallet && (
-        <div className="wallet">
-          <WalletSVG />
-        </div>
-      )}
     </Wrapper>
   );
 };

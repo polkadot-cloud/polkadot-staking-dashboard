@@ -11,12 +11,19 @@ import { useApi } from 'contexts/Api';
 import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
 import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { planckToUnit } from 'Utils';
+import { clipAddress, planckToUnit } from 'Utils';
 import { networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { AnySubscan } from 'types';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
+import { Identity } from 'library/ListItem/Labels/Identity';
+import { useValidators } from 'contexts/Validators';
+import { Validator } from 'contexts/Validators/types';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
+import { BondedPool } from 'contexts/Pools/types';
+import { Pool } from 'library/Pool/types';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';
@@ -29,6 +36,8 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { units } = network;
   const { metrics } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
+  const { validators, meta } = useValidators();
+  const { bondedPools } = useBondedPools();
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -95,6 +104,9 @@ export const PayoutListInner = (props: PayoutListProps) => {
     return <></>;
   }
 
+  // get validator metadata
+  const batchKey = 'validators_browse';
+
   return (
     <ListWrapper>
       <Header>
@@ -130,14 +142,42 @@ export const PayoutListInner = (props: PayoutListProps) => {
         )}
         <MotionContainer>
           {listPayouts.map((payout: AnySubscan, index: number) => {
-            const { amount, block_timestamp, event_id } = payout;
-            const label = event_id === 'PaidOut' ? 'Pool Claim' : event_id;
+            const {
+              amount,
+              block_timestamp,
+              event_id,
+              validator_stash,
+              pool_id,
+            } = payout;
+            const label =
+              event_id === 'PaidOut'
+                ? 'Pool Claim'
+                : event_id === 'Rewarded'
+                ? 'Payout'
+                : event_id;
+
             const labelClass =
               event_id === 'PaidOut'
                 ? 'claim'
-                : event_id === 'Reward'
+                : event_id === 'Rewarded'
                 ? 'reward'
                 : undefined;
+
+            // get validator if it exists
+            const validator = validators.find(
+              (v: Validator) => v.address === validator_stash
+            );
+
+            // get pool if it exists
+            const pool = bondedPools.find(
+              (p: BondedPool) => String(p.id) === String(pool_id)
+            );
+
+            const batchIndex = validator
+              ? validators.indexOf(validator)
+              : pool
+              ? bondedPools.indexOf(pool)
+              : 0;
 
             return (
               <motion.div
@@ -155,18 +195,56 @@ export const PayoutListInner = (props: PayoutListProps) => {
                 }}
               >
                 <ItemWrapper>
-                  <div>
-                    <div>
-                      <span className={labelClass}>
-                        <h4>{label}</h4>
-                      </span>
-                      <h4 className={labelClass}>
-                        {event_id === 'Slash' ? '-' : '+'}
-                        {planckToUnit(amount, units)} {network.unit}
-                      </h4>
+                  <div className="inner">
+                    <div className="row">
+                      <div>
+                        <div>
+                          <h4 className={`${labelClass}`}>
+                            {event_id === 'Slashed' ? '-' : '+'}
+                            {planckToUnit(amount, units)} {network.unit}
+                          </h4>
+                        </div>
+                        <div>
+                          <h5 className={`${labelClass}`}>{label}</h5>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h4>{moment.unix(block_timestamp).fromNow()}</h4>
+                    <div className="row">
+                      <div>
+                        <div>
+                          {label === 'Payout' && (
+                            <>
+                              {batchIndex > 0 ? (
+                                <Identity
+                                  meta={meta}
+                                  address={validator_stash}
+                                  batchIndex={batchIndex}
+                                  batchKey={batchKey}
+                                />
+                              ) : (
+                                <div>{clipAddress(validator_stash)}</div>
+                              )}
+                            </>
+                          )}
+                          {label === 'Pool Claim' && (
+                            <>
+                              {pool ? (
+                                <PoolIdentity
+                                  batchKey={batchKey}
+                                  batchIndex={batchIndex}
+                                  pool={pool}
+                                />
+                              ) : (
+                                <h4>From Pool {pool_id}</h4>
+                              )}
+                            </>
+                          )}
+                          {label === 'Slashed' && <h4>Deducted from bond</h4>}
+                        </div>
+                        <div>
+                          <h5>{moment.unix(block_timestamp).fromNow()}</h5>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </ItemWrapper>
