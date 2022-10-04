@@ -17,6 +17,10 @@ import { useTheme } from 'contexts/Themes';
 import { AnySubscan } from 'types';
 import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
+import { Identity } from 'library/ListItem/Labels/Identity';
+import { useValidators } from 'contexts/Validators';
+import { Validator } from 'contexts/Validators/types';
+import { Separator } from 'library/ListItem/Wrappers';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';
@@ -29,6 +33,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { units } = network;
   const { metrics } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
+  const { validators, meta } = useValidators();
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -95,6 +100,9 @@ export const PayoutListInner = (props: PayoutListProps) => {
     return <></>;
   }
 
+  // get validator metadata
+  const batchKey = 'validators_browse';
+
   return (
     <ListWrapper>
       <Header>
@@ -130,14 +138,27 @@ export const PayoutListInner = (props: PayoutListProps) => {
         )}
         <MotionContainer>
           {listPayouts.map((payout: AnySubscan, index: number) => {
-            const { amount, block_timestamp, event_id } = payout;
-            const label = event_id === 'PaidOut' ? 'Pool Claim' : event_id;
+            const { amount, block_timestamp, event_id, validator_stash } =
+              payout;
+            const label =
+              event_id === 'PaidOut'
+                ? 'Pool Claim'
+                : event_id === 'Rewarded'
+                ? 'Payout'
+                : event_id;
+
             const labelClass =
               event_id === 'PaidOut'
                 ? 'claim'
                 : event_id === 'Rewarded'
                 ? 'reward'
                 : undefined;
+
+            const validator = validators.find(
+              (v: Validator) => v.address === validator_stash
+            );
+
+            const batchIndex = validator ? validators.indexOf(validator) : 0;
 
             return (
               <motion.div
@@ -155,18 +176,38 @@ export const PayoutListInner = (props: PayoutListProps) => {
                 }}
               >
                 <ItemWrapper>
-                  <div>
-                    <div>
-                      <span className={labelClass}>
-                        <h4>{label}</h4>
-                      </span>
-                      <h4 className={labelClass}>
-                        {event_id === 'Slashed' ? '-' : '+'}
-                        {planckToUnit(amount, units)} {network.unit}
-                      </h4>
+                  <div className="inner">
+                    <div className="row">
+                      <div>
+                        <div>
+                          <h4 className={`${labelClass}`}>
+                            {event_id === 'Slashed' ? '-' : '+'}
+                            {planckToUnit(amount, units)} {network.unit}
+                          </h4>
+                        </div>
+                        <div>
+                          <h5 className={`${labelClass}`}>{label}</h5>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h4>{moment.unix(block_timestamp).fromNow()}</h4>
+                    <div className="row">
+                      <div>
+                        <div>
+                          {batchIndex > 0 ? (
+                            <Identity
+                              meta={meta}
+                              address={validator_stash}
+                              batchIndex={batchIndex}
+                              batchKey={batchKey}
+                            />
+                          ) : (
+                            <div>&nbsp;</div>
+                          )}
+                        </div>
+                        <div>
+                          <h5>{moment.unix(block_timestamp).fromNow()}</h5>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </ItemWrapper>

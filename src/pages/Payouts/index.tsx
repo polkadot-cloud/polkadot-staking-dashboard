@@ -121,6 +121,7 @@ export const Payouts = (props: PageProps) => {
               title="Recent Payouts"
               payouts={payoutsList}
               pagination
+              allowMoreCols
             />
           </CardWrapper>
         </PageRowWrapper>
