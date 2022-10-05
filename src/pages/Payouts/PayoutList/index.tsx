@@ -23,7 +23,6 @@ import { Validator } from 'contexts/Validators/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { BondedPool } from 'contexts/Pools/types';
-import { Pool } from 'library/Pool/types';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';
