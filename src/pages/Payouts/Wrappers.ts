@@ -59,6 +59,7 @@ export const ItemWrapper = styled(motion.div)`
         h4 {
           margin: 0;
           color: ${textSecondary};
+          font-variation-settings: 'wght' 575;
           &.claim {
             color: ${networkColorSecondary};
           }
