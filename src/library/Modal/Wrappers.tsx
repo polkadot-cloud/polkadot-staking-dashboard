@@ -24,6 +24,10 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
       padding: 0;
     }
 
+    path {
+      fill: ${textPrimary};
+    }
+
     &:first-child {
       flex-grow: 1;
 
