@@ -10,9 +10,9 @@ import {
 import {
   textSecondary,
   backgroundOverlay,
+  borderPrimary,
   networkColor,
   modalBackground,
-  borderPrimary,
 } from 'theme';
 import { MinimisedProps } from './types';
 
@@ -83,7 +83,6 @@ export const LogoWrapper = styled.button<MinimisedProps>`
     top: -7px;
     font-size: 0.7rem;
   }
-
   > .beta-min {
     color: ${networkColor};
     background: ${modalBackground};

@@ -97,12 +97,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
       _api.consts.babe.expectedBlockTime,
       _api.consts.balances.existentialDeposit,
+      _api.consts.nominationPools.palletId,
     ];
-
-    // pools constants
-    if (network.meta.features.pools) {
-      promises.push(_api.consts.nominationPools.palletId);
-    }
 
     // fetch constants
     const _consts = await Promise.all(promises);

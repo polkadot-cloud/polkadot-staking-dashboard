@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
 import { UIContextInterface } from 'contexts/UI/types';
-import { AnySubscan } from 'types';
+import { AnyApi, AnySubscan } from 'types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useUi } from '../UI';
@@ -71,8 +71,12 @@ export const SubscanProvider = ({
 
       // fetch 3 pages of results
       const results = await Promise.all([
-        handleFetch(activeAccount, 0, API_ENDPOINTS.subscanRewardSlash),
-        handleFetch(activeAccount, 1, API_ENDPOINTS.subscanRewardSlash),
+        handleFetch(activeAccount, 0, API_ENDPOINTS.subscanRewardSlash, {
+          is_stash: true,
+        }),
+        handleFetch(activeAccount, 1, API_ENDPOINTS.subscanRewardSlash, {
+          is_stash: true,
+        }),
       ]);
 
       // user may have turned off service while results were fetching.
@@ -97,10 +101,6 @@ export const SubscanProvider = ({
    * Stores resulting claims in context state.
    */
   const fetchPoolClaims = async () => {
-    if (!network.features.pools) {
-      setPoolClaims([]);
-      return;
-    }
     if (activeAccount === null || !services.includes('subscan')) {
       setPoolClaims([]);
       return;
@@ -177,18 +177,21 @@ export const SubscanProvider = ({
   const handleFetch = async (
     address: string,
     page: number,
-    endpoint: string
+    endpoint: string,
+    body: AnyApi = {}
   ): Promise<AnySubscan> => {
+    const bodyJson = {
+      row: 100,
+      page,
+      address,
+      ...body,
+    };
     const res: Response = await fetch(network.subscanEndpoint + endpoint, {
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': API_SUBSCAN_KEY,
       },
-      body: JSON.stringify({
-        row: 100,
-        page,
-        address,
-      }),
+      body: JSON.stringify(bodyJson),
       method: 'POST',
     });
     const resJson: AnySubscan = await res.json();

@@ -69,9 +69,6 @@ export interface Network {
     unit: string;
     priceTicker: string;
   };
-  features: {
-    pools: boolean;
-  };
   params: { [key: string]: number };
 }
 

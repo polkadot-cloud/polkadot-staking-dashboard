@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AssistantConfig } from 'contexts/Help/types';
+import { HelpContentRaw } from 'contexts/Help/types';
 
-export const ASSISTANT_CONFIG: AssistantConfig = [
+export const HELP_CONFIG: HelpContentRaw = [
   {
     key: 'overview',
     definitions: [
@@ -69,16 +69,35 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
     ],
+    external: [
+      {
+        title: 'How to Connect Your Accounts',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182121-how-to-use-the-staking-dashboard-connecting-your-account',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'How to Use the Staking Dashboard: Overview',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Saking your DOT',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
+        website: 'polkadot.network',
+      },
+    ],
   },
   {
     key: 'nominate',
     definitions: [
       {
-        title: 'Staking Status',
+        title: 'Nomination Status',
         description: [
-          'The current state of your staking position.',
-          'Whether you receive rewards depends on whether you have active nominations in the current era, and whether you are above their over-subscribed threshold.',
-          'Your staking status provides you this information at a glance.',
+          'The status of your nominations at a glance.',
+          'A set of nominations will be inactive when none of those nominees are participating in the current validator set - the set of validators currently elected to validate the network.',
+          'When at least one of your nominees are active, this nomination status will display as actively nominating - but this still does not guarantee rewards.',
+          'The top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the  {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} highest bonded nominators to receive rewards.',
+          'If an active nominee is not over-subscribed, you will receive rewards.',
         ],
       },
       {
@@ -124,9 +143,9 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Nominations',
         description: [
-          'Your nominations are the validators you have chosen to nominate. You can nominate up to 16 validators.',
-          'Your bonded funds are automatically distributed to nominations that are active in the staking era.',
-          'As long as at least one of your nominations is actively validating in a session, your funds will be staked with that validator and you will receive rewards.',
+          'Nominations are the validators a staker chooses to nominate. You can nominate up to {MAX_NOMINATIONS} validators on {NETWORK_NAME}.',
+          "Once nominations have been submitted, the staker's bonded funds are automatically distributed to nominees that are active in the curernt era.",
+          'As long as at least one of your nominations is actively validating in a session, your funds will be backing that validator.',
         ],
       },
       {
@@ -136,7 +155,38 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
     ],
-    external: [],
+    external: [
+      {
+        title: 'Changing Your Reward Destination',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182220-how-to-use-the-staking-dashboard-changing-reward-destination',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Bond More Tokens to Your Existing Stake',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182207-how-to-use-the-staking-dashboard-bond-more-tokens-to-your-existing-stake',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Unbonding Your Tokens',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182201-how-to-use-the-staking-dashboard-unbonding-your-tokens',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Rebonding',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182221-how-to-use-the-staking-dashboard-rebonding',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Changing your Controller Account',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182218-how-to-use-the-staking-dashboard-changing-your-controller-account',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Changing Your Nominations',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182518-how-to-use-the-staking-dashboard-changing-your-nominations',
+        website: 'polkadot.network',
+      },
+    ],
   },
   {
     key: 'pools',
@@ -151,44 +201,45 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
       {
         title: 'Active Pools',
         description: [
-          'The current amount of active nomination pools on the network.',
+          'The current amount of active nomination pools on {NETWORK_NAME}.',
         ],
       },
       {
         title: 'Minimum Join Bond',
         description: [
           'The minimum amount of {NETWORK_UNIT} needed to bond in order to join a pool.',
+          'This amount is different from the bond needed to create a pool.',
         ],
       },
       {
         title: 'Minimum Create Bond',
         description: [
-          'The minimum amount of {NETWORK_UNIT} needed to bond for a creator  of a pool.',
+          'The minimum amount of {NETWORK_UNIT} needed to bond in order to create a pool.',
+          'Creating a pool requires a larger deposit than that of joining a pool.',
         ],
       },
       {
-        title: 'Pool Status',
+        title: 'Pool Membership',
         description: [
-          'Your current pool status, summarising whether your account is actively in a pool and generating rewards.',
+          'Your pool membership status reflects whether you are a member of a pool.',
+          'Pool memberships can either be that of a pool member or a pool owner.',
+          'Currently on {NETWORK_NAME}, accounts can only join one pool at a time. If you wish to join another pool, you must leave your current pool first.',
+          'To leave a pool, you simply need to unbond and withdraw all your bonded {NETWORK_UNIT}. Staking dashboard provides a dedicated Leave button to unbond from a pool.',
         ],
       },
       {
         title: 'Bonded in Pool',
         description: [
           'The amount of {NETWORK_UNIT} currently bonded in a pool.',
+          "Unlike solo staking, where your bonded funds remain in your account but become locked, the {NETWORK_UNIT} you bond to a pool is transferred to the pool's stash account. Nonetheless, pool members still have access to unbond their funds at any time.",
         ],
       },
       {
         title: 'Pool Rewards',
         description: [
-          'The amount of rewards in {NETWORK_UNIT} generated by being an active participant in a pool.',
-          'Users are required to claim their pool rewards in order to receive them. Pool rewards can be bonded back into the pool, or sent to your account as free {NETWORK_UNIT}.',
-        ],
-      },
-      {
-        title: 'Joined Pool',
-        description: [
-          'The currently joined pool. Only one pool can be joined per account.',
+          'The amount of {NETWORK_UNIT} generated by being an active participant in a pool.',
+          'Pool members are required to claim their rewards in order to have them transferred to their balance.',
+          'Users have 2 choices for claiming rewards. They can be bonded back into the pool, that will increase your share of the pool and accumulate further rewards. Rewards can also be withdrawn from the pool to your account as free {NETWORK_UNIT}.',
         ],
       },
       {
@@ -202,7 +253,18 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         ],
       },
     ],
-    external: [],
+    external: [
+      {
+        title: 'Creating Nomination Pools',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182388-how-to-use-the-staking-dashboard-creating-nomination-pools',
+        website: 'polkadot.network',
+      },
+      {
+        title: 'Claiming Nomination Pool Rewards',
+        url: 'https://support.polkadot.network/support/solutions/articles/65000182399-how-to-use-staking-dashboard-claiming-nomination-pool-rewards',
+        website: 'polkadot.network',
+      },
+    ],
   },
   {
     key: 'validators',
@@ -220,6 +282,13 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
           "A validator that is actively validating blocks. Rewards are accumulated based on the validator's activity.",
           'A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.',
           '{NETWORK_NAME} allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era.',
+        ],
+      },
+      {
+        title: 'Average Commission',
+        description: [
+          'The average validator commission rate on {NETWORK_NAME}.',
+          'This metric excludes validators who host a 100% commission, as these nodes usually block nominations are are run for the purposes of staking on central exchange platforms.',
         ],
       },
       {
@@ -241,6 +310,21 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
         description: [
           "Era Points are accumulated by validators during each era, and depend on a validator's performance.",
           'As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards.',
+        ],
+      },
+      {
+        title: 'Self Stake',
+        description: [
+          'The amount of {NETWORK_UNIT} the validator has bonded themself.',
+          'This value is added to the amount of {NETWORK_UNIT} bonded by nominators to form the total stake of the validator.',
+        ],
+      },
+      {
+        title: 'Nominator Stake',
+        description: [
+          'The amount of {NETWORK_UNIT} backing the validator from its nominators.',
+          "This value is added to the validator's self stake to form the total stake of the validator.",
+          'Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session.',
         ],
       },
       {
@@ -274,9 +358,7 @@ export const ASSISTANT_CONFIG: AssistantConfig = [
     ],
     external: [
       {
-        subtitle: '',
-        label: 'Validators',
-        title: 'How do I know which validators to choose?',
+        title: 'How do I Know Which Validators to Choose?',
         url: 'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
         website: 'polkadot.network',
       },

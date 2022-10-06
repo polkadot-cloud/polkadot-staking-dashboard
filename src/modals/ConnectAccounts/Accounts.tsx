@@ -60,7 +60,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
 
   useEffect(() => {
     getStakingStatuses();
-  }, [localAccounts, balanceAccounts, ledgers]);
+  }, [localAccounts, balanceAccounts, ledgers, accounts, memberships]);
 
   const getStakingStatuses = () => {
     // accumulate imported stash accounts
@@ -215,7 +215,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
                   onClick={() => {
                     if (stashAccount) {
                       connectToAccount(stashAccount);
-                      setStatus(0);
+                      setStatus(2);
                     }
                   }}
                 >

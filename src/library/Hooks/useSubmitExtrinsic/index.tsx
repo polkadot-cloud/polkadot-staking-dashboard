@@ -24,7 +24,7 @@ export const useSubmitExtrinsic = (
   const submitAddress: string = from ?? '';
 
   const { api } = useApi();
-  const { setTxFees, txFees } = useTxFees();
+  const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
@@ -34,6 +34,7 @@ export const useSubmitExtrinsic = (
 
   // calculate fee upon setup changes and initial render
   useEffect(() => {
+    setSender(from);
     calculateEstimatedFee();
   }, [tx]);
 

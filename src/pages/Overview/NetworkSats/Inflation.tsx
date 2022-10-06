@@ -64,19 +64,6 @@ export const Inflation = () => {
               </h4>
             </div>
           </div>
-          <div>
-            <div className="inner">
-              <h2>
-                {totalIssuance.toString() === '0'
-                  ? '0'
-                  : toFixedIfNecessary(idealStake * 100, 2)}
-                %
-              </h2>
-              <h4>
-                Ideal Staked <OpenHelpIcon helpKey="Ideal Staked" />
-              </h4>
-            </div>
-          </div>
         </div>
       </section>
     </InflationWrapper>

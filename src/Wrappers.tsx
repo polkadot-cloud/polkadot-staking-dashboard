@@ -67,6 +67,10 @@ export const EntryWrapper = styled.div`
     fill: ${textPrimary};
   }
 
+  ellipse.primary {
+    fill: ${textPrimary};
+  }
+
   input {
     border: none;
     border-bottom: 1px solid #ddd;

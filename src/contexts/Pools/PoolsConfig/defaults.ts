@@ -21,7 +21,6 @@ export const stats: PoolStats = {
 };
 
 export const defaultPoolsConfigContext: PoolsConfigContextState = {
-  enabled: 0,
   addFavourite: (a) => {},
   removeFavourite: (a) => {},
   createAccounts: (p) => poolAddresses,

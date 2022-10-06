@@ -4,9 +4,9 @@
 import { ReactNode } from 'react';
 import { MaybeString } from 'types';
 
-export type AssistantConfig = Array<AssistantItem>;
+export type HelpContentRaw = Array<HelpItemRaw>;
 
-export interface AssistantItem {
+export interface HelpItemRaw {
   key?: string;
   definitions?: HelpDefinitions;
   external?: HelpExternals;
@@ -22,9 +22,7 @@ export type HelpDefinition = {
 };
 
 export interface HelpExternal {
-  label: string;
   title: string;
-  subtitle: string;
   url: string;
   website?: string;
 }

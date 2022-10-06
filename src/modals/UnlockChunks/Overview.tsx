@@ -110,10 +110,17 @@ export const Overview = forwardRef(
         })}
         <NotesWrapper>
           <p>
-            Unlocks take {bondDuration} eras before they can be withdrawn. You
-            can rebond unlocks at any time in this period, or withdraw them to
-            your free balance thereafter.
+            Unlocks take {bondDuration} eras before they can be withdrawn.
+            {isStaking &&
+              `You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.`}
           </p>
+          {!isStaking && (
+            <p>
+              Unlock chunks cannot currently be rebonded in a pool. If you wish
+              to rebond, withdraw the unlock chunk first and the add to your
+              bond.
+            </p>
+          )}
         </NotesWrapper>
       </ContentWrapper>
     );

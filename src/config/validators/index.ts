@@ -9,6 +9,7 @@ import { ReactComponent as Amforc } from './thumbnails/amforc.svg';
 import { ReactComponent as CoinbaseCloud } from './thumbnails/coinbasecloud.svg';
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
+import { ReactComponent as Dionysus } from './thumbnails/dionysus.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as GenericChain } from './thumbnails/genericchain.svg';
@@ -27,6 +28,7 @@ import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilities.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
+import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
 
 export const VALIDATOR_COMMUNITY = [
@@ -61,6 +63,7 @@ export const VALIDATOR_COMMUNITY = [
         'DpLatoXXBiSAPooF17bzUZGo7huNB7USfRqd2SgL6RBy2zr',
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
+        'EyQ1wV8jQdKYEWh7FiN2mnkFzAepfq6LfKbWLy7qQkLynGg',
       ],
     },
   },
@@ -107,6 +110,24 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'GRSWBC1kCuNVp8KTgGyK7Bo3bP7CdLDPwfnx2L5JJLQ41Qj',
         'Em4HYqVrWX3uCvrC8NWoabfKpV9z8stdRKkXYXcZdWGxdXT',
+      ],
+    },
+  },
+  {
+    name: 'Dionysus🍇',
+    Thumbnail: Dionysus,
+    bio: 'Independent secure rigorously monitored validation service for Polkadot and Kusama Networks operated by Web3 researchers and engineers with a proven record in running reliable secure infrastructure.',
+    email: 'hi@dionysus.network',
+    website: 'https://dionysus.network',
+    validators: {
+      polkadot: ['12CJw9KNkC7FzVVg3dvny4PWHjjkvdyM17mmNfXyfucp8JfM'],
+      kusama: [
+        'FWz717J6ATaYSNy2tRHAskEC9SP4uKHNJYC9mvfvimkB8GT',
+        'DrymfiuRSkpVCqy3tFxAsYEUUiXVNeghCkhcsWor6RA1K7c',
+        'DYLJXVDuT3wNfnYZ1nQoTXcpguX4hk2y93q4RnCEMuU9jTr',
+        'GjndRb4VKJatuFpxgSVULRGRULFcwxNHubrnoGZzGwfK4YT',
+        'FFAatME5P5gMazo9AywhqmeqVLTNMPrDtJsT9saxuy2BYpE',
+        'FyL5TJXFEWDHC1yuBGwtngo3LRg4nEQ4ua47p1szMQdh8HR',
       ],
     },
   },
@@ -347,13 +368,13 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'STAKEWORLD',
     Thumbnail: Stakeworld,
-    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
+    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable, low commission Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
     email: 'info@stakeworld.nl',
     website: 'https://stakeworld.nl',
     validators: {
       polkadot: [
         '14kpNbU4XjEHfYdqp95Gq3NkBWbgFd6J8Yjd2SneWNzvf1Yp',
-        '13Jpq4n3PXXaSAbJTMmFD78mXAzs8PzgUUQd5ve8saw7HQS5',
+        '14ebRSbCJepTp2X3YwDsyE3wRRQ1RZYa8nEFnLxLe19qdHna',
       ],
       kusama: [
         'CtEni6wrP7Kz2KWus9Y6vQWuhLqJpd9mQFTmTvw8T7FLui8',
@@ -393,6 +414,22 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'FZsMKYHoQG1dAVhXBMyC7aYFYpASoBrrMYsAn1gJJUAueZX',
         'GA7j1FHWXpEU4kavowEte6LWR3NgZ8bkv4spWa9joiQF5R2',
+      ],
+    },
+  },
+  {
+    name: 'validierung.cc',
+    Thumbnail: Validierungcc,
+    bio: 'We are crypto enthusiasts from Germany and offer independent and reliable validation and staking returns.',
+    email: 'contact@validierung.cc',
+    twitter: '@validierungcc',
+    website: 'https://www.validierung.cc',
+    validators: {
+      polkadot: ['15x643ScnbVQM3zGcyRw3qVtaCoddmAfDv5LZVfU8fNxkVaR'],
+      kusama: [
+        'HhBer1indmu4m1A1fMKRsCEQ8pfWGHUMskWjD2HLpspJTuW',
+        'JHamburgTPv9fRKwTPeBEjyVHmbQK2ayRBpBujb4rx2sHzJ',
+        'GHd1brgDS29LhSUMYSorgEWFb2n1M3H4EMz6mcpt8TTdHho',
       ],
     },
   },

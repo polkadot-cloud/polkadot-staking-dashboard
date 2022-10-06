@@ -4,9 +4,9 @@
 import { useEffect } from 'react';
 import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
-import { ASSISTANT_CONFIG } from 'config/assistant';
+import { HELP_CONFIG } from 'config/help';
 import {
-  AssistantItem,
+  HelpItemRaw,
   HelpDefinition,
   HelpDefinitions,
   HelpExternal,
@@ -63,11 +63,11 @@ export const Help = () => {
     return <></>;
   }
 
-  let meta: AssistantItem | undefined;
+  let meta: HelpItemRaw | undefined;
 
   if (definition) {
     // get items for active category
-    meta = Object.values(ASSISTANT_CONFIG).find((item: AssistantItem) =>
+    meta = Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
       item?.definitions?.find((d: HelpDefinition) => d.title === definition)
     );
   } else {
@@ -75,7 +75,7 @@ export const Help = () => {
     let _definitions: HelpDefinitions = [];
     let _external: HelpExternals = [];
 
-    Object.values(ASSISTANT_CONFIG).forEach((c: AssistantItem) => {
+    Object.values(HELP_CONFIG).forEach((c: HelpItemRaw) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });
@@ -176,9 +176,7 @@ export const Help = () => {
                     <External
                       key={`ext_${index}`}
                       width="100%"
-                      label={item.label}
                       title={item.title}
-                      subtitle={item.subtitle}
                       url={item.url}
                       website={item.website}
                     />

@@ -11,14 +11,15 @@ import { useApi } from 'contexts/Api';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as InfoSVG } from 'img/info.svg';
+import { ReactComponent as ForumSVG } from 'img/forum.svg';
+import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
+import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { UIContextInterface } from 'contexts/UI/types';
 import { ConnectionStatus } from 'contexts/Api/types';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
-import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
-import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useHelp } from 'contexts/Help';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
@@ -80,7 +81,6 @@ export const SideMenu = () => {
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
         <Main />
-        <Separator />
         <Heading title="Support" minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
@@ -93,6 +93,17 @@ export const SideMenu = () => {
             size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
+        <Heading title="Feedback" minimised={sideMenuMinimised} />
+        <Secondary
+          onClick={() => openModalWith('GoToFeedback')}
+          name="Feedback"
+          minimised={sideMenuMinimised}
+          icon={{
+            Svg: ForumSVG,
+            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
+          }}
+        />
+        <Separator />
         <Heading title="Network" minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}

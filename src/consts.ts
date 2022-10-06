@@ -9,7 +9,7 @@ import { stringToU8a } from '@polkadot/util';
 export const URI_PREFIX = '/';
 export const TITLE_DEFAULT = 'Polkadot Staking Dashboard';
 export const DAPP_NAME = 'Polkadot Staking Dashboard';
-export const POLKADOT_URL = 'https://polkadot.network';
+export const POLKADOT_URL = 'https://polkadot.network/staking/';
 
 export const POLKADOT_ENDPOINT = 'wss://rpc.polkadot.io';
 export const WESTEND_ENDPOINT = 'wss://westend-rpc.polkadot.io';
@@ -81,7 +81,7 @@ export const API_SUBSCAN_KEY = 'd37149339f64775155a82a53f4253b27';
 export const ENDPOINT_PRICE = 'https://api.binance.com/api/v3';
 export const API_ENDPOINTS = {
   priceChange: `${ENDPOINT_PRICE}/ticker/24hr?symbol=`,
-  subscanRewardSlash: '/api/scan/account/reward_slash',
+  subscanRewardSlash: '/api/v2/scan/account/reward_slash',
   subscanPoolRewards: '/api/scan/nomination_pool/rewards',
   subscanEraStat: '/api/scan/staking/era_stat',
 };

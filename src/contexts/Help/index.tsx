@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { replaceAll } from 'Utils';
 import { MaybeString } from 'types';
 import {
@@ -22,7 +22,7 @@ export const useHelp = () => React.useContext(HelpContext);
 
 export const HelpProvider = (props: HelpContextProps) => {
   const { network, consts } = useApi();
-  const { maxNominatorRewardedPerValidator } = consts;
+  const { maxNominations, maxNominatorRewardedPerValidator } = consts;
 
   // help module state
   const [state, setState] = useState<HelpContextState>({
@@ -30,6 +30,16 @@ export const HelpProvider = (props: HelpContextProps) => {
     definition: null,
     config: {},
   });
+
+  // when fade out completes, reset active definiton
+  useEffect(() => {
+    if (state.status === 0) {
+      setState({
+        ...state,
+        definition: null,
+      });
+    }
+  }, [state.status]);
 
   const setDefinition = (definition: MaybeString) => {
     const _state = {
@@ -59,8 +69,7 @@ export const HelpProvider = (props: HelpContextProps) => {
   const closeHelp = () => {
     setState({
       ...state,
-      status: 0,
-      definition: null,
+      status: 2,
     });
   };
 
@@ -74,6 +83,7 @@ export const HelpProvider = (props: HelpContextProps) => {
         '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
         String(maxNominatorRewardedPerValidator),
       ],
+      ['{MAX_NOMINATIONS}', String(maxNominations)],
     ];
 
     for (const varToVal of varsToValues) {

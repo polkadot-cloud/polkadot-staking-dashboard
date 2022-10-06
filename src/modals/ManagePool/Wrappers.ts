@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
 export const FixedContentWrapper = styled.div`
   padding-top: 1rem;
   box-sizing: border-box;
-  flex-basis: 50%;
+  width: 100%;
 `;
 
 export const CardsWrapper = styled(motion.div)`

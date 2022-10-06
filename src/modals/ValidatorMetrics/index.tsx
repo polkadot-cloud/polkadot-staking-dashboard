@@ -9,17 +9,44 @@ import { SubscanButton } from 'library/SubscanButton';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import Identicon from 'library/Identicon';
-import { clipAddress } from 'Utils';
+import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StatusLabel } from 'library/StatusLabel';
 import { Title } from 'library/Modal/Title';
+import { useStaking } from 'contexts/Staking';
+import { BN } from 'bn.js';
+import { PaddingWrapper } from 'modals/Wrappers';
+import { useApi } from 'contexts/Api';
+import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 
 export const ValidatorMetrics = () => {
+  const {
+    network: { units, unit },
+  } = useApi();
   const { config } = useModal();
   const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
   const { metrics } = useNetworkMetrics();
+  const { eraStakers } = useStaking();
+  const { stakers } = eraStakers;
 
+  // is the validator in the active era
+  const validatorInEra =
+    stakers.find((s: any) => s.address === address) || null;
+
+  let ownStake = new BN(0);
+  let otherStake = new BN(0);
+  if (validatorInEra) {
+    const { others, own } = validatorInEra;
+
+    others.forEach((o: any) => {
+      otherStake = otherStake.add(new BN(rmCommas(o.value)));
+    });
+    if (own) {
+      ownStake = new BN(rmCommas(own));
+    }
+  }
   const [list, setList] = useState([]);
 
   const ref: any = React.useRef();
@@ -35,6 +62,18 @@ export const ValidatorMetrics = () => {
     handleEraPoints();
   }, []);
 
+  const stats = [
+    {
+      label: 'Self Stake',
+      value: `${humanNumber(planckBnToUnit(ownStake, units))} ${unit}`,
+      help: 'Self Stake',
+    },
+    {
+      label: 'Nominator Stake',
+      value: `${humanNumber(planckBnToUnit(otherStake, units))} ${unit}`,
+      help: 'Nominator Stake',
+    },
+  ];
   return (
     <>
       <Title title="Validator Metrics" />
@@ -45,18 +84,40 @@ export const ValidatorMetrics = () => {
           {identity === null ? clipAddress(address) : identity}
         </h2>
       </div>
-      <div className="body" style={{ position: 'relative' }}>
+
+      <PaddingWrapper horizontalOnly>
+        <StatsWrapper>
+          {stats.map(
+            (s: { label: string; value: string; help: string }, i: number) => (
+              <StatWrapper key={`metrics_stat_${i}`}>
+                <div className="inner">
+                  <h4>
+                    {s.label} <OpenHelpIcon helpKey={s.help} />
+                  </h4>
+                  <h3>{s.value}</h3>
+                </div>
+              </StatWrapper>
+            )
+          )}
+        </StatsWrapper>
+      </PaddingWrapper>
+      <div
+        className="body"
+        style={{ position: 'relative', marginTop: '0.5rem' }}
+      >
         <SubscanButton />
         <GraphWrapper
           style={{
-            margin: '0 0.5rem',
-            height: 275,
+            margin: '0 1.5rem 0 0.5rem',
+            height: 350,
             border: 'none',
             boxShadow: 'none',
           }}
           flex
         >
-          <h4>Recent Era Points</h4>
+          <h4>
+            Recent Era Points <OpenHelpIcon helpKey="Era Points" />
+          </h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"
@@ -72,7 +133,7 @@ export const ValidatorMetrics = () => {
                 left: '-1rem',
               }}
             >
-              <EraPointsGraph items={list} height={200} />
+              <EraPointsGraph items={list} height={250} />
             </div>
           </div>
         </GraphWrapper>

@@ -29,7 +29,7 @@ export const BondedPoolsProvider = ({
 }) => {
   const { api, network, isReady } = useApi();
   const { getNominationsStatusFromTargets } = useStaking();
-  const { enabled, createAccounts, stats } = usePoolsConfig();
+  const { createAccounts, stats } = usePoolsConfig();
   const { lastPoolId } = stats;
 
   // stores the meta data batches for pool lists
@@ -53,14 +53,14 @@ export const BondedPoolsProvider = ({
 
   // initial setup for fetching bonded pools
   useEffect(() => {
-    if (isReady && enabled) {
+    if (isReady) {
       // fetch bonded pools
       fetchBondedPools();
     }
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, enabled, lastPoolId]);
+  }, [network, isReady, lastPoolId]);
 
   // after bonded pools have synced, fetch metabatch
   useEffect(() => {

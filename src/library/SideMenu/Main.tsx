@@ -50,7 +50,7 @@ export const Main = () => {
       // set undefined action as default
       _pages[i].action = undefined;
 
-      if (uri === `${URI_PREFIX}/nominate`) {
+      if (uri === `${URI_PREFIX}/solo`) {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
@@ -113,13 +113,7 @@ export const Main = () => {
   ]);
 
   // remove pages that network does not support
-  let pagesToDisplay: PagesConfig = Object.values(pageConfig.pages);
-  if (!network.features.pools) {
-    // remove pools
-    pagesToDisplay = pagesToDisplay.filter(
-      (page: PageItem) => page.hash !== '/pools'
-    );
-  }
+  const pagesToDisplay: PagesConfig = Object.values(pageConfig.pages);
 
   return (
     <>

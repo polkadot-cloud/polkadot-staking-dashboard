@@ -32,7 +32,7 @@ export const ActivePoolProvider = ({
   const { api, network, isReady, consts } = useApi();
   const { eraStakers } = useStaking();
   const { activeAccount } = useConnect();
-  const { enabled, createAccounts } = usePoolsConfig();
+  const { createAccounts } = usePoolsConfig();
   const { membership } = usePoolMemberships();
 
   const { existentialDeposit } = consts;
@@ -78,30 +78,30 @@ export const ActivePoolProvider = ({
 
   // subscribe to active bonded pool details for the active account
   useEffect(() => {
-    if (isReady && enabled && synced === Sync.Unsynced) {
+    if (isReady && synced === Sync.Unsynced) {
       setStateWithRef(Sync.Syncing, setSynced, syncedRef);
       subscribeToActiveBondedPool();
     }
-  }, [network, isReady, enabled, synced]);
+  }, [network, isReady, synced]);
 
   // unsubscribe all on component unmount
   useEffect(() => {
     return () => {
       unsubscribeAll();
     };
-  }, [network, enabled]);
+  }, [network]);
 
   // subscribe to pool nominations
   const bondedAddress = activeBondedPoolRef.current?.addresses?.stash;
   useEffect(() => {
-    if (isReady && enabled && bondedAddress) {
+    if (isReady && bondedAddress) {
       unsubscribePoolNominations();
       subscribeToPoolNominations(bondedAddress);
     }
     return () => {
       unsubscribePoolNominations();
     };
-  }, [network, isReady, activeBondedPool, enabled]);
+  }, [network, isReady, activeBondedPool?.addresses?.stash]);
 
   // re-calculate unclaimed payout when membership changes
   useEffect(() => {

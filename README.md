@@ -1,7 +1,7 @@
-# Polkadot Staking Dashboard [Beta]
+# Polkadot Staking Dashboard
 
 ## Deployment
-Staking dashboard is live on [staking.polkadot.network/dashboard](https://staking.polkadot.network/dashboard)
+Staking dashboard is live on [staking.polkadot.network](https://staking.polkadot.network/dashboard)
 
 <img width="1737" alt="Screenshot 2022-09-15 at 11 23 14" src="https://user-images.githubusercontent.com/13929023/190313914-ec750ca4-1be0-4d46-b2c5-2968dbe98fb4.png">
 
@@ -105,7 +105,7 @@ REACT_APP_PRIVACY_URL=https://www.parity.io/privacy/
 ## Config Files
 There are some ad-hoc files defining app configuration where needed. These just provide a means of bootstrapping app data, and further abstraction could be explored in the future.
 - [`config/pages.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/pages.ts): provides the pages and page categories of the app.
-- [`config/assistant.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/assistant.ts): provides the assistant content.
+- [`config/help.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/help.ts): provides the help content.
 - [`Utils.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Utils.ts): Various general helper functions used throughout the app, such as formatting utilities.
 
 ## Folders

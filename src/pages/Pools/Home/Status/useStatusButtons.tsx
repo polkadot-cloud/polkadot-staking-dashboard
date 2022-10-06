@@ -8,14 +8,19 @@ import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { BN } from 'bn.js';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { isReady } = useApi();
   const { setOnPoolSetup, getPoolSetupProgressPercent } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { stats } = usePoolsConfig();
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
+  const { bondedPools } = useBondedPools();
   const { isOwner } = useActivePool();
   const { getTransferOptions } = useTransferOptions();
 
@@ -24,12 +29,16 @@ export const useStatusButtons = () => {
 
   let _label;
   let _buttons;
-
   const createBtn = {
     title: `Create Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
     transform: 'grow-1',
-    disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
+    disabled:
+      !isReady ||
+      isReadOnlyAccount(activeAccount) ||
+      !activeAccount ||
+      stats.maxPools.toNumber() === 0 ||
+      bondedPools.length === stats.maxPools.toNumber(),
     onClick: () => setOnPoolSetup(1),
   };
 
@@ -37,7 +46,11 @@ export const useStatusButtons = () => {
     title: `Join Pool`,
     icon: faUserPlus,
     transform: 'grow-1',
-    disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
+    disabled:
+      !isReady ||
+      isReadOnlyAccount(activeAccount) ||
+      !activeAccount ||
+      !bondedPools.length,
     onClick: () => setActiveTab(2),
   };
 

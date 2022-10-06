@@ -1,13 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN, max } from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { BondInputWithFeedback } from 'library/Form/BondInputWithFeedback';
+import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { defaultThemes } from 'theme/default';
@@ -40,10 +41,12 @@ export const BondSome = (props: FormsProps) => {
   const [bond, setBond] = useState({ bond: freeBalance });
 
   // bond minus tx fees
-  let bondAfterTxFees = freeBalanceBn.sub(txFees);
-  if (bondAfterTxFees.isNeg()) {
-    bondAfterTxFees = BN_ZERO;
-  }
+  const enoughToCoverTxFees: boolean =
+    freeBalance - Number(bond.bond) > planckBnToUnit(txFees, units);
+
+  const bondAfterTxFees = enoughToCoverTxFees
+    ? unitToPlanckBn(Number(bond.bond), units)
+    : max(unitToPlanckBn(Number(bond.bond), units).sub(txFees), new BN(0));
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
@@ -98,9 +101,8 @@ export const BondSome = (props: FormsProps) => {
   return (
     <>
       <div className="items">
-        <BondInputWithFeedback
+        <BondFeedback
           bondType={bondType}
-          unbond={false}
           listenIsValid={setBondValid}
           defaultBond={null}
           setLocalResize={setLocalResize}
@@ -118,8 +120,8 @@ export const BondSome = (props: FormsProps) => {
               Transaction fees have been deducted from maximum bond.
             </p>
           )}
-          <EstimatedTxFee />
         </NotesWrapper>
+        <EstimatedTxFee />
       </div>
       <FormFooter
         setSection={setSection}

@@ -9,7 +9,6 @@ import Browse from 'pages/Validators';
 import Favourites from 'pages/Favourites';
 import Payouts from 'pages/Payouts';
 import Community from 'pages/Community';
-import Feedback from 'pages/Feedback';
 import { URI_PREFIX } from 'consts';
 import { PageCategories, PagesConfig } from 'types';
 import * as analyticsJson from 'img/json/analytics-solid.json';
@@ -17,7 +16,6 @@ import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
 import * as view1SolidJson from 'img/json/view-1-solid.json';
 import * as viewGroupJson from 'img/json/groups-solid-edited.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
-import * as viewForumJson from 'img/json/forum-solid.json';
 import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
 
 export const PAGE_CATEGORIES: PageCategories = [
@@ -33,10 +31,6 @@ export const PAGE_CATEGORIES: PageCategories = [
     _id: 3,
     title: 'Validators',
   },
-  {
-    _id: 4,
-    title: 'Feedback',
-  },
 ];
 
 export const PAGES_CONFIG: PagesConfig = [
@@ -50,9 +44,9 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Stake',
-    uri: `${URI_PREFIX}/nominate`,
-    hash: '/nominate',
+    title: 'Solo',
+    uri: `${URI_PREFIX}/solo`,
+    hash: '/solo',
     Entry: Nominate,
     animate: viewTrendingUpJson,
   },
@@ -95,14 +89,6 @@ export const PAGES_CONFIG: PagesConfig = [
     hash: '/favourites',
     Entry: Favourites,
     animate: favoriteHeartJson,
-  },
-  {
-    category: 4,
-    title: 'Feedback',
-    uri: `${URI_PREFIX}/feedback`,
-    hash: '/feedback',
-    Entry: Feedback,
-    animate: viewForumJson,
   },
 ];
 

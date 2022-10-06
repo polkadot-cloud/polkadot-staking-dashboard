@@ -61,6 +61,10 @@ export const ValidatorsProvider = ({
   const [sessionValidators, setSessionValidators] = useState<SessionValidators>(
     defaults.sessionValidators
   );
+
+  // stores the average network commission rate
+  const [avgCommission, setAvgCommission] = useState(0);
+
   // stores the currently active parachain validator set
   const [sessionParachainValidators, setSessionParachainValidators] =
     useState<SessionParachainValidators>(defaults.sessionParachainValidators);
@@ -112,6 +116,7 @@ export const ValidatorsProvider = ({
     setSessionValidators(defaults.sessionValidators);
     setSessionParachainValidators(defaults.sessionParachainValidators);
     removeValidatorMetaBatch('validators_browse');
+    setAvgCommission(0);
     setValidators([]);
   }, [network]);
 
@@ -243,12 +248,16 @@ export const ValidatorsProvider = ({
 
     // fetch validator set
     const v: Array<Validator> = [];
+    let totalNonAllCommission: BN = new BN(0);
     const exposures = await api.query.staking.validators.entries();
     exposures.forEach(([_args, _prefs]: AnyApi) => {
       const address = _args.args[0].toHuman();
       const prefs = _prefs.toHuman();
 
       const _commission = removePercentage(prefs.commission);
+      if (_commission !== 100) {
+        totalNonAllCommission = totalNonAllCommission.add(new BN(_commission));
+      }
 
       v.push({
         address,
@@ -259,9 +268,21 @@ export const ValidatorsProvider = ({
       });
     });
 
-    setFetchedValidators(2);
+    // get average network commission for all non-100% commissioned validators.
+    const nonCommissionCount = exposures.filter(
+      (e: AnyApi) => e.commission !== '100%'
+    ).length;
 
-    // shuffle validators before setting them
+    const _avgCommission = nonCommissionCount
+      ? toFixedIfNecessary(
+          totalNonAllCommission.toNumber() / nonCommissionCount,
+          2
+        )
+      : 0;
+
+    setFetchedValidators(2);
+    setAvgCommission(_avgCommission);
+    // shuffle validators before setting them.
     setValidators(shuffle(v));
   };
 
@@ -625,6 +646,7 @@ export const ValidatorsProvider = ({
         addFavourite,
         removeFavourite,
         validators,
+        avgCommission,
         meta: validatorMetaBatchesRef.current,
         session: sessionValidators,
         sessionParachain: sessionParachainValidators.list,

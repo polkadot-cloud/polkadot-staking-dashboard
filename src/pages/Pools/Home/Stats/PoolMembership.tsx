@@ -18,7 +18,7 @@ const PoolMembership = () => {
         ? `Owner of Pool ${membership.poolId}`
         : `In Pool ${membership.poolId}`,
     unit: '',
-    helpKey: 'Nomination Pools',
+    helpKey: 'Pool Membership',
   };
   return <Text {...params} />;
 };

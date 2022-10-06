@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 
@@ -14,16 +15,6 @@ export const Selectable = (props: any) => {
 
   return (
     <SelectableWrapper>
-      {actionsAll.map((a: any, i: number) => (
-        <button
-          key={`a_all_${i}`}
-          disabled={a.disabled ?? false}
-          type="button"
-          onClick={() => a.onClick(provider)}
-        >
-          {a.title}
-        </button>
-      ))}
       {selectToggleable === true && (
         <button
           type="button"
@@ -32,16 +23,15 @@ export const Selectable = (props: any) => {
             setSelectActive(!selectActive);
           }}
         >
-          {selectActive ? 'Cancel Selection' : 'Select'}
+          {selectActive ? 'Cancel' : 'Select'}
         </button>
       )}
-
       {selected.length > 0 && (
         <>
           {actionsSelected.map((a: any, i: number) => (
             <button
               key={`a_selected_${i}`}
-              disabled={a.disabled ?? false}
+              disabled={a?.isDisabled ? a.isDisabled() : false}
               type="button"
               onClick={() => a.onClick(provider)}
             >
@@ -50,6 +40,19 @@ export const Selectable = (props: any) => {
           ))}
         </>
       )}
+      {actionsAll.map((a: any, i: number) => {
+        return (
+          <button
+            key={`a_all_${i}`}
+            disabled={a?.isDisabled ? a.isDisabled() : false}
+            type="button"
+            onClick={() => a.onClick(provider)}
+          >
+            {a.icon && <FontAwesomeIcon icon={a.icon} />}
+            {a.title}
+          </button>
+        );
+      })}
     </SelectableWrapper>
   );
 };
