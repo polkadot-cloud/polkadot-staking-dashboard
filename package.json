@@ -86,7 +86,6 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
-    "build:netlify": "REACT_APP_ORGANISATION='© Web3 Foundation' REACT_APP_PRIVACY_URL=https://polkadot.network/privacy/ REACT_APP_DISCLAIMER_URL=https://polkadot.network/disclaimer/ REACT_APP_DISABLE_FIAT=1 BUILD_PATH='./build' react-scripts build && echo '/dashboard/* / 301!' | cat >build/_redirects",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src --fix"
