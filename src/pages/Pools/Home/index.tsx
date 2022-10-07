@@ -18,6 +18,8 @@ import {
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useModal } from 'contexts/Modal';
+import { useConnect } from 'contexts/Connect';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -33,10 +35,12 @@ import { ClosurePrompts } from './ClosurePrompts';
 import { PoolStats } from './PoolStats';
 
 export const HomeInner = () => {
+  const { activeAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { bondedPools } = useBondedPools();
   const { getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { openModalWith } = useModal();
 
   // back to tab 0 if not in a pool
   useEffect(() => {
@@ -78,7 +82,15 @@ export const HomeInner = () => {
 
   return (
     <>
-      <PageTitle title="Pools" tabs={tabs} />
+      <PageTitle
+        title="Pools"
+        tabs={tabs}
+        button={{
+          title: 'Pool Role',
+          onClick: () =>
+            openModalWith('AccountPoolRoles', { who: activeAccount }),
+        }}
+      />
       {activeTab === 0 && (
         <>
           <StatBoxList>

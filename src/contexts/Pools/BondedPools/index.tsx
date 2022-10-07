@@ -387,22 +387,22 @@ export const BondedPoolsProvider = ({
   };
 
   const getAccountRoles = (who: MaybeAccount) => {
-    const roots = bondedPools
+    const root = bondedPools
       .filter((b: BondedPool) => b.roles.root === who)
       .map((b: BondedPool) => b.id);
 
-    const nominators = bondedPools
+    const nominator = bondedPools
       .filter((b: BondedPool) => b.roles.nominator === who)
       .map((b: BondedPool) => b.id);
 
-    const stateTogglers = bondedPools
+    const stateToggler = bondedPools
       .filter((b: BondedPool) => b.roles.stateToggler === who)
       .map((b: BondedPool) => b.id);
 
     return {
-      root: roots || null,
-      nominator: nominators || null,
-      stateToggler: stateTogglers || null,
+      root,
+      nominator,
+      stateToggler,
     };
   };
 
