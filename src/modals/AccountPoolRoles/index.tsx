@@ -24,17 +24,31 @@ export const AccountPoolRoles = () => {
         <ContentWrapper>
           {root.length > 0 && (
             <>
-              <h4>You have the root role in {root.length} pools</h4>
+              <h4>Root</h4>
               <div className="items">
-                {Object.entries(root).map(([key, item]: any, index: number) => {
-                  return (
-                    <Button
-                      item={item}
-                      index={index}
-                      key={`network_switch_${index}`}
-                    />
-                  );
-                })}
+                {root.map((id: string, i: number) => (
+                  <Button poolId={id} key={`all_roles_root_${i}`} />
+                ))}
+              </div>
+            </>
+          )}
+          {nominator.length > 0 && (
+            <>
+              <h4>Nominator</h4>
+              <div className="items">
+                {nominator.map((id: string, i: number) => (
+                  <Button poolId={id} key={`all_roles_nominator_${i}`} />
+                ))}
+              </div>
+            </>
+          )}
+          {stateToggler.length > 0 && (
+            <>
+              <h4>State Toggler</h4>
+              <div className="items">
+                {stateToggler.map((id: string, i: number) => (
+                  <Button poolId={id} key={`all_roles_state_toggler_${i}`} />
+                ))}
               </div>
             </>
           )}
@@ -44,11 +58,10 @@ export const AccountPoolRoles = () => {
   );
 };
 
-const Button = (item: any, index: number) => {
+const Button = ({ poolId }: { poolId: string }) => {
   return (
     <StyledButton
       disabled={false}
-      key={`network_switch_${index}`}
       type="button"
       className="action-button"
       onClick={() => {
@@ -61,7 +74,7 @@ const Button = (item: any, index: number) => {
           height={item.brand.inline.size}
         /> */}
       </div>
-      <h3>{item}</h3>
+      <h3>{poolId}</h3>
       {/* {networkKey === key && (
         <h4 className="selected">Selected</h4>
       )} */}
