@@ -10,9 +10,9 @@ import {
 import {
   textSecondary,
   backgroundOverlay,
+  borderPrimary,
   networkColor,
   modalBackground,
-  borderPrimary,
 } from 'theme';
 import { MinimisedProps } from './types';
 

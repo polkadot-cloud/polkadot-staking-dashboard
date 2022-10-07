@@ -47,6 +47,7 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const resetTxFees = () => {
+    setSender(null);
     _setTxFees(new BN(0));
   };
 

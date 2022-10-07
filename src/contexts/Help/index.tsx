@@ -69,7 +69,6 @@ export const HelpProvider = (props: HelpContextProps) => {
     setState({
       ...state,
       status: 2,
-      definition: null,
     });
   };
 

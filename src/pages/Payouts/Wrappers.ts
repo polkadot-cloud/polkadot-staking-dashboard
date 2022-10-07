@@ -14,6 +14,7 @@ import {
 export const ItemWrapper = styled(motion.div)`
   padding: 0.5rem;
   width: 100%;
+
   > .inner {
     padding: 0 0.75rem;
     flex: 1;
@@ -26,22 +27,27 @@ export const ItemWrapper = styled(motion.div)`
     align-items: center;
     flex: 1;
     max-width: 100%;
+
     > .row {
       width: 100%;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
+      
       &:first-child {
         padding: 0.75rem 0;
       }
+
       &:last-child {
         padding-top: 1rem;
         border-top: 1px solid ${borderPrimary};
         padding-top: 0.25rem;
+        
         > div {
           min-height: 3.2rem;
         }
       }
+
       > div {
         display: flex;
         flex-flow: row wrap;
@@ -49,6 +55,7 @@ export const ItemWrapper = styled(motion.div)`
         align-items: center;
         flex: 1;
         max-width: 100%;
+
         h4 {
           margin: 0;
           color: ${textSecondary};
@@ -60,6 +67,7 @@ export const ItemWrapper = styled(motion.div)`
             color: ${networkColor};
           }
         }
+
         h5 {
           margin: 0;
           color: ${textSecondary};
@@ -76,6 +84,7 @@ export const ItemWrapper = styled(motion.div)`
             padding: 0.2rem 0.5rem;
           }
         }
+
         > div:first-child {
           flex-grow: 1;
           display: flex;
@@ -83,10 +92,12 @@ export const ItemWrapper = styled(motion.div)`
           justify-content: flex-start;
           align-items: center;
         }
+
         > div:last-child {
           display: flex;
           flex-flow: row wrap;
           justify-content: flex-end;
+
           > h4 {
             color: ${textSecondary};
             opacity: 0.8;
