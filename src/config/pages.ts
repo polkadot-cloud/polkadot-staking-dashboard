@@ -17,20 +17,19 @@ import * as view1SolidJson from 'img/json/view-1-solid.json';
 import * as viewGroupJson from 'img/json/groups-solid-edited.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
 import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
-import i18next from 'languages';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
     _id: 1,
-    title: 'default',
+    key: 'default',
   },
   {
     _id: 2,
-    title: i18next.t('pages:stake'),
+    key: 'stake',
   },
   {
     _id: 3,
-    title: i18next.t('pages:validators'),
+    key: 'validators',
   },
 ];
 

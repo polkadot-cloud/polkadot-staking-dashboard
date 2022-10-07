@@ -15,7 +15,6 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PageCategory, PageItem, PagesConfig } from 'types';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { LogoWrapper } from './Wrapper';
 import { Primary } from './Primary';
 import Heading from './Heading/Heading';
@@ -35,7 +34,8 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { i18n, t } = useTranslation('common');
+  const { i18n, t: tCommon } = useTranslation('common');
+  const { t: tPages } = useTranslation('pages');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -63,7 +63,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: t('library.active'),
+            text: tCommon('library.active'),
           };
         } else if (warning) {
           _pages[i].action = {
@@ -88,7 +88,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: t('library.active'),
+            text: tCommon('library.active'),
           };
         } else if (setupPercent > 0 && !inPool) {
           _pages[i].action = {
@@ -163,45 +163,50 @@ export const Main = () => {
       </LogoWrapper>
 
       {pageConfig.categories.map(
-        (category: PageCategory, categoryIndex: number) => (
-          <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
-            {/* display heading if not `default` (used for top links) */}
-            {category.title !== 'default' && (
-              <Heading title={category.title} minimised={sideMenuMinimised} />
-            )}
+        (category: PageCategory, categoryIndex: number) => {
+          return (
+            <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
+              {/* display heading if not `default` (used for top links) */}
+              {category.key !== 'default' && (
+                <Heading
+                  title={tPages(category.key)}
+                  minimised={sideMenuMinimised}
+                />
+              )}
 
-            {/* display category links */}
-            {pagesToDisplay.map((page: PageItem, pageIndex: number) => {
-              return (
-                <React.Fragment key={`sidemenu_page_${pageIndex}`}>
-                  {page.category === category._id && (
-                    <Primary
-                      name={
-                        i18n.resolvedLanguage === 'en'
-                          ? page.title
-                          : page.ctitle
-                      }
-                      to={page.hash}
-                      active={page.hash === pathname}
-                      icon={
-                        page.icon ? (
-                          <FontAwesomeIcon
-                            icon={page.icon}
-                            transform="grow-1"
-                            className="fa-icon"
-                          />
-                        ) : undefined
-                      }
-                      animate={page.animate}
-                      action={page.action}
-                      minimised={sideMenuMinimised}
-                    />
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </React.Fragment>
-        )
+              {/* display category links */}
+              {pagesToDisplay.map((page: PageItem, pageIndex: number) => {
+                return (
+                  <React.Fragment key={`sidemenu_page_${pageIndex}`}>
+                    {page.category === category._id && (
+                      <Primary
+                        name={
+                          i18n.resolvedLanguage === 'en'
+                            ? page.title
+                            : page.ctitle
+                        }
+                        to={page.hash}
+                        active={page.hash === pathname}
+                        icon={
+                          page.icon ? (
+                            <FontAwesomeIcon
+                              icon={page.icon}
+                              transform="grow-1"
+                              className="fa-icon"
+                            />
+                          ) : undefined
+                        }
+                        animate={page.animate}
+                        action={page.action}
+                        minimised={sideMenuMinimised}
+                      />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </React.Fragment>
+          );
+        }
       )}
     </>
   );
