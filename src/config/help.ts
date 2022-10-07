@@ -81,7 +81,7 @@ export const HELP_CONFIG: HelpContentRaw = [
         website: 'polkadot.network',
       },
       {
-        title: 'Saking your DOT',
+        title: 'Staking your DOT',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
         website: 'polkadot.network',
       },
