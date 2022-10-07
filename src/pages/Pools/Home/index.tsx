@@ -86,7 +86,7 @@ export const HomeInner = () => {
         title="Pools"
         tabs={tabs}
         button={{
-          title: 'Pool Role',
+          title: 'All Roles',
           onClick: () =>
             openModalWith('AccountPoolRoles', { who: activeAccount }),
         }}

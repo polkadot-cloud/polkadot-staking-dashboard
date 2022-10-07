@@ -386,6 +386,7 @@ export const BondedPoolsProvider = ({
     }
   };
 
+  // get all the roles belonging to one pool account
   const getAccountRoles = (who: MaybeAccount) => {
     const root = bondedPools
       .filter((b: BondedPool) => b.roles.root === who)
