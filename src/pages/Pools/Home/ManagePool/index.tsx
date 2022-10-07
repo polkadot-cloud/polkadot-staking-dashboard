@@ -41,7 +41,7 @@ export const ManagePool = () => {
           <>
             <CardHeaderWrapper withAction>
               <h3>
-                {t('pages.Pools.generate_nominations')}
+                {t('pages.pools.generate_nominations')}
                 <OpenHelpIcon helpKey="Nominations" />
               </h3>
               <div>
@@ -51,7 +51,7 @@ export const ManagePool = () => {
                   primary
                   icon={faChevronCircleRight}
                   transform="grow-1"
-                  title={t('pages.Pools.nominate')}
+                  title={t('pages.pools.nominate')}
                   disabled={!isNominator()}
                   onClick={() => openModalWith('NominatePool', {}, 'small')}
                 />

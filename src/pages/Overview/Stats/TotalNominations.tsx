@@ -21,7 +21,7 @@ export const TotalNominatorsStatBox = () => {
   }
 
   const params = {
-    label: t('pages.Overview.total_nominators'),
+    label: t('pages.overview.total_nominators'),
     stat: {
       value: totalNominators.toNumber(),
       total: maxNominatorsCount,

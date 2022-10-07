@@ -57,9 +57,9 @@ export const ClosurePrompts = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>{t('pages.Pools.destroy_pool')}</h3>
+              <h3>{t('pages.pools.destroy_pool')}</h3>
               <h4>
-                {t('pages.Pools.destroy_pool1')}{' '}
+                {t('pages.pools.destroy_pool1')}{' '}
                 {targets.length > 0
                   ? 'To continue with pool closure, stop nominating.'
                   : depositorCanWithdraw
@@ -73,7 +73,7 @@ export const ClosurePrompts = () => {
                   small
                   primary
                   inline
-                  title={t('pages.Pools.unbond')}
+                  title={t('pages.pools.unbond')}
                   disabled={
                     isSyncing || (!depositorCanWithdraw && !depositorCanUnbond)
                   }

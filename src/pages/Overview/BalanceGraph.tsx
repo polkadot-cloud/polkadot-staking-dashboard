@@ -175,7 +175,7 @@ export const BalanceGraph = () => {
     <>
       <div className="head">
         <h4>
-          {t('pages.Overview.balance')}
+          {t('pages.overview.balance')}
           <OpenHelpIcon helpKey="Your Balance" />
         </h4>
         <h2>

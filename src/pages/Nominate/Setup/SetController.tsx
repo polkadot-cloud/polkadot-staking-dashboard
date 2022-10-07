@@ -52,7 +52,7 @@ export const SetController = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        title={t('pages.Nominate.set_controller_account')}
+        title={t('pages.nominate.set_controller_account')}
         helpKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
         setupType={SetupType.Stake}
@@ -62,7 +62,7 @@ export const SetController = (props: SetupStepProps) => {
         <AccountSelect
           items={items}
           onChange={handleOnChange}
-          placeholder={t('pages.Nominate.search_account')}
+          placeholder={t('pages.nominate.search_account')}
           value={selected}
         />
         <Footer

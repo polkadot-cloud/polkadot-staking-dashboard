@@ -10,7 +10,7 @@ export const AverageCommission = () => {
   const { t } = useTranslation('common');
 
   const params = {
-    label: t('pages.Validators.average_commission'),
+    label: t('pages.validators.average_commission'),
     value: `${String(avgCommission)}%`,
     helpKey: 'Average Commission',
     chelpKey: '平均佣金',

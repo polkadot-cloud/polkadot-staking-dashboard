@@ -71,7 +71,7 @@ export const Item = (props: ItemProps) => {
               onClick={() => openModalWith('Bio', { name, bio }, 'large')}
               className="active"
             >
-              <span>{t('pages.Community.bio')}</span>
+              <span>{t('pages.community.bio')}</span>
             </button>
           </h3>
 

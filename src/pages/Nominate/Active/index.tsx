@@ -79,7 +79,7 @@ export const Active = () => {
             <>
               <CardHeaderWrapper withAction>
                 <h3>
-                  {t('pages.Nominate.start_nominating')}
+                  {t('pages.nominate.start_nominating')}
                   <OpenHelpIcon helpKey="Nominations" />
                 </h3>
                 <div>
@@ -87,7 +87,7 @@ export const Active = () => {
                     small
                     inline
                     primary
-                    title={t('pages.Nominate.nominate')}
+                    title={t('pages.nominate.nominate')}
                     icon={faChevronCircleRight}
                     transform="grow-1"
                     disabled={targets.length === 0 || inSetup() || isSyncing}

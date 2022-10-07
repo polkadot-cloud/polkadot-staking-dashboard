@@ -21,7 +21,7 @@ const ActiveValidatorsStatBox = () => {
   }
 
   const params = {
-    label: t('pages.Validators.active_validators'),
+    label: t('pages.validators.active_validators'),
     stat: {
       value: activeValidators,
       total: validatorCount.toNumber(),

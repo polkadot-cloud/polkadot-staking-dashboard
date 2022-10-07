@@ -44,7 +44,7 @@ export const Members = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>{t('pages.Pools.pool_currently_locked')}</h3>
+              <h3>{t('pages.pools.pool_currently_locked')}</h3>
               <h4>
                 You have permission to unbond and withdraw funds of any pool
                 member. Use a member&apos;s menu ({' '}
@@ -63,7 +63,7 @@ export const Members = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>{t('pages.Pools.pool_in_destroying_state')}</h3>
+              <h3>{t('pages.pools.pool_in_destroying_state')}</h3>
               <h4>
                 You have permission to unbond and withdraw funds of any pool
                 member. Use a member&apos;s menu ({' '}

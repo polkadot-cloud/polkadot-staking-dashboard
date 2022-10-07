@@ -32,7 +32,7 @@ export const SupplyStakedStatBox = () => {
   const totalIssuanceBase = totalIssuance.div(new BN(10 ** units));
 
   const params = {
-    label: t('pages.Nominate.total_supply_staked'),
+    label: t('pages.nominate.total_supply_staked'),
     stat: {
       value: lastTotalStakeBase.toNumber(),
       unit: network.unit,

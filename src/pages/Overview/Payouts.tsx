@@ -27,13 +27,13 @@ export const Payouts = () => {
         <StatusLabel
           status="active_service"
           statusFor="subscan"
-          title={t('pages.Overview.subscan_disabled')}
+          title={t('pages.overview.subscan_disabled')}
           topOffset="37%"
         />
       ) : (
         <StatusLabel
           status="sync_or_setup"
-          title={t('pages.Overview.not_staking')}
+          title={t('pages.overview.not_staking')}
           topOffset="37%"
         />
       )}

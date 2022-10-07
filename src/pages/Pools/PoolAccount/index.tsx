@@ -51,7 +51,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
         transition={{ duration: 0.3 }}
       >
         {address === null ? (
-          <h4>{t('pages.Pools.not_set')}</h4>
+          <h4>{t('pages.pools.not_set')}</h4>
         ) : synced && display !== null ? (
           <>
             <div className="icon">

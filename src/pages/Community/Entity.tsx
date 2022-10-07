@@ -60,7 +60,7 @@ export const Entity = () => {
       <TopBarWrapper>
         <Button
           inline
-          title={t('pages.Community.go_back')}
+          title={t('pages.community.go_back')}
           icon={faChevronLeft}
           transform="shrink-3"
           onClick={() => setActiveSection(0)}
@@ -72,7 +72,7 @@ export const Entity = () => {
       <CardWrapper>
         {!isReady ? (
           <div className="item">
-            <h3>{t('pages.Community.connecting')}</h3>
+            <h3>{t('pages.community.connecting')}</h3>
           </div>
         ) : (
           <>

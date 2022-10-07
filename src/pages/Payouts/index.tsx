@@ -65,7 +65,7 @@ export const Payouts = (props: PageProps) => {
           <SubscanButton />
           <CardHeaderWrapper padded>
             <h4>
-              {t('pages.Payouts.payout_history')}
+              {t('pages.payouts.payout_history')}
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
@@ -87,13 +87,13 @@ export const Payouts = (props: PageProps) => {
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"
-                title={t('pages.Payouts.subscan_disabled')}
+                title={t('pages.payouts.subscan_disabled')}
                 topOffset="30%"
               />
             ) : (
               <StatusLabel
                 status="sync_or_setup"
-                title={t('pages.Payouts.not_staking')}
+                title={t('pages.payouts.not_staking')}
                 topOffset="30%"
               />
             )}
@@ -120,7 +120,7 @@ export const Payouts = (props: PageProps) => {
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
-              title={t('pages.Payouts.recent_payouts')}
+              title={t('pages.payouts.recent_payouts')}
               payouts={payoutsList}
               pagination
             />

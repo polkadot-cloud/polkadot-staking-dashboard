@@ -17,7 +17,7 @@ export const LastEraPayoutStatBox = () => {
   const lastRewardBase = planckBnToUnit(lastReward, units).toFixed(0);
 
   const params = {
-    label: t('pages.Payouts.last_era_payout'),
+    label: t('pages.payouts.last_era_payout'),
     value: lastRewardBase,
     unit,
     helpKey: 'Last Era Payout',

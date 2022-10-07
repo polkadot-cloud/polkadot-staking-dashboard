@@ -238,7 +238,7 @@
         "withdraw": "Withdraw"
     },
     "pages": {
-        "Community": {
+        "community": {
             "fetching_validators": "Fetching validators...",
             "no_validators": "This entity contains no validators.",
             "validator": "Validator",
@@ -248,12 +248,12 @@
             "email": "Email",
             "bio": "Bio"
         },
-        "Favourites": {
+        "favourites": {
             "fetching_favourite_validators": "Fetching favourite validators...",
             "no_favourites": "No Favourites.",
             "favourite_validators": "Favourite Validators"
         },
-        "Nominate": {
+        "nominate": {
             "syncing_nominations": "Syncing nominations...",
             "your_nominations": "Your Nominations",
             "stop_nominating_selected": "Stop Nominating Selected",
@@ -288,7 +288,7 @@
             "nominations": "Nominations:",
             "reward_destination": "Reward Destination:"
         },
-        "Overview": {
+        "overview": {
             "active_nominators": "Active Nominators",
             "total_nominators": "Total Nominators",
             "available": "Available",
@@ -315,14 +315,14 @@
             "recent_payouts": "Recent Payouts",
             "reserved": "Reserved"
         },
-        "Payouts": {
+        "payouts": {
             "recent_payouts": "Recent Payouts",
             "subscan_disabled": "Subscan Disabled",
             "last_era_payout": "Last Era Payout",
             "payout_history": "Payout History",
             "not_staking": "Not Staking"
         },
-        "Pools": {
+        "pools": {
             "bond": "Bond",
             "been_claimed": "in rewards have been claimed.",
             "poolstats1": "The total amount of ${network.unit} that has been claimed by pool members.",
@@ -387,7 +387,7 @@
             "nominator": "Nominator",
             "state_toggler": "State Toggler"
         },
-        "Validators": {
+        "validators": {
             "pool_membership": "Pool Membership",
             "average_commission": "Average Commission",
             "active_validators": "Active Validators",

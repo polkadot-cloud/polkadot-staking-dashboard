@@ -64,13 +64,13 @@ export const PoolRoles = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.roles !== null}
-        title={t('pages.Pools.roles')}
+        title={t('pages.pools.roles')}
         // helpKey="Bonding"
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ margin: '0.5rem 0' }}>{t('pages.Pools.pool_role1')}</h4>
-        <h4 style={{ marginTop: 0 }}>{t('pages.Pools.pool_role2')}</h4>
+        <h4 style={{ margin: '0.5rem 0' }}>{t('pages.pools.pool_role1')}</h4>
+        <h4 style={{ marginTop: 0 }}>{t('pages.pools.pool_role2')}</h4>
         <Roles
           batchKey="pool_roles_create"
           listenIsValid={setRolesValid}

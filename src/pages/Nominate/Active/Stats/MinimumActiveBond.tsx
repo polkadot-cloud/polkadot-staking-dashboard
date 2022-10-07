@@ -13,7 +13,7 @@ export const MinimumActiveBondStatBox = () => {
   const { t } = useTranslation('common');
 
   const params = {
-    label: t('pages.Nominate.minimum_active_bond'),
+    label: t('pages.nominate.minimum_active_bond'),
     value: minActiveBond,
     unit: network.unit,
     helpKey: 'Bonding',

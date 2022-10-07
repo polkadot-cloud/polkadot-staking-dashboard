@@ -40,13 +40,13 @@ export const Input = (props: any) => {
       <div style={{ margin: '1rem 0' }}>
         <input
           style={{ width: '100%' }}
-          placeholder={t('pages.Pools.pool_namet')}
+          placeholder={t('pages.pools.pool_namet')}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}
         />
       </div>
-      <p>{t('pages.Pools.pool_name1')}</p>
+      <p>{t('pages.pools.pool_name1')}</p>
     </>
   );
 };

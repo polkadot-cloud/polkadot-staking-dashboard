@@ -22,7 +22,7 @@ export const Reserve = (props: ReserveProps) => {
       <ReserveWrapper>
         <Separator />
         <h4>
-          {t('pages.Overview.reserved')}
+          {t('pages.overview.reserved')}
           <OpenHelpIcon helpKey="Reserve Balance" />
         </h4>
 

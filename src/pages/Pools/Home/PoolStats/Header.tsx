@@ -47,13 +47,13 @@ export const Header = () => {
           <div>
             <div className="inner">
               <h2>{stateDisplay}</h2>
-              <h4>{t('pages.Pools.pool_state')}</h4>
+              <h4>{t('pages.pools.pool_state')}</h4>
             </div>
           </div>
           <div>
             <div className="inner">
               <h2>{poolMembers.length}</h2>
-              <h4>{t('pages.Pools.pool_members')}</h4>
+              <h4>{t('pages.pools.pool_members')}</h4>
             </div>
           </div>
           <div>
@@ -61,7 +61,7 @@ export const Header = () => {
               <h2>
                 {bonded} {network.unit}
               </h2>
-              <h4>{t('pages.Pools.total_bonded')}</h4>
+              <h4>{t('pages.pools.total_bonded')}</h4>
             </div>
           </div>
         </div>

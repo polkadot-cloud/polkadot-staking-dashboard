@@ -83,7 +83,7 @@ export const Status = ({ height }: { height: number }) => {
 
   const payeeStatus = PAYEE_STATUS.find((item) => item.key === payee);
 
-  let startTitle = t('pages.Nominate.start_nominating');
+  let startTitle = t('pages.nominate.start_nominating');
   if (inSetup()) {
     const progress = getStakeSetupProgressPercent(activeAccount);
     if (progress > 0) {
@@ -125,7 +125,7 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
-        label={t('pages.Nominate.reward_destination')}
+        label={t('pages.nominate.reward_destination')}
         helpKey="Reward Destination"
         icon={
           (payee === null
@@ -153,7 +153,7 @@ export const Status = ({ height }: { height: number }) => {
         }
       />
       <Separator />
-      <Controller label={t('pages.Nominate.controller_account')} />
+      <Controller label={t('pages.nominate.controller_account')} />
     </CardWrapper>
   );
 };

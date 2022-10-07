@@ -46,7 +46,7 @@ export const Controller = ({ label }: { label: string }) => {
             <Button
               primary
               inline
-              title={t('pages.Nominate.change')}
+              title={t('pages.nominate.change')}
               icon={faExchangeAlt}
               small
               disabled={

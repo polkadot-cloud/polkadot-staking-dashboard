@@ -12,7 +12,7 @@ const PoolMembership = () => {
   const { t } = useTranslation('common');
 
   const params = {
-    label: t('pages.Validators.pool_membership'),
+    label: t('pages.validators.pool_membership'),
     value:
       membership === null
         ? 'Not in Pool'

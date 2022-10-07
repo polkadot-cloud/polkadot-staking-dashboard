@@ -91,8 +91,8 @@ export const Announcements = () => {
   if (nominatorCapReached) {
     announcements.push({
       class: 'danger',
-      title: t('pages.Overview.announcements1'),
-      subtitle: t('pages.Overview.announcements2'),
+      title: t('pages.overview.announcements1'),
+      subtitle: t('pages.overview.announcements2'),
     });
   }
 
@@ -103,8 +103,8 @@ export const Announcements = () => {
       title: `${toFixedIfNecessary(
         nominatorReachedPercentage.toNumber(),
         2
-      )} ${t('pages.Overview.announcements3')}`,
-      subtitle: `${t('pages.Overview.announcements4')} ${humanNumber(
+      )} ${t('pages.overview.announcements3')}`,
+      subtitle: `${t('pages.overview.announcements4')} ${humanNumber(
         maxNominatorsCount.toNumber()
       )}.`,
     });
@@ -115,7 +115,7 @@ export const Announcements = () => {
     // total pools active
     announcements.push({
       class: 'pools',
-      title: `${bondedPools.length} ${t('pages.Overview.announcements5')}`,
+      title: `${bondedPools.length} ${t('pages.overview.announcements5')}`,
       subtitle:
         i18next.resolvedLanguage === 'en'
           ? `Nomination pools are available to join on the ${network.name} network.`
@@ -126,7 +126,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'pools',
       title: `${totalPoolPointsBase} ${network.unit} ${t(
-        'pages.Overview.announcements7'
+        'pages.overview.announcements7'
       )}`,
       subtitle:
         i18next.resolvedLanguage === 'en'
@@ -138,7 +138,7 @@ export const Announcements = () => {
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `${t('pages.Overview.announcements9')} ${minNominatorBondBase} ${
+    title: `${t('pages.overview.announcements9')} ${minNominatorBondBase} ${
       network.unit
     }.`,
     subtitle:

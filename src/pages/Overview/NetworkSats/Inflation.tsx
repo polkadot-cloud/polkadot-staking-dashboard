@@ -40,7 +40,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                {t('pages.Overview.historical_rewards_rate')}{' '}
+                {t('pages.overview.historical_rewards_rate')}{' '}
                 <OpenHelpIcon helpKey="Historical Rewards Rate" />
               </h4>
             </div>
@@ -54,7 +54,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                {t('pages.Overview.inflation')}{' '}
+                {t('pages.overview.inflation')}{' '}
                 <OpenHelpIcon helpKey="Inflation" />
               </h4>
             </div>
@@ -63,7 +63,7 @@ export const Inflation = () => {
             <div className="inner">
               <h2>{supplyAsPercent}%</h2>
               <h4>
-                {t('pages.Overview.supply_staked')}{' '}
+                {t('pages.overview.supply_staked')}{' '}
                 <OpenHelpIcon helpKey="Supply Staked" />
               </h4>
             </div>

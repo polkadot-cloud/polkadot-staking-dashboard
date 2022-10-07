@@ -96,12 +96,12 @@ export const Summary = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('pages.Pools.summary')}
+        title={t('pages.pools.summary')}
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
-          <Warning text={t('pages.Pools.w1')} />
+          <Warning text={t('pages.pools.w1')} />
         )}
         <SummaryWrapper>
           <section>
@@ -110,7 +110,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pages.Pools.pool_name')}
+              &nbsp; {t('pages.pools.pool_name')}
             </div>
             <div>{metadata ?? `Not Set`}</div>
           </section>
@@ -120,7 +120,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pages.Pools.bond_amount')}
+              &nbsp; {t('pages.pools.bond_amount')}
             </div>
             <div>
               {humanNumber(bond)} {network.unit}
@@ -132,7 +132,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pages.Pools.nominations')}
+              &nbsp; {t('pages.pools.nominations')}
             </div>
             <div>{nominations.length}</div>
           </section>
@@ -142,9 +142,9 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pages.Pools.roles')}
+              &nbsp; {t('pages.pools.roles')}
             </div>
-            <div>{t('pages.Pools.assigned')}</div>
+            <div>{t('pages.pools.assigned')}</div>
           </section>
           <section>
             <EstimatedTxFee format="table" />
@@ -164,7 +164,7 @@ export const Summary = (props: SetupStepProps) => {
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            title={t('pages.Pools.create_pool')}
+            title={t('pages.pools.create_pool')}
             primary
           />
         </div>

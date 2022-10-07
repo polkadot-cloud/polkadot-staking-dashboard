@@ -142,7 +142,7 @@ export const HomeInner = () => {
               <PoolList
                 batchKey="bonded_pools"
                 pools={bondedPools}
-                title={t('pages.Pools.active_pools')}
+                title={t('pages.pools.active_pools')}
                 allowMoreCols
                 allowSearch
                 pagination

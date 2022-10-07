@@ -14,7 +14,7 @@ const MinJoinBondStatBox = () => {
   const { t } = useTranslation('common');
 
   const params = {
-    label: t('pages.Pools.minimum_join_bond'),
+    label: t('pages.pools.minimum_join_bond'),
     value: planckBnToUnit(stats.minJoinBond, units),
     unit: network.unit,
     helpKey: 'Minimum Join Bond',

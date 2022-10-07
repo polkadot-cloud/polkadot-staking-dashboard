@@ -163,7 +163,7 @@ export const Status = ({ height }: { height: number }) => {
         <Membership label={label} />
       ) : (
         <Stat
-          label={t('pages.Pools.pool_membership')}
+          label={t('pages.pools.pool_membership')}
           helpKey="Pool Membership"
           stat="Not in Pool"
           buttons={isSyncing ? [] : buttons}
@@ -171,7 +171,7 @@ export const Status = ({ height }: { height: number }) => {
       )}
       <Separator />
       <Stat
-        label={t('pages.Pools.unclaimed_rewards')}
+        label={t('pages.pools.unclaimed_rewards')}
         helpKey="Pool Rewards"
         stat={labelRewards}
         buttons={isSyncing ? [] : buttonsRewards}
@@ -181,7 +181,7 @@ export const Status = ({ height }: { height: number }) => {
           <Separator />
           <Stat
             icon={isSyncing ? undefined : poolStateIcon}
-            label={t('pages.Pools.pool_status')}
+            label={t('pages.pools.pool_status')}
             helpKey="Nomination Status"
             stat={`${poolStatusLeft}${poolStatusRight}`}
           />

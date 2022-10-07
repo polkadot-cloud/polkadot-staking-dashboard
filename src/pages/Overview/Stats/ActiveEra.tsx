@@ -19,7 +19,7 @@ const ActiveEraStatBox = () => {
   const timeleft = `${_timeleft.hours()}:${_timeleft.minutes()}:${_timeleft.seconds()}`;
 
   const params = {
-    label: t('pages.Overview.active_era'),
+    label: t('pages.overview.active_era'),
     stat: {
       value: metrics.activeEra.index,
       unit: '',
