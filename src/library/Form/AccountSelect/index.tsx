@@ -1,6 +1,5 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
 
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,9 +11,9 @@ import { useTheme } from 'contexts/Themes';
 import { defaultThemes, networkColors } from 'theme/default';
 import { StatusLabel } from 'library/StatusLabel';
 import { useApi } from 'contexts/Api';
+import { useTranslation } from 'react-i18next';
 import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
 import { AccountSelectProps, InputItem } from '../types';
-import { useTranslation } from 'react-i18next';
 
 export const AccountSelect = (props: AccountSelectProps) => {
   const { items, onChange, placeholder, value } = props;

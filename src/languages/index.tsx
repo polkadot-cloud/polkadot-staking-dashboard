@@ -25,7 +25,7 @@ i18next
     },
   });
 
-export const TranslationButtons = () => {
+export const LanguageButton = () => {
   const { i18n } = useTranslation('common');
   return (
     <>

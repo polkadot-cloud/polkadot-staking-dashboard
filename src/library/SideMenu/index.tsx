@@ -21,7 +21,7 @@ import { ConnectionStatus } from 'contexts/Api/types';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { useHelp } from 'contexts/Help';
-import { TranslationButtons } from 'translation';
+import { LanguageButton } from 'languages';
 import { useTranslation } from 'react-i18next';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
@@ -162,7 +162,7 @@ export const SideMenu = () => {
             <MoonOutlineSVG width="1.4rem" height="1.4rem" />
           </button>
         )}
-        <TranslationButtons />
+        <LanguageButton />
       </section>
     </Wrapper>
   );

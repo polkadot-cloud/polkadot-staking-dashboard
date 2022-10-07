@@ -33,7 +33,7 @@ export const ItemWrapper = styled(motion.div)`
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-      
+
       &:first-child {
         padding: 0.75rem 0;
       }
@@ -42,7 +42,7 @@ export const ItemWrapper = styled(motion.div)`
         padding-top: 1rem;
         border-top: 1px solid ${borderPrimary};
         padding-top: 0.25rem;
-        
+
         > div {
           min-height: 3.2rem;
         }

@@ -1,6 +1,5 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
 
 import BN from 'bn.js';
 import moment from 'moment';
@@ -87,8 +86,8 @@ export const Overview = () => {
                 {lastReward === null
                   ? 0
                   : humanNumber(
-                    planckBnToUnit(new BN(lastReward.amount), units)
-                  )}
+                      planckBnToUnit(new BN(lastReward.amount), units)
+                    )}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">
