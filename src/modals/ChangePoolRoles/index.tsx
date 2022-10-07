@@ -22,7 +22,7 @@ export const ChangePoolRoles = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { config } = useModal();
   const { txFeesValid } = useTxFees();
-  const { poolId, roleEdits } = config;
+  const { id: poolId, roleEdits } = config;
 
   // tx to submit
   const tx = () => {
