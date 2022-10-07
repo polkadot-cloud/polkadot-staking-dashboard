@@ -86,7 +86,11 @@ export const SubscanProvider = ({
           if (!result?.data?.list) {
             break;
           }
-          _payouts = _payouts.concat(result.data.list);
+          // ensure no payouts have block_timestamp of 0
+          const list = result.data.list.filter(
+            (l: AnyApi) => l.block_timestamp !== 0
+          );
+          _payouts = _payouts.concat(list);
         }
         setPayouts(_payouts);
       }
@@ -125,11 +129,14 @@ export const SubscanProvider = ({
             break;
           }
           // check list has records
-          const { list } = result.data;
-          if (!list.length) {
+          if (!result.data.list.length) {
             break;
           }
-          _poolClaims = _poolClaims.concat(result.data.list);
+          // ensure no payouts have block_timestamp of 0
+          const list = result.data.list.filter(
+            (l: AnyApi) => l.block_timestamp !== 0
+          );
+          _poolClaims = _poolClaims.concat(list);
         }
         setPoolClaims(_poolClaims);
       }
