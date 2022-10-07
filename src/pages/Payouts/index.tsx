@@ -33,10 +33,11 @@ export const Payouts = (props: PageProps) => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { t } = useTranslation('common');
+  const { t: tCommon } = useTranslation('common');
+  const { t: tPages } = useTranslation('pages');
 
   const { page } = props;
-  const { title } = page;
+  const { key } = page;
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
@@ -56,7 +57,7 @@ export const Payouts = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={title} />
+      <PageTitle title={tPages(key)} />
       <StatBoxList>
         <LastEraPayoutStatBox />
       </StatBoxList>
@@ -65,7 +66,7 @@ export const Payouts = (props: PageProps) => {
           <SubscanButton />
           <CardHeaderWrapper padded>
             <h4>
-              {t('pages.payouts.payout_history')}
+              {tCommon('pages.payouts.payout_history')}
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
@@ -87,13 +88,13 @@ export const Payouts = (props: PageProps) => {
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"
-                title={t('pages.payouts.subscan_disabled')}
+                title={tCommon('pages.payouts.subscan_disabled')}
                 topOffset="30%"
               />
             ) : (
               <StatusLabel
                 status="sync_or_setup"
-                title={t('pages.payouts.not_staking')}
+                title={tCommon('pages.payouts.not_staking')}
                 topOffset="30%"
               />
             )}
@@ -120,7 +121,7 @@ export const Payouts = (props: PageProps) => {
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
-              title={t('pages.payouts.recent_payouts')}
+              title={tCommon('pages.payouts.recent_payouts')}
               payouts={payoutsList}
               pagination
             />

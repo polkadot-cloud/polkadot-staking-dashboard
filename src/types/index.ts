@@ -81,8 +81,7 @@ export type PageCategories = Array<PageCategory>;
 
 export interface PageItem {
   category: number;
-  title: string;
-  ctitle: string;
+  key: string;
   uri: string;
   hash: string;
   Entry: React.FC<PageProps>;

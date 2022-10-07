@@ -13,19 +13,20 @@ import { PageProps } from '../types';
 export const Favourites = (props: PageProps) => {
   const { isReady } = useApi();
   const { page } = props;
-  const { title } = page;
+  const { key } = page;
   const { favouritesList } = useValidators();
-  const { t } = useTranslation('common');
+  const { t: tCommon } = useTranslation('common');
+  const { t: tPages } = useTranslation('pages');
 
   const batchKey = 'favourite_validators';
 
   return (
     <>
-      <PageTitle title={title} />
+      <PageTitle title={tPages(key)} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favouritesList === null ? (
-            <h3>{t('pages.favourites.fetching_favourite_validators')}</h3>
+            <h3>{tCommon('pages.favourites.fetching_favourite_validators')}</h3>
           ) : (
             <>
               {isReady && (
@@ -35,14 +36,14 @@ export const Favourites = (props: PageProps) => {
                       bondType="stake"
                       validators={favouritesList}
                       batchKey={batchKey}
-                      title={t('pages.favourites.favourite_validators')}
+                      title={tCommon('pages.favourites.favourite_validators')}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavourites
                     />
                   ) : (
-                    <h3>{t('pages.favourites.no_favourites')}</h3>
+                    <h3>{tCommon('pages.favourites.no_favourites')}</h3>
                   )}
                 </>
               )}

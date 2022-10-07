@@ -34,7 +34,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { i18n, t: tCommon } = useTranslation('common');
+  const { t: tCommon } = useTranslation('common');
   const { t: tPages } = useTranslation('pages');
 
   const [pageConfig, setPageConfig] = useState({
@@ -180,11 +180,7 @@ export const Main = () => {
                   <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                     {page.category === category._id && (
                       <Primary
-                        name={
-                          i18n.resolvedLanguage === 'en'
-                            ? page.title
-                            : page.ctitle
-                        }
+                        name={tPages(page.key)}
                         to={page.hash}
                         active={page.hash === pathname}
                         icon={

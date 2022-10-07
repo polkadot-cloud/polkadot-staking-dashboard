@@ -31,11 +31,13 @@ import { useApi } from 'contexts/Api';
 import { Tooltip } from 'library/Tooltip';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallbackRoutes, ErrorFallbackApp } from 'library/ErrorBoundary';
+import { useTranslation } from 'react-i18next';
 
 export const RouterInner = () => {
   const { network } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+  const { t } = useTranslation('pages');
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {
@@ -95,7 +97,7 @@ export const RouterInner = () => {
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${page.title} : ${TITLE_DEFAULT}`}</title>
+                            <title>{`${t(page.key)} : ${TITLE_DEFAULT}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>
