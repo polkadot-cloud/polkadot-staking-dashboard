@@ -70,11 +70,13 @@ export const GenerateNominationsInner = (
 
   const rawBatchKey = 'validators_browse';
 
-  // update selected value on account switch
+  // update nominations on account switch
   useEffect(() => {
-    removeValidatorMetaBatch(batchKey);
-    setNominations([...defaultNominations]);
-  }, [activeAccount, defaultNominations]);
+    if (nominations !== defaultNominations) {
+      removeValidatorMetaBatch(batchKey);
+      setNominations([...defaultNominations]);
+    }
+  }, [activeAccount]);
 
   // refetch if fetching is triggered
   useEffect(() => {

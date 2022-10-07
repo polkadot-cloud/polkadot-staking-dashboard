@@ -19,7 +19,7 @@ import { InputItem } from 'library/Form/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
-import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
+import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
 export const UpdateController = () => {
