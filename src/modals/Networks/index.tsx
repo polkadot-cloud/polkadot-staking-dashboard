@@ -8,6 +8,7 @@ import { NETWORKS } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { NetworkName } from 'types';
+import { useTranslation } from 'react-i18next';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from '../Wrappers';
 import {
@@ -24,6 +25,7 @@ export const Networks = () => {
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
   const networkKey: string = network.name.toLowerCase();
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     // @ts-ignore
@@ -37,7 +39,7 @@ export const Networks = () => {
       <Title title="Networks" />
       <PaddingWrapper>
         <ContentWrapper>
-          <h4>Select Network</h4>
+          <h4>{t('modals.select_network')}</h4>
           <div className="items">
             {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
               const Svg = item.brand.inline.svg;
@@ -64,7 +66,9 @@ export const Networks = () => {
                     />
                   </div>
                   <h3>{item.name}</h3>
-                  {networkKey === key && <h4 className="selected">Selected</h4>}
+                  {networkKey === key && (
+                    <h4 className="selected">{t('modals.selected')}</h4>
+                  )}
                   <div>
                     <FontAwesomeIcon
                       transform="shrink-2"
@@ -75,7 +79,7 @@ export const Networks = () => {
               );
             })}
           </div>
-          <h4>Connection Type</h4>
+          <h4>{t('modals.connection_type')}</h4>
           <ConnectionsWrapper>
             <ConnectionButton
               connected={!isLightClient}
@@ -98,8 +102,10 @@ export const Networks = () => {
                 setStatus(0);
               }}
             >
-              <h3>Light Client</h3>
-              {isLightClient && <h4 className="selected">Selected</h4>}
+              <h3>{t('modals.light_client')}</h3>
+              {isLightClient && (
+                <h4 className="selected">{t('modals.selected')}</h4>
+              )}
             </ConnectionButton>
           </ConnectionsWrapper>
 
@@ -116,7 +122,7 @@ export const Networks = () => {
                   rel="noreferrer"
                   className="learn-more"
                 >
-                  Learn more here.
+                  {t('modals.learn_more_here')}
                 </a>
               </div>
             </BraveWarning>

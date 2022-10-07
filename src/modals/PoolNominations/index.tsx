@@ -4,6 +4,7 @@
 import { useModal } from 'contexts/Modal';
 import { ValidatorList } from 'library/ValidatorList';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -11,10 +12,11 @@ export const PoolNominations = () => {
   const { config } = useModal();
   const { nominator, targets } = config;
   const batchKey = 'pool_nominations';
+  const { t } = useTranslation('common');
 
   return (
     <>
-      <Title title="Pool Nominations" />
+      <Title title={t('modals.pool_nominations')} />
       <PaddingWrapper>
         <ListWrapper>
           {targets.length > 0 ? (
@@ -23,12 +25,12 @@ export const PoolNominations = () => {
               validators={targets}
               nominator={nominator}
               batchKey={batchKey}
-              title="Pool Nominations"
+              title={t('modals.pool_nominations')}
               showMenu={false}
               inModal
             />
           ) : (
-            <h3>This pool is not nominating.</h3>
+            <h3>{t('modals.pool_is_not_nominating')}</h3>
           )}
         </ListWrapper>
       </PaddingWrapper>

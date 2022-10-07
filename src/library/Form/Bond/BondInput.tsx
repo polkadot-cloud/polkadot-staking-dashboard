@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { isNumeric } from 'Utils';
 import { Button } from 'library/Button';
+import { useTranslation } from 'react-i18next';
 import { InputWrapper, RowWrapper } from '../Wrappers';
 import { BondInputProps } from '../types';
 
@@ -14,6 +15,7 @@ export const BondInput = (props: BondInputProps) => {
   const setters = props.setters ?? [];
   const _value = props.value ?? 0;
   const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
+  const { t } = useTranslation('common');
 
   const { network } = useApi();
   const { activeAccount } = useConnect();

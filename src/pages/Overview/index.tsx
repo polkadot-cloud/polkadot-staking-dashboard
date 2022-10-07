@@ -1,5 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
+/* eslint-disable */
 
 import BN from 'bn.js';
 import moment from 'moment';
@@ -21,6 +22,7 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { useTranslation } from 'react-i18next';
 import { ActiveAccount } from './ActiveAccount';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
@@ -33,6 +35,7 @@ import Reserve from './Reserve';
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
+  const { t } = useTranslation('common');
   const { payouts, poolClaims } = useSubscan();
   const { lastReward } = formatRewardsForGraphs(
     14,
@@ -79,13 +82,13 @@ export const Overview = () => {
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
-              <h4>Recent Payouts</h4>
+              <h4>{t('pages.Overview.recent_payouts')}</h4>
               <h2>
                 {lastReward === null
                   ? 0
                   : humanNumber(
-                      planckBnToUnit(new BN(lastReward.amount), units)
-                    )}
+                    planckBnToUnit(new BN(lastReward.amount), units)
+                  )}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">

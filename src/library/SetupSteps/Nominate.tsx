@@ -7,11 +7,13 @@ import { useApi } from 'contexts/Api';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
 import { NominationsProps } from './types';
 
 export const Nominate = (props: NominationsProps) => {
   const { batchKey, setupType, section } = props;
+  const { t } = useTranslation('common');
 
   const { consts } = useApi();
   const { activeAccount } = useConnect();
@@ -39,10 +41,7 @@ export const Nominate = (props: NominationsProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '0.5rem' }}>
-          <h4>
-            Choose up to {maxNominations} validators to nominate. Generate your
-            nominations automatically or manually insert them.
-          </h4>
+          <h4>{t('library.nominate1', { maxNominations })}</h4>
           <GenerateNominations
             batchKey={batchKey}
             setters={[

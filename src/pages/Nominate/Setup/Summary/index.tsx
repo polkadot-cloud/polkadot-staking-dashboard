@@ -18,10 +18,12 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { useTranslation } from 'react-i18next';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
   const { section } = props;
+  const { t } = useTranslation('common');
 
   const { api, network } = useApi();
   const { units } = network;
@@ -99,7 +101,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Reward Destination:
+              &nbsp; {t('pages.Nominate.reward_destination')}
             </div>
             <div>{payee}</div>
           </section>
@@ -109,7 +111,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Nominations:
+              &nbsp; {t('pages.Nominate.nominations')}
             </div>
             <div>{nominations.length}</div>
           </section>
@@ -119,7 +121,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Bond Amount:
+              &nbsp; {t('pages.Nominate.bond_amount')}
             </div>
             <div>
               {humanNumber(bond)} {network.unit}

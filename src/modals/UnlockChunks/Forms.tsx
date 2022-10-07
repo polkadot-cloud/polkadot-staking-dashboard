@@ -22,6 +22,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
+import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
@@ -38,6 +39,7 @@ export const Forms = forwardRef(
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBalances();
     const { txFeesValid } = useTxFees();
+    const { t } = useTranslation('common');
 
     const { bondType, poolClosure } = config || {};
     const { historyDepth } = staking;
@@ -109,16 +111,18 @@ export const Forms = forwardRef(
         <div ref={ref} style={{ paddingBottom: '1rem' }}>
           <div>
             {!accountHasSigner(signingAccount) && (
-              <Warning text="Your account is read only, and cannot sign transactions." />
+              <Warning text={t('modals.w1')} />
             )}
             {task === 'rebond' && (
               <h2>
-                Rebond {planckBnToUnit(value, units)} {network.unit}
+                {t('modals.rebond')} {planckBnToUnit(value, units)}{' '}
+                {network.unit}
               </h2>
             )}
             {task === 'withdraw' && (
               <h2>
-                Withdraw {planckBnToUnit(value, units)} {network.unit}
+                {t('modals.withdraw')} {planckBnToUnit(value, units)}{' '}
+                {network.unit}
               </h2>
             )}
             <Separator />
@@ -134,7 +138,7 @@ export const Forms = forwardRef(
                 onClick={() => setSection(0)}
               >
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
-                Back
+                {t('modals.back')}
               </button>
             </div>
             <div>
@@ -153,7 +157,7 @@ export const Forms = forwardRef(
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

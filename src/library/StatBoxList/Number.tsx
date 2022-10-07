@@ -3,12 +3,14 @@
 
 import NumberEasing from 'che-react-number-easing';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { StatBox } from './Item';
 import { NumberProps } from './types';
 
 export const Number = (props: NumberProps) => {
-  const { label, value, unit, helpKey } = props;
+  const { label, value, unit, helpKey, chelpKey } = props;
   const help = helpKey !== undefined;
+  const { i18n } = useTranslation('common');
 
   const currency = props.currency ?? '';
 
@@ -35,7 +37,11 @@ export const Number = (props: NumberProps) => {
           </h3>
           <h4>
             {label}
-            {help && <OpenHelpIcon helpKey={helpKey} />}
+            {help && (
+              <OpenHelpIcon
+                helpKey={i18n.resolvedLanguage === 'en' ? helpKey : chelpKey}
+              />
+            )}
           </h4>
         </div>
       </div>

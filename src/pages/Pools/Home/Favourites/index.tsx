@@ -9,12 +9,14 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import PoolList from 'library/PoolList';
 import { useUi } from 'contexts/UI';
+import { useTranslation } from 'react-i18next';
 
 export const Favourites = () => {
   const { isReady } = useApi();
   const { favourites, removeFavourite } = usePoolsConfig();
   const { bondedPools } = useBondedPools();
   const { isSyncing } = useUi();
+  const { t } = useTranslation('common');
 
   // store local favourite list and update when favourites list is mutated
   const [favouritesList, setFavouritesList] = useState<Array<any>>([]);
@@ -40,7 +42,7 @@ export const Favourites = () => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favouritesList === null || isSyncing ? (
-            <h3>Fetching favourite pools...</h3>
+            <h3>{t('pages.Pools.fetching_favourite_pools')}</h3>
           ) : (
             <>
               {isReady && (
@@ -49,12 +51,12 @@ export const Favourites = () => {
                     <PoolList
                       batchKey="favourite_pools"
                       pools={favouritesList}
-                      title="Favourites List"
+                      title={t('pages.Pools.favourites_list')}
                       allowMoreCols
                       pagination
                     />
                   ) : (
-                    <h3>No Favourites.</h3>
+                    <h3>{t('pages.Pools.no_favourites')}</h3>
                   )}
                 </>
               )}

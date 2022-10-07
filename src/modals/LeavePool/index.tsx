@@ -4,12 +4,14 @@
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { UnbondAll } from 'modals/UpdateBond/Forms/UnbondAll';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const LeavePool = () => {
+  const { t } = useTranslation('common');
   return (
     <>
-      <Title title="Leave Pool" icon={faSignOutAlt} />
+      <Title title={t('modals.leave_pool')} icon={faSignOutAlt} />
       <PaddingWrapper>
         <UnbondAll />
       </PaddingWrapper>

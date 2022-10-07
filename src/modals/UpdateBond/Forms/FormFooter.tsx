@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper } from '../../Wrappers';
 
 export const FormFooter = ({
@@ -14,6 +15,7 @@ export const FormFooter = ({
   isValid,
 }: any) => {
   const hasSections = setSection !== undefined;
+  const { t } = useTranslation('common');
 
   const handleSubmit = () => {
     if (hasSections) {
@@ -31,7 +33,7 @@ export const FormFooter = ({
             onClick={() => handleSubmit()}
           >
             <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
-            Back
+            {t('modals.back')}
           </button>
         )}
       </div>

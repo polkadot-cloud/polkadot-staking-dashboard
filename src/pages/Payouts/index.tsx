@@ -23,6 +23,7 @@ import { useStaking } from 'contexts/Staking';
 import { MAX_PAYOUT_DAYS } from 'consts';
 import { AnySubscan } from 'types';
 import { BN } from 'bn.js';
+import { useTranslation } from 'react-i18next';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
@@ -32,6 +33,7 @@ export const Payouts = (props: PageProps) => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
+  const { t } = useTranslation('common');
 
   const { page } = props;
   const { title } = page;
@@ -63,7 +65,7 @@ export const Payouts = (props: PageProps) => {
           <SubscanButton />
           <CardHeaderWrapper padded>
             <h4>
-              Payout History
+              {t('pages.Payouts.payout_history')}
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
@@ -85,13 +87,13 @@ export const Payouts = (props: PageProps) => {
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"
-                title="Subscan Disabled"
+                title={t('pages.Payouts.subscan_disabled')}
                 topOffset="30%"
               />
             ) : (
               <StatusLabel
                 status="sync_or_setup"
-                title="Not Staking"
+                title={t('pages.Payouts.not_staking')}
                 topOffset="30%"
               />
             )}
@@ -118,7 +120,7 @@ export const Payouts = (props: PageProps) => {
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
-              title="Recent Payouts"
+              title={t('pages.Payouts.recent_payouts')}
               payouts={payoutsList}
               pagination
             />

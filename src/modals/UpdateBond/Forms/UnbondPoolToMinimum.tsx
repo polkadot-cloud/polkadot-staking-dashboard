@@ -14,6 +14,7 @@ import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { Separator, NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
@@ -29,6 +30,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { getTransferOptions } = useTransferOptions();
   const { stats } = usePoolsConfig();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('common');
 
   const { minJoinBond, minCreateBond } = stats;
   const { bondDuration } = consts;
@@ -98,18 +100,15 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
       <div className="items">
         <>
           {!accountHasSigner(activeAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
+            <Warning text={t('modals.w1')} />
           )}
-          <h4>Amount to unbond:</h4>
+          <h4>{t('modals.amount_to_unbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once unbonding, you must wait {bondDuration} eras for your funds
-              to become available.
-            </p>
+            <p>{t('modals.update_bond4', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>

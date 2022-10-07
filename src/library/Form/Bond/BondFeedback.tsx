@@ -13,6 +13,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
 import { BN_ZERO } from '@polkadot/util';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { BondInput } from './BondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
@@ -26,6 +27,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const listenIsValid = props.listenIsValid ?? (() => {});
   const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
   const defaultBond = props.defaultBond || '';
+  const { t } = useTranslation('common');
 
   const { network } = useApi();
   const { activeAccount } = useConnect();

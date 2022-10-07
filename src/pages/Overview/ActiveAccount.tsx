@@ -9,12 +9,14 @@ import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
+import { useTranslation } from 'react-i18next';
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
   const { activeAccount, getAccount } = useConnect();
   const accountData = getAccount(activeAccount);
+  const { t } = useTranslation('common');
 
   // click to copy notification
   let notification: NotificationText | null = null;

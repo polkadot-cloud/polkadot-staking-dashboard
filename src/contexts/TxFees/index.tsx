@@ -42,6 +42,7 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
   }, [txFees, sender]);
 
   const setTxFees = (fees: BN) => {
+    setSender(null);
     _setTxFees(fees);
   };
 

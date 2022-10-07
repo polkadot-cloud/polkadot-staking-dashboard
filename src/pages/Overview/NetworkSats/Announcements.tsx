@@ -18,6 +18,8 @@ import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useNetworkMetrics } from 'contexts/Network';
 import { BondedPool } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -34,6 +36,7 @@ export const Announcements = () => {
   } = staking;
   const { bondedPools } = useBondedPools();
   const { totalIssuance } = metrics;
+  const { t } = useTranslation('common');
 
   let totalPoolPoints = new BN(0);
   bondedPools.forEach((b: BondedPool) => {
@@ -88,9 +91,8 @@ export const Announcements = () => {
   if (nominatorCapReached) {
     announcements.push({
       class: 'danger',
-      title: 'Nominator Limit Has Been Reached.',
-      subtitle:
-        'The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.',
+      title: t('pages.Overview.announcements1'),
+      subtitle: t('pages.Overview.announcements2'),
     });
   }
 
@@ -101,8 +103,8 @@ export const Announcements = () => {
       title: `${toFixedIfNecessary(
         nominatorReachedPercentage.toNumber(),
         2
-      )}% of Nominator Limit Reached.`,
-      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(
+      )} ${t('pages.Overview.announcements3')}`,
+      subtitle: `${t('pages.Overview.announcements4')} ${humanNumber(
         maxNominatorsCount.toNumber()
       )}.`,
     });
@@ -113,34 +115,58 @@ export const Announcements = () => {
     // total pools active
     announcements.push({
       class: 'pools',
-      title: `${bondedPools.length} nomination pools are active.`,
-      subtitle: `Nomination pools are available to join on the ${network.name} network.`,
+      title: `${bondedPools.length} ${t('pages.Overview.announcements5')}`,
+      subtitle:
+        i18next.resolvedLanguage === 'en'
+          ? `Nomination pools are available to join on the ${network.name} network.`
+          : `在 ${network.name}网络中可参与的池数.`,
     });
 
     // total locked in pols
     announcements.push({
       class: 'pools',
-      title: `${totalPoolPointsBase} ${network.unit} is currently bonded in pools.`,
-      subtitle: `The total ${network.unit} currently bonded in nomination pools.`,
+      title: `${totalPoolPointsBase} ${network.unit} ${t(
+        'pages.Overview.announcements7'
+      )}`,
+      subtitle:
+        i18next.resolvedLanguage === 'en'
+          ? `The total ${network.unit} currently bonded in nomination pools.`
+          : `提名池中当前质押的${network.unit}总数`,
     });
   }
 
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `The minimum nominator bond is now ${minNominatorBondBase} ${network.unit}.`,
-    subtitle: `The minimum bonding amount to start nominating on ${
-      network.name
-    } is now ${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
+    title: `${t('pages.Overview.announcements9')} ${minNominatorBondBase} ${
+      network.unit
+    }.`,
+    subtitle:
+      i18next.resolvedLanguage === 'en'
+        ? `The minimum bonding amount to start nominating on ${
+            network.name
+          } is now ${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`
+        : `在${network.name}提名最低绑定额为${planckBnToUnit(
+            minNominatorBond,
+            units
+          )} ${network.unit}.`,
   });
 
   // supply staked
   announcements.push({
     class: 'neutral',
-    title: `${supplyAsPercent}% of total ${network.unit} supply is currently staked.`,
-    subtitle: `A total of ${humanNumber(lastTotalStakeBase.toNumber())} ${
-      network.unit
-    } is actively staking on the network.`,
+    title:
+      i18next.resolvedLanguage === 'en'
+        ? `${supplyAsPercent}% of total ${network.unit} supply is currently staked.`
+        : ` ${network.unit}中的${supplyAsPercent}% 目前己被抵押.`,
+    subtitle:
+      i18next.resolvedLanguage === 'en'
+        ? `A total of ${humanNumber(lastTotalStakeBase.toNumber())} ${
+            network.unit
+          } is actively staking on the network.`
+        : `共 ${humanNumber(lastTotalStakeBase.toNumber())} ${
+            network.unit
+          } 在网络中被活跃抵押中.`,
   });
 
   return (

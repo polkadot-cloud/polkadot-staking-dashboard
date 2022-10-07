@@ -15,12 +15,14 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { NotesWrapper } from '../../Wrappers';
 import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
 
 export const UnbondSome = (props: FormsProps) => {
   const { setSection } = props;
+  const { t } = useTranslation('common');
 
   const { api, network, consts } = useApi();
   const { units } = network;
@@ -119,7 +121,7 @@ export const UnbondSome = (props: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('modals.w1'));
   }
 
   return (
@@ -139,10 +141,7 @@ export const UnbondSome = (props: FormsProps) => {
             warnings={warnings}
           />
           <NotesWrapper>
-            <p>
-              Once unbonding, you must wait {bondDuration} eras for your funds
-              to become available.
-            </p>
+            <p>{t('modals.update_bond4', { bondDuration })}</p>
             <EstimatedTxFee />
           </NotesWrapper>
         </>

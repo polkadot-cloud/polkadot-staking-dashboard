@@ -8,6 +8,7 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
 import { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
@@ -17,6 +18,7 @@ export const SelectFavourites = () => {
   const { favouritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback } = config;
+  const { t } = useTranslation('common');
 
   // store filtered favourites
   const [availableFavourites, setAvailableFavourites] = useState<
@@ -62,7 +64,7 @@ export const SelectFavourites = () => {
 
   return (
     <>
-      <Title title="Add From Favourites" />
+      <Title title={t('modals.add_from_favourites')} />
       <PaddingWrapper>
         <ListWrapper>
           {availableFavourites.length > 0 ? (
@@ -70,7 +72,7 @@ export const SelectFavourites = () => {
               bondType="stake"
               validators={availableFavourites}
               batchKey={batchKey}
-              title="Favourite Validators"
+              title={t('modals.add_from_favourites')}
               selectable
               selectActive
               selectToggleable={false}
@@ -81,7 +83,7 @@ export const SelectFavourites = () => {
               allowMoreCols
             />
           ) : (
-            <h3>No Favourites Available.</h3>
+            <h3>{t('modals.no_favourites_available')}</h3>
           )}
         </ListWrapper>
         <FooterWrapper>

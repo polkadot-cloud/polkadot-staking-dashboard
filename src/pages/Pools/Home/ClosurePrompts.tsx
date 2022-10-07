@@ -14,6 +14,7 @@ import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 
 export const ClosurePrompts = () => {
   const { network } = useApi();
@@ -25,6 +26,7 @@ export const ClosurePrompts = () => {
   const { isBonding, activeBondedPool, isDepositor, poolNominations } =
     useActivePool();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('common');
 
   const { state, memberCounter } = activeBondedPool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
@@ -55,9 +57,9 @@ export const ClosurePrompts = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>Destroy Pool</h3>
+              <h3>{t('pages.Pools.destroy_pool')}</h3>
               <h4>
-                All members have now left the pool.{' '}
+                {t('pages.Pools.destroy_pool1')}{' '}
                 {targets.length > 0
                   ? 'To continue with pool closure, stop nominating.'
                   : depositorCanWithdraw
@@ -71,7 +73,7 @@ export const ClosurePrompts = () => {
                   small
                   primary
                   inline
-                  title="Unbond"
+                  title={t('pages.Pools.unbond')}
                   disabled={
                     isSyncing || (!depositorCanWithdraw && !depositorCanUnbond)
                   }

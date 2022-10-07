@@ -9,6 +9,7 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { useTranslation } from 'react-i18next';
 import { Input } from './Input';
 
 export const PoolName = (props: SetupStepProps) => {
@@ -16,6 +17,7 @@ export const PoolName = (props: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const { t } = useTranslation('common');
 
   const initialValue = setup.metadata;
 
@@ -55,7 +57,7 @@ export const PoolName = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.metadata !== ''}
-        title="Pool Name"
+        title={t('pages.Pools.pool_name')}
         // helpKey="Bonding"
         setupType={SetupType.Pool}
       />

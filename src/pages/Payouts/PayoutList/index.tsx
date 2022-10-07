@@ -23,6 +23,7 @@ import { Validator } from 'contexts/Validators/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { BondedPool } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
 import { usePayoutList, PayoutListProvider } from './context';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProps } from '../types';
@@ -37,6 +38,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
+  const { t } = useTranslation('common');
 
   const disableThrottle = props.disableThrottle ?? false;
 

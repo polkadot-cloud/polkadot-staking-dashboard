@@ -18,6 +18,7 @@ import { Warning } from 'library/Form/Warning';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
@@ -28,6 +29,7 @@ export const UpdatePayee = () => {
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('common');
 
   const { payee } = staking;
 
@@ -92,12 +94,12 @@ export const UpdatePayee = () => {
           }}
         >
           {getControllerNotImported(controller) && (
-            <Warning text="You must have your controller account imported to update your reward destination" />
+            <Warning text={t('modals.w12')} />
           )}
           <Dropdown
             items={payeeItems}
             onChange={handleOnChange}
-            placeholder="Reward Destination"
+            placeholder={t('modals.reward_destination')}
             value={selected}
             current={_selected}
             height="17rem"
@@ -122,7 +124,7 @@ export const UpdatePayee = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

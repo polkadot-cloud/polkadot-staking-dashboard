@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Extension } from 'contexts/Connect/types';
+import { useTranslation } from 'react-i18next';
 import { AccountWrapper } from './Wrappers';
 import { AccountElementProps } from './types';
 
@@ -60,6 +61,7 @@ export const AccountInner = (props: AccountElementProps) => {
   const label = props.label ?? null;
   const source = meta?.source ?? null;
   const imported = meta !== null && source !== 'external';
+  const { t } = useTranslation('common');
 
   return (
     <>
@@ -74,7 +76,7 @@ export const AccountInner = (props: AccountElementProps) => {
           className="label warning"
           style={{ color: '#a17703', paddingLeft: '0.5rem' }}
         >
-          Read Only
+          {t('modals.read_only')}
         </div>
       )}
 

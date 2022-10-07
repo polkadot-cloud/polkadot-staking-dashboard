@@ -8,11 +8,13 @@ import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { useSize, formatSize } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 import { useStaking } from 'contexts/Staking';
+import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
+  const { t } = useTranslation('common');
 
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -25,13 +27,13 @@ export const Payouts = () => {
         <StatusLabel
           status="active_service"
           statusFor="subscan"
-          title="Subscan Disabled"
+          title={t('pages.Overview.subscan_disabled')}
           topOffset="37%"
         />
       ) : (
         <StatusLabel
           status="sync_or_setup"
-          title="Not Staking"
+          title={t('pages.Overview.not_staking')}
           topOffset="37%"
         />
       )}

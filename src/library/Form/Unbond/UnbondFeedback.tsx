@@ -13,6 +13,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { UnbondInput } from './UnbondInput';
 import { Spacer } from '../Wrappers';
 import { Warning } from '../Warning';
@@ -25,6 +26,7 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
   const setters = props.setters ?? [];
   const listenIsValid = props.listenIsValid ?? (() => {});
   const defaultBond = props.defaultBond || '';
+  const { t } = useTranslation('common');
 
   const { network } = useApi();
   const { activeAccount } = useConnect();

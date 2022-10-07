@@ -4,10 +4,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 export const JoinPool = (props: { id: number; setActiveTab: any }) => {
   const { id, setActiveTab } = props;
   const { openModalWith } = useModal();
+  const { t } = useTranslation('common');
 
   return (
     <div className="label button-with-text">
@@ -24,7 +26,7 @@ export const JoinPool = (props: { id: number; setActiveTab: any }) => {
           );
         }}
       >
-        Join
+        {t('library.join')}
         <FontAwesomeIcon icon={faCaretRight} transform="shrink-2" />
       </button>
     </div>

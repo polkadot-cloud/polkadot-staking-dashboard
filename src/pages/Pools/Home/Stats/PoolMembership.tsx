@@ -4,13 +4,15 @@
 import { useActivePool } from 'contexts/Pools/ActivePool';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Text } from 'library/StatBoxList/Text';
+import { useTranslation } from 'react-i18next';
 
 const PoolMembership = () => {
   const { membership } = usePoolMemberships();
   const { isOwner } = useActivePool();
+  const { t } = useTranslation('common');
 
   const params = {
-    label: 'Pool Membership',
+    label: t('pages.Validators.pool_membership'),
     value:
       membership === null
         ? 'Not in Pool'
@@ -19,6 +21,7 @@ const PoolMembership = () => {
         : `In Pool ${membership.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
+    chelpKey: '池成员资格',
   };
   return <Text {...params} />;
 };

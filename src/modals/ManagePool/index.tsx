@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { Wrapper, CardsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';
@@ -13,6 +14,7 @@ export const ManagePool = () => {
   const { setModalHeight } = useModal();
   // modal task
   const [task, setTask] = useState(null);
+  const { t } = useTranslation('common');
 
   // active modal section
   const [section, setSection] = useState(0);
@@ -36,7 +38,7 @@ export const ManagePool = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title title="Manage Pool" icon={faCog} fixed />
+        <Title title={t('modals.manage_pool')} icon={faCog} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}

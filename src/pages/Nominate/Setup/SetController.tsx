@@ -12,10 +12,12 @@ import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
+import { useTranslation } from 'react-i18next';
 import { Spacer } from '../Wrappers';
 
 export const SetController = (props: SetupStepProps) => {
   const { section } = props;
+  const { t } = useTranslation('common');
 
   const { activeAccount, accounts, getAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
@@ -50,7 +52,7 @@ export const SetController = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        title="Set Controller Account"
+        title={t('pages.Nominate.set_controller_account')}
         helpKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
         setupType={SetupType.Stake}
@@ -60,7 +62,7 @@ export const SetController = (props: SetupStepProps) => {
         <AccountSelect
           items={items}
           onChange={handleOnChange}
-          placeholder="Search Account"
+          placeholder={t('pages.Nominate.search_account')}
           value={selected}
         />
         <Footer

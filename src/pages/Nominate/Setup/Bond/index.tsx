@@ -11,12 +11,14 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { useTranslation } from 'react-i18next';
 
 export const Bond = (props: SetupStepProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const { t } = useTranslation('common');
 
   // either free to bond or existing setup value
   const initialBondValue = setup.bond === 0 ? 0 : setup.bond;
@@ -57,7 +59,7 @@ export const Bond = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.bond !== 0}
-        title="Bond"
+        title={t('pages.Nominate.bond')}
         helpKey="Bonding"
         setupType={SetupType.Stake}
       />

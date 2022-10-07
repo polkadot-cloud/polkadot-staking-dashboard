@@ -5,20 +5,23 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import { Number } from 'library/StatBoxList/Number';
 import { planckBnToUnit } from 'Utils';
+import { useTranslation } from 'react-i18next';
 
 export const LastEraPayoutStatBox = () => {
   const { network } = useApi();
   const { staking } = useStaking();
   const { unit, units } = network;
   const { lastReward } = staking;
+  const { t } = useTranslation('common');
 
   const lastRewardBase = planckBnToUnit(lastReward, units).toFixed(0);
 
   const params = {
-    label: 'Last Era Payout',
+    label: t('pages.Payouts.last_era_payout'),
     value: lastRewardBase,
     unit,
     helpKey: 'Last Era Payout',
+    chelpKey: '上一Era收益',
   };
   return <Number {...params} />;
 };

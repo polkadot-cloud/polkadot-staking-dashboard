@@ -10,6 +10,7 @@ import ValidatorList from 'library/ValidatorList';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { shuffle } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { ItemsWrapper } from './Wrappers';
 import { Item } from './Item';
 import { useCommunitySections } from './context';
@@ -19,6 +20,7 @@ export const Entity = () => {
   const { validators: allValidators, removeValidatorMetaBatch } =
     useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
+  const { t } = useTranslation('common');
 
   const { name, validators: entityAllValidators } = activeItem;
   const validators = entityAllValidators[network.name.toLowerCase()] ?? [];
@@ -58,7 +60,7 @@ export const Entity = () => {
       <TopBarWrapper>
         <Button
           inline
-          title="Go Back"
+          title={t('pages.Community.go_back')}
           icon={faChevronLeft}
           transform="shrink-3"
           onClick={() => setActiveSection(0)}
@@ -70,7 +72,7 @@ export const Entity = () => {
       <CardWrapper>
         {!isReady ? (
           <div className="item">
-            <h3>Connecting...</h3>
+            <h3>{t('pages.Community.connecting')}</h3>
           </div>
         ) : (
           <>

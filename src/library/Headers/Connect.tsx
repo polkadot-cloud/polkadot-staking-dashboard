@@ -5,11 +5,13 @@ import { useConnect } from 'contexts/Connect';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
+import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
+  const { t } = useTranslation('common');
   return (
     <HeadingWrapper>
       <Item
@@ -28,7 +30,11 @@ export const Connect = () => {
           className="icon"
           transform="shrink-2"
         />
-        <span>{activeAccount ? 'Accounts' : 'Connect'}</span>
+        <span>
+          {activeAccount
+            ? ` ${t('library.accounts')}`
+            : ` ${t('library.connect')}`}
+        </span>
       </Item>
     </HeadingWrapper>
   );

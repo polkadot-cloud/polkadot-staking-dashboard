@@ -19,6 +19,7 @@ import { InputItem } from 'library/Form/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
@@ -28,6 +29,7 @@ export const UpdateController = () => {
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('common');
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -74,20 +76,23 @@ export const UpdateController = () => {
 
   return (
     <>
-      <Title title="Change Controller Account" icon={faExchangeAlt} />
+      <Title
+        title={t('modals.change_controller_account')}
+        icon={faExchangeAlt}
+      />
       <Wrapper>
         <div
           style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
         >
           <div style={{ marginBottom: '1.5rem' }}>
             {!accountHasSigner(activeAccount) && (
-              <Warning text="Your stash account is read only and cannot sign transactions." />
+              <Warning text={t('modals.w11')} />
             )}
           </div>
           <AccountDropdown
             items={items}
             onChange={handleOnChange}
-            placeholder="Search Account"
+            placeholder={t('modals.search_account')}
             current={account}
             value={selected}
             height="17rem"
@@ -112,7 +117,7 @@ export const UpdateController = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

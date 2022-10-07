@@ -12,6 +12,7 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
 import OpenHelpIcon from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 
 export const Controller = ({ label }: { label: string }) => {
@@ -21,6 +22,7 @@ export const Controller = ({ label }: { label: string }) => {
   const { hasController } = useStaking();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
+  const { t } = useTranslation('common');
 
   let display = 'None';
   if (hasController() && controller) {
@@ -44,7 +46,7 @@ export const Controller = ({ label }: { label: string }) => {
             <Button
               primary
               inline
-              title="Change"
+              title={t('pages.Nominate.change')}
               icon={faExchangeAlt}
               small
               disabled={

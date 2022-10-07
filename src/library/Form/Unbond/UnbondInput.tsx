@@ -6,12 +6,14 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { isNumeric } from 'Utils';
 import { Button } from 'library/Button';
+import { useTranslation } from 'react-i18next';
 import { InputWrapper, RowWrapper } from '../Wrappers';
 import { UnbondInputProps } from '../types';
 
 export const UnbondInput = (props: UnbondInputProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
+  const { t } = useTranslation('common');
 
   const { disabled, freeToUnbondToMin } = props;
   const setters = props.setters ?? [];

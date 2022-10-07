@@ -10,11 +10,13 @@ import { SetupType } from 'contexts/UI/types';
 import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { useTranslation } from 'react-i18next';
 import { Spacer } from '../../Wrappers';
 import { Items, Item } from './Wrappers';
 
 export const Payee = (props: SetupStepProps) => {
   const { section } = props;
+  const { t } = useTranslation('common');
 
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
@@ -71,7 +73,7 @@ export const Payee = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.payee !== null}
-        title="Reward Destination"
+        title={t('pages.Nominate.reward_destination')}
         helpKey="Reward Destination"
         setupType={SetupType.Stake}
       />

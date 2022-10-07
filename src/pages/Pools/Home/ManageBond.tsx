@@ -15,6 +15,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -25,6 +26,7 @@ export const ManageBond = () => {
   const { membership } = usePoolMemberships();
   const { isBonding, activeBondedPool } = useActivePool();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('common');
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -37,7 +39,7 @@ export const ManageBond = () => {
     <>
       <CardHeaderWrapper>
         <h4>
-          Bonded Funds
+          {t('pages.Pools.bonded_funds')}
           <OpenHelpIcon helpKey="Bonded in Pool" />
         </h4>
         <h2>

@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useModal } from 'contexts/Modal';
+import { useTranslation } from 'react-i18next';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import { ItemProps } from './types';
@@ -18,6 +19,7 @@ import { ItemProps } from './types';
 export const Item = (props: ItemProps) => {
   const { openModalWith } = useModal();
   const { network } = useApi();
+  const { t } = useTranslation('common');
 
   const { item, actionable } = props;
   const {
@@ -69,7 +71,7 @@ export const Item = (props: ItemProps) => {
               onClick={() => openModalWith('Bio', { name, bio }, 'large')}
               className="active"
             >
-              <span>Bio</span>
+              <span>{t('pages.Community.bio')}</span>
             </button>
           </h3>
 

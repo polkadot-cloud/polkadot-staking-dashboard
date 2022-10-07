@@ -21,6 +21,7 @@ import Stat from 'library/Stat';
 import { useValidators } from 'contexts/Validators';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { BN } from 'bn.js';
+import { useTranslation } from 'react-i18next';
 import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
@@ -35,6 +36,7 @@ export const Status = ({ height }: { height: number }) => {
   const { payee } = staking;
   const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
+  const { t } = useTranslation('common');
 
   // get nomination status
   const nominationStatuses = getNominationsStatus();
@@ -81,7 +83,7 @@ export const Status = ({ height }: { height: number }) => {
 
   const payeeStatus = PAYEE_STATUS.find((item) => item.key === payee);
 
-  let startTitle = 'Start Nominating';
+  let startTitle = t('pages.Nominate.start_nominating');
   if (inSetup()) {
     const progress = getStakeSetupProgressPercent(activeAccount);
     if (progress > 0) {
@@ -123,7 +125,7 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
-        label="Reward Destination"
+        label={t('pages.Nominate.reward_destination')}
         helpKey="Reward Destination"
         icon={
           (payee === null
@@ -151,7 +153,7 @@ export const Status = ({ height }: { height: number }) => {
         }
       />
       <Separator />
-      <Controller label="Controller Account" />
+      <Controller label={t('pages.Nominate.controller_account')} />
     </CardWrapper>
   );
 };

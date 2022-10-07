@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { Extension as ExtensionInterface } from 'contexts/Connect/types';
+import { useTranslation } from 'react-i18next';
 import { ExtensionWrapper } from './Wrappers';
 import { ExtensionProps } from './types';
 
@@ -14,6 +15,7 @@ export const Extension = (props: ExtensionProps) => {
   const { extensionsStatus } = useConnect();
   const { meta } = props;
   const { id } = meta;
+  const { t } = useTranslation('common');
 
   const installed = extensions.find((e: ExtensionInterface) => e.id === id);
   const status = !installed ? 'not_found' : extensionsStatus[id];
@@ -22,13 +24,16 @@ export const Extension = (props: ExtensionProps) => {
   let message;
   switch (status) {
     case 'connected':
-      message = `Connected`;
+      message = t('modals.connected');
       break;
     case 'not_authenticated':
-      message = 'Not Authenticated. Authenticate and Try Again';
+      message = t('modals.not_authenticated');
       break;
     default:
-      message = status === 'no_accounts' ? 'No Accounts' : 'Not Connected';
+      message =
+        status === 'no_accounts'
+          ? t('modals.no_accounts')
+          : t('modals.not_connected');
   }
 
   return (

@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api';
 import { planckBnToUnit } from 'Utils';
 import Button from 'library/Button';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useTranslation } from 'react-i18next';
 import { ContentWrapper, ChunkWrapper } from './Wrappers';
 import { Separator, NotesWrapper } from '../Wrappers';
 
@@ -17,6 +18,7 @@ export const Overview = forwardRef(
     const { bondDuration } = consts;
     const { units } = network;
     const { activeEra } = metrics;
+    const { t } = useTranslation('common');
 
     const isStaking = bondType === 'stake';
 
@@ -36,7 +38,7 @@ export const Overview = forwardRef(
         {withdrawAvailable.toNumber() > 0 && (
           <>
             <ChunkWrapper noFill>
-              <h4>Available to Withdraw</h4>
+              <h4>{t('modals.available_to_withdraw')}</h4>
               <div>
                 <section>
                   <h2>
@@ -49,7 +51,7 @@ export const Overview = forwardRef(
                       small
                       inline
                       primary
-                      title="Withdraw"
+                      title={t('modals.withdraw')}
                       onClick={() => {
                         setTask('withdraw');
                         setUnlock({
@@ -83,7 +85,7 @@ export const Overview = forwardRef(
                       {left} era{left !== 1 && 's'} remaining before withdraw.
                     </h3>
                   ) : (
-                    <h3>Available to withdraw</h3>
+                    <h3>{t('modals.available_to_withdraw')}</h3>
                   )}
                 </section>
                 {isStaking && (
@@ -93,7 +95,7 @@ export const Overview = forwardRef(
                         small
                         inline
                         primary
-                        title="Rebond"
+                        title={t('modals.rebond')}
                         onClick={() => {
                           setTask('rebond');
                           setUnlock(chunk);
@@ -109,8 +111,8 @@ export const Overview = forwardRef(
           );
         })}
         <NotesWrapper>
+          Unlocks take {bondDuration} eras before they can be withdrawn.
           <p>
-            Unlocks take {bondDuration} eras before they can be withdrawn.
             {isStaking &&
               `You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.`}
           </p>

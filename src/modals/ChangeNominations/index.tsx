@@ -17,6 +17,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import {
   FooterWrapper,
   Separator,
@@ -32,6 +33,7 @@ export const ChangeNominations = () => {
   const { membership } = usePoolMemberships();
   const { poolNominations, isNominator, isOwner } = useActivePool();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('common');
 
   const { nominations: newNominations, provider, bondType } = config;
 
@@ -119,7 +121,7 @@ export const ChangeNominations = () => {
 
   return (
     <>
-      <Title title="Stop Nominating" icon={faStopCircle} />
+      <Title title={t('modals.stop_nominating')} icon={faStopCircle} />
       <PaddingWrapper verticalOnly>
         <div
           style={{
@@ -129,7 +131,7 @@ export const ChangeNominations = () => {
           }}
         >
           {!nominations.length && (
-            <Warning text="You have no nominations set." />
+            <Warning text={t('modals.no_nominations_set')} />
           )}
           {!accountHasSigner(signingAccount) && (
             <Warning
@@ -144,11 +146,7 @@ export const ChangeNominations = () => {
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once submitted, your nominations will be removed from your
-              dashboard immediately, and will not be nominated from the start of
-              the next era.
-            </p>
+            <p>{t('modals.change_nomination')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>
@@ -168,7 +166,7 @@ export const ChangeNominations = () => {
                   transform="grow-2"
                   icon={faArrowAltCircleUp as IconProp}
                 />
-                Submit
+                {t('modals.submit')}
               </button>
             </div>
           </FooterWrapper>

@@ -11,6 +11,7 @@ import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
+import { useTranslation } from 'react-i18next';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();
@@ -20,6 +21,7 @@ export const ControllerNotImported = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
+  const { t } = useTranslation('common');
 
   return (
     <>
@@ -33,18 +35,13 @@ export const ControllerNotImported = () => {
               }}
             >
               <CardHeaderWrapper>
-                <h4>
-                  You have not imported your controller account. If you have
-                  lost access to your controller account, set a new one now.
-                  Otherwise, import the controller into one of your active
-                  extensions.
-                </h4>
+                <h4>{t('pages.Nominate.controller_not_imported')}</h4>
               </CardHeaderWrapper>
               <Button
                 small
                 primary
                 inline
-                title="Set New Controller"
+                title={t('pages.Nominate.set_new_controller')}
                 onClick={() => openModalWith('UpdateController', {}, 'large')}
               />
             </CardWrapper>

@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { Pie } from 'library/StatBoxList/Pie';
 import { toFixedIfNecessary } from 'Utils';
+import { useTranslation } from 'react-i18next';
 
 export const SupplyStakedStatBox = () => {
   const { network } = useApi();
@@ -14,6 +15,7 @@ export const SupplyStakedStatBox = () => {
   const { metrics } = useNetworkMetrics();
   const { totalIssuance } = metrics;
   const { staking } = useStaking();
+  const { t } = useTranslation('common');
 
   const { lastTotalStake } = staking;
 
@@ -30,7 +32,7 @@ export const SupplyStakedStatBox = () => {
   const totalIssuanceBase = totalIssuance.div(new BN(10 ** units));
 
   const params = {
-    label: 'Total Supply Staked',
+    label: t('pages.Nominate.total_supply_staked'),
     stat: {
       value: lastTotalStakeBase.toNumber(),
       unit: network.unit,
@@ -42,6 +44,7 @@ export const SupplyStakedStatBox = () => {
 
     tooltip: `${toFixedIfNecessary(supplyAsPercent, 2)}%`,
     helpKey: 'Supply Staked',
+    chelpKey: '抵押比例',
   };
 
   return <Pie {...params} />;

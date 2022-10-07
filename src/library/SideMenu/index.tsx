@@ -21,6 +21,8 @@ import { ConnectionStatus } from 'contexts/Api/types';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { useHelp } from 'contexts/Help';
+import { TranslationButtons } from 'translation';
+import { useTranslation } from 'react-i18next';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
 import Heading from './Heading/Heading';
@@ -37,6 +39,7 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
+  const { t } = useTranslation('common');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -81,12 +84,12 @@ export const SideMenu = () => {
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
         <Main />
-        <Heading title="Support" minimised={sideMenuMinimised} />
+        <Heading title={t('library.support')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
             openHelpWith(null, {});
           }}
-          name="Help"
+          name={t('library.help')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
@@ -104,7 +107,7 @@ export const SideMenu = () => {
           }}
         />
         <Separator />
-        <Heading title="Network" minimised={sideMenuMinimised} />
+        <Heading title={t('library.network')} minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
           borderColor={borderColor}
@@ -159,6 +162,7 @@ export const SideMenu = () => {
             <MoonOutlineSVG width="1.4rem" height="1.4rem" />
           </button>
         )}
+        <TranslationButtons />
       </section>
     </Wrapper>
   );

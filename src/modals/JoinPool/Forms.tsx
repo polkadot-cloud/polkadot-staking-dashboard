@@ -18,6 +18,7 @@ import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 
@@ -32,6 +33,7 @@ export const Forms = () => {
   const { txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(activeAccount);
+  const { t } = useTranslation('common');
 
   // local bond value
   const [bond, setBond] = useState({
@@ -80,7 +82,7 @@ export const Forms = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('modals.w1'));
   }
 
   return (
