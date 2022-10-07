@@ -89,6 +89,8 @@ export const Roles = (props: RolesProps) => {
   const saveHandler = () => {
     setIsEditing(false);
 
+    console.log(id);
+
     // if setters available, use those to update
     // parent component state.
     if (setters.length) {
