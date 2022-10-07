@@ -7,6 +7,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import cn from './cn/page.json';
 import en from './en/page.json';
 
+// context object
 i18next
   .use(LanguageDetector)
   .use(initReactI18next)
