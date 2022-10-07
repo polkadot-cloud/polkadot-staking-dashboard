@@ -386,6 +386,26 @@ export const BondedPoolsProvider = ({
     }
   };
 
+  const getAccountRoles = (who: MaybeAccount) => {
+    const roots = bondedPools
+      .filter((b: BondedPool) => b.roles.root === who)
+      .map((b: BondedPool) => b.id);
+
+    const nominators = bondedPools
+      .filter((b: BondedPool) => b.roles.nominator === who)
+      .map((b: BondedPool) => b.id);
+
+    const stateTogglers = bondedPools
+      .filter((b: BondedPool) => b.roles.stateToggler === who)
+      .map((b: BondedPool) => b.id);
+
+    return {
+      root: roots || null,
+      nominator: nominators || null,
+      stateToggler: stateTogglers || null,
+    };
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
@@ -397,6 +417,7 @@ export const BondedPoolsProvider = ({
         removeFromBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
+        getAccountRoles,
         poolSearchFilter,
         bondedPools,
         meta: poolMetaBatchesRef.current,
