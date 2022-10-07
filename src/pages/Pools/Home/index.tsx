@@ -37,10 +37,13 @@ import { PoolStats } from './PoolStats';
 export const HomeInner = () => {
   const { activeAccount } = useConnect();
   const { membership } = usePoolMemberships();
-  const { bondedPools } = useBondedPools();
+  const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, activeBondedPool } = useActivePool();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { openModalWith } = useModal();
+
+  const accountPools = getAccountPools(activeAccount);
+  const totalAccountPools = Object.entries(accountPools).length;
 
   // back to tab 0 if not in a pool
   useEffect(() => {
@@ -85,11 +88,15 @@ export const HomeInner = () => {
       <PageTitle
         title="Pools"
         tabs={tabs}
-        button={{
-          title: 'All Roles',
-          onClick: () =>
-            openModalWith('AccountPoolRoles', { who: activeAccount }),
-        }}
+        button={
+          totalAccountPools
+            ? {
+                title: 'All Roles',
+                onClick: () =>
+                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+              }
+            : undefined
+        }
       />
       {activeTab === 0 && (
         <>
