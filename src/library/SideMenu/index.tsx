@@ -21,7 +21,7 @@ import { ConnectionStatus } from 'contexts/Api/types';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { useHelp } from 'contexts/Help';
-import { LanguageButton } from 'languages';
+import { LanguageButton } from 'locale';
 import { useTranslation } from 'react-i18next';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';

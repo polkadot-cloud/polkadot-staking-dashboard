@@ -5,7 +5,7 @@ import React from 'react';
 import { DEFAULT_NETWORK } from 'consts';
 import { Providers } from 'Providers';
 import { ThemesProvider } from 'contexts/Themes';
-import i18next from 'languages';
+import i18next from 'locale';
 import { I18nextProvider } from 'react-i18next';
 
 const App: React.FC = () => {
