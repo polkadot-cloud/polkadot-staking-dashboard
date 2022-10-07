@@ -407,6 +407,27 @@ export const BondedPoolsProvider = ({
     };
   };
 
+  // accumulate account pool list
+  const getAccountPools = (who: MaybeAccount) => {
+    // first get the roles of the account
+    const roles = getAccountRoles(who);
+
+    // format new list has pool => roles
+    const pools: any = {};
+    Object.entries(roles).forEach(([key, poolIds]: any) => {
+      // now looping through a role
+      poolIds.forEach((poolId: string) => {
+        const exists = Object.keys(pools).find((k: string) => k === poolId);
+        if (!exists) {
+          pools[poolId] = [key];
+        } else {
+          pools[poolId].push(key);
+        }
+      });
+    });
+    return pools;
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
@@ -419,6 +440,7 @@ export const BondedPoolsProvider = ({
         getPoolNominationStatus,
         getPoolNominationStatusCode,
         getAccountRoles,
+        getAccountPools,
         poolSearchFilter,
         bondedPools,
         meta: poolMetaBatchesRef.current,

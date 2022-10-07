@@ -10,12 +10,15 @@ import { PaddingWrapper } from '../Wrappers';
 import { StyledButton, ContentWrapper } from './Wrappers';
 
 export const AccountPoolRoles = () => {
-  const { getAccountRoles } = useBondedPools();
+  const { getAccountRoles, getAccountPools } = useBondedPools();
   const { config } = useModal();
   const { who } = config;
 
+  // TODO: refactor lists with accountPools
   const roles = getAccountRoles(who);
   const { root, nominator, stateToggler } = roles;
+
+  const accountPools = getAccountPools(who);
 
   return (
     <>
