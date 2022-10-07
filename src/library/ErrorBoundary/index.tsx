@@ -16,7 +16,7 @@ export const ErrorFallbackApp = ({
       <FontAwesomeIcon icon={faBug} transform="grow-25" />
     </h3>
     {i18next.resolvedLanguage === 'en' ? (
-      <h1>Opps, Something Went Wrong</h1>
+      <h1>Oops, Something Went Wrong</h1>
     ) : (
       <h1>抱歉，页面出现点小问题哦</h1>
     )}
@@ -38,7 +38,7 @@ export const ErrorFallbackRoutes = ({
       <FontAwesomeIcon icon={faBug} transform="grow-25" />
     </h3>
     {i18next.resolvedLanguage === 'en' ? (
-      <h1>Opps, Something Went Wrong</h1>
+      <h1>Oops, Something Went Wrong</h1>
     ) : (
       <h1>抱歉，页面出现点小问题哦</h1>
     )}
@@ -57,7 +57,7 @@ export const ErrorFallbackModal = ({
 }) => (
   <Wrapper className="modal">
     {i18next.resolvedLanguage === 'en' ? (
-      <h2>Opps, Something Went Wrong</h2>
+      <h2>Oops, Something Went Wrong</h2>
     ) : (
       <h2>抱歉，页面出现点小问题哦</h2>
     )}

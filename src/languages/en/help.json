@@ -1,0 +1,10 @@
+{
+    "overview": {
+        "definitions": {
+            "supply_staked": {
+                "title": "Supply Staked",
+                "description": "['The current cumulative supply of {NETWORK_UNIT} being staked globally.','The percentage of staked {NETWORK_UNIT} is relative to the total supply of {NETWORK_UNIT}.'"
+            }
+        }
+    }
+}

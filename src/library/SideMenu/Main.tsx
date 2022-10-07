@@ -167,14 +167,7 @@ export const Main = () => {
           <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
             {/* display heading if not `default` (used for top links) */}
             {category.title !== 'default' && (
-              <Heading
-                title={
-                  i18n.resolvedLanguage === 'en'
-                    ? category.title
-                    : category.ctitle
-                }
-                minimised={sideMenuMinimised}
-              />
+              <Heading title={category.title} minimised={sideMenuMinimised} />
             )}
 
             {/* display category links */}

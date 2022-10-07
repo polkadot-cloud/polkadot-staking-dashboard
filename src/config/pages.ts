@@ -17,22 +17,20 @@ import * as view1SolidJson from 'img/json/view-1-solid.json';
 import * as viewGroupJson from 'img/json/groups-solid-edited.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
 import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
+import i18next from 'languages';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
     _id: 1,
     title: 'default',
-    ctitle: 'default',
   },
   {
     _id: 2,
-    title: 'Stake',
-    ctitle: '抵押',
+    title: i18next.t('pages:stake'),
   },
   {
     _id: 3,
-    title: 'Validators',
-    ctitle: '验证人',
+    title: i18next.t('pages:validators'),
   },
 ];
 

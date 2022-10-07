@@ -4,8 +4,10 @@
 import i18next from 'i18next';
 import { useTranslation, initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import cn from './cn/page.json';
-import en from './en/page.json';
+import commoncn from './cn/common.json';
+import commonen from './en/common.json';
+import pagescn from './cn/pages.json';
+import pagesen from './en/pages.json';
 
 i18next
   .use(LanguageDetector)
@@ -17,16 +19,18 @@ i18next
     debug: true,
     resources: {
       en: {
-        common: en,
+        common: commonen,
+        pages: pagesen,
       },
       cn: {
-        common: cn,
+        common: commoncn,
+        pages: pagescn,
       },
     },
   });
 
 export const LanguageButton = () => {
-  const { i18n } = useTranslation('common');
+  const { i18n } = useTranslation(['common', 'pages']);
   return (
     <>
       {i18n.resolvedLanguage === 'en' ? (

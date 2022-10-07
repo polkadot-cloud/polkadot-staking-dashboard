@@ -75,7 +75,6 @@ export interface Network {
 export interface PageCategory {
   _id: number;
   title: string;
-  ctitle: string;
 }
 
 export type PageCategories = Array<PageCategory>;

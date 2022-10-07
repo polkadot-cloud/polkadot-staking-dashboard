@@ -1,0 +1,10 @@
+{
+    "overview": {
+        "definitions": {
+            "supply_staked": {
+                "title": "抵押比例",
+                "description": "['目前全球{NETWORK_UNIT}的累计发行量','抵押的百分比与{NETWORK_UNIT}总发行量相关']"
+            }
+        }
+    }
+}
