@@ -27,6 +27,9 @@ export const ChangePoolRoles = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
+    const root = roleEdits?.root?.newAddress
+      ? { Set: roleEdits?.root?.newAddress }
+      : 'Remove';
     const nominator = roleEdits?.nominator?.newAddress
       ? { Set: roleEdits?.nominator?.newAddress }
       : 'Remove';
@@ -36,7 +39,7 @@ export const ChangePoolRoles = () => {
 
     _tx = api?.tx.nominationPools?.updateRoles(
       poolId,
-      'Noop',
+      root,
       nominator,
       stateToggler
     );
@@ -65,6 +68,11 @@ export const ChangePoolRoles = () => {
             boxSizing: 'border-box',
           }}
         >
+          <RoleChange
+            roleName="Root"
+            oldAddress={roleEdits?.root?.oldAddress}
+            newAddress={roleEdits?.root?.newAddress}
+          />
           <RoleChange
             roleName="Nominator"
             oldAddress={roleEdits?.nominator?.oldAddress}

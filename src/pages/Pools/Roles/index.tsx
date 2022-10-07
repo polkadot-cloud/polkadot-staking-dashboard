@@ -89,8 +89,6 @@ export const Roles = (props: RolesProps) => {
   const saveHandler = () => {
     setIsEditing(false);
 
-    console.log(id);
-
     // if setters available, use those to update
     // parent component state.
     if (setters.length) {
@@ -181,22 +179,30 @@ export const Roles = (props: RolesProps) => {
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h4>Root</h4>
-            <PoolAccount
-              address={roles.root ?? null}
-              batchIndex={accounts.indexOf(roles.root ?? '-1')}
-              batchKey={batchKey}
-            />
-          </div>
-        </section>
-        <section>
-          <div className="inner">
             <h4>Depositor</h4>
             <PoolAccount
               address={roles.depositor ?? null}
               batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
               batchKey={batchKey}
             />
+          </div>
+        </section>
+        <section>
+          <div className="inner">
+            <h4>Root</h4>
+            {isEditing ? (
+              <RoleEditInput
+                roleKey="root"
+                roleEdit={roleEdits?.root}
+                setRoleEdit={setRoleEditHandler}
+              />
+            ) : (
+              <PoolAccount
+                address={roles.root ?? null}
+                batchIndex={accounts.indexOf(roles.root ?? '-1')}
+                batchKey={batchKey}
+              />
+            )}
           </div>
         </section>
         <section>
