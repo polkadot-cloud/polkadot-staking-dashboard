@@ -86,7 +86,7 @@
         "support": "Support",
         "help_resources": "Help Resources",
         "estimated_fee": "Estimated Tx Fee:",
-        "not_enough_funds": "You do not have enough {{unit}} to submit this transaction.",
+        "not_enough_funds": "The sender does have enough {{unit}} to submit this transaction.",
         "currently_selected": "Currently Selected:",
         "not_enough": "Not Enough",
         "create_pool": "Create Pool",

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { replaceAll } from 'Utils';
 import { MaybeString } from 'types';
 import {
@@ -31,6 +31,16 @@ export const HelpProvider = (props: HelpContextProps) => {
     config: {},
   });
 
+  // when fade out completes, reset active definiton
+  useEffect(() => {
+    if (state.status === 0) {
+      setState({
+        ...state,
+        definition: null,
+      });
+    }
+  }, [state.status]);
+
   const setDefinition = (definition: MaybeString) => {
     const _state = {
       ...state,
@@ -50,7 +60,6 @@ export const HelpProvider = (props: HelpContextProps) => {
   const openHelpWith = (definition: MaybeString, _config: HelpConfig = {}) => {
     setState({
       ...state,
-      definition,
       status: 1,
       config: _config,
     });

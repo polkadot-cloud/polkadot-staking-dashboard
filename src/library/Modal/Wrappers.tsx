@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { borderPrimary, textPrimary, textSecondary } from 'theme';
 import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
-// title wrapper for modals
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
   box-sizing: border-box;
   padding: ${(props) =>
@@ -23,6 +22,10 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
 
     button {
       padding: 0;
+    }
+
+    path {
+      fill: ${textPrimary};
     }
 
     &:first-child {

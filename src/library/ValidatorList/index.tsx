@@ -115,7 +115,10 @@ export const ValidatorListInner = (props: any) => {
 
   // reset list when validator list changes
   useEffect(() => {
-    if (props.validators !== validatorsDefault) {
+    const validatorsEqual =
+      JSON.stringify(props.validators) === JSON.stringify(validatorsDefault);
+
+    if (!validatorsEqual) {
       setFetched(false);
     }
   }, [props.validators, nominator]);

@@ -8,7 +8,9 @@ export const defaultTxFees: EstimatedFeeContext = {
   txFees: new BN(0),
   notEnoughFunds: false,
   // eslint-disable-next-line
-  setTxFees: (f) => {},
+  setTxFees: (f) => { },
   resetTxFees: () => {},
+  // eslint-disable-next-line
+  setSender: (s) => { },
   txFeesValid: false,
 };

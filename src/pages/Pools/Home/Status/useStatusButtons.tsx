@@ -31,7 +31,6 @@ export const useStatusButtons = () => {
 
   let _label;
   let _buttons;
-
   const createBtn = {
     title: `Create Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
@@ -40,7 +39,8 @@ export const useStatusButtons = () => {
       !isReady ||
       isReadOnlyAccount(activeAccount) ||
       !activeAccount ||
-      stats.maxPools.toNumber() === 0,
+      stats.maxPools.toNumber() === 0 ||
+      bondedPools.length === stats.maxPools.toNumber(),
     onClick: () => setOnPoolSetup(1),
   };
 

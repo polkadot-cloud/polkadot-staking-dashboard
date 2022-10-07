@@ -83,7 +83,6 @@ export const LogoWrapper = styled.button<MinimisedProps>`
     top: -7px;
     font-size: 0.7rem;
   }
-
   > .beta-min {
     color: ${networkColor};
     background: ${modalBackground};

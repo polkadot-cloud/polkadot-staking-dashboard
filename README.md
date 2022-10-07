@@ -1,7 +1,7 @@
-# Polkadot Staking Dashboard [Beta]
+# Polkadot Staking Dashboard
 
 ## Deployment
-Staking dashboard is live on [staking.polkadot.network/dashboard](https://staking.polkadot.network/dashboard)
+Staking dashboard is live on [staking.polkadot.network](https://staking.polkadot.network/dashboard)
 
 <img width="1737" alt="Screenshot 2022-09-15 at 11 23 14" src="https://user-images.githubusercontent.com/13929023/190313914-ec750ca4-1be0-4d46-b2c5-2968dbe98fb4.png">
 
