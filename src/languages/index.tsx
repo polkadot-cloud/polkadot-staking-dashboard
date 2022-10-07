@@ -9,6 +9,7 @@ import commonen from './en/common.json';
 import pagescn from './cn/pages.json';
 import pagesen from './en/pages.json';
 
+// context object
 i18next
   .use(LanguageDetector)
   .use(initReactI18next)
