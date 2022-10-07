@@ -208,6 +208,37 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   justify-content: flex-end;
   transition: padding 0.3s ease-out;
 
+  .title {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    width: 100%;
+
+    > div {
+      &:last-child {
+        padding-left: 1rem;
+        flex-grow: 1;
+      }
+    }
+
+    button {
+      color: ${textSecondary};
+      border: 1px solid ${borderPrimary};
+      padding: 0.5rem 0.75rem;
+      margin: 0;
+      border-radius: 0.75rem;
+
+      &:hover {
+        background: ${buttonSecondaryBackground};
+      }
+
+      .icon {
+        margin-left: 0.75rem;
+      }
+    }
+  }
+
   h1 {
     font-family: 'Unbounded', 'sans-serif', sans-serif;
     font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.75rem')};
@@ -215,13 +246,14 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       font-size: 1.5rem;
     }
     transition: font 0.5s;
+    margin: 0;
   }
 
-  > .tabs {
+  .tabs {
     box-sizing: border-box;
     overflow: hidden;
     max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
-    margin-top: ${(props) => (props.sticky ? '0' : '0.75rem')};
+    margin-top: ${(props) => (props.sticky ? '0.25rem' : '1rem')};
     transition: margin 0.2s;
     height: 3.5rem;
 
