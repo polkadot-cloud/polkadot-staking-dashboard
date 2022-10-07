@@ -75,7 +75,7 @@ export interface ActiveBondedPool {
 
 export interface BondedPool {
   addresses: PoolAddresses;
-  id: number;
+  id: number | string;
   memberCounter: string;
   points: string;
   roles: {
