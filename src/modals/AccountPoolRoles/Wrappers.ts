@@ -9,6 +9,7 @@ import {
   textSecondary,
   borderPrimary,
   textSuccess,
+  backgroundSecondary,
 } from 'theme';
 
 export const ContentWrapper = styled.div`
@@ -48,10 +49,10 @@ export const ContentWrapper = styled.div`
 export const StyledButton = styled.button`
   background: ${buttonPrimaryBackground};
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 1rem 1.2rem;
   cursor: pointer;
   margin-bottom: 1rem;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   display: inline-flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -63,7 +64,7 @@ export const StyledButton = styled.button`
   }
 
   h3 {
-    margin: 0 0.5rem;
+    margin: 0 0 0 0.25rem;
   }
 
   h4 {
@@ -84,7 +85,22 @@ export const StyledButton = styled.button`
     background: ${backgroundToggle};
   }
   .icon {
-    margin-right: 0.5rem;
+    margin-right: 0.75rem;
+  }
+  .details {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    > h4 {
+      margin-left: 1rem;
+      span {
+        margin-right: 0.5rem;
+        border: 1px solid ${borderPrimary};
+        background: ${backgroundSecondary};
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+      }
+    }
   }
 
   svg {
