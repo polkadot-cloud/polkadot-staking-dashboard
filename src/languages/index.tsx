@@ -30,6 +30,7 @@ i18next
     },
   });
 
+// TODO: change into one icon that opens a modal.
 export const LanguageButton = () => {
   const { i18n } = useTranslation(['common', 'pages']);
   return (
