@@ -3,7 +3,6 @@
     "library": {
         "not_staking": "无抵押",
         "w1": "出了点小问题",
-        "click_to_reload": "重新加载",
         "clear_selection": "清除选择",
         "w2": "您没有可用的 {{network.unit}} 可质押.",
         "w3": "质押金额超过余额.",
@@ -81,6 +80,8 @@
         "no_match2": "没有符合此条件的验证人.",
         "no_validators": "没有验证人.",
         "": "",
+        "click_to_reload": "重新加载",
+        "oops": "抱歉，页面出现点小问题哦",
         "network": "网络",
         "help": "帮助",
         "support": "支持",

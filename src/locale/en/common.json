@@ -3,7 +3,6 @@
     "library": {
         "not_staking": "Not Staking",
         "w1": "Opps, Something Went Wrong",
-        "click_to_reload": "Click to reload",
         "clear_selection": "clear selection",
         "w2": "You have no free {{network.unit}} to bond.",
         "w3": "Bond amount is more than your free balance.",
@@ -81,6 +80,8 @@
         "no_match2": "No validators match this criteria.",
         "no_validators": "No validators.",
         "": "",
+        "click_to_reload": "Click to reload",
+        "oops": "Oops, Something Went Wrong",
         "network": "Network",
         "help": "Help",
         "support": "Support",

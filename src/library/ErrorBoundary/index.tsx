@@ -14,20 +14,15 @@ export const ErrorFallbackApp = ({
 }) => {
   const { t } = useTranslation('common');
 
-  // TODO: replace i18next with t()
   return (
     <Wrapper className="app">
       <h3>
         <FontAwesomeIcon icon={faBug} transform="grow-25" />
       </h3>
-      {i18next.resolvedLanguage === 'en' ? (
-        <h1>Oops, Something Went Wrong</h1>
-      ) : (
-        <h1>抱歉，页面出现点小问题哦</h1>
-      )}
+      <h1>{t('library.oops')}</h1>
       <h2>
         <button type="button" onClick={resetErrorBoundary}>
-          {i18next.resolvedLanguage === 'en' ? 'Click to reload' : '重新下载'}
+          {t('library.click_to_reload')}
         </button>
       </h2>
     </Wrapper>
@@ -41,20 +36,15 @@ export const ErrorFallbackRoutes = ({
 }) => {
   const { t } = useTranslation('common');
 
-  // TODO: replace i18next with t()
   return (
     <Wrapper>
       <h3 className="with-margin">
         <FontAwesomeIcon icon={faBug} transform="grow-25" />
       </h3>
-      {i18next.resolvedLanguage === 'en' ? (
-        <h1>Oops, Something Went Wrong</h1>
-      ) : (
-        <h1>抱歉，页面出现点小问题哦</h1>
-      )}
+      <h1>{t('library.oops')}</h1>
       <h2>
         <button type="button" onClick={resetErrorBoundary}>
-          {i18next.resolvedLanguage === 'en' ? 'Click to reload' : '重新下载'}
+          {t('library.click_to_reload')}
         </button>
       </h2>
     </Wrapper>
@@ -68,17 +58,12 @@ export const ErrorFallbackModal = ({
 }) => {
   const { t } = useTranslation('common');
 
-  // TODO: replace i18next with t()
   return (
     <Wrapper className="modal">
-      {i18next.resolvedLanguage === 'en' ? (
-        <h2>Oops, Something Went Wrong</h2>
-      ) : (
-        <h2>抱歉，页面出现点小问题哦</h2>
-      )}
+      <h2>{t('library.oops')}</h2>
       <h4>
         <button type="button" onClick={resetErrorBoundary}>
-          {i18next.resolvedLanguage === 'en' ? 'Click to reload' : '重新下载'}
+          {t('library.click_to_reload')}
         </button>
       </h4>
     </Wrapper>
