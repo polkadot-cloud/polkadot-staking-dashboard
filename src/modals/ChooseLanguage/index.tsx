@@ -3,13 +3,8 @@
 
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
+import { availableLanguages } from 'locale';
 import { PaddingWrapper } from '../Wrappers';
-
-// TODO: use i18n to determine languages
-const lngs: any = {
-  en: { Name: 'EN' },
-  cn: { Name: 'CN' },
-};
 
 export const ChooseLanguage = () => {
   const { i18n } = useTranslation(['common', 'pages']);
@@ -17,17 +12,16 @@ export const ChooseLanguage = () => {
     <>
       <Title title="Choose Language" />
       <PaddingWrapper>
-        {Object.keys(lngs).map((lng) => (
-          <h3>
+        {availableLanguages.map((l: string, i: number) => (
+          <h3 key={`${l}_{i}`}>
             <button
-              key={lng}
               style={{
-                fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal',
+                fontWeight: i18n.resolvedLanguage === l ? 'bold' : 'normal',
               }}
               type="submit"
-              onClick={() => i18n.changeLanguage(lng)}
+              onClick={() => i18n.changeLanguage(l)}
             >
-              {lngs[lng].Name}
+              {availableLanguages[i].toUpperCase()}
             </button>
           </h3>
         ))}

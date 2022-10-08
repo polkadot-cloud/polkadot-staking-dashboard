@@ -11,7 +11,21 @@ import pagesen from './en/pages.json';
 import helpen from './en/help.json';
 import helpcn from './cn/help.json';
 
-// context object
+// construct resources
+export const resources = {
+  en: {
+    common: commonen,
+    help: helpen,
+    pages: pagesen,
+  },
+  cn: {
+    common: commoncn,
+    help: helpcn,
+    pages: pagescn,
+  },
+};
+
+// configure i18n object
 i18next
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -20,19 +34,10 @@ i18next
     lng: 'en',
     fallbackLng: 'en',
     debug: true,
-    resources: {
-      en: {
-        common: commonen,
-        help: helpen,
-        pages: pagesen,
-      },
-      cn: {
-        common: commoncn,
-        help: helpcn,
-        pages: pagescn,
-      },
-    },
+    resources,
   });
+
+export { i18next };
 
 export const LanguageButton = () => {
   const { i18n } = useTranslation(['common', 'help', 'pages']);
@@ -51,4 +56,5 @@ export const LanguageButton = () => {
   );
 };
 
-export default i18next;
+// available languages as an array of strings
+export const availableLanguages = Object.keys(resources);
