@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { AnyApi, Sync } from 'types';
 import {
+  ActiveBondedPool,
   ActiveBondedPoolState,
   ActivePoolsContextState,
   BondedPool,
@@ -100,6 +101,22 @@ export const ActivePoolsProvider = ({
     }
   }, [network, isReady, synced]);
 
+  const getActivePoolMembership = () => {
+    // TODO: get the activePool that the active account
+    // is a member of.
+    return activeBondedPoolRef.current;
+  };
+
+  const getSelectedActivePool = () => {
+    // TODO: get the currently selected active pool
+    return activeBondedPoolRef.current;
+  };
+
+  const getSelectedPoolNominations = () => {
+    // TODO: get the currently selected active pool's nominations
+    return poolNominationsRef.current;
+  };
+
   // unsubscribe all on component unmount
   useEffect(() => {
     return () => {
@@ -110,19 +127,20 @@ export const ActivePoolsProvider = ({
 
   // re-calculate unclaimed payout when membership changes
   useEffect(() => {
-    if (activeBondedPool && membership && isReady) {
+    const acitvePoolMembership = getActivePoolMembership();
+    if (acitvePoolMembership && membership && isReady) {
       const unclaimedRewards = calculatePayout(
-        activeBondedPoolRef.current?.bondedPool ?? defaults.bondedPool,
-        activeBondedPoolRef.current?.rewardPool ?? defaults.rewardPool,
-        activeBondedPoolRef.current?.rewardAccountBalance ?? new BN(0)
+        acitvePoolMembership.bondedPool ?? defaults.bondedPool,
+        acitvePoolMembership.rewardPool ?? defaults.rewardPool,
+        acitvePoolMembership.rewardAccountBalance ?? new BN(0)
       );
-      updateUnclaimedRewards(unclaimedRewards);
+      updateUnclaimedRewards(unclaimedRewards, acitvePoolMembership);
     }
   }, [
     network,
     isReady,
-    activeBondedPool?.bondedPool,
-    activeBondedPool?.rewardPool,
+    getActivePoolMembership()?.bondedPool,
+    getActivePoolMembership()?.rewardPool,
     membership,
   ]);
 
@@ -285,16 +303,15 @@ export const ActivePoolsProvider = ({
   };
 
   // Utility functions
-
   /*
    * updateUnclaimedRewards
    * A helper function to set the unclaimed rewards of an active pool.
    */
-  const updateUnclaimedRewards = (amount: BN) => {
-    if (activeBondedPoolRef.current !== null) {
+  const updateUnclaimedRewards = (amount: BN, pool: ActiveBondedPool) => {
+    if (pool !== null) {
       setStateWithRef(
         {
-          ...activeBondedPoolRef.current,
+          ...pool,
           unclaimedRewards: amount,
         },
         setActiveBondedPool,
@@ -331,7 +348,7 @@ export const ActivePoolsProvider = ({
    * Returns whether active pool exists
    */
   const isBonding = () => {
-    return !!activeBondedPoolRef.current;
+    return !!getSelectedActivePool();
   };
 
   /*
@@ -340,7 +357,7 @@ export const ActivePoolsProvider = ({
    * the nominator in the active pool.
    */
   const isNominator = () => {
-    const roles = activeBondedPoolRef.current?.bondedPool?.roles;
+    const roles = getSelectedActivePool()?.bondedPool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
@@ -355,7 +372,7 @@ export const ActivePoolsProvider = ({
    * the owner of the active pool.
    */
   const isOwner = () => {
-    const roles = activeBondedPoolRef.current?.bondedPool?.roles;
+    const roles = getSelectedActivePool()?.bondedPool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
@@ -370,7 +387,7 @@ export const ActivePoolsProvider = ({
    * the depositor of the active pool.
    */
   const isDepositor = () => {
-    const roles = activeBondedPoolRef.current?.bondedPool?.roles;
+    const roles = getSelectedActivePool()?.bondedPool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
@@ -384,7 +401,7 @@ export const ActivePoolsProvider = ({
    * the depositor of the active pool.
    */
   const isStateToggler = () => {
-    const roles = activeBondedPoolRef.current?.bondedPool?.roles;
+    const roles = getSelectedActivePool()?.bondedPool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
@@ -398,7 +415,7 @@ export const ActivePoolsProvider = ({
    * that the member is participating in.
    */
   const getPoolBondedAccount = () => {
-    return activeBondedPoolRef.current?.addresses?.stash || null;
+    return getSelectedActivePool()?.addresses?.stash || null;
   };
 
   /*
@@ -406,7 +423,7 @@ export const ActivePoolsProvider = ({
    * Possible statuses: waiting, inactive, active.
    */
   const getNominationsStatus = () => {
-    const nominations = poolNominationsRef.current.nominations?.targets || [];
+    const nominations = getSelectedPoolNominations().nominations?.targets || [];
     const statuses: { [key: string]: string } = {};
 
     for (const nomination of nominations) {
@@ -433,7 +450,7 @@ export const ActivePoolsProvider = ({
    * Returns the active pool's roles or a default roles object.
    */
   const getPoolRoles = () => {
-    const roles = activeBondedPoolRef.current?.bondedPool?.roles ?? null;
+    const roles = getSelectedActivePool()?.bondedPool?.roles ?? null;
     if (!roles) {
       return defaults.poolRoles;
     }
