@@ -20,11 +20,11 @@ import { usePoolsConfig } from '../PoolsConfig';
 import { usePoolMemberships } from '../PoolMemberships';
 import { useBondedPools } from '../BondedPools';
 
-export const ActivePoolContexts = React.createContext<ActivePoolsContextState>(
+export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
 );
 
-export const useActivePools = () => React.useContext(ActivePoolContexts);
+export const useActivePools = () => React.useContext(ActivePoolsContext);
 
 export const ActivePoolsProvider = ({
   children,
@@ -513,7 +513,7 @@ export const ActivePoolsProvider = ({
   };
 
   return (
-    <ActivePoolContexts.Provider
+    <ActivePoolsContext.Provider
       value={{
         isNominator,
         isOwner,
@@ -533,6 +533,6 @@ export const ActivePoolsProvider = ({
       }}
     >
       {children}
-    </ActivePoolContexts.Provider>
+    </ActivePoolsContext.Provider>
   );
 };
