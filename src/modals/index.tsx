@@ -30,7 +30,7 @@ import { ManagePool } from './ManagePool';
 import { GoToFeedback } from './GoToFeedback';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
-import { Languages } from './Locale';
+import { ChooseLanguage } from './ChooseLanguage';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -129,7 +129,7 @@ export const Modal = () => {
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
               {modal === 'GoToFeedback' && <GoToFeedback />}
-              {modal === 'Languages' && <Languages />}
+              {modal === 'ChooseLanguage' && <ChooseLanguage />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>

@@ -5,17 +5,17 @@ import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
+// TODO: use i18n to determine languages
 const lngs: any = {
   en: { Name: 'EN' },
   cn: { Name: 'CN' },
 };
 
-export const Languages = () => {
+export const ChooseLanguage = () => {
   const { i18n } = useTranslation(['common', 'pages']);
-
   return (
     <>
-      <Title title="Toggle Languages" />
+      <Title title="Choose Language" />
       <PaddingWrapper>
         {Object.keys(lngs).map((lng) => (
           <h3>
