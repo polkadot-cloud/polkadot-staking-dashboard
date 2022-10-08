@@ -82,7 +82,7 @@ export const ActivePoolsProvider = ({
   // is currently being displayed in the UI.
   // active pools all need to be synced before this is updated. Should
   // update to the membership pool (if present) by default.
-  const [selectedPool, setSelectedPool] = useState<string | null>(null);
+  const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
 
   // re-sync when membership.poolId changes or when bondedPools are fetched.
   // account might have more roles in bondedPools, and these pools also
@@ -110,6 +110,11 @@ export const ActivePoolsProvider = ({
   const getSelectedActivePool = () => {
     // TODO: get the currently selected active pool
     return activeBondedPoolRef.current;
+  };
+
+  const getSelectedPoolTargets = () => {
+    // TODO: get the currently selected active pool's targets
+    return targetsRef.current;
   };
 
   const getSelectedPoolNominations = () => {
@@ -161,7 +166,7 @@ export const ActivePoolsProvider = ({
     // assign default pool immediately
     const defaultSelected = membership?.poolId || accountPools[0] || null;
     if (defaultSelected) {
-      setSelectedPool(String(defaultSelected));
+      setSelectedPoolId(String(defaultSelected));
     }
   };
 
@@ -520,12 +525,11 @@ export const ActivePoolsProvider = ({
         getPoolRoles,
         setTargets,
         getNominationsStatus,
-        setSelectedPool,
+        setSelectedPoolId,
         synced: syncedRef.current,
-        activeBondedPool: activeBondedPoolRef.current,
-        targets: targetsRef.current,
-        poolNominations: poolNominationsRef.current,
-        selectedPool,
+        activeBondedPool: activeBondedPoolRef.current, // TODO: rename to selectedPool and fetch using getSelectedActivePool()
+        targets: getSelectedPoolTargets(),
+        poolNominations: getSelectedPoolNominations(),
       }}
     >
       {children}

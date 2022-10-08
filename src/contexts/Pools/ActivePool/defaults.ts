@@ -60,10 +60,9 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   // eslint-disable-next-line
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
-  setSelectedPool: (p) => {},
+  setSelectedPoolId: (p) => {},
   activeBondedPool,
   targets,
   poolNominations,
   synced: Sync.Unsynced,
-  selectedPool: null,
 };

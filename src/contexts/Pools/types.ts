@@ -100,12 +100,11 @@ export interface ActivePoolsContextState {
   getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
-  setSelectedPool: (p: string) => void;
+  setSelectedPoolId: (p: string) => void;
   activeBondedPool: ActiveBondedPool | null;
   targets: any;
   poolNominations: any;
   synced: Sync;
-  selectedPool: string | null;
 }
 
 // PoolMembers types
