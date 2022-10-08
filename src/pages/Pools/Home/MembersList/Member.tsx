@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useModal } from 'contexts/Modal';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { PoolState } from 'contexts/Pools/types';
 import { useNetworkMetrics } from 'contexts/Network';
 
@@ -31,10 +31,10 @@ export const Member = (props: any) => {
   const { openModalWith } = useModal();
   const { selectActive } = useList();
   const { metrics } = useNetworkMetrics();
-  const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
+  const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { activeEra } = metrics;
-  const { state, roles } = activeBondedPool?.bondedPool || {};
+  const { state, roles } = selectedActivePool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
 
   const { who, batchKey, batchIndex } = props;

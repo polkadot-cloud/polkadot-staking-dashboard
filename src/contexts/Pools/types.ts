@@ -62,9 +62,9 @@ export interface BondedPoolsContextState {
   meta: AnyMetaBatch;
 }
 
-export type ActiveBondedPoolState = ActiveBondedPool | null;
+export type ActivePoolState = ActivePool | null;
 
-export interface ActiveBondedPool {
+export interface ActivePool {
   id: number;
   addresses: PoolAddresses;
   bondedPool: any;
@@ -101,7 +101,7 @@ export interface ActivePoolsContextState {
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
   setSelectedPoolId: (p: string) => void;
-  activeBondedPool: ActiveBondedPool | null;
+  selectedActivePool: ActivePool | null;
   targets: any;
   poolNominations: any;
   synced: Sync;

@@ -7,7 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import Button from 'library/Button';
 import {
   faEdit,
@@ -30,10 +30,10 @@ export const Roles = (props: RolesProps) => {
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
-  const { isOwner, activeBondedPool } = useActivePool();
+  const { isOwner, selectedActivePool } = useActivePools();
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
-  const { id } = activeBondedPool || { id: 0 };
+  const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
 
   const initialiseEdits = (() => {

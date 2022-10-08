@@ -11,7 +11,7 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { planckBnToUnit } from 'Utils';
 import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -22,11 +22,11 @@ import { FooterWrapper, Separator, PaddingWrapper } from '../Wrappers';
 export const ClaimReward = () => {
   const { api, network } = useApi();
   const { setStatus: setModalStatus, config } = useModal();
-  const { activeBondedPool } = useActivePool();
+  const { selectedActivePool } = useActivePools();
   const { activeAccount, accountHasSigner } = useConnect();
   const { txFeesValid } = useTxFees();
   const { units, unit } = network;
-  let { unclaimedRewards } = activeBondedPool || {};
+  let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
   const { claimType } = config;
 
@@ -37,7 +37,7 @@ export const ClaimReward = () => {
     } else {
       setValid(false);
     }
-  }, [activeBondedPool]);
+  }, [selectedActivePool]);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);

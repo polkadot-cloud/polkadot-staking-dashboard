@@ -3,7 +3,7 @@
 
 import { BN } from 'bn.js';
 import { Sync } from 'types';
-import { ActiveBondedPool, ActivePoolsContextState } from '../types';
+import { ActivePool, ActivePoolsContextState } from '../types';
 
 export const nominationStatus = {};
 
@@ -27,7 +27,7 @@ export const rewardPool = {
   totalRewardsClaimed: '0',
 };
 
-export const activeBondedPool: ActiveBondedPool = {
+export const selectedActivePool: ActivePool = {
   id: 0,
   addresses: {
     stash: '',
@@ -61,7 +61,7 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
   setSelectedPoolId: (p) => {},
-  activeBondedPool,
+  selectedActivePool,
   targets,
   poolNominations,
   synced: Sync.Unsynced,

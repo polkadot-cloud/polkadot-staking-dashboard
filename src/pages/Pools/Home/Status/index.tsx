@@ -8,7 +8,7 @@ import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 import { planckBnToUnit, rmCommas } from 'Utils';
@@ -30,12 +30,12 @@ export const Status = ({ height }: { height: number }) => {
   const { units, unit } = network;
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { activeBondedPool, poolNominations } = useActivePool();
+  const { selectedActivePool, poolNominations } = useActivePools();
   const { openModalWith } = useModal();
   const { getNominationsStatusFromTargets, eraStakers } = useStaking();
   const { meta, validators } = useValidators();
   const { stakers } = eraStakers;
-  const poolStash = activeBondedPool?.addresses?.stash || '';
+  const poolStash = selectedActivePool?.addresses?.stash || '';
 
   const nominationStatuses = getNominationsStatusFromTargets(
     poolStash,
@@ -43,7 +43,7 @@ export const Status = ({ height }: { height: number }) => {
   );
 
   // determine pool state
-  const poolState = activeBondedPool?.bondedPool?.state ?? null;
+  const poolState = selectedActivePool?.bondedPool?.state ?? null;
 
   const activeNominees = Object.entries(nominationStatuses)
     .map(([k, v]: any) => (v === 'active' ? k : false))
@@ -56,7 +56,7 @@ export const Status = ({ height }: { height: number }) => {
   const minUnclaimedDisplay = new BN(1_000_000);
 
   // Unclaimed rewards `Stat` props
-  let { unclaimedRewards } = activeBondedPool || {};
+  let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
 
   const labelRewards = unclaimedRewards.gt(minUnclaimedDisplay)

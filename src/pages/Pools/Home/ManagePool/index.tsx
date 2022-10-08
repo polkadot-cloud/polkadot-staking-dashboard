@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { useModal } from 'contexts/Modal';
 import { PageRowWrapper } from 'Wrappers';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
@@ -23,12 +23,12 @@ export const ManagePool = () => {
     setTargets,
     targets,
     poolNominations,
-    activeBondedPool,
-  } = useActivePool();
+    selectedActivePool,
+  } = useActivePools();
 
   const isNominating = !!poolNominations?.targets?.length;
-  const nominator = activeBondedPool?.addresses?.stash ?? null;
-  const { state } = activeBondedPool?.bondedPool || {};
+  const nominator = selectedActivePool?.addresses?.stash ?? null;
+  const { state } = selectedActivePool?.bondedPool || {};
 
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>

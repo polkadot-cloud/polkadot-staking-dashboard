@@ -6,8 +6,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { AnyApi, Sync } from 'types';
 import {
-  ActiveBondedPool,
-  ActiveBondedPoolState,
+  ActivePool,
+  ActivePoolState,
   ActivePoolsContextState,
   BondedPool,
   PoolAddresses,
@@ -24,7 +24,7 @@ export const ActivePoolContexts = React.createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
 );
 
-export const useActivePool = () => React.useContext(ActivePoolContexts);
+export const useActivePools = () => React.useContext(ActivePoolContexts);
 
 export const ActivePoolsProvider = ({
   children,
@@ -48,9 +48,9 @@ export const ActivePoolsProvider = ({
   }
 
   // stores member's bonded pool
-  const [activeBondedPool, setActiveBondedPool] =
-    useState<ActiveBondedPoolState>(null);
-  const activeBondedPoolRef = useRef(activeBondedPool);
+  const [selectedActivePool, setSelectedActivePool] =
+    useState<ActivePoolState>(null);
+  const selectedActivePoolRef = useRef(selectedActivePool);
 
   // store active bonded pool unsub object
   const [unsubActivePool, setUnsubActivePool] = useState<Array<AnyApi>>([]);
@@ -104,12 +104,12 @@ export const ActivePoolsProvider = ({
   const getActivePoolMembership = () => {
     // TODO: get the activePool that the active account
     // is a member of.
-    return activeBondedPoolRef.current;
+    return selectedActivePoolRef.current;
   };
 
   const getSelectedActivePool = () => {
     // TODO: get the currently selected active pool
-    return activeBondedPoolRef.current;
+    return selectedActivePoolRef.current;
   };
 
   const getSelectedPoolTargets = () => {
@@ -191,7 +191,7 @@ export const ActivePoolsProvider = ({
       for (const unsub of unsubActivePoolRef.current) {
         unsub();
       }
-      setStateWithRef(null, setActiveBondedPool, activeBondedPoolRef);
+      setStateWithRef(null, setSelectedActivePool, selectedActivePoolRef);
       setStateWithRef([], setUnsubActivePool, unsubActivePoolRef);
     }
   };
@@ -240,7 +240,7 @@ export const ActivePoolsProvider = ({
             };
 
             // set active pool state
-            setStateWithRef(pool, setActiveBondedPool, activeBondedPoolRef);
+            setStateWithRef(pool, setSelectedActivePool, selectedActivePoolRef);
 
             // get pool target nominations and set in state
             const _targets = localStorageOrDefault(
@@ -312,15 +312,15 @@ export const ActivePoolsProvider = ({
    * updateUnclaimedRewards
    * A helper function to set the unclaimed rewards of an active pool.
    */
-  const updateUnclaimedRewards = (amount: BN, pool: ActiveBondedPool) => {
+  const updateUnclaimedRewards = (amount: BN, pool: ActivePool) => {
     if (pool !== null) {
       setStateWithRef(
         {
           ...pool,
           unclaimedRewards: amount,
         },
-        setActiveBondedPool,
-        activeBondedPoolRef
+        setSelectedActivePool,
+        selectedActivePoolRef
       );
     }
   };
@@ -527,7 +527,7 @@ export const ActivePoolsProvider = ({
         getNominationsStatus,
         setSelectedPoolId,
         synced: syncedRef.current,
-        activeBondedPool: activeBondedPoolRef.current, // TODO: rename to selectedPool and fetch using getSelectedActivePool()
+        selectedActivePool: getSelectedActivePool(),
         targets: getSelectedPoolTargets(),
         poolNominations: getSelectedPoolNominations(),
       }}

@@ -4,7 +4,7 @@
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Identicon } from 'library/Identicon';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { determinePoolDisplay } from 'Utils';
 import Button from 'library/Button';
@@ -22,17 +22,17 @@ export const Membership = ({ label }: { label: string }) => {
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
   const { bondedPools, meta } = useBondedPools();
-  const { activeBondedPool, isOwner } = useActivePool();
+  const { selectedActivePool, isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
 
   const { active } = getTransferOptions(activeAccount).pool;
 
-  const inPool = membership !== null && activeBondedPool !== null;
+  const inPool = membership !== null && selectedActivePool !== null;
 
   let display = 'Not in Pool';
-  if (membership && activeBondedPool) {
+  if (membership && selectedActivePool) {
     const pool = bondedPools.find((p: any) => {
-      return p.addresses.stash === activeBondedPool.addresses.stash;
+      return p.addresses.stash === selectedActivePool.addresses.stash;
     });
 
     if (pool) {

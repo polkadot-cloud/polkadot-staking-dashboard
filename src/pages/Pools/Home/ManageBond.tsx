@@ -10,7 +10,7 @@ import { Button, ButtonRow } from 'library/Button';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -23,7 +23,7 @@ export const ManageBond = () => {
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { membership } = usePoolMemberships();
-  const { isBonding, activeBondedPool } = useActivePool();
+  const { isBonding, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
 
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -31,7 +31,7 @@ export const ManageBond = () => {
   const { active, totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.pool;
 
-  const { state } = activeBondedPool?.bondedPool || {};
+  const { state } = selectedActivePool?.bondedPool || {};
 
   return (
     <>

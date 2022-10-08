@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -28,7 +28,7 @@ export const NominatePool = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
-  const { isNominator, targets } = useActivePool();
+  const { isNominator, targets } = useActivePools();
   const { txFeesValid } = useTxFees();
   const { nominations } = targets;
   const poolId = membership?.poolId;

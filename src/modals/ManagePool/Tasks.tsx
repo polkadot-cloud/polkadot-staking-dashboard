@@ -4,7 +4,7 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { PoolState } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { ContentWrapper } from './Wrappers';
@@ -12,10 +12,10 @@ import { ContentWrapper } from './Wrappers';
 export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;
 
-  const { activeBondedPool } = useActivePool();
-  const poolLocked = activeBondedPool?.bondedPool?.state === PoolState.Block;
+  const { selectedActivePool } = useActivePools();
+  const poolLocked = selectedActivePool?.bondedPool?.state === PoolState.Block;
   const poolDestroying =
-    activeBondedPool?.bondedPool?.state === PoolState.Destroy;
+    selectedActivePool?.bondedPool?.state === PoolState.Destroy;
 
   return (
     <ContentWrapper>

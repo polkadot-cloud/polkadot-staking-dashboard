@@ -13,7 +13,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
@@ -30,7 +30,7 @@ export const ChangeNominations = () => {
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { setStatus: setModalStatus, config } = useModal();
   const { membership } = usePoolMemberships();
-  const { poolNominations, isNominator, isOwner } = useActivePool();
+  const { poolNominations, isNominator, isOwner } = useActivePools();
   const { txFeesValid } = useTxFees();
 
   const { nominations: newNominations, provider, bondType } = config;

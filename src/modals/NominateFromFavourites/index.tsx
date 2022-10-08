@@ -13,7 +13,7 @@ import { useBalances } from 'contexts/Balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -28,7 +28,7 @@ export const NominateFromFavourites = () => {
   const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators();
-  const { isNominator, isOwner } = useActivePool();
+  const { isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
   const { membership } = usePoolMemberships();
   const { txFeesValid } = useTxFees();

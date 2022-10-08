@@ -9,7 +9,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { Separator } from 'Wrappers';
 import { BondedPool, PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -29,7 +29,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { membership } = usePoolMemberships();
-  const { isOwner, activeBondedPool } = useActivePool();
+  const { isOwner, selectedActivePool } = useActivePools();
   const { bondedPools, meta, updateBondedPools, getBondedPool } =
     useBondedPools();
   const { txFeesValid } = useTxFees();
@@ -49,7 +49,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
     if (task === 'set_pool_metadata') {
       let _metadata = '';
       const pool = bondedPools.find((p: any) => {
-        return p.addresses.stash === activeBondedPool?.addresses.stash;
+        return p.addresses.stash === selectedActivePool?.addresses.stash;
       });
 
       if (pool) {

@@ -11,7 +11,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { PoolList } from 'library/PoolList';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import {
   SECTION_FULL_WIDTH_THRESHOLD,
@@ -38,7 +38,7 @@ export const HomeInner = () => {
   const { activeAccount } = useConnect();
   const { membership } = usePoolMemberships();
   const { bondedPools, getAccountPools } = useBondedPools();
-  const { getPoolRoles, activeBondedPool } = useActivePool();
+  const { getPoolRoles, selectedActivePool } = useActivePools();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { openModalWith } = useModal();
 
@@ -47,10 +47,10 @@ export const HomeInner = () => {
 
   // back to tab 0 if not in a pool
   useEffect(() => {
-    if (!activeBondedPool) {
+    if (!selectedActivePool) {
       setActiveTab(0);
     }
-  }, [activeBondedPool]);
+  }, [selectedActivePool]);
 
   const ROW_HEIGHT = 275;
 
@@ -62,7 +62,7 @@ export const HomeInner = () => {
     },
   ];
 
-  if (activeBondedPool) {
+  if (selectedActivePool) {
     tabs = tabs.concat({
       title: 'Members',
       active: activeTab === 1,

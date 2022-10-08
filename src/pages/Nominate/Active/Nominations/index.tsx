@@ -12,7 +12,7 @@ import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePool';
 import { MaybeAccount } from 'types';
 import { PoolState } from 'contexts/Pools/types';
 import { Wrapper } from './Wrapper';
@@ -39,8 +39,8 @@ export const Nominations = ({
     poolNominations,
     isNominator: isPoolNominator,
     isOwner: isPoolOwner,
-    activeBondedPool,
-  } = useActivePool();
+    selectedActivePool,
+  } = useActivePools();
 
   const isPool = bondType === 'pool';
   const nominations = isPool
@@ -84,7 +84,7 @@ export const Nominations = ({
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&
-    activeBondedPool?.bondedPool?.state === PoolState.Destroy &&
+    selectedActivePool?.bondedPool?.state === PoolState.Destroy &&
     !nominating;
 
   const stopBtnDisabled =
