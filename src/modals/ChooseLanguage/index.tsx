@@ -5,6 +5,7 @@ import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
 import { availableLanguages } from 'locale';
 import { useModal } from 'contexts/Modal';
+import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { PaddingWrapper } from '../Wrappers';
 
 export const ChooseLanguage = () => {
@@ -12,7 +13,7 @@ export const ChooseLanguage = () => {
   const { setStatus } = useModal();
   return (
     <>
-      <Title title="Choose Language" />
+      <Title title="Choose Language" Svg={LanguageSVG} />
       <PaddingWrapper>
         {availableLanguages.map((l: string, i: number) => (
           <h3 key={`${l}_{i}`}>
