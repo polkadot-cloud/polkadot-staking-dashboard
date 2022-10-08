@@ -69,26 +69,15 @@ export const Help = () => {
 
   if (definition) {
     // get items for active category
-    meta =
-      i18n.resolvedLanguage === 'en'
-        ? Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
-            item?.definitions?.find(
-              (d: HelpDefinition) => d.title === definition
-            )
-          )
-        : Object.values(C_HELP_CONFIG).find((item: HelpItemRaw) =>
-            item?.definitions?.find(
-              (d: HelpDefinition) => d.title === definition
-            )
-          );
+    meta = Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
+      item?.definitions?.find((d: HelpDefinition) => d.title === definition)
+    );
   } else {
     // get all items
     let _definitions: HelpDefinitions = [];
     let _external: HelpExternals = [];
 
-    Object.values(
-      i18n.resolvedLanguage === 'en' ? HELP_CONFIG : C_HELP_CONFIG
-    ).forEach((c: HelpItemRaw) => {
+    Object.values(HELP_CONFIG).forEach((c: HelpItemRaw) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });

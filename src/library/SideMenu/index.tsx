@@ -14,6 +14,7 @@ import { ReactComponent as InfoSVG } from 'img/info.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
+import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
 import { UIContextInterface } from 'contexts/UI/types';
@@ -21,7 +22,6 @@ import { ConnectionStatus } from 'contexts/Api/types';
 import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { useHelp } from 'contexts/Help';
-import { LanguageButton } from 'locale';
 import { useTranslation } from 'react-i18next';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';
@@ -162,7 +162,12 @@ export const SideMenu = () => {
             <MoonOutlineSVG width="1.4rem" height="1.4rem" />
           </button>
         )}
-        <LanguageButton />
+        <button
+          type="button"
+          onClick={() => openModalWith('Languages', {}, 'small')}
+        >
+          <LanguageSVG width="1.6rem" height="1.6rem" />
+        </button>
       </section>
     </Wrapper>
   );
