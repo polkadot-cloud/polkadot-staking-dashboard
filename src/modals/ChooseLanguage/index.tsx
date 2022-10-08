@@ -4,10 +4,12 @@
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
 import { availableLanguages } from 'locale';
+import { useModal } from 'contexts/Modal';
 import { PaddingWrapper } from '../Wrappers';
 
 export const ChooseLanguage = () => {
   const { i18n } = useTranslation(['common', 'pages']);
+  const { setStatus } = useModal();
   return (
     <>
       <Title title="Choose Language" />
@@ -19,7 +21,10 @@ export const ChooseLanguage = () => {
                 fontWeight: i18n.resolvedLanguage === l ? 'bold' : 'normal',
               }}
               type="submit"
-              onClick={() => i18n.changeLanguage(l)}
+              onClick={() => {
+                i18n.changeLanguage(l);
+                setStatus(2);
+              }}
             >
               {availableLanguages[i].toUpperCase()}
             </button>
