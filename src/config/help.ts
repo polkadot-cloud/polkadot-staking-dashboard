@@ -7,6 +7,11 @@ export const HELP_CONFIG: HelpContentRaw = [
   {
     key: 'overview',
     definitions: [
+      // TODO: migrate to just keys and fetch content from i18n
+      // {
+      //   helpKey: 'Supply Staked',
+      //   localeKey: 'overview.definitions.supply_staked',
+      // },
       {
         title: 'Supply Staked',
         description: [
