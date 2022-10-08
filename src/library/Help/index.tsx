@@ -4,7 +4,7 @@
 import { useEffect } from 'react';
 import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
-import { HELP_CONFIG, C_HELP_CONFIG } from 'config/help';
+import { HELP_CONFIG } from 'config/help';
 import {
   HelpItemRaw,
   HelpDefinition,
