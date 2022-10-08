@@ -108,17 +108,19 @@ export const ActivePoolsProvider = ({
   };
 
   const getSelectedActivePool = () => {
-    // TODO: get the currently selected active pool
+    // TODO: get the currently selected active pool.
     return selectedActivePoolRef.current;
   };
 
   const getSelectedPoolTargets = () => {
     // TODO: get the currently selected active pool's targets
+    // TODO: return defaults if not present in array.
     return targetsRef.current;
   };
 
   const getSelectedPoolNominations = () => {
-    // TODO: get the currently selected active pool's nominations
+    // TODO: get the currently selected active pool's nominations.
+    // TODO: return defaults if not present in array.
     return poolNominationsRef.current;
   };
 
