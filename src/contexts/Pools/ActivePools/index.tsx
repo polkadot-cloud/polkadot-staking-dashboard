@@ -39,12 +39,19 @@ export const ActivePoolsProvider = ({
   const { getAccountPools, bondedPools } = useBondedPools();
 
   // determine active pools to subscribe to.
-  const accountPools = useMemo(
-    () => Object.keys(getAccountPools(activeAccount)),
-    [activeAccount, bondedPools]
-  );
+  const accountPools = useMemo(() => {
+    const _accountPools = Object.keys(getAccountPools(activeAccount));
+    if (
+      membership?.poolId &&
+      !_accountPools.includes(String(membership?.poolId) || '-1')
+    ) {
+      _accountPools.push(String(membership.poolId));
+    }
+    return _accountPools;
+  }, [activeAccount, bondedPools, membership]);
 
   // stores member's active pools
+  // TODO: refactor into array of pools.
   const [activePools, setActivePools] = useState<ActivePoolState>(null);
   const activePoolsRef = useRef(activePools);
 
@@ -53,6 +60,7 @@ export const ActivePoolsProvider = ({
   const unsubActivePoolsRef = useRef(unsubActivePools);
 
   // store active pools nominations.
+  // TODO: refactor into array of pools.
   const [poolNominations, setPoolNominations] = useState<any>(
     defaults.poolNominations
   );
@@ -63,6 +71,7 @@ export const ActivePoolsProvider = ({
   const unsubNominationsRef = useRef(unsubNominations);
 
   // store account target validators
+  // TODO: refactor into array of targets.
   const [targets, _setTargets] = useState<any>(defaults.targets);
   const targetsRef = useRef(targets);
 
@@ -85,7 +94,7 @@ export const ActivePoolsProvider = ({
       unsubscribePoolNominations();
     }
     setStateWithRef(Sync.Unsynced, setSynced, syncedRef);
-  }, [accountPools]);
+  }, [activeAccount, accountPools]);
 
   // subscribe to pool that the active account is a member of.
   useEffect(() => {
