@@ -388,6 +388,10 @@ export const BondedPoolsProvider = ({
 
   // get all the roles belonging to one pool account
   const getAccountRoles = (who: MaybeAccount) => {
+    const depositor = bondedPools
+      .filter((b: BondedPool) => b.roles.depositor === who)
+      .map((b: BondedPool) => b.id);
+
     const root = bondedPools
       .filter((b: BondedPool) => b.roles.root === who)
       .map((b: BondedPool) => b.id);
@@ -401,6 +405,7 @@ export const BondedPoolsProvider = ({
       .map((b: BondedPool) => b.id);
 
     return {
+      depositor,
       root,
       nominator,
       stateToggler,
