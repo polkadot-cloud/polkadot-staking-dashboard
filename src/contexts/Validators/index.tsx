@@ -27,7 +27,7 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
-import { useActivePools } from '../Pools/ActivePool';
+import { useActivePools } from '../Pools/ActivePools';
 
 export const ValidatorsContext =
   React.createContext<ValidatorsContextInterface>(

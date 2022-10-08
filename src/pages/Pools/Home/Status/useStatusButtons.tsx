@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';

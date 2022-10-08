@@ -10,7 +10,7 @@ import { Button, ButtonRow } from 'library/Button';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';

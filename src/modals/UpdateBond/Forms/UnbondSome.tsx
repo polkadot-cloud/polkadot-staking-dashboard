@@ -10,7 +10,7 @@ import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';

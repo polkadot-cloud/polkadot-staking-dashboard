@@ -7,7 +7,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';

@@ -14,7 +14,7 @@ import {
   toFixedIfNecessary,
 } from 'Utils';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

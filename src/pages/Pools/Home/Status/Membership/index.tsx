@@ -4,7 +4,7 @@
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Identicon } from 'library/Identicon';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { determinePoolDisplay } from 'Utils';
 import Button from 'library/Button';

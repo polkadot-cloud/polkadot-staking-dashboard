@@ -5,7 +5,7 @@ import { PoolAccount } from 'library/PoolAccount';
 import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { clipAddress } from 'Utils';
 import { Account } from '../Account';

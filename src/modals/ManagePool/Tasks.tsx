@@ -4,7 +4,7 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { ContentWrapper } from './Wrappers';

@@ -9,7 +9,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Separator } from 'Wrappers';
 import { BondedPool, PoolState } from 'contexts/Pools/types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';

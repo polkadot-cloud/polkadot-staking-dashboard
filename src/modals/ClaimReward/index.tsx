@@ -11,7 +11,7 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { planckBnToUnit } from 'Utils';
 import { BN } from 'bn.js';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';

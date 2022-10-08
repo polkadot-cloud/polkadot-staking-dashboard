@@ -13,7 +13,7 @@ import { useBalances } from 'contexts/Balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';

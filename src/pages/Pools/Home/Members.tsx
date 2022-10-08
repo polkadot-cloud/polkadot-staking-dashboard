@@ -4,7 +4,7 @@
 import { PageRowWrapper } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';

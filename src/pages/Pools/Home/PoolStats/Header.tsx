@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useApi } from 'contexts/Api';

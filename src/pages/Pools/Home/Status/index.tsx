@@ -8,7 +8,7 @@ import { Separator } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useModal } from 'contexts/Modal';
 import { Stat } from 'library/Stat';
 import { planckBnToUnit, rmCommas } from 'Utils';

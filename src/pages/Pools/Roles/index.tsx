@@ -7,7 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import Button from 'library/Button';
 import {
   faEdit,

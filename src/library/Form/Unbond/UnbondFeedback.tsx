@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { useState, useEffect } from 'react';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';

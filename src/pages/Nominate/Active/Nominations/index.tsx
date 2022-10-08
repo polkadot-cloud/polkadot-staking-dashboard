@@ -12,7 +12,7 @@ import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { MaybeAccount } from 'types';
 import { PoolState } from 'contexts/Pools/types';
 import { Wrapper } from './Wrapper';

@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useModal } from 'contexts/Modal';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { useNetworkMetrics } from 'contexts/Network';
 

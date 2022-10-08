@@ -6,7 +6,7 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';

@@ -21,7 +21,7 @@ import { PoolsConfigProvider } from './contexts/Pools/PoolsConfig';
 import { BondedPoolsProvider } from './contexts/Pools/BondedPools';
 import { PoolMembersProvider } from './contexts/Pools/PoolMembers';
 import { PoolMembershipsProvider } from './contexts/Pools/PoolMemberships';
-import { ActivePoolsProvider } from './contexts/Pools/ActivePool';
+import { ActivePoolsProvider } from './contexts/Pools/ActivePools';
 import { StakingProvider } from './contexts/Staking';
 import { SubscanProvider } from './contexts/Subscan';
 import { ValidatorsProvider } from './contexts/Validators';

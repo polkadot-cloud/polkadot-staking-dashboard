@@ -4,7 +4,7 @@
 import { PageRowWrapper } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTheme } from 'contexts/Themes';
 import { PoolState } from 'contexts/Pools/types';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
