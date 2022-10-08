@@ -8,6 +8,8 @@ import commoncn from './cn/common.json';
 import commonen from './en/common.json';
 import pagescn from './cn/pages.json';
 import pagesen from './en/pages.json';
+import helpen from './en/help.json';
+import helpcn from './cn/help.json';
 
 // context object
 i18next
@@ -21,17 +23,19 @@ i18next
     resources: {
       en: {
         common: commonen,
+        help: helpen,
         pages: pagesen,
       },
       cn: {
         common: commoncn,
+        help: helpcn,
         pages: pagescn,
       },
     },
   });
 
 export const LanguageButton = () => {
-  const { i18n } = useTranslation(['common', 'pages']);
+  const { i18n } = useTranslation(['common', 'help', 'pages']);
   return (
     <>
       {i18n.resolvedLanguage === 'en' ? (

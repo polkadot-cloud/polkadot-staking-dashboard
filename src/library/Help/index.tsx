@@ -29,7 +29,7 @@ export const Help = () => {
     setDefinition,
   } = useHelp();
   const controls = useAnimation();
-  const { t, i18n } = useTranslation('common');
+  const { t } = useTranslation('common');
 
   const onFadeIn = async () => {
     await controls.start('visible');
