@@ -73,9 +73,11 @@ export const SubscanProvider = ({
       const results = await Promise.all([
         handleFetch(activeAccount, 0, API_ENDPOINTS.subscanRewardSlash, {
           is_stash: true,
+          claimed_filter: 'claimed',
         }),
         handleFetch(activeAccount, 1, API_ENDPOINTS.subscanRewardSlash, {
           is_stash: true,
+          claimed_filter: 'claimed',
         }),
       ]);
 
