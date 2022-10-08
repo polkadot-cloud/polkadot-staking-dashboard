@@ -89,7 +89,7 @@ export interface BondedPool {
 
 export type NominationStatuses = { [key: string]: string };
 
-export interface ActivePoolContextState {
+export interface ActivePoolsContextState {
   isBonding: () => boolean;
   isNominator: () => boolean;
   isOwner: () => boolean;
@@ -100,10 +100,12 @@ export interface ActivePoolContextState {
   getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
+  setSelectedPool: (p: string) => void;
   activeBondedPool: ActiveBondedPool | null;
   targets: any;
   poolNominations: any;
   synced: Sync;
+  selectedPool: string | null;
 }
 
 // PoolMembers types

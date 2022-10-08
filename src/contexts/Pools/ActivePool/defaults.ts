@@ -3,7 +3,7 @@
 
 import { BN } from 'bn.js';
 import { Sync } from 'types';
-import { ActiveBondedPool, ActivePoolContextState } from '../types';
+import { ActiveBondedPool, ActivePoolsContextState } from '../types';
 
 export const nominationStatus = {};
 
@@ -48,7 +48,7 @@ export const poolNominations = {
   submittedIn: 0,
 };
 
-export const defaultActivePoolContext: ActivePoolContextState = {
+export const defaultActivePoolContext: ActivePoolsContextState = {
   isBonding: () => false,
   isNominator: () => false,
   isOwner: () => false,
@@ -60,8 +60,10 @@ export const defaultActivePoolContext: ActivePoolContextState = {
   // eslint-disable-next-line
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
+  setSelectedPool: (p) => {},
   activeBondedPool,
   targets,
   poolNominations,
   synced: Sync.Unsynced,
+  selectedPool: null,
 };
