@@ -30,6 +30,26 @@ export const Help = () => {
   } = useHelp();
   const controls = useAnimation();
   const { t } = useTranslation('common');
+  const { t: tHelp, i18n } = useTranslation('help');
+
+  // Example of getting help content from key
+  // The key will be fetched from help.ts. Loop through definitions?
+  const key = 'overview.definitions.supply_staked';
+
+  // access title and description property of key
+  const title = tHelp(`${key}.title`);
+  const description = i18n.getResource('en', 'help', `${key}.description`);
+
+  // inject variables into definition
+  const descInjected = fillDefinitionVariables({
+    title,
+    description,
+  });
+
+  // example of mapping descriptions array and constructing JSX
+  const descJsx = descInjected.description.map((d: string, i: number) => (
+    <p key={`index_${i}`}>{d}</p>
+  ));
 
   const onFadeIn = async () => {
     await controls.start('visible');
