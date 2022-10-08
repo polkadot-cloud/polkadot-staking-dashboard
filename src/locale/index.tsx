@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import i18next from 'i18next';
-import { useTranslation, initReactI18next } from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import commoncn from './cn/common.json';
 import commonen from './en/common.json';
@@ -37,24 +37,8 @@ i18next
     resources,
   });
 
+// export i18next for context
 export { i18next };
-
-export const LanguageButton = () => {
-  const { i18n } = useTranslation(['common', 'help', 'pages']);
-  return (
-    <>
-      {i18n.resolvedLanguage === 'en' ? (
-        <button type="button" onClick={() => i18n.changeLanguage('cn')}>
-          CN
-        </button>
-      ) : (
-        <button type="button" onClick={() => i18n.changeLanguage('en')}>
-          EN
-        </button>
-      )}
-    </>
-  );
-};
 
 // available languages as an array of strings
 export const availableLanguages = Object.keys(resources);
