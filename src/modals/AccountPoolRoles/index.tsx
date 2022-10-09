@@ -8,24 +8,37 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { BondedPool } from 'contexts/Pools/types';
 import { Title } from 'library/Modal/Title';
 import Identicon from 'library/Identicon';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { PaddingWrapper } from '../Wrappers';
 import { StyledButton, ContentWrapper } from './Wrappers';
 
 export const AccountPoolRoles = () => {
-  const { getAccountPools } = useBondedPools();
   const { config } = useModal();
+  const { getAccountPools } = useBondedPools();
+  const { membership } = usePoolMemberships();
   const { who } = config;
 
   const accountPools = getAccountPools(who);
   const totalAccountPools = Object.entries(accountPools).length;
+  const { label } = useStatusButtons();
 
   return (
     <>
       <Title title="All Pool Roles" icon={faBars} />
       <PaddingWrapper>
         <ContentWrapper>
+          {membership && (
+            <>
+              <h4>{label}</h4>
+              <div className="items">
+                <Button item={['member']} poolId={String(membership.poolId)} />
+              </div>
+            </>
+          )}
           <h4>
-            You have active roles in <b>{totalAccountPools}</b> pool
+            Active Roles in <b>{totalAccountPools}</b> Pool
             {totalAccountPools === 1 ? '' : 's'}
           </h4>
           <div className="items">
@@ -40,7 +53,9 @@ export const AccountPoolRoles = () => {
 };
 
 const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
+  const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();
+  const { setSelectedPoolId } = useActivePools();
 
   const pool = bondedPools.find((b: BondedPool) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
@@ -51,7 +66,8 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
       type="button"
       className="action-button"
       onClick={() => {
-        /* TODO: switch active pool being displayed. */
+        setSelectedPoolId(poolId);
+        setStatus(2);
       }}
     >
       <div className="icon">
