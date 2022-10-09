@@ -20,7 +20,8 @@ export const Membership = ({ label }: { label: string }) => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { openModalWith } = useModal();
   const { bondedPools, meta } = useBondedPools();
-  const { selectedActivePool, isOwner, isMember } = useActivePools();
+  const { selectedActivePool, isOwner, isMember, isStateToggler } =
+    useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { active } = getTransferOptions(activeAccount).pool;
 
@@ -40,27 +41,40 @@ export const Membership = ({ label }: { label: string }) => {
     }
   }
 
-  const button = isOwner() ? (
-    <Button
-      primary
-      inline
-      title="Manage"
-      icon={faCog}
-      small
-      disabled={!isReady || isReadOnlyAccount(activeAccount)}
-      onClick={() => openModalWith('ManagePool', {}, 'small')}
-    />
-  ) : isMember() && active?.gtn(0) ? (
-    <Button
-      primary
-      inline
-      title="Leave"
-      icon={faSignOutAlt}
-      small
-      disabled={!isReady || isReadOnlyAccount(activeAccount)}
-      onClick={() => openModalWith('LeavePool', { bondType: 'pool' }, 'small')}
-    />
-  ) : null;
+  const buttons = [];
+  let paddingRight = 0;
+
+  if (isOwner() || isStateToggler()) {
+    paddingRight += 7.9;
+    buttons.push(
+      <Button
+        primary
+        inline
+        title="Manage"
+        icon={faCog}
+        small
+        disabled={!isReady || isReadOnlyAccount(activeAccount)}
+        onClick={() => openModalWith('ManagePool', {}, 'small')}
+      />
+    );
+  }
+
+  if (isMember() && active?.gtn(0)) {
+    paddingRight += 7.9;
+    buttons.push(
+      <Button
+        primary
+        inline
+        title="Leave"
+        icon={faSignOutAlt}
+        small
+        disabled={!isReady || isReadOnlyAccount(activeAccount)}
+        onClick={() =>
+          openModalWith('LeavePool', { bondType: 'pool' }, 'small')
+        }
+      />
+    );
+  }
 
   return (
     <StatWrapper>
@@ -69,7 +83,7 @@ export const Membership = ({ label }: { label: string }) => {
       </h4>
       <Wrapper
         paddingLeft={selectedActivePool !== null}
-        paddingRight={button !== null}
+        paddingRight={paddingRight === 0 ? null : `${String(paddingRight)}rem`}
       >
         <h2 className="hide-with-padding">
           <div className="icon">
@@ -79,7 +93,9 @@ export const Membership = ({ label }: { label: string }) => {
             />
           </div>
           {display}
-          {button && <div className="btn">{button}</div>}
+          {buttons.length > 0 && (
+            <div className="btn">{buttons.map((b: any) => b)}</div>
+          )}
         </h2>
       </Wrapper>
     </StatWrapper>
