@@ -409,8 +409,7 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result =
-      activeAccount === roles?.root || activeAccount === roles?.stateToggler;
+    const result = activeAccount === roles?.root;
     return result;
   };
 
