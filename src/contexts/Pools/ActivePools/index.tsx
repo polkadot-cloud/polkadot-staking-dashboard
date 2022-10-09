@@ -503,7 +503,12 @@ export const ActivePoolsProvider = ({
     rewardPool: any,
     rewardAccountBalance: BN
   ): BN => {
-    if (!membership) return new BN(0);
+    const membershipPoolId = String(membership?.poolId) ?? '-1';
+
+    // exit early if the currently selected pool is not membership pool
+    if (selectedPoolId !== membershipPoolId || !membership) {
+      return new BN(0);
+    }
 
     const rewardCounterBase = new BN(10).pow(new BN(18));
 
