@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Identicon } from 'library/Identicon';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -20,17 +19,13 @@ export const Membership = ({ label }: { label: string }) => {
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { openModalWith } = useModal();
-  const { membership } = usePoolMemberships();
   const { bondedPools, meta } = useBondedPools();
-  const { selectedActivePool, isOwner } = useActivePools();
+  const { selectedActivePool, isOwner, isMember } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-
   const { active } = getTransferOptions(activeAccount).pool;
 
-  const inPool = membership !== null && selectedActivePool !== null;
-
   let display = 'Not in Pool';
-  if (membership && selectedActivePool) {
+  if (selectedActivePool) {
     const pool = bondedPools.find((p: any) => {
       return p.addresses.stash === selectedActivePool.addresses.stash;
     });
@@ -38,7 +33,10 @@ export const Membership = ({ label }: { label: string }) => {
     if (pool) {
       const metadata = meta.bonded_pools?.metadata ?? [];
       const batchIndex = bondedPools.indexOf(pool);
-      display = determinePoolDisplay(membership.address, metadata[batchIndex]);
+      display = determinePoolDisplay(
+        selectedActivePool.addresses.stash,
+        metadata[batchIndex]
+      );
     }
   }
 
@@ -52,7 +50,7 @@ export const Membership = ({ label }: { label: string }) => {
       disabled={!isReady || isReadOnlyAccount(activeAccount)}
       onClick={() => openModalWith('ManagePool', {}, 'small')}
     />
-  ) : active?.gtn(0) ? (
+  ) : isMember() && active?.gtn(0) ? (
     <Button
       primary
       inline
@@ -69,10 +67,16 @@ export const Membership = ({ label }: { label: string }) => {
       <h4>
         {label} <OpenHelpIcon helpKey="Pool Membership" />
       </h4>
-      <Wrapper paddingLeft={inPool} paddingRight={button !== null}>
+      <Wrapper
+        paddingLeft={selectedActivePool !== null}
+        paddingRight={button !== null}
+      >
         <h2 className="hide-with-padding">
           <div className="icon">
-            <Identicon value={membership?.address ?? ''} size={30} />
+            <Identicon
+              value={selectedActivePool?.addresses?.stash ?? ''}
+              size={30}
+            />
           </div>
           {display}
           {button && <div className="btn">{button}</div>}

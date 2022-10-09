@@ -18,7 +18,6 @@ import {
   faPlus,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
 import { useStatusButtons } from './useStatusButtons';
@@ -29,7 +28,6 @@ export const Status = ({ height }: { height: number }) => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
   const { isSyncing } = useUi();
-  const { membership } = usePoolMemberships();
   const { selectedActivePool, poolNominations } = useActivePools();
   const { openModalWith } = useModal();
   const { getNominationsStatusFromTargets, eraStakers } = useStaking();
@@ -50,7 +48,6 @@ export const Status = ({ height }: { height: number }) => {
     .filter((v) => v !== false);
 
   const isNominating = !!poolNominations?.targets?.length;
-  const inPool = membership;
 
   // Set the minimum unclaimed planck value to prevent e numbers
   const minUnclaimedDisplay = new BN(1_000_000);
@@ -157,7 +154,7 @@ export const Status = ({ height }: { height: number }) => {
 
   return (
     <CardWrapper height={height}>
-      {inPool ? (
+      {selectedActivePool ? (
         <Membership label={label} />
       ) : (
         <Stat
@@ -174,7 +171,7 @@ export const Status = ({ height }: { height: number }) => {
         stat={labelRewards}
         buttons={isSyncing ? [] : buttonsRewards}
       />
-      {membership && (
+      {selectedActivePool && (
         <>
           <Separator />
           <Stat
