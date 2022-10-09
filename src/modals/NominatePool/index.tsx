@@ -12,7 +12,6 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
@@ -27,18 +26,19 @@ export const NominatePool = () => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { membership } = usePoolMemberships();
-  const { isNominator, targets } = useActivePools();
+  const { selectedActivePool, isOwner, isNominator, targets } =
+    useActivePools();
   const { txFeesValid } = useTxFees();
   const { nominations } = targets;
-  const poolId = membership?.poolId;
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
-  // ensure selected membership and targests are valid
+  const poolId = selectedActivePool?.id ?? null;
+
+  // ensure selected roles are valid
   const isValid =
-    (membership && isNominator() && nominations.length > 0) ?? false;
+    (poolId !== null && isNominator() && nominations.length > 0) ?? false;
   useEffect(() => {
     setValid(isValid);
   }, [isValid]);
@@ -72,7 +72,7 @@ export const NominatePool = () => {
   if (!nominations.length) {
     warnings.push('You have no nominations set.');
   }
-  if (!membership || !isNominator()) {
+  if (!isOwner() || !isNominator()) {
     warnings.push(`You do not have a nominator role in any pools.`);
   }
 

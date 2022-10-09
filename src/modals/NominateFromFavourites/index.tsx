@@ -6,7 +6,6 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
@@ -28,9 +27,8 @@ export const NominateFromFavourites = () => {
   const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators();
-  const { isNominator, isOwner } = useActivePools();
+  const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
-  const { membership } = usePoolMemberships();
   const { txFeesValid } = useTxFees();
 
   const { maxNominations } = consts;
@@ -108,7 +106,7 @@ export const NominateFromFavourites = () => {
 
     if (bondType === 'pool') {
       _tx = api.tx.nominationPools.nominate(
-        membership?.poolId,
+        selectedActivePool?.id,
         targetsToSubmit
       );
     } else {
