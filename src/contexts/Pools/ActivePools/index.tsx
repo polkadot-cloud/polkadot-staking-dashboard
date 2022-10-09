@@ -58,10 +58,9 @@ export const ActivePoolsProvider = ({
   const unsubActivePoolsRef = useRef(unsubActivePools);
 
   // store active pools nominations.
-  // TODO: refactor into array of pools.
-  const [poolNominations, setPoolNominations] = useState<any>(
-    defaults.poolNominations
-  );
+  const [poolNominations, setPoolNominations] = useState<{
+    [key: number]: any;
+  }>({});
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nominations unsubs
@@ -119,16 +118,17 @@ export const ActivePoolsProvider = ({
     );
   };
 
+  const getSelectedPoolNominations = () => {
+    return (
+      poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
+      defaults.poolNominations
+    );
+  };
+
   const getSelectedPoolTargets = () => {
     // TODO: get the currently selected active pool's targets
     // TODO: return defaults if not present in array.
-    return targetsRef.current;
-  };
-
-  const getSelectedPoolNominations = () => {
-    // TODO: get the currently selected active pool's nominations.
-    // TODO: return defaults if not present in array.
-    return poolNominationsRef.current;
+    return targetsRef.current || defaults.targets;
   };
 
   // unsubscribe all on component unmount
@@ -180,11 +180,7 @@ export const ActivePoolsProvider = ({
         unsub();
       }
     }
-    setStateWithRef(
-      defaults.poolNominations,
-      setPoolNominations,
-      poolNominationsRef
-    );
+    setStateWithRef({}, setPoolNominations, poolNominationsRef);
     setStateWithRef([], setUnsubNominations, unsubNominationsRef);
   };
 
@@ -258,7 +254,7 @@ export const ActivePoolsProvider = ({
             setStateWithRef(_targets, _setTargets, targetsRef);
 
             // subscribe to pool nominations
-            subscribeToPoolNominations(addresses.stash);
+            subscribeToPoolNominations(poolId, addresses.stash);
           } else {
             setStateWithRef(defaults.targets, _setTargets, targetsRef);
           }
@@ -277,7 +273,10 @@ export const ActivePoolsProvider = ({
     });
   };
 
-  const subscribeToPoolNominations = async (poolBondAddress: string) => {
+  const subscribeToPoolNominations = async (
+    poolId: number,
+    poolBondAddress: string
+  ) => {
     if (!api) return;
 
     const subscribePoolNominations = async (_poolBondAddress: string) => {
@@ -294,8 +293,17 @@ export const ActivePoolsProvider = ({
               submittedIn: _nominations.submittedIn.toHuman(),
             };
           }
+
+          // add or replace current pool nominations from poolNominations
+          const _poolNominations = { ...poolNominationsRef.current };
+          _poolNominations[poolId] = _nominations;
+
           // set pool nominations state
-          setStateWithRef(_nominations, setPoolNominations, poolNominationsRef);
+          setStateWithRef(
+            _poolNominations,
+            setPoolNominations,
+            poolNominationsRef
+          );
 
           // update sycning to complete
           setStateWithRef(Sync.Synced, setSynced, syncedRef);
