@@ -13,6 +13,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import OpenHelpIcon from 'library/OpenHelpIcon';
+import React from 'react';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
@@ -94,7 +95,11 @@ export const Membership = ({ label }: { label: string }) => {
           </div>
           {display}
           {buttons.length > 0 && (
-            <div className="btn">{buttons.map((b: any) => b)}</div>
+            <div className="btn">
+              {buttons.map((b: any, i: number) => (
+                <React.Fragment key={i}>{b}</React.Fragment>
+              ))}
+            </div>
           )}
         </h2>
       </Wrapper>
