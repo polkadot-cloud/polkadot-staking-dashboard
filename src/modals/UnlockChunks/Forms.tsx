@@ -82,7 +82,7 @@ export const Forms = forwardRef(
       from: signingAccount,
       shouldSubmit: valid,
       callbackSubmit: () => {
-        setModalStatus(0);
+        setModalStatus(2);
       },
       callbackInBlock: () => {
         // if pool is being closed, remove from static lists

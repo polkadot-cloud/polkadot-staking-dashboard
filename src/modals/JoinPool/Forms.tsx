@@ -65,7 +65,7 @@ export const Forms = () => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
       setActiveTab(0);
     },
     callbackInBlock: async () => {

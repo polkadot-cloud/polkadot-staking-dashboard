@@ -122,7 +122,7 @@ export const NominateFromFavourites = () => {
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });

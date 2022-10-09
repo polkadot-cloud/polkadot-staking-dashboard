@@ -88,7 +88,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });
