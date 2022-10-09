@@ -12,7 +12,6 @@ import { useModal } from 'contexts/Modal';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { Warning } from 'library/Form/Warning';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
@@ -29,8 +28,8 @@ export const ChangeNominations = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { setStatus: setModalStatus, config } = useModal();
-  const { membership } = usePoolMemberships();
-  const { poolNominations, isNominator, isOwner } = useActivePools();
+  const { poolNominations, isNominator, isOwner, selectedActivePool } =
+    useActivePools();
   const { txFeesValid } = useTxFees();
 
   const { nominations: newNominations, provider, bondType } = config;
@@ -55,10 +54,10 @@ export const ChangeNominations = () => {
     setValid(nominations.length > 0);
   }, [nominations]);
 
-  // ensure selected membership and targets are valid
+  // ensure roles are valid
   let isValid = nominations.length > 0;
   if (isPool) {
-    isValid = (membership && (isNominator() || isOwner())) ?? false;
+    isValid = (isNominator() || isOwner()) ?? false;
   }
   useEffect(() => {
     setValid(isValid);
@@ -67,7 +66,7 @@ export const ChangeNominations = () => {
   // tx to submit
   const tx = () => {
     let _tx = null;
-    if (!valid || !api || (isPool && !membership)) {
+    if (!valid || !api) {
       return _tx;
     }
 
@@ -80,16 +79,16 @@ export const ChangeNominations = () => {
           }
     );
 
-    if (isPool && membership) {
+    if (isPool) {
       // if nominations remain, call nominate
       if (remaining !== 0) {
         _tx = api.tx.nominationPools.nominate(
-          membership.poolId,
+          selectedActivePool?.id || 0,
           targetsToSubmit
         );
       } else {
         // wishing to stop all nominations, call chill
-        _tx = api.tx.nominationPools.chill(membership.poolId);
+        _tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
       }
     } else if (isStaking) {
       if (remaining !== 0) {

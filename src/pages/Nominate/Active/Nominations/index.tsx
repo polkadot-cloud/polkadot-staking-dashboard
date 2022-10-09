@@ -105,7 +105,7 @@ export const Nominations = ({
               If Pool and account is nominator or root, display stop button.
           */}
           {((!isPool && nominations.length) ||
-            (isPool && isPoolNominator() && isPoolOwner())) && (
+            (isPool && (isPoolNominator() || isPoolOwner()))) && (
             <Button
               small
               icon={faStopCircle}

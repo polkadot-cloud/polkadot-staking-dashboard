@@ -394,8 +394,7 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result =
-      activeAccount === roles?.root || activeAccount === roles?.nominator;
+    const result = activeAccount === roles?.nominator;
     return result;
   };
 
