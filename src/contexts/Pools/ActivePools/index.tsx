@@ -489,6 +489,12 @@ export const ActivePoolsProvider = ({
   };
 
   const getPoolUnlocking = () => {
+    const membershipPoolId = String(membership?.poolId) ?? '-1';
+
+    // exit early if the currently selected pool is not membership pool
+    if (selectedPoolId !== membershipPoolId) {
+      return [];
+    }
     return membership?.unlocking || [];
   };
 
