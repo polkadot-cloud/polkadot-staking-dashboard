@@ -45,7 +45,7 @@ export const Membership = ({ label }: { label: string }) => {
   let paddingRight = 0;
 
   if (isOwner() || isStateToggler()) {
-    paddingRight += 7.9;
+    paddingRight += 8.2;
     buttons.push(
       <Button
         primary
