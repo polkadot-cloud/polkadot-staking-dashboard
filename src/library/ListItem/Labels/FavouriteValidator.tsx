@@ -10,29 +10,33 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useTooltip } from 'contexts/Tooltip';
 import { useRef } from 'react';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { FavouriteProps } from '../types';
 
 export const FavouriteValidator = (props: FavouriteProps) => {
   const { addNotification } = useNotifications();
   const { favourites, addFavourite, removeFavourite } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('common');
 
   const { address } = props;
   const isFavourite = favourites.includes(address);
 
   const notificationFavourite = !isFavourite
     ? {
-        title: 'Favourite Validator Added',
+        title: t('library.favourite_validator_added'),
         subtitle: address,
       }
     : {
-        title: 'Favourite Validator Removed',
+        title: t('library.favourite_validator_removed'),
         subtitle: address,
       };
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = `${isFavourite ? `Remove` : `Add`} Favourite`;
+  const tooltipText = `${
+    isFavourite ? `${t('library.remove')}` : `${t('library.add')}`
+  } ${t('library.favourite')}`;
 
   const toggleTooltip = () => {
     if (!open) {

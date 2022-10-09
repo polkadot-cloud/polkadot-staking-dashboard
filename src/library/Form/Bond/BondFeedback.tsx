@@ -122,32 +122,28 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     // bond errors
     if (freeBalance === 0) {
       _bondDisabled = true;
-      _errors.push(`You have no free ${network.unit} to bond.`);
+      _errors.push(`${t('library.w2')}`);
     }
 
     if (Number(bond.bond) > freeBalance) {
-      _errors.push('Bond amount is more than your free balance.');
+      _errors.push(t('library.w3'));
     }
 
     if (bond.bond !== '' && Number(bond.bond) < _planck) {
-      _errors.push('Bond amount is too small.');
+      _errors.push(t('library.w1'));
     }
 
     if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
-      _errors.push(`Not enough ${unit} to bond after transaction fees.`);
+      _errors.push(`${t('library.w11')}`);
     }
 
     if (inSetup) {
       if (freeBalance < minBondBase) {
         _bondDisabled = true;
-        _errors.push(
-          `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
-        );
+        _errors.push(`${t('library.w4')} ${minBondBase} ${network.unit}.`);
       }
       if (Number(bond.bond) < minBondBase) {
-        _errors.push(
-          `Bond amount must be at least ${minBondBase} ${network.unit}.`
-        );
+        _errors.push(`${t('library.w5')} ${minBondBase} ${network.unit}.`);
       }
     }
 
@@ -162,8 +158,12 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {`${txFees.isZero() ? `Available` : `Available after Tx Fees`}`}:{' '}
-          {humanNumber(freeBalance)} {network.unit}
+          {`${
+            txFees.isZero()
+              ? `${t('library.available')}`
+              : `${t('library.available_after_fees')}`
+          }`}
+          : {humanNumber(freeBalance)} {network.unit}
         </h4>
       </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (

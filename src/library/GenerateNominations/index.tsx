@@ -203,8 +203,8 @@ export const GenerateNominationsInner = (
   // accumulate generation methods
   const methods = [
     {
-      title: 'Optimal Selection',
-      subtitle: 'Selects a mix of majority active and inactive validators.',
+      title: t('library.optimal_selection'),
+      subtitle: t('library.n1'),
       icon: faChartPie as IconProp,
       onClick: () => {
         setMethod('Optimal Selection');
@@ -214,8 +214,8 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'Active Low Commission',
-      subtitle: 'Gets a set of active validators with low commission.',
+      title: t('library.active_low_commission'),
+      subtitle: t('library.n2'),
       icon: faCoins as IconProp,
       onClick: () => {
         setMethod('Active Low Commission');
@@ -225,8 +225,8 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'From Favourites',
-      subtitle: 'Gets a set of your favourite validators.',
+      title: t('library.from_favourites'),
+      subtitle: t('library.favourite_validators'),
       icon: faHeart as IconProp,
       onClick: () => {
         setMethod('From Favourites');
@@ -236,8 +236,8 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'Manual Selection',
-      subtitle: 'Add validators from scratch.',
+      title: t('library.manual_selection'),
+      subtitle: t('library.add_validators_from_scratch'),
       icon: faUserEdit as IconProp,
       onClick: () => {
         setMethod('Manual');
@@ -250,19 +250,19 @@ export const GenerateNominationsInner = (
   // accumulate actions
   const actions = [
     {
-      title: 'Add From Favourites',
+      title: t('library.add_from_favourites'),
       onClick: cbAddNominations,
       onSelected: false,
       isDisabled: disabledAddFavourites,
     },
     {
-      title: `Remove Selected`,
+      title: t('library.remove_selected'),
       onClick: cbRemoveSelected,
       onSelected: true,
       isDisabled: () => false,
     },
     {
-      title: 'Parachain Validator',
+      title: t('library.parachain_validator'),
       onClick: () => addNominationByType('Parachain Validator'),
       onSelected: false,
       icon: faPlus,
@@ -271,7 +271,7 @@ export const GenerateNominationsInner = (
         !availableToNominate(nominations).parachainValidators.length,
     },
     {
-      title: 'Active Validator',
+      title: t('library.active_validator'),
       onClick: () => addNominationByType('Active Validator'),
       onSelected: false,
       icon: faPlus,
@@ -280,7 +280,7 @@ export const GenerateNominationsInner = (
         !availableToNominate(nominations).activeValidators.length,
     },
     {
-      title: 'Random Validator',
+      title: t('library.random_validator'),
       onClick: () => addNominationByType('Random Validator'),
       onSelected: false,
       icon: faPlus,
@@ -312,7 +312,7 @@ export const GenerateNominationsInner = (
                 setFetching(true);
               }}
             >
-              {t('library.re-generate')}
+              {t('library.re_generate')}
             </button>
           )}
         </SelectableWrapper>

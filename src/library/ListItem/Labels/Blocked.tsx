@@ -6,16 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { BlockedProps } from '../types';
 
 export const Blocked = (props: BlockedProps) => {
   const { prefs } = props;
   const blocked = prefs?.blocked ?? null;
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('common');
 
   const posRef = useRef(null);
 
-  const tooltipText = 'Blocking Nominations';
+  const tooltipText = t('library.blocking_nominations');
 
   const toggleTooltip = () => {
     if (!open) {

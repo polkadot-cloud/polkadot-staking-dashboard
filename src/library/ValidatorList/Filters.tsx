@@ -14,6 +14,7 @@ import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
 import { Item } from 'library/Filter/Item';
 import { useValidatorFilter } from 'library/Filter/context';
+import { useTranslation } from 'react-i18next';
 
 export const Filters = () => {
   const {
@@ -23,6 +24,7 @@ export const Filters = () => {
     toggleFilterValidators,
     toggleAllValidatorFilters,
   } = useValidatorFilter();
+  const { t } = useTranslation('common');
 
   const handleFilter = (fn: any, filter: string) => {
     fn(filter);
@@ -35,9 +37,9 @@ export const Filters = () => {
 
   return (
     <Container>
-      <Category title="Order">
+      <Category title={t('library.order')}>
         <Item
-          label="Active Low Commission"
+          label={t('library.active_low_commission')}
           icon={faPercentage}
           transform="grow-4"
           active={validatorOrder === 'commission'}
@@ -46,21 +48,21 @@ export const Filters = () => {
         />
       </Category>
       <Category
-        title="Exclude:"
+        title={t('library.exclude')}
         buttons={[
           {
-            title: 'All',
+            title: t('library.all'),
             onClick: () => toggleAllValidatorFilters(1),
           },
           {
-            title: 'Clear',
+            title: t('library.clear'),
             onClick: () => toggleAllValidatorFilters(0),
             disabled: !validatorFilters.length,
           },
         ]}
       >
         <Item
-          label="inactive validators"
+          label={t('library.inactive_validators')}
           icon={faClock}
           transform="grow-4"
           active={validatorFilters?.includes('inactive') ?? false}
@@ -70,7 +72,7 @@ export const Filters = () => {
           width={170}
         />
         <Item
-          label="over subscribed"
+          label={t('library.over_subscribed')}
           icon={faExclamationTriangle}
           transform="grow-4"
           active={validatorFilters?.includes('over_subscribed') ?? false}
@@ -80,7 +82,7 @@ export const Filters = () => {
           width={155}
         />
         <Item
-          label="100% commission"
+          label={t('library.100%_commission')}
           icon={faBalanceScaleLeft}
           transform="grow-2"
           active={validatorFilters?.includes('all_commission') ?? false}
@@ -90,7 +92,7 @@ export const Filters = () => {
           width={170}
         />
         <Item
-          label="blocked nominations"
+          label={t('library.blocked_nominations')}
           icon={faUserSlash}
           transform="grow-1"
           active={validatorFilters?.includes('blocked_nominations') ?? false}
@@ -100,7 +102,7 @@ export const Filters = () => {
           width={190}
         />
         <Item
-          label="missing identity"
+          label={t('library.missing_identity')}
           icon={faUserTag}
           transform="grow-2"
           active={validatorFilters?.includes('missing_identity') ?? false}

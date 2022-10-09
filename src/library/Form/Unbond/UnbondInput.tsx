@@ -55,7 +55,9 @@ export const UnbondInput = (props: UnbondInputProps) => {
       <div>
         <InputWrapper>
           <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>Unbond {network.unit}:</h3>
+            <h3>
+              {t('library.unbond')} {network.unit}:
+            </h3>
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
@@ -73,7 +75,7 @@ export const UnbondInput = (props: UnbondInputProps) => {
           <Button
             inline
             small
-            title="Max"
+            title={t('library.max')}
             onClick={() => {
               setValue(freeToUnbondToMin);
               updateParentState(freeToUnbondToMin);

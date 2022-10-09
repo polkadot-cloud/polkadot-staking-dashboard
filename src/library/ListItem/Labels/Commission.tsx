@@ -4,15 +4,17 @@
 import { useRef } from 'react';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 
 export const Commission = (props: { commission: number }) => {
   const { commission } = props;
+  const { t } = useTranslation('common');
 
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = 'Validator Commission';
+  const tooltipText = t('library.validator_commission');
 
   const toggleTooltip = () => {
     if (!open) {
