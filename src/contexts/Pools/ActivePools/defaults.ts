@@ -52,6 +52,7 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   isBonding: () => false,
   isNominator: () => false,
   isOwner: () => false,
+  isMember: () => false,
   isDepositor: () => false,
   isStateToggler: () => false,
   getPoolBondedAccount: () => null,
