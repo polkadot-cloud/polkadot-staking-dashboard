@@ -17,7 +17,7 @@ import {
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
-  position: sticky;
+  position: fixed;
   top: 0px;
   right: 0px;
   display: flex;
@@ -27,11 +27,14 @@ export const Wrapper = styled.div`
   align-content: center;
   padding: 0 1.25rem;
   transition: all 0.15s;
-  z-index: 5;
   margin: 0.5rem 0;
   height: 4rem;
+  z-index: 6;
 
-  /* no longer in use */
+  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    width: 100%;
+  }
+
   .menu {
     display: none;
     @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {

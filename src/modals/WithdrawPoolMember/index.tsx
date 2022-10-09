@@ -74,7 +74,7 @@ export const WithdrawPoolMember = () => {
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {
       // remove the pool member from context if no more funds bonded

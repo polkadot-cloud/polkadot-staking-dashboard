@@ -7,7 +7,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { BN } from 'bn.js';
@@ -25,7 +25,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { isDepositor } = useActivePool();
+  const { isDepositor } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { stats } = usePoolsConfig();
   const { txFeesValid } = useTxFees();
@@ -88,7 +88,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });

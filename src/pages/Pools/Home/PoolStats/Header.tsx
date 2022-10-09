@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useApi } from 'contexts/Api';
@@ -11,11 +11,11 @@ import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {
   const { network } = useApi();
-  const { activeBondedPool } = useActivePool();
+  const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
 
-  const { state, points } = activeBondedPool?.bondedPool || {};
-  const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
+  const { state, points } = selectedActivePool?.bondedPool || {};
+  const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
   const bonded = toFixedIfNecessary(
     planckBnToUnit(
