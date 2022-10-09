@@ -42,10 +42,9 @@ export const ActivePoolsProvider = ({
   // determine active pools to subscribe to.
   const accountPools = useMemo(() => {
     const _accountPools = Object.keys(getAccountPools(activeAccount));
-    if (
-      membership?.poolId &&
-      !_accountPools.includes(String(membership?.poolId) || '-1')
-    ) {
+    const p = membership?.poolId ? String(membership.poolId) : '-1';
+
+    if (membership?.poolId && !_accountPools.includes(p || '-1')) {
       _accountPools.push(String(membership.poolId));
     }
     return _accountPools;
@@ -107,9 +106,10 @@ export const ActivePoolsProvider = ({
   const getActivePoolMembership = () => {
     // get the activePool that the active account
     return (
-      activePoolsRef.current.find(
-        (a: ActivePool) => a.id === membership?.poolId || 0
-      ) || null
+      activePoolsRef.current.find((a: ActivePool) => {
+        const p = membership?.poolId ? String(membership.poolId) : '0';
+        return String(a.id) === p;
+      }) || null
     );
   };
 
@@ -143,6 +143,7 @@ export const ActivePoolsProvider = ({
   // re-calculate unclaimed payout when membership changes
   useEffect(() => {
     const acitvePoolMembership = getActivePoolMembership();
+
     if (acitvePoolMembership && membership && isReady) {
       const unclaimedRewards = calculatePayout(
         acitvePoolMembership.bondedPool ?? defaults.bondedPool,
@@ -418,10 +419,9 @@ export const ActivePoolsProvider = ({
    * a member of the active pool.
    */
   const isMember = () => {
-    return (
-      getPoolMember(activeAccount)?.poolId ===
-      String(getSelectedActivePool()?.id)
-    );
+    const selectedPool = getSelectedActivePool();
+    const p = selectedPool ? String(selectedPool.id) : '-1';
+    return getPoolMember(activeAccount)?.poolId === p;
   };
 
   /*
@@ -501,7 +501,9 @@ export const ActivePoolsProvider = ({
   };
 
   const getPoolUnlocking = () => {
-    const membershipPoolId = String(membership?.poolId) ?? '-1';
+    const membershipPoolId = membership?.poolId
+      ? String(membership.poolId)
+      : '-1';
 
     // exit early if the currently selected pool is not membership pool
     if (selectedPoolId !== membershipPoolId) {
@@ -515,7 +517,9 @@ export const ActivePoolsProvider = ({
     rewardPool: any,
     rewardAccountBalance: BN
   ): BN => {
-    const membershipPoolId = String(membership?.poolId) ?? '-1';
+    const membershipPoolId = membership?.poolId
+      ? String(membership.poolId)
+      : '-1';
 
     // exit early if the currently selected pool is not membership pool
     if (selectedPoolId !== membershipPoolId || !membership) {
