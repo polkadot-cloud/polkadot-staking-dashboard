@@ -62,8 +62,6 @@ export interface BondedPoolsContextState {
   meta: AnyMetaBatch;
 }
 
-export type ActivePoolState = ActivePool | null;
-
 export interface ActivePool {
   id: number;
   addresses: PoolAddresses;

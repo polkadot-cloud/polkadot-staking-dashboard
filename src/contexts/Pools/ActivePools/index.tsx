@@ -7,7 +7,6 @@ import { useStaking } from 'contexts/Staking';
 import { AnyApi, Sync } from 'types';
 import {
   ActivePool,
-  ActivePoolState,
   ActivePoolsContextState,
   BondedPool,
   PoolAddresses,
@@ -51,8 +50,7 @@ export const ActivePoolsProvider = ({
   }, [activeAccount, bondedPools, membership]);
 
   // stores member's active pools
-  // TODO: refactor into array of pools.
-  const [activePools, setActivePools] = useState<ActivePoolState>(null);
+  const [activePools, setActivePools] = useState<Array<ActivePool>>([]);
   const activePoolsRef = useRef(activePools);
 
   // store active pools unsubs
@@ -105,14 +103,20 @@ export const ActivePoolsProvider = ({
   }, [network, isReady, syncedRef.current]);
 
   const getActivePoolMembership = () => {
-    // TODO: get the activePool that the active account
-    // is a member of, or return null.
-    return activePoolsRef.current;
+    // get the activePool that the active account
+    return (
+      activePoolsRef.current.find(
+        (a: ActivePool) => a.id === membership?.poolId || 0
+      ) || null
+    );
   };
 
   const getSelectedActivePool = () => {
-    // TODO: get the currently selected active pool.
-    return activePoolsRef.current;
+    return (
+      activePoolsRef.current.find(
+        (a: ActivePool) => a.id === Number(selectedPoolId)
+      ) || null
+    );
   };
 
   const getSelectedPoolTargets = () => {
@@ -144,7 +148,7 @@ export const ActivePoolsProvider = ({
         acitvePoolMembership.rewardPool ?? defaults.rewardPool,
         acitvePoolMembership.rewardAccountBalance ?? new BN(0)
       );
-      updateUnclaimedRewards(unclaimedRewards, acitvePoolMembership);
+      updateUnclaimedRewards(unclaimedRewards, acitvePoolMembership?.id || 0);
     }
   }, [
     network,
@@ -190,7 +194,7 @@ export const ActivePoolsProvider = ({
       for (const unsub of unsubActivePoolsRef.current) {
         unsub();
       }
-      setStateWithRef(null, setActivePools, activePoolsRef);
+      setStateWithRef([], setActivePools, activePoolsRef);
       setStateWithRef([], setUnsubActivePools, unsubActivePoolsRef);
     }
   };
@@ -232,8 +236,16 @@ export const ActivePoolsProvider = ({
               unclaimedRewards,
             };
 
+            // remove pool if it already exists
+            const _activePools = activePoolsRef.current.filter(
+              (a: ActivePool) => a.id !== pool.id
+            );
             // set active pool state
-            setStateWithRef(pool, setActivePools, activePoolsRef);
+            setStateWithRef(
+              [..._activePools, pool],
+              setActivePools,
+              activePoolsRef
+            );
 
             // get pool target nominations and set in state
             const _targets = localStorageOrDefault(
@@ -309,18 +321,20 @@ export const ActivePoolsProvider = ({
    * updateUnclaimedRewards
    * A helper function to set the unclaimed rewards of an active pool.
    */
-  const updateUnclaimedRewards = (amount: BN, pool: ActivePool) => {
-    // TODO: update the active pool the account is a member of
-    if (pool !== null) {
-      setStateWithRef(
-        {
-          ...pool,
+  const updateUnclaimedRewards = (amount: BN, poolId: number) => {
+    if (!poolId) return;
+
+    // update the active pool the account is a member of
+    const _activePools = [...activePoolsRef.current].map((a: ActivePool) => {
+      if (a.id === poolId) {
+        return {
+          ...a,
           unclaimedRewards: amount,
-        },
-        setActivePools,
-        activePoolsRef
-      );
-    }
+        };
+      }
+      return a;
+    });
+    setStateWithRef(_activePools, setActivePools, activePoolsRef);
   };
 
   /*
