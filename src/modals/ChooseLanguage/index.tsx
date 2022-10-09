@@ -9,7 +9,7 @@ import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { PaddingWrapper } from '../Wrappers';
 
 export const ChooseLanguage = () => {
-  const { i18n } = useTranslation(['common', 'pages']);
+  const { i18n } = useTranslation(['common', 'pages', 'help']);
   const { setStatus } = useModal();
   return (
     <>

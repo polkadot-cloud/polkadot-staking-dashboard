@@ -3,39 +3,64 @@
         "definitions": {
             "supply_staked": {
                 "title": "抵押比例",
-                "description": "目前全球{NETWORK_UNIT}的累计发行量','抵押的百分比与{NETWORK_UNIT}总发行量相关"
+                "description": [
+                    "目前全球{NETWORK_UNIT}的累计发行量.",
+                    "抵押的百分比与{NETWORK_UNIT}总发行量相关."
+                ]
             },
             "total_nominators": {
                 "title": "总提名人数",
-                "description": "在网络中参与抵押的账户,无论他们在当前session中是否活跃','抵押{NETWORK_UNIT}的前提是成为提名人"
+                "description": [
+                    "在网络中参与抵押的账户,无论他们在当前session中是否活跃.",
+                    "抵押{NETWORK_UNIT}的前提是成为提名人."
+                ]
             },
             "active_nominators": {
                 "title": "活跃提名人",
-                "description": "当前session中活跃的提名人,因为您的验证人也可能己超额认选,所以活跃的提名人并不能保证能获得奖励."
+                "description": [
+                    "当前session中活跃的提名人.",
+                    "因为您的验证人也可能己超额认选,所以活跃的提名人并不能保证能获得奖励."
+                ]
             },
             "your_balance": {
                 "title": "余额",
-                "description": "除了抵押的总金额外，还包括在提名池中抵押了的{NETWORK_UNIT}总金额.和抵押的金额不同，质押的池金额是被持有并锁定在池中."
+                "description": [
+                    "除了抵押的总金额外，还包括在提名池中抵押了的{NETWORK_UNIT}总金额.",
+                    "和抵押的金额不同，质押的池金额是被持有并锁定在池中."
+                ]
             },
             "reserve_balance": {
                 "title": "储备金额",
-                "description": "在{{NETWORK_NAME}}中，帐户必须有高于一定金额的余额才能在链上存在。这一数额称为“最低存款”.该应用确保账户永远不会低于这个数额."
+                "description": [
+                    "在{{NETWORK_NAME}}中，帐户必须有高于一定金额的余额才能在链上存在。这一数额称为“最低存款.",
+                    "该应用确保账户永远不会低于这个数额."
+                ]
             },
             "network_stats": {
                 "title": "网络数据",
-                "description": "实时网络信息可为您的抵押提供参考.可从总览中得到最新的网络数据."
+                "description": [
+                    "实时网络信息可为您的抵押提供参考.",
+                    "可从总览中得到最新的网络数据."
+                ]
             },
             "inflation": {
                 "title": "通货膨胀",
-                "description": "DOT具有通货膨胀性. 所以无封顶数量.在验证人的奖励是基于抵押金额, 其余归国库所有的情况下, 每年通货膨胀率约为10%."
+                "description": [
+                    "DOT具有通货膨胀性.",
+                    "所以无封顶数量.在验证人的奖励是基于抵押金额, 其余归国库所有的情况下, 每年通货膨胀率约为10%."
+                ]
             },
             "historical_rewards_rate": {
                 "title": "历史年收益",
-                "description": "根据{NETWORK_NAME}奖励分配数据估算的年收益."
+                "description": [
+                    "根据{NETWORK_NAME}奖励分配数据估算的年收益."
+                ]
             },
             "ideal_staked": {
                 "title": "最优比例",
-                "description": "理想网络条件下的抵押占发行量的百分比"
+                "description": [
+                    "理想网络条件下的抵押占发行量的百分比."
+                ]
             }
         },
         "external": {
@@ -48,35 +73,67 @@
         "definitions": {
             "nomination_status": {
                 "title": "提名状态",
-                "description": "当前的抵押状态,是否获得奖励取决于在当前Era是否有对活跃验证人的提名.以及是否超过了他们的认选."
+                "description": [
+                    "当前的抵押状态.",
+                    "A set of nominations will be inactive when none of those nominees are participating in the current validator set - the set of validators currently elected to validate the network.",
+                    "When at least one of your nominees are active, this nomination status will display as actively nominating - but this still does not guarantee rewards.",
+                    "The top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the  {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} highest bonded nominators to receive rewards.",
+                    "If an active nominee is not over-subscribed, you will receive rewards."
+                ]
             },
             "stash_and_controller_accounts": {
                 "title": "Stash和Controller帐户",
-                "description": "Stash和Controller只是用于管理抵押操作的{NETWORK_NAME}账户.Stash账户是用于存放抵押资金的账户,而Controlle账户则用于代表Stash账户执行抵押操作.切换帐户实际上是在切换Stash帐户到Controller帐户.请提前导入Stash和Controller帐户。否则将无法使用该应用程序的所有功能.可在抵押页面上导入不同的Controller帐户"
+                "description": [
+                    "Stash和Controller只是用于管理抵押操作的{NETWORK_NAME}账户.",
+                    "Stash账户是用于存放抵押资金的账户,而Controlle账户则用于代表Stash账户执行抵押操作.",
+                    "切换帐户实际上是在自动切换Stash帐户到Controller帐户.",
+                    "请提前导入Stash和Controller帐户。否则将无法使用该应用程序的所有功能.",
+                    "可在抵押页面上导入不同的Controller帐户."
+                ]
             },
             "bonding": {
                 "title": "质押",
-                "description": "质押金额是“锁定”（或抵押）{NETWORK_UNIT}的过程。质押的{NETWORK_UNIT}将自动分配给一个或多个指定验证人.',最低可活跃质押统计数是指在当前Era提名人中质押最少的{NETWORK_UNIT}."
+                "description": [
+                    "质押金额是“锁定”（或抵押）{NETWORK_UNIT}的过程. 质押的{NETWORK_UNIT}将自动分配给一个或多个指定验证人.",
+                    "最低可活跃质押统计数是指在当前Era提名人中质押最少的{NETWORK_UNIT}."
+                ]
             },
             "active_bond_threshold": {
                 "title": "保持活跃度的质押阈值",
-                "description": "在一个Era中为保持活跃提名的所需的{NETWORK_UNIT}数量. 高于这个标准能保证可以一直在这个Era的活跃提名人名单中。但这数额不保证能得到奖励,因为您的活跃提名人有超额认选的可能.',在{NETWORK_NAME},只有前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能获得每个验证人的奖励。确保您的活跃度质押金额高于此阈值将增加获得奖励的机会.可以从页面中追踪这些指标, 并在必要时执行抵押操作如增加{NETWORK_UNIT}或更改提名."
+                "description": [
+                    "在一个Era中为保持活跃提名的所需的{NETWORK_UNIT}数量. ",
+                    "高于这个标准能保证可以一直在这个Era的活跃提名人名单中. 但这数额不保证能得到奖励,因为您的活跃提名人有超额认选的可能.",
+                    "在{NETWORK_NAME},只有前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能获得每个验证人的奖励. 确保您的活跃度质押金额高于此阈值将增加获得奖励的机会.",
+                    "可以从页面中追踪这些指标, 并在必要时执行抵押操作如增加{NETWORK_UNIT}或更改提名."
+                ]
             },
             "reward_destination": {
                 "title": "奖励地址",
-                "description": "奖励地址是奖励被发送到的地方.奖励可以自动绑定到当前的绑定金额上,也可以发送到Stash、Controller或外部帐户上."
+                "description": [
+                    "奖励地址是奖励被发送到的地方.",
+                    "奖励可以自动绑定到当前的绑定金额上,也可以发送到Stash、Controller或外部帐户上."
+                ]
             },
             "nominating": {
                 "title": "提名中",
-                "description": "提名是将{NETWORK_UNIT}作为抵押的验证人的过程。每个帐户最多提名16个验证者.一旦提名了选定的验证人,他们就会成为您的提名."
+                "description": [
+                    "提名是将{NETWORK_UNIT}作为抵押的验证人的过程. 每个帐户最多提名16个验证者.",
+                    "一旦提名了选定的验证人,他们就会成为您的提名."
+                ]
             },
             "nominations": {
                 "title": "提名",
-                "description": "提名指选择验证人。最高提名数为16.质押金额会自动分配给当前Era活跃的提名人.只要本人提名中至少有一个提名在当前session中活跃执行验证,您的资金就会与该验证人绑定从而获得奖励."
+                "description": [
+                    "提名指选择验证人. 在{NETWORK_NAME}里最高提名数为 {MAX_NOMINATIONS}.",
+                    "一旦提名一交, 质押金额会自动分配给当前Era活跃的提名人.",
+                    "只要本人提名中至少有一个提名在当前session中活跃执行验证,您的资金就会与该验证人绑定从而获得奖励."
+                ]
             },
             "inactive_nominations": {
                 "title": "非活跃提名",
-                "description": "指您的质押资金未分配到当前Era的活跃验证人群中的提名."
+                "description": [
+                    "指您的质押资金未分配到当前Era的活跃验证人群中的提名."
+                ]
             }
         },
         "external": {
@@ -92,35 +149,64 @@
         "definitions": {
             "nomination_pools": {
                 "title": "提名池",
-                "description": "提名池允许用户通过抵押{NETWORK_UNIT}获得奖励.与提名不同，使用提名池只需要少量{NETWORK_UNIT},池就会代表您管理提名人选.UNIT}"
+                "description": [
+                    "提名池允许用户通过抵押{NETWORK_UNIT}获得奖励.",
+                    "提名不同，使用提名池只需要少量{NETWORK_UNIT},池就会代表您管理提名人选."
+                ]
             },
             "active_pools": {
                 "title": "活跃提名池",
-                "description": "网络上当前活跃的提名池数量."
+                "description": [
+                    "{NETWORK_NAME}网络上当前活跃的提名池数量."
+                ]
             },
             "minimum_join_bond": {
                 "title": "最低入池质押金",
-                "description": "加入池所需的最低{NETWORK_UNIT}金额"
+                "description": [
+                    "加入池所需的最低{NETWORK_UNIT}金额.",
+                    "This amount is different from the bond needed to create a pool."
+                ]
             },
             "minimum_create_bond": {
                 "title": "最低建池质押金",
-                "description": "建池所需的最低{NETWORK_UNIT}金额"
+                "description": [
+                    "建池所需的最低{NETWORK_UNIT}金额.",
+                    "Creating a pool requires a larger deposit than that of joining a pool."
+                ]
             },
             "pool_membership": {
                 "title": "池成员资格",
-                "description": "'Your pool membership status reflects whether you are a member of a pool.','Pool memberships can either be that of a pool member or a pool owner.','Currently on {NETWORK_NAME}, accounts can only join one pool at a time. If you wish to join another pool, you must leave your current pool first.','To leave a pool, you simply need to unbond and withdraw all your bonded {NETWORK_UNIT}. Staking dashboard provides a dedicated Leave button to unbond from a pool.'"
+                "description": [
+                    "Your pool membership status reflects whether you are a member of a pool.",
+                    "Pool memberships can either be that of a pool member or a pool owner.",
+                    "Currently on {NETWORK_NAME}, accounts can only join one pool at a time. If you wish to join another pool, you must leave your current pool first.",
+                    "To leave a pool, you simply need to unbond and withdraw all your bonded {NETWORK_UNIT}. Staking dashboard provides a dedicated Leave button to unbond from a pool."
+                ]
             },
             "bonded_in_pool": {
                 "title": "质押在池中的金额",
-                "description": "池中当前质押的{NETWORK_UNIT}金额"
+                "description": [
+                    "池中当前质押的{NETWORK_UNIT}金额.",
+                    "Unlike solo staking, where your bonded funds remain in your account but become locked, the {NETWORK_UNIT} you bond to a pool is transferred to the pool's stash account. Nonetheless, pool members still have access to unbond their funds at any time."
+                ]
             },
             "pool_rewards": {
                 "title": "提名池的奖励",
-                "description": "作为提名池的活跃参与者所产生的{NETWORK_UNIT}奖励金额.用户需要申请提名池奖励才能获得奖励。奖励可以绑定回池,或作为免费{NETWORK_UNIT}发送到您的帐户"
+                "description": [
+                    "作为提名池的活跃参与者所产生的{NETWORK_UNIT}奖励金额.",
+                    "用户需要申请提名池奖励才能获得奖励.",
+                    "Users have 2 choices for claiming rewards. 奖励可以绑定回池, that will increase your share of the pool and accumulate further rewards. 或作为免费{NETWORK_UNIT}发送到您的帐户."
+                ]
             },
             "pool_roles": {
                 "title": "提名池里的角色",
-                "description": "一个提名池里有4种角色,每个角色在管理池的运行方面具有不同的职责.主理人 ：可以更改提名人、状态切换人或其本身。此外，它可以执行提名人或状态切换人可以执行的任何操作.存款人：创建提名池并作为初始成员。只有在所有其他成员离开后能离开提名池。一旦他们退出，提名池将从系统中完全移除.提名人：可以选择提名池验证人状态切换人：如果提名池被冻结，可以更改池的状态和踢出（无权限解除绑定/撤回）成员."
+                "description": [
+                    "一个提名池里有4种角色,每个角色在管理池的运行方面具有不同的职责.",
+                    "主理人:可以更改提名人、状态切换人或其本身。此外，它可以执行提名人或状态切换人可以执行的任何操作.",
+                    "存款人:创建提名池并作为初始成员.只有在所有其他成员离开后能离开提名池.一旦他们退出，提名池将从系统中完全移除.",
+                    "提名人:可以选择提名池验证人.",
+                    "状态切换人:如果提名池被冻结，可以更改池的状态和踢出（无权限解除绑定/撤回)成员."
+                ]
             }
         },
         "external": {
@@ -132,51 +218,85 @@
         "definitions": {
             "validator": {
                 "title": "验证人",
-                "description": "验证在{NETWORK_NAME}中继链中的区块的实体。验证人通过确保网络安全并生成区块在{NETWORK_NAME}起着关键作用.作为提名人，您可以选择支持哪个验证人并获得奖励."
+                "description": [
+                    "验证在{NETWORK_NAME}中继链中的区块的实体。验证人通过确保网络安全并生成区块在{NETWORK_NAME}起着关键作用.",
+                    "作为提名人，您可以选择支持哪个验证人并获得奖励."
+                ]
             },
             "active_validator": {
                 "title": "活跃验证人",
-                "description": "正在验证区块的验证人。奖励根据验证人的活动表现累积.每个Era都会选择一组新的验证人,因此不能保证同一验证人在随后的Era 中会处于活跃状态.{NETWORK_NAME}允许提名者最多提名16名验证人,最大限度地提高您在每个Era 提名活跃验证人的机会."
+                "description": [
+                    "正在验证区块的验证人。奖励根据验证人的活动表现累积.,每个Era都会选择一组新的验证人,因此不能保证同一验证人在随后的Era 中会处于活跃状态.",
+                    "{NETWORK_NAME}允许提名者最多提名16名验证人,最大限度地提高您在每个Era 提名活跃验证人的机会."
+                ]
             },
             "average_commission": {
                 "title": "平均佣金",
-                "description": "'The average validator commission rate on {NETWORK_NAME}.','This metric excludes validators who host a 100% commission, as these nodes usually block nominations are are run for the purposes of staking on central exchange platforms.'"
+                "description": [
+                    "The average validator commission rate on {NETWORK_NAME}.",
+                    "This metric excludes validators who host a 100% commission, as these nodes usually block nominations are are run for the purposes of staking on central exchange platforms."
+                ]
             },
             "era": {
                 "title": "Era",
-                "description": "在每个Era结束时,根据验证人在当前Era累积的Era点数奖励{NETWORK_UNIT}。该奖励随后会分配给该验证人下的提名人.1 Era目前在波卡是24小时."
+                "description": [
+                    "在每个Era结束时,根据验证人在当前Era累积的Era点数奖励{NETWORK_UNIT}。该奖励随后会分配给该验证人下的提名人.",
+                    "1 Era目前在波卡是24小时."
+                ]
             },
             "epoch": {
                 "title": "Epoch",
-                "description": "Epoch”是{NETWORK_NAME} session的另一个名称。在每个Epoch开始时选择一组不同的验证人验证区块.1个Epoch在波卡为4小时."
+                "description": [
+                    "Epoch”是{NETWORK_NAME} session的另一个名称。在每个Epoch开始时选择一组不同的验证人验证区块.",
+                    "1个Epoch在波卡为4小时."
+                ]
             },
             "era_eoints": {
                 "title": "Era 点数",
-                "description": "Era 点由验证人在每个Era累积,取决于验证人的性能.作为抵押者,您不需要在意Era 点数。一般来说,性能更好的验证人会产生更多的Era 点数，这反过来会得到更高的奖励."
+                "description": [
+                    "Era 点由验证人在每个Era累积,取决于验证人的性能.,作为抵押者,您不需要在意Era 点数。一般来说,性能更好的验证人会产生更多的Era 点数，这反过来会得到更高的奖励."
+                ]
             },
             "self_stake": {
                 "title": "自我抵押",
-                "description": "'The amount of {NETWORK_UNIT} the validator has bonded themself.','This value is added to the amount of {NETWORK_UNIT} bonded by nominators to form the total stake of the validator.'"
+                "description": [
+                    "The amount of {NETWORK_UNIT} the validator has bonded themself.",
+                    "This value is added to the amount of {NETWORK_UNIT} bonded by nominators to form the total stake of the validator."
+                ]
             },
             "nominator_stake": {
                 "title": "提名人抵押",
-                "description": "'The amount of {NETWORK_UNIT} backing the validator from its nominators.','This value is added to the validator's self stake to form the total stake of the validator.,'Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session.'"
+                "description": [
+                    "The amount of {NETWORK_UNIT} backing the validator from its nominators.",
+                    "This value is added to the validator's self stake to form the total stake of the validator.,'Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session."
+                ]
             },
             "minimum_nomination_bond": {
                 "title": "最低提名质押金",
-                "description": "提名所需的最低质押金额."
+                "description": [
+                    "提名所需的最低质押金额."
+                ]
             },
             "commission": {
                 "title": "佣金",
-                "description": "验证人可以获得一定比例的奖励。这部分被称为他们的佣金. 提名佣金率较低的验证人意味着您将获得他们产生的更大份额的奖励.许多验证者的佣金率为100%，这意味着提名这些验证人将不会获得任何奖励.这类验证人的代表有交易所运营的验证人，其中提名和奖励分配是在相关交易所集中进行的.验证人可以随时更新他们的佣金率，这些变化将对您的盈利能力产生影响。请务必在页面上监控您的提名，以留意其佣金率更新."
+                "description": [
+                    "验证人可以获得一定比例的奖励。这部分被称为他们的佣金.",
+                    "提名佣金率较低的验证人意味着您将获得他们产生的更大份额的奖励.",
+                    "许多验证者的佣金率为100%，这意味着提名这些验证人将不会获得任何奖励.",
+                    "验证人可以随时更新他们的佣金率，这些变化将对您的盈利能力产生影响.请务必在页面上监控您的提名，以留意其佣金率更新."
+                ]
             },
             "over_subscribed": {
                 "title": "超额认选",
-                "description": "只有每个验证人的前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能在{NETWORK_NAME}获得奖励。当超过该数时,该验证人将被视为超额认选."
+                "description": [
+                    "只有每个验证人的前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能在{NETWORK_NAME}获得奖励。当超过该数时,该验证人将被视为超额认选."
+                ]
             },
             "blocked_nominations": {
                 "title": "停止提名",
-                "description": "当验证人停止提名时，提名人无法提名他们."
+                "description": [
+                    "当验证人停止提名时，提名人无法提名他们."
+                ]
             }
         },
         "external": {
@@ -187,15 +307,27 @@
         "definitions": {
             "payout": {
                 "title": "收益",
-                "description": "在{NETWORK_NAME}里抵押的收益。取决于您验证人随时间累积的“Era点数”。奖励金额会在每个Era结束时确定(24小时).要获得抵押奖励,需要手动申领。任何支持该验证人的提名人都可以申领.一个申请可触发每所有个提名人的奖励申领."
+                "description": [
+                    "在{NETWORK_NAME}里抵押的收益. 取决于您验证人随时间累积的“Era点数.奖励金额会在每个Era结束时确定(24小时).",
+                    "要获得抵押奖励,需要手动申领.任何支持该验证人的提名人都可以申领.",
+                    "一个申请可触发每所有个提名人的奖励申领."
+                ]
             },
             "last_era_payout": {
                 "title": "上一Era收益",
-                "description": "上一Era活跃的总{NETWORK_UNIT}奖励金额.收益在该Era的活跃验证人之间平均分配,然后进一步分配给参与该Era的活跃提名人.得到的收益金额取决于提名人和验证人自己在那个Era绑定了多少{NETWORK_UNIT}."
+                "description": [
+                    "上一Era活跃的总{NETWORK_UNIT}奖励金额.",
+                    "收益在该Era的活跃验证人之间平均分配,然后进一步分配给参与该Era的活跃提名人.",
+                    "得到的收益金额取决于提名人和验证人自己在那个Era绑定了多少{NETWORK_UNIT}."
+                ]
             },
             "payout_history": {
                 "title": "收益记录",
-                "description": "一名活跃提名人的收益历史记录.申领奖励是一个手动的过程，可能会快速连续或以零星方式收到多次收益。因此，您的收益图可能会在同一天发生多个收益，或者几天没有收益.这并不意味着您在该期间没有提名或产生奖励，只是该期间的收益尚未被申领."
+                "description": [
+                    "一名活跃提名人的收益历史记录.",
+                    "申领奖励是一个手动的过程，可能会快速连续或以零星方式收到多次收益。因此，您的收益图可能会在同一天发生多个收益，或者几天没有收益.",
+                    "这并不意味着您在该期间没有提名或产生奖励，只是该期间的收益尚未被申领."
+                ]
             }
         }
     }

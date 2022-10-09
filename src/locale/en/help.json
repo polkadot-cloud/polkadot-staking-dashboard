@@ -254,7 +254,7 @@
             "era_eoints": {
                 "title": "Era Points",
                 "description": [
-                    "Era Points are accumulated by validators during each era, and depend on a validator's performance.,'As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
+                    "Era Points are accumulated by validators during each era, and depend on a validator's performance.As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
                 ]
             },
             "self_stake": {
