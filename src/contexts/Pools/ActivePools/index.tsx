@@ -68,8 +68,9 @@ export const ActivePoolsProvider = ({
   const unsubNominationsRef = useRef(unsubNominations);
 
   // store account target validators
-  // TODO: refactor into array of targets.
-  const [targets, _setTargets] = useState<any>(defaults.targets);
+  const [targets, _setTargets] = useState<{
+    [key: number]: any;
+  }>({});
   const targetsRef = useRef(targets);
 
   // store whether active pool data has been synced.
@@ -126,9 +127,7 @@ export const ActivePoolsProvider = ({
   };
 
   const getSelectedPoolTargets = () => {
-    // TODO: get the currently selected active pool's targets
-    // TODO: return defaults if not present in array.
-    return targetsRef.current || defaults.targets;
+    return targetsRef.current[Number(selectedPoolId) ?? -1] || defaults.targets;
   };
 
   // unsubscribe all on component unmount
@@ -250,13 +249,20 @@ export const ActivePoolsProvider = ({
               true
             );
 
+            // add or replace current pool targets in targetsRef
+            const _poolTargets = { ...targetsRef.current };
+            _poolTargets[poolId] = _targets;
+
             // set pool staking targets
-            setStateWithRef(_targets, _setTargets, targetsRef);
+            setStateWithRef(_poolTargets, _setTargets, targetsRef);
 
             // subscribe to pool nominations
             subscribeToPoolNominations(poolId, addresses.stash);
           } else {
-            setStateWithRef(defaults.targets, _setTargets, targetsRef);
+            // set default targets for pool
+            const _poolTargets = { ...targetsRef.current };
+            _poolTargets[poolId] = defaults.targets;
+            setStateWithRef(_poolTargets, _setTargets, targetsRef);
           }
         }
       );
@@ -294,7 +300,7 @@ export const ActivePoolsProvider = ({
             };
           }
 
-          // add or replace current pool nominations from poolNominations
+          // add or replace current pool nominations in poolNominations
           const _poolNominations = { ...poolNominationsRef.current };
           _poolNominations[poolId] = _nominations;
 
@@ -347,16 +353,24 @@ export const ActivePoolsProvider = ({
 
   /*
    * setTargets
-   * Sets pools target validators in storage.
+   * Sets currently selected pool's target validators in storage.
    */
   const setTargets = (_targets: any) => {
+    if (!selectedPoolId) {
+      return;
+    }
+
     const stashAddress = getPoolBondedAccount();
     if (stashAddress) {
       localStorage.setItem(
         `${stashAddress}_pool_targets`,
         JSON.stringify(_targets)
       );
-      setStateWithRef(_targets, _setTargets, targetsRef);
+      // inject targets into targets object
+      const _poolTargets = { ...targetsRef.current };
+      _poolTargets[Number(selectedPoolId)] = _targets;
+
+      setStateWithRef(_poolTargets, _setTargets, targetsRef);
     }
   };
 
