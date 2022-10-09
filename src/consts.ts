@@ -38,7 +38,7 @@ export const PAYEE_STATUS = [
   },
 ];
 
-export const INTERFACE_MAXIMUM_WIDTH = 1600;
+export const INTERFACE_MAXIMUM_WIDTH = 1550;
 export const SIDE_MENU_MAXIMISED_WIDTH = 175;
 export const SIDE_MENU_MINIMISED_WIDTH = 75;
 export const SIDE_MENU_STICKY_THRESHOLD = 1175;
