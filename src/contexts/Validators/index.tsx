@@ -27,7 +27,7 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import * as defaults from './defaults';
-import { useActivePool } from '../Pools/ActivePool';
+import { useActivePools } from '../Pools/ActivePools';
 
 export const ValidatorsContext =
   React.createContext<ValidatorsContextInterface>(
@@ -46,7 +46,7 @@ export const ValidatorsProvider = ({
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
   const { accounts, getAccountNominations } = useBalances();
-  const { poolNominations } = useActivePool();
+  const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
   const { activeEra, earliestStoredSession } = metrics;

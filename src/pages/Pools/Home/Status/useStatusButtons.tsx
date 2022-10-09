@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
@@ -21,7 +21,7 @@ export const useStatusButtons = () => {
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
-  const { isOwner } = useActivePool();
+  const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
 
   const { active } = getTransferOptions(activeAccount).pool;
@@ -29,7 +29,6 @@ export const useStatusButtons = () => {
 
   let _label;
   let _buttons;
-
   const createBtn = {
     title: `Create Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
@@ -38,7 +37,8 @@ export const useStatusButtons = () => {
       !isReady ||
       isReadOnlyAccount(activeAccount) ||
       !activeAccount ||
-      stats.maxPools.toNumber() === 0,
+      stats.maxPools.toNumber() === 0 ||
+      bondedPools.length === stats.maxPools.toNumber(),
     onClick: () => setOnPoolSetup(1),
   };
 

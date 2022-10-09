@@ -10,7 +10,7 @@ import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
@@ -30,7 +30,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { getBondedAccount } = useBalances();
   const { bondType } = config;
   const { stats } = usePoolsConfig();
-  const { isDepositor } = useActivePool();
+  const { isDepositor } = useActivePools();
   const { txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
 
@@ -112,7 +112,7 @@ export const UnbondSome = (props: FormsProps) => {
     from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });

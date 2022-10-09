@@ -62,11 +62,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // initial connection
   useEffect(() => {
-    const _network: NetworkName = localStorage.getItem(
-      'network'
-    ) as NetworkName;
-    connect(_network, isLightClient);
-  }, []);
+    if (!provider) {
+      const _network: NetworkName = localStorage.getItem(
+        'network'
+      ) as NetworkName;
+      connect(_network, isLightClient);
+    }
+  });
 
   // provider event handlers
   useEffect(() => {

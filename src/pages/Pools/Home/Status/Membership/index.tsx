@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Identicon } from 'library/Identicon';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { determinePoolDisplay } from 'Utils';
 import Button from 'library/Button';
@@ -14,68 +13,94 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import OpenHelpIcon from 'library/OpenHelpIcon';
+import React from 'react';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { openModalWith } = useModal();
-  const { membership } = usePoolMemberships();
   const { bondedPools, meta } = useBondedPools();
-  const { activeBondedPool, isOwner } = useActivePool();
+  const { selectedActivePool, isOwner, isMember, isStateToggler } =
+    useActivePools();
   const { getTransferOptions } = useTransferOptions();
-
   const { active } = getTransferOptions(activeAccount).pool;
 
-  const inPool = membership !== null && activeBondedPool !== null;
-
   let display = 'Not in Pool';
-  if (membership && activeBondedPool) {
+  if (selectedActivePool) {
     const pool = bondedPools.find((p: any) => {
-      return p.addresses.stash === activeBondedPool.addresses.stash;
+      return p.addresses.stash === selectedActivePool.addresses.stash;
     });
 
     if (pool) {
       const metadata = meta.bonded_pools?.metadata ?? [];
       const batchIndex = bondedPools.indexOf(pool);
-      display = determinePoolDisplay(membership.address, metadata[batchIndex]);
+      display = determinePoolDisplay(
+        selectedActivePool.addresses.stash,
+        metadata[batchIndex]
+      );
     }
   }
 
-  const button = isOwner() ? (
-    <Button
-      primary
-      inline
-      title="Manage"
-      icon={faCog}
-      small
-      disabled={!isReady || isReadOnlyAccount(activeAccount)}
-      onClick={() => openModalWith('ManagePool', {}, 'small')}
-    />
-  ) : active?.gtn(0) ? (
-    <Button
-      primary
-      inline
-      title="Leave"
-      icon={faSignOutAlt}
-      small
-      disabled={!isReady || isReadOnlyAccount(activeAccount)}
-      onClick={() => openModalWith('LeavePool', { bondType: 'pool' }, 'small')}
-    />
-  ) : null;
+  const buttons = [];
+  let paddingRight = 0;
+
+  if (isOwner() || isStateToggler()) {
+    paddingRight += 8.2;
+    buttons.push(
+      <Button
+        primary
+        inline
+        title="Manage"
+        icon={faCog}
+        small
+        disabled={!isReady || isReadOnlyAccount(activeAccount)}
+        onClick={() => openModalWith('ManagePool', {}, 'small')}
+      />
+    );
+  }
+
+  if (isMember() && active?.gtn(0)) {
+    paddingRight += 7.9;
+    buttons.push(
+      <Button
+        primary
+        inline
+        title="Leave"
+        icon={faSignOutAlt}
+        small
+        disabled={!isReady || isReadOnlyAccount(activeAccount)}
+        onClick={() =>
+          openModalWith('LeavePool', { bondType: 'pool' }, 'small')
+        }
+      />
+    );
+  }
 
   return (
     <StatWrapper>
       <h4>
         {label} <OpenHelpIcon helpKey="Pool Membership" />
       </h4>
-      <Wrapper paddingLeft={inPool} paddingRight={button !== null}>
+      <Wrapper
+        paddingLeft={selectedActivePool !== null}
+        paddingRight={paddingRight === 0 ? null : `${String(paddingRight)}rem`}
+      >
         <h2 className="hide-with-padding">
           <div className="icon">
-            <Identicon value={membership?.address ?? ''} size={30} />
+            <Identicon
+              value={selectedActivePool?.addresses?.stash ?? ''}
+              size={30}
+            />
           </div>
           {display}
-          {button && <div className="btn">{button}</div>}
+          {buttons.length > 0 && (
+            <div className="btn">
+              {buttons.map((b: any, i: number) => (
+                <React.Fragment key={i}>{b}</React.Fragment>
+              ))}
+            </div>
+          )}
         </h2>
       </Wrapper>
     </StatWrapper>

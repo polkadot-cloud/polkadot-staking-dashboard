@@ -18,6 +18,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
   > div {
     display: flex;
     flex-flow: row wrap;
+    align-items: center;
     padding: 0 0.5rem;
 
     button {

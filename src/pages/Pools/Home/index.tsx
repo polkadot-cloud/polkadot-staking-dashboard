@@ -11,13 +11,14 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { PoolList } from 'library/PoolList';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useModal } from 'contexts/Modal';
+import { useConnect } from 'contexts/Connect';
 import ActivePoolsStatBox from './Stats/ActivePools';
 import MinJoinBondStatBox from './Stats/MinJoinBond';
 import PoolMembershipBox from './Stats/PoolMembership';
@@ -33,17 +34,21 @@ import { ClosurePrompts } from './ClosurePrompts';
 import { PoolStats } from './PoolStats';
 
 export const HomeInner = () => {
-  const { membership } = usePoolMemberships();
-  const { bondedPools } = useBondedPools();
-  const { getPoolRoles, activeBondedPool } = useActivePool();
+  const { activeAccount } = useConnect();
+  const { bondedPools, getAccountPools } = useBondedPools();
+  const { getPoolRoles, selectedActivePool } = useActivePools();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { openModalWith } = useModal();
+
+  const accountPools = getAccountPools(activeAccount);
+  const totalAccountPools = Object.entries(accountPools).length;
 
   // back to tab 0 if not in a pool
   useEffect(() => {
-    if (!activeBondedPool) {
+    if (!selectedActivePool) {
       setActiveTab(0);
     }
-  }, [activeBondedPool]);
+  }, [selectedActivePool]);
 
   const ROW_HEIGHT = 275;
 
@@ -55,7 +60,7 @@ export const HomeInner = () => {
     },
   ];
 
-  if (activeBondedPool) {
+  if (selectedActivePool) {
     tabs = tabs.concat({
       title: 'Members',
       active: activeTab === 1,
@@ -78,7 +83,19 @@ export const HomeInner = () => {
 
   return (
     <>
-      <PageTitle title="Pools" tabs={tabs} />
+      <PageTitle
+        title="Pools"
+        tabs={tabs}
+        button={
+          totalAccountPools
+            ? {
+                title: 'All Roles',
+                onClick: () =>
+                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+              }
+            : undefined
+        }
+      />
       {activeTab === 0 && (
         <>
           <StatBoxList>
@@ -109,7 +126,7 @@ export const HomeInner = () => {
               </CardWrapper>
             </RowSecondaryWrapper>
           </PageRowWrapper>
-          {membership !== null && (
+          {selectedActivePool !== null && (
             <>
               <ManagePool />
               <PageRowWrapper className="page-padding" noVerticalSpacer>
