@@ -19,6 +19,7 @@ export const ManagePool = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const {
+    isOwner,
     isNominator,
     setTargets,
     targets,
@@ -30,12 +31,14 @@ export const ManagePool = () => {
   const nominator = selectedActivePool?.addresses?.stash ?? null;
   const { state } = selectedActivePool?.bondedPool || {};
 
+  const canNominate = isOwner() || isNominator();
+
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondType="pool" nominator={activeAccount} />
-        ) : isNominator() && !isNominating && state !== PoolState.Destroy ? (
+        ) : canNominate && !isNominating && state !== PoolState.Destroy ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>
@@ -50,7 +53,7 @@ export const ManagePool = () => {
                   icon={faChevronCircleRight}
                   transform="grow-1"
                   title="Nominate"
-                  disabled={!isNominator()}
+                  disabled={!canNominate}
                   onClick={() => openModalWith('NominatePool', {}, 'small')}
                 />
               </div>

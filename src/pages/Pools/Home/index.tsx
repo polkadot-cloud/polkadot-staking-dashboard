@@ -17,7 +17,6 @@ import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useModal } from 'contexts/Modal';
 import { useConnect } from 'contexts/Connect';
 import ActivePoolsStatBox from './Stats/ActivePools';
@@ -36,7 +35,6 @@ import { PoolStats } from './PoolStats';
 
 export const HomeInner = () => {
   const { activeAccount } = useConnect();
-  const { membership } = usePoolMemberships();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
   const { activeTab, setActiveTab } = usePoolsTabs();
@@ -128,7 +126,7 @@ export const HomeInner = () => {
               </CardWrapper>
             </RowSecondaryWrapper>
           </PageRowWrapper>
-          {membership !== null && (
+          {selectedActivePool !== null && (
             <>
               <ManagePool />
               <PageRowWrapper className="page-padding" noVerticalSpacer>
