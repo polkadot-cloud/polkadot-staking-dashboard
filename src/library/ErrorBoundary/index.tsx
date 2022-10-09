@@ -3,7 +3,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons';
-import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 

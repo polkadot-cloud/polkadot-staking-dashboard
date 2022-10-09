@@ -32,25 +32,6 @@ export const Help = () => {
   const { t } = useTranslation('common');
   const { t: tHelp, i18n } = useTranslation('help');
 
-  // Example of getting help content from key
-  // The key will be fetched from help.ts. Loop through definitions?
-  const key = 'overview.definitions.supply_staked';
-
-  // access title and description property of key
-  const title = tHelp(`${key}.title`);
-  const description = i18n.getResource('en', 'help', `${key}.description`);
-
-  // inject variables into definition
-  const descInjected = fillDefinitionVariables({
-    title,
-    description,
-  });
-
-  // example of mapping descriptions array and constructing JSX
-  const descJsx = descInjected.description.map((d: string, i: number) => (
-    <p key={`index_${i}`}>{d}</p>
-  ));
-
   const onFadeIn = async () => {
     await controls.start('visible');
   };
@@ -84,12 +65,36 @@ export const Help = () => {
   if (status === 0) {
     return <></>;
   }
+  // TODO: migrate to just keys and fetch content from i18n
+  // {
+  //   helpKey: 'Supply Staked',
+  //   localeKey: 'overview.definitions.supply_staked',
+  // },
 
-  let meta: HelpItemRaw | undefined;
+  // Example of getting help content from key
+  // The key will be fetched from help.ts. Loop through definitions?
+  const key = 'overview.definitions.supply_staked';
+
+  // access title and description property of key
+  const title = tHelp(`${key}.title`);
+  const description = i18n.getResource('en', 'help', `${key}.description`);
+
+  // inject variables into definition
+  const descInjected = fillDefinitionVariables({
+    title,
+    description,
+  });
+
+  // example of mapping descriptions array and constructing JSX
+  const descJsx = descInjected.description.map((d: string, i: number) => (
+    <p key={`index_${i}`}>{d}</p>
+  ));
+
+  let meta: any | undefined;
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
+    meta = Object.values(HELP_CONFIG).find((item: any) =>
       item?.definitions?.find((d: HelpDefinition) => d.title === definition)
     );
   } else {
@@ -97,7 +102,7 @@ export const Help = () => {
     let _definitions: HelpDefinitions = [];
     let _external: HelpExternals = [];
 
-    Object.values(HELP_CONFIG).forEach((c: HelpItemRaw) => {
+    Object.values(HELP_CONFIG).forEach((c: any) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });
