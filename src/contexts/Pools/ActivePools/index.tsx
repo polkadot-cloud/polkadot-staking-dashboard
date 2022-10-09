@@ -18,6 +18,7 @@ import { useConnect } from '../../Connect';
 import { usePoolsConfig } from '../PoolsConfig';
 import { usePoolMemberships } from '../PoolMemberships';
 import { useBondedPools } from '../BondedPools';
+import { usePoolMembers } from '../PoolMembers';
 
 export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext
@@ -36,6 +37,7 @@ export const ActivePoolsProvider = ({
   const { createAccounts } = usePoolsConfig();
   const { membership } = usePoolMemberships();
   const { getAccountPools, bondedPools } = useBondedPools();
+  const { getPoolMember } = usePoolMembers();
 
   // determine active pools to subscribe to.
   const accountPools = useMemo(() => {
@@ -413,6 +415,18 @@ export const ActivePoolsProvider = ({
   };
 
   /*
+   * isMember
+   * Returns whether the active account is
+   * a member of the active pool.
+   */
+  const isMember = () => {
+    return (
+      getPoolMember(activeAccount)?.poolId ===
+      String(getSelectedActivePool()?.id)
+    );
+  };
+
+  /*
    * isDepositor
    * Returns whether the active account is
    * the depositor of the active pool.
@@ -558,6 +572,7 @@ export const ActivePoolsProvider = ({
       value={{
         isNominator,
         isOwner,
+        isMember,
         isDepositor,
         isStateToggler,
         isBonding,
