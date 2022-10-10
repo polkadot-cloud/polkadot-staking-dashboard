@@ -450,6 +450,7 @@ export const VALIDATOR_COMMUNITY = [
     bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
     email: 'hello@letzbake.com',
     twitter: '@letzbake1',
+    website: 'https://letzbake.com',
     validators: {
       kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },
