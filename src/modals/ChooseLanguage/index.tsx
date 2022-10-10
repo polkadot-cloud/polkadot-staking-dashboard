@@ -25,6 +25,7 @@ export const ChooseLanguage = () => {
               onClick={() => {
                 i18n.changeLanguage(l);
                 setStatus(2);
+                localStorage.setItem('locale', l);
               }}
             >
               {availableLanguages[i].toUpperCase()}
