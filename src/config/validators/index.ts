@@ -30,6 +30,7 @@ import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilit
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
+import { ReactComponent as LetzBake } from './thumbnails/letzbake.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
@@ -441,6 +442,16 @@ export const VALIDATOR_COMMUNITY = [
     twitter: '@wojdot',
     validators: {
       polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
+    },
+  },
+  {
+    name: 'LetzBake!',
+    Thumbnail: LetzBake,
+    bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
+    email: 'hello@letzbake.com',
+    twitter: '@letzbake1',
+    validators: {
+      kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },
   },
 ];
