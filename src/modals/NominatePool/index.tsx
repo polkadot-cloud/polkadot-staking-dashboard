@@ -63,7 +63,7 @@ export const NominatePool = () => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => { },
+    callbackInBlock: () => {},
   });
 
   // warnings

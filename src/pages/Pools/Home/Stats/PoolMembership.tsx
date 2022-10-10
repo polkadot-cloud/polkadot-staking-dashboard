@@ -17,8 +17,8 @@ const PoolMembership = () => {
       membership === null
         ? 'Not in Pool'
         : isOwner()
-          ? `Owner of Pool ${membership.poolId}`
-          : `In Pool ${membership.poolId}`,
+        ? `Owner of Pool ${membership.poolId}`
+        : `In Pool ${membership.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
     chelpKey: '池成员资格',

@@ -30,8 +30,8 @@ export const Connected = () => {
   const activeAccountLabel = isSyncing
     ? undefined
     : hasController()
-      ? 'Stash'
-      : undefined;
+    ? 'Stash'
+    : undefined;
 
   return (
     <>
@@ -78,7 +78,7 @@ export const Connected = () => {
                 pool={selectedActivePool}
                 label={t('library.pool')}
                 canClick={false}
-                onClick={() => { }}
+                onClick={() => {}}
                 filled
               />
             </HeadingWrapper>

@@ -56,7 +56,7 @@ export const ChangePoolRoles = () => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => { },
+    callbackInBlock: () => {},
   });
 
   return (

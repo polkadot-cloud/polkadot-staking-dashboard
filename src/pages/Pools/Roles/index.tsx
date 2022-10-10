@@ -26,7 +26,7 @@ export const Roles = (props: RolesProps) => {
   const { batchKey, defaultRoles } = props;
   const { t } = useTranslation('common');
 
-  const listenIsValid = props.listenIsValid ?? (() => { });
+  const listenIsValid = props.listenIsValid ?? (() => {});
   const setters = props.setters ?? [];
 
   const { isReady } = useApi();

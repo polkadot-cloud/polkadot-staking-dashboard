@@ -86,101 +86,94 @@ export const HomeInner = () => {
 
   return (
     <>
-
       <PageTitle
         title={t('pages.pools.pools')}
         tabs={tabs}
         button={
           totalAccountPools
             ? {
-              title: 'All Roles',
-              onClick: () =>
-                openModalWith('AccountPoolRoles', { who: activeAccount }),
-            }
+                title: 'All Roles',
+                onClick: () =>
+                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+              }
             : undefined
         }
       />
-      {
-        activeTab === 0 && (
-          <>
-            <StatBoxList>
-              <ActivePoolsStatBox />
-              <MinJoinBondStatBox />
-              <MinCreateBondStatBox />
-            </StatBoxList>
+      {activeTab === 0 && (
+        <>
+          <StatBoxList>
+            <ActivePoolsStatBox />
+            <MinJoinBondStatBox />
+            <MinCreateBondStatBox />
+          </StatBoxList>
 
-            <ClosurePrompts />
+          <ClosurePrompts />
 
-            <PageRowWrapper className="page-padding" noVerticalSpacer>
-              <RowPrimaryWrapper
-                hOrder={1}
-                vOrder={0}
-                thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
-                thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
-              >
-                <Status height={ROW_HEIGHT} />
-              </RowPrimaryWrapper>
-              <RowSecondaryWrapper
-                hOrder={0}
-                vOrder={1}
-                thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
-                thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
-              >
-                <CardWrapper height={ROW_HEIGHT}>
-                  <ManageBond />
-                </CardWrapper>
-              </RowSecondaryWrapper>
-            </PageRowWrapper>
-            {selectedActivePool !== null && (
-              <>
-                <ManagePool />
-                <PageRowWrapper className="page-padding" noVerticalSpacer>
-                  <CardWrapper>
-                    <Roles
-                      batchKey="pool_roles_manage"
-                      defaultRoles={getPoolRoles()}
-                    />
-                  </CardWrapper>
-                </PageRowWrapper>
-                <PageRowWrapper className="page-padding" noVerticalSpacer>
-                  <PoolStats />
-                </PageRowWrapper>
-              </>
-            )}
-          </>
-        )
-      }
-      {activeTab === 1 && <Members />}
-      {
-        activeTab === 2 && (
-          <>
-            <StatBoxList>
-              <PoolMembershipBox />
-              <ActivePoolsStatBox />
-              <MinJoinBondStatBox />
-            </StatBoxList>
-            <PageRowWrapper className="page-padding" noVerticalSpacer>
-              <CardWrapper>
-                <PoolList
-                  batchKey="bonded_pools"
-                  pools={bondedPools}
-                  title={t('pages.pools.active_pools')}
-                  allowMoreCols
-                  allowSearch
-                  pagination
-                />
+          <PageRowWrapper className="page-padding" noVerticalSpacer>
+            <RowPrimaryWrapper
+              hOrder={1}
+              vOrder={0}
+              thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+              thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+            >
+              <Status height={ROW_HEIGHT} />
+            </RowPrimaryWrapper>
+            <RowSecondaryWrapper
+              hOrder={0}
+              vOrder={1}
+              thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
+              thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+            >
+              <CardWrapper height={ROW_HEIGHT}>
+                <ManageBond />
               </CardWrapper>
-            </PageRowWrapper>
-          </>
-        )
-      }
-      {
-        activeTab === 3 && (
-          <>
-            <Favourites />
-          </>
-        )
-      }
+            </RowSecondaryWrapper>
+          </PageRowWrapper>
+          {selectedActivePool !== null && (
+            <>
+              <ManagePool />
+              <PageRowWrapper className="page-padding" noVerticalSpacer>
+                <CardWrapper>
+                  <Roles
+                    batchKey="pool_roles_manage"
+                    defaultRoles={getPoolRoles()}
+                  />
+                </CardWrapper>
+              </PageRowWrapper>
+              <PageRowWrapper className="page-padding" noVerticalSpacer>
+                <PoolStats />
+              </PageRowWrapper>
+            </>
+          )}
+        </>
+      )}
+      {activeTab === 1 && <Members />}
+      {activeTab === 2 && (
+        <>
+          <StatBoxList>
+            <PoolMembershipBox />
+            <ActivePoolsStatBox />
+            <MinJoinBondStatBox />
+          </StatBoxList>
+          <PageRowWrapper className="page-padding" noVerticalSpacer>
+            <CardWrapper>
+              <PoolList
+                batchKey="bonded_pools"
+                pools={bondedPools}
+                title={t('pages.pools.active_pools')}
+                allowMoreCols
+                allowSearch
+                pagination
+              />
+            </CardWrapper>
+          </PageRowWrapper>
+        </>
+      )}
+      {activeTab === 3 && (
+        <>
+          <Favourites />
+        </>
+      )}
     </>
   );
 };

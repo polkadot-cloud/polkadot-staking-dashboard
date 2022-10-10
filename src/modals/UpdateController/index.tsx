@@ -71,7 +71,7 @@ export const UpdateController = () => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => { },
+    callbackInBlock: () => {},
   });
 
   return (

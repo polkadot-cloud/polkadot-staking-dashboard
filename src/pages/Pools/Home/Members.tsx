@@ -21,8 +21,9 @@ export const Members = () => {
   const { t } = useTranslation('common');
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
-  const poolMembersTitle = `${poolMembers.length} Pool Member${poolMembers.length === 1 ? `` : `s`
-    }`;
+  const poolMembersTitle = `${poolMembers.length} Pool Member${
+    poolMembers.length === 1 ? `` : `s`
+  }`;
 
   const networkColorsSecondary: any = network.colors.secondary;
   const annuncementBorderColor = networkColorsSecondary[mode];
