@@ -110,7 +110,7 @@ export const UnbondAll = (props: FormsProps) => {
     from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });

@@ -7,7 +7,7 @@ import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { MaybeAccount, Sync } from 'types';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -30,7 +30,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
   const { membership: poolMembership } = usePoolMemberships();
-  const { synced: activePoolSynced } = useActivePool();
+  const { synced: activePoolSynced } = useActivePools();
 
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);

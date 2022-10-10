@@ -20,7 +20,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import { HeadingWrapper, FooterWrapper, NotesWrapper } from '../Wrappers';
+import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
 export const UpdateController = () => {
@@ -69,9 +69,9 @@ export const UpdateController = () => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => { },
   });
 
   return (

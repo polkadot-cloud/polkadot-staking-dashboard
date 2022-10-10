@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
 
 const PoolMembership = () => {
   const { membership } = usePoolMemberships();
-  const { isOwner } = useActivePool();
+  const { isOwner } = useActivePools();
   const { t } = useTranslation('common');
 
   const params = {
@@ -17,8 +17,8 @@ const PoolMembership = () => {
       membership === null
         ? 'Not in Pool'
         : isOwner()
-        ? `Owner of Pool ${membership.poolId}`
-        : `In Pool ${membership.poolId}`,
+          ? `Owner of Pool ${membership.poolId}`
+          : `In Pool ${membership.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
     chelpKey: '池成员资格',

@@ -4,4 +4,8 @@
 export interface PageTitleProps {
   title: string;
   tabs?: Array<any>;
+  button?: {
+    title: string;
+    onClick: () => void;
+  };
 }

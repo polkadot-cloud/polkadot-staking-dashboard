@@ -4,7 +4,7 @@
 import { PageRowWrapper } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -17,22 +17,18 @@ export const Members = () => {
   const { network } = useApi();
   const { mode } = useTheme();
   const { getMembersOfPool } = usePoolMembers();
-  const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
-  const { t, i18n } = useTranslation('common');
+  const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
+  const { t } = useTranslation('common');
 
-  const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
-  const poolMembersTitle =
-    i18n.resolvedLanguage === 'en'
-      ? `${poolMembers.length} Pool Member${
-          poolMembers.length === 1 ? `` : `s`
-        }`
-      : `${poolMembers.length} 成员`;
+  const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
+  const poolMembersTitle = `${poolMembers.length} Pool Member${poolMembers.length === 1 ? `` : `s`
+    }`;
 
   const networkColorsSecondary: any = network.colors.secondary;
   const annuncementBorderColor = networkColorsSecondary[mode];
 
   const showBlockedPrompt =
-    activeBondedPool?.bondedPool?.state === PoolState.Block &&
+    selectedActivePool?.bondedPool?.state === PoolState.Block &&
     (isOwner() || isStateToggler());
 
   return (
@@ -57,7 +53,7 @@ export const Members = () => {
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {activeBondedPool?.bondedPool?.state === PoolState.Destroy && (
+      {selectedActivePool?.bondedPool?.state === PoolState.Destroy && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}

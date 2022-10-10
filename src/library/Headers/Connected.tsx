@@ -3,10 +3,9 @@
 
 import { PoolAccount } from 'library/PoolAccount';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { clipAddress } from 'Utils';
 import { useTranslation } from 'react-i18next';
@@ -14,26 +13,25 @@ import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
-  const { activeAccount, accounts, accountHasSigner } = useConnect();
-  const { openModalWith } = useModal();
+  const { activeAccount, accountHasSigner } = useConnect();
   const { hasController, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const { activeBondedPool } = useActivePool();
+  const { selectedActivePool } = useActivePools();
   const { isSyncing } = useUi();
   const { t } = useTranslation('common');
 
   let poolAddress = '';
-  if (activeBondedPool) {
-    const { addresses } = activeBondedPool;
+  if (selectedActivePool) {
+    const { addresses } = selectedActivePool;
     poolAddress = addresses.stash;
   }
 
   const activeAccountLabel = isSyncing
     ? undefined
     : hasController()
-    ? 'Stash'
-    : undefined;
+      ? 'Stash'
+      : undefined;
 
   return (
     <>
@@ -73,14 +71,14 @@ export const Connected = () => {
           )}
 
           {/* pool account display / hide if not in pool */}
-          {activeBondedPool !== null && !isSyncing && (
+          {selectedActivePool !== null && !isSyncing && (
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}
-                pool={activeBondedPool}
+                pool={selectedActivePool}
                 label={t('library.pool')}
                 canClick={false}
-                onClick={() => {}}
+                onClick={() => { }}
                 filled
               />
             </HeadingWrapper>

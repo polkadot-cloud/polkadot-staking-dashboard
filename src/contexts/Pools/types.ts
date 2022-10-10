@@ -55,14 +55,14 @@ export interface BondedPoolsContextState {
   removeFromBondedPools: (p: number) => void;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
+  getAccountRoles: (w: MaybeAccount) => any;
+  getAccountPools: (w: MaybeAccount) => any;
   poolSearchFilter: (l: any, k: string, v: string) => void;
   bondedPools: Array<BondedPool>;
   meta: AnyMetaBatch;
 }
 
-export type ActiveBondedPoolState = ActiveBondedPool | null;
-
-export interface ActiveBondedPool {
+export interface ActivePool {
   id: number;
   addresses: PoolAddresses;
   bondedPool: any;
@@ -73,7 +73,7 @@ export interface ActiveBondedPool {
 
 export interface BondedPool {
   addresses: PoolAddresses;
-  id: number;
+  id: number | string;
   memberCounter: string;
   points: string;
   roles: {
@@ -87,10 +87,11 @@ export interface BondedPool {
 
 export type NominationStatuses = { [key: string]: string };
 
-export interface ActivePoolContextState {
+export interface ActivePoolsContextState {
   isBonding: () => boolean;
   isNominator: () => boolean;
   isOwner: () => boolean;
+  isMember: () => boolean;
   isDepositor: () => boolean;
   isStateToggler: () => boolean;
   getPoolBondedAccount: () => MaybeAccount;
@@ -98,7 +99,8 @@ export interface ActivePoolContextState {
   getPoolRoles: () => PoolRoles;
   setTargets: (t: any) => void;
   getNominationsStatus: () => NominationStatuses;
-  activeBondedPool: ActiveBondedPool | null;
+  setSelectedPoolId: (p: string) => void;
+  selectedActivePool: ActivePool | null;
   targets: any;
   poolNominations: any;
   synced: Sync;

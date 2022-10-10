@@ -6,40 +6,40 @@ export const HELP_CONFIG: any = [
     key: 'overview',
     definitions: [
       {
-        title: 'overview.definitions.supply_staked.title',
-        description: 'overview.definitions.supply_staked.description',
+        helpKey: 'Supply Staked',
+        localeKey: 'overview.definitions.supply_staked',
       },
       {
-        title: 'overview.definitions.total_nominators.title',
-        description: 'overview.definitions.total_nominators.description',
+        helpKey: 'Total Nominators',
+        localeKey: 'overview.definitions.total_nominators',
       },
       {
-        title: 'overview.definitions.active_nominators.title',
-        description: 'overview.definitions.active_nominators.description',
+        helpKey: 'Active Nominators',
+        localeKey: 'overview.definitions.active_nominators',
       },
       {
-        title: 'overview.definitions.your_balance.title',
-        description: 'overview.definitions.your_balance.description',
+        helpKey: '"Your Balance',
+        localeKey: 'overview.definitions.your_balance',
       },
       {
-        title: 'overview.definitions.reserve_balance.title',
-        description: 'overview.definitions.reserve_balance.description',
+        helpKey: 'Reserve Balance',
+        localeKey: 'overview.definitions.reserve_balance',
       },
       {
-        title: 'overview.definitions.network_stats.title',
-        description: 'overview.definitions.network_stats.description',
+        helpKey: 'Network Stats',
+        localeKey: 'overview.definitions.network_stats',
       },
       {
-        title: 'overview.definitions.inflation.title',
-        description: 'overview.definitions.inflation.description',
+        helpKey: 'Inflation',
+        localeKey: 'overview.definitions.inflation',
       },
       {
-        title: 'overview.definitions.historical_rewards_rate.title',
-        description: 'overview.definitions.historical_rewards_rate.description',
+        helpKey: 'Historical Rewards Rate',
+        localeKey: 'overview.definitions.historical_rewards_rate',
       },
       {
-        title: 'overview.definitions.ideal_staked.title',
-        description: 'overview.definitions.ideal_staked.description',
+        helpKey: 'Ideal Staked',
+        localeKey: 'overview.definitions.ideal_staked',
       },
     ],
     external: [
@@ -64,37 +64,36 @@ export const HELP_CONFIG: any = [
     key: 'nominate',
     definitions: [
       {
-        title: 'nominate.definitions.nomination_status.title',
-        description: 'nominate.definitions.nomination_status.description',
+        helpKey: 'Nomination Status',
+        localeKey: 'nominate.definitions.nomination_status',
       },
       {
-        title: 'nominate.definitions.stash_and_controller_accounts.title',
-        description:
-          'nominate.definitions.stash_and_controller_accounts.description',
+        helpKey: 'Stash and Controller Accounts',
+        localeKey: 'nominate.definitions.stash_and_controller_accounts',
       },
       {
-        title: 'nominate.definitions.bonding.title',
-        description: 'nominate.definitions.bonding.description',
+        helpKey: 'Bonding',
+        localeKey: 'nominate.definitions.bonding',
       },
       {
-        title: 'nominate.definitions.active_bond_threshold.title',
-        description: 'nominate.definitions.active_bond_threshold.description',
+        helpKey: 'Active Bond Threshold',
+        localeKey: 'nominate.definitions.active_bond_threshold',
       },
       {
-        title: 'nominate.definitions.reward_destination.title',
-        description: 'nominate.definitions.reward_destination.description',
+        helpKey: 'Reward Destination',
+        localeKey: 'nominate.definitions.reward_destination',
       },
       {
-        title: 'nominate.definitions.nominating.title',
-        description: 'nominate.definitions.nominating.description',
+        helpKey: 'Nominating',
+        localeKey: 'nominate.definitions.nominating',
       },
       {
-        title: 'nominate.definitions.nominations.title',
-        description: 'nominate.definitions.nominations.description',
+        helpKey: 'Nominations',
+        localeKey: 'nominate.definitions.nominations',
       },
       {
-        title: 'nominate.definitions.inactive_nominations.title',
-        description: 'nominate.definitions.inactive_nominations.description',
+        helpKey: 'Inactive Nominations',
+        localeKey: 'nominate.definitions.inactive_nominations',
       },
     ],
     external: [
@@ -134,36 +133,36 @@ export const HELP_CONFIG: any = [
     key: 'pools',
     definitions: [
       {
-        title: 'pools.definitions.nomination_pools.title',
-        description: 'pools.definitions.nomination_pools.description',
+        helpKey: 'Nomination Pools',
+        localeKey: 'pools.definitions.nomination_pools',
       },
       {
-        title: 'pools.definitions.active_pools.title',
-        description: 'pools.definitions.active_pools.description',
+        helpKey: 'Active Pools',
+        localeKey: 'pools.definitions.active_pools',
       },
       {
-        title: 'pools.definitions.minimum_join_bond.title',
-        description: 'pools.definitions.minimum_join_bond.description',
+        helpKey: 'Minimum Join Bond',
+        localeKey: 'pools.definitions.minimum_join_bond',
       },
       {
-        title: 'pools.definitions.minimum_create_bond.title',
-        description: 'pools.definitions.minimum_create_bond.description',
+        helpKey: 'Minimum Create Bond',
+        localeKey: 'pools.definitions.minimum_create_bond',
       },
       {
-        title: 'pools.definitions.pool_membership.title',
-        description: 'pools.definitions.pool_membership.description',
+        helpKey: 'Pool Membership',
+        localeKey: 'pools.definitions.pool_membership',
       },
       {
-        title: 'pools.definitions.bonded_in_pool.title',
-        description: 'pools.definitions.bonded_in_pool.description',
+        helpKey: 'Bonded in Pool',
+        localeKey: 'pools.definitions.bonded_in_pool',
       },
       {
-        title: 'pools.definitions.pool_rewards.title',
-        description: 'pools.definitions.pool_rewards.description',
+        helpKey: 'Pool Rewards',
+        localeKey: 'pools.definitions.pool_rewards',
       },
       {
-        title: 'pools.definitions.pool_roles.title',
-        description: 'pools.definitions.pool_roles.description',
+        helpKey: 'Pool Roles',
+        localeKey: 'pools.definitions.pool_roles',
       },
     ],
     external: [
@@ -183,53 +182,52 @@ export const HELP_CONFIG: any = [
     key: 'validators',
     definitions: [
       {
-        title: 'validators.definitions.validator.title',
-        description: 'validators.definitions.validator.description',
+        helpKey: 'Validator',
+        localeKey: 'validators.definitions.validator',
       },
       {
-        title: 'validators.definitions.active_validator.title',
-        description: 'validators.definitions.active_validator.description',
+        helpKey: 'Active Validator',
+        localeKey: 'validators.definitions.active_validator',
       },
       {
-        title: 'validators.definitions.average_commission.title',
-        description: 'validators.definitions.average_commission.description',
+        helpKey: 'Average Commission',
+        localeKey: 'validators.definitions.average_commission',
       },
       {
-        title: 'validators.definitions.era.title',
-        description: 'validators.definitions.era.description',
+        helpKey: 'Era',
+        localeKey: 'validators.definitions.era',
       },
       {
-        title: 'validators.definitions.epoch.title',
-        description: 'validators.definitions.epoch.description',
+        helpKey: 'Epoch',
+        localeKey: 'validators.definitions.epoch',
       },
       {
-        title: 'validators.definitions.era_eoints.title',
-        description: 'validators.definitions.era_eoints.description',
+        helpKey: 'Era Points',
+        localeKey: 'validators.definitions.era_eoints',
       },
       {
-        title: 'validators.definitions.self_stake.title',
-        description: 'validators.definitions.self_stake.description',
+        helpKey: 'Self Stake',
+        localeKey: 'validators.definitions.self_stake',
       },
       {
-        title: 'validators.definitions.nominator_stake.title',
-        description: 'validators.definitions.nominator_stake.description',
+        helpKey: 'Nominator Stake',
+        localeKey: 'validators.definitions.nominator_stake',
       },
       {
-        title: 'validators.definitions.minimum_nomination_bond.title',
-        description:
-          'validators.definitions.minimum_nomination_bond.description',
+        helpKey: 'Minimum Nomination Bond',
+        localeKey: 'validators.definitions.minimum_nomination_bond',
       },
       {
-        title: 'validators.definitions.commission.title',
-        description: 'validators.definitions.commission.description',
+        helpKey: 'Commission',
+        localeKey: 'validators.definitions.commission',
       },
       {
-        title: 'validators.definitions.over_subscribed.title',
-        description: 'validators.definitions.over_subscribed.description',
+        helpKey: 'Over Subscribed',
+        localeKey: 'validators.definitions.over_subscribed',
       },
       {
-        title: 'validators.definitions.blocked_nominations.title',
-        description: 'validators.definitions.blocked_nominations.description',
+        helpKey: 'Blocked Nominations',
+        localeKey: 'validators.definitions.blocked_nominations',
       },
     ],
     external: [
@@ -244,16 +242,16 @@ export const HELP_CONFIG: any = [
     key: 'payouts',
     definitions: [
       {
-        title: 'payouts.definitions.payout.title',
-        description: 'payouts.definitions.payout.description',
+        helpKey: 'Payout',
+        localeKey: 'payouts.definitions.payout',
       },
       {
-        title: 'payouts.definitions.last_era_payout.title',
-        description: 'payouts.definitions.last_era_payout.description',
+        helpKey: 'Last Era Payout',
+        localeKey: 'payouts.definitions.last_era_payout',
       },
       {
-        title: 'payouts.definitions.payout_history.title',
-        description: 'payouts.definitions.payout_history.description',
+        helpKey: 'Payout History',
+        localeKey: 'payouts.definitions.payout_history',
       },
     ],
     external: [],

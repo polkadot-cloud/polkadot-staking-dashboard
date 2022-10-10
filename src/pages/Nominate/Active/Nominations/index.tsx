@@ -12,7 +12,7 @@ import { useUi } from 'contexts/UI';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { MaybeAccount } from 'types';
 import { PoolState } from 'contexts/Pools/types';
 import { useTranslation } from 'react-i18next';
@@ -40,8 +40,8 @@ export const Nominations = ({
     poolNominations,
     isNominator: isPoolNominator,
     isOwner: isPoolOwner,
-    activeBondedPool,
-  } = useActivePool();
+    selectedActivePool,
+  } = useActivePools();
 
   const isPool = bondType === 'pool';
   const nominations = isPool
@@ -86,7 +86,7 @@ export const Nominations = ({
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&
-    activeBondedPool?.bondedPool?.state === PoolState.Destroy &&
+    selectedActivePool?.bondedPool?.state === PoolState.Destroy &&
     !nominating;
 
   const stopBtnDisabled =
@@ -109,7 +109,7 @@ export const Nominations = ({
               If Pool and account is nominator or root, display stop button.
           */}
           {((!isPool && nominations.length) ||
-            (isPool && isPoolNominator() && isPoolOwner())) && (
+            (isPool && (isPoolNominator() || isPoolOwner()))) && (
             <Button
               small
               icon={faStopCircle}
@@ -157,7 +157,7 @@ export const Nominations = ({
                 format="nomination"
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&
-                  (!isPool || isPoolNominator())
+                  (!isPool || isPoolNominator() || isPoolOwner())
                 }
                 actions={
                   isReadOnlyAccount(activeAccount)
