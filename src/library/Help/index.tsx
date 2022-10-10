@@ -65,30 +65,32 @@ export const Help = () => {
   if (status === 0) {
     return <></>;
   }
-  // TODO: migrate to just keys and fetch content from i18n
-  // {
-  //   helpKey: 'Supply Staked',
-  //   localeKey: 'overview.definitions.supply_staked',
-  // },
 
-  // Example of getting help content from key
-  // The key will be fetched from help.ts. Loop through definitions?
-  const key = 'overview.definitions.supply_staked';
+  Object.values(HELP_CONFIG).forEach((c: any) => {
+    c.forEach((ds: any) => {
+      const locale_key = ds.localeKey;
+      const help_hey = ds.helpKey;
 
-  // access title and description property of key
-  const title = tHelp(`${key}.title`);
-  const description = i18n.getResource('en', 'help', `${key}.description`);
+      // access title and description property of key
+      const title = tHelp(`${locale_key}.title`);
+      const description = i18n.getResource(
+        'en',
+        'help',
+        `${locale_key}.description`
+      );
 
-  // inject variables into definition
-  const descInjected = fillDefinitionVariables({
-    title,
-    description,
+      // inject variables into definition
+      const descInjected = fillDefinitionVariables({
+        title,
+        description,
+      });
+
+      // example of mapping descriptions array and constructing JSX
+      const descJsx = descInjected.description.map((d: string, i: number) => (
+        <p key={`index_${i}`}>{d}</p>
+      ));
+    });
   });
-
-  // example of mapping descriptions array and constructing JSX
-  const descJsx = descInjected.description.map((d: string, i: number) => (
-    <p key={`index_${i}`}>{d}</p>
-  ));
 
   let meta: any | undefined;
 
@@ -203,7 +205,7 @@ export const Help = () => {
                     <External
                       key={`ext_${index}`}
                       width="100%"
-                      title={item.title}
+                      title={t(item.title)}
                       url={item.url}
                       website={item.website}
                     />

@@ -1,12 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useRef, useEffect } from 'react';
 import { PageTitleWrapper, MenuPaddingWrapper } from 'Wrappers';
 import { PageTitleProps } from './types';
 
 export const PageTitle = (props: PageTitleProps) => {
-  const { title } = props;
+  const { title, button } = props;
   const tabs = props.tabs ?? [];
 
   const [sticky, setSticky] = useState(false);
@@ -37,25 +39,43 @@ export const PageTitle = (props: PageTitleProps) => {
     <>
       <MenuPaddingWrapper />
       <PageTitleWrapper ref={ref} sticky={sticky}>
-        <h1 className="page-padding">{title}</h1>
-        {tabs.length > 0 && (
-          <section className="tabs page-padding">
-            <div className="scroll">
-              <div className="inner">
-                {tabs.map((tab: any, i: number) => (
-                  <button
-                    className={tab.active ? `active` : ``}
-                    key={`page_tab_${i}`}
-                    type="button"
-                    onClick={() => tab.onClick()}
-                  >
-                    {tab.title}
-                  </button>
-                ))}
-              </div>
+        <div className="page-padding">
+          <section className="title">
+            <div>
+              <h1>{title}</h1>
+            </div>
+            <div>
+              {button && (
+                <button type="button" onClick={() => button.onClick()}>
+                  {button.title}
+                  <FontAwesomeIcon
+                    icon={faBars}
+                    className="icon"
+                    transform="shrink-4"
+                  />
+                </button>
+              )}
             </div>
           </section>
-        )}
+          {tabs.length > 0 && (
+            <section className="tabs">
+              <div className="scroll">
+                <div className="inner">
+                  {tabs.map((tab: any, i: number) => (
+                    <button
+                      className={tab.active ? `active` : ``}
+                      key={`page_tab_${i}`}
+                      type="button"
+                      onClick={() => tab.onClick()}
+                    >
+                      {tab.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </div>
       </PageTitleWrapper>
     </>
   );

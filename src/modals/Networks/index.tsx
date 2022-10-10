@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect } from 'react';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NETWORKS } from 'config/networks';
 import { useApi } from 'contexts/Api';
@@ -36,7 +36,7 @@ export const Networks = () => {
 
   return (
     <>
-      <Title title="Networks" />
+      <Title title="Networks" icon={faGlobe} />
       <PaddingWrapper>
         <ContentWrapper>
           <h4>{t('modals.select_network')}</h4>

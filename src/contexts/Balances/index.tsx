@@ -117,17 +117,8 @@ export const BalancesProvider = ({
 
       // if accounts have changed, update state with new unsubs / accounts
       if (accountsAdded.length) {
-        // subscribe to account balances
-        Promise.all(
-          accountsAdded.map((a: ImportedAccount) =>
-            subscribeToBalances(a.address)
-          )
-        );
-        Promise.all(
-          accountsAdded.map((a: ImportedAccount) =>
-            subscribeToLedger(a.address)
-          )
-        );
+        // subscribe to account balances and ledgers
+        handleSubscribe(accountsAdded);
       }
     }
   }, [connectAccounts, network, isReady]);
@@ -138,6 +129,18 @@ export const BalancesProvider = ({
       unsubscribeAll();
     };
   }, []);
+
+  // subscribe to added accounts
+  const handleSubscribe = async (accountsAdded: Array<ImportedAccount>) => {
+    // subscribe to balances
+    Promise.all(
+      accountsAdded.map((a: ImportedAccount) => subscribeToBalances(a.address))
+    );
+    // subscribe to ledgers
+    Promise.all(
+      accountsAdded.map((a: ImportedAccount) => subscribeToLedger(a.address))
+    );
+  };
 
   /*
    * Unsubscrbe all balance subscriptions
@@ -200,6 +203,17 @@ export const BalancesProvider = ({
           _bonded === null ? null : (_bonded.toHuman() as string | null);
         _account.bonded = _bonded;
 
+        // add bonded (controller) account as external account if not presently imported
+        if (_bonded) {
+          if (
+            connectAccounts.find(
+              (s: ImportedAccount) => s.address === _bonded
+            ) === undefined
+          ) {
+            addExternalAccount(_bonded, 'system');
+          }
+        }
+
         // set account nominations
         let _nominations = nominations.unwrapOr(null);
         if (_nominations === null) {
@@ -258,9 +272,9 @@ export const BalancesProvider = ({
 
           // add stash as external account if not present
           if (
-            !connectAccounts.find(
+            connectAccounts.find(
               (s: ImportedAccount) => s.address === stash.toHuman()
-            )
+            ) === undefined
           ) {
             addExternalAccount(stash.toHuman(), 'system');
           }

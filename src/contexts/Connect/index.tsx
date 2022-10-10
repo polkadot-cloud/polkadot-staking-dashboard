@@ -153,7 +153,7 @@ export const ConnectProvider = ({
    * Unsubscrbe from some account subscriptions and update the resulting state.
    */
   const forgetAccounts = (_accounts: Array<ExternalAccount>) => {
-    if (!accounts.length) return;
+    if (!_accounts.length) return;
     const keys = _accounts.map((a: ExternalAccount) => a.address);
 
     // unsubscribe from provided keys

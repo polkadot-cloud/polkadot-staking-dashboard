@@ -6,14 +6,13 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -29,9 +28,8 @@ export const NominateFromFavourites = () => {
   const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favouritesList } = useValidators();
-  const { isNominator, isOwner } = useActivePool();
+  const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
-  const { membership } = usePoolMemberships();
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('common');
 
@@ -110,7 +108,7 @@ export const NominateFromFavourites = () => {
 
     if (bondType === 'pool') {
       _tx = api.tx.nominationPools.nominate(
-        membership?.poolId,
+        selectedActivePool?.id,
         targetsToSubmit
       );
     } else {
@@ -124,7 +122,7 @@ export const NominateFromFavourites = () => {
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });

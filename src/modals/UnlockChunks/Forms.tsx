@@ -15,7 +15,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
 import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, rmCommas } from 'Utils';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -33,7 +33,7 @@ export const Forms = forwardRef(
     const { staking } = useStaking();
     const { removeFavourite: removeFavouritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
-    const { activeBondedPool } = useActivePool();
+    const { selectedActivePool } = useActivePools();
     const { removeFromBondedPools } = useBondedPools();
     const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
@@ -70,7 +70,7 @@ export const Forms = forwardRef(
         _tx = api.tx.staking.rebond(unlock.value.toNumber());
       } else if (task === 'withdraw' && isStaking) {
         _tx = api.tx.staking.withdrawUnbonded(historyDepth);
-      } else if (task === 'withdraw' && isPooling && activeBondedPool) {
+      } else if (task === 'withdraw' && isPooling && selectedActivePool) {
         _tx = api.tx.nominationPools.withdrawUnbonded(
           activeAccount,
           historyDepth
@@ -84,13 +84,13 @@ export const Forms = forwardRef(
       from: signingAccount,
       shouldSubmit: valid,
       callbackSubmit: () => {
-        setModalStatus(0);
+        setModalStatus(2);
       },
       callbackInBlock: () => {
         // if pool is being closed, remove from static lists
         if (poolClosure) {
-          removeFavouritePool(activeBondedPool?.addresses?.stash ?? '');
-          removeFromBondedPools(activeBondedPool?.id ?? 0);
+          removeFavouritePool(selectedActivePool?.addresses?.stash ?? '');
+          removeFromBondedPools(selectedActivePool?.id ?? 0);
         }
 
         // if no more bonded funds from pool, remove from poolMembers list

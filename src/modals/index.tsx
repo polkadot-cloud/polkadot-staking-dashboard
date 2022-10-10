@@ -31,6 +31,7 @@ import { GoToFeedback } from './GoToFeedback';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
 import { ChooseLanguage } from './ChooseLanguage';
+import { AccountPoolRoles } from './AccountPoolRoles';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =
@@ -106,6 +107,7 @@ export const Modal = () => {
         >
           <ContentWrapper ref={modalRef}>
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
+              {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
               {modal === 'Bio' && <Bio />}
               {modal === 'ChangeNominations' && <ChangeNominations />}
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
