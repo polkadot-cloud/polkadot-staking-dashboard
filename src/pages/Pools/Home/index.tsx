@@ -51,7 +51,7 @@ export const HomeInner = () => {
 
   let tabs = [
     {
-      title: 'Overview',
+      title: t('pages.pools.overview'),
       active: activeTab === 0,
       onClick: () => setActiveTab(0),
     },
@@ -59,7 +59,7 @@ export const HomeInner = () => {
 
   if (activeBondedPool) {
     tabs = tabs.concat({
-      title: 'Members',
+      title: t('pages.pools.members'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
     });
@@ -67,12 +67,12 @@ export const HomeInner = () => {
 
   tabs = tabs.concat(
     {
-      title: 'All Pools',
+      title: t('pages.pools.all_pools'),
       active: activeTab === 2,
       onClick: () => setActiveTab(2),
     },
     {
-      title: 'Favourites',
+      title: t('pages.pools.favourites'),
       active: activeTab === 3,
       onClick: () => setActiveTab(3),
     }
@@ -80,7 +80,7 @@ export const HomeInner = () => {
 
   return (
     <>
-      <PageTitle title="Pools" tabs={tabs} />
+      <PageTitle title={t('pages.pools.pools')} tabs={tabs} />
       {activeTab === 0 && (
         <>
           <StatBoxList>

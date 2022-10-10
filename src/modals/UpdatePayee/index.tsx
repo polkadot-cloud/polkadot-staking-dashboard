@@ -83,7 +83,7 @@ export const UpdatePayee = () => {
 
   return (
     <>
-      <Title title="Update Reward Destination" icon={faWallet} />
+      <Title title={t('modals.update_reward_destination')} icon={faWallet} />
       <PaddingWrapper verticalOnly>
         <div
           style={{

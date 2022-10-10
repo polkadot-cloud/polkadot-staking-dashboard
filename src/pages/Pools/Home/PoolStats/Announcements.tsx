@@ -70,18 +70,18 @@ export const Announcements = () => {
 
   announcements.push({
     class: 'neutral',
-    title: `${humanNumber(rewardsClaimed)} ${
-      network.unit
-    } in rewards have been claimed.`,
+    title: `${humanNumber(rewardsClaimed)} ${network.unit} ${t(
+      'pages.pools.been_claimed'
+    )}`,
     subtitle: `The total amount of ${network.unit} that has been claimed by pool members.`,
   });
 
   if (rewardBalance > 0) {
     announcements.push({
       class: 'neutral',
-      title: `${humanNumber(rewardBalance)} ${
-        network.unit
-      } outstanding reward balance.`,
+      title: `${humanNumber(rewardBalance)} ${network.unit} ${t(
+        'pages.pools.poolstats2'
+      )}`,
       subtitle: `The outstanding amount of ${network.unit} available to claim by pool members.`,
     });
   }

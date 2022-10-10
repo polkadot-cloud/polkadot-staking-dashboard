@@ -136,9 +136,9 @@ export const NominateFromFavourites = () => {
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`You must have your${
-                bondType === 'stake' ? ' controller' : ' '
-              }account imported to add nominations.`}
+              text={`{t('modals.s1')}${
+                bondType === 'stake' ? ' controller ' : ' '
+              }{t('modals.s3')}`}
             />
           )}
         </div>
@@ -180,7 +180,7 @@ export const NominateFromFavourites = () => {
                 : `Adding ${selectedFavourites.length} Nomination${
                     selectedFavourites.length !== 1 ? `s` : ``
                   }`
-              : `No Favourites Selected`}
+              : `${t('modals.no_favourites_selected')}`}
           </h3>
           <div>
             <button

@@ -15,7 +15,7 @@ export const Pagination = (props: PaginationProps) => {
   return (
     <PaginationWrapper prev={page !== 1} next={page !== total}>
       <div>
-        <h4>{t('library.page')}</h4>
+        <h4>{t('library.page', { page, total })}</h4>
       </div>
       <div>
         <button

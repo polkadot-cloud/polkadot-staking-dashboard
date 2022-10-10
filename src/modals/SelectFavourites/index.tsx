@@ -98,7 +98,7 @@ export const SelectFavourites = () => {
                 : `Add ${selectedFavourites.length} Favourite${
                     selectedFavourites.length !== 1 ? `s` : ``
                   } to Nominations`
-              : `No Favourites Selected`}
+              : `${t('modals.no_favourites_selected')}`}
           </button>
         </FooterWrapper>
       </PaddingWrapper>
