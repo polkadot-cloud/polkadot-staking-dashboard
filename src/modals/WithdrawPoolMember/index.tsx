@@ -20,14 +20,16 @@ import { Warning } from 'library/Form/Warning';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
 
 export const WithdrawPoolMember = () => {
-  const { api, network, consts } = useApi();
+  const { api, network } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
+  const { staking } = useStaking();
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
@@ -35,7 +37,7 @@ export const WithdrawPoolMember = () => {
 
   const { activeEra } = metrics;
   const { member, who } = config;
-  const { historyDepth } = consts;
+  const { historyDepth } = staking;
   const { unbondingEras, points } = member;
 
   // calculate total for withdraw

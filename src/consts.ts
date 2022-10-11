@@ -60,7 +60,6 @@ export const SERVICES = ['subscan', 'binance_spot'];
 export const MAX_NOMINATIONS = 16;
 export const BONDING_DURATION = 28;
 export const SESSIONS_PER_ERA = 6;
-export const HISTORY_DEPTH = 84;
 export const MAX_NOMINATOR_REWARDED_PER_VALIDATOR = 256;
 export const VOTER_SNAPSHOT_PER_BLOCK = 22500;
 export const MAX_ELECTING_VOTERS = 22500;

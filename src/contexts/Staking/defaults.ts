@@ -19,6 +19,7 @@ export const stakingMetrics: StakingMetrics = {
   maxNominatorsCount: new BN(0),
   maxValidatorsCount: new BN(0),
   minNominatorBond: new BN(0),
+  historyDepth: new BN(0),
   payee: null,
   unsub: null,
 };

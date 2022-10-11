@@ -13,6 +13,7 @@ export interface StakingMetrics {
   maxNominatorsCount: BN;
   maxValidatorsCount: BN;
   minNominatorBond: BN;
+  historyDepth: BN;
   payee: string | null;
   unsub: { (): void } | null;
 }
