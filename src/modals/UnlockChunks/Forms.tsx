@@ -13,7 +13,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Warning } from 'library/Form/Warning';
-import { useStaking } from 'contexts/Staking';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
@@ -27,9 +26,8 @@ import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
-    const { api, network } = useApi();
+    const { api, network, consts } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
-    const { staking } = useStaking();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
     const { selectedActivePool } = useActivePools();
@@ -40,7 +38,7 @@ export const Forms = forwardRef(
     const { txFeesValid } = useTxFees();
 
     const { bondType, poolClosure } = config || {};
-    const { historyDepth } = staking;
+    const { historyDepth } = consts;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);
 

@@ -200,7 +200,6 @@ export const StakingProvider = ({
   const subscribeToStakingkMetrics = async () => {
     if (api !== null && isReady && metrics.activeEra.index !== 0) {
       const previousEra = metrics.activeEra.index - 1;
-
       // subscribe to staking metrics
       const unsub = await api.queryMulti<AnyApi>(
         [
@@ -212,7 +211,6 @@ export const StakingProvider = ({
           [api.query.staking.erasValidatorReward, previousEra],
           [api.query.staking.erasTotalStake, previousEra],
           api.query.staking.minNominatorBond,
-          api.query.staking.historyDepth,
           [api.query.staking.payee, activeAccount],
         ],
         ([
@@ -224,22 +222,22 @@ export const StakingProvider = ({
           _lastReward,
           _lastTotalStake,
           _minNominatorBond,
-          _historyDepth,
           _payee,
         ]) => {
-          setStakingMetrics({
+          const _metrics = {
             ...stakingMetrics,
-            payee: _payee.toHuman(),
-            historyDepth: _historyDepth.toBn(),
-            lastTotalStake: _lastTotalStake.toBn(),
-            validatorCount: _validatorCount.toBn(),
             totalNominators: _totalNominators.toBn(),
             totalValidators: _totalValidators.toBn(),
-            minNominatorBond: _minNominatorBond.toBn(),
-            lastReward: _lastReward.unwrapOrDefault(new BN(0)),
-            maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
             maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
-          });
+            maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
+            validatorCount: _validatorCount.toBn(),
+            lastReward: _lastReward.unwrapOrDefault(new BN(0)),
+            lastTotalStake: _lastTotalStake.toBn(),
+            minNominatorBond: _minNominatorBond.toBn(),
+            payee: _payee.toHuman(),
+          };
+
+          setStakingMetrics(_metrics);
         }
       );
 

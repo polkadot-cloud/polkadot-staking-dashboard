@@ -8,6 +8,7 @@ import BN from 'bn.js';
 import {
   BONDING_DURATION,
   SESSIONS_PER_ERA,
+  HISTORY_DEPTH,
   MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
   MAX_NOMINATIONS,
   API_ENDPOINTS,
@@ -96,6 +97,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.staking.maxNominations,
       _api.consts.staking.sessionsPerEra,
       _api.consts.staking.maxNominatorRewardedPerValidator,
+      _api.consts.staking.historyDepth,
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
       _api.consts.babe.expectedBlockTime,
       _api.consts.balances.existentialDeposit,
@@ -122,19 +124,23 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       ? Number(_consts[3].toString())
       : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
 
-    const maxElectingVoters = _consts[4]
+    const historyDepth = _consts[4]
+      ? new BN(_consts[4].toString())
+      : new BN(HISTORY_DEPTH);
+
+    const maxElectingVoters = _consts[5]
       ? Number(_consts[4].toString())
       : MAX_ELECTING_VOTERS;
 
-    const expectedBlockTime = _consts[5]
+    const expectedBlockTime = _consts[6]
       ? Number(_consts[5].toString())
       : EXPECTED_BLOCK_TIME;
 
-    const existentialDeposit = _consts[6]
+    const existentialDeposit = _consts[7]
       ? new BN(_consts[6].toString())
       : new BN(0);
 
-    const poolsPalletId = _consts[7] ? _consts[7].toU8a() : new Uint8Array(0);
+    const poolsPalletId = _consts[8] ? _consts[8].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({
@@ -142,6 +148,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       maxNominations,
       sessionsPerEra,
       maxNominatorRewardedPerValidator,
+      historyDepth,
       maxElectingVoters,
       expectedBlockTime,
       poolsPalletId,
