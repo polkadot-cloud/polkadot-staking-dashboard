@@ -72,7 +72,9 @@ export const ClaimReward = () => {
   return (
     <>
       <Title
-        title={`${claimType === 'bond' ? 'Bond' : 'Withdraw'} Rewards`}
+        title={`${
+          claimType === 'bond' ? t('modals.bond') : t('modals.withdraw')
+        } ${t('modals.rewards')}`}
         icon={claimType === 'bond' ? faPlus : faShare}
       />
       <PaddingWrapper>

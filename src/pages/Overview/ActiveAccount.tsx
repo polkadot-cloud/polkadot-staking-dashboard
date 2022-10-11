@@ -22,7 +22,7 @@ export const ActiveAccount = () => {
   let notification: NotificationText | null = null;
   if (accountData !== null) {
     notification = {
-      title: 'Address Copied to Clipboard',
+      title: t('pages.overview.address_copied'),
       subtitle: accountData.address,
     };
   }
@@ -64,7 +64,7 @@ export const ActiveAccount = () => {
               </>
             )}
 
-            {!accountData && 'No Account Connected'}
+            {!accountData && t('pages.overview.no_account_connected')}
           </h3>
         </div>
       </div>

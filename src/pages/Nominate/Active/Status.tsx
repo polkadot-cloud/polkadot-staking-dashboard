@@ -138,7 +138,11 @@ export const Status = ({ height }: { height: number }) => {
             ? faCircle
             : faWallet) as IconProp
         }
-        stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
+        stat={
+          inSetup()
+            ? t('pages.nominate.not_assigned')
+            : payeeStatus?.name ?? t('pages.nominate.not_assigned')
+        }
         buttons={
           payeeStatus
             ? [

@@ -9,11 +9,11 @@ import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { PaddingWrapper } from '../Wrappers';
 
 export const ChooseLanguage = () => {
-  const { i18n } = useTranslation(['common', 'pages', 'help']);
+  const { i18n, t } = useTranslation(['common', 'pages', 'help']);
   const { setStatus } = useModal();
   return (
     <>
-      <Title title="Choose Language" Svg={LanguageSVG} />
+      <Title title={t('modals.choose_language')} Svg={LanguageSVG} />
       <PaddingWrapper>
         {availableLanguages.map((l: string, i: number) => (
           <h3 key={`${l}_{i}`}>

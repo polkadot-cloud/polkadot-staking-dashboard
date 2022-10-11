@@ -23,12 +23,12 @@ export const Setup = () => {
 
   return (
     <>
-      <PageTitle title="Start Nominating" />
+      <PageTitle title={t('pages.nominate.start_nominating')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <Button
             inline
-            title="Go Back"
+            title={t('pages.nominate.go_back')}
             icon={faChevronLeft}
             transform="shrink-3"
             onClick={() => setOnNominatorSetup(0)}
@@ -36,7 +36,7 @@ export const Setup = () => {
           <div className="right">
             <Button
               inline
-              title="Cancel"
+              title={t('pages.nominate.cancel')}
               onClick={() => {
                 setOnNominatorSetup(0);
                 setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);

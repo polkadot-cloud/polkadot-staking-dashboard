@@ -25,20 +25,18 @@ export const Payee = (props: SetupStepProps) => {
   const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
     {
-      title: 'Back to Staking',
-      subtitle:
-        'Payouts are automatically bonded to your existing bonded balance.',
+      title: t('pages.nominate.back_to_staking'),
+      subtitle: t('pages.nominate.back_to_staking1'),
       index: 0,
     },
     {
-      title: 'To Stash',
-      subtitle: 'Payouts will be sent to your stash account as free balance.',
+      title: t('pages.nominate.to_stash'),
+      subtitle: t('pages.nominate.to_stash1'),
       index: 1,
     },
     {
-      title: 'To Controller',
-      subtitle:
-        'Payouts will be sent to your controller account as free balance.',
+      title: t('pages.nominate.to_controller'),
+      subtitle: t('pages.nominate.to_controller1'),
       index: 2,
     },
   ];

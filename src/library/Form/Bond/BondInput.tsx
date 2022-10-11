@@ -79,7 +79,7 @@ export const BondInput = (props: BondInputProps) => {
           <Button
             inline
             small
-            title="Max"
+            title={t('library.max')}
             onClick={() => {
               setValue(freeBalance);
               updateParentState(freeBalance);

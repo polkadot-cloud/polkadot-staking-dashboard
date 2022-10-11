@@ -11,6 +11,7 @@ import Identicon from 'library/Identicon';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { StyledButton, ContentWrapper } from './Wrappers';
 
@@ -19,6 +20,7 @@ export const AccountPoolRoles = () => {
   const { getAccountPools } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { who } = config;
+  const { t } = useTranslation('common');
 
   const accountPools = getAccountPools(who);
   const totalAccountPools = Object.entries(accountPools).length;
@@ -26,7 +28,7 @@ export const AccountPoolRoles = () => {
 
   return (
     <>
-      <Title title="All Pool Roles" icon={faBars} />
+      <Title title={t('modals.all_pool_roles')} icon={faBars} />
       <PaddingWrapper>
         <ContentWrapper>
           {membership && (

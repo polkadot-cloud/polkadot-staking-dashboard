@@ -75,12 +75,12 @@ export const NominatePool = () => {
     warnings.push(t('modals.w6'));
   }
   if (!isOwner() || !isNominator()) {
-    warnings.push(`You do not have a nominator role in any pools.`);
+    warnings.push(t('modals.w8'));
   }
 
   return (
     <>
-      <Title title="Nominate" icon={faPlayCircle} />
+      <Title title={t('modals.nominate')} icon={faPlayCircle} />
       <PaddingWrapper verticalOnly>
         <div
           style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}

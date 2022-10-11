@@ -32,7 +32,9 @@ export const useStatusButtons = () => {
   let _label;
   let _buttons;
   const createBtn = {
-    title: `Create Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
+    title: `${t('pages.pools.create_pool')}${
+      poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``
+    }`,
     icon: faPlusCircle,
     transform: 'grow-1',
     disabled:
@@ -45,7 +47,7 @@ export const useStatusButtons = () => {
   };
 
   const joinPoolBtn = {
-    title: `Join Pool`,
+    title: `${t('pages.pools.join_pool')}`,
     icon: faUserPlus,
     transform: 'grow-1',
     disabled:
@@ -57,14 +59,14 @@ export const useStatusButtons = () => {
   };
 
   if (!membership) {
-    _label = 'Pool Membership';
+    _label = t('pages.pools.pool_membership');
     _buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
-    _label = `Owner of Pool ${membership.poolId}`;
+    _label = `${t('pages.pools.owner_of_pool')} ${membership.poolId}`;
   } else if (active?.gtn(0)) {
-    _label = `Member of Pool ${membership.poolId}`;
+    _label = `${t('pages.pools.member_of_pool')} ${membership.poolId}`;
   } else {
-    _label = `Leaving Pool ${membership.poolId}`;
+    _label = `${t('pages.pools.leaving_pool')} ${membership.poolId}`;
   }
   return { label: _label, buttons: _buttons };
 };

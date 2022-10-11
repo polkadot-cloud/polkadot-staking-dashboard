@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { Wrapper, CardsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';
@@ -12,6 +13,7 @@ import { Forms } from './Forms';
 export const UpdateBond = () => {
   const { config, setModalHeight } = useModal();
   const { fn, bondType } = config;
+  const { t } = useTranslation('common');
 
   // modal task
   const [task, setTask] = useState(null);
@@ -45,7 +47,9 @@ export const UpdateBond = () => {
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
         <Title
-          title={`${fn === 'add' ? 'Add To' : 'Remove'} Bond`}
+          title={`${fn === 'add' ? t('modals.add_to') : t('modals.remove')} ${t(
+            'modals.bond'
+          )}`}
           icon={fn === 'add' ? faPlus : faMinus}
           fixed
         />

@@ -74,7 +74,11 @@ export const Overview = forwardRef(
 
           return (
             <ChunkWrapper key={`unlock_chunk_${index}`}>
-              <h4>{left <= 0 ? 'Unlocked' : `Unlocks after era ${era}`}</h4>
+              <h4>
+                {left <= 0
+                  ? t('modals.unlocked')
+                  : `${t('modals.unlocks_after_era')} ${era} `}
+              </h4>
               <div>
                 <section>
                   <h2>
@@ -111,18 +115,9 @@ export const Overview = forwardRef(
           );
         })}
         <NotesWrapper>
-          Unlocks take {bondDuration} eras before they can be withdrawn.
-          <p>
-            {isStaking &&
-              `You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.`}
-          </p>
-          {!isStaking && (
-            <p>
-              Unlock chunks cannot currently be rebonded in a pool. If you wish
-              to rebond, withdraw the unlock chunk first and the add to your
-              bond.
-            </p>
-          )}
+          {t('modals.unlock_chunks1')}
+          <p>{isStaking && `${t('modals.unlock_chunks2')}`}</p>
+          {!isStaking && <p>{t('modals.unlock_chunk')}</p>}
         </NotesWrapper>
       </ContentWrapper>
     );

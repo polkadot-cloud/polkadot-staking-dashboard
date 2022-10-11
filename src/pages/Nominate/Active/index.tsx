@@ -44,7 +44,7 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title="Solo Staking" />
+      <PageTitle title={t('pages.nominate.solo_staking')} />
       <StatBoxList>
         <MinimumActiveBondStatBox />
         <ActiveNominationsStatBox />

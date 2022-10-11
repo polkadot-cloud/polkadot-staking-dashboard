@@ -12,13 +12,13 @@ const PoolMembership = () => {
   const { t } = useTranslation('common');
 
   const params = {
-    label: t('pages.validators.pool_membership'),
+    label: t('pages.pools.pool_membership'),
     value:
       membership === null
-        ? 'Not in Pool'
+        ? t('pages.pools.not_in_pool')
         : isOwner()
-        ? `Owner of Pool ${membership.poolId}`
-        : `In Pool ${membership.poolId}`,
+        ? `${t('pages.pools.owner_of_pool')} ${membership.poolId}`
+        : `${t('pages.pools.in_pool')} ${membership.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
     chelpKey: '池成员资格',

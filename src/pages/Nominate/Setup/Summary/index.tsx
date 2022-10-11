@@ -82,7 +82,7 @@ export const Summary = (props: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
+          <Warning text={t('pages.nominate.w1')} />
         )}
         <SummaryWrapper>
           <section>
@@ -145,7 +145,7 @@ export const Summary = (props: SetupStepProps) => {
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            title="Start Nominating"
+            title={t('pages.nominate.start_nominating')}
             primary
           />
         </div>

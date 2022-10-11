@@ -166,7 +166,9 @@ export const Roles = (props: RolesProps) => {
                 transform="grow-1"
                 inline
                 primary
-                title={isEditing ? 'Save' : 'Edit'}
+                title={
+                  isEditing ? t('pages.pools.save') : t('pages.pools.edit')
+                }
                 disabled={
                   isSyncing ||
                   isReadOnlyAccount(activeAccount) ||
@@ -181,7 +183,7 @@ export const Roles = (props: RolesProps) => {
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h4>Depositor</h4>
+            <h4>{t('pages.pools.depositor')}</h4>
             <PoolAccount
               address={roles.depositor ?? null}
               batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
@@ -191,7 +193,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>Root</h4>
+            <h4>{t('pages.pools.root')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="root"

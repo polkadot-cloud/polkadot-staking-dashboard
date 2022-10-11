@@ -43,10 +43,9 @@ export const Members = () => {
             <div className="content">
               <h3>{t('pages.pools.pool_currently_locked')}</h3>
               <h4>
-                You have permission to unbond and withdraw funds of any pool
-                member. Use a member&apos;s menu ({' '}
-                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ) to
-                select management options.
+                {t('pages.pools.member1')} ({' '}
+                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
+                {t('pages.pools.member2')}
               </h4>
             </div>
           </CardWrapper>
@@ -62,10 +61,9 @@ export const Members = () => {
             <div className="content">
               <h3>{t('pages.pools.pool_in_destroying_state')}</h3>
               <h4>
-                You have permission to unbond and withdraw funds of any pool
-                member. Use a member&apos;s menu ({' '}
-                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ) to
-                select management options.
+                {t('pages.pools.member1')} ({' '}
+                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
+                {t('pages.pools.member2')}
               </h4>
             </div>
           </CardWrapper>

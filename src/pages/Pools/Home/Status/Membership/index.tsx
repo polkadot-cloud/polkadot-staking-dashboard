@@ -29,7 +29,7 @@ export const Membership = ({ label }: { label: string }) => {
 
   const { active } = getTransferOptions(activeAccount).pool;
 
-  let display = 'Not in Pool';
+  let display = t('pages.pools.not_in_pool');
   if (selectedActivePool) {
     const pool = bondedPools.find((p: any) => {
       return p.addresses.stash === selectedActivePool.addresses.stash;
@@ -54,7 +54,7 @@ export const Membership = ({ label }: { label: string }) => {
       <Button
         primary
         inline
-        title="Manage"
+        title={t('pages.pools.manage')}
         icon={faCog}
         small
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
@@ -69,7 +69,7 @@ export const Membership = ({ label }: { label: string }) => {
       <Button
         primary
         inline
-        title="Leave"
+        title={t('pages.pools.leave')}
         icon={faSignOutAlt}
         small
         disabled={!isReady || isReadOnlyAccount(activeAccount)}

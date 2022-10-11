@@ -111,7 +111,7 @@ export const Item = (props: ItemProps) => {
                   transform="shrink-1"
                   className="icon-left"
                 />
-                <h4>email</h4>
+                <h4>{t('pages.community.email')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
@@ -147,7 +147,7 @@ export const Item = (props: ItemProps) => {
                   window.open(website, '_blank');
                 }}
               >
-                <h4>website</h4>
+                <h4>{t('pages.community.website')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"

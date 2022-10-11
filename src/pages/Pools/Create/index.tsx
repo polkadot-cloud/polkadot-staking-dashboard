@@ -11,6 +11,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { SetupType } from 'contexts/UI/types';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
+import { useTranslation } from 'react-i18next';
 import { PoolName } from './PoolName';
 import { Bond } from './Bond';
 import { PoolRoles } from './PoolRoles';
@@ -18,15 +19,16 @@ import { Summary } from './Summary';
 
 export const Create = () => {
   const { setOnPoolSetup, setActiveAccountSetup } = useUi();
+  const { t } = useTranslation('common');
 
   return (
     <>
-      <PageTitle title="Create a Pool" />
+      <PageTitle title={t('pages.pools.create_a_pool')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <Button
             inline
-            title="Go Back"
+            title={t('pages.pools.go_back')}
             icon={faChevronLeft}
             transform="shrink-3"
             onClick={() => setOnPoolSetup(0)}
@@ -34,7 +36,7 @@ export const Create = () => {
           <div className="right">
             <Button
               inline
-              title="Cancel"
+              title={t('pages.pools.cancel')}
               onClick={() => {
                 setOnPoolSetup(0);
                 setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);

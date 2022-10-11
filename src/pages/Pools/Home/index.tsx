@@ -92,7 +92,7 @@ export const HomeInner = () => {
         button={
           totalAccountPools
             ? {
-                title: 'All Roles',
+                title: t('pages.pools.all_roles'),
                 onClick: () =>
                   openModalWith('AccountPoolRoles', { who: activeAccount }),
               }

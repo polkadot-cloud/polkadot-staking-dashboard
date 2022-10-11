@@ -80,8 +80,8 @@ export const Entity = () => {
               <div className="item">
                 <h3>
                   {validators.length
-                    ? 'Fetching validators...'
-                    : 'This entity contains no validators.'}
+                    ? t('pages.community.fetching_validators')
+                    : t('pages.community.no_validators')}
                 </h3>
               </div>
             )}

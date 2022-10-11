@@ -37,7 +37,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   let notification: NotificationText | null = null;
   if (address !== null) {
     notification = {
-      title: 'Address Copied to Clipboard',
+      title: t('pages.pools.address_copied'),
       subtitle: address,
     };
   }
