@@ -10,51 +10,51 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import PoolList from 'library/PoolList';
 import { useUi } from 'contexts/UI';
 
-export const Favourites = () => {
+export const Favorites = () => {
   const { isReady } = useApi();
-  const { favourites, removeFavourite } = usePoolsConfig();
+  const { favorites, removeFavorite } = usePoolsConfig();
   const { bondedPools } = useBondedPools();
   const { isSyncing } = useUi();
 
-  // store local favourite list and update when favourites list is mutated
-  const [favouritesList, setFavouritesList] = useState<Array<any>>([]);
+  // store local favorite list and update when favorites list is mutated
+  const [favoritesList, setFavoritesList] = useState<Array<any>>([]);
 
   useEffect(() => {
-    // map favourites to bonded pools
-    let _favouritesList = favourites.map((f: any) => {
+    // map favorites to bonded pools
+    let _favoritesList = favorites.map((f: any) => {
       const pool = bondedPools.find((b: any) => b.addresses.stash === f);
       if (!pool) {
-        removeFavourite(f);
+        removeFavorite(f);
       }
       return pool;
     });
 
     // filter not found bonded pools
-    _favouritesList = _favouritesList.filter((f: any) => f !== undefined);
+    _favoritesList = _favoritesList.filter((f: any) => f !== undefined);
 
-    setFavouritesList(_favouritesList);
-  }, [favourites]);
+    setFavoritesList(_favoritesList);
+  }, [favorites]);
 
   return (
     <>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          {favouritesList === null || isSyncing ? (
-            <h3>Fetching favourite pools...</h3>
+          {favoritesList === null || isSyncing ? (
+            <h3>Fetching favorite pools...</h3>
           ) : (
             <>
               {isReady && (
                 <>
-                  {favouritesList.length > 0 ? (
+                  {favoritesList.length > 0 ? (
                     <PoolList
-                      batchKey="favourite_pools"
-                      pools={favouritesList}
-                      title="Favourites List"
+                      batchKey="favorite_pools"
+                      pools={favoritesList}
+                      title="Favorites List"
                       allowMoreCols
                       pagination
                     />
                   ) : (
-                    <h3>No Favourites.</h3>
+                    <h3>No Favorites.</h3>
                   )}
                 </>
               )}
@@ -66,4 +66,4 @@ export const Favourites = () => {
   );
 };
 
-export default Favourites;
+export default Favorites;

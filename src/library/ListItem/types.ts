@@ -18,7 +18,7 @@ export interface CopyAddressProps {
   };
 }
 
-export interface FavouriteProps {
+export interface FavoriteProps {
   address: string;
 }
 

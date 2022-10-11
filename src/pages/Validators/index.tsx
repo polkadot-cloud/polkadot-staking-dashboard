@@ -53,7 +53,7 @@ export const Validators = (props: PageProps) => {
                   allowFilters
                   allowSearch
                   pagination
-                  toggleFavourites
+                  toggleFavorites
                 />
               )}
             </>

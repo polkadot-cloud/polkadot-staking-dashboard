@@ -21,17 +21,17 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   // eslint-disable-next-line
   fetchValidatorPrefs: async (v) => null,
   // eslint-disable-next-line
-  addFavourite: (a) => {},
+  addFavorite: (a) => {},
   // eslint-disable-next-line
-  removeFavourite: (a) => {},
+  removeFavorite: (a) => {},
   validators: [],
   avgCommission: 0,
   meta: {},
   session: sessionValidators,
   sessionParachain: [],
-  favourites: [],
+  favorites: [],
   nominated: null,
   poolNominated: null,
-  favouritesList: null,
+  favoritesList: null,
   validatorCommunity: [],
 };

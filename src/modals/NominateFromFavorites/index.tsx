@@ -21,12 +21,12 @@ import { Title } from 'library/Modal/Title';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
-export const NominateFromFavourites = () => {
+export const NominateFromFavorites = () => {
   const { consts, api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
-  const { favouritesList } = useValidators();
+  const { favoritesList } = useValidators();
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
   const { txFeesValid } = useTxFees();
@@ -35,32 +35,32 @@ export const NominateFromFavourites = () => {
   const { bondType, nominations } = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;
 
-  // store filtered favourites
-  const [availableFavourites, setAvailableFavourites] = useState<
+  // store filtered favorites
+  const [availableFavorites, setAvailableFavorites] = useState<
     Array<Validator>
   >([]);
 
-  // store selected favourites in local state
-  const [selectedFavourites, setSelectedFavourites] = useState<
-    Array<Validator>
-  >([]);
+  // store selected favorites in local state
+  const [selectedFavorites, setSelectedFavorites] = useState<Array<Validator>>(
+    []
+  );
 
-  // store filtered favourites
+  // store filtered favorites
   useEffect(() => {
-    if (favouritesList) {
-      const _availableFavourites = favouritesList.filter(
-        (favourite: Validator) =>
+    if (favoritesList) {
+      const _availableFavorites = favoritesList.filter(
+        (favorite: Validator) =>
           !nominations.find(
-            (nomination: string) => nomination === favourite.address
-          ) && !favourite.prefs.blocked
+            (nomination: string) => nomination === favorite.address
+          ) && !favorite.prefs.blocked
       );
-      setAvailableFavourites(_availableFavourites);
+      setAvailableFavorites(_availableFavorites);
     }
   }, []);
 
-  // calculate active + selected favourites
+  // calculate active + selected favorites
   const nominationsToSubmit = nominations.concat(
-    selectedFavourites.map((favourite: Validator) => favourite.address)
+    selectedFavorites.map((favorite: Validator) => favorite.address)
   );
 
   // valid to submit transaction
@@ -68,25 +68,25 @@ export const NominateFromFavourites = () => {
 
   useEffect(() => {
     setResize();
-  }, [selectedFavourites]);
+  }, [selectedFavorites]);
 
   // ensure selected list is within limits
   useEffect(() => {
     setValid(
       nominationsToSubmit.length > 0 &&
         nominationsToSubmit.length <= maxNominations &&
-        selectedFavourites.length > 0
+        selectedFavorites.length > 0
     );
-  }, [selectedFavourites]);
+  }, [selectedFavorites]);
 
-  const batchKey = 'nominate_from_favourites';
+  const batchKey = 'nominate_from_favorites';
 
   const onSelected = (provider: any) => {
     const { selected } = provider;
-    setSelectedFavourites(selected);
+    setSelectedFavorites(selected);
   };
 
-  const totalAfterSelection = nominations.length + selectedFavourites.length;
+  const totalAfterSelection = nominations.length + selectedFavorites.length;
   const overMaxNominations = totalAfterSelection > maxNominations;
 
   // tx to submit
@@ -127,7 +127,7 @@ export const NominateFromFavourites = () => {
 
   return (
     <>
-      <Title title="Nominate Favourites" />
+      <Title title="Nominate Favorites" />
       <PaddingWrapper>
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
@@ -139,12 +139,12 @@ export const NominateFromFavourites = () => {
           )}
         </div>
         <ListWrapper>
-          {availableFavourites.length > 0 ? (
+          {availableFavorites.length > 0 ? (
             <ValidatorList
               bondType="stake"
-              validators={availableFavourites}
+              validators={availableFavorites}
               batchKey={batchKey}
-              title="Favourite Validators / Not Nominated"
+              title="Favorite Validators / Not Nominated"
               selectable
               selectActive
               selectToggleable={false}
@@ -155,7 +155,7 @@ export const NominateFromFavourites = () => {
               allowMoreCols
             />
           ) : (
-            <h3>No Favourites Available.</h3>
+            <h3>No Favorites Available.</h3>
           )}
         </ListWrapper>
         <NotesWrapper style={{ paddingBottom: 0 }}>
@@ -164,19 +164,19 @@ export const NominateFromFavourites = () => {
         <FooterWrapper>
           <h3
             className={
-              selectedFavourites.length === 0 ||
+              selectedFavorites.length === 0 ||
               nominationsToSubmit.length > maxNominations
                 ? ''
                 : 'active'
             }
           >
-            {selectedFavourites.length > 0
+            {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `Adding this many favourites will surpass ${maxNominations} nominations.`
-                : `Adding ${selectedFavourites.length} Nomination${
-                    selectedFavourites.length !== 1 ? `s` : ``
+                ? `Adding this many favorites will surpass ${maxNominations} nominations.`
+                : `Adding ${selectedFavorites.length} Nomination${
+                    selectedFavorites.length !== 1 ? `s` : ``
                   }`
-              : `No Favourites Selected`}
+              : `No Favorites Selected`}
           </h3>
           <div>
             <button
@@ -204,4 +204,4 @@ export const NominateFromFavourites = () => {
   );
 };
 
-export default NominateFromFavourites;
+export default NominateFromFavorites;
