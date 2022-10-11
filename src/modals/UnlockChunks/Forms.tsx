@@ -30,7 +30,7 @@ export const Forms = forwardRef(
     const { api, network } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
     const { staking } = useStaking();
-    const { removeFavourite: removeFavouritePool } = usePoolsConfig();
+    const { removeFavorite: removeFavoritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
     const { selectedActivePool } = useActivePools();
     const { removeFromBondedPools } = useBondedPools();
@@ -87,7 +87,7 @@ export const Forms = forwardRef(
       callbackInBlock: () => {
         // if pool is being closed, remove from static lists
         if (poolClosure) {
-          removeFavouritePool(selectedActivePool?.addresses?.stash ?? '');
+          removeFavoritePool(selectedActivePool?.addresses?.stash ?? '');
           removeFromBondedPools(selectedActivePool?.id ?? 0);
         }
 

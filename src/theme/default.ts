@@ -91,7 +91,7 @@ export const defaultThemes: { [key: string]: any } = {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
   },
-  shadow: v('#e4e4e4', '#181818'),
+  shadow: v('#dedede', '#181818'),
   status: {
     danger: {
       solid: v('red', 'red'),

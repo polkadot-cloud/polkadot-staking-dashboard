@@ -28,7 +28,7 @@ import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { Favourites } from './Favourites';
+import { Favorites } from './Favorites';
 import { Members } from './Members';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolStats } from './PoolStats';
@@ -75,7 +75,7 @@ export const HomeInner = () => {
       onClick: () => setActiveTab(2),
     },
     {
-      title: 'Favourites',
+      title: 'Favorites',
       active: activeTab === 3,
       onClick: () => setActiveTab(3),
     }
@@ -168,7 +168,7 @@ export const HomeInner = () => {
       )}
       {activeTab === 3 && (
         <>
-          <Favourites />
+          <Favorites />
         </>
       )}
     </>

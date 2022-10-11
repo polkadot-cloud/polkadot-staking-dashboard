@@ -22,7 +22,7 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
-import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
+import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { useUi } from 'contexts/UI';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 import { PoolState } from 'contexts/Pools/types';
@@ -157,7 +157,7 @@ export const Pool = (props: PoolProps) => {
           />
           <div>
             <Labels>
-              <FavouritePool address={addresses.stash} />
+              <FavoritePool address={addresses.stash} />
               <PoolId id={id} />
               <Members members={memberCounter} />
               <button

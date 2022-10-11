@@ -30,9 +30,9 @@ export const Nominations = ({
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getAccountNominations } = useBalances();
   const { nominated: stakeNominated, poolNominated } = useValidators();
-  let { favouritesList } = useValidators();
-  if (favouritesList === null) {
-    favouritesList = [];
+  let { favoritesList } = useValidators();
+  if (favoritesList === null) {
+    favoritesList = [];
   }
 
   const {
@@ -72,7 +72,7 @@ export const Nominations = ({
   const cbAddNominations = ({ setSelectActive }: any) => {
     setSelectActive(false);
     openModalWith(
-      'NominateFromFavourites',
+      'NominateFromFavorites',
       {
         nominations,
         bondType,
@@ -165,8 +165,8 @@ export const Nominations = ({
                           onSelected: true,
                         },
                         {
-                          disabled: !favouritesList.length,
-                          title: 'Add From Favourites',
+                          disabled: !favoritesList.length,
+                          title: 'Add From Favorites',
                           onClick: cbAddNominations,
                           onSelected: false,
                         },

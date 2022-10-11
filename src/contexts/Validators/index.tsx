@@ -81,16 +81,16 @@ export const ValidatorsProvider = ({
   }>({});
   const validatorSubsRef = useRef(validatorSubs);
 
-  // get favourites from local storage
-  const getFavourites = () => {
-    const _favourites = localStorage.getItem(
-      `${network.name.toLowerCase()}_favourites`
+  // get favorites from local storage
+  const getFavorites = () => {
+    const _favorites = localStorage.getItem(
+      `${network.name.toLowerCase()}_favorites`
     );
-    return _favourites !== null ? JSON.parse(_favourites) : [];
+    return _favorites !== null ? JSON.parse(_favorites) : [];
   };
 
-  // stores the user's favourite validators
-  const [favourites, setFavourites] = useState<string[]>(getFavourites());
+  // stores the user's favorite validators
+  const [favorites, setFavorites] = useState<string[]>(getFavorites());
 
   // stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Array<Validator> | null>(null);
@@ -100,8 +100,8 @@ export const ValidatorsProvider = ({
     null
   );
 
-  // stores the user's favourites validators as list
-  const [favouritesList, setFavouritesList] = useState<Array<Validator> | null>(
+  // stores the user's favorites validators as list
+  const [favoritesList, setFavoritesList] = useState<Array<Validator> | null>(
     null
   );
 
@@ -202,31 +202,31 @@ export const ValidatorsProvider = ({
     }
   };
 
-  // re-fetch favourites upon network change
+  // re-fetch favorites upon network change
   // re-shuffle validator community on network change
   useEffect(() => {
-    setFavourites(getFavourites());
+    setFavorites(getFavorites());
     setValidatorCommunity(shuffle(VALIDATOR_COMMUNITY));
   }, [network]);
 
-  // fetch favourites in validator list format
+  // fetch favorites in validator list format
   useEffect(() => {
     if (isReady) {
-      fetchFavouriteList();
+      fetchFavoriteList();
     }
-  }, [isReady, favourites]);
+  }, [isReady, favorites]);
 
-  const fetchFavouriteList = async () => {
+  const fetchFavoriteList = async () => {
     // format to list format
-    const _favourites = [...favourites].map((item: string) => {
+    const _favorites = [...favorites].map((item: string) => {
       return { address: item };
     });
     // // fetch preferences
-    const favouritesWithPrefs = await fetchValidatorPrefs(_favourites);
-    if (favouritesWithPrefs) {
-      setFavouritesList(favouritesWithPrefs);
+    const favoritesWithPrefs = await fetchValidatorPrefs(_favorites);
+    if (favoritesWithPrefs) {
+      setFavoritesList(favoritesWithPrefs);
     } else {
-      setFavouritesList([]);
+      setFavoritesList([]);
     }
   };
 
@@ -607,34 +607,34 @@ export const ValidatorsProvider = ({
   };
 
   /*
-   * Adds a favourite validator.
+   * Adds a favorite validator.
    */
-  const addFavourite = (address: string) => {
-    const _favourites: any = Object.assign(favourites);
-    if (!_favourites.includes(address)) {
-      _favourites.push(address);
+  const addFavorite = (address: string) => {
+    const _favorites: any = Object.assign(favorites);
+    if (!_favorites.includes(address)) {
+      _favorites.push(address);
     }
 
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favourites`,
-      JSON.stringify(_favourites)
+      `${network.name.toLowerCase()}_favorites`,
+      JSON.stringify(_favorites)
     );
-    setFavourites([..._favourites]);
+    setFavorites([..._favorites]);
   };
 
   /*
-   * Removes a favourite validator if they exist.
+   * Removes a favorite validator if they exist.
    */
-  const removeFavourite = (address: string) => {
-    let _favourites = Object.assign(favourites);
-    _favourites = _favourites.filter(
+  const removeFavorite = (address: string) => {
+    let _favorites = Object.assign(favorites);
+    _favorites = _favorites.filter(
       (validator: string) => validator !== address
     );
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favourites`,
-      JSON.stringify(_favourites)
+      `${network.name.toLowerCase()}_favorites`,
+      JSON.stringify(_favorites)
     );
-    setFavourites([..._favourites]);
+    setFavorites([..._favorites]);
   };
 
   return (
@@ -643,17 +643,17 @@ export const ValidatorsProvider = ({
         fetchValidatorMetaBatch,
         removeValidatorMetaBatch,
         fetchValidatorPrefs,
-        addFavourite,
-        removeFavourite,
+        addFavorite,
+        removeFavorite,
         validators,
         avgCommission,
         meta: validatorMetaBatchesRef.current,
         session: sessionValidators,
         sessionParachain: sessionParachainValidators.list,
-        favourites,
+        favorites,
         nominated,
         poolNominated,
-        favouritesList,
+        favoritesList,
         validatorCommunity,
       }}
     >

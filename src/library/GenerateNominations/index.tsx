@@ -47,9 +47,9 @@ export const GenerateNominationsInner = (
   } = useFetchMehods();
   const { maxNominations } = consts;
 
-  let { favouritesList } = useValidators();
-  if (favouritesList === null) {
-    favouritesList = [];
+  let { favoritesList } = useValidators();
+  if (favoritesList === null) {
+    favoritesList = [];
   }
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
@@ -160,7 +160,7 @@ export const GenerateNominationsInner = (
       updateSetters(_nominations);
     };
     openModalWith(
-      'SelectFavourites',
+      'SelectFavorites',
       {
         nominations,
         callback: updateList,
@@ -196,8 +196,8 @@ export const GenerateNominationsInner = (
   const disabledMaxNominations = () => {
     return nominations.length >= maxNominations;
   };
-  const disabledAddFavourites = () => {
-    return !favouritesList?.length || nominations.length >= maxNominations;
+  const disabledAddFavorites = () => {
+    return !favoritesList?.length || nominations.length >= maxNominations;
   };
 
   // accumulate generation methods
@@ -225,11 +225,11 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'From Favourites',
-      subtitle: 'Gets a set of your favourite validators.',
+      title: 'From Favorites',
+      subtitle: 'Gets a set of your favorite validators.',
       icon: faHeart as IconProp,
       onClick: () => {
-        setMethod('From Favourites');
+        setMethod('From Favorites');
         removeValidatorMetaBatch(batchKey);
         setNominations([]);
         setFetching(true);
@@ -250,10 +250,10 @@ export const GenerateNominationsInner = (
   // accumulate actions
   const actions = [
     {
-      title: 'Add From Favourites',
+      title: 'Add From Favorites',
       onClick: cbAddNominations,
       onSelected: false,
-      isDisabled: disabledAddFavourites,
+      isDisabled: disabledAddFavorites,
     },
     {
       title: `Remove Selected`,
