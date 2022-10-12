@@ -56,6 +56,9 @@ export const EntryWrapper = styled.div`
   h5 {
     color: ${textPrimary};
   }
+  p {
+    color: ${textSecondary};
+  }
   a {
     color: ${textSecondary};
   }
@@ -417,13 +420,14 @@ export const Separator = styled.div`
  * Positioned under titles for a Go Back button and other page header info.
  */
 export const TopBarWrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
   border-bottom: 1px solid ${borderPrimary};
-  padding-bottom: 0.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   width: 100%;
-  margin-top: 0.4rem;
   margin-bottom: 0.25rem;
 
   button {

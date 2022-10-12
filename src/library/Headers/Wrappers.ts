@@ -57,7 +57,6 @@ export const HeadingWrapper = styled.div`
 export const Item = styled(motion.button)`
   background: ${buttonSecondaryBackground};
   border: 1px solid ${borderPrimary};
-  color: ${textPrimary};
   flex-grow: 1;
   padding: 0.05rem 1rem;
   border-radius: 1.5rem;
@@ -79,13 +78,13 @@ export const Item = styled(motion.button)`
   }
 
   > span {
-    color: ${textPrimary};
+    color: white;
     line-height: 2.2rem;
   }
   &.connect {
     background: ${networkColor};
     > span {
-      color: ${textInvert};
+      color: 'white';
       svg {
         color: white;
       }
@@ -93,12 +92,12 @@ export const Item = styled(motion.button)`
     .icon {
       margin-right: 0.6rem;
       path {
-        fill: ${textInvert};
+        fill: white;
       }
     }
   }
   path {
-    fill: ${textPrimary};
+    fill: white;
   }
 `;
 
