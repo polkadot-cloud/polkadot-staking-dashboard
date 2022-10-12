@@ -15,6 +15,7 @@ import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as GenericChain } from './thumbnails/genericchain.svg';
 import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
+import { ReactComponent as LetzBake } from './thumbnails/letzbake.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
 import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
 import { ReactComponent as PDP } from './thumbnails/pdp.svg';
@@ -170,6 +171,17 @@ export const VALIDATOR_COMMUNITY = [
         'FvdwMNP57nRWEsNZZsrHWKqnbmduy4jBAC8MeLmgi9Yp8sA',
         'D3Sr3PozgPypkBzKBheGSJbqu8m4idenBPaWtZUXLWPtjJT',
       ],
+    },
+  },
+  {
+    name: 'LetzBake!',
+    Thumbnail: LetzBake,
+    bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
+    email: 'hello@letzbake.com',
+    twitter: '@letzbake1',
+    website: 'https://letzbake.com',
+    validators: {
+      kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },
   },
   {

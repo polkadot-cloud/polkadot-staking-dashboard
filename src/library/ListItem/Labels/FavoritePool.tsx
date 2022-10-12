@@ -4,35 +4,35 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
-import { useValidators } from 'contexts/Validators';
 import { useNotifications } from 'contexts/Notifications';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useTooltip } from 'contexts/Tooltip';
 import { useRef } from 'react';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { FavouriteProps } from '../types';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { FavoriteProps } from '../types';
 
-export const FavouriteValidator = (props: FavouriteProps) => {
+export const FavoritePool = (props: FavoriteProps) => {
   const { addNotification } = useNotifications();
-  const { favourites, addFavourite, removeFavourite } = useValidators();
+  const { favorites, addFavorite, removeFavorite } = usePoolsConfig();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   const { address } = props;
-  const isFavourite = favourites.includes(address);
+  const isFavorite = favorites.includes(address);
 
-  const notificationFavourite = !isFavourite
+  const notificationFavorite = !isFavorite
     ? {
-        title: 'Favourite Validator Added',
+        title: 'Favorite Pool Added',
         subtitle: address,
       }
     : {
-        title: 'Favourite Validator Removed',
+        title: 'Favorite Pool Removed',
         subtitle: address,
       };
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = `${isFavourite ? `Remove` : `Add`} Favourite`;
+  const tooltipText = `${isFavorite ? `Remove` : `Add`} Favorite`;
 
   const toggleTooltip = () => {
     if (!open) {
@@ -42,25 +42,25 @@ export const FavouriteValidator = (props: FavouriteProps) => {
   };
 
   return (
-    <div className="label">
+    <div className="label pool">
       <TooltipTrigger
         className="tooltip-trigger-element as-button"
         data-tooltip-text={tooltipText}
         onMouseMove={() => toggleTooltip()}
         onClick={() => {
-          if (isFavourite) {
-            removeFavourite(address);
+          if (isFavorite) {
+            removeFavorite(address);
           } else {
-            addFavourite(address);
+            addFavorite(address);
           }
-          addNotification(notificationFavourite);
+          addNotification(notificationFavorite);
         }}
       />
       <TooltipPosition ref={posRef} />
-      <button type="button" className={isFavourite ? 'active' : undefined}>
+      <button type="button" className={isFavorite ? 'active' : undefined}>
         <FontAwesomeIcon
           icon={
-            !isFavourite ? (faHeartRegular as IconProp) : (faHeart as IconProp)
+            !isFavorite ? (faHeartRegular as IconProp) : (faHeart as IconProp)
           }
           transform="shrink-2"
         />

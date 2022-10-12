@@ -20,7 +20,6 @@ import { Warning } from 'library/Form/Warning';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useStaking } from 'contexts/Staking';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
@@ -28,9 +27,8 @@ import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
 
 export const WithdrawPoolMember = () => {
-  const { api, network } = useApi();
+  const { api, network, consts } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { staking } = useStaking();
   const { setStatus: setModalStatus, config } = useModal();
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
@@ -39,7 +37,7 @@ export const WithdrawPoolMember = () => {
 
   const { activeEra } = metrics;
   const { member, who } = config;
-  const { historyDepth } = staking;
+  const { historyDepth } = consts;
   const { unbondingEras, points } = member;
 
   // calculate total for withdraw
@@ -76,7 +74,7 @@ export const WithdrawPoolMember = () => {
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {
       // remove the pool member from context if no more funds bonded

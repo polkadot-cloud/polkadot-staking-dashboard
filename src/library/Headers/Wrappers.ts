@@ -17,7 +17,7 @@ import {
 
 export const Wrapper = styled.div`
   box-sizing: border-box;
-  position: sticky;
+  position: fixed;
   top: 0px;
   right: 0px;
   display: flex;
@@ -27,11 +27,14 @@ export const Wrapper = styled.div`
   align-content: center;
   padding: 0 1.25rem;
   transition: all 0.15s;
-  z-index: 5;
   margin: 0.5rem 0;
   height: 4rem;
+  z-index: 6;
 
-  /* no longer in use */
+  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    width: 100%;
+  }
+
   .menu {
     display: none;
     @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
@@ -54,7 +57,6 @@ export const HeadingWrapper = styled.div`
 export const Item = styled(motion.button)`
   background: ${buttonSecondaryBackground};
   border: 1px solid ${borderPrimary};
-  color: ${textPrimary};
   flex-grow: 1;
   padding: 0.05rem 1rem;
   border-radius: 1.5rem;
@@ -76,13 +78,13 @@ export const Item = styled(motion.button)`
   }
 
   > span {
-    color: ${textPrimary};
+    color: white;
     line-height: 2.2rem;
   }
   &.connect {
     background: ${networkColor};
     > span {
-      color: ${textInvert};
+      color: 'white';
       svg {
         color: white;
       }
@@ -90,12 +92,12 @@ export const Item = styled(motion.button)`
     .icon {
       margin-right: 0.6rem;
       path {
-        fill: ${textInvert};
+        fill: white;
       }
     }
   }
   path {
-    fill: ${textPrimary};
+    fill: white;
   }
 `;
 

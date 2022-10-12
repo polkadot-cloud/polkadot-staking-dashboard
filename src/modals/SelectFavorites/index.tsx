@@ -12,54 +12,54 @@ import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
-export const SelectFavourites = () => {
+export const SelectFavorites = () => {
   const { consts } = useApi();
   const { config, setStatus, setResize } = useModal();
-  const { favouritesList } = useValidators();
+  const { favoritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback } = config;
   const { t } = useTranslation('common');
 
-  // store filtered favourites
-  const [availableFavourites, setAvailableFavourites] = useState<
+  // store filtered favorites
+  const [availableFavorites, setAvailableFavorites] = useState<
     Array<Validator>
   >([]);
 
-  // store selected favourites in local state
-  const [selectedFavourites, setSelectedFavourites] = useState([]);
+  // store selected favorites in local state
+  const [selectedFavorites, setSelectedFavorites] = useState([]);
 
-  // store filtered favourites
+  // store filtered favorites
   useEffect(() => {
-    if (favouritesList) {
-      const _availableFavourites = favouritesList.filter(
-        (favourite: Validator) =>
+    if (favoritesList) {
+      const _availableFavorites = favoritesList.filter(
+        (favorite: Validator) =>
           !nominations.find(
-            (nomination: Validator) => nomination.address === favourite.address
-          ) && !favourite.prefs.blocked
+            (nomination: Validator) => nomination.address === favorite.address
+          ) && !favorite.prefs.blocked
       );
-      setAvailableFavourites(_availableFavourites);
+      setAvailableFavorites(_availableFavorites);
     }
   }, []);
 
   useEffect(() => {
     setResize();
-  }, [selectedFavourites]);
+  }, [selectedFavorites]);
 
-  const batchKey = 'favourite_validators';
+  const batchKey = 'favorite_validators';
 
   const onSelected = (provider: any) => {
     const { selected } = provider;
-    setSelectedFavourites(selected);
+    setSelectedFavorites(selected);
   };
 
-  const submitSelectedFavourites = () => {
-    if (!selectedFavourites.length) return;
-    const newNominations = [...nominations].concat(...selectedFavourites);
+  const submitSelectedFavorites = () => {
+    if (!selectedFavorites.length) return;
+    const newNominations = [...nominations].concat(...selectedFavorites);
     generateNominationsCallback(newNominations);
     setStatus(0);
   };
 
-  const totalAfterSelection = nominations.length + selectedFavourites.length;
+  const totalAfterSelection = nominations.length + selectedFavorites.length;
   const overMaxNominations = totalAfterSelection > maxNominations;
 
   return (
@@ -67,10 +67,10 @@ export const SelectFavourites = () => {
       <Title title={t('modals.add_from_favourites')} />
       <PaddingWrapper>
         <ListWrapper>
-          {availableFavourites.length > 0 ? (
+          {availableFavorites.length > 0 ? (
             <ValidatorList
               bondType="stake"
-              validators={availableFavourites}
+              validators={availableFavorites}
               batchKey={batchKey}
               title={t('modals.add_from_favourites')}
               selectable
@@ -89,16 +89,16 @@ export const SelectFavourites = () => {
         <FooterWrapper>
           <button
             type="button"
-            disabled={!selectedFavourites.length || overMaxNominations}
-            onClick={() => submitSelectedFavourites()}
+            disabled={!selectedFavorites.length || overMaxNominations}
+            onClick={() => submitSelectedFavorites()}
           >
-            {selectedFavourites.length > 0
+            {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `Adding this many favourites will surpass ${maxNominations} nominations.`
-                : `Add ${selectedFavourites.length} Favourite${
-                    selectedFavourites.length !== 1 ? `s` : ``
+                ? `Adding this many favorites will surpass ${maxNominations} nominations.`
+                : `Add ${selectedFavorites.length} Favorite${
+                    selectedFavorites.length !== 1 ? `s` : ``
                   } to Nominations`
-              : `No Favourites Selected`}
+              : `No Favorites Selected`}
           </button>
         </FooterWrapper>
       </PaddingWrapper>
@@ -106,4 +106,4 @@ export const SelectFavourites = () => {
   );
 };
 
-export default SelectFavourites;
+export default SelectFavorites;

@@ -104,28 +104,28 @@ REACT_APP_PRIVACY_URL=https://www.parity.io/privacy/
 ```
 ## Config Files
 There are some ad-hoc files defining app configuration where needed. These just provide a means of bootstrapping app data, and further abstraction could be explored in the future.
-- [`config/pages.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/pages.ts): provides the pages and page categories of the app.
-- [`config/help.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/config/help.ts): provides the help content.
-- [`Utils.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Utils.ts): Various general helper functions used throughout the app, such as formatting utilities.
+- [`config/pages.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/pages.ts): provides the pages and page categories of the app.
+- [`config/help.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/help.ts): provides the help content.
+- [`Utils.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Utils.ts): Various general helper functions used throughout the app, such as formatting utilities.
 
 ## Folders
 
-Folders are structured in the [`src/`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src) directory to separate functional, presentational and context components:
-- [`contexts`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/contexts): context providers for the app. All Polkadot JS API interaction happens in these files.
-- [`img`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/img): app SVGs.
-- [`library`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/library): reusable components that could eventually be abstracted into a separate UI library.
-- [`modals`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/modals): the various modal pop-ups used in the app.
-- [`pages`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/pages): similar to modals, page components and components that comprise pages.
-- [`theme`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/theme): the theming configuration of the app.
-- [`workers`](https://github.com/rossbulat/polkadot-staking-dashboard/tree/master/src/workers): web workers that crunch process-heavy scripts. Only one exists right now, that iterates `erasStakers` and calculates active nominators and minimum nomination bond.
+Folders are structured in the [`src/`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src) directory to separate functional, presentational and context components:
+- [`contexts`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/contexts): context providers for the app. All Polkadot JS API interaction happens in these files.
+- [`img`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/img): app SVGs.
+- [`library`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/library): reusable components that could eventually be abstracted into a separate UI library.
+- [`modals`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/modals): the various modal pop-ups used in the app.
+- [`pages`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/pages): similar to modals, page components and components that comprise pages.
+- [`theme`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/theme): the theming configuration of the app.
+- [`workers`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/workers): web workers that crunch process-heavy scripts. Only one exists right now, that iterates `erasStakers` and calculates active nominators and minimum nomination bond.
 
 ## App Entry
 
 Going from the top-most component, the component hierarchy is set up as follows:
-- [`index.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/index.tsx): DOM render, of little interest.
-- [`App.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/App.tsx): wraps `<App />` in the theme provider context and determines the active network from local storage.
-- [`Providers.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
-- [`Router.tsx`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
+- [`index.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/index.tsx): DOM render, of little interest.
+- [`App.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/App.tsx): wraps `<App />` in the theme provider context and determines the active network from local storage.
+- [`Providers.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
+- [`Router.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Router.tsx): contains react router `<Route>`'s, in addition to the major app presentational components. Beyond `<Route>` components, this file is also the entry point for the following components:
   - `<Modal />`: top-level of the modal.
   - `<Help />`: top-level of the help module.
   - `<Headers />`: fixed header of the app containing the stash / controller and accounts toggle buttons.
@@ -137,10 +137,10 @@ Going from the top-most component, the component hierarchy is set up as follows:
 Documenting some of the development patterns used:
 
 - We use the **"Wrapper" terminology for styled components** that wrap a functional component.
-- **Styles are defined on a per-component basis**, being defined in the same folder as the component markup itself. Where unavoidable (such as global styles, interface layout), styled components should reside in [`src/Wrappers.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/Wrappers.tsx).
-- **Theme values** can be either directly imported into styled components, from [`theme/index.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/theme/index.ts), or as raw values within component files using [`theme/default.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/theme/default.ts).
-- **Constants or default values** (such as those waiting for Polkadot API) are defined in [`src/constants.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/constants.ts).
-- Packages with **missing TypeScript definitions** can be declared in [`src/react-app-env.d.ts`](https://github.com/rossbulat/polkadot-staking-dashboard/blob/master/src/react-app-env.d.ts).
+- **Styles are defined on a per-component basis**, being defined in the same folder as the component markup itself. Where unavoidable (such as global styles, interface layout), styled components should reside in [`src/Wrappers.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Wrappers.tsx).
+- **Theme values** can be either directly imported into styled components, from [`theme/index.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/theme/index.ts), or as raw values within component files using [`theme/default.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/theme/default.ts).
+- **Constants or default values** (such as those waiting for Polkadot API) are defined in [`src/constants.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/constants.ts).
+- Packages with **missing TypeScript definitions** can be declared in [`src/react-app-env.d.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/react-app-env.d.ts).
 
 ## TypeScript Support
 
@@ -165,4 +165,4 @@ Integration tests make sense for the app itself, ensuring the page layout, help 
 - 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
 - 08/04/2022: [[Video] Polkadot Staking Dashboard April 2022 Update](https://www.youtube.com/watch?v=y6AJ6RhKMH0)
 - 09/03/2022: [Representing the Stash and Controller Account](https://medium.com/@paritytech/polkadot-staking-dashboard-representing-the-stack-and-controller-account-2ea76bb54b47)
-- 28/02/2022: [Defining the Polkadot Staking Experience: Phase 0](https://rossbulat.medium.com/defining-the-polkadot-staking-experience-phase-0-211cb2bc113c)
+- 28/02/2022: [Defining the Polkadot Staking Experience: Phase 0](https://paritytech.medium.com/defining-the-polkadot-staking-experience-phase-0-211cb2bc113c)

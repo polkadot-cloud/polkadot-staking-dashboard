@@ -39,7 +39,7 @@ export const Entity = () => {
   useEffect(() => {
     removeValidatorMetaBatch(batchKey);
     const newShuffledValidators = shuffle([...shuffledValidators]);
-    setShuffledValidators(shuffle(newShuffledValidators));
+    setShuffledValidators(newShuffledValidators);
   }, [name, network]);
 
   const container = {
@@ -56,7 +56,7 @@ export const Entity = () => {
   const batchKey = 'community_entity_validators';
 
   return (
-    <PageRowWrapper className="page-padding">
+    <PageRowWrapper className="page-padding" noVerticalSpacer>
       <TopBarWrapper>
         <Button
           inline
@@ -94,7 +94,7 @@ export const Entity = () => {
                 selectable={false}
                 allowMoreCols
                 pagination
-                toggleFavourites
+                toggleFavorites
                 allowFilters
               />
             )}

@@ -253,8 +253,10 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
       justify-content: flex-start;
       align-items: center;
       padding: 0 1rem;
-      h3 {
+      h3,
+      h4 {
         margin: 0;
+        padding: 0;
       }
       span {
         margin-right: 1.25rem;

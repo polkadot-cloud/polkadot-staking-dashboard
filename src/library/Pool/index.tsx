@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { useModal } from 'contexts/Modal';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useConnect } from 'contexts/Connect';
@@ -22,7 +22,7 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
-import { FavouritePool } from 'library/ListItem/Labels/FavouritePool';
+import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { useUi } from 'contexts/UI';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 import { PoolState } from 'contexts/Pools/types';
@@ -39,7 +39,7 @@ export const Pool = (props: PoolProps) => {
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { meta } = useBondedPools();
-  const { isBonding } = useActivePool();
+  const { isBonding } = useActivePools();
   const { addNotification } = useNotifications();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { validators } = useValidators();
@@ -157,7 +157,7 @@ export const Pool = (props: PoolProps) => {
           />
           <div>
             <Labels>
-              <FavouritePool address={addresses.stash} />
+              <FavoritePool address={addresses.stash} />
               <PoolId id={id} />
               <Members members={memberCounter} />
               <button

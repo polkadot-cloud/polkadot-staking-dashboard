@@ -4,7 +4,7 @@
 import { PageRowWrapper } from 'Wrappers';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTheme } from 'contexts/Themes';
 import { PoolState } from 'contexts/Pools/types';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
@@ -23,12 +23,12 @@ export const ClosurePrompts = () => {
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
   const { isSyncing } = useUi();
-  const { isBonding, activeBondedPool, isDepositor, poolNominations } =
-    useActivePool();
+  const { isBonding, selectedActivePool, isDepositor, poolNominations } =
+    useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { t } = useTranslation('common');
 
-  const { state, memberCounter } = activeBondedPool?.bondedPool || {};
+  const { state, memberCounter } = selectedActivePool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
 

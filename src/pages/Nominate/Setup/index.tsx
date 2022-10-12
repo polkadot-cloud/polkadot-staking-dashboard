@@ -28,21 +28,20 @@ export const Setup = () => {
         <TopBarWrapper>
           <Button
             inline
-            title="Go Back"
+            title="Back"
             icon={faChevronLeft}
             transform="shrink-3"
             onClick={() => setOnNominatorSetup(0)}
           />
-          <div className="right">
-            <Button
-              inline
-              title="Cancel"
-              onClick={() => {
-                setOnNominatorSetup(0);
-                setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
-              }}
-            />
-          </div>
+          <Button
+            inline
+            title="Cancel"
+            onClick={() => {
+              setOnNominatorSetup(0);
+              setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+            }}
+          />
+          <div className="right" />
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

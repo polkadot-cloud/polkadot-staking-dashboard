@@ -26,21 +26,20 @@ export const Create = () => {
         <TopBarWrapper>
           <Button
             inline
-            title="Go Back"
+            title="Back"
             icon={faChevronLeft}
             transform="shrink-3"
             onClick={() => setOnPoolSetup(0)}
           />
-          <div className="right">
-            <Button
-              inline
-              title="Cancel"
-              onClick={() => {
-                setOnPoolSetup(0);
-                setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
-              }}
-            />
-          </div>
+          <Button
+            inline
+            title="Cancel"
+            onClick={() => {
+              setOnPoolSetup(0);
+              setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+            }}
+          />
+          <div className="right" />
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

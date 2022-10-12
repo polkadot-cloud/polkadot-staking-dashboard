@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
-import { ReactComponent as WalletSVG } from 'img/wallet.svg';
 import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';

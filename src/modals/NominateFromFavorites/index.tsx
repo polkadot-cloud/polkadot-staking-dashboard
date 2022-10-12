@@ -6,14 +6,13 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { ValidatorList } from 'library/ValidatorList';
 import { useApi } from 'contexts/Api';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { Validator } from 'contexts/Validators/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -23,15 +22,14 @@ import { useTranslation } from 'react-i18next';
 import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
-export const NominateFromFavourites = () => {
+export const NominateFromFavorites = () => {
   const { consts, api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
   const { config, setStatus: setModalStatus, setResize } = useModal();
-  const { favouritesList } = useValidators();
-  const { isNominator, isOwner } = useActivePool();
+  const { favoritesList } = useValidators();
+  const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
-  const { membership } = usePoolMemberships();
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('common');
 
@@ -39,32 +37,32 @@ export const NominateFromFavourites = () => {
   const { bondType, nominations } = config;
   const signingAccount = bondType === 'pool' ? activeAccount : controller;
 
-  // store filtered favourites
-  const [availableFavourites, setAvailableFavourites] = useState<
+  // store filtered favorites
+  const [availableFavorites, setAvailableFavorites] = useState<
     Array<Validator>
   >([]);
 
-  // store selected favourites in local state
-  const [selectedFavourites, setSelectedFavourites] = useState<
-    Array<Validator>
-  >([]);
+  // store selected favorites in local state
+  const [selectedFavorites, setSelectedFavorites] = useState<Array<Validator>>(
+    []
+  );
 
-  // store filtered favourites
+  // store filtered favorites
   useEffect(() => {
-    if (favouritesList) {
-      const _availableFavourites = favouritesList.filter(
-        (favourite: Validator) =>
+    if (favoritesList) {
+      const _availableFavorites = favoritesList.filter(
+        (favorite: Validator) =>
           !nominations.find(
-            (nomination: string) => nomination === favourite.address
-          ) && !favourite.prefs.blocked
+            (nomination: string) => nomination === favorite.address
+          ) && !favorite.prefs.blocked
       );
-      setAvailableFavourites(_availableFavourites);
+      setAvailableFavorites(_availableFavorites);
     }
   }, []);
 
-  // calculate active + selected favourites
+  // calculate active + selected favorites
   const nominationsToSubmit = nominations.concat(
-    selectedFavourites.map((favourite: Validator) => favourite.address)
+    selectedFavorites.map((favorite: Validator) => favorite.address)
   );
 
   // valid to submit transaction
@@ -72,25 +70,25 @@ export const NominateFromFavourites = () => {
 
   useEffect(() => {
     setResize();
-  }, [selectedFavourites]);
+  }, [selectedFavorites]);
 
   // ensure selected list is within limits
   useEffect(() => {
     setValid(
       nominationsToSubmit.length > 0 &&
         nominationsToSubmit.length <= maxNominations &&
-        selectedFavourites.length > 0
+        selectedFavorites.length > 0
     );
-  }, [selectedFavourites]);
+  }, [selectedFavorites]);
 
-  const batchKey = 'nominate_from_favourites';
+  const batchKey = 'nominate_from_favorites';
 
   const onSelected = (provider: any) => {
     const { selected } = provider;
-    setSelectedFavourites(selected);
+    setSelectedFavorites(selected);
   };
 
-  const totalAfterSelection = nominations.length + selectedFavourites.length;
+  const totalAfterSelection = nominations.length + selectedFavorites.length;
   const overMaxNominations = totalAfterSelection > maxNominations;
 
   // tx to submit
@@ -110,7 +108,7 @@ export const NominateFromFavourites = () => {
 
     if (bondType === 'pool') {
       _tx = api.tx.nominationPools.nominate(
-        membership?.poolId,
+        selectedActivePool?.id,
         targetsToSubmit
       );
     } else {
@@ -124,7 +122,7 @@ export const NominateFromFavourites = () => {
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });
@@ -143,10 +141,10 @@ export const NominateFromFavourites = () => {
           )}
         </div>
         <ListWrapper>
-          {availableFavourites.length > 0 ? (
+          {availableFavorites.length > 0 ? (
             <ValidatorList
               bondType="stake"
-              validators={availableFavourites}
+              validators={availableFavorites}
               batchKey={batchKey}
               title={t('modals.f_not_nominated')}
               selectable
@@ -168,19 +166,19 @@ export const NominateFromFavourites = () => {
         <FooterWrapper>
           <h3
             className={
-              selectedFavourites.length === 0 ||
+              selectedFavorites.length === 0 ||
               nominationsToSubmit.length > maxNominations
                 ? ''
                 : 'active'
             }
           >
-            {selectedFavourites.length > 0
+            {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `Adding this many favourites will surpass ${maxNominations} nominations.`
-                : `Adding ${selectedFavourites.length} Nomination${
-                    selectedFavourites.length !== 1 ? `s` : ``
+                ? `Adding this many favorites will surpass ${maxNominations} nominations.`
+                : `Adding ${selectedFavorites.length} Nomination${
+                    selectedFavorites.length !== 1 ? `s` : ``
                   }`
-              : `No Favourites Selected`}
+              : `No Favorites Selected`}
           </h3>
           <div>
             <button
@@ -208,4 +206,4 @@ export const NominateFromFavourites = () => {
   );
 };
 
-export default NominateFromFavourites;
+export default NominateFromFavorites;

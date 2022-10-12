@@ -22,14 +22,15 @@ import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
 import { ChangePoolRoles } from './ChangePoolRoles';
 import { ClaimReward } from './ClaimReward';
-import { SelectFavourites } from './SelectFavourites';
-import { NominateFromFavourites } from './NominateFromFavourites';
+import { SelectFavorites } from './SelectFavorites';
+import { NominateFromFavorites } from './NominateFromFavorites';
 import { Networks } from './Networks';
 import { Bio } from './Bio';
 import { ManagePool } from './ManagePool';
 import { GoToFeedback } from './GoToFeedback';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
+import { AccountPoolRoles } from './AccountPoolRoles';
 import { ChooseLanguage } from './ChooseLanguage';
 
 export const Modal = () => {
@@ -106,6 +107,7 @@ export const Modal = () => {
         >
           <ContentWrapper ref={modalRef}>
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
+              {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
               {modal === 'Bio' && <Bio />}
               {modal === 'ChangeNominations' && <ChangeNominations />}
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
@@ -122,9 +124,9 @@ export const Modal = () => {
               {modal === 'UnlockChunks' && <UnlockChunks />}
               {modal === 'NominatePool' && <NominatePool />}
               {modal === 'LeavePool' && <LeavePool />}
-              {modal === 'SelectFavourites' && <SelectFavourites />}
+              {modal === 'SelectFavorites' && <SelectFavorites />}
               {modal === 'Networks' && <Networks />}
-              {modal === 'NominateFromFavourites' && <NominateFromFavourites />}
+              {modal === 'NominateFromFavorites' && <NominateFromFavorites />}
               {modal === 'PoolNominations' && <PoolNominations />}
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}

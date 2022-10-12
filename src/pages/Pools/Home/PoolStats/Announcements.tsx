@@ -14,19 +14,17 @@ import {
   toFixedIfNecessary,
 } from 'Utils';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useTranslation } from 'react-i18next';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
   const { network, consts } = useApi();
-  const { activeBondedPool } = useActivePool();
+  const { selectedActivePool } = useActivePools();
   const { units } = network;
-  const { rewardAccountBalance } = activeBondedPool || {};
-  const { totalRewardsClaimed } = activeBondedPool?.rewardPool || {};
+  const { rewardAccountBalance } = selectedActivePool || {};
+  const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
-  const { t } = useTranslation('common');
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BN.max(

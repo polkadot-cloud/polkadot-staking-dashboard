@@ -39,7 +39,7 @@ export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
         : textSecondary};
 
     padding: ${(props) => props.padding};
-    border-radius: 1.25rem;
+    border-radius: 1.5rem;
     font-size: ${(props) => props.fontSize};
     transition: opacity 0.2s;
 
