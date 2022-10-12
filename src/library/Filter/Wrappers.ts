@@ -112,7 +112,7 @@ export const ItemWrapper = styled.div<any>`
 `;
 
 export const LargeItemWrapper = styled.div`
-  border: 1px solid ${borderPrimary};
+  border: 1.5px solid ${borderPrimary};
   background: ${buttonPrimaryBackground};
   border-radius: 1rem;
   display: flex;
