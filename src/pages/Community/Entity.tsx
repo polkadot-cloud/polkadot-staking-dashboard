@@ -54,7 +54,7 @@ export const Entity = () => {
   const batchKey = 'community_entity_validators';
 
   return (
-    <PageRowWrapper className="page-padding">
+    <PageRowWrapper className="page-padding" noVerticalSpacer>
       <TopBarWrapper>
         <Button
           inline
