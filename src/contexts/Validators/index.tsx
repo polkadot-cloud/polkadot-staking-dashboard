@@ -105,10 +105,11 @@ export const ValidatorsProvider = ({
     null
   );
 
-  // stores a shuffled validator community
-  const [validatorCommunity, setValidatorCommunity] = useState<any>(
-    shuffle(VALIDATOR_COMMUNITY)
-  );
+  // stores validator community
+
+  const [validatorCommunity, setValidatorCommunity] = useState<any>([
+    ...shuffle(VALIDATOR_COMMUNITY),
+  ]);
 
   // reset validators list on network change
   useEffect(() => {
@@ -202,11 +203,9 @@ export const ValidatorsProvider = ({
     }
   };
 
-  // re-fetch favorites upon network change
-  // re-shuffle validator community on network change
+  // re-fetch favorites on network change
   useEffect(() => {
     setFavorites(getFavorites());
-    setValidatorCommunity(shuffle(VALIDATOR_COMMUNITY));
   }, [network]);
 
   // fetch favorites in validator list format
