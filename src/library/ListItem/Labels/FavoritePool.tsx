@@ -10,29 +10,33 @@ import { useTooltip } from 'contexts/Tooltip';
 import { useRef } from 'react';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useTranslation } from 'react-i18next';
 import { FavoriteProps } from '../types';
 
 export const FavoritePool = (props: FavoriteProps) => {
   const { addNotification } = useNotifications();
   const { favorites, addFavorite, removeFavorite } = usePoolsConfig();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('common');
 
   const { address } = props;
   const isFavorite = favorites.includes(address);
 
   const notificationFavorite = !isFavorite
     ? {
-        title: 'Favorite Pool Added',
+        title: t('library.favorite_pool_added'),
         subtitle: address,
       }
     : {
-        title: 'Favorite Pool Removed',
+        title: t('library.favorite_pool_removed'),
         subtitle: address,
       };
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = `${isFavorite ? `Remove` : `Add`} Favorite`;
+  const tooltipText = `${
+    isFavorite ? `${t('library.remove')}` : `${t('library.add')}`
+  } ${t('library.favorite')}`;
 
   const toggleTooltip = () => {
     if (!open) {

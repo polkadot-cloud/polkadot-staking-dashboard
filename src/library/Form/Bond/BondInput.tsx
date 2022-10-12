@@ -59,7 +59,9 @@ export const BondInput = (props: BondInputProps) => {
       <div>
         <InputWrapper>
           <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>Bond {network.unit}:</h3>
+            <h3>
+              {t('library.bond')} {network.unit}:
+            </h3>
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
@@ -77,7 +79,7 @@ export const BondInput = (props: BondInputProps) => {
           <Button
             inline
             small
-            title="Max"
+            title={t('library.max')}
             onClick={() => {
               setValue(freeBalance);
               updateParentState(freeBalance);

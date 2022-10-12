@@ -13,12 +13,14 @@ import {
   TooltipTrigger,
   OverSubscribedWrapper,
 } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { OversubscribedProps } from '../types';
 
 export const Oversubscribed = (props: OversubscribedProps) => {
   const { consts, network } = useApi();
   const { meta } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('common');
 
   const { batchIndex, batchKey } = props;
 
@@ -46,7 +48,9 @@ export const Oversubscribed = (props: OversubscribedProps) => {
 
   const posRef = useRef(null);
 
-  const tooltipText = `Over subscribed: Minimum reward bond is ${lowestReward} ${network.unit}`;
+  const tooltipText = `${t('library.minimum_reward')} ${lowestReward} ${
+    network.unit
+  }`;
 
   const toggleTooltip = () => {
     if (!open) {

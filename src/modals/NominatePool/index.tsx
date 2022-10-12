@@ -80,7 +80,7 @@ export const NominatePool = () => {
 
   return (
     <>
-      <Title title="Nominate" icon={faPlayCircle} />
+      <Title title={t('modals.nominate')} icon={faPlayCircle} />
       <PaddingWrapper verticalOnly>
         <div
           style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}

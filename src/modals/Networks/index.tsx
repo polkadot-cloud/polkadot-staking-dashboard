@@ -36,7 +36,7 @@ export const Networks = () => {
 
   return (
     <>
-      <Title title="Networks" icon={faGlobe} />
+      <Title title={t('modals.networks')} icon={faGlobe} />
       <PaddingWrapper>
         <ContentWrapper>
           <h4>{t('modals.select_network')}</h4>
@@ -113,9 +113,7 @@ export const Networks = () => {
             <BraveWarning>
               <BraveIconSVG />
               <div className="brave-text">
-                <b>To Brave users!</b> Due to a recent update (
-                <i>Brave version 1.36</i>), there may appear issues while using
-                light clients (e.g. not connected).{' '}
+                {t('modals.brave_text')}{' '}
                 <a
                   href="https://paritytech.github.io/substrate-connect/#troubleshooting"
                   target="_blank"

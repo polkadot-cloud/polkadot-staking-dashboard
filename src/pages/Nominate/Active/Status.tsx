@@ -93,18 +93,20 @@ export const Status = ({ height }: { height: number }) => {
   return (
     <CardWrapper height={height}>
       <Stat
-        label="Status"
+        label={t('pages.nominate.status')}
         helpKey="Nomination Status"
         stat={
           inSetup() || isSyncing
-            ? 'Not Nominating'
+            ? t('pages.nominate.not_nominating')
             : !nominations.length
-            ? 'Inactive: No Nominations Set'
+            ? t('pages.nominate.no_nominations_set')
             : activeNominees.length
-            ? `Nominating and ${
-                earningRewards ? 'Earning Rewards' : 'Not Earning Rewards'
+            ? `${t('pages.nominate.nominating_and')} ${
+                earningRewards
+                  ? t('pages.nominate.earning_rewards')
+                  : t('pages.nominate.not_earning_rewards')
               }`
-            : 'Waiting for Active Nominations'
+            : t('pages.nominate.waiting_for_active_nominations')
         }
         buttons={
           !inSetup()
@@ -136,12 +138,16 @@ export const Status = ({ height }: { height: number }) => {
             ? faCircle
             : faWallet) as IconProp
         }
-        stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
+        stat={
+          inSetup()
+            ? t('pages.nominate.not_assigned')
+            : payeeStatus?.name ?? t('pages.nominate.not_assigned')
+        }
         buttons={
           payeeStatus
             ? [
                 {
-                  title: 'Update',
+                  title: t('pages.nominate.update'),
                   icon: faWallet,
                   small: true,
                   disabled:

@@ -134,7 +134,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
     }),
     datasets: [
       {
-        label: 'Payout',
+        label: t('library.payout'),
         data: combinedPayouts.map((item: AnySubscan) => {
           return item?.amount ?? 0;
         }),

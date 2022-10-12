@@ -96,10 +96,10 @@ export const SideMenu = () => {
             size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
-        <Heading title="Feedback" minimised={sideMenuMinimised} />
+        <Heading title={t('library.feedback')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => openModalWith('GoToFeedback')}
-          name="Feedback"
+          name={t('library.feedback')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: ForumSVG,

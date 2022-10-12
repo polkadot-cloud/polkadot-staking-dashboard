@@ -64,7 +64,7 @@ export const SelectFavorites = () => {
 
   return (
     <>
-      <Title title={t('modals.add_from_favourites')} />
+      <Title title={t('modals.add_from_favorites')} />
       <PaddingWrapper>
         <ListWrapper>
           {availableFavorites.length > 0 ? (
@@ -72,7 +72,7 @@ export const SelectFavorites = () => {
               bondType="stake"
               validators={availableFavorites}
               batchKey={batchKey}
-              title={t('modals.add_from_favourites')}
+              title={t('modals.favorite_validators')}
               selectable
               selectActive
               selectToggleable={false}
@@ -83,7 +83,7 @@ export const SelectFavorites = () => {
               allowMoreCols
             />
           ) : (
-            <h3>{t('modals.no_favourites_available')}</h3>
+            <h3>{t('modals.no_favorites_available')}</h3>
           )}
         </ListWrapper>
         <FooterWrapper>
@@ -98,7 +98,7 @@ export const SelectFavorites = () => {
                 : `Add ${selectedFavorites.length} Favorite${
                     selectedFavorites.length !== 1 ? `s` : ``
                   } to Nominations`
-              : `No Favorites Selected`}
+              : `${t('modals.no_favorites_selected')}`}
           </button>
         </FooterWrapper>
       </PaddingWrapper>

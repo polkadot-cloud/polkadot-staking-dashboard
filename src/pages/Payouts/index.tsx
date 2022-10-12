@@ -79,7 +79,7 @@ export const Payouts = (props: PageProps) => {
                     .format('Do MMMM')}
                 </>
               ) : (
-                'None'
+                tCommon('pages.payouts.none')
               )}
             </h2>
           </CardHeaderWrapper>

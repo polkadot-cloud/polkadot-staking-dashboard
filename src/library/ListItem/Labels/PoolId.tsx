@@ -6,13 +6,15 @@ import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHashtag } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 export const PoolId = (props: { id: number }) => {
   const { id } = props;
+  const { t } = useTranslation('common');
 
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
   const posRef = useRef<HTMLDivElement>(null);
-  const tooltipText = 'Pool ID';
+  const tooltipText = t('library.pool_id');
 
   const toggleTooltip = () => {
     if (!open) {

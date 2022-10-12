@@ -237,8 +237,8 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 transform="grow-2"
                 icon={faArrowAltCircleUp as IconProp}
               />
-              Submit
-              {submitting && 'ting'}
+              {t('modals.submit')}
+              {submitting && t('modals.ting')}
             </button>
           </div>
         </FooterWrapper>

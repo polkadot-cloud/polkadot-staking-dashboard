@@ -30,8 +30,8 @@ import { ManagePool } from './ManagePool';
 import { GoToFeedback } from './GoToFeedback';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
-import { AccountPoolRoles } from './AccountPoolRoles';
 import { ChooseLanguage } from './ChooseLanguage';
+import { AccountPoolRoles } from './AccountPoolRoles';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =

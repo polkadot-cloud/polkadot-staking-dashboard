@@ -99,7 +99,9 @@ export const Nominations = ({
     <Wrapper>
       <CardHeaderWrapper withAction>
         <h3>
-          {isPool ? 'Pool Nominations' : 'Nominations'}
+          {isPool
+            ? t('pages.nominate.pool_nominations')
+            : t('pages.nominate.nominations')}
           <OpenHelpIcon helpKey="Nominations" />
         </h3>
         <div>
@@ -114,7 +116,7 @@ export const Nominations = ({
               transform="grow-1"
               inline
               primary
-              title="Stop"
+              title={t('pages.nominate.stop')}
               disabled={stopBtnDisabled}
               onClick={() =>
                 openModalWith(
@@ -134,8 +136,8 @@ export const Nominations = ({
         <div className="head">
           <h4>
             {!isSyncing && nominated === null
-              ? 'Not Nominating.'
-              : 'Syncing...'}
+              ? t('pages.nominate.not_nominating')
+              : t('pages.nominate.syncing')}
           </h4>
         </div>
       ) : !nominator ? (
@@ -151,7 +153,7 @@ export const Nominations = ({
                 validators={nominated}
                 nominator={nominator}
                 batchKey={batchKey}
-                title="Your Nominations"
+                title={t('pages.nominate.your_nominations')}
                 format="nomination"
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&
@@ -162,13 +164,13 @@ export const Nominations = ({
                     ? []
                     : [
                         {
-                          title: 'Stop Nominating Selected',
+                          title: t('pages.nominate.stop_nominating_selected'),
                           onClick: cbStopNominatingSelected,
                           onSelected: true,
                         },
                         {
                           disabled: !favoritesList.length,
-                          title: 'Add From Favorites',
+                          title: t('pages.nominate.add_from_favorites'),
                           onClick: cbAddNominations,
                           onSelected: false,
                         },

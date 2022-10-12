@@ -9,6 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { planckBnToUnit } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {
@@ -24,6 +25,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
 
   const minJoinBondBase = planckBnToUnit(minJoinBond, units);
   const minCreateBondBase = planckBnToUnit(minCreateBond, units);
+  const { t } = useTranslation('common');
 
   return (
     <ContentWrapper>
@@ -39,8 +41,10 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               }}
             >
               <div>
-                <h3>Bond Extra</h3>
-                <p>Bond more {network.unit}.</p>
+                <h3>{t('modals.bond_extra')}</h3>
+                <p>
+                  {t('modals.bond_more')} {network.unit}.
+                </p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -55,8 +59,10 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               }}
             >
               <div>
-                <h3>Bond All</h3>
-                <p>Bond all available {network.unit}.</p>
+                <h3>{t('modals.bond_all')}</h3>
+                <p>
+                  {t('modals.bond_all_available')} {network.unit}.
+                </p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -75,8 +81,10 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               }}
             >
               <div>
-                <h3>Unbond</h3>
-                <p>Unbond some of your {network.unit}.</p>
+                <h3>{t('modals.unbond')}</h3>
+                <p>
+                  {t('modals.unbond_some_of_your')} {network.unit}.
+                </p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -92,8 +100,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>Unbond All</h3>
-                  <p>Exit your staking position.</p>
+                  <h3>{t('modals.unbond_all')}</h3>
+                  <p>{t('modals.exit_your_staking_position')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -110,11 +118,17 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>Unbond To Minimum</h3>
+                  <h3>{t('modals.unbond_to_minimum')}</h3>
                   <p>
                     {isDepositor()
-                      ? `Unbond up to the ${minCreateBondBase} ${unit} minimum bond for pool depositors.`
-                      : `Unbond up to the ${minJoinBondBase} ${unit} minimum to maintain your pool membership`}
+                      ? `${t('modals.update_bound5', {
+                          minCreateBondBase,
+                          unit,
+                        })}`
+                      : `${t('modals.update_bound6', {
+                          minCreateBondBase,
+                          unit,
+                        })}`}
                   </p>
                 </div>
                 <div>

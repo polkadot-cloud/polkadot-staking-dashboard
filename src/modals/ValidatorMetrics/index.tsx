@@ -66,12 +66,12 @@ export const ValidatorMetrics = () => {
 
   const stats = [
     {
-      label: 'Self Stake',
+      label: t('modals.self_stake'),
       value: `${humanNumber(planckBnToUnit(ownStake, units))} ${unit}`,
       help: 'Self Stake',
     },
     {
-      label: 'Nominator Stake',
+      label: t('modals.nominator_stake'),
       value: `${humanNumber(planckBnToUnit(otherStake, units))} ${unit}`,
       help: 'Nominator Stake',
     },

@@ -5,11 +5,13 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Button } from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 import { HeaderProps } from '../types';
 
 export const Header = (props: HeaderProps) => {
   const { title, helpKey, complete, thisSection, setupType } = props;
+  const { t } = useTranslation('common');
 
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useUi();
@@ -31,14 +33,14 @@ export const Header = (props: HeaderProps) => {
                 <Button
                   inline
                   small
-                  title="Update"
+                  title={t('library.update')}
                   onClick={() => {
                     setActiveAccountSetupSection(setupType, thisSection);
                   }}
                 />
               </span>
             )}
-            <h4 className="complete">Complete</h4>
+            <h4 className="complete">{t('library.complete')}</h4>
           </>
         )}
       </section>

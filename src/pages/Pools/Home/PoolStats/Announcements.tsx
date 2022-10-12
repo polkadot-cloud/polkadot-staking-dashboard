@@ -15,6 +15,7 @@ import {
 } from 'Utils';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -25,6 +26,7 @@ export const Announcements = () => {
   const { rewardAccountBalance } = selectedActivePool || {};
   const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
+  const { t } = useTranslation('common');
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BN.max(
@@ -65,22 +67,23 @@ export const Announcements = () => {
   };
 
   const announcements = [];
+  const unit = network.unit;
 
   announcements.push({
     class: 'neutral',
-    title: `${humanNumber(rewardsClaimed)} ${
-      network.unit
-    } in rewards have been claimed.`,
-    subtitle: `The total amount of ${network.unit} that has been claimed by pool members.`,
+    title: `${humanNumber(rewardsClaimed)} ${network.unit} ${t(
+      'pages.pools.been_claimed'
+    )}`,
+    subtitle: `${t('pages.pools.poolstats1', { unit })}`,
   });
 
   if (rewardBalance > 0) {
     announcements.push({
       class: 'neutral',
-      title: `${humanNumber(rewardBalance)} ${
-        network.unit
-      } outstanding reward balance.`,
-      subtitle: `The outstanding amount of ${network.unit} available to claim by pool members.`,
+      title: `${humanNumber(rewardBalance)} ${network.unit} ${t(
+        'pages.pools.poolstats2'
+      )}`,
+      subtitle: `${t('pages.pools.poolstats3', { unit })}`,
     });
   }
 

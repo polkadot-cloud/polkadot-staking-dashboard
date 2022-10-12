@@ -8,9 +8,12 @@ import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
 import { useTranslation } from 'react-i18next';
+import { PageProps } from 'pages/types';
 
-export const Favorites = () => {
+export const Favorites = (props: PageProps) => {
   const { isReady } = useApi();
+  const { page } = props;
+  const { key } = page;
   const { favoritesList } = useValidators();
   const { t: tCommon } = useTranslation('common');
 
@@ -18,11 +21,11 @@ export const Favorites = () => {
 
   return (
     <>
-      <PageTitle title="Favorites" />
+      <PageTitle title={tCommon(key)} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favoritesList === null ? (
-            <h3>{tCommon('pages.favourites.fetching_favourite_validators')}</h3>
+            <h3>{tCommon('pages.favorites.fetching_favorite_validators')}</h3>
           ) : (
             <>
               {isReady && (
@@ -32,14 +35,14 @@ export const Favorites = () => {
                       bondType="stake"
                       validators={favoritesList}
                       batchKey={batchKey}
-                      title={tCommon('pages.favourites.favourite_validators')}
+                      title={tCommon('pages.favorites.favorite_validators')}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavorites
                     />
                   ) : (
-                    <h3>{tCommon('pages.favourites.no_favourites')}</h3>
+                    <h3>{tCommon('pages.favorites.no_favorites')}</h3>
                   )}
                 </>
               )}

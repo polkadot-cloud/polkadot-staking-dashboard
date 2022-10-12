@@ -15,6 +15,7 @@ import {
 import { defaultThemes, networkColors } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
 import { useApi } from 'contexts/Api';
+import { useTranslation } from 'react-i18next';
 import { EraPointsProps } from './types';
 
 ChartJS.register(
@@ -32,6 +33,7 @@ export const EraPoints = (props: EraPointsProps) => {
   const { network } = useApi();
   let { items } = props;
   const { height } = props;
+  const { t } = useTranslation('common');
 
   items = items === undefined ? [] : items;
 
@@ -76,7 +78,7 @@ export const EraPoints = (props: EraPointsProps) => {
       },
       title: {
         display: false,
-        text: 'Era Points',
+        text: t('library.era_points'),
       },
       tooltip: {
         displayColors: false,
@@ -107,7 +109,7 @@ export const EraPoints = (props: EraPointsProps) => {
     }),
     datasets: [
       {
-        label: 'Points',
+        label: t('library.points'),
         // data: empty_data,
         data: items.map((item: any, index: number) => {
           return item.reward_point;

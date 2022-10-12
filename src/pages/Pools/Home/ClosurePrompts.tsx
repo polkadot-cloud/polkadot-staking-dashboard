@@ -61,12 +61,12 @@ export const ClosurePrompts = () => {
               <h4>
                 {t('pages.pools.destroy_pool1')}{' '}
                 {targets.length > 0
-                  ? 'To continue with pool closure, stop nominating.'
+                  ? t('pages.pools.destroy_pool2')
                   : depositorCanWithdraw
-                  ? 'You can now withdraw and close the pool.'
+                  ? t('pages.pools.destroy_pool3')
                   : depositorCanUnbond
-                  ? 'You can now unbond your funds.'
-                  : 'Withdraw your unlock chunk to proceed with pool closure.'}
+                  ? t('pages.pools.destroy_pool4')
+                  : t('pages.pools.destroy_pool5')}
               </h4>
               <ButtonRow verticalSpacing>
                 <Button

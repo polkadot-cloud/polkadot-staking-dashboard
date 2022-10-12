@@ -65,7 +65,7 @@ export const Status = ({ height }: { height: number }) => {
   const buttonsRewards = unclaimedRewards.gt(minUnclaimedDisplay)
     ? [
         {
-          title: 'Withdraw',
+          title: t('pages.pools.withdraw'),
           icon: faShare,
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
@@ -73,7 +73,7 @@ export const Status = ({ height }: { height: number }) => {
             openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
         },
         {
-          title: 'Bond',
+          title: t('pages.pools.bond'),
           icon: faPlus,
           disabled:
             !isReady ||
@@ -136,21 +136,23 @@ export const Status = ({ height }: { height: number }) => {
   // determine pool status - left side
   const poolStatusLeft =
     poolState === PoolState.Block
-      ? 'Locked / '
+      ? t('pages.pools.locked1')
       : poolState === PoolState.Destroy
-      ? 'Destroying / '
+      ? t('pages.pools.destroying1')
       : '';
 
   // determine pool status - right side
   const poolStatusRight = isSyncing
-    ? 'Inactive: Pool Not Nominating'
+    ? t('pages.pools.inactive_pool_not_nominating')
     : !isNominating
-    ? 'Inactive: Pool Not Nominating'
+    ? t('pages.pools.inactive_pool_not_nominating')
     : activeNominees.length
-    ? `Nominating and ${
-        earningRewards ? 'Earning Rewards' : 'Not Earning Rewards'
+    ? `${t('pages.pools.nominating_and')} ${
+        earningRewards
+          ? t('pages.pools.earning_rewards')
+          : t('pages.pools.not_earning_rewards')
       }`
-    : 'Waiting for Active Nominations';
+    : t('pages.pools.waiting_for_active_nominations');
 
   const { label, buttons } = useStatusButtons();
 
@@ -162,7 +164,7 @@ export const Status = ({ height }: { height: number }) => {
         <Stat
           label={t('pages.pools.pool_membership')}
           helpKey="Pool Membership"
-          stat="Not in Pool"
+          stat={t('pages.pools.not_in_pool')}
           buttons={isSyncing ? [] : buttons}
         />
       )}

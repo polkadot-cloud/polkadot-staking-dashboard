@@ -28,6 +28,7 @@ import { useStaking } from 'contexts/Staking';
 import { AnySubscan } from 'types';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSubscan } from 'contexts/Subscan';
+import { useTranslation } from 'react-i18next';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -51,6 +52,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
+  const { t } = useTranslation('common');
 
   const { units } = network;
   const notStaking = !isSyncing && inSetup() && !membership;
@@ -80,7 +82,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
     }),
     datasets: [
       {
-        label: 'Payout',
+        label: t('library.payout'),
         data: payoutsByDay.map((item: AnySubscan) => {
           return item.amount;
         }),
@@ -90,7 +92,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
         borderRadius: 3,
       },
       {
-        label: 'Pool Claim',
+        label: t('library.pool_claim'),
         data: poolClaimsByDay.map((item: AnySubscan) => {
           return item.amount;
         }),

@@ -8,6 +8,7 @@ import { useBalances } from 'contexts/Balances';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { clipAddress } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
@@ -18,6 +19,7 @@ export const Connected = () => {
   const controller = getBondedAccount(activeAccount);
   const { selectedActivePool } = useActivePools();
   const { isSyncing } = useUi();
+  const { t } = useTranslation('common');
 
   let poolAddress = '';
   if (selectedActivePool) {
@@ -57,7 +59,7 @@ export const Connected = () => {
                   getControllerNotImported(controller)
                     ? controller
                       ? clipAddress(controller)
-                      : 'Not Imported'
+                      : t('library.not_imported')
                     : undefined
                 }
                 format="name"
@@ -74,7 +76,7 @@ export const Connected = () => {
               <PoolAccount
                 value={poolAddress}
                 pool={selectedActivePool}
-                label="Pool"
+                label={t('library.pool')}
                 canClick={false}
                 onClick={() => {}}
                 filled

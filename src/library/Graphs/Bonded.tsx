@@ -7,6 +7,7 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { humanNumber } from 'Utils';
+import { useTranslation } from 'react-i18next';
 import { GraphWrapper } from './Wrappers';
 import { BondedProps } from './types';
 
@@ -15,6 +16,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export const Bonded = (props: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
+  const { t } = useTranslation('common');
 
   const { active, unlocking, unlocked, inactive } = props;
   const { free } = props;
@@ -87,7 +89,7 @@ export const Bonded = (props: BondedProps) => {
       ];
 
   const data = {
-    labels: ['Active', 'Unlocking', 'Free'],
+    labels: [t('library.active1'), t('library.unlocking'), t('library.free')],
     datasets: [
       {
         label: network.unit,

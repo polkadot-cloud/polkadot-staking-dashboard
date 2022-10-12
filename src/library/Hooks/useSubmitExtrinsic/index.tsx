@@ -11,6 +11,7 @@ import { DAPP_NAME } from 'consts';
 import { AnyApi } from 'types';
 import { Extension } from 'contexts/Connect/types';
 import { useTxFees } from 'contexts/TxFees';
+import { useTranslation } from 'react-i18next';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (
@@ -28,6 +29,7 @@ export const useSubmitExtrinsic = (
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
+  const { t } = useTranslation('common');
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
@@ -69,7 +71,7 @@ export const useSubmitExtrinsic = (
 
     const extension = extensions.find((e: Extension) => e.id === source);
     if (extension === undefined) {
-      throw new Error('wallet not found');
+      throw new Error(t('library.wallet_not_found'));
     } else {
       // summons extension popup if not already connected.
       extension.enable(DAPP_NAME);
@@ -87,8 +89,8 @@ export const useSubmitExtrinsic = (
           if (status.isReady) {
             addPending(accountNonce);
             addNotification({
-              title: 'Pending',
-              subtitle: 'Transaction was initiated.',
+              title: t('library.pending'),
+              subtitle: t('library.transaction_was_initiated'),
             });
             callbackSubmit();
           }
@@ -98,8 +100,8 @@ export const useSubmitExtrinsic = (
             setSubmitting(false);
             removePending(accountNonce);
             addNotification({
-              title: 'In Block',
-              subtitle: 'Transaction in block',
+              title: t('library.in_block'),
+              subtitle: t('library.transaction_in_block'),
             });
             callbackInBlock();
           }
@@ -109,14 +111,14 @@ export const useSubmitExtrinsic = (
             events.forEach(({ event: { method } }: AnyApi) => {
               if (method === 'ExtrinsicSuccess') {
                 addNotification({
-                  title: 'Finalized',
-                  subtitle: 'Transaction successful',
+                  title: t('library.finalized'),
+                  subtitle: t('library.transaction_successful'),
                 });
                 unsub();
               } else if (method === 'ExtrinsicFailed') {
                 addNotification({
-                  title: 'Failed',
-                  subtitle: 'Error with transaction',
+                  title: t('library.failed'),
+                  subtitle: t('library.error_with_transaction'),
                 });
                 setSubmitting(false);
                 removePending(accountNonce);
@@ -130,8 +132,8 @@ export const useSubmitExtrinsic = (
       setSubmitting(false);
       removePending(accountNonce);
       addNotification({
-        title: 'Cancelled',
-        subtitle: 'Transaction was cancelled',
+        title: t('library.cancelled'),
+        subtitle: t('library.transaction_was_cancelled'),
       });
     }
   };

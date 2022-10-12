@@ -23,25 +23,26 @@ export const Setup = () => {
 
   return (
     <>
-      <PageTitle title="Start Nominating" />
+      <PageTitle title={t('pages.nominate.start_nominating')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <Button
             inline
-            title="Back"
+            title={t('pages.nominate.go_back')}
             icon={faChevronLeft}
             transform="shrink-3"
             onClick={() => setOnNominatorSetup(0)}
           />
-          <Button
-            inline
-            title="Cancel"
-            onClick={() => {
-              setOnNominatorSetup(0);
-              setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
-            }}
-          />
-          <div className="right" />
+          <div className="right">
+            <Button
+              inline
+              title={t('pages.nominate.cancel')}
+              onClick={() => {
+                setOnNominatorSetup(0);
+                setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+              }}
+            />
+          </div>
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

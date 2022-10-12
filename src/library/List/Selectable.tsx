@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 
 export const Selectable = (props: any) => {
   const { actionsAll, actionsSelected, canSelect } = props;
+  const { t } = useTranslation('common');
 
   const provider = useList();
   // get list provider props
@@ -23,7 +25,7 @@ export const Selectable = (props: any) => {
             setSelectActive(!selectActive);
           }}
         >
-          {selectActive ? 'Cancel' : 'Select'}
+          {selectActive ? t('library.cancel') : t('library.select')}
         </button>
       )}
       {selected.length > 0 && (

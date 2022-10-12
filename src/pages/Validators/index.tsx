@@ -50,7 +50,7 @@ export const Validators = (props: PageProps) => {
                   bondType="stake"
                   validators={validators}
                   batchKey="validators_browse"
-                  title="Network Validators"
+                  title={tCommon('pages.validators.network_validators')}
                   selectable={false}
                   allowMoreCols
                   allowFilters

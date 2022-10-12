@@ -15,6 +15,7 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { Pool } from 'library/Pool/types';
+import { useTranslation } from 'react-i18next';
 
 export const PoolBonded = ({
   pool,
@@ -31,6 +32,7 @@ export const PoolBonded = ({
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { meta, getPoolNominationStatusCode } = useBondedPools();
   const { units, unit } = network;
+  const { t } = useTranslation('common');
 
   // get pool targets from nominations meta batch
   const nominations = meta[batchKey]?.nominations ?? [];
@@ -80,10 +82,10 @@ export const PoolBonded = ({
       <ValidatorStatusWrapper status={nominationStatus}>
         <h5>
           {nominationStatus === null
-            ? `Syncing...`
+            ? `${t('library.syncing')}`
             : targets.length
             ? capitalizeFirstLetter(nominationStatus ?? '')
-            : 'Not Nominating'}
+            : t('library.not_nominating')}
           {' / '}
           Bonded: {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
         </h5>

@@ -115,30 +115,29 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
     // unbond errors
     if (Number(bond.bond) > activeBase) {
-      _errors.push('Unbond amount is more than your bonded balance.');
+      _errors.push(t('library.w6'));
     }
 
     // unbond errors for staking only
     if (bondType === 'stake') {
       if (getControllerNotImported(controller)) {
-        _errors.push(
-          'You must have your controller account imported to unbond.'
-        );
+        _errors.push(t('library.w9'));
       }
     }
 
     if (bond.bond !== '' && Number(bond.bond) < _planck) {
-      _errors.push('Value is too small');
+      _errors.push(t('library.value_is_too_small'));
     }
 
     if (Number(bond.bond) > freeToUnbondToMin) {
+      const unit = network.unit;
       _errors.push(
-        `A minimum bond of ${minBondBase} ${network.unit} is required ${
+        `${t('library.minimum_bond', { minBondBase, unit })}${
           bondType === 'stake'
-            ? `when actively nominating`
+            ? `${t('library.when_actively_nominating')}`
             : isDepositor()
-            ? `as the pool depositor`
-            : `as a pool member`
+            ? `${t('library.as_the_pool_depositor')}`
+            : `${t('library.as_a_pool_member')}`
         }.`
       );
     }
@@ -152,11 +151,11 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
     <>
       <CardHeaderWrapper>
         <h4>
-          Bonded: {humanNumber(activeBase)} {network.unit}
+          {t('library.bonded')} {humanNumber(activeBase)} {network.unit}
         </h4>
       </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
-        <Warning key={`unbond_error_${index}`} text={err} />
+        <Warning key={`unbond_error_${index} `} text={err} />
       ))}
       <Spacer />
       <UnbondInput

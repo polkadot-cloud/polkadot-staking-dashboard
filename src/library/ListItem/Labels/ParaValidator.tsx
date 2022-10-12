@@ -7,10 +7,12 @@ import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useValidators } from 'contexts/Validators';
+import { useTranslation } from 'react-i18next';
 import { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { sessionParachain } = useValidators();
+  const { t } = useTranslation('common');
 
   if (!sessionParachain?.includes(address || '')) {
     return <></>;
@@ -19,7 +21,7 @@ export const ParaValidator = ({ address }: ParaValidatorProps) => {
 
   const posRef = useRef(null);
 
-  const tooltipText = 'Validating Parachain Blocks';
+  const tooltipText = t('library.validating_parachain_blocks');
 
   const toggleTooltip = () => {
     if (!open) {

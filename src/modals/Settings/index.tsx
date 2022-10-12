@@ -4,17 +4,19 @@
 import { useUi } from 'contexts/UI';
 import { StatusButton } from 'library/StatusButton';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {
   const { services, toggleService } = useUi();
+  const { t } = useTranslation('common');
 
   // fetch flag to disable fiat
   const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
 
   return (
     <>
-      <Title title="Toggle Services" />
+      <Title title={t('modals.toggle_services')} />
       <PaddingWrapper>
         <StatusButton
           checked={services.includes('subscan')}

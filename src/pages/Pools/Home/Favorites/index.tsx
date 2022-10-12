@@ -42,7 +42,7 @@ export const Favorites = () => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favoritesList === null || isSyncing ? (
-            <h3>{t('pages.pools.fetching_favourite_pools')}</h3>
+            <h3>{t('pages.pools.fetching_favorite_pools')}</h3>
           ) : (
             <>
               {isReady && (
@@ -51,12 +51,12 @@ export const Favorites = () => {
                     <PoolList
                       batchKey="favorite_pools"
                       pools={favoritesList}
-                      title={t('pages.pools.favourites_list')}
+                      title={t('pages.pools.favorites_list')}
                       allowMoreCols
                       pagination
                     />
                   ) : (
-                    <h3>{t('pages.pools.no_favourites')}</h3>
+                    <h3>{t('pages.pools.no_favorites')}</h3>
                   )}
                 </>
               )}

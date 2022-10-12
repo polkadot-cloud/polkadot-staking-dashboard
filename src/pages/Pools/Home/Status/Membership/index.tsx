@@ -13,6 +13,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import OpenHelpIcon from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { Wrapper } from './Wrapper';
 
@@ -24,10 +25,11 @@ export const Membership = ({ label }: { label: string }) => {
   const { selectedActivePool, isOwner, isMember, isStateToggler } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('common');
 
   const { active } = getTransferOptions(activeAccount).pool;
 
-  let display = 'Not in Pool';
+  let display = t('pages.pools.not_in_pool');
   if (selectedActivePool) {
     const pool = bondedPools.find((p: any) => {
       return p.addresses.stash === selectedActivePool.addresses.stash;
@@ -52,7 +54,7 @@ export const Membership = ({ label }: { label: string }) => {
       <Button
         primary
         inline
-        title="Manage"
+        title={t('pages.pools.manage')}
         icon={faCog}
         small
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
@@ -67,7 +69,7 @@ export const Membership = ({ label }: { label: string }) => {
       <Button
         primary
         inline
-        title="Leave"
+        title={t('pages.pools.leave')}
         icon={faSignOutAlt}
         small
         disabled={!isReady || isReadOnlyAccount(activeAccount)}

@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import { useModal } from 'contexts/Modal';
+import { useTranslation } from 'react-i18next';
 import { PoolAccount } from '../PoolAccount';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import RoleEditInput from './RoleEditInput';
@@ -23,6 +24,7 @@ import { RolesProps, RoleEditEntry } from './types';
 
 export const Roles = (props: RolesProps) => {
   const { batchKey, defaultRoles } = props;
+  const { t } = useTranslation('common');
 
   const listenIsValid = props.listenIsValid ?? (() => {});
   const setters = props.setters ?? [];
@@ -136,7 +138,7 @@ export const Roles = (props: RolesProps) => {
     <>
       <CardHeaderWrapper withAction>
         <h3>
-          Roles <OpenHelpIcon helpKey="Pool Roles" />
+          {t('pages.pools.roles')} <OpenHelpIcon helpKey="Pool Roles" />
         </h3>
         {!(isOwner() === true || setters.length) ? (
           <></>
@@ -150,7 +152,7 @@ export const Roles = (props: RolesProps) => {
                   transform="grow-1"
                   inline
                   primary
-                  title="Cancel"
+                  title={t('pages.pools.cancel')}
                   disabled={isSyncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
@@ -164,7 +166,9 @@ export const Roles = (props: RolesProps) => {
                 transform="grow-1"
                 inline
                 primary
-                title={isEditing ? 'Save' : 'Edit'}
+                title={
+                  isEditing ? t('pages.pools.save') : t('pages.pools.edit')
+                }
                 disabled={
                   isSyncing ||
                   isReadOnlyAccount(activeAccount) ||
@@ -179,7 +183,7 @@ export const Roles = (props: RolesProps) => {
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h4>Depositor</h4>
+            <h4>{t('pages.pools.depositor')}</h4>
             <PoolAccount
               address={roles.depositor ?? null}
               batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
@@ -189,7 +193,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>Root</h4>
+            <h4>{t('pages.pools.root')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="root"
@@ -207,7 +211,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>Nominator</h4>
+            <h4>{t('pages.pools.nominator')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="nominator"
@@ -225,7 +229,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>State Toggler</h4>
+            <h4>{t('pages.pools.state_toggler')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="stateToggler"

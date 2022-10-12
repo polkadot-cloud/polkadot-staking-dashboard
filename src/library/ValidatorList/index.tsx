@@ -25,6 +25,7 @@ import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Selectable } from 'library/List/Selectable';
 import { SearchInput } from 'library/List/SearchInput';
+import { useTranslation } from 'react-i18next';
 import { Filters } from './Filters';
 import { useList, ListProvider } from '../List/context';
 
@@ -36,6 +37,7 @@ export const ValidatorListInner = (props: any) => {
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
+  const { t } = useTranslation('common');
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -213,7 +215,7 @@ export const ValidatorListInner = (props: any) => {
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.address === value.address)
+        index === self.findIndex((t1: any) => t1.address === value.address)
     );
 
     handleValidatorsFilterUpdate(filteredValidators);
@@ -264,7 +266,7 @@ export const ValidatorListInner = (props: any) => {
         {allowSearch && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Address or Identity"
+            placeholder={t('library.search_address_or_identity')}
           />
         )}
 
@@ -322,8 +324,8 @@ export const ValidatorListInner = (props: any) => {
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
               {isSearching
-                ? 'No validators match this criteria.'
-                : 'No validators.'}
+                ? t('library.no_match2')
+                : t('library.no_validators')}
             </h4>
           )}
         </MotionContainer>

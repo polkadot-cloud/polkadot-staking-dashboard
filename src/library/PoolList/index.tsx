@@ -18,6 +18,7 @@ import { Pagination } from 'library/List/Pagination';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { SearchInput } from 'library/List/SearchInput';
 import { useUi } from 'contexts/UI';
+import { useTranslation } from 'react-i18next';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -25,6 +26,7 @@ export const PoolListInner = (props: PoolListProps) => {
   const { allowMoreCols, pagination, batchKey }: any = props;
   const disableThrottle = props.disableThrottle ?? false;
   const allowSearch = props.allowSearch ?? false;
+  const { t } = useTranslation('common');
 
   const { mode } = useTheme();
   const { isReady, network } = useApi();
@@ -113,7 +115,7 @@ export const PoolListInner = (props: PoolListProps) => {
     // ensure no duplicates
     filteredPools = filteredPools.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.id === value.id)
+        index === self.findIndex((t1: any) => t1.id === value.id)
     );
 
     setPage(1);
@@ -154,7 +156,7 @@ export const PoolListInner = (props: PoolListProps) => {
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Pool ID, Name or Address"
+            placeholder={t('library.search')}
           />
         )}
         {pagination && listPools.length > 0 && (
@@ -194,8 +196,8 @@ export const PoolListInner = (props: PoolListProps) => {
           ) : (
             <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
               {isSyncing
-                ? 'Syncing Pool list...'
-                : 'No pools match this criteria.'}
+                ? t('library.syncing_pool_list')
+                : t('library.no_match1')}
             </h4>
           )}
         </MotionContainer>

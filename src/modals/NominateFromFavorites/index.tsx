@@ -129,14 +129,14 @@ export const NominateFromFavorites = () => {
 
   return (
     <>
-      <Title title={t('modals.nominate_favourites')} />
+      <Title title={t('modals.nominate_favorites')} />
       <PaddingWrapper>
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`You must have your${
-                bondType === 'stake' ? ' controller' : ' '
-              }account imported to add nominations.`}
+              text={`{t('modals.s1')}${
+                bondType === 'stake' ? ' controller ' : ' '
+              }{t('modals.s3')}`}
             />
           )}
         </div>
@@ -157,7 +157,7 @@ export const NominateFromFavorites = () => {
               allowMoreCols
             />
           ) : (
-            <h3>{t('modals.no_favourites_available')}</h3>
+            <h3>{t('modals.no_favorites_available')}</h3>
           )}
         </ListWrapper>
         <NotesWrapper style={{ paddingBottom: 0 }}>
@@ -178,7 +178,7 @@ export const NominateFromFavorites = () => {
                 : `Adding ${selectedFavorites.length} Nomination${
                     selectedFavorites.length !== 1 ? `s` : ``
                   }`
-              : `No Favorites Selected`}
+              : `${t('modals.no_favorites_selected')}`}
           </h3>
           <div>
             <button
