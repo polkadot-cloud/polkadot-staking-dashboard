@@ -49,9 +49,9 @@ export const GenerateNominationsInner = (
   } = useFetchMehods();
   const { maxNominations } = consts;
 
-  let { favouritesList } = useValidators();
-  if (favouritesList === null) {
-    favouritesList = [];
+  let { favoritesList } = useValidators();
+  if (favoritesList === null) {
+    favoritesList = [];
   }
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
@@ -162,7 +162,7 @@ export const GenerateNominationsInner = (
       updateSetters(_nominations);
     };
     openModalWith(
-      'SelectFavourites',
+      'SelectFavorites',
       {
         nominations,
         callback: updateList,
@@ -198,8 +198,8 @@ export const GenerateNominationsInner = (
   const disabledMaxNominations = () => {
     return nominations.length >= maxNominations;
   };
-  const disabledAddFavourites = () => {
-    return !favouritesList?.length || nominations.length >= maxNominations;
+  const disabledAddFavorites = () => {
+    return !favoritesList?.length || nominations.length >= maxNominations;
   };
 
   // accumulate generation methods
@@ -227,11 +227,11 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: t('library.from_favourites'),
-      subtitle: t('library.favourite_validators'),
+      title: t('library.from_favorites'),
+      subtitle: t('library.favorites_validators'),
       icon: faHeart as IconProp,
       onClick: () => {
-        setMethod('From Favourites');
+        setMethod('From Favorites');
         removeValidatorMetaBatch(batchKey);
         setNominations([]);
         setFetching(true);
@@ -252,10 +252,10 @@ export const GenerateNominationsInner = (
   // accumulate actions
   const actions = [
     {
-      title: t('library.add_from_favourites'),
+      title: t('library.add_from_favorites'),
       onClick: cbAddNominations,
       onSelected: false,
-      isDisabled: disabledAddFavourites,
+      isDisabled: disabledAddFavorites,
     },
     {
       title: t('library.remove_selected'),
@@ -304,19 +304,19 @@ export const GenerateNominationsInner = (
           {['Active Low Commission', 'Optimal Selection'].includes(
             method || ''
           ) && (
-            <button
-              type="button"
-              onClick={() => {
-                // set a temporary height to prevent height snapping on re-renders.
-                setHeight(heightRef?.current?.clientHeight || null);
-                setTimeout(() => setHeight(null), 200);
-                removeValidatorMetaBatch(batchKey);
-                setFetching(true);
-              }}
-            >
-              {t('library.re_generate')}
-            </button>
-          )}
+              <button
+                type="button"
+                onClick={() => {
+                  // set a temporary height to prevent height snapping on re-renders.
+                  setHeight(heightRef?.current?.clientHeight || null);
+                  setTimeout(() => setHeight(null), 200);
+                  removeValidatorMetaBatch(batchKey);
+                  setFetching(true);
+                }}
+              >
+                {t('library.re_generate')}
+              </button>
+            )}
         </SelectableWrapper>
       )}
       <Wrapper

@@ -31,9 +31,9 @@ export const Nominations = ({
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getAccountNominations } = useBalances();
   const { nominated: stakeNominated, poolNominated } = useValidators();
-  let { favouritesList } = useValidators();
-  if (favouritesList === null) {
-    favouritesList = [];
+  let { favoritesList } = useValidators();
+  if (favoritesList === null) {
+    favoritesList = [];
   }
 
   const {
@@ -74,7 +74,7 @@ export const Nominations = ({
   const cbAddNominations = ({ setSelectActive }: any) => {
     setSelectActive(false);
     openModalWith(
-      'NominateFromFavourites',
+      'NominateFromFavorites',
       {
         nominations,
         bondType,
@@ -110,26 +110,26 @@ export const Nominations = ({
           */}
           {((!isPool && nominations.length) ||
             (isPool && (isPoolNominator() || isPoolOwner()))) && (
-            <Button
-              small
-              icon={faStopCircle}
-              transform="grow-1"
-              inline
-              primary
-              title={t('pages.nominate.stop')}
-              disabled={stopBtnDisabled}
-              onClick={() =>
-                openModalWith(
-                  'ChangeNominations',
-                  {
-                    nominations: [],
-                    bondType,
-                  },
-                  'small'
-                )
-              }
-            />
-          )}
+              <Button
+                small
+                icon={faStopCircle}
+                transform="grow-1"
+                inline
+                primary
+                title={t('pages.nominate.stop')}
+                disabled={stopBtnDisabled}
+                onClick={() =>
+                  openModalWith(
+                    'ChangeNominations',
+                    {
+                      nominations: [],
+                      bondType,
+                    },
+                    'small'
+                  )
+                }
+              />
+            )}
         </div>
       </CardHeaderWrapper>
       {nominated === null || isSyncing ? (
@@ -163,18 +163,18 @@ export const Nominations = ({
                   isReadOnlyAccount(activeAccount)
                     ? []
                     : [
-                        {
-                          title: t('pages.nominate.stop_nominating_selected'),
-                          onClick: cbStopNominatingSelected,
-                          onSelected: true,
-                        },
-                        {
-                          disabled: !favouritesList.length,
-                          title: t('pages.nominate.add_from_favourites'),
-                          onClick: cbAddNominations,
-                          onSelected: false,
-                        },
-                      ]
+                      {
+                        title: t('pages.nominate.stop_nominating_selected'),
+                        onClick: cbStopNominatingSelected,
+                        onSelected: true,
+                      },
+                      {
+                        disabled: !favoritesList.length,
+                        title: t('pages.nominate.add_from_favorites'),
+                        onClick: cbAddNominations,
+                        onSelected: false,
+                      },
+                    ]
                 }
                 refetchOnListUpdate
                 allowMoreCols

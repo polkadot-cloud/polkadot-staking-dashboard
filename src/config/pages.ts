@@ -6,7 +6,7 @@ import Overview from 'pages/Overview';
 import Nominate from 'pages/Nominate';
 import Pools from 'pages/Pools';
 import Browse from 'pages/Validators';
-import Favourites from 'pages/Favourites';
+import Favorites from 'pages/Favorites';
 import Payouts from 'pages/Payouts';
 import Community from 'pages/Community';
 import { URI_PREFIX } from 'consts';
@@ -85,9 +85,9 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 3,
     key: 'favourites',
-    uri: `${URI_PREFIX}/favourites`,
-    hash: '/favourites',
-    Entry: Favourites,
+    uri: `${URI_PREFIX}/favorites`,
+    hash: '/favorites',
+    Entry: Favorites,
     animate: favoriteHeartJson,
   },
 ];

@@ -94,7 +94,7 @@ export const Entity = () => {
                 selectable={false}
                 allowMoreCols
                 pagination
-                toggleFavourites
+                toggleFavorites
                 allowFilters
               />
             )}

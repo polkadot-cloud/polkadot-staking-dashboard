@@ -59,7 +59,7 @@ export const ValidatorListInner = (props: any) => {
     batchKey,
     allowMoreCols,
     allowFilters,
-    toggleFavourites,
+    toggleFavorites,
     pagination,
     title,
     format,
@@ -309,7 +309,7 @@ export const ValidatorListInner = (props: any) => {
                     <Validator
                       validator={validator}
                       nominator={nominator}
-                      toggleFavourites={toggleFavourites}
+                      toggleFavorites={toggleFavorites}
                       batchIndex={batchIndex}
                       batchKey={batchKey}
                       format={format}

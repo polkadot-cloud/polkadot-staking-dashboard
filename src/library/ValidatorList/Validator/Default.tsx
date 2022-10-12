@@ -21,7 +21,7 @@ import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import { useTranslation } from 'react-i18next';
 import { useValidators } from '../../../contexts/Validators';
 import { getIdentityDisplay } from './Utils';
-import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
+import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -34,7 +34,7 @@ import { DefaultProps } from './types';
 export const Default = (props: DefaultProps) => {
   const {
     validator,
-    toggleFavourites,
+    toggleFavorites,
     batchIndex,
     batchKey,
     showMenu,
@@ -125,7 +125,7 @@ export const Default = (props: DefaultProps) => {
               <Commission commission={commission} />
               <ParaValidator address={address} />
 
-              {toggleFavourites && <FavouriteValidator address={address} />}
+              {toggleFavorites && <FavoriteValidator address={address} />}
               {showMenu && (
                 <button
                   type="button"

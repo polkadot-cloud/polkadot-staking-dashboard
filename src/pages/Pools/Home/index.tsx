@@ -30,7 +30,7 @@ import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { Roles } from '../Roles';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { Favourites } from './Favourites';
+import { Favorites } from './Favorites';
 import { Members } from './Members';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolStats } from './PoolStats';
@@ -78,7 +78,7 @@ export const HomeInner = () => {
       onClick: () => setActiveTab(2),
     },
     {
-      title: t('pages.pools.favourites'),
+      title: t('pages.pools.favorites'),
       active: activeTab === 3,
       onClick: () => setActiveTab(3),
     }
@@ -92,10 +92,10 @@ export const HomeInner = () => {
         button={
           totalAccountPools
             ? {
-                title: t('pages.pools.all_roles'),
-                onClick: () =>
-                  openModalWith('AccountPoolRoles', { who: activeAccount }),
-              }
+              title: t('pages.pools.all_roles'),
+              onClick: () =>
+                openModalWith('AccountPoolRoles', { who: activeAccount }),
+            }
             : undefined
         }
       />
@@ -171,7 +171,7 @@ export const HomeInner = () => {
       )}
       {activeTab === 3 && (
         <>
-          <Favourites />
+          <Favorites />
         </>
       )}
     </>

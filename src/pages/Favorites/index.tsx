@@ -10,40 +10,40 @@ import { PageRowWrapper } from 'Wrappers';
 import { useTranslation } from 'react-i18next';
 import { PageProps } from '../types';
 
-export const Favourites = (props: PageProps) => {
+export const Favorites = (props: PageProps) => {
   const { isReady } = useApi();
   const { page } = props;
   const { key } = page;
-  const { favouritesList } = useValidators();
+  const { favoritesList } = useValidators();
   const { t: tCommon } = useTranslation('common');
   const { t: tPages } = useTranslation('pages');
 
-  const batchKey = 'favourite_validators';
+  const batchKey = 'favorite_validators';
 
   return (
     <>
       <PageTitle title={tPages(key)} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          {favouritesList === null ? (
-            <h3>{tCommon('pages.favourites.fetching_favourite_validators')}</h3>
+          {favoritesList === null ? (
+            <h3>{tCommon('pages.favourites.fetching_favorite_validators')}</h3>
           ) : (
             <>
               {isReady && (
                 <>
-                  {favouritesList.length > 0 ? (
+                  {favoritesList.length > 0 ? (
                     <ValidatorList
                       bondType="stake"
-                      validators={favouritesList}
+                      validators={favoritesList}
                       batchKey={batchKey}
-                      title={tCommon('pages.favourites.favourite_validators')}
+                      title={tCommon('pages.favourites.favorite_validators')}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
-                      toggleFavourites
+                      toggleFavorites
                     />
                   ) : (
-                    <h3>{tCommon('pages.favourites.no_favourites')}</h3>
+                    <h3>{tCommon('pages.favourites.no_favorites')}</h3>
                   )}
                 </>
               )}
@@ -55,4 +55,4 @@ export const Favourites = (props: PageProps) => {
   );
 };
 
-export default Favourites;
+export default Favorites;

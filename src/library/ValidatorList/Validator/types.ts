@@ -6,7 +6,7 @@ import { MaybeAccount } from 'types';
 export interface NominationProps {
   validator: any;
   nominator: MaybeAccount;
-  toggleFavourites: boolean;
+  toggleFavorites: boolean;
   batchIndex: number;
   batchKey: string;
   bondType: string;
@@ -15,7 +15,7 @@ export interface NominationProps {
 
 export interface DefaultProps {
   validator: any;
-  toggleFavourites: boolean;
+  toggleFavorites: boolean;
   batchIndex: number;
   batchKey: string;
   showMenu: boolean;
