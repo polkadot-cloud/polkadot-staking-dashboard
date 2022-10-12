@@ -86,7 +86,8 @@ export const Overview = forwardRef(
                   </h2>
                   {left > 0 ? (
                     <h3>
-                      {left} era{left !== 1 && 's'} remaining before withdraw.
+                      {left} era{left !== 1 && 's'}{' '}
+                      {t('modals.remaining_before_withdraw')}
                     </h3>
                   ) : (
                     <h3>{t('modals.available_to_withdraw')}</h3>

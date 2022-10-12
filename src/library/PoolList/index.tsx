@@ -115,7 +115,7 @@ export const PoolListInner = (props: PoolListProps) => {
     // ensure no duplicates
     filteredPools = filteredPools.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.id === value.id)
+        index === self.findIndex((t1: any) => t1.id === value.id)
     );
 
     setPage(1);

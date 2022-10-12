@@ -27,10 +27,10 @@ export const EraStatus = (props: any) => {
   // flag whether validator is active
 
   const validatorStatus = isSyncing
-    ? 'waiting'
+    ? t('library.waiting')
     : validatorInEra
-    ? 'active'
-    : 'waiting';
+    ? t('library.active')
+    : t('library.waiting');
 
   let totalStakePlanck = new BN(0);
   if (validatorInEra) {
@@ -52,7 +52,7 @@ export const EraStatus = (props: any) => {
           ? t('library.syncing')
           : validatorInEra
           ? `${t('library.active1')} / ${humanNumber(totalStake)} ${unit}`
-          : capitalizeFirstLetter(validatorStatus ?? '')}
+          : validatorStatus ?? ''}
       </h5>
     </ValidatorStatusWrapper>
   );

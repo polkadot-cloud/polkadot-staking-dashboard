@@ -109,17 +109,15 @@ export const Announcements = () => {
       )}.`,
     });
   }
-
+  const network_name = network.name;
+  const network_unit = network.unit;
   // bonded pools available
   if (bondedPools.length) {
     // total pools active
     announcements.push({
       class: 'pools',
       title: `${bondedPools.length} ${t('pages.overview.announcements5')}`,
-      subtitle:
-        i18next.resolvedLanguage === 'en'
-          ? `Nomination pools are available to join on the ${network.name} network.`
-          : `在 ${network.name}网络中可参与的池数.`,
+      subtitle: `${t('pages.overview.available_to_join', { network_name })}`,
     });
 
     // total locked in pols
@@ -128,10 +126,7 @@ export const Announcements = () => {
       title: `${totalPoolPointsBase} ${network.unit} ${t(
         'pages.overview.announcements7'
       )}`,
-      subtitle:
-        i18next.resolvedLanguage === 'en'
-          ? `The total ${network.unit} currently bonded in nomination pools.`
-          : `提名池中当前质押的${network.unit}总数`,
+      subtitle: `${t('pages.overview.the_total', { network_unit })}`,
     });
   }
 
@@ -141,32 +136,22 @@ export const Announcements = () => {
     title: `${t('pages.overview.announcements9')} ${minNominatorBondBase} ${
       network.unit
     }.`,
-    subtitle:
-      i18next.resolvedLanguage === 'en'
-        ? `The minimum bonding amount to start nominating on ${
-            network.name
-          } is now ${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`
-        : `在${network.name}提名最低绑定额为${planckBnToUnit(
-            minNominatorBond,
-            units
-          )} ${network.unit}.`,
+    subtitle: `${t('pages.overview.minimum_bonding_amount', {
+      network_name,
+    })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
-
+  const _lastTotalStakeBase = humanNumber(lastTotalStakeBase.toNumber());
   // supply staked
   announcements.push({
     class: 'neutral',
-    title:
-      i18next.resolvedLanguage === 'en'
-        ? `${supplyAsPercent}% of total ${network.unit} supply is currently staked.`
-        : ` ${network.unit}中的${supplyAsPercent}% 目前己被抵押.`,
-    subtitle:
-      i18next.resolvedLanguage === 'en'
-        ? `A total of ${humanNumber(lastTotalStakeBase.toNumber())} ${
-            network.unit
-          } is actively staking on the network.`
-        : `共 ${humanNumber(lastTotalStakeBase.toNumber())} ${
-            network.unit
-          } 在网络中被活跃抵押中.`,
+    title: `${t('pages.overview.currently_staked', {
+      supplyAsPercent,
+      network_unit,
+    })}`,
+    subtitle: `${t('pages.overview.staking_on_the_network', {
+      _lastTotalStakeBase,
+      network_unit,
+    })}`,
   });
 
   return (

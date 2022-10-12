@@ -57,7 +57,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
                 }`}
               >
                 {externalAccountsByUser.length
-                  ? `${externalAccountsByUser.length} Connected`
+                  ? `${externalAccountsByUser.length} ${t('modals.connected')}`
                   : ``}
               </span>
             </h3>

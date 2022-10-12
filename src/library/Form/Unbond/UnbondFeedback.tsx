@@ -130,8 +130,9 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
     }
 
     if (Number(bond.bond) > freeToUnbondToMin) {
+      const unit = network.unit;
       _errors.push(
-        `A minimum bond of ${minBondBase} ${network.unit} is required ${
+        `${t('library.minimum_bond', { minBondBase, unit })}${
           bondType === 'stake'
             ? `${t('library.when_actively_nominating')}`
             : isDepositor()
@@ -154,7 +155,7 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
         </h4>
       </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
-        <Warning key={`unbond_error_${index}`} text={err} />
+        <Warning key={`unbond_error_${index} `} text={err} />
       ))}
       <Spacer />
       <UnbondInput

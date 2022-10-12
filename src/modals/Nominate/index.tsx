@@ -76,6 +76,7 @@ export const Nominate = () => {
     callbackInBlock: () => {},
   });
 
+  const unit = network.unit;
   // warnings
   const warnings = [];
   if (getControllerNotImported(controller)) {
@@ -85,9 +86,7 @@ export const Nominate = () => {
     warnings.push(t('modals.w6'));
   }
   if (activeBase < minNominatorBondBase) {
-    warnings.push(
-      `You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}. Please bond some funds before nominating.`
-    );
+    warnings.push(`${(t('modals.w7'), { minNominatorBondBase, unit })}`);
   }
 
   return (

@@ -121,8 +121,14 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                   <h3>{t('modals.unbond_to_minimum')}</h3>
                   <p>
                     {isDepositor()
-                      ? `Unbond up to the ${minCreateBondBase} ${unit} minimum bond for pool depositors.`
-                      : `Unbond up to the ${minJoinBondBase} ${unit} minimum to maintain your pool membership`}
+                      ? `${t('modals.update_bound5', {
+                          minCreateBondBase,
+                          unit,
+                        })}`
+                      : `${t('modals.update_bound6', {
+                          minCreateBondBase,
+                          unit,
+                        })}`}
                   </p>
                 </div>
                 <div>

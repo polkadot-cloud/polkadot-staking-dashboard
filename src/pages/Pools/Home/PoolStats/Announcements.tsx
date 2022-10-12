@@ -67,13 +67,14 @@ export const Announcements = () => {
   };
 
   const announcements = [];
+  const unit = network.unit;
 
   announcements.push({
     class: 'neutral',
     title: `${humanNumber(rewardsClaimed)} ${network.unit} ${t(
       'pages.pools.been_claimed'
     )}`,
-    subtitle: `The total amount of ${network.unit} that has been claimed by pool members.`,
+    subtitle: `${t('pages.pools.poolstats1', { unit })}`,
   });
 
   if (rewardBalance > 0) {
@@ -82,7 +83,7 @@ export const Announcements = () => {
       title: `${humanNumber(rewardBalance)} ${network.unit} ${t(
         'pages.pools.poolstats2'
       )}`,
-      subtitle: `The outstanding amount of ${network.unit} available to claim by pool members.`,
+      subtitle: `${t('pages.pools.poolstats3', { unit })}`,
     });
   }
 

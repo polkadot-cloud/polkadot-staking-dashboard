@@ -118,11 +118,12 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     const _errors = warnings;
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
+    const network_unit = network.unit;
 
     // bond errors
     if (freeBalance === 0) {
       _bondDisabled = true;
-      _errors.push(`${t('library.w2')}`);
+      _errors.push(`${t('library.w2', { network_unit })}`);
     }
 
     if (Number(bond.bond) > freeBalance) {
@@ -134,7 +135,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     }
 
     if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
-      _errors.push(`${t('library.w11')}`);
+      _errors.push(`${t('library.w11', { network_unit })}`);
     }
 
     if (inSetup) {

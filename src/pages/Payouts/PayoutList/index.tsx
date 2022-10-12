@@ -236,11 +236,15 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                   pool={pool}
                                 />
                               ) : (
-                                <h4>From Pool {pool_id}</h4>
+                                <h4>
+                                  {t('pages.payouts.from_pool')} {pool_id}
+                                </h4>
                               )}
                             </>
                           )}
-                          {label === 'Slashed' && <h4>Deducted from bond</h4>}
+                          {label === 'Slashed' && (
+                            <h4>{t('pages.payouts.deducted_from_bond')}</h4>
+                          )}
                         </div>
                         <div>
                           <h5>{moment.unix(block_timestamp).fromNow()}</h5>

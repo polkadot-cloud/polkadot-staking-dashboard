@@ -105,6 +105,7 @@ export const BondAll = (props: FormsProps) => {
     callbackInBlock: () => {},
   });
 
+  const unit = network.unit;
   return (
     <>
       <div className="items">
@@ -113,16 +114,13 @@ export const BondAll = (props: FormsProps) => {
             <Warning text={t('modals.w1')} />
           )}
           {freeBalance === 0 && (
-            <Warning text={`You have no free ${network.unit} to bond.`} />
+            <Warning text={`${t('modals.no_free_to_bond', { unit })}`} />
           )}
           <h4>{t('modals.amount_to_bond')}</h4>
           <h2>
             {planckBnToUnit(bondAfterTxFees, units)} {network.unit}
           </h2>
-          <p>
-            This amount of {network.unit} will be added to your current bonded
-            funds.
-          </p>
+          <p>{t('modals.update_bond1', { unit })}</p>
           <Separator />
           <h4>{t('modals.new_total_bond')}</h4>
           <h2>
