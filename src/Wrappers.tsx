@@ -56,6 +56,9 @@ export const EntryWrapper = styled.div`
   h5 {
     color: ${textPrimary};
   }
+  p {
+    color: ${textSecondary};
+  }
   a {
     color: ${textSecondary};
   }
@@ -423,7 +426,7 @@ export const TopBarWrapper = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   padding-bottom: 0.5rem;
   width: 100%;
-  margin-top: 0.4rem;
+  margin-top: 0.75rem;
   margin-bottom: 0.25rem;
 
   button {
