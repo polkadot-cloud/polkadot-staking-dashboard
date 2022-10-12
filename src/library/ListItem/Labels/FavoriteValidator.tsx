@@ -24,18 +24,19 @@ export const FavoriteValidator = (props: FavoriteProps) => {
 
   const notificationFavorite = !isFavorite
     ? {
-      title: t('library.favorite_validator_added'),
-      subtitle: address,
-    }
+        title: t('library.favorite_validator_added'),
+        subtitle: address,
+      }
     : {
-      title: t('library.favorite_validator_removed'),
-      subtitle: address,
-    };
+        title: t('library.favorite_validator_removed'),
+        subtitle: address,
+      };
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = `${isFavorite ? `${t('library.remove')}` : `${t('library.add')}`
-    } ${t('library.favorite')}`;
+  const tooltipText = `${
+    isFavorite ? `${t('library.remove')}` : `${t('library.add')}`
+  } ${t('library.favorite')}`;
 
   const toggleTooltip = () => {
     if (!open) {

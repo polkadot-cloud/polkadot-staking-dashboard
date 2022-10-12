@@ -304,19 +304,19 @@ export const GenerateNominationsInner = (
           {['Active Low Commission', 'Optimal Selection'].includes(
             method || ''
           ) && (
-              <button
-                type="button"
-                onClick={() => {
-                  // set a temporary height to prevent height snapping on re-renders.
-                  setHeight(heightRef?.current?.clientHeight || null);
-                  setTimeout(() => setHeight(null), 200);
-                  removeValidatorMetaBatch(batchKey);
-                  setFetching(true);
-                }}
-              >
-                {t('library.re_generate')}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                // set a temporary height to prevent height snapping on re-renders.
+                setHeight(heightRef?.current?.clientHeight || null);
+                setTimeout(() => setHeight(null), 200);
+                removeValidatorMetaBatch(batchKey);
+                setFetching(true);
+              }}
+            >
+              {t('library.re_generate')}
+            </button>
+          )}
         </SelectableWrapper>
       )}
       <Wrapper

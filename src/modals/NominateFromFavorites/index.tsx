@@ -76,8 +76,8 @@ export const NominateFromFavorites = () => {
   useEffect(() => {
     setValid(
       nominationsToSubmit.length > 0 &&
-      nominationsToSubmit.length <= maxNominations &&
-      selectedFavorites.length > 0
+        nominationsToSubmit.length <= maxNominations &&
+        selectedFavorites.length > 0
     );
   }, [selectedFavorites]);
 
@@ -102,8 +102,8 @@ export const NominateFromFavorites = () => {
       bondType === 'pool'
         ? item
         : {
-          Id: item,
-        }
+            Id: item,
+          }
     );
 
     if (bondType === 'pool') {
@@ -124,7 +124,7 @@ export const NominateFromFavorites = () => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => { },
+    callbackInBlock: () => {},
   });
 
   return (
@@ -134,8 +134,9 @@ export const NominateFromFavorites = () => {
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`{t('modals.s1')}${bondType === 'stake' ? ' controller ' : ' '
-                }{t('modals.s3')}`}
+              text={`{t('modals.s1')}${
+                bondType === 'stake' ? ' controller ' : ' '
+              }{t('modals.s3')}`}
             />
           )}
         </div>
@@ -166,7 +167,7 @@ export const NominateFromFavorites = () => {
           <h3
             className={
               selectedFavorites.length === 0 ||
-                nominationsToSubmit.length > maxNominations
+              nominationsToSubmit.length > maxNominations
                 ? ''
                 : 'active'
             }
@@ -174,8 +175,9 @@ export const NominateFromFavorites = () => {
             {selectedFavorites.length > 0
               ? overMaxNominations
                 ? `Adding this many favorites will surpass ${maxNominations} nominations.`
-                : `Adding ${selectedFavorites.length} Nomination${selectedFavorites.length !== 1 ? `s` : ``
-                }`
+                : `Adding ${selectedFavorites.length} Nomination${
+                    selectedFavorites.length !== 1 ? `s` : ``
+                  }`
               : `${t('modals.no_favorites_selected')}`}
           </h3>
           <div>

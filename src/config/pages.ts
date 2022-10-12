@@ -84,7 +84,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
-    key: 'favourites',
+    key: 'favorites',
     uri: `${URI_PREFIX}/favorites`,
     hash: '/favorites',
     Entry: Favorites,

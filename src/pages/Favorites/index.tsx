@@ -26,7 +26,7 @@ export const Favorites = (props: PageProps) => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favoritesList === null ? (
-            <h3>{tCommon('pages.favourites.fetching_favorite_validators')}</h3>
+            <h3>{tCommon('pages.favorites.fetching_favorite_validators')}</h3>
           ) : (
             <>
               {isReady && (
@@ -36,14 +36,14 @@ export const Favorites = (props: PageProps) => {
                       bondType="stake"
                       validators={favoritesList}
                       batchKey={batchKey}
-                      title={tCommon('pages.favourites.favorite_validators')}
+                      title={tCommon('pages.favorites.favorite_validators')}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavorites
                     />
                   ) : (
-                    <h3>{tCommon('pages.favourites.no_favorites')}</h3>
+                    <h3>{tCommon('pages.favorites.no_favorites')}</h3>
                   )}
                 </>
               )}

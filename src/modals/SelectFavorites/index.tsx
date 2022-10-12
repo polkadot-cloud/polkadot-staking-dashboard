@@ -95,8 +95,9 @@ export const SelectFavorites = () => {
             {selectedFavorites.length > 0
               ? overMaxNominations
                 ? `Adding this many favorites will surpass ${maxNominations} nominations.`
-                : `Add ${selectedFavorites.length} Favorite${selectedFavorites.length !== 1 ? `s` : ``
-                } to Nominations`
+                : `Add ${selectedFavorites.length} Favorite${
+                    selectedFavorites.length !== 1 ? `s` : ``
+                  } to Nominations`
               : `${t('modals.no_favorites_selected')}`}
           </button>
         </FooterWrapper>

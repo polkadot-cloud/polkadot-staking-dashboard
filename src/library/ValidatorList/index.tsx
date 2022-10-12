@@ -215,7 +215,7 @@ export const ValidatorListInner = (props: any) => {
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.address === value.address)
+        index === self.findIndex((t1: any) => t1.address === value.address)
     );
 
     handleValidatorsFilterUpdate(filteredValidators);
