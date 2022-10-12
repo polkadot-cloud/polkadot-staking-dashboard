@@ -21,6 +21,7 @@ export interface APIConstants {
   maxNominations: number;
   sessionsPerEra: number;
   maxNominatorRewardedPerValidator: number;
+  historyDepth: BN;
   maxElectingVoters: number;
   expectedBlockTime: number;
   existentialDeposit: BN;
