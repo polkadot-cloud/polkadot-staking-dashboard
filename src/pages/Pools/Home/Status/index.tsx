@@ -136,9 +136,9 @@ export const Status = ({ height }: { height: number }) => {
   // determine pool status - left side
   const poolStatusLeft =
     poolState === PoolState.Block
-      ? 'Locked / '
+      ? t('pages.pools.locked1')
       : poolState === PoolState.Destroy
-      ? 'Destroying / '
+      ? t('pages.pools.destroying1')
       : '';
 
   // determine pool status - right side
@@ -164,7 +164,7 @@ export const Status = ({ height }: { height: number }) => {
         <Stat
           label={t('pages.pools.pool_membership')}
           helpKey="Pool Membership"
-          stat="Not in Pool"
+          stat={t('pages.pools.not_in_pool')}
           buttons={isSyncing ? [] : buttons}
         />
       )}

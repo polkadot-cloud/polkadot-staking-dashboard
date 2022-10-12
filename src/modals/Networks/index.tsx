@@ -36,7 +36,7 @@ export const Networks = () => {
 
   return (
     <>
-      <Title title="Networks" icon={faGlobe} />
+      <Title title={t('modals.networks')} icon={faGlobe} />
       <PaddingWrapper>
         <ContentWrapper>
           <h4>{t('modals.select_network')}</h4>

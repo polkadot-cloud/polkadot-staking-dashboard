@@ -30,13 +30,13 @@ export const Header = () => {
   let stateDisplay;
   switch (state) {
     case PoolState.Block:
-      stateDisplay = 'Locked';
+      stateDisplay = t('pages.pools.locked');
       break;
     case PoolState.Destroy:
-      stateDisplay = 'Destroying';
+      stateDisplay = t('pages.pools.destroying');
       break;
     default:
-      stateDisplay = 'Open';
+      stateDisplay = t('pages.pools.open');
       break;
   }
 

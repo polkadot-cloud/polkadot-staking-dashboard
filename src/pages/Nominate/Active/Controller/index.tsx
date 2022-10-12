@@ -24,7 +24,7 @@ export const Controller = ({ label }: { label: string }) => {
   const controller = getBondedAccount(activeAccount);
   const { t } = useTranslation('common');
 
-  let display = 'None';
+  let display = t('pages.nominate.none');
   if (hasController() && controller) {
     display = clipAddress(controller);
   }

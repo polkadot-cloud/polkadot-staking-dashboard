@@ -49,7 +49,7 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title="Overview" />
+      <PageTitle title={t('pages.overview.overview')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <ActiveAccount />

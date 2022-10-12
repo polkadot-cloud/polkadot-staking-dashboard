@@ -115,7 +115,7 @@ export const Overview = forwardRef(
           );
         })}
         <NotesWrapper>
-          {t('modals.unlock_chunks1')}
+          {t('modals.unlock_chunks1', { bondDuration })}
           <p>{isStaking && `${t('modals.unlock_chunks2')}`}</p>
           {!isStaking && <p>{t('modals.unlock_chunk')}</p>}
         </NotesWrapper>
