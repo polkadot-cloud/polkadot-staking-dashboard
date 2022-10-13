@@ -4,6 +4,7 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { DEFAULT_LOCALE } from 'consts';
 import commoncn from './cn/common.json';
 import commonen from './en/common.json';
 import pagescn from './cn/pages.json';
@@ -25,14 +26,20 @@ export const resources = {
   },
 };
 
+// get locale from localStorage
+const locale = localStorage.getItem('locale') ?? DEFAULT_LOCALE;
+if (locale === null) {
+  localStorage.setItem('locale', DEFAULT_LOCALE);
+}
+
 // configure i18n object
 i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     interpolation: { escapeValue: false },
-    lng: 'en', // TODO: get initial language from localStorage `locale`, default to en if does not exist
-    fallbackLng: 'en',
+    lng: locale,
+    fallbackLng: DEFAULT_LOCALE,
     debug: true,
     resources,
   });
