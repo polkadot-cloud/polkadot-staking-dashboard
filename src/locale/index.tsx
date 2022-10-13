@@ -31,7 +31,7 @@ i18next
   .use(initReactI18next)
   .init({
     interpolation: { escapeValue: false },
-    lng: 'en',
+    lng: 'en', // TODO: get initial language from localStorage `locale`, default to en if does not exist
     fallbackLng: 'en',
     debug: true,
     resources,
