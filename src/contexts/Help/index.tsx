@@ -60,6 +60,7 @@ export const HelpProvider = (props: HelpContextProps) => {
   const openHelpWith = (definition: MaybeString, _config: HelpConfig = {}) => {
     setState({
       ...state,
+      definition,
       status: 1,
       config: _config,
     });

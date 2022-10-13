@@ -4,14 +4,6 @@
 import { ReactNode } from 'react';
 import { MaybeString } from 'types';
 
-export type HelpContentRaw = Array<HelpItemRaw>;
-
-export interface HelpItemRaw {
-  key?: string;
-  definitions?: HelpDefinitions;
-  external?: HelpExternals;
-}
-
 export type HelpExternals = Array<HelpExternal>;
 
 export type HelpDefinitions = Array<HelpDefinition>;
@@ -21,6 +13,14 @@ export type HelpDefinition = {
   description: string[];
 };
 
+export type HelpRecords = Array<HelpRecord>;
+
+export type HelpRecord = {
+  key: string;
+  localeKey: string;
+};
+
+// TODO: update external type
 export interface HelpExternal {
   title: string;
   url: string;

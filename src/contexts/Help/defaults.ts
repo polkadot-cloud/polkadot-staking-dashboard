@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { HelpContextInterface, HelpDefinition } from './types';
+import { HelpContextInterface, HelpRecord } from './types';
 
-export const definition: HelpDefinition = {
-  title: '',
-  description: [],
+export const definition: HelpRecord = {
+  key: '',
+  localeKey: '',
 };
 
 export const defaultHelpContext: HelpContextInterface = {

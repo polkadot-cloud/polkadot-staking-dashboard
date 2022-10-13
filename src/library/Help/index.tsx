@@ -6,11 +6,11 @@ import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
 import { HELP_CONFIG } from 'config/help';
 import {
-  HelpItemRaw,
   HelpDefinition,
-  HelpDefinitions,
   HelpExternal,
   HelpExternals,
+  HelpRecord,
+  HelpRecords,
 } from 'contexts/Help/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -66,71 +66,66 @@ export const Help = () => {
     return <></>;
   }
 
-  Object.values(HELP_CONFIG).forEach((c: any) => {
-    c.forEach((ds: any) => {
-      const locale_key = ds.localeKey;
-      const help_hey = ds.helpKey;
-
-      // access title and description property of key
-      const title = tHelp(`${locale_key}.title`);
-      const description = i18n.getResource(
-        'en',
-        'help',
-        `${locale_key}.description`
-      );
-
-      // inject variables into definition
-      const descInjected = fillDefinitionVariables({
-        title,
-        description,
-      });
-
-      // example of mapping descriptions array and constructing JSX
-      const descJsx = descInjected.description.map((d: string, i: number) => (
-        <p key={`index_${i}`}>{d}</p>
-      ));
-    });
-  });
-
   let meta: any | undefined;
 
+  // if a definition is provided, get it from help config, otherwise
+  // return all definitions and external items from the category.
   if (definition) {
     // get items for active category
-    meta = Object.values(HELP_CONFIG).find((item: any) =>
-      item?.definitions?.find((d: HelpDefinition) => d.title === definition)
+    meta = Object.values(HELP_CONFIG).find((c: any) =>
+      c?.definitions?.find((d: HelpRecord) => d.key === definition)
     );
   } else {
     // get all items
-    let _definitions: HelpDefinitions = [];
+    let _definitions: HelpRecords = [];
     let _external: HelpExternals = [];
 
     Object.values(HELP_CONFIG).forEach((c: any) => {
-      _definitions = _definitions.concat([...(c.definitions || [])]);
-      _external = _external.concat([...(c.external || [])]);
+      _definitions = _definitions.concat([...(c?.definitions || [])]);
+      _external = _external.concat([...(c?.external || [])]);
     });
     meta = { definitions: _definitions, external: _external };
   }
 
-  // resources to display
+  // accumulate all definition translations for display
   let definitions = meta?.definitions ?? [];
+  const activeDefinitions = definitions
+    .filter((d: HelpRecord) => d.key !== definition)
+    .map((d: HelpRecord) => {
+      const { localeKey } = d;
+
+      return fillDefinitionVariables({
+        title: tHelp(`${localeKey}.title`),
+        description: i18n.getResource('en', 'help', `${localeKey}.description`),
+      });
+    });
 
   // get active definiton
-  let activeDefinition = definition
-    ? definitions.find((d: HelpDefinition) => d.title === definition)
+  const activeRecord = definition
+    ? definitions.find((d: HelpRecord) => d.key === definition)
     : null;
 
-  // fill placeholder variables
-  activeDefinition = activeDefinition
-    ? fillDefinitionVariables(activeDefinition)
-    : null;
+  let activeDefinition: HelpDefinition | null = null;
+  if (activeRecord) {
+    const { localeKey } = activeRecord;
 
-  // filter active definition
-  definitions = definitions.filter(
-    (d: HelpDefinition) => d.title !== definition
-  );
+    const title = tHelp(`${localeKey}.title`);
+    const description = i18n.getResource(
+      'en',
+      'help',
+      `${localeKey}.description`
+    );
+    activeDefinition = fillDefinitionVariables({
+      title,
+      description,
+    });
 
-  // get external resources
-  const external = meta?.external ?? [];
+    // filter active definition
+    definitions = definitions.filter((d: HelpRecord) => d.key !== definition);
+  }
+
+  // TODO: get external resources
+  // const external = meta?.external ?? [];
 
   return (
     <Wrapper
@@ -147,7 +142,7 @@ export const Help = () => {
         <HeightWrapper>
           <ContentWrapper>
             <div className="buttons">
-              {definition && (
+              {activeDefinition && (
                 <button type="button" onClick={() => setDefinition(null)}>
                   <FontAwesomeIcon icon={faReplyAll} />
                   {t('library.all_resources')}
@@ -175,29 +170,28 @@ export const Help = () => {
               </>
             )}
 
-            {/* Display definitions */}
-            {definitions.length > 0 && (
+            {activeDefinitions.length > 0 && (
               <>
                 <h3>
                   {activeDefinition ? `Related ` : ''}
                   {t('library.definitions')}
                 </h3>
-                {definitions.map((item: HelpDefinition, index: number) => {
-                  item = fillDefinitionVariables(item);
-                  return (
-                    <Definition
-                      key={`def_${index}`}
-                      onClick={() => {}}
-                      title={item.title}
-                      description={item.description}
-                    />
-                  );
-                })}
+                {activeDefinitions.map(
+                  (item: HelpDefinition, index: number) => {
+                    return (
+                      <Definition
+                        key={`def_${index}`}
+                        onClick={() => {}}
+                        title={item.title}
+                        description={item.description}
+                      />
+                    );
+                  }
+                )}
               </>
             )}
 
-            {/* Display external */}
-            {external.length > 0 && (
+            {/* {external.length > 0 && (
               <>
                 <h3>{t('library.articles')}</h3>
                 {external.map((item: HelpExternal, index: number) => {
@@ -214,7 +208,7 @@ export const Help = () => {
                   return thisRteturn;
                 })}
               </>
-            )}
+            )} */}
           </ContentWrapper>
         </HeightWrapper>
         <button
