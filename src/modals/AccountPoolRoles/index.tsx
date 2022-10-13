@@ -12,6 +12,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { StyledButton, ContentWrapper } from './Wrappers';
 
@@ -39,10 +40,16 @@ export const AccountPoolRoles = () => {
               </div>
             </>
           )}
-          <h4>
-            Active Roles in <b>{totalAccountPools}</b> Pool
-            {totalAccountPools === 1 ? '' : 's'}
-          </h4>
+          {i18next.resolvedLanguage === 'en' ? (
+            <h4>
+              Active Roles in <b>{totalAccountPools}</b> Pool
+              {totalAccountPools === 1 ? '' : 's'}
+            </h4>
+          ) : (
+            <h4>
+              有活跃角色在 <b>{totalAccountPools}</b> 个提名池
+            </h4>
+          )}
           <div className="items">
             {Object.entries(accountPools).map(([key, item]: any, i: number) => (
               <Button item={item} poolId={key} key={`all_roles_root_${i}`} />

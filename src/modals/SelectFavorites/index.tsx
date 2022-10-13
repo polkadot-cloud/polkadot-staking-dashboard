@@ -9,6 +9,7 @@ import { useApi } from 'contexts/Api';
 import { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper, FooterWrapper } from './Wrappers';
 
@@ -94,10 +95,12 @@ export const SelectFavorites = () => {
           >
             {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `Adding this many favorites will surpass ${maxNominations} nominations.`
-                : `Add ${selectedFavorites.length} Favorite${
+                ? `${(t('modals.will_surpass'), { maxNominations })}`
+                : i18next.resolvedLanguage === 'en'
+                ? `Add ${selectedFavorites.length} Favorite${
                     selectedFavorites.length !== 1 ? `s` : ``
                   } to Nominations`
+                : `添加 ${selectedFavorites.length} 个喜爱到提名表上`
               : `${t('modals.no_favorites_selected')}`}
           </button>
         </FooterWrapper>

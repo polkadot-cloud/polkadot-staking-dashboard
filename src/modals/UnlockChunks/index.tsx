@@ -8,6 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
+import i18next from 'i18next';
 import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
 import { Overview } from './Overview';
 import { Forms } from './Forms';
@@ -68,13 +69,23 @@ export const UnlockChunks = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title
-          title={`${unlocking.length > 0 ? `${unlocking.length} ` : ``}Unlock${
-            unlocking.length === 1 ? '' : 's'
-          }`}
-          icon={faLockOpen}
-          fixed
-        />
+        {i18next.resolvedLanguage === 'en' ? (
+          <Title
+            title={`${
+              unlocking.length > 0 ? `${unlocking.length} ` : ``
+            }Unlock${unlocking.length === 1 ? '' : 's'}`}
+            icon={faLockOpen}
+            fixed
+          />
+        ) : (
+          <Title
+            title={`${
+              unlocking.length > 0 ? `${unlocking.length} ` : ``
+            }个未解锁`}
+            icon={faLockOpen}
+            fixed
+          />
+        )}
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}
