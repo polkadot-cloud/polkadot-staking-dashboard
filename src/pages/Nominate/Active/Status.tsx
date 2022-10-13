@@ -136,7 +136,7 @@ export const Status = ({ height }: { height: number }) => {
         }
         stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
         buttons={
-          payeeStatus
+          !inSetup()
             ? [
                 {
                   title: 'Update',
