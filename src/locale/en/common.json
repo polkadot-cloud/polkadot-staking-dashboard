@@ -478,6 +478,8 @@
             "average_commission": "Average Commission",
             "active_validators": "Active Validators",
             "total_validators": "Total Validators",
+            "displaying_validators_one": "Displaying {{count}} Validator",
+            "displaying_validators_other": "Displaying {{count}} Validators",
             "network_validators": "Network Validators",
             "connecting": "Connecting...",
             "fetching_validators": "Fetching validators..."

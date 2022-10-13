@@ -26,7 +26,6 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Selectable } from 'library/List/Selectable';
 import { SearchInput } from 'library/List/SearchInput';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { Filters } from './Filters';
 import { useList, ListProvider } from '../List/context';
 
@@ -62,7 +61,6 @@ export const ValidatorListInner = (props: any) => {
     allowFilters,
     toggleFavorites,
     pagination,
-    title,
     format,
     selectable,
     bondType,
@@ -229,20 +227,11 @@ export const ValidatorListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
-          {i18next.resolvedLanguage === 'en' ? (
-            <h4>
-              {title ||
-                `Displaying ${validators.length} Validator${
-                  validators.length === 1 ? '' : 's'
-                }`}
-            </h4>
-          ) : (
-            <h4>
-              {title ||
-                `正在显示 ${validators.length} 个验证人
-              }`}
-            </h4>
-          )}
+          <h4>
+            {t('pages.validators.displaying_validators', {
+              count: validators.length,
+            })}
+          </h4>
         </div>
         <div>
           {allowListFormat === true && (
