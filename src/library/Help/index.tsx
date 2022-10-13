@@ -96,7 +96,11 @@ export const Help = () => {
 
       return fillDefinitionVariables({
         title: tHelp(`${localeKey}.title`),
-        description: i18n.getResource('en', 'help', `${localeKey}.description`),
+        description: i18n.getResource(
+          i18n.resolvedLanguage,
+          'help',
+          `${localeKey}.description`
+        ),
       });
     });
 
@@ -111,7 +115,7 @@ export const Help = () => {
 
     const title = tHelp(`${localeKey}.title`);
     const description = i18n.getResource(
-      'en',
+      i18n.resolvedLanguage,
       'help',
       `${localeKey}.description`
     );
