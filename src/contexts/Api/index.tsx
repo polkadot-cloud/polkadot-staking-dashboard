@@ -143,7 +143,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       historyDepth = new BN(historyDepth.toString());
     }
 
-    const poolsPalletId = _consts[9] ? _consts[9].toU8a() : new Uint8Array(0);
+    const poolsPalletId = _consts[8] ? _consts[8].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({
