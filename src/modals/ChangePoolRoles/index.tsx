@@ -12,6 +12,7 @@ import { useApi } from 'contexts/Api';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
@@ -19,14 +20,18 @@ import { RoleChange } from './RoleChange';
 export const ChangePoolRoles = () => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
+  const { replacePoolRoles } = useBondedPools();
   const { activeAccount, accountHasSigner } = useConnect();
   const { config } = useModal();
   const { txFeesValid } = useTxFees();
-  const { poolId, roleEdits } = config;
+  const { id: poolId, roleEdits } = config;
 
   // tx to submit
   const tx = () => {
     let _tx = null;
+    const root = roleEdits?.root?.newAddress
+      ? { Set: roleEdits?.root?.newAddress }
+      : 'Remove';
     const nominator = roleEdits?.nominator?.newAddress
       ? { Set: roleEdits?.nominator?.newAddress }
       : 'Remove';
@@ -36,7 +41,7 @@ export const ChangePoolRoles = () => {
 
     _tx = api?.tx.nominationPools?.updateRoles(
       poolId,
-      'Noop',
+      root,
       nominator,
       stateToggler
     );
@@ -49,9 +54,12 @@ export const ChangePoolRoles = () => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      // manually update bondedPools with new pool roles
+      replacePoolRoles(poolId, roleEdits);
+    },
   });
 
   return (
@@ -65,6 +73,11 @@ export const ChangePoolRoles = () => {
             boxSizing: 'border-box',
           }}
         >
+          <RoleChange
+            roleName="Root"
+            oldAddress={roleEdits?.root?.oldAddress}
+            newAddress={roleEdits?.root?.newAddress}
+          />
           <RoleChange
             roleName="Nominator"
             oldAddress={roleEdits?.nominator?.oldAddress}

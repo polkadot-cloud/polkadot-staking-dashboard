@@ -9,9 +9,9 @@ import { shuffle } from 'Utils';
 export const useFetchMehods = () => {
   const { validators, sessionParachain } = useValidators();
   const { applyValidatorOrder, applyValidatorFilters } = useValidatorFilter();
-  let { favouritesList } = useValidators();
-  if (favouritesList === null) {
-    favouritesList = [];
+  let { favoritesList } = useValidators();
+  if (favoritesList === null) {
+    favoritesList = [];
   }
 
   const rawBatchKey = 'validators_browse';
@@ -25,8 +25,8 @@ export const useFetchMehods = () => {
       case 'Active Low Commission':
         nominations = fetchLowCommission();
         break;
-      case 'From Favourites':
-        nominations = fetchFavourites();
+      case 'From Favorites':
+        nominations = fetchFavorites();
         break;
       default:
         return [];
@@ -51,16 +51,16 @@ export const useFetchMehods = () => {
     return nominations;
   };
 
-  const fetchFavourites = () => {
+  const fetchFavorites = () => {
     let _favs: Array<Validator> = [];
 
-    if (!favouritesList) {
+    if (!favoritesList) {
       return _favs;
     }
 
-    if (favouritesList.length) {
-      // take subset of up to 16 favourites
-      _favs = favouritesList.slice(0, 16);
+    if (favoritesList.length) {
+      // take subset of up to 16 favorites
+      _favs = favoritesList.slice(0, 16);
     }
     return _favs;
   };

@@ -15,6 +15,7 @@ export const consts: APIConstants = {
   maxNominations: 0,
   sessionsPerEra: 0,
   maxNominatorRewardedPerValidator: 0,
+  historyDepth: new BN(0),
   maxElectingVoters: 0,
   expectedBlockTime: 0,
   existentialDeposit: new BN(0),

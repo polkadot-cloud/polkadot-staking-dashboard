@@ -9,38 +9,38 @@ import { PageTitle } from 'library/PageTitle';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 
-export const Favourites = (props: PageProps) => {
+export const Favorites = (props: PageProps) => {
   const { isReady } = useApi();
   const { page } = props;
   const { title } = page;
-  const { favouritesList } = useValidators();
+  const { favoritesList } = useValidators();
 
-  const batchKey = 'favourite_validators';
+  const batchKey = 'favorite_validators';
 
   return (
     <>
       <PageTitle title={title} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          {favouritesList === null ? (
-            <h3>Fetching favourite validators...</h3>
+          {favoritesList === null ? (
+            <h3>Fetching favorite validators...</h3>
           ) : (
             <>
               {isReady && (
                 <>
-                  {favouritesList.length > 0 ? (
+                  {favoritesList.length > 0 ? (
                     <ValidatorList
                       bondType="stake"
-                      validators={favouritesList}
+                      validators={favoritesList}
                       batchKey={batchKey}
-                      title="Favourite Validators"
+                      title="Favorite Validators"
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
-                      toggleFavourites
+                      toggleFavorites
                     />
                   ) : (
-                    <h3>No Favourites.</h3>
+                    <h3>No Favorites.</h3>
                   )}
                 </>
               )}
@@ -52,4 +52,4 @@ export const Favourites = (props: PageProps) => {
   );
 };
 
-export default Favourites;
+export default Favorites;

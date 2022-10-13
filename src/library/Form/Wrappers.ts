@@ -39,10 +39,10 @@ export const InputWrapper = styled.div`
     }
 
     input {
+      background: ${backgroundLabel};
       max-width: 100%;
       margin-top: 0.5rem;
       border: none;
-      background: ${backgroundLabel};
       border-radius: 0.75rem;
       padding: 0.75rem;
     }

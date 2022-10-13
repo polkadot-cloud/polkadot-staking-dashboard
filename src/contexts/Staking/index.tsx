@@ -212,7 +212,6 @@ export const StakingProvider = ({
           [api.query.staking.erasValidatorReward, previousEra],
           [api.query.staking.erasTotalStake, previousEra],
           api.query.staking.minNominatorBond,
-          api.query.staking.historyDepth,
           [api.query.staking.payee, activeAccount],
         ],
         ([
@@ -224,13 +223,11 @@ export const StakingProvider = ({
           _lastReward,
           _lastTotalStake,
           _minNominatorBond,
-          _historyDepth,
           _payee,
         ]) => {
           setStakingMetrics({
             ...stakingMetrics,
             payee: _payee.toHuman(),
-            historyDepth: _historyDepth.toBn(),
             lastTotalStake: _lastTotalStake.toBn(),
             validatorCount: _validatorCount.toBn(),
             totalNominators: _totalNominators.toBn(),

@@ -21,6 +21,12 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line
   getPoolNominationStatusCode: (t) => '',
   // eslint-disable-next-line
+  getAccountRoles: (w) => null,
+  // eslint-disable-next-line
+  getAccountPools: (w) => null,
+  // eslint-disable-next-line
+  replacePoolRoles: (p, e) => {},
+  // eslint-disable-next-line
    poolSearchFilter: (l, k, v) => {},
   bondedPools: [],
   meta: {},

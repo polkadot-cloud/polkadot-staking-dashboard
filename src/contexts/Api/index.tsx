@@ -62,11 +62,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // initial connection
   useEffect(() => {
-    const _network: NetworkName = localStorage.getItem(
-      'network'
-    ) as NetworkName;
-    connect(_network, isLightClient);
-  }, []);
+    if (!provider) {
+      const _network: NetworkName = localStorage.getItem(
+        'network'
+      ) as NetworkName;
+      connect(_network, isLightClient);
+    }
+  });
 
   // provider event handlers
   useEffect(() => {
@@ -97,11 +99,12 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
       _api.consts.babe.expectedBlockTime,
       _api.consts.balances.existentialDeposit,
+      _api.consts.staking.historyDepth,
       _api.consts.nominationPools.palletId,
     ];
 
     // fetch constants
-    const _consts = await Promise.all(promises);
+    const _consts: any = await Promise.all(promises);
 
     // format constants
     const bondDuration = _consts[0]
@@ -132,7 +135,15 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       ? new BN(_consts[6].toString())
       : new BN(0);
 
-    const poolsPalletId = _consts[7] ? _consts[7].toU8a() : new Uint8Array(0);
+    let historyDepth;
+    if (_consts[7] !== undefined) {
+      historyDepth = new BN(_consts[7].toString());
+    } else {
+      historyDepth = await _api.query.staking.historyDepth();
+      historyDepth = new BN(historyDepth.toString());
+    }
+
+    const poolsPalletId = _consts[9] ? _consts[9].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({
@@ -140,6 +151,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       maxNominations,
       sessionsPerEra,
       maxNominatorRewardedPerValidator,
+      historyDepth,
       maxElectingVoters,
       expectedBlockTime,
       poolsPalletId,

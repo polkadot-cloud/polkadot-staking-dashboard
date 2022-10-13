@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { useState, useEffect } from 'react';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBalances } from 'contexts/Balances';
@@ -31,7 +31,7 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
   const { staking, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
   const { getTransferOptions } = useTransferOptions();
-  const { isDepositor } = useActivePool();
+  const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;

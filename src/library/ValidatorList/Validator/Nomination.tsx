@@ -6,7 +6,7 @@ import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import { useList } from '../../List/context';
 import { getIdentityDisplay } from './Utils';
-import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
+import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Metrics } from '../../ListItem/Labels/Metrics';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { CopyAddress } from '../../ListItem/Labels/CopyAddress';
@@ -24,7 +24,7 @@ export const Nomination = (props: NominationProps) => {
   const {
     validator,
     nominator,
-    toggleFavourites,
+    toggleFavorites,
     batchIndex,
     batchKey,
     bondType,
@@ -51,7 +51,7 @@ export const Nomination = (props: NominationProps) => {
           <div>
             <Labels>
               <CopyAddress validator={validator} />
-              {toggleFavourites && <FavouriteValidator address={address} />}
+              {toggleFavorites && <FavoriteValidator address={address} />}
             </Labels>
           </div>
         </div>

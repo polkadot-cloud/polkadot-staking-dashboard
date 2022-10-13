@@ -10,10 +10,9 @@ import { Button, ButtonRow } from 'library/Button';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useModal } from 'contexts/Modal';
 import { useUi } from 'contexts/UI';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PoolState } from 'contexts/Pools/types';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useTransferOptions } from 'contexts/TransferOptions';
 
 export const ManageBond = () => {
@@ -22,8 +21,7 @@ export const ManageBond = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
-  const { membership } = usePoolMemberships();
-  const { isBonding, activeBondedPool } = useActivePool();
+  const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
 
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -31,7 +29,7 @@ export const ManageBond = () => {
   const { active, totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.pool;
 
-  const { state } = activeBondedPool?.bondedPool || {};
+  const { state } = selectedActivePool?.bondedPool || {};
 
   return (
     <>
@@ -49,7 +47,12 @@ export const ManageBond = () => {
             primary
             inline
             title="+"
-            disabled={isSyncing || !isBonding() || state === PoolState.Destroy}
+            disabled={
+              isSyncing ||
+              !isBonding() ||
+              !isMember() ||
+              state === PoolState.Destroy
+            }
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -62,7 +65,12 @@ export const ManageBond = () => {
             small
             primary
             title="-"
-            disabled={isSyncing || !isBonding() || state === PoolState.Destroy}
+            disabled={
+              isSyncing ||
+              !isBonding() ||
+              !isMember() ||
+              state === PoolState.Destroy
+            }
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -77,7 +85,7 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={isSyncing || !membership || state === PoolState.Destroy}
+            disabled={isSyncing || !isMember() || state === PoolState.Destroy}
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
             }
@@ -89,7 +97,7 @@ export const ManageBond = () => {
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
         free={planckBnToUnit(freeBalance, units)}
-        inactive={!membership}
+        inactive={!isMember()}
       />
     </>
   );

@@ -9,10 +9,9 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Separator } from 'Wrappers';
 import { BondedPool, PoolState } from 'contexts/Pools/types';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Warning } from 'library/Form/Warning';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -28,12 +27,11 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { membership } = usePoolMemberships();
-  const { isOwner, activeBondedPool } = useActivePool();
+  const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
   const { bondedPools, meta, updateBondedPools, getBondedPool } =
     useBondedPools();
   const { txFeesValid } = useTxFees();
-  const poolId = membership?.poolId;
+  const poolId = selectedActivePool?.id;
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -41,15 +39,19 @@ export const Forms = forwardRef((props: any, ref: any) => {
   // updated metadata value
   const [metadata, setMetadata] = useState<string>('');
 
-  // ensure selected membership and targests are valid
-  const isValid = (membership && isOwner()) ?? false;
+  // ensure account has relevant roles for task
+  const canToggle =
+    (isOwner() || isStateToggler()) &&
+    ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task);
+  const canRename = isOwner() && task === 'set_pool_metadata';
+  const isValid = canToggle || canRename;
 
   // determine current pool metadata and set in state
   useEffect(() => {
     if (task === 'set_pool_metadata') {
       let _metadata = '';
       const pool = bondedPools.find((p: any) => {
-        return p.addresses.stash === activeBondedPool?.addresses.stash;
+        return p.addresses.stash === selectedActivePool?.addresses.stash;
       });
 
       if (pool) {
@@ -147,7 +149,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {
       // reflect updated state in bondedPools list
