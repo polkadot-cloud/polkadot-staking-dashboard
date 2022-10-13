@@ -20,7 +20,11 @@ export type HelpRecord = {
   localeKey: string;
 };
 
-// TODO: update external type
+export interface ExternalRecord {
+  localeKey: string;
+  url: string;
+  website?: string;
+}
 export interface HelpExternal {
   title: string;
   url: string;

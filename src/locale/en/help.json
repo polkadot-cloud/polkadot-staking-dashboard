@@ -137,7 +137,7 @@
             }
         },
         "external": {
-            "chang_destination": "Changing Your Reward Destination",
+            "change_destination": "Changing Your Reward Destination",
             "bond_more": "Bond More Tokens to Your Existing Stake",
             "unbonding_tokens": "Unbonding Your Tokens",
             "rebonding": "Rebonding",

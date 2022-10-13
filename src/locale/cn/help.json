@@ -137,7 +137,7 @@
             }
         },
         "external": {
-            "chang_destination": "更改奖励钱包地址",
+            "change_destination": "更改奖励钱包地址",
             "bond_more": "质押更多代币到现有的抵押",
             "unbonding_tokens": "解除您的质押",
             "rebonding": "解除质押中",

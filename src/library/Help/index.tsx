@@ -6,6 +6,7 @@ import { useAnimation } from 'framer-motion';
 import { useHelp } from 'contexts/Help';
 import { HELP_CONFIG } from 'config/help';
 import {
+  ExternalRecord,
   HelpDefinition,
   HelpExternal,
   HelpExternals,
@@ -128,8 +129,17 @@ export const Help = () => {
     definitions = definitions.filter((d: HelpRecord) => d.key !== definition);
   }
 
-  // TODO: get external resources
-  // const external = meta?.external ?? [];
+  // accumulate external resources
+  const externals = meta?.external ?? [];
+  const activeExternals = externals.map((e: ExternalRecord) => {
+    const { localeKey, url, website } = e;
+
+    return {
+      title: tHelp(localeKey),
+      url,
+      website,
+    };
+  });
 
   return (
     <Wrapper
@@ -181,38 +191,32 @@ export const Help = () => {
                   {t('library.definitions')}
                 </h3>
                 {activeDefinitions.map(
-                  (item: HelpDefinition, index: number) => {
-                    return (
-                      <Definition
-                        key={`def_${index}`}
-                        onClick={() => {}}
-                        title={item.title}
-                        description={item.description}
-                      />
-                    );
-                  }
+                  (item: HelpDefinition, index: number) => (
+                    <Definition
+                      key={`def_${index}`}
+                      onClick={() => {}}
+                      title={item.title}
+                      description={item.description}
+                    />
+                  )
                 )}
               </>
             )}
 
-            {/* {external.length > 0 && (
+            {activeExternals.length > 0 && (
               <>
                 <h3>{t('library.articles')}</h3>
-                {external.map((item: HelpExternal, index: number) => {
-                  const thisRteturn = (
-                    <External
-                      key={`ext_${index}`}
-                      width="100%"
-                      title={t(item.title)}
-                      url={item.url}
-                      website={item.website}
-                    />
-                  );
-
-                  return thisRteturn;
-                })}
+                {activeExternals.map((item: HelpExternal, index: number) => (
+                  <External
+                    key={`ext_${index}`}
+                    width="100%"
+                    title={t(item.title)}
+                    url={item.url}
+                    website={item.website}
+                  />
+                ))}
               </>
-            )} */}
+            )}
           </ContentWrapper>
         </HeightWrapper>
         <button

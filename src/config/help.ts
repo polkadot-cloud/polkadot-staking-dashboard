@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+// TODO: re-introduce type
 export const HELP_CONFIG: any = [
   {
     key: 'overview',
@@ -44,17 +45,17 @@ export const HELP_CONFIG: any = [
     ],
     external: [
       {
-        title: 'overview.external.connect_your_accounts',
+        localeKey: 'overview.external.connect_your_accounts',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182121-how-to-use-the-staking-dashboard-connecting-your-account',
         website: 'polkadot.network',
       },
       {
-        title: 'overview.external.how_to_use',
+        localeKey: 'overview.external.how_to_use',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
         website: 'polkadot.network',
       },
       {
-        title: 'overview.external.stake_dot',
+        localeKey: 'overview.external.stake_dot',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
         website: 'polkadot.network',
       },
@@ -98,32 +99,32 @@ export const HELP_CONFIG: any = [
     ],
     external: [
       {
-        title: 'nominate.external.chang_destination',
+        localeKey: 'nominate.external.change_destination',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182220-how-to-use-the-staking-dashboard-changing-reward-destination',
         website: 'polkadot.network',
       },
       {
-        title: 'nominate.external.bond_more',
+        localeKey: 'nominate.external.bond_more',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182207-how-to-use-the-staking-dashboard-bond-more-tokens-to-your-existing-stake',
         website: 'polkadot.network',
       },
       {
-        title: 'nominate.external.unbonding_tokens',
+        localeKey: 'nominate.external.unbonding_tokens',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182201-how-to-use-the-staking-dashboard-unbonding-your-tokens',
         website: 'polkadot.network',
       },
       {
-        title: 'nominate.external.rebonding',
+        localeKey: 'nominate.external.rebonding',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182221-how-to-use-the-staking-dashboard-rebonding',
         website: 'polkadot.network',
       },
       {
-        title: 'nominate.external.change_account',
+        localeKey: 'nominate.external.change_account',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182218-how-to-use-the-staking-dashboard-changing-your-controller-account',
         website: 'polkadot.network',
       },
       {
-        title: 'nominate.external.change_nominations',
+        localeKey: 'nominate.external.change_nominations',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182518-how-to-use-the-staking-dashboard-changing-your-nominations',
         website: 'polkadot.network',
       },
@@ -167,12 +168,12 @@ export const HELP_CONFIG: any = [
     ],
     external: [
       {
-        title: 'pools.external.create_pools',
+        localeKey: 'pools.external.create_pools',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182388-how-to-use-the-staking-dashboard-creating-nomination-pools',
         website: 'polkadot.network',
       },
       {
-        title: 'pools.external.claim_rewards',
+        localeKey: 'pools.external.claim_rewards',
         url: 'https://support.polkadot.network/support/solutions/articles/65000182399-how-to-use-staking-dashboard-claiming-nomination-pool-rewards',
         website: 'polkadot.network',
       },
@@ -232,7 +233,7 @@ export const HELP_CONFIG: any = [
     ],
     external: [
       {
-        title: 'validators.external.choose_validators',
+        localeKey: 'validators.external.choose_validators',
         url: 'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
         website: 'polkadot.network',
       },
