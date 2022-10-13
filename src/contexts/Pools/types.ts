@@ -57,6 +57,7 @@ export interface BondedPoolsContextState {
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
   getAccountRoles: (w: MaybeAccount) => any;
   getAccountPools: (w: MaybeAccount) => any;
+  replacePoolRoles: (poolId: number, roleEdits: any) => void;
   poolSearchFilter: (l: any, k: string, v: string) => void;
   bondedPools: Array<BondedPool>;
   meta: AnyMetaBatch;

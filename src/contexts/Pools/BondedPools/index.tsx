@@ -442,6 +442,44 @@ export const BondedPoolsProvider = ({
     return pools;
   };
 
+  // determine roles to replace from roleEdits
+  const toReplace = (roleEdits: any) => {
+    const root = roleEdits?.root?.newAddress ?? '';
+    const nominator = roleEdits?.nominator?.newAddress ?? '';
+    const stateToggler = roleEdits?.stateToggler?.newAddress ?? '';
+
+    return {
+      root,
+      nominator,
+      stateToggler,
+    };
+  };
+
+  // replaces the pool roles from roleEdits
+  const replacePoolRoles = (poolId: number, roleEdits: any) => {
+    let pool =
+      bondedPools.find((b: BondedPool) => String(b.id) === String(poolId)) ||
+      null;
+
+    if (!pool) return;
+
+    pool = {
+      ...pool,
+      roles: {
+        ...pool.roles,
+        ...toReplace(roleEdits),
+      },
+    };
+
+    const newBondedPools = [
+      ...bondedPools.map((b: BondedPool) =>
+        String(b.id) === String(poolId) && pool !== null ? pool : b
+      ),
+    ];
+
+    setBondedPools(newBondedPools);
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
@@ -455,6 +493,7 @@ export const BondedPoolsProvider = ({
         getPoolNominationStatusCode,
         getAccountRoles,
         getAccountPools,
+        replacePoolRoles,
         poolSearchFilter,
         bondedPools,
         meta: poolMetaBatchesRef.current,
