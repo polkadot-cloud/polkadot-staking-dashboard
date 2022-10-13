@@ -4,14 +4,12 @@
 import NumberEasing from 'che-react-number-easing';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatPie } from 'library/Graphs/StatBoxPie';
-import { useTranslation } from 'react-i18next';
 import { StatBox } from './Item';
 import { PieProps } from './types';
 
 export const Pie = (props: PieProps) => {
-  const { label, stat, graph, tooltip, helpKey, chelpKey } = props;
+  const { label, stat, graph, tooltip, helpKey } = props;
   const help = helpKey !== undefined;
-  const { i18n } = useTranslation('common');
 
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
@@ -72,12 +70,7 @@ export const Pie = (props: PieProps) => {
             )}
           </h3>
           <h4>
-            {label}{' '}
-            {help && (
-              <OpenHelpIcon
-                helpKey={i18n.resolvedLanguage === 'en' ? helpKey : chelpKey}
-              />
-            )}
+            {label} {help && <OpenHelpIcon helpKey={helpKey} />}
           </h4>
         </div>
       </div>

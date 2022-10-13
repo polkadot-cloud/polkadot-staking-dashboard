@@ -21,7 +21,6 @@ const PoolMembership = () => {
         : `${t('pages.pools.in_pool')} ${membership.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
-    chelpKey: '池成员资格',
   };
   return <Text {...params} />;
 };

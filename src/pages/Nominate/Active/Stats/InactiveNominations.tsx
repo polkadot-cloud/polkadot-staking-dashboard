@@ -34,7 +34,6 @@ export const ActiveNominationsStatBox = () => {
     },
     tooltip: isNominating() ? `${inactiveAsPercent}%` : undefined,
     helpKey: 'Inactive Nominations',
-    chelpKey: '非活跃提名',
   };
 
   return <Pie {...params} />;

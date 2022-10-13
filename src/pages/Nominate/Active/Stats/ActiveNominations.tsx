@@ -28,7 +28,6 @@ export const ActiveNominationsStatBox = () => {
     },
     tooltip: active ? 'Active' : undefined,
     helpKey: 'Nominations',
-    chelpKey: '提名',
   };
 
   return <Pie {...params} />;

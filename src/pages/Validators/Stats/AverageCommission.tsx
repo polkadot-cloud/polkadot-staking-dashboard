@@ -13,7 +13,6 @@ export const AverageCommission = () => {
     label: t('pages.validators.average_commission'),
     value: `${String(avgCommission)}%`,
     helpKey: 'Average Commission',
-    chelpKey: '平均佣金',
   };
   return <Text {...params} />;
 };

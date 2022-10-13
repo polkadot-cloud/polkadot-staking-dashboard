@@ -44,7 +44,6 @@ export const SupplyStakedStatBox = () => {
 
     tooltip: `${toFixedIfNecessary(supplyAsPercent, 2)}%`,
     helpKey: 'Supply Staked',
-    chelpKey: '抵押比例',
   };
 
   return <Pie {...params} />;

@@ -14,7 +14,6 @@ const ActivePoolsStatBox = () => {
     value: stats.counterForBondedPools.toNumber(),
     unit: '',
     helpKey: 'Active Pools',
-    chelpKey: '活跃提名池',
   };
   return <Number {...params} />;
 };

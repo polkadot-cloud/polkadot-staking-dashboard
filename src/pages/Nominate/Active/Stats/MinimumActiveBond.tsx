@@ -17,7 +17,6 @@ export const MinimumActiveBondStatBox = () => {
     value: minActiveBond,
     unit: network.unit,
     helpKey: 'Bonding',
-    chelpKey: '质押',
   };
 
   return <Number {...params} />;

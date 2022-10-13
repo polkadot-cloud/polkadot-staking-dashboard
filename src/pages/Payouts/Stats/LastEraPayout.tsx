@@ -21,7 +21,6 @@ export const LastEraPayoutStatBox = () => {
     value: lastRewardBase,
     unit,
     helpKey: 'Last Era Payout',
-    chelpKey: '上一Era收益',
   };
   return <Number {...params} />;
 };

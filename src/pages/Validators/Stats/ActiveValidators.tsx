@@ -33,7 +33,6 @@ const ActiveValidatorsStatBox = () => {
     },
     tooltip: `${toFixedIfNecessary(activeValidatorsAsPercent, 2)}%`,
     helpKey: 'Active Validator',
-    chelpKey: '活跃验证人',
   };
 
   return <Pie {...params} />;

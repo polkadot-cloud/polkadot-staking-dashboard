@@ -30,7 +30,6 @@ const ActiveEraStatBox = () => {
     },
     tooltip: metrics.activeEra.index === 0 ? undefined : timeleft,
     helpKey: 'Era',
-    chelpKey: 'Era',
   };
   return <Pie {...params} />;
 };

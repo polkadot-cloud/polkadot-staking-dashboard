@@ -18,7 +18,6 @@ const MinJoinBondStatBox = () => {
     value: planckBnToUnit(stats.minJoinBond, units),
     unit: network.unit,
     helpKey: 'Minimum Join Bond',
-    chelpKey: '最低入池质押金',
   };
   return <Number {...params} />;
 };

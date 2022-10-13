@@ -18,7 +18,6 @@ const MinCreateBondStatBox = () => {
     value: planckBnToUnit(stats.minCreateBond, units),
     unit: network.unit,
     helpKey: 'Minimum Create Bond',
-    chelpKey: '最低建池质押金',
   };
   return <Number {...params} />;
 };
