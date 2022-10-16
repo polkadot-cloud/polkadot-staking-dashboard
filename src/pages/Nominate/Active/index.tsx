@@ -42,7 +42,7 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title="Solo Staking" />
+      <PageTitle title="Nominate" />
       <StatBoxList>
         <MinimumActiveBondStatBox />
         <ActiveNominationsStatBox />

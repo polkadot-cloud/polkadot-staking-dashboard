@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { AnyApi, AnyMetaBatch, MaybeAccount, Sync } from 'types';
+import { AnyApi, AnyJson, AnyMetaBatch, MaybeAccount, Sync } from 'types';
 
 // PoolsConfig types
 export interface PoolsConfigContextState {
@@ -41,8 +41,11 @@ export interface PoolMembership {
   poolId: number;
   points: string;
   lastRecordedRewardCounter: string;
-  unbondingEras: any;
-  unlocking: any;
+  unbondingEras: { [key: number]: string };
+  unlocking: Array<{
+    era: number;
+    value: BN;
+  }>;
 }
 
 // BondedPool types
@@ -57,7 +60,7 @@ export interface BondedPoolsContextState {
   getPoolNominationStatusCode: (t: NominationStatuses | null) => string;
   getAccountRoles: (w: MaybeAccount) => any;
   getAccountPools: (w: MaybeAccount) => any;
-  replacePoolRoles: (poolId: number, roleEdits: any) => void;
+  replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
   poolSearchFilter: (l: any, k: string, v: string) => void;
   bondedPools: Array<BondedPool>;
   meta: AnyMetaBatch;

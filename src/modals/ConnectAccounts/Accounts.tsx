@@ -16,6 +16,7 @@ import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { PoolMembership } from 'contexts/Pools/types';
 import { ImportedAccount } from 'contexts/Connect/types';
+import { AnyJson } from 'types';
 import {
   AccountWrapper,
   AccountGroupWrapper,
@@ -23,8 +24,13 @@ import {
   ContentWrapper,
 } from './Wrappers';
 import { AccountElement, AccountButton } from './Account';
+import {
+  ActivelyStakingAccount,
+  ControllerAccount,
+  StashAcount,
+} from './types';
 
-export const Accounts = forwardRef((props: any, ref: any) => {
+export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const { setSection } = props;
 
   const { isReady } = useApi();
@@ -41,16 +47,16 @@ export const Accounts = forwardRef((props: any, ref: any) => {
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
 
-  const _controllers: any = [];
-  const _stashes: any = [];
+  const _controllers: Array<ControllerAccount> = [];
+  const _stashes: Array<StashAcount> = [];
 
   // store local copy of accounts
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
   // store staking statuses
-  const [activeStaking, setActiveStaking] = useState<Array<ImportedAccount>>(
-    []
-  );
+  const [activeStaking, setActiveStaking] = useState<
+    Array<ActivelyStakingAccount>
+  >([]);
   const [activePooling, setActivePooling] = useState<Array<PoolMembership>>([]);
   const [inactive, setInactive] = useState<string[]>([]);
 
@@ -92,24 +98,29 @@ export const Accounts = forwardRef((props: any, ref: any) => {
     }
 
     // construct account groupings
-    const _activeStaking: Array<any> = [];
+    const _activeStaking: Array<ActivelyStakingAccount> = [];
     const _activePooling: Array<PoolMembership> = [];
     const _inactive: string[] = [];
 
     for (const account of localAccounts) {
-      const stash = _stashes.find((s: any) => s.address === account.address);
-      const controller = _controllers.find(
-        (c: any) => c.address === account.address
-      );
-      const poolMember = memberships.find(
-        (m: PoolMembership) => m.address === account.address
-      );
+      const stash =
+        _stashes.find((s: StashAcount) => s.address === account.address) ??
+        null;
+      const controller =
+        _controllers.find(
+          (c: ControllerAccount) => c.address === account.address
+        ) ?? null;
+      const poolMember =
+        memberships.find(
+          (m: PoolMembership) => m.address === account.address
+        ) ?? null;
 
       // if stash, get controller
       if (stash) {
         const applied =
-          _activeStaking.find((a: any) => a.stash === account.address) !==
-          undefined;
+          _activeStaking.find(
+            (a: ActivelyStakingAccount) => a.stash === account.address
+          ) !== undefined;
 
         if (!applied) {
           const _record = {
@@ -204,7 +215,7 @@ export const Accounts = forwardRef((props: any, ref: any) => {
               <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
               Nominating
             </h3>
-            {activeStaking.map((item: any, i: number) => {
+            {activeStaking.map((item: ActivelyStakingAccount, i: number) => {
               const { stash, controller } = item;
               const stashAccount = getAccount(stash);
               const controllerAccount = getAccount(controller);

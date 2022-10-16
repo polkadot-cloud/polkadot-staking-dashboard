@@ -11,9 +11,16 @@ export interface NumberProps {
 
 export interface PieProps {
   label: string;
-  stat: any;
-  graph: any;
-  tooltip: any;
+  stat: {
+    value: string | number;
+    unit: string | number;
+    total?: number;
+  };
+  graph: {
+    value1: number;
+    value2: number;
+  };
+  tooltip?: string;
   helpKey: string;
 }
 
