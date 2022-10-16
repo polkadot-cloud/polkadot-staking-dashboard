@@ -231,7 +231,7 @@ export const HELP_CONFIG: HelpContentRaw = [
         title: 'Bonded in Pool',
         description: [
           'The amount of {NETWORK_UNIT} currently bonded in a pool.',
-          "Unlike solo staking, where your bonded funds remain in your account but become locked, the {NETWORK_UNIT} you bond to a pool is transferred to the pool's stash account. Nonetheless, pool members still have access to unbond their funds at any time.",
+          "Unlike nominating directly, where your bonded funds remain in your account but become locked, the {NETWORK_UNIT} you bond to a pool is transferred to the pool's stash account. Nonetheless, pool members still have access to unbond their funds at any time.",
         ],
       },
       {

@@ -44,9 +44,9 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Solo',
-    uri: `${URI_PREFIX}/solo`,
-    hash: '/solo',
+    title: 'Nominate',
+    uri: `${URI_PREFIX}/nominate`,
+    hash: '/nominate',
     Entry: Nominate,
     animate: viewTrendingUpJson,
   },
