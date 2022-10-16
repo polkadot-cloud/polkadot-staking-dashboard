@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FunctionComponent, SVGProps } from 'react';
-import { MaybeAccount } from 'types';
+import { AnyApi, MaybeAccount } from 'types';
 
 export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
@@ -22,13 +22,20 @@ export interface ConnectContextInterface {
   activeAccountMeta: ExtensionAccount | null;
 }
 
+export interface ExtensionInteface {
+  accounts: AnyApi;
+  metadata: AnyApi;
+  provider: AnyApi;
+  signer: AnyApi;
+}
+
 export interface Extension {
   id: string;
   title: string;
   icon: FunctionComponent<
     SVGProps<SVGSVGElement> & { title?: string | undefined }
   >;
-  enable: (n: string) => void;
+  enable: (n: string) => Promise<ExtensionInteface>;
   version: string;
 }
 export interface ExtensionAccount {

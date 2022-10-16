@@ -21,7 +21,7 @@ import {
   APIConstants,
   ConnectionStatus,
 } from 'contexts/Api/types';
-import { Network, NetworkName } from 'types';
+import { AnyApi, Network, NetworkName } from 'types';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
@@ -104,7 +104,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     ];
 
     // fetch constants
-    const _consts: any = await Promise.all(promises);
+    const _consts: AnyApi = await Promise.all(promises);
 
     // format constants
     const bondDuration = _consts[0]

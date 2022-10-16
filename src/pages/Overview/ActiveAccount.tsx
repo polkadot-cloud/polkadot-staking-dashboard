@@ -6,7 +6,7 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useConnect } from 'contexts/Connect';
 import { Identicon } from 'library/Identicon';
-import { clipAddress } from 'Utils';
+import { clipAddress, convertRemToPixels } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { ActiveAccounWrapper } from './Wrappers';
@@ -33,7 +33,10 @@ export const ActiveAccount = () => {
             {accountData && (
               <>
                 <div className="icon">
-                  <Identicon value={accountData.address} size="1.7rem" />
+                  <Identicon
+                    value={accountData.address}
+                    size={convertRemToPixels('1.7rem')}
+                  />
                 </div>
                 {clipAddress(accountData.address)}
                 <button
