@@ -53,7 +53,7 @@ export const Main = () => {
       // set undefined action as default
       _pages[i].action = undefined;
 
-      if (uri === `${URI_PREFIX}/solo`) {
+      if (uri === `${URI_PREFIX}/nominate`) {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();

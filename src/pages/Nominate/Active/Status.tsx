@@ -144,7 +144,7 @@ export const Status = ({ height }: { height: number }) => {
             : payeeStatus?.name ?? t('pages.nominate.not_assigned')
         }
         buttons={
-          payeeStatus
+          !inSetup()
             ? [
                 {
                   title: t('pages.nominate.update'),

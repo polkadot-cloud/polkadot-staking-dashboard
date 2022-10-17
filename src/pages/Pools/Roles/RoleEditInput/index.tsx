@@ -57,7 +57,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
             placeholder={t('pages.pools.address')}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
-            value={roleEdit?.newAddress}
+            value={roleEdit?.newAddress ?? ''}
           />
         </section>
       </div>

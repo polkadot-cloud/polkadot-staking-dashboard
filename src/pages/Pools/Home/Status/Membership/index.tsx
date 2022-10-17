@@ -93,7 +93,7 @@ export const Membership = ({ label }: { label: string }) => {
           <div className="icon">
             <Identicon
               value={selectedActivePool?.addresses?.stash ?? ''}
-              size={30}
+              size={26}
             />
           </div>
           {display}

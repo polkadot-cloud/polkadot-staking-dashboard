@@ -43,71 +43,64 @@ export const Tasks = forwardRef((props: any, ref: any) => {
             </div>
           </button>
         )}
-        {isOwner() ||
-          (isStateToggler() && (
-            <>
-              {poolLocked ? (
-                <button
-                  type="button"
-                  className="action-button"
-                  disabled={poolDestroying}
-                  onClick={() => {
-                    setSection(1);
-                    setTask('unlock_pool');
-                  }}
-                >
-                  <div>
-                    <h3>{t('modals.unlock_pool')}</h3>
-                    <p>{t('modals.allow_to_join')}</p>
-                  </div>
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                    />
-                  </div>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="action-button"
-                  disabled={poolDestroying}
-                  onClick={() => {
-                    setSection(1);
-                    setTask('lock_pool');
-                  }}
-                >
-                  <div>
-                    <h3>{t('modals.lock_pool')}</h3>
-                    <p>{t('modals.stop_joining_pool')}</p>
-                  </div>
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                    />
-                  </div>
-                </button>
-              )}
+        {(isOwner() || isStateToggler()) && (
+          <>
+            {poolLocked ? (
               <button
                 type="button"
                 className="action-button"
                 disabled={poolDestroying}
                 onClick={() => {
                   setSection(1);
-                  setTask('destroy_pool');
+                  setTask('unlock_pool');
                 }}
               >
                 <div>
-                  <h3>{t('modals.destroy_pool')}</h3>
-                  <p>{t('modals.change_to_destroy')}</p>
+                  <h3>{t('modals.unlock_pool')}</h3>
+                  <p>{t('modals.allow_to_join')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
                 </div>
               </button>
-            </>
-          ))}
+            ) : (
+              <button
+                type="button"
+                className="action-button"
+                disabled={poolDestroying}
+                onClick={() => {
+                  setSection(1);
+                  setTask('lock_pool');
+                }}
+              >
+                <div>
+                  <h3>{t('modals.lock_pool')}</h3>
+                  <p>{t('modals.stop_joining_pool')}</p>
+                </div>
+                <div>
+                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+                </div>
+              </button>
+            )}
+            <button
+              type="button"
+              className="action-button"
+              disabled={poolDestroying}
+              onClick={() => {
+                setSection(1);
+                setTask('destroy_pool');
+              }}
+            >
+              <div>
+                <h3>{t('modals.destroy_pool')}</h3>
+                <p>{t('modals.change_to_destroy')}</p>
+              </div>
+              <div>
+                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+              </div>
+            </button>
+          </>
+        )}
       </div>
     </ContentWrapper>
   );

@@ -24,7 +24,7 @@ export const TotalNominatorsStatBox = () => {
     label: t('pages.overview.total_nominators'),
     stat: {
       value: totalNominators.toNumber(),
-      total: maxNominatorsCount,
+      total: maxNominatorsCount.toNumber(),
       unit: '',
     },
     graph: {

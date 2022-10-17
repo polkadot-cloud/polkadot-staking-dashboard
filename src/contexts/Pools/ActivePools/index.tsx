@@ -84,7 +84,10 @@ export const ActivePoolsProvider = ({
   // Should default to the membership pool (if present).
   const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
 
-  // re-sync when accountPools change.
+  // re-sync when number of accountRoles change.
+  // this can happen when bondedPools sync, when roles
+  // are edited within the dashboard, or when pool
+  // membership changes.
   useEffect(() => {
     if (unsubActivePoolsRef.current.length) {
       unsubscribeActivePools();
@@ -93,7 +96,7 @@ export const ActivePoolsProvider = ({
       unsubscribePoolNominations();
     }
     setStateWithRef(Sync.Unsynced, setSynced, syncedRef);
-  }, [activeAccount, accountPools]);
+  }, [activeAccount, accountPools.length]);
 
   // subscribe to pool that the active account is a member of.
   useEffect(() => {
@@ -168,9 +171,14 @@ export const ActivePoolsProvider = ({
       setStateWithRef(Sync.Synced, setSynced, syncedRef);
     }
 
-    // assign default pool immediately
+    // assign default pool immediately if active pool not currently selected
     const defaultSelected = membership?.poolId || accountPools[0] || null;
-    if (defaultSelected) {
+    const activePoolSelected =
+      activePoolsRef.current.find(
+        (a: ActivePool) => String(a.id) === String(selectedPoolId)
+      ) || null;
+
+    if (defaultSelected && !activePoolSelected) {
       setSelectedPoolId(String(defaultSelected));
     }
   };

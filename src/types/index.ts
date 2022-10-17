@@ -5,7 +5,6 @@ import React, { FunctionComponent, SVGProps } from 'react';
 import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
-import { AnyJson } from '@polkadot/types-codec/types';
 
 export type Fn = () => void;
 
@@ -103,6 +102,8 @@ export type MaybeString = string | null;
 // any types to compress compiler warnings
 // eslint-disable-next-line
 export type AnyApi = any;
+// eslint-disable-next-line
+export type AnyJson = any;
 // eslint-disable-next-line
 export type AnyMetaBatch = any;
 // eslint-disable-next-line

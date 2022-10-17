@@ -13,6 +13,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
@@ -20,6 +21,7 @@ import { RoleChange } from './RoleChange';
 export const ChangePoolRoles = () => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
+  const { replacePoolRoles } = useBondedPools();
   const { activeAccount, accountHasSigner } = useConnect();
   const { config } = useModal();
   const { txFeesValid } = useTxFees();
@@ -56,7 +58,10 @@ export const ChangePoolRoles = () => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      // manually update bondedPools with new pool roles
+      replacePoolRoles(poolId, roleEdits);
+    },
   });
 
   return (

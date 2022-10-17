@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
-import { PagesConfig } from 'types/index';
+import { AnyMetaBatch, PagesConfig } from 'types/index';
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 
@@ -203,7 +203,10 @@ export const replaceAll = (str: string, find: string, replace: string) => {
   return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 };
 
-export const determinePoolDisplay = (adddress: string, batchItem: any) => {
+export const determinePoolDisplay = (
+  adddress: string,
+  batchItem: AnyMetaBatch
+) => {
   // default display value
   const defaultDisplay = clipAddress(adddress);
 

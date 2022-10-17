@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { motion } from 'framer-motion';
-import { clipAddress } from 'Utils';
+import { clipAddress, convertRemToPixels } from 'Utils';
 import { Identicon } from 'library/Identicon';
 import { useNotifications } from 'contexts/Notifications';
 import { useAccount } from 'contexts/Account';
@@ -55,14 +55,14 @@ export const PoolAccount = (props: PoolAccountProps) => {
         ) : synced && display !== null ? (
           <>
             <div className="icon">
-              <Identicon value={address} size="1.6rem" />
+              <Identicon value={address} size={convertRemToPixels('1.6rem')} />
             </div>
             <h4>{display}</h4>
           </>
         ) : (
           <>
             <div className="icon">
-              <Identicon value={address} size="1.6rem" />
+              <Identicon value={address} size={convertRemToPixels('1.6rem')} />
             </div>
             <h4>{clipAddress(address)}</h4>
           </>
