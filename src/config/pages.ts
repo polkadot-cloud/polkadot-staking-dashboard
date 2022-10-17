@@ -44,7 +44,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    key: 'Nominate',
+    key: 'nominate',
     uri: `${URI_PREFIX}/nominate`,
     hash: '/nominate',
     Entry: Nominate,

@@ -10,15 +10,10 @@ import { I18nextProvider } from 'react-i18next';
 
 const App: React.FC = () => {
   let network = localStorage.getItem('network');
-  let locale = localStorage.getItem('locale');
 
   if (network === null) {
     network = DEFAULT_NETWORK;
     localStorage.setItem('network', network);
-  }
-  if (locale === null) {
-    locale = 'en';
-    localStorage.setItem('locale', locale);
   }
 
   return (
