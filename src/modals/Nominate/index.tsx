@@ -18,7 +18,6 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import {
   FooterWrapper,
   Separator,
@@ -100,14 +99,7 @@ export const Nominate = () => {
           {warnings.map((text: any, index: number) => (
             <Warning key={index} text={text} />
           ))}
-          {i18next.resolvedLanguage === 'en' ? (
-            <h2>
-              You Have {nominations.length} Nomination
-              {nominations.length === 1 ? '' : 's'}
-            </h2>
-          ) : (
-            <h2>您有{nominations.length} 个提名</h2>
-          )}
+          {t('modals.have_nomination', { count: nominations.length })}
           <Separator />
           <NotesWrapper>
             <p>{t('modals.nominate')}</p>

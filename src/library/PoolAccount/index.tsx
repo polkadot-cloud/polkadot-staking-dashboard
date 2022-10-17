@@ -9,6 +9,7 @@ import Identicon from 'library/Identicon';
 import { useConnect } from 'contexts/Connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useTranslation } from 'react-i18next';
 import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 import { PoolAccountProps } from './types';
@@ -18,6 +19,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
   const { fetchPoolsMetaBatch, meta } = useBondedPools();
+  const { t } = useTranslation('common');
 
   const { label } = props;
 
@@ -58,7 +60,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
   // display value
   const defaultDisplay = clipAddress(props.pool.addresses.stash);
-  let display = syncing ? 'Syncing...' : metaData ?? defaultDisplay;
+  let display = syncing ? t('library.syncing') : metaData ?? defaultDisplay;
 
   // check if super identity has been byte encoded
   const displayAsBytes = u8aToString(u8aUnwrapBytes(display));

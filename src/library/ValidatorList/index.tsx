@@ -228,7 +228,7 @@ export const ValidatorListInner = (props: any) => {
       <Header>
         <div>
           <h4>
-            {t('pages.validators.displaying_validators', {
+            {t('library.displaying_validators', {
               count: validators.length,
             })}
           </h4>

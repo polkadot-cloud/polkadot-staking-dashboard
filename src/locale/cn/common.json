@@ -1,7 +1,7 @@
 {
     "library": {
+        "displaying_validators": "正在显示 {{count}} 个验证人",
         "waiting": "等待中",
-        "displaying_validator": "{validators_length, plural, ==1 {Dispalying # Validator} other {Dispalying # Validators}}",
         "minimum_bond": "最低质押为 {{minBondBase}} {{unit}}",
         "not_staking": "无抵押",
         "clear_selection": "清除选择",
@@ -131,10 +131,18 @@
         "nominate1": "最多能选择 {{maxNominations}} 个验证人。自动生成提名或手动加入提名"
     },
     "modals": {
-        "all_nomination": "所有提名",
-        "nomination": "提名",
         "favourite_validators": "藏夹中的验证人",
         "": "",
+        "unlock": "{{count}} 个未解锁",
+        "add_favorite_one": "添加 {{count}} 个喜爱到提名表上",
+        "have_nomination": "您有{{count}} 个提名",
+        "read_only_account": "{{count}} 个只读帐户",
+        "imported_account": "{{count}} 个导入帐户",
+        "nomination": "{{count}} 个提名",
+        "stop": "停止",
+        "all_nomination": "所有提名",
+        "active_roles": "有活跃角色在 {{count}} 个提名池",
+        "pool": "池",
         "will_surpass": "添加过多收藏夹将超{{maxNominations}}提名数",
         "update_bound5": "存款人解除质押到{{minCreateBondBase}} {{unit}}的最低保证金.",
         "update_bound6": "存款人解除质押到{{minCreateBondBase}} {{unit}}最小值，以保持池成员身份",
@@ -476,7 +484,6 @@
             "average_commission": "平均佣金",
             "active_validators": "活跃验证人",
             "total_validators": "所有验证人",
-            "displaying_validators": "正在显示 {{count}} 个验证人",
             "network_validators": "验证人列表",
             "connecting": "连接中...",
             "fetching_validators": "正在获取验证人信息..."

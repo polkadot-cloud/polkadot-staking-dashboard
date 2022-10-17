@@ -19,7 +19,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useNetworkMetrics } from 'contexts/Network';
 import { BondedPool } from 'contexts/Pools/types';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

@@ -17,7 +17,6 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useTxFees } from 'contexts/TxFees';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import {
   FooterWrapper,
   Separator,
@@ -135,20 +134,17 @@ export const ChangeNominations = () => {
           )}
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`{t('modals.s1')}${
+              text={`${t('modals.s1')}${
                 bondType === 'stake' ? ' controller ' : ' '
               }{t('modals.s2')}`}
             />
           )}
-          {i18next.resolvedLanguage === 'en' ? (
-            <h2>
-              Stop {!remaining ? 'All Nomination' : `${removing} Nomination`}
-              {removing === 1 ? '' : 's'}
-            </h2>
-          ) : (
-            <h2>停止 {!remaining ? '所有提名' : `${removing} 个提名`}</h2>
-          )}
-
+          <h2>
+            {t('modals.stop')}{' '}
+            {!remaining
+              ? t('modals.all_nomination')
+              : `${t('modals.nomination', { count: removing })}`}
+          </h2>
           <Separator />
           <NotesWrapper>
             <p>{t('modals.change_nomination')}</p>

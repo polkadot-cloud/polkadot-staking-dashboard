@@ -12,7 +12,6 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { StyledButton, ContentWrapper } from './Wrappers';
 
@@ -40,16 +39,11 @@ export const AccountPoolRoles = () => {
               </div>
             </>
           )}
-          {i18next.resolvedLanguage === 'en' ? (
-            <h4>
-              Active Roles in <b>{totalAccountPools}</b> Pool
-              {totalAccountPools === 1 ? '' : 's'}
-            </h4>
-          ) : (
-            <h4>
-              有活跃角色在 <b>{totalAccountPools}</b> 个提名池
-            </h4>
-          )}
+          <h4>
+            {t('modals.active_roles', {
+              count: totalAccountPools,
+            })}
+          </h4>
           <div className="items">
             {Object.entries(accountPools).map(([key, item]: any, i: number) => (
               <Button item={item} poolId={key} key={`all_roles_root_${i}`} />
@@ -65,6 +59,7 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
   const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePools();
+  const { t } = useTranslation('common');
 
   const pool = bondedPools.find((b: BondedPool) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
@@ -84,11 +79,15 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
       </div>
 
       <div className="details">
-        <h3>Pool {poolId}</h3>
+        <h3>
+          {t('modals.pool')} {poolId}
+        </h3>
         <h4>
-          {item.includes('root') && <span>Root</span>}
-          {item.includes('nominator') && <span>Nominator</span>}
-          {item.includes('stateToggler') && <span>State Toggler</span>}
+          {item.includes('root') && <span>{t('modals.root')}</span>}
+          {item.includes('nominator') && <span>{t('modals.nominator')}</span>}
+          {item.includes('stateToggler') && (
+            <span>{t('modals.state_toggler')}</span>
+          )}
         </h4>
       </div>
       <div>

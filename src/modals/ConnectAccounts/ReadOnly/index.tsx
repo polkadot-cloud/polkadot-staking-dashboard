@@ -6,7 +6,6 @@ import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { faGlasses, faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import { ExtensionWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
 import { ReadOnlyInput } from '../ReadOnlyInput';
@@ -69,15 +68,9 @@ export const ReadOnly = (props: ReadOnlyProps) => {
       {readOnlyOpen && (
         <div className="content">
           <ReadOnlyInput />
-          {externalAccountsByUser.length > 0 &&
-            (i18next.resolvedLanguage === 'en' ? (
-              <h5>
-                {externalAccountsByUser.length} Read Only Account
-                {externalAccountsByUser.length === 1 ? '' : 's'}
-              </h5>
-            ) : (
-              <h5>{externalAccountsByUser.length} 个只读帐户</h5>
-            ))}
+          {externalAccountsByUser.length > 0 && (
+            <h5>{t('modals.read_only_account', { count: accounts.length })}</h5>
+          )}
           <div className="accounts">
             {externalAccountsByUser.map((a: ExternalAccount, i: number) => (
               <div key={`user_external_account_${i}`} className="account">
