@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
-import { PagesConfig } from 'types/index';
+import { AnyApi, PagesConfig } from 'types/index';
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 
@@ -221,4 +221,10 @@ export const determinePoolDisplay = (adddress: string, batchItem: any) => {
   }
 
   return display;
+};
+
+export const track = (e: string) => {
+  if ((window as AnyApi).sa_event) {
+    (window as AnyApi).sa_event(e);
+  }
 };
