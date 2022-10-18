@@ -1,36 +1,36 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useConnect } from 'contexts/Connect';
+import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
+import { useNotifications } from 'contexts/Notifications';
+import { NotificationText } from 'contexts/Notifications/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolsTabs } from 'pages/Pools/Home/context';
-import { useConnect } from 'contexts/Connect';
-import {
-  Wrapper,
-  Labels,
-  Separator,
-  MenuPosition,
-} from 'library/ListItem/Wrappers';
-import { useMenu } from 'contexts/Menu';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { NotificationText } from 'contexts/Notifications/types';
-import { useNotifications } from 'contexts/Notifications';
+import { PoolState } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
-import { useUi } from 'contexts/UI';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
-import { PoolState } from 'contexts/Pools/types';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import { PoolProps } from './types';
-import { Members } from '../ListItem/Labels/Members';
+import {
+  Labels,
+  MenuPosition,
+  Separator,
+  Wrapper,
+} from 'library/ListItem/Wrappers';
+import { usePoolsTabs } from 'pages/Pools/Home/context';
+import { useEffect, useRef, useState } from 'react';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
+import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
+import { PoolProps } from './types';
 
 export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;

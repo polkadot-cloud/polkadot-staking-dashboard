@@ -2,17 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  sleep,
-  shuffle,
-  removePercentage,
-  rmCommas,
-  setStateWithRef,
-  planckBnToUnit,
-  toFixedIfNecessary,
-} from 'Utils';
-import { AnyApi, AnyMetaBatch, Fn } from 'types';
+import { VALIDATOR_COMMUNITY } from 'config/validators';
 import { MIN_BOND_PRECISION } from 'consts';
 import {
   SessionParachainValidators,
@@ -21,13 +11,23 @@ import {
   ValidatorAddresses,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
-import { VALIDATOR_COMMUNITY } from 'config/validators';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnyApi, AnyMetaBatch, Fn } from 'types';
+import {
+  planckBnToUnit,
+  removePercentage,
+  rmCommas,
+  setStateWithRef,
+  shuffle,
+  sleep,
+  toFixedIfNecessary,
+} from 'Utils';
 import { useApi } from '../Api';
+import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
-import { useBalances } from '../Balances';
-import * as defaults from './defaults';
 import { useActivePools } from '../Pools/ActivePools';
+import * as defaults from './defaults';
 
 export const ValidatorsContext =
   React.createContext<ValidatorsContextInterface>(

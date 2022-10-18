@@ -3,11 +3,11 @@
 
 import BN from 'bn.js';
 import {
-  StakingMetrics,
   EraStakers,
-  StakingTargets,
   NominationStatuses,
   StakingContextInterface,
+  StakingMetrics,
+  StakingTargets,
 } from 'contexts/Staking/types';
 
 export const stakingMetrics: StakingMetrics = {

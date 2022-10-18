@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { useConnect } from 'contexts/Connect';
-import { planckBnToUnit, humanNumber } from 'Utils';
-import BondedGraph from 'library/Graphs/Bonded';
 import { useApi } from 'contexts/Api';
-import { Button, ButtonRow } from 'library/Button';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useUi } from 'contexts/UI';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { PoolState } from 'contexts/Pools/types';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
+import { Button, ButtonRow } from 'library/Button';
+import BondedGraph from 'library/Graphs/Bonded';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { humanNumber, planckBnToUnit } from 'Utils';
 
 export const ManageBond = () => {
   const { network } = useApi();

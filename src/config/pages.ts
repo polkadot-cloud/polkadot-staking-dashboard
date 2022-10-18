@@ -2,21 +2,21 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faHashtag } from '@fortawesome/free-solid-svg-icons';
-import Overview from 'pages/Overview';
-import Nominate from 'pages/Nominate';
-import Pools from 'pages/Pools';
-import Browse from 'pages/Validators';
-import Favorites from 'pages/Favorites';
-import Payouts from 'pages/Payouts';
-import Community from 'pages/Community';
 import { URI_PREFIX } from 'consts';
-import { PageCategories, PagesConfig } from 'types';
 import * as analyticsJson from 'img/json/analytics-solid.json';
-import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
-import * as view1SolidJson from 'img/json/view-1-solid.json';
+import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
 import * as viewGroupJson from 'img/json/groups-solid-edited.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
-import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
+import * as view1SolidJson from 'img/json/view-1-solid.json';
+import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
+import Community from 'pages/Community';
+import Favorites from 'pages/Favorites';
+import Nominate from 'pages/Nominate';
+import Overview from 'pages/Overview';
+import Payouts from 'pages/Payouts';
+import Pools from 'pages/Pools';
+import Browse from 'pages/Validators';
+import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {

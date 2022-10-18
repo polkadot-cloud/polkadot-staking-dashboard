@@ -1,18 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
-import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { useValidators } from 'contexts/Validators';
-import ValidatorList from 'library/ValidatorList';
-import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useApi } from 'contexts/Api';
+import { useValidators } from 'contexts/Validators';
+import Button from 'library/Button';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import ValidatorList from 'library/ValidatorList';
+import { useEffect, useState } from 'react';
 import { shuffle } from 'Utils';
-import { ItemsWrapper } from './Wrappers';
-import { Item } from './Item';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { useCommunitySections } from './context';
+import { Item } from './Item';
+import { ItemsWrapper } from './Wrappers';
 
 export const Entity = () => {
   const { isReady, network } = useApi();

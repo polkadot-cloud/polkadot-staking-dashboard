@@ -1,25 +1,25 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, forwardRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useModal } from 'contexts/Modal';
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { Separator } from 'Wrappers';
-import { BondedPool, PoolState } from 'contexts/Pools/types';
-import { Warning } from 'library/Form/Warning';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { BondedPool, PoolState } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
-import { ContentWrapper } from './Wrappers';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Warning } from 'library/Form/Warning';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import React, { forwardRef, useEffect, useState } from 'react';
+import { Separator } from 'Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
   const { setSection, task, section } = props;

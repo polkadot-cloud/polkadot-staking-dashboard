@@ -3,8 +3,8 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import { ItemWrapper } from './Wrappers';
 import { ItemProps } from './types';
+import { ItemWrapper } from './Wrappers';
 
 export const Item = (props: ItemProps) => {
   const { icon, label, transform, onClick } = props;

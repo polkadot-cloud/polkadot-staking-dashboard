@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatPie } from 'library/Graphs/StatBoxPie';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { PieProps } from './types';
 

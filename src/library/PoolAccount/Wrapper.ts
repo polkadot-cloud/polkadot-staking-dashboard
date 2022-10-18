@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { textSecondary, borderSecondary } from 'theme';
+import styled from 'styled-components';
+import { borderSecondary, textSecondary } from 'theme';
 import { WrapperProps } from './types';
 
 export const Wrapper = styled(motion.button)<WrapperProps>`

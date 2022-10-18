@@ -4,11 +4,11 @@
 import { SECTION_FULL_WIDTH_THRESHOLD } from 'consts';
 import styled from 'styled-components';
 import {
-  textPrimary,
-  networkColor,
-  textSecondary,
   borderPrimary,
   buttonPrimaryBackground,
+  networkColor,
+  textPrimary,
+  textSecondary,
 } from 'theme';
 
 export const Items = styled.div`

@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import ContentLoader from 'react-content-loader';
 import { useTheme } from 'contexts/Themes';
+import ContentLoader from 'react-content-loader';
 import { defaultThemes } from 'theme/default';
 
 export const Announcement = () => {

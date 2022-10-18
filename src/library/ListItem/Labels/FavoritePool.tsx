@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
-import { useNotifications } from 'contexts/Notifications';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useTooltip } from 'contexts/Tooltip';
-import { useRef } from 'react';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNotifications } from 'contexts/Notifications';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useTooltip } from 'contexts/Tooltip';
+import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useRef } from 'react';
 import { FavoriteProps } from '../types';
 
 export const FavoritePool = (props: FavoriteProps) => {

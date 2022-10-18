@@ -1,20 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { forwardRef } from 'react';
-import { useConnect } from 'contexts/Connect';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { EXTENSIONS, ExtensionConfig } from 'config/extensions';
-import {
-  ContentWrapper,
-  PaddingWrapper,
-  Separator,
-  ExtensionWrapper,
-} from './Wrappers';
+import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { useConnect } from 'contexts/Connect';
+import { forwardRef } from 'react';
 import { Extension } from './Extension';
 import { ReadOnly } from './ReadOnly';
 import { forwardRefProps } from './types';
+import {
+  ContentWrapper,
+  ExtensionWrapper,
+  PaddingWrapper,
+  Separator,
+} from './Wrappers';
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
   const { setSection } = props;

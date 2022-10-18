@@ -1,22 +1,22 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
+import { PAGES_CONFIG, PAGE_CATEGORIES } from 'config/pages';
+import { POLKADOT_URL, URI_PREFIX } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { useStaking } from 'contexts/Staking';
-import { URI_PREFIX, POLKADOT_URL } from 'consts';
-import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
-import { UIContextInterface } from 'contexts/UI/types';
+import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { UIContextInterface } from 'contexts/UI/types';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { PageCategory, PageItem, PagesConfig } from 'types';
-import { LogoWrapper } from './Wrapper';
-import { Primary } from './Primary';
 import Heading from './Heading/Heading';
+import { Primary } from './Primary';
+import { LogoWrapper } from './Wrapper';
 
 export const Main = () => {
   const { network } = useApi();

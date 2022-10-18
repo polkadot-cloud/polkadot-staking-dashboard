@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
+import React, { useEffect, useState } from 'react';
 
 export const Input = (props: any) => {
   const { listenIsValid, defaultValue } = props;

@@ -1,19 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Element } from 'react-scroll';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
-import { Button } from 'library/Button';
 import { useUi } from 'contexts/UI';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
+import { Button } from 'library/Button';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
-import { SetController } from './SetController';
+import { Element } from 'react-scroll';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
+import { SetController } from './SetController';
 import { Summary } from './Summary';
 
 export const Setup = () => {

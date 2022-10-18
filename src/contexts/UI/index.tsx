@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect, useRef } from 'react';
 import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { ImportedAccount } from 'contexts/Connect/types';
-import { MaybeAccount, Sync } from 'types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import React, { useEffect, useRef, useState } from 'react';
+import { MaybeAccount, Sync } from 'types';
+import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { useApi } from '../Api';
+import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
-import { useBalances } from '../Balances';
-import { useApi } from '../Api';
 import * as defaults from './defaults';
 import { SetupType, UIContextInterface } from './types';
 

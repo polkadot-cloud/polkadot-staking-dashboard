@@ -3,11 +3,11 @@
 
 import styled from 'styled-components';
 import {
-  borderPrimary,
-  textPrimary,
   backgroundDropdown,
-  textSecondary,
+  borderPrimary,
   borderSecondary,
+  textPrimary,
+  textSecondary,
 } from 'theme';
 
 export const StyledDownshift = styled.div`

@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { decodeAddress, encodeAddress } from '@polkadot/keyring';
+import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
 import { AnyMetaBatch, PagesConfig } from 'types/index';
-import { decodeAddress, encodeAddress } from '@polkadot/keyring';
-import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {

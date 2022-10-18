@@ -1,26 +1,26 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import {
+  faChevronCircleRight,
   faRedoAlt,
   faWallet,
-  faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Separator } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { useStaking } from 'contexts/Staking';
+import { BN } from 'bn.js';
+import { PAYEE_STATUS } from 'consts';
+import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { PAYEE_STATUS } from 'consts';
+import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { useApi } from 'contexts/Api';
-import Stat from 'library/Stat';
 import { useValidators } from 'contexts/Validators';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import Stat from 'library/Stat';
 import { planckBnToUnit, rmCommas } from 'Utils';
-import { BN } from 'bn.js';
+import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {

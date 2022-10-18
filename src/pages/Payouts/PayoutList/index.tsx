@@ -1,31 +1,31 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
-import moment from 'moment';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { List, Header, Wrapper as ListWrapper } from 'library/List';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
 import { useApi } from 'contexts/Api';
-import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { clipAddress, planckToUnit } from 'Utils';
-import { networkColors } from 'theme/default';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { BondedPool } from 'contexts/Pools/types';
+import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { AnySubscan } from 'types';
-import { Pagination } from 'library/List/Pagination';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { Identity } from 'library/ListItem/Labels/Identity';
 import { useValidators } from 'contexts/Validators';
 import { Validator } from 'contexts/Validators/types';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { motion } from 'framer-motion';
+import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import { MotionContainer } from 'library/List/MotionContainer';
+import { Pagination } from 'library/List/Pagination';
+import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import { BondedPool } from 'contexts/Pools/types';
-import { usePayoutList, PayoutListProvider } from './context';
-import { ItemWrapper } from '../Wrappers';
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
+import { networkColors } from 'theme/default';
+import { AnySubscan } from 'types';
+import { clipAddress, planckToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
+import { ItemWrapper } from '../Wrappers';
+import { PayoutListProvider, usePayoutList } from './context';
 
 export const PayoutListInner = (props: PayoutListProps) => {
   const { allowMoreCols, pagination } = props;

@@ -4,12 +4,12 @@
 import styled from 'styled-components';
 import {
   backgroundToggle,
+  borderPrimary,
   buttonPrimaryBackground,
+  successTransparent,
   textPrimary,
   textSecondary,
-  borderPrimary,
   textSuccess,
-  successTransparent,
 } from 'theme';
 import { NetworkButtonProps } from './types';
 

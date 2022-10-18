@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Text } from 'library/StatBoxList/Text';
 import { useValidators } from 'contexts/Validators';
+import { Text } from 'library/StatBoxList/Text';
 
 export const AverageCommission = () => {
   const { avgCommission } = useValidators();

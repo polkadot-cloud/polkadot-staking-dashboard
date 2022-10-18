@@ -2,23 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useStaking } from 'contexts/Staking';
-import { AnyApi, Sync } from 'types';
 import {
   ActivePool,
   ActivePoolsContextState,
   BondedPool,
   PoolAddresses,
 } from 'contexts/Pools/types';
-import { rmCommas, localStorageOrDefault, setStateWithRef } from 'Utils';
-import * as defaults from './defaults';
+import { useStaking } from 'contexts/Staking';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { AnyApi, Sync } from 'types';
+import { localStorageOrDefault, rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
-import { usePoolsConfig } from '../PoolsConfig';
-import { usePoolMemberships } from '../PoolMemberships';
 import { useBondedPools } from '../BondedPools';
 import { usePoolMembers } from '../PoolMembers';
+import { usePoolMemberships } from '../PoolMemberships';
+import { usePoolsConfig } from '../PoolsConfig';
+import * as defaults from './defaults';
 
 export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
   defaults.defaultActivePoolContext

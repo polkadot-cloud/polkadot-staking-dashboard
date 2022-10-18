@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState } from 'react';
-import { PageRowWrapper } from 'Wrappers';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import { ItemsWrapper } from './Wrappers';
-import { Item } from './Item';
+import { useEffect, useState } from 'react';
+import { PageRowWrapper } from 'Wrappers';
 import { useCommunitySections } from './context';
+import { Item } from './Item';
+import { ItemsWrapper } from './Wrappers';
 
 export const List = () => {
   const { network } = useApi();

@@ -1,27 +1,27 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
-import { useConnect } from 'contexts/Connect';
-import { Button } from 'library/Button';
-import { humanNumber, unitToPlanckBn } from 'Utils';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Warning } from 'library/Form/Warning';
-import { SetupStepProps } from 'library/SetupSteps/types';
-import { SetupType } from 'contexts/UI/types';
-import { Header } from 'library/SetupSteps/Header';
-import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BN } from 'bn.js';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { defaultPoolSetup } from 'contexts/UI/defaults';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
+import { useUi } from 'contexts/UI';
+import { defaultPoolSetup } from 'contexts/UI/defaults';
+import { SetupType } from 'contexts/UI/types';
+import { Button } from 'library/Button';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Warning } from 'library/Form/Warning';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Header } from 'library/SetupSteps/Header';
+import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { humanNumber, unitToPlanckBn } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {

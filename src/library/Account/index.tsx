@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { clipAddress, convertRemToPixels } from 'Utils';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
-import { faGlasses } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Wrapper from './Wrapper';
+import { clipAddress, convertRemToPixels } from 'Utils';
 import Identicon from '../Identicon';
 import { AccountProps } from './types';
+import Wrapper from './Wrapper';
 
 export const Account = (props: AccountProps) => {
   const { mode } = useTheme();
