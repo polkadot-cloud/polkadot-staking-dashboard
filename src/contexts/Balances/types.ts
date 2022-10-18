@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { MaybeAccount } from 'types';
+import { AnyApi, MaybeAccount } from 'types';
 
 export interface UnlockChunk {
   era: number;
@@ -62,5 +62,5 @@ export interface BalancesContextInterface {
   isController: (address: MaybeAccount) => boolean;
   accounts: Array<BalancesAccount>;
   existentialAmount: BN;
-  ledgers: any;
+  ledgers: AnyApi;
 }

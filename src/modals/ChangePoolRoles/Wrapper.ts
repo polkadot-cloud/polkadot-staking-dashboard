@@ -21,6 +21,7 @@ export const RoleChangeWrapper = styled.div`
   overflow: hidden;
 
   .label {
+    color: ${textSecondary};
     margin: 0.25rem 0 0.75rem 0;
   }
   .role-change {

@@ -16,6 +16,7 @@ import {
   ExternalAccount,
   Extension,
   ExtensionAccount,
+  ExtensionInteface,
 } from 'contexts/Connect/types';
 import { AnyApi, MaybeAccount } from 'types';
 import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
@@ -71,7 +72,7 @@ export const ConnectProvider = ({
   const unsubscribeRef = useRef(unsubscribe);
 
   const getInstalledExtensions = () => {
-    const { injectedWeb3 }: any = window;
+    const { injectedWeb3 }: AnyApi = window;
 
     const _exts: Extension[] = [];
     EXTENSIONS.forEach((e: ExtensionConfig) => {
@@ -276,7 +277,7 @@ export const ConnectProvider = ({
       if (extensionIsLocal(id)) {
         try {
           // summons extension popup
-          const extension: any = await enable(DAPP_NAME);
+          const extension: ExtensionInteface = await enable(DAPP_NAME);
 
           if (extension !== undefined) {
             // subscribe to accounts
@@ -392,7 +393,7 @@ export const ConnectProvider = ({
     const _activeAccount = getActiveAccountLocal(network);
     try {
       // summons extension popup
-      const extension: any = await enable(DAPP_NAME);
+      const extension: ExtensionInteface = await enable(DAPP_NAME);
 
       if (extension !== undefined) {
         // subscribe to accounts
