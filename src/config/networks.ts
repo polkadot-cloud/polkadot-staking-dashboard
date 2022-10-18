@@ -116,16 +116,16 @@ export const NETWORKS: Networks = {
     },
     colors: {
       primary: {
-        light: '#EC6E79',
-        dark: '#EC6E79',
+        light: '#da4e71',
+        dark: '#da4e71',
       },
       secondary: {
-        light: '#Ec8f6e',
-        dark: '#Ec8f6e',
+        light: '#ff5c5c',
+        dark: '#ff5c5c',
       },
       transparent: {
-        light: 'rgb(236,110,121,0.05)',
-        dark: 'rgb(236,110,121, 0.05)',
+        light: 'rgb(218, 78, 113, 0.05)',
+        dark: 'rgb(218, 78, 113, 0.05)',
       },
     },
     subscanEndpoint: 'https://westend.api.subscan.io',
