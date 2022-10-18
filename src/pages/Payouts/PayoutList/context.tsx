@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 
 export const PayoutListContext =
   React.createContext<PayoutListContextInterface>({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setListFormat: (v: string) => {},
     listFormat: 'col',
   });

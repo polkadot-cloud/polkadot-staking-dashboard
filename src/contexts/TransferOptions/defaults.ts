@@ -5,7 +5,7 @@ import BN from 'bn.js';
 import { TransferOptions, TransferOptionsContextInterface } from './types';
 
 export const defaultBalancesContext: TransferOptionsContextInterface = {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getTransferOptions: (a) => transferOptions,
 };
 

@@ -4,9 +4,9 @@
 import { AccountContextInterface } from './types';
 
 export const defaultAccountContext: AccountContextInterface = {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fetchAccountMetaBatch: (k, v, r) => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeAccountMetaBatch: (k) => {},
   meta: {},
 };
