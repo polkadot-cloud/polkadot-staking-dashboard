@@ -102,14 +102,14 @@ export const EraPoints = (props: EraPointsProps) => {
   };
 
   const data = {
-    labels: items.map((item: any, index: number) => {
+    labels: items.map((item: any) => {
       return item.era;
     }),
     datasets: [
       {
         label: 'Points',
         // data: empty_data,
-        data: items.map((item: any, index: number) => {
+        data: items.map((item: any) => {
           return item.reward_point;
         }),
         borderColor: networkColors[`${network.name}-${mode}`],
