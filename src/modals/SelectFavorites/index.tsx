@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
-import { ValidatorList } from 'library/ValidatorList';
-import { useApi } from 'contexts/Api';
 import { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
+import { ValidatorList } from 'library/ValidatorList';
+import { useEffect, useState } from 'react';
 import { PaddingWrapper } from '../Wrappers';
-import { ListWrapper, FooterWrapper } from './Wrappers';
+import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {
   const { consts } = useApi();

@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FunctionComponent, SVGProps } from 'react';
-import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { PageProps } from 'pages/types';
+import React, { FunctionComponent, SVGProps } from 'react';
 
 export type Fn = () => void;
 

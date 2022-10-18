@@ -2,20 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
-import { Wrapper, Labels, Separator } from 'library/ListItem/Wrappers';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
+import { Labels, Separator, Wrapper } from 'library/ListItem/Wrappers';
 import { useList } from '../../List/context';
-import { getIdentityDisplay } from './Utils';
-import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
-import { Metrics } from '../../ListItem/Labels/Metrics';
-import { Identity } from '../../ListItem/Labels/Identity';
-import { CopyAddress } from '../../ListItem/Labels/CopyAddress';
-import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Blocked } from '../../ListItem/Labels/Blocked';
-import { Select } from '../../ListItem/Labels/Select';
-import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
-import { NominationProps } from './types';
 import { Commission } from '../../ListItem/Labels/Commission';
+import { CopyAddress } from '../../ListItem/Labels/CopyAddress';
+import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
+import { Identity } from '../../ListItem/Labels/Identity';
+import { Metrics } from '../../ListItem/Labels/Metrics';
+import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
+import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
+import { Select } from '../../ListItem/Labels/Select';
+import { NominationProps } from './types';
+import { getIdentityDisplay } from './Utils';
 
 export const Nomination = (props: NominationProps) => {
   const { meta } = useValidators();

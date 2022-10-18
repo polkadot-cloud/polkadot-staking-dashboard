@@ -7,8 +7,8 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
-import { SectionWrapper, ReserveWrapper, Separator } from './Wrappers';
 import { ReserveProps } from './types';
+import { ReserveWrapper, SectionWrapper, Separator } from './Wrappers';
 
 export const Reserve = (props: ReserveProps) => {
   const { height } = props;

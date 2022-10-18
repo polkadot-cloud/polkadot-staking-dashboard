@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useState, useEffect, useRef } from 'react';
 import { ImportedAccount } from 'contexts/Connect/types';
 import {
   PoolMembership,
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, Fn } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
-import * as defaults from './defaults';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
+import * as defaults from './defaults';
 
 export const PoolMembershipsContext =
   React.createContext<PoolMembershipsContextState>(

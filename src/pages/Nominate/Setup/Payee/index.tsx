@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { isNumeric } from 'Utils';
-import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
-import { SetupStepProps } from 'library/SetupSteps/types';
+import { useUi } from 'contexts/UI';
 import { SetupType } from 'contexts/UI/types';
-import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
+import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { useEffect, useState } from 'react';
+import { isNumeric } from 'Utils';
 import { Spacer } from '../../Wrappers';
-import { Items, Item } from './Wrappers';
+import { Item, Items } from './Wrappers';
 
 export const Payee = (props: SetupStepProps) => {
   const { section } = props;

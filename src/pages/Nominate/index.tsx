@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useUi } from 'contexts/UI';
-import { Wrapper } from './Wrappers';
 import { Active } from './Active';
 import { Setup } from './Setup';
+import { Wrapper } from './Wrappers';
 
 export const Nominate = () => {
   const { onNominatorSetup } = useUi();

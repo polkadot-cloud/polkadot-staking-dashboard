@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
-import { convertRemToPixels, clipAddress } from 'Utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Identicon from 'library/Identicon';
+import { clipAddress, convertRemToPixels } from 'Utils';
 import { RoleChangeWrapper } from './Wrapper';
 
 export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {

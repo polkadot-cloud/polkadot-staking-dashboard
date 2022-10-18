@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
-import { setStateWithRef } from 'Utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch } from 'types';
+import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import { defaultAccountContext } from './defaults';
 import { AccountContextInterface } from './types';

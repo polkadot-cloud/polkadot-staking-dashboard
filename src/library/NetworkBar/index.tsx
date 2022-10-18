@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useRef, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
-import { usePrices } from 'library/Hooks/usePrices';
 import { useOutsideAlerter } from 'library/Hooks';
-import { Wrapper, Summary, NetworkInfo, Separator } from './Wrappers';
+import { usePrices } from 'library/Hooks/usePrices';
+import { useEffect, useRef, useState } from 'react';
 import { Status } from './Status';
+import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
   const { services } = useUi();

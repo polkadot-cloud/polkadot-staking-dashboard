@@ -3,13 +3,13 @@
 
 import styled from 'styled-components';
 import {
+  backgroundSecondary,
   backgroundToggle,
+  borderPrimary,
   buttonPrimaryBackground,
   textPrimary,
   textSecondary,
-  borderPrimary,
   textSuccess,
-  backgroundSecondary,
 } from 'theme';
 
 export const ContentWrapper = styled.div`

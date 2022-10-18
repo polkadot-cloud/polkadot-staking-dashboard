@@ -1,19 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
-import { Identicon } from 'library/Identicon';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { determinePoolDisplay } from 'Utils';
-import Button from 'library/Button';
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import Button from 'library/Button';
+import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
+import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import React from 'react';
+import { determinePoolDisplay } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {

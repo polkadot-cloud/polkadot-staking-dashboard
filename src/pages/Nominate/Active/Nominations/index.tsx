@@ -1,20 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useValidators } from 'contexts/Validators';
-import { ValidatorList } from 'library/ValidatorList';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { Button } from 'library/Button';
-import { useModal } from 'contexts/Modal';
+import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
-import { useStaking } from 'contexts/Staking';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
+import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { MaybeAccount } from 'types';
 import { PoolState } from 'contexts/Pools/types';
+import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { useValidators } from 'contexts/Validators';
+import { Button } from 'library/Button';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { ValidatorList } from 'library/ValidatorList';
+import { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
