@@ -1,5 +1,12 @@
 {
+    "contexts": {
+        "waiting": "waiting",
+        "inactive": "inactive",
+        "active": "active"
+    },
     "library": {
+        "manual": "Manual",
+        "related": "Related",
         "displaying_validators_one": "Displaying {{count}} Validator",
         "displaying_validators_other": "Displaying {{count}} Validators",
         "waiting": "waiting",
@@ -96,7 +103,7 @@
         "w4": "You do not meet the minimum bond of",
         "w11": "Not enough {{network_unit}} to bond after transaction fees.",
         "w1": "Bond amount is too small.",
-        "w2": "You have no free {{unit}} to bond.",
+        "w2": "You have no free {{_unit}} to bond.",
         "w3": "Bond amount is more than your free balance.",
         "click_to_reload": "Click to reload",
         "oops": "Oops, Something Went Wrong",
@@ -134,6 +141,9 @@
     "modals": {
         "favourite_validators": "Favourite Validators",
         "": "",
+        "no_unlocks": "No Unlocks",
+        "adding_favorite_one": "Adding {{count}} Nomination",
+        "adding_favorite_other": "Adding {{count}} Nominations",
         "unlock_one": "{{count}} Unlock",
         "unlock_other": "{{count}} Unlocks",
         "add_favorite_one": "Add {{count}} Favorite to Nominations",
@@ -209,7 +219,7 @@
         "pool_name": "Pool Name",
         "manage_pool": "Manage Pool",
         "w4": "This pool is being destroyed. There are no management options available.",
-        "brave_text": "<b>To Brave users!</b> Due to a recent update (<i>Brave version 1.36</i>), there may appear issues while using light clients (e.g. not connected).",
+        "brave_text": "To Brave users! Due to a recent update (Brave version 1.36), there may appear issues while using light clients (e.g. not connected).",
         "nominate1": "Nominate",
         "w5": "You must have your controller account imported to start nominating",
         "w6": "You have no nominations set.",
@@ -390,6 +400,8 @@
             "reserved": "Reserved"
         },
         "payouts": {
+            "pool_claim": "Pool Claim",
+            "payout": "Payout",
             "none": "None",
             "recent_payouts": "Recent Payouts",
             "subscan_disabled": "Subscan Disabled",

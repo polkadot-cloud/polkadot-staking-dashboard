@@ -16,12 +16,13 @@ export const Favorites = (props: PageProps) => {
   const { key } = page;
   const { favoritesList } = useValidators();
   const { t: tCommon } = useTranslation('common');
+  const { t: tPages } = useTranslation('pages');
 
   const batchKey = 'favorite_validators';
 
   return (
     <>
-      <PageTitle title={tCommon(key)} />
+      <PageTitle title={tPages(key)} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favoritesList === null ? (

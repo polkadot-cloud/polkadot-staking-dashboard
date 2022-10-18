@@ -152,9 +152,9 @@ export const PayoutListInner = (props: PayoutListProps) => {
             } = payout;
             const label =
               event_id === 'PaidOut'
-                ? 'Pool Claim'
+                ? t('pages.payouts.pool_claim')
                 : event_id === 'Rewarded'
-                ? 'Payout'
+                ? t('pages.payouts.payout')
                 : event_id;
 
             const labelClass =

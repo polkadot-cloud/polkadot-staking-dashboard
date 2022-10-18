@@ -54,7 +54,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
   return (
     <ValidatorStatusWrapper status={nominationStatus}>
       <h5>
-        {capitalizeFirstLetter(nominationStatus ?? '')}
+        {nominationStatus ?? ''}
         {stakedAmount > 0 &&
           ` / ${
             erasStakersSyncing ? '...' : `${humanNumber(stakedAmount)} ${unit}`

@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import BN from 'bn.js';
 import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
@@ -84,10 +84,10 @@ export const PoolBonded = ({
           {nominationStatus === null
             ? `${t('library.syncing')}`
             : targets.length
-            ? capitalizeFirstLetter(nominationStatus ?? '')
-            : t('library.not_nominating')}
+              ? nominationStatus ?? ''
+              : t('library.not_nominating')}
           {' / '}
-          Bonded: {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
+          {t('library.bonded')} {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
         </h5>
       </ValidatorStatusWrapper>
     </>

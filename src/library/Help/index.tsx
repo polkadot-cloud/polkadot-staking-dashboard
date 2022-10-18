@@ -187,7 +187,7 @@ export const Help = () => {
             {activeDefinitions.length > 0 && (
               <>
                 <h3>
-                  {activeDefinition ? `Related ` : ''}
+                  {activeDefinition ? `${t('library.related')} ` : ''}
                   {t('library.definitions')}
                 </h3>
                 {activeDefinitions.map(

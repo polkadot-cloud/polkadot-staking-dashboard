@@ -67,7 +67,7 @@ export const Overview = forwardRef(
             </ChunkWrapper>
           </>
         )}
-        {unlocking.length === 0 && <h2>No Unlocks</h2>}
+        {unlocking.length === 0 && <h2>{t('modals.no_unlocks')}</h2>}
         {unlocking.map((chunk: any, index: number) => {
           const { era, value } = chunk;
           const left = era - activeEra.index;

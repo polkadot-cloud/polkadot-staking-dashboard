@@ -20,6 +20,7 @@ import {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
+import { useTranslation } from 'react-i18next';
 import { useApi } from '../Api';
 import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
@@ -294,6 +295,7 @@ export const StakingProvider = ({
     }
     const nominations = getAccountNominations(activeAccount);
     const statuses: NominationStatuses = {};
+    const { t } = useTranslation('common');
 
     for (const nomination of nominations) {
       const s = eraStakersRef.current.stakers.find(
@@ -301,17 +303,17 @@ export const StakingProvider = ({
       );
 
       if (s === undefined) {
-        statuses[nomination] = 'waiting';
+        statuses[nomination] = t('contexts.waiting');
         continue;
       }
       const exists = (s.others ?? []).find(
         (_o: any) => _o.who === activeAccount
       );
       if (exists === undefined) {
-        statuses[nomination] = 'inactive';
+        statuses[nomination] = t('contexts.inactive');
         continue;
       }
-      statuses[nomination] = 'active';
+      statuses[nomination] = t('contexts.active');
     }
 
     return statuses;

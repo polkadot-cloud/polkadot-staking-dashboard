@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react';
 import {
   BondedPool,
@@ -15,6 +15,7 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
+import { useTranslation } from 'react-i18next';
 
 export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
   defaultBondedPoolsContext
@@ -254,16 +255,17 @@ export const BondedPoolsProvider = ({
    * Determine bonded pool's current nomination statuse
    */
   const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
-    let status = 'waiting';
+    const { t } = useTranslation('common');
+    let status = t('contexts.waiting');
 
     if (statuses) {
       for (const _status of Object.values(statuses)) {
         if (_status === 'active') {
-          status = 'active';
+          status = t('contexts.active');
           break;
         }
         if (_status === 'inactive') {
-          status = 'inactive';
+          status = t('contexts.inactive');
         }
       }
     }

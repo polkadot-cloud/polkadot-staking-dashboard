@@ -1,5 +1,12 @@
 {
+    "contexts": {
+        "waiting": "等待中",
+        "inactive": "非活跃",
+        "active": "活跃"
+    },
     "library": {
+        "manual": "手动",
+        "related": "相关",
         "displaying_validators": "正在显示 {{count}} 个验证人",
         "waiting": "等待中",
         "minimum_bond": "最低质押为 {{minBondBase}} {{unit}}",
@@ -95,7 +102,7 @@
         "w4": "未达到最低质押金",
         "w11": "交易费用后 {{network_unit}} 不足以质押.",
         "w1": "质押金额太少.",
-        "w2": "您没有可用的 {{unit}} 可质押.",
+        "w2": "您没有可用的 {{_unit}} 可质押.",
         "w3": "质押金额超过余额.",
         "click_to_reload": "重新加载",
         "oops": "抱歉，页面出现点小问题哦",
@@ -110,7 +117,7 @@
         "create_pool": "创建提名池",
         "inactive": "未激活",
         "nominate": "提名",
-        "active": "己激活",
+        "active": "激活",
         "re_generate": "重新生成",
         "all_resources": "所有信息",
         "close": "关闭",
@@ -133,8 +140,10 @@
     "modals": {
         "favourite_validators": "藏夹中的验证人",
         "": "",
+        "no_unlocks": "无未解锁",
+        "adding_favorite": "正在添加{{count}} 个提名",
         "unlock": "{{count}} 个未解锁",
-        "add_favorite_one": "添加 {{count}} 个喜爱到提名表上",
+        "add_favorite": "添加 {{count}} 个喜爱到提名表上",
         "have_nomination": "您有{{count}} 个提名",
         "read_only_account": "{{count}} 个只读帐户",
         "imported_account": "{{count}} 个导入帐户",
@@ -201,7 +210,7 @@
         "pool_name": "提名池名称",
         "manage_pool": "管理池",
         "w4": "正在销毁此池。没有可用的管理选项",
-        "brave_text": "<b>致Brave的用户!</b> 由于最近的更新 (<i>Brave 版本 1.36</i>), 使用轻型客户端时可能会出现问题(例如不能连接).",
+        "brave_text": "致Brave的用户! 由于最近的更新 (Brave 版本 1.36), 使用轻型客户端时可能会出现问题(例如不能连接).",
         "nominate1": "提名",
         "w5": "必须导入controller帐户才能开始提名",
         "w6": "没有提名",
@@ -223,7 +232,7 @@
         "subscan_disabled": "Subscan己断开",
         "withdraw_member_funds": "取出会员资金",
         "bio": "简介",
-        "read_only_accounts": "个只读帐户",
+        "read_only_accounts": "只读帐户",
         "not_staking": "未抵押",
         "forget": "清除",
         "read_only": "只读",
@@ -384,6 +393,8 @@
             "reserved": "己储备"
         },
         "payouts": {
+            "pool_claim": "提名池收益",
+            "payout": "收益",
             "none": "无",
             "recent_payouts": "最近收益",
             "subscan_disabled": "Subscan己断开",

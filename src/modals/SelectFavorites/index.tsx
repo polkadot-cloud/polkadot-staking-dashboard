@@ -95,7 +95,7 @@ export const SelectFavorites = () => {
             {selectedFavorites.length > 0
               ? overMaxNominations
                 ? `${(t('modals.will_surpass'), { maxNominations })}`
-                : `${t('modals.add_favorite_one', {
+                : `${t('modals.add_favorite', {
                     count: selectedFavorites.length,
                   })}`
               : `${t('modals.no_favorites_selected')}`}
