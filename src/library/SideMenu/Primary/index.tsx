@@ -9,11 +9,13 @@ import { useState } from 'react';
 import Lottie from 'react-lottie';
 import { registerSaEvent } from 'Utils';
 import { Link } from 'react-router-dom';
+import { useApi } from 'contexts/Api';
 import { Wrapper, MinimisedWrapper } from './Wrappers';
 import { PrimaryProps } from '../types';
 
 export const Primary = (props: PrimaryProps) => {
   const { setSideMenu } = useUi();
+  const { network } = useApi();
 
   const { name, active, to, icon, action, minimised } = props;
 
@@ -61,7 +63,7 @@ export const Primary = (props: PrimaryProps) => {
       onClick={() => {
         setSideMenu(0);
         setIsStopped(false);
-        registerSaEvent('page_visited', {
+        registerSaEvent(`${network.name.toLowerCase()}_page_visited`, {
           name,
         });
       }}

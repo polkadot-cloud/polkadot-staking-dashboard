@@ -14,7 +14,7 @@ import { useUi } from 'contexts/UI';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
-  const { isReady } = useApi();
+  const { isReady, network } = useApi();
   const { setOnPoolSetup, getPoolSetupProgressPercent } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stats } = usePoolsConfig();
@@ -40,7 +40,9 @@ export const useStatusButtons = () => {
       stats.maxPools.toNumber() === 0 ||
       bondedPools.length === stats.maxPools.toNumber(),
     onClick: () => {
-      registerSaEvent('pool_create_button_pressed');
+      registerSaEvent(
+        `${network.name.toLowerCase()}_pool_create_button_pressed`
+      );
       setOnPoolSetup(1);
     },
   };
@@ -55,7 +57,7 @@ export const useStatusButtons = () => {
       !activeAccount ||
       !bondedPools.length,
     onClick: () => {
-      registerSaEvent('pool_join_button_pressed');
+      registerSaEvent(`${network.name.toLowerCase()}_pool_join_button_pressed`);
       setActiveTab(2);
     },
   };
