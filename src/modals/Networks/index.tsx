@@ -44,7 +44,6 @@ export const Networks = () => {
             {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
               const Svg = item.brand.inline.svg;
               const rpcDisabled = networkKey === key;
-
               return (
                 <NetworkButton
                   connected={networkKey === key}
@@ -91,7 +90,9 @@ export const Networks = () => {
               }}
             >
               <h3>RPC</h3>
-              {!isLightClient && <h4 className="selected">Selected</h4>}
+              {!isLightClient && (
+                <h4 className="selected">{t('modals.selected')}</h4>
+              )}
             </ConnectionButton>
             <ConnectionButton
               connected={isLightClient}

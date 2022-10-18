@@ -7,6 +7,7 @@ import { availableLanguages } from 'locale';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { PaddingWrapper } from '../Wrappers';
+import { ContentWrapper, LocaleButton } from './Wrapper';
 
 export const ChooseLanguage = () => {
   const { i18n, t } = useTranslation(['common', 'pages', 'help']);
@@ -15,23 +16,28 @@ export const ChooseLanguage = () => {
     <>
       <Title title={t('modals.choose_language')} Svg={LanguageSVG} />
       <PaddingWrapper>
-        {availableLanguages.map((l: string, i: number) => (
-          <h3 key={`${l}_{i}`}>
-            <button
-              style={{
-                fontWeight: i18n.resolvedLanguage === l ? 'bold' : 'normal',
-              }}
-              type="submit"
-              onClick={() => {
-                i18n.changeLanguage(l);
-                setStatus(2);
-                localStorage.setItem('locale', l);
-              }}
-            >
-              {availableLanguages[i].toUpperCase()}
-            </button>
-          </h3>
-        ))}
+        <ContentWrapper>
+          <div className="item">
+            {availableLanguages.map((l: string, i: number) => (
+              <h3 key={`${l}_{i}`}>
+                <LocaleButton
+                  connected={i18n.resolvedLanguage === l}
+                  type="button"
+                  onClick={() => {
+                    i18n.changeLanguage(l);
+                    setStatus(2);
+                    localStorage.setItem('locale', l);
+                  }}
+                >
+                  {availableLanguages[i].toUpperCase()}
+                  {i18n.resolvedLanguage === l && (
+                    <h4 className="selected">{t('modals.selected')}</h4>
+                  )}
+                </LocaleButton>
+              </h3>
+            ))}
+          </div>
+        </ContentWrapper>
       </PaddingWrapper>
     </>
   );

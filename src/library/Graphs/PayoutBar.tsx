@@ -78,7 +78,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
 
   const data = {
     labels: payoutsByDay.map((item: AnySubscan) => {
-      return moment.unix(item.block_timestamp).format('Do MMM');
+      return moment.unix(item.block_timestamp).format('Do MMMM');
     }),
     datasets: [
       {
