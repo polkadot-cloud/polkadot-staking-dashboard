@@ -6,12 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import {
-  capitalizeFirstLetter,
-  humanNumber,
-  planckBnToUnit,
-  rmCommas,
-} from 'Utils';
+import { humanNumber, planckBnToUnit, rmCommas } from 'Utils';
 import { NominationStatusProps } from '../types';
 
 export const NominationStatus = (props: NominationStatusProps) => {

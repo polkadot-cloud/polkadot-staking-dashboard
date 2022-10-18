@@ -17,7 +17,7 @@ export const Members = () => {
   const { network } = useApi();
   const { mode } = useTheme();
   const { getMembersOfPool } = usePoolMembers();
-  const { i18n, t } = useTranslation('common');
+  const { t } = useTranslation('common');
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);

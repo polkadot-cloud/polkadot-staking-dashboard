@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import {
   backgroundToggle,
   buttonPrimaryBackground,
-  textSecondary,
-  borderPrimary,
   textSuccess,
   successTransparent,
 } from 'theme';

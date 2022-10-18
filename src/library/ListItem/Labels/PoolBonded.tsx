@@ -9,7 +9,6 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { Pool } from 'library/Pool/types';
 import { useEffect, useState } from 'react';
 import {
-  capitalizeFirstLetter,
   humanNumber,
   planckBnToUnit,
   rmCommas,

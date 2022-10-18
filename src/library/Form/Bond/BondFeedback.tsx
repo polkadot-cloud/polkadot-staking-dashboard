@@ -36,7 +36,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units, unit } = network;
+  const { units } = network;
   const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
 

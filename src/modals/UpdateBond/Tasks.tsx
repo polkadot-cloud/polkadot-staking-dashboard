@@ -21,9 +21,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { fn } = config;
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
-  const { minCreateBond, minJoinBond } = stats;
-
-  const minJoinBondBase = planckBnToUnit(minJoinBond, units);
+  const { minCreateBond } = stats;
   const minCreateBondBase = planckBnToUnit(minCreateBond, units);
   const { t } = useTranslation('common');
 
