@@ -3,6 +3,7 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { useCombobox } from 'downshift';
@@ -31,6 +32,10 @@ export const Dropdown = (props: DropdownProps) => {
     },
   });
 
+  const { t } = useTranslation('common');
+  const cname = current?.name;
+  const vname = value?.name;
+
   return (
     <StyledDownshift>
       <div>
@@ -42,7 +47,7 @@ export const Dropdown = (props: DropdownProps) => {
         <div style={{ position: 'relative' }}>
           <div className="current">
             <div className="input-wrap selected">
-              <input className="input" disabled value={current?.name ?? ''} />
+              <input className="input" disabled value={t(`${cname}`) ?? ''} />
             </div>
             <span>
               <FontAwesomeIcon icon={faAnglesRight} />
@@ -52,7 +57,7 @@ export const Dropdown = (props: DropdownProps) => {
                 className="input"
                 disabled
                 {...c.getInputProps({ placeholder })}
-                value={value?.name ?? '...'}
+                value={t(`${vname}`) ?? '...'}
               />
             </div>
           </div>
@@ -87,16 +92,18 @@ const DropdownItem = ({ c, item, index }: any) => {
       ? `2px solid ${networkColors[`${network.name}-${mode}`]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 
+  const { t } = useTranslation('common');
+  const iname = item.name;
   return (
     <div
       className="item"
-      {...c.getItemProps({ key: item.name, index, item })}
+      {...c.getItemProps({ key: t(`${iname}`), index, item })}
       style={{
         color,
         border,
       }}
     >
-      <p>{item.name}</p>
+      <p>{t(`${iname}`)}</p>
     </div>
   );
 };

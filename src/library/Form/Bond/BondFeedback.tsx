@@ -1,6 +1,5 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
 
 import { BN_ZERO } from '@polkadot/util';
 import BN, { max } from 'bn.js';
@@ -25,7 +24,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
   const setters = props.setters ?? [];
-  const listenIsValid = props.listenIsValid ?? (() => { });
+  const listenIsValid = props.listenIsValid ?? (() => {});
   const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
   const defaultBond = props.defaultBond || '';
   const { t } = useTranslation('common');
@@ -160,10 +159,11 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {`${txFees.isZero()
-            ? `${t('library.available')}`
-            : `${t('library.available_after_fees')}`
-            }`}
+          {`${
+            txFees.isZero()
+              ? `${t('library.available')}`
+              : `${t('library.available_after_fees')}`
+          }`}
           : {humanNumber(freeBalance)} {network.unit}
         </h4>
       </CardHeaderWrapper>
