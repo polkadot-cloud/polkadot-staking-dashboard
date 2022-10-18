@@ -17,7 +17,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { humanNumber } from 'Utils';
+import { humanNumber, registerSaEvent } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -139,7 +139,12 @@ export const Summary = (props: SetupStepProps) => {
           }}
         >
           <Button
-            onClick={() => submitTx()}
+            onClick={() => {
+              registerSaEvent(
+                `${network.name.toLowerCase()}_user_started_nominating`
+              );
+              submitTx();
+            }}
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }

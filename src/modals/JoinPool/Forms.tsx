@@ -17,7 +17,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckBnToUnit, registerSaEvent, unitToPlanckBn } from 'Utils';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrapper';
 
@@ -109,7 +109,10 @@ export const Forms = () => {
           <button
             type="button"
             className="submit"
-            onClick={() => submitTx()}
+            onClick={() => {
+              registerSaEvent(`${network.name.toLowerCase()}_pool_joined`);
+              submitTx();
+            }}
             disabled={
               submitting ||
               !bondValid ||
