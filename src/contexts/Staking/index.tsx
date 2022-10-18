@@ -19,6 +19,7 @@ import {
   rmCommas,
   setStateWithRef,
 } from 'Utils';
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
