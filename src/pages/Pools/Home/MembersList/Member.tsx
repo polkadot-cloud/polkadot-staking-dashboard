@@ -1,31 +1,31 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useRef } from 'react';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { useList } from 'library/List/context';
-import { Identity } from 'library/ListItem/Labels/Identity';
-import { Select } from 'library/ListItem/Labels/Select';
-import {
-  Wrapper,
-  Labels,
-  Separator,
-  MenuPosition,
-} from 'library/ListItem/Wrappers';
-import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
-import { useMenu } from 'contexts/Menu';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faBars,
   faShare,
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useTranslation } from 'react-i18next';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { PoolState } from 'contexts/Pools/types';
+import { useList } from 'library/List/context';
+import { Identity } from 'library/ListItem/Labels/Identity';
+import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
+import { Select } from 'library/ListItem/Labels/Select';
+import {
+  Labels,
+  MenuPosition,
+  Separator,
+  Wrapper,
+} from 'library/ListItem/Wrappers';
+import { useRef } from 'react';
 
 export const Member = (props: any) => {
   const { meta } = usePoolMembers();

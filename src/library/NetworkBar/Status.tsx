@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import { useApi } from 'contexts/Api';
 import { ConnectionStatus } from 'contexts/Api/types';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 export const Status = () => {
   const { status } = useApi();

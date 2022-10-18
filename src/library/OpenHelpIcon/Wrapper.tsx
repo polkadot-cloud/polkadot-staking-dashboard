@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, networkColor, buttonHelpBackground } from 'theme';
+import { buttonHelpBackground, networkColor, textSecondary } from 'theme';
 
 export const Wrapper = styled.button`
   background: ${buttonHelpBackground};

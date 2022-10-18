@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
-import { Networks } from 'types';
 import { DEFAULT_PARAMS } from 'consts';
-import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
-import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
-import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
-import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
-import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
+import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
+import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
+import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
+import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
+import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
+import { Networks } from 'types';
 
 /*
  * Network Configuration
@@ -116,16 +116,16 @@ export const NETWORKS: Networks = {
     },
     colors: {
       primary: {
-        light: '#EC6E79',
-        dark: '#EC6E79',
+        light: '#da4e71',
+        dark: '#da4e71',
       },
       secondary: {
-        light: '#Ec8f6e',
-        dark: '#Ec8f6e',
+        light: '#ff7c4d',
+        dark: '#ff7c4d',
       },
       transparent: {
-        light: 'rgb(236,110,121,0.05)',
-        dark: 'rgb(236,110,121, 0.05)',
+        light: 'rgb(218, 78, 113, 0.05)',
+        dark: 'rgb(218, 78, 113, 0.05)',
       },
     },
     subscanEndpoint: 'https://westend.api.subscan.io',

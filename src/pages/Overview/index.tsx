@@ -2,34 +2,34 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import moment from 'moment';
-import { StatBoxList } from 'library/StatBoxList';
-import {
-  TopBarWrapper,
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
-import { GraphWrapper } from 'library/Graphs/Wrappers';
-import { useApi } from 'contexts/Api';
-import { useSubscan } from 'contexts/Subscan';
-import { SubscanButton } from 'library/SubscanButton';
-import { PageTitle } from 'library/PageTitle';
-import { formatRewardsForGraphs } from 'library/Graphs/Utils';
-import { planckBnToUnit, humanNumber } from 'Utils';
 import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useSubscan } from 'contexts/Subscan';
+import { formatRewardsForGraphs } from 'library/Graphs/Utils';
+import { GraphWrapper } from 'library/Graphs/Wrappers';
+import { PageTitle } from 'library/PageTitle';
+import { StatBoxList } from 'library/StatBoxList';
+import { SubscanButton } from 'library/SubscanButton';
+import moment from 'moment';
+import { humanNumber, planckBnToUnit } from 'Utils';
+import {
+  PageRowWrapper,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
+  TopBarWrapper,
+} from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
-import TotalNominatorsStatBox from './Stats/TotalNominations';
-import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
-import ActiveEraStatBox from './Stats/ActiveEra';
-import { NetworkStats } from './NetworkSats';
 import BalanceGraph from './BalanceGraph';
+import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
 import Reserve from './Reserve';
+import ActiveEraStatBox from './Stats/ActiveEra';
+import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
+import TotalNominatorsStatBox from './Stats/TotalNominations';
 
 export const Overview = () => {
   const { network } = useApi();

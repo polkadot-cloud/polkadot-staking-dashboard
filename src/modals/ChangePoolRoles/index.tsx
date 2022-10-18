@@ -1,22 +1,22 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useApi } from 'contexts/Api';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTxFees } from 'contexts/TxFees';
-import { Title } from 'library/Modal/Title';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTranslation } from 'react-i18next';
+import { useTxFees } from 'contexts/TxFees';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
-import Wrapper from './Wrapper';
 import { RoleChange } from './RoleChange';
+import Wrapper from './Wrapper';
 
 export const ChangePoolRoles = () => {
   const { api } = useApi();

@@ -1,20 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRowWrapper } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useTheme } from 'contexts/Themes';
-import { PoolState } from 'contexts/Pools/types';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { Button, ButtonRow } from 'library/Button';
-import { useModal } from 'contexts/Modal';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useUi } from 'contexts/UI';
+import { PoolState } from 'contexts/Pools/types';
+import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
+import { useUi } from 'contexts/UI';
+import { Button, ButtonRow } from 'library/Button';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
   const { network } = useApi();

@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { Button } from 'library/Button';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useStaking } from 'contexts/Staking';
-import { PageRowWrapper } from 'Wrappers';
 import { useModal } from 'contexts/Modal';
-import { useUi } from 'contexts/UI';
+import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
+import { useUi } from 'contexts/UI';
+import { Button } from 'library/Button';
+import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { defaultThemes } from 'theme/default';
 import { useTranslation } from 'react-i18next';
+import { PageRowWrapper } from 'Wrappers';
 
 export const ControllerNotImported = () => {
   const { openModalWith } = useModal();

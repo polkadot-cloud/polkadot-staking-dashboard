@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Button } from 'library/Button';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React from 'react';
-import { Wrapper } from './Wrapper';
 import { StatProps } from './types';
+import { Wrapper } from './Wrapper';
 
 export const Stat = (props: StatProps) => {
   const { label, stat, buttons, helpKey, icon } = props;

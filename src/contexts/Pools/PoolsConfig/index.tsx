@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { bnToU8a, u8aConcat } from '@polkadot/util';
+import BN from 'bn.js';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
-import React, { useState, useEffect, useRef } from 'react';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
-import * as defaults from './defaults';
 import { useApi } from '../../Api';
+import * as defaults from './defaults';
 
 export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
   defaults.defaultPoolsConfigContext

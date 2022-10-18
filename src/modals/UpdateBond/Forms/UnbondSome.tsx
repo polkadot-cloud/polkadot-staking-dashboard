@@ -1,24 +1,24 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { useModal } from 'contexts/Modal';
-import { useBalances } from 'contexts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useStaking } from 'contexts/Staking';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTxFees } from 'contexts/TxFees';
+import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
+import { useTxFees } from 'contexts/TxFees';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useEffect, useState } from 'react';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper } from '../../Wrappers';
-import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
+import { FormFooter } from './FormFooter';
 
 export const UnbondSome = (props: FormsProps) => {
   const { setSection } = props;

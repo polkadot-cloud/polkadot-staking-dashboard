@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, useRef } from 'react';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
+import { useEffect, useRef, useState } from 'react';
 import { Wrapper, CardsWrapper, FixedContentWrapper } from './Wrappers';
 import { Tasks } from './Tasks';
 import { Forms } from './Forms';

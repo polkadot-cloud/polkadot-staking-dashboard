@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NETWORKS } from 'config/networks';
@@ -10,15 +9,16 @@ import { useModal } from 'contexts/Modal';
 import { NetworkName } from 'types';
 import { useTranslation } from 'react-i18next';
 import { Title } from 'library/Modal/Title';
+import { useEffect, useState } from 'react';
+import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
 import {
-  ContentWrapper,
-  NetworkButton,
-  ConnectionsWrapper,
   BraveWarning,
   ConnectionButton,
+  ConnectionsWrapper,
+  ContentWrapper,
+  NetworkButton,
 } from './Wrapper';
-import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 
 export const Networks = () => {
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);

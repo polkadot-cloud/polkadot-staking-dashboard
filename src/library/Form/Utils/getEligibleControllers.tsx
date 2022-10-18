@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState } from 'react';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { ImportedAccount } from 'contexts/Connect/types';
-import { planckBnToUnit } from 'Utils';
 import { useConnect } from 'contexts/Connect';
 import { useTranslation } from 'react-i18next';
+import { ImportedAccount } from 'contexts/Connect/types';
+import { useEffect, useState } from 'react';
+import { planckBnToUnit } from 'Utils';
 import { InputItem } from '../types';
 
 export const getEligibleControllers = (): Array<InputItem> => {

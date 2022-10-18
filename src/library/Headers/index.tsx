@@ -1,16 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useLocation } from 'react-router-dom';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
+import { useLocation } from 'react-router-dom';
 import { pageFromUri } from 'Utils';
-import { Spinner } from './Spinner';
-import { Wrapper, LargeScreensOnly } from './Wrappers';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
+import { Spinner } from './Spinner';
+import { LargeScreensOnly, Wrapper } from './Wrappers';
 
 export const Headers = () => {
   const { pathname } = useLocation();

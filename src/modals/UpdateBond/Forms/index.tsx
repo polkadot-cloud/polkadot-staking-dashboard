@@ -3,11 +3,11 @@
 
 import { forwardRef } from 'react';
 import { ContentWrapper } from '../Wrappers';
-import { BondSome } from './BondSome';
 import { BondAll } from './BondAll';
-import { UnbondSome } from './UnbondSome';
+import { BondSome } from './BondSome';
 import { UnbondAll } from './UnbondAll';
 import { UnbondPoolToMinimum } from './UnbondPoolToMinimum';
+import { UnbondSome } from './UnbondSome';
 
 export const Forms = forwardRef((props: any, ref: any) => {
   const { task } = props;

@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from 'react';
-import Button from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
+import Button from 'library/Button';
+import React, { useState } from 'react';
 import { isValidAddress } from 'Utils';
 import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';

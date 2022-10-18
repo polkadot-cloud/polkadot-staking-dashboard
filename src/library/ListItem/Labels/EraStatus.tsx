@@ -4,10 +4,10 @@
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
-import { capitalizeFirstLetter, humanNumber, rmCommas } from 'Utils';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { humanNumber, rmCommas } from 'Utils';
 
 export const EraStatus = (props: any) => {
   const { address } = props;

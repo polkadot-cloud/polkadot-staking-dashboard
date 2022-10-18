@@ -1,27 +1,27 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useRef } from 'react';
+import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExpandAlt, faCompressAlt } from '@fortawesome/free-solid-svg-icons';
-import throttle from 'lodash.throttle';
-import { useUi } from 'contexts/UI';
-import { useModal } from 'contexts/Modal';
+import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useApi } from 'contexts/Api';
+import { ConnectionStatus } from 'contexts/Api/types';
+import { useHelp } from 'contexts/Help';
+import { useModal } from 'contexts/Modal';
+import { useTheme } from 'contexts/Themes';
+import { useUi } from 'contexts/UI';
+import { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
-import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { ReactComponent as InfoSVG } from 'img/info.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
+import { ReactComponent as InfoSVG } from 'img/info.svg';
+import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
-import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
 import { useOutsideAlerter } from 'library/Hooks';
-import { UIContextInterface } from 'contexts/UI/types';
-import { ConnectionStatus } from 'contexts/Api/types';
+import throttle from 'lodash.throttle';
+import { useEffect, useRef } from 'react';
 import { defaultThemes } from 'theme/default';
-import { useTheme } from 'contexts/Themes';
-import { useHelp } from 'contexts/Help';
 import { useTranslation } from 'react-i18next';
 import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
 import { Secondary } from './Secondary';

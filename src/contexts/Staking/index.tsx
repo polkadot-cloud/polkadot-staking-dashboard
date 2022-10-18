@@ -1,18 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
 import BN from 'bn.js';
+import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
-import Worker from 'worker-loader!../../workers/stakers';
-import {
-  rmCommas,
-  localStorageOrDefault,
-  setStateWithRef,
-  planckBnToUnit,
-} from 'Utils';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
-import { AnyApi, MaybeAccount } from 'types';
 import {
   EraStakers,
   NominationStatuses,
@@ -21,10 +13,19 @@ import {
   StakingTargets,
 } from 'contexts/Staking/types';
 import { useTranslation } from 'react-i18next';
+import { AnyApi, MaybeAccount } from 'types';
+import {
+  localStorageOrDefault,
+  planckBnToUnit,
+  rmCommas,
+  setStateWithRef,
+} from 'Utils';
+// eslint-disable-next-line import/no-unresolved
+import Worker from 'worker-loader!../../workers/stakers';
 import { useApi } from '../Api';
-import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
+import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
 
 export const StakingContext = React.createContext<StakingContextInterface>(

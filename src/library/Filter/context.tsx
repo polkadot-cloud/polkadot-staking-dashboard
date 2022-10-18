@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import React, { useState } from 'react';
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import * as defaults from './defaults';
 import { ValidatorFilterContextInterface } from './types';
 

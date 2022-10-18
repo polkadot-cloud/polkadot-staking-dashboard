@@ -3,8 +3,8 @@
 
 import { useState } from 'react';
 import Lottie from 'react-lottie';
-import { Wrapper, MinimisedWrapper, IconWrapper } from './Wrappers';
 import { SecondaryProps } from '../types';
+import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers';
 
 export const Secondary = (props: SecondaryProps) => {
   const { action, name, icon, minimised, onClick, borderColor } = props;

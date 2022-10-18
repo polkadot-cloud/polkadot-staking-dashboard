@@ -1,33 +1,34 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 /* eslint-disable */
-import { useEffect, useState, useRef } from 'react';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useValidators } from 'contexts/Validators';
-import { ValidatorList } from 'library/ValidatorList';
-import { useModal } from 'contexts/Modal';
-import { LargeItem } from 'library/Filter/LargeItem';
+
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-  faHeart,
-  faUserEdit,
   faChartPie,
   faCoins,
+  faHeart,
   faPlus,
   faTimes,
+  faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import { ValidatorFilterProvider } from 'library/Filter/context';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
-import { SelectableWrapper } from 'library/List';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useValidators } from 'contexts/Validators';
+import { ValidatorFilterProvider } from 'library/Filter/context';
+import { LargeItem } from 'library/Filter/LargeItem';
+import { SelectableWrapper } from 'library/List';
+import { ValidatorList } from 'library/ValidatorList';
+import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { useEffect, useRef, useState } from 'react';
 import {
   GenerateNominationsInnerProps,
   Nominations,
 } from '../SetupSteps/types';
-import { GenerateOptionsWrapper } from './Wrappers';
 import { useFetchMehods } from './useFetchMethods';
+import { GenerateOptionsWrapper } from './Wrappers';
 
 export const GenerateNominationsInner = (
   props: GenerateNominationsInnerProps

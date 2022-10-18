@@ -1,19 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useModal } from 'contexts/Modal';
-import { PageRowWrapper } from 'Wrappers';
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { Button } from 'library/Button';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import Nominations from 'pages/Nominate/Active/Nominations';
-import { GenerateNominations } from 'library/GenerateNominations';
-import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { useTranslation } from 'react-i18next';
+import { useUi } from 'contexts/UI';
+import { Button } from 'library/Button';
+import { GenerateNominations } from 'library/GenerateNominations';
+import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import Nominations from 'pages/Nominate/Active/Nominations';
+import { PageRowWrapper } from 'Wrappers';
 
 export const ManagePool = () => {
   const { isSyncing } = useUi();

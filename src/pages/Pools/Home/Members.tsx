@@ -1,16 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRowWrapper } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { useTheme } from 'contexts/Themes';
 import { PoolState } from 'contexts/Pools/types';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from 'contexts/Themes';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { PageRowWrapper } from 'Wrappers';
 import { MembersList } from './MembersList';
 
 export const Members = () => {

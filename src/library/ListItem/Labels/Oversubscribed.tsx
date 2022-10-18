@@ -1,19 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
-import { useValidators } from 'contexts/Validators';
 import { useTooltip } from 'contexts/Tooltip';
+import { useValidators } from 'contexts/Validators';
+import { motion } from 'framer-motion';
 import {
+  OverSubscribedWrapper,
   TooltipPosition,
   TooltipTrigger,
-  OverSubscribedWrapper,
 } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
+import { useRef } from 'react';
 import { OversubscribedProps } from '../types';
 
 export const Oversubscribed = (props: OversubscribedProps) => {

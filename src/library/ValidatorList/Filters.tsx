@@ -1,20 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
 import {
-  faPercentage,
-  faExclamationTriangle,
-  faUserSlash,
   faBalanceScaleLeft,
   faClock,
+  faExclamationTriangle,
+  faPercentage,
+  faUserSlash,
   faUserTag,
 } from '@fortawesome/free-solid-svg-icons';
-import { Container } from 'library/Filter/Container';
 import { Category } from 'library/Filter/Category';
-import { Item } from 'library/Filter/Item';
+import { Container } from 'library/Filter/Container';
 import { useValidatorFilter } from 'library/Filter/context';
 import { useTranslation } from 'react-i18next';
+import { Item } from 'library/Filter/Item';
+import { useEffect } from 'react';
 
 export const Filters = () => {
   const {
