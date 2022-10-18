@@ -398,7 +398,7 @@ export const ConnectProvider = ({
 
       if (extension !== undefined) {
         // successful extension connection event.
-        registerSaEvent('extension_connected', {
+        registerSaEvent(`${network.name.toLowerCase()}_extension_connected`, {
           id,
         });
 

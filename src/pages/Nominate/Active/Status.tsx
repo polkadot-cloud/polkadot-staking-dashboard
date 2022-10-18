@@ -117,7 +117,9 @@ export const Status = ({ height }: { height: number }) => {
                     isReadOnlyAccount(activeAccount) ||
                     !activeAccount,
                   onClick: () => {
-                    registerSaEvent('nominate_setup_button_pressed');
+                    registerSaEvent(
+                      `${network.name.toLowerCase()}_nominate_setup_button_pressed`
+                    );
                     setOnNominatorSetup(1);
                   },
                 },
