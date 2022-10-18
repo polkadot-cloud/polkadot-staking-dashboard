@@ -61,7 +61,7 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   // eslint-disable-next-line
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
-  setSelectedPoolId: (p) => {},
+  setSelectedPoolId: () => {},
   selectedActivePool,
   targets,
   poolNominations,

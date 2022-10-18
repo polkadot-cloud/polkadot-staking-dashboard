@@ -52,7 +52,7 @@ export const Menu = () => {
           }}
         >
           {menu.items.map((item: any, i: number) => {
-            const { icon, title, wrap, cb } = item;
+            const { icon, title, cb } = item;
 
             return (
               <ItemWrapper

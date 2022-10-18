@@ -215,7 +215,7 @@ export const PoolList = (props: any) => {
 export class PoolListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;
 
-  shouldComponentUpdate(nextProps: PoolListProps, nextState: any) {
+  shouldComponentUpdate(nextProps: PoolListProps) {
     return this.props.pools !== nextProps.pools;
   }
 
