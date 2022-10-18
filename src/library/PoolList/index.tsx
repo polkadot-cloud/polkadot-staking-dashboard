@@ -21,11 +21,15 @@ import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
-export const PoolListInner = (props: PoolListProps) => {
-  const { allowMoreCols, pagination, batchKey }: any = props;
-  const disableThrottle = props.disableThrottle ?? false;
-  const allowSearch = props.allowSearch ?? false;
-
+export const PoolListInner = ({
+  allowMoreCols,
+  pagination,
+  batchKey = '',
+  disableThrottle,
+  allowSearch,
+  pools,
+  title,
+}: PoolListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
@@ -40,10 +44,10 @@ export const PoolListInner = (props: PoolListProps) => {
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of pools
-  const [poolsDefault, setPoolsDefault] = useState(props.pools);
+  const [poolsDefault, setPoolsDefault] = useState(pools);
 
   // manipulated list (ordering, filtering) of pools
-  const [pools, setPools] = useState(props.pools);
+  const [_pools, _setPools] = useState(pools);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -56,7 +60,7 @@ export const PoolListInner = (props: PoolListProps) => {
   };
 
   // pagination
-  const totalPages = Math.ceil(pools.length / LIST_ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(_pools.length / LIST_ITEMS_PER_PAGE);
   const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
@@ -65,10 +69,10 @@ export const PoolListInner = (props: PoolListProps) => {
 
   // refetch list when pool list changes
   useEffect(() => {
-    if (props.pools !== poolsDefault) {
+    if (pools !== poolsDefault) {
       setFetched(false);
     }
-  }, [props.pools]);
+  }, [pools]);
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
@@ -79,10 +83,10 @@ export const PoolListInner = (props: PoolListProps) => {
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
-    setPoolsDefault(props.pools);
-    setPools(props.pools);
+    setPoolsDefault(pools);
+    _setPools(pools);
     setFetched(true);
-    fetchPoolsMetaBatch(batchKey, props.pools, true);
+    fetchPoolsMetaBatch(batchKey, pools, true);
   };
 
   // render throttle
@@ -99,9 +103,9 @@ export const PoolListInner = (props: PoolListProps) => {
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listPools = pools.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listPools = _pools.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
   } else {
-    listPools = pools;
+    listPools = _pools;
   }
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -118,14 +122,14 @@ export const PoolListInner = (props: PoolListProps) => {
 
     setPage(1);
     setRenderIteration(1);
-    setPools(filteredPools);
+    _setPools(filteredPools);
   };
 
   return (
     <ListWrapper>
       <Header>
         <div>
-          <h4>{props.title}</h4>
+          <h4>{title}</h4>
         </div>
         <div>
           <button type="button" onClick={() => setListFormat('row')}>

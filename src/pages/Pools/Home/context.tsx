@@ -20,7 +20,7 @@ export const PoolsTabsProvider = ({
 }) => {
   const [activeTab, _setActiveTab] = useState<number>(0);
 
-  const setActiveTab = (t: any) => {
+  const setActiveTab = (t: number) => {
     _setActiveTab(t);
   };
 
