@@ -7,14 +7,14 @@ import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 import { ItemWrapper } from '../Wrappers';
 
 export const External = (props: any) => {
-  const { width, height, subtitle, label, title, url, website } = props;
+  const { width, height, subtitle, title, url, website } = props;
 
   const handleClick = () => {
     window.open(url, '_blank');
   };
 
   return (
-    <ItemWrapper width={`${width}%`} height={height || 'auto'}>
+    <ItemWrapper width={`${width}`} height={height || 'auto'}>
       <motion.button
         className="item"
         whileHover={{ scale: 1.004 }}
