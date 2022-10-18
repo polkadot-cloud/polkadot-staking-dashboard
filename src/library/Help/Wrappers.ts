@@ -176,7 +176,7 @@ export const ItemWrapper = styled(motion.div)<any>`
   display: flex;
   width: ${(props) => props.width};
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};
-  overflow: auto;
+  overflow: hidden;
   flex-flow: row wrap;
   justify-content: flex-start;
 
