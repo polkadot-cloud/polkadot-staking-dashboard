@@ -1,142 +1,160 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ellipsisFn, unitToPlanck } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
-import { useSetup } from 'contexts/Setup';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useTxFees } from 'contexts/TxFees';
+import { useUi } from 'contexts/UI';
+import { defaultStakeSetup } from 'contexts/UI/defaults';
+import { SetupType } from 'contexts/UI/types';
+import { Button } from 'library/Button';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
-import { useBatchCall } from 'library/Hooks/useBatchCall';
-import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import type { SetupStepProps } from 'library/SetupSteps/types';
-import { SubmitTx } from 'library/SubmitTx';
-import { useNetwork } from 'contexts/Network';
-import { useApi } from 'contexts/Api';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { humanNumber, registerSaEvent } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = ({ section }: SetupStepProps) => {
-  const { t } = useTranslation('pages');
-  const { api } = useApi();
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork();
-  const { newBatchCall } = useBatchCall();
-  const { getPayeeItems } = usePayeeConfig();
-  const { accountHasSigner } = useImportedAccounts();
-  const { activeAccount, activeProxy } = useActiveAccounts();
-  const { getNominatorSetup, removeSetupProgress } = useSetup();
+export const Summary = (props: SetupStepProps) => {
+  const { section } = props;
 
-  const setup = getNominatorSetup(activeAccount);
-  const { progress } = setup;
-  const { bond, nominations, payee } = progress;
+  const { api, network } = useApi();
+  const { units } = network;
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { txFeesValid } = useTxFees();
 
-  const getTxs = () => {
+  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+
+  const { controller, bond, nominations, payee } = setup;
+
+  const txs = () => {
     if (!activeAccount || !api) {
       return null;
     }
+    const stashToSubmit = {
+      Id: activeAccount,
+    };
+    const bondToSubmit = bond * 10 ** units;
+    const targetsToSubmit = nominations.map((item: any) => {
+      return {
+        Id: item.address,
+      };
+    });
+    const controllerToSubmit = {
+      Id: controller,
+    };
 
-    const targetsToSubmit = nominations.map(
-      ({ address }: { address: string }) => ({
-        Id: address,
-      })
-    );
-
-    const payeeToSubmit =
-      payee.destination === 'Account'
-        ? {
-            Account: payee.account,
-          }
-        : payee.destination;
-
-    const bondToSubmit = unitToPlanck(bond || '0', units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-
-    const txs = [
-      api.tx.staking.bond(bondAsString, payeeToSubmit),
+    // construct a batch of transactions
+    const _txs = [
+      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
       api.tx.staking.nominate(targetsToSubmit),
+      api.tx.staking.setController(controllerToSubmit),
     ];
-    return newBatchCall(txs, activeAccount);
+    return api.tx.utility.batch(_txs);
   };
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTxs(),
+  const { submitTx, submitting } = useSubmitExtrinsic({
+    tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
+    callbackSubmit: () => {},
     callbackInBlock: () => {
-      removeSetupProgress('nominator', activeAccount);
+      // reset localStorage setup progress
+      setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
     },
   });
-
-  const payeeDisplay =
-    getPayeeItems().find(({ value }) => value === payee.destination)?.title ||
-    payee.destination;
 
   return (
     <>
       <Header
         thisSection={section}
         complete={null}
-        title={t('nominate.summary')}
-        bondFor="nominator"
+        title="Summary"
+        setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        {!(
-          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
-        ) && <Warning text={t('nominate.readOnly')} />}
+        {!accountHasSigner(activeAccount) && (
+          <Warning text="Your account is read only, and cannot sign transactions." />
+        )}
         <SummaryWrapper>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominate.payoutDestination')}:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Controller:
             </div>
-            <div>
-              {payee.destination === 'Account'
-                ? `${payeeDisplay}: ${ellipsisFn(payee.account || '')}`
-                : payeeDisplay}
-            </div>
+            <div>{controller}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominate.nominating')}:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Reward Destination:
             </div>
-            <div>{t('nominate.validator', { count: nominations.length })}</div>
+            <div>{payee}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('nominate.bondAmount')}:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Nominations:
+            </div>
+            <div>{nominations.length}</div>
+          </section>
+          <section>
+            <div>
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Bond Amount:
             </div>
             <div>
-              {new BigNumber(bond || 0).toFormat()} {unit}
+              {humanNumber(bond)} {network.unit}
             </div>
+          </section>
+          <section>
+            <EstimatedTxFee format="table" />
           </section>
         </SummaryWrapper>
         <div
           style={{
             flex: 1,
+            flexDirection: 'row',
             width: '100%',
-            borderRadius: '1rem',
-            overflow: 'hidden',
+            display: 'flex',
+            justifyContent: 'end',
           }}
         >
-          <SubmitTx
-            submitText={t('nominate.startNominating')}
-            valid
-            customEvent={`${network.toLowerCase()}_user_started_nominating`}
-            {...submitExtrinsic}
-            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
+          <Button
+            onClick={() => {
+              registerSaEvent(
+                `${network.name.toLowerCase()}_user_started_nominating`
+              );
+              submitTx();
+            }}
+            disabled={
+              submitting || !accountHasSigner(activeAccount) || !txFeesValid
+            }
+            title="Start Nominating"
+            primary
           />
         </div>
       </MotionContainer>
     </>
   );
 };
+
+export default Summary;

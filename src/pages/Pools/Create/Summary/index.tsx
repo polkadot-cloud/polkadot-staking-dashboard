@@ -1,79 +1,80 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { unitToPlanck } from '@polkadot-cloud/utils';
-import BigNumber from 'bignumber.js';
-import { useTranslation } from 'react-i18next';
+import { BN } from 'bn.js';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useSetup } from 'contexts/Setup';
+import { useTxFees } from 'contexts/TxFees';
+import { useUi } from 'contexts/UI';
+import { defaultPoolSetup } from 'contexts/UI/defaults';
+import { SetupType } from 'contexts/UI/types';
+import { Button } from 'library/Button';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
-import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import type { SetupStepProps } from 'library/SetupSteps/types';
-import { SubmitTx } from 'library/SubmitTx';
-import { useNetwork } from 'contexts/Network';
-import { useApi } from 'contexts/Api';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { humanNumber, registerSaEvent, unitToPlanckBn } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = ({ section }: SetupStepProps) => {
-  const { t } = useTranslation('pages');
-  const { api } = useApi();
-  const {
-    network,
-    networkData: { units, unit },
-  } = useNetwork();
+export const Summary = (props: SetupStepProps) => {
+  const { section } = props;
+  const { api, network } = useApi();
+  const { units } = network;
+  const { activeAccount, accountHasSigner } = useConnect();
+  const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { stats } = usePoolsConfig();
-  const { newBatchCall } = useBatchCall();
-  const { accountHasSigner } = useImportedAccounts();
-  const { getPoolSetup, removeSetupProgress } = useSetup();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
-  const { activeAccount, activeProxy } = useActiveAccounts();
-
   const { lastPoolId } = stats;
-  const poolId = lastPoolId.plus(1);
-  const setup = getPoolSetup(activeAccount);
-  const { progress } = setup;
+  const poolId = lastPoolId.add(new BN(1));
+  const { txFeesValid } = useTxFees();
 
-  const { metadata, bond, roles, nominations } = progress;
+  const setup = getSetupProgress(SetupType.Pool, activeAccount);
 
-  const getTxs = () => {
-    if (!activeAccount || !api) {
+  const { metadata, bond, roles, nominations } = setup;
+
+  const txs = () => {
+    if (
+      !activeAccount ||
+      !api ||
+      !metadata ||
+      bond === 0 ||
+      !roles ||
+      !nominations.length
+    ) {
       return null;
     }
 
-    const targetsToSubmit = nominations.map(
-      ({ address }: { address: string }) => address
-    );
+    const bondToSubmit = unitToPlanckBn(bond, units).toString();
+    const targetsToSubmit = nominations.map((item: any) => item.address);
 
-    const bondToSubmit = unitToPlanck(bond, units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-
-    const txs = [
+    // construct a batch of transactions
+    const _txs = [
       api.tx.nominationPools.create(
-        bondAsString,
-        roles?.root || activeAccount,
-        roles?.nominator || activeAccount,
-        roles?.bouncer || activeAccount
+        bondToSubmit,
+        roles.root,
+        roles.nominator,
+        roles.stateToggler
       ),
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
     ];
-    return newBatchCall(txs, activeAccount);
+    return api.tx.utility.batch(_txs);
   };
 
-  const submitExtrinsic = useSubmitExtrinsic({
-    tx: getTxs(),
+  const { submitTx, submitting } = useSubmitExtrinsic({
+    tx: txs(),
     from: activeAccount,
     shouldSubmit: true,
+    callbackSubmit: () => {},
     callbackInBlock: async () => {
       // query and add created pool to bondedPools list
       const pool = await queryBondedPool(poolId.toNumber());
@@ -81,12 +82,10 @@ export const Summary = ({ section }: SetupStepProps) => {
 
       // query and add account to poolMembers list
       const member = await queryPoolMember(activeAccount);
-      if (member) {
-        addToPoolMembers(member);
-      }
+      addToPoolMembers(member);
 
       // reset localStorage setup progress
-      removeSetupProgress('pool', activeAccount);
+      setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
     },
   });
 
@@ -95,62 +94,86 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('pools.summary')}
-        bondFor="pool"
+        title="Summary"
+        setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        {!(
-          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
-        ) && <Warning text={t('pools.readOnly')} />}
+        {!accountHasSigner(activeAccount) && (
+          <Warning text="Your account is read only, and cannot sign transactions." />
+        )}
         <SummaryWrapper>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('pools.poolName')}:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Pool Name:
             </div>
-            <div>{metadata ?? `${t('pools.notSet')}`}</div>
+            <div>{metadata ?? `Not Set`}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('pools.bondAmount')}:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Bond Amount:
             </div>
             <div>
-              {new BigNumber(bond).toFormat()} {unit}
+              {humanNumber(bond)} {network.unit}
             </div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;
-              {t('pools.nominating')}:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Nominations:
             </div>
-            <div>{t('nominate.validator', { count: nominations.length })}</div>
+            <div>{nominations.length}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
-              {t('pools.roles')}:
+              <FontAwesomeIcon
+                icon={faCheckCircle as IconProp}
+                transform="grow-1"
+              />{' '}
+              &nbsp; Roles:
             </div>
-            <div>{t('pools.assigned')}</div>
+            <div>Assigned</div>
+          </section>
+          <section>
+            <EstimatedTxFee format="table" />
           </section>
         </SummaryWrapper>
         <div
           style={{
             flex: 1,
+            flexDirection: 'row',
             width: '100%',
-            borderRadius: '1rem',
-            overflow: 'hidden',
+            display: 'flex',
+            justifyContent: 'end',
           }}
         >
-          <SubmitTx
-            submitText={t('pools.createPool')}
-            valid
-            customEvent={`${network.toLowerCase()}_user_created_pool`}
-            {...submitExtrinsic}
-            displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
+          <Button
+            onClick={() => {
+              registerSaEvent(
+                `${network.name.toLowerCase()}_user_created_pool`
+              );
+              submitTx();
+            }}
+            disabled={
+              submitting || !accountHasSigner(activeAccount) || !txFeesValid
+            }
+            title="Create Pool"
+            primary
           />
         </div>
       </MotionContainer>
     </>
   );
 };
+
+export default Summary;
