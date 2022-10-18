@@ -41,12 +41,12 @@ export const nominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
   getNominationsStatus: () => nominationStatus,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getNominationsStatusFromTargets: (w, t) => nominationStatus,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTargets: (t) => {},
   hasController: () => false,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getControllerNotImported: (a) => null,
   isBonding: () => false,
   isNominating: () => false,

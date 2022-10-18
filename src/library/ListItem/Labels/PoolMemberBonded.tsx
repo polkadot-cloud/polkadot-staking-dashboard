@@ -13,7 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export const PoolMemberBonded = (props: any) => {
-  const { meta, batchKey, batchIndex, who } = props;
+  const { meta, batchKey, batchIndex } = props;
   const { network } = useApi();
   const { units, unit } = network;
   const { t } = useTranslation('common');

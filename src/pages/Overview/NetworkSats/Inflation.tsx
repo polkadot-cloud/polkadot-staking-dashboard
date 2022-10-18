@@ -13,8 +13,8 @@ import { InflationWrapper } from './Wrappers';
 export const Inflation = () => {
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  const { inflation, stakedReturn, idealStake } = useInflation();
   const { t } = useTranslation('common');
+  const { inflation, stakedReturn } = useInflation();
 
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;
