@@ -8,6 +8,7 @@ import {
   isValidAddress,
   localStorageOrDefault,
   setStateWithRef,
+  registerSaEvent,
 } from 'Utils';
 import { DAPP_NAME } from 'consts';
 import {
@@ -396,6 +397,11 @@ export const ConnectProvider = ({
       const extension: ExtensionInteface = await enable(DAPP_NAME);
 
       if (extension !== undefined) {
+        // successful extension connection event.
+        registerSaEvent('extension_connected', {
+          id,
+        });
+
         // subscribe to accounts
         const _unsubscribe = (await extension.accounts.subscribe(
           (injected: ExtensionAccount[]) => {

@@ -10,7 +10,7 @@ import { useUi } from 'contexts/UI';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { BN } from 'bn.js';
+import { registerSaEvent } from 'Utils';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
@@ -39,7 +39,10 @@ export const useStatusButtons = () => {
       !activeAccount ||
       stats.maxPools.toNumber() === 0 ||
       bondedPools.length === stats.maxPools.toNumber(),
-    onClick: () => setOnPoolSetup(1),
+    onClick: () => {
+      registerSaEvent('pool_create_button_pressed');
+      setOnPoolSetup(1);
+    },
   };
 
   const joinPoolBtn = {
@@ -51,7 +54,10 @@ export const useStatusButtons = () => {
       isReadOnlyAccount(activeAccount) ||
       !activeAccount ||
       !bondedPools.length,
-    onClick: () => setActiveTab(2),
+    onClick: () => {
+      registerSaEvent('pool_join_button_pressed');
+      setActiveTab(2);
+    },
   };
 
   if (!membership) {

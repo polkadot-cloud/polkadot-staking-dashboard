@@ -226,8 +226,8 @@ export const determinePoolDisplay = (
   return display;
 };
 
-export const track = (e: string) => {
+export const registerSaEvent = (e: string, a: AnyApi = {}) => {
   if ((window as AnyApi).sa_event) {
-    (window as AnyApi).sa_event(e);
+    (window as AnyApi).sa_event(e, a);
   }
 };

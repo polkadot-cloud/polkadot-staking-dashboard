@@ -19,7 +19,7 @@ import { useUi } from 'contexts/UI';
 import { useApi } from 'contexts/Api';
 import Stat from 'library/Stat';
 import { useValidators } from 'contexts/Validators';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { planckBnToUnit, rmCommas, registerSaEvent } from 'Utils';
 import { BN } from 'bn.js';
 import { Controller } from './Controller';
 
@@ -116,7 +116,10 @@ export const Status = ({ height }: { height: number }) => {
                     !isReady ||
                     isReadOnlyAccount(activeAccount) ||
                     !activeAccount,
-                  onClick: () => setOnNominatorSetup(1),
+                  onClick: () => {
+                    registerSaEvent('nominate_setup_button_pressed');
+                    setOnNominatorSetup(1);
+                  },
                 },
               ]
         }

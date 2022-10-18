@@ -8,6 +8,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import Lottie from 'react-lottie';
+import { registerSaEvent } from 'Utils';
 import { Wrapper, MinimisedWrapper } from './Wrappers';
 import { PrimaryProps } from '../types';
 
@@ -60,6 +61,9 @@ export const Primary = (props: PrimaryProps) => {
       onClick={() => {
         setSideMenu(0);
         setIsStopped(false);
+        registerSaEvent('page_visited', {
+          name,
+        });
       }}
     >
       <StyledWrapper
