@@ -1,27 +1,23 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { registerSaEvent } from 'Utils';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
-import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
-import { useNetwork } from 'contexts/Network';
-import type { PrimaryProps } from '../types';
-import { Wrapper } from './Wrappers';
+import Lottie from 'react-lottie';
+import { registerSaEvent } from 'Utils';
+import { Wrapper, MinimisedWrapper } from './Wrappers';
+import { PrimaryProps } from '../types';
 
-export const Primary = ({
-  name,
-  active,
-  to,
-  action,
-  minimised,
-  lottie,
-}: PrimaryProps) => {
+export const Primary = (props: PrimaryProps) => {
   const { setSideMenu } = useUi();
-  const { network } = useNetwork();
-  const { icon, play } = useDotLottieButton(lottie);
+
+  const { name, active, to, icon, action, minimised } = props;
+
+  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
   let Action = null;
   const actionStatus = action?.status ?? null;
@@ -30,16 +26,14 @@ export const Primary = ({
     case 'text':
       Action = (
         <div className="action text">
-          <span className={actionStatus || undefined}>
-            {action?.text ?? ''}
-          </span>
+          <span className={`${actionStatus}`}>{action?.text ?? ''}</span>
         </div>
       );
       break;
     case 'bullet':
       Action = (
         <div className={`action ${actionStatus}`}>
-          <FontAwesomeIcon icon={faCircle} transform="shrink-4" />
+          <FontAwesomeIcon icon={faCircle as IconProp} transform="shrink-4" />
         </div>
       );
       break;
@@ -47,36 +41,68 @@ export const Primary = ({
       Action = null;
   }
 
+  // animate icon config
+
+  const { animate } = props;
+  const [isStopped, setIsStopped] = useState(true);
+
+  const animateOptions = {
+    loop: true,
+    autoplay: false,
+    animationData: animate,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
+
   return (
     <Link
       to={to}
       onClick={() => {
-        if (!active) {
-          play();
-          setSideMenu(false);
-          registerSaEvent(`${network.toLowerCase()}_${name}_page_visit`);
-        }
+        setSideMenu(0);
+        setIsStopped(false);
+        registerSaEvent('page_visited', {
+          name,
+        });
       }}
     >
-      <Wrapper
+      <StyledWrapper
         className={`${active ? `active` : `inactive`}${
-          minimised ? ` minimised` : ``
-        }${action ? ` ${actionStatus}` : ``}`}
+          action ? ` action-${actionStatus}` : ``
+        }`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{
           duration: 0.1,
         }}
       >
-        <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {icon}
+        <div className="icon">
+          {animate === undefined ? (
+            icon
+          ) : (
+            <Lottie
+              options={animateOptions}
+              width={minimised ? '1.5rem' : '1.35rem'}
+              height={minimised ? '1.5rem' : '1.35rem'}
+              isStopped={isStopped}
+              isPaused={isStopped}
+              eventListeners={[
+                {
+                  eventName: 'loopComplete',
+                  callback: () => setIsStopped(true),
+                },
+              ]}
+            />
+          )}
         </div>
         {!minimised && (
           <>
             <h4 className="name">{name}</h4> {Action}
           </>
         )}
-      </Wrapper>
+      </StyledWrapper>
     </Link>
   );
 };
+
+export default Primary;
