@@ -400,6 +400,7 @@
             "unclaimed_rewards": "待申领奖励",
             "address_invalid": "地址无效",
             "": "",
+            "pool_member": "{{count}} 个成员",
             "poolstats1": "成员已申领奖励{{unit}}总数",
             "poolstats3": "成员可申领的奖励{{unit}}金额",
             "locked1": "己锁 / ",

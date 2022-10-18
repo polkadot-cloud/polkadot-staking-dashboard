@@ -406,6 +406,8 @@
             "unclaimed_rewards": "Unclaimed Rewards",
             "address_invalid": "Address Invalid",
             "": "",
+            "pool_member_one": "{{count}} Pool Member",
+            "pool_member_other": "{{count}} Pool Members",
             "poolstats1": "The total amount of {{unit}} that has been claimed by pool members.",
             "poolstats3": "The outstanding amount of {unit} available to claim by pool members.",
             "locked1": "Locked / ",

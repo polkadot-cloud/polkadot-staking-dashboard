@@ -21,12 +21,9 @@ export const Members = () => {
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
-  const poolMembersTitle =
-    i18n.resolvedLanguage === 'en'
-      ? `${poolMembers.length} Pool Member${
-          poolMembers.length === 1 ? `` : `s`
-        }`
-      : `${poolMembers.length} 成员`;
+  const poolMembersTitle = `${t('pages.pools.pool_member', {
+    count: poolMembers.length,
+  })}`;
 
   const networkColorsSecondary: any = network.colors.secondary;
   const annuncementBorderColor = networkColorsSecondary[mode];
