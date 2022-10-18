@@ -26,15 +26,15 @@ export const U32_OPTS = { bitLength: 32, isLe: true };
 export const PAYEE_STATUS = [
   {
     key: 'Staked',
-    name: 'Back to Staking',
+    name: 'consts.staked',
   },
   {
     key: 'Stash',
-    name: 'To Stash Account',
+    name: 'consts.stash',
   },
   {
     key: 'Controller',
-    name: 'To Controller Account',
+    name: 'consts.controller',
   },
 ];
 
