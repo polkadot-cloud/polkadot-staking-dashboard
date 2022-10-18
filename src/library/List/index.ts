@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary, borderPrimary, textPrimary, networkColor } from 'theme';
+import { borderPrimary, networkColor, textPrimary, textSecondary } from 'theme';
 import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`

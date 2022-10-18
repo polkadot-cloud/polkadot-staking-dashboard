@@ -25,6 +25,7 @@
         "prefer-arrow-functions"
     ],
     "rules": {
+        "import/no-webpack-loader-syntax": "off",
         "react/require-default-props": "off",
         "react/no-access-state-in-setstate": "off",
         "react/destructuring-assignment": "off",

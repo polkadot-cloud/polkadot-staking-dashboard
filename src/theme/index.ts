@@ -3,8 +3,8 @@
 
 import theme from 'styled-theming';
 import {
-  defaultThemes,
   cardThemes,
+  defaultThemes,
   networkColors,
   networkColorsSecondary,
   networkColorsTransparent,

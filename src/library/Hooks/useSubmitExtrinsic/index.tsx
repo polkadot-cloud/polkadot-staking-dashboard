@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useState, useEffect } from 'react';
-import { useApi } from 'contexts/Api';
-import { useNotifications } from 'contexts/Notifications';
-import { useExtrinsics } from 'contexts/Extrinsics';
-import { useConnect } from 'contexts/Connect';
 import { DAPP_NAME } from 'consts';
-import { AnyApi } from 'types';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { Extension } from 'contexts/Connect/types';
+import { useExtrinsics } from 'contexts/Extrinsics';
+import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { AnyApi } from 'types';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (

@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { stringToU8a } from '@polkadot/util';
+import BN from 'bn.js';
+import { NETWORKS } from 'config/networks';
 import {
   APIConstants,
   APIContextInterface,
   ConnectionStatus,
 } from 'contexts/Api/types';
-import BN from 'bn.js';
-import { NETWORKS } from 'config/networks';
 
 export const consts: APIConstants = {
   bondDuration: 0,

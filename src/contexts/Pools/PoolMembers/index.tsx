@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useConnect } from 'contexts/Connect';
 import { PoolMemberContext } from 'contexts/Pools/types';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
-import { useConnect } from 'contexts/Connect';
-import { defaultPoolMembers } from './defaults';
 import { useApi } from '../../Api';
+import { defaultPoolMembers } from './defaults';
 
 export const PoolMembersContext =
   React.createContext<PoolMemberContext>(defaultPoolMembers);

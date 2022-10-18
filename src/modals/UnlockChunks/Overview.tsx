@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { forwardRef } from 'react';
 import { useApi } from 'contexts/Api';
-import { planckBnToUnit } from 'Utils';
-import Button from 'library/Button';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useTranslation } from 'react-i18next';
-import { ContentWrapper, ChunkWrapper } from './Wrappers';
+import Button from 'library/Button';
+import { forwardRef } from 'react';
+import { planckBnToUnit } from 'Utils';
 import { Separator, NotesWrapper } from '../Wrappers';
+import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondType, setSection, setUnlock, setTask }: any, ref: any) => {

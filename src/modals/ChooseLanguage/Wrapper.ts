@@ -35,7 +35,6 @@ export const LocaleButton = styled.button<any>`
   box-sizing: border-box;
   padding: 1rem;
   cursor: pointer;
-  margin-bottom: 1rem;
   border-radius: 0.75rem;
   display: inline-flex;
   flex-flow: row wrap;

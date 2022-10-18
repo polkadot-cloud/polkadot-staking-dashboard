@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import { defaultThemes, networkColors } from 'theme/default';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
+import { Doughnut } from 'react-chartjs-2';
+import { defaultThemes, networkColors } from 'theme/default';
 import { humanNumber } from 'Utils';
 import { useTranslation } from 'react-i18next';
 import { GraphWrapper } from './Wrappers';

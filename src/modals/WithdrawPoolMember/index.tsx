@@ -1,30 +1,30 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BN from 'bn.js';
-import { useState } from 'react';
-import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useNetworkMetrics } from 'contexts/Network';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { useTxFees } from 'contexts/TxFees';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { Title } from 'library/Modal/Title';
+import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import {
+  FooterWrapper,
   NotesWrapper,
   PaddingWrapper,
   Separator,
-  FooterWrapper,
 } from 'modals/Wrappers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { Warning } from 'library/Form/Warning';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
-import { useNetworkMetrics } from 'contexts/Network';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTxFees } from 'contexts/TxFees';
-import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { planckBnToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {
   const { api, network, consts } = useApi();

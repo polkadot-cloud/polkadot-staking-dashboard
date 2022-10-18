@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useApi } from 'contexts/Api';
 import { useTranslation } from 'react-i18next';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { PoolState } from 'contexts/Pools/types';
+import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {

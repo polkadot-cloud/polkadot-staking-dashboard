@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Number } from 'library/StatBoxList/Number';
-import { planckBnToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTranslation } from 'react-i18next';
+import { Number } from 'library/StatBoxList/Number';
+import { planckBnToUnit } from 'Utils';
 
 const MinJoinBondStatBox = () => {
   const { network } = useApi();

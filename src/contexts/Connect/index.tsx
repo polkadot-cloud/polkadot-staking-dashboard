@@ -1,32 +1,32 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
 import Keyring from '@polkadot/keyring';
+import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { DAPP_NAME } from 'consts';
+import {
+  ConnectContextInterface,
+  Extension,
+  ExtensionAccount,
+  ExtensionInteface,
+  ExternalAccount,
+  ImportedAccount,
+} from 'contexts/Connect/types';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnyApi, MaybeAccount } from 'types';
 import {
   clipAddress,
   isValidAddress,
   localStorageOrDefault,
   setStateWithRef,
 } from 'Utils';
-import { DAPP_NAME } from 'consts';
-import {
-  ConnectContextInterface,
-  ImportedAccount,
-  ExternalAccount,
-  Extension,
-  ExtensionAccount,
-  ExtensionInteface,
-} from 'contexts/Connect/types';
-import { AnyApi, MaybeAccount } from 'types';
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
 import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';
 import {
-  removeFromLocalExtensions,
+  extensionIsLocal,
   getActiveAccountLocal,
   getLocalExternalAccounts,
-  extensionIsLocal,
+  removeFromLocalExtensions,
 } from './Utils';
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(

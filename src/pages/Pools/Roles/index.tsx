@@ -1,26 +1,26 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { useAccount } from 'contexts/Account';
-import { useConnect } from 'contexts/Connect';
-import { useApi } from 'contexts/Api';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import Button from 'library/Button';
 import {
-  faEdit,
   faCheckCircle,
+  faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { useUi } from 'contexts/UI';
+import { useAccount } from 'contexts/Account';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useUi } from 'contexts/UI';
+import Button from 'library/Button';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useEffect, useState } from 'react';
 import { PoolAccount } from '../PoolAccount';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import RoleEditInput from './RoleEditInput';
-import { RolesProps, RoleEditEntry } from './types';
+import { RoleEditEntry, RolesProps } from './types';
 
 export const Roles = (props: RolesProps) => {
   const { batchKey, defaultRoles } = props;

@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import {
   capitalizeFirstLetter,
   humanNumber,
   planckBnToUnit,
   rmCommas,
 } from 'Utils';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { BN } from 'bn.js';
 import { NominationStatusProps } from '../types';
 
 export const NominationStatus = (props: NominationStatusProps) => {

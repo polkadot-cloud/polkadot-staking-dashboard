@@ -1,18 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { StatBoxList } from 'library/StatBoxList';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { ValidatorList } from 'library/ValidatorList';
 import { PageTitle } from 'library/PageTitle';
+import { StatBoxList } from 'library/StatBoxList';
+import { ValidatorList } from 'library/ValidatorList';
 import { PageRowWrapper } from 'Wrappers';
 import { useTranslation } from 'react-i18next';
+import { PageProps } from '../types';
+import ActiveValidatorsStatBox from './Stats/ActiveValidators';
 import AverageCommissionStatBox from './Stats/AverageCommission';
 import TotalValidatorsStatBox from './Stats/TotalValidators';
-import ActiveValidatorsStatBox from './Stats/ActiveValidators';
-import { PageProps } from '../types';
 
 export const Validators = (props: PageProps) => {
   const { page } = props;

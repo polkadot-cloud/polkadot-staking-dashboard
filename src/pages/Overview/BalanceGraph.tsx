@@ -1,30 +1,30 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import {
-  usdFormatter,
-  planckBnToUnit,
-  humanNumber,
-  toFixedIfNecessary,
-} from 'Utils';
-import { useSize, formatSize } from 'library/Graphs/Utils';
+import { useTheme } from 'contexts/Themes';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
+import { formatSize, useSize } from 'library/Graphs/Utils';
+import { usePrices } from 'library/Hooks/usePrices';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import React from 'react';
+import { Doughnut } from 'react-chartjs-2';
 import {
   defaultThemes,
   networkColors,
   networkColorsSecondary,
 } from 'theme/default';
-import { useTheme } from 'contexts/Themes';
-import { usePrices } from 'library/Hooks/usePrices';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
+import {
+  humanNumber,
+  planckBnToUnit,
+  toFixedIfNecessary,
+  usdFormatter,
+} from 'Utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

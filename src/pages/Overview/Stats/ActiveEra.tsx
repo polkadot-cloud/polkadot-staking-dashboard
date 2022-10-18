@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import moment from 'moment';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useSessionEra } from 'contexts/SessionEra';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();

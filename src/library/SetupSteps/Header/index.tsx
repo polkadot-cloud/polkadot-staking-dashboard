@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { Button } from 'library/Button';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
+import { Button } from 'library/Button';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Wrapper } from './Wrapper';
 import { HeaderProps } from '../types';
 

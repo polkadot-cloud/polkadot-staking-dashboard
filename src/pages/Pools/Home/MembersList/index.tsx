@@ -1,22 +1,22 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import { List, Header, Wrapper as ListWrapper } from 'library/List';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { networkColors } from 'theme/default';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
-import { AnyApi, Sync } from 'types';
+import { motion } from 'framer-motion';
+import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import { ListProvider, useList } from 'library/List/context';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
-import { useList, ListProvider } from 'library/List/context';
 import { Selectable } from 'library/List/Selectable';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { useEffect, useRef, useState } from 'react';
+import { networkColors } from 'theme/default';
+import { AnyApi, Sync } from 'types';
 import { Member } from './Member';
 
 export const MembersListInner = (props: any) => {

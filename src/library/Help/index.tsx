@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect } from 'react';
-import { useAnimation } from 'framer-motion';
-import { useHelp } from 'contexts/Help';
+import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HELP_CONFIG } from 'config/help';
+import { useHelp } from 'contexts/Help';
 import {
   ExternalRecord,
   HelpDefinition,
@@ -13,9 +13,9 @@ import {
   HelpRecord,
   HelpRecords,
 } from 'contexts/Help/types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { useAnimation } from 'framer-motion';
+import { useEffect } from 'react';
 import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import Definition from './Items/Definition';
 import External from './Items/External';

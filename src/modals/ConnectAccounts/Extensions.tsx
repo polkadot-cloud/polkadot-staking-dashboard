@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { forwardRef } from 'react';
-import { useConnect } from 'contexts/Connect';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EXTENSIONS, ExtensionConfig } from 'config/extensions';
 import { useTranslation } from 'react-i18next';
+import { useConnect } from 'contexts/Connect';
+import { forwardRef } from 'react';
 import {
   ContentWrapper,
   PaddingWrapper,

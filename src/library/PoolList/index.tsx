@@ -1,24 +1,24 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
 import { useApi } from 'contexts/Api';
-import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { Pool } from 'library/Pool';
-import { List, Header, Wrapper as ListWrapper } from 'library/List';
-import { useTheme } from 'contexts/Themes';
-import { networkColors } from 'theme/default';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Pagination } from 'library/List/Pagination';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { SearchInput } from 'library/List/SearchInput';
+import { StakingContext } from 'contexts/Staking';
+import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import { MotionContainer } from 'library/List/MotionContainer';
+import { Pagination } from 'library/List/Pagination';
+import { SearchInput } from 'library/List/SearchInput';
+import { Pool } from 'library/Pool';
+import React, { useEffect, useRef, useState } from 'react';
+import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 

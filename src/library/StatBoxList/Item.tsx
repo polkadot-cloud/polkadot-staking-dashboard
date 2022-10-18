@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { StatBoxWrapper } from './Wrapper';
-import { Pie } from './Pie';
 import { Number } from './Number';
+import { Pie } from './Pie';
 import { Text } from './Text';
+import { StatBoxWrapper } from './Wrapper';
 
 export const StatBox = ({ children }: { children: React.ReactNode }) => {
   return (

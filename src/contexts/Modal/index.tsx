@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useTxFees } from 'contexts/TxFees';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { defaultModalContext } from './defaults';
 import { ModalConfig, ModalContextInterface, ModalContextState } from './types';
 

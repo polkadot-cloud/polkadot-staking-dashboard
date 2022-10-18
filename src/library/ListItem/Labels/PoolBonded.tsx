@@ -2,8 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useState, useEffect } from 'react';
 import { useApi } from 'contexts/Api';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useStaking } from 'contexts/Staking';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { Pool } from 'library/Pool/types';
+import { useEffect, useState } from 'react';
 import {
   capitalizeFirstLetter,
   humanNumber,
@@ -11,10 +15,6 @@ import {
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useStaking } from 'contexts/Staking';
-import { Pool } from 'library/Pool/types';
 import { useTranslation } from 'react-i18next';
 
 export const PoolBonded = ({

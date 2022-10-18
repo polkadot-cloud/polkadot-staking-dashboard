@@ -1,18 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
-import { Identicon } from 'library/Identicon';
-import { clipAddress } from 'Utils';
-import Button from 'library/Button';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
-import { useBalances } from 'contexts/Balances';
+import Button from 'library/Button';
+import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
+import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
+import { clipAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const Controller = ({ label }: { label: string }) => {

@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
-import React, { useState, useEffect, useRef } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
 import { Option } from '@polkadot/types-codec';
-import { rmCommas, setStateWithRef } from 'Utils';
+import BN from 'bn.js';
 import {
   BalanceLedger,
   BalancesAccount,
   BalancesContextInterface,
 } from 'contexts/Balances/types';
 import { ImportedAccount } from 'contexts/Connect/types';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnyApi, MaybeAccount } from 'types';
+import { rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';

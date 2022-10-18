@@ -1,25 +1,25 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
+import { BN } from 'bn.js';
+import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
-import { SubscanButton } from 'library/SubscanButton';
+import { formatSize, useSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
-import { useSize, formatSize } from 'library/Graphs/Utils';
 import Identicon from 'library/Identicon';
-import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
-import { useNetworkMetrics } from 'contexts/Network';
-import { StatusLabel } from 'library/StatusLabel';
 import { Title } from 'library/Modal/Title';
-import { useStaking } from 'contexts/Staking';
-import { BN } from 'bn.js';
-import { PaddingWrapper } from 'modals/Wrappers';
-import { useApi } from 'contexts/Api';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
+import { StatusLabel } from 'library/StatusLabel';
+import { SubscanButton } from 'library/SubscanButton';
+import { PaddingWrapper } from 'modals/Wrappers';
+import React, { useEffect, useState } from 'react';
+import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
   const {

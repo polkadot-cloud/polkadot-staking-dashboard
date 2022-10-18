@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
+import { SetupType } from 'contexts/UI/types';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
-import { SetupStepProps } from 'library/SetupSteps/types';
-import { SetupType } from 'contexts/UI/types';
-import { Header } from 'library/SetupSteps/Header';
 import { Footer } from 'library/SetupSteps/Footer';
+import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { useTranslation } from 'react-i18next';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { useEffect, useState } from 'react';
 
 export const Bond = (props: SetupStepProps) => {
   const { section } = props;

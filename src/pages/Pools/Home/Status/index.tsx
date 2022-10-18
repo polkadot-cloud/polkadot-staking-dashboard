@@ -1,26 +1,26 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolState } from 'contexts/Pools/types';
-import BN from 'bn.js';
-import { useUi } from 'contexts/UI';
-import { Separator } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useModal } from 'contexts/Modal';
-import { Stat } from 'library/Stat';
-import { planckBnToUnit, rmCommas } from 'Utils';
 import {
-  faLock,
   faExclamationTriangle,
+  faLock,
   faPlus,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
+import BN from 'bn.js';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { PoolState } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { useTranslation } from 'react-i18next';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { Stat } from 'library/Stat';
+import { planckBnToUnit, rmCommas } from 'Utils';
+import { Separator } from 'Wrappers';
 import { useStatusButtons } from './useStatusButtons';
 import { Membership } from './Membership';
 

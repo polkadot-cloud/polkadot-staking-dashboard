@@ -1,32 +1,31 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Line } from 'react-chartjs-2';
 import {
-  Chart as ChartJS,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
+import { useSubscan } from 'contexts/Subscan';
+import { useTheme } from 'contexts/Themes';
+import { useUi } from 'contexts/UI';
+import { Line } from 'react-chartjs-2';
 import {
   defaultThemes,
   networkColors,
   networkColorsSecondary,
-  networkColorsTransparent,
 } from 'theme/default';
-import { useTheme } from 'contexts/Themes';
-import { humanNumber } from 'Utils';
-import { useUi } from 'contexts/UI';
-import { useStaking } from 'contexts/Staking';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { AnySubscan } from 'types';
-import { useSubscan } from 'contexts/Subscan';
 import { useTranslation } from 'react-i18next';
+import { humanNumber } from 'Utils';
 import { PayoutLineProps } from './types';
 import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
 
