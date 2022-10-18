@@ -23,6 +23,7 @@ import moment from 'moment';
 import { useRef } from 'react';
 import { AnySubscan } from 'types';
 import { PageRowWrapper } from 'Wrappers';
+
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';

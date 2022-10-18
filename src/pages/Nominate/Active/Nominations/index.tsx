@@ -15,6 +15,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
 import { MaybeAccount } from 'types';
+
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({

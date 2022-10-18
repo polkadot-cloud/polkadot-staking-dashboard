@@ -8,6 +8,7 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageRowWrapper } from 'Wrappers';
+
 import { PageProps } from '../types';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
 import AverageCommissionStatBox from './Stats/AverageCommission';

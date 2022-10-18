@@ -8,6 +8,7 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
+
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';

@@ -6,6 +6,7 @@ import { useUi } from 'contexts/UI';
 import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useRef, useState } from 'react';
+
 import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 

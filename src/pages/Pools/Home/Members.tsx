@@ -10,6 +10,7 @@ import { PoolState } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageRowWrapper } from 'Wrappers';
+
 import { MembersList } from './MembersList';
 
 export const Members = () => {

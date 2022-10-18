@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PAGES_CONFIG, PAGE_CATEGORIES } from 'config/pages';
+import { PAGE_CATEGORIES, PAGES_CONFIG } from 'config/pages';
 import { POLKADOT_URL, URI_PREFIX } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -14,6 +14,7 @@ import { UIContextInterface } from 'contexts/UI/types';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { PageCategory, PageItem, PagesConfig } from 'types';
+
 import Heading from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';

@@ -5,6 +5,7 @@ import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Identicon from 'library/Identicon';
 import { clipAddress, convertRemToPixels } from 'Utils';
+
 import { RoleChangeWrapper } from './Wrapper';
 
 export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {

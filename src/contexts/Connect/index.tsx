@@ -20,6 +20,7 @@ import {
   localStorageOrDefault,
   setStateWithRef,
 } from 'Utils';
+
 import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';
 import {

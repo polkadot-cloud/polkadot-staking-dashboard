@@ -4,6 +4,7 @@
 import { Identicon as IdenticonDefault } from '@polkadot/react-identicon';
 import styled from 'styled-components';
 import { backgroundIdenticon } from 'theme';
+
 import { IdenticonProps } from './types';
 
 const Wrapper = styled.div`

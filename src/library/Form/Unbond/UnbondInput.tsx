@@ -6,6 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
 import React, { useEffect, useState } from 'react';
 import { isNumeric } from 'Utils';
+
 import { UnbondInputProps } from '../types';
 import { InputWrapper, RowWrapper } from '../Wrappers';
 

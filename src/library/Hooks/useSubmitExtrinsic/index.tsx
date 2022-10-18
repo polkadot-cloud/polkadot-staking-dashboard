@@ -11,6 +11,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
+
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (

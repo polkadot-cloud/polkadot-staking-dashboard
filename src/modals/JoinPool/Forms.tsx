@@ -18,6 +18,7 @@ import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrapper';
 

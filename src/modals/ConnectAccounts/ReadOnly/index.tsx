@@ -5,6 +5,7 @@ import { faCog, faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+
 import { ReadOnlyInput } from '../ReadOnlyInput';
 import { ReadOnlyProps } from '../types';
 import { ExtensionWrapper } from '../Wrappers';

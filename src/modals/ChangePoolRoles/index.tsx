@@ -13,6 +13,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { RoleChange } from './RoleChange';
 import Wrapper from './Wrapper';

@@ -3,6 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
+
 import * as defaults from './defaults';
 
 export const CommunitySectionsContext: React.Context<any> = React.createContext(

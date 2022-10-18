@@ -21,6 +21,7 @@ import {
   RowSecondaryWrapper,
   TopBarWrapper,
 } from 'Wrappers';
+
 import { ActiveAccount } from './ActiveAccount';
 import BalanceGraph from './BalanceGraph';
 import { NetworkStats } from './NetworkSats';

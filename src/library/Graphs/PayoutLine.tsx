@@ -25,6 +25,7 @@ import {
 } from 'theme/default';
 import { AnySubscan } from 'types';
 import { humanNumber } from 'Utils';
+
 import { PayoutLineProps } from './types';
 import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
 

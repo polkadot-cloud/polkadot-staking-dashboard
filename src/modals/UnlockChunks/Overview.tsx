@@ -7,6 +7,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import Button from 'library/Button';
 import { forwardRef } from 'react';
 import { planckBnToUnit } from 'Utils';
+
 import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 

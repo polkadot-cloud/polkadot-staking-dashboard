@@ -3,6 +3,7 @@
 
 import React, { useRef, useState } from 'react';
 import { setStateWithRef } from 'Utils';
+
 import { defaultNotificationsContext } from './defaults';
 import {
   NotificationInterface,

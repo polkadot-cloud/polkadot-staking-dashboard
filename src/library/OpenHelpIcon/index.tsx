@@ -3,6 +3,7 @@
 
 import { useHelp } from 'contexts/Help';
 import { ReactComponent as IconSVG } from 'img/info-outline.svg';
+
 import { OpenHelpIconProps } from './types';
 import { Wrapper } from './Wrapper';
 

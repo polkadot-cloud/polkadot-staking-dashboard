@@ -4,6 +4,7 @@
 import { useConnect } from 'contexts/Connect';
 import React from 'react';
 import { isValidAddress } from 'Utils';
+
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {

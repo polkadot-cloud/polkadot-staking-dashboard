@@ -4,6 +4,7 @@
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
+
 import { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 

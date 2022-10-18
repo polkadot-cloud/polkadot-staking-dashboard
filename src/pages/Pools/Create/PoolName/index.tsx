@@ -9,6 +9,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
+
 import { Input } from './Input';
 
 export const PoolName = (props: SetupStepProps) => {

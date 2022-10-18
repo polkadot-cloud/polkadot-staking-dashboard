@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, Fn } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
+
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';

@@ -7,6 +7,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { PoolState } from 'contexts/Pools/types';
 import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
+
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'library/Button';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React from 'react';
+
 import { StatProps } from './types';
 import { Wrapper } from './Wrapper';
 

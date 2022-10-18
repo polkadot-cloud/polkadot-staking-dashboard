@@ -18,6 +18,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { Separator } from 'Wrappers';
+
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 

@@ -9,6 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { planckBnToUnit } from 'Utils';
+
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 

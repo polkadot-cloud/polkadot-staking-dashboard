@@ -23,6 +23,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
 import { clipAddress, planckToUnit } from 'Utils';
+
 import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';

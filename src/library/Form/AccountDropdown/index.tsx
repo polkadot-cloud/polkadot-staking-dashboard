@@ -10,6 +10,7 @@ import Identicon from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { defaultThemes, networkColors } from 'theme/default';
 import { convertRemToPixels } from 'Utils';
+
 import { AccountDropdownProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
 

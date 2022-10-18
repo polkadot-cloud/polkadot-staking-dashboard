@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
 import { useConnect } from 'contexts/Connect';
 import { forwardRef } from 'react';
+
 import { Extension } from './Extension';
 import { ReadOnly } from './ReadOnly';
 import { forwardRefProps } from './types';

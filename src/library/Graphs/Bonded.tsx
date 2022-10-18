@@ -7,6 +7,7 @@ import { useTheme } from 'contexts/Themes';
 import { Doughnut } from 'react-chartjs-2';
 import { defaultThemes, networkColors } from 'theme/default';
 import { humanNumber } from 'Utils';
+
 import { BondedProps } from './types';
 import { GraphWrapper } from './Wrappers';
 

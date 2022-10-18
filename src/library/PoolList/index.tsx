@@ -18,6 +18,7 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
+
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 

@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Identicon } from 'library/Identicon';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
 import { clipAddress, convertRemToPixels } from 'Utils';
+
 import { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
 

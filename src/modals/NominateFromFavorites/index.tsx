@@ -18,6 +18,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
+
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 

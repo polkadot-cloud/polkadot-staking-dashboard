@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FunctionComponent, SVGProps } from 'react';
+
 import { ReactComponent as PolkadotJSSVG } from './icons/dot_icon.svg';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';

@@ -21,6 +21,7 @@ import { useOutsideAlerter } from 'library/Hooks';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { defaultThemes } from 'theme/default';
+
 import Heading from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';

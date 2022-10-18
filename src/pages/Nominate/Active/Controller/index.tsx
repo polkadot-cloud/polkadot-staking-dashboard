@@ -12,6 +12,7 @@ import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { clipAddress } from 'Utils';
+
 import { Wrapper } from './Wrapper';
 
 export const Controller = ({ label }: { label: string }) => {

@@ -3,6 +3,7 @@
 
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+
 import { Announcements } from './Announcements';
 import { Inflation } from './Inflation';
 import { Wrapper } from './Wrappers';

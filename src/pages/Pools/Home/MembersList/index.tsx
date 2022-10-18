@@ -17,6 +17,7 @@ import { Selectable } from 'library/List/Selectable';
 import { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { AnyApi, Sync } from 'types';
+
 import { Member } from './Member';
 
 export const MembersListInner = (props: any) => {

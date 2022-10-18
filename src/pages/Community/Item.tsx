@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
+
 import { useCommunitySections } from './context';
 import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';

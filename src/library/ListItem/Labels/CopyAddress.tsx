@@ -6,6 +6,7 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
+
 import { CopyAddressProps } from '../types';
 
 export const CopyAddress = (props: CopyAddressProps) => {

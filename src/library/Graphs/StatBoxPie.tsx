@@ -10,6 +10,7 @@ import {
   networkColors,
   networkColorsTransparent,
 } from 'theme/default';
+
 import { StatPieProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip);

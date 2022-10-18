@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import Lottie from 'react-lottie';
+
 import { SecondaryProps } from '../types';
 import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers';
 

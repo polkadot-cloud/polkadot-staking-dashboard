@@ -10,6 +10,7 @@ import ValidatorList from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { shuffle } from 'Utils';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
+
 import { useCommunitySections } from './context';
 import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';

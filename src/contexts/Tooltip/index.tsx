@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { RefObject, useState } from 'react';
+
 import { defaultTooltipContext } from './defaults';
 import { TooltipContextInterface } from './types';
 

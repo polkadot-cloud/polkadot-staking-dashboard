@@ -6,6 +6,7 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import Button from 'library/Button';
 import React, { useState } from 'react';
 import { isValidAddress } from 'Utils';
+
 import { Wrapper } from './Wrapper';
 
 export const ReadOnlyInput = () => {

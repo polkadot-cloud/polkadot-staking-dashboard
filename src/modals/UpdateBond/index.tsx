@@ -5,6 +5,7 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
+
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';

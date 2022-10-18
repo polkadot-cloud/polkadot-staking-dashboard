@@ -14,6 +14,7 @@ import {
   networkColor,
   textSecondary,
 } from 'theme';
+
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`

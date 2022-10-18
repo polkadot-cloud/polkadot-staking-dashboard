@@ -8,6 +8,7 @@ import { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
+
 import { PaddingWrapper } from '../Wrappers';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 

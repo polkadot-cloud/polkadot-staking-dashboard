@@ -4,6 +4,7 @@
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
+
 import { MetricsProps } from '../types';
 
 export const Metrics = (props: MetricsProps) => {

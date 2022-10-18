@@ -4,6 +4,7 @@
 import Keyring from '@polkadot/keyring';
 import { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
+
 import { ExternalAccount } from './types';
 
 // removes extension from localExtensions

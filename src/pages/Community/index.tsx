@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageTitle } from 'library/PageTitle';
+
 import { PageProps } from '../types';
 import { CommunitySectionsProvider, useCommunitySections } from './context';
 import { Entity } from './Entity';

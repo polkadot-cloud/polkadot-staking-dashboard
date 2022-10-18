@@ -3,6 +3,7 @@
 
 import NumberEasing from 'che-react-number-easing';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+
 import { StatBox } from './Item';
 import { NumberProps } from './types';
 

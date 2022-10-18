@@ -7,6 +7,7 @@ import { EstimatedFeeContext, TxFeesContext, useTxFees } from 'contexts/TxFees';
 import React, { Context, useEffect } from 'react';
 import { defaultThemes } from 'theme/default';
 import { humanNumber, planckBnToUnit } from 'Utils';
+
 import { EstimatedTxFeeProps } from './types';
 import { Wrapper } from './Wrapper';
 

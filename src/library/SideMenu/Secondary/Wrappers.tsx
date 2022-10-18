@@ -10,6 +10,7 @@ import {
   textPrimary,
   textSecondary,
 } from 'theme';
+
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`

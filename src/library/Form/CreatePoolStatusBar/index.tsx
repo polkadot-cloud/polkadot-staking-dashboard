@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { planckBnToUnit } from 'Utils';
+
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 

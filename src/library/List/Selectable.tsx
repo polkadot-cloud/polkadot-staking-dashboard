@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 

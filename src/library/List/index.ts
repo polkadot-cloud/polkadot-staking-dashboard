@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { borderPrimary, networkColor, textPrimary, textSecondary } from 'theme';
+
 import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`

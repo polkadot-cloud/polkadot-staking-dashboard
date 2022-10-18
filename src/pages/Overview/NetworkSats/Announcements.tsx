@@ -18,6 +18,7 @@ import {
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
+
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

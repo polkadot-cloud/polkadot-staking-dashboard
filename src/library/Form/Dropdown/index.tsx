@@ -8,6 +8,7 @@ import { useTheme } from 'contexts/Themes';
 import { useCombobox } from 'downshift';
 import { useState } from 'react';
 import { defaultThemes, networkColors } from 'theme/default';
+
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 import { DropdownInput, DropdownProps } from '../types';
 

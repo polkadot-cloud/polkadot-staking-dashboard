@@ -3,6 +3,7 @@
 
 import React, { useRef } from 'react';
 import { setStateWithRef } from 'Utils';
+
 import { defaultThemeContext } from './defaults';
 import { ThemeContextInterface } from './types';
 

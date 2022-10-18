@@ -22,6 +22,7 @@ import {
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
+
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(

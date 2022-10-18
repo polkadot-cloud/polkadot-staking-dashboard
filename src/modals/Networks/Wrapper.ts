@@ -11,6 +11,7 @@ import {
   textSecondary,
   textSuccess,
 } from 'theme';
+
 import { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`

@@ -8,6 +8,7 @@ import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
+
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 

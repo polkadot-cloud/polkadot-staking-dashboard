@@ -7,6 +7,7 @@ import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+
 import { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {

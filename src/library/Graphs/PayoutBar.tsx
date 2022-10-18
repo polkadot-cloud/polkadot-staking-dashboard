@@ -28,6 +28,7 @@ import {
 } from 'theme/default';
 import { AnySubscan } from 'types';
 import { humanNumber } from 'Utils';
+
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 

@@ -6,6 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import React, { useEffect, useState } from 'react';
 import { MaybeAccount } from 'types';
+
 import * as defaults from './defaults';
 
 export interface EstimatedFeeContext {

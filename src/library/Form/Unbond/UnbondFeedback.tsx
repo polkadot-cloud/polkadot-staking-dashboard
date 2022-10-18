@@ -13,6 +13,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
 import { humanNumber, planckBnToUnit } from 'Utils';
+
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';

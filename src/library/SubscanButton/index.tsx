@@ -8,6 +8,7 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import styled from 'styled-components';
 import { defaultThemes, networkColors } from 'theme/default';
+
 import { WrapperProps } from './types';
 
 const Wrapper = styled.div<WrapperProps>`

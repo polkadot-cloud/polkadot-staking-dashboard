@@ -3,6 +3,7 @@
 
 import { faBug } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { Wrapper } from './Wrapper';
 
 export const ErrorFallbackApp = ({

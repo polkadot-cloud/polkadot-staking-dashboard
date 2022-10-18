@@ -3,6 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
+
 import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
 

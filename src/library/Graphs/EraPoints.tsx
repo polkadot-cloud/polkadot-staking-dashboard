@@ -15,6 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { defaultThemes, networkColors } from 'theme/default';
+
 import { EraPointsProps } from './types';
 
 ChartJS.register(

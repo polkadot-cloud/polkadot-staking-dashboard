@@ -12,6 +12,7 @@ import {
   planckBnToUnit,
   rmCommas,
 } from 'Utils';
+
 import { NominationStatusProps } from '../types';
 
 export const NominationStatus = (props: NominationStatusProps) => {

@@ -5,6 +5,7 @@ import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { useEffect, useRef, useState } from 'react';
+
 import { Accounts } from './Accounts';
 import { Extensions } from './Extensions';
 import { CardsWrapper, Wrapper } from './Wrappers';

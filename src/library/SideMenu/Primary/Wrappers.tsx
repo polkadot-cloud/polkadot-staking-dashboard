@@ -12,6 +12,7 @@ import {
   warning,
   warningTransparent,
 } from 'theme';
+
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`

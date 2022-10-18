@@ -8,6 +8,7 @@ import { useUi } from 'contexts/UI';
 import { useState } from 'react';
 import Lottie from 'react-lottie';
 import { Link } from 'react-router-dom';
+
 import { PrimaryProps } from '../types';
 import { MinimisedWrapper, Wrapper } from './Wrappers';
 

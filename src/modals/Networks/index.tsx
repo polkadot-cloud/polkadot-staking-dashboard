@@ -9,6 +9,7 @@ import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { NetworkName } from 'types';
+
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
 import {

@@ -11,6 +11,7 @@ import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { Element } from 'react-scroll';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
+
 import { Bond } from './Bond';
 import { PoolName } from './PoolName';
 import { PoolRoles } from './PoolRoles';

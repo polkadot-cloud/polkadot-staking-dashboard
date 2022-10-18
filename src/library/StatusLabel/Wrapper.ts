@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 import { backgroundLabel, textSecondary } from 'theme';
+
 import { WrapperProps } from './types';
 
 export const Wrapper = styled.div<WrapperProps>`

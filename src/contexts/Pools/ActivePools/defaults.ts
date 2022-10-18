@@ -3,6 +3,7 @@
 
 import { BN } from 'bn.js';
 import { Sync } from 'types';
+
 import { ActivePool, ActivePoolsContextState } from '../types';
 
 export const nominationStatus = {};

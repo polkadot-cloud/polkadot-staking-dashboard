@@ -14,6 +14,7 @@ import {
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
+
 import Definition from './Items/Definition';
 import External from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';

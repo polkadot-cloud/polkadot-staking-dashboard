@@ -6,6 +6,7 @@ import { useAnimation } from 'framer-motion';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+
 import { AccountPoolRoles } from './AccountPoolRoles';
 import { Bio } from './Bio';
 import { ChangeNominations } from './ChangeNominations';

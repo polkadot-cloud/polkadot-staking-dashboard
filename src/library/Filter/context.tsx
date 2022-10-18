@@ -5,6 +5,7 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import React, { useState } from 'react';
+
 import * as defaults from './defaults';
 import { ValidatorFilterContextInterface } from './types';
 

@@ -9,6 +9,7 @@ import { useTheme } from 'contexts/Themes';
 import Identicon from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { defaultThemes } from 'theme/default';
+
 import { clipAddress, convertRemToPixels } from '../../Utils';
 import { PoolAccountProps } from './types';
 import Wrapper from './Wrapper';

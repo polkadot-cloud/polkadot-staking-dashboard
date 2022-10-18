@@ -5,6 +5,7 @@ import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+
 import { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
 

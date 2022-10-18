@@ -6,6 +6,7 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { useLocation } from 'react-router-dom';
 import { pageFromUri } from 'Utils';
+
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';

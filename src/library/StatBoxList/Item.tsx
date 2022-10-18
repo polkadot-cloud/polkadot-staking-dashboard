@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+
 import { Number } from './Number';
 import { Pie } from './Pie';
 import { Text } from './Text';

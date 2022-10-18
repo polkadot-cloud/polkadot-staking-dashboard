@@ -9,6 +9,7 @@ import { Extension } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import Identicon from 'library/Identicon';
 import { clipAddress } from 'Utils';
+
 import { AccountElementProps } from './types';
 import { AccountWrapper } from './Wrappers';
 

@@ -7,6 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { defaultThemes } from 'theme/default';
 import { clipAddress, convertRemToPixels } from 'Utils';
+
 import Identicon from '../Identicon';
 import { AccountProps } from './types';
 import Wrapper from './Wrapper';

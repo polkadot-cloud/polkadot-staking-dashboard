@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { FunctionComponent } from 'react';
+
 import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {

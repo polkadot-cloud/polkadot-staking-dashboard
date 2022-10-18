@@ -9,6 +9,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
 import { clipAddress, convertRemToPixels } from 'Utils';
+
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {

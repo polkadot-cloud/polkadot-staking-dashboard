@@ -7,6 +7,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { forwardRef } from 'react';
+
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {

@@ -4,6 +4,7 @@
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
+
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 

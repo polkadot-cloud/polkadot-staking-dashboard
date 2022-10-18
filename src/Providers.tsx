@@ -8,6 +8,7 @@ import { withProviders } from 'library/Hooks';
 import Router from 'Router';
 import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
+
 import { AccountProvider } from './contexts/Account';
 import { APIProvider, useApi } from './contexts/Api';
 import { BalancesProvider } from './contexts/Balances';

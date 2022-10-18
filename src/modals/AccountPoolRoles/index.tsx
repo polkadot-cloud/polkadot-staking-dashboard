@@ -11,6 +11,7 @@ import { BondedPool } from 'contexts/Pools/types';
 import Identicon from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
+
 import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, StyledButton } from './Wrappers';
 

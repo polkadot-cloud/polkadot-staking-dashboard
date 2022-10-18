@@ -5,6 +5,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { setStateWithRef } from 'Utils';
+
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import { SessionEra, SessionEraContextInterface } from './types';

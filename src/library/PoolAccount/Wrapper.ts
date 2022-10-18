@@ -4,6 +4,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { borderSecondary, textSecondary } from 'theme';
+
 import { WrapperProps } from './types';
 
 export const Wrapper = styled(motion.button)<WrapperProps>`

@@ -4,6 +4,7 @@
 import NumberEasing from 'che-react-number-easing';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+
 import { StatBox } from './Item';
 import { PieProps } from './types';
 

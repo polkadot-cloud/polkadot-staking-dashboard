@@ -7,6 +7,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { ValidatorList } from 'library/ValidatorList';
 import { PageRowWrapper } from 'Wrappers';
+
 import { PageProps } from '../types';
 
 export const Favorites = (props: PageProps) => {

@@ -6,6 +6,7 @@ import { PoolMemberContext } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
+
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 

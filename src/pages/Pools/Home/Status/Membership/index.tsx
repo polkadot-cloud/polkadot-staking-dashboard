@@ -14,6 +14,7 @@ import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import React from 'react';
 import { determinePoolDisplay } from 'Utils';
+
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {

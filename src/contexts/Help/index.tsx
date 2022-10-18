@@ -5,6 +5,7 @@ import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
 import { MaybeString } from 'types';
 import { replaceAll } from 'Utils';
+
 import * as defaults from './defaults';
 import {
   HelpConfig,

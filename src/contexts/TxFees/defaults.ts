@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+
 import { EstimatedFeeContext } from '.';
 
 export const defaultTxFees: EstimatedFeeContext = {

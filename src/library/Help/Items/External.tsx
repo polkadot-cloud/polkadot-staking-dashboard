@@ -4,6 +4,7 @@
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
+
 import { ItemWrapper } from '../Wrappers';
 
 export const External = (props: any) => {

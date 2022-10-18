@@ -7,6 +7,7 @@ import { useUi } from 'contexts/UI';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+
 import { GenerateNominations } from '../GenerateNominations';
 import { NominationsProps } from './types';
 

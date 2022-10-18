@@ -3,6 +3,7 @@
 
 import { useTxFees } from 'contexts/TxFees';
 import React, { useEffect, useState } from 'react';
+
 import { defaultModalContext } from './defaults';
 import { ModalConfig, ModalContextInterface, ModalContextState } from './types';
 

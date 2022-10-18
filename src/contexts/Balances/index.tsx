@@ -12,6 +12,7 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
+
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';

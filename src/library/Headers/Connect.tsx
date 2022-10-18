@@ -5,6 +5,7 @@ import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {

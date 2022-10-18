@@ -25,6 +25,7 @@ import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
+
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
 

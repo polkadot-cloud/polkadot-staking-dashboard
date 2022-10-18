@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { Extension as ExtensionInterface } from 'contexts/Connect/types';
 import { useState } from 'react';
+
 import { ExtensionProps } from './types';
 import { ExtensionWrapper } from './Wrappers';
 

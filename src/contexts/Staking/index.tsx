@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import {
@@ -12,6 +11,7 @@ import {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   localStorageOrDefault,
@@ -21,6 +21,7 @@ import {
 } from 'Utils';
 // eslint-disable-next-line import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
+
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';

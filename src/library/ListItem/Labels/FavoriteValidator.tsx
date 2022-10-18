@@ -10,6 +10,7 @@ import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+
 import { FavoriteProps } from '../types';
 
 export const FavoriteValidator = (props: FavoriteProps) => {

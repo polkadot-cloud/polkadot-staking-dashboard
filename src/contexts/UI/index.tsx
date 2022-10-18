@@ -9,6 +9,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
 import { MaybeAccount, Sync } from 'types';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
+
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';

@@ -4,6 +4,7 @@
 import { BN } from 'bn.js';
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
+
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import { NetworkMetrics, NetworkMetricsContextInterface } from './types';

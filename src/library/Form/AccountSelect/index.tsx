@@ -11,6 +11,7 @@ import { StatusLabel } from 'library/StatusLabel';
 import { useEffect, useState } from 'react';
 import { defaultThemes, networkColors } from 'theme/default';
 import { clipAddress, convertRemToPixels } from 'Utils';
+
 import { AccountSelectProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 

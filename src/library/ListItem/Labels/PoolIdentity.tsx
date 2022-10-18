@@ -5,6 +5,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import Identicon from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { clipAddress, determinePoolDisplay } from 'Utils';
+
 import { PoolIdentityProps } from '../types';
 
 export const PoolIdentity = (props: PoolIdentityProps) => {

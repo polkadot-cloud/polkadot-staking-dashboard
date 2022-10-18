@@ -22,6 +22,7 @@ import {
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
+
 import { ControllerNotImported } from './ControllerNotImported';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';

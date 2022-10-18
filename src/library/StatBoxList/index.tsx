@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+
 import { ListWrapper, Wrapper } from './Wrapper';
 
 export const StatBoxList = ({ children }: { children: React.ReactNode }) => {

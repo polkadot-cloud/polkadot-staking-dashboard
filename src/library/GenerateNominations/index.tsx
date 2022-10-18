@@ -21,6 +21,7 @@ import { SelectableWrapper } from 'library/List';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
+
 import {
   GenerateNominationsInnerProps,
   Nominations,

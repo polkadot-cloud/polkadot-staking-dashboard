@@ -76,6 +76,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "gh-pages": "^3.2.3",
     "prettier": "^2.6.2",
     "terser-webpack-plugin": "^5.3.3",

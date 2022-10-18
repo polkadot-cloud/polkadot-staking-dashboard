@@ -10,6 +10,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
+
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
