@@ -12,7 +12,7 @@ import {
 } from 'Utils';
 
 export const PoolMemberBonded = (props: any) => {
-  const { meta, batchKey, batchIndex, who } = props;
+  const { meta, batchKey, batchIndex } = props;
   const { network } = useApi();
   const { units, unit } = network;
 

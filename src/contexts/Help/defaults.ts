@@ -9,14 +9,14 @@ export const definition: HelpDefinition = {
 };
 
 export const defaultHelpContext: HelpContextInterface = {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   openHelpWith: (d, c) => {},
   closeHelp: () => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setStatus: (s) => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setDefinition: (d) => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fillDefinitionVariables: (d) => definition,
   status: 0,
   definition: null,
