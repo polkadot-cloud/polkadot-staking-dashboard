@@ -5,11 +5,11 @@ import { ModalContextInterface } from './types';
 
 export const defaultModalContext: ModalContextInterface = {
   status: 0,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setStatus: (status) => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   openModalWith: (m, c, s) => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setModalHeight: (v) => {},
   setResize: () => {},
   modal: 'ConnectAccounts',
