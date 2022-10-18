@@ -1,34 +1,34 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, forwardRef } from 'react';
 import {
   faCog,
   faProjectDiagram,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import { useConnect } from 'contexts/Connect';
-import Button from 'library/Button';
-import { useBalances } from 'contexts/Balances';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
-import { PoolMembership } from 'contexts/Pools/types';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
+import { useModal } from 'contexts/Modal';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { PoolMembership } from 'contexts/Pools/types';
+import Button from 'library/Button';
+import { forwardRef, useEffect, useState } from 'react';
 import { AnyJson } from 'types';
-import {
-  AccountWrapper,
-  AccountGroupWrapper,
-  PaddingWrapper,
-  ContentWrapper,
-} from './Wrappers';
-import { AccountElement, AccountButton } from './Account';
+import { AccountButton, AccountElement } from './Account';
 import {
   ActivelyStakingAccount,
   ControllerAccount,
   StashAcount,
 } from './types';
+import {
+  AccountGroupWrapper,
+  AccountWrapper,
+  ContentWrapper,
+  PaddingWrapper,
+} from './Wrappers';
 
 export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const { setSection } = props;

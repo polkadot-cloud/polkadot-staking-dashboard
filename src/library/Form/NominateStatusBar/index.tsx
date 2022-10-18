@@ -1,16 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faFlag } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useUi } from 'contexts/UI';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { planckBnToUnit } from 'Utils';
-import { Wrapper } from './Wrapper';
 import { NominateStatusBarProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const NominateStatusBar = (props: NominateStatusBarProps) => {
   const { value } = props;

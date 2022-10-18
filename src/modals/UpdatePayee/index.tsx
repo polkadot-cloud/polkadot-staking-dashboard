@@ -1,23 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Dropdown } from 'library/Form/Dropdown';
-import { useStaking } from 'contexts/Staking';
-import { useBalances } from 'contexts/Balances';
-import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useConnect } from 'contexts/Connect';
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PAYEE_STATUS } from 'consts';
-import { Warning } from 'library/Form/Warning';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Dropdown } from 'library/Form/Dropdown';
+import { Warning } from 'library/Form/Warning';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { useEffect, useState } from 'react';
 import { FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {

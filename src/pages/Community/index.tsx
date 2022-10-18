@@ -3,10 +3,10 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { PageProps } from '../types';
-import { Wrapper } from './Wrappers';
 import { CommunitySectionsProvider, useCommunitySections } from './context';
-import { List } from './List';
 import { Entity } from './Entity';
+import { List } from './List';
+import { Wrapper } from './Wrappers';
 
 export const CommunityInner = (props: PageProps) => {
   const { page } = props;

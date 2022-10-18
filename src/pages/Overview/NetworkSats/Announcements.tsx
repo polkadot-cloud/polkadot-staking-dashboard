@@ -1,23 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
-import { motion } from 'framer-motion';
-import { useStaking } from 'contexts/Staking';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { BondedPool } from 'contexts/Pools/types';
+import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
+import { motion } from 'framer-motion';
+import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import {
   humanNumber,
   planckBnToUnit,
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
-import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useNetworkMetrics } from 'contexts/Network';
-import { BondedPool } from 'contexts/Pools/types';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

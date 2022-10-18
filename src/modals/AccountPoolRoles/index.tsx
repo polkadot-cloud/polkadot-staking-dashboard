@@ -4,15 +4,15 @@
 import { faBars, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { BondedPool } from 'contexts/Pools/types';
-import { Title } from 'library/Modal/Title';
-import Identicon from 'library/Identicon';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { BondedPool } from 'contexts/Pools/types';
+import Identicon from 'library/Identicon';
+import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { PaddingWrapper } from '../Wrappers';
-import { StyledButton, ContentWrapper } from './Wrappers';
+import { ContentWrapper, StyledButton } from './Wrappers';
 
 export const AccountPoolRoles = () => {
   const { config } = useModal();

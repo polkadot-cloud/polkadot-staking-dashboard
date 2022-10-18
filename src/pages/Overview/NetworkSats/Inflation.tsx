@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 

@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import {
   highlightPrimary,
   highlightSecondary,
+  networkColor,
   success,
+  textPrimary,
   warning,
   warningTransparent,
-  networkColor,
-  textPrimary,
 } from 'theme';
 import { MinimisedProps } from '../types';
 

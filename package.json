@@ -36,6 +36,7 @@
     "lodash.throttle": "^4.1.1",
     "moment": "^2.29.4",
     "nth-check": ">=2.0.1",
+    "prettier-plugin-organize-imports": "^3.1.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.2.0",
     "react-content-loader": "^6.2.0",
@@ -88,7 +89,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src --fix"
+    "lint": "eslint ./src --fix",
+    "prettier": "npx prettier --check ./src",
+    "prettier:write": "npx prettier --write ./src"
   },
   "browserslist": {
     "production": [

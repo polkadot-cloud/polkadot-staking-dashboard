@@ -3,8 +3,8 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useRef, useEffect } from 'react';
-import { PageTitleWrapper, MenuPaddingWrapper } from 'Wrappers';
+import { useEffect, useRef, useState } from 'react';
+import { MenuPaddingWrapper, PageTitleWrapper } from 'Wrappers';
 import { PageTitleProps } from './types';
 
 export const PageTitle = (props: PageTitleProps) => {

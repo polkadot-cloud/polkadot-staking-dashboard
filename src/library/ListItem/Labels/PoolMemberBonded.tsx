@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import {
   humanNumber,
   planckBnToUnit,
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import BN from 'bn.js';
 
 export const PoolMemberBonded = (props: any) => {
   const { meta, batchKey, batchIndex, who } = props;

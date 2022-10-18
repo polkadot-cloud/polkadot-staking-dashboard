@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { tooltipBackground, textInvert } from 'theme';
+import { textInvert, tooltipBackground } from 'theme';
 
 export const Wrapper = styled.div`
   background: ${tooltipBackground};

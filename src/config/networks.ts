@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
-import { Networks } from 'types';
 import { DEFAULT_PARAMS } from 'consts';
-import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
-import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
-import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
-import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
-import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
+import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
+import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
+import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
+import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
+import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
+import { Networks } from 'types';
 
 /*
  * Network Configuration

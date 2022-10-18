@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faCog, faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
-import { faGlasses, faCog } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ExtensionWrapper } from '../Wrappers';
-import { Wrapper } from './Wrapper';
 import { ReadOnlyInput } from '../ReadOnlyInput';
 import { ReadOnlyProps } from '../types';
+import { ExtensionWrapper } from '../Wrappers';
+import { Wrapper } from './Wrapper';
 
 export const ReadOnly = (props: ReadOnlyProps) => {
   const { setReadOnlyOpen, readOnlyOpen } = props;

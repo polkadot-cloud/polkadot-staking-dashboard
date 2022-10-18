@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { useUi } from 'contexts/UI';
+import throttle from 'lodash.throttle';
 import moment from 'moment';
 import React from 'react';
-import throttle from 'lodash.throttle';
-import { planckBnToUnit } from 'Utils';
 import { AnySubscan } from 'types';
-import { useUi } from 'contexts/UI';
+import { planckBnToUnit } from 'Utils';
 
 export const getSize = (element: any) => {
   const width = element?.offsetWidth;

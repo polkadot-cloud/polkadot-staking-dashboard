@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { MEDIUM_FONT_SiZE_MAX_WIDTH, SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 import styled from 'styled-components';
 import {
-  textSecondary,
   borderPrimary,
-  buttonSecondaryBackground,
   borderSecondary,
+  buttonSecondaryBackground,
+  textSecondary,
 } from 'theme';
-import { SMALL_FONT_SIZE_MAX_WIDTH, MEDIUM_FONT_SiZE_MAX_WIDTH } from 'consts';
 
 export const ActiveAccounWrapper = styled.div`
   width: 100%;

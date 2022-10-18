@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useModal } from 'contexts/Modal';
-import { ValidatorList } from 'library/ValidatorList';
 import { Title } from 'library/Modal/Title';
+import { ValidatorList } from 'library/ValidatorList';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 

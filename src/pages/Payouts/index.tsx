@@ -1,28 +1,28 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useRef } from 'react';
-import moment from 'moment';
-import { StatBoxList } from 'library/StatBoxList';
+import { BN } from 'bn.js';
+import { MAX_PAYOUT_DAYS } from 'consts';
+import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
-import {
-  GraphWrapper,
-  CardWrapper,
-  CardHeaderWrapper,
-} from 'library/Graphs/Wrappers';
-import { PageRowWrapper } from 'Wrappers';
-import { SubscanButton } from 'library/SubscanButton';
-import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
-import { PageTitle } from 'library/PageTitle';
-import { useSize, formatSize } from 'library/Graphs/Utils';
-import { StatusLabel } from 'library/StatusLabel';
+import { PayoutLine } from 'library/Graphs/PayoutLine';
+import { formatSize, useSize } from 'library/Graphs/Utils';
+import {
+  CardHeaderWrapper,
+  CardWrapper,
+  GraphWrapper,
+} from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useStaking } from 'contexts/Staking';
-import { MAX_PAYOUT_DAYS } from 'consts';
+import { PageTitle } from 'library/PageTitle';
+import { StatBoxList } from 'library/StatBoxList';
+import { StatusLabel } from 'library/StatusLabel';
+import { SubscanButton } from 'library/SubscanButton';
+import moment from 'moment';
+import { useRef } from 'react';
 import { AnySubscan } from 'types';
-import { BN } from 'bn.js';
+import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';

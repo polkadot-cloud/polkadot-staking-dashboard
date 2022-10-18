@@ -27,7 +27,7 @@ export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line
   replacePoolRoles: (p, e) => {},
   // eslint-disable-next-line
-   poolSearchFilter: (l, k, v) => {},
+  poolSearchFilter: (l, k, v) => {},
   bondedPools: [],
   meta: {},
 };

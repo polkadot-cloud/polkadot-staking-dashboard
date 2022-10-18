@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ReactComponent as IconSVG } from 'img/info-outline.svg';
 import { useHelp } from 'contexts/Help';
-import { Wrapper } from './Wrapper';
+import { ReactComponent as IconSVG } from 'img/info-outline.svg';
 import { OpenHelpIconProps } from './types';
+import { Wrapper } from './Wrapper';
 
 export const OpenHelpIcon = (props: OpenHelpIconProps) => {
   const { openHelpWith } = useHelp();

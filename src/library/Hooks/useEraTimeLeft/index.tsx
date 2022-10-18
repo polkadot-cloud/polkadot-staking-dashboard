@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, useRef } from 'react';
 import { useSessionEra } from 'contexts/SessionEra';
+import { useEffect, useRef, useState } from 'react';
 
 export const useEraTimeLeft = () => {
   const { sessionEra, getEraTimeLeft } = useSessionEra();

@@ -3,8 +3,8 @@
 
 // import { useUi } from 'contexts/UI';
 import { useUi } from 'contexts/UI';
-import { Home } from './Home';
 import { Create } from './Create';
+import { Home } from './Home';
 
 export const Stake = () => {
   const { onPoolSetup } = useUi();
