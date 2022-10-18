@@ -3,11 +3,11 @@
 
 import styled from 'styled-components';
 import {
-  textSecondary,
   borderPrimary,
-  networkColor,
-  buttonSecondaryBackground,
   buttonPrimaryBackground,
+  buttonSecondaryBackground,
+  networkColor,
+  textSecondary,
 } from 'theme';
 
 export const Wrapper = styled.div`

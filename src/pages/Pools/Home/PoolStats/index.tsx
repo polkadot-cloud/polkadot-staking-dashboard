@@ -1,10 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { Wrapper } from './Wrappers';
-import { Header } from './Header';
+import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { Announcements } from './Announcements';
+import { Header } from './Header';
+import { Wrapper } from './Wrappers';
 
 export const PoolStats = () => {
   return (

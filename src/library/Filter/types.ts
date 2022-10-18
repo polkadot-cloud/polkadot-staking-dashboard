@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { ButtonProps } from 'library/Button/types';
+import React from 'react';
 
 export interface ItemProps {
   icon: IconProp;

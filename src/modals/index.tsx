@@ -1,36 +1,36 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useRef } from 'react';
-import { useAnimation } from 'framer-motion';
 import { useModal } from 'contexts/Modal';
-import { ErrorBoundary } from 'react-error-boundary';
+import { useAnimation } from 'framer-motion';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
-import { PoolNominations } from './PoolNominations';
-import { ModalWrapper, ContentWrapper, HeightWrapper } from './Wrappers';
-import { ConnectAccounts } from './ConnectAccounts';
-import { ValidatorMetrics } from './ValidatorMetrics';
-import { UpdateController } from './UpdateController';
-import { Settings } from './Settings';
-import { UpdateBond } from './UpdateBond';
-import { UpdatePayee } from './UpdatePayee';
+import { useEffect, useRef } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { AccountPoolRoles } from './AccountPoolRoles';
+import { Bio } from './Bio';
 import { ChangeNominations } from './ChangeNominations';
-import { Nominate } from './Nominate';
-import { UnlockChunks } from './UnlockChunks';
-import { NominatePool } from './NominatePool';
-import { JoinPool } from './JoinPool';
-import { LeavePool } from './LeavePool';
 import { ChangePoolRoles } from './ChangePoolRoles';
 import { ClaimReward } from './ClaimReward';
-import { SelectFavorites } from './SelectFavorites';
-import { NominateFromFavorites } from './NominateFromFavorites';
-import { Networks } from './Networks';
-import { Bio } from './Bio';
-import { ManagePool } from './ManagePool';
+import { ConnectAccounts } from './ConnectAccounts';
 import { GoToFeedback } from './GoToFeedback';
+import { JoinPool } from './JoinPool';
+import { LeavePool } from './LeavePool';
+import { ManagePool } from './ManagePool';
+import { Networks } from './Networks';
+import { Nominate } from './Nominate';
+import { NominateFromFavorites } from './NominateFromFavorites';
+import { NominatePool } from './NominatePool';
+import { PoolNominations } from './PoolNominations';
+import { SelectFavorites } from './SelectFavorites';
+import { Settings } from './Settings';
 import { UnbondPoolMember } from './UnbondPoolMember';
+import { UnlockChunks } from './UnlockChunks';
+import { UpdateBond } from './UpdateBond';
+import { UpdateController } from './UpdateController';
+import { UpdatePayee } from './UpdatePayee';
+import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
-import { AccountPoolRoles } from './AccountPoolRoles';
+import { ContentWrapper, HeightWrapper, ModalWrapper } from './Wrappers';
 
 export const Modal = () => {
   const { setModalHeight, setStatus, status, modal, size, height, resize } =

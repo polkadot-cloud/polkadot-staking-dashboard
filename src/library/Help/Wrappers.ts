@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import {
   helpButton,
   modalOverlayBackground,
@@ -176,7 +176,7 @@ export const ItemWrapper = styled(motion.div)<any>`
   display: flex;
   width: ${(props) => props.width};
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};
-  overflow: auto;
+  overflow: hidden;
   flex-flow: row wrap;
   justify-content: flex-start;
 

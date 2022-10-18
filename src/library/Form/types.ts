@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExternalAccount, ExtensionAccount } from 'contexts/Connect/types';
 import { Balance } from 'contexts/Balances/types';
+import { ExtensionAccount, ExternalAccount } from 'contexts/Connect/types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;

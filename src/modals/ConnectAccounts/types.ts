@@ -1,6 +1,6 @@
-import { FunctionComponent, SVGProps } from 'react';
-import { ExtensionAccount } from 'contexts/Connect/types';
 import { BalanceLedger } from 'contexts/Balances/types';
+import { ExtensionAccount } from 'contexts/Connect/types';
+import { FunctionComponent, SVGProps } from 'react';
 import { MaybeAccount } from 'types';
 
 export interface ExtensionProps {

@@ -3,10 +3,10 @@
 
 import BN from 'bn.js';
 import {
-  BalanceLedger,
   Balance,
-  Nominations,
+  BalanceLedger,
   BalancesContextInterface,
+  Nominations,
 } from 'contexts/Balances/types';
 
 export const balance: Balance = {

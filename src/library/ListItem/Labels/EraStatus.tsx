@@ -4,9 +4,9 @@
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
-import { capitalizeFirstLetter, humanNumber, rmCommas } from 'Utils';
-import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useUi } from 'contexts/UI';
+import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { capitalizeFirstLetter, humanNumber, rmCommas } from 'Utils';
 
 export const EraStatus = (props: any) => {
   const { address } = props;

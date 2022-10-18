@@ -1,18 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { motion } from 'framer-motion';
-import { clipAddress, convertRemToPixels } from 'Utils';
-import { Identicon } from 'library/Identicon';
-import { useNotifications } from 'contexts/Notifications';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAccount } from 'contexts/Account';
-import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
+import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import { Wrapper } from './Wrapper';
+import { motion } from 'framer-motion';
+import { Identicon } from 'library/Identicon';
+import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
+import { clipAddress, convertRemToPixels } from 'Utils';
 import { PoolAccountProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { address, last, batchKey, batchIndex } = props;

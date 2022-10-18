@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { backgroundLabel, textSecondary, networkColor } from 'theme';
+import { backgroundLabel, networkColor, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;

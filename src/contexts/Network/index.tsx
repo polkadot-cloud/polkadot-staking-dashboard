@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BN } from 'bn.js';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
 import { useApi } from '../Api';
 import * as defaults from './defaults';

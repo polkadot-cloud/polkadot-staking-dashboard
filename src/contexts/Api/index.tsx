@@ -1,26 +1,26 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import BN from 'bn.js';
-import {
-  BONDING_DURATION,
-  SESSIONS_PER_ERA,
-  MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
-  MAX_NOMINATIONS,
-  API_ENDPOINTS,
-  MAX_ELECTING_VOTERS,
-  EXPECTED_BLOCK_TIME,
-} from 'consts';
 import { NETWORKS } from 'config/networks';
 import {
-  APIContextInterface,
-  NetworkState,
+  API_ENDPOINTS,
+  BONDING_DURATION,
+  EXPECTED_BLOCK_TIME,
+  MAX_ELECTING_VOTERS,
+  MAX_NOMINATIONS,
+  MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
+  SESSIONS_PER_ERA,
+} from 'consts';
+import {
   APIConstants,
+  APIContextInterface,
   ConnectionStatus,
+  NetworkState,
 } from 'contexts/Api/types';
+import React, { useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
 import * as defaults from './defaults';
 

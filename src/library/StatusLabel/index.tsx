@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { useUi } from 'contexts/UI';
-import { useStaking } from 'contexts/Staking';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { Wrapper } from './Wrapper';
+import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { StatusLabelProps } from './types';
+import { Wrapper } from './Wrapper';
 
 export const StatusLabel = (props: StatusLabelProps) => {
   const status = props.status ?? 'sync_or_setup';

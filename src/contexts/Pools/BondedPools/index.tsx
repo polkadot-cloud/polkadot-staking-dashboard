@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import {
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
   NominationStatuses,
 } from 'contexts/Pools/types';
+import { useStaking } from 'contexts/Staking';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
-import { useStaking } from 'contexts/Staking';
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';

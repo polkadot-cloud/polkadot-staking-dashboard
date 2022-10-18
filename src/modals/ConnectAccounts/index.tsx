@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, useRef } from 'react';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { ImportedAccount } from 'contexts/Connect/types';
-import { Wrapper, CardsWrapper } from './Wrappers';
-import { Extensions } from './Extensions';
+import { useModal } from 'contexts/Modal';
+import { useEffect, useRef, useState } from 'react';
 import { Accounts } from './Accounts';
+import { Extensions } from './Extensions';
+import { CardsWrapper, Wrapper } from './Wrappers';
 
 export const ConnectAccounts = () => {
   const modal = useModal();

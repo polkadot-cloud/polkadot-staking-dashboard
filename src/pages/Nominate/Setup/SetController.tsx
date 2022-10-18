@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { AccountSelect } from 'library/Form/AccountSelect';
-import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
-import { InputItem } from 'library/Form/types';
 import { SetupType } from 'contexts/UI/types';
-import { Header } from 'library/SetupSteps/Header';
+import { AccountSelect } from 'library/Form/AccountSelect';
+import { InputItem } from 'library/Form/types';
+import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Footer } from 'library/SetupSteps/Footer';
+import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
+import { useEffect, useState } from 'react';
 import { Spacer } from '../Wrappers';
 
 export const SetController = (props: SetupStepProps) => {

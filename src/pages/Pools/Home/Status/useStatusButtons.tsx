@@ -1,16 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useUi } from 'contexts/UI';
-import { useTransferOptions } from 'contexts/TransferOptions';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { registerSaEvent } from 'Utils';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {

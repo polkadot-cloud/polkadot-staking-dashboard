@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
+import { useState } from 'react';
 import Lottie from 'react-lottie';
 import { registerSaEvent } from 'Utils';
+import { Link } from 'react-router-dom';
 import { Wrapper, MinimisedWrapper } from './Wrappers';
 import { PrimaryProps } from '../types';
 

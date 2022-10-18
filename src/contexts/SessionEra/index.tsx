@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import moment from 'moment';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import { SessionEraContextInterface, SessionEra } from './types';
+import { SessionEra, SessionEraContextInterface } from './types';
 
 export const SessionEraContext =
   React.createContext<SessionEraContextInterface>(
