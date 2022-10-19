@@ -6,12 +6,13 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import * as infoJson from 'img/json/info-outline.json';
 import * as helpCenterJson from 'img/json/help-center-outline.json';
 import Lottie from 'react-lottie';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   faChevronCircleLeft,
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { setStateWithRef } from 'Utils';
 import { ItemsWrapper, ItemWrapper, PageToggleWrapper } from './Wrappers';
 
 export const Tips = () => {
@@ -23,13 +24,27 @@ export const Tips = () => {
     if (window.innerWidth >= 750 && window.innerWidth < 1200) {
       return 2;
     }
-
     return 3;
+  };
+
+  // helper function to determine which page we should be on upon page resize.
+  // This function ensures totalPages is never surpassed, but does not guarantee
+  // that the start item will maintain across resizes.
+  const getPage = () => {
+    const itemsPerPage = getItemsPerPage();
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+    if (pageRef.current > totalPages) {
+      return totalPages;
+    }
+    const end = pageRef.current * itemsPerPage;
+    const start = end - (itemsPerPage - 1);
+    return Math.ceil(start / itemsPerPage);
   };
 
   // resize side menu callback
   const resizeCallback = () => {
-    setItemsPerPage(getItemsPerPage());
+    setStateWithRef(getPage(), setPage, pageRef);
+    setStateWithRef(getItemsPerPage(), setItemsPerPage, itemsPerPageRef);
   };
 
   // resize event listener
@@ -42,9 +57,14 @@ export const Tips = () => {
 
   // store the current amount of allowed items on display
   const [itemsPerPage, setItemsPerPage] = useState<number>(getItemsPerPage());
+  const itemsPerPageRef = useRef(itemsPerPage);
 
   // store the current page
   const [page, setPage] = useState<number>(1);
+  const pageRef = useRef(page);
+
+  const _itemsPerPage = itemsPerPageRef.current;
+  const _page = pageRef.current;
 
   // configure help items
   const items = [
@@ -85,11 +105,11 @@ export const Tips = () => {
   ];
 
   // determine items to be displayed
-  const endItem = page * itemsPerPage;
-  const startItem = endItem - (itemsPerPage - 1);
+  const endItem = _page * _itemsPerPage;
+  const startItem = endItem - (_itemsPerPage - 1);
 
   const itemsDisplay = items.slice(startItem - 1, endItem);
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const totalPages = Math.ceil(items.length / _itemsPerPage);
 
   return (
     <CardWrapper>
@@ -102,9 +122,9 @@ export const Tips = () => {
           <PageToggleWrapper>
             <button
               type="button"
-              disabled={totalPages === 1 || page === 1}
+              disabled={totalPages === 1 || _page === 1}
               onClick={() => {
-                setPage(page - 1);
+                setStateWithRef(_page - 1, setPage, pageRef);
               }}
             >
               <FontAwesomeIcon
@@ -115,7 +135,7 @@ export const Tips = () => {
             </button>
             <h4 className={totalPages === 1 ? `disabled` : undefined}>
               <span>
-                {startItem} {itemsPerPage > 1 && ` - ${endItem}`}
+                {startItem} {_itemsPerPage > 1 && ` - ${endItem}`}
               </span>
               {totalPages > 1 && (
                 <>
@@ -125,9 +145,9 @@ export const Tips = () => {
             </h4>
             <button
               type="button"
-              disabled={totalPages === 1 || page === totalPages}
+              disabled={totalPages === 1 || _page === totalPages}
               onClick={() => {
-                setPage(page + 1);
+                setStateWithRef(_page + 1, setPage, pageRef);
               }}
             >
               <FontAwesomeIcon
