@@ -76,36 +76,42 @@ export const Tips = () => {
   // configure help items
   const items = [
     {
-      title: '1. How would you like to stake?',
+      id: 0,
+      title: 'How would you like to stake?',
       subtitle:
         'Becoming a nominator or joining a pool - which one is right for you.',
       icon: helpCenterJson,
     },
     {
-      title: '2. Managing your Nominations',
+      id: 1,
+      title: 'Managing your Nominations',
       subtitle:
         'You are now staking. Read more about managing your nominations.',
       icon: infoJson,
     },
     {
-      title: '3. Reviewing Payouts',
+      id: 2,
+      title: 'Reviewing Payouts',
       subtitle: 'Learn who your best performing nominees are, and update them.',
       icon: infoJson,
     },
     {
-      title: '4. How would you like to stake?',
+      id: 3,
+      title: 'How would you like to stake?',
       subtitle:
         'Becoming a nominator or joining a pool - which one is right for you.',
       icon: helpCenterJson,
     },
     {
-      title: '5. Managing your Nominations',
+      id: 4,
+      title: 'Managing your Nominations',
       subtitle:
         'You are now staking. Read more about managing your nominations.',
       icon: infoJson,
     },
     {
-      title: '6. Reviewing Payouts',
+      id: 5,
+      title: 'Reviewing Payouts',
       subtitle: 'Learn who your best performing nominees are, and update them.',
       icon: infoJson,
     },
