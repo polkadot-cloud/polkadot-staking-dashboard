@@ -6,6 +6,7 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import * as infoJson from 'img/json/info-outline.json';
 import * as helpCenterJson from 'img/json/help-center-outline.json';
 import Lottie from 'react-lottie';
+import { useEffect, useState } from 'react';
 import { ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const Tips = () => {
@@ -34,26 +35,40 @@ export const Tips = () => {
           title="How would you like to stake?"
           subtitle="Becoming a nominator or joining a pool - which one is right for you."
           icon={helpCenterJson}
+          index={1}
         />
         <Item
           title="Managing your Nominations"
           subtitle="You are now staking. Read more about managing your nominations."
           icon={infoJson}
+          index={2}
         />
         <Item
           title="Reviewing Payouts"
           subtitle="Learn who your best performing nominees are, and update them."
           icon={infoJson}
+          index={3}
         />
       </ItemsWrapper>
     </CardWrapper>
   );
 };
 
-const Item = ({ title, subtitle, icon }: any) => {
+const Item = ({ title, subtitle, icon, index }: any) => {
+  const [isStopped, setIsStopped] = useState(true);
+
+  useEffect(() => {
+    const delay = index * 200;
+    setTimeout(() => {
+      if (isStopped) {
+        setIsStopped(false);
+      }
+    }, delay);
+  }, []);
+
   const animateOptions = {
-    loop: false,
-    autoplay: true,
+    loop: true,
+    autoplay: false,
     animationData: icon,
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice',
@@ -66,6 +81,10 @@ const Item = ({ title, subtitle, icon }: any) => {
       whileHover={{ scale: 1.01 }}
       onClick={() => {
         console.log('interact with tip');
+      }}
+      transition={{
+        type: 'spring',
+        bounce: 0.55,
       }}
       variants={{
         hidden: {
@@ -84,8 +103,14 @@ const Item = ({ title, subtitle, icon }: any) => {
             options={animateOptions}
             width="2.25rem"
             height="2.25rem"
-            isStopped={false}
-            isPaused={false}
+            isStopped={isStopped}
+            isPaused={isStopped}
+            eventListeners={[
+              {
+                eventName: 'loopComplete',
+                callback: () => setIsStopped(true),
+              },
+            ]}
           />
         </section>
         <section>
