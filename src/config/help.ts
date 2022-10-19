@@ -8,6 +8,14 @@ export const HELP_CONFIG: HelpContentRaw = [
     key: 'overview',
     definitions: [
       {
+        title: 'Dashboard Tips',
+        description: [
+          'Staking dashboard will present you tips to help you along each step of staking on Polkadot',
+          'Tips will sometimes ask you questions about your intentions with Polkadot staking, and will update depending on your staking status.',
+          'Tips can be turned off or re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.',
+        ],
+      },
+      {
         title: 'Supply Staked',
         description: [
           'The current cumulative supply of {NETWORK_UNIT} being staked globally.',

@@ -29,6 +29,7 @@ import Reserve from './Reserve';
 import ActiveEraStatBox from './Stats/ActiveEra';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
+import { Tips } from './Tips';
 
 export const Overview = () => {
   const { network } = useApi();
@@ -58,6 +59,9 @@ export const Overview = () => {
         <ActiveNominatorsStatBox />
         <ActiveEraStatBox />
       </StatBoxList>
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <Tips />
+      </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowSecondaryWrapper
           hOrder={0}
