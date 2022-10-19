@@ -93,8 +93,8 @@ const Item = ({ title, subtitle, icon, index, controls }: any) => {
         <section>
           <Lottie
             options={animateOptions}
-            width="2.25rem"
-            height="2.25rem"
+            width="2.2rem"
+            height="2.2rem"
             isStopped={isStopped}
             isPaused={isStopped}
             eventListeners={[

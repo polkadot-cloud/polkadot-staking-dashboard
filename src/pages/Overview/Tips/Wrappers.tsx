@@ -34,13 +34,14 @@ export const ItemWrapper = styled(motion.button)`
   > .inner {
     box-shadow: -1px 3px 4px ${shadowColorSecondary};
     border: 1px solid ${borderPrimary};
-    border-radius: 1.25rem;
+    border-radius: 1.5rem;
     box-sizing: border-box;
     padding: 0rem 1rem;
     transition: border 0.05s;
     display: flex;
     flex-flow: row wrap;
     height: 6rem;
+    transition: border 0.2s;
 
     > section {
       height: 100%;
@@ -52,10 +53,10 @@ export const ItemWrapper = styled(motion.button)`
         padding-right: 1rem;
 
         .lpf {
-          fill: ${textPrimary};
+          fill: ${networkColor};
         }
         .lps {
-          stroke: ${textPrimary};
+          stroke: ${networkColor};
         }
       }
 
@@ -102,15 +103,6 @@ export const ItemWrapper = styled(motion.button)`
 
     &:hover {
       border-color: ${networkColor};
-
-      > section:first-child {
-        .lpf {
-          fill: ${networkColor};
-        }
-        .lps {
-          stroke: ${networkColor};
-        }
-      }
     }
   }
 `;

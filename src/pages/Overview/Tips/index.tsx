@@ -3,8 +3,8 @@
 
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import * as infoJson from 'img/json/info-outline.json';
-import * as helpCenterJson from 'img/json/help-center-outline.json';
+import * as infoJson from 'img/json/info-solid.json';
+import * as helpCenterJson from 'img/json/help-center-solid.json';
 import { useEffect, useState, useRef } from 'react';
 import {
   faChevronCircleLeft,
