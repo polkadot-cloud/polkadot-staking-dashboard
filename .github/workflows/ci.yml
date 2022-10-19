@@ -24,3 +24,10 @@ jobs:
       - run: yarn build
       - run: yarn lint
       # - run: yarn test # No reason to check for tests now since they do not exist
+
+  all:
+    # This job ensures that all jobs above (now we have just build) are successful.
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Success
