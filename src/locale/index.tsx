@@ -42,7 +42,7 @@ i18next
     interpolation: { escapeValue: false },
     lng: locale,
     fallbackLng: DEFAULT_LOCALE,
-    debug: true,
+    debug: process.env.REACT_APP_DEBUG_I18N === '1',
     resources,
   });
 
