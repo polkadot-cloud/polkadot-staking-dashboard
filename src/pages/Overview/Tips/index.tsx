@@ -43,29 +43,53 @@ export const Tips = () => {
   // store the current amount of allowed items on display
   const [itemsPerPage, setItemsPerPage] = useState<number>(getItemsPerPage());
 
+  // store the current page
+  const [page, setPage] = useState<number>(1);
+
   // configure help items
   const items = [
     {
-      title: 'How would you like to stake?',
+      title: '1. How would you like to stake?',
       subtitle:
         'Becoming a nominator or joining a pool - which one is right for you.',
       icon: helpCenterJson,
     },
     {
-      title: 'Managing your Nominations',
+      title: '2. Managing your Nominations',
       subtitle:
         'You are now staking. Read more about managing your nominations.',
       icon: infoJson,
     },
     {
-      title: 'Reviewing Payouts',
+      title: '3. Reviewing Payouts',
+      subtitle: 'Learn who your best performing nominees are, and update them.',
+      icon: infoJson,
+    },
+    {
+      title: '4. How would you like to stake?',
+      subtitle:
+        'Becoming a nominator or joining a pool - which one is right for you.',
+      icon: helpCenterJson,
+    },
+    {
+      title: '5. Managing your Nominations',
+      subtitle:
+        'You are now staking. Read more about managing your nominations.',
+      icon: infoJson,
+    },
+    {
+      title: '6. Reviewing Payouts',
       subtitle: 'Learn who your best performing nominees are, and update them.',
       icon: infoJson,
     },
   ];
 
   // determine items to be displayed
-  const itemsDisplay = items.slice(0, itemsPerPage);
+  const endItem = page * itemsPerPage;
+  const startItem = endItem - (itemsPerPage - 1);
+
+  const itemsDisplay = items.slice(startItem - 1, endItem);
+  const totalPages = Math.ceil(items.length / itemsPerPage);
 
   return (
     <CardWrapper>
@@ -78,8 +102,9 @@ export const Tips = () => {
           <PageToggleWrapper>
             <button
               type="button"
+              disabled={totalPages === 1 || page === 1}
               onClick={() => {
-                /* TODO: toggle pages */
+                setPage(page - 1);
               }}
             >
               <FontAwesomeIcon
@@ -88,14 +113,21 @@ export const Tips = () => {
                 transform="grow-1"
               />
             </button>
-            <h4>
-              <span>1-3</span>
-              of <span>3</span>
+            <h4 className={totalPages === 1 ? `disabled` : undefined}>
+              <span>
+                {startItem} {itemsPerPage > 1 && ` - ${endItem}`}
+              </span>
+              {totalPages > 1 && (
+                <>
+                  of <span>{items.length}</span>
+                </>
+              )}
             </h4>
             <button
               type="button"
+              disabled={totalPages === 1 || page === totalPages}
               onClick={() => {
-                /* TODO: toggle pages */
+                setPage(page + 1);
               }}
             >
               <FontAwesomeIcon

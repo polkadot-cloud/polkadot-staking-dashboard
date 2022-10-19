@@ -134,12 +134,20 @@ export const PageToggleWrapper = styled.div`
       opacity: 1;
       color: ${networkColor};
     }
+
+    &:disabled {
+      color: ${textSecondary};
+      opacity: 0.1;
+    }
   }
 
   h4 {
     margin: 0;
     span {
       margin: 0 0.5rem;
+    }
+    &.disabled {
+      opacity: 0.25;
     }
   }
 `;
