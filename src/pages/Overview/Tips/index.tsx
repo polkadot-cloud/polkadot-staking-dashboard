@@ -5,7 +5,6 @@ import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import * as infoJson from 'img/json/info-outline.json';
 import * as helpCenterJson from 'img/json/help-center-outline.json';
-import Lottie from 'react-lottie';
 import { useEffect, useState, useRef } from 'react';
 import {
   faChevronCircleLeft,
@@ -13,7 +12,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { setStateWithRef } from 'Utils';
-import { ItemsWrapper, ItemWrapper, PageToggleWrapper } from './Wrappers';
+import throttle from 'lodash.throttle';
+import { PageToggleWrapper } from './Wrappers';
+import { ItemsOuter } from './ItemsOuter';
 
 export const Tips = () => {
   // helper function to determine the number of items to display per page
@@ -41,17 +42,23 @@ export const Tips = () => {
     return Math.ceil(start / itemsPerPage);
   };
 
-  // resize side menu callback
+  // resize callback
   const resizeCallback = () => {
     setStateWithRef(getPage(), setPage, pageRef);
     setStateWithRef(getItemsPerPage(), setItemsPerPage, itemsPerPageRef);
   };
 
+  // throttle resize callback
+  const throttledResizeCallback = throttle(resizeCallback, 200, {
+    trailing: true,
+    leading: false,
+  });
+
   // resize event listener
   useEffect(() => {
-    window.addEventListener('resize', resizeCallback);
+    window.addEventListener('resize', throttledResizeCallback);
     return () => {
-      window.removeEventListener('resize', resizeCallback);
+      window.removeEventListener('resize', throttledResizeCallback);
     };
   }, []);
 
@@ -159,93 +166,7 @@ export const Tips = () => {
           </PageToggleWrapper>
         </div>
       </CardHeaderWrapper>
-      <ItemsWrapper
-        initial="hidden"
-        animate="show"
-        variants={{
-          hidden: { opacity: 0 },
-          show: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.2,
-            },
-          },
-        }}
-      >
-        {itemsDisplay.map((item: any, index: number) => (
-          <Item key={`tip_${index}`} index={index} {...item} />
-        ))}
-      </ItemsWrapper>
+      <ItemsOuter items={itemsDisplay} />
     </CardWrapper>
-  );
-};
-
-const Item = ({ title, subtitle, icon, index }: any) => {
-  const [isStopped, setIsStopped] = useState(true);
-
-  useEffect(() => {
-    const delay = index * 200;
-    setTimeout(() => {
-      if (isStopped) {
-        setIsStopped(false);
-      }
-    }, delay);
-  }, []);
-
-  const animateOptions = {
-    loop: true,
-    autoplay: false,
-    animationData: icon,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  };
-
-  return (
-    <ItemWrapper
-      type="button"
-      whileHover={{ scale: 1.01 }}
-      onClick={() => {
-        console.log('interact with tip');
-      }}
-      transition={{
-        type: 'spring',
-        bounce: 0.55,
-      }}
-      variants={{
-        hidden: {
-          y: 15,
-          opacity: 0,
-        },
-        show: {
-          y: 0,
-          opacity: 1,
-        },
-      }}
-    >
-      <div className="inner">
-        <section>
-          <Lottie
-            options={animateOptions}
-            width="2.25rem"
-            height="2.25rem"
-            isStopped={isStopped}
-            isPaused={isStopped}
-            eventListeners={[
-              {
-                eventName: 'loopComplete',
-                callback: () => setIsStopped(true),
-              },
-            ]}
-          />
-        </section>
-        <section>
-          <h4>{title}</h4>
-          <div className="desc">
-            <p>{subtitle}</p>
-          </div>
-        </section>
-      </div>
-    </ItemWrapper>
   );
 };
