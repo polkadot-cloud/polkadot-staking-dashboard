@@ -28,6 +28,7 @@ export const BondedPoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { t } = useTranslation('common');
   const { api, network, isReady } = useApi();
   const { getNominationsStatusFromTargets } = useStaking();
   const { createAccounts, stats } = usePoolsConfig();
@@ -242,7 +243,7 @@ export const BondedPoolsProvider = ({
     const nominations = poolMetaBatches.bonded_pools?.nominations ?? [];
     const targets = nominations[batchIndex]?.targets ?? [];
 
-    const target = targets.find((t: string) => t === nomination);
+    const target = targets.find((_t: string) => _t === nomination);
 
     const nominationStatus = getNominationsStatusFromTargets(nominator, [
       target,
@@ -255,7 +256,6 @@ export const BondedPoolsProvider = ({
    * Determine bonded pool's current nomination statuse
    */
   const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
-    const { t } = useTranslation('common');
     let status = t('contexts.waiting');
 
     if (statuses) {

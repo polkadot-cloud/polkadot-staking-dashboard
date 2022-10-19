@@ -6,9 +6,9 @@ import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
 
 export const ActiveNominationsStatBox = () => {
+  const { t } = useTranslation('common');
   const { getNominationsStatus } = useStaking();
   const nominationStatuses = getNominationsStatus();
-  const { t } = useTranslation('common');
 
   const total = Object.values(nominationStatuses).length;
   const active =

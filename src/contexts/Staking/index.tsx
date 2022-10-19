@@ -40,6 +40,8 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { t } = useTranslation('common');
+
   const {
     activeAccount,
     accounts: connectAccounts,
@@ -295,7 +297,6 @@ export const StakingProvider = ({
     }
     const nominations = getAccountNominations(activeAccount);
     const statuses: NominationStatuses = {};
-    const { t } = useTranslation('common');
 
     for (const nomination of nominations) {
       const s = eraStakersRef.current.stakers.find(
@@ -315,7 +316,6 @@ export const StakingProvider = ({
       }
       statuses[nomination] = t('contexts.active');
     }
-
     return statuses;
   };
 
