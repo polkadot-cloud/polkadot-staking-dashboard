@@ -18,7 +18,7 @@ export const ItemsWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row nowrap;
   justify-items: center;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 0.25rem 0;
 `;
 export const ItemWrapper = styled(motion.button)`
   padding: 0;
@@ -40,7 +40,7 @@ export const ItemWrapper = styled(motion.button)`
     transition: border 0.05s;
     display: flex;
     flex-flow: row wrap;
-    height: 6rem;
+    height: 6.5rem;
     transition: border 0.2s;
 
     > section {
