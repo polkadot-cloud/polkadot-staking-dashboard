@@ -34,7 +34,7 @@ export const ItemWrapper = styled(motion.button)`
   > .inner {
     box-shadow: -1px 3px 4px ${shadowColorSecondary};
     border: 1px solid ${borderPrimary};
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
     box-sizing: border-box;
     padding: 0rem 1rem;
     transition: border 0.05s;
