@@ -31,11 +31,20 @@ import {
   PageWrapper,
   SideInterfaceWrapper,
 } from 'Wrappers';
+import { extractUrlValue, registerSaEvent } from 'Utils';
 
 export const RouterInner = () => {
   const { network } = useApi();
-  const { pathname } = useLocation();
+  const { search, pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+
+  // register landing source from URL
+  useEffect(() => {
+    const utmSource = extractUrlValue('utm_source', search);
+    if (utmSource) {
+      registerSaEvent('conversion', { utmSource });
+    }
+  }, []);
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {
