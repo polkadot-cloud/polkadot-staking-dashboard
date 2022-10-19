@@ -213,7 +213,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                     <div className="row">
                       <div>
                         <div>
-                          {label === 'Payout' && (
+                          {label === t('pages.payouts.payout') && (
                             <>
                               {batchIndex > 0 ? (
                                 <Identity
@@ -227,7 +227,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                               )}
                             </>
                           )}
-                          {label === 'Pool Claim' && (
+                          {label === t('pages.payouts.pool_claim') && (
                             <>
                               {pool ? (
                                 <PoolIdentity
