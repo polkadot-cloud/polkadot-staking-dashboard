@@ -7,16 +7,53 @@ import * as infoJson from 'img/json/info-outline.json';
 import * as helpCenterJson from 'img/json/help-center-outline.json';
 import Lottie from 'react-lottie';
 import { useEffect, useState } from 'react';
-import { ItemsWrapper, ItemWrapper } from './Wrappers';
+import {
+  faChevronCircleLeft,
+  faChevronCircleRight,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ItemsWrapper, ItemWrapper, PageToggleWrapper } from './Wrappers';
 
 export const Tips = () => {
   return (
     <CardWrapper>
-      <CardHeaderWrapper>
+      <CardHeaderWrapper withAction>
         <h4>
           Tips
           <OpenHelpIcon helpKey="Dashboard Tips" />
         </h4>
+        <div>
+          <PageToggleWrapper>
+            <button
+              type="button"
+              onClick={() => {
+                /* TODO: toggle pages */
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faChevronCircleLeft}
+                className="icon"
+                transform="grow-1"
+              />
+            </button>
+            <h4>
+              <span>1-3</span>
+              of <span>3</span>
+            </h4>
+            <button
+              type="button"
+              onClick={() => {
+                /* TODO: toggle pages */
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faChevronCircleRight}
+                className="icon"
+                transform="grow-1"
+              />
+            </button>
+          </PageToggleWrapper>
+        </div>
       </CardHeaderWrapper>
       <ItemsWrapper
         initial="hidden"

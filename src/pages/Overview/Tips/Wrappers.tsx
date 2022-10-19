@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import {
-  backgroundDropdown,
+  backgroundLabel,
   borderPrimary,
   networkColor,
   shadowColorSecondary,
@@ -18,7 +18,7 @@ export const ItemsWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row nowrap;
   justify-items: center;
-  margin: 0.25rem 0;
+  margin: 0.5rem 0;
 `;
 export const ItemWrapper = styled(motion.button)`
   padding: 0;
@@ -37,15 +37,10 @@ export const ItemWrapper = styled(motion.button)`
     border-radius: 1.25rem;
     box-sizing: border-box;
     padding: 0rem 1rem;
-    transition: background 0.25s, border 0.25s;
+    transition: border 0.05s;
     display: flex;
     flex-flow: row wrap;
     height: 5.75rem;
-
-    &:hover {
-      background: ${backgroundDropdown};
-      border-color: ${networkColor};
-    }
 
     > section {
       height: 100%;
@@ -91,6 +86,49 @@ export const ItemWrapper = styled(motion.button)`
           }
         }
       }
+    }
+
+    &:hover {
+      border-color: ${networkColor};
+
+      > section:first-child {
+        .lpf {
+          fill: ${networkColor};
+        }
+        .lps {
+          stroke: ${networkColor};
+        }
+      }
+    }
+  }
+`;
+
+export const PageToggleWrapper = styled.div`
+  background: ${backgroundLabel};
+  color: ${textSecondary};
+  padding: 0.25rem 0.5rem;
+  border-radius: 1.5rem;
+  position: relative;
+  top: -0.25rem;
+  display: flex;
+  flex-flow: row wrap;
+
+  > button {
+    margin: 0;
+    opacity: 0.75;
+    transition: color 0.2s;
+
+    &:hover {
+      opacity: 1;
+      color: ${networkColor};
+    }
+  }
+
+  h4 {
+    margin: 0;
+
+    span {
+      margin: 0 0.5rem;
     }
   }
 `;
