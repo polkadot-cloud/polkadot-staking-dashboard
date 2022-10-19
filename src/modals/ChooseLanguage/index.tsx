@@ -3,7 +3,7 @@
 /* eslint-disable */
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import { availableLanguages } from 'locale';
+import { availableLanguages, i18ToMomentLocale } from 'locale';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import moment from 'moment';
@@ -16,9 +16,9 @@ export const ChooseLanguage = () => {
   const { i18n, t } = useTranslation(['common', 'pages', 'help']);
   const { setStatus } = useModal();
 
+  // update moment locale on i18 locale change
   useEffect(() => {
-    i18n.resolvedLanguage === 'cn'
-      ? moment.locale('zh-cn') : moment.locale('en');
+    moment.locale(i18ToMomentLocale(i18n.resolvedLanguage));
   }, [i18n.resolvedLanguage]);
 
   return (
