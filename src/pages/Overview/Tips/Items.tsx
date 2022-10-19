@@ -28,9 +28,6 @@ export const ItemsInner = ({ items }: any) => {
         hidden: { opacity: 0 },
         show: {
           opacity: 1,
-          transition: {
-            staggerChildren: 0.2,
-          },
         },
       }}
     >
@@ -50,7 +47,7 @@ const Item = ({ title, subtitle, icon, index, controls }: any) => {
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
-    const delay = index * 200;
+    const delay = index * 100;
     setTimeout(() => {
       if (isStopped) {
         setIsStopped(false);
@@ -77,9 +74,9 @@ const Item = ({ title, subtitle, icon, index, controls }: any) => {
       animate={controls}
       custom={index}
       transition={{
-        type: 'spring',
-        bounce: 0.55,
         delay: index * 0.2,
+        duration: 0.3,
+        ease: 'easeOut',
       }}
       variants={{
         hidden: {
