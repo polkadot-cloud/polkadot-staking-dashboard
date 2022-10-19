@@ -230,4 +230,9 @@ export const registerSaEvent = (e: string, a: AnyApi = {}) => {
   if ((window as AnyApi).sa_event) {
     (window as AnyApi).sa_event(e, a);
   }
+// extracts a URL value from a URL string
+export const extractUrlValue = (key: string, url: string) => {
+  if (typeof url === 'undefined') url = window.location.href;
+  const match = url.match(`[?&]${key}=([^&]+)`);
+  return match ? match[1] : null;
 };
