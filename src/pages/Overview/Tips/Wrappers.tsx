@@ -40,7 +40,7 @@ export const ItemWrapper = styled(motion.button)`
     transition: border 0.05s;
     display: flex;
     flex-flow: row wrap;
-    height: 6rem;
+    height: 5.5rem;
     transition: border 0.2s;
 
     > section {
@@ -80,7 +80,7 @@ export const ItemWrapper = styled(motion.button)`
           justify-content: flex-start;
           overflow: hidden;
           width: 100%;
-          height: 2rem;
+          height: 1.8rem;
           position: relative;
 
           p {
@@ -90,7 +90,7 @@ export const ItemWrapper = styled(motion.button)`
             left: 0;
             width: 100%;
             box-sizing: border-box;
-            margin: 0.3rem 0 0rem 0;
+            margin: 0.2rem 0 0 0;
             text-align: left;
             font-size: 1rem;
             text-overflow: ellipsis;
