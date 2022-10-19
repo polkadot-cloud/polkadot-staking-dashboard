@@ -1,4 +1,4 @@
 {
-  "**/*.ts[x]": "// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors",
+  "**/*.{ts, tsx}": "// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors",
   "ignore": ["testdata", "npm"]
 }
