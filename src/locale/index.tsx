@@ -55,7 +55,7 @@ export const availableLanguages = Object.keys(resources);
 // map i18n to moment locale keys, with any custom amendments.
 const i18ToMomentLocaleMap: { [key: string]: string } = {
   ...Object.fromEntries(availableLanguages.map((a: string) => [a, a])),
-  cn: 'zh-en',
+  cn: 'zh-cn',
 };
 
 // convert i18 locale key to moment key if needed.
