@@ -15,6 +15,58 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ItemsWrapper, ItemWrapper, PageToggleWrapper } from './Wrappers';
 
 export const Tips = () => {
+  // helper function to determine the number of items to display per page
+  const getItemsPerPage = () => {
+    if (window.innerWidth < 750) {
+      return 1;
+    }
+    if (window.innerWidth >= 750 && window.innerWidth < 1200) {
+      return 2;
+    }
+
+    return 3;
+  };
+
+  // resize side menu callback
+  const resizeCallback = () => {
+    setItemsPerPage(getItemsPerPage());
+  };
+
+  // resize event listener
+  useEffect(() => {
+    window.addEventListener('resize', resizeCallback);
+    return () => {
+      window.removeEventListener('resize', resizeCallback);
+    };
+  }, []);
+
+  // store the current amount of allowed items on display
+  const [itemsPerPage, setItemsPerPage] = useState<number>(getItemsPerPage());
+
+  // configure help items
+  const items = [
+    {
+      title: 'How would you like to stake?',
+      subtitle:
+        'Becoming a nominator or joining a pool - which one is right for you.',
+      icon: helpCenterJson,
+    },
+    {
+      title: 'Managing your Nominations',
+      subtitle:
+        'You are now staking. Read more about managing your nominations.',
+      icon: infoJson,
+    },
+    {
+      title: 'Reviewing Payouts',
+      subtitle: 'Learn who your best performing nominees are, and update them.',
+      icon: infoJson,
+    },
+  ];
+
+  // determine items to be displayed
+  const itemsDisplay = items.slice(0, itemsPerPage);
+
   return (
     <CardWrapper>
       <CardHeaderWrapper withAction>
@@ -68,24 +120,9 @@ export const Tips = () => {
           },
         }}
       >
-        <Item
-          title="How would you like to stake?"
-          subtitle="Becoming a nominator or joining a pool - which one is right for you."
-          icon={helpCenterJson}
-          index={1}
-        />
-        <Item
-          title="Managing your Nominations"
-          subtitle="You are now staking. Read more about managing your nominations."
-          icon={infoJson}
-          index={2}
-        />
-        <Item
-          title="Reviewing Payouts"
-          subtitle="Learn who your best performing nominees are, and update them."
-          icon={infoJson}
-          index={3}
-        />
+        {itemsDisplay.map((item: any, index: number) => (
+          <Item key={`tip_${index}`} index={index} {...item} />
+        ))}
       </ItemsWrapper>
     </CardWrapper>
   );

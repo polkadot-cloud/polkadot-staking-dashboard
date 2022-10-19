@@ -40,7 +40,7 @@ export const ItemWrapper = styled(motion.button)`
     transition: border 0.05s;
     display: flex;
     flex-flow: row wrap;
-    height: 5.75rem;
+    height: 6rem;
 
     > section {
       height: 100%;
@@ -78,11 +78,23 @@ export const ItemWrapper = styled(motion.button)`
           flex-flow: column wrap;
           justify-content: flex-start;
           overflow: hidden;
+          width: 100%;
+          height: 2rem;
+          position: relative;
+
           p {
             color: ${textSecondary};
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
             margin: 0.3rem 0 0rem 0;
             text-align: left;
             font-size: 1rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
           }
         }
       }
@@ -126,7 +138,6 @@ export const PageToggleWrapper = styled.div`
 
   h4 {
     margin: 0;
-
     span {
       margin: 0 0.5rem;
     }
