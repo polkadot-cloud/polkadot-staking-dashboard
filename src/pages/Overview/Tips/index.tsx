@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useApi } from 'contexts/Api';
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import * as infoJson from 'img/json/info-outline.json';
+import * as helpCenterJson from 'img/json/help-center-outline.json';
+import Lottie from 'react-lottie';
 import { ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const Tips = () => {
-  const { network } = useApi();
-
   return (
     <CardWrapper>
       <CardHeaderWrapper>
@@ -33,21 +33,33 @@ export const Tips = () => {
         <Item
           title="How would you like to stake?"
           subtitle="Becoming a nominator or joining a pool - which one is right for you."
+          icon={helpCenterJson}
         />
         <Item
           title="Managing your Nominations"
           subtitle="You are now staking. Read more about managing your nominations."
+          icon={infoJson}
         />
         <Item
           title="Reviewing Payouts"
-          subtitle="Learn who your best performing nominees are, and update them when needed."
+          subtitle="Learn who your best performing nominees are, and update them."
+          icon={infoJson}
         />
       </ItemsWrapper>
     </CardWrapper>
   );
 };
 
-const Item = ({ title, subtitle }: any) => {
+const Item = ({ title, subtitle, icon }: any) => {
+  const animateOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: icon,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
+
   return (
     <ItemWrapper
       type="button"
@@ -67,10 +79,21 @@ const Item = ({ title, subtitle }: any) => {
       }}
     >
       <div className="inner">
-        <h4>{title}</h4>
-        <div className="desc">
-          <p>{subtitle}</p>
-        </div>
+        <section>
+          <Lottie
+            options={animateOptions}
+            width="2.25rem"
+            height="2.25rem"
+            isStopped={false}
+            isPaused={false}
+          />
+        </section>
+        <section>
+          <h4>{title}</h4>
+          <div className="desc">
+            <p>{subtitle}</p>
+          </div>
+        </section>
       </div>
     </ItemWrapper>
   );

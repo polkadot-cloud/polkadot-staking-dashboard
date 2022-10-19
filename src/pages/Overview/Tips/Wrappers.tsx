@@ -34,38 +34,63 @@ export const ItemWrapper = styled(motion.button)`
   > .inner {
     box-shadow: -1px 3px 4px ${shadowColorSecondary};
     border: 1px solid ${borderPrimary};
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: flex-start;
     border-radius: 1.25rem;
     box-sizing: border-box;
-    padding: 0rem 1.25rem;
+    padding: 0rem 1rem;
     transition: background 0.25s, border 0.25s;
-    height: 6.5rem;
+    display: flex;
+    flex-flow: row wrap;
+    height: 5.75rem;
 
     &:hover {
       background: ${backgroundDropdown};
       border-color: ${networkColor};
     }
 
-    h4 {
-      color: ${textPrimary};
-      font-variation-settings: 'wght' 625;
-      margin: 1.25rem 0 0 0;
-    }
+    > section {
+      height: 100%;
 
-    .desc {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column wrap;
-      justify-content: flex-start;
-      overflow: hidden;
-    }
-    p {
-      color: ${textSecondary};
-      margin: 0.6rem 0 0.25rem 0;
-      text-align: left;
+      &:first-child {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        padding-right: 1rem;
+
+        .lpf {
+          fill: ${textPrimary};
+        }
+        .lps {
+          stroke: ${textPrimary};
+        }
+      }
+
+      &:last-child {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
+        flex: 1;
+
+        h4 {
+          color: ${textPrimary};
+          font-variation-settings: 'wght' 625;
+          margin: 0;
+          font-size: 1.15rem;
+        }
+
+        .desc {
+          display: flex;
+          flex-flow: column wrap;
+          justify-content: flex-start;
+          overflow: hidden;
+          p {
+            color: ${textSecondary};
+            margin: 0.3rem 0 0rem 0;
+            text-align: left;
+            font-size: 1rem;
+          }
+        }
+      }
     }
   }
 `;
