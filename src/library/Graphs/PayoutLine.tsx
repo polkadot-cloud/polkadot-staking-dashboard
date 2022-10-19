@@ -26,6 +26,7 @@ import {
 import { AnySubscan } from 'types';
 import { useTranslation } from 'react-i18next';
 import { humanNumber } from 'Utils';
+import { useLocale } from 'contexts/Locale';
 import { PayoutLineProps } from './types';
 import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
 
@@ -49,6 +50,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
+  const { locale } = useLocale();
 
   const { units } = network;
   const notStaking = !isSyncing && inSetup() && !poolMembership;
@@ -74,6 +76,7 @@ export const PayoutLine = (props: PayoutLineProps) => {
 
   // configure graph options
   const options = {
+    locale,
     responsive: true,
     maintainAspectRatio: false,
     scales: {

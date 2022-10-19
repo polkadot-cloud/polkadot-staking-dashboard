@@ -8,6 +8,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { defaultThemes, networkColors } from 'theme/default';
 import { humanNumber } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { useLocale } from 'contexts/Locale';
 import { GraphWrapper } from './Wrappers';
 import { BondedProps } from './types';
 
@@ -17,6 +18,7 @@ export const Bonded = (props: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
   const { t } = useTranslation('common');
+  const { locale } = useLocale();
 
   const { active, unlocking, unlocked, inactive } = props;
   const { free } = props;
@@ -35,6 +37,7 @@ export const Bonded = (props: BondedProps) => {
   }
 
   const options = {
+    locale,
     responsive: true,
     maintainAspectRatio: false,
     spacing: zeroBalance ? 0 : 2,

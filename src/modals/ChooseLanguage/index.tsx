@@ -1,25 +1,21 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
+
 /* eslint-disable */
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import { availableLanguages, i18ToMomentLocale } from 'locale';
+import { availableLanguages } from 'locale';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
-import moment from 'moment';
 import 'moment/locale/zh-cn';
-import { useEffect } from 'react';
 import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, LocaleButton } from './Wrapper';
+import { useLocale } from 'contexts/Locale';
 
 export const ChooseLanguage = () => {
   const { i18n, t } = useTranslation(['common', 'pages', 'help']);
   const { setStatus } = useModal();
-
-  // update moment locale on i18 locale change
-  useEffect(() => {
-    moment.locale(i18ToMomentLocale(i18n.resolvedLanguage));
-  }, [i18n.resolvedLanguage]);
+  const { setLocale } = useLocale();
 
   return (
     <>
@@ -33,9 +29,8 @@ export const ChooseLanguage = () => {
                   connected={i18n.resolvedLanguage === l}
                   type="button"
                   onClick={() => {
-                    i18n.changeLanguage(l);
+                    setLocale(l);
                     setStatus(2);
-                    localStorage.setItem('locale', l);
                   }}
                 >
                   {availableLanguages[i].toUpperCase()}

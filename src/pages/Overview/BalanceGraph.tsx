@@ -25,6 +25,7 @@ import {
   toFixedIfNecessary,
   usdFormatter,
 } from 'Utils';
+import { useLocale } from 'contexts/Locale';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -39,6 +40,7 @@ export const BalanceGraph = () => {
   const { services } = useUi();
   const prices = usePrices();
   const { t } = useTranslation('common');
+  const { locale } = useLocale();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -88,6 +90,7 @@ export const BalanceGraph = () => {
   }
 
   const options = {
+    locale,
     responsive: true,
     maintainAspectRatio: false,
     spacing: zeroBalance ? 0 : 5,

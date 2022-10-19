@@ -29,6 +29,7 @@ import {
 import { AnySubscan } from 'types';
 import { useTranslation } from 'react-i18next';
 import { humanNumber } from 'Utils';
+import { useLocale } from 'contexts/Locale';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -53,6 +54,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
   const { t } = useTranslation('common');
+  const { locale } = useLocale();
 
   const { units } = network;
   const notStaking = !isSyncing && inSetup() && !membership;
@@ -105,6 +107,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
   };
 
   const options = {
+    locale,
     responsive: true,
     maintainAspectRatio: false,
     barPercentage: 0.4,
@@ -121,6 +124,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
             size: 10,
           },
           autoSkip: true,
+          // maxTicksLimit: 50, // TODO; make dynamic depending on width of chart.
         },
       },
       y: {

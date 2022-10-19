@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { defaultThemes, networkColors } from 'theme/default';
+import { useLocale } from 'contexts/Locale';
 import { EraPointsProps } from './types';
 
 ChartJS.register(
@@ -34,10 +35,12 @@ export const EraPoints = (props: EraPointsProps) => {
   let { items } = props;
   const { height } = props;
   const { t } = useTranslation('common');
+  const { locale } = useLocale();
 
   items = items === undefined ? [] : items;
 
   const options = {
+    locale,
     responsive: true,
     maintainAspectRatio: false,
     scales: {

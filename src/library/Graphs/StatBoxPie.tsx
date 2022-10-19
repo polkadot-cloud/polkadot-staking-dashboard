@@ -3,6 +3,7 @@
 
 import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
+import { useLocale } from 'contexts/Locale';
 import { useTheme } from 'contexts/Themes';
 import { Pie } from 'react-chartjs-2';
 import {
@@ -15,6 +16,10 @@ import { StatPieProps } from './types';
 ChartJS.register(ArcElement, Tooltip);
 
 export const StatPie = (props: StatPieProps) => {
+  const { network } = useApi();
+  const { mode } = useTheme();
+  const { locale } = useLocale();
+
   let { value, value2 } = props;
 
   // format zero value graph
@@ -23,9 +28,6 @@ export const StatPie = (props: StatPieProps) => {
     value = 1;
     value2 = 0;
   }
-
-  const { network } = useApi();
-  const { mode } = useTheme();
 
   const borderColor = isZero
     ? defaultThemes.buttons.toggle.background[mode]
@@ -39,6 +41,7 @@ export const StatPie = (props: StatPieProps) => {
     : networkColorsTransparent[`${network.name}-${mode}`];
 
   const options = {
+    locale,
     borderColor,
     hoverBorderColor: borderColor,
     backgroundColor,

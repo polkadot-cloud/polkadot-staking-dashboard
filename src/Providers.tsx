@@ -8,6 +8,7 @@ import { withProviders } from 'library/Hooks';
 import Router from 'Router';
 import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
+import { LocaleProvider } from 'contexts/Locale';
 import { AccountProvider } from './contexts/Account';
 import { APIProvider, useApi } from './contexts/Api';
 import { BalancesProvider } from './contexts/Balances';
@@ -50,6 +51,7 @@ export const ThemedRouter = () => {
 };
 
 export const Providers = withProviders(
+  LocaleProvider,
   APIProvider,
   ConnectProvider,
   HelpProvider,
