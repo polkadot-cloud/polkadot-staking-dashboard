@@ -5,7 +5,7 @@ import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { URI_PREFIX } from 'consts';
 import * as analyticsJson from 'img/json/analytics-solid.json';
 import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
-import * as viewGroupJson from 'img/json/groups-solid-edited.json';
+import * as viewGroupJson from 'img/json/groups-solid.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
 import * as view1SolidJson from 'img/json/view-1-solid.json';
 import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
