@@ -52,7 +52,7 @@ export const MEDIUM_FONT_SiZE_MAX_WIDTH = 1600;
 /*
  * Toggle-able services
  */
-export const SERVICES = ['subscan', 'binance_spot'];
+export const SERVICES = ['subscan', 'binance_spot', 'tips'];
 
 /*
  * Fallback config values
