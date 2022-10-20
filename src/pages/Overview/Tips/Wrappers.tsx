@@ -30,91 +30,91 @@ export const ItemWrapper = styled(motion.button)`
   &:last-child {
     margin-right: 0.25rem;
   }
+`;
 
-  > .inner {
-    box-shadow: -1px 3px 4px ${shadowColorSecondary};
-    border: 1px solid ${borderPrimary};
-    border-radius: 1.25rem;
-    box-sizing: border-box;
-    padding: 0rem 1rem;
-    transition: border 0.05s;
-    display: flex;
-    flex-flow: row wrap;
-    height: 5.5rem;
-    transition: border 0.2s;
+export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
+  box-shadow: -1px 3px 4px ${shadowColorSecondary};
+  border: 1px solid ${borderPrimary};
+  border-radius: 1.25rem;
+  box-sizing: border-box;
+  padding: 0rem 1rem;
+  transition: border 0.05s;
+  display: flex;
+  flex-flow: row wrap;
+  height: 5.5rem;
+  transition: border 0.2s;
 
-    > section {
-      height: 100%;
+  > section {
+    height: 100%;
 
-      &:first-child {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        padding-right: 1rem;
+    &:first-child {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      padding-right: 1rem;
 
-        .lpf {
-          fill: ${networkColor};
-        }
-        .lps {
-          stroke: ${networkColor};
+      .lpf {
+        fill: ${networkColor};
+      }
+      .lps {
+        stroke: ${networkColor};
+      }
+    }
+
+    &:last-child {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: flex-start;
+      justify-content: center;
+      flex: 1;
+
+      h4 {
+        color: ${textPrimary};
+        font-variation-settings: 'wght' 625;
+        margin: 0;
+        font-size: 1.15rem;
+
+        > span {
+          font-variation-settings: 'wght' 500;
+          background: ${backgroundLabel};
+          color: ${textSecondary};
+          font-size: 0.97rem;
+          margin-left: 0.25rem;
+          padding: 0.3rem 0.6rem;
+          border-radius: 1.5rem;
+          opacity: 0.9;
         }
       }
 
-      &:last-child {
+      .desc {
         display: flex;
-        flex-flow: column nowrap;
-        align-items: flex-start;
-        justify-content: center;
-        flex: 1;
+        flex-flow: column wrap;
+        justify-content: flex-start;
+        overflow: hidden;
+        width: 100%;
+        height: 1.8rem;
+        position: relative;
 
-        h4 {
-          color: ${textPrimary};
-          font-variation-settings: 'wght' 625;
-          margin: 0;
-          font-size: 1.15rem;
-
-          > span {
-            font-variation-settings: 'wght' 500;
-            background: ${backgroundLabel};
-            color: ${textSecondary};
-            font-size: 0.97rem;
-            margin-left: 0.25rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 1.5rem;
-            opacity: 0.9;
-          }
-        }
-
-        .desc {
-          display: flex;
-          flex-flow: column wrap;
-          justify-content: flex-start;
-          overflow: hidden;
+        p {
+          color: ${textSecondary};
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
-          height: 1.8rem;
-          position: relative;
-
-          p {
-            color: ${textSecondary};
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            box-sizing: border-box;
-            margin: 0.2rem 0 0 0;
-            text-align: left;
-            font-size: 1rem;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-          }
+          box-sizing: border-box;
+          margin: 0.2rem 0 0 0;
+          text-align: left;
+          font-size: 1rem;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
       }
     }
+  }
 
-    &:hover {
-      border-color: ${networkColor};
-    }
+  &:hover {
+    border-color: ${(props) => (props.inactive ? borderPrimary : networkColor)};
   }
 `;
 

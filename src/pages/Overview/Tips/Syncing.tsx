@@ -4,7 +4,7 @@
 import Lottie from 'react-lottie';
 import { useApi } from 'contexts/Api';
 import * as refreshChangeJson from 'img/json/refresh-change-outline.json';
-import { ItemsWrapper, ItemWrapper } from './Wrappers';
+import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
 
 export const Syncing = () => {
   const {
@@ -31,8 +31,8 @@ export const Syncing = () => {
         },
       }}
     >
-      <ItemWrapper type="button">
-        <div className="inner">
+      <ItemWrapper type="button" style={{ cursor: 'default' }}>
+        <ItemInnerWrapper inactive>
           <section>
             <Lottie
               options={animateOptions}
@@ -43,12 +43,12 @@ export const Syncing = () => {
             />
           </section>
           <section>
-            <h4>Syncing with {name}...</h4>
+            <h4>Syncing With {name}...</h4>
             <div className="desc">
               <p>One moment please.</p>
             </div>
           </section>
-        </div>
+        </ItemInnerWrapper>
       </ItemWrapper>
     </ItemsWrapper>
   );

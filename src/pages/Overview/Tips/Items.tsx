@@ -4,7 +4,8 @@
 import Lottie from 'react-lottie';
 import React, { useEffect, useState } from 'react';
 import { useAnimationControls } from 'framer-motion';
-import { ItemsWrapper, ItemWrapper } from './Wrappers';
+import { useTips } from 'contexts/Tips';
+import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items }: any) => {
   const [_items, setItems] = useState(items);
@@ -44,6 +45,8 @@ export const ItemsInner = ({ items }: any) => {
 };
 
 const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
+  const { openTipWith } = useTips();
+
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
@@ -69,7 +72,7 @@ const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
       type="button"
       whileHover={{ scale: 1.02 }}
       onClick={() => {
-        console.log('interact with tip');
+        openTipWith('Tip Placeholder', {});
       }}
       animate={controls}
       custom={index}
@@ -89,7 +92,7 @@ const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
         },
       }}
     >
-      <div className="inner">
+      <ItemInnerWrapper>
         <section>
           <Lottie
             options={animateOptions}
@@ -113,7 +116,7 @@ const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
             <p>{subtitle}</p>
           </div>
         </section>
-      </div>
+      </ItemInnerWrapper>
     </ItemWrapper>
   );
 };
