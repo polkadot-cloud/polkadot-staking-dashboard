@@ -42,7 +42,7 @@ export const RouterInner = () => {
   useEffect(() => {
     const utmSource = extractUrlValue('utm_source', search);
     if (utmSource) {
-      registerSaEvent('conversion', { utmSource });
+      registerSaEvent(`conversion_${utmSource}`);
     }
   }, []);
 
