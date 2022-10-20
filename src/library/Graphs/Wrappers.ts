@@ -55,6 +55,12 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
       margin-left: 0.5rem;
     }
   }
+
+  > div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
 `;
 
 /* CardWrapper

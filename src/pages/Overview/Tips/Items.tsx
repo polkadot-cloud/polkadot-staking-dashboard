@@ -47,7 +47,7 @@ const Item = ({ title, subtitle, icon, index, controls }: any) => {
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
-    const delay = index * 100;
+    const delay = index * 75;
     setTimeout(() => {
       if (isStopped) {
         setIsStopped(false);
@@ -67,7 +67,7 @@ const Item = ({ title, subtitle, icon, index, controls }: any) => {
   return (
     <ItemWrapper
       type="button"
-      whileHover={{ scale: 1.01 }}
+      whileHover={{ scale: 1.02 }}
       onClick={() => {
         console.log('interact with tip');
       }}
@@ -75,7 +75,7 @@ const Item = ({ title, subtitle, icon, index, controls }: any) => {
       custom={index}
       transition={{
         delay: index * 0.2,
-        duration: 0.3,
+        duration: 0.25,
         ease: 'easeOut',
       }}
       variants={{

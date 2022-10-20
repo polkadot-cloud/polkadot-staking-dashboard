@@ -116,6 +116,7 @@ export const PageToggleWrapper = styled.div`
   top: -0.25rem;
   display: flex;
   flex-flow: row wrap;
+  margin-left: 0.75rem;
 
   > button {
     margin: 0;

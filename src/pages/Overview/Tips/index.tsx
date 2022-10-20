@@ -7,6 +7,7 @@ import * as infoJson from 'img/json/info-outline.json';
 import * as helpCenterJson from 'img/json/help-center-outline.json';
 import { useEffect, useState, useRef } from 'react';
 import {
+  faCog,
   faChevronCircleLeft,
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
@@ -168,6 +169,16 @@ export const Tips = () => {
                 className="icon"
                 transform="grow-1"
               />
+            </button>
+          </PageToggleWrapper>
+          <PageToggleWrapper>
+            <button
+              type="button"
+              onClick={() => {
+                /* open dismiss popup */
+              }}
+            >
+              <FontAwesomeIcon icon={faCog} />
             </button>
           </PageToggleWrapper>
         </div>
