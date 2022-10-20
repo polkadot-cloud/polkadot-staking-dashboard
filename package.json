@@ -4,7 +4,7 @@
   "license": "apache-2.0",
   "private": false,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "6.1.0",
+    "@fortawesome/fontawesome-svg-core": "6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "6.1.0",
@@ -64,7 +64,7 @@
     "@types/styled-components": "^5.1.21",
     "@types/window-or-global": "^1.0.4",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
-    "@typescript-eslint/parser": "^5.25.0",
+    "@typescript-eslint/parser": "^5.40.1",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
