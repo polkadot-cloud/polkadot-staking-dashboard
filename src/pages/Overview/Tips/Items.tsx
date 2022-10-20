@@ -70,7 +70,6 @@ const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
   return (
     <ItemWrapper
       type="button"
-      whileHover={{ scale: 1.02 }}
       onClick={() => {
         openTipWith('Tip Placeholder', {});
       }}
