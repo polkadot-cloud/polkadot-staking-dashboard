@@ -14,7 +14,7 @@ export const Settings = () => {
 
   return (
     <>
-      <Title title="Toggle Services" />
+      <Title title="Settings" />
       <PaddingWrapper>
         <h4>Toggle Services</h4>
         <StatusButton

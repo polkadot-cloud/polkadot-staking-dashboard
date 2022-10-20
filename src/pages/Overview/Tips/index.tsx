@@ -132,16 +132,16 @@ export const Tips = () => {
               />
             </button>
           </PageToggleWrapper>
+          {/*
           <PageToggleWrapper>
             <button
               type="button"
               onClick={() => {
-                /* open dismiss popup */
               }}
             >
               <FontAwesomeIcon icon={faCog} />
             </button>
-          </PageToggleWrapper>
+      </PageToggleWrapper> */}
         </div>
       </CardHeaderWrapper>
       {isSyncing ? <Syncing /> : <Items items={itemsDisplay} />}
