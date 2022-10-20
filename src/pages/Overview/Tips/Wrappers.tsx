@@ -101,7 +101,7 @@ export const ItemWrapper = styled(motion.button)`
             left: 0;
             width: 100%;
             box-sizing: border-box;
-            margin: 0.3rem 0 0 0;
+            margin: 0.2rem 0 0 0;
             text-align: left;
             font-size: 1rem;
             text-overflow: ellipsis;

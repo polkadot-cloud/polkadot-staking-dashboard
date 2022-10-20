@@ -14,10 +14,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { setStateWithRef } from 'Utils';
 import throttle from 'lodash.throttle';
+import { useUi } from 'contexts/UI';
 import { PageToggleWrapper } from './Wrappers';
-import { ItemsOuter } from './ItemsOuter';
+import { Items } from './Items';
+import { Syncing } from './Syncing';
 
 export const Tips = () => {
+  const { isSyncing } = useUi();
   // helper function to determine the number of items to display per page
   const getItemsPerPage = () => {
     if (window.innerWidth < 750) {
@@ -189,7 +192,7 @@ export const Tips = () => {
           </PageToggleWrapper>
         </div>
       </CardHeaderWrapper>
-      <ItemsOuter items={itemsDisplay} />
+      {isSyncing ? <Syncing /> : <Items items={itemsDisplay} />}
     </CardWrapper>
   );
 };
