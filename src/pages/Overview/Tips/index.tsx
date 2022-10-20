@@ -3,8 +3,6 @@
 
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import * as infoJson from 'img/json/info-outline.json';
-import * as helpCenterJson from 'img/json/help-center-outline.json';
 import { useEffect, useState, useRef } from 'react';
 import {
   faCog,
@@ -15,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { setStateWithRef } from 'Utils';
 import throttle from 'lodash.throttle';
 import { useUi } from 'contexts/UI';
+import { TIPS_CONFIG } from 'config/tips';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
@@ -77,55 +76,8 @@ export const Tips = () => {
   const _itemsPerPage = itemsPerPageRef.current;
   const _page = pageRef.current;
 
-  // configure help items
-  const items = [
-    {
-      id: 0,
-      label: 'Setup',
-      title: 'How would you like to stake?',
-      subtitle:
-        'Becoming a nominator or joining a pool - which one is right for you.',
-      icon: helpCenterJson,
-    },
-    {
-      id: 1,
-      label: 'Nominate',
-      title: 'Managing your Nominations',
-      subtitle:
-        'You are now staking. Read more about managing your nominations.',
-      icon: infoJson,
-    },
-    {
-      id: 2,
-      label: 'Payouts',
-      title: 'Reviewing Payouts',
-      subtitle: 'Learn who your best performing nominees are, and update them.',
-      icon: infoJson,
-    },
-    {
-      id: 3,
-      label: 'Setup',
-      title: 'How would you like to stake?',
-      subtitle:
-        'Becoming a nominator or joining a pool - which one is right for you.',
-      icon: helpCenterJson,
-    },
-    {
-      id: 4,
-      label: 'Payouts',
-      title: 'Managing your Nominations',
-      subtitle:
-        'You are now staking. Read more about managing your nominations.',
-      icon: infoJson,
-    },
-    {
-      id: 5,
-      label: 'Setup',
-      title: 'Reviewing Payouts',
-      subtitle: 'Learn who your best performing nominees are, and update them.',
-      icon: infoJson,
-    },
-  ];
+  // TODO: get tips relevant to connected account.
+  const items = TIPS_CONFIG;
 
   // determine items to be displayed
   const endItem = _page * _itemsPerPage;
