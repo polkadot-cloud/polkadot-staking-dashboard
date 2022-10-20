@@ -10,6 +10,7 @@ import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
+import { Tips } from 'library/Tips';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
 import SideMenu from 'library/SideMenu';
@@ -60,11 +61,14 @@ export const RouterInner = () => {
         {/* Help: closed by default */}
         <Help />
 
-        {/* Tooltip: invisible by default */}
-        <Tooltip />
+        {/* Tips: closed by default */}
+        <Tips />
 
         {/* Menu: closed by default */}
         <Menu />
+
+        {/* Tooltip: invisible by default */}
+        <Tooltip />
 
         {/* Left side menu */}
         <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>
