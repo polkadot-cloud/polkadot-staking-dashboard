@@ -2,20 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { PoolState } from 'contexts/Pools/types';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { PoolState } from 'contexts/Pools/types';
+import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {
   const { network } = useApi();
-  const { activeBondedPool } = useActivePool();
+  const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
 
-  const { state, points } = activeBondedPool?.bondedPool || {};
-  const poolMembers = getMembersOfPool(activeBondedPool?.id ?? 0);
+  const { state, points } = selectedActivePool?.bondedPool || {};
+  const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
   const bonded = toFixedIfNecessary(
     planckBnToUnit(

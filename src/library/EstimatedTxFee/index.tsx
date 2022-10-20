@@ -1,12 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect } from 'react';
 import { useApi } from 'contexts/Api';
-import { useTxFees, TxFeesContext, EstimatedFeeContext } from 'contexts/TxFees';
-import { humanNumber, planckBnToUnit } from 'Utils';
-import { defaultThemes } from 'theme/default';
 import { useTheme } from 'contexts/Themes';
+import { EstimatedFeeContext, TxFeesContext, useTxFees } from 'contexts/TxFees';
+import React, { Context, useEffect } from 'react';
+import { defaultThemes } from 'theme/default';
+import { humanNumber, planckBnToUnit } from 'Utils';
 import { EstimatedTxFeeProps } from './types';
 import { Wrapper } from './Wrapper';
 
@@ -50,7 +50,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
 };
 
 export class EstimatedTxFee extends React.Component<EstimatedTxFeeProps> {
-  static contextType = TxFeesContext;
+  static contextType: Context<EstimatedFeeContext> = TxFeesContext;
 
   componentDidMount(): void {
     const { resetTxFees } = this.context as EstimatedFeeContext;
@@ -58,7 +58,7 @@ export class EstimatedTxFee extends React.Component<EstimatedTxFeeProps> {
   }
 
   componentWillUnmount(): void {
-    const { resetTxFees }: any = this.context;
+    const { resetTxFees } = this.context as EstimatedFeeContext;
     resetTxFees();
   }
 

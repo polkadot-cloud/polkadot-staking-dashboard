@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
 import { useConnect } from 'contexts/Connect';
+import React from 'react';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
@@ -55,7 +55,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
             placeholder="Address"
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
-            value={roleEdit?.newAddress}
+            value={roleEdit?.newAddress ?? ''}
           />
         </section>
       </div>

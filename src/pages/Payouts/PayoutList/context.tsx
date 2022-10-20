@@ -1,11 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from 'react';
 import { PayoutListContextInterface } from 'pages/Pools/types';
+import React, { useState } from 'react';
 
 export const PayoutListContext =
   React.createContext<PayoutListContextInterface>({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setListFormat: (v: string) => {},
     listFormat: 'col',
   });

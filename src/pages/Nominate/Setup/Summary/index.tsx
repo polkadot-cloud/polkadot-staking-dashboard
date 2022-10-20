@@ -1,23 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
 import { useConnect } from 'contexts/Connect';
-import { Button } from 'library/Button';
-import { humanNumber } from 'Utils';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Warning } from 'library/Form/Warning';
-import { SetupStepProps } from 'library/SetupSteps/types';
+import { useTxFees } from 'contexts/TxFees';
+import { useUi } from 'contexts/UI';
+import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
+import { Button } from 'library/Button';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Warning } from 'library/Form/Warning';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { defaultStakeSetup } from 'contexts/UI/defaults';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTxFees } from 'contexts/TxFees';
+import { SetupStepProps } from 'library/SetupSteps/types';
+import { humanNumber, registerSaEvent } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -139,7 +139,12 @@ export const Summary = (props: SetupStepProps) => {
           }}
         >
           <Button
-            onClick={() => submitTx()}
+            onClick={() => {
+              registerSaEvent(
+                `${network.name.toLowerCase()}_user_started_nominating`
+              );
+              submitTx();
+            }}
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }

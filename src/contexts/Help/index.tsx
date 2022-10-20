@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import React, { useState, useEffect } from 'react';
-import { replaceAll } from 'Utils';
+import React, { useEffect, useState } from 'react';
 import { MaybeString } from 'types';
+import { replaceAll } from 'Utils';
+import * as defaults from './defaults';
 import {
   HelpConfig,
   HelpContextInterface,
@@ -12,7 +13,6 @@ import {
   HelpContextState,
   HelpDefinition,
 } from './types';
-import * as defaults from './defaults';
 
 export const HelpContext = React.createContext<HelpContextInterface>(
   defaults.defaultHelpContext

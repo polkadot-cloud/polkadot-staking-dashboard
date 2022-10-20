@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import {
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
   NominationStatuses,
 } from 'contexts/Pools/types';
+import { useStaking } from 'contexts/Staking';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
-import { useStaking } from 'contexts/Staking';
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -386,6 +386,100 @@ export const BondedPoolsProvider = ({
     }
   };
 
+  // get all the roles belonging to one pool account
+  const getAccountRoles = (who: MaybeAccount) => {
+    if (!who) {
+      return {
+        depositor: [],
+        root: [],
+        nominator: [],
+        stateToggler: [],
+      };
+    }
+
+    const depositor = bondedPools
+      .filter((b: BondedPool) => b.roles.depositor === who)
+      .map((b: BondedPool) => b.id);
+
+    const root = bondedPools
+      .filter((b: BondedPool) => b.roles.root === who)
+      .map((b: BondedPool) => b.id);
+
+    const nominator = bondedPools
+      .filter((b: BondedPool) => b.roles.nominator === who)
+      .map((b: BondedPool) => b.id);
+
+    const stateToggler = bondedPools
+      .filter((b: BondedPool) => b.roles.stateToggler === who)
+      .map((b: BondedPool) => b.id);
+
+    return {
+      depositor,
+      root,
+      nominator,
+      stateToggler,
+    };
+  };
+
+  // accumulate account pool list
+  const getAccountPools = (who: MaybeAccount) => {
+    // first get the roles of the account
+    const roles = getAccountRoles(who);
+
+    // format new list has pool => roles
+    const pools: any = {};
+    Object.entries(roles).forEach(([key, poolIds]: any) => {
+      // now looping through a role
+      poolIds.forEach((poolId: string) => {
+        const exists = Object.keys(pools).find((k: string) => k === poolId);
+        if (!exists) {
+          pools[poolId] = [key];
+        } else {
+          pools[poolId].push(key);
+        }
+      });
+    });
+    return pools;
+  };
+
+  // determine roles to replace from roleEdits
+  const toReplace = (roleEdits: any) => {
+    const root = roleEdits?.root?.newAddress ?? '';
+    const nominator = roleEdits?.nominator?.newAddress ?? '';
+    const stateToggler = roleEdits?.stateToggler?.newAddress ?? '';
+
+    return {
+      root,
+      nominator,
+      stateToggler,
+    };
+  };
+
+  // replaces the pool roles from roleEdits
+  const replacePoolRoles = (poolId: number, roleEdits: any) => {
+    let pool =
+      bondedPools.find((b: BondedPool) => String(b.id) === String(poolId)) ||
+      null;
+
+    if (!pool) return;
+
+    pool = {
+      ...pool,
+      roles: {
+        ...pool.roles,
+        ...toReplace(roleEdits),
+      },
+    };
+
+    const newBondedPools = [
+      ...bondedPools.map((b: BondedPool) =>
+        String(b.id) === String(poolId) && pool !== null ? pool : b
+      ),
+    ];
+
+    setBondedPools(newBondedPools);
+  };
+
   return (
     <BondedPoolsContext.Provider
       value={{
@@ -397,6 +491,9 @@ export const BondedPoolsProvider = ({
         removeFromBondedPools,
         getPoolNominationStatus,
         getPoolNominationStatusCode,
+        getAccountRoles,
+        getAccountPools,
+        replacePoolRoles,
         poolSearchFilter,
         bondedPools,
         meta: poolMetaBatchesRef.current,

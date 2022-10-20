@@ -1,32 +1,32 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useState, useRef } from 'react';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useValidators } from 'contexts/Validators';
-import { ValidatorList } from 'library/ValidatorList';
-import { useModal } from 'contexts/Modal';
-import { LargeItem } from 'library/Filter/LargeItem';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-  faHeart,
-  faUserEdit,
   faChartPie,
   faCoins,
+  faHeart,
   faPlus,
   faTimes,
+  faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import { ValidatorFilterProvider } from 'library/Filter/context';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
-import { SelectableWrapper } from 'library/List';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useValidators } from 'contexts/Validators';
+import { ValidatorFilterProvider } from 'library/Filter/context';
+import { LargeItem } from 'library/Filter/LargeItem';
+import { SelectableWrapper } from 'library/List';
+import { ValidatorList } from 'library/ValidatorList';
+import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { useEffect, useRef, useState } from 'react';
 import {
   GenerateNominationsInnerProps,
   Nominations,
 } from '../SetupSteps/types';
-import { GenerateOptionsWrapper } from './Wrappers';
 import { useFetchMehods } from './useFetchMethods';
+import { GenerateOptionsWrapper } from './Wrappers';
 
 export const GenerateNominationsInner = (
   props: GenerateNominationsInnerProps
@@ -47,9 +47,9 @@ export const GenerateNominationsInner = (
   } = useFetchMehods();
   const { maxNominations } = consts;
 
-  let { favouritesList } = useValidators();
-  if (favouritesList === null) {
-    favouritesList = [];
+  let { favoritesList } = useValidators();
+  if (favoritesList === null) {
+    favoritesList = [];
   }
   // store the method of fetching validators
   const [method, setMethod] = useState<string | null>(
@@ -70,11 +70,13 @@ export const GenerateNominationsInner = (
 
   const rawBatchKey = 'validators_browse';
 
-  // update selected value on account switch
+  // update nominations on account switch
   useEffect(() => {
-    removeValidatorMetaBatch(batchKey);
-    setNominations([...defaultNominations]);
-  }, [activeAccount, defaultNominations]);
+    if (nominations !== defaultNominations) {
+      removeValidatorMetaBatch(batchKey);
+      setNominations([...defaultNominations]);
+    }
+  }, [activeAccount]);
 
   // refetch if fetching is triggered
   useEffect(() => {
@@ -158,7 +160,7 @@ export const GenerateNominationsInner = (
       updateSetters(_nominations);
     };
     openModalWith(
-      'SelectFavourites',
+      'SelectFavorites',
       {
         nominations,
         callback: updateList,
@@ -194,8 +196,8 @@ export const GenerateNominationsInner = (
   const disabledMaxNominations = () => {
     return nominations.length >= maxNominations;
   };
-  const disabledAddFavourites = () => {
-    return !favouritesList?.length || nominations.length >= maxNominations;
+  const disabledAddFavorites = () => {
+    return !favoritesList?.length || nominations.length >= maxNominations;
   };
 
   // accumulate generation methods
@@ -223,11 +225,11 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'From Favourites',
-      subtitle: 'Gets a set of your favourite validators.',
+      title: 'From Favorites',
+      subtitle: 'Gets a set of your favorite validators.',
       icon: faHeart as IconProp,
       onClick: () => {
-        setMethod('From Favourites');
+        setMethod('From Favorites');
         removeValidatorMetaBatch(batchKey);
         setNominations([]);
         setFetching(true);
@@ -248,10 +250,10 @@ export const GenerateNominationsInner = (
   // accumulate actions
   const actions = [
     {
-      title: 'Add From Favourites',
+      title: 'Add From Favorites',
       onClick: cbAddNominations,
       onSelected: false,
-      isDisabled: disabledAddFavourites,
+      isDisabled: disabledAddFavorites,
     },
     {
       title: `Remove Selected`,

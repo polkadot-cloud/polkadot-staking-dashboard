@@ -1,26 +1,25 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, forwardRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useModal } from 'contexts/Modal';
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { Separator } from 'Wrappers';
-import { BondedPool, PoolState } from 'contexts/Pools/types';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { Warning } from 'library/Form/Warning';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { BondedPool, PoolState } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
-import { ContentWrapper } from './Wrappers';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Warning } from 'library/Form/Warning';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import React, { forwardRef, useEffect, useState } from 'react';
+import { Separator } from 'Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
   const { setSection, task, section } = props;
@@ -28,12 +27,11 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { membership } = usePoolMemberships();
-  const { isOwner, activeBondedPool } = useActivePool();
+  const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
   const { bondedPools, meta, updateBondedPools, getBondedPool } =
     useBondedPools();
   const { txFeesValid } = useTxFees();
-  const poolId = membership?.poolId;
+  const poolId = selectedActivePool?.id;
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -41,15 +39,19 @@ export const Forms = forwardRef((props: any, ref: any) => {
   // updated metadata value
   const [metadata, setMetadata] = useState<string>('');
 
-  // ensure selected membership and targests are valid
-  const isValid = (membership && isOwner()) ?? false;
+  // ensure account has relevant roles for task
+  const canToggle =
+    (isOwner() || isStateToggler()) &&
+    ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task);
+  const canRename = isOwner() && task === 'set_pool_metadata';
+  const isValid = canToggle || canRename;
 
   // determine current pool metadata and set in state
   useEffect(() => {
     if (task === 'set_pool_metadata') {
       let _metadata = '';
       const pool = bondedPools.find((p: any) => {
-        return p.addresses.stash === activeBondedPool?.addresses.stash;
+        return p.addresses.stash === selectedActivePool?.addresses.stash;
       });
 
       if (pool) {
@@ -147,7 +149,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {
       // reflect updated state in bondedPools list

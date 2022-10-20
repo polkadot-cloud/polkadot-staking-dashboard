@@ -10,19 +10,20 @@ import { ReactComponent as CoinbaseCloud } from './thumbnails/coinbasecloud.svg'
 import { ReactComponent as Crifferent } from './thumbnails/crifferent.svg';
 import { ReactComponent as Decentradot } from './thumbnails/decentradot.svg';
 import { ReactComponent as Dionysus } from './thumbnails/dionysus.svg';
-import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
+import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as GenericChain } from './thumbnails/genericchain.svg';
-import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
+import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
+import { ReactComponent as LetzBake } from './thumbnails/letzbake.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
 import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
 import { ReactComponent as PDP } from './thumbnails/pdp.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as PythagorasCapitalInvestment } from './thumbnails/pythagorascapitalinvestment.svg';
-import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
 import { ReactComponent as Stakely } from './thumbnails/stakely.svg';
+import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
@@ -170,6 +171,17 @@ export const VALIDATOR_COMMUNITY = [
         'FvdwMNP57nRWEsNZZsrHWKqnbmduy4jBAC8MeLmgi9Yp8sA',
         'D3Sr3PozgPypkBzKBheGSJbqu8m4idenBPaWtZUXLWPtjJT',
       ],
+    },
+  },
+  {
+    name: 'LetzBake!',
+    Thumbnail: LetzBake,
+    bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
+    email: 'hello@letzbake.com',
+    twitter: '@letzbake1',
+    website: 'https://letzbake.com',
+    validators: {
+      kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },
   },
   {

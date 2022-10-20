@@ -14,24 +14,24 @@ export const sessionParachainValidators = {
 };
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fetchValidatorMetaBatch: (k, v, r) => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   removeValidatorMetaBatch: (k) => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fetchValidatorPrefs: async (v) => null,
-  // eslint-disable-next-line
-  addFavourite: (a) => {},
-  // eslint-disable-next-line
-  removeFavourite: (a) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  addFavorite: (a) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  removeFavorite: (a) => {},
   validators: [],
   avgCommission: 0,
   meta: {},
   session: sessionValidators,
   sessionParachain: [],
-  favourites: [],
+  favorites: [],
   nominated: null,
   poolNominated: null,
-  favouritesList: null,
+  favoritesList: null,
   validatorCommunity: [],
 };

@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
-import { motion } from 'framer-motion';
 import { APIContext } from 'contexts/Api';
+import { motion } from 'framer-motion';
+import React from 'react';
 
 export const BlockNumberInner = (props: any) => {
   return (

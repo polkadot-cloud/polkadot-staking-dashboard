@@ -3,11 +3,11 @@
 
 import BN from 'bn.js';
 import {
-  StakingMetrics,
   EraStakers,
-  StakingTargets,
   NominationStatuses,
   StakingContextInterface,
+  StakingMetrics,
+  StakingTargets,
 } from 'contexts/Staking/types';
 
 export const stakingMetrics: StakingMetrics = {
@@ -19,7 +19,6 @@ export const stakingMetrics: StakingMetrics = {
   maxNominatorsCount: new BN(0),
   maxValidatorsCount: new BN(0),
   minNominatorBond: new BN(0),
-  historyDepth: new BN(0),
   payee: null,
   unsub: null,
 };
@@ -42,12 +41,12 @@ export const nominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
   getNominationsStatus: () => nominationStatus,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getNominationsStatusFromTargets: (w, t) => nominationStatus,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTargets: (t) => {},
   hasController: () => false,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getControllerNotImported: (a) => null,
   isBonding: () => false,
   isNominating: () => false,

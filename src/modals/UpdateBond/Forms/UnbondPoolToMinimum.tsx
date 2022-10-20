@@ -1,22 +1,22 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { useModal } from 'contexts/Modal';
+import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Warning } from 'library/Form/Warning';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { BN } from 'bn.js';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTxFees } from 'contexts/TxFees';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { Separator, NotesWrapper } from '../../Wrappers';
-import { FormFooter } from './FormFooter';
+import { useTxFees } from 'contexts/TxFees';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Warning } from 'library/Form/Warning';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useEffect, useState } from 'react';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { NotesWrapper, Separator } from '../../Wrappers';
 import { FormsProps } from '../types';
+import { FormFooter } from './FormFooter';
 
 export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { setSection } = props;
@@ -25,7 +25,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { isDepositor } = useActivePool();
+  const { isDepositor } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { stats } = usePoolsConfig();
   const { txFeesValid } = useTxFees();
@@ -88,7 +88,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });

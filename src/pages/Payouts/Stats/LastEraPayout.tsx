@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
+import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
 import { planckBnToUnit } from 'Utils';
 

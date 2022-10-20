@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 
 export const Inflation = () => {
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  const { inflation, stakedReturn, idealStake } = useInflation();
+  const { inflation, stakedReturn } = useInflation();
 
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;

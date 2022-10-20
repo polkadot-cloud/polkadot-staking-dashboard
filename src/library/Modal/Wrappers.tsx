@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 import styled from 'styled-components';
 import { borderPrimary, textPrimary, textSecondary } from 'theme';
-import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
 
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
   box-sizing: border-box;
@@ -18,6 +18,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
   > div {
     display: flex;
     flex-flow: row wrap;
+    align-items: center;
     padding: 0 0.5rem;
 
     button {

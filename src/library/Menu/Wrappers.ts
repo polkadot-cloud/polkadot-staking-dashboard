@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from 'styled-components';
 import { FLOATING_MENU_WIDTH } from 'consts';
-import { modalBackground, borderPrimary, textSecondary } from 'theme';
+import styled from 'styled-components';
+import { borderPrimary, modalBackground, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   background: ${modalBackground};

@@ -1,32 +1,32 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { StakingContext } from 'contexts/Staking';
-import { useValidators } from 'contexts/Validators';
-import { useNetworkMetrics } from 'contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { Validator } from 'library/ValidatorList/Validator';
-import { List, Header, Wrapper as ListWrapper } from 'library/List';
 import { useModal } from 'contexts/Modal';
+import { useNetworkMetrics } from 'contexts/Network';
+import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { networkColors } from 'theme/default';
+import { useUi } from 'contexts/UI';
+import { useValidators } from 'contexts/Validators';
+import { motion } from 'framer-motion';
 import {
   useValidatorFilter,
   ValidatorFilterProvider,
 } from 'library/Filter/context';
-import { useUi } from 'contexts/UI';
-import { Pagination } from 'library/List/Pagination';
+import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
-import { Selectable } from 'library/List/Selectable';
+import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
+import { Selectable } from 'library/List/Selectable';
+import { Validator } from 'library/ValidatorList/Validator';
+import React, { useEffect, useRef, useState } from 'react';
+import { networkColors } from 'theme/default';
+import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
-import { useList, ListProvider } from '../List/context';
 
 export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
@@ -57,7 +57,7 @@ export const ValidatorListInner = (props: any) => {
     batchKey,
     allowMoreCols,
     allowFilters,
-    toggleFavourites,
+    toggleFavorites,
     pagination,
     title,
     format,
@@ -307,7 +307,7 @@ export const ValidatorListInner = (props: any) => {
                     <Validator
                       validator={validator}
                       nominator={nominator}
-                      toggleFavourites={toggleFavourites}
+                      toggleFavorites={toggleFavorites}
                       batchIndex={batchIndex}
                       batchKey={batchKey}
                       format={format}

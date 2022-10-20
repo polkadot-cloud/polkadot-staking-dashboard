@@ -1,27 +1,27 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useUi } from 'contexts/UI';
-import { useTransferOptions } from 'contexts/TransferOptions';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { BN } from 'bn.js';
+import { registerSaEvent } from 'Utils';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
-  const { isReady } = useApi();
+  const { isReady, network } = useApi();
   const { setOnPoolSetup, getPoolSetupProgressPercent } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stats } = usePoolsConfig();
   const { membership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
-  const { isOwner } = useActivePool();
+  const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
 
   const { active } = getTransferOptions(activeAccount).pool;
@@ -39,7 +39,12 @@ export const useStatusButtons = () => {
       !activeAccount ||
       stats.maxPools.toNumber() === 0 ||
       bondedPools.length === stats.maxPools.toNumber(),
-    onClick: () => setOnPoolSetup(1),
+    onClick: () => {
+      registerSaEvent(
+        `${network.name.toLowerCase()}_pool_create_button_pressed`
+      );
+      setOnPoolSetup(1);
+    },
   };
 
   const joinPoolBtn = {
@@ -51,7 +56,10 @@ export const useStatusButtons = () => {
       isReadOnlyAccount(activeAccount) ||
       !activeAccount ||
       !bondedPools.length,
-    onClick: () => setActiveTab(2),
+    onClick: () => {
+      registerSaEvent(`${network.name.toLowerCase()}_pool_join_button_pressed`);
+      setActiveTab(2);
+    },
   };
 
   if (!membership) {

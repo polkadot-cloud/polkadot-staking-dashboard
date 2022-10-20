@@ -1,25 +1,25 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useModal } from 'contexts/Modal';
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { BondFeedback } from 'library/Form/Bond/BondFeedback';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { useModal } from 'contexts/Modal';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTxFees } from 'contexts/TxFees';
 import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTxFees } from 'contexts/TxFees';
-import { useTransferOptions } from 'contexts/TransferOptions';
-import { ContentWrapper } from './Wrapper';
+import { BondFeedback } from 'library/Form/Bond/BondFeedback';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { useEffect, useState } from 'react';
+import { planckBnToUnit, registerSaEvent, unitToPlanckBn } from 'Utils';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { ContentWrapper } from './Wrapper';
 
 export const Forms = () => {
   const { api, network } = useApi();
@@ -65,7 +65,7 @@ export const Forms = () => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
       setActiveTab(0);
     },
     callbackInBlock: async () => {
@@ -109,7 +109,10 @@ export const Forms = () => {
           <button
             type="button"
             className="submit"
-            onClick={() => submitTx()}
+            onClick={() => {
+              registerSaEvent(`${network.name.toLowerCase()}_pool_joined`);
+              submitTx();
+            }}
             disabled={
               submitting ||
               !bondValid ||

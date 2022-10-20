@@ -1,20 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Line } from 'react-chartjs-2';
 import {
-  Chart as ChartJS,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
 } from 'chart.js';
-import { defaultThemes, networkColors } from 'theme/default';
-import { useTheme } from 'contexts/Themes';
 import { useApi } from 'contexts/Api';
+import { useTheme } from 'contexts/Themes';
+import { Line } from 'react-chartjs-2';
+import { defaultThemes, networkColors } from 'theme/default';
 import { EraPointsProps } from './types';
 
 ChartJS.register(
@@ -102,14 +102,14 @@ export const EraPoints = (props: EraPointsProps) => {
   };
 
   const data = {
-    labels: items.map((item: any, index: number) => {
+    labels: items.map((item: any) => {
       return item.era;
     }),
     datasets: [
       {
         label: 'Points',
         // data: empty_data,
-        data: items.map((item: any, index: number) => {
+        data: items.map((item: any) => {
           return item.reward_point;
         }),
         borderColor: networkColors[`${network.name}-${mode}`],

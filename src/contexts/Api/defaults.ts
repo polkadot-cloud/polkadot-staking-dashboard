@@ -2,19 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { stringToU8a } from '@polkadot/util';
+import BN from 'bn.js';
+import { NETWORKS } from 'config/networks';
 import {
   APIConstants,
   APIContextInterface,
   ConnectionStatus,
 } from 'contexts/Api/types';
-import BN from 'bn.js';
-import { NETWORKS } from 'config/networks';
 
 export const consts: APIConstants = {
   bondDuration: 0,
   maxNominations: 0,
   sessionsPerEra: 0,
   maxNominatorRewardedPerValidator: 0,
+  historyDepth: new BN(0),
   maxElectingVoters: 0,
   expectedBlockTime: 0,
   existentialDeposit: new BN(0),
@@ -22,12 +23,12 @@ export const consts: APIConstants = {
 };
 
 export const defaultApiContext: APIContextInterface = {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   connect: async () => {
     await new Promise((resolve) => resolve(null));
   },
   fetchDotPrice: () => {},
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   switchNetwork: async (_network, _isLightClient) => {
     await new Promise((resolve) => resolve(null));
   },

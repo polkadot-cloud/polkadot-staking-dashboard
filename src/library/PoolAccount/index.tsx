@@ -1,18 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { useApi } from 'contexts/Api';
-import { useTheme } from 'contexts/Themes';
-import { defaultThemes } from 'theme/default';
-import { ReactComponent as WalletSVG } from 'img/wallet.svg';
-import Identicon from 'library/Identicon';
-import { useConnect } from 'contexts/Connect';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import Wrapper from './Wrapper';
+import { useTheme } from 'contexts/Themes';
+import Identicon from 'library/Identicon';
+import { useEffect, useState } from 'react';
+import { defaultThemes } from 'theme/default';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 import { PoolAccountProps } from './types';
+import Wrapper from './Wrapper';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { mode } = useTheme();

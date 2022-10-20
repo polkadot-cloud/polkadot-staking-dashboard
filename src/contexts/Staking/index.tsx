@@ -1,18 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
 import BN from 'bn.js';
-// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
-import Worker from 'worker-loader!../../workers/stakers';
-import {
-  rmCommas,
-  localStorageOrDefault,
-  setStateWithRef,
-  planckBnToUnit,
-} from 'Utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
-import { AnyApi, MaybeAccount } from 'types';
 import {
   EraStakers,
   NominationStatuses,
@@ -20,10 +11,19 @@ import {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
+import { AnyApi, MaybeAccount } from 'types';
+import {
+  localStorageOrDefault,
+  planckBnToUnit,
+  rmCommas,
+  setStateWithRef,
+} from 'Utils';
+// eslint-disable-next-line import/no-unresolved
+import Worker from 'worker-loader!../../workers/stakers';
 import { useApi } from '../Api';
-import { useNetworkMetrics } from '../Network';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
+import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
 
 export const StakingContext = React.createContext<StakingContextInterface>(
@@ -212,7 +212,6 @@ export const StakingProvider = ({
           [api.query.staking.erasValidatorReward, previousEra],
           [api.query.staking.erasTotalStake, previousEra],
           api.query.staking.minNominatorBond,
-          api.query.staking.historyDepth,
           [api.query.staking.payee, activeAccount],
         ],
         ([
@@ -224,13 +223,11 @@ export const StakingProvider = ({
           _lastReward,
           _lastTotalStake,
           _minNominatorBond,
-          _historyDepth,
           _payee,
         ]) => {
           setStakingMetrics({
             ...stakingMetrics,
             payee: _payee.toHuman(),
-            historyDepth: _historyDepth.toBn(),
             lastTotalStake: _lastTotalStake.toBn(),
             validatorCount: _validatorCount.toBn(),
             totalNominators: _totalNominators.toBn(),

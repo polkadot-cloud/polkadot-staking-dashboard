@@ -1,29 +1,29 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
-import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
+import { motion } from 'framer-motion';
+import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import {
   humanNumber,
   planckBnToUnit,
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
-import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
-import { useActivePool } from 'contexts/Pools/ActivePool';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { isSyncing } = useUi();
   const { network, consts } = useApi();
-  const { activeBondedPool } = useActivePool();
+  const { selectedActivePool } = useActivePools();
   const { units } = network;
-  const { rewardAccountBalance } = activeBondedPool || {};
-  const { totalRewardsClaimed } = activeBondedPool?.rewardPool || {};
+  const { rewardAccountBalance } = selectedActivePool || {};
+  const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
 
   // calculate the latest reward account balance

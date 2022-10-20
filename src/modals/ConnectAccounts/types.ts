@@ -1,5 +1,7 @@
-import { FunctionComponent, SVGProps } from 'react';
+import { BalanceLedger } from 'contexts/Balances/types';
 import { ExtensionAccount } from 'contexts/Connect/types';
+import { FunctionComponent, SVGProps } from 'react';
+import { MaybeAccount } from 'types';
 
 export interface ExtensionProps {
   meta: ExtensionMetaProps;
@@ -22,7 +24,7 @@ export interface ExtensionMetaProps {
 
 export interface AccountElementProps {
   meta: ExtensionAccount | null;
-  address?: string;
+  address?: MaybeAccount;
   label?: string[];
   disconnect?: boolean;
   asElement?: boolean;
@@ -37,4 +39,21 @@ export interface forwardRefProps {
   setSection?: any;
   readOnlyOpen: boolean;
   setReadOnlyOpen: (e: boolean) => void;
+}
+
+export interface ControllerAccount {
+  address: string;
+  ledger: BalanceLedger;
+}
+
+export interface StashAcount {
+  address: string;
+  controller: MaybeAccount;
+}
+
+export interface ActivelyStakingAccount {
+  stash: MaybeAccount;
+  controller: MaybeAccount;
+  stashImported: boolean;
+  controllerImported: boolean;
 }

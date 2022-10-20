@@ -1,23 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN_ZERO } from '@polkadot/util';
 import { BN, max } from 'bn.js';
-import { useState, useEffect } from 'react';
-import { useModal } from 'contexts/Modal';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useTheme } from 'contexts/Themes';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTxFees } from 'contexts/TxFees';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTxFees } from 'contexts/TxFees';
+import { useEffect, useState } from 'react';
 import { defaultThemes } from 'theme/default';
-import { useTheme } from 'contexts/Themes';
-import { BN_ZERO } from '@polkadot/util';
-import { useTransferOptions } from 'contexts/TransferOptions';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper } from '../../Wrappers';
-import { FormFooter } from './FormFooter';
 import { FormsProps } from '../types';
+import { FormFooter } from './FormFooter';
 
 export const BondSome = (props: FormsProps) => {
   const { section, setSection, setLocalResize } = props;
@@ -88,7 +88,7 @@ export const BondSome = (props: FormsProps) => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(0);
+      setModalStatus(2);
     },
     callbackInBlock: () => {},
   });

@@ -1,29 +1,27 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolAccount } from 'library/PoolAccount';
-import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
-import { useStaking } from 'contexts/Staking';
 import { useBalances } from 'contexts/Balances';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useConnect } from 'contexts/Connect';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
+import { PoolAccount } from 'library/PoolAccount';
 import { clipAddress } from 'Utils';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
-  const { activeAccount, accounts, accountHasSigner } = useConnect();
-  const { openModalWith } = useModal();
+  const { activeAccount, accountHasSigner } = useConnect();
   const { hasController, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const { activeBondedPool } = useActivePool();
+  const { selectedActivePool } = useActivePools();
   const { isSyncing } = useUi();
 
   let poolAddress = '';
-  if (activeBondedPool) {
-    const { addresses } = activeBondedPool;
+  if (selectedActivePool) {
+    const { addresses } = selectedActivePool;
     poolAddress = addresses.stash;
   }
 
@@ -71,11 +69,11 @@ export const Connected = () => {
           )}
 
           {/* pool account display / hide if not in pool */}
-          {activeBondedPool !== null && !isSyncing && (
+          {selectedActivePool !== null && !isSyncing && (
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}
-                pool={activeBondedPool}
+                pool={selectedActivePool}
                 label="Pool"
                 canClick={false}
                 onClick={() => {}}

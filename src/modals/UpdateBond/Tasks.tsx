@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { forwardRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { useModal } from 'contexts/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { forwardRef } from 'react';
 import { planckBnToUnit } from 'Utils';
 import { ContentWrapper } from './Wrappers';
 
@@ -18,7 +18,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { units, unit } = network;
   const { config } = useModal();
   const { fn } = config;
-  const { isDepositor } = useActivePool();
+  const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minCreateBond, minJoinBond } = stats;
 

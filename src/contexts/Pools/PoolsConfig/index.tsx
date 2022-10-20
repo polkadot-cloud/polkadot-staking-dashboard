@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { bnToU8a, u8aConcat } from '@polkadot/util';
+import BN from 'bn.js';
 import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
-import React, { useState, useEffect, useRef } from 'react';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
-import * as defaults from './defaults';
 import { useApi } from '../../Api';
+import * as defaults from './defaults';
 
 export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
   defaults.defaultPoolsConfigContext
@@ -32,16 +32,16 @@ export const PoolsConfigProvider = ({
   });
   const poolsConfigRef = useRef(poolsConfig);
 
-  // get favourite pools from local storage
-  const getFavourites = () => {
-    const _favourites = localStorage.getItem(
-      `${network.name.toLowerCase()}_favourite_pools`
+  // get favorite pools from local storage
+  const getFavorites = () => {
+    const _favorites = localStorage.getItem(
+      `${network.name.toLowerCase()}_favorite_pools`
     );
-    return _favourites !== null ? JSON.parse(_favourites) : [];
+    return _favorites !== null ? JSON.parse(_favorites) : [];
   };
 
-  // stores the user's favourite pools
-  const [favourites, setFavourites] = useState<string[]>(getFavourites());
+  // stores the user's favorite pools
+  const [favorites, setFavorites] = useState<string[]>(getFavorites());
 
   useEffect(() => {
     if (isReady) {
@@ -131,34 +131,34 @@ export const PoolsConfigProvider = ({
   };
 
   /*
-   * Adds a favourite validator.
+   * Adds a favorite validator.
    */
-  const addFavourite = (address: string) => {
-    const _favourites: any = Object.assign(favourites);
-    if (!_favourites.includes(address)) {
-      _favourites.push(address);
+  const addFavorite = (address: string) => {
+    const _favorites: any = Object.assign(favorites);
+    if (!_favorites.includes(address)) {
+      _favorites.push(address);
     }
 
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favourite_pools`,
-      JSON.stringify(_favourites)
+      `${network.name.toLowerCase()}_favorite_pools`,
+      JSON.stringify(_favorites)
     );
-    setFavourites([..._favourites]);
+    setFavorites([..._favorites]);
   };
 
   /*
-   * Removes a favourite validator if they exist.
+   * Removes a favorite validator if they exist.
    */
-  const removeFavourite = (address: string) => {
-    let _favourites = Object.assign(favourites);
-    _favourites = _favourites.filter(
+  const removeFavorite = (address: string) => {
+    let _favorites = Object.assign(favorites);
+    _favorites = _favorites.filter(
       (validator: string) => validator !== address
     );
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favourite_pools`,
-      JSON.stringify(_favourites)
+      `${network.name.toLowerCase()}_favorite_pools`,
+      JSON.stringify(_favorites)
     );
-    setFavourites([..._favourites]);
+    setFavorites([..._favorites]);
   };
 
   // Helper: generates pool stash and reward accounts. assumes poolsPalletId is synced.
@@ -189,10 +189,10 @@ export const PoolsConfigProvider = ({
   return (
     <PoolsConfigContext.Provider
       value={{
-        addFavourite,
-        removeFavourite,
+        addFavorite,
+        removeFavorite,
         createAccounts,
-        favourites,
+        favorites,
         stats: poolsConfigRef.current.stats,
       }}
     >

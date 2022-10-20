@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
-import { MutableRefObject } from 'react';
-import { PagesConfig } from 'types/index';
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import BN from 'bn.js';
+import { MutableRefObject } from 'react';
+import { AnyApi, AnyMetaBatch, PagesConfig } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -203,7 +203,10 @@ export const replaceAll = (str: string, find: string, replace: string) => {
   return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 };
 
-export const determinePoolDisplay = (adddress: string, batchItem: any) => {
+export const determinePoolDisplay = (
+  adddress: string,
+  batchItem: AnyMetaBatch
+) => {
   // default display value
   const defaultDisplay = clipAddress(adddress);
 
@@ -221,4 +224,17 @@ export const determinePoolDisplay = (adddress: string, batchItem: any) => {
   }
 
   return display;
+};
+
+// extracts a URL value from a URL string
+export const extractUrlValue = (key: string, url: string) => {
+  if (typeof url === 'undefined') url = window.location.href;
+  const match = url.match(`[?&]${key}=([^&]+)`);
+  return match ? match[1] : null;
+};
+
+export const registerSaEvent = (e: string, a: AnyApi = {}) => {
+  if ((window as AnyApi).sa_event) {
+    (window as AnyApi).sa_event(e, a);
+  }
 };

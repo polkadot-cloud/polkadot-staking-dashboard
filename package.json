@@ -9,13 +9,13 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "6.1.0",
     "@fortawesome/react-fontawesome": "^0.1.18",
-    "@polkadot/api": "^9.4.2",
-    "@polkadot/keyring": "^10.1.9",
-    "@polkadot/react-identicon": "^2.9.8",
-    "@polkadot/rpc-provider": "^9.4.2",
-    "@polkadot/types": "^9.4.2",
-    "@polkadot/types-codec": "^9.4.2",
-    "@polkadot/util": "^10.1.9",
+    "@polkadot/api": "^9.5.2",
+    "@polkadot/keyring": "^10.1.11",
+    "@polkadot/react-identicon": "^2.9.11",
+    "@polkadot/rpc-provider": "^9.5.2",
+    "@polkadot/types": "^9.5.2",
+    "@polkadot/types-codec": "^9.5.2",
+    "@polkadot/util": "^10.1.11",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -89,7 +89,8 @@
     "build:netlify": "REACT_APP_ORGANISATION='© Web3 Foundation' REACT_APP_PRIVACY_URL=https://polkadot.network/privacy/ REACT_APP_DISCLAIMER_URL=https://polkadot.network/disclaimer/ REACT_APP_DISABLE_FIAT=1 BUILD_PATH='./build' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src --fix"
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "browserslist": {
     "production": [

@@ -1,39 +1,39 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useRef } from 'react';
-import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMenu } from 'contexts/Menu';
-import { useNotifications } from 'contexts/Notifications';
 import { useModal } from 'contexts/Modal';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
+import CopyAddress from 'library/ListItem/Labels/CopyAddress';
+import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import {
-  Wrapper,
   Labels,
   MenuPosition,
   Separator,
+  Wrapper,
 } from 'library/ListItem/Wrappers';
-import CopyAddress from 'library/ListItem/Labels/CopyAddress';
-import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
+import { useRef } from 'react';
 import { useValidators } from '../../../contexts/Validators';
-import { getIdentityDisplay } from './Utils';
-import { FavouriteValidator } from '../../ListItem/Labels/FavouriteValidator';
-import { Identity } from '../../ListItem/Labels/Identity';
-import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
+import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
 import { Commission } from '../../ListItem/Labels/Commission';
-import { Select } from '../../ListItem/Labels/Select';
 import { EraStatus } from '../../ListItem/Labels/EraStatus';
-import { useList } from '../../List/context';
+import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
+import { Identity } from '../../ListItem/Labels/Identity';
+import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
+import { Select } from '../../ListItem/Labels/Select';
 import { DefaultProps } from './types';
+import { getIdentityDisplay } from './Utils';
 
 export const Default = (props: DefaultProps) => {
   const {
     validator,
-    toggleFavourites,
+    toggleFavorites,
     batchIndex,
     batchKey,
     showMenu,
@@ -123,7 +123,7 @@ export const Default = (props: DefaultProps) => {
               <Commission commission={commission} />
               <ParaValidator address={address} />
 
-              {toggleFavourites && <FavouriteValidator address={address} />}
+              {toggleFavorites && <FavoriteValidator address={address} />}
               {showMenu && (
                 <button
                   type="button"

@@ -1,18 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Element } from 'react-scroll';
-import { useUi } from 'contexts/UI';
-import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
-import { PageTitle } from 'library/PageTitle';
-import Button from 'library/Button';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { Nominate } from 'library/SetupSteps/Nominate';
-import { SetupType } from 'contexts/UI/types';
+import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
-import { PoolName } from './PoolName';
+import { SetupType } from 'contexts/UI/types';
+import Button from 'library/Button';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { PageTitle } from 'library/PageTitle';
+import { Nominate } from 'library/SetupSteps/Nominate';
+import { Element } from 'react-scroll';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { Bond } from './Bond';
+import { PoolName } from './PoolName';
 import { PoolRoles } from './PoolRoles';
 import { Summary } from './Summary';
 
@@ -26,21 +26,20 @@ export const Create = () => {
         <TopBarWrapper>
           <Button
             inline
-            title="Go Back"
+            title="Back"
             icon={faChevronLeft}
             transform="shrink-3"
             onClick={() => setOnPoolSetup(0)}
           />
-          <div className="right">
-            <Button
-              inline
-              title="Cancel"
-              onClick={() => {
-                setOnPoolSetup(0);
-                setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
-              }}
-            />
-          </div>
+          <Button
+            inline
+            title="Cancel"
+            onClick={() => {
+              setOnPoolSetup(0);
+              setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+            }}
+          />
+          <div className="right" />
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

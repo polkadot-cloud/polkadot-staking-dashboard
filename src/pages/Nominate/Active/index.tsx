@@ -1,33 +1,33 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { StatBoxList } from 'library/StatBoxList';
-import { useStaking } from 'contexts/Staking';
-import { useBalances } from 'contexts/Balances';
-import { useConnect } from 'contexts/Connect';
-import { Button } from 'library/Button';
-import { PageTitle } from 'library/PageTitle';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useModal } from 'contexts/Modal';
-import { useUi } from 'contexts/UI';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import {
   SECTION_FULL_WIDTH_THRESHOLD,
   SIDE_MENU_STICKY_THRESHOLD,
 } from 'consts';
+import { useBalances } from 'contexts/Balances';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { Button } from 'library/Button';
 import { GenerateNominations } from 'library/GenerateNominations';
-import { Nominations } from './Nominations';
+import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { PageTitle } from 'library/PageTitle';
+import { StatBoxList } from 'library/StatBoxList';
+import {
+  PageRowWrapper,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
+} from 'Wrappers';
+import { ControllerNotImported } from './ControllerNotImported';
 import { ManageBond } from './ManageBond';
+import { Nominations } from './Nominations';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import InacctiveNominationsStatBox from './Stats/InactiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
-import { ControllerNotImported } from './ControllerNotImported';
 import { Status } from './Status';
 
 export const Active = () => {
@@ -42,7 +42,7 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title="Solo Staking" />
+      <PageTitle title="Nominate" />
       <StatBoxList>
         <MinimumActiveBondStatBox />
         <ActiveNominationsStatBox />

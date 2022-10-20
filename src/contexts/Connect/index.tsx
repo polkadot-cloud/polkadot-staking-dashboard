@@ -1,31 +1,33 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
 import Keyring from '@polkadot/keyring';
+import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { DAPP_NAME } from 'consts';
+import {
+  ConnectContextInterface,
+  Extension,
+  ExtensionAccount,
+  ExtensionInteface,
+  ExternalAccount,
+  ImportedAccount,
+} from 'contexts/Connect/types';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnyApi, MaybeAccount } from 'types';
 import {
   clipAddress,
   isValidAddress,
   localStorageOrDefault,
   setStateWithRef,
+  registerSaEvent,
 } from 'Utils';
-import { DAPP_NAME } from 'consts';
-import {
-  ConnectContextInterface,
-  ImportedAccount,
-  ExternalAccount,
-  Extension,
-  ExtensionAccount,
-} from 'contexts/Connect/types';
-import { AnyApi, MaybeAccount } from 'types';
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
 import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';
 import {
-  removeFromLocalExtensions,
+  extensionIsLocal,
   getActiveAccountLocal,
   getLocalExternalAccounts,
-  extensionIsLocal,
+  removeFromLocalExtensions,
 } from './Utils';
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(
@@ -71,7 +73,7 @@ export const ConnectProvider = ({
   const unsubscribeRef = useRef(unsubscribe);
 
   const getInstalledExtensions = () => {
-    const { injectedWeb3 }: any = window;
+    const { injectedWeb3 }: AnyApi = window;
 
     const _exts: Extension[] = [];
     EXTENSIONS.forEach((e: ExtensionConfig) => {
@@ -153,7 +155,7 @@ export const ConnectProvider = ({
    * Unsubscrbe from some account subscriptions and update the resulting state.
    */
   const forgetAccounts = (_accounts: Array<ExternalAccount>) => {
-    if (!accounts.length) return;
+    if (!_accounts.length) return;
     const keys = _accounts.map((a: ExternalAccount) => a.address);
 
     // unsubscribe from provided keys
@@ -276,7 +278,7 @@ export const ConnectProvider = ({
       if (extensionIsLocal(id)) {
         try {
           // summons extension popup
-          const extension: any = await enable(DAPP_NAME);
+          const extension: ExtensionInteface = await enable(DAPP_NAME);
 
           if (extension !== undefined) {
             // subscribe to accounts
@@ -392,9 +394,14 @@ export const ConnectProvider = ({
     const _activeAccount = getActiveAccountLocal(network);
     try {
       // summons extension popup
-      const extension: any = await enable(DAPP_NAME);
+      const extension: ExtensionInteface = await enable(DAPP_NAME);
 
       if (extension !== undefined) {
+        // successful extension connection event.
+        registerSaEvent(`${network.name.toLowerCase()}_extension_connected`, {
+          id,
+        });
+
         // subscribe to accounts
         const _unsubscribe = (await extension.accounts.subscribe(
           (injected: ExtensionAccount[]) => {

@@ -1,49 +1,54 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  SECTION_FULL_WIDTH_THRESHOLD,
+  SIDE_MENU_STICKY_THRESHOLD,
+} from 'consts';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { PageTitle } from 'library/PageTitle';
+import { PoolList } from 'library/PoolList';
+import { StatBoxList } from 'library/StatBoxList';
 import { useEffect } from 'react';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
-import { StatBoxList } from 'library/StatBoxList';
-import { PoolList } from 'library/PoolList';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import {
-  SECTION_FULL_WIDTH_THRESHOLD,
-  SIDE_MENU_STICKY_THRESHOLD,
-} from 'consts';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import ActivePoolsStatBox from './Stats/ActivePools';
-import MinJoinBondStatBox from './Stats/MinJoinBond';
-import PoolMembershipBox from './Stats/PoolMembership';
-import MinCreateBondStatBox from './Stats/MinCreateBond';
-import { Status } from './Status';
+import { Roles } from '../Roles';
+import { ClosurePrompts } from './ClosurePrompts';
+import { PoolsTabsProvider, usePoolsTabs } from './context';
+import { Favorites } from './Favorites';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
-import { Roles } from '../Roles';
-import { PoolsTabsProvider, usePoolsTabs } from './context';
-import { Favourites } from './Favourites';
 import { Members } from './Members';
-import { ClosurePrompts } from './ClosurePrompts';
 import { PoolStats } from './PoolStats';
+import ActivePoolsStatBox from './Stats/ActivePools';
+import MinCreateBondStatBox from './Stats/MinCreateBond';
+import MinJoinBondStatBox from './Stats/MinJoinBond';
+import PoolMembershipBox from './Stats/PoolMembership';
+import { Status } from './Status';
 
 export const HomeInner = () => {
-  const { membership } = usePoolMemberships();
-  const { bondedPools } = useBondedPools();
-  const { getPoolRoles, activeBondedPool } = useActivePool();
+  const { activeAccount } = useConnect();
+  const { bondedPools, getAccountPools } = useBondedPools();
+  const { getPoolRoles, selectedActivePool } = useActivePools();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { openModalWith } = useModal();
+
+  const accountPools = getAccountPools(activeAccount);
+  const totalAccountPools = Object.entries(accountPools).length;
 
   // back to tab 0 if not in a pool
   useEffect(() => {
-    if (!activeBondedPool) {
+    if (!selectedActivePool) {
       setActiveTab(0);
     }
-  }, [activeBondedPool]);
+  }, [selectedActivePool]);
 
   const ROW_HEIGHT = 275;
 
@@ -55,7 +60,7 @@ export const HomeInner = () => {
     },
   ];
 
-  if (activeBondedPool) {
+  if (selectedActivePool) {
     tabs = tabs.concat({
       title: 'Members',
       active: activeTab === 1,
@@ -70,7 +75,7 @@ export const HomeInner = () => {
       onClick: () => setActiveTab(2),
     },
     {
-      title: 'Favourites',
+      title: 'Favorites',
       active: activeTab === 3,
       onClick: () => setActiveTab(3),
     }
@@ -78,7 +83,19 @@ export const HomeInner = () => {
 
   return (
     <>
-      <PageTitle title="Pools" tabs={tabs} />
+      <PageTitle
+        title="Pools"
+        tabs={tabs}
+        button={
+          totalAccountPools
+            ? {
+                title: 'All Roles',
+                onClick: () =>
+                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+              }
+            : undefined
+        }
+      />
       {activeTab === 0 && (
         <>
           <StatBoxList>
@@ -109,7 +126,7 @@ export const HomeInner = () => {
               </CardWrapper>
             </RowSecondaryWrapper>
           </PageRowWrapper>
-          {membership !== null && (
+          {selectedActivePool !== null && (
             <>
               <ManagePool />
               <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -151,7 +168,7 @@ export const HomeInner = () => {
       )}
       {activeTab === 3 && (
         <>
-          <Favourites />
+          <Favorites />
         </>
       )}
     </>

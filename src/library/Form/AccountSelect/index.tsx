@@ -1,18 +1,18 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useApi } from 'contexts/Api';
+import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
 import Identicon from 'library/Identicon';
-import { clipAddress, convertRemToPixels } from 'Utils';
-import { useTheme } from 'contexts/Themes';
-import { defaultThemes, networkColors } from 'theme/default';
 import { StatusLabel } from 'library/StatusLabel';
-import { useApi } from 'contexts/Api';
-import { StyledDownshift, StyledSelect, StyledController } from './Wrappers';
+import { useEffect, useState } from 'react';
+import { defaultThemes, networkColors } from 'theme/default';
+import { clipAddress, convertRemToPixels } from 'Utils';
 import { AccountSelectProps, InputItem } from '../types';
+import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 
 export const AccountSelect = (props: AccountSelectProps) => {
   const { items, onChange, placeholder, value } = props;

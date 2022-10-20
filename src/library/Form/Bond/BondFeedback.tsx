@@ -1,22 +1,22 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN_ZERO } from '@polkadot/util';
 import BN, { max } from 'bn.js';
-import { useState, useEffect } from 'react';
-import { useActivePool } from 'contexts/Pools/ActivePool';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useStaking } from 'contexts/Staking';
-import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useTxFees } from 'contexts/TxFees';
-import { BN_ZERO } from '@polkadot/util';
+import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { BondInput } from './BondInput';
-import { Spacer } from '../Wrappers';
-import { Warning } from '../Warning';
+import { useTxFees } from 'contexts/TxFees';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { useEffect, useState } from 'react';
+import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondFeedbackProps } from '../types';
+import { Warning } from '../Warning';
+import { Spacer } from '../Wrappers';
+import { BondInput } from './BondInput';
 
 export const BondFeedback = (props: BondFeedbackProps) => {
   const { bondType } = props;
@@ -31,7 +31,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
   const { getTransferOptions } = useTransferOptions();
-  const { isDepositor } = useActivePool();
+  const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units, unit } = network;

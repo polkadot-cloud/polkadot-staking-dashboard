@@ -1,41 +1,39 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolState } from 'contexts/Pools/types';
-import BN from 'bn.js';
-import { useUi } from 'contexts/UI';
-import { Separator } from 'Wrappers';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { useModal } from 'contexts/Modal';
-import { Stat } from 'library/Stat';
-import { planckBnToUnit, rmCommas } from 'Utils';
 import {
-  faLock,
   faExclamationTriangle,
+  faLock,
   faPlus,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import BN from 'bn.js';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { PoolState } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import { useStatusButtons } from './useStatusButtons';
+import { CardWrapper } from 'library/Graphs/Wrappers';
+import { Stat } from 'library/Stat';
+import { planckBnToUnit, rmCommas } from 'Utils';
+import { Separator } from 'Wrappers';
 import { Membership } from './Membership';
+import { useStatusButtons } from './useStatusButtons';
 
 export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
   const { isSyncing } = useUi();
-  const { membership } = usePoolMemberships();
-  const { activeBondedPool, poolNominations } = useActivePool();
+  const { selectedActivePool, poolNominations } = useActivePools();
   const { openModalWith } = useModal();
   const { getNominationsStatusFromTargets, eraStakers } = useStaking();
   const { meta, validators } = useValidators();
   const { stakers } = eraStakers;
-  const poolStash = activeBondedPool?.addresses?.stash || '';
+  const poolStash = selectedActivePool?.addresses?.stash || '';
 
   const nominationStatuses = getNominationsStatusFromTargets(
     poolStash,
@@ -43,20 +41,19 @@ export const Status = ({ height }: { height: number }) => {
   );
 
   // determine pool state
-  const poolState = activeBondedPool?.bondedPool?.state ?? null;
+  const poolState = selectedActivePool?.bondedPool?.state ?? null;
 
   const activeNominees = Object.entries(nominationStatuses)
     .map(([k, v]: any) => (v === 'active' ? k : false))
     .filter((v) => v !== false);
 
   const isNominating = !!poolNominations?.targets?.length;
-  const inPool = membership;
 
   // Set the minimum unclaimed planck value to prevent e numbers
   const minUnclaimedDisplay = new BN(1_000_000);
 
   // Unclaimed rewards `Stat` props
-  let { unclaimedRewards } = activeBondedPool || {};
+  let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
 
   const labelRewards = unclaimedRewards.gt(minUnclaimedDisplay)
@@ -157,7 +154,7 @@ export const Status = ({ height }: { height: number }) => {
 
   return (
     <CardWrapper height={height}>
-      {inPool ? (
+      {selectedActivePool ? (
         <Membership label={label} />
       ) : (
         <Stat
@@ -174,7 +171,7 @@ export const Status = ({ height }: { height: number }) => {
         stat={labelRewards}
         buttons={isSyncing ? [] : buttonsRewards}
       />
-      {membership && (
+      {selectedActivePool && (
         <>
           <Separator />
           <Stat

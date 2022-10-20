@@ -1,40 +1,40 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useRef } from 'react';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { useList } from 'library/List/context';
-import { Identity } from 'library/ListItem/Labels/Identity';
-import { Select } from 'library/ListItem/Labels/Select';
-import {
-  Wrapper,
-  Labels,
-  Separator,
-  MenuPosition,
-} from 'library/ListItem/Wrappers';
-import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
-import { useMenu } from 'contexts/Menu';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faBars,
   faShare,
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { PoolState } from 'contexts/Pools/types';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { PoolState } from 'contexts/Pools/types';
+import { useList } from 'library/List/context';
+import { Identity } from 'library/ListItem/Labels/Identity';
+import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
+import { Select } from 'library/ListItem/Labels/Select';
+import {
+  Labels,
+  MenuPosition,
+  Separator,
+  Wrapper,
+} from 'library/ListItem/Wrappers';
+import { useRef } from 'react';
 
 export const Member = (props: any) => {
   const { meta } = usePoolMembers();
   const { openModalWith } = useModal();
   const { selectActive } = useList();
   const { metrics } = useNetworkMetrics();
-  const { activeBondedPool, isOwner, isStateToggler } = useActivePool();
+  const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { activeEra } = metrics;
-  const { state, roles } = activeBondedPool?.bondedPool || {};
+  const { state, roles } = selectedActivePool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
 
   const { who, batchKey, batchIndex } = props;

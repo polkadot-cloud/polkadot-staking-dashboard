@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js';
+import { useApi } from 'contexts/Api';
+import { useTheme } from 'contexts/Themes';
 import { Pie } from 'react-chartjs-2';
 import {
   defaultThemes,
   networkColors,
   networkColorsTransparent,
 } from 'theme/default';
-import { useTheme } from 'contexts/Themes';
-import { useApi } from 'contexts/Api';
 import { StatPieProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip);

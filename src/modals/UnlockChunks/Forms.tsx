@@ -1,38 +1,36 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
-import { useState, useEffect, forwardRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { useModal } from 'contexts/Modal';
-import { useBalances } from 'contexts/Balances';
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Warning } from 'library/Form/Warning';
-import { useStaking } from 'contexts/Staking';
-import { planckBnToUnit, rmCommas } from 'Utils';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
+import { EstimatedTxFee } from 'library/EstimatedTxFee';
+import { Warning } from 'library/Form/Warning';
+import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { forwardRef, useEffect, useState } from 'react';
+import { planckBnToUnit, rmCommas } from 'Utils';
+import { FooterWrapper, NotesWrapper, Separator } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
-import { FooterWrapper, Separator, NotesWrapper } from '../Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
-    const { api, network } = useApi();
+    const { api, network, consts } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
-    const { staking } = useStaking();
-    const { removeFavourite: removeFavouritePool } = usePoolsConfig();
+    const { removeFavorite: removeFavoritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
-    const { activeBondedPool } = useActivePool();
+    const { selectedActivePool } = useActivePools();
     const { removeFromBondedPools } = useBondedPools();
     const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
@@ -40,7 +38,7 @@ export const Forms = forwardRef(
     const { txFeesValid } = useTxFees();
 
     const { bondType, poolClosure } = config || {};
-    const { historyDepth } = staking;
+    const { historyDepth } = consts;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);
 
@@ -68,7 +66,7 @@ export const Forms = forwardRef(
         _tx = api.tx.staking.rebond(unlock.value.toNumber());
       } else if (task === 'withdraw' && isStaking) {
         _tx = api.tx.staking.withdrawUnbonded(historyDepth);
-      } else if (task === 'withdraw' && isPooling && activeBondedPool) {
+      } else if (task === 'withdraw' && isPooling && selectedActivePool) {
         _tx = api.tx.nominationPools.withdrawUnbonded(
           activeAccount,
           historyDepth
@@ -82,13 +80,13 @@ export const Forms = forwardRef(
       from: signingAccount,
       shouldSubmit: valid,
       callbackSubmit: () => {
-        setModalStatus(0);
+        setModalStatus(2);
       },
       callbackInBlock: () => {
         // if pool is being closed, remove from static lists
         if (poolClosure) {
-          removeFavouritePool(activeBondedPool?.addresses?.stash ?? '');
-          removeFromBondedPools(activeBondedPool?.id ?? 0);
+          removeFavoritePool(selectedActivePool?.addresses?.stash ?? '');
+          removeFromBondedPools(selectedActivePool?.id ?? 0);
         }
 
         // if no more bonded funds from pool, remove from poolMembers list

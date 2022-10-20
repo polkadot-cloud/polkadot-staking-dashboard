@@ -1,31 +1,35 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
 import { useApi } from 'contexts/Api';
-import { StakingContext } from 'contexts/Staking';
 import { useNetworkMetrics } from 'contexts/Network';
-import { LIST_ITEMS_PER_PAGE, LIST_ITEMS_PER_BATCH } from 'consts';
-import { Pool } from 'library/Pool';
-import { List, Header, Wrapper as ListWrapper } from 'library/List';
-import { useTheme } from 'contexts/Themes';
-import { networkColors } from 'theme/default';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { Pagination } from 'library/List/Pagination';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { SearchInput } from 'library/List/SearchInput';
+import { StakingContext } from 'contexts/Staking';
+import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
+import { motion } from 'framer-motion';
+import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import { MotionContainer } from 'library/List/MotionContainer';
+import { Pagination } from 'library/List/Pagination';
+import { SearchInput } from 'library/List/SearchInput';
+import { Pool } from 'library/Pool';
+import React, { useEffect, useRef, useState } from 'react';
+import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
-export const PoolListInner = (props: PoolListProps) => {
-  const { allowMoreCols, pagination, batchKey }: any = props;
-  const disableThrottle = props.disableThrottle ?? false;
-  const allowSearch = props.allowSearch ?? false;
-
+export const PoolListInner = ({
+  allowMoreCols,
+  pagination,
+  batchKey = '',
+  disableThrottle,
+  allowSearch,
+  pools,
+  title,
+}: PoolListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
@@ -40,10 +44,10 @@ export const PoolListInner = (props: PoolListProps) => {
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of pools
-  const [poolsDefault, setPoolsDefault] = useState(props.pools);
+  const [poolsDefault, setPoolsDefault] = useState(pools);
 
   // manipulated list (ordering, filtering) of pools
-  const [pools, setPools] = useState(props.pools);
+  const [_pools, _setPools] = useState(pools);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -56,7 +60,7 @@ export const PoolListInner = (props: PoolListProps) => {
   };
 
   // pagination
-  const totalPages = Math.ceil(pools.length / LIST_ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(_pools.length / LIST_ITEMS_PER_PAGE);
   const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
   const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
 
@@ -65,10 +69,10 @@ export const PoolListInner = (props: PoolListProps) => {
 
   // refetch list when pool list changes
   useEffect(() => {
-    if (props.pools !== poolsDefault) {
+    if (pools !== poolsDefault) {
       setFetched(false);
     }
-  }, [props.pools]);
+  }, [pools]);
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
@@ -79,10 +83,10 @@ export const PoolListInner = (props: PoolListProps) => {
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
-    setPoolsDefault(props.pools);
-    setPools(props.pools);
+    setPoolsDefault(pools);
+    _setPools(pools);
     setFetched(true);
-    fetchPoolsMetaBatch(batchKey, props.pools, true);
+    fetchPoolsMetaBatch(batchKey, pools, true);
   };
 
   // render throttle
@@ -99,9 +103,9 @@ export const PoolListInner = (props: PoolListProps) => {
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listPools = pools.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listPools = _pools.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
   } else {
-    listPools = pools;
+    listPools = _pools;
   }
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -118,14 +122,14 @@ export const PoolListInner = (props: PoolListProps) => {
 
     setPage(1);
     setRenderIteration(1);
-    setPools(filteredPools);
+    _setPools(filteredPools);
   };
 
   return (
     <ListWrapper>
       <Header>
         <div>
-          <h4>{props.title}</h4>
+          <h4>{title}</h4>
         </div>
         <div>
           <button type="button" onClick={() => setListFormat('row')}>
@@ -215,7 +219,7 @@ export const PoolList = (props: any) => {
 export class PoolListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;
 
-  shouldComponentUpdate(nextProps: PoolListProps, nextState: any) {
+  shouldComponentUpdate(nextProps: PoolListProps) {
     return this.props.pools !== nextProps.pools;
   }
 

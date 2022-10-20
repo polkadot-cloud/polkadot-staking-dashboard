@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState } from 'react';
+import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { Extension as ExtensionInterface } from 'contexts/Connect/types';
-import { ExtensionWrapper } from './Wrappers';
+import { useState } from 'react';
 import { ExtensionProps } from './types';
+import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
   const { extensions } = useConnect();
@@ -112,13 +112,13 @@ export const ExtensionInner = (props: any) => {
       </div>
 
       <div className={status === 'connected' ? 'success' : 'neutral'}>
-        <h3>
+        <h4>
           <span
             className={`message ${status === 'connected' ? 'success' : ''}`}
           >
             {message}
           </span>
-        </h3>
+        </h4>
         {flag && flag}
         <FontAwesomeIcon
           icon={status === 'connected' ? faCheckCircle : faPlus}

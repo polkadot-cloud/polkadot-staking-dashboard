@@ -3,7 +3,7 @@
 
 import { BN } from 'bn.js';
 import { Sync } from 'types';
-import { ActiveBondedPool, ActivePoolContextState } from '../types';
+import { ActivePool, ActivePoolsContextState } from '../types';
 
 export const nominationStatus = {};
 
@@ -27,7 +27,7 @@ export const rewardPool = {
   totalRewardsClaimed: '0',
 };
 
-export const activeBondedPool: ActiveBondedPool = {
+export const selectedActivePool: ActivePool = {
   id: 0,
   addresses: {
     stash: '',
@@ -48,19 +48,22 @@ export const poolNominations = {
   submittedIn: 0,
 };
 
-export const defaultActivePoolContext: ActivePoolContextState = {
+export const defaultActivePoolContext: ActivePoolsContextState = {
   isBonding: () => false,
   isNominator: () => false,
   isOwner: () => false,
+  isMember: () => false,
   isDepositor: () => false,
   isStateToggler: () => false,
   getPoolBondedAccount: () => null,
   getPoolUnlocking: () => [],
   getPoolRoles: () => poolRoles,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
-  activeBondedPool,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  setSelectedPoolId: (p) => {},
+  selectedActivePool,
   targets,
   poolNominations,
   synced: Sync.Unsynced,

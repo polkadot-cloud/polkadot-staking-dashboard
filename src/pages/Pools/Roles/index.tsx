@@ -1,25 +1,25 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
-import { useAccount } from 'contexts/Account';
-import { useConnect } from 'contexts/Connect';
-import { useApi } from 'contexts/Api';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useActivePool } from 'contexts/Pools/ActivePool';
-import Button from 'library/Button';
 import {
-  faEdit,
   faCheckCircle,
+  faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { useUi } from 'contexts/UI';
+import { useAccount } from 'contexts/Account';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { PoolAccount } from '../PoolAccount';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useUi } from 'contexts/UI';
+import Button from 'library/Button';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useEffect, useState } from 'react';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
+import { PoolAccount } from '../PoolAccount';
 import RoleEditInput from './RoleEditInput';
-import { RolesProps, RoleEditEntry } from './types';
+import { RoleEditEntry, RolesProps } from './types';
 
 export const Roles = (props: RolesProps) => {
   const { batchKey, defaultRoles } = props;
@@ -30,10 +30,10 @@ export const Roles = (props: RolesProps) => {
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
-  const { isOwner, activeBondedPool } = useActivePool();
+  const { isOwner, selectedActivePool } = useActivePools();
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
-  const { id } = activeBondedPool || { id: 0 };
+  const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
 
   const initialiseEdits = (() => {
@@ -179,22 +179,30 @@ export const Roles = (props: RolesProps) => {
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h4>Root</h4>
-            <PoolAccount
-              address={roles.root ?? null}
-              batchIndex={accounts.indexOf(roles.root ?? '-1')}
-              batchKey={batchKey}
-            />
-          </div>
-        </section>
-        <section>
-          <div className="inner">
             <h4>Depositor</h4>
             <PoolAccount
               address={roles.depositor ?? null}
               batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
               batchKey={batchKey}
             />
+          </div>
+        </section>
+        <section>
+          <div className="inner">
+            <h4>Root</h4>
+            {isEditing ? (
+              <RoleEditInput
+                roleKey="root"
+                roleEdit={roleEdits?.root}
+                setRoleEdit={setRoleEditHandler}
+              />
+            ) : (
+              <PoolAccount
+                address={roles.root ?? null}
+                batchIndex={accounts.indexOf(roles.root ?? '-1')}
+                batchKey={batchKey}
+              />
+            )}
           </div>
         </section>
         <section>

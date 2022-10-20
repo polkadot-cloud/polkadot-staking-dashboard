@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import {
-  textSecondary,
   buttonSecondaryBackground,
   networkColor,
   networkColorSecondary,
+  textSecondary,
 } from 'theme';
 import { ButtonProps, ButtonWrapperProps } from './types';
 
@@ -39,7 +39,7 @@ export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
         : textSecondary};
 
     padding: ${(props) => props.padding};
-    border-radius: 1.25rem;
+    border-radius: 1.5rem;
     font-size: ${(props) => props.fontSize};
     transition: opacity 0.2s;
 

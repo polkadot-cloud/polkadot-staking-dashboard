@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
-import { Identicon } from 'library/Identicon';
-import { clipAddress } from 'Utils';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
+import { Identicon } from 'library/Identicon';
+import { clipAddress, convertRemToPixels } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
@@ -33,7 +33,10 @@ export const ActiveAccount = () => {
             {accountData && (
               <>
                 <div className="icon">
-                  <Identicon value={accountData.address} size="1.7rem" />
+                  <Identicon
+                    value={accountData.address}
+                    size={convertRemToPixels('1.7rem')}
+                  />
                 </div>
                 {clipAddress(accountData.address)}
                 <button

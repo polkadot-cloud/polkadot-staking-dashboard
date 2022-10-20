@@ -3,10 +3,10 @@
 
 import BN from 'bn.js';
 import {
-  BalanceLedger,
   Balance,
-  Nominations,
+  BalanceLedger,
   BalancesContextInterface,
+  Nominations,
 } from 'contexts/Balances/types';
 
 export const balance: Balance = {
@@ -31,21 +31,21 @@ export const nominations: Nominations = {
 };
 
 export const defaultBalancesContext: BalancesContextInterface = {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getAccount: (address) => null,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getAccountBalance: (address) => balance,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getLedgerForStash: (address) => ledger,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getLedgerForController: (address) => null,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getAccountLocks: (address) => [],
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getBondedAccount: (address) => null,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getAccountNominations: (address) => [],
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isController: (address) => false,
   accounts: [],
   existentialAmount: new BN(0),

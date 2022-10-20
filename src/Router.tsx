@@ -1,41 +1,50 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useRef } from 'react';
-import {
-  Routes,
-  Route,
-  HashRouter,
-  useLocation,
-  Navigate,
-} from 'react-router-dom';
+import { PAGES_CONFIG } from 'config/pages';
+import { TITLE_DEFAULT } from 'consts';
+import { useApi } from 'contexts/Api';
+import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
-import { Helmet } from 'react-helmet';
+import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
+import { Headers } from 'library/Headers';
+import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
+import { NetworkBar } from 'library/NetworkBar';
+import Notifications from 'library/Notifications';
+import SideMenu from 'library/SideMenu';
+import { Tooltip } from 'library/Tooltip';
+import { Modal } from 'modals';
+import { useEffect, useRef } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Helmet } from 'react-helmet';
 import {
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
+import {
+  BodyInterfaceWrapper,
+  MainInterfaceWrapper,
   PageWrapper,
   SideInterfaceWrapper,
-  MainInterfaceWrapper,
-  BodyInterfaceWrapper,
 } from 'Wrappers';
-import { PAGES_CONFIG } from 'config/pages';
-import { NetworkBar } from 'library/NetworkBar';
-import { Modal } from 'modals';
-import { Headers } from 'library/Headers';
-import SideMenu from 'library/SideMenu';
-import { Help } from 'library/Help';
-import Notifications from 'library/Notifications';
-import { TITLE_DEFAULT } from 'consts';
-import { useUi } from 'contexts/UI';
-import { useApi } from 'contexts/Api';
-import { Tooltip } from 'library/Tooltip';
-import { ErrorBoundary } from 'react-error-boundary';
-import { ErrorFallbackRoutes, ErrorFallbackApp } from 'library/ErrorBoundary';
+import { extractUrlValue, registerSaEvent } from 'Utils';
 
 export const RouterInner = () => {
   const { network } = useApi();
-  const { pathname } = useLocation();
+  const { search, pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+
+  // register landing source from URL
+  useEffect(() => {
+    const utmSource = extractUrlValue('utm_source', search);
+    if (utmSource) {
+      registerSaEvent('conversion', { utmSource });
+    }
+  }, []);
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {

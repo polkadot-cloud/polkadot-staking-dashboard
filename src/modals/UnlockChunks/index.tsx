@@ -1,23 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect, useRef } from 'react';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useActivePool } from 'contexts/Pools/ActivePool';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
-import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
-import { Overview } from './Overview';
+import { useEffect, useRef, useState } from 'react';
 import { Forms } from './Forms';
+import { Overview } from './Overview';
+import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
   const { bondType } = config || {};
   const { getLedgerForStash } = useBalances();
-  const { getPoolUnlocking } = useActivePool();
+  const { getPoolUnlocking } = useActivePools();
 
   // get the unlocking per bondType
   const _getUnlocking = () => {

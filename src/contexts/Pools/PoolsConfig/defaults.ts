@@ -21,10 +21,10 @@ export const stats: PoolStats = {
 };
 
 export const defaultPoolsConfigContext: PoolsConfigContextState = {
-  addFavourite: (a) => {},
-  removeFavourite: (a) => {},
-  createAccounts: (p) => poolAddresses,
-  favourites: [],
+  addFavorite: () => {},
+  removeFavorite: () => {},
+  createAccounts: () => poolAddresses,
+  favorites: [],
   stats,
 };
 

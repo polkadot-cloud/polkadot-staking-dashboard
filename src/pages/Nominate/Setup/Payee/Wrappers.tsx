@@ -4,9 +4,10 @@
 import { SECTION_FULL_WIDTH_THRESHOLD } from 'consts';
 import styled from 'styled-components';
 import {
-  backgroundToggle,
-  textPrimary,
+  borderPrimary,
+  buttonPrimaryBackground,
   networkColor,
+  textPrimary,
   textSecondary,
 } from 'theme';
 
@@ -31,10 +32,10 @@ export const Item = styled.button<{ selected?: boolean }>`
   }
 
   > div {
+    background: ${buttonPrimaryBackground};
+    border: 1.5px solid
+      ${(props) => (props.selected ? networkColor : borderPrimary)};
     box-sizing: border-box;
-    background: ${backgroundToggle};
-    border: 2px solid
-      ${(props) => (props.selected ? networkColor : backgroundToggle)};
     width: 100%;
     border-radius: 1rem;
     display: flex;
@@ -48,7 +49,7 @@ export const Item = styled.button<{ selected?: boolean }>`
       width: 100%;
     }
     h3 {
-      color: ${(props) => (props.selected ? networkColor : textPrimary)};
+      color: ${textPrimary};
       font-size: 1.2rem;
     }
     &:first-child {
