@@ -43,7 +43,7 @@ export const ItemsInner = ({ items }: any) => {
   );
 };
 
-const Item = ({ title, subtitle, icon, index, controls }: any) => {
+const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
@@ -106,7 +106,9 @@ const Item = ({ title, subtitle, icon, index, controls }: any) => {
           />
         </section>
         <section>
-          <h4>{title}</h4>
+          <h4>
+            {title} <span>{label}</span>
+          </h4>
           <div className="desc">
             <p>{subtitle}</p>
           </div>

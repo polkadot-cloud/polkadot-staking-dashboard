@@ -72,6 +72,17 @@ export const ItemWrapper = styled(motion.button)`
           font-variation-settings: 'wght' 625;
           margin: 0;
           font-size: 1.15rem;
+
+          > span {
+            font-variation-settings: 'wght' 500;
+            background: ${backgroundLabel};
+            color: ${textSecondary};
+            font-size: 0.97rem;
+            margin-left: 0.25rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 1.5rem;
+            opacity: 0.9;
+          }
         }
 
         .desc {
@@ -90,7 +101,7 @@ export const ItemWrapper = styled(motion.button)`
             left: 0;
             width: 100%;
             box-sizing: border-box;
-            margin: 0.2rem 0 0 0;
+            margin: 0.3rem 0 0 0;
             text-align: left;
             font-size: 1rem;
             text-overflow: ellipsis;
