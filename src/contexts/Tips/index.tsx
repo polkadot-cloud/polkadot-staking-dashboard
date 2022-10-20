@@ -12,7 +12,7 @@ export const TipsContext =
 export const useTips = () => React.useContext(TipsContext);
 
 export const TipsProvider = ({ children }: { children: React.ReactNode }) => {
-  // help module state
+  // module state
   const [state, setState] = useState<any>({
     status: 0,
     tip: null,
