@@ -21,6 +21,7 @@ import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
@@ -31,8 +32,11 @@ export const Tips = () => {
   const { toggleDismiss } = useTips();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
-  const { isNominating } = useStaking();
+  const { isNominating, staking } = useStaking();
   const { isOwner } = useActivePools();
+  const { getTransferOptions } = useTransferOptions();
+  const { minNominatorBond } = staking;
+  const transferOptions = getTransferOptions(activeAccount);
 
   // helper function to determine the number of items to display per page
   const getItemsPerPage = () => {
@@ -97,18 +101,23 @@ export const Tips = () => {
     segments.push(1);
   } else if (!isNominating() && !membership) {
     segments.push(2);
+    if (transferOptions.freeBalance.gt(minNominatorBond)) {
+      segments.push(3);
+    } else {
+      segments.push(4);
+    }
   } else {
     if (isNominating()) {
-      segments.push(3);
+      segments.push(5);
     }
     if (membership) {
       if (!isOwner()) {
-        segments.push(4);
+        segments.push(6);
       } else {
-        segments.push(5);
+        segments.push(7);
       }
     }
-    segments.push(6);
+    segments.push(8);
   }
 
   // TODO: filter tips relevant to connected account.

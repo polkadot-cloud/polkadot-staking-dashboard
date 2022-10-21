@@ -39,22 +39,9 @@ export const TIPS_CONFIG = [
     icon: helpCenterJson,
   },
   {
-    id: 'recommended_join_pool',
-    meta: {
-      segment: 2,
-    },
-    label: 'Pools',
-    title: 'Recommended: Join a Pool',
-    subtitle: 'Your account is best suited to join a pool.',
-    description: [
-      'Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.',
-    ],
-    icon: infoJson,
-  },
-  {
     id: 'recommended_nominator',
     meta: {
-      segment: 2,
+      segment: 3,
     },
     label: 'Nominator',
     title: 'Recommended: Become a Nominator',
@@ -66,9 +53,22 @@ export const TIPS_CONFIG = [
     icon: infoJson,
   },
   {
+    id: 'recommended_join_pool',
+    meta: {
+      segment: 4,
+    },
+    label: 'Pools',
+    title: 'Recommended: Join a Pool',
+    subtitle: 'Your account is best suited to join a pool.',
+    description: [
+      'Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.',
+    ],
+    icon: infoJson,
+  },
+  {
     id: 'managing_nominations',
     meta: {
-      segment: 3,
+      segment: 5,
     },
     label: 'Nominator',
     title: 'Managing Your Nominations',
@@ -83,7 +83,7 @@ export const TIPS_CONFIG = [
   {
     id: 'monitoring_pool',
     meta: {
-      segment: 4,
+      segment: 6,
     },
     label: 'Pools',
     title: 'Manage Your Pool Membership',
@@ -97,7 +97,7 @@ export const TIPS_CONFIG = [
   {
     id: 'keep_pool_nominating',
     meta: {
-      segment: 5,
+      segment: 7,
     },
     label: 'Pools',
     title: 'Managing Your Pool',
@@ -112,7 +112,7 @@ export const TIPS_CONFIG = [
   {
     id: 'reviewing_payouts',
     meta: {
-      segment: 6,
+      segment: 8,
     },
     label: 'Payouts',
     title: 'Reviewing Payouts',
@@ -126,7 +126,7 @@ export const TIPS_CONFIG = [
   {
     id: 'understanding_validator_performance',
     meta: {
-      segment: 6,
+      segment: 8,
     },
     label: 'Validators',
     title: 'Understanding Validator Performance',
