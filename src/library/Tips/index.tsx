@@ -4,6 +4,8 @@
 import { useTips } from 'contexts/Tips';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
+import useFillVariables from 'library/Hooks/useFillVariables';
+import { FillVariableItem } from 'library/Hooks/useFillVariables/types';
 import { Tip } from './Items/Tip';
 import { Dismiss } from './Items/Dismiss';
 
@@ -11,6 +13,7 @@ import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Tips = () => {
   const { setStatus, status, tip, closeTip, dismissOpen } = useTips();
+  const { fillVariables } = useFillVariables();
   const controls = useAnimation();
 
   const onFadeIn = async () => {
@@ -48,37 +51,13 @@ export const Tips = () => {
   }
 
   // if (definition) {
-  //   // get items for active category
-  //   meta = Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
-  //     item?.definitions?.find((d: HelpDefinition) => d.title === definition)
-  //   );
-  // } else {
-  //   // get all items
-  //   let _definitions: HelpDefinitions = [];
-  //   let _external: HelpExternals = [];
-
-  //   Object.values(HELP_CONFIG).forEach((c: HelpItemRaw) => {
-  //     _definitions = _definitions.concat([...(c.definitions || [])]);
-  //     _external = _external.concat([...(c.external || [])]);
-  //   });
-  //   meta = { definitions: _definitions, external: _external };
-  // }
-
-  // // resources to display
-  // let definitions = meta?.definitions ?? [];
-
   // // get active definiton
   // const activeTip = definition
   //   ? definitions.find((d: HelpDefinition) => d.title === definition)
   //   : null;
 
-  // // filter active definition
-  // definitions = definitions.filter(
-  //   (d: HelpDefinition) => d.title !== definition
-  // );
-
   // should be `tip`;
-  const activeTip = {
+  let activeTip: FillVariableItem | null = {
     title: 'Tip Title',
     description: [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -88,6 +67,9 @@ export const Tips = () => {
       'Fusce congue magna nulla, vel fringilla orci sollicitudin a. Nunc sed purus risus.',
     ],
   };
+
+  // fill placeholder variables
+  activeTip = activeTip ? fillVariables(activeTip) : null;
 
   return (
     <Wrapper

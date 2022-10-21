@@ -73,32 +73,6 @@ export const HelpProvider = (props: HelpContextProps) => {
     });
   };
 
-  const fillDefinitionVariables = (d: HelpDefinition) => {
-    let { title, description } = d;
-
-    const varsToValues = [
-      ['{NETWORK_UNIT}', network.unit],
-      ['{NETWORK_NAME}', network.name],
-      [
-        '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
-        String(maxNominatorRewardedPerValidator),
-      ],
-      ['{MAX_NOMINATIONS}', String(maxNominations)],
-    ];
-
-    for (const varToVal of varsToValues) {
-      title = replaceAll(title, varToVal[0], varToVal[1]);
-      description = description.map((_d: string) =>
-        replaceAll(_d, varToVal[0], varToVal[1])
-      );
-    }
-
-    return {
-      title,
-      description,
-    };
-  };
-
   return (
     <HelpContext.Provider
       value={{
@@ -106,7 +80,6 @@ export const HelpProvider = (props: HelpContextProps) => {
         closeHelp,
         setStatus,
         setDefinition,
-        fillDefinitionVariables,
         status: state.status,
         definition: state.definition,
       }}
