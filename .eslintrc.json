@@ -36,7 +36,6 @@
     "no-param-reassign": "off",
     "no-plusplus": "off",
     "no-continue": "off",
-    "max-len": "off",
     "no-underscore-dangle": "off",
     "no-restricted-syntax": "off",
     "@typescript-eslint/no-empty-function": "off",
