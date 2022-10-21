@@ -17,14 +17,22 @@ import { TIPS_CONFIG } from 'config/tips';
 import { useTips } from 'contexts/Tips';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { AnyJson } from 'types';
+import { useConnect } from 'contexts/Connect';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useStaking } from 'contexts/Staking';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
 
 export const Tips = () => {
+  const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { toggleDismiss } = useTips();
   const { fillVariables } = useFillVariables();
+  const { membership } = usePoolMemberships();
+  const { isNominating } = useStaking();
+  const { isOwner } = useActivePools();
 
   // helper function to determine the number of items to display per page
   const getItemsPerPage = () => {
@@ -83,15 +91,37 @@ export const Tips = () => {
   const _itemsPerPage = itemsPerPageRef.current;
   const _page = pageRef.current;
 
+  // accumulate segments to include in tips
+  const segments: AnyJson = [];
+  if (!activeAccount) {
+    segments.push(1);
+  } else if (!isNominating() && !membership) {
+    segments.push(2);
+  } else {
+    if (isNominating()) {
+      segments.push(3);
+    }
+    if (membership) {
+      if (!isOwner()) {
+        segments.push(4);
+      } else {
+        segments.push(5);
+      }
+    }
+    segments.push(6);
+  }
+
   // TODO: filter tips relevant to connected account.
-  let items = TIPS_CONFIG;
+  let items = TIPS_CONFIG.filter((t: AnyJson) =>
+    segments.includes(t.meta.segment)
+  );
   items = items.map((i: AnyJson) =>
     fillVariables(i, ['title', 'subtitle', 'description'])
   );
 
   // determine items to be displayed
-  const endItem = isSyncing ? 1 : _page * _itemsPerPage;
-  const startItem = isSyncing ? 1 : endItem - (_itemsPerPage - 1);
+  const endItem = isSyncing ? 1 : Math.min(_page * _itemsPerPage, items.length);
+  const startItem = isSyncing ? 1 : _page * _itemsPerPage - (_itemsPerPage - 1);
 
   const totalItems = isSyncing ? 1 : items.length;
   const itemsDisplay = items.slice(startItem - 1, endItem);
@@ -122,7 +152,10 @@ export const Tips = () => {
             <h4 className={totalPages === 1 ? `disabled` : undefined}>
               <span>
                 {startItem}
-                {_itemsPerPage > 1 && totalItems > 1 && ` - ${endItem}`}
+                {_itemsPerPage > 1 &&
+                  totalItems > 1 &&
+                  startItem !== endItem &&
+                  ` - ${endItem}`}
               </span>
               {totalPages > 1 && (
                 <>

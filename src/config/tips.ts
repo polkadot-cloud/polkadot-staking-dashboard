@@ -7,6 +7,9 @@ import * as helpCenterJson from 'img/json/help-center-outline.json';
 export const TIPS_CONFIG = [
   {
     id: 'connect_extensions',
+    meta: {
+      segment: 1,
+    },
     label: 'Setup',
     title: 'Connect Extensions',
     subtitle: 'Connect your accounts to begin using staking dashboard.',
@@ -20,6 +23,9 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'how_to_stake',
+    meta: {
+      segment: 2,
+    },
     label: 'Setup',
     title: 'How Would You Like to Stake?',
     subtitle: 'Learn about the different ways to stake on {NETWORK_NAME}.',
@@ -34,6 +40,9 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'recommended_join_pool',
+    meta: {
+      segment: 2,
+    },
     label: 'Pools',
     title: 'Recommended: Join a Pool',
     subtitle: 'Your account is best suited to join a pool.',
@@ -44,6 +53,9 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'recommended_nominator',
+    meta: {
+      segment: 2,
+    },
     label: 'Nominator',
     title: 'Recommended: Become a Nominator',
     subtitle: 'You have enough {NETWORK_UNIT} to become a nominator.',
@@ -55,9 +67,13 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'managing_nominations',
+    meta: {
+      segment: 3,
+    },
     label: 'Nominator',
     title: 'Managing Your Nominations',
-    subtitle: 'Regularly check back to see how your nominations are performing',
+    subtitle:
+      'Regularly check back to see how your nominations are performing.',
     description: [
       'Be sure to check the performance of your nominations on a regular basis.',
       'To maximise variety and a decentralised mix of validators, choose validators from a range of entities.',
@@ -66,6 +82,9 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'monitoring_pool',
+    meta: {
+      segment: 4,
+    },
     label: 'Pools',
     title: 'Manage Your Pool Membership',
     subtitle: 'Monitor the performance of your pool.',
@@ -77,9 +96,12 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'keep_pool_nominating',
+    meta: {
+      segment: 5,
+    },
     label: 'Pools',
     title: 'Managing Your Pool',
-    subtitle: "Keep on top of your pool's performance",
+    subtitle: "Keep on top of your pool's performance.",
     description: [
       'It is important to keep your pool actively nominating.',
       'If your pool is not earning rewards, members will be tempted to leave and join another pool.',
@@ -89,6 +111,9 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'reviewing_payouts',
+    meta: {
+      segment: 6,
+    },
     label: 'Payouts',
     title: 'Reviewing Payouts',
     subtitle: 'Keep track of payouts.',
@@ -100,6 +125,9 @@ export const TIPS_CONFIG = [
   },
   {
     id: 'understanding_validator_performance',
+    meta: {
+      segment: 6,
+    },
     label: 'Validators',
     title: 'Understanding Validator Performance',
     subtitle: 'Many factors determine how validators perform.',
