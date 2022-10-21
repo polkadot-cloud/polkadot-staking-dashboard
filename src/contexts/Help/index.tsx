@@ -1,17 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
 import { MaybeString } from 'types';
-import { replaceAll } from 'Utils';
 import * as defaults from './defaults';
 import {
   HelpConfig,
   HelpContextInterface,
   HelpContextProps,
   HelpContextState,
-  HelpDefinition,
 } from './types';
 
 export const HelpContext = React.createContext<HelpContextInterface>(
@@ -21,9 +18,6 @@ export const HelpContext = React.createContext<HelpContextInterface>(
 export const useHelp = () => React.useContext(HelpContext);
 
 export const HelpProvider = (props: HelpContextProps) => {
-  const { network, consts } = useApi();
-  const { maxNominations, maxNominatorRewardedPerValidator } = consts;
-
   // help module state
   const [state, setState] = useState<HelpContextState>({
     status: 0,
