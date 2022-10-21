@@ -134,6 +134,10 @@ export const PageToggleWrapper = styled.div`
     opacity: 0.75;
     transition: color 0.2s;
 
+    > svg {
+      color: ${textSecondary};
+    }
+
     &:hover {
       opacity: 1;
       color: ${networkColor};
