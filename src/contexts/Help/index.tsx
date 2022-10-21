@@ -80,10 +80,10 @@ export const HelpProvider = (props: HelpContextProps) => {
       ['{NETWORK_UNIT}', network.unit],
       ['{NETWORK_NAME}', network.name],
       [
-        '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
+        '{FallbackNominatorRewardedPerValidator}',
         String(maxNominatorRewardedPerValidator),
       ],
-      ['{MAX_NOMINATIONS}', String(maxNominations)],
+      ['{FallbackMaxNominations}', String(maxNominations)],
     ];
 
     for (const varToVal of varsToValues) {

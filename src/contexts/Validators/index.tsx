@@ -3,7 +3,7 @@
 
 import BN from 'bn.js';
 import { VALIDATOR_COMMUNITY } from 'config/validators';
-import { MIN_BOND_PRECISION } from 'consts';
+import { MinBondPrecision } from 'consts';
 import {
   SessionParachainValidators,
   SessionValidators,
@@ -529,7 +529,7 @@ export const ValidatorsProvider = ({
             others.length > 0
               ? toFixedIfNecessary(
                   planckBnToUnit(new BN(rmCommas(others[0].value)), units),
-                  MIN_BOND_PRECISION
+                MinBondPrecision
                 )
               : 0;
 
@@ -548,7 +548,7 @@ export const ValidatorsProvider = ({
                     new BN(rmCommas(others[lowestRewardIndex]?.value)),
                     units
                   ),
-                  MIN_BOND_PRECISION
+                MinBondPrecision
                 )
               : 0;
 

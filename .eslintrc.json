@@ -50,7 +50,6 @@
     "no-promise-executor-return": "off",
     "prefer-destructuring": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "camelcase": "off",
     "no-nested-ternary": "off",
     "semi": [2, "always"],
     "react/jsx-filename-extension": [

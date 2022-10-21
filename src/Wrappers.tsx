@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  INTERFACE_MAXIMUM_WIDTH,
-  SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD,
-  SIDE_MENU_MAXIMISED_WIDTH,
-  SIDE_MENU_MINIMISED_WIDTH,
-  SIDE_MENU_STICKY_THRESHOLD,
+  InterfaceMaximumWidth,
+  ShowAccountsButtonWidthThreshold,
+  SideMenuMaximisedWidth,
+  SideMenuMinimisedWidth,
+  SideMenuStickyThreshold,
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -97,11 +97,11 @@ export const EntryWrapper = styled.div`
     padding-left: 1.25rem;
     padding-right: 1.25rem;
 
-    @media (min-width: ${SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD + 1}px) {
+    @media (min-width: ${ShowAccountsButtonWidthThreshold + 1}px) {
       padding-left: 1.75rem;
       padding-right: 1.75rem;
     }
-    @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+    @media (min-width: ${SideMenuStickyThreshold + 1}px) {
       padding: 0 3rem 0 1rem;
     }
     @media (min-width: 1500px) {
@@ -141,18 +141,18 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
   overflow: hidden;
   min-width: ${(props) =>
     props.minimised
-      ? `${SIDE_MENU_MINIMISED_WIDTH}px`
-      : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
+    ? `${SideMenuMinimisedWidth}px`
+    : `${SideMenuMaximisedWidth}px`};
   max-width: ${(props) =>
     props.minimised
-      ? `${SIDE_MENU_MINIMISED_WIDTH}px`
-      : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
+    ? `${SideMenuMinimisedWidth}px`
+    : `${SideMenuMaximisedWidth}px`};
   transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
 
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     position: fixed;
     top: 0;
-    left: ${(props) => (props.open ? 0 : `-${SIDE_MENU_MAXIMISED_WIDTH}px`)};
+    left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
   }
 `;
 
@@ -176,7 +176,7 @@ export const MainInterfaceWrapper = styled.div`
  * affect the entire page.
  */
 export const PageWrapper = styled(motion.div)`
-  max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
+  max-width: ${InterfaceMaximumWidth}px;
   box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
@@ -207,7 +207,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   justify-content: flex-end;
   transition: padding 0.3s ease-out;
 
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     top: 4rem;
     padding-top: 0.75rem;
     padding-bottom: 0.5rem;
@@ -248,7 +248,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   h1 {
     font-family: 'Unbounded', 'sans-serif', sans-serif;
     font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.75rem')};
-    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    @media (max-width: ${SideMenuStickyThreshold}px) {
       font-size: 1.5rem;
     }
     transition: font 0.5s;
@@ -258,12 +258,12 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   .tabs {
     box-sizing: border-box;
     overflow: hidden;
-    max-width: ${INTERFACE_MAXIMUM_WIDTH}px;
+    max-width: ${InterfaceMaximumWidth}px;
     transition: margin 0.2s;
     height: 3.5rem;
 
     margin-top: ${(props) => (props.sticky ? '0.5rem' : '0.9rem')};
-    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    @media (max-width: ${SideMenuStickyThreshold}px) {
       margin-top: 0.5rem;
     }
 
@@ -319,7 +319,7 @@ export const MenuPaddingWrapper = styled.div`
   height: 4rem;
   z-index: 4;
   display: none;
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     display: block;
   }
 `;
