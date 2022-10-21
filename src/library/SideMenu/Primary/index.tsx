@@ -58,8 +58,10 @@ export const Primary = (props: PrimaryProps) => {
     <Link
       to={to}
       onClick={() => {
-        setSideMenu(0);
-        setIsStopped(false);
+        if (!active) {
+          setSideMenu(0);
+          setIsStopped(false);
+        }
       }}
     >
       <StyledWrapper

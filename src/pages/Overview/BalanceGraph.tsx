@@ -126,7 +126,7 @@ export const BalanceGraph = () => {
   };
 
   // determine stats
-  const _labels = ['Available', 'Unlocking', 'Staking', 'In Pool'];
+  const _labels = ['Available', 'Unlocking', 'Nominating', 'In Pool'];
   const _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
   const _colors = zeroBalance
     ? [
