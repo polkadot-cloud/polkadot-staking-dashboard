@@ -71,7 +71,7 @@ const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
     <ItemWrapper
       type="button"
       onClick={() => {
-        openTipWith('Tip Placeholder', {});
+        openTipWith(title, {});
       }}
       animate={controls}
       custom={index}

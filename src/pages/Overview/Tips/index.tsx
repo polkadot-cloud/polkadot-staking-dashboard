@@ -15,6 +15,8 @@ import throttle from 'lodash.throttle';
 import { useUi } from 'contexts/UI';
 import { TIPS_CONFIG } from 'config/tips';
 import { useTips } from 'contexts/Tips';
+import useFillVariables from 'library/Hooks/useFillVariables';
+import { AnyJson } from 'types';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
@@ -22,6 +24,7 @@ import { Syncing } from './Syncing';
 export const Tips = () => {
   const { isSyncing } = useUi();
   const { toggleDismiss } = useTips();
+  const { fillVariables } = useFillVariables();
 
   // helper function to determine the number of items to display per page
   const getItemsPerPage = () => {
@@ -80,8 +83,11 @@ export const Tips = () => {
   const _itemsPerPage = itemsPerPageRef.current;
   const _page = pageRef.current;
 
-  // TODO: get tips relevant to connected account.
-  const items = TIPS_CONFIG;
+  // TODO: filter tips relevant to connected account.
+  let items = TIPS_CONFIG;
+  items = items.map((i: AnyJson) =>
+    fillVariables(i, ['title', 'subtitle', 'description'])
+  );
 
   // determine items to be displayed
   const endItem = isSyncing ? 1 : _page * _itemsPerPage;

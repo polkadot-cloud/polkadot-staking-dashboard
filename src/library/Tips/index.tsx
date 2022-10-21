@@ -5,7 +5,8 @@ import { useTips } from 'contexts/Tips';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import useFillVariables from 'library/Hooks/useFillVariables';
-import { FillVariableItem } from 'library/Hooks/useFillVariables/types';
+import { TIPS_CONFIG } from 'config/tips';
+import { AnyJson } from 'types';
 import { Tip } from './Items/Tip';
 import { Dismiss } from './Items/Dismiss';
 
@@ -50,26 +51,16 @@ export const Tips = () => {
     return <></>;
   }
 
-  // if (definition) {
-  // // get active definiton
-  // const activeTip = definition
-  //   ? definitions.find((d: HelpDefinition) => d.title === definition)
-  //   : null;
-
-  // should be `tip`;
-  let activeTip: FillVariableItem | null = {
-    title: 'Tip Title',
-    description: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      'Maecenas molestie ex in neque mollis pretium. Aenean mattis ante nec vehicula varius.',
-      'Praesent vel consequat lectus, a mattis dui.',
-      'Quisque lacinia ipsum nulla, at convallis orci finibus id. Morbi maximus lectus vitae justo lobortis viverra. Ut in nisl sapien. Duis id consectetur quam. Aenean ligula libero, suscipit vitae sagittis nec, molestie sit amet ligula.',
-      'Fusce congue magna nulla, vel fringilla orci sollicitudin a. Nunc sed purus risus.',
-    ],
-  };
+  // if (tip) {
+  // // get active tip
+  let activeTip: AnyJson = tip
+    ? TIPS_CONFIG.find((d: any) => d.title === tip)
+    : null;
 
   // fill placeholder variables
-  activeTip = activeTip ? fillVariables(activeTip) : null;
+  activeTip = activeTip
+    ? fillVariables(activeTip, ['title', 'subtitle', 'description'])
+    : null;
 
   return (
     <Wrapper

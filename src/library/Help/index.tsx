@@ -15,6 +15,7 @@ import {
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useEffect } from 'react';
+import { AnyJson } from 'types';
 import Definition from './Items/Definition';
 import External from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
@@ -81,12 +82,14 @@ export const Help = () => {
   let definitions = meta?.definitions ?? [];
 
   // get active definiton
-  let activeDefinition = definition
+  let activeDefinition: AnyJson = definition
     ? definitions.find((d: HelpDefinition) => d.title === definition)
     : null;
 
   // fill placeholder variables
-  activeDefinition = activeDefinition ? fillVariables(activeDefinition) : null;
+  activeDefinition = activeDefinition
+    ? fillVariables(activeDefinition, ['title', 'description'])
+    : null;
 
   // filter active definition
   definitions = definitions.filter(
@@ -133,8 +136,8 @@ export const Help = () => {
                 <Definition
                   open
                   onClick={() => {}}
-                  title={activeDefinition.title}
-                  description={activeDefinition.description}
+                  title={activeDefinition?.title}
+                  description={activeDefinition?.description}
                 />
               </>
             )}
@@ -146,8 +149,8 @@ export const Help = () => {
                   {activeDefinition ? `Related ` : ''}
                   Definitions
                 </h3>
-                {definitions.map((item: HelpDefinition, index: number) => {
-                  item = fillVariables(item);
+                {definitions.map((item: AnyJson, index: number) => {
+                  item = fillVariables(item, ['title', 'description']);
                   return (
                     <Definition
                       key={`def_${index}`}
