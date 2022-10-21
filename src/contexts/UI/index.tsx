@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import { ServiceList, SideMenuStickyThreshold } from 'consts';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -38,7 +38,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // get initial services
   const getAvailableServices = () => {
     // get services config from local storage
-    const _services: any = localStorageOrDefault('services', SERVICES, true);
+    const _services: any = localStorageOrDefault('services', ServiceList, true);
 
     // if fiat is disabled, remove binance_spot service
     const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
@@ -71,7 +71,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState(
-    window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD
+    window.innerWidth <= SideMenuStickyThreshold
       ? 1
       : userSideMenuMinimisedRef.current
   );
@@ -92,7 +92,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // resize side menu callback
   const resizeCallback = () => {
-    if (window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD) {
+    if (window.innerWidth <= SideMenuStickyThreshold) {
       setSideMenuMinimised(0);
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);

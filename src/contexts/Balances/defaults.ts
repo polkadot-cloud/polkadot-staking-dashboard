@@ -31,21 +31,21 @@ export const nominations: Nominations = {
 };
 
 export const defaultBalancesContext: BalancesContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getAccount: (address) => null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getAccountBalance: (address) => balance,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getLedgerForStash: (address) => ledger,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getLedgerForController: (address) => null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getAccountLocks: (address) => [],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getBondedAccount: (address) => null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getAccountNominations: (address) => [],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   isController: (address) => false,
   accounts: [],
   existentialAmount: new BN(0),

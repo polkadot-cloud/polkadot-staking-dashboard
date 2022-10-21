@@ -3,7 +3,7 @@
 
 import Keyring from '@polkadot/keyring';
 import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
-import { DAPP_NAME } from 'consts';
+import { DappName } from 'consts';
 import {
   ConnectContextInterface,
   Extension,
@@ -277,7 +277,7 @@ export const ConnectProvider = ({
       if (extensionIsLocal(id)) {
         try {
           // summons extension popup
-          const extension: ExtensionInteface = await enable(DAPP_NAME);
+          const extension: ExtensionInteface = await enable(DappName);
 
           if (extension !== undefined) {
             // subscribe to accounts
@@ -393,7 +393,7 @@ export const ConnectProvider = ({
     const _activeAccount = getActiveAccountLocal(network);
     try {
       // summons extension popup
-      const extension: ExtensionInteface = await enable(DAPP_NAME);
+      const extension: ExtensionInteface = await enable(DappName);
 
       if (extension !== undefined) {
         // subscribe to accounts

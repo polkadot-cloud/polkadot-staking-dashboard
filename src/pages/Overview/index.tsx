@@ -2,10 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import {
-  SECTION_FULL_WIDTH_THRESHOLD,
-  SIDE_MENU_STICKY_THRESHOLD,
-} from 'consts';
+import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
@@ -62,8 +59,8 @@ export const Overview = () => {
         <RowSecondaryWrapper
           hOrder={0}
           vOrder={0}
-          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
-          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+          thresholdStickyMenu={SideMenuStickyThreshold}
+          thresholdFullWidth={SectionFullWidthThreshold}
         >
           <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
             <BalanceGraph />
@@ -73,8 +70,8 @@ export const Overview = () => {
         <RowPrimaryWrapper
           hOrder={1}
           vOrder={1}
-          thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
-          thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+          thresholdStickyMenu={SideMenuStickyThreshold}
+          thresholdFullWidth={SectionFullWidthThreshold}
         >
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
