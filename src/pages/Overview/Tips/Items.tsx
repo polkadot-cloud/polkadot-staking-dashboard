@@ -44,7 +44,7 @@ export const ItemsInner = ({ items }: any) => {
   );
 };
 
-const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
+const Item = ({ id, title, label, subtitle, icon, index, controls }: any) => {
   const { openTipWith } = useTips();
 
   const [isStopped, setIsStopped] = useState(true);
@@ -71,7 +71,7 @@ const Item = ({ title, label, subtitle, icon, index, controls }: any) => {
     <ItemWrapper
       type="button"
       onClick={() => {
-        openTipWith(title, {});
+        openTipWith(id, {});
       }}
       animate={controls}
       custom={index}

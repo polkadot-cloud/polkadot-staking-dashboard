@@ -51,10 +51,9 @@ export const Tips = () => {
     return <></>;
   }
 
-  // if (tip) {
-  // // get active tip
+  // get active tip
   let activeTip: AnyJson = tip
-    ? TIPS_CONFIG.find((d: any) => d.title === tip)
+    ? TIPS_CONFIG.find((d: any) => d.id === tip)
     : null;
 
   // fill placeholder variables
@@ -80,8 +79,8 @@ export const Tips = () => {
               <Dismiss />
             ) : (
               <Tip
-                title={activeTip?.title}
-                description={activeTip?.description}
+                title={activeTip?.title ?? ''}
+                description={activeTip?.description ?? []}
               />
             )}
           </ContentWrapper>

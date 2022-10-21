@@ -6,7 +6,7 @@ import * as helpCenterJson from 'img/json/help-center-outline.json';
 
 export const TIPS_CONFIG = [
   {
-    id: 0,
+    id: 'how_to_stake',
     label: 'Setup',
     title: 'How would you like to stake {NETWORK_UNIT}?',
     subtitle:
@@ -21,12 +21,13 @@ export const TIPS_CONFIG = [
     icon: helpCenterJson,
   },
   {
-    id: 1,
+    id: 'managing_nominations',
     label: 'Nominate',
-    title: 'Managing your Nominations',
-    subtitle: 'You are now staking. Read more about managing your nominations.',
+    title: '{NETWORK_UNIT} Managing your Nominations',
+    subtitle:
+      '{NETWORK_UNIT} You are now staking. Read more about managing your nominations.',
     description: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      '{NETWORK_UNIT}Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       'Maecenas molestie ex in neque mollis pretium. Aenean mattis ante nec vehicula varius.',
       'Praesent vel consequat lectus, a mattis dui.',
       'Quisque lacinia ipsum nulla, at convallis orci finibus id. Morbi maximus lectus vitae justo lobortis viverra. Ut in nisl sapien. Duis id consectetur quam. Aenean ligula libero, suscipit vitae sagittis nec, molestie sit amet ligula.',
@@ -35,7 +36,7 @@ export const TIPS_CONFIG = [
     icon: infoJson,
   },
   {
-    id: 2,
+    id: 'reviewing_payouts',
     label: 'Payouts',
     title: 'Reviewing Payouts',
     subtitle: 'Learn who your best performing nominees are, and update them.',
@@ -49,7 +50,7 @@ export const TIPS_CONFIG = [
     icon: infoJson,
   },
   {
-    id: 3,
+    id: 'how_to_stake_2',
     label: 'Setup',
     title: 'How would you like to stake?',
     subtitle:
@@ -64,7 +65,7 @@ export const TIPS_CONFIG = [
     icon: helpCenterJson,
   },
   {
-    id: 4,
+    id: 'managing_nominations_2',
     label: 'Payouts',
     title: 'Managing your Nominations',
     subtitle: 'You are now staking. Read more about managing your nominations.',
@@ -78,7 +79,7 @@ export const TIPS_CONFIG = [
     icon: infoJson,
   },
   {
-    id: 5,
+    id: 'reviewing_payouts_2',
     label: 'Setup',
     title: 'Reviewing Payouts',
     subtitle: 'Learn who your best performing nominees are, and update them.',
