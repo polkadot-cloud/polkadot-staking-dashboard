@@ -111,10 +111,6 @@ export const TipWrapper = styled(motion.div)`
   overflow: hidden;
   flex: 1;
 
-  button {
-    padding: 0;
-  }
-
   h2 {
     margin: 0 0 1.5rem 0;
     display: flex;
@@ -140,5 +136,12 @@ export const TipWrapper = styled(motion.div)`
 
   p.icon {
     opacity: 0.5;
+  }
+
+  .buttons {
+    padding-bottom: 1rem;
+    > div {
+      margin-right: 1rem;
+    }
   }
 `;

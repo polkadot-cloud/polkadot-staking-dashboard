@@ -8,6 +8,8 @@ export interface TipsContextInterface {
   closeTip: () => void;
   setStatus: (s: number) => void;
   setTip: (d: MaybeString) => void;
+  toggleDismiss: (o: boolean) => void;
+  dismissOpen: boolean;
   status: number;
   tip: MaybeString;
 }

@@ -14,12 +14,15 @@ import { setStateWithRef } from 'Utils';
 import throttle from 'lodash.throttle';
 import { useUi } from 'contexts/UI';
 import { TIPS_CONFIG } from 'config/tips';
+import { useTips } from 'contexts/Tips';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
 
 export const Tips = () => {
   const { isSyncing } = useUi();
+  const { toggleDismiss } = useTips();
+
   // helper function to determine the number of items to display per page
   const getItemsPerPage = () => {
     if (window.innerWidth < 750) {
@@ -136,7 +139,12 @@ export const Tips = () => {
             </button>
           </PageToggleWrapper>
           <PageToggleWrapper>
-            <button type="button">
+            <button
+              type="button"
+              onClick={() => {
+                toggleDismiss(true);
+              }}
+            >
               <FontAwesomeIcon icon={faCog} />
             </button>
           </PageToggleWrapper>

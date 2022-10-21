@@ -11,6 +11,9 @@ export const defaultTipsContext: TipsContextInterface = {
   setStatus: (s) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTip: (d) => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  toggleDismiss: (o) => {},
+  dismissOpen: false,
   status: 0,
   tip: null,
 };

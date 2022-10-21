@@ -1,17 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTips } from 'contexts/Tips';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
-import Tip from './Items/Tip';
+import { Tip } from './Items/Tip';
+import { Dismiss } from './Items/Dismiss';
 
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Tips = () => {
-  const { setStatus, status, tip, closeTip } = useTips();
+  const { setStatus, status, tip, closeTip, dismissOpen } = useTips();
   const controls = useAnimation();
 
   const onFadeIn = async () => {
@@ -104,16 +103,14 @@ export const Tips = () => {
       <div>
         <HeightWrapper>
           <ContentWrapper>
-            <div className="buttons">
-              <button type="button" onClick={() => closeTip()}>
-                <FontAwesomeIcon icon={faTimes} />
-                Close Tip
-              </button>
-            </div>
-            <Tip
-              title={activeTip?.title}
-              description={activeTip?.description}
-            />
+            {dismissOpen ? (
+              <Dismiss />
+            ) : (
+              <Tip
+                title={activeTip?.title}
+                description={activeTip?.description}
+              />
+            )}
           </ContentWrapper>
         </HeightWrapper>
         <button

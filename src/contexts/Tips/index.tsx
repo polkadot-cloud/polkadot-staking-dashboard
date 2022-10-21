@@ -16,6 +16,7 @@ export const TipsProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, setState] = useState<any>({
     status: 0,
     tip: null,
+    dismissOpen: false,
     config: {},
   });
 
@@ -41,6 +42,7 @@ export const TipsProvider = ({ children }: { children: React.ReactNode }) => {
     const _state = {
       ...state,
       status: newStatus,
+      dismissOpen: newStatus !== 0,
     };
     setState(_state);
   };
@@ -61,6 +63,14 @@ export const TipsProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  const toggleDismiss = (open: boolean) => {
+    setState({
+      ...state,
+      status: 1,
+      dismissOpen: open,
+    });
+  };
+
   return (
     <TipsContext.Provider
       value={{
@@ -68,6 +78,8 @@ export const TipsProvider = ({ children }: { children: React.ReactNode }) => {
         closeTip,
         setStatus,
         setTip,
+        toggleDismiss,
+        dismissOpen: state.dismissOpen,
         status: state.status,
         tip: state.tip,
       }}
