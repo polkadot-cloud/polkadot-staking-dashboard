@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { API_ENDPOINTS, API_SUBSCAN_KEY } from 'consts';
+import { ApiEndpoints, ApiSubscanKey } from 'consts';
 import { UIContextInterface } from 'contexts/UI/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, AnySubscan } from 'types';
@@ -71,11 +71,11 @@ export const SubscanProvider = ({
 
       // fetch 3 pages of results
       const results = await Promise.all([
-        handleFetch(activeAccount, 0, API_ENDPOINTS.subscanRewardSlash, {
+        handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
           claimed_filter: 'claimed',
         }),
-        handleFetch(activeAccount, 1, API_ENDPOINTS.subscanRewardSlash, {
+        handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
           claimed_filter: 'claimed',
         }),
@@ -118,8 +118,8 @@ export const SubscanProvider = ({
 
       // fetch 3 pages of results
       const results = await Promise.all([
-        handleFetch(activeAccount, 0, API_ENDPOINTS.subscanPoolRewards),
-        handleFetch(activeAccount, 1, API_ENDPOINTS.subscanPoolRewards),
+        handleFetch(activeAccount, 0, ApiEndpoints.subscanPoolRewards),
+        handleFetch(activeAccount, 1, ApiEndpoints.subscanPoolRewards),
       ]);
 
       // user may have turned off service while results were fetching.
@@ -156,7 +156,7 @@ export const SubscanProvider = ({
       return [];
     }
 
-    const res = await handleFetch(address, 0, API_ENDPOINTS.subscanEraStat);
+    const res = await handleFetch(address, 0, ApiEndpoints.subscanEraStat);
 
     if (res.message === 'Success') {
       if (getServices().includes('subscan')) {
@@ -198,7 +198,7 @@ export const SubscanProvider = ({
     const res: Response = await fetch(network.subscanEndpoint + endpoint, {
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': API_SUBSCAN_KEY,
+        'X-API-Key': ApiSubscanKey,
       },
       body: JSON.stringify(bodyJson),
       method: 'POST',

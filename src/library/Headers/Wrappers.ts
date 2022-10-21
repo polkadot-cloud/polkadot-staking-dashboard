@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD,
-  SIDE_MENU_STICKY_THRESHOLD,
+  ShowAccountsButtonWidthThreshold,
+  SideMenuStickyThreshold,
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -30,13 +30,13 @@ export const Wrapper = styled.div`
   height: 4rem;
   z-index: 6;
 
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     width: 100%;
   }
 
   .menu {
     display: none;
-    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    @media (max-width: ${SideMenuStickyThreshold}px) {
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
@@ -119,7 +119,7 @@ export const ItemInactive = styled(motion.div)`
 
 export const LargeScreensOnly = styled.div`
   display: flex;
-  @media (max-width: ${SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD}px) {
+  @media (max-width: ${ShowAccountsButtonWidthThreshold}px) {
     display: none;
   }
 `;

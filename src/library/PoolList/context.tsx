@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 
 export const PoolListContext: React.Context<any> = React.createContext({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setListFormat: (v: string) => {},
   listFormat: 'col',
 });

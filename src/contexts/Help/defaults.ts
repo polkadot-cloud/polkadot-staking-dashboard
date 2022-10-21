@@ -4,12 +4,12 @@
 import { HelpContextInterface } from './types';
 
 export const defaultHelpContext: HelpContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   openHelpWith: (d, c) => {},
   closeHelp: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setStatus: (s) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setDefinition: (d) => {},
   status: 0,
   definition: null,

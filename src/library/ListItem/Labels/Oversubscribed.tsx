@@ -37,12 +37,11 @@ export const Oversubscribed = (props: OversubscribedProps) => {
 
   const eraStakers = stake[batchIndex];
 
-  const total_nominations = eraStakers?.total_nominations ?? 0;
+  const totalNominations = eraStakers?.total_nominations ?? 0;
   const lowestReward = eraStakers?.lowestReward ?? 0;
 
   const displayOversubscribed =
-    synced.stake &&
-    total_nominations >= consts.maxNominatorRewardedPerValidator;
+    synced.stake && totalNominations >= consts.maxNominatorRewardedPerValidator;
 
   const posRef = useRef(null);
 

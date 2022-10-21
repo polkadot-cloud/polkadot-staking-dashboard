@@ -23,12 +23,12 @@ export const consts: APIConstants = {
 };
 
 export const defaultApiContext: APIContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   connect: async () => {
     await new Promise((resolve) => resolve(null));
   },
   fetchDotPrice: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   switchNetwork: async (_network, _isLightClient) => {
     await new Promise((resolve) => resolve(null));
   },

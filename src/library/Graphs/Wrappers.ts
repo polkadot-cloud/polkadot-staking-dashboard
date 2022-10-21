@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import { SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
 import {
   backgroundSecondary,
@@ -91,7 +91,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     background: none;
   `}
 
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     padding: ${(props) =>
       props.noPadding
         ? '0rem'
@@ -100,7 +100,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
         : '1rem 0.75rem'};
   }
 
-  @media (min-width: ${SIDE_MENU_STICKY_THRESHOLD + 1}px) {
+  @media (min-width: ${SideMenuStickyThreshold + 1}px) {
     height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
   }
 

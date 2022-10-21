@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BN } from 'bn.js';
-import { MAX_PAYOUT_DAYS } from 'consts';
+import { MaxPayoutDays } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
@@ -43,7 +43,7 @@ export const Payouts = (props: PageProps) => {
   // take non-zero rewards in most-recent order
   let payoutsList: AnySubscan = [
     ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
-  ].slice(0, MAX_PAYOUT_DAYS);
+  ].slice(0, MaxPayoutDays);
 
   // re-order rewards based on block timestamp
   payoutsList = payoutsList.sort((a: AnySubscan, b: AnySubscan) => {
@@ -106,8 +106,8 @@ export const Payouts = (props: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar days={MAX_PAYOUT_DAYS} height="150px" />
-              <PayoutLine days={MAX_PAYOUT_DAYS} average={10} height="75px" />
+              <PayoutBar days={MaxPayoutDays} height="150px" />
+              <PayoutLine days={MaxPayoutDays} average={10} height="75px" />
             </div>
           </div>
         </GraphWrapper>

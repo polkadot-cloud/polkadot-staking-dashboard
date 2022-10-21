@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PAGES_CONFIG } from 'config/pages';
-import { TITLE_DEFAULT } from 'consts';
+import { TitleDefault } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
@@ -99,7 +99,7 @@ export const RouterInner = () => {
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${page.title} : ${TITLE_DEFAULT}`}</title>
+                            <title>{`${page.title} : ${TitleDefault}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>
