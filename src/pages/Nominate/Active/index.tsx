@@ -2,10 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import {
-  SectionFullWidthThreshold,
-  SideMenuStickyThreshold,
-} from 'consts';
+import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';

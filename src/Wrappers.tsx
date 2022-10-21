@@ -141,12 +141,12 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
   overflow: hidden;
   min-width: ${(props) =>
     props.minimised
-    ? `${SideMenuMinimisedWidth}px`
-    : `${SideMenuMaximisedWidth}px`};
+      ? `${SideMenuMinimisedWidth}px`
+      : `${SideMenuMaximisedWidth}px`};
   max-width: ${(props) =>
     props.minimised
-    ? `${SideMenuMinimisedWidth}px`
-    : `${SideMenuMaximisedWidth}px`};
+      ? `${SideMenuMinimisedWidth}px`
+      : `${SideMenuMaximisedWidth}px`};
   transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
 
   @media (max-width: ${SideMenuStickyThreshold}px) {

@@ -529,7 +529,7 @@ export const ValidatorsProvider = ({
             others.length > 0
               ? toFixedIfNecessary(
                   planckBnToUnit(new BN(rmCommas(others[0].value)), units),
-                MinBondPrecision
+                  MinBondPrecision
                 )
               : 0;
 
@@ -548,7 +548,7 @@ export const ValidatorsProvider = ({
                     new BN(rmCommas(others[lowestRewardIndex]?.value)),
                     units
                   ),
-                MinBondPrecision
+                  MinBondPrecision
                 )
               : 0;
 

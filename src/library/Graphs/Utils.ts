@@ -358,7 +358,6 @@ export const combineRewardsByDay = (
   // loop pool claims and consume / combine payouts
   poolClaimsByDay.forEach((p: AnySubscan) => {
     let { amount } = p;
-    const { block_timestamp } = p;
 
     // check payouts exist on this day
     const payoutsThisDay = payoutsByDay.filter((q: AnySubscan) => {
@@ -377,7 +376,7 @@ export const combineRewardsByDay = (
     });
     rewards.push({
       amount,
-      block_timestamp,
+      block_timestamp: p.block_timestamp,
     });
   });
 

@@ -2,10 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import {
-  SectionFullWidthThreshold,
-  SideMenuStickyThreshold,
-} from 'consts';
+import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';

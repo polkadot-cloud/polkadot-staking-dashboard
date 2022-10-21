@@ -29,8 +29,8 @@ export const Wrapper = styled.div<MinimisedProps>`
   backdrop-filter: blur(4px);
   width: ${(props) =>
     props.minimised
-    ? `${SideMenuMinimisedWidth}px`
-    : `${SideMenuMaximisedWidth}px`};
+      ? `${SideMenuMinimisedWidth}px`
+      : `${SideMenuMaximisedWidth}px`};
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     background: ${backgroundOverlay};

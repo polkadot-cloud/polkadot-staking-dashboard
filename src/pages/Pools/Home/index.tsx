@@ -1,10 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  SectionFullWidthThreshold,
-  SideMenuStickyThreshold,
-} from 'consts';
+import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
