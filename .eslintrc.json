@@ -8,6 +8,7 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "airbnb",
+    // "airbnb-typescript",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -17,7 +18,8 @@
       "arrowFunctions": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "plugins": ["react", "@typescript-eslint", "prefer-arrow-functions"],
   "rules": {
@@ -39,8 +41,6 @@
     "no-underscore-dangle": "off",
     "no-restricted-syntax": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "react/prop-types": "off",
-    "arrow-body-style": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-use-before-define": "off",
@@ -50,6 +50,7 @@
     "prefer-destructuring": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "no-nested-ternary": "off",
+    "no-shadow": "off",
     "semi": [2, "always"],
     "react/jsx-filename-extension": [
       "warn",
@@ -65,7 +66,6 @@
         "tsx": "never"
       }
     ],
-    "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "prefer-arrow-functions/prefer-arrow-functions": [
       "warn",
@@ -75,7 +75,8 @@
         "returnStyle": "unchanged",
         "singleReturnOnly": false
       }
-    ]
+    ],
+    "react/prop-types": "off"
   },
   "settings": {
     "import/resolver": {
