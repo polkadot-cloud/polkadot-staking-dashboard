@@ -16,7 +16,7 @@ export const Dismiss = () => {
         <h1>Dismiss Tips</h1>
       </div>
       <div>
-        <h4>Dismissing tips will remove them from the Overview page.</h4>
+        <h4>Dismissing tips will remove them from this Overview page.</h4>
         <h4>
           Tips can be turned re-enabled from dashboard settings, that can be
           accessed via the cog icon in the bottom left corner of the side menu.

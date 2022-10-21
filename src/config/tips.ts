@@ -16,7 +16,7 @@ export const TIPS_CONFIG = [
     description: [
       'Connect your accounts to begin using Polkadot staking dashboard.',
       'Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.',
-      'Connect your wallets from the Accounts button at the top right of the dashboard, and select the account you wish to stake with to continue.',
+      'Connect your wallets from the Connect button at the top right of the dashboard, and select the account you wish to stake with to continue.',
       'Staking dashboard supports a range of extensions and wallets.',
     ],
     icon: infoJson,
