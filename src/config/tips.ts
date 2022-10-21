@@ -116,7 +116,7 @@ export const TIPS_CONFIG = [
     },
     label: 'Payouts',
     title: 'Reviewing Payouts',
-    subtitle: 'Keep track of payouts.',
+    subtitle: 'Keep track of payout frequency and amount you receive.',
     description: [
       'Regularly reviewing your Payouts is a good way to gauge how well your nominations are performing.',
       'Go to the Payouts page to get a detailed breakdown of each payout you receive, and by which validator (or pool) the payout came from.',

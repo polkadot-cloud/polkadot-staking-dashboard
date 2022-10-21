@@ -39,6 +39,7 @@ export const Tips = () => {
   const transferOptions = getTransferOptions(activeAccount);
 
   // helper function to determine the number of items to display per page
+  // TODO abstract thresholds to consts and use for flex-grow.
   const getItemsPerPage = () => {
     if (window.innerWidth < 750) {
       return 1;
