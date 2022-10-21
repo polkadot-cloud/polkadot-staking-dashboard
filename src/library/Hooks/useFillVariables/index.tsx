@@ -2,12 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useStaking } from 'contexts/Staking';
 import { AnyJson } from 'types';
-import { replaceAll } from 'Utils';
+import { planckBnToUnit, replaceAll, toFixedIfNecessary } from 'Utils';
 
 export const useFillVariables = () => {
   const { network, consts } = useApi();
+  const { eraStakers } = useStaking();
+  const { stats } = usePoolsConfig();
   const { maxNominations, maxNominatorRewardedPerValidator } = consts;
+  const { minActiveBond } = eraStakers;
+  const { minJoinBond, minCreateBond } = stats;
 
   const fillVariables = (d: AnyJson, keys: Array<string>) => {
     const fields: AnyJson = Object.entries(d).filter(([k]: any) =>
@@ -23,6 +29,22 @@ export const useFillVariables = () => {
             String(maxNominatorRewardedPerValidator),
           ],
           ['{MAX_NOMINATIONS}', String(maxNominations)],
+          ['{MIN_ACTIVE_BOND}', String(toFixedIfNecessary(minActiveBond, 3))],
+          [
+            '{MIN_POOL_JOIN_BOND}',
+            String(
+              toFixedIfNecessary(planckBnToUnit(minJoinBond, network.units), 3)
+            ),
+          ],
+          [
+            '{MIN_POOL_CREATE_BOND}',
+            String(
+              toFixedIfNecessary(
+                planckBnToUnit(minCreateBond, network.units),
+                3
+              )
+            ),
+          ],
         ];
 
         for (const varToVal of varsToValues) {
