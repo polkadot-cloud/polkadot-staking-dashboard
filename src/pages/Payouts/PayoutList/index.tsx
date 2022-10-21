@@ -142,16 +142,16 @@ export const PayoutListInner = (props: PayoutListProps) => {
         <MotionContainer>
           {listPayouts.map((p: AnySubscan, index: number) => {
             const label =
-              p.eventId === 'PaidOut'
+              p.event_id === 'PaidOut'
                 ? 'Pool Claim'
-                : p.eventId === 'Rewarded'
+                : p.event_id === 'Rewarded'
                 ? 'Payout'
-                : p.eventId;
+                : p.event_id;
 
             const labelClass =
-              p.eventId === 'PaidOut'
+              p.event_id === 'PaidOut'
                 ? 'claim'
-                : p.eventId === 'Rewarded'
+                : p.event_id === 'Rewarded'
                 ? 'reward'
                 : undefined;
 
@@ -192,7 +192,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                       <div>
                         <div>
                           <h4 className={`${labelClass}`}>
-                            {p.eventId === 'Slashed' ? '-' : '+'}
+                            {p.event_id === 'Slashed' ? '-' : '+'}
                             {planckToUnit(p.amount, units)} {network.unit}
                           </h4>
                         </div>
