@@ -172,7 +172,7 @@ export const IdentityWrapper = styled(motion.div)`
     width: 100%;
     height: 3.2rem;
     line-height: 3.2rem;
-    padding: 0 0 0 0.4rem;
+    padding: 0 0 0 0.3rem;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
