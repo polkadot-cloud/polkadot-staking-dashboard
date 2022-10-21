@@ -35,8 +35,9 @@ export const Tips = () => {
   // This function ensures totalPages is never surpassed, but does not guarantee
   // that the start item will maintain across resizes.
   const getPage = () => {
+    const totalItmes = isSyncing ? 1 : items.length;
     const itemsPerPage = getItemsPerPage();
-    const totalPages = Math.ceil(items.length / itemsPerPage);
+    const totalPages = Math.ceil(totalItmes / itemsPerPage);
     if (pageRef.current > totalPages) {
       return totalPages;
     }
@@ -80,11 +81,12 @@ export const Tips = () => {
   const items = TIPS_CONFIG;
 
   // determine items to be displayed
-  const endItem = _page * _itemsPerPage;
-  const startItem = endItem - (_itemsPerPage - 1);
+  const endItem = isSyncing ? 1 : _page * _itemsPerPage;
+  const startItem = isSyncing ? 1 : endItem - (_itemsPerPage - 1);
 
+  const totalItems = isSyncing ? 1 : items.length;
   const itemsDisplay = items.slice(startItem - 1, endItem);
-  const totalPages = Math.ceil(items.length / _itemsPerPage);
+  const totalPages = Math.ceil(totalItems / _itemsPerPage);
 
   return (
     <CardWrapper>
@@ -110,7 +112,8 @@ export const Tips = () => {
             </button>
             <h4 className={totalPages === 1 ? `disabled` : undefined}>
               <span>
-                {startItem} {_itemsPerPage > 1 && ` - ${endItem}`}
+                {startItem}
+                {_itemsPerPage > 1 && totalItems > 1 && ` - ${endItem}`}
               </span>
               {totalPages > 1 && (
                 <>
@@ -132,16 +135,11 @@ export const Tips = () => {
               />
             </button>
           </PageToggleWrapper>
-          {/*
           <PageToggleWrapper>
-            <button
-              type="button"
-              onClick={() => {
-              }}
-            >
+            <button type="button">
               <FontAwesomeIcon icon={faCog} />
             </button>
-      </PageToggleWrapper> */}
+          </PageToggleWrapper>
         </div>
       </CardHeaderWrapper>
       {isSyncing ? <Syncing /> : <Items items={itemsDisplay} />}
