@@ -115,7 +115,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
             border-radius: 1.5rem;
             opacity: 0.9;
             text-align: center;
-            border: 1px solid ${borderPrimary};
           }
         }
       }
