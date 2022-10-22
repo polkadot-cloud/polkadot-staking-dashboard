@@ -40,7 +40,7 @@ export const ItemWrapper = styled(motion.button)`
 `;
 
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
-  box-shadow: -1px 3px 4px ${shadowColorSecondary};
+  box-shadow: -1px 3px 2px ${shadowColorSecondary};
   border: 1px solid ${borderPrimary};
   border-radius: 1.25rem;
   box-sizing: border-box;
