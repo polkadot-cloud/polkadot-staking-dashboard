@@ -11,6 +11,7 @@ import {
   textSecondary,
 } from 'theme';
 import { motion } from 'framer-motion';
+import { TipsThresholdSmall, TipsThresholdMedium } from 'consts';
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
@@ -22,10 +23,16 @@ export const ItemsWrapper = styled(motion.div)`
 `;
 export const ItemWrapper = styled(motion.button)`
   padding: 0;
-  flex-grow: 1;
-  flex-basis: 33%;
   margin-left: 0.25rem;
   margin-right: 1rem;
+
+  flex-basis: 100%;
+  @media (min-width: ${TipsThresholdSmall}px) {
+    flex-basis: 50%;
+  }
+  @media (min-width: ${TipsThresholdMedium}px) {
+    flex-basis: 33.33%;
+  }
 
   &:last-child {
     margin-right: 0.25rem;

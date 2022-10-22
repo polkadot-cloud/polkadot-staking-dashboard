@@ -22,6 +22,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { TipsThresholdSmall, TipsThresholdMedium } from 'consts';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
@@ -39,12 +40,14 @@ export const Tips = () => {
   const transferOptions = getTransferOptions(activeAccount);
 
   // helper function to determine the number of items to display per page
-  // TODO abstract thresholds to consts and use for flex-grow.
   const getItemsPerPage = () => {
-    if (window.innerWidth < 750) {
+    if (window.innerWidth < TipsThresholdSmall) {
       return 1;
     }
-    if (window.innerWidth >= 750 && window.innerWidth < 1200) {
+    if (
+      window.innerWidth >= TipsThresholdSmall &&
+      window.innerWidth < TipsThresholdMedium
+    ) {
       return 2;
     }
     return 3;

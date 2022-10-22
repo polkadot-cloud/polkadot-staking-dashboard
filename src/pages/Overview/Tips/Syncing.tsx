@@ -31,7 +31,7 @@ export const Syncing = () => {
         },
       }}
     >
-      <ItemWrapper type="button" style={{ cursor: 'default' }}>
+      <ItemWrapper type="button" style={{ cursor: 'default', flexGrow: 1 }}>
         <ItemInnerWrapper inactive>
           <section>
             <Lottie

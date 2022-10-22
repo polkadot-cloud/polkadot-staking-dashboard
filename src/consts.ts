@@ -43,6 +43,8 @@ export const ShowAccountsButtonWidthThreshold = 1000;
 export const FloatingMenuWidth = 250;
 export const SmallFontSizeMaxWidth = 600;
 export const MediumFontSizeMaxWidth = 1600;
+export const TipsThresholdSmall = 750;
+export const TipsThresholdMedium = 1200;
 
 /*
  * Toggle-able services
