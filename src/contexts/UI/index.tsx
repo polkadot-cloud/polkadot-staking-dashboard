@@ -160,13 +160,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       syncing = true;
     }
 
-    // nomination pool contexts have synced
-    if (activePoolSynced !== Sync.Synced) {
-      syncing = true;
-    }
-
     setIsSyncing(syncing);
-  }, [isReady, staking, metrics, accounts, eraStakers, activePoolSynced]);
+  }, [isReady, staking, metrics, accounts, eraStakers]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
