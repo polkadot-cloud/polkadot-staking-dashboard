@@ -71,7 +71,7 @@ export const TIPS_CONFIG = [
       segment: 5,
     },
     label: 'Nominator',
-    title: 'Managing Your Nominations',
+    title: 'Manage Your Nominations',
     subtitle:
       'Regularly check back to see how your nominations are performing.',
     description: [
@@ -115,7 +115,7 @@ export const TIPS_CONFIG = [
       segment: 8,
     },
     label: 'Payouts',
-    title: 'Reviewing Payouts',
+    title: 'Review Payouts',
     subtitle: 'Keep track of payout frequency and amount you receive.',
     description: [
       'Regularly reviewing your Payouts is a good way to gauge how well your nominations are performing.',
@@ -129,7 +129,7 @@ export const TIPS_CONFIG = [
       segment: 8,
     },
     label: 'Validators',
-    title: 'Measuring Validator Performance Regularly',
+    title: 'Measure Validator Performance Regularly',
     subtitle: 'Many factors determine how validators perform.',
     description: [
       'Various factors of a validator will affect how much they are rewarded, such as the amount of era points it generates, how many nominators are backing it, and whether it is over subscribed.',
