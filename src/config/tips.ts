@@ -129,7 +129,7 @@ export const TIPS_CONFIG = [
       segment: 8,
     },
     label: 'Validators',
-    title: 'Understanding Validator Performance',
+    title: 'Validator Performance',
     subtitle: 'Many factors determine how validators perform.',
     description: [
       'Various factors of a validator will affect how much they are rewarded, such as the amount of era points it generates, how many nominators are backing it, and whether it is over subscribed.',
