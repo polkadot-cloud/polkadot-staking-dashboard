@@ -107,5 +107,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/"
+  "homepage": "/",
+  "jest": {
+    "transformIgnorePatterns": []
+  }
 }
