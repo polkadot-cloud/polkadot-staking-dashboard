@@ -39,8 +39,15 @@ export const Tips = () => {
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
 
-  // helper function to determine the number of items to display per page
+  // multiple tips per row is currently turned off.
+  const multiTipsPerRow = false;
+
+  // helper function to determine the number of items to display per page.
+  // UI displays 1 item by default.
   const getItemsPerPage = () => {
+    if (!multiTipsPerRow) {
+      return 1;
+    }
     if (window.innerWidth < TipsThresholdSmall) {
       return 1;
     }
@@ -124,7 +131,7 @@ export const Tips = () => {
     segments.push(8);
   }
 
-  // TODO: filter tips relevant to connected account.
+  // filter tips relevant to connected account.
   let items = TIPS_CONFIG.filter((t: AnyJson) =>
     segments.includes(t.meta.segment)
   );

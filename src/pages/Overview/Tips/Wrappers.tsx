@@ -27,12 +27,13 @@ export const ItemWrapper = styled(motion.button)`
   margin-right: 1rem;
 
   flex-basis: 100%;
-  @media (min-width: ${TipsThresholdSmall}px) {
+  /* multiple tips per row is currently disabled */
+  /* @media (min-width: ${TipsThresholdSmall}px) {
     flex-basis: 50%;
   }
   @media (min-width: ${TipsThresholdMedium}px) {
     flex-basis: 33.33%;
-  }
+  } */
 
   &:last-child {
     margin-right: 0.25rem;
@@ -157,7 +158,7 @@ export const PageToggleWrapper = styled.div`
   padding: 0.25rem 0.5rem;
   border-radius: 1.5rem;
   position: relative;
-  top: -0.25rem;
+  top: -0.2rem;
   display: flex;
   flex-flow: row wrap;
   margin-left: 0.75rem;
