@@ -43,7 +43,9 @@ export const Syncing = () => {
             />
           </section>
           <section>
-            <h4>Syncing with {name}</h4>
+            <div className="title">
+              <h4>Syncing with {name}</h4>
+            </div>
             <div className="desc">
               <p>One moment please...</p>
             </div>
