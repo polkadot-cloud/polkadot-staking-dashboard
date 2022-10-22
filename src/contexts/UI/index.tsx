@@ -4,10 +4,9 @@
 import BN from 'bn.js';
 import { ServiceList, SideMenuStickyThreshold } from 'consts';
 import { ImportedAccount } from 'contexts/Connect/types';
-import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
-import { MaybeAccount, Sync } from 'types';
+import { MaybeAccount } from 'types';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
@@ -30,7 +29,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
   const { membership: poolMembership } = usePoolMemberships();
-  const { synced: activePoolSynced } = useActivePools();
 
   // set whether app is syncing
   const [isSyncing, setIsSyncing] = useState(false);
