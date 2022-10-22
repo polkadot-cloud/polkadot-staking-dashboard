@@ -202,7 +202,11 @@ export const Tips = () => {
           </PageToggleWrapper>
         </div>
       </CardHeaderWrapper>
-      {isSyncing ? <Syncing /> : <Items items={itemsDisplay} />}
+      {isSyncing ? (
+        <Syncing />
+      ) : (
+        <Items items={itemsDisplay} page={pageRef.current} />
+      )}
     </CardWrapper>
   );
 };

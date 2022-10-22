@@ -7,18 +7,25 @@ import { useAnimationControls } from 'framer-motion';
 import { useTips } from 'contexts/Tips';
 import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
 
-export const ItemsInner = ({ items }: any) => {
+export const ItemsInner = ({ items, page }: any) => {
   const [_items, setItems] = useState(items);
   const controls = useAnimationControls();
 
   useEffect(() => {
+    doControls(true);
+  }, [page]);
+
+  useEffect(() => {
     setItems(items);
-    doControls();
   }, [items]);
 
-  const doControls = async () => {
-    controls.set('hidden');
-    controls.start('show');
+  const doControls = async (transition: boolean) => {
+    if (transition) {
+      controls.set('hidden');
+      controls.start('show');
+    } else {
+      controls.set('show');
+    }
   };
 
   return (
