@@ -137,7 +137,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           box-sizing: border-box;
           margin: 0;
           text-align: left;
-          font-size: 1rem;
+          font-size: 1.05rem;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;

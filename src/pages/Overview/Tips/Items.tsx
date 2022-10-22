@@ -8,16 +8,11 @@ import { useTips } from 'contexts/Tips';
 import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
-  const [_items, setItems] = useState(items);
   const controls = useAnimationControls();
 
   useEffect(() => {
     doControls(true);
   }, [page]);
-
-  useEffect(() => {
-    setItems(items);
-  }, [items]);
 
   const doControls = async (transition: boolean) => {
     if (transition) {
@@ -39,9 +34,9 @@ export const ItemsInner = ({ items, page }: any) => {
         },
       }}
     >
-      {_items.map((item: any, index: number) => (
+      {items.map((item: any, index: number) => (
         <Item
-          key={`tip_${index}`}
+          key={`tip_${index}_${page}`}
           index={index}
           {...item}
           controls={controls}

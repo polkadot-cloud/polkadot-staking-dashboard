@@ -12,7 +12,7 @@ export const TIPS_CONFIG = [
     },
     label: 'Setup',
     title: 'Connect Extensions',
-    subtitle: 'Connect your accounts to begin using staking dashboard.',
+    subtitle: 'Connect to begin using staking dashboard.',
     description: [
       'Connect your accounts to begin using Polkadot staking dashboard.',
       'Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.',
@@ -27,8 +27,8 @@ export const TIPS_CONFIG = [
       segment: 2,
     },
     label: 'Setup',
-    title: 'How Would You Like to Stake?',
-    subtitle: 'Learn about the different ways to stake on {NETWORK_NAME}.',
+    title: 'The different ways to stake',
+    subtitle: 'Nominate directly or join a pool.',
     description: [
       'There are multiple ways to stake on {NETWORK_NAME}.',
       'You can either become a nominator or become a member of a pool.',
@@ -43,9 +43,9 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 3,
     },
-    label: 'Nominator',
-    title: 'Recommended: Become a Nominator',
-    subtitle: 'You have enough {NETWORK_UNIT} to become a nominator.',
+    label: 'Nominating',
+    title: 'Recommended: Nominate',
+    subtitle: 'You have enough {NETWORK_UNIT} to nominate.',
     description: [
       'You have enough {NETWORK_UNIT} to become a nominator and start earning rewards.',
       'Nominating directly does however require you to actively check your backed validators.',
@@ -59,7 +59,7 @@ export const TIPS_CONFIG = [
     },
     label: 'Pools',
     title: 'Recommended: Join a Pool',
-    subtitle: 'Your account is best suited to join a pool.',
+    subtitle: 'Based on your account balance.',
     description: [
       'Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.',
     ],
@@ -70,10 +70,9 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 5,
     },
-    label: 'Nominator',
-    title: 'Manage Your Nominations',
-    subtitle:
-      'Regularly check back to see how your nominations are performing.',
+    label: 'Nominating',
+    title: 'Managing Nominations',
+    subtitle: 'Monitoring nominee performance.',
     description: [
       'Be sure to check the performance of your nominations on a regular basis.',
       'To maximise variety and a decentralised mix of validators, choose validators from a range of entities.',
@@ -86,8 +85,8 @@ export const TIPS_CONFIG = [
       segment: 6,
     },
     label: 'Pools',
-    title: 'Manage Your Pool Membership',
-    subtitle: 'Monitor the performance of your pool.',
+    title: 'Managing Pool Membership',
+    subtitle: 'Monitoring pool performance.',
     description: [
       'Pools will manage nominations on your behalf, but it is still a good idea to check regularly whether your pool is actively earning rewards.',
       "Monitor your pool's status to ensure that it is performing well regularly, and consider joining another pool if you are not receiving any rewards.",
@@ -115,8 +114,8 @@ export const TIPS_CONFIG = [
       segment: 8,
     },
     label: 'Payouts',
-    title: 'Review Payouts',
-    subtitle: 'Keep track of payout frequency and amount you receive.',
+    title: 'Reviewing Payouts',
+    subtitle: 'Monitor payout frequency and amount.',
     description: [
       'Regularly reviewing your Payouts is a good way to gauge how well your nominations are performing.',
       'Go to the Payouts page to get a detailed breakdown of each payout you receive, and by which validator (or pool) the payout came from.',
@@ -129,8 +128,8 @@ export const TIPS_CONFIG = [
       segment: 8,
     },
     label: 'Validators',
-    title: 'Measure Validator Performance Regularly',
-    subtitle: 'Many factors determine how validators perform.',
+    title: 'Measuring Validator Performance',
+    subtitle: 'The factors of validator performance.',
     description: [
       'Various factors of a validator will affect how much they are rewarded, such as the amount of era points it generates, how many nominators are backing it, and whether it is over subscribed.',
       'All these metrics change over time, sometimes in an unpredictable manner.It is therefore important that nominators actively monitor validators and their performance.',
