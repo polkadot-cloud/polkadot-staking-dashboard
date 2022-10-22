@@ -83,7 +83,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         overflow: hidden;
         position: relative;
         width: 100%;
-        height: 1.8rem;
+        height: 1.9rem;
 
         > h4 {
           position: absolute;
@@ -99,8 +99,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          height: 1.9rem;
 
           > span {
+            box-sizing: border-box;
             position: absolute;
             right: 0;
             min-width: 6.2rem;
@@ -113,6 +115,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
             border-radius: 1.5rem;
             opacity: 0.9;
             text-align: center;
+            border: 1px solid ${borderPrimary};
           }
         }
       }
@@ -123,7 +126,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         justify-content: flex-start;
         overflow: hidden;
         width: 100%;
-        height: 1.8rem;
+        height: 1.6rem;
         position: relative;
 
         p {
@@ -133,7 +136,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           left: 0;
           width: 100%;
           box-sizing: border-box;
-          margin: 0.2rem 0 0 0;
+          margin: 0;
           text-align: left;
           font-size: 1rem;
           text-overflow: ellipsis;
