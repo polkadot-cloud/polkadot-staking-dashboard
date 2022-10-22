@@ -115,9 +115,12 @@ const Item = ({ id, title, label, subtitle, icon, index, controls }: any) => {
           />
         </section>
         <section>
-          <h4>
-            {title} <span>{label}</span>
-          </h4>
+          <div className="title">
+            <h4>
+              {title}
+              <span>{label}</span>
+            </h4>
+          </div>
           <div className="desc">
             <p>{subtitle}</p>
           </div>

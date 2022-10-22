@@ -75,27 +75,51 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
       justify-content: center;
       flex: 1;
 
-      h4 {
-        color: ${textPrimary};
-        font-variation-settings: 'wght' 625;
-        margin: 0;
-        font-size: 1.15rem;
+      .title {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        text-align: left;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 1.8rem;
 
-        > span {
-          font-variation-settings: 'wght' 500;
-          background: ${backgroundLabel};
-          color: ${textSecondary};
-          font-size: 0.97rem;
-          margin-left: 0.25rem;
-          padding: 0.3rem 0.6rem;
-          border-radius: 1.5rem;
-          opacity: 0.9;
+        > h4 {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: auto;
+          max-width: 100%;
+          color: ${textPrimary};
+          font-variation-settings: 'wght' 625;
+          margin: 0;
+          font-size: 1.15rem;
+          padding-right: 6.75rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          > span {
+            position: absolute;
+            right: 0;
+            min-width: 6.2rem;
+            font-variation-settings: 'wght' 500;
+            background: ${backgroundLabel};
+            color: ${textSecondary};
+            font-size: 0.97rem;
+            margin-left: 0.25rem;
+            padding: 0rem 0.6rem;
+            border-radius: 1.5rem;
+            opacity: 0.9;
+            text-align: center;
+          }
         }
       }
 
       .desc {
         display: flex;
-        flex-flow: column wrap;
+        flex-flow: column nowrap;
         justify-content: flex-start;
         overflow: hidden;
         width: 100%;
