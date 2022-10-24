@@ -70,6 +70,7 @@ export const ValidatorListInner = (props: any) => {
   const inModal = props.inModal ?? false;
   const allowSearch = props.allowSearch ?? false;
   const allowListFormat = props.allowListFormat ?? true;
+  const alwaysRefetchValidators = props.alwaysRefetchValidators ?? false;
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
@@ -115,10 +116,13 @@ export const ValidatorListInner = (props: any) => {
 
   // reset list when validator list changes
   useEffect(() => {
-    const validatorsEqual =
-      JSON.stringify(props.validators) === JSON.stringify(validatorsDefault);
-
-    if (!validatorsEqual) {
+    if (alwaysRefetchValidators) {
+      if (
+        JSON.stringify(props.validators) !== JSON.stringify(validatorsDefault)
+      ) {
+        setFetched(false);
+      }
+    } else {
       setFetched(false);
     }
   }, [props.validators, nominator]);
