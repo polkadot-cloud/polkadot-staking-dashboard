@@ -1,10 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  SECTION_FULL_WIDTH_THRESHOLD,
-  SIDE_MENU_STICKY_THRESHOLD,
-} from 'consts';
+import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -110,16 +107,16 @@ export const HomeInner = () => {
             <RowPrimaryWrapper
               hOrder={1}
               vOrder={0}
-              thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
-              thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+              thresholdStickyMenu={SideMenuStickyThreshold}
+              thresholdFullWidth={SectionFullWidthThreshold}
             >
               <Status height={ROW_HEIGHT} />
             </RowPrimaryWrapper>
             <RowSecondaryWrapper
               hOrder={0}
               vOrder={1}
-              thresholdStickyMenu={SIDE_MENU_STICKY_THRESHOLD}
-              thresholdFullWidth={SECTION_FULL_WIDTH_THRESHOLD}
+              thresholdStickyMenu={SideMenuStickyThreshold}
+              thresholdFullWidth={SectionFullWidthThreshold}
             >
               <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />

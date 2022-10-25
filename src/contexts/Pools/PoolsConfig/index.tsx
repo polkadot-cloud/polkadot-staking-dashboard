@@ -3,7 +3,7 @@
 
 import { bnToU8a, u8aConcat } from '@polkadot/util';
 import BN from 'bn.js';
-import { EMPTY_H256, MOD_PREFIX, U32_OPTS } from 'consts';
+import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
@@ -176,11 +176,11 @@ export const PoolsConfigProvider = ({
       .createType(
         'AccountId32',
         u8aConcat(
-          MOD_PREFIX,
+          ModPrefix,
           poolsPalletId,
           new Uint8Array([index]),
-          bnToU8a(poolId, U32_OPTS),
-          EMPTY_H256
+          bnToU8a(poolId, U32Opts),
+          EmptyH256
         )
       )
       .toString();

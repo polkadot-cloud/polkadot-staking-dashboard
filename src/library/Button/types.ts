@@ -6,7 +6,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export interface ButtonProps {
   onClick?: () => void;
   primary?: boolean;
-  secondary?: string;
+  secondary?: boolean;
   inline?: boolean;
   small?: boolean;
   disabled?: boolean;

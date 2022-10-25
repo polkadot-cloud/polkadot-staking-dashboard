@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
+import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -70,6 +70,7 @@ export const ValidatorListInner = (props: any) => {
   const inModal = props.inModal ?? false;
   const allowSearch = props.allowSearch ?? false;
   const allowListFormat = props.allowListFormat ?? true;
+  const alwaysRefetchValidators = props.alwaysRefetchValidators ?? false;
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
@@ -106,19 +107,22 @@ export const ValidatorListInner = (props: any) => {
   };
 
   // pagination
-  const totalPages = Math.ceil(validators.length / LIST_ITEMS_PER_PAGE);
-  const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
-  const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
+  const totalPages = Math.ceil(validators.length / ListItemsPerPage);
+  const pageEnd = page * ListItemsPerPage - 1;
+  const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
+  const batchEnd = renderIteration * ListItemsPerBatch - 1;
 
   // reset list when validator list changes
   useEffect(() => {
-    const validatorsEqual =
-      JSON.stringify(props.validators) === JSON.stringify(validatorsDefault);
-
-    if (!validatorsEqual) {
+    if (alwaysRefetchValidators) {
+      if (
+        JSON.stringify(props.validators) !== JSON.stringify(validatorsDefault)
+      ) {
+        setFetched(false);
+      }
+    } else {
       setFetched(false);
     }
   }, [props.validators, nominator]);

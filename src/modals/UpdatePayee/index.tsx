@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PAYEE_STATUS } from 'consts';
+import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -31,7 +31,7 @@ export const UpdatePayee = () => {
 
   const { payee } = staking;
 
-  const _selected: any = PAYEE_STATUS.find((item) => item.key === payee);
+  const _selected: any = PayeeStatus.find((item) => item.key === payee);
   const [selected, setSelected]: any = useState(null);
 
   // reset selected value on account change
@@ -41,7 +41,7 @@ export const UpdatePayee = () => {
 
   // ensure selected key is valid
   useEffect(() => {
-    const exists = PAYEE_STATUS.find((item) => item.key === selected?.key);
+    const exists = PayeeStatus.find((item) => item.key === selected?.key);
     setValid(exists !== undefined);
   }, [selected]);
 
@@ -75,7 +75,7 @@ export const UpdatePayee = () => {
   });
 
   // remove active payee option from selectable items
-  const payeeItems = PAYEE_STATUS.filter((item) => {
+  const payeeItems = PayeeStatus.filter((item) => {
     return item.key !== _selected.key;
   });
 

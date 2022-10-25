@@ -3,7 +3,7 @@
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { ConnectionStatus } from 'contexts/Api/types';
 import { useHelp } from 'contexts/Help';
@@ -47,7 +47,7 @@ export const SideMenu = () => {
   }, []);
 
   const throttleCallback = () => {
-    if (window.innerWidth >= SIDE_MENU_STICKY_THRESHOLD) {
+    if (window.innerWidth >= SideMenuStickyThreshold) {
       setSideMenu(0);
     }
   };
@@ -145,7 +145,7 @@ export const SideMenu = () => {
         </button>
         <button
           type="button"
-          onClick={() => openModalWith('Settings', {}, 'small')}
+          onClick={() => openModalWith('Settings', {}, 'large')}
         >
           <CogOutlineSVG width="1.6rem" height="1.6rem" />
         </button>

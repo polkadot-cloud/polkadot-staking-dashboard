@@ -4,9 +4,9 @@
 import { NotificationsContextInterface } from './types';
 
 export const defaultNotificationsContext: NotificationsContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   addNotification: (n) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   removeNotification: (n) => {},
   notifications: [],
 };

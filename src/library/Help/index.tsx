@@ -13,21 +13,17 @@ import {
   HelpItemRaw,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
+import useFillVariables from 'library/Hooks/useFillVariables';
 import { useEffect } from 'react';
+import { AnyJson } from 'types';
 import Definition from './Items/Definition';
 import External from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
-  const {
-    setStatus,
-    status,
-    fillDefinitionVariables,
-    definition,
-    closeHelp,
-    setDefinition,
-  } = useHelp();
+  const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
   const controls = useAnimation();
+  const { fillVariables } = useFillVariables();
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -86,13 +82,13 @@ export const Help = () => {
   let definitions = meta?.definitions ?? [];
 
   // get active definiton
-  let activeDefinition = definition
+  let activeDefinition: AnyJson = definition
     ? definitions.find((d: HelpDefinition) => d.title === definition)
     : null;
 
   // fill placeholder variables
   activeDefinition = activeDefinition
-    ? fillDefinitionVariables(activeDefinition)
+    ? fillVariables(activeDefinition, ['title', 'description'])
     : null;
 
   // filter active definition
@@ -140,8 +136,8 @@ export const Help = () => {
                 <Definition
                   open
                   onClick={() => {}}
-                  title={activeDefinition.title}
-                  description={activeDefinition.description}
+                  title={activeDefinition?.title}
+                  description={activeDefinition?.description}
                 />
               </>
             )}
@@ -153,8 +149,8 @@ export const Help = () => {
                   {activeDefinition ? `Related ` : ''}
                   Definitions
                 </h3>
-                {definitions.map((item: HelpDefinition, index: number) => {
-                  item = fillDefinitionVariables(item);
+                {definitions.map((item: AnyJson, index: number) => {
+                  item = fillVariables(item, ['title', 'description']);
                   return (
                     <Definition
                       key={`def_${index}`}
