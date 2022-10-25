@@ -1,17 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { motion, useAnimationControls } from 'framer-motion';
 import Lottie from 'react-lottie';
 import React, { useEffect, useState } from 'react';
-import { useAnimationControls } from 'framer-motion';
 import { useTips } from 'contexts/Tips';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
   const controls = useAnimationControls();
 
+  // stores whether this is the initial display of tips
+  const [initial, setInitial] = useState(true);
+
   useEffect(() => {
     doControls(true);
+    setInitial(false);
   }, [page]);
 
   const doControls = async (transition: boolean) => {
@@ -40,28 +46,32 @@ export const ItemsInner = ({ items, page }: any) => {
           index={index}
           {...item}
           controls={controls}
+          initial={initial}
         />
       ))}
     </ItemsWrapper>
   );
 };
 
-const Item = ({ id, title, label, subtitle, icon, index, controls }: any) => {
+const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
   const { openTipWith } = useTips();
 
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
     const delay = index * 75;
-    setTimeout(() => {
-      if (isStopped) {
-        setIsStopped(false);
-      }
-    }, delay);
+
+    if (initial) {
+      setTimeout(() => {
+        if (isStopped) {
+          setIsStopped(false);
+        }
+      }, delay);
+    }
   }, []);
 
   const animateOptions = {
-    loop: true,
+    loop: false,
     autoplay: false,
     animationData: icon,
     rendererSettings: {
@@ -71,25 +81,20 @@ const Item = ({ id, title, label, subtitle, icon, index, controls }: any) => {
 
   return (
     <ItemWrapper
-      type="button"
-      onClick={() => {
-        openTipWith(id, {});
-      }}
       animate={controls}
       custom={index}
       transition={{
         delay: index * 0.2,
-        duration: 0.25,
-        ease: 'easeOut',
+        duration: 0.7,
+        type: 'spring',
+        bounce: 0.35,
       }}
       variants={{
         hidden: {
           y: 15,
-          opacity: 0,
         },
         show: {
           y: 0,
-          opacity: 1,
         },
       }}
     >
@@ -111,13 +116,21 @@ const Item = ({ id, title, label, subtitle, icon, index, controls }: any) => {
         </section>
         <section>
           <div className="title">
-            <h4>
-              {title}
-              <span>{label}</span>
-            </h4>
+            <h3>{title}</h3>
           </div>
           <div className="desc">
-            <p>{subtitle}</p>
+            <h4>
+              {subtitle}
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                onClick={() => openTipWith(id, {})}
+                type="button"
+                className="more"
+              >
+                More
+                <FontAwesomeIcon icon={faChevronRight} />
+              </motion.button>
+            </h4>
           </div>
         </section>
       </ItemInnerWrapper>

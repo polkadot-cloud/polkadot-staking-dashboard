@@ -10,7 +10,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 1,
     },
-    label: 'Setup',
     title: 'Connect Extensions',
     subtitle:
       'Connect your accounts to begin using Polkadot staking dashboard.',
@@ -27,7 +26,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 2,
     },
-    label: 'Setup',
     title: 'How Would You Like to Stake?',
     subtitle: 'Either become a nominator or become a member of a pool.',
     description: [
@@ -44,7 +42,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 3,
     },
-    label: 'Nominator',
     title: 'Recommended: Become a Nominator',
     subtitle: 'You have enough {NETWORK_UNIT} to become a nominator.',
     description: [
@@ -58,7 +55,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 4,
     },
-    label: 'Pools',
     title: 'Recommended: Join a Pool',
     subtitle: 'Your account is best suited to join a pool.',
     description: [
@@ -71,7 +67,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 5,
     },
-    label: 'Nominator',
     title: 'Managing Nominations',
     subtitle:
       'Be sure to check the performance of your nominations on a regular basis.',
@@ -86,7 +81,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 6,
     },
-    label: 'Pools',
     title: 'Managing Pool Membership',
     subtitle:
       "It's a good idea to check regularly whether your pool is actively earning rewards.",
@@ -101,7 +95,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 7,
     },
-    label: 'Pools',
     title: 'Managing Your Pool',
     subtitle: 'It is important to keep your pool actively nominating.',
     description: [
@@ -116,7 +109,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 8,
     },
-    label: 'Payouts',
     title: 'Reviewing Payouts',
     subtitle:
       'Regularly reviewing your payouts is a good way to gauge how well your nominations are performing.',
@@ -131,7 +123,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 8,
     },
-    label: 'Validators',
     title: 'Measuring Validator Performance',
     subtitle: 'Various factors affect how much validators are rewarded.',
     description: [

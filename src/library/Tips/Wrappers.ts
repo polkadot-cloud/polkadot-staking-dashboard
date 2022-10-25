@@ -67,11 +67,11 @@ export const ContentWrapper = styled.div`
   position: relative;
   padding: 5rem 0;
 
-  > .buttons {
+  .close-button {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     position: relative;
 
     > button {

@@ -13,13 +13,13 @@ export const Tip = (props: any) => {
 
   return (
     <>
-      <div className="buttons">
-        <button type="button" onClick={() => closeTip()}>
-          <FontAwesomeIcon icon={faTimes} />
-          Close Tip
-        </button>
-      </div>
       <TipWrapper>
+        <div className="close-button">
+          <button type="button" onClick={() => closeTip()}>
+            <FontAwesomeIcon icon={faTimes} />
+            Close
+          </button>
+        </div>
         <div>
           <h1>{title}</h1>
         </div>

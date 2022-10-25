@@ -31,7 +31,7 @@ export const Syncing = () => {
         },
       }}
     >
-      <ItemWrapper type="button" style={{ cursor: 'default', flexGrow: 1 }}>
+      <ItemWrapper>
         <ItemInnerWrapper inactive>
           <section>
             <Lottie
@@ -44,10 +44,10 @@ export const Syncing = () => {
           </section>
           <section>
             <div className="title">
-              <h4>Syncing with {name}</h4>
+              <h3>Syncing with {name}</h3>
             </div>
             <div className="desc">
-              <p>One moment please...</p>
+              <h4>One moment please...</h4>
             </div>
           </section>
         </ItemInnerWrapper>
