@@ -102,10 +102,10 @@ export const EntryWrapper = styled.div`
       padding-right: 2.25rem;
     }
     @media (min-width: ${SideMenuStickyThreshold + 1}px) {
-      padding: 0 5rem 0 2.75rem;
+      padding: 0 5rem 0 2.5rem;
     }
     @media (min-width: 1500px) {
-      padding: 0 5rem 0 2.75rem;
+      padding: 0 5rem 0 2.5rem;
     }
   }
 `;
