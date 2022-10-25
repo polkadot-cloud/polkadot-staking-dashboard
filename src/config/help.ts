@@ -54,7 +54,7 @@ export const HELP_CONFIG: HelpContentRaw = [
         title: 'Network Stats',
         description: [
           'Real time network statistics that may affect your staking positions.',
-          'Keep up to date on the state of the network from your Overview.',
+          'Keep up to date on the state of the network from your overview.',
         ],
       },
       {
