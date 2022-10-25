@@ -22,25 +22,9 @@ export const TIPS_CONFIG = [
     icon: infoJson,
   },
   {
-    id: 'how_to_stake',
-    meta: {
-      segment: 2,
-    },
-    title: 'How Would You Like to Stake?',
-    subtitle: 'Either become a nominator or become a member of a pool.',
-    description: [
-      'There are multiple ways to stake on {NETWORK_NAME}.',
-      'You can either become a nominator or become a member of a pool.',
-      'Directly nominating requires you to bond {NETWORK_UNIT} and choose validators you wish to back, and to nominate up to {MAX_NOMINATIONS} of them. To earn rewards as a nominator, you currently need to bond at least {MIN_ACTIVE_BOND} {NETWORK_UNIT}.',
-      'Joining a pool is much cheaper, requiring a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. Nominating validators is done on your behalf, and you simply claim rewards from the pool.',
-      'Creating a pool is also possible, requiring a minimum of {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}.',
-    ],
-    icon: helpCenterJson,
-  },
-  {
     id: 'recommended_nominator',
     meta: {
-      segment: 3,
+      segment: 2,
     },
     title: 'Recommended: Become a Nominator',
     subtitle: 'You have enough {NETWORK_UNIT} to become a nominator.',
@@ -53,7 +37,7 @@ export const TIPS_CONFIG = [
   {
     id: 'recommended_join_pool',
     meta: {
-      segment: 4,
+      segment: 3,
     },
     title: 'Recommended: Join a Pool',
     subtitle: 'Your account is best suited to join a pool.',
@@ -61,6 +45,22 @@ export const TIPS_CONFIG = [
       'Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.',
     ],
     icon: infoJson,
+  },
+  {
+    id: 'how_to_stake',
+    meta: {
+      segment: 4,
+    },
+    title: 'How Would You Like to Stake?',
+    subtitle: 'Either become a nominator or become a member of a pool.',
+    description: [
+      'There are multiple ways to stake on {NETWORK_NAME}.',
+      'You can either become a nominator or become a member of a pool.',
+      'Directly nominating requires you to bond {NETWORK_UNIT} and choose validators you wish to back, and to nominate up to {MAX_NOMINATIONS} of them. To earn rewards as a nominator, you currently need to bond at least {MIN_ACTIVE_BOND} {NETWORK_UNIT}.',
+      'Joining a pool is much cheaper, requiring a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. Nominating validators is done on your behalf, and you simply claim rewards from the pool.',
+      'Creating a pool is also possible, requiring a minimum of {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}.',
+    ],
+    icon: helpCenterJson,
   },
   {
     id: 'managing_nominations',
