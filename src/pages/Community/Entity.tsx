@@ -8,7 +8,6 @@ import Button from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import ValidatorList from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
-import { shuffle } from 'Utils';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { useCommunitySections } from './context';
 import { Item } from './Item';
@@ -24,21 +23,21 @@ export const Entity = () => {
   const validators = entityAllValidators[network.name.toLowerCase()] ?? [];
 
   // include validators that exist in `erasStakers`
-  const [shuffledValidators, setShuffledValidators] = useState(
-    shuffle(allValidators.filter((v) => validators.includes(v.address)))
+  const [activeValidators, setActiveValidators] = useState(
+    allValidators.filter((v) => validators.includes(v.address))
   );
 
   useEffect(() => {
-    setShuffledValidators(
+    setActiveValidators(
       allValidators.filter((v) => validators.includes(v.address))
     );
   }, [allValidators, network]);
 
   useEffect(() => {
     removeValidatorMetaBatch(batchKey);
-    const newShuffledValidators = shuffle([...shuffledValidators]);
-    setShuffledValidators(newShuffledValidators);
-  }, [name, network]);
+    const newValidators = [...activeValidators];
+    setActiveValidators(newValidators);
+  }, [name, activeItem, network]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -74,7 +73,7 @@ export const Entity = () => {
           </div>
         ) : (
           <>
-            {shuffledValidators.length === 0 && (
+            {activeValidators.length === 0 && (
               <div className="item">
                 <h3>
                   {validators.length
@@ -83,10 +82,10 @@ export const Entity = () => {
                 </h3>
               </div>
             )}
-            {shuffledValidators.length > 0 && (
+            {activeValidators.length > 0 && (
               <ValidatorList
                 bondType="stake"
-                validators={shuffledValidators}
+                validators={activeValidators}
                 batchKey={batchKey}
                 title={`${name}'s Validators`}
                 selectable={false}
@@ -94,6 +93,7 @@ export const Entity = () => {
                 pagination
                 toggleFavorites
                 allowFilters
+                refetchOnListUpdate
               />
             )}
           </>

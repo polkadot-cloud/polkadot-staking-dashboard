@@ -145,7 +145,7 @@ export const SideMenu = () => {
         </button>
         <button
           type="button"
-          onClick={() => openModalWith('Settings', {}, 'small')}
+          onClick={() => openModalWith('Settings', {}, 'large')}
         >
           <CogOutlineSVG width="1.6rem" height="1.6rem" />
         </button>

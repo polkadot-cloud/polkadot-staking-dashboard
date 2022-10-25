@@ -49,10 +49,17 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
+    flex-grow: ${(props) => (props.withAction ? 1 : 0)};
 
     .help-icon {
       margin-left: 0.5rem;
     }
+  }
+
+  > div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
   }
 `;
 
