@@ -23,11 +23,13 @@ import { useStaking } from 'contexts/Staking';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { TipsThresholdSmall, TipsThresholdMedium } from 'consts';
+import { useApi } from 'contexts/Api';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
 
 export const Tips = () => {
+  const { network } = useApi();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { toggleDismiss } = useTips();
@@ -86,6 +88,11 @@ export const Tips = () => {
     trailing: true,
     leading: false,
   });
+
+  // re-sync page when active account changes
+  useEffect(() => {
+    setStateWithRef(getPage(), setPage, pageRef);
+  }, [activeAccount, network]);
 
   // resize event listener
   useEffect(() => {

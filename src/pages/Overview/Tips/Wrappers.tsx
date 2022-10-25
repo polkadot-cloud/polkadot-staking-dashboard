@@ -83,7 +83,8 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         position: relative;
         width: 100%;
         height: 1.9rem;
-        margin-top: 0.2rem;
+        position: relative;
+        top: 0.2rem;
 
         > h3 {
           position: absolute;

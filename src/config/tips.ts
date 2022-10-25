@@ -43,6 +43,7 @@ export const TIPS_CONFIG = [
     subtitle: 'Your account is best suited to join a pool.',
     description: [
       'Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.',
+      'Joining a pool requires a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}.',
     ],
     icon: infoJson,
   },
