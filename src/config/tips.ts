@@ -129,7 +129,7 @@ export const TIPS_CONFIG = [
     description: [
       'Various factors affect how much validators are rewarded, such as the amount of era points it generates, how many nominators are backing it, and whether it is over subscribed.',
       'All these metrics change over time, sometimes in an unpredictable manner.It is therefore important that nominators actively monitor validators and their performance.',
-      'Staking dashboard provides a range of metrics to help you unserstand how a validator is performing.',
+      'Staking dashboard provides a range of metrics to help you understand how a validator is performing.',
     ],
     icon: infoJson,
   },
