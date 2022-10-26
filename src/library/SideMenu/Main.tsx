@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PAGES_CONFIG, PAGE_CATEGORIES } from 'config/pages';
-import { POLKADOT_URL, URI_PREFIX } from 'consts';
+import { PolkadotUrl, UriPrefix } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -50,7 +50,7 @@ export const Main = () => {
       // set undefined action as default
       _pages[i].action = undefined;
 
-      if (uri === `${URI_PREFIX}/nominate`) {
+      if (uri === `${UriPrefix}/nominate`) {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
@@ -76,7 +76,7 @@ export const Main = () => {
         }
       }
 
-      if (uri === `${URI_PREFIX}/pools`) {
+      if (uri === `${UriPrefix}/pools`) {
         // configure Pools action
         const inPool = membership;
         const setupPercent = getPoolSetupProgressPercent(activeAccount);
@@ -119,7 +119,7 @@ export const Main = () => {
     <>
       <LogoWrapper
         onClick={() => {
-          window.open(POLKADOT_URL, '_blank');
+          window.open(PolkadotUrl, '_blank');
         }}
         minimised={sideMenuMinimised}
       >

@@ -4,9 +4,9 @@
 import { ExtrinsicsContextInterface } from './types';
 
 export const defaultExtrinsicsContext: ExtrinsicsContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   addPending: (t) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   removePending: (t) => {},
   pending: [],
 };

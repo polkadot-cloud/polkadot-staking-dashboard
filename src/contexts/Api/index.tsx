@@ -6,13 +6,13 @@ import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import BN from 'bn.js';
 import { NETWORKS } from 'config/networks';
 import {
-  API_ENDPOINTS,
-  BONDING_DURATION,
-  EXPECTED_BLOCK_TIME,
-  MAX_ELECTING_VOTERS,
-  MAX_NOMINATIONS,
-  MAX_NOMINATOR_REWARDED_PER_VALIDATOR,
-  SESSIONS_PER_ERA,
+  ApiEndpoints,
+  FallbackBondingDuration,
+  FallbackExpectedBlockTime,
+  FallbackMaxElectingVoters,
+  FallbackMaxNominations,
+  FallbackNominatorRewardedPerValidator,
+  FallbackSessionsPerEra,
 } from 'consts';
 import {
   APIConstants,
@@ -109,27 +109,27 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     // format constants
     const bondDuration = _consts[0]
       ? Number(_consts[0].toString())
-      : BONDING_DURATION;
+      : FallbackBondingDuration;
 
     const maxNominations = _consts[1]
       ? Number(_consts[1].toString())
-      : MAX_NOMINATIONS;
+      : FallbackMaxNominations;
 
     const sessionsPerEra = _consts[2]
       ? Number(_consts[2].toString())
-      : SESSIONS_PER_ERA;
+      : FallbackSessionsPerEra;
 
     const maxNominatorRewardedPerValidator = _consts[3]
       ? Number(_consts[3].toString())
-      : MAX_NOMINATOR_REWARDED_PER_VALIDATOR;
+      : FallbackNominatorRewardedPerValidator;
 
     const maxElectingVoters = _consts[4]
       ? Number(_consts[4].toString())
-      : MAX_ELECTING_VOTERS;
+      : FallbackMaxElectingVoters;
 
     const expectedBlockTime = _consts[5]
       ? Number(_consts[5].toString())
-      : EXPECTED_BLOCK_TIME;
+      : FallbackExpectedBlockTime;
 
     const existentialDeposit = _consts[6]
       ? new BN(_consts[6].toString())
@@ -197,7 +197,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // handles fetching of DOT price and updates context state.
   const fetchDotPrice = async () => {
     const urls = [
-      `${API_ENDPOINTS.priceChange}${NETWORKS[network.name].api.priceTicker}`,
+      `${ApiEndpoints.priceChange}${NETWORKS[network.name].api.priceTicker}`,
     ];
     const responses = await Promise.all(
       urls.map((u) => fetch(u, { method: 'GET' }))

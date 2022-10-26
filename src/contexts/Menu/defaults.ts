@@ -6,11 +6,11 @@ import { MenuContextInterface } from './types';
 export const defaultMenuContext: MenuContextInterface = {
   openMenu: () => {},
   closeMenu: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setMenuPosition: (r) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   checkMenuPosition: (r) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setMenuItems: (items) => {},
   open: 0,
   show: 0,

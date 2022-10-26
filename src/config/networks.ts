@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
-import { DEFAULT_PARAMS } from 'consts';
+import { DefaultParams } from 'consts';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
 import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
@@ -58,7 +58,7 @@ export const NETWORKS: Networks = {
       priceTicker: 'DOTUSDT',
     },
     params: {
-      ...DEFAULT_PARAMS,
+      ...DefaultParams,
       stakeTarget: 0.75,
     },
   },
@@ -102,7 +102,7 @@ export const NETWORKS: Networks = {
       priceTicker: 'KSMUSDT',
     },
     params: {
-      ...DEFAULT_PARAMS,
+      ...DefaultParams,
       auctionAdjust: 0.3 / 60,
       auctionMax: 60,
       stakeTarget: 0.75,
@@ -120,8 +120,8 @@ export const NETWORKS: Networks = {
         dark: '#da4e71',
       },
       secondary: {
-        light: '#ff7c4d',
-        dark: '#ff7c4d',
+        light: '#e37c44',
+        dark: '#e37c44',
       },
       transparent: {
         light: 'rgb(218, 78, 113, 0.05)',
@@ -148,7 +148,7 @@ export const NETWORKS: Networks = {
       priceTicker: 'DOTUSDT',
     },
     params: {
-      ...DEFAULT_PARAMS,
+      ...DefaultParams,
       stakeTarget: 0.75,
     },
   },

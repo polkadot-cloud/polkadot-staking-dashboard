@@ -25,7 +25,7 @@ export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
 
   > button {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: center;
     background: ${(props) =>
       props.type === 'invert-primary'
