@@ -30,7 +30,7 @@
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",
     "che-react-number-easing": "^0.1.4",
-    "downshift": "^6.1.7",
+    "downshift": "^7.0.0",
     "follow-redirects": ">=1.14.8",
     "framer-motion": "^7.6.1",
     "lodash.throttle": "^4.1.1",
