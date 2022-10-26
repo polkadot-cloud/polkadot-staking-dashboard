@@ -120,8 +120,9 @@ export const BalanceGraph = () => {
         },
         callbacks: {
           label: (context: any) => {
-            return `${context.label}: ${context.parsed === -1 ? 0 : humanNumber(context.parsed)
-              } ${network.unit}`;
+            return `${context.label}: ${
+              context.parsed === -1 ? 0 : humanNumber(context.parsed)
+            } ${network.unit}`;
           },
         },
       },
@@ -130,24 +131,26 @@ export const BalanceGraph = () => {
   };
 
   // determine stats
-  const _labels = [t('pages.overview.available'),
-  t('pages.overview.unlocking'),
-  t('pages.overview.staking'),
-  t('pages.overview.in_pool')];
+  const _labels = [
+    t('pages.overview.available'),
+    t('pages.overview.unlocking'),
+    t('pages.overview.staking'),
+    t('pages.overview.in_pool'),
+  ];
   const _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
   const _colors = zeroBalance
     ? [
-      defaultThemes.graphs.colors[1][mode],
-      defaultThemes.graphs.inactive2[mode],
-      defaultThemes.graphs.inactive2[mode],
-      defaultThemes.graphs.inactive[mode],
-    ]
+        defaultThemes.graphs.colors[1][mode],
+        defaultThemes.graphs.inactive2[mode],
+        defaultThemes.graphs.inactive2[mode],
+        defaultThemes.graphs.inactive[mode],
+      ]
     : [
-      defaultThemes.graphs.colors[1][mode],
-      defaultThemes.graphs.colors[0][mode],
-      networkColors[`${network.name}-${mode}`],
-      networkColorsSecondary[`${network.name}-${mode}`],
-    ];
+        defaultThemes.graphs.colors[1][mode],
+        defaultThemes.graphs.colors[0][mode],
+        networkColors[`${network.name}-${mode}`],
+        networkColorsSecondary[`${network.name}-${mode}`],
+      ];
 
   // default to a greyscale 50/50 donut on zero balance
   let dataSet;

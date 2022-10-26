@@ -147,15 +147,15 @@ export const PayoutListInner = (props: PayoutListProps) => {
               p.event_id === 'PaidOut'
                 ? t('pages.payouts.pool_claim')
                 : p.event_id === 'Rewarded'
-                  ? t('pages.payouts.payout')
-                  : p.event_id;
+                ? t('pages.payouts.payout')
+                : p.event_id;
 
             const labelClass =
               p.event_id === 'PaidOut'
                 ? 'claim'
                 : p.event_id === 'Rewarded'
-                  ? 'reward'
-                  : undefined;
+                ? 'reward'
+                : undefined;
 
             // get validator if it exists
             const validator = validators.find(
@@ -170,8 +170,8 @@ export const PayoutListInner = (props: PayoutListProps) => {
             const batchIndex = validator
               ? validators.indexOf(validator)
               : pool
-                ? bondedPools.indexOf(pool)
-                : 0;
+              ? bondedPools.indexOf(pool)
+              : 0;
 
             return (
               <motion.div
@@ -229,7 +229,9 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                   pool={pool}
                                 />
                               ) : (
-                                <h4>{t('pages.payouts.from_pool')} {p.pool_id}</h4>
+                                <h4>
+                                  {t('pages.payouts.from_pool')} {p.pool_id}
+                                </h4>
                               )}
                             </>
                           )}
