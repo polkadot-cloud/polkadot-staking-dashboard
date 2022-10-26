@@ -1249,11 +1249,6 @@
   resolved "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.2.0.tgz#76467a94aa888aeb22aafa43eb6ff889df3a5a7f"
   integrity sha512-rBevIsj2nclStJ7AxTdfsa3ovHb1H+qApwrxcTVo+NNdeJiB9V75hsKfrkG5AwNcRUNxrPPiScGYCNmLMoh8pg==
 
-"@fortawesome/fontawesome-common-types@^0.2.36":
-  version "0.2.36"
-  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.36.tgz#b44e52db3b6b20523e0c57ef8c42d315532cb903"
-  integrity sha512-a/7BiSgobHAgBWeN7N0w+lAhInrGxksn13uK7231n2m8EDPE3BMCl9NZLTGrj9ZXfCmC6LM0QLqXidIizVQ6yg==
-
 "@fortawesome/fontawesome-svg-core@6.2.0":
   version "6.2.0"
   resolved "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.2.0.tgz#11856eaf4dd1d865c442ddea1eed8ee855186ba2"
@@ -1268,12 +1263,12 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "6.2.0"
 
-"@fortawesome/free-regular-svg-icons@^5.15.4":
-  version "5.15.4"
-  resolved "https://registry.npmjs.org/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.15.4.tgz#b97edab436954333bbeac09cfc40c6a951081a02"
-  integrity sha512-9VNNnU3CXHy9XednJ3wzQp6SwNwT3XaM26oS4Rp391GsxVYA+0oDR2J194YCIWf7jNRCYKjUCOduxdceLrx+xw==
+"@fortawesome/free-regular-svg-icons@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.2.0.tgz#947e1f03be17da3a60bfeb2666b5348b19448ce2"
+  integrity sha512-M1dG+PAmkYMTL9BSUHFXY5oaHwBYfHCPhbJ8qj8JELsc9XCrUJ6eEHWip4q0tE+h9C0DVyFkwIM9t7QYyCpprQ==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.36"
+    "@fortawesome/fontawesome-common-types" "6.2.0"
 
 "@fortawesome/free-solid-svg-icons@6.2.0":
   version "6.2.0"
@@ -1852,7 +1847,7 @@
     "@polkadot/util" "^10.1.11"
     rxjs "^7.5.7"
 
-"@polkadot/rpc-provider@9.6.1", "@polkadot/rpc-provider@^9.6.1":
+"@polkadot/rpc-provider@9.6.1", "@polkadot/rpc-provider@^9.5.2":
   version "9.6.1"
   resolved "https://registry.npmjs.org/@polkadot/rpc-provider/-/rpc-provider-9.6.1.tgz#7861985a2cd443608b504e861d66d0cebd46e643"
   integrity sha512-dG/qeIXDHYBotZ+xT6lurYClG0dPMmClfXTGteFoSv6nTWwi2nL3RoBWgJZHOSlJBExleenovDQXdOy2YmuiFQ==
@@ -1873,16 +1868,6 @@
 
 "@polkadot/types-augment@9.6.1":
   version "9.6.1"
-  resolved "https://registry.npmjs.org/@polkadot/types-augment/-/types-augment-9.6.1.tgz#8d3cd23852d786e58d09741f8daad9c549335df0"
-  integrity sha512-ZS8XoaeiMpOO5Bbz+4hI5ynsd057kHT5pHZc8PIypQvE/slhzZyBKOW8+MblM4FIyVfR8owz/7nGpOX62zfMiA==
-  dependencies:
-    "@babel/runtime" "^7.19.4"
-    "@polkadot/types" "9.6.1"
-    "@polkadot/types-codec" "9.6.1"
-    "@polkadot/util" "^10.1.11"
-
-"@polkadot/types-augment@9.6.1":
-  version "9.6.1"
   resolved "https://registry.yarnpkg.com/@polkadot/types-augment/-/types-augment-9.6.1.tgz#8d3cd23852d786e58d09741f8daad9c549335df0"
   integrity sha512-ZS8XoaeiMpOO5Bbz+4hI5ynsd057kHT5pHZc8PIypQvE/slhzZyBKOW8+MblM4FIyVfR8owz/7nGpOX62zfMiA==
   dependencies:
@@ -1890,15 +1875,6 @@
     "@polkadot/types" "9.6.1"
     "@polkadot/types-codec" "9.6.1"
     "@polkadot/util" "^10.1.11"
-
-"@polkadot/types-codec@9.5.2":
-  version "9.5.2"
-  resolved "https://registry.npmjs.org/@polkadot/types-codec/-/types-codec-9.5.2.tgz#345c38ccef17651b8cabd159a42810893b5e7e44"
-  integrity sha512-FJPjE3ceTGTcadeC8d5C+aSR8SLKuQrXKIBmMNBky+WwzEo0vufRqxFWcPLxAOEeeUPgBXS967tP15+UU4psGA==
-  dependencies:
-    "@babel/runtime" "^7.19.4"
-    "@polkadot/util" "^10.1.11"
-    "@polkadot/x-bigint" "^10.1.11"
 
 "@polkadot/types-codec@9.6.1", "@polkadot/types-codec@^9.5.2":
   version "9.6.1"
@@ -1909,15 +1885,6 @@
     "@polkadot/util" "^10.1.11"
     "@polkadot/x-bigint" "^10.1.11"
 
-"@polkadot/types-create@9.5.2":
-  version "9.5.2"
-  resolved "https://registry.npmjs.org/@polkadot/types-create/-/types-create-9.5.2.tgz#a85dcb794ea11e5d528baa34b65e57cfafc905cf"
-  integrity sha512-YbplL8K0LqUEHoV3FgZ5B83oVV67KGbLXsWHVVaUZBPsmtXJXrbBfSyJgl/80I2n4lXEBmg3sFAYMbaSTvL05A==
-  dependencies:
-    "@babel/runtime" "^7.19.4"
-    "@polkadot/types-codec" "9.6.1"
-    "@polkadot/util" "^10.1.11"
-
 "@polkadot/types-create@9.6.1":
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/@polkadot/types-create/-/types-create-9.6.1.tgz#689f5b7f2e3aac2c1248455bf3a6f6e3ca2e286e"
@@ -1927,10 +1894,10 @@
     "@polkadot/types-codec" "9.6.1"
     "@polkadot/util" "^10.1.11"
 
-"@polkadot/types-known@9.5.2":
-  version "9.5.2"
-  resolved "https://registry.npmjs.org/@polkadot/types-known/-/types-known-9.5.2.tgz#a71fd08932b1643bbf346321472ed48ab1ade215"
-  integrity sha512-iNaGOF6dGiTvy3Ns8Z7WNjYD1SGnZiapDAKPH4brPuJqMpN6/FxYpfPSSOKx+IJEamsdINcaggb87eWyPxH8CA==
+"@polkadot/types-known@9.6.1":
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-known/-/types-known-9.6.1.tgz#a96b05156a145d350f749752fa7d980d6b1dcc89"
+  integrity sha512-D5Cc3VikkGnZmVbeNEgksgimdYQY/+pdrSr0xzAd2vZV0WBN17UmrXQ2EKGxEhITqt9n75Zsemh0oTIEOuc1WA==
   dependencies:
     "@babel/runtime" "^7.19.4"
     "@polkadot/networks" "^10.1.11"
@@ -1946,20 +1913,6 @@
   dependencies:
     "@babel/runtime" "^7.19.4"
     "@polkadot/util" "^10.1.11"
-
-"@polkadot/types@9.5.2":
-  version "9.5.2"
-  resolved "https://registry.npmjs.org/@polkadot/types/-/types-9.5.2.tgz#33ab2caea08f084141a01038adbe53ed69ab7d9c"
-  integrity sha512-6C5xzOrMK+fu0JMOlSO+8dPDhpwKPOaKMv3v5BMvBEWtDNKM81/QQoAoYT7DSVXq/V16icSFxPs9IWC+6Qq5ag==
-  dependencies:
-    "@babel/runtime" "^7.19.4"
-    "@polkadot/keyring" "^10.1.11"
-    "@polkadot/types-augment" "9.6.1"
-    "@polkadot/types-codec" "9.6.1"
-    "@polkadot/types-create" "9.6.1"
-    "@polkadot/util" "^10.1.11"
-    "@polkadot/util-crypto" "^10.1.11"
-    rxjs "^7.5.7"
 
 "@polkadot/types@9.6.1", "@polkadot/types@^9.6.1":
   version "9.6.1"
