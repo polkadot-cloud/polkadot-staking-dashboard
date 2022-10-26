@@ -21,7 +21,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { humanNumber, registerSaEvent, unitToPlanckBn } from 'Utils';
+import { humanNumber, unitToPlanckBn } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -159,10 +159,7 @@ export const Summary = (props: SetupStepProps) => {
         >
           <Button
             onClick={() => {
-              registerSaEvent(
-                `${network.name.toLowerCase()}_user_created_pool`
-              );
-              submitTx();
+              submitTx(`${network.name.toLowerCase()}_user_created_pool`);
             }}
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
