@@ -21,7 +21,7 @@ export const Membership = ({ label }: { label: string }) => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { openModalWith } = useModal();
   const { bondedPools, meta } = useBondedPools();
-  const { selectedActivePool, isOwner, isMember, isStateToggler } =
+  const { selectedActivePool, isDepositor, isOwner, isMember, isStateToggler } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { active } = getTransferOptions(activeAccount).pool;
@@ -60,7 +60,7 @@ export const Membership = ({ label }: { label: string }) => {
     );
   }
 
-  if (isMember() && active?.gtn(0)) {
+  if (isMember() && !isDepositor() && active?.gtn(0)) {
     paddingRight += 7.9;
     buttons.push(
       <Button
