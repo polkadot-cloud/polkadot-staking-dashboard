@@ -27,7 +27,7 @@ export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
-  const { isSyncing } = useUi();
+  const { poolsSyncing } = useUi();
   const { selectedActivePool, poolNominations } = useActivePools();
   const { openModalWith } = useModal();
   const { getNominationsStatusFromTargets, eraStakers } = useStaking();
@@ -140,7 +140,7 @@ export const Status = ({ height }: { height: number }) => {
       : '';
 
   // determine pool status - right side
-  const poolStatusRight = isSyncing
+  const poolStatusRight = poolsSyncing
     ? 'Inactive: Pool Not Nominating'
     : !isNominating
     ? 'Inactive: Pool Not Nominating'
@@ -161,7 +161,7 @@ export const Status = ({ height }: { height: number }) => {
           label="Pool Membership"
           helpKey="Pool Membership"
           stat="Not in Pool"
-          buttons={isSyncing ? [] : buttons}
+          buttons={poolsSyncing ? [] : buttons}
         />
       )}
       <Separator />
@@ -169,13 +169,13 @@ export const Status = ({ height }: { height: number }) => {
         label="Unclaimed Rewards"
         helpKey="Pool Rewards"
         stat={labelRewards}
-        buttons={isSyncing ? [] : buttonsRewards}
+        buttons={poolsSyncing ? [] : buttonsRewards}
       />
       {selectedActivePool && (
         <>
           <Separator />
           <Stat
-            icon={isSyncing ? undefined : poolStateIcon}
+            icon={poolsSyncing ? undefined : poolStateIcon}
             label="Pool Status"
             helpKey="Nomination Status"
             stat={`${poolStatusLeft}${poolStatusRight}`}

@@ -18,7 +18,7 @@ import {
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { isSyncing } = useUi();
+  const { poolsSyncing } = useUi();
   const { network, consts } = useApi();
   const { selectedActivePool } = useActivePools();
   const { units } = network;
@@ -91,7 +91,7 @@ export const Announcements = () => {
       animate="show"
       style={{ width: '100%' }}
     >
-      {isSyncing ? (
+      {poolsSyncing ? (
         <AnnouncementLoader />
       ) : (
         announcements.map((item, index) => (
