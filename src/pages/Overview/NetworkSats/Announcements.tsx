@@ -21,7 +21,7 @@ import {
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { isSyncing } = useUi();
+  const { networkSyncing } = useUi();
   const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking();
@@ -150,7 +150,7 @@ export const Announcements = () => {
       animate="show"
       style={{ width: '100%' }}
     >
-      {isSyncing ? (
+      {networkSyncing ? (
         <AnnouncementLoader />
       ) : (
         announcements.map((item, index) => (

@@ -43,7 +43,7 @@ export const Pool = (props: PoolProps) => {
   const { addNotification } = useNotifications();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { validators } = useValidators();
-  const { isSyncing } = useUi();
+  const { poolsSyncing } = useUi();
 
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
@@ -173,7 +173,7 @@ export const Pool = (props: PoolProps) => {
         <Separator />
         <div className="row status">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
-          {!isSyncing &&
+          {!poolsSyncing &&
             state === PoolState.Open &&
             !isBonding() &&
             !isReadOnlyAccount(activeAccount) &&

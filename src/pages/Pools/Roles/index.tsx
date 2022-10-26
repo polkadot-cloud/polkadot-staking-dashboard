@@ -31,7 +31,7 @@ export const Roles = (props: RolesProps) => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { isSyncing } = useUi();
+  const { poolsSyncing } = useUi();
   const { openModalWith } = useModal();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
@@ -151,7 +151,7 @@ export const Roles = (props: RolesProps) => {
                   inline
                   primary
                   title="Cancel"
-                  disabled={isSyncing || isReadOnlyAccount(activeAccount)}
+                  disabled={poolsSyncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
               </div>
@@ -166,7 +166,7 @@ export const Roles = (props: RolesProps) => {
                 primary
                 title={isEditing ? 'Save' : 'Edit'}
                 disabled={
-                  isSyncing ||
+                  poolsSyncing ||
                   isReadOnlyAccount(activeAccount) ||
                   !isRoleEditsValid()
                 }
