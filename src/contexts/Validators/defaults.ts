@@ -14,15 +14,15 @@ export const sessionParachainValidators = {
 };
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   fetchValidatorMetaBatch: (k, v, r) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   removeValidatorMetaBatch: (k) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   fetchValidatorPrefs: async (v) => null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   addFavorite: (a) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   removeFavorite: (a) => {},
   validators: [],
   avgCommission: 0,

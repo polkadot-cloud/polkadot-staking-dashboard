@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
+import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -62,12 +62,12 @@ export const PoolListInner = ({
   };
 
   // pagination
-  const totalPages = Math.ceil(_pools.length / LIST_ITEMS_PER_PAGE);
-  const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
-  const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
+  const totalPages = Math.ceil(_pools.length / ListItemsPerPage);
+  const pageEnd = page * ListItemsPerPage - 1;
+  const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
+  const batchEnd = renderIteration * ListItemsPerBatch - 1;
 
   // refetch list when pool list changes
   useEffect(() => {
@@ -105,7 +105,7 @@ export const PoolListInner = ({
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listPools = _pools.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listPools = _pools.slice(pageStart).slice(0, ListItemsPerPage);
   } else {
     listPools = _pools;
   }

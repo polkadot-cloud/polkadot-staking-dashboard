@@ -36,7 +36,6 @@ export interface HelpContextInterface {
   closeHelp: () => void;
   setStatus: (s: number) => void;
   setDefinition: (d: MaybeString) => void;
-  fillDefinitionVariables: (d: HelpDefinition) => HelpDefinition;
   status: number;
   definition: MaybeString;
 }

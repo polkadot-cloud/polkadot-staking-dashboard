@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faHashtag } from '@fortawesome/free-solid-svg-icons';
-import { URI_PREFIX } from 'consts';
+import { UriPrefix } from 'consts';
 import * as analyticsJson from 'img/json/analytics-solid.json';
 import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
-import * as viewGroupJson from 'img/json/groups-solid-edited.json';
+import * as viewGroupJson from 'img/json/groups-solid.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
 import * as view1SolidJson from 'img/json/view-1-solid.json';
 import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
@@ -37,7 +37,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 1,
     key: 'overview',
-    uri: `${URI_PREFIX}/`,
+    uri: `${UriPrefix}/`,
     hash: '/overview',
     Entry: Overview,
     animate: view1SolidJson,
@@ -45,7 +45,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 2,
     key: 'nominate',
-    uri: `${URI_PREFIX}/nominate`,
+    uri: `${UriPrefix}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
     animate: viewTrendingUpJson,
@@ -53,7 +53,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 2,
     key: 'pools',
-    uri: `${URI_PREFIX}/pools`,
+    uri: `${UriPrefix}/pools`,
     hash: '/pools',
     Entry: Pools,
     animate: viewGroupJson,
@@ -61,7 +61,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 2,
     key: 'payouts',
-    uri: `${URI_PREFIX}/payouts`,
+    uri: `${UriPrefix}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
     animate: analyticsJson,
@@ -69,7 +69,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 3,
     key: 'validators',
-    uri: `${URI_PREFIX}/validators`,
+    uri: `${UriPrefix}/validators`,
     hash: '/validators',
     Entry: Browse,
     animate: viewAgendaJson,
@@ -77,7 +77,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 3,
     key: 'community',
-    uri: `${URI_PREFIX}/community`,
+    uri: `${UriPrefix}/community`,
     hash: '/community',
     Entry: Community,
     icon: faHashtag,
@@ -85,7 +85,7 @@ export const PAGES_CONFIG: PagesConfig = [
   {
     category: 3,
     key: 'favorites',
-    uri: `${URI_PREFIX}/favorites`,
+    uri: `${UriPrefix}/favorites`,
     hash: '/favorites',
     Entry: Favorites,
     animate: favoriteHeartJson,

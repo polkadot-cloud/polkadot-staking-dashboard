@@ -7,6 +7,10 @@ export const HELP_CONFIG: any = [
     key: 'overview',
     definitions: [
       {
+        key: 'Dashboard Tips',
+        localeKey: 'overview.definitions.dashboard_tips',
+      },
+      {
         key: 'Supply Staked',
         localeKey: 'overview.definitions.supply_staked',
       },

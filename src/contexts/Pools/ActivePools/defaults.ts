@@ -58,10 +58,10 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   getPoolBondedAccount: () => null,
   getPoolUnlocking: () => [],
   getPoolRoles: () => poolRoles,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setSelectedPoolId: (p) => {},
   selectedActivePool,
   targets,

@@ -9,7 +9,7 @@ import {
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { BN } from 'bn.js';
-import { PAYEE_STATUS } from 'consts';
+import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -81,8 +81,7 @@ export const Status = ({ height }: { height: number }) => {
     }
   }
 
-  const payeeStatus = PAYEE_STATUS.find((item) => item.key === payee);
-  const name = payeeStatus?.name;
+  const payeeStatus = PayeeStatus.find((item) => item.key === payee);
 
   let startTitle = t('pages.nominate.start_nominating');
   if (inSetup()) {
@@ -100,30 +99,29 @@ export const Status = ({ height }: { height: number }) => {
           inSetup() || isSyncing
             ? t('pages.nominate.not_nominating')
             : !nominations.length
-            ? t('pages.nominate.no_nominations_set')
-            : activeNominees.length
-            ? `${t('pages.nominate.nominating_and')} ${
-                earningRewards
+              ? t('pages.nominate.no_nominations_set')
+              : activeNominees.length
+                ? `${t('pages.nominate.nominating_and')} ${earningRewards
                   ? t('pages.nominate.earning_rewards')
                   : t('pages.nominate.not_earning_rewards')
-              }`
-            : t('pages.nominate.waiting_for_active_nominations')
+                }`
+                : t('pages.nominate.waiting_for_active_nominations')
         }
         buttons={
           !inSetup()
             ? []
             : [
-                {
-                  title: startTitle,
-                  icon: faChevronCircleRight,
-                  transform: 'grow-1',
-                  disabled:
-                    !isReady ||
-                    isReadOnlyAccount(activeAccount) ||
-                    !activeAccount,
-                  onClick: () => setOnNominatorSetup(1),
-                },
-              ]
+              {
+                title: startTitle,
+                icon: faChevronCircleRight,
+                transform: 'grow-1',
+                disabled:
+                  !isReady ||
+                  isReadOnlyAccount(activeAccount) ||
+                  !activeAccount,
+                onClick: () => setOnNominatorSetup(1),
+              },
+            ]
         }
       />
       <Separator />
@@ -134,10 +132,10 @@ export const Status = ({ height }: { height: number }) => {
           (payee === null
             ? faCircle
             : payee === 'Staked'
-            ? faRedoAlt
-            : payee === 'None'
-            ? faCircle
-            : faWallet) as IconProp
+              ? faRedoAlt
+              : payee === 'None'
+                ? faCircle
+                : faWallet) as IconProp
         }
         stat={
           inSetup()
@@ -147,15 +145,15 @@ export const Status = ({ height }: { height: number }) => {
         buttons={
           !inSetup()
             ? [
-                {
-                  title: t('pages.nominate.update'),
-                  icon: faWallet,
-                  small: true,
-                  disabled:
-                    inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
-                  onClick: () => openModalWith('UpdatePayee', {}, 'small'),
-                },
-              ]
+              {
+                title: t('pages.nominate.update'),
+                icon: faWallet,
+                small: true,
+                disabled:
+                  inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
+                onClick: () => openModalWith('UpdatePayee', {}, 'small'),
+              },
+            ]
             : []
         }
       />

@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { DEFAULT_NETWORK } from 'consts';
+import { DefaultNetwork } from 'consts';
 import { ThemesProvider } from 'contexts/Themes';
 import { i18next } from 'locale';
 import { I18nextProvider } from 'react-i18next';
@@ -12,7 +12,7 @@ const App: React.FC = () => {
   let network = localStorage.getItem('network');
 
   if (network === null) {
-    network = DEFAULT_NETWORK;
+    network = DefaultNetwork;
     localStorage.setItem('network', network);
   }
 

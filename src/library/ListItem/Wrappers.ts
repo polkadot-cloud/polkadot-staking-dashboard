@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
+import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
@@ -78,7 +78,7 @@ export const Labels = styled.div`
 
   button {
     padding: 0 0.1rem;
-    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
+    @media (min-width: ${SmallFontSizeMaxWidth}px) {
       padding: 0 0.2rem;
     }
 
@@ -98,7 +98,7 @@ export const Labels = styled.div`
     position: relative;
     color: ${textSecondary};
     margin: 0 0.2rem;
-    @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH}px) {
+    @media (min-width: ${SmallFontSizeMaxWidth}px) {
       margin: 0 0.2rem;
 
       &.pool {
@@ -172,7 +172,7 @@ export const IdentityWrapper = styled(motion.div)`
     width: 100%;
     height: 3.2rem;
     line-height: 3.2rem;
-    padding: 0 0 0 0.4rem;
+    padding: 0 0 0 0.3rem;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { DefinitionWrapper } from '../Wrappers';
 
-export const Heading = (props: any) => {
+export const Definition = (props: any) => {
   const { title, description, open: _open } = props;
 
   const [open, setOpen] = useState(_open || false);
@@ -34,4 +34,4 @@ export const Heading = (props: any) => {
   );
 };
 
-export default Heading;
+export default Definition;

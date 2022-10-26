@@ -4,23 +4,23 @@
 import { ConnectContextInterface } from 'contexts/Connect/types';
 
 export const defaultConnectContext: ConnectContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   formatAccountSs58: (a: string) => null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   connectExtensionAccounts: (e) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   getAccount: (a) => null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   connectToAccount: (a) => {},
   disconnectFromAccount: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   addExternalAccount: (a, b) => {},
   getActiveAccount: () => null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   accountHasSigner: (a) => false,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   isReadOnlyAccount: (a) => false,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   forgetAccounts: (a) => {},
   extensions: [],
   extensionsStatus: {},

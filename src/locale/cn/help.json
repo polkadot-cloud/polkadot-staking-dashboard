@@ -1,6 +1,13 @@
 {
     "overview": {
         "definitions": {
+            "dashboard_tips": {
+                "title": "Dashboard Tips",
+                "description": [
+                    "该应用将为您提供提示，帮助您完成在波卡抵押中的每一步.",
+                    "您可通过侧菜单左下角的齿轮图标访问设置中关闭或启用提示."
+                ]
+            },
             "supply_staked": {
                 "title": "抵押比例",
                 "description": [
@@ -77,7 +84,7 @@
                     "当前的抵押状态.",
                     "当这些提名人中没有一个是在当前活跃验证人群内（被选择用于验证网络的验证人群体）时，这组提名将处于非活跃状态.",
                     "当您的被提名人中至少有一人是活跃时，此提名状态将显示为活跃提名-但这仍然不能保证奖励.",
-                    "每个活跃验证人的前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}提名人可获得{NETWORK_NAME}奖励。因此，如果被提名人活跃且超额认购，您必须是{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}最高质押提名人里的一员才能获得奖励.",
+                    "每个活跃验证人的前{FallbackNominatorRewardedPerValidator}提名人可获得{NETWORK_NAME}奖励。因此，如果被提名人活跃且超额认购，您必须是{FallbackNominatorRewardedPerValidator}最高质押提名人里的一员才能获得奖励.",
                     "如果一位活跃的被提名人没有超额认购，您将获得奖励."
                 ]
             },
@@ -103,7 +110,7 @@
                 "description": [
                     "在一个Era中为保持活跃提名的所需的{NETWORK_UNIT}数量. ",
                     "高于这个标准能保证可以一直在这个Era的活跃提名人名单中. 但这数额不保证能得到奖励,因为您的活跃提名人有超额认选的可能.",
-                    "在{NETWORK_NAME},只有前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能获得每个验证人的奖励. 确保您的活跃度质押金额高于此阈值将增加获得奖励的机会.",
+                    "在{NETWORK_NAME},只有前{FallbackNominatorRewardedPerValidator}名提名人才能获得每个验证人的奖励. 确保您的活跃度质押金额高于此阈值将增加获得奖励的机会.",
                     "可以从页面中追踪这些指标, 并在必要时执行抵押操作如增加{NETWORK_UNIT}或更改提名."
                 ]
             },
@@ -124,7 +131,7 @@
             "nominations": {
                 "title": "提名",
                 "description": [
-                    "提名指选择验证人. 在{NETWORK_NAME}里最高提名数为 {MAX_NOMINATIONS}.",
+                    "提名指选择验证人. 在{NETWORK_NAME}里最高提名数为 {FallbackMaxNominations}.",
                     "一旦提名一交, 质押金额会自动分配给当前Era活跃的提名人.",
                     "只要本人提名中至少有一个提名在当前session中活跃执行验证,您的资金就会与该验证人绑定从而获得奖励."
                 ]
@@ -289,7 +296,7 @@
             "over_subscribed": {
                 "title": "超额认选",
                 "description": [
-                    "只有每个验证人的前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能在{NETWORK_NAME}获得奖励. 当超过该数时,该验证人将被视为超额认选."
+                    "只有每个验证人的前{FallbackNominatorRewardedPerValidator}名提名人才能在{NETWORK_NAME}获得奖励. 当超过该数时,该验证人将被视为超额认选."
                 ]
             },
             "blocked_nominations": {

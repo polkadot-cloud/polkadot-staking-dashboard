@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
+import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -62,12 +62,12 @@ export const PayoutListInner = (props: PayoutListProps) => {
   };
 
   // pagination
-  const totalPages = Math.ceil(payouts.length / LIST_ITEMS_PER_PAGE);
-  const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
-  const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
+  const totalPages = Math.ceil(payouts.length / ListItemsPerPage);
+  const pageEnd = page * ListItemsPerPage - 1;
+  const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
+  const batchEnd = renderIteration * ListItemsPerBatch - 1;
 
   // refetch list when list changes
   useEffect(() => {
@@ -96,7 +96,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listPayouts = payouts.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listPayouts = payouts.slice(pageStart).slice(0, ListItemsPerPage);
   } else {
     listPayouts = payouts;
   }
@@ -142,43 +142,36 @@ export const PayoutListInner = (props: PayoutListProps) => {
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
-          {listPayouts.map((payout: AnySubscan, index: number) => {
-            const {
-              amount,
-              block_timestamp,
-              event_id,
-              validator_stash,
-              pool_id,
-            } = payout;
+          {listPayouts.map((p: AnySubscan, index: number) => {
             const label =
-              event_id === 'PaidOut'
+              p.event_id === 'PaidOut'
                 ? t('pages.payouts.pool_claim')
-                : event_id === 'Rewarded'
-                ? t('pages.payouts.payout')
-                : event_id;
+                : p.event_id === 'Rewarded'
+                  ? t('pages.payouts.payout')
+                  : p.event_id;
 
             const labelClass =
-              event_id === 'PaidOut'
+              p.event_id === 'PaidOut'
                 ? 'claim'
-                : event_id === 'Rewarded'
-                ? 'reward'
-                : undefined;
+                : p.event_id === 'Rewarded'
+                  ? 'reward'
+                  : undefined;
 
             // get validator if it exists
             const validator = validators.find(
-              (v: Validator) => v.address === validator_stash
+              (v: Validator) => v.address === p.validator_stash
             );
 
             // get pool if it exists
             const pool = bondedPools.find(
-              (p: BondedPool) => String(p.id) === String(pool_id)
+              (_p: BondedPool) => String(_p.id) === String(p.pool_id)
             );
 
             const batchIndex = validator
               ? validators.indexOf(validator)
               : pool
-              ? bondedPools.indexOf(pool)
-              : 0;
+                ? bondedPools.indexOf(pool)
+                : 0;
 
             return (
               <motion.div
@@ -201,8 +194,8 @@ export const PayoutListInner = (props: PayoutListProps) => {
                       <div>
                         <div>
                           <h4 className={`${labelClass}`}>
-                            {event_id === 'Slashed' ? '-' : '+'}
-                            {planckToUnit(amount, units)} {network.unit}
+                            {p.event_id === 'Slashed' ? '-' : '+'}
+                            {planckToUnit(p.amount, units)} {network.unit}
                           </h4>
                         </div>
                         <div>
@@ -218,12 +211,12 @@ export const PayoutListInner = (props: PayoutListProps) => {
                               {batchIndex > 0 ? (
                                 <Identity
                                   meta={meta}
-                                  address={validator_stash}
+                                  address={p.validator_stash}
                                   batchIndex={batchIndex}
                                   batchKey={batchKey}
                                 />
                               ) : (
-                                <div>{clipAddress(validator_stash)}</div>
+                                <div>{clipAddress(p.validator_stash)}</div>
                               )}
                             </>
                           )}
@@ -236,9 +229,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                   pool={pool}
                                 />
                               ) : (
-                                <h4>
-                                  {t('pages.payouts.from_pool')} {pool_id}
-                                </h4>
+                                <h4>{t('pages.payouts.from_pool')} {p.pool_id}</h4>
                               )}
                             </>
                           )}
@@ -247,7 +238,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                           )}
                         </div>
                         <div>
-                          <h5>{moment.unix(block_timestamp).fromNow()}</h5>
+                          <h5>{moment.unix(p.block_timestamp).fromNow()}</h5>
                         </div>
                       </div>
                     </div>

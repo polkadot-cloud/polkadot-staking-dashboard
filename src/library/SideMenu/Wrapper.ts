@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  SIDE_MENU_MAXIMISED_WIDTH,
-  SIDE_MENU_MINIMISED_WIDTH,
-  SIDE_MENU_STICKY_THRESHOLD,
+  SideMenuMaximisedWidth,
+  SideMenuMinimisedWidth,
+  SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
 import {
@@ -29,10 +29,10 @@ export const Wrapper = styled.div<MinimisedProps>`
   backdrop-filter: blur(4px);
   width: ${(props) =>
     props.minimised
-      ? `${SIDE_MENU_MINIMISED_WIDTH}px`
-      : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
+      ? `${SideMenuMinimisedWidth}px`
+      : `${SideMenuMaximisedWidth}px`};
 
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     background: ${backgroundOverlay};
     transition: all 0.2s;
     border-radius: 0.75rem;

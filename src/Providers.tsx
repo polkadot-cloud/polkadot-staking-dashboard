@@ -29,6 +29,7 @@ import { StakingProvider } from './contexts/Staking';
 import { SubscanProvider } from './contexts/Subscan';
 import { useTheme } from './contexts/Themes';
 import { UIProvider } from './contexts/UI';
+import { TipsProvider } from './contexts/Tips';
 import { ValidatorsProvider } from './contexts/Validators';
 
 export const WrappedRouter = () => (
@@ -74,7 +75,8 @@ export const Providers = withProviders(
   TxFeesProvider,
   ExtrinsicsProvider,
   ModalProvider,
-  SessionEraProvider
+  SessionEraProvider,
+  TipsProvider
 )(ThemedRouter);
 
 export default Providers;
