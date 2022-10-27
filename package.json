@@ -55,7 +55,6 @@
     "yarn": "^1.22.18"
   },
   "devDependencies": {
-    "@types/": "faker-js/faker",
     "@types/jest": "^27.4.0",
     "@types/node": "^16.11.22",
     "@types/react": "^18.0.15",

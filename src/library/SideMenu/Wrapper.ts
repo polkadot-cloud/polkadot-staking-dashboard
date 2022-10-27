@@ -10,7 +10,6 @@ import styled from 'styled-components';
 import {
   backgroundOverlay,
   borderPrimary,
-  modalBackground,
   networkColor,
   textSecondary,
 } from 'theme';
