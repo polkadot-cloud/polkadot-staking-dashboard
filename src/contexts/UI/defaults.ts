@@ -50,5 +50,7 @@ export const defaultUIContext: UIContextInterface = {
   onNominatorSetup: 0,
   onPoolSetup: 0,
   isSyncing: false,
+  networkSyncing: false,
+  poolsSyncing: false,
   containerRefs: {},
 };

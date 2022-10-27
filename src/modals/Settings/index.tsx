@@ -14,8 +14,9 @@ export const Settings = () => {
 
   return (
     <>
-      <Title title="Toggle Services" />
+      <Title title="Settings" />
       <PaddingWrapper>
+        <h4>Toggle Services</h4>
         <StatusButton
           checked={services.includes('subscan')}
           label="Subscan API"
@@ -32,6 +33,16 @@ export const Settings = () => {
             }}
           />
         )}
+
+        <h4>Toggle Features</h4>
+
+        <StatusButton
+          checked={services.includes('tips')}
+          label="Dashboard Tips"
+          onClick={() => {
+            toggleService('tips');
+          }}
+        />
       </PaddingWrapper>
     </>
   );

@@ -98,14 +98,14 @@ export const EntryWrapper = styled.div`
     padding-right: 1.25rem;
 
     @media (min-width: ${ShowAccountsButtonWidthThreshold + 1}px) {
-      padding-left: 1.75rem;
-      padding-right: 1.75rem;
+      padding-left: 2.25rem;
+      padding-right: 2.25rem;
     }
     @media (min-width: ${SideMenuStickyThreshold + 1}px) {
-      padding: 0 3rem 0 1rem;
+      padding: 0 5rem 0 2.5rem;
     }
     @media (min-width: 1500px) {
-      padding: 0 5rem 0 1rem;
+      padding: 0 5rem 0 2.5rem;
     }
   }
 `;

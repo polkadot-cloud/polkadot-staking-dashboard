@@ -12,6 +12,7 @@ import {
   buttonSecondaryBackground,
   networkColor,
   textPrimary,
+  textSecondary,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -37,6 +38,7 @@ export const Wrapper = styled.div`
   .menu {
     display: none;
     @media (max-width: ${SideMenuStickyThreshold}px) {
+      color: ${textSecondary};
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
@@ -80,13 +82,11 @@ export const Item = styled(motion.button)`
     color: white;
     line-height: 2.2rem;
   }
+
   &.connect {
     background: ${networkColor};
     > span {
       color: 'white';
-      svg {
-        color: white;
-      }
     }
     .icon {
       margin-right: 0.6rem;
@@ -94,9 +94,6 @@ export const Item = styled(motion.button)`
         fill: white;
       }
     }
-  }
-  path {
-    fill: white;
   }
 `;
 

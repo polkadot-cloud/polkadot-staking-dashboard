@@ -28,5 +28,7 @@ export interface UIContextInterface {
   onNominatorSetup: number;
   onPoolSetup: number;
   isSyncing: boolean;
+  networkSyncing: boolean;
+  poolsSyncing: boolean;
   containerRefs: any;
 }
