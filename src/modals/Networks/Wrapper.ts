@@ -150,6 +150,7 @@ export const ConnectionsWrapper = styled.div`
 export const ConnectionButton = styled.button<NetworkButtonProps>`
   background: ${buttonPrimaryBackground};
   padding: 0.75rem 0.75rem;
+  margin-bottom: 1rem;
   margin-right: 0.5rem;
   border-radius: 0.5rem;
   border: 1px solid ${successTransparent};
