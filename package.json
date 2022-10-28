@@ -48,7 +48,7 @@
     "@types/jest": "^27.4.0",
     "@types/lodash.throttle": "^4.1.6",
     "@types/node": "^16.11.22",
-    "@types/react": "^18.0.15",
+    "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.5",
     "@types/styled-components": "^5.1.21",
     "@types/styled-theming": "^2.2.5",
