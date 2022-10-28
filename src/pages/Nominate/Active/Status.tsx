@@ -141,7 +141,7 @@ export const Status = ({ height }: { height: number }) => {
         stat={
           inSetup()
             ? t('pages.nominate.not_assigned')
-            : t(`${name}`) ?? t('pages.nominate.not_assigned')
+            : payeeStatus?.name ?? t('pages.nominate.not_assigned')
         }
         buttons={
           !inSetup()

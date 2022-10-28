@@ -36,7 +36,7 @@ export const Settings = () => {
           />
         )}
 
-        <h4>Toggle Features</h4>
+        <h4>{t('modals.toggle_features')}</h4>
 
         <StatusButton
           checked={services.includes('tips')}

@@ -15,16 +15,16 @@ import {
 } from 'contexts/Help/types';
 import { useTranslation } from 'react-i18next';
 import { useAnimation } from 'framer-motion';
-import useFillVariables from 'library/Hooks/useFillVariables';
 import { useEffect } from 'react';
-import { AnyJson } from 'types';
+import useFillVariables from 'library/Hooks/useFillVariables';
+import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import Definition from './Items/Definition';
 import External from './Items/External';
 
 export const Help = () => {
   const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
-  const controls = useAnimation();
   const { fillVariables } = useFillVariables();
+  const controls = useAnimation();
   const { t } = useTranslation('common');
   const { t: tHelp, i18n } = useTranslation('help');
 
@@ -64,8 +64,6 @@ export const Help = () => {
 
   let meta: any | undefined;
 
-  // if a definition is provided, get it from help config, otherwise
-  // return all definitions and external items from the category.
   if (definition) {
     // get items for active category
     meta = Object.values(HELP_CONFIG).find((c: any) =>
@@ -90,142 +88,140 @@ export const Help = () => {
     .map((d: HelpRecord) => {
       const { localeKey } = d;
 
-      return fillDefinitionVariables({
-        title: tHelp(`${localeKey}.title`),
-        description: i18n.getResource(
-          i18n.resolvedLanguage,
-          'help',
-          `${localeKey}.description`
-        ),
-      });
+      return fillVariables(activeRecord, ['title', 'description']);
+
+      // return fillDefinitionVariables({
+      //   title: tHelp(`${localeKey}.title`),
+      //   description: i18n.getResource(
+      //     i18n.resolvedLanguage,
+      //     'help',
+      //     `${localeKey}.description`
+      //   ),
+      // });
     });
 
   // get active definiton
-  let activeDefinition: AnyJson = definition
-    ? definitions.find((d: HelpDefinition) => d.title === definition)
+  const activeRecord = definition
+    ? definitions.find((d: HelpRecord) => d.key === definition)
     : null;
 
-  // fill placeholder variables
-  activeDefinition = activeDefinition
-    ? fillVariables(activeDefinition, ['title', 'description'])
-    : null;
+  let activeDefinition: HelpDefinition | null = null;
+  if (activeRecord) {
+    const { localeKey } = activeRecord;
 
-  const title = tHelp(`${localeKey}.title`);
-  const description = i18n.getResource(
-    i18n.resolvedLanguage,
-    'help',
-    `${localeKey}.description`
-  );
-  // activeDefinition = fillDefinitionVariables({
-  //   title,
-  //   description,
-  // });
+    const title = tHelp(`${localeKey}.title`);
+    const description = i18n.getResource(
+      i18n.resolvedLanguage,
+      'help',
+      `${localeKey}.description`
+    );
 
-  // filter active definition
-  definitions = definitions.filter((d: HelpRecord) => d.key !== definition);
-}
+    activeDefinition = fillVariables(activeRecord, ['title', 'description']);
 
-// accumulate external resources
-const externals = meta?.external ?? [];
-const activeExternals = externals.map((e: ExternalRecord) => {
-  const { localeKey, url, website } = e;
+    // filter active definition
+    definitions = definitions.filter((d: HelpRecord) => d.key !== definition);
+  }
 
-  return {
-    title: tHelp(localeKey),
-    url,
-    website,
-  };
-});
+  // accumulate external resources
+  const externals = meta?.external ?? [];
+  const activeExternals = externals.map((e: ExternalRecord) => {
+    const { localeKey, url, website } = e;
 
-return (
-  <Wrapper
-    initial={{
-      opacity: 0,
-    }}
-    animate={controls}
-    transition={{
-      duration: 0.25,
-    }}
-    variants={variants}
-  >
-    <div>
-      <HeightWrapper>
-        <ContentWrapper>
-          <div className="buttons">
-            {activeDefinition && (
-              <button type="button" onClick={() => setDefinition(null)}>
-                <FontAwesomeIcon icon={faReplyAll} />
-                {t('library.all_resources')}
+    return {
+      title: tHelp(localeKey),
+      url,
+      website,
+    };
+  });
+
+  return (
+    <Wrapper
+      initial={{
+        opacity: 0,
+      }}
+      animate={controls}
+      transition={{
+        duration: 0.25,
+      }}
+      variants={variants}
+    >
+      <div>
+        <HeightWrapper>
+          <ContentWrapper>
+            <div className="buttons">
+              {activeDefinition && (
+                <button type="button" onClick={() => setDefinition(null)}>
+                  <FontAwesomeIcon icon={faReplyAll} />
+                  {t('library.all_resources')}
+                </button>
+              )}
+              <button type="button" onClick={() => closeHelp()}>
+                <FontAwesomeIcon icon={faTimes} />
+                {t('library.close')}
               </button>
-            )}
-            <button type="button" onClick={() => closeHelp()}>
-              <FontAwesomeIcon icon={faTimes} />
-              {t('library.close')}
-            </button>
-          </div>
-          <h1>
-            {activeDefinition
-              ? `${activeDefinition.title}`
-              : `${t('library.help_resources')}`}
-          </h1>
+            </div>
+            <h1>
+              {activeDefinition
+                ? `${activeDefinition.title}`
+                : `${t('library.help_resources')}`}
+            </h1>
 
-          {activeDefinition !== null && (
-            <>
-              <Definition
-                open
-                onClick={() => { }}
-                title={activeDefinition?.title}
-                description={activeDefinition?.description}
-              />
-            </>
-          )}
-
-          {activeDefinitions.length > 0 && (
-            <>
-              <h3>
-                {activeDefinition ? `${t('library.related')} ` : ''}
-                {t('library.definitions')}
-              </h3>
-              {definitions.map((item: AnyJson, index: number) => {
-                item = fillVariables(item, ['title', 'description']);
-                return (
-                  <Definition
-                    key={`def_${index}`}
-                    onClick={() => { }}
-                    title={item.title}
-                    description={item.description}
-                  />
-                )
-                )}
-            </>
-          )}
-
-          {activeExternals.length > 0 && (
-            <>
-              <h3>{t('library.articles')}</h3>
-              {activeExternals.map((item: HelpExternal, index: number) => (
-                <External
-                  key={`ext_${index}`}
-                  width="100%"
-                  title={t(item.title)}
-                  url={item.url}
-                  website={item.website}
+            {activeDefinition !== null && (
+              <>
+                <Definition
+                  open
+                  onClick={() => {}}
+                  title={activeDefinition.title}
+                  description={activeDefinition.description}
                 />
-              ))}
-            </>
-          )}
-        </ContentWrapper>
-      </HeightWrapper>
-      <button
-        type="button"
-        className="close"
-        onClick={() => {
-          closeHelp();
-        }}
-      >
-        &nbsp;
-      </button>
-    </div>
-  </Wrapper>
-);
+              </>
+            )}
+
+            {activeDefinitions.length > 0 && (
+              <>
+                <h3>
+                  {activeDefinition ? `${t('library.related')} ` : ''}
+                  {t('library.definitions')}
+                </h3>
+                {activeDefinitions.map(
+                  (item: HelpDefinition, index: number) => (
+                    <Definition
+                      key={`def_${index}`}
+                      onClick={() => {}}
+                      title={item.title}
+                      description={item.description}
+                    />
+                  )
+                )}
+              </>
+            )}
+
+            {activeExternals.length > 0 && (
+              <>
+                <h3>{t('library.articles')}</h3>
+                {activeExternals.map((item: HelpExternal, index: number) => (
+                  <External
+                    key={`ext_${index}`}
+                    width="100%"
+                    title={t(item.title)}
+                    url={item.url}
+                    website={item.website}
+                  />
+                ))}
+              </>
+            )}
+          </ContentWrapper>
+        </HeightWrapper>
+        <button
+          type="button"
+          className="close"
+          onClick={() => {
+            closeHelp();
+          }}
+        >
+          &nbsp;
+        </button>
+      </div>
+    </Wrapper>
+  );
 };
