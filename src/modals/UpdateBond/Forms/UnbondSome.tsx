@@ -134,7 +134,7 @@ export const UnbondSome = (props: FormsProps) => {
         <>
           {unclaimedRewards > 0 && bondType === 'pool' && (
             <Warning
-              text={`Unbonding will also withdraw your current outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
             />
           )}
           <UnbondFeedback
