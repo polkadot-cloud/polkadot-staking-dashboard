@@ -116,10 +116,10 @@ export const Help = () => {
     'help',
     `${localeKey}.description`
   );
-  activeDefinition = fillDefinitionVariables({
-    title,
-    description,
-  });
+  // activeDefinition = fillDefinitionVariables({
+  //   title,
+  //   description,
+  // });
 
   // filter active definition
   definitions = definitions.filter((d: HelpRecord) => d.key !== definition);
