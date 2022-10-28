@@ -18,7 +18,7 @@ export const Connected = () => {
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
   const { selectedActivePool } = useActivePools();
-  const { isSyncing } = useUi();
+  const { networkSyncing } = useUi();
   const { t } = useTranslation('common');
 
   let poolAddress = '';
@@ -27,11 +27,11 @@ export const Connected = () => {
     poolAddress = addresses.stash;
   }
 
-  const activeAccountLabel = isSyncing
+  const activeAccountLabel = networkSyncing
     ? undefined
     : hasController()
-    ? 'Stash'
-    : undefined;
+      ? 'Stash'
+      : undefined;
 
   return (
     <>
@@ -50,7 +50,7 @@ export const Connected = () => {
           </HeadingWrapper>
 
           {/* controller account display / hide if no controller present */}
-          {hasController() && !isSyncing && (
+          {hasController() && !networkSyncing && (
             <HeadingWrapper>
               <Account
                 value={controller ?? ''}
@@ -71,14 +71,14 @@ export const Connected = () => {
           )}
 
           {/* pool account display / hide if not in pool */}
-          {selectedActivePool !== null && !isSyncing && (
+          {selectedActivePool !== null && !networkSyncing && (
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}
                 pool={selectedActivePool}
                 label={t('library.pool')}
                 canClick={false}
-                onClick={() => {}}
+                onClick={() => { }}
                 filled
               />
             </HeadingWrapper>

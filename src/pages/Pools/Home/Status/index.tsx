@@ -28,7 +28,7 @@ export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
-  const { isSyncing } = useUi();
+  const { poolsSyncing } = useUi();
   const { selectedActivePool, poolNominations } = useActivePools();
   const { openModalWith } = useModal();
   const { getNominationsStatusFromTargets, eraStakers } = useStaking();
@@ -64,26 +64,26 @@ export const Status = ({ height }: { height: number }) => {
 
   const buttonsRewards = unclaimedRewards.gt(minUnclaimedDisplay)
     ? [
-        {
-          title: t('pages.pools.withdraw'),
-          icon: faShare,
-          disabled: !isReady || isReadOnlyAccount(activeAccount),
-          small: true,
-          onClick: () =>
-            openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
-        },
-        {
-          title: t('pages.pools.bond'),
-          icon: faPlus,
-          disabled:
-            !isReady ||
-            isReadOnlyAccount(activeAccount) ||
-            poolState === PoolState.Destroy,
-          small: true,
-          onClick: () =>
-            openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
-        },
-      ]
+      {
+        title: t('pages.pools.withdraw'),
+        icon: faShare,
+        disabled: !isReady || isReadOnlyAccount(activeAccount),
+        small: true,
+        onClick: () =>
+          openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
+      },
+      {
+        title: t('pages.pools.bond'),
+        icon: faPlus,
+        disabled:
+          !isReady ||
+          isReadOnlyAccount(activeAccount) ||
+          poolState === PoolState.Destroy,
+        small: true,
+        onClick: () =>
+          openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
+      },
+    ]
     : undefined;
 
   let poolStateIcon;
@@ -138,21 +138,20 @@ export const Status = ({ height }: { height: number }) => {
     poolState === PoolState.Block
       ? t('pages.pools.locked1')
       : poolState === PoolState.Destroy
-      ? t('pages.pools.destroying1')
-      : '';
+        ? t('pages.pools.destroying1')
+        : '';
 
   // determine pool status - right side
-  const poolStatusRight = isSyncing
+  const poolStatusRight = poolsSyncing
     ? t('pages.pools.inactive_pool_not_nominating')
     : !isNominating
-    ? t('pages.pools.inactive_pool_not_nominating')
-    : activeNominees.length
-    ? `${t('pages.pools.nominating_and')} ${
-        earningRewards
+      ? t('pages.pools.inactive_pool_not_nominating')
+      : activeNominees.length
+        ? `${t('pages.pools.nominating_and')} ${earningRewards
           ? t('pages.pools.earning_rewards')
           : t('pages.pools.not_earning_rewards')
-      }`
-    : t('pages.pools.waiting_for_active_nominations');
+        }`
+        : t('pages.pools.waiting_for_active_nominations');
 
   const { label, buttons } = useStatusButtons();
 
@@ -165,7 +164,7 @@ export const Status = ({ height }: { height: number }) => {
           label={t('pages.pools.pool_membership')}
           helpKey="Pool Membership"
           stat={t('pages.pools.not_in_pool')}
-          buttons={isSyncing ? [] : buttons}
+          buttons={poolsSyncing ? [] : buttons}
         />
       )}
       <Separator />
@@ -173,13 +172,13 @@ export const Status = ({ height }: { height: number }) => {
         label={t('pages.pools.unclaimed_rewards')}
         helpKey="Pool Rewards"
         stat={labelRewards}
-        buttons={isSyncing ? [] : buttonsRewards}
+        buttons={poolsSyncing ? [] : buttonsRewards}
       />
       {selectedActivePool && (
         <>
           <Separator />
           <Stat
-            icon={isSyncing ? undefined : poolStateIcon}
+            icon={poolsSyncing ? undefined : poolStateIcon}
             label={t('pages.pools.pool_status')}
             helpKey="Nomination Status"
             stat={`${poolStatusLeft}${poolStatusRight}`}
