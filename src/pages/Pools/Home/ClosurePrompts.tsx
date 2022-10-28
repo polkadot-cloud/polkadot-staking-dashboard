@@ -21,7 +21,7 @@ export const ClosurePrompts = () => {
   const { mode } = useTheme();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
-  const { isSyncing } = useUi();
+  const { poolsSyncing } = useUi();
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
@@ -35,7 +35,7 @@ export const ClosurePrompts = () => {
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !isSyncing &&
+    !poolsSyncing &&
     isDepositor() &&
     state === PoolState.Destroy &&
     memberCounter === '1';
@@ -73,7 +73,8 @@ export const ClosurePrompts = () => {
                   inline
                   title="Unbond"
                   disabled={
-                    isSyncing || (!depositorCanWithdraw && !depositorCanUnbond)
+                    poolsSyncing ||
+                    (!depositorCanWithdraw && !depositorCanUnbond)
                   }
                   onClick={() =>
                     openModalWith(
@@ -88,7 +89,7 @@ export const ClosurePrompts = () => {
                   primary
                   icon={faLockOpen}
                   title={String(totalUnlockChuncks ?? 0)}
-                  disabled={isSyncing || !isBonding()}
+                  disabled={poolsSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith(
                       'UnlockChunks',

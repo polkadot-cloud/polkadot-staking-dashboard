@@ -12,6 +12,6 @@ export interface UseSubmitExtrinsicProps {
 }
 
 export interface UseSubmitExtrinsic {
-  submitTx: { (): void };
+  submitTx: { (customEventInBlock?: string): void };
   submitting: boolean;
 }

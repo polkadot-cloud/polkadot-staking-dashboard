@@ -3,7 +3,7 @@
 ## Deployment
 Staking dashboard is live on [staking.polkadot.network](https://staking.polkadot.network/dashboard)
 
-<img width="1737" alt="Screenshot 2022-09-15 at 11 23 14" src="https://user-images.githubusercontent.com/13929023/190313914-ec750ca4-1be0-4d46-b2c5-2968dbe98fb4.png">
+<img width="1807" alt="Screenshot 2022-10-28 at 09 36 42" src="https://user-images.githubusercontent.com/13929023/198530973-0fff2049-da50-4786-96b9-035fa95dec43.png">
 
 # Validator Entity Setup Guide
 

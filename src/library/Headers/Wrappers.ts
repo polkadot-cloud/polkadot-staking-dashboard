@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD,
-  SIDE_MENU_STICKY_THRESHOLD,
+  ShowAccountsButtonWidthThreshold,
+  SideMenuStickyThreshold,
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import {
   buttonSecondaryBackground,
   networkColor,
   textPrimary,
+  textSecondary,
 } from 'theme';
 
 export const Wrapper = styled.div`
@@ -30,13 +31,14 @@ export const Wrapper = styled.div`
   height: 4rem;
   z-index: 6;
 
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     width: 100%;
   }
 
   .menu {
     display: none;
-    @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+    @media (max-width: ${SideMenuStickyThreshold}px) {
+      color: ${textSecondary};
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
@@ -80,13 +82,11 @@ export const Item = styled(motion.button)`
     color: white;
     line-height: 2.2rem;
   }
+
   &.connect {
     background: ${networkColor};
     > span {
       color: 'white';
-      svg {
-        color: white;
-      }
     }
     .icon {
       margin-right: 0.6rem;
@@ -94,9 +94,6 @@ export const Item = styled(motion.button)`
         fill: white;
       }
     }
-  }
-  path {
-    fill: white;
   }
 `;
 
@@ -119,7 +116,7 @@ export const ItemInactive = styled(motion.div)`
 
 export const LargeScreensOnly = styled.div`
   display: flex;
-  @media (max-width: ${SHOW_ACCOUNTS_BUTTON_WIDTH_THRESHOLD}px) {
+  @media (max-width: ${ShowAccountsButtonWidthThreshold}px) {
     display: none;
   }
 `;

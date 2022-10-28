@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SMALL_FONT_SIZE_MAX_WIDTH } from 'consts';
+import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
@@ -100,7 +100,7 @@ export const InflationWrapper = styled.div`
           border-right: 0;
         }
 
-        @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 150}px) {
+        @media (min-width: ${SmallFontSizeMaxWidth + 150}px) {
           flex-basis: 25%;
           max-width: 275px;
           padding-left: 1rem;
@@ -120,7 +120,7 @@ export const InflationWrapper = styled.div`
           flex-flow: row nowrap;
           border-bottom: 1px solid ${borderPrimary};
 
-          @media (min-width: ${SMALL_FONT_SIZE_MAX_WIDTH + 150}px) {
+          @media (min-width: ${SmallFontSizeMaxWidth + 150}px) {
             margin-bottom: 0;
           }
 

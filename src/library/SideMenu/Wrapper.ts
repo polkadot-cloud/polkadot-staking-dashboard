@@ -2,15 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  SIDE_MENU_MAXIMISED_WIDTH,
-  SIDE_MENU_MINIMISED_WIDTH,
-  SIDE_MENU_STICKY_THRESHOLD,
+  SideMenuMaximisedWidth,
+  SideMenuMinimisedWidth,
+  SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
 import {
   backgroundOverlay,
   borderPrimary,
-  modalBackground,
   networkColor,
   textSecondary,
 } from 'theme';
@@ -29,10 +28,10 @@ export const Wrapper = styled.div<MinimisedProps>`
   backdrop-filter: blur(4px);
   width: ${(props) =>
     props.minimised
-      ? `${SIDE_MENU_MINIMISED_WIDTH}px`
-      : `${SIDE_MENU_MAXIMISED_WIDTH}px`};
+      ? `${SideMenuMinimisedWidth}px`
+      : `${SideMenuMaximisedWidth}px`};
 
-  @media (max-width: ${SIDE_MENU_STICKY_THRESHOLD}px) {
+  @media (max-width: ${SideMenuStickyThreshold}px) {
     background: ${backgroundOverlay};
     transition: all 0.2s;
     border-radius: 0.75rem;
@@ -77,22 +76,6 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
   position: relative;
 
-  > .beta {
-    color: ${networkColor};
-    position: absolute;
-    top: -7px;
-    font-size: 0.7rem;
-  }
-  > .beta-min {
-    color: ${networkColor};
-    background: ${modalBackground};
-    position: absolute;
-    right: 0px;
-    z-index: 2;
-    font-size: 0.6rem;
-    padding: 0.1rem 0.45rem;
-    border-radius: 0.5rem;
-  }
   ellipse {
     fill: ${networkColor};
   }

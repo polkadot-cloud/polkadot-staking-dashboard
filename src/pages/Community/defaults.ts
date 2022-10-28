@@ -8,7 +8,7 @@ export const item = {
 };
 
 export const defaultContext = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setActiveSection: (t: number) => {},
   activeSection: 0,
 };

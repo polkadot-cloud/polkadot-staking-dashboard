@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SECTION_FULL_WIDTH_THRESHOLD } from 'consts';
+import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
 import { borderPrimary } from 'theme';
 
@@ -17,7 +17,7 @@ export const RolesWrapper = styled.div`
     padding: 0 0.5rem;
     border-right: 1px solid ${borderPrimary};
 
-    @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
+    @media (max-width: ${SectionFullWidthThreshold}px) {
       flex-basis: 100%;
       border-right: none;
       border-bottom: 1px solid ${borderPrimary};
@@ -41,7 +41,7 @@ export const RolesWrapper = styled.div`
       box-sizing: border-box;
       padding: 0 0.5rem;
 
-      @media (max-width: ${SECTION_FULL_WIDTH_THRESHOLD}px) {
+      @media (max-width: ${SectionFullWidthThreshold}px) {
         padding: 0;
       }
 

@@ -63,7 +63,7 @@ export const PoolRoles = (props: SetupStepProps) => {
         thisSection={section}
         complete={setup.roles !== null}
         title="Roles"
-        // helpKey="Bonding"
+        helpKey="Pool Roles"
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

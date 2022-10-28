@@ -98,7 +98,7 @@ export const Networks = () => {
                 setStatus(0);
               }}
             >
-              <h3>Light Client</h3>
+              <h3>Light Client (Experimental)</h3>
               {isLightClient && <h4 className="selected">Selected</h4>}
             </ConnectionButton>
           </ConnectionsWrapper>

@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LIST_ITEMS_PER_BATCH, LIST_ITEMS_PER_PAGE } from 'consts';
+import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -64,12 +64,12 @@ export const MembersListInner = (props: any) => {
   };
 
   // pagination
-  const totalPages = Math.ceil(members.length / LIST_ITEMS_PER_PAGE);
-  const pageEnd = page * LIST_ITEMS_PER_PAGE - 1;
-  const pageStart = pageEnd - (LIST_ITEMS_PER_PAGE - 1);
+  const totalPages = Math.ceil(members.length / ListItemsPerPage);
+  const pageEnd = page * ListItemsPerPage - 1;
+  const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * LIST_ITEMS_PER_BATCH - 1;
+  const batchEnd = renderIteration * ListItemsPerBatch - 1;
 
   // refetch list when list changes
   useEffect(() => {
@@ -114,7 +114,7 @@ export const MembersListInner = (props: any) => {
 
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listMembers = members.slice(pageStart).slice(0, LIST_ITEMS_PER_PAGE);
+    listMembers = members.slice(pageStart).slice(0, ListItemsPerPage);
   } else {
     listMembers = members;
   }

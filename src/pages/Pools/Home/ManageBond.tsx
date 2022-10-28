@@ -20,7 +20,7 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { isSyncing } = useUi();
+  const { poolsSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
 
@@ -48,7 +48,7 @@ export const ManageBond = () => {
             inline
             title="+"
             disabled={
-              isSyncing ||
+              poolsSyncing ||
               !isBonding() ||
               !isMember() ||
               state === PoolState.Destroy
@@ -66,7 +66,7 @@ export const ManageBond = () => {
             primary
             title="-"
             disabled={
-              isSyncing ||
+              poolsSyncing ||
               !isBonding() ||
               !isMember() ||
               state === PoolState.Destroy
@@ -85,7 +85,9 @@ export const ManageBond = () => {
             primary
             icon={faLockOpen}
             title={String(totalUnlockChuncks ?? 0)}
-            disabled={isSyncing || !isMember() || state === PoolState.Destroy}
+            disabled={
+              poolsSyncing || !isMember() || state === PoolState.Destroy
+            }
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
             }

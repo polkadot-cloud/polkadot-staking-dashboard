@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { DAPP_NAME } from 'consts';
+import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { Extension } from 'contexts/Connect/types';
@@ -11,6 +11,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
+import { registerSaEvent } from 'Utils';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = (
@@ -23,11 +24,12 @@ export const useSubmitExtrinsic = (
   const { from } = extrinsic;
   const submitAddress: string = from ?? '';
 
-  const { api } = useApi();
+  const { api, network } = useApi();
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
+  const networkLower = network.name.toLowerCase();
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
@@ -53,7 +55,7 @@ export const useSubmitExtrinsic = (
   };
 
   // submit extrinsic
-  const submitTx = async () => {
+  const submitTx = async (customEventInBlock?: string) => {
     if (submitting || !shouldSubmit || !api) {
       return;
     }
@@ -72,7 +74,7 @@ export const useSubmitExtrinsic = (
       throw new Error('wallet not found');
     } else {
       // summons extension popup if not already connected.
-      extension.enable(DAPP_NAME);
+      extension.enable(DappName);
     }
 
     // pre-submission state update
@@ -95,6 +97,14 @@ export const useSubmitExtrinsic = (
 
           // extrinsic is in block, assume tx completed
           if (status.isInBlock) {
+            // register sa events
+            const callInfo = tx.method.toHuman();
+            const txEventKey = `${networkLower}_tx_${callInfo.section}_${callInfo.method}`;
+            registerSaEvent(txEventKey);
+            if (customEventInBlock) {
+              registerSaEvent(customEventInBlock);
+            }
+
             setSubmitting(false);
             removePending(accountNonce);
             addNotification({

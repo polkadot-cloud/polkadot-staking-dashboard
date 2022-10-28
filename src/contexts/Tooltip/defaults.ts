@@ -6,11 +6,11 @@ import { TooltipContextInterface } from './types';
 export const defaultTooltipContext: TooltipContextInterface = {
   openTooltip: () => {},
   closeTooltip: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setTooltipPosition: (r) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   checkTooltipPosition: (r) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setTooltipMeta: (t) => {},
   open: 0,
   show: 0,

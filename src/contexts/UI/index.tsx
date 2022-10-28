@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { SERVICES, SIDE_MENU_STICKY_THRESHOLD } from 'consts';
+import { ServiceList, SideMenuStickyThreshold } from 'consts';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
-import { MaybeAccount, Sync } from 'types';
+import { MaybeAccount } from 'types';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
@@ -30,15 +30,21 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
   const { membership: poolMembership } = usePoolMemberships();
-  const { synced: activePoolSynced } = useActivePools();
+  const { synced: activePoolsSynced } = useActivePools();
 
-  // set whether app is syncing
+  // set whether the network has been synced.
+  const [networkSyncing, setNetworkSyncing] = useState(false);
+
+  // set whether pools are being synced.
+  const [poolsSyncing, setPoolsSyncing] = useState(false);
+
+  // set whether app is syncing.ncludes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState(false);
 
   // get initial services
   const getAvailableServices = () => {
     // get services config from local storage
-    const _services: any = localStorageOrDefault('services', SERVICES, true);
+    const _services: any = localStorageOrDefault('services', ServiceList, true);
 
     // if fiat is disabled, remove binance_spot service
     const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
@@ -71,7 +77,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState(
-    window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD
+    window.innerWidth <= SideMenuStickyThreshold
       ? 1
       : userSideMenuMinimisedRef.current
   );
@@ -92,7 +98,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // resize side menu callback
   const resizeCallback = () => {
-    if (window.innerWidth <= SIDE_MENU_STICKY_THRESHOLD) {
+    if (window.innerWidth <= SideMenuStickyThreshold) {
       setSideMenuMinimised(0);
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);
@@ -132,19 +138,27 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // app syncing updates
   useEffect(() => {
-    let syncing = false;
+    let _syncing = false;
+    let _networkSyncing = false;
+    let _poolsSyncing = false;
 
     if (!isReady) {
-      syncing = true;
+      _syncing = true;
+      _networkSyncing = true;
+      _poolsSyncing = true;
     }
     // staking metrics have synced
     if (staking.lastReward === new BN(0)) {
-      syncing = true;
+      _syncing = true;
+      _networkSyncing = true;
+      _poolsSyncing = true;
     }
 
     // era has synced from Network
     if (metrics.activeEra.index === 0) {
-      syncing = true;
+      _syncing = true;
+      _networkSyncing = true;
+      _poolsSyncing = true;
     }
 
     // all extension accounts have been synced
@@ -152,21 +166,28 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       (a: ImportedAccount) => a.source !== 'external'
     );
     if (accounts.length < extensionAccounts.length) {
-      syncing = true;
+      _syncing = true;
+      _networkSyncing = true;
+      _poolsSyncing = true;
     }
 
-    // eraStakers has synced
+    setNetworkSyncing(_networkSyncing);
+
+    // active pools have been synced
+    if (!activePoolsSynced) {
+      _syncing = true;
+      _poolsSyncing = true;
+    }
+
+    setPoolsSyncing(_poolsSyncing);
+
+    // eraStakers total active nominators has synced
     if (!eraStakers.totalActiveNominators) {
-      syncing = true;
+      _syncing = true;
     }
 
-    // nomination pool contexts have synced
-    if (activePoolSynced !== Sync.Synced) {
-      syncing = true;
-    }
-
-    setIsSyncing(syncing);
-  }, [isReady, staking, metrics, accounts, eraStakers, activePoolSynced]);
+    setIsSyncing(_syncing);
+  }, [isReady, staking, metrics, accounts, eraStakers]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
@@ -360,6 +381,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         onNominatorSetup,
         onPoolSetup,
         isSyncing,
+        networkSyncing,
+        poolsSyncing,
         containerRefs,
       }}
     >

@@ -9,7 +9,7 @@ import {
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { BN } from 'bn.js';
-import { PAYEE_STATUS } from 'consts';
+import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -79,7 +79,7 @@ export const Status = ({ height }: { height: number }) => {
     }
   }
 
-  const payeeStatus = PAYEE_STATUS.find((item) => item.key === payee);
+  const payeeStatus = PayeeStatus.find((item) => item.key === payee);
 
   let startTitle = 'Start Nominating';
   if (inSetup()) {

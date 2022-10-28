@@ -3,7 +3,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PAGES_CONFIG, PAGE_CATEGORIES } from 'config/pages';
-import { POLKADOT_URL, URI_PREFIX } from 'consts';
+import { PolkadotUrl, UriPrefix } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -50,7 +50,7 @@ export const Main = () => {
       // set undefined action as default
       _pages[i].action = undefined;
 
-      if (uri === `${URI_PREFIX}/nominate`) {
+      if (uri === `${UriPrefix}/nominate`) {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
@@ -76,7 +76,7 @@ export const Main = () => {
         }
       }
 
-      if (uri === `${URI_PREFIX}/pools`) {
+      if (uri === `${UriPrefix}/pools`) {
         // configure Pools action
         const inPool = membership;
         const setupPercent = getPoolSetupProgressPercent(activeAccount);
@@ -119,35 +119,14 @@ export const Main = () => {
     <>
       <LogoWrapper
         onClick={() => {
-          window.open(POLKADOT_URL, '_blank');
+          window.open(PolkadotUrl, '_blank');
         }}
         minimised={sideMenuMinimised}
       >
         {sideMenuMinimised ? (
-          <>
-            <div
-              className="beta-min"
-              style={{ top: network.name === 'Westend' ? '-5px' : '-10px' }}
-            >
-              BETA
-            </div>
-            <network.brand.icon style={{ maxHeight: '100%', width: '2rem' }} />
-          </>
+          <network.brand.icon style={{ maxHeight: '100%', width: '2rem' }} />
         ) : (
           <>
-            <div
-              className="beta"
-              style={{
-                right:
-                  network.name === 'Kusama'
-                    ? '1.6rem'
-                    : network.name === 'Westend'
-                    ? '1.25rem'
-                    : '0.25rem',
-              }}
-            >
-              Staking | BETA
-            </div>
             <network.brand.logo.svg
               style={{
                 maxHeight: '100%',

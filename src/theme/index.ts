@@ -214,7 +214,15 @@ export const successTransparent: theme.ThemeSet = theme(
 
 // shadow
 
-export const shadowColor: theme.ThemeSet = theme(v, defaultThemes.shadow);
+export const shadowColor: theme.ThemeSet = theme(
+  v,
+  defaultThemes.shadow.primary
+);
+
+export const shadowColorSecondary: theme.ThemeSet = theme(
+  v,
+  defaultThemes.shadow.secondary
+);
 
 /* Aggregates all card configurations and serves the currently
  * active card style via the theming context.

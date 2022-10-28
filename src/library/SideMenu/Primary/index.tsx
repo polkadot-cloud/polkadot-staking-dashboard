@@ -61,9 +61,11 @@ export const Primary = (props: PrimaryProps) => {
     <Link
       to={to}
       onClick={() => {
-        setSideMenu(0);
-        setIsStopped(false);
-        registerSaEvent(`${network.name.toLowerCase()}_${name}_page_visit`);
+        if (!active) {
+          setSideMenu(0);
+          setIsStopped(false);
+          registerSaEvent(`${network.name.toLowerCase()}_${name}_page_visit`);
+        }
       }}
     >
       <StyledWrapper
