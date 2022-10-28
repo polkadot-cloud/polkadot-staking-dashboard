@@ -106,7 +106,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
           )}
           {unclaimedRewards > 0 && (
             <Warning
-              text={`Unbonding will also withdraw your current outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
             />
           )}
           <h4>Amount to unbond:</h4>
