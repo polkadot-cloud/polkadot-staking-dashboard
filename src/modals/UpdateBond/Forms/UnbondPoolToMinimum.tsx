@@ -25,10 +25,14 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { isDepositor } = useActivePools();
+  const { isDepositor, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { stats } = usePoolsConfig();
   const { txFeesValid } = useTxFees();
+
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
   const { minJoinBond, minCreateBond } = stats;
   const { bondDuration } = consts;
@@ -99,6 +103,11 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
         <>
           {!accountHasSigner(activeAccount) && (
             <Warning text="Your account is read only, and cannot sign transactions." />
+          )}
+          {unclaimedRewards > 0 && (
+            <Warning
+              text={`Unbonding will also withdraw your current outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            />
           )}
           <h4>Amount to unbond:</h4>
           <h2>
