@@ -11,10 +11,6 @@ import { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { sessionParachain } = useValidators();
-
-  if (!sessionParachain?.includes(address || '')) {
-    return <></>;
-  }
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   const posRef = useRef(null);
@@ -27,6 +23,10 @@ export const ParaValidator = ({ address }: ParaValidatorProps) => {
       setTooltipPosition(posRef);
     }
   };
+
+  if (!sessionParachain?.includes(address || '')) {
+    return <></>;
+  }
 
   return (
     <div className="label">
