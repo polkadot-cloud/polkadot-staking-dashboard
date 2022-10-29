@@ -67,7 +67,7 @@ export const PoolBonded = ({
   // recalculate nominations status
   useEffect(() => {
     handleNominationsStatus();
-  }, [meta]);
+  }, [pool, meta]);
 
   // calculate total bonded pool amount
   const poolBonded = planckBnToUnit(new BN(rmCommas(points)), units);
