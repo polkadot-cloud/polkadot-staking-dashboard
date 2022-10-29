@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -13,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
+import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
@@ -32,7 +34,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { getBondedAccount } = useBalances();
   const { bondType } = config;
   const { stats } = usePoolsConfig();
-  const { isDepositor } = useActivePools();
+  const { isDepositor, selectedActivePool } = useActivePools();
   const { txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
 
@@ -41,6 +43,10 @@ export const UnbondSome = (props: FormsProps) => {
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
+
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
@@ -128,6 +134,11 @@ export const UnbondSome = (props: FormsProps) => {
     <>
       <div className="items">
         <>
+          {unclaimedRewards > 0 && bondType === 'pool' && (
+            <Warning
+              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            />
+          )}
           <UnbondFeedback
             bondType={bondType}
             listenIsValid={setBondValid}

@@ -6,11 +6,13 @@ import { BN, max } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
+import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
 import { defaultThemes } from 'theme/default';
@@ -32,6 +34,11 @@ export const BondSome = (props: FormsProps) => {
   const { getTransferOptions } = useTransferOptions();
   const { bondType } = config;
   const { txFees, txFeesValid } = useTxFees();
+  const { selectedActivePool } = useActivePools();
+
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
@@ -103,6 +110,11 @@ export const BondSome = (props: FormsProps) => {
   return (
     <>
       <div className="items">
+        {unclaimedRewards > 0 && bondType === 'pool' && (
+          <Warning
+            text={`Bonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+          />
+        )}
         <BondFeedback
           bondType={bondType}
           listenIsValid={setBondValid}

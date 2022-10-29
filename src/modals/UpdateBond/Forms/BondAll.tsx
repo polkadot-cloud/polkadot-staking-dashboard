@@ -6,6 +6,7 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
@@ -32,6 +33,11 @@ export const BondAll = (props: FormsProps) => {
   const { getTransferOptions } = useTransferOptions();
   const { bondType } = config;
   const { txFees, txFeesValid } = useTxFees();
+  const { selectedActivePool } = useActivePools();
+
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
   const isStaking = bondType === 'stake';
   const isPooling = bondType === 'pool';
@@ -102,7 +108,7 @@ export const BondAll = (props: FormsProps) => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => { },
   });
 
   const unit = network.unit;
@@ -115,6 +121,11 @@ export const BondAll = (props: FormsProps) => {
           )}
           {freeBalance === 0 && (
             <Warning text={`${t('modals.no_free_to_bond', { unit })}`} />
+          )}
+          {unclaimedRewards > 0 && bondType === 'pool' && (
+            <Warning
+              text={`Bonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            />
           )}
           <h4>{t('modals.amount_to_bond')}</h4>
           <h2>

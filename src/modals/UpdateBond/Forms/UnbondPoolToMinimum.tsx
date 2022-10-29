@@ -26,11 +26,15 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { isDepositor } = useActivePools();
+  const { isDepositor, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { stats } = usePoolsConfig();
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('common');
+
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
   const { minJoinBond, minCreateBond } = stats;
   const { bondDuration } = consts;
@@ -41,9 +45,9 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   // unbond amount to minimum threshold
   const freeToUnbond = isDepositor()
     ? planckBnToUnit(
-        BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
-        units
-      )
+      BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
+      units
+    )
     : planckBnToUnit(BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)), units);
 
   // local bond value
@@ -92,7 +96,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => { },
   });
 
   return (
@@ -101,6 +105,11 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
         <>
           {!accountHasSigner(activeAccount) && (
             <Warning text={t('modals.w1')} />
+          )}
+          {unclaimedRewards > 0 && (
+            <Warning
+              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            />
           )}
           <h4>{t('modals.amount_to_unbond')}</h4>
           <h2>
