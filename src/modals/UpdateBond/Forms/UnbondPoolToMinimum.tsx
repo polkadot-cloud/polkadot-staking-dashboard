@@ -45,9 +45,9 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   // unbond amount to minimum threshold
   const freeToUnbond = isDepositor()
     ? planckBnToUnit(
-      BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
-      units
-    )
+        BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
+        units
+      )
     : planckBnToUnit(BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)), units);
 
   // local bond value
@@ -96,7 +96,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => { },
+    callbackInBlock: () => {},
   });
 
   return (

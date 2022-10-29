@@ -108,7 +108,7 @@ export const BondAll = (props: FormsProps) => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => { },
+    callbackInBlock: () => {},
   });
 
   const unit = network.unit;

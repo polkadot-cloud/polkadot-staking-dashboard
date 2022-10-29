@@ -143,8 +143,6 @@
         "nominate1": "最多能选择 {{maxNominations}} 个验证人。自动生成提名或手动加入提名"
     },
     "modals": {
-        "favourite_validators": "藏夹中的验证人",
-        "": "",
         "toggle_features": "功能切换",
         "no_unlocks": "无未解锁",
         "adding_favorite": "正在添加{{count}} 个提名",

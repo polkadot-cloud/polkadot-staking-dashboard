@@ -104,7 +104,9 @@ export const Networks = () => {
               }}
             >
               <h3>{t('modals.light_client')} (Experimental)</h3>
-              {isLightClient && <h4 className="selected">{t('modals.selected')}</h4>}
+              {isLightClient && (
+                <h4 className="selected">{t('modals.selected')}</h4>
+              )}
             </ConnectionButton>
           </ConnectionsWrapper>
 

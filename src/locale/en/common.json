@@ -144,8 +144,6 @@
         "nominate1": "Choose up to {{maxNominations}} validators to nominate. Generate your nominations automatically or manually insert them."
     },
     "modals": {
-        "favourite_validators": "Favourite Validators",
-        "": "",
         "toggle_features": "Toggle Features",
         "no_unlocks": "No Unlocks",
         "adding_favorite_one": "Adding {{count}} Nomination",
