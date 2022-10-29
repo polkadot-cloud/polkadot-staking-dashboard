@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NETWORKS } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
+import { useTooltip } from 'contexts/Tooltip';
 import { Title } from 'library/Modal/Title';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NetworkName } from 'types';
+import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
 import {
@@ -24,6 +26,7 @@ export const Networks = () => {
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
   const networkKey: string = network.name.toLowerCase();
+  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   useEffect(() => {
     // @ts-ignore
@@ -31,6 +34,17 @@ export const Networks = () => {
       setBraveBrowser(isBrave);
     });
   });
+
+  const posRef = useRef(null);
+
+  const tooltipText = 'Undergoing Maintenance';
+
+  const toggleTooltip = () => {
+    if (!open) {
+      setTooltipMeta(tooltipText);
+      setTooltipPosition(posRef);
+    }
+  };
 
   return (
     <>
@@ -91,14 +105,21 @@ export const Networks = () => {
             </ConnectionButton>
             <ConnectionButton
               connected={isLightClient}
-              disabled={isLightClient}
+              className="off"
+              disabled
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, true);
                 setStatus(0);
               }}
             >
-              <h3>Light Client (Experimental)</h3>
+              <TooltipTrigger
+                className="tooltip-trigger-element"
+                data-tooltip-text={tooltipText}
+                onMouseMove={() => toggleTooltip()}
+              />
+              <TooltipPosition ref={posRef} style={{ left: '10px' }} />
+              <h3>Light Client</h3>
               {isLightClient && <h4 className="selected">Selected</h4>}
             </ConnectionButton>
           </ConnectionsWrapper>
