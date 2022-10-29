@@ -149,10 +149,10 @@ export const NominateFromFavorites = () => {
               selectActive
               selectToggleable={false}
               onSelected={onSelected}
-              refetchOnListUpdate
               showMenu={false}
               inModal
               allowMoreCols
+              refetchOnListUpdate
             />
           ) : (
             <h3>No Favorites Available.</h3>
