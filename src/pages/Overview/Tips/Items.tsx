@@ -128,7 +128,7 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
                 className="more"
               >
                 More
-                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
               </motion.button>
             </h4>
           </div>
