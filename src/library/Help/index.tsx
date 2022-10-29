@@ -88,16 +88,17 @@ export const Help = () => {
     .map((d: HelpRecord) => {
       const { localeKey } = d;
 
-      return fillVariables(activeRecord, ['title', 'description']);
-
-      // return fillDefinitionVariables({
-      //   title: tHelp(`${localeKey}.title`),
-      //   description: i18n.getResource(
-      //     i18n.resolvedLanguage,
-      //     'help',
-      //     `${localeKey}.description`
-      //   ),
-      // });
+      return fillVariables(
+        {
+          title: tHelp(`${localeKey}.title`),
+          description: i18n.getResource(
+            i18n.resolvedLanguage,
+            'help',
+            `${localeKey}.description`
+          ),
+        },
+        ['title', 'description']
+      );
     });
 
   // get active definiton
@@ -116,7 +117,13 @@ export const Help = () => {
       `${localeKey}.description`
     );
 
-    activeDefinition = fillVariables(activeRecord, ['title', 'description']);
+    activeDefinition = fillVariables(
+      {
+        title,
+        description,
+      },
+      ['title', 'description']
+    );
 
     // filter active definition
     definitions = definitions.filter((d: HelpRecord) => d.key !== definition);
