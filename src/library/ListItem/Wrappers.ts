@@ -10,6 +10,7 @@ import {
   borderPrimary,
   modalBackground,
   networkColor,
+  shadowColorSecondary,
   textSecondary,
 } from 'theme';
 
@@ -17,18 +18,19 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.format === 'nomination' ? '6rem' : '3.2rem')};
+  height: ${(props) => (props.format === 'nomination' ? '6rem' : '3rem')};
   position: relative;
   margin: 0.5rem;
 
   > .inner {
     background: ${(props) =>
       props.inModal ? backgroundModalItem : backgroundDropdown};
-    border: 1px solid ${borderPrimary};
+    box-shadow: 0px 1.75px 0px 1.25px ${shadowColorSecondary};
 
     ${(props) =>
       props.inModal &&
       `
+      box-shadow: none;
       border: none;`}
     box-sizing: border-box;
     flex: 1;
@@ -45,11 +47,10 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
     width: 100%;
     height: 100%;
     padding: 0;
-
     .row {
       box-sizing: border-box;
       flex: 1 0 100%;
-      height: 3.2rem;
+      height: 3.25rem;
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;
@@ -57,7 +58,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
       padding: 0 0.5rem;
 
       &.status {
-        height: 2.8rem;
+        height: 2.75rem;
       }
       svg {
         margin: 0;
@@ -74,7 +75,7 @@ export const Labels = styled.div`
   overflow: hidden;
   flex: 1 1 100%;
   padding: 0 0 0 0.25rem;
-  height: 3.2rem;
+  height: 2.75rem;
 
   button {
     padding: 0 0.1rem;
@@ -163,20 +164,23 @@ export const IdentityWrapper = styled(motion.div)`
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    height: 3.2rem;
-    padding: 0;
+    height: 3.25rem;
+    padding: 0 0 0 0.2rem;
   }
   h4 {
+    color: ${textSecondary};
     position: absolute;
     top: 0;
     width: 100%;
-    height: 3.2rem;
-    line-height: 3.2rem;
+    height: 3.25rem;
+    line-height: 3.25rem;
     padding: 0 0 0 0.3rem;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-variation-settings: 'wght' 600;
+    font-size: 1rem;
 
     > span {
       color: ${textSecondary};
