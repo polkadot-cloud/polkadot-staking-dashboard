@@ -4,10 +4,11 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
-  backgroundValidator,
+  backgroundDropdown,
   borderPrimary,
   networkColor,
   networkColorSecondary,
+  shadowColorSecondary,
   textSecondary,
 } from 'theme';
 
@@ -18,9 +19,9 @@ export const ItemWrapper = styled(motion.div)`
   > .inner {
     padding: 0 0.75rem;
     flex: 1;
-    background: ${backgroundValidator};
-    border: 1px solid ${borderPrimary};
-    border-radius: 0.75rem;
+    background: ${backgroundDropdown};
+    box-shadow: 0px 1.75px 0px 1.25px ${shadowColorSecondary};
+    border-radius: 1rem;
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;
@@ -35,13 +36,12 @@ export const ItemWrapper = styled(motion.div)`
       align-items: center;
 
       &:first-child {
-        padding: 0.75rem 0;
+        padding: 1rem 0 0.75rem 0;
       }
 
       &:last-child {
-        padding-top: 1rem;
+        padding-top: 0rem;
         border-top: 1px solid ${borderPrimary};
-        padding-top: 0.25rem;
 
         > div {
           min-height: 3.2rem;

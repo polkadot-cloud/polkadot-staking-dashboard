@@ -26,6 +26,7 @@ export const PoolNominations = () => {
               title="Pool Nominations"
               showMenu={false}
               inModal
+              refetchOnListUpdate
             />
           ) : (
             <h3>This pool is not nominating.</h3>
