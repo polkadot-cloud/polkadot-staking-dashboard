@@ -34,7 +34,7 @@ export const Identity = (props: IdentityProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <Identicon value={address} size={26} />
+      <Identicon value={address} size={24} />
       <div className="inner">
         {synced.identities && display !== null ? (
           <h4>{display}</h4>
