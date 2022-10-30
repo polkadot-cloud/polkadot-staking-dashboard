@@ -84,7 +84,7 @@ export const defaultThemes: { [key: string]: any } = {
   },
   help: {
     button: {
-      background: v('rgba(255,255,255,0.90)', 'rgba(0,0,0,0.4)'),
+      background: v('rgba(255,255,255,0.90)', 'rgba(0,0,0,0.85)'),
     },
   },
   loader: {
