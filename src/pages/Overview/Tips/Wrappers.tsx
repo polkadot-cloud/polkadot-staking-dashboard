@@ -16,7 +16,7 @@ export const ItemsWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row nowrap;
   justify-items: center;
-  margin-top: 0.5rem;
+  margin: 0.25rem 0 0.15rem 0;
 `;
 export const ItemWrapper = styled(motion.div)`
   padding: 0;
