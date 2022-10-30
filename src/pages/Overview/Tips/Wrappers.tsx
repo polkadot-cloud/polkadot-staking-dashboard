@@ -4,14 +4,11 @@
 import styled from 'styled-components';
 import {
   backgroundLabel,
-  borderPrimary,
   networkColor,
-  shadowColorSecondary,
   textPrimary,
   textSecondary,
 } from 'theme';
 import { motion } from 'framer-motion';
-import { TipsThresholdSmall, TipsThresholdMedium } from 'consts';
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
@@ -19,35 +16,23 @@ export const ItemsWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row nowrap;
   justify-items: center;
-  margin: 0.5rem 0 0.5rem 0;
+  margin-top: 0.5rem;
 `;
 export const ItemWrapper = styled(motion.div)`
   padding: 0;
-  margin-left: 0.25rem;
-  margin-right: 1rem;
   flex-basis: 100%;
-  /* multiple tips per row is currently disabled */
-  /* @media (min-width: ${TipsThresholdSmall}px) {
-    flex-basis: 50%;
-  }
-  @media (min-width: ${TipsThresholdMedium}px) {
-    flex-basis: 33.33%;
-  } */
   &:last-child {
     margin-right: 0.25rem;
   }
 `;
 
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
-  box-shadow: -1px 3px 2px ${shadowColorSecondary};
-  border: 1px solid ${borderPrimary};
   border-radius: 1.25rem;
   box-sizing: border-box;
-  padding: 0rem 1rem;
   transition: border 0.05s;
   display: flex;
   flex-flow: row wrap;
-  height: 5.5rem;
+  height: 4rem;
   transition: border 0.2s;
 
   > section {
