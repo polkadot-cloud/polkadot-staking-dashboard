@@ -52,6 +52,11 @@ export const PayoutBar = (props: PayoutBarProps) => {
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
 
+  // remove slashes from payouts (graph does not support negative values).
+  const payoutsNoSlash = payouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
+  );
+
   const { units } = network;
   const notStaking = !isSyncing && inSetup() && !membership;
   const average = 1;
@@ -60,7 +65,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
     days,
     average,
     units,
-    payouts,
+    payoutsNoSlash,
     poolClaims
   );
 
