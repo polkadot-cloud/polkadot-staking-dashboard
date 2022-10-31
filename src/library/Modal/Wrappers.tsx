@@ -33,9 +33,16 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
       flex-grow: 1;
 
       > h2 {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
         font-family: 'Unbounded', 'sans-serif', sans-serif;
         font-size: 1.3rem;
         margin: 0;
+
+        > button {
+          margin-left: 0.85rem;
+        }
       }
       > svg {
         margin-right: 0.9rem;
