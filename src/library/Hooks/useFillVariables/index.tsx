@@ -11,7 +11,11 @@ export const useFillVariables = () => {
   const { network, consts } = useApi();
   const { eraStakers } = useStaking();
   const { stats } = usePoolsConfig();
-  const { maxNominations, maxNominatorRewardedPerValidator } = consts;
+  const {
+    maxNominations,
+    maxNominatorRewardedPerValidator,
+    existentialDeposit,
+  } = consts;
   const { minActiveBond } = eraStakers;
   const { minJoinBond, minCreateBond } = stats;
 
@@ -44,6 +48,10 @@ export const useFillVariables = () => {
                 3
               )
             ),
+          ],
+          [
+            '{EXISTENTIAL_DEPOSIT}',
+            String(planckBnToUnit(existentialDeposit, network.units)),
           ],
         ];
 
