@@ -25,7 +25,7 @@ export const HELP_CONFIG: HelpContentRaw = [
         title: 'Total Nominators',
         description: [
           'Accounts who are staking in the network, regardless of whether they are active or inactive in the current session.',
-          'In order to stake {NETWORK_UNIT}, you must be a nominator.',
+          'In order to stake {NETWORK_UNIT} you can either become a nominator or join a pool - that act as nominators themselves.',
         ],
       },
       {
@@ -59,7 +59,7 @@ export const HELP_CONFIG: HelpContentRaw = [
       {
         title: 'Inflation',
         description: [
-          'DOT is inflationary; there is no maximum number of DOT.',
+          '{NETWORK_UNIT} is inflationary; there is no cap on the maximum amount of {NETWORK_UNIT}.',
           'Inflation is designed to be approximately 10% annually, with validator rewards being a function of the amount staked and the remainder going to treasury.',
         ],
       },
@@ -101,8 +101,8 @@ export const HELP_CONFIG: HelpContentRaw = [
         title: 'Nomination Status',
         description: [
           'The status of your nominations at a glance.',
-          'A set of nominations will be inactive when none of those nominees are participating in the current validator set - the set of validators currently elected to validate the network.',
-          'When at least one of your nominees are active, this nomination status will display as actively nominating - but this still does not guarantee rewards.',
+          'A set of nominations will be inactive when none of those nominees are participating in the current validator set (the set of validators currently elected to validate the network).',
+          'When at least one of your nominees are active, this nomination status will display as "actively nominating" - but this still does not guarantee rewards.',
           'The top {FallbackNominatorRewardedPerValidator} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the  {FallbackNominatorRewardedPerValidator} highest bonded nominators to receive rewards.',
           'If an active nominee is not over-subscribed, you will receive rewards.',
         ],
@@ -128,17 +128,19 @@ export const HELP_CONFIG: HelpContentRaw = [
       {
         title: 'Bonding',
         description: [
-          'Bonding funds is the process of "locking" (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of your nominated validators.',
-          'The minimum active bond statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era.',
+          'Bonding funds is the process of "locking" (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of the allocated nominations.',
+          'As a nominator, you allocate nominations yourself. In a pool, the pool owner or pool nominator will allocate nominations on your behalf, and your bonded funds will back those nominations.',
+          'The minimum active bond statistic represents the minimum {NETWORK_UNIT} being bonded by a nominator for the current era. This value is also the minimum amount required to receive rewards.',
         ],
       },
       {
         title: 'Active Bond Threshold',
         description: [
-          'The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ',
-          'Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.',
+          'The amount of {NETWORK_UNIT} needed to be actively nominating in an era.',
+          "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
+          'Being above the active bond threshold simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.',
           'Only the top {FallbackNominatorRewardedPerValidator} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.',
-          'You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT} or changing your nominations.',
+          'You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool.',
         ],
       },
       {
@@ -159,14 +161,15 @@ export const HELP_CONFIG: HelpContentRaw = [
         title: 'Nominations',
         description: [
           'Nominations are the validators a staker chooses to nominate. You can nominate up to {FallbackMaxNominations} validators on {NETWORK_NAME}.',
-          "Once nominations have been submitted, the staker's bonded funds are automatically distributed to nominees that are active in the curernt era.",
-          'As long as at least one of your nominations is actively validating in a session, your funds will be backing that validator.',
+          'For nomination pools, the pool owner and pool nominator are in charge of nominating validators on behalf of all the pool members.',
+          'Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the current era.',
+          'As long as at least one nomination is actively validating in a session, your funds will be backing that validator.',
         ],
       },
       {
         title: 'Inactive Nominations',
         description: [
-          'Nominations that are in the active validator set for the current era, but your bonded funds have not been assigned to these nominations.',
+          'Nominations that are in the active validator set for the current era, but bonded funds have not been assigned to these nominations.',
         ],
       },
     ],
@@ -330,7 +333,7 @@ export const HELP_CONFIG: HelpContentRaw = [
       {
         title: 'Self Stake',
         description: [
-          'The amount of {NETWORK_UNIT} the validator has bonded themself.',
+          'The amount of {NETWORK_UNIT} the validator has bonded themselves.',
           'This value is added to the amount of {NETWORK_UNIT} bonded by nominators to form the total stake of the validator.',
         ],
       },
@@ -343,15 +346,9 @@ export const HELP_CONFIG: HelpContentRaw = [
         ],
       },
       {
-        title: 'Minimum Nomination Bond',
-        description: [
-          'The minimum amount you need bonded in order to nominate.',
-        ],
-      },
-      {
         title: 'Commission',
         description: [
-          'Validators can take a percentage of the rewards they earn. This chunk is called their commission.',
+          'Validators can take a percentage of the rewards they earn. This amount is termed their commission.',
           'Nominating validators with low commissions mean you will receive a larger share of the rewards they generate.',
           'Many validators will have a commission rate of 100%, meaning you will receive no rewards by nominating these validators.',
           'Examples of such validators include those operating on behalf of exchanges, where nominating and reward distribution is done centrally on the exchange in question.',
