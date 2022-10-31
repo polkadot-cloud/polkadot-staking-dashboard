@@ -37,7 +37,7 @@ export const Controller = ({ label }: { label: string }) => {
       <Wrapper paddingLeft={hasController()} paddingRight>
         <h2 className="hide-with-padding">
           <div className="icon">
-            <Identicon value={controller || ''} size={30} />
+            <Identicon value={controller || ''} size={26} />
           </div>
           {displayName || display}
           <div className="btn">
