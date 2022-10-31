@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { FunctionComponent } from 'react';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {
@@ -13,9 +14,10 @@ interface TitleProps {
   icon?: IconProp;
   Svg?: FunctionComponent<any>;
   fixed?: boolean;
+  helpKey?: string;
 }
 
-export const Title = ({ title, icon, fixed, Svg }: TitleProps) => {
+export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
   const { setStatus } = useModal();
 
   const graphic = Svg ? (
@@ -28,7 +30,10 @@ export const Title = ({ title, icon, fixed, Svg }: TitleProps) => {
     <TitleWrapper fixed={fixed || false}>
       <div>
         {graphic}
-        <h2>{title}</h2>
+        <h2>
+          {title}
+          {helpKey && <OpenHelpIcon helpKey={helpKey} />}
+        </h2>
       </div>
       <div>
         <button type="button" onClick={() => setStatus(2)}>

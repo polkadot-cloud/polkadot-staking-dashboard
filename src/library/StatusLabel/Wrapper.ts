@@ -39,7 +39,7 @@ export const Wrapper = styled.div<WrapperProps>`
     }
 
     span {
-      margin-left: 0.5rem;
+      margin-left: 0.65rem;
     }
   }
 `;
