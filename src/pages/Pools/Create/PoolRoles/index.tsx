@@ -68,10 +68,12 @@ export const PoolRoles = (props: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ margin: '0.5rem 0' }}>
-          You will consume your pool&apos;s Root and Depositor roles.
+          As the pool creator, you will consume your pool&apos;s{' '}
+          <b>Depositor</b> role.
         </h4>
         <h4 style={{ marginTop: 0 }}>
-          Your Nominator and State Toggler roles can be assigned to any account.
+          Your <b>Root</b>, <b>Nominator</b> and <b>State Toggler</b> roles can
+          be assigned to any account.
         </h4>
         <Roles
           batchKey="pool_roles_create"
