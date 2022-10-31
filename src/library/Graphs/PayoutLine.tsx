@@ -52,11 +52,16 @@ export const PayoutLine = (props: PayoutLineProps) => {
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
 
+  // remove slashes from payouts (graph does not support negative values).
+  const payoutsNoSlash = payouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
+  );
+
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
     average,
     units,
-    payouts,
+    payoutsNoSlash,
     poolClaims
   );
 
