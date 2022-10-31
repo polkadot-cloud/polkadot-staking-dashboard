@@ -81,7 +81,11 @@ export const UpdatePayee = () => {
 
   return (
     <>
-      <Title title="Update Reward Destination" icon={faWallet} />
+      <Title
+        title="Update Reward Destination"
+        icon={faWallet}
+        helpKey="Reward Destination"
+      />
       <PaddingWrapper verticalOnly>
         <div
           style={{

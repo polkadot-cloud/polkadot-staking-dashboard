@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
+import OpenHelpIcon from 'library/OpenHelpIcon';
 import { StatusLabelProps } from './types';
 import { Wrapper } from './Wrapper';
 
@@ -35,10 +36,17 @@ export const StatusLabel = (props: StatusLabelProps) => {
   return (
     <Wrapper topOffset={topOffset}>
       <div>
-        <FontAwesomeIcon icon={faExclamationTriangle} />
+        {props.hideIcon !== true && (
+          <FontAwesomeIcon icon={faExclamationTriangle} />
+        )}
         <h2>
           &nbsp;&nbsp;
           {title}
+          {props.helpKey && (
+            <span>
+              <OpenHelpIcon helpKey={props.helpKey} light />
+            </span>
+          )}
         </h2>
       </div>
     </Wrapper>
