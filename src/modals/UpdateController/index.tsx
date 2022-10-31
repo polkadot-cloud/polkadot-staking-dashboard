@@ -74,7 +74,11 @@ export const UpdateController = () => {
 
   return (
     <>
-      <Title title="Change Controller Account" icon={faExchangeAlt} />
+      <Title
+        title="Change Controller Account"
+        icon={faExchangeAlt}
+        helpKey="Controller Account Eligibility"
+      />
       <Wrapper>
         <div
           style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
