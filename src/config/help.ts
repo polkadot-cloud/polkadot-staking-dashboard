@@ -118,6 +118,14 @@ export const HELP_CONFIG: HelpContentRaw = [
         ],
       },
       {
+        title: 'Controller Account Eligibility',
+        description: [
+          'For an account to become a controller, it must have a balance of at least the existential deposit. On {NETWORK_NAME} the existential deposit amount is {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT}.',
+          'If an account does not have at least this amount, you will see the "Not Enough {NETWORK_UNIT}" message overlaying it.',
+          'Topping up an account with at least {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT} will make it eligible and selectable as a controller.',
+        ],
+      },
+      {
         title: 'Bonding',
         description: [
           'Bonding funds is the process of "locking" (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of your nominated validators.',

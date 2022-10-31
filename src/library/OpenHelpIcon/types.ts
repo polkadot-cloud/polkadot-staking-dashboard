@@ -4,4 +4,5 @@
 export interface OpenHelpIconProps {
   helpKey: string;
   size?: string;
+  light?: boolean;
 }

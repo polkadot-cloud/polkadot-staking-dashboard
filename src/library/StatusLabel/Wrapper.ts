@@ -37,5 +37,9 @@ export const Wrapper = styled.div<WrapperProps>`
       font-size: 1.2rem;
       opacity: 0.75;
     }
+
+    span {
+      margin-left: 0.5rem;
+    }
   }
 `;
