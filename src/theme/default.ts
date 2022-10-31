@@ -29,7 +29,7 @@ export const defaultThemes: { [key: string]: any } = {
     ),
     secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.25)'),
     network: v('rgba(244,225,225,0.75)', 'rgba(39,39,39,0.75)'),
-    dropdown: v('rgba(242,242,242,0.6)', 'rgba(30,30,30,0.6)'),
+    dropdown: v('rgba(237,237,237,0.6)', 'rgba(33,33,33,0.6)'),
     modalitem: v('rgba(244,244,244,0.6)', 'rgba(22,22,22,0.4)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
@@ -84,7 +84,7 @@ export const defaultThemes: { [key: string]: any } = {
   },
   help: {
     button: {
-      background: v('rgba(255,255,255,0.90)', 'rgba(0,0,0,0.4)'),
+      background: v('rgba(255,255,255,0.90)', 'rgba(0,0,0,0.85)'),
     },
   },
   loader: {
@@ -93,7 +93,7 @@ export const defaultThemes: { [key: string]: any } = {
   },
   shadow: {
     primary: v('#dedede', '#1f1f1f'),
-    secondary: v('#ededed', '#222'),
+    secondary: v('#eaeaea', '#222'),
   },
   status: {
     danger: {
