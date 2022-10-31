@@ -103,7 +103,7 @@ export const HELP_CONFIG: HelpContentRaw = [
           'The status of your nominations at a glance.',
           'A set of nominations will be inactive when none of those nominees are participating in the current validator set (the set of validators currently elected to validate the network).',
           'When at least one of your nominees are active, this nomination status will display as "actively nominating" - but this still does not guarantee rewards.',
-          'The top {FallbackNominatorRewardedPerValidator} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the  {FallbackNominatorRewardedPerValidator} highest bonded nominators to receive rewards.',
+          'The top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators of each active validator receive rewards on {NETWORK_NAME}. So if a nominee is active and over-subscribed, you must be a part of the  {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} highest bonded nominators to receive rewards.',
           'If an active nominee is not over-subscribed, you will receive rewards.',
         ],
       },
@@ -139,7 +139,7 @@ export const HELP_CONFIG: HelpContentRaw = [
           'The amount of {NETWORK_UNIT} needed to be actively nominating in an era.',
           "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
           'Being above the active bond threshold simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.',
-          'Only the top {FallbackNominatorRewardedPerValidator} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.',
+          'Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.',
           'You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool.',
         ],
       },
@@ -160,7 +160,7 @@ export const HELP_CONFIG: HelpContentRaw = [
       {
         title: 'Nominations',
         description: [
-          'Nominations are the validators a staker chooses to nominate. You can nominate up to {FallbackMaxNominations} validators on {NETWORK_NAME}.',
+          'Nominations are the validators a staker chooses to nominate. You can nominate up to {MAX_NOMINATIONS} validators on {NETWORK_NAME}.',
           'For nomination pools, the pool owner and pool nominator are in charge of nominating validators on behalf of all the pool members.',
           'Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the current era.',
           'As long as at least one nomination is actively validating in a session, your funds will be backing that validator.',
@@ -358,7 +358,7 @@ export const HELP_CONFIG: HelpContentRaw = [
       {
         title: 'Over Subscribed',
         description: [
-          'Only the top {FallbackNominatorRewardedPerValidator} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed.',
+          'Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators for each validator are rewarded in {NETWORK_NAME}. When this number is surpassed, this validator is considered over subscribed.',
         ],
       },
       {
