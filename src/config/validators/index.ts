@@ -415,6 +415,23 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'Staking4All',
+    Thumbnail: Staking4All,
+    bio: "We want to make staking on blockchain projects clear and transparent so everyone can stake and receive returns on their crypto holdings. Stake with us!",
+    email: 'staking4all@gmail.com',
+    twitter: '@staking4all',
+    website: 'https://www.staking4all.org/',
+    validators: {
+      polkadot: [
+        '14cxMDpBNLsNEXWyCzked3zghzaYWXwoqGT4h12GqQXdVhmn',
+        '16g43B7VPfTmpXQujSz3aKbqY9twSrDreHFWtwp4P7bLkQPp',
+      ],
+      kusama: [
+        'GTUi6r2LEsf71zEQDnBvBvKskQcWvK66KRqcRbdmcczaadr',
+      ],
+    },
+  },
+  {
     name: 'TurboFlakes',
     Thumbnail: TurboFlakes,
     bio: 'TurboFlakes provides validators with character running on top of dedicated and high performance servers. Raiden, Coco and Momo are our named validators serving non-stop Polkadot and Kusama. We also provide end-user tooling to help you to interact with substrate blockchain networks. Feel free to reach out.',
