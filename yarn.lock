@@ -1033,12 +1033,12 @@
     core-js-pure "^3.25.1"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.19.4", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
-  version "7.19.4"
-  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.19.4.tgz#a42f814502ee467d55b38dd1c256f53a7b885c78"
-  integrity sha512-EXpLCrk55f+cYqmHsSR+yD/0gAIMxxA9QK9lnQWzhMCvt+YmoBN7Zx94s++Kv0+unHk39vxNO8t+CMA2WSS3wA==
+"@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.8", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.19.4", "@babel/runtime@^7.20.0", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+  version "7.20.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.0.tgz#824a9ef325ffde6f78056059db3168c08785e24a"
+  integrity sha512-NDYdls71fTXoU8TZHfbBWg7DiZfNzClcKui/+kyi6ppD2L1qnWW3VV6CjtaBXSUGGhiTWJ6ereOIkUvenif66Q==
   dependencies:
-    regenerator-runtime "^0.13.4"
+    regenerator-runtime "^0.13.10"
 
 "@babel/template@^7.18.10", "@babel/template@^7.3.3":
   version "7.18.10"
@@ -1871,12 +1871,21 @@
     "@polkadot/types-codec" "9.6.1"
     "@polkadot/util" "^10.1.11"
 
-"@polkadot/types-codec@9.6.1", "@polkadot/types-codec@^9.5.2":
+"@polkadot/types-codec@9.6.1":
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-9.6.1.tgz#d937a385636c4d9b29e59cfb9582b55e31421132"
   integrity sha512-fgrD9yKVVHMyw26VORE+VR2hEnyVa5g5krK3Xv4l6rVGWYYE/vcmsuelZIPM0Glzc5K/2nA72s4Yv5/V8Sk1gA==
   dependencies:
     "@babel/runtime" "^7.19.4"
+    "@polkadot/util" "^10.1.11"
+    "@polkadot/x-bigint" "^10.1.11"
+
+"@polkadot/types-codec@^9.6.2":
+  version "9.6.2"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-9.6.2.tgz#0c3ab8d8db8199aed4bedf9008d70093fca85f0a"
+  integrity sha512-XXpJv+ydQDmno2dHm2dHCxAYrCLncCqsF/xUQAlQS2qbViQOoEUoP5wOhcKrsvITNekh0YLfdhyzaSId2ST2xQ==
+  dependencies:
+    "@babel/runtime" "^7.20.0"
     "@polkadot/util" "^10.1.11"
     "@polkadot/x-bigint" "^10.1.11"
 
@@ -8798,7 +8807,7 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
+regenerator-runtime@^0.13.10, regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.9:
   version "0.13.10"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz#ed07b19616bcbec5da6274ebc75ae95634bfc2ee"
   integrity sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==
