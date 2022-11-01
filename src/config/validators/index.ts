@@ -28,6 +28,7 @@ import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilities.svg';
+import { ReactComponent as Staking4All } from './thumbnails/staking4all.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
