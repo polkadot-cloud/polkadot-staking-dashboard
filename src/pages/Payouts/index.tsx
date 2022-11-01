@@ -70,7 +70,10 @@ export const Payouts = (props: PageProps) => {
               {payouts.length ? (
                 <>
                   {moment
-                    .unix(payouts[MaxPayoutDays - 2].block_timestamp)
+                    .unix(
+                      payouts[Math.min(MaxPayoutDays - 2, payouts.length - 1)]
+                        .block_timestamp
+                    )
                     .format('Do MMMM')}
                   &nbsp;-&nbsp;
                   {moment.unix(payouts[0].block_timestamp).format('Do MMMM')}
