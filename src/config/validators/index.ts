@@ -27,6 +27,7 @@ import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
+import { ReactComponent as Staking4All } from './thumbnails/staking4all.svg';
 import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilities.svg';
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
@@ -58,7 +59,10 @@ export const VALIDATOR_COMMUNITY = [
     twitter: '@amforcag',
     website: 'https://amforc.com/',
     validators: {
-      polkadot: ['1y6CPLgccsysCEii3M7jQF834GZsz9A3HMcZz3w7RjGPpBL'],
+      polkadot: [
+        '1y6CPLgccsysCEii3M7jQF834GZsz9A3HMcZz3w7RjGPpBL',
+        '1gBKvQ9vbraAfhxEroBnxoGp9687Hu5wR7NYSwgJeAsw4x8',
+      ],
       kusama: [
         'DVUNoinHdSNfismcrFaBwdJfysxc7A48QkNvTDnTSPXPw3q',
         'DpLatoXXBiSAPooF17bzUZGo7huNB7USfRqd2SgL6RBy2zr',
@@ -394,6 +398,21 @@ export const VALIDATOR_COMMUNITY = [
         'Et9M3rrA7H2kHQEGRXHxufcp9HTEmFirMWtKHvjoJ85r1C9',
         'Dh2ZNKbQMdusURjfZZj7Bczb57PGEoCVmDHdq8hjnH5PZ4E',
       ],
+    },
+  },
+  {
+    name: 'Staking4All',
+    Thumbnail: Staking4All,
+    bio: 'We want to make staking on blockchain projects clear and transparent so everyone can stake and receive returns on their crypto holdings. Stake with us!',
+    email: 'staking4all@gmail.com',
+    twitter: '@staking4all',
+    website: 'https://www.staking4all.org/',
+    validators: {
+      polkadot: [
+        '14cxMDpBNLsNEXWyCzked3zghzaYWXwoqGT4h12GqQXdVhmn',
+        '16g43B7VPfTmpXQujSz3aKbqY9twSrDreHFWtwp4P7bLkQPp',
+      ],
+      kusama: ['GTUi6r2LEsf71zEQDnBvBvKskQcWvK66KRqcRbdmcczaadr'],
     },
   },
   {
