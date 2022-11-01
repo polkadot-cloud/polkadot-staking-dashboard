@@ -97,6 +97,9 @@ export const Labels = styled.div`
 
   .label {
     position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
     color: ${textSecondary};
     margin: 0 0.2rem;
     @media (min-width: ${SmallFontSizeMaxWidth}px) {

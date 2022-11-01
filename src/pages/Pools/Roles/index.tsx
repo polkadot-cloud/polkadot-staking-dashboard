@@ -29,7 +29,7 @@ export const Roles = (props: RolesProps) => {
   const listenIsValid = props.listenIsValid ?? (() => {});
   const setters = props.setters ?? [];
 
-  const { isReady } = useApi();
+  const { isReady, network } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
   const { isOwner, selectedActivePool } = useActivePools();
@@ -66,15 +66,16 @@ export const Roles = (props: RolesProps) => {
   // update default roles on account switch
   useEffect(() => {
     setAccounts(Object.values(roles));
+    setIsEditing(false);
     setRoleEdits(initialiseEdits);
     setFetched(false);
-  }, [activeAccount]);
+  }, [activeAccount, network]);
 
   // fetch accounts meta batch
   useEffect(() => {
     if (isReady && !fetched) {
       setFetched(true);
-      fetchAccountMetaBatch(batchKey, Object.values(roles), false);
+      fetchAccountMetaBatch(batchKey, Object.values(roles), true);
     }
   }, [isReady, fetched]);
 
