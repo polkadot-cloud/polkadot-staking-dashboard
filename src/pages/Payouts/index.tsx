@@ -52,6 +52,16 @@ export const Payouts = (props: PageProps) => {
     return y.sub(x);
   });
 
+  // earliest payout date
+  const fromDate = moment
+    .unix(
+      payouts[Math.min(MaxPayoutDays - 2, payouts.length - 1)].block_timestamp
+    )
+    .format('Do MMMM');
+
+  // latest payout date
+  const toDate = moment.unix(payouts[0].block_timestamp).format('Do MMMM');
+
   return (
     <>
       <PageTitle title={title} />
@@ -69,14 +79,8 @@ export const Payouts = (props: PageProps) => {
             <h2>
               {payouts.length ? (
                 <>
-                  {moment
-                    .unix(
-                      payouts[Math.min(MaxPayoutDays - 2, payouts.length - 1)]
-                        .block_timestamp
-                    )
-                    .format('Do MMMM')}
-                  &nbsp;-&nbsp;
-                  {moment.unix(payouts[0].block_timestamp).format('Do MMMM')}
+                  {fromDate}
+                  {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}
                 </>
               ) : (
                 'None'
