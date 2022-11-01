@@ -52,15 +52,20 @@ export const Payouts = (props: PageProps) => {
     return y.sub(x);
   });
 
-  // earliest payout date
-  const fromDate = moment
-    .unix(
-      payouts[Math.min(MaxPayoutDays - 2, payouts.length - 1)].block_timestamp
-    )
-    .format('Do MMMM');
+  // calculate the earliest and latest payout dates if they exist.
+  let fromDate;
+  let toDate;
+  if (payoutsList.length) {
+    fromDate = moment
+      .unix(
+        payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
+          .block_timestamp
+      )
+      .format('Do MMMM');
 
-  // latest payout date
-  const toDate = moment.unix(payouts[0].block_timestamp).format('Do MMMM');
+    // latest payout date
+    toDate = moment.unix(payoutsList[0].block_timestamp).format('Do MMMM');
+  }
 
   return (
     <>
