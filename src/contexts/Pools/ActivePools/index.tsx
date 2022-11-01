@@ -163,6 +163,14 @@ export const ActivePoolsProvider = ({
     membership,
   ]);
 
+  // when we are subscribed to all active pools, syncing is considered
+  // completed.
+  useEffect(() => {
+    if (unsubNominationsRef.current.length === accountPools.length) {
+      setStateWithRef(Sync.Synced, setSynced, syncedRef);
+    }
+  }, [unsubNominationsRef.current]);
+
   // handle active pool subscriptions
   const handlePoolSubscriptions = async () => {
     if (accountPools.length) {
@@ -224,7 +232,6 @@ export const ActivePoolsProvider = ({
           const balance = accountData.data;
           bondedPool = bondedPool?.unwrapOr(undefined)?.toHuman();
           rewardPool = rewardPool?.unwrapOr(undefined)?.toHuman();
-
           if (rewardPool && bondedPool) {
             const rewardAccountBalance = balance?.free;
             const unclaimedRewards = calculatePayout(
@@ -295,7 +302,6 @@ export const ActivePoolsProvider = ({
     poolBondAddress: string
   ) => {
     if (!api) return;
-
     const subscribePoolNominations = async (_poolBondAddress: string) => {
       const unsub = await api.query.staking.nominators(
         _poolBondAddress,
@@ -321,9 +327,6 @@ export const ActivePoolsProvider = ({
             setPoolNominations,
             poolNominationsRef
           );
-
-          // update sycning to complete
-          setStateWithRef(Sync.Synced, setSynced, syncedRef);
         }
       );
       return unsub;

@@ -28,6 +28,7 @@ export const PoolNominations = () => {
               title={t('modals.pool_nominations')}
               showMenu={false}
               inModal
+              refetchOnListUpdate
             />
           ) : (
             <h3>{t('modals.pool_is_not_nominating')}</h3>

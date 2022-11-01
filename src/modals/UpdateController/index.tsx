@@ -79,6 +79,7 @@ export const UpdateController = () => {
       <Title
         title={t('modals.change_controller_account')}
         icon={faExchangeAlt}
+        helpKey="Controller Account Eligibility"
       />
       <Wrapper>
         <div

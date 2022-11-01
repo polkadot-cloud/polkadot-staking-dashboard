@@ -7,7 +7,7 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
-import { MaybeAccount } from 'types';
+import { MaybeAccount, Sync } from 'types';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
@@ -174,7 +174,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setNetworkSyncing(_networkSyncing);
 
     // active pools have been synced
-    if (!activePoolsSynced) {
+    if (activePoolsSynced !== Sync.Synced) {
       _syncing = true;
       _poolsSyncing = true;
     }
@@ -187,7 +187,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setIsSyncing(_syncing);
-  }, [isReady, staking, metrics, accounts, eraStakers]);
+  }, [isReady, staking, metrics, accounts, eraStakers, activePoolsSynced]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);

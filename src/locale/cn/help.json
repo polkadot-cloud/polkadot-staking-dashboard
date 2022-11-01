@@ -19,7 +19,7 @@
                 "title": "总提名人数",
                 "description": [
                     "在网络中参与抵押的账户,无论他们在当前Session中是否活跃.",
-                    "抵押{NETWORK_UNIT}的前提是成为提名人."
+                    "抵押{NETWORK_UNIT}的前提是成为提名人或加入提名池，提名池本身就是一个提名人."
                 ]
             },
             "active_nominators": {
@@ -53,7 +53,7 @@
             "inflation": {
                 "title": "通货膨胀",
                 "description": [
-                    "DOT具有通货膨胀性.所以无封顶数量.",
+                    "{NETWORK_UNIT}具有通货膨胀性.所以无封顶数量.",
                     "在验证人的奖励是基于抵押金额, 其余归国库所有的情况下, 每年通货膨胀率约为10%."
                 ]
             },
@@ -98,20 +98,30 @@
                     "可在抵押页面上导入不同的Controller帐户."
                 ]
             },
+            "controller_account_eligibility": {
+                "title": "Controller Account Eligibility",
+                "description": [
+                    "For an account to become a controller, it must have a balance of at least the existential deposit. On {NETWORK_NAME} the existential deposit amount is {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT}.",
+                    "If an account does not have at least this amount, you will see the 'Not Enough {NETWORK_UNIT}' message overlaying it.",
+                    "Topping up an account with at least {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT} will make it eligible and selectable as a controller."
+                ]
+            },
             "bonding": {
                 "title": "质押",
                 "description": [
                     "质押金额是“锁定”（或抵押）{NETWORK_UNIT}的过程. 质押的{NETWORK_UNIT}将自动分配给一个或多个指定验证人.",
-                    "最低可活跃质押统计数是指在当前Era提名人中质押最少的{NETWORK_UNIT}."
+                    "As a nominator, you allocate nominations yourself. In a pool, the pool owner or pool nominator will allocate nominations on your behalf, and your bonded funds will back those nominations.",
+                    "最低可活跃质押统计数是指在当前Era提名人中质押最少的{NETWORK_UNIT}.This value is also the minimum amount required to receive rewards."
                 ]
             },
             "active_bond_threshold": {
                 "title": "保持活跃度的质押阈值",
                 "description": [
                     "在一个Era中为保持活跃提名的所需的{NETWORK_UNIT}数量. ",
+                    "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
                     "高于这个标准能保证可以一直在这个Era的活跃提名人名单中. 但这数额不保证能得到奖励,因为您的活跃提名人有超额认选的可能.",
-                    "在{NETWORK_NAME},只有前{FallbackNominatorRewardedPerValidator}名提名人才能获得每个验证人的奖励. 确保您的活跃度质押金额高于此阈值将增加获得奖励的机会.",
-                    "可以从页面中追踪这些指标, 并在必要时执行抵押操作如增加{NETWORK_UNIT}或更改提名."
+                    "在{NETWORK_NAME},只有前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能获得每个验证人的奖励. 确保您的活跃度质押金额高于此阈值将增加获得奖励的机会.",
+                    "可以从页面中追踪这些指标, 并在必要时执行抵押操作如增加{NETWORK_UNIT}或更改提名或加入其它提名池."
                 ]
             },
             "reward_destination": {
@@ -131,7 +141,8 @@
             "nominations": {
                 "title": "提名",
                 "description": [
-                    "提名指选择验证人. 在{NETWORK_NAME}里最高提名数为 {FallbackMaxNominations}.",
+                    "提名指选择验证人. 在{NETWORK_NAME}里最高提名数为 {MAX_NOMINATIONS}.",
+                    "For nomination pools, the pool owner and pool nominator are in charge of nominating validators on behalf of all the pool members.",
                     "一旦提名一交, 质押金额会自动分配给当前Era活跃的提名人.",
                     "只要本人提名中至少有一个提名在当前session中活跃执行验证,您的资金就会与该验证人绑定从而获得奖励."
                 ]
@@ -139,7 +150,7 @@
             "inactive_nominations": {
                 "title": "非活跃提名",
                 "description": [
-                    "指您的质押资金未分配到当前Era的活跃验证人群中的提名."
+                    "指质押资金未分配到当前Era的活跃验证人群中的提名."
                 ]
             }
         },
@@ -278,25 +289,20 @@
                     "该值和验证人的自我抵押一起形成验证人总抵押数,值得注意的是,该值因为随着提名人在该Session的质押金额给活跃验证人的重新分配,每一个era都会发生变化."
                 ]
             },
-            "minimum_nomination_bond": {
-                "title": "最低提名质押金",
-                "description": [
-                    "提名所需的最低质押金额."
-                ]
-            },
             "commission": {
                 "title": "佣金",
                 "description": [
                     "验证人可以获得一定比例的奖励。这部分被称为他们的佣金.",
                     "提名佣金率较低的验证人意味着您将获得他们产生的更大份额的奖励.",
                     "许多验证者的佣金率为100%，这意味着提名这些验证人将不会获得任何奖励.",
+                    "Examples of such validators include those operating on behalf of exchanges, where nominating and reward distribution is done centrally on the exchange in question.",
                     "验证人可以随时更新他们的佣金率，这些变化将对您的盈利能力产生影响. 请务必在页面上监控您的提名，以留意其佣金率更新."
                 ]
             },
             "over_subscribed": {
                 "title": "超额认选",
                 "description": [
-                    "只有每个验证人的前{FallbackNominatorRewardedPerValidator}名提名人才能在{NETWORK_NAME}获得奖励. 当超过该数时,该验证人将被视为超额认选."
+                    "只有每个验证人的前{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}名提名人才能在{NETWORK_NAME}获得奖励. 当超过该数时,该验证人将被视为超额认选."
                 ]
             },
             "blocked_nominations": {

@@ -1,10 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +33,11 @@ export const UnbondAll = (props: FormsProps) => {
   const { bondType } = config;
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
+  const { selectedActivePool } = useActivePools();
+
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
@@ -131,6 +138,11 @@ export const UnbondAll = (props: FormsProps) => {
             <Warning text={t('modals.w10')} />
           ) : (
             <></>
+          )}
+          {unclaimedRewards > 0 && (
+            <Warning
+              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            />
           )}
           <h4>{t('modals.amount_to_unbond')}</h4>
           <h2>

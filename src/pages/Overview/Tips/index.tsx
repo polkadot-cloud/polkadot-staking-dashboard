@@ -31,7 +31,7 @@ import { Syncing } from './Syncing';
 export const Tips = () => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
-  const { isSyncing } = useUi();
+  const { networkSyncing } = useUi();
   const { toggleDismiss } = useTips();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
@@ -66,7 +66,7 @@ export const Tips = () => {
   // This function ensures totalPages is never surpassed, but does not guarantee
   // that the start item will maintain across resizes.
   const getPage = () => {
-    const totalItmes = isSyncing ? 1 : items.length;
+    const totalItmes = networkSyncing ? 1 : items.length;
     const itemsPerPage = getItemsPerPage();
     const totalPages = Math.ceil(totalItmes / itemsPerPage);
     if (pageRef.current > totalPages) {
@@ -147,10 +147,14 @@ export const Tips = () => {
   );
 
   // determine items to be displayed
-  const endItem = isSyncing ? 1 : Math.min(_page * _itemsPerPage, items.length);
-  const startItem = isSyncing ? 1 : _page * _itemsPerPage - (_itemsPerPage - 1);
+  const endItem = networkSyncing
+    ? 1
+    : Math.min(_page * _itemsPerPage, items.length);
+  const startItem = networkSyncing
+    ? 1
+    : _page * _itemsPerPage - (_itemsPerPage - 1);
 
-  const totalItems = isSyncing ? 1 : items.length;
+  const totalItems = networkSyncing ? 1 : items.length;
   const itemsDisplay = items.slice(startItem - 1, endItem);
   const totalPages = Math.ceil(totalItems / _itemsPerPage);
 
@@ -216,7 +220,7 @@ export const Tips = () => {
           </PageToggleWrapper>
         </div>
       </CardHeaderWrapper>
-      {isSyncing ? (
+      {networkSyncing ? (
         <Syncing />
       ) : (
         <Items items={itemsDisplay} page={pageRef.current} />

@@ -56,6 +56,11 @@ export const PayoutBar = (props: PayoutBarProps) => {
   const { t } = useTranslation('common');
   const { locale } = useLocale();
 
+  // remove slashes from payouts (graph does not support negative values).
+  const payoutsNoSlash = payouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
+  );
+
   const { units } = network;
   const notStaking = !isSyncing && inSetup() && !membership;
   const average = 1;
@@ -64,7 +69,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
     days,
     average,
     units,
-    payouts,
+    payoutsNoSlash,
     poolClaims
   );
 

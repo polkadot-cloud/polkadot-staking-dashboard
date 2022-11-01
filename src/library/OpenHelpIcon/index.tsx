@@ -20,6 +20,7 @@ export const OpenHelpIcon = (props: OpenHelpIconProps) => {
       }}
       className="help-icon"
       style={{ width: size, height: size }}
+      light={props.light ?? false}
     >
       <IconSVG />
     </Wrapper>

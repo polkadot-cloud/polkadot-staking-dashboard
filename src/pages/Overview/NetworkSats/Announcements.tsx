@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { networkSyncing } = useUi();
+  const { networkSyncing, isSyncing } = useUi();
   const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking();
@@ -87,7 +87,7 @@ export const Announcements = () => {
   const announcements = [];
 
   // maximum nominators have been reached
-  if (nominatorCapReached) {
+  if (nominatorCapReached && !isSyncing) {
     announcements.push({
       class: 'danger',
       title: t('pages.overview.announcements1'),

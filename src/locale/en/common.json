@@ -245,6 +245,7 @@
         "subscan_disabled": "Subscan Disabled",
         "withdraw_member_funds": "Withdraw Member Funds",
         "bio": "bio",
+        "read_only_accounts": "Read Only Accounts",
         "not_staking": "Not Staking",
         "forget": "Forget",
         "read_only": "Read Only",

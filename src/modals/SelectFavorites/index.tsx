@@ -77,10 +77,10 @@ export const SelectFavorites = () => {
               selectActive
               selectToggleable={false}
               onSelected={onSelected}
-              refetchOnListUpdate
               showMenu={false}
               inModal
               allowMoreCols
+              refetchOnListUpdate
             />
           ) : (
             <h3>{t('modals.no_favorites_available')}</h3>

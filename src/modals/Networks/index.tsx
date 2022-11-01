@@ -6,10 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NETWORKS } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
+import { useTooltip } from 'contexts/Tooltip';
+import { Title } from 'library/Modal/Title';
+import { useEffect, useRef, useState } from 'react';
 import { NetworkName } from 'types';
 import { useTranslation } from 'react-i18next';
-import { Title } from 'library/Modal/Title';
-import { useEffect, useState } from 'react';
+import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
 import {
@@ -26,6 +28,7 @@ export const Networks = () => {
   const { setStatus } = useModal();
   const networkKey: string = network.name.toLowerCase();
   const { t } = useTranslation('common');
+  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   useEffect(() => {
     // @ts-ignore
@@ -33,6 +36,17 @@ export const Networks = () => {
       setBraveBrowser(isBrave);
     });
   });
+
+  const posRef = useRef(null);
+
+  const tooltipText = 'Undergoing Maintenance';
+
+  const toggleTooltip = () => {
+    if (!open) {
+      setTooltipMeta(tooltipText);
+      setTooltipPosition(posRef);
+    }
+  };
 
   return (
     <>
@@ -96,14 +110,21 @@ export const Networks = () => {
             </ConnectionButton>
             <ConnectionButton
               connected={isLightClient}
-              disabled={isLightClient}
+              className="off"
+              disabled
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, true);
                 setStatus(0);
               }}
             >
-              <h3>{t('modals.light_client')} (Experimental)</h3>
+              <TooltipTrigger
+                className="tooltip-trigger-element"
+                data-tooltip-text={tooltipText}
+                onMouseMove={() => toggleTooltip()}
+              />
+              <TooltipPosition ref={posRef} style={{ left: '10px' }} />
+              <h3>{t('modals.light_client')}t</h3>
               {isLightClient && (
                 <h4 className="selected">{t('modals.selected')}</h4>
               )}

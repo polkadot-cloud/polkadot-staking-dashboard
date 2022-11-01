@@ -77,6 +77,10 @@ export const HELP_CONFIG: any = [
         localeKey: 'nominate.definitions.stash_and_controller_accounts',
       },
       {
+        key: 'Controller Account Eligibility',
+        localeKey: 'nominate.definitions.controller_account_eligibility',
+      },
+      {
         key: 'Bonding',
         localeKey: 'nominate.definitions.bonding',
       },
@@ -217,10 +221,6 @@ export const HELP_CONFIG: any = [
       {
         key: 'Nominator Stake',
         localeKey: 'validators.definitions.nominator_stake',
-      },
-      {
-        key: 'Minimum Nomination Bond',
-        localeKey: 'validators.definitions.minimum_nomination_bond',
       },
       {
         key: 'Commission',

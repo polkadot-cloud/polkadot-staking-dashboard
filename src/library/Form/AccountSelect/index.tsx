@@ -110,6 +110,8 @@ const DropdownItem = ({ c, item, index }: any) => {
           status="not_enough_unit"
           title={item.alert}
           topOffset="40%"
+          helpKey="Controller Account Eligibility"
+          hideIcon
         />
       )}
       <div
