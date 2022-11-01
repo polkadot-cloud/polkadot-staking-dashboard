@@ -69,9 +69,11 @@ export const Payouts = (props: PageProps) => {
             <h2>
               {payouts.length ? (
                 <>
-                  {/* These are the days that appear in the Chart
-                  TODO: Fix it without hardcoded values */}
-                  {moment.unix(payouts[58].block_timestamp).format('Do MMMM')}
+                  {/* 58 are the actual days that the Graph shows (MaxPayoutDays - 2) and that 
+                  is cause the 60 days should be reduced by 2 (current and 1st day) */}
+                  {moment
+                    .unix(payouts[MaxPayoutDays - 2].block_timestamp)
+                    .format('Do MMMM')}
                   &nbsp;-&nbsp;
                   {moment.unix(payouts[0].block_timestamp).format('Do MMMM')}
                 </>
