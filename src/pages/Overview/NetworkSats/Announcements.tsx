@@ -7,6 +7,7 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -21,11 +22,13 @@ import {
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { networkSyncing, isSyncing } = useUi();
+  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
   const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking();
   const { metrics } = useNetworkMetrics();
+  const { poolMembers } = usePoolMembers();
+
   const {
     minNominatorBond,
     totalNominators,
@@ -114,7 +117,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'pools',
       title: `${bondedPools.length} nomination pools are active.`,
-      subtitle: `Nomination pools are available to join on the ${network.name} network.`,
+      subtitle: `The number of nomination pools available to join on ${network.name}.`,
     });
 
     // total locked in pols
@@ -123,6 +126,17 @@ export const Announcements = () => {
       title: `${totalPoolPointsBase} ${network.unit} is currently bonded in pools.`,
       subtitle: `The total ${network.unit} currently bonded in nomination pools.`,
     });
+
+    if (poolMembers.length > 0 && !poolsSyncing) {
+      // total locked in pols
+      announcements.push({
+        class: 'pools',
+        title: `${humanNumber(
+          poolMembers.length
+        )} pool members are actively bonding in pools.`,
+        subtitle: `The total number of accounts that have joined a pool.`,
+      });
+    }
   }
 
   // minimum nominator bond
