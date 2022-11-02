@@ -30,14 +30,6 @@ export const ValidatorFilterProvider = ({
   // store the validator ordering method that is currently active
   const [validatorOrder, setValidatorOrder]: any = useState('default');
 
-  const setValidatorsOrder = (by: string) => {
-    setValidatorOrder(by);
-  };
-
-  const setValidatorsFilter = (filter: any) => {
-    setValidatorFilters(filter);
-  };
-
   /*
    * toggleAllValidaorFilters
    * Either turns all filters on or all filters off.
@@ -45,7 +37,7 @@ export const ValidatorFilterProvider = ({
    */
   const toggleAllValidatorFilters = (toggle: number) => {
     if (toggle) {
-      setValidatorsFilter([
+      setValidatorFilters([
         'all_commission',
         'blocked_nominations',
         'over_subscribed',
@@ -72,7 +64,7 @@ export const ValidatorFilterProvider = ({
     } else {
       filter.push(f);
     }
-    setValidatorsFilter(filter);
+    setValidatorFilters(filter);
   };
 
   /*
@@ -88,27 +80,17 @@ export const ValidatorFilterProvider = ({
     batchKey: string,
     filter: any = validatorFilters
   ) => {
-    if (filter.includes('all_commission')) {
-      list = filterAllCommission(list);
-    }
-    if (filter.includes('blocked_nominations')) {
+    if (filter.includes('all_commission')) list = filterAllCommission(list);
+    if (filter.includes('blocked_nominations'))
       list = filterBlockedNominations(list);
-    }
-    if (filter.includes('over_subscribed')) {
+    if (filter.includes('over_subscribed'))
       list = filterOverSubscribed(list, batchKey);
-    }
-    if (filter.includes('missing_identity')) {
+    if (filter.includes('missing_identity'))
       list = filterMissingIdentity(list, batchKey);
-    }
-    if (filter.includes('inactive')) {
-      list = filterInactive(list);
-    }
-    if (filter.includes('not_parachain_validator')) {
+    if (filter.includes('inactive')) list = filterInactive(list);
+    if (filter.includes('not_parachain_validator'))
       list = filterNonParachainValidator(list);
-    }
-    if (filter.includes('in_session')) {
-      list = filterInSession(list);
-    }
+    if (filter.includes('in_session')) list = filterInSession(list);
     return list;
   };
 
@@ -178,14 +160,10 @@ export const ValidatorFilterProvider = ({
     for (const validator of list) {
       const addressBatchIndex =
         meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+      const stake = meta[batchKey]?.stake ?? false;
 
       // if we cannot derive data, fallback to include validator in filtered list
-      if (addressBatchIndex === -1) {
-        filteredList.push(validator);
-        continue;
-      }
-      const stake = meta[batchKey]?.stake ?? false;
-      if (!stake) {
+      if (addressBatchIndex === -1 || !stake) {
         filteredList.push(validator);
         continue;
       }
@@ -216,8 +194,7 @@ export const ValidatorFilterProvider = ({
    * Returns the updated filtered list.
    */
   const filterBlockedNominations = (list: any) => {
-    list = list.filter((validator: any) => validator?.prefs?.blocked !== true);
-    return list;
+    return list.filter((validator: any) => validator?.prefs?.blocked !== true);
   };
 
   /*
@@ -227,13 +204,10 @@ export const ValidatorFilterProvider = ({
    */
   const filterInactive = (list: any) => {
     // if list has not yet been populated, return original list
-    if (session.list.length === 0) {
-      return list;
-    }
-    list = list.filter((validator: any) =>
+    if (session.list.length === 0) return list;
+    return list.filter((validator: any) =>
       session.list.includes(validator.address)
     );
-    return list;
   };
 
   /*
@@ -243,13 +217,10 @@ export const ValidatorFilterProvider = ({
    */
   const filterNonParachainValidator = (list: any) => {
     // if list has not yet been populated, return original list
-    if ((sessionParachain?.length ?? 0) === 0) {
-      return list;
-    }
-    list = list.filter((validator: any) =>
+    if ((sessionParachain?.length ?? 0) === 0) return list;
+    return list.filter((validator: any) =>
       sessionParachain.includes(validator.address)
     );
-    return list;
   };
 
   /*
@@ -259,13 +230,10 @@ export const ValidatorFilterProvider = ({
    */
   const filterInSession = (list: any) => {
     // if list has not yet been populated, return original list
-    if (session.list.length === 0) {
-      return list;
-    }
-    list = list.filter(
+    if (session.list.length === 0) return list;
+    return list.filter(
       (validator: any) => !session.list.includes(validator.address)
     );
-    return list;
   };
 
   /*
@@ -273,8 +241,7 @@ export const ValidatorFilterProvider = ({
    * Sets the ordering key for orderValidators
    */
   const orderValidators = (by: string) => {
-    const order = validatorOrder === by ? 'default' : by;
-    setValidatorsOrder(order);
+    setValidatorOrder(validatorOrder === by ? 'default' : by);
   };
 
   /*
@@ -283,10 +250,7 @@ export const ValidatorFilterProvider = ({
    * Returns the updated ordered list.
    */
   const applyValidatorOrder = (list: any, order: string) => {
-    if (order === 'commission') {
-      return orderLowestCommission(list);
-    }
-    return list;
+    return order === 'commission' ? orderLowestCommission(list) : list;
   };
 
   /*
@@ -295,10 +259,9 @@ export const ValidatorFilterProvider = ({
    * Returns the updated ordered list.
    */
   const orderLowestCommission = (list: any) => {
-    const orderedList = [...list].sort(
+    return [...list].sort(
       (a: any, b: any) => a.prefs.commission - b.prefs.commission
     );
-    return orderedList;
   };
 
   /*
@@ -313,26 +276,16 @@ export const ValidatorFilterProvider = ({
     batchKey: string,
     searchTerm: string
   ) => {
-    if (meta[batchKey] === undefined) {
-      return list;
-    }
+    if (meta[batchKey] === undefined) return list;
     const filteredList: any = [];
     for (const validator of list) {
       const batchIndex =
         meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+      const identities = meta[batchKey]?.identities ?? false;
+      const supers = meta[batchKey]?.supers ?? false;
 
       // if we cannot derive data, fallback to include validator in filtered list
-      if (batchIndex === -1) {
-        filteredList.push(validator);
-        continue;
-      }
-      const identities = meta[batchKey]?.identities ?? false;
-      if (!identities) {
-        filteredList.push(validator);
-        continue;
-      }
-      const supers = meta[batchKey]?.supers ?? false;
-      if (!supers) {
+      if (batchIndex === -1 || !identities || !supers) {
         filteredList.push(validator);
         continue;
       }
@@ -356,15 +309,13 @@ export const ValidatorFilterProvider = ({
         superIdentityAsBytes === '' ? superIdentityRaw : superIdentityAsBytes
       ).toLowerCase();
 
-      if (address.toLowerCase().includes(searchTerm.toLowerCase())) {
+      if (address.toLowerCase().includes(searchTerm.toLowerCase()))
         filteredList.push(validator);
-      }
       if (
         identitySearch.includes(searchTerm.toLowerCase()) ||
         superIdentitySearch.includes(searchTerm.toLowerCase())
-      ) {
+      )
         filteredList.push(validator);
-      }
     }
     return filteredList;
   };

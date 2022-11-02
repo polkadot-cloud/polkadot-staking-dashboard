@@ -3,26 +3,21 @@
 
 import { CategoryProps } from './types';
 
-export const Category = (props: CategoryProps) => {
-  const { title } = props;
-  const buttons = props.buttons ?? [];
-
-  return (
-    <div className="category">
-      <div className="head">
-        {title}
-        {buttons.map((button: any, i: number) => (
-          <button
-            key={`category_${title}_${i}`}
-            type="button"
-            onClick={() => button.onClick()}
-            disabled={button.disabled}
-          >
-            {button.title}
-          </button>
-        ))}
-      </div>
-      <div className="items">{props.children}</div>
+export const Category = ({ title, buttons = [], children }: CategoryProps) => (
+  <div className="category">
+    <div className="head">
+      {title}
+      {buttons.map((button: any, i: number) => (
+        <button
+          key={`category_${title}_${i}`}
+          type="button"
+          onClick={() => button.onClick()}
+          disabled={button.disabled}
+        >
+          {button.title}
+        </button>
+      ))}
     </div>
-  );
-};
+    <div className="items">{children}</div>
+  </div>
+);
