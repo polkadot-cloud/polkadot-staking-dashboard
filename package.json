@@ -45,7 +45,7 @@
     "yarn": "^1.22.18"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.0",
+    "@types/jest": "^29.2.1",
     "@types/lodash.throttle": "^4.1.6",
     "@types/node": "^18.11.8",
     "@types/react": "^18.0.24",
