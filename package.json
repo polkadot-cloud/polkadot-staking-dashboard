@@ -57,7 +57,7 @@
     "@types/react-scroll": "^1.8.3",
     "@types/window-or-global": "^1.0.4",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
-    "@typescript-eslint/parser": "^5.40.1",
+    "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
