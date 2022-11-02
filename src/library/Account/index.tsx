@@ -5,57 +5,53 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
+import { useEffect, useState } from 'react';
 import { defaultThemes } from 'theme/default';
 import { clipAddress, convertRemToPixels } from 'Utils';
 import Identicon from '../Identicon';
 import { AccountProps } from './types';
 import Wrapper from './Wrapper';
 
-export const Account = (props: AccountProps) => {
+export const Account = ({
+  filled = false,
+  fontSize = '1.05rem',
+  format,
+  value,
+  label,
+  readOnly,
+  canClick,
+  title,
+  onClick,
+}: AccountProps) => {
   const { mode } = useTheme();
   const { getAccount } = useConnect();
-
-  // data props
-  const { value, label, readOnly } = props;
-
-  // presentational props
-  const { format } = props;
-  const filled = props.filled ?? false;
-  const fontSize = props.fontSize ?? '1.05rem';
-
-  // functional props
-  const { canClick }: { canClick: boolean } = props;
+  const [displayValue, setDisplayValue] = useState<string | undefined>();
 
   const unassigned = value === null || value === undefined || !value.length;
 
-  // format value based on `format` prop
-  let displayValue;
-  switch (format) {
-    case 'name':
-      if (value !== '') {
-        displayValue = getAccount(value)?.name;
-      } else {
-        displayValue = clipAddress(value);
-      }
-      break;
-    case 'text':
-      displayValue = value;
-      break;
-    default:
-      if (value) {
-        displayValue = clipAddress(value);
-      }
-  }
+  useEffect(() => {
+    // format value based on `format` prop
+    switch (format) {
+      case 'name':
+        setDisplayValue(
+          value !== '' ? getAccount(value)?.name : clipAddress(value)
+        );
+        break;
+      case 'text':
+        setDisplayValue(value);
+        break;
+      default:
+        if (value) setDisplayValue(clipAddress(value));
+    }
 
-  // if title prop is provided, override `displayValue`
-  if (props.title !== undefined) {
-    displayValue = props.title;
-  }
+    // if title prop is provided, override `displayValue`
+    if (title !== undefined) setDisplayValue(title);
+  }, [value, title, getAccount, clipAddress]);
 
   return (
     <Wrapper
       whileHover={{ scale: 1.01 }}
-      onClick={props.onClick}
+      onClick={onClick}
       cursor={canClick ? 'pointer' : 'default'}
       fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
       fontSize={fontSize}
@@ -84,7 +80,7 @@ export const Account = (props: AccountProps) => {
               />
             </span>
           )}
-          <span className="title">{displayValue || clipAddress(value)}</span>
+          <span className="title">{displayValue}</span>
         </>
       )}
     </Wrapper>
