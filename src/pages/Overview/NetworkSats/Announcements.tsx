@@ -7,6 +7,7 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -22,11 +23,13 @@ import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { networkSyncing, isSyncing } = useUi();
+  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
   const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking();
   const { metrics } = useNetworkMetrics();
+  const { poolMembers } = usePoolMembers();
+
   const {
     minNominatorBond,
     totalNominators,
@@ -127,14 +130,24 @@ export const Announcements = () => {
       )}`,
       subtitle: `${t('pages.overview.the_total', { networkUnit })}`,
     });
+
+    if (poolMembers.length > 0 && !poolsSyncing) {
+      // total locked in pols
+      announcements.push({
+        class: 'pools',
+        title: `${humanNumber(
+          poolMembers.length
+        )} pool members are actively bonding in pools.`,
+        subtitle: `The total number of accounts that have joined a pool.`,
+      });
+    }
   }
 
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `${t('pages.overview.announcements9')} ${minNominatorBondBase} ${
-      network.unit
-    }.`,
+    title: `${t('pages.overview.announcements9')} ${minNominatorBondBase} ${network.unit
+      }.`,
     subtitle: `${t('pages.overview.minimum_bonding_amount', {
       networkName,
     })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,

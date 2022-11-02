@@ -55,6 +55,21 @@ export const Payouts = (props: PageProps) => {
     return y.sub(x);
   });
 
+  // calculate the earliest and latest payout dates if they exist.
+  let fromDate;
+  let toDate;
+  if (payoutsList.length) {
+    fromDate = moment
+      .unix(
+        payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
+          .block_timestamp
+      )
+      .format('Do MMMM');
+
+    // latest payout date
+    toDate = moment.unix(payoutsList[0].block_timestamp).format('Do MMMM');
+  }
+
   return (
     <>
       <PageTitle title={tPages(key)} />
@@ -72,11 +87,8 @@ export const Payouts = (props: PageProps) => {
             <h2>
               {payouts.length ? (
                 <>
-                  {moment.unix(payouts[0].block_timestamp).format('LL')}
-                  &nbsp;-&nbsp;
-                  {moment
-                    .unix(payouts[payouts.length - 1].block_timestamp)
-                    .format('LL')}
+                  {fromDate}
+                  {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}
                 </>
               ) : (
                 tCommon('pages.payouts.none')

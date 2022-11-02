@@ -377,7 +377,7 @@
             "currently_staked": "{{supplyAsPercent}}% of total {{networkUnit}} supply is currently staked.",
             "minimum_bonding_amount": "The minimum bonding amount to start nominating on {{networkName}} is now",
             "the_total": "The total {{networkUnit}}  currently bonded in nomination pools.",
-            "available_to_join": "Nomination pools are available to join on the {{networkName}} network.",
+            "available_to_join": "The number of nomination pools available to join on {{networkName}}.",
             "overview": "Overview",
             "address_copied": "Address Copied to Clipboard",
             "no_account_connected": "No Account Connected",
