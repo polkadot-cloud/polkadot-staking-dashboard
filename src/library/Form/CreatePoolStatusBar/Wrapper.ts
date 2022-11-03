@@ -49,21 +49,21 @@ export const Wrapper = styled.div`
       .bar {
         background: ${backgroundLabel};
         width: 100%;
-        padding: 0.4rem 0.5rem;
+        padding: 0.65rem 0.75rem;
         overflow: hidden;
         position: relative;
         transition: background 0.15s;
       }
       &:first-child .bar {
-        border-top-left-radius: 1rem;
-        border-bottom-left-radius: 1rem;
+        border-top-left-radius: 1.5rem;
+        border-bottom-left-radius: 1.5rem;
         h5 {
           margin-left: 0.25rem;
         }
       }
       &:last-child .bar {
-        border-top-right-radius: 1rem;
-        border-bottom-right-radius: 1rem;
+        border-top-right-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
       }
 
       &.invert {
