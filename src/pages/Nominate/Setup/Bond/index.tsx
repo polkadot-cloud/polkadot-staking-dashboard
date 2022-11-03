@@ -82,6 +82,7 @@ export const Bond = (props: SetupStepProps) => {
             },
           ]}
           txFees={txFees}
+          maxWidth
         />
         <NominateStatusBar value={bond.bond} />
         <Footer complete={bondValid} setupType={SetupType.Stake} />

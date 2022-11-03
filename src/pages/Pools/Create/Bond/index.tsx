@@ -82,6 +82,7 @@ export const Bond = (props: SetupStepProps) => {
             },
           ]}
           txFees={txFees}
+          maxWidth
         />
         <CreatePoolStatusBar value={bond.bond} />
         <Footer complete={bondValid} setupType={SetupType.Pool} />

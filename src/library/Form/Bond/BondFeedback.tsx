@@ -9,16 +9,15 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
-import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import { BondInput } from './BondInput';
 
 export const BondFeedback = (props: BondFeedbackProps) => {
-  const { bondType, txFees } = props;
+  const { bondType, txFees, maxWidth } = props;
   const syncing = props.syncing ?? false;
   const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
@@ -157,24 +156,21 @@ export const BondFeedback = (props: BondFeedbackProps) => {
 
   return (
     <>
-      <CardHeaderWrapper>
-        <h4>
-          Available: {syncing ? '...' : humanNumber(freeBalance)} {network.unit}
-        </h4>
-      </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
         <Warning key={`setup_error_${index}`} text={err} />
       ))}
       <Spacer />
-      <BondInput
-        value={bond.bond}
-        defaultValue={defaultBond}
-        syncing={syncing}
-        disabled={bondDisabled}
-        setters={setters}
-        freeBalance={freeBalance}
-        disableTxFeeUpdate={disableTxFeeUpdate}
-      />
+      <div style={{ maxWidth: maxWidth ? '600px' : '100%' }}>
+        <BondInput
+          value={bond.bond}
+          defaultValue={defaultBond}
+          syncing={syncing}
+          disabled={bondDisabled}
+          setters={setters}
+          freeBalance={freeBalance}
+          disableTxFeeUpdate={disableTxFeeUpdate}
+        />
+      </div>
     </>
   );
 };

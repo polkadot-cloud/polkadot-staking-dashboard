@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
 import { useEffect, useState } from 'react';
-import { isNumeric } from 'Utils';
+import { humanNumber, isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
 
@@ -59,22 +59,31 @@ export const BondInput = (props: BondInputProps) => {
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">
-            <input
-              type="text"
-              placeholder={`0 ${network.unit}`}
-              value={value}
-              onChange={(e) => {
-                handleChangeBond(e);
-              }}
-              disabled={disabled}
-            />
+            <div>
+              <input
+                type="text"
+                placeholder={`0 ${network.unit}`}
+                value={value}
+                onChange={(e) => {
+                  handleChangeBond(e);
+                }}
+                disabled={disabled}
+              />
+            </div>
+            <div>
+              <p>
+                {syncing
+                  ? '...'
+                  : `${humanNumber(freeBalance)} ${network.unit} available`}
+              </p>
+            </div>
           </div>
         </section>
         <section>
           <Button
             inline
             title="Max"
-            disabled={syncing}
+            disabled={syncing || freeBalance === 0}
             onClick={() => {
               setValue(freeBalance);
               updateParentState(freeBalance);

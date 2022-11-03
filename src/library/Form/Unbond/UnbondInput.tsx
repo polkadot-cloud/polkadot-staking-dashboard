@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { Button } from 'library/Button';
 import React, { useEffect, useState } from 'react';
-import { isNumeric } from 'Utils';
+import { humanNumber, isNumeric, planckBnToUnit } from 'Utils';
 import { UnbondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
 
@@ -13,10 +13,13 @@ export const UnbondInput = (props: UnbondInputProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
-  const { disabled, freeToUnbondToMin } = props;
+  const { disabled, freeToUnbondToMin, active } = props;
   const setters = props.setters ?? [];
   const _value = props.value ?? 0;
   const defaultValue = props.defaultValue ?? 0;
+
+  // get the actively bonded amount.
+  const activeBase = planckBnToUnit(active, network.units);
 
   // the current local bond value
   const [value, setValue] = useState(_value);
@@ -54,15 +57,20 @@ export const UnbondInput = (props: UnbondInputProps) => {
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">
-            <input
-              type="text"
-              placeholder={`0 ${network.unit}`}
-              value={value}
-              onChange={(e) => {
-                handleChangeUnbond(e);
-              }}
-              disabled={disabled}
-            />
+            <div>
+              <input
+                type="text"
+                placeholder={`0 ${network.unit}`}
+                value={value}
+                onChange={(e) => {
+                  handleChangeUnbond(e);
+                }}
+                disabled={disabled}
+              />
+            </div>
+            <div>
+              {humanNumber(activeBase)} {network.unit} bonded
+            </div>
           </div>
         </section>
         <section>

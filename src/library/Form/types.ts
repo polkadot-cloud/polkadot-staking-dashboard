@@ -51,6 +51,7 @@ export interface BondFeedbackProps {
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
   txFees: BN;
+  maxWidth?: boolean;
 }
 
 export interface BondInputProps {
@@ -75,6 +76,7 @@ export interface UnbondFeedbackProps {
 }
 
 export interface UnbondInputProps {
+  active: BN;
   freeToUnbondToMin: number;
   defaultValue: number | string;
   disabled: boolean;

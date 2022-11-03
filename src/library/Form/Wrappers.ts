@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
+import { borderPrimary, textSecondary } from 'theme';
 
 export const Spacer = styled.div`
   width: 100%;
@@ -37,7 +37,6 @@ export const InputWrapper = styled.div`
 
   > .inner {
     width: 100%;
-    max-width: 600px;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -58,12 +57,39 @@ export const InputWrapper = styled.div`
         border: 1px solid ${borderPrimary};
         padding: 1rem;
         border-radius: 0.75rem;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
 
-        input {
-          border: none;
-          padding: 0;
-          width: 100%;
-          max-width: 100%;
+        > div {
+          &:first-child {
+            flex-grow: 1;
+          }
+          &:last-child {
+            color: ${textSecondary};
+            justify-content: flex-end;
+            opacity: 0.5;
+            position: relative;
+            p {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              position: relative;
+              margin: 0;
+              font-size: 1rem;
+            }
+          }
+          > input {
+            border: none;
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            flex-grow: 1;
+          }
         }
       }
     }

@@ -9,9 +9,8 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { planckBnToUnit } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
@@ -146,16 +145,12 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
   return (
     <>
-      <CardHeaderWrapper>
-        <h4>
-          Bonded: {humanNumber(activeBase)} {network.unit}
-        </h4>
-      </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
         <Warning key={`unbond_error_${index}`} text={err} />
       ))}
       <Spacer />
       <UnbondInput
+        active={active}
         defaultValue={defaultBond}
         disabled={false}
         freeToUnbondToMin={freeToUnbondToMin}
