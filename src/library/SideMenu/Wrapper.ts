@@ -35,6 +35,12 @@ export const Wrapper = styled.div<MinimisedProps>`
     background: ${backgroundOverlay};
     transition: all 0.2s;
     border-radius: 0.75rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   section {
