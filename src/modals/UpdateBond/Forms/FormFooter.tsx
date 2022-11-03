@@ -27,7 +27,7 @@ export const FormFooter = ({
         {hasSections && (
           <button
             type="button"
-            className="submit"
+            className="submit secondary"
             onClick={() => handleSubmit()}
           >
             <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
@@ -38,7 +38,7 @@ export const FormFooter = ({
       <div>
         <button
           type="button"
-          className="submit"
+          className="submit primary"
           onClick={() => submitTx()}
           disabled={submitting || !isValid}
         >

@@ -157,8 +157,15 @@ export const FooterWrapper = styled.div`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    color: ${networkColor};
-    border: 1px solid ${networkColor};
+    &.primary {
+      color: white;
+      background: ${networkColor};
+      border: 1px solid ${networkColor};
+    }
+    &.secondary {
+      color: ${networkColor};
+      border: 1px solid ${networkColor};
+    }
 
     &:disabled {
       opacity: 0.25;

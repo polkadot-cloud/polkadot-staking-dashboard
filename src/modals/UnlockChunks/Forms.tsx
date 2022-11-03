@@ -128,7 +128,7 @@ export const Forms = forwardRef(
             <div>
               <button
                 type="button"
-                className="submit"
+                className="submit secondary"
                 onClick={() => setSection(0)}
               >
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
@@ -138,7 +138,7 @@ export const Forms = forwardRef(
             <div>
               <button
                 type="button"
-                className="submit"
+                className="submit primary"
                 onClick={() => submitTx()}
                 disabled={
                   !valid ||
