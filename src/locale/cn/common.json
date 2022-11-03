@@ -10,8 +10,13 @@
         "active": "活跃"
     },
     "library": {
+        "errors": {
+            "unknown": "抱歉，页面出现点小问题哦",
+            "404": "找不到页面"
+        },
         "manual": "手动",
         "related": "相关",
+        "displaying_zero": "无验证人",
         "displaying_validators": "正在显示 {{count}} 个验证人",
         "waiting": "等待中",
         "minimum_bond": "最低质押为 {{minBondBase}} {{unit}}",
@@ -110,7 +115,6 @@
         "w2": "您没有可用的 {{_unit}} 可质押.",
         "w3": "质押金额超过余额.",
         "click_to_reload": "重新加载",
-        "oops": "抱歉，页面出现点小问题哦",
         "network": "网络",
         "help": "帮助",
         "support": "支持",
@@ -146,6 +150,7 @@
         "toggle_features": "功能切换",
         "no_unlocks": "无未解锁",
         "adding_favorite": "正在添加{{count}} 个提名",
+        "unlock_zero": "无未解锁",
         "unlock": "{{count}} 个未解锁",
         "add_favorite": "添加 {{count}} 个喜爱到提名表上",
         "have_nomination": "您有{{count}} 个提名",
@@ -154,6 +159,7 @@
         "nomination": "{{count}} 个提名",
         "stop": "停止",
         "all_nomination": "所有提名",
+        "active_roles_zero": "无活跃角色在提名池",
         "active_roles": "有活跃角色在 {{count}} 个提名池",
         "pool": "池",
         "will_surpass": "添加过多收藏夹将超{{maxNominations}}提名数",

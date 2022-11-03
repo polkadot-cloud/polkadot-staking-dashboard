@@ -97,3 +97,4 @@ export const DefaultParams = {
  * default language
  */
 export const DEFAULT_LOCALE = 'en';
+export const DEFAULT_NS = 'common';

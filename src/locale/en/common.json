@@ -10,8 +10,13 @@
         "active": "active"
     },
     "library": {
+        "errors": {
+            "unknown": "Oops, Something Went Wrong",
+            "404": "Not Found"
+        },
         "manual": "Manual",
         "related": "Related",
+        "displaying_zero": " No Validators",
         "displaying_validators_one": "Displaying {{count}} Validator",
         "displaying_validators_other": "Displaying {{count}} Validators",
         "waiting": "waiting",
@@ -111,7 +116,6 @@
         "w2": "You have no free {{_unit}} to bond.",
         "w3": "Bond amount is more than your free balance.",
         "click_to_reload": "Click to reload",
-        "oops": "Oops, Something Went Wrong",
         "network": "Network",
         "help": "Help",
         "support": "Support",
@@ -148,6 +152,7 @@
         "no_unlocks": "No Unlocks",
         "adding_favorite_one": "Adding {{count}} Nomination",
         "adding_favorite_other": "Adding {{count}} Nominations",
+        "unlock_zero": "No Unlocks",
         "unlock_one": "{{count}} Unlock",
         "unlock_other": "{{count}} Unlocks",
         "add_favorite_one": "Add {{count}} Favorite to Nominations",
@@ -162,6 +167,7 @@
         "nomination_other": "{{count}} Nominations",
         "stop": "Stop",
         "all_nomination": "All Nomination",
+        "active_roles_zero": "Active Roles In No Pool",
         "active_roles_one": "Active Roles in {{count}} Pool",
         "active_roles_other": "Active Roles in {{count}} Pools",
         "pool": "Pool",

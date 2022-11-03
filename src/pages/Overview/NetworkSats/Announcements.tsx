@@ -146,8 +146,9 @@ export const Announcements = () => {
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `${t('pages.overview.announcements9')} ${minNominatorBondBase} ${network.unit
-      }.`,
+    title: `${t('pages.overview.announcements9')} ${minNominatorBondBase} ${
+      network.unit
+    }.`,
     subtitle: `${t('pages.overview.minimum_bonding_amount', {
       networkName,
     })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,

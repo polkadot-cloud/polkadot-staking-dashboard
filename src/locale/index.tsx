@@ -3,8 +3,7 @@
 
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { DEFAULT_LOCALE } from 'consts';
+import { DEFAULT_LOCALE, DEFAULT_NS } from 'consts';
 import commoncn from './cn/common.json';
 import commonen from './en/common.json';
 import pagescn from './cn/pages.json';
@@ -35,16 +34,21 @@ if (!_locale) {
 }
 
 // configure i18n object.
-i18next
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
+i18next.use(initReactI18next).init(
+  {
+    saveMissing: true,
     interpolation: { escapeValue: false },
     lng: locale,
     fallbackLng: DEFAULT_LOCALE,
+    fallbackNS: DEFAULT_NS,
     debug: process.env.REACT_APP_DEBUG_I18N === '1',
     resources,
-  });
+  },
+  (err) => {
+    if (err)
+      return console.log('Something went wrong with the locale system', err);
+  }
+);
 
 // export i18next for context.
 export { i18next };
