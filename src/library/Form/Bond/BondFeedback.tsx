@@ -9,7 +9,6 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
 import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
@@ -19,7 +18,8 @@ import { Spacer } from '../Wrappers';
 import { BondInput } from './BondInput';
 
 export const BondFeedback = (props: BondFeedbackProps) => {
-  const { bondType } = props;
+  const { bondType, txFees } = props;
+  const syncing = props.syncing ?? false;
   const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
   const setters = props.setters ?? [];
@@ -35,7 +35,6 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units, unit } = network;
-  const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
 
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -142,7 +141,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
           `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
         );
       }
-      if (Number(bond.bond) < minBondBase) {
+      if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
         _errors.push(
           `Bond amount must be at least ${minBondBase} ${network.unit}.`
         );
@@ -160,8 +159,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {`${txFees.isZero() ? `Available` : `Available after Tx Fees`}`}:{' '}
-          {humanNumber(freeBalance)} {network.unit}
+          Available: {syncing ? '...' : humanNumber(freeBalance)} {network.unit}
         </h4>
       </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
@@ -171,6 +169,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
       <BondInput
         value={bond.bond}
         defaultValue={defaultBond}
+        syncing={syncing}
         disabled={bondDisabled}
         setters={setters}
         freeBalance={freeBalance}

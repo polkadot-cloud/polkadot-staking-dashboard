@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import { Balance } from 'contexts/Balances/types';
 import { ExtensionAccount, ExternalAccount } from 'contexts/Connect/types';
 
@@ -40,6 +41,7 @@ export interface AccountSelectProps {
 }
 
 export interface BondFeedbackProps {
+  syncing?: boolean;
   setters: any;
   bondType: string;
   defaultBond: number | null;
@@ -48,9 +50,11 @@ export interface BondFeedbackProps {
   warnings?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
+  txFees: BN;
 }
 
 export interface BondInputProps {
+  syncing?: boolean;
   setters: any;
   value: any;
   defaultValue: number | string;
@@ -67,6 +71,7 @@ export interface UnbondFeedbackProps {
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
   setLocalResize?: () => void;
+  txFees: BN;
 }
 
 export interface UnbondInputProps {

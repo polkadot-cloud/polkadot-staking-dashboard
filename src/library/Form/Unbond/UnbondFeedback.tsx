@@ -9,7 +9,6 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
 import { humanNumber, planckBnToUnit } from 'Utils';
@@ -19,7 +18,7 @@ import { Spacer } from '../Wrappers';
 import { UnbondInput } from './UnbondInput';
 
 export const UnbondFeedback = (props: UnbondFeedbackProps) => {
-  const { bondType } = props;
+  const { bondType, txFees } = props;
   const inSetup = props.inSetup ?? false;
   const warnings = props.warnings ?? [];
   const setters = props.setters ?? [];
@@ -36,7 +35,6 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
-  const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
 

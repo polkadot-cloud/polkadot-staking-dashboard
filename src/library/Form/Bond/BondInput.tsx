@@ -14,6 +14,7 @@ export const BondInput = (props: BondInputProps) => {
   const setters = props.setters ?? [];
   const _value = props.value ?? 0;
   const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
+  const syncing = props.syncing || false;
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
@@ -76,6 +77,7 @@ export const BondInput = (props: BondInputProps) => {
             inline
             small
             title="Max"
+            disabled={syncing}
             onClick={() => {
               setValue(freeBalance);
               updateParentState(freeBalance);

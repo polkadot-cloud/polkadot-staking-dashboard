@@ -1,7 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN } from 'bn.js';
 import { useConnect } from 'contexts/Connect';
+import { useTxFees } from 'contexts/TxFees';
 import { useUi } from 'contexts/UI';
 import { SetupType } from 'contexts/UI/types';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
@@ -15,6 +17,7 @@ import { useEffect, useState } from 'react';
 export const Bond = (props: SetupStepProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
+  const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
@@ -63,6 +66,7 @@ export const Bond = (props: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
+          syncing={txFees.eq(new BN(0))}
           bondType="stake"
           inSetup
           listenIsValid={setBondValid}
@@ -77,6 +81,7 @@ export const Bond = (props: SetupStepProps) => {
               current: bond,
             },
           ]}
+          txFees={txFees}
         />
         <NominateStatusBar value={bond.bond} />
         <Footer complete={bondValid} setupType={SetupType.Stake} />
