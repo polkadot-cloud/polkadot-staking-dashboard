@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const Spacer = styled.div`
   width: 100%;
@@ -29,22 +29,43 @@ export const RowWrapper = styled.div`
 export const InputWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
 
-  > section {
-    flex: 1;
+  h3 {
+    margin: 0;
+  }
 
-    h3 {
-      margin: 0;
-    }
+  > .inner {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-top: 0.5rem;
+    padding: 0;
 
-    input {
-      background: ${backgroundLabel};
-      max-width: 100%;
-      margin-top: 0.5rem;
-      border: none;
-      border-radius: 0.75rem;
-      padding: 0.75rem;
+    > section {
+      &:first-child {
+        flex-grow: 1;
+      }
+      &:last-child {
+        padding-left: 1rem;
+      }
+      .input {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border: 1px solid ${borderPrimary};
+        padding: 1rem;
+        border-radius: 0.75rem;
+
+        input {
+          border: none;
+          padding: 0;
+          width: 100%;
+          max-width: 100%;
+        }
+      }
     }
   }
 `;

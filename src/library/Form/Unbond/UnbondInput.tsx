@@ -49,11 +49,11 @@ export const UnbondInput = (props: UnbondInputProps) => {
   };
 
   return (
-    <RowWrapper>
-      <div>
-        <InputWrapper>
-          <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>Unbond {network.unit}:</h3>
+    <InputWrapper>
+      <h3>Unbond {network.unit}:</h3>
+      <div className="inner">
+        <section style={{ opacity: disabled ? 0.5 : 1 }}>
+          <div className="input">
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
@@ -63,22 +63,19 @@ export const UnbondInput = (props: UnbondInputProps) => {
               }}
               disabled={disabled}
             />
-          </section>
-        </InputWrapper>
-      </div>
-      <div>
-        <div>
+          </div>
+        </section>
+        <section>
           <Button
             inline
-            small
             title="Max"
             onClick={() => {
               setValue(freeToUnbondToMin);
               updateParentState(freeToUnbondToMin);
             }}
           />
-        </div>
+        </section>
       </div>
-    </RowWrapper>
+    </InputWrapper>
   );
 };

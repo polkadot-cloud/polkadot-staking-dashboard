@@ -54,11 +54,11 @@ export const BondInput = (props: BondInputProps) => {
   };
 
   return (
-    <RowWrapper>
-      <div>
-        <InputWrapper>
-          <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>Bond {network.unit}:</h3>
+    <InputWrapper>
+      <h3>Bond {network.unit}:</h3>
+      <div className="inner">
+        <section style={{ opacity: disabled ? 0.5 : 1 }}>
+          <div className="input">
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
@@ -68,14 +68,11 @@ export const BondInput = (props: BondInputProps) => {
               }}
               disabled={disabled}
             />
-          </section>
-        </InputWrapper>
-      </div>
-      <div>
-        <div>
+          </div>
+        </section>
+        <section>
           <Button
             inline
-            small
             title="Max"
             disabled={syncing}
             onClick={() => {
@@ -83,9 +80,9 @@ export const BondInput = (props: BondInputProps) => {
               updateParentState(freeBalance);
             }}
           />
-        </div>
+        </section>
       </div>
-    </RowWrapper>
+    </InputWrapper>
   );
 };
 
