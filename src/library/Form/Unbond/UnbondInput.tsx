@@ -7,7 +7,7 @@ import { Button } from 'library/Button';
 import React, { useEffect, useState } from 'react';
 import { isNumeric } from 'Utils';
 import { UnbondInputProps } from '../types';
-import { InputWrapper, RowWrapper } from '../Wrappers';
+import { InputWrapper } from '../Wrappers';
 
 export const UnbondInput = (props: UnbondInputProps) => {
   const { network } = useApi();

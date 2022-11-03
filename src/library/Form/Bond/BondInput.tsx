@@ -7,7 +7,7 @@ import { Button } from 'library/Button';
 import { useEffect, useState } from 'react';
 import { isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
-import { InputWrapper, RowWrapper } from '../Wrappers';
+import { InputWrapper } from '../Wrappers';
 
 export const BondInput = (props: BondInputProps) => {
   const { disabled, freeBalance } = props;
