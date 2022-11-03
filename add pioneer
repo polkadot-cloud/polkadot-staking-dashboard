@@ -1,0 +1,24 @@
+ 
+
+{
+    name: 'PIONEER STAKE',
+    Thumbnail: PIONEERSTAKE,
+    bio: 'We have been active validators since 2019 on the Kusama,Polkadot network. Service is working on warranty and investment prospects ', 
+    email: 'pioneer.validator@gmail.com',
+    twitter: '@Ihor07054865',
+    website: 'cyber-matrix.info',
+    validators: {
+      polkadot: [
+        '129LBt5T1eYtnGHbPYeiiMdmWfokCiiq7z6JBfjnYifiombz',
+        '13mjnUDrHwYGATFB1FkFkZ1U3kYFsAQfHYTdcc8p3HP1xzZA',
+        '15MUBwP6dyVw5CXF9PjSSv7SdXQuDSwjX86v1kBodCSWVR7c',
+      ],
+      kusama: [
+        'EQF693vsen6WxMdoYgf2cypvH4saFJWFzDupoFUT79MffeW',
+        'CaVLqgMmajk7ySYjo4SPqauXwsZu8Y5tP9vVDvJvcecbp3n',
+        'G543pxmwKNAbW2WepZW7Ss9Wgx9wuDQWcPyhk4eEzpzcibG',
+        'F7c6ocWu397zYewAHBxqTwHgXhXDebgYSVjRX9oQM42hkpn',
+        'Cm6QfCvV3vud3X6Zfg3yMBEnG6JFNsn6EzcZv6UyqTefkR1',
+      ],
+    },
+  },
