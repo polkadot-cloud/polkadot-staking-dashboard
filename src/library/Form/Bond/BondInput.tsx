@@ -9,26 +9,32 @@ import { isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
 import { InputWrapper, RowWrapper } from '../Wrappers';
 
-export const BondInput = (props: BondInputProps) => {
-  const { disabled, freeBalance } = props;
-  const setters = props.setters ?? [];
-  const _value = props.value ?? 0;
-  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
+export const BondInput = ({
+  setters,
+  disabled,
+  defaultValue,
+  freeBalance,
+  disableTxFeeUpdate,
+  value,
+}: BondInputProps) => {
+  const sets = setters ?? [];
+  const _value = value ?? 0;
+  const disableTxFeeUpd = disableTxFeeUpdate ?? false;
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
   // the current local bond value
-  const [value, setValue] = useState(_value);
+  const [v, setV] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setValue(props.defaultValue ?? 0);
+    setV(defaultValue ?? 0);
   }, [activeAccount]);
 
   useEffect(() => {
-    if (!disableTxFeeUpdate) {
-      setValue(_value.toString());
+    if (!disableTxFeeUpd) {
+      setV(_value.toString());
     }
   }, [_value]);
 
@@ -38,13 +44,13 @@ export const BondInput = (props: BondInputProps) => {
     if (!isNumeric(val) && val !== '') {
       return;
     }
-    setValue(val);
+    setV(val);
     updateParentState(val);
   };
 
   // apply bond to parent setters
   const updateParentState = (val: any) => {
-    for (const s of setters) {
+    for (const s of sets) {
       s.set({
         ...s.current,
         bond: val,
@@ -61,7 +67,7 @@ export const BondInput = (props: BondInputProps) => {
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
-              value={value}
+              value={v}
               onChange={(e) => {
                 handleChangeBond(e);
               }}
@@ -77,7 +83,7 @@ export const BondInput = (props: BondInputProps) => {
             small
             title="Max"
             onClick={() => {
-              setValue(freeBalance);
+              setV(freeBalance);
               updateParentState(freeBalance);
             }}
           />
