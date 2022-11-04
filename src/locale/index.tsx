@@ -36,7 +36,7 @@ if (!_locale) {
 // configure i18n object.
 i18next.use(initReactI18next).init(
   {
-    saveMissing: true,
+    initImmediate: false, // setting initImediate to false, will load the resources synchronously
     interpolation: { escapeValue: false },
     lng: locale,
     fallbackLng: DEFAULT_LOCALE,
