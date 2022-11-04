@@ -144,6 +144,7 @@ export const Tips = () => {
   let items = TIPS_CONFIG.filter((i: AnyJson) =>
     segments.includes(i.meta.segment)
   );
+
   items = items.map((i: AnyJson) =>
     fillVariables(i, ['title', 'subtitle', 'description'])
   );

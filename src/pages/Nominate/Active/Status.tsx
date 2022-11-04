@@ -82,6 +82,7 @@ export const Status = ({ height }: { height: number }) => {
   }
 
   const payeeStatus = PayeeStatus.find((item) => item.key === payee);
+  const name = payeeStatus?.name;
 
   let startTitle = t('pages.nominate.start_nominating');
   if (inSetup()) {
@@ -141,7 +142,7 @@ export const Status = ({ height }: { height: number }) => {
         stat={
           inSetup()
             ? t('pages.nominate.not_assigned')
-            : payeeStatus?.name ?? t('pages.nominate.not_assigned')
+            : t(`${name}`) ?? t('pages.nominate.not_assigned')
         }
         buttons={
           !inSetup()
