@@ -14,7 +14,7 @@ import {
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { AnyJson } from 'types';
 import Definition from './Items/Definition';
 import External from './Items/External';
@@ -25,14 +25,14 @@ export const Help = () => {
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
 
-  const onFadeIn = async () => {
+  const onFadeIn = useCallback(async () => {
     await controls.start('visible');
-  };
+  }, []);
 
-  const onFadeOut = async () => {
+  const onFadeOut = useCallback(async () => {
     await controls.start('hidden');
     setStatus(0);
-  };
+  }, []);
 
   const variants = {
     hidden: {
@@ -55,9 +55,7 @@ export const Help = () => {
   }, [status]);
 
   // render early if help not open
-  if (status === 0) {
-    return <></>;
-  }
+  if (status === 0) return <></>;
 
   let meta: HelpItemRaw | undefined;
 
