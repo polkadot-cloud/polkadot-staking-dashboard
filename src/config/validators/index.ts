@@ -137,12 +137,12 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
-    name: 'GATOTECH',
+    name: 'GATOTECH 😸',
     Thumbnail: Gatotech,
     bio: 'Gatotech Ltd is a Scottish IT company focused on the adoption of decentralised ledger technologies (DLT) for the benefit of humankind.',
     email: 'info@gatotech.uk',
     twitter: '@gatotech_uk',
-    website: 'gatotech.uk',
+    website: 'https://gatotech.uk',
     validators: {
       polkadot: [
         '15iA5hpjUecWBbf38Nfegwmtyux25o3LrGaNodfZDxq5nXXE',
