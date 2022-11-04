@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { humanNumber, rmCommas } from 'Utils';
+import { capitalizeFirstLetter, humanNumber, rmCommas } from 'Utils';
 
 export const EraStatus = (props: any) => {
   const { address } = props;
@@ -52,7 +52,7 @@ export const EraStatus = (props: any) => {
           ? t('library.syncing')
           : validatorInEra
           ? `${t('library.active1')} / ${humanNumber(totalStake)} ${unit}`
-          : validatorStatus ?? ''}
+          : capitalizeFirstLetter(validatorStatus ?? '')}
       </h5>
     </ValidatorStatusWrapper>
   );

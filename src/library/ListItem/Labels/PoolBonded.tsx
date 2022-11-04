@@ -9,6 +9,7 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { Pool } from 'library/Pool/types';
 import { useEffect, useState } from 'react';
 import {
+  capitalizeFirstLetter,
   humanNumber,
   planckBnToUnit,
   rmCommas,
@@ -83,7 +84,7 @@ export const PoolBonded = ({
           {nominationStatus === null
             ? `${t('library.syncing')}`
             : targets.length
-            ? nominationStatus ?? ''
+            ? capitalizeFirstLetter(nominationStatus ?? '')
             : t('library.not_nominating')}
           {' / '}
           {t('library.bonded')} {humanNumber(toFixedIfNecessary(poolBonded, 3))}{' '}
