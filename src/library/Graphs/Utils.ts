@@ -47,7 +47,7 @@ interface FormatSizeIf {
 }
 
 export const formatSize = (
-  { width, height }: formatSizeIf,
+  { width, height }: FormatSizeIf,
   minHeight: number
 ) => ({
   width: width || '100%',

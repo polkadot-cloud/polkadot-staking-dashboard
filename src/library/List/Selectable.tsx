@@ -29,7 +29,7 @@ export const Selectable = ({ actionsAll, actionsSelected, canSelect }: any) => {
           {actionsSelected.map((a: any, i: number) => (
             <button
               key={`a_selected_${i}`}
-              disabled={a.isDisabled()}
+              disabled={a?.isDisabled ? a.isDisabled() : false}
               type="button"
               onClick={() => a.onClick(provider)}
             >
@@ -41,7 +41,7 @@ export const Selectable = ({ actionsAll, actionsSelected, canSelect }: any) => {
       {actionsAll.map((a: any, i: number) => (
         <button
           key={`a_all_${i}`}
-          disabled={a?.isDisabled()}
+          disabled={a?.isDisabled ? a.isDisabled() : false}
           type="button"
           onClick={() => a.onClick(provider)}
         >
