@@ -135,10 +135,10 @@ export const Announcements = () => {
       // total locked in pols
       announcements.push({
         class: 'pools',
-        title: `${humanNumber(
-          poolMembers.length
-        )} pool members are actively bonding in pools.`,
-        subtitle: `The total number of accounts that have joined a pool.`,
+        title: `${humanNumber(poolMembers.length)} ${t(
+          'pages.overview.pool_members_bonding'
+        )}`,
+        subtitle: `${t('pages.overview.total_num_accounts')}`,
       });
     }
   }

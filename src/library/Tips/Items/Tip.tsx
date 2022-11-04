@@ -4,11 +4,12 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTips } from 'contexts/Tips';
+import { useTranslation } from 'react-i18next';
 import { TipWrapper } from '../Wrappers';
 
 export const Tip = (props: any) => {
   const { title, description } = props;
-
+  const { t } = useTranslation('common');
   const { closeTip } = useTips();
 
   return (
@@ -17,7 +18,7 @@ export const Tip = (props: any) => {
         <div className="close-button">
           <button type="button" onClick={() => closeTip()}>
             <FontAwesomeIcon icon={faTimes} />
-            Close
+            {t('library.close')}
           </button>
         </div>
         <div>

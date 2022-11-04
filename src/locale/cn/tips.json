@@ -1,0 +1,81 @@
+{
+    "connect_extensions": {
+        "title": "连接扩展",
+        "subtitle": "连接您的帐户,开始使用Polkadot staking.",
+        "description": [
+            "连接您的帐户，开始使用Polkadot staking仪表板.",
+            "账户通过充当钱包的网络扩展访问。您的钱包用于签署您在仪表板中提交的交易.",
+            "从仪表板右上角的“连接”按钮连接您的钱包，然后选择您希望与之赌注的帐户以继续.",
+            "该应用支持一系列扩展和钱包."
+        ]
+    },
+    "recommended_nominator": {
+        "title": "推荐：成为提名人",
+        "subtitle": "中You have enough {NETWORK_UNIT} to become a nominator.",
+        "description": [
+            "中You have enough {NETWORK_UNIT} to become a nominator and start earning rewards.",
+            "Nominating directly does however require you to actively check your backed validators."
+        ]
+    },
+    "recommended_join_pool": {
+        "title": "Recommended: 加入池",
+        "subtitle": "中Your account is best suited to join a pool.",
+        "description": [
+            "中Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.",
+            "Joining a pool requires a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
+        ]
+    },
+    "how_to_stake": {
+        "title": "您会如何抵押?",
+        "subtitle": "中Either become a nominator or become a member of a pool.",
+        "description": [
+            "中There are multiple ways to stake on {NETWORK_NAME}.",
+            "You can either become a nominator or become a member of a pool.",
+            "Directly nominating requires you to bond {NETWORK_UNIT} and choose validators you wish to back, and to nominate up to {MAX_NOMINATIONS} of them. To earn rewards as a nominator, you currently need to bond at least {MIN_ACTIVE_BOND} {NETWORK_UNIT}.",
+            "Joining a pool is much cheaper, requiring a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. Nominating validators is done on your behalf, and you simply claim rewards from the pool.",
+            "Creating a pool is also possible, requiring a minimum of {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
+        ]
+    },
+    "managing_nominations": {
+        "title": "管理提名",
+        "subtitle": "中Be sure to check the performance of your nominations on a regular basis.",
+        "description": [
+            "中Be sure to check the performance of your nominations on a regular basis.",
+            "To maximise variety and a decentralised mix of validators, choose validators from a range of entities."
+        ]
+    },
+    "monitoring_pool": {
+        "title": "管理提名池成员",
+        "subtitle": "中It is a good idea to check regularly whether your pool is actively earning rewards.",
+        "description": [
+            "中Pools will manage nominations on your behalf, but it is still a good idea to check regularly whether your pool is actively earning rewards.",
+            "Monitor your pool's status to ensure that it is performing well regularly, and consider joining another pool if you are not receiving any rewards.",
+        ]
+    },
+    "keep_pool_nominating": {
+        "title": "管理您的提名池",
+        "subtitle": "中It is important to keep your pool actively nominating.",
+        "description": [
+            "中It is important to keep your pool actively nominating.",
+            "If your pool is not earning rewards, members will be tempted to leave and join another pool.",
+            "Your root and nominator roles are important for managing your nominations. If nominations are not performing well, choose different ones to increase your pool's chances of earning rewards."
+        ]
+    },
+    "reviewing_payouts": {
+        "title": "Reviewing Payouts查看收益",
+        "subtitle": "中Regularly reviewing your payouts is a good way to gauge how well your nominations are performing.",
+        "description": [
+            "中Regularly reviewing your payouts is a good way to gauge how well your nominations are performing.",
+            "Go to the Payouts page to get a detailed breakdown of each payout you receive, and by which validator (or pool) the payout came from."
+        ]
+    },
+    "understanding_validator_performance": {
+        "title": "测量验证人性能",
+        "subtitle": "中Various factors affect how much validators are rewarded.",
+        "description": [
+            "中Various factors affect how much validators are rewarded, such as the amount of era points it generates, how many nominators are backing it, and whether it is over subscribed.",
+            "All these metrics change over time, sometimes in an unpredictable manner.It is therefore important that nominators actively monitor validators and their performance.",
+            "Staking dashboard provides a range of metrics to help you understand how a validator is performing."
+        ]
+    }
+}

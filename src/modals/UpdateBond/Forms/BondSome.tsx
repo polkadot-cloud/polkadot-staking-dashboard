@@ -112,7 +112,9 @@ export const BondSome = (props: FormsProps) => {
       <div className="items">
         {unclaimedRewards > 0 && bondType === 'pool' && (
           <Warning
-            text={`Bonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            text={`${t('modals.bonding_withdraw')} ${unclaimedRewards} ${
+              network.unit
+            }.`}
           />
         )}
         <BondFeedback

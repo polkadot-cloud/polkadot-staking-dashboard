@@ -4,13 +4,14 @@
 import Lottie from 'react-lottie';
 import { useApi } from 'contexts/Api';
 import * as refreshChangeJson from 'img/json/refresh-change-outline.json';
+import { useTranslation } from 'react-i18next';
 import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
 
 export const Syncing = () => {
   const {
     network: { name },
   } = useApi();
-
+  const { t } = useTranslation('common');
   const animateOptions = {
     loop: true,
     autoplay: true,
@@ -44,10 +45,12 @@ export const Syncing = () => {
           </section>
           <section>
             <div className="title">
-              <h3>Syncing with {name}</h3>
+              <h3>
+                {t('pages.overview.syncing_with')} {name}
+              </h3>
             </div>
             <div className="desc">
-              <h4>One moment please...</h4>
+              <h4>{t('pages.overview.one_moment_please')}</h4>
             </div>
           </section>
         </ItemInnerWrapper>

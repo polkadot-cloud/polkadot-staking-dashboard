@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useTips } from 'contexts/Tips';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
@@ -55,7 +56,7 @@ export const ItemsInner = ({ items, page }: any) => {
 
 const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
   const { openTipWith } = useTips();
-
+  const { t } = useTranslation('common');
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
@@ -127,7 +128,7 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
                 type="button"
                 className="more"
               >
-                More
+                {t('pages.overview.more')}
                 <FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
               </motion.button>
             </h4>

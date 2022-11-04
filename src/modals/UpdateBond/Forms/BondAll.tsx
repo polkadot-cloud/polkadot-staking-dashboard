@@ -124,7 +124,9 @@ export const BondAll = (props: FormsProps) => {
           )}
           {unclaimedRewards > 0 && bondType === 'pool' && (
             <Warning
-              text={`Bonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+              text={`${t('modals.bonding_withdraw')} ${unclaimedRewards} ${
+                network.unit
+              }.`}
             />
           )}
           <h4>{t('modals.amount_to_bond')}</h4>

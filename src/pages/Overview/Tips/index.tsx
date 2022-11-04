@@ -24,6 +24,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { TipsThresholdSmall, TipsThresholdMedium } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useTranslation } from 'react-i18next';
 import { PageToggleWrapper } from './Wrappers';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
@@ -40,6 +41,7 @@ export const Tips = () => {
   const { getTransferOptions } = useTransferOptions();
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
+  const { t } = useTranslation('common');
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -139,8 +141,8 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((t: AnyJson) =>
-    segments.includes(t.meta.segment)
+  let items = TIPS_CONFIG.filter((i: AnyJson) =>
+    segments.includes(i.meta.segment)
   );
   items = items.map((i: AnyJson) =>
     fillVariables(i, ['title', 'subtitle', 'description'])
@@ -162,7 +164,7 @@ export const Tips = () => {
     <CardWrapper>
       <CardHeaderWrapper withAction>
         <h4>
-          Tips
+          {t('pages.overview.tips')}
           <OpenHelpIcon helpKey="Dashboard Tips" />
         </h4>
         <div>

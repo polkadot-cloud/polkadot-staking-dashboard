@@ -14,6 +14,10 @@
             "unknown": "Oops, Something Went Wrong",
             "404": "Not Found"
         },
+        "disable_dashboard_tips": "Disable Dashboard Tips",
+        "re-enable": "Tips can be turned re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.",
+        "dismiss_result": "Dismissing tips will remove them from your overview.",
+        "dismiss_tips": "Dismiss Tips",
         "manual": "Manual",
         "related": "Related",
         "displaying_zero": " No Validators",
@@ -148,6 +152,10 @@
         "nominate1": "Choose up to {{maxNominations}} validators to nominate. Generate your nominations automatically or manually insert them."
     },
     "modals": {
+        "unbonding_withdraw": "Unbonding will also withdraw your outstanding rewards of",
+        "bonding_withdraw": "Bonding will also withdraw your outstanding rewards of",
+        "dashboard_tips": "Dashboard Tips",
+        "binance_api": "Binance Spot API",
         "toggle_features": "Toggle Features",
         "no_unlocks": "No Unlocks",
         "adding_favorite_one": "Adding {{count}} Nomination",
@@ -328,13 +336,11 @@
             "favorite_validators": "Favorite Validators"
         },
         "nominate": {
-            "syncing_nominations": "Syncing nominations...",
             "active_nominations": "Active Nominations",
             "inactive_nominations": "Inactive Nominations",
             "minimum_active_bond": "Minimum Active Bond",
             "total_supply_staked": "Total Supply Staked",
             "controller_account": "Controller Account",
-            "": "",
             "add_from_favorites": "Add From Favorites",
             "none": "None",
             "summary": "Summary",
@@ -376,9 +382,14 @@
             "reward_destination": "Reward Destination:"
         },
         "overview": {
+            "tips": "Tips",
+            "one_moment_please": "One moment please...",
+            "syncing_with": "Syncing with",
+            "more": "More",
+            "total_num_accounts": "The total number of accounts that have joined a pool.",
             "active_nominators": "Active Nominators",
             "total_nominators": "Total Nominators",
-            "": "",
+            "pool_members_bonding": "pool members are actively bonding in pools.",
             "staking_on_the_network": "A total of {{_lastTotalStakeBase}}{{networkUnit}} is actively staking on the network.",
             "currently_staked": "{{supplyAsPercent}}% of total {{networkUnit}} supply is currently staked.",
             "minimum_bonding_amount": "The minimum bonding amount to start nominating on {{networkName}} is now",
@@ -423,12 +434,15 @@
             "deducted_from_bond": "Deducted from bond"
         },
         "pools": {
+            "join": "Join",
+            "create": "Create",
+            "assigned_to_any_account": " Your <b>Root</b>, <b>Nominator</b> and <b>State Toggler</b> roles can be assigned to any account.",
+            "pool_creator": " As the pool creator, you will consume your pool's <b>Depositor</b> role.",
             "active_pools": "Active Pools",
             "minimum-create_bond": "Minimum Create Bond",
             "minimum_join_bond": "Minimum Join Bond",
             "unclaimed_rewards": "Unclaimed Rewards",
             "address_invalid": "Address Invalid",
-            "": "",
             "pool_member_one": "{{count}} Pool Member",
             "pool_member_other": "{{count}} Pool Members",
             "poolstats1": "The total amount of {{unit}} that has been claimed by pool members.",
@@ -486,8 +500,6 @@
             "summary": "Summary",
             "w1": "Your account is read only, and cannot sign transactions.",
             "create_pool": "Create Pool",
-            "pool_role2": "Your Nominator and State Toggler roles can be assigned to any account.",
-            "pool_role1": "You will consume your pool's Root and Depositor roles.",
             "pool_name1": "Pool names support characters, symbols and emojis - be creative!",
             "assigned": "Assigned",
             "roles": "Roles:",

@@ -68,7 +68,7 @@ export const Bonded = (props: BondedProps) => {
         callbacks: {
           label: (context: any) => {
             if (inactive) {
-              return 'Inactive';
+              return `${t('library.inactive')}`;
             }
             return `${context.label}: ${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)
