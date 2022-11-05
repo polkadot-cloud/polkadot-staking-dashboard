@@ -21,7 +21,7 @@ export const NETWORKS: Networks = {
   polkadot: {
     name: 'Polkadot',
     endpoints: {
-      rpc: 'wss://rpc.polkadot.io',
+      rpc: 'wss://apps-rpc.polkadot.io',
       lightClient: WellKnownChain.polkadot,
     },
     colors: {
