@@ -41,31 +41,44 @@ export const useSize = (element: any) => {
   return size;
 };
 
-export const formatSize = (size: any, minHeight: number) => {
-  const width: string | number = size.width === undefined ? '100%' : size.width;
-  const height: number = size.height === undefined ? minHeight : size.height;
+interface FormatSizeIf {
+  width: string | number;
+  height: number;
+}
 
-  return {
-    width,
-    height,
-    minHeight,
-  };
-};
+export const formatSize = (
+  { width, height }: FormatSizeIf,
+  minHeight: number
+) => ({
+  width: width || '100%',
+  height: height || minHeight,
+  minHeight,
+});
 
-export const getGradient = (ctx: any, chartArea: any) => {
+interface GetGradientIf {
+  right: number;
+  left: number;
+  top: number;
+  bottom: number;
+}
+
+export const getGradient = (
+  ctx: any,
+  { right, left, top, bottom }: GetGradientIf
+) => {
   let width;
   let height;
   let gradient;
 
-  const chartWidth = chartArea.right - chartArea.left;
-  const chartHeight = chartArea.bottom - chartArea.top;
+  const chartWidth = right - left;
+  const chartHeight = bottom - top;
 
   if (!gradient || width !== chartWidth || height !== chartHeight) {
     // Create the gradient because this is either the first render
     // or the size of the chart has changed
     width = chartWidth;
     height = chartHeight;
-    gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+    gradient = ctx.createLinearGradient(0, bottom, 0, top);
     gradient.addColorStop(0, 'rgba(203, 37, 111, 0.9)');
     gradient.addColorStop(1, 'rgba(223, 81, 144, 0.7)');
   }
@@ -79,14 +92,10 @@ export const calculatePayoutsByDay = (
   average: number,
   units: number
 ) => {
-  if (!payouts.length) {
-    return payouts;
-  }
+  if (!payouts.length) return payouts;
 
   // if we are taking an average, we will need extra days of data.
-  if (average > 1) {
-    maxDays += average;
-  }
+  if (average > 1) maxDays += average;
 
   const payoutsByDay: any = [];
   let curDay = 367;
@@ -194,20 +203,17 @@ export const calculatePayoutsByDay = (
       }
 
       // commit last payout
-      if (p === payouts.length) {
+      if (p === payouts.length)
         payoutsByDay.push({
           amount: planckBnToUnit(curPayout.amount, units),
           event_id: curPayout.amount.lt(new BN(0)) ? 'Slash' : 'Reward',
           block_timestamp: payout.block_timestamp,
         });
-      }
     }
   }
 
   // if we don't need to take an average, just return the `payoutsByDay`.
-  if (average <= 1) {
-    return payoutsByDay;
-  }
+  if (average <= 1) return payoutsByDay;
 
   // create moving average value over `average` days
   const averagePayoutsByDay = [];
@@ -269,18 +275,14 @@ export const formatRewardsForGraphs = (
   payouts: AnySubscan,
   poolClaims: AnySubscan
 ) => {
-  let payoutsByDay = prefillToMaxDays(
+  const payoutsByDay = prefillToMaxDays(
     calculatePayoutsByDay(payouts, days, average, units),
     days
   );
-  let poolClaimsByDay = prefillToMaxDays(
+  const poolClaimsByDay = prefillToMaxDays(
     calculatePayoutsByDay(poolClaims, days, average, units),
     days
   );
-
-  // reverse rewards: most recent last
-  payoutsByDay = payoutsByDay.reverse();
-  poolClaimsByDay = poolClaimsByDay.reverse();
 
   // get most recent payout
   const payoutExists =
@@ -306,8 +308,9 @@ export const formatRewardsForGraphs = (
   }
 
   return {
-    payoutsByDay,
-    poolClaimsByDay,
+    // reverse rewards: most recent last
+    payoutsByDay: payoutsByDay.reverse(),
+    poolClaimsByDay: poolClaimsByDay.reverse(),
     lastReward,
   };
 };

@@ -4,23 +4,21 @@
 import { useState } from 'react';
 import { DefinitionWrapper } from '../Wrappers';
 
-export const Definition = (props: any) => {
-  const { title, description, open: _open } = props;
-
+export const Definition = ({ title, description, open: _open }: any) => {
   const [open, setOpen] = useState(_open || false);
 
   return (
     <DefinitionWrapper>
       <div>
-        {!_open && (
+        {!_open ? (
           <button onClick={() => setOpen(!open)} type="button">
             <h2>
               {title}
               <span>{open ? '-' : '+'}</span>
             </h2>
           </button>
-        )}
-        {open && (
+        ) : null}
+        {open ? (
           <>
             {description.map((item: any, index: number) => (
               <h4 key={`inner_def_${index}`} className="definition">
@@ -28,7 +26,7 @@ export const Definition = (props: any) => {
               </h4>
             ))}
           </>
-        )}
+        ) : null}
       </div>
     </DefinitionWrapper>
   );
