@@ -474,4 +474,23 @@ export const VALIDATOR_COMMUNITY = [
       polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
     },
   },
+  {
+    name: 'Stake Plus',
+    Thumbnail: stakeplus,
+    bio: 'Providing high quality renewable powered crypto services to blockchain ecosystems.',
+    email: 'contact@stake.plus',
+    twitter: '@StakePlusCrypto',
+    website: 'https://stake.plus',
+    validators: {
+      polkadot: ['152QidDC4QrtMCyRGiQmvrNyjntvMg2XouCSdoPSeqUNTvsq'],
+      kusama: [
+        'FLiadJNdXvLi8TJ62XzrQVxmZaT8z5hAr1YXQg437r8o4G6',
+        'CibcGcwnThunMNYrStEWHYdr5WDuy8QnMgT3Vr39JeWCcQs',
+        'Hhgs6hgUeAkAd2c3SbphWxAvm9hSoqRxnoarZgrB2pJYPJT',
+        'FPVebvd7u2TtyU2magxZVvRqzAHpGZ9aJ9rHXewpHqMGuzr',
+        'F8FswEGD1quEyNciuR9KwsragUmqnk7mFLqmAdRdnY9Sdwx',
+        'DqsZ7nrch8Ro9HqP1ZX7CbbpZFWy2V4bWjWWjNA2PAehZsW',
+      ],
+    },
+  },
 ];
