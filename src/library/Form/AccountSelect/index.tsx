@@ -14,9 +14,12 @@ import { clipAddress, convertRemToPixels } from 'Utils';
 import { AccountSelectProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 
-export const AccountSelect = (props: AccountSelectProps) => {
-  const { items, onChange, placeholder, value } = props;
-
+export const AccountSelect = ({
+  items,
+  onChange,
+  placeholder,
+  value,
+}: AccountSelectProps) => {
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
 
   useEffect(() => {

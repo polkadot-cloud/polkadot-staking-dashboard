@@ -9,21 +9,25 @@ import { isNumeric } from 'Utils';
 import { UnbondInputProps } from '../types';
 import { InputWrapper, RowWrapper } from '../Wrappers';
 
-export const UnbondInput = (props: UnbondInputProps) => {
+export const UnbondInput = ({
+  defaultValue,
+  disabled,
+  freeToUnbondToMin,
+  setters,
+  value,
+}: UnbondInputProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
-  const { disabled, freeToUnbondToMin } = props;
-  const setters = props.setters ?? [];
-  const _value = props.value ?? 0;
-  const defaultValue = props.defaultValue ?? 0;
+  const sets = setters ?? [];
+  const _value = value ?? 0;
 
   // the current local bond value
-  const [value, setValue] = useState(_value);
+  const [localBond, setLocalBond] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setValue(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? 0);
   }, [activeAccount]);
 
   // handle change for unbonding
@@ -33,14 +37,14 @@ export const UnbondInput = (props: UnbondInputProps) => {
     const val = element.value;
 
     if (!(!isNumeric(val) && val !== '')) {
-      setValue(val);
+      setLocalBond(val);
       updateParentState(val);
     }
   };
 
   // apply bond to parent setters
   const updateParentState = (val: any) => {
-    for (const s of setters) {
+    for (const s of sets) {
       s.set({
         ...s.current,
         bond: val,
@@ -57,7 +61,7 @@ export const UnbondInput = (props: UnbondInputProps) => {
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
-              value={value}
+              value={localBond}
               onChange={(e) => {
                 handleChangeUnbond(e);
               }}
@@ -73,7 +77,7 @@ export const UnbondInput = (props: UnbondInputProps) => {
             small
             title="Max"
             onClick={() => {
-              setValue(freeToUnbondToMin);
+              setLocalBond(freeToUnbondToMin);
               updateParentState(freeToUnbondToMin);
             }}
           />

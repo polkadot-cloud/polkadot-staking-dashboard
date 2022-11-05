@@ -6,3 +6,4 @@
 **/.eslintrc.js
 **/tsconfig.json
 **/webpack.config.js
+src/img/**/*

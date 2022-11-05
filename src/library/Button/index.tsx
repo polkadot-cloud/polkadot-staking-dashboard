@@ -21,26 +21,26 @@ export const ButtonRow = styled.div<{ verticalSpacing?: boolean }>`
 
 export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
   display: inline-block;
-  margin: ${(props) => props.margin};
+  margin: ${({ margin }) => margin};
 
   > button {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    background: ${(props) =>
-      props.type === 'invert-primary'
+    background: ${({ type }) =>
+      type === 'invert-primary'
         ? networkColor
-        : props.type === 'invert-secondary'
+        : type === 'invert-secondary'
         ? networkColorSecondary
         : buttonSecondaryBackground};
-    color: ${(props) =>
-      props.type === 'invert-primary' || props.type === 'invert-secondary'
+    color: ${({ type }) =>
+      type === 'invert-primary' || type === 'invert-secondary'
         ? 'white'
         : textSecondary};
 
-    padding: ${(props) => props.padding};
+    padding: ${({ padding }) => padding};
     border-radius: 1.5rem;
-    font-size: ${(props) => props.fontSize};
+    font-size: ${({ fontSize }) => fontSize};
     transition: opacity 0.2s;
 
     .space {
@@ -54,11 +54,17 @@ export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
   }
 `;
 
-export const Button = (props: ButtonProps) => {
-  let { transform } = props;
-  const { primary, secondary, icon, title, disabled, small, inline } = props;
-  const { onClick } = props;
-
+export const Button = ({
+  onClick,
+  transform,
+  primary,
+  secondary,
+  icon,
+  title,
+  disabled,
+  small,
+  inline,
+}: ButtonProps) => {
   transform = transform ?? 'shrink-1';
 
   const type = primary

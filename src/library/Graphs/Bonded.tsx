@@ -12,12 +12,15 @@ import { GraphWrapper } from './Wrappers';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const Bonded = (props: BondedProps) => {
+export const Bonded = ({
+  active,
+  free,
+  unlocking,
+  unlocked,
+  inactive,
+}: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
-
-  const { active, unlocking, unlocked, inactive } = props;
-  const { free } = props;
 
   // graph data
   let graphActive = active;
