@@ -25,16 +25,16 @@ export const BondInput = ({
   const { activeAccount } = useConnect();
 
   // the current local bond value
-  const [v, setV] = useState(_value);
+  const [localBond, setLocalBond] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setV(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? 0);
   }, [activeAccount]);
 
   useEffect(() => {
     if (!disableTxFeeUpd) {
-      setV(_value.toString());
+      setLocalBond(_value.toString());
     }
   }, [_value]);
 
@@ -44,7 +44,7 @@ export const BondInput = ({
     if (!isNumeric(val) && val !== '') {
       return;
     }
-    setV(val);
+    setLocalBond(val);
     updateParentState(val);
   };
 
@@ -67,7 +67,7 @@ export const BondInput = ({
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
-              value={v}
+              value={localBond}
               onChange={(e) => {
                 handleChangeBond(e);
               }}
@@ -83,7 +83,7 @@ export const BondInput = ({
             small
             title="Max"
             onClick={() => {
-              setV(freeBalance);
+              setLocalBond(freeBalance);
               updateParentState(freeBalance);
             }}
           />

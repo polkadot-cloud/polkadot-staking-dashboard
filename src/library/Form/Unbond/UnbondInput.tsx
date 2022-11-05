@@ -23,11 +23,11 @@ export const UnbondInput = ({
   const _value = value ?? 0;
 
   // the current local bond value
-  const [v, setV] = useState(_value);
+  const [localBond, setLocalBond] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setV(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? 0);
   }, [activeAccount]);
 
   // handle change for unbonding
@@ -37,7 +37,7 @@ export const UnbondInput = ({
     const val = element.value;
 
     if (!(!isNumeric(val) && val !== '')) {
-      setV(val);
+      setLocalBond(val);
       updateParentState(val);
     }
   };
@@ -61,7 +61,7 @@ export const UnbondInput = ({
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
-              value={v}
+              value={localBond}
               onChange={(e) => {
                 handleChangeUnbond(e);
               }}
@@ -77,7 +77,7 @@ export const UnbondInput = ({
             small
             title="Max"
             onClick={() => {
-              setV(freeToUnbondToMin);
+              setLocalBond(freeToUnbondToMin);
               updateParentState(freeToUnbondToMin);
             }}
           />

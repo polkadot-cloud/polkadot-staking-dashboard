@@ -27,7 +27,7 @@ export const UnbondFeedback = ({
   defaultBond,
   setLocalResize,
 }: UnbondFeedbackProps) => {
-  const defBond = defaultBond || '';
+  const defaultValue = defaultBond || '';
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
@@ -54,13 +54,13 @@ export const UnbondFeedback = ({
 
   // local bond state
   const [bond, setBond] = useState<{ bond: number | string }>({
-    bond: defBond,
+    bond: defaultValue,
   });
 
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: defBond,
+      bond: defaultValue,
     });
   }, [activeAccount]);
 
@@ -155,7 +155,7 @@ export const UnbondFeedback = ({
       ))}
       <Spacer />
       <UnbondInput
-        defaultValue={defBond}
+        defaultValue={defaultValue}
         disabled={false}
         freeToUnbondToMin={freeToUnbondToMin}
         setters={setters}
