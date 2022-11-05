@@ -9,24 +9,29 @@ import { humanNumber, isNumeric, planckBnToUnit } from 'Utils';
 import { UnbondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
 
-export const UnbondInput = (props: UnbondInputProps) => {
+export const UnbondInput = ({
+  defaultValue,
+  disabled,
+  freeToUnbondToMin,
+  setters,
+  value,
+  active,
+}: UnbondInputProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
-  const { disabled, freeToUnbondToMin, active } = props;
-  const setters = props.setters ?? [];
-  const _value = props.value ?? 0;
-  const defaultValue = props.defaultValue ?? 0;
+  const sets = setters ?? [];
+  const _value = value ?? 0;
 
   // get the actively bonded amount.
   const activeBase = planckBnToUnit(active, network.units);
 
   // the current local bond value
-  const [value, setValue] = useState(_value);
+  const [localBond, setLocalBond] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setValue(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? 0);
   }, [activeAccount]);
 
   // handle change for unbonding
@@ -36,14 +41,14 @@ export const UnbondInput = (props: UnbondInputProps) => {
     const val = element.value;
 
     if (!(!isNumeric(val) && val !== '')) {
-      setValue(val);
+      setLocalBond(val);
       updateParentState(val);
     }
   };
 
   // apply bond to parent setters
   const updateParentState = (val: any) => {
-    for (const s of setters) {
+    for (const s of sets) {
       s.set({
         ...s.current,
         bond: val,
@@ -61,7 +66,7 @@ export const UnbondInput = (props: UnbondInputProps) => {
               <input
                 type="text"
                 placeholder={`0 ${network.unit}`}
-                value={value}
+                value={localBond}
                 onChange={(e) => {
                   handleChangeUnbond(e);
                 }}
@@ -78,7 +83,7 @@ export const UnbondInput = (props: UnbondInputProps) => {
             inline
             title="Max"
             onClick={() => {
-              setValue(freeToUnbondToMin);
+              setLocalBond(freeToUnbondToMin);
               updateParentState(freeToUnbondToMin);
             }}
           />

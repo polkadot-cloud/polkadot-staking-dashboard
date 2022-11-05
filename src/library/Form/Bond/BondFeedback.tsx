@@ -16,16 +16,18 @@ import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import { BondInput } from './BondInput';
 
-export const BondFeedback = (props: BondFeedbackProps) => {
-  const { bondType, txFees, maxWidth } = props;
-  const syncing = props.syncing ?? false;
-  const inSetup = props.inSetup ?? false;
-  const warnings = props.warnings ?? [];
-  const setters = props.setters ?? [];
-  const listenIsValid = props.listenIsValid ?? (() => {});
-  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
-  const defaultBond = props.defaultBond || '';
-
+export const BondFeedback = ({
+  bondType,
+  inSetup = false,
+  warnings = [],
+  setters = [],
+  listenIsValid = () => {},
+  disableTxFeeUpdate = false,
+  defaultBond,
+  txFees,
+  maxWidth,
+  syncing = false,
+}: BondFeedbackProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
@@ -35,6 +37,8 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const { minJoinBond, minCreateBond } = stats;
   const { units, unit } = network;
   const { minNominatorBond } = staking;
+
+  const defBond = defaultBond || '';
 
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -54,7 +58,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
 
   // local bond state
   const [bond, setBond] = useState<{ bond: number | string }>({
-    bond: defaultBond,
+    bond: defBond,
   });
 
   // whether bond is disabled
@@ -71,7 +75,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: defaultBond,
+      bond: defBond,
     });
   }, [activeAccount]);
 
@@ -79,11 +83,6 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   useEffect(() => {
     handleErrors();
   }, [bond, txFees]);
-
-  // if resize is present, handle on error change
-  useEffect(() => {
-    if (props.setLocalResize) props.setLocalResize();
-  }, [errors]);
 
   // update max bond after txFee sync
   useEffect(() => {
@@ -163,7 +162,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
       <div style={{ maxWidth: maxWidth ? '600px' : '100%' }}>
         <BondInput
           value={bond.bond}
-          defaultValue={defaultBond}
+          defaultValue={defBond}
           syncing={syncing}
           disabled={bondDisabled}
           setters={setters}
