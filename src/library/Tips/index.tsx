@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
+
 import { useTips } from 'contexts/Tips';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
@@ -16,7 +16,7 @@ export const Tips = () => {
   const { setStatus, status, tip, closeTip, dismissOpen } = useTips();
   const { fillVariables } = useFillVariables();
   const controls = useAnimation();
-  const { t } = useTranslation('common');
+  const { t: tTips, i18n } = useTranslation('tips');
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -56,6 +56,22 @@ export const Tips = () => {
   let activeTip: AnyJson = tip
     ? TIPS_CONFIG.find((d: any) => d.id === tip)
     : null;
+
+  // const title = tTips(`${activeTip}.title`);
+  // const subtitle = tTips(`${activeTip}.subtitle`);
+  // const description = i18n.getResource(
+  //   i18n.resolvedLanguage,
+  //   'tips',
+  //   `${activeTip}.description`
+  // );
+  // activeTip = fillVariables(
+  //   {
+  //     title,
+  //     subtitle,
+  //     description,
+  //   },
+  //   ['title', 'subtitle', 'description']
+  // );
 
   // fill placeholder variables
   activeTip = activeTip
@@ -99,4 +115,3 @@ export const Tips = () => {
     </Wrapper>
   );
 };
-// {t(`${activeTip?.title ?? ''}`)} {t(`${activeTip?.description ?? []}`)}

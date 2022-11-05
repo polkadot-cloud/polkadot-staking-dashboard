@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState, useRef } from 'react';
@@ -42,6 +42,7 @@ export const Tips = () => {
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
   const { t } = useTranslation('common');
+  const { t: tTips, i18n } = useTranslation('tips');
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -144,6 +145,20 @@ export const Tips = () => {
   let items = TIPS_CONFIG.filter((i: AnyJson) =>
     segments.includes(i.meta.segment)
   );
+  console.log(items);
+  console.log(tTips('managing_nominations.description'));
+  const title = tTips(`${items}.title`);
+  const subtitle = tTips(`${items}.subtitle`);
+  const description = tTips(`${items}.description`);
+  items = fillVariables(
+    {
+      title,
+      subtitle,
+      description,
+    },
+    ['title', 'subtitle', 'description']
+  );
+
 
   items = items.map((i: AnyJson) =>
     fillVariables(i, ['title', 'subtitle', 'description'])

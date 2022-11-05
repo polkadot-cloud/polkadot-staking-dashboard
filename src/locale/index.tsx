@@ -10,6 +10,8 @@ import pagescn from './cn/pages.json';
 import pagesen from './en/pages.json';
 import helpen from './en/help.json';
 import helpcn from './cn/help.json';
+import tipsen from './en/tips.json';
+import tipscn from './cn/tips.json';
 
 // construct resources.
 export const resources = {
@@ -17,11 +19,13 @@ export const resources = {
     common: commonen,
     help: helpen,
     pages: pagesen,
+    tips: tipsen,
   },
   cn: {
     common: commoncn,
     help: helpcn,
     pages: pagescn,
+    tips: tipscn,
   },
 };
 
