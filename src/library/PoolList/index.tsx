@@ -16,7 +16,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
@@ -67,27 +67,27 @@ export const PoolListInner = ({
   // render batch
   const batchEnd = renderIteration * ListItemsPerBatch - 1;
 
+  // handle pool list bootstrapping
+  const setupPoolList = useCallback(() => {
+    setPoolsDefault(pools);
+    _setPools(pools);
+    setFetched(true);
+    fetchPoolsMetaBatch(batchKey, pools, true);
+  }, [batchKey, fetchPoolsMetaBatch, pools]);
+
   // refetch list when pool list changes
   useEffect(() => {
     if (pools !== poolsDefault) {
       setFetched(false);
     }
-  }, [pools]);
+  }, [pools, poolsDefault]);
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
       setupPoolList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
-
-  // handle pool list bootstrapping
-  const setupPoolList = () => {
-    setPoolsDefault(pools);
-    _setPools(pools);
-    setFetched(true);
-    fetchPoolsMetaBatch(batchKey, pools, true);
-  };
+  }, [isReady, fetched, metrics.activeEra.index, setupPoolList]);
 
   // render throttle
   useEffect(() => {
@@ -96,7 +96,7 @@ export const PoolListInner = ({
         setRenderIteration(renderIterationRef.current + 1);
       }, 500);
     }
-  }, [renderIterationRef.current]);
+  }, [batchEnd, disableThrottle, pageEnd]);
 
   // get pools to render
   let listPools = [];

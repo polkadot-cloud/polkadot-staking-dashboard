@@ -31,7 +31,7 @@ export const Input = (props: any) => {
   // reset value to default when changing account
   useEffect(() => {
     setMetadata(defaultValue ?? '');
-  }, [activeAccount]);
+  }, [activeAccount, defaultValue]);
 
   return (
     <>

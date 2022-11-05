@@ -38,24 +38,24 @@ export const SideMenu = () => {
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
 
+  const throttleCallback = () => {
+    if (window.innerWidth >= SideMenuStickyThreshold) {
+      setSideMenu(0);
+    }
+  };
+
+  const windowThrottle = throttle(throttleCallback, 200, {
+    trailing: true,
+    leading: false,
+  });
+
   // listen to window resize to hide SideMenu
   useEffect(() => {
     window.addEventListener('resize', windowThrottle);
     return () => {
       window.removeEventListener('resize', windowThrottle);
     };
-  }, []);
-
-  const throttleCallback = () => {
-    if (window.innerWidth >= SideMenuStickyThreshold) {
-      setSideMenu(0);
-    }
-  };
-  const windowThrottle = throttle(throttleCallback, 200, {
-    trailing: true,
-    leading: false,
-  });
-
+  }, [windowThrottle]);
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {
     setSideMenu(0);

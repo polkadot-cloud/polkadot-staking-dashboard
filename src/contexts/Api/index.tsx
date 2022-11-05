@@ -72,6 +72,82 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // provider event handlers
   useEffect(() => {
+    // connection callback
+    const connectedCallback = async (_provider: WsProvider | ScProvider) => {
+      const _api = new ApiPromise({ provider: _provider });
+      await _api.isReady;
+
+      localStorage.setItem('network', String(network.name));
+
+      // constants
+      const promises = [
+        _api.consts.staking.bondingDuration,
+        _api.consts.staking.maxNominations,
+        _api.consts.staking.sessionsPerEra,
+        _api.consts.staking.maxNominatorRewardedPerValidator,
+        _api.consts.electionProviderMultiPhase.maxElectingVoters,
+        _api.consts.babe.expectedBlockTime,
+        _api.consts.balances.existentialDeposit,
+        _api.consts.staking.historyDepth,
+        _api.consts.nominationPools.palletId,
+      ];
+
+      // fetch constants
+      const _consts: AnyApi = await Promise.all(promises);
+
+      // format constants
+      const bondDuration = _consts[0]
+        ? Number(_consts[0].toString())
+        : FallbackBondingDuration;
+
+      const maxNominations = _consts[1]
+        ? Number(_consts[1].toString())
+        : FallbackMaxNominations;
+
+      const sessionsPerEra = _consts[2]
+        ? Number(_consts[2].toString())
+        : FallbackSessionsPerEra;
+
+      const maxNominatorRewardedPerValidator = _consts[3]
+        ? Number(_consts[3].toString())
+        : FallbackNominatorRewardedPerValidator;
+
+      const maxElectingVoters = _consts[4]
+        ? Number(_consts[4].toString())
+        : FallbackMaxElectingVoters;
+
+      const expectedBlockTime = _consts[5]
+        ? Number(_consts[5].toString())
+        : FallbackExpectedBlockTime;
+
+      const existentialDeposit = _consts[6]
+        ? new BN(_consts[6].toString())
+        : new BN(0);
+
+      let historyDepth;
+      if (_consts[7] !== undefined) {
+        historyDepth = new BN(_consts[7].toString());
+      } else {
+        historyDepth = await _api.query.staking.historyDepth();
+        historyDepth = new BN(historyDepth.toString());
+      }
+
+      const poolsPalletId = _consts[8] ? _consts[8].toU8a() : new Uint8Array(0);
+
+      setApi(_api);
+      setConsts({
+        bondDuration,
+        maxNominations,
+        sessionsPerEra,
+        maxNominatorRewardedPerValidator,
+        historyDepth,
+        maxElectingVoters,
+        expectedBlockTime,
+        poolsPalletId,
+        existentialDeposit,
+      });
+    };
+
     if (provider !== null) {
       provider.on('connected', () => {
         setConnectionStatus(ConnectionStatus.Connected);
@@ -81,83 +157,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       });
       connectedCallback(provider);
     }
-  }, [provider]);
-
-  // connection callback
-  const connectedCallback = async (_provider: WsProvider | ScProvider) => {
-    const _api = new ApiPromise({ provider: _provider });
-    await _api.isReady;
-
-    localStorage.setItem('network', String(network.name));
-
-    // constants
-    const promises = [
-      _api.consts.staking.bondingDuration,
-      _api.consts.staking.maxNominations,
-      _api.consts.staking.sessionsPerEra,
-      _api.consts.staking.maxNominatorRewardedPerValidator,
-      _api.consts.electionProviderMultiPhase.maxElectingVoters,
-      _api.consts.babe.expectedBlockTime,
-      _api.consts.balances.existentialDeposit,
-      _api.consts.staking.historyDepth,
-      _api.consts.nominationPools.palletId,
-    ];
-
-    // fetch constants
-    const _consts: AnyApi = await Promise.all(promises);
-
-    // format constants
-    const bondDuration = _consts[0]
-      ? Number(_consts[0].toString())
-      : FallbackBondingDuration;
-
-    const maxNominations = _consts[1]
-      ? Number(_consts[1].toString())
-      : FallbackMaxNominations;
-
-    const sessionsPerEra = _consts[2]
-      ? Number(_consts[2].toString())
-      : FallbackSessionsPerEra;
-
-    const maxNominatorRewardedPerValidator = _consts[3]
-      ? Number(_consts[3].toString())
-      : FallbackNominatorRewardedPerValidator;
-
-    const maxElectingVoters = _consts[4]
-      ? Number(_consts[4].toString())
-      : FallbackMaxElectingVoters;
-
-    const expectedBlockTime = _consts[5]
-      ? Number(_consts[5].toString())
-      : FallbackExpectedBlockTime;
-
-    const existentialDeposit = _consts[6]
-      ? new BN(_consts[6].toString())
-      : new BN(0);
-
-    let historyDepth;
-    if (_consts[7] !== undefined) {
-      historyDepth = new BN(_consts[7].toString());
-    } else {
-      historyDepth = await _api.query.staking.historyDepth();
-      historyDepth = new BN(historyDepth.toString());
-    }
-
-    const poolsPalletId = _consts[8] ? _consts[8].toU8a() : new Uint8Array(0);
-
-    setApi(_api);
-    setConsts({
-      bondDuration,
-      maxNominations,
-      sessionsPerEra,
-      maxNominatorRewardedPerValidator,
-      historyDepth,
-      maxElectingVoters,
-      expectedBlockTime,
-      poolsPalletId,
-      existentialDeposit,
-    });
-  };
+  }, [network.name, provider]);
 
   // connect function sets provider and updates active network.
   const connect = async (_network: NetworkName, _isLightClient?: boolean) => {

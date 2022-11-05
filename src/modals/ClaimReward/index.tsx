@@ -37,7 +37,7 @@ export const ClaimReward = () => {
     } else {
       setValid(false);
     }
-  }, [selectedActivePool]);
+  }, [selectedActivePool, unclaimedRewards]);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);

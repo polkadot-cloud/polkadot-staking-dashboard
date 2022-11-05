@@ -5,7 +5,7 @@ import { bnToU8a, u8aConcat } from '@polkadot/util';
 import BN from 'bn.js';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
@@ -43,15 +43,6 @@ export const PoolsConfigProvider = ({
   // stores the user's favorite pools
   const [favorites, setFavorites] = useState<string[]>(getFavorites());
 
-  useEffect(() => {
-    if (isReady) {
-      subscribeToPoolConfig();
-    }
-    return () => {
-      unsubscribe();
-    };
-  }, [network, isReady]);
-
   const unsubscribe = () => {
     if (poolsConfigRef.current.unsub !== null) {
       poolsConfigRef.current.unsub();
@@ -59,7 +50,7 @@ export const PoolsConfigProvider = ({
   };
 
   // subscribe to pool chain state
-  const subscribeToPoolConfig = async () => {
+  const subscribeToPoolConfig = useCallback(async () => {
     if (!api) return;
 
     const unsub = await api.queryMulti<AnyApi>(
@@ -128,7 +119,16 @@ export const PoolsConfigProvider = ({
       setPoolsConfig,
       poolsConfigRef
     );
-  };
+  }, [api]);
+
+  useEffect(() => {
+    if (isReady) {
+      subscribeToPoolConfig();
+    }
+    return () => {
+      unsubscribe();
+    };
+  }, [network, isReady, subscribeToPoolConfig]);
 
   /*
    * Adds a favorite validator.

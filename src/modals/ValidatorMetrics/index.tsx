@@ -53,14 +53,14 @@ export const ValidatorMetrics = () => {
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 300);
 
-  const handleEraPoints = async () => {
-    const _list = await fetchEraPoints(address, metrics.activeEra.index);
-    setList(_list);
-  };
-
   useEffect(() => {
+    const handleEraPoints = async () => {
+      const _list = await fetchEraPoints(address, metrics.activeEra.index);
+      setList(_list);
+    };
+
     handleEraPoints();
-  }, []);
+  }, [address, fetchEraPoints, metrics.activeEra.index]);
 
   const stats = [
     {

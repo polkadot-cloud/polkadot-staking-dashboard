@@ -7,7 +7,7 @@ import {
   PoolMembership,
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnyApi, Fn } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
@@ -42,25 +42,6 @@ export const PoolMembershipsProvider = ({
   );
   const poolMembershipUnsubRefs = useRef<Array<AnyApi>>(poolMembershipUnsubs);
 
-  useEffect(() => {
-    if (isReady) {
-      (() => {
-        setStateWithRef([], setPoolMemberships, poolMembershipsRef);
-        unsubscribeAll();
-        getPoolMemberships();
-      })();
-    }
-  }, [network, isReady, connectAccounts]);
-
-  // subscribe to account pool memberships
-  const getPoolMemberships = async () => {
-    Promise.all(
-      connectAccounts.map((a: ImportedAccount) =>
-        subscribeToPoolMembership(a.address)
-      )
-    );
-  };
-
   // unsubscribe from pool memberships on unmount
   useEffect(() => {
     return () => {
@@ -74,65 +55,81 @@ export const PoolMembershipsProvider = ({
   };
 
   // subscribe to an account's pool membership
-  const subscribeToPoolMembership = async (address: string) => {
-    if (!api) return;
+  const subscribeToPoolMembership = useCallback(
+    async (address: string) => {
+      if (!api) return;
 
-    const unsub = await api.query.nominationPools.poolMembers(
-      address,
-      async (result: AnyApi) => {
-        let membership = result?.unwrapOr(undefined)?.toHuman();
+      const unsub = await api.query.nominationPools.poolMembers(
+        address,
+        async (result: AnyApi) => {
+          let membership = result?.unwrapOr(undefined)?.toHuman();
 
-        if (membership) {
-          // format pool's unlocking chunks
-          const unbondingEras: AnyApi = membership.unbondingEras;
-          const unlocking = [];
-          for (const [e, v] of Object.entries(unbondingEras || {})) {
-            const era = rmCommas(e as string);
-            const value = rmCommas(v as string);
-            unlocking.push({
-              era: Number(era),
-              value: new BN(value),
-            });
+          if (membership) {
+            // format pool's unlocking chunks
+            const unbondingEras: AnyApi = membership.unbondingEras;
+            const unlocking = [];
+            for (const [e, v] of Object.entries(unbondingEras || {})) {
+              const era = rmCommas(e as string);
+              const value = rmCommas(v as string);
+              unlocking.push({
+                era: Number(era),
+                value: new BN(value),
+              });
+            }
+            membership.points = membership.points
+              ? rmCommas(membership.points)
+              : '0';
+            membership = {
+              address,
+              ...membership,
+              unlocking,
+            };
+
+            // remove stale membership if it's already in list
+            let _poolMemberships = Object.values(poolMembershipsRef.current);
+            _poolMemberships = _poolMemberships
+              .filter((m: PoolMembership) => m.address !== address)
+              .concat(membership);
+
+            setStateWithRef(
+              _poolMemberships,
+              setPoolMemberships,
+              poolMembershipsRef
+            );
+          } else {
+            // no membership: remove account membership if present
+            let _poolMemberships = Object.values(poolMembershipsRef.current);
+            _poolMemberships = _poolMemberships.filter(
+              (m: PoolMembership) => m.address !== address
+            );
+            setStateWithRef(
+              _poolMemberships,
+              setPoolMemberships,
+              poolMembershipsRef
+            );
           }
-          membership.points = membership.points
-            ? rmCommas(membership.points)
-            : '0';
-          membership = {
-            address,
-            ...membership,
-            unlocking,
-          };
-
-          // remove stale membership if it's already in list
-          let _poolMemberships = Object.values(poolMembershipsRef.current);
-          _poolMemberships = _poolMemberships
-            .filter((m: PoolMembership) => m.address !== address)
-            .concat(membership);
-
-          setStateWithRef(
-            _poolMemberships,
-            setPoolMemberships,
-            poolMembershipsRef
-          );
-        } else {
-          // no membership: remove account membership if present
-          let _poolMemberships = Object.values(poolMembershipsRef.current);
-          _poolMemberships = _poolMemberships.filter(
-            (m: PoolMembership) => m.address !== address
-          );
-          setStateWithRef(
-            _poolMemberships,
-            setPoolMemberships,
-            poolMembershipsRef
-          );
         }
-      }
-    );
+      );
 
-    const _unsubs = poolMembershipUnsubRefs.current.concat(unsub);
-    setStateWithRef(_unsubs, setPoolMembershipUnsubs, poolMembershipUnsubRefs);
-    return unsub;
-  };
+      const _unsubs = poolMembershipUnsubRefs.current.concat(unsub);
+      setStateWithRef(
+        _unsubs,
+        setPoolMembershipUnsubs,
+        poolMembershipUnsubRefs
+      );
+      return unsub;
+    },
+    [api]
+  );
+
+  // subscribe to account pool memberships
+  const getPoolMemberships = useCallback(async () => {
+    Promise.all(
+      connectAccounts.map((a: ImportedAccount) =>
+        subscribeToPoolMembership(a.address)
+      )
+    );
+  }, [connectAccounts, subscribeToPoolMembership]);
 
   // gets the membership of the active account
   const getActiveAccountPoolMembership = () => {
@@ -147,6 +144,16 @@ export const PoolMembershipsProvider = ({
     }
     return poolMembership;
   };
+
+  useEffect(() => {
+    if (isReady) {
+      (() => {
+        setStateWithRef([], setPoolMemberships, poolMembershipsRef);
+        unsubscribeAll();
+        getPoolMemberships();
+      })();
+    }
+  }, [network, isReady, connectAccounts, getPoolMemberships]);
 
   return (
     <PoolMembershipsContext.Provider

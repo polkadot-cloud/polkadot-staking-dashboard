@@ -9,7 +9,7 @@ import {
   NominationStatuses,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef, shuffle } from 'Utils';
 import { useApi } from '../../Api';
@@ -53,45 +53,49 @@ export const BondedPoolsProvider = ({
 
   // initial setup for fetching bonded pools
   useEffect(() => {
+    const poolSubsRefCurrent = poolSubsRef.current;
+
+    /*
+     *  Helper: to add addresses to pool record.
+     */
+    const getPoolWithAddresses = (id: number, pool: BondedPool) => {
+      return {
+        ...pool,
+        id,
+        addresses: createAccounts(id),
+      };
+    };
+
+    // fetch all bonded pool entries
+    const fetchBondedPools = async () => {
+      if (!api) return;
+
+      const _exposures = await api.query.nominationPools.bondedPools.entries();
+      let exposures = _exposures.map(([_keys, _val]: AnyApi) => {
+        const id = _keys.toHuman()[0];
+        const pool = _val.toHuman();
+        return getPoolWithAddresses(id, pool);
+      });
+
+      exposures = shuffle(exposures);
+      setBondedPools(exposures);
+    };
     if (isReady) {
       // fetch bonded pools
       fetchBondedPools();
     }
     return () => {
+      const unsubscribe = () => {
+        Object.values(poolSubsRefCurrent).map((batch: Array<Fn>) => {
+          return Object.entries(batch).map(([, v]) => {
+            return v();
+          });
+        });
+        setBondedPools([]);
+      };
       unsubscribe();
     };
-  }, [network, isReady, lastPoolId]);
-
-  // after bonded pools have synced, fetch metabatch
-  useEffect(() => {
-    if (bondedPools.length) {
-      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
-    }
-  }, [bondedPools]);
-
-  const unsubscribe = () => {
-    Object.values(poolSubsRef.current).map((batch: Array<Fn>) => {
-      return Object.entries(batch).map(([, v]) => {
-        return v();
-      });
-    });
-    setBondedPools([]);
-  };
-
-  // fetch all bonded pool entries
-  const fetchBondedPools = async () => {
-    if (!api) return;
-
-    const _exposures = await api.query.nominationPools.bondedPools.entries();
-    let exposures = _exposures.map(([_keys, _val]: AnyApi) => {
-      const id = _keys.toHuman()[0];
-      const pool = _val.toHuman();
-      return getPoolWithAddresses(id, pool);
-    });
-
-    exposures = shuffle(exposures);
-    setBondedPools(exposures);
-  };
+  }, [network, isReady, lastPoolId, api, createAccounts]);
 
   // queries a bonded pool and injects ID and addresses to a result.
   const queryBondedPool = async (id: number) => {
@@ -111,120 +115,112 @@ export const BondedPoolsProvider = ({
     };
   };
 
-  /*
-    Fetches a new batch of pool metadata.
-    Fetches the metadata of a pool that we assume to be a string.
-    structure:
-    {
-      key: {
-        [
-          {
-          metadata: [],
-        }
-      ]
-    },
-  };
-  */
-  const fetchPoolsMetaBatch = async (
-    key: string,
-    p: AnyMetaBatch,
-    refetch = false
-  ) => {
-    if (!isReady || !api) {
-      return;
-    }
-    if (!p.length) {
-      return;
-    }
-    if (!refetch) {
-      // if already exists, do not re-fetch
-      if (poolMetaBatchesRef.current[key] !== undefined) {
+  const fetchPoolsMetaBatch = useCallback(
+    async (key: string, p: AnyMetaBatch, refetch = false) => {
+      if (!isReady || !api) {
         return;
       }
-    } else {
-      // tidy up if existing batch exists
-      delete poolMetaBatches[key];
-      delete poolMetaBatchesRef.current[key];
+      if (!p.length) {
+        return;
+      }
+      if (!refetch) {
+        // if already exists, do not re-fetch
+        if (poolMetaBatchesRef.current[key] !== undefined) {
+          return;
+        }
+      } else {
+        // tidy up if existing batch exists
+        delete poolMetaBatches[key];
+        delete poolMetaBatchesRef.current[key];
 
-      if (poolSubsRef.current[key] !== undefined) {
-        for (const unsub of poolSubsRef.current[key]) {
-          unsub();
+        if (poolSubsRef.current[key] !== undefined) {
+          for (const unsub of poolSubsRef.current[key]) {
+            unsub();
+          }
         }
       }
-    }
 
-    // aggregate pool ids and addresses
-    const ids = [];
-    const addresses = [];
-    for (const _p of p) {
-      ids.push(Number(_p.id));
+      // aggregate pool ids and addresses
+      const ids = [];
+      const addresses = [];
+      for (const _p of p) {
+        ids.push(Number(_p.id));
 
-      if (_p?.addresses?.stash) {
-        addresses.push(_p.addresses.stash);
+        if (_p?.addresses?.stash) {
+          addresses.push(_p.addresses.stash);
+        }
       }
+
+      // store batch ids
+      const batchesUpdated = Object.assign(poolMetaBatchesRef.current);
+      batchesUpdated[key] = {};
+      batchesUpdated[key].ids = ids;
+      setStateWithRef(
+        { ...batchesUpdated },
+        setPoolMetaBatch,
+        poolMetaBatchesRef
+      );
+
+      const subscribeToMetadata = async (_ids: AnyApi) => {
+        const unsub = await api.query.nominationPools.metadata.multi(
+          _ids,
+          (_metadata: AnyApi) => {
+            const metadata = [];
+            for (let i = 0; i < _metadata.length; i++) {
+              metadata.push(_metadata[i].toHuman());
+            }
+            const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
+            _batchesUpdated[key].metadata = metadata;
+
+            setStateWithRef(
+              { ..._batchesUpdated },
+              setPoolMetaBatch,
+              poolMetaBatchesRef
+            );
+          }
+        );
+        return unsub;
+      };
+
+      const subscribeToNominators = async (_addresses: AnyApi) => {
+        const unsub = await api.query.staking.nominators.multi(
+          _addresses,
+          (_nominations: AnyApi) => {
+            const nominations = [];
+            for (let i = 0; i < _nominations.length; i++) {
+              nominations.push(_nominations[i].toHuman());
+            }
+
+            const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
+            _batchesUpdated[key].nominations = nominations;
+
+            setStateWithRef(
+              { ..._batchesUpdated },
+              setPoolMetaBatch,
+              poolMetaBatchesRef
+            );
+          }
+        );
+        return unsub;
+      };
+
+      // initiate subscriptions
+      await Promise.all([
+        subscribeToMetadata(ids),
+        subscribeToNominators(addresses),
+      ]).then((unsubs: Array<Fn>) => {
+        addMetaBatchUnsubs(key, unsubs);
+      });
+    },
+    [api, isReady, poolMetaBatches]
+  );
+
+  // after bonded pools have synced, fetch metabatch
+  useEffect(() => {
+    if (bondedPools.length) {
+      fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
     }
-
-    // store batch ids
-    const batchesUpdated = Object.assign(poolMetaBatchesRef.current);
-    batchesUpdated[key] = {};
-    batchesUpdated[key].ids = ids;
-    setStateWithRef(
-      { ...batchesUpdated },
-      setPoolMetaBatch,
-      poolMetaBatchesRef
-    );
-
-    const subscribeToMetadata = async (_ids: AnyApi) => {
-      const unsub = await api.query.nominationPools.metadata.multi(
-        _ids,
-        (_metadata: AnyApi) => {
-          const metadata = [];
-          for (let i = 0; i < _metadata.length; i++) {
-            metadata.push(_metadata[i].toHuman());
-          }
-          const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
-          _batchesUpdated[key].metadata = metadata;
-
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setPoolMetaBatch,
-            poolMetaBatchesRef
-          );
-        }
-      );
-      return unsub;
-    };
-
-    const subscribeToNominators = async (_addresses: AnyApi) => {
-      const unsub = await api.query.staking.nominators.multi(
-        _addresses,
-        (_nominations: AnyApi) => {
-          const nominations = [];
-          for (let i = 0; i < _nominations.length; i++) {
-            nominations.push(_nominations[i].toHuman());
-          }
-
-          const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
-          _batchesUpdated[key].nominations = nominations;
-
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setPoolMetaBatch,
-            poolMetaBatchesRef
-          );
-        }
-      );
-      return unsub;
-    };
-
-    // initiate subscriptions
-    await Promise.all([
-      subscribeToMetadata(ids),
-      subscribeToNominators(addresses),
-    ]).then((unsubs: Array<Fn>) => {
-      addMetaBatchUnsubs(key, unsubs);
-    });
-  };
+  }, [bondedPools, fetchPoolsMetaBatch]);
 
   /*
    * Get bonded pool nomination statuses
@@ -282,17 +278,6 @@ export const BondedPoolsProvider = ({
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
     setStateWithRef(_unsubs, setPoolSubs, poolSubsRef);
-  };
-
-  /*
-   *  Helper: to add addresses to pool record.
-   */
-  const getPoolWithAddresses = (id: number, pool: BondedPool) => {
-    return {
-      ...pool,
-      id,
-      addresses: createAccounts(id),
-    };
   };
 
   const getBondedPool = (poolId: MaybePool) => {

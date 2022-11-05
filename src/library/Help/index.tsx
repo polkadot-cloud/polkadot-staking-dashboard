@@ -27,12 +27,12 @@ export const Help = () => {
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
-  }, []);
+  }, [controls]);
 
   const onFadeOut = useCallback(async () => {
     await controls.start('hidden');
     setStatus(0);
-  }, []);
+  }, [controls, setStatus]);
 
   const variants = {
     hidden: {
@@ -52,7 +52,7 @@ export const Help = () => {
     if (status === 2) {
       onFadeOut();
     }
-  }, [status]);
+  }, [onFadeIn, onFadeOut, status]);
 
   // render early if help not open
   if (status === 0) return <></>;

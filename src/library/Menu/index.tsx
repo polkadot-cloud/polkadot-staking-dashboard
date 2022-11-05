@@ -17,18 +17,18 @@ export const Menu = () => {
       menu.checkMenuPosition(ref);
       // check position
     }
-  }, [menu.open]);
+  }, [menu, menu.checkMenuPosition, menu.open]);
 
   useEffect(() => {
+    const resizeCallback = () => {
+      menu.closeMenu();
+    };
+
     window.addEventListener('resize', resizeCallback);
     return () => {
       window.removeEventListener('resize', resizeCallback);
     };
-  }, []);
-
-  const resizeCallback = () => {
-    menu.closeMenu();
-  };
+  }, [menu]);
 
   useOutsideAlerter(
     ref,

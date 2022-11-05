@@ -63,7 +63,7 @@ export const UnlockChunks = () => {
       _height += formsRef.current?.clientHeight ?? 0;
     }
     setModalHeight(_height);
-  }, [task, section]);
+  }, [task, section, setModalHeight]);
 
   return (
     <Wrapper>

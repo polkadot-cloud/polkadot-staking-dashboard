@@ -39,7 +39,7 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const { freeBalance } = getTransferOptions(sender);
     setNotEnoughFunds(freeBalance.sub(txFees).lt(new BN(0)));
-  }, [txFees, sender]);
+  }, [txFees, sender, getTransferOptions]);
 
   const setTxFees = (fees: BN) => {
     _setTxFees(fees);

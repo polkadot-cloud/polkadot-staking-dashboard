@@ -8,7 +8,7 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Roles } from '../../Roles';
 
 export const PoolRoles = (props: SetupStepProps) => {
@@ -19,12 +19,16 @@ export const PoolRoles = (props: SetupStepProps) => {
 
   // if no roles in setup already, inject `activeAccount` to be
   // root and depositor roles.
-  const initialValue = setup.roles ?? {
-    root: activeAccount,
-    depositor: activeAccount,
-    nominator: activeAccount,
-    stateToggler: activeAccount,
-  };
+  const initialValue = useMemo(
+    () =>
+      setup.roles ?? {
+        root: activeAccount,
+        depositor: activeAccount,
+        nominator: activeAccount,
+        stateToggler: activeAccount,
+      },
+    [activeAccount, setup.roles]
+  );
 
   // store local pool name for form control
   const [roles, setRoles] = useState({
@@ -44,7 +48,7 @@ export const PoolRoles = (props: SetupStepProps) => {
     setRoles({
       roles: initialValue,
     });
-  }, [activeAccount]);
+  }, [activeAccount, initialValue]);
 
   // apply initial pool roles to setup progress
   useEffect(() => {
@@ -55,7 +59,7 @@ export const PoolRoles = (props: SetupStepProps) => {
         roles: initialValue,
       });
     }
-  }, [setup.section]);
+  }, [initialValue, section, setActiveAccountSetup, setup, setup.section]);
 
   return (
     <>

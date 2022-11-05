@@ -46,7 +46,7 @@ export const Payee = (props: SetupStepProps) => {
   // update selected value on account switch
   useEffect(() => {
     setPayee(setup.payee);
-  }, [activeAccount]);
+  }, [activeAccount, setup.payee]);
 
   const handleChangePayee = (i: number) => {
     // not in options

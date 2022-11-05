@@ -7,7 +7,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { Pool } from 'library/Pool/types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   capitalizeFirstLetter,
   humanNumber,
@@ -33,8 +33,14 @@ export const PoolBonded = ({
   const { units, unit } = network;
 
   // get pool targets from nominations meta batch
-  const nominations = meta[batchKey]?.nominations ?? [];
-  const targets = nominations[batchIndex]?.targets ?? [];
+  const nominations = useMemo(
+    () => meta[batchKey]?.nominations ?? [],
+    [batchKey, meta]
+  );
+  const targets = useMemo(
+    () => nominations[batchIndex]?.targets ?? [],
+    [batchIndex, nominations]
+  );
 
   // store nomination status in state
   const [nominationsStatus, setNominationsStatus] = useState<{
@@ -44,13 +50,13 @@ export const PoolBonded = ({
   // update pool nomination status as nominations metadata becomes available.
   // we cannot add effect dependencies here as this needs to trigger
   // as soon as the component displays. (upon tab change).
-  const handleNominationsStatus = () => {
+  const handleNominationsStatus = useCallback(() => {
     const _nominationStatus = getNominationsStatusFromTargets(
       addresses.stash,
       targets
     );
     setNominationsStatus(_nominationStatus);
-  };
+  }, [addresses.stash, getNominationsStatusFromTargets, targets]);
 
   // recalculate nominations status as app syncs
   useEffect(() => {
@@ -67,7 +73,7 @@ export const PoolBonded = ({
   // recalculate nominations status
   useEffect(() => {
     handleNominationsStatus();
-  }, [meta, pool]);
+  }, [handleNominationsStatus, meta, pool]);
 
   // calculate total bonded pool amount
   const poolBonded = planckBnToUnit(new BN(rmCommas(points)), units);

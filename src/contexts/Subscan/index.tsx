@@ -3,7 +3,7 @@
 
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
 import { UIContextInterface } from 'contexts/UI/types';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AnyApi, AnySubscan } from 'types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -38,19 +38,36 @@ export const SubscanProvider = ({
     setPoolClaims([]);
   }, [network]);
 
-  // fetch payouts as soon as network is ready
-  useEffect(() => {
-    if (isReady) {
-      fetchPayouts();
-      fetchPoolClaims();
-    }
-  }, [isReady, network, activeAccount]);
-
-  // fetch payouts on services toggle
-  useEffect(() => {
-    fetchPayouts();
-    fetchPoolClaims();
-  }, [services]);
+  /* handleFetch
+   * utility to handle a fetch request to Subscan
+   * returns resulting JSON.
+   */
+  const handleFetch = useCallback(
+    async (
+      address: string,
+      page: number,
+      endpoint: string,
+      body: AnyApi = {}
+    ): Promise<AnySubscan> => {
+      const bodyJson = {
+        row: 100,
+        page,
+        address,
+        ...body,
+      };
+      const res: Response = await fetch(network.subscanEndpoint + endpoint, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': ApiSubscanKey,
+        },
+        body: JSON.stringify(bodyJson),
+        method: 'POST',
+      });
+      const resJson: AnySubscan = await res.json();
+      return resJson;
+    },
+    [network.subscanEndpoint]
+  );
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -59,7 +76,7 @@ export const SubscanProvider = ({
    * as the user could have turned off the service while payouts were fetching.
    * Stores resulting payouts in context state.
    */
-  const fetchPayouts = async () => {
+  const fetchPayouts = useCallback(async () => {
     if (activeAccount === null || !services.includes('subscan')) {
       setPayouts([]);
       return;
@@ -97,7 +114,7 @@ export const SubscanProvider = ({
         setPayouts(_payouts);
       }
     }
-  };
+  }, [activeAccount, getServices, handleFetch, services]);
 
   /* fetchPoolClaims
    * fetches claim history from Subscan.
@@ -106,7 +123,7 @@ export const SubscanProvider = ({
    * as the user could have turned off the service while payouts were fetching.
    * Stores resulting claims in context state.
    */
-  const fetchPoolClaims = async () => {
+  const fetchPoolClaims = useCallback(async () => {
     if (activeAccount === null || !services.includes('subscan')) {
       setPoolClaims([]);
       return;
@@ -143,7 +160,7 @@ export const SubscanProvider = ({
         setPoolClaims(_poolClaims);
       }
     }
-  };
+  }, [activeAccount, getServices, handleFetch, services]);
 
   /* fetchEraPoints
    * fetches recent era point history for a particular address.
@@ -179,33 +196,19 @@ export const SubscanProvider = ({
     return [];
   };
 
-  /* handleFetch
-   * utility to handle a fetch request to Subscan
-   * returns resulting JSON.
-   */
-  const handleFetch = async (
-    address: string,
-    page: number,
-    endpoint: string,
-    body: AnyApi = {}
-  ): Promise<AnySubscan> => {
-    const bodyJson = {
-      row: 100,
-      page,
-      address,
-      ...body,
-    };
-    const res: Response = await fetch(network.subscanEndpoint + endpoint, {
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': ApiSubscanKey,
-      },
-      body: JSON.stringify(bodyJson),
-      method: 'POST',
-    });
-    const resJson: AnySubscan = await res.json();
-    return resJson;
-  };
+  // fetch payouts as soon as network is ready
+  useEffect(() => {
+    if (isReady) {
+      fetchPayouts();
+      fetchPoolClaims();
+    }
+  }, [isReady, network, activeAccount, fetchPayouts, fetchPoolClaims]);
+
+  // fetch payouts on services toggle
+  useEffect(() => {
+    fetchPayouts();
+    fetchPoolClaims();
+  }, [fetchPayouts, fetchPoolClaims, services]);
 
   return (
     <SubscanContext.Provider

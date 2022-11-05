@@ -39,7 +39,7 @@ export const Bond = (props: SetupStepProps) => {
     setBond({
       bond: initialBondValue,
     });
-  }, [activeAccount]);
+  }, [activeAccount, initialBondValue]);
 
   // apply initial bond value to setup progress
   useEffect(() => {
@@ -50,7 +50,7 @@ export const Bond = (props: SetupStepProps) => {
         bond: initialBondValue,
       });
     }
-  }, [setup.section]);
+  }, [initialBondValue, section, setActiveAccountSetup, setup, setup.section]);
 
   return (
     <>

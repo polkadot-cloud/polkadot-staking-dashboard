@@ -46,7 +46,7 @@ export const Account = ({
 
     // if title prop is provided, override `displayValue`
     if (title !== undefined) setDisplayValue(title);
-  }, [value, title]);
+  }, [value, title, format, getAccount]);
 
   return (
     <Wrapper

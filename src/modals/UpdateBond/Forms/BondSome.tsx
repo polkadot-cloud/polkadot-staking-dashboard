@@ -69,7 +69,7 @@ export const BondSome = (props: FormsProps) => {
     if (section === 1) {
       if (setLocalResize) setLocalResize();
     }
-  }, [bond, txFees, bondValid]);
+  }, [bond, txFees, bondValid, section, setLocalResize]);
 
   // tx to submit
   const tx = () => {

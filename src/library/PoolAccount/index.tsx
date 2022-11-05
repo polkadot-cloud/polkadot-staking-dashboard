@@ -33,6 +33,11 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
+    // handle pool list bootstrapping
+    const getPoolMeta = () => {
+      const pools: any = [{ id: props.pool.id }];
+      fetchPoolsMetaBatch(batchKey, pools, true);
+    };
     if (isReady) {
       setFetched(true);
 
@@ -40,13 +45,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
         getPoolMeta();
       }
     }
-  }, [isReady, fetched]);
-
-  // handle pool list bootstrapping
-  const getPoolMeta = () => {
-    const pools: any = [{ id: props.pool.id }];
-    fetchPoolsMetaBatch(batchKey, pools, true);
-  };
+  }, [isReady, fetched, props.pool.id, fetchPoolsMetaBatch]);
 
   const filled = props.filled ?? false;
   const fontSize = props.fontSize ?? '1.05rem';

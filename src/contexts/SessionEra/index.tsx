@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
@@ -39,18 +39,8 @@ export const SessionEraProvider = ({
   const [unsub, setUnsub] = useState<AnyApi>(null);
   const unsubRef = useRef(unsub);
 
-  // manage unsubscribe
-  useEffect(() => {
-    subscribeToSessionProgress();
-    return () => {
-      if (unsubRef.current !== null) {
-        unsubRef.current();
-      }
-    };
-  }, [isReady]);
-
   // active subscription
-  const subscribeToSessionProgress = async () => {
+  const subscribeToSessionProgress = useCallback(async () => {
     if (isReady && api !== null) {
       const _unsub = await api.derive.session.progress((session) => {
         setStateWithRef(
@@ -67,7 +57,18 @@ export const SessionEraProvider = ({
       });
       setStateWithRef(_unsub, setUnsub, unsubRef);
     }
-  };
+  }, [api, isReady]);
+
+  // manage unsubscribe
+  useEffect(() => {
+    const unsubRefCurrent = unsubRef.current;
+    subscribeToSessionProgress();
+    return () => {
+      if (unsubRefCurrent !== null) {
+        unsubRefCurrent();
+      }
+    };
+  }, [isReady, subscribeToSessionProgress]);
 
   const getEraTimeLeft = () => {
     const eraBlocksLeft =

@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion, useAnimationControls } from 'framer-motion';
-import Lottie from 'react-lottie';
-import React, { useEffect, useState } from 'react';
-import { useTips } from 'contexts/Tips';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
+import { useTips } from 'contexts/Tips';
+import { motion, useAnimationControls } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import Lottie from 'react-lottie';
+import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
   const controls = useAnimationControls();
@@ -16,18 +16,17 @@ export const ItemsInner = ({ items, page }: any) => {
   const [initial, setInitial] = useState(true);
 
   useEffect(() => {
+    const doControls = async (transition: boolean) => {
+      if (transition) {
+        controls.set('hidden');
+        controls.start('show');
+      } else {
+        controls.set('show');
+      }
+    };
     doControls(true);
     setInitial(false);
-  }, [page]);
-
-  const doControls = async (transition: boolean) => {
-    if (transition) {
-      controls.set('hidden');
-      controls.start('show');
-    } else {
-      controls.set('show');
-    }
-  };
+  }, [controls, page]);
 
   return (
     <ItemsWrapper
@@ -68,7 +67,7 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
         }
       }, delay);
     }
-  }, []);
+  }, [index, initial, isStopped]);
 
   const animateOptions = {
     loop: false,

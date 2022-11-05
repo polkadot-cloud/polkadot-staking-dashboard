@@ -22,6 +22,7 @@ export const useEraTimeLeft = () => {
   useEffect(() => {
     setEraTimeLeft(getEraTimeLeft());
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     timeleftInterval = setInterval(() => {
       setEraTimeLeft(eraTimeLeftRef.current - 1);
     }, 1000);

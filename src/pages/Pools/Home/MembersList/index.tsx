@@ -14,7 +14,7 @@ import { ListProvider, useList } from 'library/List/context';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Selectable } from 'library/List/Selectable';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { AnyApi, Sync } from 'types';
 import { Member } from './Member';
@@ -71,19 +71,27 @@ export const MembersListInner = (props: any) => {
   // render batch
   const batchEnd = renderIteration * ListItemsPerBatch - 1;
 
+  // handle validator list bootstrapping
+  const setupMembersList = useCallback(() => {
+    setMembersDefault(props.members);
+    setMembers(props.members);
+    fetchPoolMembersMetaBatch(batchKey, props.members, false);
+    setFetched(Sync.Synced);
+  }, [batchKey, fetchPoolMembersMetaBatch, props.members]);
+
   // refetch list when list changes
   useEffect(() => {
     if (props.members !== membersDefault) {
       setFetched(Sync.Unsynced);
     }
-  }, [props.members]);
+  }, [membersDefault, props.members]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && fetched === Sync.Unsynced) {
       setupMembersList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, metrics.activeEra.index, setupMembersList]);
 
   // render throttle
   useEffect(() => {
@@ -92,22 +100,14 @@ export const MembersListInner = (props: any) => {
         setRenderIteration(renderIterationRef.current + 1);
       }, 500);
     }
-  }, [renderIterationRef.current]);
+  }, [batchEnd, disableThrottle, pageEnd]);
 
   // trigger onSelected when selection changes
   useEffect(() => {
     if (props.onSelected) {
       props.onSelected(provider);
     }
-  }, [selected]);
-
-  // handle validator list bootstrapping
-  const setupMembersList = () => {
-    setMembersDefault(props.members);
-    setMembers(props.members);
-    fetchPoolMembersMetaBatch(batchKey, props.members, false);
-    setFetched(Sync.Synced);
-  };
+  }, [props, provider, selected]);
 
   // get list items to render
   let listMembers = [];

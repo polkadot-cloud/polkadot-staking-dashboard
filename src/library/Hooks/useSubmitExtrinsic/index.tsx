@@ -34,23 +34,23 @@ export const useSubmitExtrinsic = (
 
   // calculate fee upon setup changes and initial render
   useEffect(() => {
+    const calculateEstimatedFee = async () => {
+      if (tx === null) {
+        return;
+      }
+      // get payment info
+      const { partialFee } = await tx.paymentInfo(submitAddress);
+      const partialFeeBn = new BN(partialFee.toString());
+
+      // give tx fees to global useTxFees context
+      if (partialFeeBn.toString() !== txFees.toString()) {
+        setTxFees(partialFeeBn);
+      }
+    };
+
     setSender(from);
     calculateEstimatedFee();
-  }, [tx]);
-
-  const calculateEstimatedFee = async () => {
-    if (tx === null) {
-      return;
-    }
-    // get payment info
-    const { partialFee } = await tx.paymentInfo(submitAddress);
-    const partialFeeBn = new BN(partialFee.toString());
-
-    // give tx fees to global useTxFees context
-    if (partialFeeBn.toString() !== txFees.toString()) {
-      setTxFees(partialFeeBn);
-    }
-  };
+  }, [from, setSender, setTxFees, submitAddress, tx, txFees]);
 
   // submit extrinsic
   const submitTx = async () => {

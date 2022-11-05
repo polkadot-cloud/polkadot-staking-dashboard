@@ -4,7 +4,7 @@
 import { useModal } from 'contexts/Modal';
 import { useAnimation } from 'framer-motion';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AccountPoolRoles } from './AccountPoolRoles';
 import { Bio } from './Bio';
@@ -39,15 +39,6 @@ export const Modal = () => {
 
   const maxHeight = window.innerHeight * 0.8;
 
-  const onFadeIn = async () => {
-    await controls.start('visible');
-  };
-
-  const onFadeOut = async () => {
-    await controls.start('hidden');
-    setStatus(0);
-  };
-
   const variants = {
     hidden: {
       opacity: 0,
@@ -56,6 +47,15 @@ export const Modal = () => {
       opacity: 1,
     },
   };
+
+  const onFadeIn = useCallback(async () => {
+    await controls.start('visible');
+  }, [controls]);
+
+  const onFadeOut = useCallback(async () => {
+    await controls.start('hidden');
+    setStatus(0);
+  }, [controls, setStatus]);
 
   useEffect(() => {
     // modal has been opened - fade in
@@ -66,20 +66,16 @@ export const Modal = () => {
     if (status === 2) {
       onFadeOut();
     }
-  }, [status]);
+  }, [controls, onFadeIn, onFadeOut, setStatus, status]);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
   // resize modal on status or resize change
   useEffect(() => {
-    handleResize();
-  }, [resize]);
-
-  const handleResize = () => {
     let _height = modalRef.current?.clientHeight ?? 0;
     _height = _height > maxHeight ? maxHeight : _height;
     setModalHeight(_height);
-  };
+  }, [maxHeight, resize, setModalHeight]);
 
   if (status === 0) {
     return <></>;

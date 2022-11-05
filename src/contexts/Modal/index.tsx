@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useTxFees } from 'contexts/TxFees';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { defaultModalContext } from './defaults';
 import { ModalConfig, ModalContextInterface, ModalContextState } from './types';
 
@@ -27,9 +27,17 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     resize: 0,
   });
 
+  const setResize = useCallback(() => {
+    // increments resize to trigger a height transition
+    setState({
+      ...state,
+      resize: state.resize + 1,
+    });
+  }, [state]);
+
   useEffect(() => {
     setResize();
-  }, [state.status, notEnoughFunds]);
+  }, [state.status, notEnoughFunds, setResize]);
 
   const setStatus = (newStatus: number) => {
     const _state = {
@@ -64,14 +72,6 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setState({
       ...state,
       height: h,
-    });
-  };
-
-  const setResize = () => {
-    // increments resize to trigger a height transition
-    setState({
-      ...state,
-      resize: state.resize + 1,
     });
   };
 

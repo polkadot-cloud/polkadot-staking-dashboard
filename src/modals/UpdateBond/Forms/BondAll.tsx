@@ -73,12 +73,12 @@ export const BondAll = (props: FormsProps) => {
     } else {
       setBondValid(false);
     }
-  }, [freeBalance, txFees]);
+  }, [bondAfterTxFees, freeBalance, txFees]);
 
   // modal resize on form update
   useEffect(() => {
     if (setLocalResize) setLocalResize();
-  }, [bond]);
+  }, [bond, setLocalResize]);
 
   // tx to submit
   const tx = () => {

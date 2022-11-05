@@ -31,7 +31,7 @@ export const ManagePool = () => {
       _height += formsRef.current?.clientHeight ?? 0;
     }
     setModalHeight(_height);
-  }, [section, task]);
+  }, [section, setModalHeight, task]);
 
   return (
     <Wrapper>

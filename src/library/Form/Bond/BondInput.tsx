@@ -30,13 +30,13 @@ export const BondInput = ({
   // reset value to default when changing account
   useEffect(() => {
     setLocalBond(defaultValue ?? 0);
-  }, [activeAccount]);
+  }, [activeAccount, defaultValue]);
 
   useEffect(() => {
     if (!disableTxFeeUpd) {
       setLocalBond(_value.toString());
     }
-  }, [_value]);
+  }, [_value, disableTxFeeUpd]);
 
   // handle change for bonding
   const handleChangeBond = (e: any) => {

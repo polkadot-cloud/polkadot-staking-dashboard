@@ -39,7 +39,7 @@ export const UpdateBond = () => {
       _height += formsRef.current?.clientHeight ?? 0;
     }
     setModalHeight(_height);
-  }, [section, task, localResize]);
+  }, [section, task, localResize, setModalHeight]);
 
   return (
     <Wrapper>

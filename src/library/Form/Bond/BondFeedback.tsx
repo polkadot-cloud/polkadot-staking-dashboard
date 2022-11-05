@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
@@ -73,48 +73,16 @@ export const BondFeedback = ({
     ? unitToPlanckBn(Number(bond.bond), units)
     : max(unitToPlanckBn(Number(bond.bond), units).sub(txFees), new BN(0));
 
-  // update bond on account change
-  useEffect(() => {
-    setBond({
-      bond: defBond,
-    });
-  }, [activeAccount]);
-
-  // handle errors on input change
-  useEffect(() => {
-    handleErrors();
-  }, [bond, txFees]);
-
-  // if resize is present, handle on error change
-  useEffect(() => {
-    if (setLocalResize) setLocalResize();
-  }, [errors]);
-
-  // update max bond after txFee sync
-  useEffect(() => {
-    if (!disableTxFeeUpdate) {
-      if (Number(bond.bond) > freeBalance) {
-        setBond({ bond: freeBalance });
-      }
-    }
-  }, [txFees]);
-
-  // add this component's setBond to setters
-  setters.push({
-    set: setBond,
-    current: bond,
-  });
-
-  // bond amount to minimum threshold
-  const minBondBase =
-    bondType === 'pool'
-      ? inSetup || isDepositor()
-        ? planckBnToUnit(minCreateBond, units)
-        : planckBnToUnit(minJoinBond, units)
-      : planckBnToUnit(minNominatorBond, units);
-
   // handle error updates
-  const handleErrors = () => {
+  const handleErrors = useCallback(() => {
+    // bond amount to minimum threshold
+    const minBondBase =
+      bondType === 'pool'
+        ? inSetup || isDepositor()
+          ? planckBnToUnit(minCreateBond, units)
+          : planckBnToUnit(minJoinBond, units)
+        : planckBnToUnit(minNominatorBond, units);
+
     let _bondDisabled = false;
     const _errors = warnings;
     const _bond = bond.bond;
@@ -157,7 +125,54 @@ export const BondFeedback = ({
     setBondDisabled(_bondDisabled);
     listenIsValid(bondValid);
     setErrors(_errors);
-  };
+  }, [
+    bond.bond,
+    bondAfterTxFees,
+    bondType,
+    freeBalance,
+    inSetup,
+    isDepositor,
+    listenIsValid,
+    minCreateBond,
+    minJoinBond,
+    minNominatorBond,
+    network.unit,
+    unit,
+    units,
+    warnings,
+  ]);
+
+  // update bond on account change
+  useEffect(() => {
+    setBond({
+      bond: defBond,
+    });
+  }, [activeAccount, defBond]);
+
+  // handle errors on input change
+  useEffect(() => {
+    handleErrors();
+  }, [bond, handleErrors, txFees]);
+
+  // if resize is present, handle on error change
+  useEffect(() => {
+    if (setLocalResize) setLocalResize();
+  }, [errors, setLocalResize]);
+
+  // update max bond after txFee sync
+  useEffect(() => {
+    if (!disableTxFeeUpdate) {
+      if (Number(bond.bond) > freeBalance) {
+        setBond({ bond: freeBalance });
+      }
+    }
+  }, [bond.bond, disableTxFeeUpdate, freeBalance, txFees]);
+
+  // add this component's setBond to setters
+  setters.push({
+    set: setBond,
+    current: bond,
+  });
 
   return (
     <>

@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const usePrices = () => {
   const { network, fetchDotPrice } = useApi();
@@ -22,33 +22,38 @@ export const usePrices = () => {
   const [prices, _setPrices] = useState(pricesLocalStorage());
   const pricesRef = useRef(prices);
 
-  const setPrices = (p: any) => {
-    localStorage.setItem(`${network.name}_prices`, JSON.stringify(p));
-    pricesRef.current = {
-      ...pricesRef.current,
-      ...p,
-    };
-    _setPrices({
-      ...pricesRef.current,
-      ...p,
-    });
-  };
+  const setPrices = useCallback(
+    (p: any) => {
+      localStorage.setItem(`${network.name}_prices`, JSON.stringify(p));
+      pricesRef.current = {
+        ...pricesRef.current,
+        ...p,
+      };
+      _setPrices({
+        ...pricesRef.current,
+        ...p,
+      });
+    },
+    [network.name]
+  );
 
-  const initiatePriceInterval = async () => {
+  let priceHandle: any = null;
+
+  const setPriceInterval = useCallback(async () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    priceHandle = setInterval(async () => {
+      const _prices = await fetchDotPrice();
+      setPrices(_prices);
+    }, 1000 * 30);
+  }, []);
+
+  const initiatePriceInterval = useCallback(async () => {
     const _prices = await fetchDotPrice();
     setPrices(_prices);
     if (priceHandle === null) {
       setPriceInterval();
     }
-  };
-
-  let priceHandle: any = null;
-  const setPriceInterval = async () => {
-    priceHandle = setInterval(async () => {
-      const _prices = await fetchDotPrice();
-      setPrices(_prices);
-    }, 1000 * 30);
-  };
+  }, [fetchDotPrice, priceHandle, setPriceInterval, setPrices]);
 
   // initial price subscribe
   useEffect(() => {
@@ -58,7 +63,7 @@ export const usePrices = () => {
         clearInterval(priceHandle);
       }
     };
-  }, []);
+  }, [initiatePriceInterval, priceHandle]);
 
   // resubscribe on network toggle
   useEffect(() => {
@@ -66,7 +71,7 @@ export const usePrices = () => {
       clearInterval(priceHandle);
     }
     initiatePriceInterval();
-  }, [network]);
+  }, [initiatePriceInterval, network, priceHandle]);
 
   // servie toggle
   useEffect(() => {
@@ -77,7 +82,7 @@ export const usePrices = () => {
     } else if (priceHandle !== null) {
       clearInterval(priceHandle);
     }
-  }, [services]);
+  }, [initiatePriceInterval, priceHandle, services]);
 
   return pricesRef.current;
 };

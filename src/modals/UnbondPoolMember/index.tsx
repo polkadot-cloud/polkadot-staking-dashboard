@@ -57,7 +57,7 @@ export const UnbondPoolMember = () => {
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond]);
+  }, [bond, setResize]);
 
   // tx to submit
   const tx = () => {

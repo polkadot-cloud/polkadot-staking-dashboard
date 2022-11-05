@@ -1,32 +1,32 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useEffect, useState, useRef } from 'react';
 import {
-  faCog,
   faChevronCircleLeft,
   faChevronCircleRight,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { setStateWithRef } from 'Utils';
-import throttle from 'lodash.throttle';
-import { useUi } from 'contexts/UI';
 import { TIPS_CONFIG } from 'config/tips';
-import { useTips } from 'contexts/Tips';
-import useFillVariables from 'library/Hooks/useFillVariables';
-import { AnyJson } from 'types';
+import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useTips } from 'contexts/Tips';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { TipsThresholdSmall, TipsThresholdMedium } from 'consts';
-import { useApi } from 'contexts/Api';
-import { PageToggleWrapper } from './Wrappers';
+import { useUi } from 'contexts/UI';
+import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import useFillVariables from 'library/Hooks/useFillVariables';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import throttle from 'lodash.throttle';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AnyJson } from 'types';
+import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
+import { PageToggleWrapper } from './Wrappers';
 
 export const Tips = () => {
   const { network } = useApi();
@@ -44,28 +44,31 @@ export const Tips = () => {
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
 
+  // filter tips relevant to connected account.
+  let items = TIPS_CONFIG.filter((t: AnyJson) =>
+    segments.includes(t.meta.segment)
+  );
+  items = items.map((i: AnyJson) =>
+    fillVariables(i, ['title', 'subtitle', 'description'])
+  );
+
   // helper function to determine the number of items to display per page.
   // UI displays 1 item by default.
-  const getItemsPerPage = () => {
-    if (!multiTipsPerRow) {
-      return 1;
-    }
-    if (window.innerWidth < TipsThresholdSmall) {
-      return 1;
-    }
+  const getItemsPerPage = useCallback(() => {
+    if (!multiTipsPerRow) return 1;
+    if (window.innerWidth < TipsThresholdSmall) return 1;
     if (
       window.innerWidth >= TipsThresholdSmall &&
       window.innerWidth < TipsThresholdMedium
-    ) {
+    )
       return 2;
-    }
     return 3;
-  };
+  }, [multiTipsPerRow]);
 
   // helper function to determine which page we should be on upon page resize.
   // This function ensures totalPages is never surpassed, but does not guarantee
   // that the start item will maintain across resizes.
-  const getPage = () => {
+  const getPage = useCallback(() => {
     const totalItmes = networkSyncing ? 1 : items.length;
     const itemsPerPage = getItemsPerPage();
     const totalPages = Math.ceil(totalItmes / itemsPerPage);
@@ -75,7 +78,7 @@ export const Tips = () => {
     const end = pageRef.current * itemsPerPage;
     const start = end - (itemsPerPage - 1);
     return Math.ceil(start / itemsPerPage);
-  };
+  }, [getItemsPerPage, items.length, networkSyncing]);
 
   // resize callback
   const resizeCallback = () => {
@@ -92,7 +95,7 @@ export const Tips = () => {
   // re-sync page when active account changes
   useEffect(() => {
     setStateWithRef(getPage(), setPage, pageRef);
-  }, [activeAccount, network]);
+  }, [activeAccount, getPage, network]);
 
   // resize event listener
   useEffect(() => {
@@ -100,7 +103,7 @@ export const Tips = () => {
     return () => {
       window.removeEventListener('resize', throttledResizeCallback);
     };
-  }, []);
+  }, [throttledResizeCallback]);
 
   // store the current amount of allowed items on display
   const [itemsPerPage, setItemsPerPage] = useState<number>(getItemsPerPage());
@@ -137,14 +140,6 @@ export const Tips = () => {
     }
     segments.push(8);
   }
-
-  // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((t: AnyJson) =>
-    segments.includes(t.meta.segment)
-  );
-  items = items.map((i: AnyJson) =>
-    fillVariables(i, ['title', 'subtitle', 'description'])
-  );
 
   // determine items to be displayed
   const endItem = networkSyncing

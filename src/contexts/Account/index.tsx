@@ -33,8 +33,9 @@ export const AccountProvider = ({
 
   // unsubscribe from any validator meta batches
   useEffect(() => {
+    const accountSubsRefCurrent = accountSubsRef.current;
     return () => {
-      Object.values(accountSubsRef.current).map((batch: AnyMetaBatch) => {
+      Object.values(accountSubsRefCurrent).map((batch: AnyMetaBatch) => {
         return Object.entries(batch).map(([, v]: AnyApi) => {
           return v();
         });

@@ -87,7 +87,7 @@ export const UnbondSome = (props: FormsProps) => {
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond]);
+  }, [bond, setResize]);
 
   // tx to submit
   const tx = () => {

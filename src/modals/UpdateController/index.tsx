@@ -14,8 +14,8 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
 import { InputItem } from 'library/Form/types';
-import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
+import { useEligibleControllers } from 'library/Hooks/useEligibleControllers';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
@@ -36,7 +36,7 @@ export const UpdateController = () => {
   const [selected, setSelected] = useState<ImportedAccount | null>(null);
 
   // get eligible controller accounts
-  const items = getEligibleControllers();
+  const items = useEligibleControllers();
 
   // reset selected value on account change
   useEffect(() => {

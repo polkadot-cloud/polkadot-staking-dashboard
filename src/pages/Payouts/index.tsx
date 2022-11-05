@@ -57,7 +57,7 @@ export const Payouts = (props: PageProps) => {
       return y.sub(x);
     });
     setPayoutLists(pList);
-  }, [payouts]);
+  }, [payouts, poolClaims]);
 
   useEffect(() => {
     // calculate the earliest and latest payout dates if they exist.
@@ -74,7 +74,7 @@ export const Payouts = (props: PageProps) => {
       // latest payout date
       setToDate(moment.unix(payoutsList[0].block_timestamp).format('Do MMMM'));
     }
-  }, [payoutsList?.length]);
+  }, [payoutsList, payoutsList.length]);
 
   return (
     <>

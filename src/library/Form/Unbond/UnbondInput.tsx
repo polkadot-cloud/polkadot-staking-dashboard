@@ -28,7 +28,7 @@ export const UnbondInput = ({
   // reset value to default when changing account
   useEffect(() => {
     setLocalBond(defaultValue ?? 0);
-  }, [activeAccount]);
+  }, [activeAccount, defaultValue]);
 
   // handle change for unbonding
   const handleChangeUnbond = (e: React.ChangeEvent) => {

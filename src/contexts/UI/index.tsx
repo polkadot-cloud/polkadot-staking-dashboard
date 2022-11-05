@@ -113,7 +113,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     if (poolMembership) {
       setOnPoolSetup(0);
     }
-  }, [inSetup(), network, poolMembership]);
+  }, [inSetup, network, poolMembership]);
 
   // resize event listener
   useEffect(() => {
@@ -130,6 +130,40 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // update setup state when activeAccount changes
   useEffect(() => {
+    /*
+     * Generates the default setup objects or the currently
+     * connected accounts.
+     */
+    const setupDefault = () => {
+      // generate setup objects from connected accounts
+      const _setup = connectAccounts.map((item) => {
+        const localStakeSetup = localStorage.getItem(
+          `${network.name.toLowerCase()}_stake_setup_${item.address}`
+        );
+        const localPoolSetup = localStorage.getItem(
+          `${network.name.toLowerCase()}_pool_setup_${item.address}`
+        );
+        const stakeProgress =
+          localStakeSetup !== null
+            ? JSON.parse(localStakeSetup)
+            : defaults.defaultStakeSetup;
+
+        const poolProgress =
+          localPoolSetup !== null
+            ? JSON.parse(localPoolSetup)
+            : defaults.defaultPoolSetup;
+
+        return {
+          address: item.address,
+          progress: {
+            stake: stakeProgress,
+            pool: poolProgress,
+          },
+        };
+      });
+      return _setup;
+    };
+
     if (connectAccounts.length) {
       const _setup = setupDefault();
       setStateWithRef(_setup, setSetup, setupRef);
@@ -187,44 +221,18 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setIsSyncing(_syncing);
-  }, [isReady, staking, metrics, accounts, eraStakers, activePoolsSynced]);
+  }, [
+    isReady,
+    staking,
+    metrics,
+    accounts,
+    eraStakers,
+    activePoolsSynced,
+    connectAccounts,
+  ]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);
-  };
-
-  /*
-   * Generates the default setup objects or the currently
-   * connected accounts.
-   */
-  const setupDefault = () => {
-    // generate setup objects from connected accounts
-    const _setup = connectAccounts.map((item) => {
-      const localStakeSetup = localStorage.getItem(
-        `${network.name.toLowerCase()}_stake_setup_${item.address}`
-      );
-      const localPoolSetup = localStorage.getItem(
-        `${network.name.toLowerCase()}_pool_setup_${item.address}`
-      );
-      const stakeProgress =
-        localStakeSetup !== null
-          ? JSON.parse(localStakeSetup)
-          : defaults.defaultStakeSetup;
-
-      const poolProgress =
-        localPoolSetup !== null
-          ? JSON.parse(localPoolSetup)
-          : defaults.defaultPoolSetup;
-
-      return {
-        address: item.address,
-        progress: {
-          stake: stakeProgress,
-          pool: poolProgress,
-        },
-      };
-    });
-    return _setup;
   };
 
   /*

@@ -37,7 +37,7 @@ export const PoolName = (props: SetupStepProps) => {
     setMetadata({
       metadata: initialValue,
     });
-  }, [activeAccount]);
+  }, [activeAccount, initialValue]);
 
   // apply initial metadata to setup progress
   useEffect(() => {
@@ -48,7 +48,7 @@ export const PoolName = (props: SetupStepProps) => {
         metadata: initialValue,
       });
     }
-  }, [setup.section]);
+  }, [initialValue, section, setActiveAccountSetup, setup, setup.section]);
 
   return (
     <>

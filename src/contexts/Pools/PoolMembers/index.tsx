@@ -3,7 +3,7 @@
 
 import { useConnect } from 'contexts/Connect';
 import { PoolMemberContext } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
@@ -47,21 +47,10 @@ export const PoolMembersProvider = ({
     unsubscribeAndResetMeta();
   }, [activeAccount]);
 
-  // initial setup for fetching members
-  useEffect(() => {
-    if (isReady) {
-      // fetch bonded pools
-      fetchPoolMembers();
-    }
-    return () => {
-      unsubscribe();
-    };
-  }, [network, isReady]);
-
-  const unsubscribe = () => {
+  const unsubscribe = useCallback(() => {
     unsubscribeAndResetMeta();
     setPoolMembers([]);
-  };
+  }, []);
 
   const unsubscribeAndResetMeta = () => {
     Object.values(poolMembersSubsRef.current).map((batch: Array<Fn>) => {
@@ -73,7 +62,7 @@ export const PoolMembersProvider = ({
   };
 
   // fetch all pool members entries
-  const fetchPoolMembers = async () => {
+  const fetchPoolMembers = useCallback(async () => {
     if (!api) return;
 
     const _exposures = await api.query.nominationPools.poolMembers.entries();
@@ -89,7 +78,18 @@ export const PoolMembersProvider = ({
     });
 
     setPoolMembers(exposures);
-  };
+  }, [api]);
+
+  // initial setup for fetching members
+  useEffect(() => {
+    if (isReady) {
+      // fetch bonded pools
+      fetchPoolMembers();
+    }
+    return () => {
+      unsubscribe();
+    };
+  }, [network, isReady, fetchPoolMembers, unsubscribe]);
 
   const getMembersOfPool = (poolId: number) => {
     return poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;

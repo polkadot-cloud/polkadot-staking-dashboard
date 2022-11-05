@@ -36,55 +36,55 @@ export const NetworkMetricsProvider = ({
 
   // manage unsubscribe
   useEffect(() => {
+    // active subscription
+    const subscribeToNetworkMetrics = async () => {
+      if (!api) return;
+
+      if (isReady) {
+        const _unsub = await api.queryMulti(
+          [
+            api.query.staking.activeEra,
+            api.query.balances.totalIssuance,
+            api.query.auctions.auctionCounter,
+            api.query.paraSessionInfo.earliestStoredSession,
+          ],
+          ([
+            activeEra,
+            _totalIssuance,
+            _auctionCounter,
+            _earliestStoredSession,
+          ]: AnyApi) => {
+            // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
+            let _activeEra = activeEra
+              .unwrapOrDefault({
+                index: 0,
+                start: 0,
+              })
+              .toString();
+
+            // convert JSON string to object
+            _activeEra = JSON.parse(_activeEra);
+
+            const _metrics = {
+              activeEra: _activeEra,
+              totalIssuance: _totalIssuance.toBn(),
+              auctionCounter: new BN(_auctionCounter.toString()),
+              earliestStoredSession: new BN(_earliestStoredSession.toString()),
+            };
+            setMetrics(_metrics);
+          }
+        );
+        setUnsub(_unsub);
+      }
+    };
+
     subscribeToNetworkMetrics();
     return () => {
       if (unsub) {
         unsub();
       }
     };
-  }, [isReady]);
-
-  // active subscription
-  const subscribeToNetworkMetrics = async () => {
-    if (!api) return;
-
-    if (isReady) {
-      const _unsub = await api.queryMulti(
-        [
-          api.query.staking.activeEra,
-          api.query.balances.totalIssuance,
-          api.query.auctions.auctionCounter,
-          api.query.paraSessionInfo.earliestStoredSession,
-        ],
-        ([
-          activeEra,
-          _totalIssuance,
-          _auctionCounter,
-          _earliestStoredSession,
-        ]: AnyApi) => {
-          // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
-          let _activeEra = activeEra
-            .unwrapOrDefault({
-              index: 0,
-              start: 0,
-            })
-            .toString();
-
-          // convert JSON string to object
-          _activeEra = JSON.parse(_activeEra);
-
-          const _metrics = {
-            activeEra: _activeEra,
-            totalIssuance: _totalIssuance.toBn(),
-            auctionCounter: new BN(_auctionCounter.toString()),
-            earliestStoredSession: new BN(_earliestStoredSession.toString()),
-          };
-          setMetrics(_metrics);
-        }
-      );
-      setUnsub(_unsub);
-    }
-  };
+  }, [api, isReady, unsub]);
 
   return (
     <NetworkMetricsContext.Provider

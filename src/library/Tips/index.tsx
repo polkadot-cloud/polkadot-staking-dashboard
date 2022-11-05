@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { TIPS_CONFIG } from 'config/tips';
 import { useTips } from 'contexts/Tips';
 import { useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
 import useFillVariables from 'library/Hooks/useFillVariables';
-import { TIPS_CONFIG } from 'config/tips';
+import { useEffect } from 'react';
 import { AnyJson } from 'types';
-import { Tip } from './Items/Tip';
 import { Dismiss } from './Items/Dismiss';
+import { Tip } from './Items/Tip';
 
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
@@ -16,16 +16,6 @@ export const Tips = () => {
   const { setStatus, status, tip, closeTip, dismissOpen } = useTips();
   const { fillVariables } = useFillVariables();
   const controls = useAnimation();
-
-  const onFadeIn = async () => {
-    await controls.start('visible');
-  };
-
-  const onFadeOut = async () => {
-    await controls.start('hidden');
-    setStatus(0);
-  };
-
   const variants = {
     hidden: {
       opacity: 0,
@@ -36,6 +26,15 @@ export const Tips = () => {
   };
 
   useEffect(() => {
+    const onFadeIn = async () => {
+      await controls.start('visible');
+    };
+
+    const onFadeOut = async () => {
+      await controls.start('hidden');
+      setStatus(0);
+    };
+
     // help has been opened - fade in
     if (status === 1) {
       onFadeIn();
@@ -44,7 +43,7 @@ export const Tips = () => {
     if (status === 2) {
       onFadeOut();
     }
-  }, [status]);
+  }, [controls, setStatus, status]);
 
   // render early if help not open
   if (status === 0) {

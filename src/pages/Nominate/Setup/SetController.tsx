@@ -7,13 +7,13 @@ import { useUi } from 'contexts/UI';
 import { SetupType } from 'contexts/UI/types';
 import { AccountSelect } from 'library/Form/AccountSelect';
 import { InputItem } from 'library/Form/types';
-import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
+import { Warning } from 'library/Form/Warning';
+import { useEligibleControllers } from 'library/Hooks/useEligibleControllers';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
-import { Warning } from 'library/Form/Warning';
 import { planckBnToUnit } from 'Utils';
 import { Spacer } from '../Wrappers';
 
@@ -37,7 +37,7 @@ export const SetController = (props: SetupStepProps) => {
   );
 
   // get eligible controllers for input
-  const items = getEligibleControllers();
+  const items = useEligibleControllers();
 
   // check if at least one item has enough unit to become a controller
   const itemsWithEnoughBalance = items
@@ -53,7 +53,7 @@ export const SetController = (props: SetupStepProps) => {
       setup.controller !== null ? setup.controller : null
     );
     setSelected(_initial);
-  }, [activeAccount, accounts]);
+  }, [activeAccount, accounts, getAccount, setup.controller]);
 
   const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
     setSelected(selectedItem);

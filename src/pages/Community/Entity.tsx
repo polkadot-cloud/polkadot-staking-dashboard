@@ -7,7 +7,7 @@ import { useValidators } from 'contexts/Validators';
 import Button from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import ValidatorList from 'library/ValidatorList';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { useCommunitySections } from './context';
 import { Item } from './Item';
@@ -20,7 +20,10 @@ export const Entity = () => {
   const { setActiveSection, activeItem } = useCommunitySections();
 
   const { name, validators: entityAllValidators } = activeItem;
-  const validators = entityAllValidators[network.name.toLowerCase()] ?? [];
+  const validators = useMemo(
+    () => entityAllValidators[network.name.toLowerCase()] ?? [],
+    [entityAllValidators, network.name]
+  );
 
   // include validators that exist in `erasStakers`
   const [activeValidators, setActiveValidators] = useState(
@@ -31,13 +34,13 @@ export const Entity = () => {
     setActiveValidators(
       allValidators.filter((v) => validators.includes(v.address))
     );
-  }, [allValidators, network]);
+  }, [allValidators, network, validators]);
 
   useEffect(() => {
     removeValidatorMetaBatch(batchKey);
     const newValidators = [...activeValidators];
     setActiveValidators(newValidators);
-  }, [name, activeItem, network]);
+  }, [name, activeItem, network, removeValidatorMetaBatch, activeValidators]);
 
   const container = {
     hidden: { opacity: 0 },

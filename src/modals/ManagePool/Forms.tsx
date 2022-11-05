@@ -61,7 +61,13 @@ export const Forms = forwardRef((props: any, ref: any) => {
         setMetadata(u8aToString(u8aUnwrapBytes(_metadata)));
       }
     }
-  }, [section]);
+  }, [
+    bondedPools,
+    meta.bonded_pools?.metadata,
+    section,
+    selectedActivePool?.addresses.stash,
+    task,
+  ]);
 
   useEffect(() => {
     setValid(isValid);

@@ -107,9 +107,11 @@ export const Main = () => {
     controllerNotImported,
     isSyncing,
     membership,
-    inNominatorSetup(),
-    getStakeSetupProgressPercent(activeAccount),
-    getPoolSetupProgressPercent(activeAccount),
+    pageConfig.pages,
+    pageConfig.categories,
+    inNominatorSetup,
+    getStakeSetupProgressPercent,
+    getPoolSetupProgressPercent,
   ]);
 
   // remove pages that network does not support

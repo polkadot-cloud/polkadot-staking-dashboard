@@ -4,7 +4,7 @@
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Accounts } from './Accounts';
 import { Extensions } from './Extensions';
 import { CardsWrapper, Wrapper } from './Wrappers';
@@ -28,7 +28,7 @@ export const ConnectAccounts = () => {
   const extensionsRef = useRef<HTMLDivElement>(null);
   const accountsRef = useRef<HTMLDivElement>(null);
 
-  const resizeModal = () => {
+  const resizeModal = useCallback(() => {
     let _height = 0;
     if (section === 0) {
       _height = extensionsRef.current?.clientHeight ?? 0;
@@ -36,7 +36,7 @@ export const ConnectAccounts = () => {
       _height = accountsRef.current?.clientHeight ?? 0;
     }
     modal.setModalHeight(_height);
-  };
+  }, [modal, section]);
 
   useEffect(() => {
     resizeModal();
@@ -47,6 +47,7 @@ export const ConnectAccounts = () => {
     extensions,
     modal.height,
     readOnlyOpen,
+    resizeModal,
   ]);
 
   // remove active account from connect list

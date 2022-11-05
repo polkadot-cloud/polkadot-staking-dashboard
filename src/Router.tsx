@@ -10,10 +10,10 @@ import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
-import { Tips } from 'library/Tips';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
 import SideMenu from 'library/SideMenu';
+import { Tips } from 'library/Tips';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
@@ -48,7 +48,7 @@ export const RouterInner = () => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
     });
-  }, []);
+  }, [setContainerRefs]);
 
   // references to outer containers
   const mainInterfaceRef = useRef<HTMLDivElement>(null);

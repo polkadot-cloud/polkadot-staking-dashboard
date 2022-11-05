@@ -47,7 +47,7 @@ export const Nominate = () => {
   // ensure selected key is valid
   useEffect(() => {
     setValid(nominations.length > 0 && activeBase >= minNominatorBondBase);
-  }, [targets]);
+  }, [activeBase, minNominatorBondBase, nominations.length, targets]);
 
   // tx to submit
   const tx = () => {

@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import bnJs from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -31,7 +31,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { txFeesValid } = useTxFees();
 
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = unclaimedRewards ?? new bnJs.BN(0);
   unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
   const { minJoinBond, minCreateBond } = stats;
@@ -43,10 +43,13 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   // unbond amount to minimum threshold
   const freeToUnbond = isDepositor()
     ? planckBnToUnit(
-        BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
+        bnJs.BN.max(freeToUnbondBn.sub(minCreateBond), new bnJs.BN(0)),
         units
       )
-    : planckBnToUnit(BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)), units);
+    : planckBnToUnit(
+        bnJs.BN.max(freeToUnbondBn.sub(minJoinBond), new bnJs.BN(0)),
+        units
+      );
 
   // local bond value
   const [bond, setBond] = useState({
@@ -71,7 +74,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond]);
+  }, [bond, setResize]);
 
   // tx to submit
   const tx = () => {

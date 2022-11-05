@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
@@ -57,29 +57,6 @@ export const UnbondFeedback = ({
     bond: defaultValue,
   });
 
-  // update bond on account change
-  useEffect(() => {
-    setBond({
-      bond: defaultValue,
-    });
-  }, [activeAccount]);
-
-  // handle errors on input change
-  useEffect(() => {
-    handleErrors();
-  }, [bond, txFees]);
-
-  // if resize is present, handle on error change
-  useEffect(() => {
-    if (setLocalResize) setLocalResize();
-  }, [errors]);
-
-  // add this component's setBond to setters
-  setters.push({
-    set: setBond,
-    current: bond,
-  });
-
   // bond amount to minimum threshold
   const minBondBase =
     bondType === 'pool'
@@ -109,7 +86,7 @@ export const UnbondFeedback = ({
   const activeBase = planckBnToUnit(active, units);
 
   // handle error updates
-  const handleErrors = () => {
+  const handleErrors = useCallback(() => {
     const _errors = [...warnings];
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
@@ -141,7 +118,43 @@ export const UnbondFeedback = ({
 
     listenIsValid(!_errors.length && _bond !== '');
     setErrors(_errors);
-  };
+  }, [
+    activeBase,
+    bond.bond,
+    bondType,
+    controller,
+    freeToUnbondToMin,
+    getControllerNotImported,
+    isDepositor,
+    listenIsValid,
+    minBondBase,
+    network.unit,
+    units,
+    warnings,
+  ]);
+
+  // update bond on account change
+  useEffect(() => {
+    setBond({
+      bond: defaultValue,
+    });
+  }, [activeAccount, defaultValue]);
+
+  // handle errors on input change
+  useEffect(() => {
+    handleErrors();
+  }, [bond, handleErrors, txFees]);
+
+  // if resize is present, handle on error change
+  useEffect(() => {
+    if (setLocalResize) setLocalResize();
+  }, [errors, setLocalResize]);
+
+  // add this component's setBond to setters
+  setters.push({
+    set: setBond,
+    current: bond,
+  });
 
   return (
     <>

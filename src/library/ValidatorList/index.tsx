@@ -23,7 +23,7 @@ import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
@@ -114,6 +114,54 @@ export const ValidatorListInner = (props: any) => {
   // render batch
   const batchEnd = renderIteration * ListItemsPerBatch - 1;
 
+  // handle validator list bootstrapping
+  const setupValidatorList = useCallback(() => {
+    setValidatorsDefault(props.validators);
+    setValidators(props.validators);
+    setFetched(true);
+    fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
+  }, [
+    batchKey,
+    fetchValidatorMetaBatch,
+    props.validators,
+    refetchOnListUpdate,
+  ]);
+
+  // handle filter / order update
+  const handleValidatorsFilterUpdate = useCallback(
+    (filteredValidators: any = Object.assign(validatorsDefault)) => {
+      if (allowFilters) {
+        if (validatorOrder !== 'default') {
+          filteredValidators = applyValidatorOrder(
+            filteredValidators,
+            validatorOrder
+          );
+        }
+        filteredValidators = applyValidatorFilters(
+          filteredValidators,
+          batchKey
+        );
+        setValidators(filteredValidators);
+        setPage(1);
+        setRenderIteration(1);
+      }
+    },
+    [
+      allowFilters,
+      applyValidatorFilters,
+      applyValidatorOrder,
+      batchKey,
+      validatorOrder,
+      validatorsDefault,
+    ]
+  );
+
+  // if in modal, handle resize
+  const maybeHandleModalResize = useCallback(() => {
+    if (!inModal) return;
+    modal.setResize();
+  }, [inModal, modal]);
+
   // reset list when validator list changes
   useEffect(() => {
     if (alwaysRefetchValidators) {
@@ -125,14 +173,14 @@ export const ValidatorListInner = (props: any) => {
     } else {
       setFetched(false);
     }
-  }, [props.validators, nominator]);
+  }, [props.validators, nominator, alwaysRefetchValidators, validatorsDefault]);
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
       setupValidatorList();
     }
-  }, [isReady, metrics.activeEra.index, fetched]);
+  }, [isReady, metrics.activeEra.index, fetched, setupValidatorList]);
 
   // render throttle
   useEffect(() => {
@@ -141,52 +189,33 @@ export const ValidatorListInner = (props: any) => {
         setRenderIteration(renderIterationRef.current + 1);
       }, 50);
     }
-  }, [renderIterationRef.current]);
+  }, [batchEnd, disableThrottle, pageEnd]);
 
   // trigger onSelected when selection changes
   useEffect(() => {
     if (props.onSelected) {
       props.onSelected(provider);
     }
-  }, [selected]);
+  }, [props, provider, selected]);
 
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [validatorFilters, validatorOrder, isSyncing]);
+  }, [
+    validatorFilters,
+    validatorOrder,
+    isSyncing,
+    allowFilters,
+    fetched,
+    handleValidatorsFilterUpdate,
+  ]);
 
   // handle modal resize on list format change
   useEffect(() => {
     maybeHandleModalResize();
-  }, [listFormat, renderIteration, validators, page]);
-
-  // handle validator list bootstrapping
-  const setupValidatorList = () => {
-    setValidatorsDefault(props.validators);
-    setValidators(props.validators);
-    setFetched(true);
-    fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
-  };
-
-  // handle filter / order update
-  const handleValidatorsFilterUpdate = (
-    filteredValidators: any = Object.assign(validatorsDefault)
-  ) => {
-    if (allowFilters) {
-      if (validatorOrder !== 'default') {
-        filteredValidators = applyValidatorOrder(
-          filteredValidators,
-          validatorOrder
-        );
-      }
-      filteredValidators = applyValidatorFilters(filteredValidators, batchKey);
-      setValidators(filteredValidators);
-      setPage(1);
-      setRenderIteration(1);
-    }
-  };
+  }, [listFormat, renderIteration, validators, page, maybeHandleModalResize]);
 
   // get validators to render
   let listValidators = [];
@@ -197,12 +226,6 @@ export const ValidatorListInner = (props: any) => {
   } else {
     listValidators = validators;
   }
-
-  // if in modal, handle resize
-  const maybeHandleModalResize = () => {
-    if (!inModal) return;
-    modal.setResize();
-  };
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;

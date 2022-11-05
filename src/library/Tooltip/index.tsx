@@ -12,6 +12,18 @@ export const Tooltip = () => {
   const ref = useRef(null);
 
   useEffect(() => {
+    const mouseMoveCallback = (e: any) => {
+      const isTriggerElement = e.target?.classList.contains(
+        'tooltip-trigger-element'
+      );
+      const dataAttribute =
+        e.target?.getAttribute('data-tooltip-text') ?? false;
+      if (!isTriggerElement) {
+        tooltip.closeTooltip();
+      } else if (dataAttribute !== tooltip.text) {
+        tooltip.closeTooltip();
+      }
+    };
     if (tooltip.open === 1) {
       tooltip.checkTooltipPosition(ref);
       window.addEventListener('mousemove', mouseMoveCallback);
@@ -21,19 +33,7 @@ export const Tooltip = () => {
     return () => {
       window.removeEventListener('mousemove', mouseMoveCallback);
     };
-  }, [tooltip.open]);
-
-  const mouseMoveCallback = (e: any) => {
-    const isTriggerElement = e.target?.classList.contains(
-      'tooltip-trigger-element'
-    );
-    const dataAttribute = e.target?.getAttribute('data-tooltip-text') ?? false;
-    if (!isTriggerElement) {
-      tooltip.closeTooltip();
-    } else if (dataAttribute !== tooltip.text) {
-      tooltip.closeTooltip();
-    }
-  };
+  }, [tooltip, tooltip.open]);
 
   return (
     <>

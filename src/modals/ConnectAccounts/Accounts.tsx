@@ -15,7 +15,7 @@ import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
 import Button from 'library/Button';
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { AnyJson } from 'types';
 import { AccountButton, AccountElement } from './Account';
 import {
@@ -47,9 +47,6 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
 
-  const _controllers: Array<ControllerAccount> = [];
-  const _stashes: Array<StashAcount> = [];
-
   // store local copy of accounts
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
@@ -60,15 +57,9 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const [activePooling, setActivePooling] = useState<Array<PoolMembership>>([]);
   const [inactive, setInactive] = useState<string[]>([]);
 
-  useEffect(() => {
-    setLocalAccounts(accounts);
-  }, [isReady, accounts]);
-
-  useEffect(() => {
-    getStakingStatuses();
-  }, [localAccounts, balanceAccounts, ledgers, accounts, memberships]);
-
-  const getStakingStatuses = () => {
+  const getStakingStatuses = useCallback(() => {
+    const _controllers: Array<ControllerAccount> = [];
+    const _stashes: Array<StashAcount> = [];
     // accumulate imported stash accounts
     for (const account of localAccounts) {
       const locks = getAccountLocks(account.address);
@@ -173,7 +164,28 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
     setActiveStaking(_activeStaking);
     setActivePooling(_activePooling);
     setInactive(_inactive);
-  };
+  }, [
+    getAccountLocks,
+    getBondedAccount,
+    getLedgerForController,
+    localAccounts,
+    memberships,
+  ]);
+
+  useEffect(() => {
+    setLocalAccounts(accounts);
+  }, [isReady, accounts]);
+
+  useEffect(() => {
+    getStakingStatuses();
+  }, [
+    localAccounts,
+    balanceAccounts,
+    ledgers,
+    accounts,
+    memberships,
+    getStakingStatuses,
+  ]);
 
   return (
     <ContentWrapper>

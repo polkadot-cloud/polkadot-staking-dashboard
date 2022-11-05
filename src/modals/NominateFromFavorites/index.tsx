@@ -56,7 +56,7 @@ export const NominateFromFavorites = () => {
       );
       setAvailableFavorites(_availableFavorites);
     }
-  }, []);
+  }, [favoritesList, nominations]);
 
   // calculate active + selected favorites
   const nominationsToSubmit = nominations.concat(
@@ -68,7 +68,7 @@ export const NominateFromFavorites = () => {
 
   useEffect(() => {
     setResize();
-  }, [selectedFavorites]);
+  }, [selectedFavorites, setResize]);
 
   // ensure selected list is within limits
   useEffect(() => {
@@ -77,7 +77,7 @@ export const NominateFromFavorites = () => {
         nominationsToSubmit.length <= maxNominations &&
         selectedFavorites.length > 0
     );
-  }, [selectedFavorites]);
+  }, [maxNominations, nominationsToSubmit.length, selectedFavorites]);
 
   const batchKey = 'nominate_from_favorites';
 

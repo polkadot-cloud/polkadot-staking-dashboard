@@ -28,7 +28,7 @@ export const TipsProvider = ({ children }: { children: React.ReactNode }) => {
         tip: null,
       });
     }
-  }, [state.status]);
+  }, [state, state.status]);
 
   const setTip = (tip: MaybeString) => {
     const _state = {

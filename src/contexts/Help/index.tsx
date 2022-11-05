@@ -33,7 +33,7 @@ export const HelpProvider = (props: HelpContextProps) => {
         definition: null,
       });
     }
-  }, [state.status]);
+  }, [state, state.status]);
 
   const setDefinition = (definition: MaybeString) => {
     const _state = {

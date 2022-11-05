@@ -26,7 +26,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -50,10 +50,16 @@ export const Pool = (props: PoolProps) => {
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
 
   // get metadata from pools metabatch
-  const nominations = meta[batchKey]?.nominations ?? [];
+  const nominations = useMemo(
+    () => meta[batchKey]?.nominations ?? [],
+    [batchKey, meta]
+  );
 
   // get pool targets from nominations metadata
-  const targets = nominations[batchIndex]?.targets ?? [];
+  const targets = useMemo(
+    () => nominations[batchIndex]?.targets ?? [],
+    [batchIndex, nominations]
+  );
 
   // extract validator entries from pool targets
   const targetValidators = validators.filter((v: any) =>
@@ -67,13 +73,13 @@ export const Pool = (props: PoolProps) => {
   // update pool nomination status as nominations metadata becomes available.
   // we cannot add effect dependencies here as this needs to trigger
   // as soon as the component displays. (upon tab change).
-  const handleNominationsStatus = () => {
+  const handleNominationsStatus = useCallback(() => {
     const _nominationStatus = getNominationsStatusFromTargets(
       addresses.stash,
       targets
     );
     setNominationsStatus(_nominationStatus);
-  };
+  }, [addresses.stash, getNominationsStatusFromTargets, targets]);
 
   // recalculate nominations status as app syncs
   useEffect(() => {
@@ -90,7 +96,7 @@ export const Pool = (props: PoolProps) => {
   // recalculate nominations status
   useEffect(() => {
     handleNominationsStatus();
-  }, [meta]);
+  }, [handleNominationsStatus, meta]);
 
   // configure floating menu position
   const posRef = useRef(null);

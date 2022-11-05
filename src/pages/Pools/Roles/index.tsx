@@ -67,7 +67,7 @@ export const Roles = (props: RolesProps) => {
     setIsEditing(false);
     setRoleEdits(initialiseEdits);
     setFetched(false);
-  }, [activeAccount, network]);
+  }, [activeAccount, initialiseEdits, network, roles]);
 
   // fetch accounts meta batch
   useEffect(() => {
@@ -75,7 +75,7 @@ export const Roles = (props: RolesProps) => {
       setFetched(true);
       fetchAccountMetaBatch(batchKey, Object.values(roles), true);
     }
-  }, [isReady, fetched]);
+  }, [isReady, fetched, fetchAccountMetaBatch, batchKey, roles]);
 
   const isRoleEditsValid = () => {
     for (const roleEdit of Object.values<RoleEditEntry>(roleEdits)) {

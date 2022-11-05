@@ -78,7 +78,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
       setPayouts(props.payouts);
       setFetched(true);
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, metrics.activeEra.index, props.payouts]);
 
   // render throttle
   useEffect(() => {
@@ -87,7 +87,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
         setRenderIteration(renderIterationRef.current + 1);
       }, 500);
     }
-  }, [renderIterationRef.current]);
+  }, [batchEnd, disableThrottle, pageEnd]);
 
   // get list items to render
   let listPayouts = [];

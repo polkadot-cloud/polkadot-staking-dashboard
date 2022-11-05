@@ -11,7 +11,7 @@ import {
   ValidatorAddresses,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import {
   planckBnToUnit,
@@ -82,12 +82,12 @@ export const ValidatorsProvider = ({
   const validatorSubsRef = useRef(validatorSubs);
 
   // get favorites from local storage
-  const getFavorites = () => {
+  const getFavorites = useCallback(() => {
     const _favorites = localStorage.getItem(
       `${network.name.toLowerCase()}_favorites`
     );
     return _favorites !== null ? JSON.parse(_favorites) : [];
-  };
+  }, [network.name]);
 
   // stores the user's favorite validators
   const [favorites, setFavorites] = useState<string[]>(getFavorites());
@@ -109,129 +109,38 @@ export const ValidatorsProvider = ({
 
   const [validatorCommunity] = useState<any>([...shuffle(VALIDATOR_COMMUNITY)]);
 
-  // reset validators list on network change
-  useEffect(() => {
-    setFetchedValidators(0);
-    setSessionValidators(defaults.sessionValidators);
-    setSessionParachainValidators(defaults.sessionParachainValidators);
-    removeValidatorMetaBatch('validators_browse');
-    setAvgCommission(0);
-    setValidators([]);
-  }, [network]);
+  /*
+   * Helper function to add mataBatch unsubs by key.
+   */
+  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
+    const _unsubs = validatorSubsRef.current;
+    const _keyUnsubs = _unsubs[key] ?? [];
 
-  // fetch validators and session validators when activeEra ready
-  useEffect(() => {
-    if (isReady) {
-      fetchValidators();
-      subscribeSessionValidators(api);
-    }
-
-    return () => {
-      // unsubscribe from any validator meta batches
-      Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) => {
-        return Object.entries(batch).map(([, v]: AnyApi) => {
-          return v();
-        });
-      });
-    };
-  }, [isReady, activeEra]);
-
-  // fetch parachain session validators when earliestStoredSession ready
-  useEffect(() => {
-    if (isReady && earliestStoredSession.gt(new BN(0))) {
-      subscribeParachainValidators(api);
-    }
-  }, [isReady, earliestStoredSession]);
-
-  // pre-populating validator meta batches. Needed for generating nominations
-  useEffect(() => {
-    if (validators.length > 0) {
-      fetchValidatorMetaBatch('validators_browse', validators, true);
-    }
-  }, [isReady, validators]);
-
-  // fetch active account's nominations in validator list format
-  useEffect(() => {
-    if (isReady && activeAccount) {
-      fetchNominatedList();
-    }
-  }, [isReady, activeAccount, accounts]);
-
-  const fetchNominatedList = async () => {
-    if (!activeAccount) {
-      return;
-    }
-    // get raw targets list
-    const targets = getAccountNominations(activeAccount);
-
-    // format to list format
-    const targetsFormatted = targets.map((item: any) => {
-      return { address: item };
-    });
-    // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
-
-    if (nominationsWithPrefs) {
-      setNominated(nominationsWithPrefs);
-    } else {
-      setNominated([]);
-    }
+    _keyUnsubs.push(...unsubs);
+    _unsubs[key] = _keyUnsubs;
+    setStateWithRef(_unsubs, setValidatorSubs, validatorSubsRef);
   };
 
-  // fetch active account's pool nominations in validator list format
-  useEffect(() => {
-    if (isReady && poolNominations) {
-      fetchPoolNominatedList();
-    }
-  }, [isReady, poolNominations]);
-
-  const fetchPoolNominatedList = async () => {
-    // get raw nominations list
-    let n = poolNominations.targets;
-    // format to list format
-    n = n.map((item: string) => {
-      return { address: item };
-    });
-    // fetch preferences
-    const nominationsWithPrefs = await fetchValidatorPrefs(n);
-    if (nominationsWithPrefs) {
-      setPoolNominated(nominationsWithPrefs);
-    } else {
-      setPoolNominated([]);
-    }
-  };
-
-  // re-fetch favorites on network change
-  useEffect(() => {
-    setFavorites(getFavorites());
-  }, [network]);
-
-  // fetch favorites in validator list format
-  useEffect(() => {
-    if (isReady) {
-      fetchFavoriteList();
-    }
-  }, [isReady, favorites]);
-
-  const fetchFavoriteList = async () => {
-    // format to list format
-    const _favorites = [...favorites].map((item: string) => {
-      return { address: item };
-    });
-    // // fetch preferences
-    const favoritesWithPrefs = await fetchValidatorPrefs(_favorites);
-    if (favoritesWithPrefs) {
-      setFavoritesList(favoritesWithPrefs);
-    } else {
-      setFavoritesList([]);
-    }
-  };
+  const removeValidatorMetaBatch = useCallback(
+    (key: string) => {
+      if (validatorSubsRef.current[key] !== undefined) {
+        // ubsubscribe from updates
+        for (const unsub of validatorSubsRef.current[key]) {
+          unsub();
+        }
+        // wipe data
+        delete validatorMetaBatches[key];
+        delete validatorMetaBatchesRef.current[key];
+      }
+    },
+    [validatorMetaBatches]
+  );
 
   /*
    * Fetches the active validator set.
    * Validator meta batches are derived from this initial list.
    */
-  const fetchValidators = async () => {
+  const fetchValidators = useCallback(async () => {
     if (!isReady || !api) {
       return;
     }
@@ -281,76 +190,99 @@ export const ValidatorsProvider = ({
     setAvgCommission(_avgCommission);
     // shuffle validators before setting them.
     setValidators(shuffle(v));
-  };
+  }, [api, fetchedValidators, isReady]);
 
   /*
    * subscribe to active session
    */
-  const subscribeSessionValidators = async (_api: AnyApi) => {
-    if (isReady) {
-      const unsub = await _api.query.session.validators(
-        (_validators: AnyApi) => {
-          setSessionValidators({
-            ...sessionValidators,
-            list: _validators.toHuman(),
-            unsub,
-          });
-        }
-      );
-    }
-  };
+  const subscribeSessionValidators = useCallback(
+    async (_api: AnyApi) => {
+      if (isReady) {
+        const unsub = await _api.query.session.validators(
+          (_validators: AnyApi) => {
+            setSessionValidators({
+              ...sessionValidators,
+              list: _validators.toHuman(),
+              unsub,
+            });
+          }
+        );
+      }
+    },
+    [isReady, sessionValidators]
+  );
 
   /*
    * subscribe to active parachain validators
    */
-  const subscribeParachainValidators = async (_api: AnyApi) => {
-    if (isReady) {
-      const unsub = await _api.query.paraSessionInfo.accountKeys(
-        earliestStoredSession.toString(),
-        (_validators: AnyApi) => {
-          setSessionParachainValidators({
-            ...sessionParachainValidators,
-            list: _validators.toHuman(),
-            unsub,
-          });
-        }
-      );
-    }
-  };
+  const subscribeParachainValidators = useCallback(
+    async (_api: AnyApi) => {
+      if (isReady) {
+        const unsub = await _api.query.paraSessionInfo.accountKeys(
+          earliestStoredSession.toString(),
+          (_validators: AnyApi) => {
+            setSessionParachainValidators({
+              ...sessionParachainValidators,
+              list: _validators.toHuman(),
+              unsub,
+            });
+          }
+        );
+      }
+    },
+    [earliestStoredSession, isReady, sessionParachainValidators]
+  );
 
   /*
    * fetches prefs for a list of validators
    */
-  const fetchValidatorPrefs = async (_validators: ValidatorAddresses) => {
-    if (!_validators.length || !api) {
-      return null;
+  const fetchValidatorPrefs = useCallback(
+    async (_validators: ValidatorAddresses) => {
+      if (!_validators.length || !api) {
+        return null;
+      }
+
+      const v: string[] = [];
+      for (const _v of _validators) {
+        v.push(_v.address);
+      }
+
+      const prefsAll = await api.query.staking.validators.multi(v);
+
+      const validatorsWithPrefs = [];
+      let i = 0;
+      for (const _prefs of prefsAll) {
+        const prefs: AnyApi = _prefs.toHuman();
+
+        const commission = removePercentage(prefs?.commission ?? '0%');
+
+        validatorsWithPrefs.push({
+          address: v[i],
+          prefs: {
+            commission,
+            blocked: prefs.blocked,
+          },
+        });
+        i++;
+      }
+      return validatorsWithPrefs;
+    },
+    [api]
+  );
+
+  const fetchFavoriteList = useCallback(async () => {
+    // format to list format
+    const _favorites = [...favorites].map((item: string) => {
+      return { address: item };
+    });
+    // // fetch preferences
+    const favoritesWithPrefs = await fetchValidatorPrefs(_favorites);
+    if (favoritesWithPrefs) {
+      setFavoritesList(favoritesWithPrefs);
+    } else {
+      setFavoritesList([]);
     }
-
-    const v: string[] = [];
-    for (const _v of _validators) {
-      v.push(_v.address);
-    }
-
-    const prefsAll = await api.query.staking.validators.multi(v);
-
-    const validatorsWithPrefs = [];
-    let i = 0;
-    for (const _prefs of prefsAll) {
-      const prefs: AnyApi = _prefs.toHuman();
-
-      const commission = removePercentage(prefs?.commission ?? '0%');
-
-      validatorsWithPrefs.push({
-        address: v[i],
-        prefs: {
-          commission,
-          blocked: prefs.blocked,
-        },
-      });
-      i++;
-    }
-    return validatorsWithPrefs;
-  };
+  }, [favorites, fetchValidatorPrefs]);
 
   /*
     Fetches a new batch of subscribed validator metadata. Stores the returning
@@ -367,117 +299,205 @@ export const ValidatorsProvider = ({
     },
   };
   */
-  const fetchValidatorMetaBatch = async (
-    key: string,
-    v: AnyMetaBatch,
-    refetch = false
-  ) => {
-    if (!isReady || !api) {
-      return;
-    }
-
-    if (!v.length) {
-      return;
-    }
-
-    if (!refetch) {
-      // if already exists, do not re-fetch
-      if (validatorMetaBatchesRef.current[key] !== undefined) {
+  const fetchValidatorMetaBatch = useCallback(
+    async (key: string, v: AnyMetaBatch, refetch = false) => {
+      if (!isReady || !api) {
         return;
       }
-    } else {
-      // tidy up if existing batch exists
-      delete validatorMetaBatches[key];
-      delete validatorMetaBatchesRef.current[key];
 
-      if (validatorSubsRef.current[key] !== undefined) {
-        for (const unsub of validatorSubsRef.current[key]) {
-          unsub();
+      if (!v.length) {
+        return;
+      }
+
+      if (!refetch) {
+        // if already exists, do not re-fetch
+        if (validatorMetaBatchesRef.current[key] !== undefined) {
+          return;
+        }
+      } else {
+        // tidy up if existing batch exists
+        delete validatorMetaBatches[key];
+        delete validatorMetaBatchesRef.current[key];
+
+        if (validatorSubsRef.current[key] !== undefined) {
+          for (const unsub of validatorSubsRef.current[key]) {
+            unsub();
+          }
         }
       }
-    }
 
-    const addresses = [];
-    for (const _v of v) {
-      addresses.push(_v.address);
-    }
+      const addresses = [];
+      for (const _v of v) {
+        addresses.push(_v.address);
+      }
 
-    // store batch addresses
-    const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-    batchesUpdated[key] = {};
-    batchesUpdated[key].addresses = addresses;
-    setStateWithRef(
-      { ...batchesUpdated },
-      setValidatorMetaBatch,
-      validatorMetaBatchesRef
-    );
-
-    const subscribeToIdentities = async (addr: AnyApi) => {
-      const unsub = await api.query.identity.identityOf.multi<AnyApi>(
-        addr,
-        (_identities) => {
-          const identities = [];
-          for (let i = 0; i < _identities.length; i++) {
-            identities.push(_identities[i].toHuman());
-          }
-          const _batchesUpdated = Object.assign(
-            validatorMetaBatchesRef.current
-          );
-
-          // check if batch still exists before updating
-          if (_batchesUpdated[key]) {
-            _batchesUpdated[key].identities = identities;
-            setStateWithRef(
-              { ..._batchesUpdated },
-              setValidatorMetaBatch,
-              validatorMetaBatchesRef
-            );
-          }
-        }
+      // store batch addresses
+      const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
+      batchesUpdated[key] = {};
+      batchesUpdated[key].addresses = addresses;
+      setStateWithRef(
+        { ...batchesUpdated },
+        setValidatorMetaBatch,
+        validatorMetaBatchesRef
       );
-      return unsub;
-    };
 
-    const subscribeToSuperIdentities = async (addr: AnyApi) => {
-      const unsub = await api.query.identity.superOf.multi<AnyApi>(
-        addr,
-        async (_supers) => {
-          // determine where supers exist
-          const supers: AnyApi = [];
-          const supersWithIdentity: AnyApi = [];
+      const subscribeToIdentities = async (addr: AnyApi) => {
+        const unsub = await api.query.identity.identityOf.multi<AnyApi>(
+          addr,
+          (_identities) => {
+            const identities = [];
+            for (let i = 0; i < _identities.length; i++) {
+              identities.push(_identities[i].toHuman());
+            }
+            const _batchesUpdated = Object.assign(
+              validatorMetaBatchesRef.current
+            );
 
-          for (let i = 0; i < _supers.length; i++) {
-            const _super = _supers[i].toHuman();
-            supers.push(_super);
-            if (_super !== null) {
-              supersWithIdentity.push(i);
+            // check if batch still exists before updating
+            if (_batchesUpdated[key]) {
+              _batchesUpdated[key].identities = identities;
+              setStateWithRef(
+                { ..._batchesUpdated },
+                setValidatorMetaBatch,
+                validatorMetaBatchesRef
+              );
             }
           }
+        );
+        return unsub;
+      };
 
-          // get supers one-off multi query
-          const query = supers
-            .filter((s: AnyApi) => s !== null)
-            .map((s: AnyApi) => s[0]);
+      const subscribeToSuperIdentities = async (addr: AnyApi) => {
+        const unsub = await api.query.identity.superOf.multi<AnyApi>(
+          addr,
+          async (_supers) => {
+            // determine where supers exist
+            const supers: AnyApi = [];
+            const supersWithIdentity: AnyApi = [];
 
-          const temp = await api.query.identity.identityOf.multi<AnyApi>(
-            query,
-            (_identities) => {
-              for (let j = 0; j < _identities.length; j++) {
-                const _identity = _identities[j].toHuman();
-                // inject identity into super array
-                supers[supersWithIdentity[j]].identity = _identity;
+            for (let i = 0; i < _supers.length; i++) {
+              const _super = _supers[i].toHuman();
+              supers.push(_super);
+              if (_super !== null) {
+                supersWithIdentity.push(i);
               }
             }
-          );
-          temp();
 
+            // get supers one-off multi query
+            const query = supers
+              .filter((s: AnyApi) => s !== null)
+              .map((s: AnyApi) => s[0]);
+
+            const temp = await api.query.identity.identityOf.multi<AnyApi>(
+              query,
+              (_identities) => {
+                for (let j = 0; j < _identities.length; j++) {
+                  const _identity = _identities[j].toHuman();
+                  // inject identity into super array
+                  supers[supersWithIdentity[j]].identity = _identity;
+                }
+              }
+            );
+            temp();
+
+            const _batchesUpdated = Object.assign(
+              validatorMetaBatchesRef.current
+            );
+
+            // check if batch still exists before updating
+            if (_batchesUpdated[key]) {
+              _batchesUpdated[key].supers = supers;
+              setStateWithRef(
+                { ..._batchesUpdated },
+                setValidatorMetaBatch,
+                validatorMetaBatchesRef
+              );
+            }
+          }
+        );
+        return unsub;
+      };
+
+      await Promise.all([
+        subscribeToIdentities(addresses),
+        subscribeToSuperIdentities(addresses),
+      ]).then((unsubs: Array<Fn>) => {
+        addMetaBatchUnsubs(key, unsubs);
+      });
+
+      // intentional throttle to prevent slow render updates.
+      await sleep(250);
+
+      // subscribe to validator nominators
+      const args: AnyApi = [];
+
+      for (let i = 0; i < v.length; i++) {
+        args.push([activeEra.index, v[i].address]);
+      }
+
+      const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
+        args,
+        (_validators) => {
+          const stake = [];
+
+          for (let _validator of _validators) {
+            _validator = _validator.toHuman();
+            let others = _validator.others ?? [];
+
+            // account for yourself being an additional nominator
+            const totalNominations = others.length + 1;
+
+            // get lowest active stake for the validator
+            others = others.sort((a: AnyApi, b: AnyApi) => {
+              const x = new BN(rmCommas(a.value));
+              const y = new BN(rmCommas(b.value));
+              return x.sub(y);
+            });
+
+            const lowestActive =
+              others.length > 0
+                ? toFixedIfNecessary(
+                    planckBnToUnit(new BN(rmCommas(others[0].value)), units),
+                    MinBondPrecision
+                  )
+                : 0;
+
+            // get the lowest reward stake of the validator, which is
+            // the largest index - `maxNominatorRewardedPerValidator`,
+            // or the first index if does not exist.
+            const lowestRewardIndex = Math.max(
+              others.length - maxNominatorRewardedPerValidator,
+              0
+            );
+
+            const lowestReward =
+              others.length > 0
+                ? toFixedIfNecessary(
+                    planckBnToUnit(
+                      new BN(rmCommas(others[lowestRewardIndex]?.value)),
+                      units
+                    ),
+                    MinBondPrecision
+                  )
+                : 0;
+
+            stake.push({
+              total: _validator.total,
+              own: _validator.own,
+              total_nominations: totalNominations,
+              lowest: lowestActive,
+              lowestReward,
+            });
+          }
+
+          // commit update
           const _batchesUpdated = Object.assign(
             validatorMetaBatchesRef.current
           );
 
           // check if batch still exists before updating
           if (_batchesUpdated[key]) {
-            _batchesUpdated[key].supers = supers;
+            _batchesUpdated[key].stake = stake;
             setStateWithRef(
               { ..._batchesUpdated },
               setValidatorMetaBatch,
@@ -486,122 +506,18 @@ export const ValidatorsProvider = ({
           }
         }
       );
-      return unsub;
-    };
 
-    await Promise.all([
-      subscribeToIdentities(addresses),
-      subscribeToSuperIdentities(addresses),
-    ]).then((unsubs: Array<Fn>) => {
-      addMetaBatchUnsubs(key, unsubs);
-    });
-
-    // intentional throttle to prevent slow render updates.
-    await sleep(250);
-
-    // subscribe to validator nominators
-    const args: AnyApi = [];
-
-    for (let i = 0; i < v.length; i++) {
-      args.push([activeEra.index, v[i].address]);
-    }
-
-    const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
-      args,
-      (_validators) => {
-        const stake = [];
-
-        for (let _validator of _validators) {
-          _validator = _validator.toHuman();
-          let others = _validator.others ?? [];
-
-          // account for yourself being an additional nominator
-          const totalNominations = others.length + 1;
-
-          // get lowest active stake for the validator
-          others = others.sort((a: AnyApi, b: AnyApi) => {
-            const x = new BN(rmCommas(a.value));
-            const y = new BN(rmCommas(b.value));
-            return x.sub(y);
-          });
-
-          const lowestActive =
-            others.length > 0
-              ? toFixedIfNecessary(
-                  planckBnToUnit(new BN(rmCommas(others[0].value)), units),
-                  MinBondPrecision
-                )
-              : 0;
-
-          // get the lowest reward stake of the validator, which is
-          // the largest index - `maxNominatorRewardedPerValidator`,
-          // or the first index if does not exist.
-          const lowestRewardIndex = Math.max(
-            others.length - maxNominatorRewardedPerValidator,
-            0
-          );
-
-          const lowestReward =
-            others.length > 0
-              ? toFixedIfNecessary(
-                  planckBnToUnit(
-                    new BN(rmCommas(others[lowestRewardIndex]?.value)),
-                    units
-                  ),
-                  MinBondPrecision
-                )
-              : 0;
-
-          stake.push({
-            total: _validator.total,
-            own: _validator.own,
-            total_nominations: totalNominations,
-            lowest: lowestActive,
-            lowestReward,
-          });
-        }
-
-        // commit update
-        const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-
-        // check if batch still exists before updating
-        if (_batchesUpdated[key]) {
-          _batchesUpdated[key].stake = stake;
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setValidatorMetaBatch,
-            validatorMetaBatchesRef
-          );
-        }
-      }
-    );
-
-    addMetaBatchUnsubs(key, [unsub3]);
-  };
-
-  /*
-   * Helper function to add mataBatch unsubs by key.
-   */
-  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
-    const _unsubs = validatorSubsRef.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
-
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setValidatorSubs, validatorSubsRef);
-  };
-
-  const removeValidatorMetaBatch = (key: string) => {
-    if (validatorSubsRef.current[key] !== undefined) {
-      // ubsubscribe from updates
-      for (const unsub of validatorSubsRef.current[key]) {
-        unsub();
-      }
-      // wipe data
-      delete validatorMetaBatches[key];
-      delete validatorMetaBatchesRef.current[key];
-    }
-  };
+      addMetaBatchUnsubs(key, [unsub3]);
+    },
+    [
+      activeEra.index,
+      api,
+      isReady,
+      maxNominatorRewardedPerValidator,
+      units,
+      validatorMetaBatches,
+    ]
+  );
 
   /*
    * Adds a favorite validator.
@@ -633,6 +549,111 @@ export const ValidatorsProvider = ({
     );
     setFavorites([..._favorites]);
   };
+
+  const fetchNominatedList = useCallback(async () => {
+    if (!activeAccount) {
+      return;
+    }
+    // get raw targets list
+    const targets = getAccountNominations(activeAccount);
+
+    // format to list format
+    const targetsFormatted = targets.map((item: any) => {
+      return { address: item };
+    });
+    // fetch preferences
+    const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
+
+    if (nominationsWithPrefs) {
+      setNominated(nominationsWithPrefs);
+    } else {
+      setNominated([]);
+    }
+  }, [activeAccount, fetchValidatorPrefs, getAccountNominations]);
+
+  // reset validators list on network change
+  useEffect(() => {
+    setFetchedValidators(0);
+    setSessionValidators(defaults.sessionValidators);
+    setSessionParachainValidators(defaults.sessionParachainValidators);
+    removeValidatorMetaBatch('validators_browse');
+    setAvgCommission(0);
+    setValidators([]);
+  }, [network, removeValidatorMetaBatch]);
+
+  // fetch validators and session validators when activeEra ready
+  useEffect(() => {
+    const validatorSubsRefCurrent = validatorSubsRef.current;
+    if (isReady) {
+      fetchValidators();
+      subscribeSessionValidators(api);
+    }
+
+    return () => {
+      // unsubscribe from any validator meta batches
+      Object.values(validatorSubsRefCurrent).map((batch: AnyMetaBatch) => {
+        return Object.entries(batch).map(([, v]: AnyApi) => {
+          return v();
+        });
+      });
+    };
+  }, [isReady, activeEra, fetchValidators, subscribeSessionValidators, api]);
+
+  // fetch parachain session validators when earliestStoredSession ready
+  useEffect(() => {
+    if (isReady && earliestStoredSession.gt(new BN(0))) {
+      subscribeParachainValidators(api);
+    }
+  }, [isReady, earliestStoredSession, subscribeParachainValidators, api]);
+
+  // pre-populating validator meta batches. Needed for generating nominations
+  useEffect(() => {
+    if (validators.length > 0) {
+      fetchValidatorMetaBatch('validators_browse', validators, true);
+    }
+  }, [fetchValidatorMetaBatch, isReady, validators]);
+
+  // fetch active account's nominations in validator list format
+  useEffect(() => {
+    if (isReady && activeAccount) {
+      fetchNominatedList();
+    }
+  }, [isReady, activeAccount, accounts, fetchNominatedList]);
+
+  const fetchPoolNominatedList = useCallback(async () => {
+    // get raw nominations list
+    let n = poolNominations.targets;
+    // format to list format
+    n = n.map((item: string) => {
+      return { address: item };
+    });
+    // fetch preferences
+    const nominationsWithPrefs = await fetchValidatorPrefs(n);
+    if (nominationsWithPrefs) {
+      setPoolNominated(nominationsWithPrefs);
+    } else {
+      setPoolNominated([]);
+    }
+  }, [fetchValidatorPrefs, poolNominations.targets]);
+
+  // fetch active account's pool nominations in validator list format
+  useEffect(() => {
+    if (isReady && poolNominations) {
+      fetchPoolNominatedList();
+    }
+  }, [fetchPoolNominatedList, isReady, poolNominations]);
+
+  // re-fetch favorites on network change
+  useEffect(() => {
+    setFavorites(getFavorites());
+  }, [getFavorites, network]);
+
+  // fetch favorites in validator list format
+  useEffect(() => {
+    if (isReady) {
+      fetchFavoriteList();
+    }
+  }, [isReady, fetchFavoriteList, favorites]);
 
   return (
     <ValidatorsContext.Provider

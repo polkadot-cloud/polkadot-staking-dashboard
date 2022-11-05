@@ -37,11 +37,11 @@ export const SelectFavorites = () => {
       );
       setAvailableFavorites(_availableFavorites);
     }
-  }, []);
+  }, [favoritesList, nominations]);
 
   useEffect(() => {
     setResize();
-  }, [selectedFavorites]);
+  }, [selectedFavorites, setResize]);
 
   const batchKey = 'favorite_validators';
 

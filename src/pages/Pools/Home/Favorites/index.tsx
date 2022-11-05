@@ -33,7 +33,7 @@ export const Favorites = () => {
     _favoritesList = _favoritesList.filter((f: any) => f !== undefined);
 
     setFavoritesList(_favoritesList);
-  }, [favorites]);
+  }, [bondedPools, favorites, removeFavorite]);
 
   return (
     <>

@@ -21,7 +21,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
     return () => {
       resetTxFees();
     };
-  }, []);
+  }, [resetTxFees]);
 
   const txFeesBase = humanNumber(planckBnToUnit(txFees, units));
 

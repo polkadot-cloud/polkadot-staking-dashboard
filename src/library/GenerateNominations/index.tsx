@@ -76,7 +76,13 @@ export const GenerateNominationsInner = (
       removeValidatorMetaBatch(batchKey);
       setNominations([...defaultNominations]);
     }
-  }, [activeAccount]);
+  }, [
+    activeAccount,
+    batchKey,
+    defaultNominations,
+    nominations,
+    removeValidatorMetaBatch,
+  ]);
 
   // refetch if fetching is triggered
   useEffect(() => {

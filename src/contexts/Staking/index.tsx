@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useEffect, useRef, useState } from 'react';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import {
   EraStakers,
@@ -11,6 +10,7 @@ import {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   localStorageOrDefault,
@@ -77,6 +77,97 @@ export const StakingProvider = ({
     ) as StakingTargets
   );
 
+  const subscribeToStakingkMetrics = useCallback(async () => {
+    if (api !== null && isReady && metrics.activeEra.index !== 0) {
+      const previousEra = metrics.activeEra.index - 1;
+
+      // subscribe to staking metrics
+      const unsub = await api.queryMulti<AnyApi>(
+        [
+          api.query.staking.counterForNominators,
+          api.query.staking.counterForValidators,
+          api.query.staking.maxNominatorsCount,
+          api.query.staking.maxValidatorsCount,
+          api.query.staking.validatorCount,
+          [api.query.staking.erasValidatorReward, previousEra],
+          [api.query.staking.erasTotalStake, previousEra],
+          api.query.staking.minNominatorBond,
+          [api.query.staking.payee, activeAccount],
+        ],
+        ([
+          _totalNominators,
+          _totalValidators,
+          _maxNominatorsCount,
+          _maxValidatorsCount,
+          _validatorCount,
+          _lastReward,
+          _lastTotalStake,
+          _minNominatorBond,
+          _payee,
+        ]) => {
+          setStakingMetrics({
+            ...stakingMetrics,
+            payee: _payee.toHuman(),
+            lastTotalStake: _lastTotalStake.toBn(),
+            validatorCount: _validatorCount.toBn(),
+            totalNominators: _totalNominators.toBn(),
+            totalValidators: _totalValidators.toBn(),
+            minNominatorBond: _minNominatorBond.toBn(),
+            lastReward: _lastReward.unwrapOrDefault(new BN(0)),
+            maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
+            maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
+          });
+        }
+      );
+
+      setStakingMetrics({
+        ...stakingMetrics,
+        unsub,
+      });
+    }
+  }, [activeAccount, api, isReady, metrics.activeEra.index, stakingMetrics]);
+
+  /*
+   * Fetches the active nominator set.
+   * The top 256 nominators get rewarded. Nominators may have their bond  spread
+   * among multiple nominees.
+   * the minimum nominator bond is calculated by summing a particular bond of a nominator.
+   */
+  const fetchEraStakers = useCallback(async () => {
+    if (!isReady || metrics.activeEra.index === 0 || !api) {
+      return;
+    }
+    const _exposures = await api.query.staking.erasStakers.entries(
+      metrics.activeEra.index
+    );
+
+    // flag eraStakers is recyncing
+    setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
+
+    // humanise exposures to send to worker
+    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
+      return {
+        keys: _keys.toHuman(),
+        val: _val.toHuman(),
+      };
+    });
+
+    // worker to calculate stats
+    worker.postMessage({
+      activeAccount,
+      units: network.units,
+      exposures,
+      maxNominatorRewardedPerValidator,
+    });
+  }, [
+    activeAccount,
+    api,
+    isReady,
+    maxNominatorRewardedPerValidator,
+    metrics.activeEra.index,
+    network.units,
+  ]);
+
   useEffect(() => {
     if (status === 'connecting') {
       setStateWithRef(defaults.eraStakers, setEraStakers, eraStakersRef);
@@ -95,14 +186,14 @@ export const StakingProvider = ({
         stakingMetrics.unsub();
       }
     };
-  }, [isReady, metrics.activeEra]);
+  }, [isReady, metrics.activeEra, stakingMetrics, subscribeToStakingkMetrics]);
 
   // handle syncing with eraStakers
   useEffect(() => {
     if (isReady) {
       fetchEraStakers();
     }
-  }, [isReady, metrics.activeEra.index, activeAccount]);
+  }, [isReady, metrics.activeEra.index, activeAccount, fetchEraStakers]);
 
   useEffect(() => {
     if (activeAccount) {
@@ -161,7 +252,14 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
+  }, [
+    isReady,
+    accounts,
+    activeAccount,
+    eraStakersRef.current.stakers,
+    getAccountNominations,
+    units,
+  ]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -195,90 +293,6 @@ export const StakingProvider = ({
         );
       }
     }
-  };
-
-  const subscribeToStakingkMetrics = async () => {
-    if (api !== null && isReady && metrics.activeEra.index !== 0) {
-      const previousEra = metrics.activeEra.index - 1;
-
-      // subscribe to staking metrics
-      const unsub = await api.queryMulti<AnyApi>(
-        [
-          api.query.staking.counterForNominators,
-          api.query.staking.counterForValidators,
-          api.query.staking.maxNominatorsCount,
-          api.query.staking.maxValidatorsCount,
-          api.query.staking.validatorCount,
-          [api.query.staking.erasValidatorReward, previousEra],
-          [api.query.staking.erasTotalStake, previousEra],
-          api.query.staking.minNominatorBond,
-          [api.query.staking.payee, activeAccount],
-        ],
-        ([
-          _totalNominators,
-          _totalValidators,
-          _maxNominatorsCount,
-          _maxValidatorsCount,
-          _validatorCount,
-          _lastReward,
-          _lastTotalStake,
-          _minNominatorBond,
-          _payee,
-        ]) => {
-          setStakingMetrics({
-            ...stakingMetrics,
-            payee: _payee.toHuman(),
-            lastTotalStake: _lastTotalStake.toBn(),
-            validatorCount: _validatorCount.toBn(),
-            totalNominators: _totalNominators.toBn(),
-            totalValidators: _totalValidators.toBn(),
-            minNominatorBond: _minNominatorBond.toBn(),
-            lastReward: _lastReward.unwrapOrDefault(new BN(0)),
-            maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
-            maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
-          });
-        }
-      );
-
-      setStakingMetrics({
-        ...stakingMetrics,
-        unsub,
-      });
-    }
-  };
-
-  /*
-   * Fetches the active nominator set.
-   * The top 256 nominators get rewarded. Nominators may have their bond  spread
-   * among multiple nominees.
-   * the minimum nominator bond is calculated by summing a particular bond of a nominator.
-   */
-  const fetchEraStakers = async () => {
-    if (!isReady || metrics.activeEra.index === 0 || !api) {
-      return;
-    }
-    const _exposures = await api.query.staking.erasStakers.entries(
-      metrics.activeEra.index
-    );
-
-    // flag eraStakers is recyncing
-    setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
-
-    // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
-      return {
-        keys: _keys.toHuman(),
-        val: _val.toHuman(),
-      };
-    });
-
-    // worker to calculate stats
-    worker.postMessage({
-      activeAccount,
-      units: network.units,
-      exposures,
-      maxNominatorRewardedPerValidator,
-    });
   };
 
   /*
