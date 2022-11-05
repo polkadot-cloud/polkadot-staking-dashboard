@@ -11,7 +11,7 @@ import {
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
-import { setStateWithRef } from 'Utils';
+import { setStateWithRef, shuffle } from 'Utils';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -83,11 +83,13 @@ export const BondedPoolsProvider = ({
     if (!api) return;
 
     const _exposures = await api.query.nominationPools.bondedPools.entries();
-    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
+    let exposures = _exposures.map(([_keys, _val]: AnyApi) => {
       const id = _keys.toHuman()[0];
       const pool = _val.toHuman();
       return getPoolWithAddresses(id, pool);
     });
+
+    exposures = shuffle(exposures);
     setBondedPools(exposures);
   };
 
