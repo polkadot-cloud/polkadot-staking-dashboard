@@ -14,6 +14,7 @@ import { ReactComponent as Gatotech } from './thumbnails/gatotech.svg';
 import { ReactComponent as GDOT } from './thumbnails/gdot.svg';
 import { ReactComponent as GenericChain } from './thumbnails/genericchain.svg';
 import { ReactComponent as GoOpen } from './thumbnails/goopen.svg';
+import { ReactComponent as Helikon } from './thumbnails/helikon.svg';
 import { ReactComponent as HighStake } from './thumbnails/highstake.svg';
 import { ReactComponent as LetzBake } from './thumbnails/letzbake.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
@@ -162,6 +163,21 @@ export const VALIDATOR_COMMUNITY = [
     validators: {
       polkadot: ['16VVNbc4m6aUxwaVwgRra6Ue7fMNGcRQHTFo1TqxmnCyuwwn'],
       kusama: ['JJiV1xrj1814BVDDG2pFCsgzdbR7K29VcyXQGXEUhn7LWhK'],
+    },
+  },
+  {
+    name: 'Helikon',
+    Thumbnail: Helikon,
+    bio: 'We are an independent blockchain software, infrastructre and staking services company from Istanbul. We run our validators on state-of-the-art owned hardware in a Tier III colocation data center just outside Istanbul. Please visit our website for more information about our products and services.',
+    email: 'info@helikon.io',
+    twitter: '@helikonlabs',
+    website: 'https://www.helikon.io',
+    validators: {
+      polkadot: ['123kFHVth2udmM79sn3RPQ81HukrQWCxA1vmTWkGHSvkR4k1'],
+      kusama: [
+        'GC8fuEZG4E5epGf5KGXtcDfvrc6HXE7GJ5YnbiqSpqdQYLg',
+        'GougF9o6LNGrAMb1ZtH9XWePVCz1PBAvwatjvCtw75M6M3q',
+      ],
     },
   },
   {
