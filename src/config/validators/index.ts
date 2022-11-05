@@ -19,6 +19,7 @@ import { ReactComponent as LetzBake } from './thumbnails/letzbake.svg';
 import { ReactComponent as Metaspan } from './thumbnails/metaspan.svg';
 import { ReactComponent as ParaNodes } from './thumbnails/paranodes.svg';
 import { ReactComponent as PDP } from './thumbnails/pdp.svg';
+import { ReactComponent as PioneerStake } from './thumbnails/pioneerstake.svg';
 import { ReactComponent as Polkachu } from './thumbnails/polkachu.svg';
 import { ReactComponent as Polkadotters } from './thumbnails/polkadotters.svg';
 import { ReactComponent as PythagorasCapitalInvestment } from './thumbnails/pythagorascapitalinvestment.svg';
@@ -261,7 +262,7 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'PDP_Validator',
     Thumbnail: PDP,
-    bio: 'Our service has its own infrastructure and a team of administrators.  The beneficiaries of our service are investment professionals.  We validate in projects from the top 10.  We will help you earn!',
+    bio: 'Our service has its own infrastructure and a team of administrators. The beneficiaries of our service are investment professionals. We validate in projects from the top 10. We will help you earn!',
     email: 'pavel.butenko@yahoo.com',
     twitter: '@PaulBAciD',
     website: 'https://t.me/go300info',
@@ -270,6 +271,27 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'J7MmkYX4dJzUbNnU9ccemPFbxtsyaSgFVwAGMxx8k9Lf5cu',
         'HCogweijHTm85qf9cSUqjNmyZZvu61r4SsTcsAT7S7pgpem',
+      ],
+    },
+  },
+  {
+    name: 'PIONEER STAKE',
+    Thumbnail: PioneerStake,
+    bio: 'We have been active validators since 2019 on the Kusama and Polkadot networks. Service is working on warranty and investment prospects ',
+    email: 'pioneer.validator@gmail.com',
+    twitter: '@Ihor07054865',
+    validators: {
+      polkadot: [
+        '129LBt5T1eYtnGHbPYeiiMdmWfokCiiq7z6JBfjnYifiombz',
+        '13mjnUDrHwYGATFB1FkFkZ1U3kYFsAQfHYTdcc8p3HP1xzZA',
+        '15MUBwP6dyVw5CXF9PjSSv7SdXQuDSwjX86v1kBodCSWVR7c',
+      ],
+      kusama: [
+        'EQF693vsen6WxMdoYgf2cypvH4saFJWFzDupoFUT79MffeW',
+        'CaVLqgMmajk7ySYjo4SPqauXwsZu8Y5tP9vVDvJvcecbp3n',
+        'G543pxmwKNAbW2WepZW7Ss9Wgx9wuDQWcPyhk4eEzpzcibG',
+        'F7c6ocWu397zYewAHBxqTwHgXhXDebgYSVjRX9oQM42hkpn',
+        'Cm6QfCvV3vud3X6Zfg3yMBEnG6JFNsn6EzcZv6UyqTefkR1',
       ],
     },
   },
