@@ -32,6 +32,7 @@ import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilit
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
+import { ReactComponent as Stakeplus } from './thumbnails/stakeplus.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
@@ -476,7 +477,7 @@ export const VALIDATOR_COMMUNITY = [
   },
   {
     name: 'Stake Plus',
-    Thumbnail: stakeplus,
+    Thumbnail: Stakeplus,
     bio: 'Providing high quality renewable powered crypto services to blockchain ecosystems.',
     email: 'contact@stake.plus',
     twitter: '@StakePlusCrypto',
