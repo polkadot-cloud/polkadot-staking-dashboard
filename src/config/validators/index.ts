@@ -27,6 +27,7 @@ import { ReactComponent as PythagorasCapitalInvestment } from './thumbnails/pyth
 import { ReactComponent as Stakely } from './thumbnails/stakely.svg';
 import { ReactComponent as Stakenode } from './thumbnails/stakenode.svg';
 import { ReactComponent as Stakepile } from './thumbnails/stakepile.svg';
+import { ReactComponent as Stakeplus } from './thumbnails/stakeplus.svg';
 import { ReactComponent as Stakerspace } from './thumbnails/stakerspace.svg';
 import { ReactComponent as Stakeworld } from './thumbnails/stakeworld.svg';
 import { ReactComponent as Staking4All } from './thumbnails/staking4all.svg';
@@ -395,6 +396,25 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'HWyLYmpW68JGJYoVJcot6JQ1CJbtUQeTdxfY1kUTsvGCB1r',
         'GLSikJaXTVWvWtUhzB3Bj6xb5TcnhTUp6EuAkxaCohT9UBv',
+      ],
+    },
+  },
+  {
+    name: 'Stake Plus',
+    Thumbnail: Stakeplus,
+    bio: 'Providing high quality renewable powered crypto services to blockchain ecosystems.',
+    email: 'contact@stake.plus',
+    twitter: '@StakePlusCrypto',
+    website: 'https://stake.plus',
+    validators: {
+      polkadot: ['152QidDC4QrtMCyRGiQmvrNyjntvMg2XouCSdoPSeqUNTvsq'],
+      kusama: [
+        'FLiadJNdXvLi8TJ62XzrQVxmZaT8z5hAr1YXQg437r8o4G6',
+        'CibcGcwnThunMNYrStEWHYdr5WDuy8QnMgT3Vr39JeWCcQs',
+        'Hhgs6hgUeAkAd2c3SbphWxAvm9hSoqRxnoarZgrB2pJYPJT',
+        'FPVebvd7u2TtyU2magxZVvRqzAHpGZ9aJ9rHXewpHqMGuzr',
+        'F8FswEGD1quEyNciuR9KwsragUmqnk7mFLqmAdRdnY9Sdwx',
+        'DqsZ7nrch8Ro9HqP1ZX7CbbpZFWy2V4bWjWWjNA2PAehZsW',
       ],
     },
   },
