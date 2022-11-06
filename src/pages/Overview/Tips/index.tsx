@@ -44,6 +44,31 @@ export const Tips = () => {
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
 
+  // accumulate segments to include in tips
+  const segments: AnyJson = [];
+  if (!activeAccount) {
+    segments.push(1);
+  } else if (!isNominating() && !membership) {
+    if (transferOptions.freeBalance.gt(minNominatorBond)) {
+      segments.push(2);
+    } else {
+      segments.push(3);
+    }
+    segments.push(4);
+  } else {
+    if (isNominating()) {
+      segments.push(5);
+    }
+    if (membership) {
+      if (!isOwner()) {
+        segments.push(6);
+      } else {
+        segments.push(7);
+      }
+    }
+    segments.push(8);
+  }
+
   // filter tips relevant to connected account.
   let items = TIPS_CONFIG.filter((t: AnyJson) =>
     segments.includes(t.meta.segment)
@@ -115,31 +140,6 @@ export const Tips = () => {
 
   const _itemsPerPage = itemsPerPageRef.current;
   const _page = pageRef.current;
-
-  // accumulate segments to include in tips
-  const segments: AnyJson = [];
-  if (!activeAccount) {
-    segments.push(1);
-  } else if (!isNominating() && !membership) {
-    if (transferOptions.freeBalance.gt(minNominatorBond)) {
-      segments.push(2);
-    } else {
-      segments.push(3);
-    }
-    segments.push(4);
-  } else {
-    if (isNominating()) {
-      segments.push(5);
-    }
-    if (membership) {
-      if (!isOwner()) {
-        segments.push(6);
-      } else {
-        segments.push(7);
-      }
-    }
-    segments.push(8);
-  }
 
   // determine items to be displayed
   const endItem = networkSyncing

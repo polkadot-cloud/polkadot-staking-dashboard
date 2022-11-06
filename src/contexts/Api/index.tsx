@@ -20,7 +20,7 @@ import {
   ConnectionStatus,
   NetworkState,
 } from 'contexts/Api/types';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
 import * as defaults from './defaults';
 
@@ -60,20 +60,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     !!localStorage.getItem('isLightClient')
   );
 
-  // initial connection
-  useEffect(() => {
-    if (!provider) {
-      const _network: NetworkName = localStorage.getItem(
-        'network'
-      ) as NetworkName;
-      connect(_network, isLightClient);
-    }
-  });
-
-  // provider event handlers
-  useEffect(() => {
-    // connection callback
-    const connectedCallback = async (_provider: WsProvider | ScProvider) => {
+  // connection callback
+  const connectedCallback = useCallback(
+    async (_provider: WsProvider | ScProvider) => {
       const _api = new ApiPromise({ provider: _provider });
       await _api.isReady;
 
@@ -146,8 +135,22 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         poolsPalletId,
         existentialDeposit,
       });
-    };
+    },
+    [network.name]
+  );
 
+  // initial connection
+  useEffect(() => {
+    if (!provider) {
+      const _network: NetworkName = localStorage.getItem(
+        'network'
+      ) as NetworkName;
+      connect(_network, isLightClient);
+    }
+  });
+
+  // provider event handlers
+  useEffect(() => {
     if (provider !== null) {
       provider.on('connected', () => {
         setConnectionStatus(ConnectionStatus.Connected);
@@ -157,7 +160,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       });
       connectedCallback(provider);
     }
-  }, [network.name, provider]);
+  }, [connectedCallback, provider]);
 
   // connect function sets provider and updates active network.
   const connect = async (_network: NetworkName, _isLightClient?: boolean) => {
