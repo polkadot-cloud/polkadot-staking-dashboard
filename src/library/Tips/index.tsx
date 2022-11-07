@@ -57,26 +57,25 @@ export const Tips = () => {
     ? TIPS_CONFIG.find((d: any) => d.id === tip)
     : null;
 
-  // const title = tTips(`${activeTip}.title`);
-  // const subtitle = tTips(`${activeTip}.subtitle`);
-  // const description = i18n.getResource(
-  //   i18n.resolvedLanguage,
-  //   'tips',
-  //   `${activeTip}.description`
-  // );
-  // activeTip = fillVariables(
-  //   {
-  //     title,
-  //     subtitle,
-  //     description,
-  //   },
-  //   ['title', 'subtitle', 'description']
-  // );
-
   // fill placeholder variables
-  activeTip = activeTip
-    ? fillVariables(activeTip, ['title', 'subtitle', 'description'])
-    : null;
+  if (activeTip) {
+    const { localeKey } = activeTip;
+
+    activeTip = fillVariables(
+      {
+        title: tTips(`${localeKey}.title`),
+        subtitle: tTips(`${localeKey}.subtitle`),
+        description: i18n.getResource(
+          i18n.resolvedLanguage,
+          'tips',
+          `${localeKey}.description`
+        ),
+      },
+      ['title', 'subtitle', 'description']
+    );
+  } else {
+    activeTip = null;
+  }
 
   return (
     <Wrapper
