@@ -10,27 +10,33 @@ import { isNumeric } from 'Utils';
 import { InputWrapper, RowWrapper } from '../Wrappers';
 import { BondInputProps } from '../types';
 
-export const BondInput = (props: BondInputProps) => {
-  const { disabled, freeBalance } = props;
-  const setters = props.setters ?? [];
-  const _value = props.value ?? 0;
-  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
+export const BondInput = ({
+  setters,
+  disabled,
+  defaultValue,
+  freeBalance,
+  disableTxFeeUpdate,
+  value,
+}: BondInputProps) => {
+  const sets = setters ?? [];
+  const _value = value ?? 0;
+  const disableTxFeeUpd = disableTxFeeUpdate ?? false;
   const { t } = useTranslation('common');
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
   // the current local bond value
-  const [value, setValue] = useState(_value);
+  const [localBond, setLocalBond] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setValue(props.defaultValue ?? 0);
+    setLocalBond(defaultValue ?? 0);
   }, [activeAccount]);
 
   useEffect(() => {
-    if (!disableTxFeeUpdate) {
-      setValue(_value.toString());
+    if (!disableTxFeeUpd) {
+      setLocalBond(_value.toString());
     }
   }, [_value]);
 
@@ -40,13 +46,13 @@ export const BondInput = (props: BondInputProps) => {
     if (!isNumeric(val) && val !== '') {
       return;
     }
-    setValue(val);
+    setLocalBond(val);
     updateParentState(val);
   };
 
   // apply bond to parent setters
   const updateParentState = (val: any) => {
-    for (const s of setters) {
+    for (const s of sets) {
       s.set({
         ...s.current,
         bond: val,
@@ -65,7 +71,7 @@ export const BondInput = (props: BondInputProps) => {
             <input
               type="text"
               placeholder={`0 ${network.unit}`}
-              value={value}
+              value={localBond}
               onChange={(e) => {
                 handleChangeBond(e);
               }}
@@ -81,7 +87,7 @@ export const BondInput = (props: BondInputProps) => {
             small
             title={t('library.max')}
             onClick={() => {
-              setValue(freeBalance);
+              setLocalBond(freeBalance);
               updateParentState(freeBalance);
             }}
           />

@@ -13,16 +13,13 @@ import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 import { NominateStatusBarProps } from '../types';
 
-export const NominateStatusBar = (props: NominateStatusBarProps) => {
-  const { value } = props;
-  const { t } = useTranslation('common');
-
-  const { network } = useApi();
+export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { staking, eraStakers } = useStaking();
   const { isSyncing } = useUi();
-  const { unit, units } = network;
+  const { unit, units } = useApi().network;
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
+  const { t } = useTranslation('common');
 
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
   const gtMinNominatorBond = value >= minNominatorBondBase;

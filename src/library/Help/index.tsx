@@ -15,8 +15,8 @@ import {
 } from 'contexts/Help/types';
 import { useTranslation } from 'react-i18next';
 import { useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
 import useFillVariables from 'library/Hooks/useFillVariables';
+import { useCallback, useEffect } from 'react';
 import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
 import Definition from './Items/Definition';
 import External from './Items/External';
@@ -28,14 +28,14 @@ export const Help = () => {
   const { t } = useTranslation('common');
   const { t: tHelp, i18n } = useTranslation('help');
 
-  const onFadeIn = async () => {
+  const onFadeIn = useCallback(async () => {
     await controls.start('visible');
-  };
+  }, []);
 
-  const onFadeOut = async () => {
+  const onFadeOut = useCallback(async () => {
     await controls.start('hidden');
     setStatus(0);
-  };
+  }, []);
 
   const variants = {
     hidden: {
@@ -58,9 +58,7 @@ export const Help = () => {
   }, [status]);
 
   // render early if help not open
-  if (status === 0) {
-    return <></>;
-  }
+  if (status === 0) return <></>;
 
   let meta: any | undefined;
 

@@ -12,15 +12,17 @@ import { defaultThemes, networkColors } from 'theme/default';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 import { DropdownInput, DropdownProps } from '../types';
 
-export const Dropdown = (props: DropdownProps) => {
-  const { items, onChange, label, placeholder, value, current } = props;
-
+export const Dropdown = ({
+  items,
+  onChange,
+  label,
+  placeholder,
+  value,
+  current,
+}: DropdownProps) => {
   const [inputItems, setInputItems] = useState<Array<DropdownInput>>(items);
 
-  const itemToString = (item: DropdownInput | null) => {
-    const name = item?.name ?? '';
-    return name;
-  };
+  const itemToString = (item: DropdownInput | null) => item?.name ?? '';
 
   const c = useCombobox({
     items: inputItems,
@@ -39,11 +41,11 @@ export const Dropdown = (props: DropdownProps) => {
   return (
     <StyledDownshift>
       <div>
-        {label && (
+        {label ? (
           <div className="label" {...c.getLabelProps()}>
             {label}
           </div>
-        )}
+        ) : null}
         <div style={{ position: 'relative' }}>
           <div className="current">
             <div className="input-wrap selected">
@@ -81,15 +83,15 @@ export const Dropdown = (props: DropdownProps) => {
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi();
+  const { name } = useApi().network;
   const { mode } = useTheme();
   const color =
     c.selectedItem?.key === item.key
-      ? networkColors[`${network.name}-${mode}`]
+      ? networkColors[`${name}-${mode}`]
       : defaultThemes.text.primary[mode];
   const border =
     c.selectedItem?.key === item.key
-      ? `2px solid ${networkColors[`${network.name}-${mode}`]}`
+      ? `2px solid ${networkColors[`${name}-${mode}`]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 
   const { t } = useTranslation('common');

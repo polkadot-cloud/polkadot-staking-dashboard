@@ -15,11 +15,14 @@ import { clipAddress, convertRemToPixels } from 'Utils';
 import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 import { AccountSelectProps, InputItem } from '../types';
 
-export const AccountSelect = (props: AccountSelectProps) => {
-  const { items, onChange, placeholder, value } = props;
-  const { t } = useTranslation('common');
-
+export const AccountSelect = ({
+  items,
+  onChange,
+  placeholder,
+  value,
+}: AccountSelectProps) => {
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
+  const { t } = useTranslation('common');
 
   useEffect(() => {
     setInputItems(items);

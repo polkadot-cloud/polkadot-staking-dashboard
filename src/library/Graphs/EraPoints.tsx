@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { defaultThemes, networkColors } from 'theme/default';
-import { useLocale } from 'contexts/Locale';
 import { EraPointsProps } from './types';
 
 ChartJS.register(
@@ -29,18 +28,12 @@ ChartJS.register(
   Legend
 );
 
-export const EraPoints = (props: EraPointsProps) => {
+export const EraPoints = ({ items = [], height }: EraPointsProps) => {
   const { mode } = useTheme();
-  const { network } = useApi();
-  let { items } = props;
-  const { height } = props;
+  const { name } = useApi().network;
   const { t } = useTranslation('common');
-  const { locale } = useLocale();
-
-  items = items === undefined ? [] : items;
 
   const options = {
-    locale,
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -94,9 +87,7 @@ export const EraPoints = (props: EraPointsProps) => {
           title: () => {
             return [];
           },
-          label: (context: any) => {
-            return `${context.parsed.y}`;
-          },
+          label: (context: any) => `${context.parsed.y}`,
         },
         intersect: false,
         interaction: {
@@ -107,18 +98,13 @@ export const EraPoints = (props: EraPointsProps) => {
   };
 
   const data = {
-    labels: items.map((item: any) => {
-      return item.era;
-    }),
+    labels: items.map((item: any) => item.era),
     datasets: [
       {
         label: t('library.points'),
-        // data: empty_data,
-        data: items.map((item: any) => {
-          return item.reward_point;
-        }),
-        borderColor: networkColors[`${network.name}-${mode}`],
-        backgroundColor: networkColors[`${network.name}-${mode}`],
+        data: items.map((item: any) => item.reward_point),
+        borderColor: networkColors[`${name}-${mode}`],
+        backgroundColor: networkColors[`${name}-${mode}`],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,
@@ -129,7 +115,7 @@ export const EraPoints = (props: EraPointsProps) => {
   return (
     <div
       style={{
-        height: height === undefined ? 'auto' : height,
+        height: height || 'auto',
       }}
     >
       <Line options={options} data={data} />

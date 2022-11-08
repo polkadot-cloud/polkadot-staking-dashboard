@@ -19,16 +19,16 @@ import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import { BondInput } from './BondInput';
 
-export const BondFeedback = (props: BondFeedbackProps) => {
-  const { bondType } = props;
-  const inSetup = props.inSetup ?? false;
-  const warnings = props.warnings ?? [];
-  const setters = props.setters ?? [];
-  const listenIsValid = props.listenIsValid ?? (() => {});
-  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
-  const defaultBond = props.defaultBond || '';
-  const { t } = useTranslation('common');
-
+export const BondFeedback = ({
+  bondType,
+  inSetup = false,
+  warnings = [],
+  setters = [],
+  listenIsValid = () => {},
+  disableTxFeeUpdate = false,
+  defaultBond,
+  setLocalResize,
+}: BondFeedbackProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
@@ -39,6 +39,9 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   const { units } = network;
   const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
+  const { t } = useTranslation('common');
+
+  const defBond = defaultBond || '';
 
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -58,7 +61,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
 
   // local bond state
   const [bond, setBond] = useState<{ bond: number | string }>({
-    bond: defaultBond,
+    bond: defBond,
   });
 
   // whether bond is disabled
@@ -75,7 +78,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: defaultBond,
+      bond: defBond,
     });
   }, [activeAccount]);
 
@@ -86,7 +89,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
 
   // if resize is present, handle on error change
   useEffect(() => {
-    if (props.setLocalResize) props.setLocalResize();
+    if (setLocalResize) setLocalResize();
   }, [errors]);
 
   // update max bond after txFee sync
@@ -173,7 +176,7 @@ export const BondFeedback = (props: BondFeedbackProps) => {
       <Spacer />
       <BondInput
         value={bond.bond}
-        defaultValue={defaultBond}
+        defaultValue={defBond}
         disabled={bondDisabled}
         setters={setters}
         freeBalance={freeBalance}

@@ -6,18 +6,16 @@ import { useTranslation } from 'react-i18next';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 
-export const Selectable = (props: any) => {
-  const { actionsAll, actionsSelected, canSelect } = props;
-  const { t } = useTranslation('common');
-
+export const Selectable = ({ actionsAll, actionsSelected, canSelect }: any) => {
   const provider = useList();
   // get list provider props
   const { selectActive, setSelectActive, selected, selectToggleable } =
     provider;
+  const { t } = useTranslation('common');
 
   return (
     <SelectableWrapper>
-      {selectToggleable === true && (
+      {selectToggleable === true ? (
         <button
           type="button"
           disabled={!canSelect}
@@ -27,8 +25,8 @@ export const Selectable = (props: any) => {
         >
           {selectActive ? t('library.cancel') : t('library.select')}
         </button>
-      )}
-      {selected.length > 0 && (
+      ) : null}
+      {selected.length > 0 ? (
         <>
           {actionsSelected.map((a: any, i: number) => (
             <button
@@ -41,20 +39,18 @@ export const Selectable = (props: any) => {
             </button>
           ))}
         </>
-      )}
-      {actionsAll.map((a: any, i: number) => {
-        return (
-          <button
-            key={`a_all_${i}`}
-            disabled={a?.isDisabled ? a.isDisabled() : false}
-            type="button"
-            onClick={() => a.onClick(provider)}
-          >
-            {a.icon && <FontAwesomeIcon icon={a.icon} />}
-            {a.title}
-          </button>
-        );
-      })}
+      ) : null}
+      {actionsAll.map((a: any, i: number) => (
+        <button
+          key={`a_all_${i}`}
+          disabled={a?.isDisabled ? a.isDisabled() : false}
+          type="button"
+          onClick={() => a.onClick(provider)}
+        >
+          {a.icon ? <FontAwesomeIcon icon={a.icon} /> : null}
+          {a.title}
+        </button>
+      ))}
     </SelectableWrapper>
   );
 };

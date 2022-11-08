@@ -14,14 +14,17 @@ import { BondedProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const Bonded = (props: BondedProps) => {
+export const Bonded = ({
+  active,
+  free,
+  unlocking,
+  unlocked,
+  inactive,
+}: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
   const { t } = useTranslation('common');
   const { locale } = useLocale();
-
-  const { active, unlocking, unlocked, inactive } = props;
-  const { free } = props;
 
   // graph data
   let graphActive = active;

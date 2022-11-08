@@ -19,15 +19,17 @@ import { Spacer } from '../Wrappers';
 import { UnbondInput } from './UnbondInput';
 import { UnbondFeedbackProps } from '../types';
 
-export const UnbondFeedback = (props: UnbondFeedbackProps) => {
-  const { bondType } = props;
-  const inSetup = props.inSetup ?? false;
-  const warnings = props.warnings ?? [];
-  const setters = props.setters ?? [];
-  const listenIsValid = props.listenIsValid ?? (() => {});
-  const defaultBond = props.defaultBond || '';
+export const UnbondFeedback = ({
+  bondType,
+  inSetup = false,
+  warnings = [],
+  setters = [],
+  listenIsValid = () => {},
+  defaultBond,
+  setLocalResize,
+}: UnbondFeedbackProps) => {
+  const defaultValue = defaultBond || '';
   const { t } = useTranslation('common');
-
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
@@ -53,13 +55,13 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
   // local bond state
   const [bond, setBond] = useState<{ bond: number | string }>({
-    bond: defaultBond,
+    bond: defaultValue,
   });
 
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: defaultBond,
+      bond: defaultValue,
     });
   }, [activeAccount]);
 
@@ -70,7 +72,7 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
   // if resize is present, handle on error change
   useEffect(() => {
-    if (props.setLocalResize) props.setLocalResize();
+    if (setLocalResize) setLocalResize();
   }, [errors]);
 
   // add this component's setBond to setters
@@ -106,31 +108,25 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
   // get the actively bonded amount.
   const activeBase = planckBnToUnit(active, units);
+  const unit = network.unit;
 
   // handle error updates
   const handleErrors = () => {
-    const _errors = warnings;
+    const _errors = [...warnings];
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // unbond errors
-    if (Number(bond.bond) > activeBase) {
-      _errors.push(t('library.w6'));
-    }
+    if (Number(bond.bond) > activeBase) _errors.push(t('library.w6'));
 
     // unbond errors for staking only
-    if (bondType === 'stake') {
-      if (getControllerNotImported(controller)) {
-        _errors.push(t('library.w9'));
-      }
-    }
+    if (bondType === 'stake')
+      if (getControllerNotImported(controller)) _errors.push(t('library.w9'));
 
-    if (bond.bond !== '' && Number(bond.bond) < _planck) {
+    if (bond.bond !== '' && Number(bond.bond) < _planck)
       _errors.push(t('library.value_is_too_small'));
-    }
 
-    if (Number(bond.bond) > freeToUnbondToMin) {
-      const unit = network.unit;
+    if (Number(bond.bond) > freeToUnbondToMin)
       _errors.push(
         `${t('library.minimum_bond', { minBondBase, unit })}${
           bondType === 'stake'
@@ -140,10 +136,8 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
             : `${t('library.as_a_pool_member')}`
         }.`
       );
-    }
-    const bondValid = !_errors.length && _bond !== '';
 
-    listenIsValid(bondValid);
+    listenIsValid(!_errors.length && _bond !== '');
     setErrors(_errors);
   };
 
@@ -159,7 +153,7 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
       ))}
       <Spacer />
       <UnbondInput
-        defaultValue={defaultBond}
+        defaultValue={defaultValue}
         disabled={false}
         freeToUnbondToMin={freeToUnbondToMin}
         setters={setters}

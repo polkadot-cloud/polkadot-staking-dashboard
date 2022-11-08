@@ -44,11 +44,9 @@ ChartJS.register(
   Legend
 );
 
-export const PayoutBar = (props: PayoutBarProps) => {
-  const { days, height } = props;
-
+export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { mode } = useTheme();
-  const { network } = useApi();
+  const { name, unit, units } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
@@ -61,7 +59,6 @@ export const PayoutBar = (props: PayoutBarProps) => {
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const { units } = network;
   const notStaking = !isSyncing && inSetup() && !membership;
   const average = 1;
 
@@ -75,24 +72,22 @@ export const PayoutBar = (props: PayoutBarProps) => {
 
   // determine color for payouts
   const colorPayouts = notStaking
-    ? networkColorsTransparent[`${network.name}-${mode}`]
-    : networkColors[`${network.name}-${mode}`];
+    ? networkColorsTransparent[`${name}-${mode}`]
+    : networkColors[`${name}-${mode}`];
 
   // determine color for poolClaims
   const colorPoolClaims = notStaking
-    ? networkColorsTransparent[`${network.name}-${mode}`]
-    : networkColorsSecondary[`${network.name}-${mode}`];
+    ? networkColorsTransparent[`${name}-${mode}`]
+    : networkColorsSecondary[`${name}-${mode}`];
 
   const data = {
-    labels: payoutsByDay.map((item: AnySubscan) => {
-      return moment.unix(item.block_timestamp).format('LL');
-    }),
+    labels: payoutsByDay.map((item: AnySubscan) =>
+      moment.unix(item.block_timestamp).format('Do MMM')
+    ),
     datasets: [
       {
         label: t('library.payout'),
-        data: payoutsByDay.map((item: AnySubscan) => {
-          return item.amount;
-        }),
+        data: payoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
@@ -100,9 +95,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
       },
       {
         label: t('library.pool_claim'),
-        data: poolClaimsByDay.map((item: AnySubscan) => {
-          return item.amount;
-        }),
+        data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
         pointRadius: 0,
@@ -160,12 +153,8 @@ export const PayoutBar = (props: PayoutBarProps) => {
           weight: '600',
         },
         callbacks: {
-          title: () => {
-            return [];
-          },
-          label: (context: any) => {
-            return `${humanNumber(context.parsed.y)} ${network.unit}`;
-          },
+          title: () => [],
+          label: (context: any) => `${humanNumber(context.parsed.y)} ${unit}`,
         },
       },
     },
@@ -174,7 +163,7 @@ export const PayoutBar = (props: PayoutBarProps) => {
   return (
     <div
       style={{
-        height: height === undefined ? 'auto' : height,
+        height: height || 'auto',
       }}
     >
       <Bar options={options} data={data} />

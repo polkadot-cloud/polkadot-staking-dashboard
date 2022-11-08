@@ -35,7 +35,7 @@ export const Connected = () => {
 
   return (
     <>
-      {activeAccount && (
+      {activeAccount ? (
         <>
           {/* default account display / stash label if actively nominating */}
           <HeadingWrapper>
@@ -84,7 +84,7 @@ export const Connected = () => {
             </HeadingWrapper>
           )}
         </>
-      )}
+      ) : null}
     </>
   );
 };
