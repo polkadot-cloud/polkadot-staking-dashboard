@@ -151,6 +151,7 @@ export const Tips = () => {
 
     return fillVariables(
       {
+        ...i,
         title: tTips(`${localeKey}.title`),
         subtitle: tTips(`${localeKey}.subtitle`),
         description: i18n.getResource(
