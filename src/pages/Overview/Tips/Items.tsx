@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion, useAnimationControls } from 'framer-motion';
-import Lottie from 'react-lottie';
-import React, { useEffect, useState } from 'react';
-import { useTips } from 'contexts/Tips';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
+import { useTips } from 'contexts/Tips';
+import { motion, useAnimationControls } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import Lottie from 'react-lottie';
+import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
   const controls = useAnimationControls();

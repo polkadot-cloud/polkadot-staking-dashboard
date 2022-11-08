@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   backgroundLabel,
@@ -8,7 +9,6 @@ import {
   textPrimary,
   textSecondary,
 } from 'theme';
-import { motion } from 'framer-motion';
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
