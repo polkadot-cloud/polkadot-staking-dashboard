@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useEffect, useRef, useState } from 'react';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import {
   EraStakers,
@@ -11,6 +10,7 @@ import {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   localStorageOrDefault,
