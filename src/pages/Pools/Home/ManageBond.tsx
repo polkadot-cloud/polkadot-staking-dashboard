@@ -42,7 +42,7 @@ export const ManageBond = () => {
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
         </h2>
-        <ButtonRow verticalSpacing>
+        <ButtonRow>
           <ButtonPrimary
             disabled={
               poolsSyncing ||
