@@ -39,7 +39,7 @@ export const Controller = ({ label }: { label: string }) => {
           <div className="icon">
             <Identicon value={controller || ''} size={26} />
           </div>
-          {displayName || display}
+          {displayName || display}&nbsp;
           <div className="btn">
             <ButtonPrimary
               text="Change"

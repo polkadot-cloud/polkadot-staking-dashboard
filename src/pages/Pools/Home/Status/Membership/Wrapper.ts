@@ -47,8 +47,8 @@ export const Wrapper = styled.div<WrapperProps>`
         margin-left: 0.75rem;
       }
 
-      span {
-        padding-left: 0.75rem;
+      > span {
+        padding-left: 0.8rem;
       }
     }
   }
