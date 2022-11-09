@@ -8,12 +8,11 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import Button from 'library/Button';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
-import React from 'react';
 import { determinePoolDisplay } from 'Utils';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
@@ -46,14 +45,11 @@ export const Membership = ({ label }: { label: string }) => {
   let paddingRight = 0;
 
   if (isOwner() || isStateToggler()) {
-    paddingRight += 8.2;
+    paddingRight += 8.5;
     buttons.push(
-      <Button
-        primary
-        inline
-        title="Manage"
-        icon={faCog}
-        small
+      <ButtonPrimary
+        text="Manage"
+        iconLeft={faCog}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
         onClick={() => openModalWith('ManagePool', {}, 'small')}
       />
@@ -61,14 +57,11 @@ export const Membership = ({ label }: { label: string }) => {
   }
 
   if (isMember() && !isDepositor() && active?.gtn(0)) {
-    paddingRight += 7.9;
+    paddingRight += 8.5;
     buttons.push(
-      <Button
-        primary
-        inline
-        title="Leave"
-        icon={faSignOutAlt}
-        small
+      <ButtonPrimary
+        text="Leave"
+        iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
         onClick={() =>
           openModalWith('LeavePool', { bondType: 'pool' }, 'small')
@@ -80,7 +73,8 @@ export const Membership = ({ label }: { label: string }) => {
   return (
     <StatWrapper>
       <h4>
-        {label} <OpenHelpIcon helpKey="Pool Membership" />
+        {label}
+        <OpenHelpIcon helpKey="Pool Membership" />
       </h4>
       <Wrapper
         paddingLeft={selectedActivePool !== null}
@@ -97,7 +91,7 @@ export const Membership = ({ label }: { label: string }) => {
           {buttons.length > 0 && (
             <div className="btn">
               {buttons.map((b: any, i: number) => (
-                <React.Fragment key={i}>{b}</React.Fragment>
+                <span key={i}>{b}</span>
               ))}
             </div>
           )}

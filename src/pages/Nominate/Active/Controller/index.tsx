@@ -7,11 +7,11 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
-import Button from 'library/Button';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { clipAddress } from 'Utils';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { Wrapper } from './Wrapper';
 
 export const Controller = ({ label }: { label: string }) => {
@@ -41,12 +41,9 @@ export const Controller = ({ label }: { label: string }) => {
           </div>
           {displayName || display}
           <div className="btn">
-            <Button
-              primary
-              inline
-              title="Change"
-              icon={faExchangeAlt}
-              small
+            <ButtonPrimary
+              text="Change"
+              iconLeft={faExchangeAlt}
               disabled={
                 !isReady || !hasController() || isReadOnlyAccount(activeAccount)
               }

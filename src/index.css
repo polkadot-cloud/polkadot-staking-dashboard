@@ -90,11 +90,7 @@ a {
 
 button {
   font-family: 'Inter', 'sans-serif', sans-serif;
-  background: none;
-  box-shadow: none;
-  border: none;
-  cursor: pointer;
-  font-variation-settings: 'wght' 550;
+  cursor: pointer
 }
 
 .label {
