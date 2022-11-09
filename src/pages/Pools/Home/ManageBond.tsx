@@ -9,11 +9,12 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { Button, ButtonRow } from 'library/Button';
+import { ButtonRow } from 'library/Button';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { humanNumber, planckBnToUnit } from 'Utils';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -41,57 +42,57 @@ export const ManageBond = () => {
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
         </h2>
-        <ButtonRow>
-          <Button
-            small
-            primary
-            inline
-            title="+"
-            disabled={
-              poolsSyncing ||
-              !isBonding() ||
-              !isMember() ||
-              state === PoolState.Destroy
-            }
-            onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'add', bondType: 'pool' },
-                'small'
-              )
-            }
-          />
-          <Button
-            small
-            primary
-            title="-"
-            disabled={
-              poolsSyncing ||
-              !isBonding() ||
-              !isMember() ||
-              state === PoolState.Destroy
-            }
-            onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'remove', bondType: 'pool' },
-                'small'
-              )
-            }
-          />
-          <Button
-            small
-            inline
-            primary
-            icon={faLockOpen}
-            title={String(totalUnlockChuncks ?? 0)}
-            disabled={
-              poolsSyncing || !isMember() || state === PoolState.Destroy
-            }
-            onClick={() =>
-              openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
-            }
-          />
+        <ButtonRow verticalSpacing>
+          <span>
+            <ButtonPrimary
+              marginRight
+              text="+"
+              disabled={
+                poolsSyncing ||
+                !isBonding() ||
+                !isMember() ||
+                state === PoolState.Destroy
+              }
+              onClick={() =>
+                openModalWith(
+                  'UpdateBond',
+                  { fn: 'add', bondType: 'pool' },
+                  'small'
+                )
+              }
+            />
+          </span>
+          <span>
+            <ButtonPrimary
+              marginRight
+              text="-"
+              disabled={
+                poolsSyncing ||
+                !isBonding() ||
+                !isMember() ||
+                state === PoolState.Destroy
+              }
+              onClick={() =>
+                openModalWith(
+                  'UpdateBond',
+                  { fn: 'remove', bondType: 'pool' },
+                  'small'
+                )
+              }
+            />
+          </span>
+          <span>
+            <ButtonPrimary
+              iconLeft={faLockOpen}
+              text={String(totalUnlockChuncks ?? 0)}
+              disabled={
+                poolsSyncing || !isMember() || state === PoolState.Destroy
+              }
+              onClick={() =>
+                openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
+              }
+            />
+          </span>
         </ButtonRow>
       </CardHeaderWrapper>
       <BondedGraph
