@@ -24,7 +24,7 @@
     "chartjs-plugin-datalabels": "^2.0.0",
     "che-react-number-easing": "^0.1.4",
     "downshift": "^6.1.7",
-    "framer-motion": "^7.6.2",
+    "framer-motion": "^7.6.5",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",
