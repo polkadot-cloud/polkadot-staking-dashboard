@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -15,7 +16,6 @@ import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { humanNumber, planckBnToUnit } from 'Utils';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -47,50 +47,44 @@ export const ManageBond = () => {
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
         </h2>
         <ButtonRow verticalSpacing>
-          <span>
-            <ButtonPrimary
-              marginRight
-              text="+"
-              disabled={
-                inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
-              }
-              onClick={() =>
-                openModalWith(
-                  'UpdateBond',
-                  { fn: 'add', bondType: 'stake' },
-                  'small'
-                )
-              }
-            />
-          </span>
-          <span>
-            <ButtonPrimary
-              marginRight
-              text="-"
-              disabled={
-                inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
-              }
-              onClick={() =>
-                openModalWith(
-                  'UpdateBond',
-                  { fn: 'remove', bondType: 'stake' },
-                  'small'
-                )
-              }
-            />
-          </span>
-          <span>
-            <ButtonPrimary
-              iconLeft={faLockOpen}
-              text={String(totalUnlockChuncks ?? 0)}
-              disabled={
-                inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
-              }
-              onClick={() =>
-                openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
-              }
-            />
-          </span>
+          <ButtonPrimary
+            marginRight
+            text="+"
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
+            onClick={() =>
+              openModalWith(
+                'UpdateBond',
+                { fn: 'add', bondType: 'stake' },
+                'small'
+              )
+            }
+          />
+          <ButtonPrimary
+            marginRight
+            text="-"
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
+            onClick={() =>
+              openModalWith(
+                'UpdateBond',
+                { fn: 'remove', bondType: 'stake' },
+                'small'
+              )
+            }
+          />
+          <ButtonPrimary
+            iconLeft={faLockOpen}
+            text={String(totalUnlockChuncks ?? 0)}
+            disabled={
+              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+            }
+            onClick={() =>
+              openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
+            }
+          />
         </ButtonRow>
       </CardHeaderWrapper>
       <BondedGraph

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React from 'react';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { StatProps } from './types';
 import { Wrapper } from './Wrapper';
 

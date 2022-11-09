@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -11,7 +12,6 @@ import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { clipAddress } from 'Utils';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { Wrapper } from './Wrapper';
 
 export const Controller = ({ label }: { label: string }) => {

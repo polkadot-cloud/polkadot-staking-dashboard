@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -12,7 +13,6 @@ import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { determinePoolDisplay } from 'Utils';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
