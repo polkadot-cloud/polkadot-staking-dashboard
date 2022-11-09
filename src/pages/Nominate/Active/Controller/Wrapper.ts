@@ -14,7 +14,7 @@ export const Wrapper = styled.div<WrapperProps>`
 
   > .hide-with-padding {
     padding-left: ${(props) => (props.paddingLeft ? '3rem' : '0')};
-    padding-right: ${(props) => (props.paddingRight ? '7.9rem' : '0')};
+    padding-right: ${(props) => (props.paddingRight ? '8.2rem' : '0')};
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
     flex-shrink: 1;
@@ -37,8 +37,7 @@ export const Wrapper = styled.div<WrapperProps>`
       position: absolute;
       right: 0;
       top: 0;
-      padding-top: 0.1rem;
-      padding-bottom: 0.1rem;
+      padding: 0.1rem;
       display: flex;
       flex-flow: row wrap;
       align-items: center;

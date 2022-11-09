@@ -38,8 +38,7 @@ export const Wrapper = styled.div<WrapperProps>`
       position: absolute;
       right: 0;
       top: 0;
-      padding-top: 0.1rem;
-      padding-bottom: 0.1rem;
+      padding: 0.1rem;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
