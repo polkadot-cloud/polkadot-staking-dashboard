@@ -44,14 +44,13 @@ export const ManageBond = () => {
         </h2>
         <ButtonRow verticalSpacing>
           <ButtonPrimary
-            marginRight
-            text="+"
             disabled={
               poolsSyncing ||
               !isBonding() ||
               !isMember() ||
               state === PoolState.Destroy
             }
+            marginRight
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -59,16 +58,16 @@ export const ManageBond = () => {
                 'small'
               )
             }
+            text="+"
           />
           <ButtonPrimary
-            marginRight
-            text="-"
             disabled={
               poolsSyncing ||
               !isBonding() ||
               !isMember() ||
               state === PoolState.Destroy
             }
+            marginRight
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -76,16 +75,17 @@ export const ManageBond = () => {
                 'small'
               )
             }
+            text="-"
           />
           <ButtonPrimary
-            iconLeft={faLockOpen}
-            text={String(totalUnlockChuncks ?? 0)}
             disabled={
               poolsSyncing || !isMember() || state === PoolState.Destroy
             }
+            iconLeft={faLockOpen}
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
             }
+            text={String(totalUnlockChuncks ?? 0)}
           />
         </ButtonRow>
       </CardHeaderWrapper>

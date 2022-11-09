@@ -48,11 +48,10 @@ export const ManageBond = () => {
         </h2>
         <ButtonRow verticalSpacing>
           <ButtonPrimary
-            marginRight
-            text="+"
             disabled={
               inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
             }
+            marginRight
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -60,13 +59,13 @@ export const ManageBond = () => {
                 'small'
               )
             }
+            text="+"
           />
           <ButtonPrimary
-            marginRight
-            text="-"
             disabled={
               inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
             }
+            marginRight
             onClick={() =>
               openModalWith(
                 'UpdateBond',
@@ -74,16 +73,17 @@ export const ManageBond = () => {
                 'small'
               )
             }
+            text="-"
           />
           <ButtonPrimary
-            iconLeft={faLockOpen}
-            text={String(totalUnlockChuncks ?? 0)}
             disabled={
               inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
             }
+            iconLeft={faLockOpen}
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
             }
+            text={String(totalUnlockChuncks ?? 0)}
           />
         </ButtonRow>
       </CardHeaderWrapper>
