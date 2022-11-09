@@ -21,7 +21,6 @@ export const Wrapper = styled.div`
     margin-top: 1rem;
 
     > section {
-      box-sizing: border-box;
       padding: 0 0.15rem;
 
       &:nth-child(1) {

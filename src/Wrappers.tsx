@@ -33,7 +33,6 @@ import {
  */
 export const EntryWrapper = styled.div`
   background: ${backgroundGradient};
-  box-sizing: border-box;
   width: 100%;
   background-attachment: fixed;
   display: flex;
@@ -116,7 +115,6 @@ export const EntryWrapper = styled.div`
  * Used once in Router.
  */
 export const BodyInterfaceWrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: row nowrap;
   position: relative;
@@ -130,7 +128,6 @@ export const BodyInterfaceWrapper = styled.div`
  * Used once in Router.
  */
 export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
-  box-sizing: border-box;
   height: 100vh;
   display: flex;
   flex-flow: column nowrap;
@@ -162,7 +159,6 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
  * Used once in Router.
  */
 export const MainInterfaceWrapper = styled.div`
-  box-sizing: border-box;
   flex: 1;
   display: flex;
   flex-flow: column nowrap;
@@ -177,7 +173,6 @@ export const MainInterfaceWrapper = styled.div`
  */
 export const PageWrapper = styled(motion.div)`
   max-width: ${InterfaceMaximumWidth}px;
-  box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
   padding-bottom: 4.5rem;
@@ -192,7 +187,6 @@ export const PageWrapper = styled(motion.div)`
  * is stuck.
  */
 export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
-  box-sizing: border-box;
   background: ${backgroundPrimary};
   position: sticky;
   top: 0px;
@@ -214,7 +208,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   }
 
   .title {
-    box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -256,7 +249,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   }
 
   .tabs {
-    box-sizing: border-box;
     overflow: hidden;
     max-width: ${InterfaceMaximumWidth}px;
     transition: margin 0.2s;
@@ -268,7 +260,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
     }
 
     > .scroll {
-      box-sizing: border-box;
       width: 100%;
       height: 4.5rem;
       overflow-x: auto;
@@ -312,7 +303,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
  */
 export const MenuPaddingWrapper = styled.div`
   background: ${backgroundPrimary};
-  box-sizing: border-box;
   position: fixed;
   top: 0px;
   width: 100%;
@@ -330,16 +320,12 @@ export const MenuPaddingWrapper = styled.div`
  * Commonly used with RowPrimaryWrapper and RowSecondaryWrapper.
  */
 export const PageRowWrapper = styled.div<PageRowWrapperProps>`
-  box-sizing: border-box;
   margin-top: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
   margin-bottom: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
   display: flex;
   flex-shrink: 0;
   flex-flow: row wrap;
   width: 100%;
-  * {
-    box-sizing: border-box;
-  }
   /* kill heading padding, already applied to wrapper */
   h1,
   h2,
@@ -355,7 +341,6 @@ export const PageRowWrapper = styled.div<PageRowWrapperProps>`
  */
 export const RowPrimaryWrapper = styled.div<InterfaceLayoutProps>`
   order: ${(props) => props.vOrder};
-  box-sizing: border-box;
   flex: 1;
   flex-basis: 100%;
   max-width: 100%;
@@ -383,7 +368,6 @@ export const RowPrimaryWrapper = styled.div<InterfaceLayoutProps>`
  */
 export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
   order: ${(props) => props.vOrder};
-  box-sizing: border-box;
   flex-basis: 100%;
   width: 100%;
   border-radius: 1rem;
@@ -420,7 +404,6 @@ export const Separator = styled.div`
  * Positioned under titles for a Go Back button and other page header info.
  */
 export const TopBarWrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: row wrap;
   align-items: center;

@@ -21,7 +21,6 @@ export const Wrapper = styled(motion.div)`
   backdrop-filter: blur(14px);
 
   > div {
-    box-sizing: border-box;
     height: 100%;
     display: flex;
     flex-flow: row wrap;
@@ -60,7 +59,6 @@ export const HeightWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  box-sizing: border-box;
   width: 100%;
   height: auto;
   overflow: hidden;
@@ -98,7 +96,6 @@ export const ContentWrapper = styled.div`
 `;
 
 export const TipWrapper = styled(motion.div)`
-  box-sizing: border-box;
   width: 100%;
   display: flex;
   background: ${helpButton};

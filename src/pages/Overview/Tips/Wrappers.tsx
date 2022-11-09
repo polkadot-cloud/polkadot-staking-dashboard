@@ -12,7 +12,6 @@ import { motion } from 'framer-motion';
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
-  box-sizing: border-box;
   display: flex;
   flex-flow: row nowrap;
   justify-items: center;
@@ -28,7 +27,6 @@ export const ItemWrapper = styled(motion.div)`
 
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
   border-radius: 1.25rem;
-  box-sizing: border-box;
   transition: border 0.05s;
   display: flex;
   flex-flow: row wrap;
@@ -89,7 +87,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           height: 1.9rem;
 
           > span {
-            box-sizing: border-box;
             position: absolute;
             right: 0;
             min-width: 6.2rem;
@@ -124,7 +121,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           width: auto;
           height: 1.8rem;
           max-width: 100%;
-          box-sizing: border-box;
           margin: 0;
           padding: 0.15rem 6rem 0 0;
           text-align: left;
@@ -143,7 +139,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           background: ${networkColor};
           color: white;
           border-radius: 1.5rem;
-          padding: 0.25rem 0.75rem;
+          padding: 0.1rem 0.75rem;
           font-size: 1rem;
 
           > svg {

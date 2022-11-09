@@ -13,7 +13,6 @@ import {
 
 export const Items = styled.div`
   position: relative;
-  box-sizing: border-box;
   margin: 0.75rem 0 0;
   width: 100%;
   border-radius: 0.75rem;
@@ -25,7 +24,6 @@ export const Items = styled.div`
 `;
 
 export const Item = styled.button<{ selected?: boolean }>`
-  box-sizing: border-box;
   flex-basis: 33%;
   @media (max-width: ${SectionFullWidthThreshold}px) {
     flex-basis: 100%;
@@ -35,7 +33,6 @@ export const Item = styled.button<{ selected?: boolean }>`
     background: ${buttonPrimaryBackground};
     border: 1.5px solid
       ${(props) => (props.selected ? networkColor : borderPrimary)};
-    box-sizing: border-box;
     width: 100%;
     border-radius: 1rem;
     display: flex;

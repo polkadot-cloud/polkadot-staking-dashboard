@@ -11,7 +11,6 @@ import {
 } from 'theme';
 
 export const Wrapper = styled.div`
-  box-sizing: border-box;
   padding: 0 0.5rem;
   position: relative;
   overflow: hidden;
@@ -29,7 +28,6 @@ export const Wrapper = styled.div`
     overflow: hidden;
 
     > div {
-      box-sizing: border-box;
       display: flex;
       flex-wrap: nowrap;
       overflow: auto;

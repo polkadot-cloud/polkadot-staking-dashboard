@@ -30,7 +30,6 @@ export const ItemsWrapper = styled(motion.div)`
 `;
 
 export const ItemWrapper = styled(motion.div)`
-  box-sizing: border-box;
   flex-shrink: 0;
   flex-grow: 1;
   flex-basis: 100%;
@@ -46,7 +45,6 @@ export const ItemWrapper = styled(motion.div)`
     background: ${backgroundSecondary};
     border: ${cardBorder} ${borderPrimary};
     box-shadow: ${cardShadow} ${shadowColor};
-    box-sizing: border-box;
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;
@@ -61,7 +59,6 @@ export const ItemWrapper = styled(motion.div)`
 
     /* vertical validator thumbnail / content tiling */
     section {
-      box-sizing: border-box;
       display: flex;
       flex-flow: column wrap;
       padding: 0 1rem;
@@ -138,7 +135,6 @@ export const ItemWrapper = styled(motion.div)`
       }
 
       &:first-child {
-        box-sizing: border-box;
         flex-flow: row wrap;
         align-items: center;
         justify-content: flex-start;
