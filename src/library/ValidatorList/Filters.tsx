@@ -37,7 +37,7 @@ export const Filters = () => {
     <Container>
       <Category title="Order">
         <Item
-          label="Active Low Commission"
+          label="Low Commission"
           icon={faPercentage}
           transform="grow-4"
           active={validatorOrder === 'commission'}
