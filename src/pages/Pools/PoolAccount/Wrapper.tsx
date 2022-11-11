@@ -46,6 +46,7 @@ export const Wrapper = styled.div<{ last?: boolean }>`
         opacity: 0.5;
         cursor: pointer;
         transition: opacity 0.1s;
+        margin-left: 0.5rem;
         &:hover {
           opacity: 0.8;
         }
