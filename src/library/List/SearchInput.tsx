@@ -7,7 +7,7 @@ export const SearchInput = ({ handleChange, placeholder }: any) => (
   <div className="search">
     <input
       type="text"
-      className="search"
+      className="search searchbox"
       placeholder={placeholder}
       onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
     />

@@ -200,6 +200,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
               <>
                 <h2>Update Pool Name</h2>
                 <input
+                  className="textbox"
                   style={{ width: '100%' }}
                   placeholder="Pool Name"
                   type="text"
