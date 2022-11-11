@@ -174,7 +174,7 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 4rem;
+  margin-top: 5.5rem;
   @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
     margin-top: 3rem;
   }
