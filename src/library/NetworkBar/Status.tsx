@@ -3,8 +3,8 @@
 
 import { useApi } from 'contexts/Api';
 import { ConnectionStatus } from 'contexts/Api/types';
-import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export const Status = () => {
   const { status } = useApi();

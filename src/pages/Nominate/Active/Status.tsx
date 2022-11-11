@@ -19,8 +19,8 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import Stat from 'library/Stat';
-import { planckBnToUnit, rmCommas } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { planckBnToUnit, rmCommas } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
 

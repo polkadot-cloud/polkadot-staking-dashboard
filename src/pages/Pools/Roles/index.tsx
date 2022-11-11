@@ -10,15 +10,15 @@ import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import Button from 'library/Button';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState } from 'react';
-import { PoolAccount } from '../PoolAccount';
+import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
+import { PoolAccount } from '../PoolAccount';
 import RoleEditInput from './RoleEditInput';
 import { RoleEditEntry, RolesProps } from './types';
 

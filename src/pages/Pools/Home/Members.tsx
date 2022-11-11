@@ -7,9 +7,9 @@ import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { PoolState } from 'contexts/Pools/types';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { MembersList } from './MembersList';
 

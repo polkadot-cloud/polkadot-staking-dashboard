@@ -7,9 +7,9 @@ import { SetupType } from 'contexts/UI/types';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { useTranslation } from 'react-i18next';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from './Input';
 
 export const PoolName = (props: SetupStepProps) => {

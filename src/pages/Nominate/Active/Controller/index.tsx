@@ -10,8 +10,8 @@ import { useStaking } from 'contexts/Staking';
 import Button from 'library/Button';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
-import { useTranslation } from 'react-i18next';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
+import { useTranslation } from 'react-i18next';
 import { clipAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 

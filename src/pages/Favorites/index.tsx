@@ -6,9 +6,9 @@ import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { ValidatorList } from 'library/ValidatorList';
-import { PageRowWrapper } from 'Wrappers';
-import { useTranslation } from 'react-i18next';
 import { PageProps } from 'pages/types';
+import { useTranslation } from 'react-i18next';
+import { PageRowWrapper } from 'Wrappers';
 
 export const Favorites = (props: PageProps) => {
   const { isReady } = useApi();

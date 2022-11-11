@@ -14,11 +14,11 @@ import Identicon from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useTranslation } from 'react-i18next';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {

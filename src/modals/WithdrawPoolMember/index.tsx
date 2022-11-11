@@ -22,8 +22,8 @@ import {
   PaddingWrapper,
   Separator,
 } from 'modals/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {

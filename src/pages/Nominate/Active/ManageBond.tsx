@@ -9,12 +9,12 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import { useUi } from 'contexts/UI';
 import { Button, ButtonRow } from 'library/Button';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 
 export const ManageBond = () => {

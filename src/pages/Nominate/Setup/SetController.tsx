@@ -8,13 +8,13 @@ import { SetupType } from 'contexts/UI/types';
 import { AccountSelect } from 'library/Form/AccountSelect';
 import { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
+import { Warning } from 'library/Form/Warning';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { Warning } from 'library/Form/Warning';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { Spacer } from '../Wrappers';
 

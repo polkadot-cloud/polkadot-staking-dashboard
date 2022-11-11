@@ -4,13 +4,13 @@
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 import {
   humanNumber,
   planckBnToUnit,
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
-import { useTranslation } from 'react-i18next';
 
 export const PoolMemberBonded = (props: any) => {
   const { meta, batchKey, batchIndex } = props;

@@ -3,14 +3,14 @@
 
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
+import { useLocale } from 'contexts/Locale';
 import { useTheme } from 'contexts/Themes';
 import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { humanNumber } from 'Utils';
-import { useTranslation } from 'react-i18next';
-import { useLocale } from 'contexts/Locale';
-import { GraphWrapper } from './Wrappers';
 import { BondedProps } from './types';
+import { GraphWrapper } from './Wrappers';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

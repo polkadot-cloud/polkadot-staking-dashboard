@@ -3,11 +3,11 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { useTranslation } from 'react-i18next';
 import { Button } from 'library/Button';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { Wrapper } from './Wrapper';
+import { useTranslation } from 'react-i18next';
 import { HeaderProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const Header = (props: HeaderProps) => {
   const { title, helpKey, complete, thisSection, setupType } = props;

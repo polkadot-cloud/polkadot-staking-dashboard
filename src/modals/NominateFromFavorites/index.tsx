@@ -16,10 +16,10 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
-import { NotesWrapper, PaddingWrapper, FooterWrapper } from '../Wrappers';
+import { useTranslation } from 'react-i18next';
+import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {

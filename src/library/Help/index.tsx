@@ -13,13 +13,13 @@ import {
   HelpRecord,
   HelpRecords,
 } from 'contexts/Help/types';
-import { useTranslation } from 'react-i18next';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
-import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
+import { useTranslation } from 'react-i18next';
 import Definition from './Items/Definition';
 import External from './Items/External';
+import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
   const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();

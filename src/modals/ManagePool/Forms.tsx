@@ -13,14 +13,14 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { BondedPool, PoolState } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
-import { useTranslation } from 'react-i18next';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import React, { forwardRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Separator } from 'Wrappers';
-import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
   const { setSection, task, section } = props;

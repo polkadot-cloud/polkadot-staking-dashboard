@@ -4,8 +4,8 @@
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
-import { planckBnToUnit } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { planckBnToUnit } from 'Utils';
 
 export const LastEraPayoutStatBox = () => {
   const { network } = useApi();

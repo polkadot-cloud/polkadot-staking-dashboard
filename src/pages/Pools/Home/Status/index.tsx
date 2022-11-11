@@ -16,13 +16,13 @@ import { PoolState } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import { useTranslation } from 'react-i18next';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { Stat } from 'library/Stat';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { Separator } from 'Wrappers';
-import { useStatusButtons } from './useStatusButtons';
 import { Membership } from './Membership';
+import { useStatusButtons } from './useStatusButtons';
 
 export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();

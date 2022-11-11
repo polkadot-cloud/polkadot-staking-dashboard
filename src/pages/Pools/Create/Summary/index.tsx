@@ -11,7 +11,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
-import { useTranslation } from 'react-i18next';
 import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
@@ -22,6 +21,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, unitToPlanckBn } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 

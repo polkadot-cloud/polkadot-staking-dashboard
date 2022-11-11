@@ -10,19 +10,19 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
 import { GenerateNominations } from 'library/GenerateNominations';
-import { useTranslation } from 'react-i18next';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
+import { useTranslation } from 'react-i18next';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
-import { Nominations } from './Nominations';
 import { ControllerNotImported } from './ControllerNotImported';
 import { ManageBond } from './ManageBond';
+import { Nominations } from './Nominations';
 import ActiveNominationsStatBox from './Stats/ActiveNominations';
 import InacctiveNominationsStatBox from './Stats/InactiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';

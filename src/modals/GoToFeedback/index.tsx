@@ -4,8 +4,8 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
-import { useTranslation } from 'react-i18next';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { NotesWrapper, PaddingWrapper } from '../Wrappers';
 
 export const GoToFeedback = () => {

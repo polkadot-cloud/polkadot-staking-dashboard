@@ -9,8 +9,8 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Button } from 'library/Button';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
-import { defaultThemes } from 'theme/default';
 import { useTranslation } from 'react-i18next';
+import { defaultThemes } from 'theme/default';
 import { PageRowWrapper } from 'Wrappers';
 
 export const ControllerNotImported = () => {

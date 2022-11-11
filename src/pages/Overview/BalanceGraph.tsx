@@ -5,6 +5,7 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useLocale } from 'contexts/Locale';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -13,19 +14,18 @@ import { usePrices } from 'library/Hooks/usePrices';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import {
   defaultThemes,
   networkColors,
   networkColorsSecondary,
 } from 'theme/default';
-import { useTranslation } from 'react-i18next';
 import {
   humanNumber,
   planckBnToUnit,
   toFixedIfNecessary,
   usdFormatter,
 } from 'Utils';
-import { useLocale } from 'contexts/Locale';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

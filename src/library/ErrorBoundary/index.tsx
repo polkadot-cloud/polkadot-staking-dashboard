@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBug } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
 
 // an example of types of errors, could be unknown

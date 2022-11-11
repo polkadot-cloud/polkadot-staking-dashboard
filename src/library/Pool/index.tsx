@@ -19,7 +19,6 @@ import { useValidators } from 'contexts/Validators';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import { useTranslation } from 'react-i18next';
 import {
   Labels,
   MenuPosition,
@@ -28,10 +27,11 @@ import {
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useEffect, useRef, useState } from 'react';
-import { Members } from '../ListItem/Labels/Members';
-import { PoolProps } from './types';
+import { useTranslation } from 'react-i18next';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
+import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
+import { PoolProps } from './types';
 
 export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;

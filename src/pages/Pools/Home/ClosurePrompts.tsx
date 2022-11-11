@@ -10,10 +10,10 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolState } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import { useUi } from 'contexts/UI';
 import { Button, ButtonRow } from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {

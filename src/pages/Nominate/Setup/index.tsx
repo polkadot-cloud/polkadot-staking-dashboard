@@ -12,9 +12,9 @@ import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
-import { SetController } from './SetController';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
+import { SetController } from './SetController';
 import { Summary } from './Summary';
 
 export const Setup = () => {

@@ -12,9 +12,9 @@ import {
   Tooltip,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { EraPointsProps } from './types';
 

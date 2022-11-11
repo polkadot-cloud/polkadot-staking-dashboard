@@ -9,15 +9,15 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import { useTxFees } from 'contexts/TxFees';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
+import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import { UnbondInput } from './UnbondInput';
-import { UnbondFeedbackProps } from '../types';
 
 export const UnbondFeedback = ({
   bondType,

@@ -10,9 +10,9 @@ import {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef, shuffle } from 'Utils';
-import { useTranslation } from 'react-i18next';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';

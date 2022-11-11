@@ -12,12 +12,12 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { UIContextInterface } from 'contexts/UI/types';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { PageCategory, PageItem, PagesConfig } from 'types';
-import { useTranslation } from 'react-i18next';
-import { LogoWrapper } from './Wrapper';
-import { Primary } from './Primary';
 import Heading from './Heading/Heading';
+import { Primary } from './Primary';
+import { LogoWrapper } from './Wrapper';
 
 export const Main = () => {
   const { network } = useApi();

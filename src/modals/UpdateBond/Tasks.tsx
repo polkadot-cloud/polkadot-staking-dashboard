@@ -8,8 +8,8 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { forwardRef } from 'react';
-import { planckBnToUnit } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { planckBnToUnit } from 'Utils';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {

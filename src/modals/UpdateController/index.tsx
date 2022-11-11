@@ -18,8 +18,8 @@ import { getEligibleControllers } from 'library/Form/Utils/getEligibleController
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 

@@ -7,8 +7,8 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { PoolAccount } from 'library/PoolAccount';
-import { clipAddress } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { clipAddress } from 'Utils';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 

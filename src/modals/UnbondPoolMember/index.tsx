@@ -20,8 +20,8 @@ import {
   PaddingWrapper,
   Separator,
 } from 'modals/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas, unitToPlanckBn } from 'Utils';
 
 export const UnbondPoolMember = () => {

@@ -10,9 +10,9 @@ import ValidatorList from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
-import { ItemsWrapper } from './Wrappers';
-import { Item } from './Item';
 import { useCommunitySections } from './context';
+import { Item } from './Item';
+import { ItemsWrapper } from './Wrappers';
 
 export const Entity = () => {
   const { isReady, network } = useApi();

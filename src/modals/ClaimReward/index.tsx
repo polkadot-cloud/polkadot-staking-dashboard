@@ -15,10 +15,10 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
-import { PaddingWrapper, FooterWrapper, Separator } from '../Wrappers';
+import { FooterWrapper, PaddingWrapper, Separator } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { api, network } = useApi();

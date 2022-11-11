@@ -1,17 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { DEFAULT_LOCALE, DEFAULT_NS } from 'consts';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { DEFAULT_LOCALE, DEFAULT_NS } from 'consts';
 import commoncn from './cn/common.json';
-import commonen from './en/common.json';
-import pagescn from './cn/pages.json';
-import pagesen from './en/pages.json';
-import helpen from './en/help.json';
 import helpcn from './cn/help.json';
-import tipsen from './en/tips.json';
+import pagescn from './cn/pages.json';
 import tipscn from './cn/tips.json';
+import commonen from './en/common.json';
+import helpen from './en/help.json';
+import pagesen from './en/pages.json';
+import tipsen from './en/tips.json';
 
 // construct resources.
 export const resources = {

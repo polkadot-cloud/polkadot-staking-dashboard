@@ -12,9 +12,9 @@ import {
 import { Category } from 'library/Filter/Category';
 import { Container } from 'library/Filter/Container';
 import { useValidatorFilter } from 'library/Filter/context';
-import { useTranslation } from 'react-i18next';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Filters = () => {
   const {

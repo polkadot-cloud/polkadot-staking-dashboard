@@ -11,9 +11,9 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import Button from 'library/Button';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
-import { useTranslation } from 'react-i18next';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { determinePoolDisplay } from 'Utils';
 import { Wrapper } from './Wrapper';
 

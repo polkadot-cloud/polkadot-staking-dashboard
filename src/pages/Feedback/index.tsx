@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageTitle } from 'library/PageTitle';
-import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { Wrapper } from '../Community/Wrappers';
 import { PageProps } from '../types';
@@ -37,8 +37,8 @@ const Feedback = (props: PageProps) => {
           'complete' === d.readyState
             ? l()
             : w.attachEvent
-              ? w.attachEvent('onload', l)
-              : w.addEventListener('load', l, !1);
+            ? w.attachEvent('onload', l)
+            : w.addEventListener('load', l, !1);
       }
     })(window, document, 'canny-jssdk', 'script');
 
@@ -53,7 +53,7 @@ const Feedback = (props: PageProps) => {
   return (
     <Wrapper>
       <PageTitle title={tPages(key)} />
-      <PageRowWrapper className='page-padding'>
+      <PageRowWrapper className="page-padding">
         <div data-canny style={{ width: '100%' }} />
       </PageRowWrapper>
     </Wrapper>

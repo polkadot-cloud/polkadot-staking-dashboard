@@ -9,17 +9,17 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { planckBnToUnit } from 'Utils';
-import { FormFooter } from './FormFooter';
 import { NotesWrapper, Separator } from '../../Wrappers';
 import { FormsProps } from '../types';
+import { FormFooter } from './FormFooter';
 
 export const BondAll = (props: FormsProps) => {
   const { setSection, setLocalResize } = props;

@@ -3,8 +3,8 @@
 
 import { useConnect } from 'contexts/Connect';
 import React from 'react';
-import { isValidAddress } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {

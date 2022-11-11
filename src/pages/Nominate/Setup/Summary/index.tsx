@@ -16,8 +16,8 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { useTranslation } from 'react-i18next';
 import { SetupStepProps } from 'library/SetupSteps/types';
+import { useTranslation } from 'react-i18next';
 import { humanNumber } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 

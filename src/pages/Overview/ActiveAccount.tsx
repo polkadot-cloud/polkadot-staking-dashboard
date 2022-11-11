@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import { useTranslation } from 'react-i18next';
 import { Identicon } from 'library/Identicon';
+import { useTranslation } from 'react-i18next';
 import { clipAddress, convertRemToPixels } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 

@@ -4,11 +4,11 @@
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useTranslation } from 'react-i18next';
 import Button from 'library/Button';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
-import { Separator, NotesWrapper } from '../Wrappers';
+import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(

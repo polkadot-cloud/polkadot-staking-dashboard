@@ -3,10 +3,10 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { useTranslation } from 'react-i18next';
 import { Button } from 'library/Button';
-import { Wrapper } from './Wrapper';
+import { useTranslation } from 'react-i18next';
 import { FooterProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const Footer = (props: FooterProps) => {
   const { complete, setupType } = props;

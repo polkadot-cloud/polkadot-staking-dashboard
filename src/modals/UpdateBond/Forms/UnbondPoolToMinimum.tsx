@@ -8,16 +8,16 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { FormFooter } from './FormFooter';
-import { Separator, NotesWrapper } from '../../Wrappers';
+import { NotesWrapper, Separator } from '../../Wrappers';
 import { FormsProps } from '../types';
+import { FormFooter } from './FormFooter';
 
 export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { setSection } = props;

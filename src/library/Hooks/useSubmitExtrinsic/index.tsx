@@ -9,8 +9,8 @@ import { Extension } from 'contexts/Connect/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyApi } from 'types';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 

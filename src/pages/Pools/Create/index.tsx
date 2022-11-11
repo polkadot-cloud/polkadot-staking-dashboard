@@ -4,16 +4,16 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
-import { useTranslation } from 'react-i18next';
 import { SetupType } from 'contexts/UI/types';
 import Button from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
+import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
-import { PoolName } from './PoolName';
 import { Bond } from './Bond';
+import { PoolName } from './PoolName';
 import { PoolRoles } from './PoolRoles';
 import { Summary } from './Summary';
 

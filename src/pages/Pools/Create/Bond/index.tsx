@@ -9,9 +9,9 @@ import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { useTranslation } from 'react-i18next';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Bond = (props: SetupStepProps) => {
   const { section } = props;

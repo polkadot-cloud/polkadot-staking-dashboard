@@ -7,11 +7,11 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useRef, useState } from 'react';
-import { Wrapper, FixedContentWrapper, CardsWrapper } from './Wrappers';
-import { Overview } from './Overview';
+import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
+import { Overview } from './Overview';
+import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();

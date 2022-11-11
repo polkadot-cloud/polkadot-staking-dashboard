@@ -10,15 +10,16 @@ import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
-import { Tips } from 'library/Tips';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
 import SideMenu from 'library/SideMenu';
+import { Tips } from 'library/Tips';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import {
   HashRouter,
   Navigate,
@@ -32,7 +33,6 @@ import {
   PageWrapper,
   SideInterfaceWrapper,
 } from 'Wrappers';
-import { useTranslation } from 'react-i18next';
 
 export const RouterInner = () => {
   const { network } = useApi();

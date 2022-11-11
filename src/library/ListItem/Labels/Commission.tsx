@@ -3,8 +3,8 @@
 
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Commission = (props: { commission: number }) => {
   const { commission } = props;

@@ -14,13 +14,13 @@ import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { useTranslation } from 'react-i18next';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { ContentWrapper } from './Wrapper';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { ContentWrapper } from './Wrapper';
 
 export const Forms = () => {
   const { api, network } = useApi();

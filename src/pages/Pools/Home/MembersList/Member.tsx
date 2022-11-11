@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { PoolState } from 'contexts/Pools/types';
@@ -26,6 +25,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Member = (props: any) => {
   const { meta } = usePoolMembers();
