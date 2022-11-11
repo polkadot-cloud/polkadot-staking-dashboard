@@ -70,6 +70,7 @@ export const ItemWrapper = styled(motion.div)`
         align-items: center;
 
         > button {
+          font-size: 1.1rem;
           &.active {
             color: ${textSecondary};
             background: ${backgroundDropdown};
