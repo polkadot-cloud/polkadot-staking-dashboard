@@ -138,17 +138,18 @@ export const AccountProvider = ({
             .filter((s: AnyApi) => s !== null)
             .map((s: AnyApi) => s[0]);
 
-          const temp = await api.query.identity.identityOf.multi<AnyApi>(
-            query,
-            (_identities) => {
-              for (let j = 0; j < _identities.length; j++) {
-                const _identity = _identities[j].toHuman();
-                // inject identity into super array
-                supers[supersWithIdentity[j]].identity = _identity;
+          (
+            await api.query.identity.identityOf.multi<AnyApi>(
+              query,
+              (_identities) => {
+                for (let j = 0; j < _identities.length; j++) {
+                  const _identity = _identities[j].toHuman();
+                  // inject identity into super array
+                  supers[supersWithIdentity[j]].identity = _identity;
+                }
               }
-            }
-          );
-          temp();
+            )
+          )();
 
           const _batchesUpdated = Object.assign(accountMetaBatchesRef.current);
           _batchesUpdated[key].supers = supers;
