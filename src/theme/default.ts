@@ -65,10 +65,10 @@ export const defaultThemes: { [key: string]: any } = {
   },
   buttons: {
     primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
-    secondary: { background: v('rgba(238, 236, 236, 0.9)', '#333') },
+    secondary: { background: v('#eeecec', '#333') },
     toggle: { background: v('rgba(244,243,242,1)', '#1a1a1a') },
     help: { background: v('#ececec', '#242424') },
-    hover: { background: v('rgba(232, 230, 230, 0.9)', '#080808') },
+    hover: { background: v('#e8e6e6', '#080808') },
     disabled: {
       background: v('#F3F6F4', '#000000'),
       text: v('#ececec', '#444444'),

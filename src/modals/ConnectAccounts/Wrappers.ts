@@ -16,7 +16,6 @@ import {
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
-  box-sizing: border-box;
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
@@ -25,7 +24,6 @@ export const CardsWrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div`
-  box-sizing: border-box;
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
@@ -35,7 +33,6 @@ export const ContentWrapper = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
@@ -82,13 +79,11 @@ export const Wrapper = styled.div`
 `;
 
 export const PaddingWrapper = styled.div`
-  box-sizing: border-box;
   padding: 1rem 0 0.5rem 0rem;
   height: auto;
 `;
 
 export const AccountGroupWrapper = styled(motion.button)`
-  box-sizing: border-box;
   border-radius: 1rem;
   width: 100%;
   display: flex;
@@ -99,7 +94,6 @@ export const AccountGroupWrapper = styled(motion.button)`
   transition: background 0.15s;
 
   > section {
-    box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     flex-basis: 100%;
@@ -158,7 +152,6 @@ export const AccountWrapper = styled.div`
 
   > div,
   button {
-    box-sizing: border-box;
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
@@ -173,7 +166,6 @@ export const AccountWrapper = styled.div`
     padding-right: 0.4rem;
 
     > div {
-      box-sizing: border-box;
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;
@@ -227,12 +219,10 @@ export const AccountWrapper = styled.div`
 `;
 
 export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
-  box-sizing: border-box;
   width: 100%;
 
   > button,
   > div {
-    box-sizing: border-box;
     width: 100%;
     margin: ${(props) => (props.noSpacing ? 0 : '1rem 0')};
     padding: ${(props) => (props.noSpacing ? 0 : '1rem 0.25rem')};
@@ -247,7 +237,6 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
     min-height: 3.5rem;
 
     > div {
-      box-sizing: border-box;
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;

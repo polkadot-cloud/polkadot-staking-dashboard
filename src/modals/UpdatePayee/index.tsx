@@ -113,7 +113,7 @@ export const UpdatePayee = () => {
             <div>
               <button
                 type="button"
-                className="submit"
+                className="submit primary"
                 onClick={() => submitTx()}
                 disabled={
                   !valid ||

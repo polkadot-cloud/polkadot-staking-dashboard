@@ -55,6 +55,7 @@ export const PoolBonded = ({
   // recalculate nominations status as app syncs
   useEffect(() => {
     if (
+      targets.length &&
       nominationsStatus === null &&
       eraStakers.stakers.length &&
       nominations.length
@@ -67,7 +68,7 @@ export const PoolBonded = ({
   // recalculate nominations status
   useEffect(() => {
     handleNominationsStatus();
-  }, [meta, pool]);
+  }, [meta, pool, eraStakers.stakers.length]);
 
   // calculate total bonded pool amount
   const poolBonded = planckBnToUnit(new BN(rmCommas(points)), units);

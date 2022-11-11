@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { Button } from 'library/Button';
 import React, { useEffect, useState } from 'react';
-import { isNumeric } from 'Utils';
+import { humanNumber, isNumeric, planckBnToUnit } from 'Utils';
 import { UnbondInputProps } from '../types';
-import { InputWrapper, RowWrapper } from '../Wrappers';
+import { InputWrapper } from '../Wrappers';
 
 export const UnbondInput = ({
   defaultValue,
@@ -15,12 +15,16 @@ export const UnbondInput = ({
   freeToUnbondToMin,
   setters,
   value,
+  active,
 }: UnbondInputProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
   const sets = setters ?? [];
   const _value = value ?? 0;
+
+  // get the actively bonded amount.
+  const activeBase = planckBnToUnit(active, network.units);
 
   // the current local bond value
   const [localBond, setLocalBond] = useState(_value);
@@ -53,36 +57,38 @@ export const UnbondInput = ({
   };
 
   return (
-    <RowWrapper>
-      <div>
-        <InputWrapper>
-          <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>Unbond {network.unit}:</h3>
-            <input
-              type="text"
-              placeholder={`0 ${network.unit}`}
-              value={localBond}
-              onChange={(e) => {
-                handleChangeUnbond(e);
-              }}
-              disabled={disabled}
-            />
-          </section>
-        </InputWrapper>
-      </div>
-      <div>
-        <div>
-          <Button
-            inline
-            small
-            title="Max"
+    <InputWrapper>
+      <h3>Unbond {network.unit}:</h3>
+      <div className="inner">
+        <section style={{ opacity: disabled ? 0.5 : 1 }}>
+          <div className="input">
+            <div>
+              <input
+                type="text"
+                placeholder={`0 ${network.unit}`}
+                value={localBond}
+                onChange={(e) => {
+                  handleChangeUnbond(e);
+                }}
+                disabled={disabled}
+              />
+            </div>
+            <div>
+              {humanNumber(activeBase)} {network.unit} bonded
+            </div>
+          </div>
+        </section>
+        <section>
+          <ButtonInvert
+            text="Max"
+            disabled={disabled}
             onClick={() => {
               setLocalBond(freeToUnbondToMin);
               updateParentState(freeToUnbondToMin);
             }}
           />
-        </div>
+        </section>
       </div>
-    </RowWrapper>
+    </InputWrapper>
   );
 };

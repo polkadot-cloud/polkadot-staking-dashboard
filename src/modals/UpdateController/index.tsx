@@ -103,7 +103,7 @@ export const UpdateController = () => {
             <div>
               <button
                 type="button"
-                className="submit"
+                className="submit primary"
                 onClick={() => submitTx()}
                 disabled={
                   selected === null ||
