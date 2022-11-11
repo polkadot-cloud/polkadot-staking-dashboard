@@ -182,23 +182,10 @@ export const AccountProvider = ({
     setStateWithRef(_unsubs, setAccountSubs, accountSubsRef);
   };
 
-  const removeAccountMetaBatch = (key: string) => {
-    if (accountSubsRef.current[key] !== undefined) {
-      // ubsubscribe from updates
-      for (const unsub of accountSubsRef.current[key]) {
-        unsub();
-      }
-      // wipe data
-      delete accountMetaBatches[key];
-      delete accountMetaBatchesRef.current[key];
-    }
-  };
-
   return (
     <AccountContext.Provider
       value={{
         fetchAccountMetaBatch,
-        removeAccountMetaBatch,
         meta: accountMetaBatchesRef.current,
       }}
     >

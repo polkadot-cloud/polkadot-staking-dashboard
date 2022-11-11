@@ -5,6 +5,5 @@ import { AnyMetaBatch } from 'types';
 
 export interface AccountContextInterface {
   fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
-  removeAccountMetaBatch: (k: string) => void;
   meta: AnyMetaBatch;
 }
