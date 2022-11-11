@@ -11,19 +11,15 @@ const Wrapper = styled.div`
     fill: ${backgroundIdenticon};
   }
 `;
-export const Identicon = (props: IdenticonProps) => {
-  const { value, size } = props;
-
-  return (
-    <Wrapper>
-      <IdenticonDefault
-        value={value}
-        size={size}
-        theme="polkadot"
-        style={{ cursor: 'default' }}
-      />
-    </Wrapper>
-  );
-};
+export const Identicon = ({ value, size }: IdenticonProps) => (
+  <Wrapper>
+    <IdenticonDefault
+      value={value}
+      size={size}
+      theme="polkadot"
+      style={{ cursor: 'default' }}
+    />
+  </Wrapper>
+);
 
 export default Identicon;

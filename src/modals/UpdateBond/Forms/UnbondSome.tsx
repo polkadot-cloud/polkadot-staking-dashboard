@@ -33,7 +33,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { bondType } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
-  const { txFeesValid } = useTxFees();
+  const { txFees, txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
 
   const controller = getBondedAccount(activeAccount);
@@ -148,6 +148,7 @@ export const UnbondSome = (props: FormsProps) => {
               },
             ]}
             warnings={warnings}
+            txFees={txFees}
           />
           <NotesWrapper>
             <p>

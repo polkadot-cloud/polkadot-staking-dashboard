@@ -13,19 +13,18 @@
   src: url('../public/fonts/Unbounded.ttf');
 }
 
-
 /* global font size */
 html {
   font-size: 10px;
 }
 
-@media(min-width: 600px) {
+@media (min-width: 600px) {
   html {
     font-size: 11.2px;
   }
 }
 
-@media(min-width: 1600px) {
+@media (min-width: 1600px) {
   html {
     font-size: 11.7px;
   }
@@ -43,14 +42,17 @@ body {
 h1 {
   font-weight: normal;
   font-size: 1.6rem;
-  margin: 0 0 0.4rem 0;
+  line-height: 1.6rem;
   font-variation-settings: 'wght' 600;
+  margin: 0 0 0.4rem 0;
 }
 
 h2 {
   font-weight: normal;
   font-size: 1.45rem;
+  line-height: 1.65rem;
   font-variation-settings: 'wght' 625;
+  margin: 1rem 0;
 }
 
 h3 {
@@ -58,18 +60,21 @@ h3 {
   font-size: 1.25rem;
   line-height: 1.55rem;
   font-variation-settings: 'wght' 560;
+  margin: 1rem 0;
 }
 
 h4 {
   font-weight: normal;
   font-size: 1.1rem;
-  line-height: 1.6rem;
+  line-height: 1.65rem;
   font-variation-settings: 'wght' 500;
+  margin: 1.25rem 0;
 }
 
 h5 {
   font-weight: normal;
   font-size: 0.92rem;
+  line-height: 0.92rem;
   margin: 1.25rem 0;
   font-variation-settings: 'wght' 540;
 }
@@ -86,12 +91,9 @@ a {
 }
 
 button {
-  font-family: 'Inter', 'sans-serif', sans-serif;
-  background: none;
-  box-shadow: none;
-  border: none;
   cursor: pointer;
-  font-variation-settings: 'wght' 550;
+  font-weight: normal;
+  font-variation-settings: 'wght' 600;
 }
 
 .label {

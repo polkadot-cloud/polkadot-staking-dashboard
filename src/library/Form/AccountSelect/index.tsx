@@ -14,9 +14,12 @@ import { clipAddress, convertRemToPixels } from 'Utils';
 import { AccountSelectProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 
-export const AccountSelect = (props: AccountSelectProps) => {
-  const { items, onChange, placeholder, value } = props;
-
+export const AccountSelect = ({
+  items,
+  onChange,
+  placeholder,
+  value,
+}: AccountSelectProps) => {
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
 
   useEffect(() => {
@@ -63,7 +66,7 @@ export const AccountSelect = (props: AccountSelectProps) => {
               onClick={() => c.reset()}
               aria-label="clear selection"
             >
-              <FontAwesomeIcon transform="grow-2" icon={faTimes} />
+              <FontAwesomeIcon transform="grow-4" icon={faTimes} />
             </StyledController>
           )}
           <StyledSelect {...c.getMenuProps()}>

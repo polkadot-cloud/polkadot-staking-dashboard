@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
-import Button from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -24,21 +24,25 @@ export const Create = () => {
       <PageTitle title="Create a Pool" />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
-          <Button
-            inline
-            title="Back"
-            icon={faChevronLeft}
-            transform="shrink-3"
-            onClick={() => setOnPoolSetup(0)}
-          />
-          <Button
-            inline
-            title="Cancel"
-            onClick={() => {
-              setOnPoolSetup(0);
-              setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
-            }}
-          />
+          <span>
+            <ButtonSecondary
+              lg
+              text="Back"
+              iconLeft={faChevronLeft}
+              iconTransform="shrink-3"
+              onClick={() => setOnPoolSetup(0)}
+            />
+          </span>
+          <span>
+            <ButtonSecondary
+              lg
+              text="Cancel"
+              onClick={() => {
+                setOnPoolSetup(0);
+                setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+              }}
+            />
+          </span>
           <div className="right" />
         </TopBarWrapper>
       </PageRowWrapper>

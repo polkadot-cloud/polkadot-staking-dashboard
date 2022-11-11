@@ -115,7 +115,7 @@ export const Nominate = () => {
             <div>
               <button
                 type="button"
-                className="submit"
+                className="submit primary"
                 onClick={() => submitTx()}
                 disabled={
                   !valid || submitting || warnings.length > 0 || !txFeesValid

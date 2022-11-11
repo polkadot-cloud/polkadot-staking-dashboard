@@ -27,7 +27,6 @@ export const Wrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  box-sizing: border-box;
   width: 100%;
 
   > h4 {
@@ -39,9 +38,7 @@ export const ContentWrapper = styled.div`
   }
 
   .items {
-    box-sizing: border-box;
     position: relative;
-    box-sizing: border-box;
     border-bottom: none;
     width: auto;
     border-radius: 0.75rem;
@@ -62,7 +59,6 @@ export const ContentWrapper = styled.div`
 
 export const NetworkButton = styled.button<NetworkButtonProps>`
   background: ${buttonPrimaryBackground};
-  box-sizing: border-box;
   padding: 1rem;
   cursor: pointer;
   margin-bottom: 1rem;

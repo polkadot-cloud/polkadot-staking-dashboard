@@ -21,7 +21,6 @@ export const Wrapper = styled.ul`
     position: relative;
     border-radius: 10px;
     padding: 1rem 1.5rem;
-    box-sizing: border-box;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -30,13 +29,11 @@ export const Wrapper = styled.ul`
 
     h3 {
       color: ${networkColor};
-      box-sizing: border-box;
       margin: 0 0 0.5rem;
       flex: 1;
     }
     h5 {
       color: ${textSecondary};
-      box-sizing: border-box;
       margin: 0;
       text-overflow: ellipsis;
       white-space: nowrap;

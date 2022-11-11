@@ -3,17 +3,13 @@
 
 import React from 'react';
 
-export const SearchInput = (props: any) => {
-  const { handleChange, placeholder } = props;
-
-  return (
-    <div className="search">
-      <input
-        type="text"
-        className="search"
-        placeholder={placeholder}
-        onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
-      />
-    </div>
-  );
-};
+export const SearchInput = ({ handleChange, placeholder }: any) => (
+  <div className="search">
+    <input
+      type="text"
+      className="search"
+      placeholder={placeholder}
+      onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
+    />
+  </div>
+);

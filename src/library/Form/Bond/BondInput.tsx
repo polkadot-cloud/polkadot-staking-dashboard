@@ -1,34 +1,41 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { Button } from 'library/Button';
 import { useEffect, useState } from 'react';
-import { isNumeric } from 'Utils';
+import { humanNumber, isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
-import { InputWrapper, RowWrapper } from '../Wrappers';
+import { InputWrapper } from '../Wrappers';
 
-export const BondInput = (props: BondInputProps) => {
-  const { disabled, freeBalance } = props;
-  const setters = props.setters ?? [];
-  const _value = props.value ?? 0;
-  const disableTxFeeUpdate = props.disableTxFeeUpdate ?? false;
+export const BondInput = ({
+  setters,
+  disabled,
+  defaultValue,
+  freeBalance,
+  disableTxFeeUpdate,
+  value,
+  syncing = false,
+}: BondInputProps) => {
+  const sets = setters ?? [];
+  const _value = value ?? 0;
+  const disableTxFeeUpd = disableTxFeeUpdate ?? false;
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
 
   // the current local bond value
-  const [value, setValue] = useState(_value);
+  const [localBond, setLocalBond] = useState(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setValue(props.defaultValue ?? 0);
+    setLocalBond(defaultValue ?? 0);
   }, [activeAccount]);
 
   useEffect(() => {
-    if (!disableTxFeeUpdate) {
-      setValue(_value.toString());
+    if (!disableTxFeeUpd) {
+      setLocalBond(_value.toString());
     }
   }, [_value]);
 
@@ -38,13 +45,13 @@ export const BondInput = (props: BondInputProps) => {
     if (!isNumeric(val) && val !== '') {
       return;
     }
-    setValue(val);
+    setLocalBond(val);
     updateParentState(val);
   };
 
   // apply bond to parent setters
   const updateParentState = (val: any) => {
-    for (const s of setters) {
+    for (const s of sets) {
       s.set({
         ...s.current,
         bond: val,
@@ -53,37 +60,43 @@ export const BondInput = (props: BondInputProps) => {
   };
 
   return (
-    <RowWrapper>
-      <div>
-        <InputWrapper>
-          <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>Bond {network.unit}:</h3>
-            <input
-              type="text"
-              placeholder={`0 ${network.unit}`}
-              value={value}
-              onChange={(e) => {
-                handleChangeBond(e);
-              }}
-              disabled={disabled}
-            />
-          </section>
-        </InputWrapper>
-      </div>
-      <div>
-        <div>
-          <Button
-            inline
-            small
-            title="Max"
+    <InputWrapper>
+      <h3>Bond {network.unit}:</h3>
+      <div className="inner">
+        <section style={{ opacity: disabled ? 0.5 : 1 }}>
+          <div className="input">
+            <div>
+              <input
+                type="text"
+                placeholder={`0 ${network.unit}`}
+                value={localBond}
+                onChange={(e) => {
+                  handleChangeBond(e);
+                }}
+                disabled={disabled}
+              />
+            </div>
+            <div>
+              <p>
+                {syncing
+                  ? '...'
+                  : `${humanNumber(freeBalance)} ${network.unit} available`}
+              </p>
+            </div>
+          </div>
+        </section>
+        <section>
+          <ButtonInvert
+            text="Max"
+            disabled={disabled || syncing || freeBalance === 0}
             onClick={() => {
-              setValue(freeBalance);
+              setLocalBond(freeBalance);
               updateParentState(freeBalance);
             }}
           />
-        </div>
+        </section>
       </div>
-    </RowWrapper>
+    </InputWrapper>
   );
 };
 

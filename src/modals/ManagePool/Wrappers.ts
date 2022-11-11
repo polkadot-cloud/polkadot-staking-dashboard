@@ -15,12 +15,10 @@ export const Wrapper = styled.div`
 
 export const FixedContentWrapper = styled.div`
   padding-top: 1rem;
-  box-sizing: border-box;
   width: 100%;
 `;
 
 export const CardsWrapper = styled(motion.div)`
-  box-sizing: border-box;
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
@@ -29,7 +27,6 @@ export const CardsWrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div`
-  box-sizing: border-box;
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
@@ -40,9 +37,7 @@ export const ContentWrapper = styled.div`
   flex-grow: 1;
 
   .items {
-    box-sizing: border-box;
     position: relative;
-    box-sizing: border-box;
     padding: 0.5rem 0 1.5rem 0;
     border-bottom: none;
     width: auto;
@@ -61,7 +56,6 @@ export const ContentWrapper = styled.div`
 
     .action-button {
       background: ${buttonPrimaryBackground};
-      box-sizing: border-box;
       padding: 1rem;
       cursor: pointer;
       margin-bottom: 1rem;

@@ -220,7 +220,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
           <div>
             <button
               type="button"
-              className="submit"
+              className="submit secondary"
               onClick={() => setSection(0)}
               disabled={submitting}
             >
@@ -234,7 +234,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
           <div>
             <button
               type="button"
-              className="submit"
+              className="submit primary"
               onClick={() => submitTx()}
               disabled={
                 submitting ||

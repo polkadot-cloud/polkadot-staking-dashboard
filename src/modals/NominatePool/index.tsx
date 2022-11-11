@@ -101,7 +101,7 @@ export const NominatePool = () => {
             <div>
               <button
                 type="button"
-                className="submit"
+                className="submit primary"
                 onClick={() => submitTx()}
                 disabled={
                   !valid ||

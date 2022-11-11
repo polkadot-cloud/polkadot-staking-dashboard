@@ -11,7 +11,6 @@ import {
 } from 'theme';
 
 export const StyledDownshift = styled.div`
-  box-sizing: border-box;
   position: relative;
   width: 100%;
   height: auto;
@@ -39,7 +38,6 @@ export const StyledDownshift = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    box-sizing: border-box;
     padding: 0.25rem 0 0 0;
     margin: 0.25rem 0.7rem 0 0.7rem;
     flex: 1;
@@ -55,7 +53,6 @@ export const StyledDownshift = styled.div`
   /* input element of dropdown */
   .input {
     border: none;
-    box-sizing: border-box;
     padding-left: 0.75rem;
     flex: 1;
     text-overflow: ellipsis;
@@ -66,7 +63,6 @@ export const StyledDownshift = styled.div`
 
 export const StyledController = styled.button<any>`
   color: ${textPrimary};
-  box-sizing: border-box;
   border: none;
   position: absolute;
   right: 0.5rem;
@@ -84,20 +80,17 @@ export const StyledController = styled.button<any>`
 export const StyledDropdown = styled.div<any>`
   background: ${backgroundDropdown};
   position: relative;
-  box-sizing: border-box;
   margin: 0.5rem 0 0;
   border-bottom: none;
   border-radius: 0.75rem;
   z-index: 1;
 
   .items {
-    box-sizing: border-box;
     width: auto;
     height: ${(props) => (props.height ? props.height : 'auto')};
     overflow: auto;
 
     .item {
-      box-sizing: border-box;
       padding: 0.5rem;
       cursor: pointer;
       margin: 0.25rem;

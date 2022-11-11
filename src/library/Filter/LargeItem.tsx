@@ -5,30 +5,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { LargeItemWrapper } from './Wrappers';
 
-export const LargeItem = (props: any) => {
-  const { icon, title, subtitle, transform, onClick } = props;
-  const disabled = props.disabled ?? false;
-
-  return (
-    <motion.button
-      disabled={disabled}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.99 }}
-      transition={{
-        duration: 0.3,
-      }}
-      onClick={() => onClick()}
-      className="item"
-      style={{
-        opacity: disabled ? 0.5 : 1,
-      }}
-    >
-      <LargeItemWrapper>
+export const LargeItem = ({
+  disabled = false,
+  active,
+  icon,
+  title,
+  subtitle,
+  transform,
+  onClick,
+}: any) => (
+  <motion.button
+    disabled={disabled}
+    whileHover={{ scale: 1.01 }}
+    whileTap={{ scale: 0.99 }}
+    transition={{
+      duration: 0.3,
+    }}
+    onClick={() => onClick()}
+    className="item"
+    style={{
+      opacity: disabled ? 0.5 : 1,
+    }}
+  >
+    <LargeItemWrapper>
+      <div className="inner">
         <section>
           <FontAwesomeIcon
             icon={icon}
             transform={transform}
-            opacity={props.active ? 1 : 0.7}
+            opacity={active ? 1 : 0.7}
           />
 
           <h3>{title}</h3>
@@ -36,7 +41,7 @@ export const LargeItem = (props: any) => {
         <section>
           <p>{subtitle}</p>
         </section>
-      </LargeItemWrapper>
-    </motion.button>
-  );
-};
+      </div>
+    </LargeItemWrapper>
+  </motion.button>
+);
