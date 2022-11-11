@@ -414,7 +414,7 @@ export const TopBarWrapper = styled.div`
   margin-bottom: 0.25rem;
 
   > span {
-    margin-right: 1.25rem;
+    margin-right: 1rem;
   }
 
   h3 {

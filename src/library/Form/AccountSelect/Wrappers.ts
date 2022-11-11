@@ -38,7 +38,7 @@ export const StyledController = styled.button<any>`
   color: ${textPrimary};
   position: absolute;
   right: 0.5rem;
-  top: 0.4rem;
+  top: 0.6rem;
   width: 2.2rem;
   height: 2.2rem;
   display: flex;

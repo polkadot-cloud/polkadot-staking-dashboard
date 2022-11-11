@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderSecondary, textSecondary } from 'theme';
 
 export const Spacer = styled.div`
   width: 100%;
@@ -53,7 +53,7 @@ export const InputWrapper = styled.div`
       .input {
         width: 100%;
         max-width: 100%;
-        border: 1px solid ${borderPrimary};
+        border: 1px solid ${borderSecondary};
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;
