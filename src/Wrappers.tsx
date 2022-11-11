@@ -227,6 +227,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       padding: 0.5rem 0.75rem;
       margin: 0;
       border-radius: 0.75rem;
+      font-size: 1.1rem;
 
       &:hover {
         background: ${buttonSecondaryBackground};
