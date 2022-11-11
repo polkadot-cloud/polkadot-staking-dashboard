@@ -159,7 +159,7 @@ export const BondFeedback = ({
         <Warning key={`setup_error_${index}`} text={err} />
       ))}
       <Spacer />
-      <div style={{ maxWidth: maxWidth ? '600px' : '100%' }}>
+      <div style={{ maxWidth: maxWidth ? '500px' : '100%' }}>
         <BondInput
           value={bond.bond}
           defaultValue={defBond}

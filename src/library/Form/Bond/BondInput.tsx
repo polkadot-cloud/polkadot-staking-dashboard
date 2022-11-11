@@ -88,7 +88,7 @@ export const BondInput = ({
         <section>
           <ButtonInvert
             text="Max"
-            disabled={syncing || freeBalance === 0}
+            disabled={disabled || syncing || freeBalance === 0}
             onClick={() => {
               setLocalBond(freeBalance);
               updateParentState(freeBalance);

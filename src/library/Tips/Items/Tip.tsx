@@ -18,6 +18,7 @@ export const Tip = (props: any) => {
           <ButtonInvertRounded
             text="Close"
             iconLeft={faTimes}
+            iconTransform="grow-2"
             onClick={() => closeTip()}
           />
         </div>

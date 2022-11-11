@@ -253,7 +253,9 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
     overflow: hidden;
     max-width: ${InterfaceMaximumWidth}px;
     transition: margin 0.2s;
-    height: 3.5rem;
+    height: 3.6rem;
+    border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
+    border-bottom-color: ${borderPrimary};
 
     margin-top: ${(props) => (props.sticky ? '0.5rem' : '0.9rem')};
     @media (max-width: ${SideMenuStickyThreshold}px) {
@@ -270,11 +272,9 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
     .inner {
       display: flex;
       flex-flow: row nowrap;
-      border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
-      border-bottom-color: ${borderPrimary};
 
       > button {
-        padding: 0.75rem 1rem;
+        padding: 0.65rem 1rem;
         margin-bottom: 0.5rem;
         margin-right: 0.75rem;
         font-size: ${(props) => (props.sticky ? '1.05rem' : '1.15rem')};

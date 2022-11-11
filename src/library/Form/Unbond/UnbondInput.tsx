@@ -81,6 +81,7 @@ export const UnbondInput = ({
         <section>
           <ButtonInvert
             text="Max"
+            disabled={disabled}
             onClick={() => {
               setLocalBond(freeToUnbondToMin);
               updateParentState(freeToUnbondToMin);

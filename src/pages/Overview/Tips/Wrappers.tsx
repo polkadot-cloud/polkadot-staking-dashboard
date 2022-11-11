@@ -139,7 +139,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           background: ${networkColor};
           color: white;
           border-radius: 1.5rem;
-          padding: 0.1rem 0.75rem;
+          padding: 0.1rem 0.85rem;
           font-size: 1rem;
 
           > svg {

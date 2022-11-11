@@ -139,6 +139,7 @@ export const Summary = (props: SetupStepProps) => {
           }}
         >
           <ButtonPrimary
+            lg
             onClick={() => submitTx()}
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid

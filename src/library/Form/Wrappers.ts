@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderSecondary, textSecondary } from 'theme';
+import { borderPrimary, textSecondary } from 'theme';
 
 export const Spacer = styled.div`
   width: 100%;
@@ -32,7 +32,9 @@ export const InputWrapper = styled.div`
   flex-flow: column wrap;
 
   h3 {
+    color: ${textSecondary};
     margin: 0;
+    padding: 0 0.25rem;
   }
 
   > .inner {
@@ -40,7 +42,7 @@ export const InputWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     padding: 0;
 
     > section {
@@ -53,7 +55,7 @@ export const InputWrapper = styled.div`
       .input {
         width: 100%;
         max-width: 100%;
-        border: 1px solid ${borderSecondary};
+        border: 1px solid ${borderPrimary};
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;
