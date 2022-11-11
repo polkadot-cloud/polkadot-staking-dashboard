@@ -22,7 +22,7 @@ import { FormFooter } from './FormFooter';
 export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   const { api, network } = useApi();
   const { units } = network;
-  const { setStatus: setModalStatus, config } = useModal();
+  const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
@@ -65,6 +65,11 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
     const _bond = freeBalance;
     setBond({ bond: _bond });
   }, [freeBalance]);
+
+  // modal resize on form update
+  useEffect(() => {
+    setResize();
+  }, [bond]);
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: string) => {

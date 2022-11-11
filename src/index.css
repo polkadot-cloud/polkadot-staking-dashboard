@@ -50,7 +50,7 @@ h1 {
 h2 {
   font-weight: normal;
   font-size: 1.45rem;
-  line-height: 1.45rem;
+  line-height: 1.65rem;
   font-variation-settings: 'wght' 625;
   margin: 1rem 0;
 }
@@ -66,9 +66,9 @@ h3 {
 h4 {
   font-weight: normal;
   font-size: 1.1rem;
-  line-height: 1.6rem;
+  line-height: 1.65rem;
   font-variation-settings: 'wght' 500;
-  margin: 1rem 0;
+  margin: 1.25rem 0;
 }
 
 h5 {
@@ -91,8 +91,10 @@ a {
 }
 
 button {
-  font-family: 'Inter', 'sans-serif', sans-serif;
   cursor: pointer;
+  font-family: 'Inter', 'sans-serif', sans-serif;
+  font-weight: normal;
+    font-variation-settings: 'wght' 600;
 }
 
 .label {

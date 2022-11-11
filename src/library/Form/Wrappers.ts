@@ -48,7 +48,7 @@ export const InputWrapper = styled.div`
         flex-grow: 1;
       }
       &:last-child {
-        padding-left: 1rem;
+        padding: 0 0.25rem 0 1.25rem;
       }
       .input {
         width: 100%;

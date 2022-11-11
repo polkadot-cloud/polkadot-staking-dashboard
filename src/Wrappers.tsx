@@ -413,9 +413,8 @@ export const TopBarWrapper = styled.div`
   width: 100%;
   margin-bottom: 0.25rem;
 
-  button {
-    padding: 0.75rem 1rem;
-    margin-right: 1rem;
+  > span {
+    margin-right: 1.25rem;
   }
 
   h3 {

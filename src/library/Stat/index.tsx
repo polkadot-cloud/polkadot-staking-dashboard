@@ -32,7 +32,7 @@ export const Stat = (props: StatProps) => {
                 <ButtonPrimary
                   key={`btn_${index}_${Math.random()}`}
                   text={btn.title}
-                  lg={!btn.small ?? undefined}
+                  lg={btn.large ?? undefined}
                   iconLeft={btn.icon ?? undefined}
                   iconTransform={btn.transform ?? undefined}
                   disabled={btn.disabled ?? false}

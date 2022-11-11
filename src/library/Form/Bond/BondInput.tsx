@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { Button } from 'library/Button';
 import { useEffect, useState } from 'react';
 import { humanNumber, isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
@@ -86,9 +86,8 @@ export const BondInput = ({
           </div>
         </section>
         <section>
-          <Button
-            inline
-            title="Max"
+          <ButtonInvert
+            text="Max"
             disabled={syncing || freeBalance === 0}
             onClick={() => {
               setLocalBond(freeBalance);

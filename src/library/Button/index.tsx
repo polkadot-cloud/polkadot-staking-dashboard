@@ -37,7 +37,7 @@ export const Wrapper = styled(motion.div)<ButtonWrapperProps>`
       type === 'invert-primary' || type === 'invert-secondary'
         ? 'white'
         : textSecondary};
-
+    line-height: 1.25rem;
     padding: ${({ padding }) => padding};
     border-radius: 1.5rem;
     font-size: ${({ fontSize }) => fontSize};

@@ -41,7 +41,7 @@ export const Header = styled.div`
     button {
       color: ${textSecondary};
       font-size: 1.1rem;
-      margin-left: 0.4rem;
+      margin: 0 0.5rem 0 0.75rem;
       opacity: 0.6;
       transition: all 0.2s;
 

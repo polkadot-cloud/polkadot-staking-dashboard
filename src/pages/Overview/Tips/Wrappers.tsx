@@ -163,8 +163,9 @@ export const PageToggleWrapper = styled.div`
   margin-left: 0.75rem;
 
   > button {
-    margin: 0;
+    margin: 0 0.5rem;
     opacity: 0.75;
+    font-size: 1.1rem;
     transition: color 0.2s;
 
     > svg {

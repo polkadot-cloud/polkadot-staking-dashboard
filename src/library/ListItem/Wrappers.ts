@@ -102,10 +102,12 @@ export const Labels = styled.div`
     margin: 0 0.2rem;
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       margin: 0 0.2rem;
-
       &.pool {
         margin: 0 0.4rem;
       }
+    }
+    button {
+      font-size: 1.1rem;
     }
     &.button-with-text {
       margin-right: 0;
