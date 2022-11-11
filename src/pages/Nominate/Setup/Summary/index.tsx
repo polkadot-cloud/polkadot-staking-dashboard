@@ -4,13 +4,13 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useTxFees } from 'contexts/TxFees';
 import { useUi } from 'contexts/UI';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
-import { Button } from 'library/Button';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -138,13 +138,12 @@ export const Summary = (props: SetupStepProps) => {
             justifyContent: 'end',
           }}
         >
-          <Button
+          <ButtonPrimary
             onClick={() => submitTx()}
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            title="Start Nominating"
-            primary
+            text="Start Nominating"
           />
         </div>
       </MotionContainer>

@@ -435,3 +435,14 @@ export const TopBarWrapper = styled.div`
     }
   }
 `;
+
+/* ButtonRowWrapper
+ *
+ * A flex container for a row of buttons
+ */
+export const ButtonRowWrapper = styled.div<{ verticalSpacing?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: ${(props) => (props.verticalSpacing ? '1rem' : 0)};
+`;

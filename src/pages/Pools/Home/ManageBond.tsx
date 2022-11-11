@@ -10,11 +10,11 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { ButtonRow } from 'library/Button';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { humanNumber, planckBnToUnit } from 'Utils';
+import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -42,7 +42,7 @@ export const ManageBond = () => {
         <h2>
           {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
         </h2>
-        <ButtonRow>
+        <ButtonRowWrapper>
           <ButtonPrimary
             disabled={
               poolsSyncing ||
@@ -87,7 +87,7 @@ export const ManageBond = () => {
             }
             text={String(totalUnlockChuncks ?? 0)}
           />
-        </ButtonRow>
+        </ButtonRowWrapper>
       </CardHeaderWrapper>
       <BondedGraph
         active={planckBnToUnit(active, units)}

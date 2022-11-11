@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
-import Button from 'library/Button';
 import React, { useState } from 'react';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
@@ -109,14 +109,13 @@ export const ReadOnlyInput = () => {
         </section>
         <section>
           {!reformatted ? (
-            <Button
-              inline
+            <ButtonSecondary
               onClick={() => handleImport()}
-              title="Import"
+              text="Import"
               disabled={valid !== 'valid'}
             />
           ) : (
-            <Button inline onClick={() => handleConfirm()} title="Confirm" />
+            <ButtonSecondary onClick={() => handleConfirm()} text="Confirm" />
           )}
         </section>
       </div>
