@@ -48,9 +48,8 @@ i18next.use(initReactI18next).init(
     debug: process.env.REACT_APP_DEBUG_I18N === '1',
     resources,
   },
-  (err) => {
-    if (err)
-      return console.log('Something went wrong with the locale system', err);
+  () => {
+    /* locale error */
   }
 );
 
