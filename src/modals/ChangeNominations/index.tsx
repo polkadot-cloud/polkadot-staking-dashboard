@@ -1,10 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -152,9 +151,10 @@ export const ChangeNominations = () => {
           </NotesWrapper>
           <FooterWrapper>
             <div>
-              <button
-                type="button"
-                className="submit primary"
+              <ButtonSubmit
+                text={`Submit${submitting ? 'ting' : ''}`}
+                iconLeft={faArrowAltCircleUp}
+                iconTransform="grow-2"
                 onClick={() => submitTx()}
                 disabled={
                   !valid ||
@@ -162,13 +162,7 @@ export const ChangeNominations = () => {
                   !accountHasSigner(signingAccount) ||
                   !txFeesValid
                 }
-              >
-                <FontAwesomeIcon
-                  transform="grow-2"
-                  icon={faArrowAltCircleUp as IconProp}
-                />
-                Submit
-              </button>
+              />
             </div>
           </FooterWrapper>
         </div>
