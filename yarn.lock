@@ -2124,10 +2124,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.15":
-  version "0.1.0-alpha.15"
-  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.15.tgz#db7ea6f9b6fa193c5bb77e52045930cd5f761337"
-  integrity sha512-5P2xsOH3GnM/0OcV+Vg0dLgcvIjt16OfLCtY83S+vOhS2VXoOnATsC6kcWYKdHhumSjuWPgzFyd8gFnNVfKs+w==
+"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.16":
+  version "0.1.0-alpha.16"
+  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.16.tgz#d383e79f56362b9812164e9344b053450b7c250a"
+  integrity sha512-LbMjTG95L376yifTWawtV6lSWv93qsV/dKe9FtAOPb55n6nywXN2t/Xbc/M6W1YhD7FpB0KoyYfbuHZQx5+2aQ==
 
 "@rushstack/eslint-patch@^1.1.0":
   version "1.2.0"

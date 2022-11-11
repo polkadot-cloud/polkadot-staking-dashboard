@@ -73,9 +73,14 @@ export const EntryWrapper = styled.div`
     fill: ${textPrimary};
   }
 
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+  }
+
   input {
     border: none;
-    border-bottom: 1px solid #ddd;
     padding: 0.7rem 0rem;
     font-size: 1.1rem;
     background: none;
@@ -86,10 +91,14 @@ export const EntryWrapper = styled.div`
     color: #aaa;
   }
 
-  input:focus,
-  textarea:focus,
-  select:focus {
-    outline: none;
+  .textbox,
+  .textbox:focus {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .searchbox,
+  .searchbox:focus {
+    border: 1px solid #ddd;
   }
 
   .page-padding {
