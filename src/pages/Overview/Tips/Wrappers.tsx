@@ -110,7 +110,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         justify-content: flex-start;
         overflow: hidden;
         width: 100%;
-        height: 1.8rem;
+        height: 1.85rem;
         position: relative;
 
         h4 {
@@ -119,10 +119,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           top: 0;
           left: 0;
           width: auto;
-          height: 1.8rem;
+          height: 1.85rem;
           max-width: 100%;
           margin: 0;
-          padding: 0.15rem 6rem 0 0;
+          padding: 0.15rem 6rem 0rem 0;
           text-align: left;
           font-size: 1.05rem;
           text-overflow: ellipsis;

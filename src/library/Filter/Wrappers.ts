@@ -110,42 +110,46 @@ export const ItemWrapper = styled.div<any>`
 `;
 
 export const LargeItemWrapper = styled.div`
-  border: 1.5px solid ${borderPrimary};
-  background: ${buttonPrimaryBackground};
-  border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  position: relative;
-  padding: 1rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  > section {
-    width: 100%;
+  padding: 0.5rem;
+  > .inner {
+    border: 1.5px solid ${borderPrimary};
+    background: ${buttonPrimaryBackground};
+    border-radius: 1rem;
     display: flex;
-    flex-flow: row wrap;
-    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: center;
+    position: relative;
+    padding: 1rem;
 
-    h3 {
-      margin: 0;
+    &:last-child {
+      margin-right: 0;
     }
-  }
 
-  svg {
-    color: ${networkColor};
-    margin-right: 0.75rem;
-  }
+    > section {
+      width: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
 
-  p {
-    color: ${textSecondary};
-    margin: 0;
-    text-align: left;
-    padding: 0.5rem 0 0 0;
+      h3 {
+        margin: 0;
+      }
+    }
+
+    svg {
+      color: ${networkColor};
+      margin-right: 0.75rem;
+    }
+
+    p {
+      color: ${textSecondary};
+      margin: 0;
+      text-align: left;
+      padding: 0.5rem 0 0 0;
+    }
   }
 `;
 

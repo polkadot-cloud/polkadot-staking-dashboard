@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import {
@@ -113,15 +113,19 @@ export const Help = () => {
           <ContentWrapper>
             <div className="buttons">
               {definition && (
-                <button type="button" onClick={() => setDefinition(null)}>
-                  <FontAwesomeIcon icon={faReplyAll} />
-                  All Resources
-                </button>
+                <ButtonInvertRounded
+                  lg
+                  text="All Resources"
+                  iconLeft={faReplyAll}
+                  onClick={() => setDefinition(null)}
+                />
               )}
-              <button type="button" onClick={() => closeHelp()}>
-                <FontAwesomeIcon icon={faTimes} />
-                Close
-              </button>
+              <ButtonInvertRounded
+                lg
+                text="Close"
+                iconLeft={faTimes}
+                onClick={() => closeHelp()}
+              />
             </div>
             <h1>
               {activeDefinition

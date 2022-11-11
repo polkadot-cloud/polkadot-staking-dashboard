@@ -60,6 +60,7 @@ export const Wrapper = styled.div<MinimisedProps>`
         margin-top: ${(props) => (props.minimised ? '1.25rem' : 0)};
         margin-right: ${(props) => (props.minimised ? 0 : '1rem')};
         opacity: 0.75;
+        padding: 0.1rem;
 
         path {
           fill: ${textSecondary};

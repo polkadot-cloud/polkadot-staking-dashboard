@@ -93,7 +93,6 @@ export const SelectableWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0.5rem 0 0 0;
 
   > button {
     border: 1px solid ${borderPrimary};

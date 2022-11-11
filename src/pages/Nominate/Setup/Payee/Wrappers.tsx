@@ -28,6 +28,7 @@ export const Item = styled.button<{ selected?: boolean }>`
   @media (max-width: ${SectionFullWidthThreshold}px) {
     flex-basis: 100%;
   }
+  padding: 0.5rem;
 
   > div {
     background: ${buttonPrimaryBackground};
@@ -39,7 +40,6 @@ export const Item = styled.button<{ selected?: boolean }>`
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    margin: 0.35rem;
     padding: 1.25rem;
 
     > div {
