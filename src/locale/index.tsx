@@ -28,7 +28,6 @@ export const resources = {
 i18next.use(initReactI18next).init({
   debug: process.env.REACT_APP_DEBUG_I18N === '1',
   fallbackLng: DefaultLocale,
-  initImmediate: true,
   interpolation: { escapeValue: false },
   lng,
   resources,
