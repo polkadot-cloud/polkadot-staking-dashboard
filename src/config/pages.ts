@@ -20,15 +20,15 @@ import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
-    _id: 1,
+    id: 1,
     key: 'default',
   },
   {
-    _id: 2,
+    id: 2,
     key: 'Stake',
   },
   {
-    _id: 3,
+    id: 3,
     key: 'Validators',
   },
 ];

@@ -141,7 +141,7 @@ export const Main = () => {
       </LogoWrapper>
 
       {pageConfig.categories.map(
-        ({ _id: categoryId, key: categoryKey }: PageCategory, i: number) => (
+        ({ id: categoryId, key: categoryKey }: PageCategory, i: number) => (
           <React.Fragment key={`sidemenu_category_${i}`}>
             {/* display heading if not `default` (used for top links) */}
             {categoryKey !== 'default' && (
