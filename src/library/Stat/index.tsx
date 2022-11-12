@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from 'library/Button';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React from 'react';
 import { StatProps } from './types';
@@ -29,14 +29,12 @@ export const Stat = (props: StatProps) => {
             &nbsp;&nbsp;&nbsp;
             {buttons.map((btn: any, index: number) => (
               <React.Fragment key={`stat_${index}`}>
-                <Button
+                <ButtonPrimary
                   key={`btn_${index}_${Math.random()}`}
-                  primary
-                  inline
-                  title={btn.title}
-                  small={btn.small ?? undefined}
-                  icon={btn.icon ?? undefined}
-                  transform={btn.transform ?? undefined}
+                  text={btn.title}
+                  lg={btn.large ?? undefined}
+                  iconLeft={btn.icon ?? undefined}
+                  iconTransform={btn.transform ?? undefined}
                   disabled={btn.disabled ?? false}
                   onClick={() => btn.onClick()}
                 />

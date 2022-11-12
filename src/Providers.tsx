@@ -31,12 +31,19 @@ import { TipsProvider } from './contexts/Tips';
 import { UIProvider } from './contexts/UI';
 import { ValidatorsProvider } from './contexts/Validators';
 
-export const WrappedRouter = () => (
-  <Wrapper>
-    <Router />
-  </Wrapper>
-);
+// `polkadot-dashboard-ui` theme classes are inserted here.
+export const WrappedRouter = () => {
+  const { mode } = useTheme();
+  const { network } = useApi();
 
+  return (
+    <Wrapper className={`theme-${network.name.toLowerCase()} theme-${mode}`}>
+      <Router />
+    </Wrapper>
+  );
+};
+
+// App-specific theme classes are inserted here.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
   const { network } = useApi();

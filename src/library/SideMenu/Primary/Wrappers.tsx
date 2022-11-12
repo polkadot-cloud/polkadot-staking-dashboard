@@ -15,7 +15,6 @@ import {
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`
-  box-sizing: border-box;
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
@@ -65,7 +64,6 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
         color: ${warning};
         border: 1px solid ${warningTransparent};
       }
-      box-sizing: border-box;
       border-radius: 0.5rem;
       padding: 0.15rem 0.5rem;
     }
@@ -91,7 +89,6 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 `;
 
 export const MinimisedWrapper = styled(motion.div)`
-  box-sizing: border-box;
   border-radius: 0.5rem;
   display: flex;
   flex-flow: row wrap;

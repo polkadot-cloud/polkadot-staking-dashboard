@@ -31,6 +31,7 @@ export const useStatusButtons = () => {
   const createBtn = {
     title: `Create${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||
@@ -44,6 +45,7 @@ export const useStatusButtons = () => {
   const joinPoolBtn = {
     title: `Join`,
     icon: faUserPlus,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||

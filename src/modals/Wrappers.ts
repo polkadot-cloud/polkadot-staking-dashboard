@@ -25,7 +25,6 @@ export const ModalWrapper = styled(motion.div)`
 
   /* modal content wrapper */
   > div {
-    box-sizing: border-box;
     height: 100%;
     display: flex;
     flex-flow: row wrap;
@@ -48,7 +47,6 @@ export const HeightWrapper = styled.div<{ size: string }>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
-  box-sizing: border-box;
   width: 100%;
   max-width: ${(props) =>
     props.size === 'xl'
@@ -64,7 +62,6 @@ export const HeightWrapper = styled.div<{ size: string }>`
 
 // Modal content wrapper
 export const ContentWrapper = styled.div`
-  box-sizing: border-box;
   background: ${modalBackground};
   width: 100%;
   height: auto;
@@ -97,7 +94,6 @@ export const PaddingWrapper = styled.div<{
   verticalOnly?: boolean;
   horizontalOnly?: boolean;
 }>`
-  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
@@ -157,8 +153,15 @@ export const FooterWrapper = styled.div`
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    color: ${networkColor};
-    border: 1px solid ${networkColor};
+    &.primary {
+      color: white;
+      background: ${networkColor};
+      border: 1px solid ${networkColor};
+    }
+    &.secondary {
+      color: ${networkColor};
+      border: 1px solid ${networkColor};
+    }
 
     &:disabled {
       opacity: 0.25;

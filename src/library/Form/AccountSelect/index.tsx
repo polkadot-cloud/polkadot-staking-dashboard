@@ -66,7 +66,7 @@ export const AccountSelect = ({
               onClick={() => c.reset()}
               aria-label="clear selection"
             >
-              <FontAwesomeIcon transform="grow-2" icon={faTimes} />
+              <FontAwesomeIcon transform="grow-4" icon={faTimes} />
             </StyledController>
           )}
           <StyledSelect {...c.getMenuProps()}>

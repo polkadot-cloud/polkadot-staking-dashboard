@@ -9,7 +9,6 @@ export const Wrapper = styled.div`
   margin-top: 0.5rem;
 
   .input {
-    box-sizing: border-box;
     border: 1px solid ${borderPrimary};
     border-radius: 1rem;
     display: flex;
@@ -22,7 +21,6 @@ export const Wrapper = styled.div`
       flex-flow: column wrap;
 
       > input {
-        box-sizing: border-box;
         width: 100%;
         border: none;
         padding-right: 1rem;

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import Button from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import ValidatorList from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
@@ -55,11 +55,11 @@ export const Entity = () => {
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <TopBarWrapper>
-        <Button
-          inline
-          title="Go Back"
-          icon={faChevronLeft}
-          transform="shrink-3"
+        <ButtonSecondary
+          lg
+          text="Go Back"
+          iconLeft={faChevronLeft}
+          iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
         />
       </TopBarWrapper>

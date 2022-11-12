@@ -1,9 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -107,9 +106,10 @@ export const UnbondPoolMember = () => {
         </div>
         <FooterWrapper>
           <div>
-            <button
-              type="button"
-              className="submit"
+            <ButtonSubmit
+              text={`Submit${submitting ? 'ting' : ''}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
               onClick={() => submitTx()}
               disabled={
                 submitting ||
@@ -117,14 +117,7 @@ export const UnbondPoolMember = () => {
                 !accountHasSigner(activeAccount) ||
                 !txFeesValid
               }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-              {submitting && 'ting'}
-            </button>
+            />
           </div>
         </FooterWrapper>
       </ContentWrapper>

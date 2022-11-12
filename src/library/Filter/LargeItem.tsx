@@ -16,7 +16,7 @@ export const LargeItem = ({
 }: any) => (
   <motion.button
     disabled={disabled}
-    whileHover={{ scale: 1.02 }}
+    whileHover={{ scale: 1.01 }}
     whileTap={{ scale: 0.99 }}
     transition={{
       duration: 0.3,
@@ -28,18 +28,20 @@ export const LargeItem = ({
     }}
   >
     <LargeItemWrapper>
-      <section>
-        <FontAwesomeIcon
-          icon={icon}
-          transform={transform}
-          opacity={active ? 1 : 0.7}
-        />
+      <div className="inner">
+        <section>
+          <FontAwesomeIcon
+            icon={icon}
+            transform={transform}
+            opacity={active ? 1 : 0.7}
+          />
 
-        <h3>{title}</h3>
-      </section>
-      <section>
-        <p>{subtitle}</p>
-      </section>
+          <h3>{title}</h3>
+        </section>
+        <section>
+          <p>{subtitle}</p>
+        </section>
+      </div>
     </LargeItemWrapper>
   </motion.button>
 );

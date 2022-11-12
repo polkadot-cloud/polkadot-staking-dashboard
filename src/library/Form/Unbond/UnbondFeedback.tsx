@@ -9,10 +9,8 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { planckBnToUnit } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
@@ -26,6 +24,7 @@ export const UnbondFeedback = ({
   listenIsValid = () => {},
   defaultBond,
   setLocalResize,
+  txFees,
 }: UnbondFeedbackProps) => {
   const defaultValue = defaultBond || '';
 
@@ -39,7 +38,6 @@ export const UnbondFeedback = ({
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
-  const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -145,16 +143,12 @@ export const UnbondFeedback = ({
 
   return (
     <>
-      <CardHeaderWrapper>
-        <h4>
-          Bonded: {humanNumber(activeBase)} {network.unit}
-        </h4>
-      </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
         <Warning key={`unbond_error_${index}`} text={err} />
       ))}
       <Spacer />
       <UnbondInput
+        active={active}
         defaultValue={defaultValue}
         disabled={false}
         freeToUnbondToMin={freeToUnbondToMin}

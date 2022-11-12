@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { buttonPrimaryBackground, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
@@ -14,13 +13,11 @@ export const Wrapper = styled.div`
 `;
 
 export const FixedContentWrapper = styled.div`
-  box-sizing: border-box;
   padding-top: 1rem;
   width: 100%;
 `;
 
 export const CardsWrapper = styled(motion.div)`
-  box-sizing: border-box;
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
@@ -31,7 +28,6 @@ export const CardsWrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div`
-  box-sizing: border-box;
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
@@ -47,7 +43,6 @@ export const ChunkWrapper = styled.div<any>`
   margin: 1rem 0;
 
   > div {
-    box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     width: 100%;
@@ -78,7 +73,6 @@ export const ChunkWrapper = styled.div<any>`
       !props.noFill ? buttonPrimaryBackground : 'none'};
     padding: ${(props) => (!props.noFill ? '0.5rem' : '0 0.5rem')};
     color: ${textSecondary};
-    box-sizing: border-box;
     margin: 0;
     width: 100%;
     border-radius: 0.75rem;
