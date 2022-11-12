@@ -97,4 +97,3 @@ export const DefaultParams = {
  * locale
  */
 export const DefaultLocale = 'en';
-export const FallbackNS = 'common';

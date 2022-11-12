@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { DefaultLocale, FallbackNS } from 'consts';
+import { DefaultLocale } from 'consts';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import pagesCn from './cn/pages.json';
@@ -28,7 +28,6 @@ export const resources = {
 i18next.use(initReactI18next).init({
   debug: process.env.REACT_APP_DEBUG_I18N === '1',
   fallbackLng: DefaultLocale,
-  fallbackNS: FallbackNS,
   initImmediate: true,
   interpolation: { escapeValue: false },
   lng,
