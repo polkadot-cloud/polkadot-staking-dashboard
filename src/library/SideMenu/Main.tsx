@@ -141,8 +141,8 @@ export const Main = () => {
       </LogoWrapper>
 
       {pageConfig.categories.map(
-        ({ id: categoryId, key: categoryKey }: PageCategory, i: number) => (
-          <React.Fragment key={`sidemenu_category_${i}`}>
+        ({ id: categoryId, key: categoryKey }: PageCategory) => (
+          <React.Fragment key={`sidemenu_category_${categoryId}`}>
             {/* display heading if not `default` (used for top links) */}
             {categoryKey !== 'default' && (
               <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
@@ -150,11 +150,8 @@ export const Main = () => {
 
             {/* display category links */}
             {pagesToDisplay.map(
-              (
-                { category, hash, icon, key, animate, action }: PageItem,
-                j: number
-              ) => (
-                <React.Fragment key={`sidemenu_page_${i}_${j}`}>
+              ({ category, hash, icon, key, animate, action }: PageItem) => (
+                <React.Fragment key={`sidemenu_page_${categoryId}_${key}`}>
                   {category === categoryId && (
                     <Primary
                       name={t(key)}
