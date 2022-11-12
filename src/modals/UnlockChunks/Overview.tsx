@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useTranslation } from 'react-i18next';
-import Button from 'library/Button';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
-import { Separator, NotesWrapper } from '../Wrappers';
+import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
@@ -47,11 +47,8 @@ export const Overview = forwardRef(
                 </section>
                 <section>
                   <div>
-                    <Button
-                      small
-                      inline
-                      primary
-                      title={t('modals.withdraw')}
+                    <ButtonPrimary
+                      text={t('modals.withdraw')}
                       onClick={() => {
                         setTask('withdraw');
                         setUnlock({
@@ -96,11 +93,8 @@ export const Overview = forwardRef(
                 {isStaking && (
                   <section>
                     <div>
-                      <Button
-                        small
-                        inline
-                        primary
-                        title={t('modals.rebond')}
+                      <ButtonPrimary
+                        text={t('modals.rebond')}
                         onClick={() => {
                           setTask('rebond');
                           setUnlock(chunk);

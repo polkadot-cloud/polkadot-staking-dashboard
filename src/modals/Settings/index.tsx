@@ -3,8 +3,8 @@
 
 import { useUi } from 'contexts/UI';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { StatusButton } from 'library/StatusButton';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {

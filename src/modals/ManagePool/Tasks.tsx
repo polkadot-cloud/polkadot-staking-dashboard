@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
-import { useTranslation } from 'react-i18next';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {

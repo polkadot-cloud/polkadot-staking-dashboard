@@ -5,8 +5,8 @@ import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const PoolId = (props: { id: number }) => {
   const { id } = props;

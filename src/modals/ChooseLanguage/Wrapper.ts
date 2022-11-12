@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import {
   backgroundToggle,
   buttonPrimaryBackground,
-  textSuccess,
   successTransparent,
+  textSuccess,
 } from 'theme';
 
 export const ContentWrapper = styled.div`

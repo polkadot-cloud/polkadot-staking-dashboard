@@ -17,8 +17,8 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useValidators } from '../../../contexts/Validators';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';

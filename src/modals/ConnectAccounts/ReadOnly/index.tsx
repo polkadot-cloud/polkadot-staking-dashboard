@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { useTranslation } from 'react-i18next';
-import { ExtensionWrapper } from '../Wrappers';
-import { Wrapper } from './Wrapper';
 import { ReadOnlyInput } from '../ReadOnlyInput';
 import { ReadOnlyProps } from '../types';
+import { ExtensionWrapper } from '../Wrappers';
+import { Wrapper } from './Wrapper';
 
 export const ReadOnly = (props: ReadOnlyProps) => {
   const { setReadOnlyOpen, readOnlyOpen } = props;

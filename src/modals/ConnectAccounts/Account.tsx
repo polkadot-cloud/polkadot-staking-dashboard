@@ -8,10 +8,10 @@ import { useConnect } from 'contexts/Connect';
 import { Extension } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import Identicon from 'library/Identicon';
-import { clipAddress } from 'Utils';
 import { useTranslation } from 'react-i18next';
-import { AccountWrapper } from './Wrappers';
+import { clipAddress } from 'Utils';
 import { AccountElementProps } from './types';
+import { AccountWrapper } from './Wrappers';
 
 export const AccountElement = (props: AccountElementProps) => {
   return (

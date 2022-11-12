@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useTips } from 'contexts/Tips';
 import { useTranslation } from 'react-i18next';
 import { TipWrapper } from '../Wrappers';
@@ -16,10 +16,12 @@ export const Tip = (props: any) => {
     <>
       <TipWrapper>
         <div className="close-button">
-          <button type="button" onClick={() => closeTip()}>
-            <FontAwesomeIcon icon={faTimes} />
-            {t('library.close')}
-          </button>
+          <ButtonInvertRounded
+            text={t('library.close')}
+            iconLeft={faTimes}
+            iconTransform="grow-2"
+            onClick={() => closeTip()}
+          />
         </div>
         <div>
           <h1>{title}</h1>

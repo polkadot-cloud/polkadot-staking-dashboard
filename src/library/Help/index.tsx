@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import {
@@ -13,13 +13,13 @@ import {
   HelpRecord,
   HelpRecords,
 } from 'contexts/Help/types';
-import { useTranslation } from 'react-i18next';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
-import { Wrapper, ContentWrapper, HeightWrapper } from './Wrappers';
+import { useTranslation } from 'react-i18next';
 import Definition from './Items/Definition';
 import External from './Items/External';
+import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
   const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
@@ -154,16 +154,20 @@ export const Help = () => {
         <HeightWrapper>
           <ContentWrapper>
             <div className="buttons">
-              {activeDefinition && (
-                <button type="button" onClick={() => setDefinition(null)}>
-                  <FontAwesomeIcon icon={faReplyAll} />
-                  {t('library.all_resources')}
-                </button>
+              {definition && (
+                <ButtonInvertRounded
+                  lg
+                  text={t('library.all_resources')}
+                  iconLeft={faReplyAll}
+                  onClick={() => setDefinition(null)}
+                />
               )}
-              <button type="button" onClick={() => closeHelp()}>
-                <FontAwesomeIcon icon={faTimes} />
-                {t('library.close')}
-              </button>
+              <ButtonInvertRounded
+                lg
+                text={t('library.close')}
+                iconLeft={faTimes}
+                onClick={() => closeHelp()}
+              />
             </div>
             <h1>
               {activeDefinition

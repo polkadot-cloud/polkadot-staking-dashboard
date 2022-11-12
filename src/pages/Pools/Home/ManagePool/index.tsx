@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
-import { useTranslation } from 'react-i18next';
 import { useUi } from 'contexts/UI';
-import { Button } from 'library/Button';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import Nominations from 'pages/Nominate/Active/Nominations';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const ManagePool = () => {
@@ -48,13 +48,10 @@ export const ManagePool = () => {
                 <OpenHelpIcon helpKey="Nominations" />
               </h3>
               <div>
-                <Button
-                  small
-                  inline
-                  primary
-                  icon={faChevronCircleRight}
-                  transform="grow-1"
-                  title={t('pages.pools.nominate')}
+                <ButtonPrimary
+                  iconLeft={faChevronCircleRight}
+                  iconTransform="grow-1"
+                  text={t('pages.pools.nominate')}
                   disabled={!canNominate}
                   onClick={() => openModalWith('NominatePool', {}, 'small')}
                 />

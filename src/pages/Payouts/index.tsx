@@ -21,8 +21,8 @@ import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
-import { AnySubscan } from 'types';
 import { useTranslation } from 'react-i18next';
+import { AnySubscan } from 'types';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
@@ -34,7 +34,7 @@ export const Payouts = (props: PageProps) => {
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { t: tCommon } = useTranslation('common');
-  const { t: tPages } = useTranslation('pages');
+  const { t } = useTranslation('pages');
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>();
   const [fromDate, setFromDate] = useState<string | undefined>();
@@ -81,7 +81,7 @@ export const Payouts = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={tPages(key)} />
+      <PageTitle title={t(key)} />
       <StatBoxList>
         <LastEraPayoutStatBox />
       </StatBoxList>

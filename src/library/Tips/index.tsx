@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { TIPS_CONFIG } from 'config/tips';
 import { useTips } from 'contexts/Tips';
 import { useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
 import useFillVariables from 'library/Hooks/useFillVariables';
-import { TIPS_CONFIG } from 'config/tips';
-import { AnyJson } from 'types';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tip } from './Items/Tip';
+import { AnyJson } from 'types';
 import { Dismiss } from './Items/Dismiss';
+import { Tip } from './Items/Tip';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Tips = () => {

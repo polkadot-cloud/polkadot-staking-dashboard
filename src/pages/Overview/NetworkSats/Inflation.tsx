@@ -6,8 +6,8 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { toFixedIfNecessary } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 
 export const Inflation = () => {

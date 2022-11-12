@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import Button from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import ValidatorList from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
-import { ItemsWrapper } from './Wrappers';
-import { Item } from './Item';
 import { useCommunitySections } from './context';
+import { Item } from './Item';
+import { ItemsWrapper } from './Wrappers';
 
 export const Entity = () => {
   const { isReady, network } = useApi();
@@ -57,11 +57,11 @@ export const Entity = () => {
   return (
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <TopBarWrapper>
-        <Button
-          inline
-          title={t('pages.community.go_back')}
-          icon={faChevronLeft}
-          transform="shrink-3"
+        <ButtonSecondary
+          lg
+          text={t('pages.community.go_back')}
+          iconLeft={faChevronLeft}
+          iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
         />
       </TopBarWrapper>

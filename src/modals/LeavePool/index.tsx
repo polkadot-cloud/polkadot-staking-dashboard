@@ -3,8 +3,8 @@
 
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { UnbondAll } from 'modals/UpdateBond/Forms/UnbondAll';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const LeavePool = () => {

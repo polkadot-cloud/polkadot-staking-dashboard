@@ -1,4 +1,5 @@
 {
+  "pages": {
     "stake": "抵押",
     "validators": "验证人",
     "overview": "总览",
@@ -7,4 +8,5 @@
     "payouts": "收益",
     "community": "社区",
     "favorites": "收藏夹"
+  }
 }

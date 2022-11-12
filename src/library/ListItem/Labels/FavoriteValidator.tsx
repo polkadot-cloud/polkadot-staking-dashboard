@@ -9,8 +9,8 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FavoriteProps } from '../types';
 
 export const FavoriteValidator = (props: FavoriteProps) => {

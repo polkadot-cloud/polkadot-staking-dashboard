@@ -3,11 +3,11 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { useCombobox } from 'downshift';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 import { DropdownInput, DropdownProps } from '../types';

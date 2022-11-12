@@ -7,10 +7,10 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNotifications } from 'contexts/Notifications';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useTranslation } from 'react-i18next';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FavoriteProps } from '../types';
 
 export const FavoritePool = (props: FavoriteProps) => {

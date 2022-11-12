@@ -1,11 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import Lottie from 'react-lottie';
 import { useApi } from 'contexts/Api';
 import * as refreshChangeJson from 'img/json/refresh-change-outline.json';
 import { useTranslation } from 'react-i18next';
-import { ItemsWrapper, ItemWrapper, ItemInnerWrapper } from './Wrappers';
+import Lottie from 'react-lottie';
+import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const Syncing = () => {
   const {

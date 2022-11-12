@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { textPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div<{ last?: boolean }>`
-  box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
@@ -47,6 +46,7 @@ export const Wrapper = styled.div<{ last?: boolean }>`
         opacity: 0.5;
         cursor: pointer;
         transition: opacity 0.1s;
+        margin-left: 0.5rem;
         &:hover {
           opacity: 0.8;
         }

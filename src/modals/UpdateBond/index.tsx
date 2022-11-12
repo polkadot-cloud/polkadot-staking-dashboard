@@ -4,11 +4,11 @@
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useRef, useState } from 'react';
-import { Wrapper, CardsWrapper, FixedContentWrapper } from './Wrappers';
-import { Tasks } from './Tasks';
+import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
+import { Tasks } from './Tasks';
+import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 
 export const UpdateBond = () => {
   const { config, setModalHeight } = useModal();

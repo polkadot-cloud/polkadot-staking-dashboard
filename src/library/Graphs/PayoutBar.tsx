@@ -13,6 +13,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
+import { useLocale } from 'contexts/Locale';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
@@ -20,6 +21,7 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import {
   defaultThemes,
   networkColors,
@@ -27,9 +29,7 @@ import {
   networkColorsTransparent,
 } from 'theme/default';
 import { AnySubscan } from 'types';
-import { useTranslation } from 'react-i18next';
 import { humanNumber } from 'Utils';
-import { useLocale } from 'contexts/Locale';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 

@@ -100,7 +100,7 @@
         "favorites_validators": "Gets a set of your favorite validators.",
         "from_favorites": "From Favorites",
         "n2": "Gets a set of active validators with low commission.",
-        "active_low_commission": "Active Low Commission",
+        "low_commission": "Low Commission",
         "n1": "Selects a mix of majority active and inactive validators.",
         "optimal_selection": "Optimal Selection",
         "max": "Max",

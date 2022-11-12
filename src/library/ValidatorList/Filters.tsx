@@ -12,9 +12,9 @@ import {
 import { Category } from 'library/Filter/Category';
 import { Container } from 'library/Filter/Container';
 import { useValidatorFilter } from 'library/Filter/context';
-import { useTranslation } from 'react-i18next';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Filters = () => {
   const {
@@ -39,7 +39,7 @@ export const Filters = () => {
     <Container>
       <Category title={t('library.order')}>
         <Item
-          label={t('library.active_low_commission')}
+          label={t('library.low_commission')}
           icon={faPercentage}
           transform="grow-4"
           active={validatorOrder === 'commission'}

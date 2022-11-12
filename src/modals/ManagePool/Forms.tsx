@@ -6,6 +6,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -13,14 +14,14 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { BondedPool, PoolState } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
-import { useTranslation } from 'react-i18next';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import React, { forwardRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Separator } from 'Wrappers';
-import { ContentWrapper } from './Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
   const { setSection, task, section } = props;
@@ -189,6 +190,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
               <>
                 <h2>{t('modals.update_pool_name')}</h2>
                 <input
+                  className="textbox"
                   style={{ width: '100%' }}
                   placeholder={t('modals.pool_name')}
                   type="text"
@@ -210,7 +212,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
           <div>
             <button
               type="button"
-              className="submit"
+              className="submit secondary"
               onClick={() => setSection(0)}
               disabled={submitting}
             >
@@ -222,9 +224,10 @@ export const Forms = forwardRef((props: any, ref: any) => {
             </button>
           </div>
           <div>
-            <button
-              type="button"
-              className="submit"
+            <ButtonSubmit
+              text={`Submit${submitting ? 'ting' : ''}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
               onClick={() => submitTx()}
               disabled={
                 submitting ||
@@ -232,14 +235,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 !valid ||
                 !txFeesValid
               }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              {t('modals.submit')}
-              {submitting && t('modals.ting')}
-            </button>
+            />
           </div>
         </FooterWrapper>
       </div>

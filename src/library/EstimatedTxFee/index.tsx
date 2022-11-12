@@ -3,9 +3,9 @@
 
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
-import { useTranslation } from 'react-i18next';
 import { EstimatedFeeContext, TxFeesContext, useTxFees } from 'contexts/TxFees';
 import React, { Context, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { EstimatedTxFeeProps } from './types';

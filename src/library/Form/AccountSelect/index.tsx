@@ -8,12 +8,12 @@ import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
 import Identicon from 'library/Identicon';
 import { StatusLabel } from 'library/StatusLabel';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { clipAddress, convertRemToPixels } from 'Utils';
-import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 import { AccountSelectProps, InputItem } from '../types';
+import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 
 export const AccountSelect = ({
   items,
@@ -68,7 +68,7 @@ export const AccountSelect = ({
               onClick={() => c.reset()}
               aria-label={t('library.clear_selection')}
             >
-              <FontAwesomeIcon transform="grow-2" icon={faTimes} />
+              <FontAwesomeIcon transform="grow-4" icon={faTimes} />
             </StyledController>
           )}
           <StyledSelect {...c.getMenuProps()}>

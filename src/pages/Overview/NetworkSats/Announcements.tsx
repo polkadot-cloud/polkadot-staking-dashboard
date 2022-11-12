@@ -13,13 +13,13 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { useTranslation } from 'react-i18next';
 import {
   humanNumber,
   planckBnToUnit,
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
-import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

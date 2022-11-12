@@ -5,8 +5,8 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
-import { toFixedIfNecessary } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { toFixedIfNecessary } from 'Utils';
 
 export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi();

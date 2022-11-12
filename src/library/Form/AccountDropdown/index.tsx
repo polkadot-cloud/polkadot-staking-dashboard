@@ -8,11 +8,11 @@ import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
 import Identicon from 'library/Identicon';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { convertRemToPixels } from 'Utils';
-import { useTranslation } from 'react-i18next';
-import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
 import { AccountDropdownProps, InputItem } from '../types';
+import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
 
 export const AccountDropdown = ({
   items,

@@ -14,19 +14,19 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { ReactComponent as InfoSVG } from 'img/info.svg';
+import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
-import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { useOutsideAlerter } from 'library/Hooks';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
-import { defaultThemes } from 'theme/default';
 import { useTranslation } from 'react-i18next';
-import { Separator, Wrapper, ConnectionSymbol } from './Wrapper';
-import { Secondary } from './Secondary';
+import { defaultThemes } from 'theme/default';
 import Heading from './Heading/Heading';
 import { Main } from './Main';
+import { Secondary } from './Secondary';
+import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
   const { network, status } = useApi();

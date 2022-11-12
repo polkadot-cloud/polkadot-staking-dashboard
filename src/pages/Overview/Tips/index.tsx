@@ -1,33 +1,33 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { CardWrapper, CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { useEffect, useState, useRef } from 'react';
 import {
-  faCog,
   faChevronCircleLeft,
   faChevronCircleRight,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { setStateWithRef } from 'Utils';
-import throttle from 'lodash.throttle';
-import { useUi } from 'contexts/UI';
 import { TIPS_CONFIG } from 'config/tips';
-import { useTips } from 'contexts/Tips';
-import useFillVariables from 'library/Hooks/useFillVariables';
-import { AnyJson } from 'types';
+import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useTips } from 'contexts/Tips';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { TipsThresholdSmall, TipsThresholdMedium } from 'consts';
-import { useApi } from 'contexts/Api';
+import { useUi } from 'contexts/UI';
+import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import useFillVariables from 'library/Hooks/useFillVariables';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import throttle from 'lodash.throttle';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PageToggleWrapper } from './Wrappers';
+import { AnyJson } from 'types';
+import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
 import { Syncing } from './Syncing';
+import { PageToggleWrapper } from './Wrappers';
 
 export const Tips = () => {
   const { network } = useApi();

@@ -9,11 +9,9 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
-import { useTxFees } from 'contexts/TxFees';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
-import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { useTranslation } from 'react-i18next';
+import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
@@ -27,7 +25,9 @@ export const BondFeedback = ({
   listenIsValid = () => {},
   disableTxFeeUpdate = false,
   defaultBond,
-  setLocalResize,
+  txFees,
+  maxWidth,
+  syncing = false,
 }: BondFeedbackProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
@@ -37,7 +37,6 @@ export const BondFeedback = ({
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
-  const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
   const { t } = useTranslation('common');
 
@@ -86,11 +85,6 @@ export const BondFeedback = ({
   useEffect(() => {
     handleErrors();
   }, [bond, txFees]);
-
-  // if resize is present, handle on error change
-  useEffect(() => {
-    if (setLocalResize) setLocalResize();
-  }, [errors]);
 
   // update max bond after txFee sync
   useEffect(() => {
@@ -146,7 +140,7 @@ export const BondFeedback = ({
         _bondDisabled = true;
         _errors.push(`${t('library.w4')} ${minBondBase} ${network.unit}.`);
       }
-      if (Number(bond.bond) < minBondBase) {
+      if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
         _errors.push(`${t('library.w5')} ${minBondBase} ${network.unit}.`);
       }
     }
@@ -160,28 +154,21 @@ export const BondFeedback = ({
 
   return (
     <>
-      <CardHeaderWrapper>
-        <h4>
-          {`${
-            txFees.isZero()
-              ? `${t('library.available')}`
-              : `${t('library.available_after_fees')}`
-          }`}
-          : {humanNumber(freeBalance)} {network.unit}
-        </h4>
-      </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
         <Warning key={`setup_error_${index}`} text={err} />
       ))}
       <Spacer />
-      <BondInput
-        value={bond.bond}
-        defaultValue={defBond}
-        disabled={bondDisabled}
-        setters={setters}
-        freeBalance={freeBalance}
-        disableTxFeeUpdate={disableTxFeeUpdate}
-      />
+      <div style={{ maxWidth: maxWidth ? '500px' : '100%' }}>
+        <BondInput
+          value={bond.bond}
+          defaultValue={defBond}
+          syncing={syncing}
+          disabled={bondDisabled}
+          setters={setters}
+          freeBalance={freeBalance}
+          disableTxFeeUpdate={disableTxFeeUpdate}
+        />
+      </div>
     </>
   );
 };

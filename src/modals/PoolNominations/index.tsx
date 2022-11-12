@@ -3,8 +3,8 @@
 
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 import { ValidatorList } from 'library/ValidatorList';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -21,6 +21,7 @@ export const PoolNominations = () => {
         <ListWrapper>
           {targets.length > 0 ? (
             <ValidatorList
+              format="nomination"
               bondType="pool"
               validators={targets}
               nominator={nominator}

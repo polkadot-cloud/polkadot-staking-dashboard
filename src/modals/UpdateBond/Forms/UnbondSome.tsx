@@ -10,13 +10,13 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper } from '../../Wrappers';
 import { FormsProps } from '../types';
@@ -35,7 +35,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { bondType } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
-  const { txFeesValid } = useTxFees();
+  const { txFees, txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
 
   const controller = getBondedAccount(activeAccount);
@@ -152,6 +152,7 @@ export const UnbondSome = (props: FormsProps) => {
               },
             ]}
             warnings={warnings}
+            txFees={txFees}
           />
           <NotesWrapper>
             <p>{t('modals.update_bond4', { bondDuration })}</p>

@@ -6,19 +6,19 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
-import Button from 'library/Button';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState } from 'react';
-import { PoolAccount } from '../PoolAccount';
+import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
+import { PoolAccount } from '../PoolAccount';
 import RoleEditInput from './RoleEditInput';
 import { RoleEditEntry, RolesProps } from './types';
 
@@ -147,13 +147,10 @@ export const Roles = (props: RolesProps) => {
           <>
             {isEditing && (
               <div>
-                <Button
-                  small
-                  icon={faTimesCircle}
-                  transform="grow-1"
-                  inline
-                  primary
-                  title={t('pages.pools.cancel')}
+                <ButtonPrimary
+                  iconLeft={faTimesCircle}
+                  iconTransform="grow-1"
+                  text={t('pages.pools.cancel')}
                   disabled={poolsSyncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
@@ -161,15 +158,10 @@ export const Roles = (props: RolesProps) => {
             )}
             &nbsp;&nbsp;
             <div>
-              <Button
-                small
-                icon={isEditing ? faCheckCircle : faEdit}
-                transform="grow-1"
-                inline
-                primary
-                title={
-                  isEditing ? t('pages.pools.save') : t('pages.pools.edit')
-                }
+              <ButtonPrimary
+                iconLeft={isEditing ? faCheckCircle : faEdit}
+                iconTransform="grow-1"
+                text={isEditing ? t('pages.pools.save') : t('pages.pools.edit')}
                 disabled={
                   poolsSyncing ||
                   isReadOnlyAccount(activeAccount) ||

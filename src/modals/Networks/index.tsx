@@ -7,11 +7,11 @@ import { NETWORKS } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useTooltip } from 'contexts/Tooltip';
+import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
-import { NetworkName } from 'types';
 import { useTranslation } from 'react-i18next';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
+import { NetworkName } from 'types';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
 import {

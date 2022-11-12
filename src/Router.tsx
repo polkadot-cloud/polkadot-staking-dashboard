@@ -10,15 +10,16 @@ import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
-import { Tips } from 'library/Tips';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
 import SideMenu from 'library/SideMenu';
+import { Tips } from 'library/Tips';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import {
   HashRouter,
   Navigate,
@@ -32,7 +33,6 @@ import {
   PageWrapper,
   SideInterfaceWrapper,
 } from 'Wrappers';
-import { useTranslation } from 'react-i18next';
 
 export const RouterInner = () => {
   const { network } = useApi();
@@ -85,23 +85,23 @@ export const RouterInner = () => {
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <AnimatePresence>
               <Routes>
-                {PAGES_CONFIG.map((page, pageIndex) => {
-                  const { Entry } = page;
+                {PAGES_CONFIG.map((page, i) => {
+                  const { Entry, hash, key } = page;
 
                   return (
                     <Route
-                      key={`main_interface_page_${pageIndex}`}
-                      path={page.hash}
+                      key={`main_interface_page_${i}`}
+                      path={hash}
                       element={
                         <PageWrapper
-                          key={`main_interface_key__${pageIndex}`}
+                          key={`main_interface_key__${i}`}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${t(page.key)} : ${TitleDefault}`}</title>
+                            <title>{`${t(key)} : ${TitleDefault}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>

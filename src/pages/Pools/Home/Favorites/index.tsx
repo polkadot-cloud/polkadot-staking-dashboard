@@ -5,10 +5,10 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
-import { useTranslation } from 'react-i18next';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import PoolList from 'library/PoolList';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const Favorites = () => {

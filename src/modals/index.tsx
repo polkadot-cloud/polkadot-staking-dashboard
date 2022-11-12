@@ -10,6 +10,7 @@ import { AccountPoolRoles } from './AccountPoolRoles';
 import { Bio } from './Bio';
 import { ChangeNominations } from './ChangeNominations';
 import { ChangePoolRoles } from './ChangePoolRoles';
+import { ChooseLanguage } from './ChooseLanguage';
 import { ClaimReward } from './ClaimReward';
 import { ConnectAccounts } from './ConnectAccounts';
 import { GoToFeedback } from './GoToFeedback';
@@ -30,7 +31,6 @@ import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
-import { ChooseLanguage } from './ChooseLanguage';
 import { ContentWrapper, HeightWrapper, ModalWrapper } from './Wrappers';
 
 export const Modal = () => {

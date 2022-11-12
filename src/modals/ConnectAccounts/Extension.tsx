@@ -5,10 +5,10 @@ import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { Extension as ExtensionInterface } from 'contexts/Connect/types';
-import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { ExtensionWrapper } from './Wrappers';
+import { useTranslation } from 'react-i18next';
 import { ExtensionProps } from './types';
+import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
   const { extensions } = useConnect();

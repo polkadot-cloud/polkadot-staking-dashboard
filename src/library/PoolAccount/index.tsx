@@ -5,14 +5,14 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from 'contexts/Themes';
 import Identicon from 'library/Identicon';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
-import Wrapper from './Wrapper';
 import { clipAddress, convertRemToPixels } from '../../Utils';
 import { PoolAccountProps } from './types';
+import Wrapper from './Wrapper';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { mode } = useTheme();

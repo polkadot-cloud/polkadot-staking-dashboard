@@ -7,10 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
-import { planckBnToUnit } from 'Utils';
 import { useTranslation } from 'react-i18next';
-import { Wrapper } from './Wrapper';
+import { planckBnToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { minCreateBond } = usePoolsConfig().stats;

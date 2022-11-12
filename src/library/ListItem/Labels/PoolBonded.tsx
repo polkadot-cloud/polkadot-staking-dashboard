@@ -8,6 +8,7 @@ import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { Pool } from 'library/Pool/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   capitalizeFirstLetter,
   humanNumber,
@@ -15,7 +16,6 @@ import {
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
-import { useTranslation } from 'react-i18next';
 
 export const PoolBonded = ({
   pool,
@@ -57,6 +57,7 @@ export const PoolBonded = ({
   // recalculate nominations status as app syncs
   useEffect(() => {
     if (
+      targets.length &&
       nominationsStatus === null &&
       eraStakers.stakers.length &&
       nominations.length
@@ -69,7 +70,7 @@ export const PoolBonded = ({
   // recalculate nominations status
   useEffect(() => {
     handleNominationsStatus();
-  }, [meta, pool]);
+  }, [meta, pool, eraStakers.stakers.length]);
 
   // calculate total bonded pool amount
   const poolBonded = planckBnToUnit(new BN(rmCommas(points)), units);

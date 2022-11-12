@@ -7,13 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAccount } from 'contexts/Account';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Identicon } from 'library/Identicon';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
+import { useTranslation } from 'react-i18next';
 import { clipAddress, convertRemToPixels } from 'Utils';
-import { Wrapper } from './Wrapper';
 import { PoolAccountProps } from '../types';
+import { Wrapper } from './Wrapper';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { address, last, batchKey, batchIndex } = props;

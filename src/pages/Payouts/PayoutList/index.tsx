@@ -18,15 +18,15 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
 import { clipAddress, planckToUnit } from 'Utils';
+import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
-import { PayoutListProps } from '../types';
 
 export const PayoutListInner = (props: PayoutListProps) => {
   const { allowMoreCols, pagination } = props;

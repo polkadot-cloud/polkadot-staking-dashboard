@@ -11,25 +11,25 @@ import { PageTitle } from 'library/PageTitle';
 import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
 } from 'Wrappers';
-import { useTranslation } from 'react-i18next';
-import ActivePoolsStatBox from './Stats/ActivePools';
-import MinJoinBondStatBox from './Stats/MinJoinBond';
-import PoolMembershipBox from './Stats/PoolMembership';
-import MinCreateBondStatBox from './Stats/MinCreateBond';
-import { Status } from './Status';
-import { ManageBond } from './ManageBond';
-import { ManagePool } from './ManagePool';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favorites } from './Favorites';
+import { ManageBond } from './ManageBond';
+import { ManagePool } from './ManagePool';
 import { Members } from './Members';
 import { PoolStats } from './PoolStats';
+import ActivePoolsStatBox from './Stats/ActivePools';
+import MinCreateBondStatBox from './Stats/MinCreateBond';
+import MinJoinBondStatBox from './Stats/MinJoinBond';
+import PoolMembershipBox from './Stats/PoolMembership';
+import { Status } from './Status';
 
 export const HomeInner = () => {
   const { activeAccount } = useConnect();
@@ -42,9 +42,9 @@ export const HomeInner = () => {
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
-  // back to tab 0 if not in a pool
+  // back to tab 0 if not in a pool & on members tab
   useEffect(() => {
-    if (!selectedActivePool) {
+    if (!selectedActivePool && [1].includes(activeTab)) {
       setActiveTab(0);
     }
   }, [selectedActivePool]);

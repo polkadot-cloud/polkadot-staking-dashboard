@@ -3,8 +3,8 @@
 
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useTranslation } from 'react-i18next';
 import { Number } from 'library/StatBoxList/Number';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 
 const MinJoinBondStatBox = () => {

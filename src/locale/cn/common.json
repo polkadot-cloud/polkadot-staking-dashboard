@@ -99,7 +99,7 @@
         "favorites_validators": "获取一组您喜欢的验证人.",
         "from_favorites": "来自收藏夹",
         "n2": "取一组低佣金的活动验证人.",
-        "active_low_commission": "活跃低佣金",
+        "low_commission": "低佣金",
         "n1": "混合选择大多数活动和非活动验证人.",
         "optimal_selection": "最佳选择",
         "max": "最高",

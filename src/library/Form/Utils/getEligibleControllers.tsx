@@ -5,9 +5,9 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useTranslation } from 'react-i18next';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { InputItem } from '../types';
 

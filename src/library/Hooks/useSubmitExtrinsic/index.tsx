@@ -9,27 +9,27 @@ import { Extension } from 'contexts/Connect/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
-import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyApi } from 'types';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
-export const useSubmitExtrinsic = (
-  extrinsic: UseSubmitExtrinsicProps
-): UseSubmitExtrinsic => {
-  // extract extrinsic info
-  const { tx, shouldSubmit, callbackSubmit, callbackInBlock } = extrinsic;
-
-  // if null account is provided, fallback to empty string
-  const { from } = extrinsic;
-  const submitAddress: string = from ?? '';
-
+export const useSubmitExtrinsic = ({
+  tx,
+  shouldSubmit,
+  callbackSubmit,
+  callbackInBlock,
+  from,
+}: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { api } = useApi();
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount, extensions } = useConnect();
   const { t } = useTranslation('common');
+
+  // if null account is provided, fallback to empty string
+  const submitAddress: string = from ?? '';
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);

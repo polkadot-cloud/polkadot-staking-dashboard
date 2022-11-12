@@ -4,8 +4,8 @@
 import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
-import { toFixedIfNecessary } from 'Utils';
 import { useTranslation } from 'react-i18next';
+import { toFixedIfNecessary } from 'Utils';
 
 export const TotalNominatorsStatBox = () => {
   const { staking } = useStaking();

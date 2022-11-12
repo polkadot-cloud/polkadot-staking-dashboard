@@ -6,9 +6,9 @@ import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { ValidatorList } from 'library/ValidatorList';
-import { PageRowWrapper } from 'Wrappers';
-import { useTranslation } from 'react-i18next';
 import { PageProps } from 'pages/types';
+import { useTranslation } from 'react-i18next';
+import { PageRowWrapper } from 'Wrappers';
 
 export const Favorites = (props: PageProps) => {
   const { isReady } = useApi();
@@ -16,13 +16,13 @@ export const Favorites = (props: PageProps) => {
   const { key } = page;
   const { favoritesList } = useValidators();
   const { t: tCommon } = useTranslation('common');
-  const { t: tPages } = useTranslation('pages');
+  const { t } = useTranslation('pages');
 
   const batchKey = 'favorite_validators';
 
   return (
     <>
-      <PageTitle title={tPages(key)} />
+      <PageTitle title={t(key)} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favoritesList === null ? (

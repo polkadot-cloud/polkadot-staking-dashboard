@@ -1,4 +1,5 @@
 {
+  "pages": {
     "stake": "Stake",
     "validators": "Validators",
     "overview": "Overview",
@@ -7,4 +8,5 @@
     "payouts": "Payouts",
     "community": "Community",
     "favorites": "Favorites"
+  }
 }

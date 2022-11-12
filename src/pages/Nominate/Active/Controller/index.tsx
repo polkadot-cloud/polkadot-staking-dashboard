@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
-import Button from 'library/Button';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
-import { useTranslation } from 'react-i18next';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
+import { useTranslation } from 'react-i18next';
 import { clipAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
@@ -41,14 +41,11 @@ export const Controller = ({ label }: { label: string }) => {
           <div className="icon">
             <Identicon value={controller || ''} size={26} />
           </div>
-          {displayName || display}
+          {displayName || display}&nbsp;
           <div className="btn">
-            <Button
-              primary
-              inline
-              title={t('pages.nominate.change')}
-              icon={faExchangeAlt}
-              small
+            <ButtonPrimary
+              text={t('pages.nominate.change')}
+              iconLeft={faExchangeAlt}
               disabled={
                 !isReady || !hasController() || isReadOnlyAccount(activeAccount)
               }

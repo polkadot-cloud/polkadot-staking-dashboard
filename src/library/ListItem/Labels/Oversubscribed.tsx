@@ -12,8 +12,8 @@ import {
   TooltipPosition,
   TooltipTrigger,
 } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { OversubscribedProps } from '../types';
 
 export const Oversubscribed = (props: OversubscribedProps) => {

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import React, { useEffect, useRef, useState } from 'react';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import {
   EraStakers,
@@ -11,6 +10,7 @@ import {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyApi, MaybeAccount } from 'types';
 import {
@@ -351,7 +351,9 @@ export const StakingProvider = ({
     }
 
     for (const target of _targets) {
-      const s = eraStakers.stakers.find((_n: any) => _n.address === target);
+      const s = eraStakersRef.current.stakers.find(
+        (_n: any) => _n.address === target
+      );
 
       if (s === undefined) {
         statuses[target] = 'waiting';

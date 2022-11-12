@@ -12,13 +12,13 @@ import { Wrapper } from './Wrappers';
 export const CommunityInner = (props: PageProps) => {
   const { page } = props;
   const { key } = page;
-  const { t: tPages } = useTranslation('pages');
 
   const { activeSection } = useCommunitySections();
+  const { t } = useTranslation('pages');
 
   return (
     <Wrapper>
-      <PageTitle title={`${tPages(key)}`} />
+      <PageTitle title={`${t(key)}`} />
       {activeSection === 0 && <List />}
       {activeSection === 1 && <Entity />}
     </Wrapper>

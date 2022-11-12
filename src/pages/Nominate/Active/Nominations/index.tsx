@@ -2,19 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
-import { useTranslation } from 'react-i18next';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import { Button } from 'library/Button';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
+import { useTranslation } from 'react-i18next';
 import { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
@@ -110,13 +110,10 @@ export const Nominations = ({
           */}
           {((!isPool && nominations.length) ||
             (isPool && (isPoolNominator() || isPoolOwner()))) && (
-            <Button
-              small
-              icon={faStopCircle}
-              transform="grow-1"
-              inline
-              primary
-              title={t('pages.nominate.stop')}
+            <ButtonPrimary
+              iconLeft={faStopCircle}
+              iconTransform="grow-1"
+              text={t('pages.nominate.stop')}
               disabled={stopBtnDisabled}
               onClick={() =>
                 openModalWith(

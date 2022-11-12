@@ -3,10 +3,10 @@
 
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
-import { useTranslation } from 'react-i18next';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { PoolState } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 

@@ -82,7 +82,6 @@ export const HeaderWrapper = styled.div`
     flex-basis: 100%;
 
     .items {
-      box-sizing: border-box;
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;
@@ -90,7 +89,6 @@ export const HeaderWrapper = styled.div`
       width: 100%;
 
       > div {
-        box-sizing: border-box;
         flex-grow: 1;
         flex-basis: 100%;
         width: 100%;

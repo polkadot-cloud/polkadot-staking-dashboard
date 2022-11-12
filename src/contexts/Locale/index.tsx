@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState } from 'react';
-import moment from 'moment';
 import { i18ToMomentLocale } from 'locale';
+import moment from 'moment';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const LocaleContext = React.createContext<any>(null);

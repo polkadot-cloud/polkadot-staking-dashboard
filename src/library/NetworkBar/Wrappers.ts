@@ -107,7 +107,6 @@ export const NetworkInfo = styled(motion.div)`
   width: 100%;
   background: ${networkColor};
   flex: 1;
-  box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;

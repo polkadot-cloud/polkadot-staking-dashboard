@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Input = (props: any) => {
   const { listenIsValid, defaultValue } = props;
@@ -39,6 +39,7 @@ export const Input = (props: any) => {
     <>
       <div style={{ margin: '1rem 0' }}>
         <input
+          className="textbox"
           style={{ width: '100%' }}
           placeholder={t('pages.pools.pool_name')}
           type="text"

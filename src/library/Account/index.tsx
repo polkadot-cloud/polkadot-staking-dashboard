@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { useEffect, useState } from 'react';
-import { defaultThemes } from 'theme/default';
 import { useTranslation } from 'react-i18next';
+import { defaultThemes } from 'theme/default';
 import { clipAddress, convertRemToPixels } from 'Utils';
-import Wrapper from './Wrapper';
 import Identicon from '../Identicon';
 import { AccountProps } from './types';
+import Wrapper from './Wrapper';
 
 export const Account = ({
   filled = false,

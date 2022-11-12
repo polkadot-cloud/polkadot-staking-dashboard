@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
-import { useTranslation } from 'react-i18next';
 import { Text } from 'library/StatBoxList/Text';
+import { useTranslation } from 'react-i18next';
 
 export const AverageCommission = () => {
   const { avgCommission } = useValidators();
