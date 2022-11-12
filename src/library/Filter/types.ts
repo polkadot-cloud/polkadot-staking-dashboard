@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { ButtonProps } from 'library/Button/types';
 import React from 'react';
 
 export interface ItemProps {
@@ -17,7 +16,7 @@ export interface ItemProps {
 
 export interface CategoryProps {
   title: string;
-  buttons?: Array<ButtonProps>;
+  buttons?: Array<any>;
   children: React.ReactNode;
 }
 

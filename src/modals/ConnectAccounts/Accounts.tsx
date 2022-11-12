@@ -7,6 +7,7 @@ import {
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -14,7 +15,6 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
-import Button from 'library/Button';
 import { forwardRef, useEffect, useState } from 'react';
 import { AnyJson } from 'types';
 import { AccountButton, AccountElement } from './Account';
@@ -183,11 +183,10 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
             <h1>Accounts</h1>
           </div>
           <div>
-            <Button
-              title="Extensions"
-              inline
-              icon={faCog}
-              transform="shrink-2"
+            <ButtonSecondary
+              text="Extensions"
+              iconLeft={faCog}
+              iconTransform="shrink-2"
               onClick={() => setSection(0)}
             />
           </div>

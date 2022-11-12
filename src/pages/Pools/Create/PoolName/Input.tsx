@@ -37,6 +37,7 @@ export const Input = (props: any) => {
     <>
       <div style={{ margin: '1rem 0' }}>
         <input
+          className="textbox"
           style={{ width: '100%' }}
           placeholder="Pool Name"
           type="text"
