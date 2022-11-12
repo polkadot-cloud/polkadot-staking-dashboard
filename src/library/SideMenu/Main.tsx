@@ -154,7 +154,7 @@ export const Main = () => {
                 { category, hash, icon, key, animate, action }: PageItem,
                 j: number
               ) => (
-                <React.Fragment key={`sidemenu_page_${j}`}>
+                <React.Fragment key={`sidemenu_page_${i}_${j}`}>
                   {category === categoryId && (
                     <Primary
                       name={t(key)}
