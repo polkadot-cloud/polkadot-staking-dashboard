@@ -18,10 +18,10 @@ export const resources = {
 };
 
 // get locale from localStorage.
-const _locale = localStorage.getItem('locale');
-const locale = _locale ?? DefaultLocale;
+const localLocale = localStorage.getItem('locale');
+const locale = localLocale ?? DefaultLocale;
 
-if (!_locale) {
+if (!localLocale) {
   localStorage.setItem('locale', DefaultLocale);
 }
 
