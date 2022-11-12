@@ -141,48 +141,44 @@ export const Main = () => {
       </LogoWrapper>
 
       {pageConfig.categories.map(
-        ({ _id: categoryId, key: categoryKey }: PageCategory, i: number) => {
-          return (
-            <React.Fragment key={`sidemenu_category_${i}`}>
-              {/* display heading if not `default` (used for top links) */}
-              {categoryKey !== 'default' && (
-                <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
-              )}
+        ({ _id: categoryId, key: categoryKey }: PageCategory, i: number) => (
+          <React.Fragment key={`sidemenu_category_${i}`}>
+            {/* display heading if not `default` (used for top links) */}
+            {categoryKey !== 'default' && (
+              <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
+            )}
 
-              {/* display category links */}
-              {pagesToDisplay.map(
-                (
-                  { category, hash, icon, key, animate, action }: PageItem,
-                  j: number
-                ) => {
-                  return (
-                    <React.Fragment key={`sidemenu_page_${j}`}>
-                      {category === categoryId && (
-                        <Primary
-                          name={t(key)}
-                          to={hash}
-                          active={hash === pathname}
-                          icon={
-                            icon ? (
-                              <FontAwesomeIcon
-                                icon={icon}
-                                transform="grow-1"
-                                className="fa-icon"
-                              />
-                            ) : undefined
-                          }
-                          animate={animate}
-                          action={action}
-                          minimised={sideMenuMinimised}
-                        />
-                      )}
-                    </React.Fragment>
-                  );
-                }
-              )}
-            </React.Fragment>
-          );
-        }
+            {/* display category links */}
+            {pagesToDisplay.map(
+              (
+                { category, hash, icon, key, animate, action }: PageItem,
+                j: number
+              ) => (
+                <React.Fragment key={`sidemenu_page_${j}`}>
+                  {category === categoryId && (
+                    <Primary
+                      name={t(key)}
+                      to={hash}
+                      active={hash === pathname}
+                      icon={
+                        icon ? (
+                          <FontAwesomeIcon
+                            icon={icon}
+                            transform="grow-1"
+                            className="fa-icon"
+                          />
+                        ) : undefined
+                      }
+                      animate={animate}
+                      action={action}
+                      minimised={sideMenuMinimised}
+                    />
+                  )}
+                </React.Fragment>
+              )
+            )}
+          </React.Fragment>
+        )
       )}
     </>
   );
