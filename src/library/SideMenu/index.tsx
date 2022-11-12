@@ -14,7 +14,6 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { ReactComponent as InfoSVG } from 'img/info.svg';
-import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
@@ -160,12 +159,6 @@ export const SideMenu = () => {
             <MoonOutlineSVG width="1.4rem" height="1.4rem" />
           </button>
         )}
-        <button
-          type="button"
-          onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
-        >
-          <LanguageSVG width="1.6rem" height="1.6rem" />
-        </button>
       </section>
     </Wrapper>
   );
