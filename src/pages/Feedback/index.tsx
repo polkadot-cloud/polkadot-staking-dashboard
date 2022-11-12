@@ -4,6 +4,7 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { Wrapper } from '../Community/Wrappers';
 import { PageProps } from '../types';
@@ -12,7 +13,8 @@ const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 
 const Feedback = (props: PageProps) => {
   const { page } = props;
-  const { title } = page;
+  const { key } = page;
+  const { t } = useTranslation('pages');
 
   useEffect(() => {
     (function (w: any, d: any, i: any, s: any) {
@@ -50,7 +52,7 @@ const Feedback = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <PageTitle title={title} />
+      <PageTitle title={t(key)} />
       <PageRowWrapper className="page-padding">
         <div data-canny style={{ width: '100%' }} />
       </PageRowWrapper>
