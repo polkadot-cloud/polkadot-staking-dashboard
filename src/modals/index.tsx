@@ -10,6 +10,7 @@ import { AccountPoolRoles } from './AccountPoolRoles';
 import { Bio } from './Bio';
 import { ChangeNominations } from './ChangeNominations';
 import { ChangePoolRoles } from './ChangePoolRoles';
+import { ChooseLanguage } from './ChooseLanguage';
 import { ClaimReward } from './ClaimReward';
 import { ConnectAccounts } from './ConnectAccounts';
 import { GoToFeedback } from './GoToFeedback';
@@ -130,6 +131,7 @@ export const Modal = () => {
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
               {modal === 'GoToFeedback' && <GoToFeedback />}
+              {modal === 'ChooseLanguage' && <ChooseLanguage />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>

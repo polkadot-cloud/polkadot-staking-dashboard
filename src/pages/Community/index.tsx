@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageTitle } from 'library/PageTitle';
+import { useTranslation } from 'react-i18next';
 import { PageProps } from '../types';
 import { CommunitySectionsProvider, useCommunitySections } from './context';
 import { Entity } from './Entity';
@@ -10,13 +11,14 @@ import { Wrapper } from './Wrappers';
 
 export const CommunityInner = (props: PageProps) => {
   const { page } = props;
-  const { title } = page;
+  const { key } = page;
 
   const { activeSection } = useCommunitySections();
+  const { t: tPages } = useTranslation('pages');
 
   return (
     <Wrapper>
-      <PageTitle title={`${title}`} />
+      <PageTitle title={`${tPages(key)}`} />
       {activeSection === 0 && <List />}
       {activeSection === 1 && <Entity />}
     </Wrapper>

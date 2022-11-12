@@ -73,14 +73,14 @@ export interface Network {
 
 export interface PageCategory {
   _id: number;
-  title: string;
+  key: string;
 }
 
 export type PageCategories = Array<PageCategory>;
 
 export interface PageItem {
   category: number;
-  title: string;
+  key: string;
   uri: string;
   hash: string;
   Entry: React.FC<PageProps>;

@@ -138,7 +138,7 @@ export const pageFromUri = (pathname: string) => {
 
 export const pageTitleFromUri = (pathname: string, pages: PagesConfig) => {
   for (const page of pages) {
-    if (page.uri === pathname) return page.title;
+    if (page.uri === pathname) return page.key;
   }
   return '';
 };

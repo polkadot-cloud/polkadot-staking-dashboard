@@ -92,3 +92,9 @@ export const DefaultParams = {
   minInflation: 0.025,
   stakeTarget: 0.5,
 };
+
+/*
+ * default language
+ */
+export const DEFAULT_LOCALE = 'en';
+export const DEFAULT_NS = 'common';

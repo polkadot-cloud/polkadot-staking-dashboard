@@ -7,6 +7,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { ValidatorList } from 'library/ValidatorList';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import ActiveValidatorsStatBox from './Stats/ActiveValidators';
@@ -15,14 +16,15 @@ import TotalValidatorsStatBox from './Stats/TotalValidators';
 
 export const Validators = (props: PageProps) => {
   const { page } = props;
-  const { title } = page;
+  const { key } = page;
 
   const { isReady } = useApi();
   const { validators } = useValidators();
+  const { t: tPages } = useTranslation('pages');
 
   return (
     <>
-      <PageTitle title={title} />
+      <PageTitle title={tPages(key)} />
       <StatBoxList>
         <TotalValidatorsStatBox />
         <ActiveValidatorsStatBox />

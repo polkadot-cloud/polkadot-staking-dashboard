@@ -19,6 +19,7 @@ import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import {
   HashRouter,
   Navigate,
@@ -37,6 +38,7 @@ export const RouterInner = () => {
   const { network } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+  const { t } = useTranslation('pages');
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {
@@ -99,7 +101,7 @@ export const RouterInner = () => {
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${page.title} : ${TitleDefault}`}</title>
+                            <title>{`${t(page.key)} : ${TitleDefault}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>
