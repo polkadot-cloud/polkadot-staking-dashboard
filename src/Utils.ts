@@ -5,7 +5,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
-import { AnyMetaBatch, PagesConfig } from 'types/index';
+import { AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -134,13 +134,6 @@ export const pageFromUri = (pathname: string) => {
   const lastUriItem = pathname.substring(pathname.lastIndexOf('/') + 1);
   const page = lastUriItem.trim() === '' ? 'overview' : lastUriItem;
   return page;
-};
-
-export const pageTitleFromUri = (pathname: string, pages: PagesConfig) => {
-  for (const page of pages) {
-    if (page.uri === pathname) return page.title;
-  }
-  return '';
 };
 
 export const isNumeric = (str: string | number) => {

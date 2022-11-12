@@ -19,6 +19,7 @@ import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import {
   HashRouter,
   Navigate,
@@ -37,6 +38,7 @@ export const RouterInner = () => {
   const { network } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+  const { t } = useTranslation('pages');
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {
@@ -83,23 +85,23 @@ export const RouterInner = () => {
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <AnimatePresence>
               <Routes>
-                {PAGES_CONFIG.map((page, pageIndex) => {
-                  const { Entry } = page;
+                {PAGES_CONFIG.map((page, i) => {
+                  const { Entry, hash, key } = page;
 
                   return (
                     <Route
-                      key={`main_interface_page_${pageIndex}`}
-                      path={page.hash}
+                      key={`main_interface_page_${i}`}
+                      path={hash}
                       element={
                         <PageWrapper
-                          key={`main_interface_key__${pageIndex}`}
+                          key={`main_interface_key__${i}`}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${page.title} : ${TitleDefault}`}</title>
+                            <title>{`${t(key)} : ${TitleDefault}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>

@@ -12,6 +12,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { UIContextInterface } from 'contexts/UI/types';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { PageCategory, PageItem, PagesConfig } from 'types';
 import Heading from './Heading/Heading';
@@ -33,6 +34,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
+  const { t } = useTranslation('pages');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -139,39 +141,39 @@ export const Main = () => {
       </LogoWrapper>
 
       {pageConfig.categories.map(
-        (category: PageCategory, categoryIndex: number) => (
-          <React.Fragment key={`sidemenu_category_${categoryIndex}`}>
+        ({ id: categoryId, key: categoryKey }: PageCategory) => (
+          <React.Fragment key={`sidemenu_category_${categoryId}`}>
             {/* display heading if not `default` (used for top links) */}
-            {category.title !== 'default' && (
-              <Heading title={category.title} minimised={sideMenuMinimised} />
+            {categoryKey !== 'default' && (
+              <Heading title={t(categoryKey)} minimised={sideMenuMinimised} />
             )}
 
             {/* display category links */}
-            {pagesToDisplay.map((page: PageItem, pageIndex: number) => {
-              return (
-                <React.Fragment key={`sidemenu_page_${pageIndex}`}>
-                  {page.category === category._id && (
+            {pagesToDisplay.map(
+              ({ category, hash, icon, key, animate, action }: PageItem) => (
+                <React.Fragment key={`sidemenu_page_${categoryId}_${key}`}>
+                  {category === categoryId && (
                     <Primary
-                      name={page.title}
-                      to={page.hash}
-                      active={page.hash === pathname}
+                      name={t(key)}
+                      to={hash}
+                      active={hash === pathname}
                       icon={
-                        page.icon ? (
+                        icon ? (
                           <FontAwesomeIcon
-                            icon={page.icon}
+                            icon={icon}
                             transform="grow-1"
                             className="fa-icon"
                           />
                         ) : undefined
                       }
-                      animate={page.animate}
-                      action={page.action}
+                      animate={animate}
+                      action={action}
                       minimised={sideMenuMinimised}
                     />
                   )}
                 </React.Fragment>
-              );
-            })}
+              )
+            )}
           </React.Fragment>
         )
       )}
