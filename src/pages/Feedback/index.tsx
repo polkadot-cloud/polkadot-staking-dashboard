@@ -4,10 +4,10 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { Wrapper } from '../Community/Wrappers';
 import { PageProps } from '../types';
-import { useTranslation } from 'react-i18next';
 
 const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 
@@ -37,8 +37,8 @@ const Feedback = (props: PageProps) => {
           'complete' === d.readyState
             ? l()
             : w.attachEvent
-              ? w.attachEvent('onload', l)
-              : w.addEventListener('load', l, !1);
+            ? w.attachEvent('onload', l)
+            : w.addEventListener('load', l, !1);
       }
     })(window, document, 'canny-jssdk', 'script');
 

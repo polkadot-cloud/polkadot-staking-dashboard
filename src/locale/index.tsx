@@ -24,6 +24,7 @@ export const resources = {
     ...pagesCn,
   },
 };
+
 // configure i18n object.
 i18next.use(initReactI18next).init({
   debug: process.env.REACT_APP_DEBUG_I18N === '1',
