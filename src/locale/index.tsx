@@ -53,9 +53,8 @@ i18next.use(initReactI18next).init(
     fallbackLng: DefaultLocale,
     resources,
   },
-  (err) => {
-    if (err)
-      return console.log('Something went wrong with the locale system', err);
+  () => {
+    /* locale error */
   }
 );
 

@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /* eslint-disable */
-import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
-import { availableLanguages } from 'locale';
+import { useLocale } from 'contexts/Locale';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
+import { Title } from 'library/Modal/Title';
+import { availableLanguages } from 'locale';
 import 'moment/locale/zh-cn';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, LocaleButton } from './Wrapper';
-import { useLocale } from 'contexts/Locale';
 
 export const ChooseLanguage = () => {
   const { i18n, t } = useTranslation(['common', 'pages', 'help']);

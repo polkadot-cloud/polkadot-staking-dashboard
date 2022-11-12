@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageTitle } from 'library/PageTitle';
-import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { Wrapper } from '../Community/Wrappers';
 import { PageProps } from '../types';
