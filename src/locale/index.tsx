@@ -10,10 +10,10 @@ import pagesen from './en/pages.json';
 // construct resources.
 export const resources = {
   en: {
-    pages: pagesen,
+    ...pagesen,
   },
   cn: {
-    pages: pagescn,
+    ...pagescn,
   },
 };
 

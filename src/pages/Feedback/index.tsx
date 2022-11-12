@@ -14,7 +14,7 @@ const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 const Feedback = (props: PageProps) => {
   const { page } = props;
   const { key } = page;
-  const { t: tPages } = useTranslation('pages');
+  const { t } = useTranslation('pages');
 
   useEffect(() => {
     (function (w: any, d: any, i: any, s: any) {
@@ -52,7 +52,7 @@ const Feedback = (props: PageProps) => {
 
   return (
     <Wrapper>
-      <PageTitle title={tPages(key)} />
+      <PageTitle title={t(key)} />
       <PageRowWrapper className="page-padding">
         <div data-canny style={{ width: '100%' }} />
       </PageRowWrapper>

@@ -1,10 +1,12 @@
 {
-    "stake": "Stake",
-    "validators": "Validators",
-    "overview": "Overview",
-    "nominate": "Nominate",
-    "pools": "Pools",
-    "payouts": "Payouts",
-    "community": "Community",
-    "favorites": "Favorites"
+    "pages": {
+        "stake": "Stake",
+        "validators": "Validators",
+        "overview": "Overview",
+        "nominate": "Nominate",
+        "pools": "Pools",
+        "payouts": "Payouts",
+        "community": "Community",
+        "favorites": "Favorites"
+    }
 }

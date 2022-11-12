@@ -34,7 +34,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { t: tPages } = useTranslation('pages');
+  const { t } = useTranslation('pages');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -147,7 +147,7 @@ export const Main = () => {
               {/* display heading if not `default` (used for top links) */}
               {category.key !== 'default' && (
                 <Heading
-                  title={tPages(category.key)}
+                  title={t(category.key)}
                   minimised={sideMenuMinimised}
                 />
               )}
@@ -158,7 +158,7 @@ export const Main = () => {
                   <React.Fragment key={`sidemenu_page_${pageIndex}`}>
                     {page.category === category._id && (
                       <Primary
-                        name={tPages(page.key)}
+                        name={t(page.key)}
                         to={page.hash}
                         active={page.hash === pathname}
                         icon={
