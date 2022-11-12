@@ -153,25 +153,26 @@ export const Main = () => {
               )}
 
               {/* display category links */}
-              {pagesToDisplay.map((page: PageItem, pageIndex: number) => {
+              {pagesToDisplay.map((page: PageItem, i: number) => {
+                const { hash, icon, key, animate, action } = page;
                 return (
-                  <React.Fragment key={`sidemenu_page_${pageIndex}`}>
+                  <React.Fragment key={`sidemenu_page_${i}`}>
                     {page.category === category._id && (
                       <Primary
-                        name={t(page.key)}
-                        to={page.hash}
-                        active={page.hash === pathname}
+                        name={t(key)}
+                        to={hash}
+                        active={hash === pathname}
                         icon={
-                          page.icon ? (
+                          icon ? (
                             <FontAwesomeIcon
-                              icon={page.icon}
+                              icon={icon}
                               transform="grow-1"
                               className="fa-icon"
                             />
                           ) : undefined
                         }
-                        animate={page.animate}
-                        action={page.action}
+                        animate={animate}
+                        action={action}
                         minimised={sideMenuMinimised}
                       />
                     )}
