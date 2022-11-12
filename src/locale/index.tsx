@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { DEFAULT_LOCALE, DEFAULT_NS } from 'consts';
+import { DefaultLocale, FallbackNS } from 'consts';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import pagescn from './cn/pages.json';
@@ -19,10 +19,10 @@ export const resources = {
 
 // get locale from localStorage.
 const _locale = localStorage.getItem('locale');
-const locale = _locale ?? DEFAULT_LOCALE;
+const locale = _locale ?? DefaultLocale;
 
 if (!_locale) {
-  localStorage.setItem('locale', DEFAULT_LOCALE);
+  localStorage.setItem('locale', DefaultLocale);
 }
 
 // configure i18n object.
@@ -31,8 +31,8 @@ i18next.use(initReactI18next).init(
     initImmediate: false, // setting initImediate to false, will load the resources synchronously
     interpolation: { escapeValue: false },
     lng: locale,
-    fallbackLng: DEFAULT_LOCALE,
-    fallbackNS: DEFAULT_NS,
+    fallbackLng: DefaultLocale,
+    fallbackNS: FallbackNS,
     debug: process.env.REACT_APP_DEBUG_I18N === '1',
     resources,
   },
