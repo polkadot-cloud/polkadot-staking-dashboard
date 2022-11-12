@@ -4,16 +4,16 @@
 import { DefaultLocale, FallbackNS } from 'consts';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import pagescn from './cn/pages.json';
-import pagesen from './en/pages.json';
+import pagesCn from './cn/pages.json';
+import pagesEn from './en/pages.json';
 
 // construct resources.
 export const resources = {
   en: {
-    ...pagesen,
+    ...pagesEn,
   },
   cn: {
-    ...pagescn,
+    ...pagesCn,
   },
 };
 
