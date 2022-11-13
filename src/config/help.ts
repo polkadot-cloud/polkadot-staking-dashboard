@@ -1,9 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { HelpItemLocales } from 'contexts/Help/types';
+import { HelpItems } from 'contexts/Help/types';
 
-export const HELP_CONFIG: HelpItemLocales = [
+export const HELP_CONFIG: HelpItems = [
   {
     key: 'overview',
     definitions: [

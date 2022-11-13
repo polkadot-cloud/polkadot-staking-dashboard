@@ -6,12 +6,11 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import {
-  ExternalLocale,
-  ExternalLocales,
+  ExternalItem,
+  ExternalItems,
   HelpDefinition,
   HelpExternal,
-  HelpItemLocale,
-  HelpLocales,
+  HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
@@ -60,19 +59,19 @@ export const Help = () => {
   // render early if help not open
   if (status === 0) return <></>;
 
-  let meta: HelpItemLocale | undefined;
+  let meta: HelpItem | undefined;
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HELP_CONFIG).find((c: HelpItemLocale) =>
+    meta = Object.values(HELP_CONFIG).find((c: HelpItem) =>
       c?.definitions?.find((d: string) => d === definition)
     );
   } else {
     // get all items
-    let _definitions: HelpLocales = [];
-    let _external: ExternalLocales = [];
+    let _definitions: Array<string> = [];
+    let _external: ExternalItems = [];
 
-    Object.values(HELP_CONFIG).forEach((c: HelpItemLocale) => {
+    Object.values(HELP_CONFIG).forEach((c: HelpItem) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });
@@ -129,7 +128,7 @@ export const Help = () => {
 
   // accumulate external resources
   const externals = meta?.external ?? [];
-  const activeExternals = externals.map((e: ExternalLocale) => {
+  const activeExternals = externals.map((e: ExternalItem) => {
     const localeKey = e[0];
     const url = e[1];
     const website = e[2];
