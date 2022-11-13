@@ -16,9 +16,7 @@ export type HelpExternals = Array<HelpExternal>;
 export type ExternalLocales = Array<ExternalLocale>;
 
 export type HelpDefinitions = Array<HelpDefinition>;
-export type HelpLocales = Array<HelpLocale>;
-
-export type HelpLocale = [string, string];
+export type HelpLocales = Array<string>;
 
 export type HelpDefinition = {
   title: string;

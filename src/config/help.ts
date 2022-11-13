@@ -7,16 +7,15 @@ export const HELP_CONFIG: HelpItemLocales = [
   {
     key: 'overview',
     definitions: [
-      ['Dashboard Tips', 'dashboard_tips'],
-      ['Supply Staked', 'supply_staked'],
-      ['Total Nominators', 'total_nominators'],
-      ['Active Nominators', 'active_nominators'],
-      ['Your Balance', 'your_balance'],
-      ['Reserve Balance', 'reserve_balance'],
-      ['Network Stats', 'network_stats'],
-      ['Inflation', 'inflation'],
-      ['Historical Rewards Rate', 'historical_rewards_rate'],
-      ['Ideal Staked', 'ideal_staked'],
+      'Dashboard Tips',
+      'Total Nominators',
+      'Active Nominators',
+      'Your Balance',
+      'Reserve Balance',
+      'Network Stats',
+      'Inflation',
+      'Historical Rewards Rate',
+      'Ideal Staked',
     ],
     external: [
       {
@@ -39,15 +38,15 @@ export const HELP_CONFIG: HelpItemLocales = [
   {
     key: 'nominate',
     definitions: [
-      ['Nomination Status', 'nomination_status'],
-      ['Stash and Controller Accounts', 'stash_and_controller_accounts'],
-      ['Controller Account Eligibility', 'controller_account_eligibility'],
-      ['Bonding', 'bonding'],
-      ['Active Bond Threshold', 'active_bond_threshold'],
-      ['Reward Destination', 'reward_destination'],
-      ['Nominating', 'nominating'],
-      ['Nominations', 'nominations'],
-      ['Inactive Nominations', 'inactive_nominations'],
+      'Nomination Status',
+      'Stash and Controller Accounts',
+      'Controller Account Eligibility',
+      'Bonding',
+      'Active Bond Threshold',
+      'Reward Destination',
+      'Nominating',
+      'Nominations',
+      'Inactive Nominations',
     ],
     external: [
       {
@@ -85,14 +84,14 @@ export const HELP_CONFIG: HelpItemLocales = [
   {
     key: 'pools',
     definitions: [
-      ['Nomination Pools', 'nomination_pools'],
-      ['Active Pools', 'active_pools'],
-      ['Minimum Join Bond', 'minimum_join_bond'],
-      ['Minimum Create Bond', 'minimum_create_bond'],
-      ['Pool Membership', 'pool_membership'],
-      ['Bonded in Pool', 'bonded_in_pool'],
-      ['Pool Rewards', 'pool_rewards'],
-      ['Pool Roles', 'pool_roles'],
+      'Nomination Pools',
+      'Active Pools',
+      'Minimum Join Bond',
+      'Minimum Create Bond',
+      'Pool Membership',
+      'Bonded in Pool',
+      'Pool Rewards',
+      'Pool Roles',
     ],
     external: [
       {
@@ -110,17 +109,17 @@ export const HELP_CONFIG: HelpItemLocales = [
   {
     key: 'validators',
     definitions: [
-      ['Validator', 'validator'],
-      ['Active Validator', 'active_validator'],
-      ['Average Commission', 'average_commission'],
-      ['Era', 'era'],
-      ['Epoch', 'epoch'],
-      ['Era Points', 'era_eoints'],
-      ['Self Stake', 'self_stake'],
-      ['Nominator Stake', 'nominator_stake'],
-      ['Commission', 'commission'],
-      ['Over Subscribed', 'over_subscribed'],
-      ['Blocked Nominations', 'blocked_nominations'],
+      'Validator',
+      'Active Validator',
+      'Average Commission',
+      'Era',
+      'Epoch',
+      'Era Points',
+      'Self Stake',
+      'Nominator Stake',
+      'Commission',
+      'Over Subscribed',
+      'Blocked Nominations',
     ],
     external: [
       {
@@ -132,11 +131,7 @@ export const HELP_CONFIG: HelpItemLocales = [
   },
   {
     key: 'payouts',
-    definitions: [
-      ['Payout', 'payout'],
-      ['Last Era Payout', 'last_era_payout'],
-      ['Payout History', 'payout_history'],
-    ],
+    definitions: ['Payout', 'Last Era Payout', 'Payout History'],
     external: [],
   },
   {

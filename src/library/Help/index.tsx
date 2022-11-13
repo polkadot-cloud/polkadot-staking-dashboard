@@ -11,13 +11,13 @@ import {
   HelpDefinition,
   HelpExternal,
   HelpItemLocale,
-  HelpLocale,
   HelpLocales,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { stringToKey } from 'Utils';
 import Definition from './Items/Definition';
 import External from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
@@ -65,7 +65,7 @@ export const Help = () => {
   if (definition) {
     // get items for active category
     meta = Object.values(HELP_CONFIG).find((c: HelpItemLocale) =>
-      c?.definitions?.find((d: HelpLocale) => d[0] === definition)
+      c?.definitions?.find((d: string) => d === definition)
     );
   } else {
     // get all items
@@ -82,9 +82,9 @@ export const Help = () => {
   let definitions = meta?.definitions ?? [];
 
   const activeDefinitions = definitions
-    .filter((d: HelpLocale) => d[0] !== definition)
-    .map((d: HelpLocale) => {
-      const localeKey = d[1];
+    .filter((d: string) => d !== definition)
+    .map((d: string) => {
+      const localeKey = stringToKey(d);
 
       return fillVariables(
         {
@@ -101,12 +101,12 @@ export const Help = () => {
 
   // get active definiton
   const activeRecord = definition
-    ? definitions.find((d: HelpLocale) => d[0] === definition)
+    ? definitions.find((d: string) => d === definition)
     : null;
 
   let activeDefinition: HelpDefinition | null = null;
   if (activeRecord) {
-    const localeKey = activeRecord[1];
+    const localeKey = stringToKey(activeRecord);
 
     const title = t(`definitions.${localeKey}.title`);
     const description = i18n.getResource(
@@ -124,7 +124,7 @@ export const Help = () => {
     );
 
     // filter active definition
-    definitions = definitions.filter((d: HelpLocale) => d[0] !== definition);
+    definitions = definitions.filter((d: string) => d !== definition);
   }
 
   // accumulate external resources
