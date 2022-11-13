@@ -65,7 +65,7 @@ export const Help = () => {
   if (definition) {
     // get items for active category
     meta = Object.values(HELP_CONFIG).find((c: HelpItemLocale) =>
-      c?.definitions?.find((d: HelpLocale) => d.key === definition)
+      c?.definitions?.find((d: HelpLocale) => d[0] === definition)
     );
   } else {
     // get all items
@@ -82,9 +82,9 @@ export const Help = () => {
   let definitions = meta?.definitions ?? [];
 
   const activeDefinitions = definitions
-    .filter((d: HelpLocale) => d.key !== definition)
+    .filter((d: HelpLocale) => d[0] !== definition)
     .map((d: HelpLocale) => {
-      const { localeKey } = d;
+      const localeKey = d[1];
 
       return fillVariables(
         {
@@ -101,12 +101,12 @@ export const Help = () => {
 
   // get active definiton
   const activeRecord = definition
-    ? definitions.find((d: HelpLocale) => d.key === definition)
+    ? definitions.find((d: HelpLocale) => d[0] === definition)
     : null;
 
   let activeDefinition: HelpDefinition | null = null;
   if (activeRecord) {
-    const { localeKey } = activeRecord;
+    const localeKey = activeRecord[1];
 
     const title = t(`definitions.${localeKey}.title`);
     const description = i18n.getResource(
@@ -124,7 +124,7 @@ export const Help = () => {
     );
 
     // filter active definition
-    definitions = definitions.filter((d: HelpLocale) => d.key !== definition);
+    definitions = definitions.filter((d: HelpLocale) => d[0] !== definition);
   }
 
   // accumulate external resources
