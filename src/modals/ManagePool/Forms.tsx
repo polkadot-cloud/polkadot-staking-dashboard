@@ -117,36 +117,36 @@ export const Forms = forwardRef((props: any, ref: any) => {
   };
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
 
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
 
     // remove decimal errors
     switch (task) {
       case 'set_pool_metadata':
-        _tx = api.tx.nominationPools.setMetadata(poolId, metadata);
+        tx = api.tx.nominationPools.setMetadata(poolId, metadata);
         break;
       case 'destroy_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
+        tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
         break;
       case 'unlock_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
+        tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
         break;
       case 'lock_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
+        tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
         break;
       default:
-        _tx = null;
+        tx = null;
     }
 
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {

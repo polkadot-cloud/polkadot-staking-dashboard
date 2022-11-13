@@ -56,27 +56,27 @@ export const Forms = forwardRef(
     }, [unlock]);
 
     // tx to submit
-    const tx = () => {
-      let _tx = null;
+    const getTx = () => {
+      let tx = null;
       if (!valid || !api) {
-        return _tx;
+        return tx;
       }
       // rebond is only available when staking directly.
       if (task === 'rebond' && isStaking) {
-        _tx = api.tx.staking.rebond(unlock.value.toNumber());
+        tx = api.tx.staking.rebond(unlock.value.toNumber());
       } else if (task === 'withdraw' && isStaking) {
-        _tx = api.tx.staking.withdrawUnbonded(historyDepth);
+        tx = api.tx.staking.withdrawUnbonded(historyDepth);
       } else if (task === 'withdraw' && isPooling && selectedActivePool) {
-        _tx = api.tx.nominationPools.withdrawUnbonded(
+        tx = api.tx.nominationPools.withdrawUnbonded(
           activeAccount,
           historyDepth
         );
       }
-      return _tx;
+      return tx;
     };
     const signingAccount = isStaking ? controller : activeAccount;
     const { submitTx, submitting } = useSubmitExtrinsic({
-      tx: tx(),
+      tx: getTx(),
       from: signingAccount,
       shouldSubmit: valid,
       callbackSubmit: () => {

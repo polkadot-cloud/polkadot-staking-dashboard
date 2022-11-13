@@ -43,18 +43,18 @@ export const NominatePool = () => {
   }, [isValid]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
     const targetsToSubmit = nominations.map((item: any) => item.address);
-    _tx = api.tx.nominationPools.nominate(poolId, targetsToSubmit);
-    return _tx;
+    tx = api.tx.nominationPools.nominate(poolId, targetsToSubmit);
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {

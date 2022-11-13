@@ -41,7 +41,7 @@ export const Summary = (props: SetupStepProps) => {
 
   const { metadata, bond, roles, nominations } = setup;
 
-  const txs = () => {
+  const getTxs = () => {
     if (
       !activeAccount ||
       !api ||
@@ -57,7 +57,7 @@ export const Summary = (props: SetupStepProps) => {
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
     // construct a batch of transactions
-    const _txs = [
+    const txs = [
       api.tx.nominationPools.create(
         bondToSubmit,
         roles.root,
@@ -67,11 +67,11 @@ export const Summary = (props: SetupStepProps) => {
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
     ];
-    return api.tx.utility.batch(_txs);
+    return api.tx.utility.batch(txs);
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: txs(),
+    tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {},

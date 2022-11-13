@@ -52,19 +52,18 @@ export const UpdatePayee = () => {
   const [valid, setValid] = useState<boolean>(false);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
 
     if (!api || !valid) {
-      return _tx;
+      return tx;
     }
-
-    _tx = api.tx.staking.setPayee(selected.key);
-    return _tx;
+    tx = api.tx.staking.setPayee(selected.key);
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: controller,
     shouldSubmit: valid,
     callbackSubmit: () => {
