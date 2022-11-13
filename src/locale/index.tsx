@@ -4,7 +4,9 @@
 import { DefaultLocale } from 'consts';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import helpCn from './cn/help.json';
 import pagesCn from './cn/pages.json';
+import helpEn from './en/help.json';
 import pagesEn from './en/pages.json';
 
 // get locale from localStorage.
@@ -19,9 +21,11 @@ if (!localLng) {
 export const resources = {
   en: {
     ...pagesEn,
+    ...helpEn,
   },
   cn: {
     ...pagesCn,
+    ...helpCn,
   },
 };
 

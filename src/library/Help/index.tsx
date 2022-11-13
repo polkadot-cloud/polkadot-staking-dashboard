@@ -6,16 +6,18 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import {
+  ExternalLocale,
+  ExternalLocales,
   HelpDefinition,
-  HelpDefinitions,
   HelpExternal,
-  HelpExternals,
-  HelpItemRaw,
+  HelpItemLocale,
+  HelpLocale,
+  HelpLocales,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
-import { AnyJson } from 'types';
+import { useTranslation } from 'react-i18next';
 import Definition from './Items/Definition';
 import External from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
@@ -24,6 +26,7 @@ export const Help = () => {
   const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
+  const { t, i18n } = useTranslation('help');
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
@@ -57,45 +60,84 @@ export const Help = () => {
   // render early if help not open
   if (status === 0) return <></>;
 
-  let meta: HelpItemRaw | undefined;
+  let meta: HelpItemLocale | undefined;
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HELP_CONFIG).find((item: HelpItemRaw) =>
-      item?.definitions?.find((d: HelpDefinition) => d.title === definition)
+    meta = Object.values(HELP_CONFIG).find((c: HelpItemLocale) =>
+      c?.definitions?.find((d: HelpLocale) => d.key === definition)
     );
   } else {
     // get all items
-    let _definitions: HelpDefinitions = [];
-    let _external: HelpExternals = [];
+    let _definitions: HelpLocales = [];
+    let _external: ExternalLocales = [];
 
-    Object.values(HELP_CONFIG).forEach((c: HelpItemRaw) => {
+    Object.values(HELP_CONFIG).forEach((c: HelpItemLocale) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });
     meta = { definitions: _definitions, external: _external };
   }
 
-  // resources to display
   let definitions = meta?.definitions ?? [];
 
+  const activeDefinitions = definitions
+    .filter((d: HelpLocale) => d.key !== definition)
+    .map((d: HelpLocale) => {
+      const { localeKey } = d;
+
+      return fillVariables(
+        {
+          title: t(`${localeKey}.title`),
+          description: i18n.getResource(
+            i18n.resolvedLanguage,
+            'help',
+            `${localeKey}.description`
+          ),
+        },
+        ['title', 'description']
+      );
+    });
+
   // get active definiton
-  let activeDefinition: AnyJson = definition
-    ? definitions.find((d: HelpDefinition) => d.title === definition)
+  const activeRecord = definition
+    ? definitions.find((d: HelpLocale) => d.key === definition)
     : null;
 
-  // fill placeholder variables
-  activeDefinition = activeDefinition
-    ? fillVariables(activeDefinition, ['title', 'description'])
-    : null;
+  let activeDefinition: HelpDefinition | null = null;
+  if (activeRecord) {
+    const { localeKey } = activeRecord;
 
-  // filter active definition
-  definitions = definitions.filter(
-    (d: HelpDefinition) => d.title !== definition
-  );
+    const title = t(`${localeKey}.title`);
+    const description = i18n.getResource(
+      i18n.resolvedLanguage,
+      'help',
+      `${localeKey}.description`
+    );
 
-  // get external resources
-  const external = meta?.external ?? [];
+    activeDefinition = fillVariables(
+      {
+        title,
+        description,
+      },
+      ['title', 'description']
+    );
+
+    // filter active definition
+    definitions = definitions.filter((d: HelpLocale) => d.key !== definition);
+  }
+
+  // accumulate external resources
+  const externals = meta?.external ?? [];
+  const activeExternals = externals.map((e: ExternalLocale) => {
+    const { localeKey, url, website } = e;
+
+    return {
+      title: t(localeKey),
+      url,
+      website,
+    };
+  });
 
   return (
     <Wrapper
@@ -144,44 +186,37 @@ export const Help = () => {
               </>
             )}
 
-            {/* Display definitions */}
             {definitions.length > 0 && (
               <>
                 <h3>
                   {activeDefinition ? `Related ` : ''}
                   Definitions
                 </h3>
-                {definitions.map((item: AnyJson, index: number) => {
-                  item = fillVariables(item, ['title', 'description']);
-                  return (
+                {activeDefinitions.map(
+                  (item: HelpDefinition, index: number) => (
                     <Definition
                       key={`def_${index}`}
                       onClick={() => {}}
                       title={item.title}
                       description={item.description}
                     />
-                  );
-                })}
+                  )
+                )}
               </>
             )}
 
-            {/* Display external */}
-            {external.length > 0 && (
+            {activeExternals.length > 0 && (
               <>
                 <h3>Articles</h3>
-                {external.map((item: HelpExternal, index: number) => {
-                  const thisRteturn = (
-                    <External
-                      key={`ext_${index}`}
-                      width="100%"
-                      title={item.title}
-                      url={item.url}
-                      website={item.website}
-                    />
-                  );
-
-                  return thisRteturn;
-                })}
+                {activeExternals.map((item: HelpExternal, index: number) => (
+                  <External
+                    key={`ext_${index}`}
+                    width="100%"
+                    title={t(item.title)}
+                    url={item.url}
+                    website={item.website}
+                  />
+                ))}
               </>
             )}
           </ContentWrapper>
