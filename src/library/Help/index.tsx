@@ -130,7 +130,9 @@ export const Help = () => {
   // accumulate external resources
   const externals = meta?.external ?? [];
   const activeExternals = externals.map((e: ExternalLocale) => {
-    const { localeKey, url, website } = e;
+    const localeKey = e[0];
+    const url = e[1];
+    const website = e[2];
 
     return {
       title: t(`externals.${localeKey}`),

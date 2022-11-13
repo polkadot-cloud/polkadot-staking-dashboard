@@ -23,11 +23,8 @@ export type HelpDefinition = {
   description: string[];
 };
 
-export interface ExternalLocale {
-  localeKey: string;
-  url: string;
-  website?: string;
-}
+export type ExternalLocale = [string, string, string];
+
 export interface HelpExternal {
   title: string;
   url: string;
