@@ -13,14 +13,12 @@ export interface HelpItem {
 }
 
 export type ExternalItems = Array<ExternalItem>;
+export type ExternalItem = [string, string, string];
 
-export type HelpDefinitions = Array<HelpDefinition>;
-export type HelpDefinition = {
+export type DefinitionWithKeys = {
   title: string;
   description: string[];
 };
-
-export type ExternalItem = [string, string, string];
 
 export interface ExternalWithKeys {
   title: string;

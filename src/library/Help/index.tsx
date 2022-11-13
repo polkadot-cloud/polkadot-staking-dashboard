@@ -6,10 +6,10 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import {
+  DefinitionWithKeys,
   ExternalItem,
   ExternalItems,
   ExternalWithKeys,
-  HelpDefinition,
   HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
@@ -103,7 +103,7 @@ export const Help = () => {
     ? definitions.find((d: string) => d === definition)
     : null;
 
-  let activeDefinition: HelpDefinition | null = null;
+  let activeDefinition: DefinitionWithKeys | null = null;
   if (activeRecord) {
     const localeKey = stringToKey(activeRecord);
 
@@ -194,7 +194,7 @@ export const Help = () => {
                   Definitions
                 </h3>
                 {activeDefinitions.map(
-                  (item: HelpDefinition, index: number) => (
+                  (item: DefinitionWithKeys, index: number) => (
                     <Definition
                       key={`def_${index}`}
                       onClick={() => {}}
