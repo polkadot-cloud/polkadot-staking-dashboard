@@ -1,6 +1,5 @@
 {
   "help": {
-    "overview": {
       "definitions": {
         "dashboard_tips": {
           "title": "实用提示",
@@ -69,16 +68,7 @@
           "description": [
             "理想网络条件下的抵押占发行量的百分比."
           ]
-        }
-      },
-      "external": {
-        "connect_your_accounts": "如何连接您的帐户",
-        "how_to_use": "如何使用Staking Dashboard:概述",
-        "stake_dot": "抵押您的DOT"
-      }
-    },
-    "nominate": {
-      "definitions": {
+        },
         "nomination_status": {
           "title": "提名状态",
           "description": [
@@ -153,19 +143,7 @@
           "description": [
             "指质押资金未分配到当前Era的活跃验证人群中的提名."
           ]
-        }
-      },
-      "external": {
-        "change_destination": "更改奖励钱包地址",
-        "bond_more": "质押更多代币到现有的抵押",
-        "unbonding_tokens": "解除您的质押",
-        "rebonding": "解除质押中",
-        "change_account": "更改您的Controller账号",
-        "change_nominations": "更改您的提名"
-      }
-    },
-    "pools": {
-      "definitions": {
+        },
         "nomination_pools": {
           "title": "提名池",
           "description": [
@@ -226,15 +204,7 @@
             "提名人:可以选择提名池验证人.",
             "状态切换人:如果提名池被冻结，可以更改池的状态和踢出（无权限解除绑定/撤回)成员."
           ]
-        }
-      },
-      "external": {
-        "create_pools": "创建提名池",
-        "claim_rewards": "申领提名池奖励"
-      }
-    },
-    "validators": {
-      "definitions": {
+        },
         "validator": {
           "title": "验证人",
           "description": [
@@ -311,14 +281,7 @@
           "description": [
             "当验证人停止(冻结）被提名功能时，提名人无法提名他们."
           ]
-        }
-      },
-      "external": {
-        "choose_validators": "如何选择验证人?"
-      }
-    },
-    "payouts": {
-      "definitions": {
+        },
         "payout": {
           "title": "收益",
           "description": [
@@ -343,7 +306,20 @@
             "这并不意味着您在该期间没有提名或产生奖励，只是该期间的收益尚未被申领."
           ]
         }
-      }
+    },
+    "externals": {
+      "connect_your_accounts": "如何连接您的帐户",
+      "how_to_use": "如何使用Staking Dashboard:概述",
+      "stake_dot": "抵押您的DOT",
+      "change_destination": "更改奖励钱包地址",
+      "bond_more": "质押更多代币到现有的抵押",
+      "unbonding_tokens": "解除您的质押",
+      "rebonding": "解除质押中",
+      "change_account": "更改您的Controller账号",
+      "change_nominations": "更改您的提名",
+      "create_pools": "创建提名池",
+      "claim_rewards": "申领提名池奖励",
+      "choose_validators": "如何选择验证人?"
     }
   }
 }

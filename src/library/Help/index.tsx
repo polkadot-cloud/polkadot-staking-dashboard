@@ -88,11 +88,11 @@ export const Help = () => {
 
       return fillVariables(
         {
-          title: t(`${localeKey}.title`),
+          title: t(`definitions.${localeKey}.title`),
           description: i18n.getResource(
             i18n.resolvedLanguage,
             'help',
-            `${localeKey}.description`
+            `definitions.${localeKey}.description`
           ),
         },
         ['title', 'description']
@@ -108,11 +108,11 @@ export const Help = () => {
   if (activeRecord) {
     const { localeKey } = activeRecord;
 
-    const title = t(`${localeKey}.title`);
+    const title = t(`definitions.${localeKey}.title`);
     const description = i18n.getResource(
       i18n.resolvedLanguage,
       'help',
-      `${localeKey}.description`
+      `definitions.${localeKey}.description`
     );
 
     activeDefinition = fillVariables(
@@ -133,7 +133,7 @@ export const Help = () => {
     const { localeKey, url, website } = e;
 
     return {
-      title: t(localeKey),
+      title: t(`externals.${localeKey}`),
       url,
       website,
     };
