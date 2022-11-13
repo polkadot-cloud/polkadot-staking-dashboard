@@ -12,11 +12,9 @@ export interface HelpItem {
   external?: ExternalItems;
 }
 
-export type HelpExternals = Array<HelpExternal>;
 export type ExternalItems = Array<ExternalItem>;
 
 export type HelpDefinitions = Array<HelpDefinition>;
-
 export type HelpDefinition = {
   title: string;
   description: string[];
@@ -24,7 +22,7 @@ export type HelpDefinition = {
 
 export type ExternalItem = [string, string, string];
 
-export interface HelpExternal {
+export interface ExternalWithKeys {
   title: string;
   url: string;
   website?: string;

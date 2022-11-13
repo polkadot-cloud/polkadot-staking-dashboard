@@ -8,8 +8,8 @@ import { useHelp } from 'contexts/Help';
 import {
   ExternalItem,
   ExternalItems,
+  ExternalWithKeys,
   HelpDefinition,
-  HelpExternal,
   HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
@@ -209,15 +209,17 @@ export const Help = () => {
             {activeExternals.length > 0 && (
               <>
                 <h3>Articles</h3>
-                {activeExternals.map((item: HelpExternal, index: number) => (
-                  <External
-                    key={`ext_${index}`}
-                    width="100%"
-                    title={t(item.title)}
-                    url={item.url}
-                    website={item.website}
-                  />
-                ))}
+                {activeExternals.map(
+                  (item: ExternalWithKeys, index: number) => (
+                    <External
+                      key={`ext_${index}`}
+                      width="100%"
+                      title={t(item.title)}
+                      url={item.url}
+                      website={item.website}
+                    />
+                  )
+                )}
               </>
             )}
           </ContentWrapper>
