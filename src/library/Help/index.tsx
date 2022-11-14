@@ -26,6 +26,7 @@ export const Help = () => {
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
   const { t, i18n } = useTranslation('help');
+  const { t: tLib } = useTranslation('library');
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
@@ -158,14 +159,14 @@ export const Help = () => {
               {definition && (
                 <ButtonInvertRounded
                   lg
-                  text="All Resources"
+                  text={tLib('all_resources')}
                   iconLeft={faReplyAll}
                   onClick={() => setDefinition(null)}
                 />
               )}
               <ButtonInvertRounded
                 lg
-                text="Close"
+                text={tLib('close')}
                 iconLeft={faTimes}
                 onClick={() => closeHelp()}
               />
@@ -173,7 +174,7 @@ export const Help = () => {
             <h1>
               {activeDefinition
                 ? `${activeDefinition.title}`
-                : `Help Resources`}
+                : `${tLib('help_resources')}`}
             </h1>
 
             {activeDefinition !== null && (
@@ -190,8 +191,8 @@ export const Help = () => {
             {definitions.length > 0 && (
               <>
                 <h3>
-                  {activeDefinition ? `Related ` : ''}
-                  Definitions
+                  {activeDefinition ? `${tLib('related')} ` : ''}
+                  {tLib('definitions')}
                 </h3>
                 {activeDefinitions.map(
                   (item: DefinitionWithKeys, index: number) => (
@@ -208,7 +209,7 @@ export const Help = () => {
 
             {activeExternals.length > 0 && (
               <>
-                <h3>Articles</h3>
+                <h3>{tLib('articles')}</h3>
                 {activeExternals.map(
                   (item: ExternalWithKeys, index: number) => (
                     <External

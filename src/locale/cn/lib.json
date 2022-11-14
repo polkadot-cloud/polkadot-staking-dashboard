@@ -1,0 +1,16 @@
+{
+  "library": {
+    "network": "网络",
+    "feedback": "反馈",
+    "help": "帮助",
+    "support": "支持",
+    "help_resources": "帮助信息",
+    "inactive": "未激活",
+    "active": "激活",
+    "all_resources": "所有信息",
+    "close": "关闭",
+    "definitions": "定义",
+    "articles": "文章",
+    "related": "相关"
+  }
+}

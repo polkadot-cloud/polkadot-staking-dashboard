@@ -20,6 +20,7 @@ import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useOutsideAlerter } from 'library/Hooks';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import Heading from './Heading/Heading';
 import { Main } from './Main';
@@ -37,6 +38,7 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
+  const { t } = useTranslation('library');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -81,22 +83,22 @@ export const SideMenu = () => {
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
         <Main />
-        <Heading title="Support" minimised={sideMenuMinimised} />
+        <Heading title={t('support')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
             openHelpWith(null, {});
           }}
-          name="Help"
+          name={t('help')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
             size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
-        <Heading title="Feedback" minimised={sideMenuMinimised} />
+        <Heading title={t('feedback')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => openModalWith('GoToFeedback')}
-          name="Feedback"
+          name={t('feedback')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: ForumSVG,
@@ -104,7 +106,7 @@ export const SideMenu = () => {
           }}
         />
         <Separator />
-        <Heading title="Network" minimised={sideMenuMinimised} />
+        <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
           borderColor={borderColor}

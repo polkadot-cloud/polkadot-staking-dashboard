@@ -35,6 +35,7 @@ export const Main = () => {
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
   const { t } = useTranslation('pages');
+  const { t: tLib } = useTranslation('library');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -62,7 +63,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: 'Active',
+            text: tLib('active'),
           };
         } else if (warning) {
           _pages[i].action = {
@@ -87,7 +88,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: 'Active',
+            text: tLib('active'),
           };
         } else if (setupPercent > 0 && !inPool) {
           _pages[i].action = {
