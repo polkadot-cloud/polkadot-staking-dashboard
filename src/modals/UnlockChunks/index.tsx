@@ -53,28 +53,37 @@ export const UnlockChunks = () => {
   const overviewRef = useRef<HTMLDivElement>(null);
   const formsRef = useRef<HTMLDivElement>(null);
 
-  // resize modal on state change
-  useEffect(() => {
-    let _height = headerRef.current?.clientHeight ?? 0;
+  const getModalHeight = () => {
+    let h = headerRef.current?.clientHeight ?? 0;
 
     if (section === 0) {
-      _height += overviewRef.current?.clientHeight ?? 0;
+      h += overviewRef.current?.clientHeight ?? 0;
     } else {
-      _height += formsRef.current?.clientHeight ?? 0;
+      h += formsRef.current?.clientHeight ?? 0;
     }
-    setModalHeight(_height);
+    return h;
+  };
+
+  // resize modal on state change
+  useEffect(() => {
+    setModalHeight(getModalHeight());
   }, [task, section]);
+
+  // resize this modal on window resize
+  useEffect(() => {
+    window.addEventListener('resize', resizeCallback);
+    return () => {
+      window.removeEventListener('resize', resizeCallback);
+    };
+  }, []);
+  const resizeCallback = () => {
+    setModalHeight(getModalHeight());
+  };
 
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title
-          title={`${unlocking.length > 0 ? `${unlocking.length} ` : ``}Unlock${
-            unlocking.length === 1 ? '' : 's'
-          }`}
-          icon={faLockOpen}
-          fixed
-        />
+        <Title title="Unlocks" icon={faLockOpen} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}
