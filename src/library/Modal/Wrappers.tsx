@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
 import { borderPrimary, textPrimary, textSecondary } from 'theme';
 
@@ -69,11 +68,14 @@ export const StatWrapper = styled.div`
   flex-flow: column wrap;
   margin-bottom: 0.5rem;
   padding: 0 0.5rem;
-  flex-basis: 50%;
   flex-grow: 1;
 
-  @media (max-width: ${SmallFontSizeMaxWidth}px) {
-    flex-basis: 100%;
+  flex-basis: 100%;
+  @media (min-width: 600px) and (max-width: 1000px) {
+    flex-basis: 50%;
+  }
+  @media (min-width: 1001px) {
+    flex-basis: 33%;
   }
 
   > .inner {
