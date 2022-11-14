@@ -109,16 +109,19 @@ export const Forms = forwardRef(
             {!accountHasSigner(signingAccount) && (
               <Warning text="Your account is read only, and cannot sign transactions." />
             )}
-            {task === 'rebond' && (
-              <h2>
-                Rebond {planckBnToUnit(value, units)} {network.unit}
-              </h2>
-            )}
-            {task === 'withdraw' && (
-              <h2>
-                Withdraw {planckBnToUnit(value, units)} {network.unit}
-              </h2>
-            )}
+
+            <div style={{ marginTop: '2rem' }}>
+              {task === 'rebond' && (
+                <h2>
+                  Rebond {planckBnToUnit(value, units)} {network.unit}
+                </h2>
+              )}
+              {task === 'withdraw' && (
+                <h2>
+                  Withdraw {planckBnToUnit(value, units)} {network.unit}
+                </h2>
+              )}
+            </div>
             <Separator />
             <NotesWrapper>
               <EstimatedTxFee />
