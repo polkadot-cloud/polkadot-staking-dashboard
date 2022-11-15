@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import pagesCn from './cn/pages.json';
 import pagesEn from './en/pages.json';
+import pagesFr from './fr/pages.json';
 
 // get locale from localStorage.
 const localLng = localStorage.getItem('lng');
@@ -22,6 +23,9 @@ export const resources = {
   },
   cn: {
     ...pagesCn,
+  },
+  fr: {
+    ...pagesFr,
   },
 };
 

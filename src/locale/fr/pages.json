@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "stake": "Investissement",
+    "validators": "Validateurs",
+    "overview": "Aperçu",
+    "nominate": "Désigner",
+    "pools": "Pools",
+    "payouts": "Paiements",
+    "community": "Communauté",
+    "favorites": "Favoris"
+  }
+}
