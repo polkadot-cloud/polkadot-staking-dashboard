@@ -6,7 +6,6 @@ import { textInvert, tooltipBackground } from 'theme';
 
 export const Wrapper = styled.div`
   background: ${tooltipBackground};
-  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   transition: opacity 0.1s;

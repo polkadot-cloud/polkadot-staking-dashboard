@@ -6,6 +6,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -116,36 +117,36 @@ export const Forms = forwardRef((props: any, ref: any) => {
   };
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
 
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
 
     // remove decimal errors
     switch (task) {
       case 'set_pool_metadata':
-        _tx = api.tx.nominationPools.setMetadata(poolId, metadata);
+        tx = api.tx.nominationPools.setMetadata(poolId, metadata);
         break;
       case 'destroy_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
+        tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
         break;
       case 'unlock_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
+        tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
         break;
       case 'lock_pool':
-        _tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
+        tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
         break;
       default:
-        _tx = null;
+        tx = null;
     }
 
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
@@ -199,6 +200,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
               <>
                 <h2>Update Pool Name</h2>
                 <input
+                  className="textbox"
                   style={{ width: '100%' }}
                   placeholder="Pool Name"
                   type="text"
@@ -220,7 +222,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
           <div>
             <button
               type="button"
-              className="submit"
+              className="submit secondary"
               onClick={() => setSection(0)}
               disabled={submitting}
             >
@@ -232,9 +234,10 @@ export const Forms = forwardRef((props: any, ref: any) => {
             </button>
           </div>
           <div>
-            <button
-              type="button"
-              className="submit"
+            <ButtonSubmit
+              text={`Submit${submitting ? 'ting' : ''}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
               onClick={() => submitTx()}
               disabled={
                 submitting ||
@@ -242,14 +245,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 !valid ||
                 !txFeesValid
               }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              Submit
-              {submitting && 'ting'}
-            </button>
+            />
           </div>
         </FooterWrapper>
       </div>

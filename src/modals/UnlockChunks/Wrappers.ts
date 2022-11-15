@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { buttonPrimaryBackground, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
@@ -14,13 +13,11 @@ export const Wrapper = styled.div`
 `;
 
 export const FixedContentWrapper = styled.div`
-  box-sizing: border-box;
   padding-top: 1rem;
   width: 100%;
 `;
 
 export const CardsWrapper = styled(motion.div)`
-  box-sizing: border-box;
   width: 200%;
   display: flex;
   flex-flow: row nowrap;
@@ -31,57 +28,54 @@ export const CardsWrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div`
-  box-sizing: border-box;
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
   flex: 1;
   padding: 0 1.25rem;
+
+  > div:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const ChunkWrapper = styled.div<any>`
   flex: 1;
   display: flex;
   flex-flow: column wrap;
-  margin: 1rem 0;
+  margin-top: 1.25rem;
 
   > div {
-    box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     width: 100%;
-    padding: 0 0.5rem;
+    padding: 0.25rem 1.1rem;
+    border-radius: 1rem;
+    background: ${buttonPrimaryBackground};
 
     > section {
       display: flex;
       flex-flow: column wrap;
       justify-content: flex-end;
       align-items: flex-start;
-      padding: 0.5rem 0;
+      padding: 0.75rem 0;
 
       &:first-child {
         flex-grow: 1;
+      }
+      &:last-child {
+        justify-content: center;
       }
     }
   }
 
   h2 {
-    margin: 0.75rem 0 0 0;
-  }
-  h3 {
-    color: ${textSecondary};
-    margin: 1rem 0 0 0;
+    margin: 0;
   }
   h4 {
-    background: ${(props) =>
-      !props.noFill ? buttonPrimaryBackground : 'none'};
-    padding: ${(props) => (!props.noFill ? '0.5rem' : '0 0.5rem')};
     color: ${textSecondary};
-    box-sizing: border-box;
-    margin: 0;
-    width: 100%;
-    border-radius: 0.75rem;
+    margin: 0.35rem 0 0 0;
   }
 `;
 

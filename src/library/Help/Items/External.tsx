@@ -4,14 +4,20 @@
 import { faExternalLinkAlt as faExt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
+import { useCallback } from 'react';
 import { ItemWrapper } from '../Wrappers';
 
-export const External = (props: any) => {
-  const { width, height, subtitle, title, url, website } = props;
-
-  const handleClick = () => {
+export const External = ({
+  width,
+  height,
+  subtitle,
+  title,
+  url,
+  website,
+}: any) => {
+  const handleClick = useCallback(() => {
     window.open(url, '_blank');
-  };
+  }, [url]);
 
   return (
     <ItemWrapper width={`${width}`} height={height || 'auto'}>

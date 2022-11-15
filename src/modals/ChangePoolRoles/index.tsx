@@ -1,10 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -27,8 +26,8 @@ export const ChangePoolRoles = () => {
   const { id: poolId, roleEdits } = config;
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     const root = roleEdits?.root?.newAddress
       ? { Set: roleEdits?.root?.newAddress }
       : 'Remove';
@@ -39,18 +38,18 @@ export const ChangePoolRoles = () => {
       ? { Set: roleEdits?.stateToggler?.newAddress }
       : 'Remove';
 
-    _tx = api?.tx.nominationPools?.updateRoles(
+    tx = api?.tx.nominationPools?.updateRoles(
       poolId,
       root,
       nominator,
       stateToggler
     );
-    return _tx;
+    return tx;
   };
 
   // handle extrinsic
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
@@ -93,20 +92,15 @@ export const ChangePoolRoles = () => {
           </NotesWrapper>
           <FooterWrapper>
             <div>
-              <button
-                type="button"
-                className="submit"
+              <ButtonSubmit
+                text={`Submit${submitting ? 'ting' : ''}`}
+                iconLeft={faArrowAltCircleUp}
+                iconTransform="grow-2"
                 onClick={() => submitTx()}
                 disabled={
                   submitting || !accountHasSigner(activeAccount) || !txFeesValid
                 }
-              >
-                <FontAwesomeIcon
-                  transform="grow-2"
-                  icon={faArrowAltCircleUp as IconProp}
-                />
-                Submit
-              </button>
+              />
             </div>
           </FooterWrapper>
         </div>

@@ -12,7 +12,6 @@ import {
 
 export const Wrapper = styled.div`
   color: ${textPrimary};
-  box-sizing: border-box;
   border-radius: 0.75rem;
   width: 100%;
   margin: 1rem 0;
@@ -25,7 +24,6 @@ export const Wrapper = styled.div`
   min-height: 3.5rem;
 
   > .content {
-    box-sizing: border-box;
     padding: 0 1rem;
     width: 100%;
   }
@@ -36,7 +34,6 @@ export const Wrapper = styled.div`
   }
 
   .account {
-    box-sizing: border-box;
     width: 100%;
     border: 1px solid ${borderPrimary};
     border-radius: 0.75rem;
@@ -51,7 +48,6 @@ export const Wrapper = styled.div`
       transition: opacity 0.2s;
 
       &:first-child {
-        box-sizing: border-box;
         flex: 1;
         display: flex;
         flex-flow: row wrap;

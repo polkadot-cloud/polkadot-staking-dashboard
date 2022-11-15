@@ -16,7 +16,6 @@ import {
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
-  box-sizing: border-box;
   border-radius: ${(props) => (props.minimised ? '0.7rem' : 0)};
   background: none;
   padding: 1rem 1rem 1rem 1.25rem;
@@ -35,6 +34,12 @@ export const Wrapper = styled.div<MinimisedProps>`
     background: ${backgroundOverlay};
     transition: all 0.2s;
     border-radius: 0.75rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   section {
@@ -53,7 +58,9 @@ export const Wrapper = styled.div<MinimisedProps>`
         color: ${textSecondary};
         transition: color 0.2s;
         margin-top: ${(props) => (props.minimised ? '1.25rem' : 0)};
+        margin-right: ${(props) => (props.minimised ? 0 : '1rem')};
         opacity: 0.75;
+        padding: 0.1rem;
 
         path {
           fill: ${textSecondary};

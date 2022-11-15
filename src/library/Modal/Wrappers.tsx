@@ -1,12 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
 import { borderPrimary, textPrimary, textSecondary } from 'theme';
 
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
-  box-sizing: border-box;
   padding: ${(props) =>
     props.fixed ? '0.6rem 1rem 1.5rem 1rem' : '2rem 1.5rem 0 1.5rem'};
   display: flex;
@@ -66,40 +64,49 @@ export const StatsWrapper = styled.div`
   flex-flow: row wrap;
 `;
 export const StatWrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: column wrap;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   padding: 0 0.5rem;
-  flex-basis: 50%;
   flex-grow: 1;
+  flex-basis: 100%;
 
-  @media (max-width: ${SmallFontSizeMaxWidth}px) {
-    flex-basis: 100%;
+  @media (min-width: 600px) {
+    margin-bottom: 0.5rem;
+  }
+  @media (min-width: 600px) and (max-width: 900px) {
+    flex-basis: 50%;
+  }
+  @media (min-width: 901px) {
+    flex-basis: 33%;
   }
 
   > .inner {
-    box-sizing: border-box;
-    padding: 0.65rem 0;
+    padding-bottom: 0.65rem;
     border-bottom: 1px solid ${borderPrimary};
 
-    > h3,
+    > h2,
+    h3,
     h4 {
       margin: 0;
     }
     h4 {
-      color: ${textPrimary};
-      margin: 0.6rem 0;
+      margin: 0rem 0 0.6rem 0;
       display: flex;
       align-items: center;
 
       > .help-icon {
-        margin-left: 0.55rem;
+        margin-left: 0.5rem;
+      }
+
+      .icon {
+        margin-right: 0.425rem;
       }
     }
-    h3 {
+    h2,
+    h3,
+    h4 {
       color: ${textSecondary};
-      padding-bottom: 0.15rem;
     }
   }
 `;

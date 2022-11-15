@@ -34,7 +34,7 @@ export const Headers = () => {
         <SideMenuToggle />
 
         {/* spinner to show app syncing */}
-        {syncing || pending.length > 0 ? <Spinner /> : <></>}
+        {syncing || pending.length > 0 ? <Spinner /> : null}
 
         {/* connected accounts */}
         <LargeScreensOnly>

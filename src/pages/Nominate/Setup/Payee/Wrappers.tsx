@@ -13,7 +13,6 @@ import {
 
 export const Items = styled.div`
   position: relative;
-  box-sizing: border-box;
   margin: 0.75rem 0 0;
   width: 100%;
   border-radius: 0.75rem;
@@ -25,24 +24,22 @@ export const Items = styled.div`
 `;
 
 export const Item = styled.button<{ selected?: boolean }>`
-  box-sizing: border-box;
   flex-basis: 33%;
   @media (max-width: ${SectionFullWidthThreshold}px) {
     flex-basis: 100%;
   }
+  padding: 0.5rem;
 
   > div {
     background: ${buttonPrimaryBackground};
     border: 1.5px solid
       ${(props) => (props.selected ? networkColor : borderPrimary)};
-    box-sizing: border-box;
     width: 100%;
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    margin: 0.35rem;
     padding: 1.25rem;
 
     > div {
@@ -60,7 +57,7 @@ export const Item = styled.button<{ selected?: boolean }>`
     }
     p {
       color: ${textSecondary};
-      margin: 0.75rem 0 0 0;
+      margin: 0.5rem 0 0 0;
       text-align: left;
     }
   }

@@ -20,23 +20,23 @@ import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {
-    _id: 1,
-    title: 'default',
+    id: 1,
+    key: 'default',
   },
   {
-    _id: 2,
-    title: 'Stake',
+    id: 2,
+    key: 'Stake',
   },
   {
-    _id: 3,
-    title: 'Validators',
+    id: 3,
+    key: 'Validators',
   },
 ];
 
 export const PAGES_CONFIG: PagesConfig = [
   {
     category: 1,
-    title: 'Overview',
+    key: 'overview',
     uri: `${UriPrefix}/`,
     hash: '/overview',
     Entry: Overview,
@@ -44,7 +44,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Nominate',
+    key: 'nominate',
     uri: `${UriPrefix}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
@@ -52,7 +52,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Pools',
+    key: 'pools',
     uri: `${UriPrefix}/pools`,
     hash: '/pools',
     Entry: Pools,
@@ -60,7 +60,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    title: 'Payouts',
+    key: 'payouts',
     uri: `${UriPrefix}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
@@ -68,7 +68,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
-    title: 'Validators',
+    key: 'validators',
     uri: `${UriPrefix}/validators`,
     hash: '/validators',
     Entry: Browse,
@@ -76,7 +76,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
-    title: 'Community',
+    key: 'community',
     uri: `${UriPrefix}/community`,
     hash: '/community',
     Entry: Community,
@@ -84,7 +84,7 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 3,
-    title: 'Favorites',
+    key: 'favorites',
     uri: `${UriPrefix}/favorites`,
     hash: '/favorites',
     Entry: Favorites,

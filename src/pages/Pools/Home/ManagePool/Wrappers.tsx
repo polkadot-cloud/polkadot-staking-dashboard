@@ -12,7 +12,6 @@ export const RolesWrapper = styled.div`
   margin-top: 0.25rem;
 
   > section {
-    box-sizing: border-box;
     flex: 1 1 25%;
     padding: 0 0.5rem;
     border-right: 1px solid ${borderPrimary};
@@ -38,7 +37,6 @@ export const RolesWrapper = styled.div`
 
     .inner {
       flex: 1;
-      box-sizing: border-box;
       padding: 0 0.5rem;
 
       @media (max-width: ${SectionFullWidthThreshold}px) {

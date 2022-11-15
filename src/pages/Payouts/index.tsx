@@ -20,7 +20,8 @@ import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
 import moment from 'moment';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnySubscan } from 'types';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
@@ -32,44 +33,54 @@ export const Payouts = (props: PageProps) => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
+  const { t } = useTranslation('pages');
+
+  const [payoutsList, setPayoutLists] = useState<AnySubscan>();
+  const [fromDate, setFromDate] = useState<string | undefined>();
+  const [toDate, setToDate] = useState<string | undefined>();
 
   const { page } = props;
-  const { title } = page;
+  const { key } = page;
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 300);
 
-  // take non-zero rewards in most-recent order
-  let payoutsList: AnySubscan = [
-    ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
-  ].slice(0, MaxPayoutDays);
+  useEffect(() => {
+    // take non-zero rewards in most-recent order
+    let pList: AnySubscan = [
+      ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
+    ].slice(0, MaxPayoutDays);
 
-  // re-order rewards based on block timestamp
-  payoutsList = payoutsList.sort((a: AnySubscan, b: AnySubscan) => {
-    const x = new BN(a.block_timestamp);
-    const y = new BN(b.block_timestamp);
-    return y.sub(x);
-  });
+    // re-order rewards based on block timestamp
+    pList = pList.sort((a: AnySubscan, b: AnySubscan) => {
+      const x = new BN(a.block_timestamp);
+      const y = new BN(b.block_timestamp);
+      return y.sub(x);
+    });
+    setPayoutLists(pList);
+  }, [payouts]);
 
-  // calculate the earliest and latest payout dates if they exist.
-  let fromDate;
-  let toDate;
-  if (payoutsList.length) {
-    fromDate = moment
-      .unix(
-        payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
-          .block_timestamp
-      )
-      .format('Do MMMM');
+  useEffect(() => {
+    // calculate the earliest and latest payout dates if they exist.
+    if (payoutsList?.length) {
+      setFromDate(
+        moment
+          .unix(
+            payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
+              .block_timestamp
+          )
+          .format('Do MMMM')
+      );
 
-    // latest payout date
-    toDate = moment.unix(payoutsList[0].block_timestamp).format('Do MMMM');
-  }
+      // latest payout date
+      setToDate(moment.unix(payoutsList[0].block_timestamp).format('Do MMMM'));
+    }
+  }, [payoutsList?.length]);
 
   return (
     <>
-      <PageTitle title={title} />
+      <PageTitle title={t(key)} />
       <StatBoxList>
         <LastEraPayoutStatBox />
       </StatBoxList>
@@ -124,7 +135,7 @@ export const Payouts = (props: PageProps) => {
           </div>
         </GraphWrapper>
       </PageRowWrapper>
-      {!payoutsList.length ? (
+      {!payoutsList?.length ? (
         <></>
       ) : (
         <PageRowWrapper className="page-padding" noVerticalSpacer>

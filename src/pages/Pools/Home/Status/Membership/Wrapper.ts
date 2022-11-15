@@ -16,8 +16,8 @@ export const Wrapper = styled.div<WrapperProps>`
     padding-left: ${(props) => (props.paddingLeft ? '3rem' : '0')};
     padding-right: ${(props) =>
       props.paddingRight ? props.paddingRight : '0'};
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
     flex-shrink: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -38,13 +38,17 @@ export const Wrapper = styled.div<WrapperProps>`
       position: absolute;
       right: 0;
       top: 0;
+      padding: 0.1rem;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-      padding-top: 0.15rem;
       width: ${(props) => props.paddingRight};
       > div {
         margin-left: 0.75rem;
+      }
+
+      > span {
+        padding-left: 0.8rem;
       }
     }
   }

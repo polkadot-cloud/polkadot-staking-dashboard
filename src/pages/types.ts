@@ -6,5 +6,5 @@ export interface PageProps {
 }
 
 interface PageProp {
-  title: string;
+  key: string;
 }

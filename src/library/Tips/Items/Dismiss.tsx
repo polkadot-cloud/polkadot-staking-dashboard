@@ -1,9 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ButtonPrimary,
+  ButtonSecondary,
+} from '@rossbulat/polkadot-dashboard-ui';
 import { useTips } from 'contexts/Tips';
 import { useUi } from 'contexts/UI';
-import { Button } from 'library/Button';
 import { TipWrapper } from '../Wrappers';
 
 export const Dismiss = () => {
@@ -22,22 +25,15 @@ export const Dismiss = () => {
           accessed via the cog icon in the bottom left corner of the side menu.
         </h4>
         <div className="buttons">
-          <Button
-            primary
-            inline
-            title="Disable Dashboard Tips"
+          <ButtonPrimary
+            marginRight
+            text="Disable Dashboard Tips"
             onClick={() => {
               toggleService('tips');
               closeTip();
             }}
           />
-          <Button
-            inline
-            title="Cancel"
-            onClick={() => {
-              closeTip();
-            }}
-          />
+          <ButtonSecondary text="Cancel" onClick={() => closeTip()} />
         </div>
       </div>
     </TipWrapper>

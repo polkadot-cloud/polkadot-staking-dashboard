@@ -14,9 +14,7 @@ import { StatPieProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip);
 
-export const StatPie = (props: StatPieProps) => {
-  let { value, value2 } = props;
-
+export const StatPie = ({ value, value2 }: StatPieProps) => {
   // format zero value graph
   const isZero = !value && !value;
   if (isZero) {
@@ -24,26 +22,23 @@ export const StatPie = (props: StatPieProps) => {
     value2 = 0;
   }
 
-  const { network } = useApi();
+  const { name } = useApi().network;
   const { mode } = useTheme();
 
   const borderColor = isZero
     ? defaultThemes.buttons.toggle.background[mode]
-    : [
-        networkColors[`${network.name}-${mode}`],
-        defaultThemes.transparent[mode],
-      ];
+    : [networkColors[`${name}-${mode}`], defaultThemes.transparent[mode]];
 
   const backgroundColor = isZero
     ? defaultThemes.buttons.toggle.background[mode]
-    : networkColorsTransparent[`${network.name}-${mode}`];
+    : networkColorsTransparent[`${name}-${mode}`];
 
   const options = {
     borderColor,
     hoverBorderColor: borderColor,
     backgroundColor,
     hoverBackgroundColor: [
-      networkColorsTransparent[`${network.name}-${mode}`],
+      networkColorsTransparent[`${name}-${mode}`],
       defaultThemes.transparent[mode],
     ],
     responsive: true,
@@ -64,7 +59,7 @@ export const StatPie = (props: StatPieProps) => {
       {
         data: [value, value2],
         backgroundColor: [
-          networkColorsTransparent[`${network.name}-${mode}`],
+          networkColorsTransparent[`${name}-${mode}`],
           defaultThemes.transparent[mode],
         ],
         borderWidth: 1.6,

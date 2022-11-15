@@ -38,17 +38,19 @@ ChartJS.register(
   Legend
 );
 
-export const PayoutLine = (props: PayoutLineProps) => {
-  const { days, average, height, background } = props;
-
+export const PayoutLine = ({
+  days,
+  average,
+  height,
+  background,
+}: PayoutLineProps) => {
   const { mode } = useTheme();
-  const { network } = useApi();
+  const { name, unit, units } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
 
-  const { units } = network;
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
 
@@ -70,10 +72,10 @@ export const PayoutLine = (props: PayoutLineProps) => {
 
   // determine color for payouts
   const color = notStaking
-    ? networkColors[`${network.name}-${mode}`]
+    ? networkColors[`${name}-${mode}`]
     : !poolingOnly
-    ? networkColors[`${network.name}-${mode}`]
-    : networkColorsSecondary[`${network.name}-${mode}`];
+    ? networkColors[`${name}-${mode}`]
+    : networkColorsSecondary[`${name}-${mode}`];
 
   // configure graph options
   const options = {
@@ -115,12 +117,8 @@ export const PayoutLine = (props: PayoutLineProps) => {
           weight: '600',
         },
         callbacks: {
-          title: () => {
-            return [];
-          },
-          label: (context: any) => {
-            return ` ${humanNumber(context.parsed.y)} ${network.unit}`;
-          },
+          title: () => [],
+          label: (context: any) => ` ${humanNumber(context.parsed.y)} ${unit}`,
         },
         intersect: false,
         interaction: {
@@ -131,15 +129,11 @@ export const PayoutLine = (props: PayoutLineProps) => {
   };
 
   const data = {
-    labels: payoutsByDay.map(() => {
-      return '';
-    }),
+    labels: payoutsByDay.map(() => ''),
     datasets: [
       {
         label: 'Payout',
-        data: combinedPayouts.map((item: AnySubscan) => {
-          return item?.amount ?? 0;
-        }),
+        data: combinedPayouts.map((item: AnySubscan) => item?.amount ?? 0),
         borderColor: color,
         backgroundColor: color,
         pointStyle: undefined,
@@ -152,13 +146,13 @@ export const PayoutLine = (props: PayoutLineProps) => {
   return (
     <>
       <h5 className="secondary">
-        {average > 1 ? `${average} Day Average` : <>&nbsp;</>}
+        {average > 1 ? `${average} Day Average` : null}
       </h5>
       <div
         className="graph_line"
         style={{
-          height: height === undefined ? 'auto' : height,
-          background: background === undefined ? 'none' : background,
+          height: height || 'auto',
+          background: background || 'none',
         }}
       >
         <Line options={options} data={data} />

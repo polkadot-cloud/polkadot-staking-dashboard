@@ -1,9 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -59,16 +58,16 @@ export const WithdrawPoolMember = () => {
   const [valid] = useState<boolean>(totalWithdraw > 0 ?? false);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
-    _tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth);
-    return _tx;
+    tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth);
+    return tx;
   };
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
@@ -103,9 +102,10 @@ export const WithdrawPoolMember = () => {
           </div>
           <FooterWrapper>
             <div>
-              <button
-                type="button"
-                className="submit"
+              <ButtonSubmit
+                text={`Submit${submitting ? 'ting' : ''}`}
+                iconLeft={faArrowAltCircleUp}
+                iconTransform="grow-2"
                 onClick={() => submitTx()}
                 disabled={
                   !valid ||
@@ -113,13 +113,7 @@ export const WithdrawPoolMember = () => {
                   !accountHasSigner(activeAccount) ||
                   !txFeesValid
                 }
-              >
-                <FontAwesomeIcon
-                  transform="grow-2"
-                  icon={faArrowAltCircleUp as IconProp}
-                />
-                Submit
-              </button>
+              />
             </div>
           </FooterWrapper>
         </div>

@@ -4,12 +4,10 @@
 import React from 'react';
 import { Wrapper } from './Wrappers';
 
-export const Container = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Wrapper>
-      <div className="hide-scrollbar">
-        <div>{children}</div>
-      </div>
-    </Wrapper>
-  );
-};
+export const Container = ({ children }: { children: React.ReactNode }) => (
+  <Wrapper>
+    <div className="hide-scrollbar">
+      <div>{children}</div>
+    </div>
+  </Wrapper>
+);
