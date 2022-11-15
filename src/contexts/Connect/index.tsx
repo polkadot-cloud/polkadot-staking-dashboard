@@ -7,8 +7,8 @@ import {
   clipAddress,
   isValidAddress,
   localStorageOrDefault,
-  setStateWithRef,
   registerSaEvent,
+  setStateWithRef,
 } from 'Utils';
 import { DAPP_NAME } from 'consts';
 import {

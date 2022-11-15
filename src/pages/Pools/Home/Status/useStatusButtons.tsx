@@ -1,15 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { faUserPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useUi } from 'contexts/UI';
-import { useTransferOptions } from 'contexts/TransferOptions';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import { registerSaEvent } from 'Utils';
 import { usePoolsTabs } from '../context';
 
@@ -30,8 +30,9 @@ export const useStatusButtons = () => {
   let _label;
   let _buttons;
   const createBtn = {
-    title: `Create Pool${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
+    title: `Create${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||
@@ -48,8 +49,9 @@ export const useStatusButtons = () => {
   };
 
   const joinPoolBtn = {
-    title: `Join Pool`,
+    title: `Join`,
     icon: faUserPlus,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||
