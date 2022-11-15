@@ -140,10 +140,9 @@ export const Summary = (props: SetupStepProps) => {
         >
           <ButtonPrimary
             lg
-            onClick={() => {
-              submitTx(`${network.name.toLowerCase()}_user_started_nominating`);
-              submitTx();
-            }}
+            onClick={() =>
+              submitTx(`${network.name.toLowerCase()}_user_started_nominating`)
+            }
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }

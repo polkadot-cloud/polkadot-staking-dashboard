@@ -18,8 +18,8 @@ import {
   clipAddress,
   isValidAddress,
   localStorageOrDefault,
-  setStateWithRef,
   registerSaEvent,
+  setStateWithRef,
 } from 'Utils';
 import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';

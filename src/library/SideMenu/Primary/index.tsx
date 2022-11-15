@@ -4,14 +4,14 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useState } from 'react';
 import Lottie from 'react-lottie';
-import { registerSaEvent } from 'Utils';
 import { Link } from 'react-router-dom';
-import { useApi } from 'contexts/Api';
-import { Wrapper, MinimisedWrapper } from './Wrappers';
+import { registerSaEvent } from 'Utils';
 import { PrimaryProps } from '../types';
+import { MinimisedWrapper, Wrapper } from './Wrappers';
 
 export const Primary = (props: PrimaryProps) => {
   const { setSideMenu } = useUi();

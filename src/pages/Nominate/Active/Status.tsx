@@ -17,9 +17,9 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import { planckBnToUnit, rmCommas, registerSaEvent } from 'Utils';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import Stat from 'library/Stat';
+import { planckBnToUnit, registerSaEvent, rmCommas } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
 

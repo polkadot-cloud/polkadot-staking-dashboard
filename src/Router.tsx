@@ -27,13 +27,13 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import { extractUrlValue, registerSaEvent } from 'Utils';
 import {
   BodyInterfaceWrapper,
   MainInterfaceWrapper,
   PageWrapper,
   SideInterfaceWrapper,
 } from 'Wrappers';
-import { extractUrlValue, registerSaEvent } from 'Utils';
 
 export const RouterInner = () => {
   const { network } = useApi();
