@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/polkadot-staking-dashboard/static/css/main.6f0d2b5a.css",
-    "main.js": "/polkadot-staking-dashboard/static/js/main.3cfb000f.js",
+    "main.css": "/polkadot-staking-dashboard/static/css/main.13fd33bc.css",
+    "main.js": "/polkadot-staking-dashboard/static/js/main.8f5912ef.js",
     "static/js/514.545dc02d.chunk.js": "/polkadot-staking-dashboard/static/js/514.545dc02d.chunk.js",
     "static/js/569.4525ba2e.chunk.js": "/polkadot-staking-dashboard/static/js/569.4525ba2e.chunk.js",
     "static/js/712.1d5a6ad1.chunk.js": "/polkadot-staking-dashboard/static/js/712.1d5a6ad1.chunk.js",
@@ -43,7 +43,6 @@
     "static/media/stakingfacilities.svg": "/polkadot-staking-dashboard/static/media/stakingfacilities.fbb6cf05e1269143d89b1291b8720fa0.svg",
     "static/media/goopen.svg": "/polkadot-staking-dashboard/static/media/goopen.3fd4a8481fc78c4e7877e2b8a7b0c079.svg",
     "static/media/nova_wallet.svg": "/polkadot-staking-dashboard/static/media/nova_wallet.7fb6fff54b8871c601d5d5d30d91c3ad.svg",
-    "static/media/dot_icon.svg": "/polkadot-staking-dashboard/static/media/dot_icon.614ba2fd777d5f472430b1f9fcdb2e5b.svg",
     "static/media/enkrypt_icon.svg": "/polkadot-staking-dashboard/static/media/enkrypt_icon.6a3566bf4363c04e785710ea42a33edd.svg",
     "static/media/turboflakes.svg": "/polkadot-staking-dashboard/static/media/turboflakes.013572b97f957bb359ce8d8c190dac24.svg",
     "static/media/pdp.svg": "/polkadot-staking-dashboard/static/media/pdp.e3f5ad18efe82be551ec316ec8e5f86c.svg",
@@ -51,6 +50,7 @@
     "static/media/polkadot_inline.svg": "/polkadot-staking-dashboard/static/media/polkadot_inline.6e0b27aae6f961b74fc81e4ee1cfa519.svg",
     "static/media/polkachu.svg": "/polkadot-staking-dashboard/static/media/polkachu.5354ee904a1e3644e9afc3c3853a458d.svg",
     "static/media/logo-github.svg": "/polkadot-staking-dashboard/static/media/logo-github.f0843d48b095543a71d4e4f6809ca9d6.svg",
+    "static/media/polkadot_js.svg": "/polkadot-staking-dashboard/static/media/polkadot_js.af39156828a1006e1c5ddeff76f2e107.svg",
     "static/media/talisman_icon.svg": "/polkadot-staking-dashboard/static/media/talisman_icon.a472b7ba134a736739b6e2bef7b95f57.svg",
     "static/media/info.svg": "/polkadot-staking-dashboard/static/media/info.60d577f3d2a10108504833a6baeaff1e.svg",
     "static/media/kusama_inline.svg": "/polkadot-staking-dashboard/static/media/kusama_inline.849721521463251c05c3bc88c4bfb234.svg",
@@ -65,8 +65,8 @@
     "static/media/decentradot.svg": "/polkadot-staking-dashboard/static/media/decentradot.55e51b4842821f8f7f289af7082ba3e5.svg",
     "static/media/cross.svg": "/polkadot-staking-dashboard/static/media/cross.8364276c40f7da112b31c7c66cc7e86c.svg",
     "static/media/info-outline.svg": "/polkadot-staking-dashboard/static/media/info-outline.710ee0b66a632101a3e85de51b365ddb.svg",
-    "main.6f0d2b5a.css.map": "/polkadot-staking-dashboard/static/css/main.6f0d2b5a.css.map",
-    "main.3cfb000f.js.map": "/polkadot-staking-dashboard/static/js/main.3cfb000f.js.map",
+    "main.13fd33bc.css.map": "/polkadot-staking-dashboard/static/css/main.13fd33bc.css.map",
+    "main.8f5912ef.js.map": "/polkadot-staking-dashboard/static/js/main.8f5912ef.js.map",
     "514.545dc02d.chunk.js.map": "/polkadot-staking-dashboard/static/js/514.545dc02d.chunk.js.map",
     "569.4525ba2e.chunk.js.map": "/polkadot-staking-dashboard/static/js/569.4525ba2e.chunk.js.map",
     "712.1d5a6ad1.chunk.js.map": "/polkadot-staking-dashboard/static/js/712.1d5a6ad1.chunk.js.map",
@@ -74,7 +74,7 @@
     "496.d365b852.chunk.js.map": "/polkadot-staking-dashboard/static/js/496.d365b852.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6f0d2b5a.css",
-    "static/js/main.3cfb000f.js"
+    "static/css/main.13fd33bc.css",
+    "static/js/main.8f5912ef.js"
   ]
 }
