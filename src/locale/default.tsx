@@ -6,7 +6,7 @@ import { AnyJson } from 'types';
 // Load language resources dynamically.
 //
 // Bootstraps i18next with additional language resources.
-export const loadDefault = async (lng: string) => {
+export const loadLngAsync = async (lng: string) => {
   const resources: AnyJson = await Promise.all([
     await import(`./${lng}/base.json`),
     await import(`./${lng}/help.json`),
@@ -16,8 +16,8 @@ export const loadDefault = async (lng: string) => {
   const help = resources[1].help;
 
   return {
-    key: lng,
-    value: {
+    l: lng,
+    r: {
       base,
       help,
     },

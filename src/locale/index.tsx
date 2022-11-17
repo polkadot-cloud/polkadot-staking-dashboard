@@ -5,7 +5,7 @@ import { DefaultLocale } from 'consts';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { AnyJson } from 'types';
-import { loadDefault } from './default';
+import { loadLngAsync } from './default';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 
@@ -25,22 +25,42 @@ if (!localLng) {
 // determine resources exist without dynamically importing them.
 let resources: AnyJson = null;
 if (lng === DefaultLocale) {
+  const resourcesInner = { ...baseEn, ...helpEn };
   resources = {
-    en: {
-      ...baseEn,
-      ...helpEn,
-    },
+    en: resourcesInner,
   };
+  localStorage.setItem(
+    'lng_resources',
+    JSON.stringify({ l: DefaultLocale, r: resourcesInner })
+  );
 } else {
-  // TODO: get entire language from localStorage if exists.
-  // TODO: introduce `lng_resources` localStorage item.
-  dynamicLoad = true;
-  resources = {
-    en: {
-      ...baseEn,
-      ...helpEn,
-    },
-  };
+  // not the default locale, check if local resources exist
+  let localValid = false;
+  const localResources = localStorage.getItem('lng_resources');
+  if (localResources !== null) {
+    const { l, r } = JSON.parse(localResources);
+
+    if (l === lng) {
+      localValid = true;
+      // local resources found, load them in
+      resources = {
+        [lng]: {
+          ...r,
+        },
+      };
+    }
+  }
+
+  if (!localValid) {
+    // no resources exist locally, dynamic import needed.
+    dynamicLoad = true;
+    resources = {
+      en: {
+        ...baseEn,
+        ...helpEn,
+      },
+    };
+  }
 }
 
 // configure i18n object.
@@ -56,16 +76,16 @@ i18next.use(initReactI18next).init({
   if (!dynamicLoad) {
     return;
   }
-  const {
-    key,
-    value: { base, help },
-  } = await loadDefault(lng);
+  const { l, r } = await loadLngAsync(lng);
+  const { base, help } = r;
 
-  i18next.addResourceBundle(key, 'base', base);
-  i18next.addResourceBundle(key, 'help', help);
+  i18next.addResourceBundle(l, 'base', base);
+  i18next.addResourceBundle(l, 'help', help);
 
-  if (key !== i18next.resolvedLanguage) {
-    i18next.changeLanguage(key);
+  localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
+
+  if (l !== i18next.resolvedLanguage) {
+    i18next.changeLanguage(l);
   }
 })();
 
