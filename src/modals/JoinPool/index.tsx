@@ -51,21 +51,21 @@ export const JoinPool = () => {
   }, [bond]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!bondValid || !api) {
-      return _tx;
+      return tx;
     }
 
     // remove decimal errors
     const bondToSubmit = unitToPlanckBn(bond.bond, units);
-    _tx = api.tx.nominationPools.join(bondToSubmit, poolId);
+    tx = api.tx.nominationPools.join(bondToSubmit, poolId);
 
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
