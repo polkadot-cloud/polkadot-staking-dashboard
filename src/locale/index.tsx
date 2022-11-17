@@ -47,7 +47,7 @@ if (lng === DefaultLocale) {
 i18next.use(initReactI18next).init({
   debug: process.env.REACT_APP_DEBUG_I18N === '1',
   fallbackLng: DefaultLocale,
-  lng: dynamicLoad ? 'en' : lng,
+  lng: dynamicLoad ? DefaultLocale : lng,
   resources,
 });
 
