@@ -1,5 +1,5 @@
 {
-  "pages": {
+  "base": {
     "stake": "抵押",
     "validators": "验证人",
     "overview": "总览",

@@ -34,7 +34,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),

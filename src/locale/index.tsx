@@ -6,8 +6,8 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { AnyJson } from 'types';
 import { loadDefault } from './default';
+import baseEn from './en/base.json';
 import helpEn from './en/help.json';
-import pagesEn from './en/pages.json';
 
 let lng: string;
 let dynamicLoad = false;
@@ -27,7 +27,7 @@ let resources: AnyJson = null;
 if (lng === DefaultLocale) {
   resources = {
     en: {
-      ...pagesEn,
+      ...baseEn,
       ...helpEn,
     },
   };
@@ -37,7 +37,7 @@ if (lng === DefaultLocale) {
   dynamicLoad = true;
   resources = {
     en: {
-      ...pagesEn,
+      ...baseEn,
       ...helpEn,
     },
   };
@@ -58,10 +58,10 @@ i18next.use(initReactI18next).init({
   }
   const {
     key,
-    value: { pages, help },
+    value: { base, help },
   } = await loadDefault(lng);
 
-  i18next.addResourceBundle(key, 'pages', pages);
+  i18next.addResourceBundle(key, 'base', base);
   i18next.addResourceBundle(key, 'help', help);
 
   if (key !== i18next.resolvedLanguage) {

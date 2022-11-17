@@ -8,17 +8,17 @@ import { AnyJson } from 'types';
 // Bootstraps i18next with additional language resources.
 export const loadDefault = async (lng: string) => {
   const resources: AnyJson = await Promise.all([
-    await import(`./${lng}/pages.json`),
+    await import(`./${lng}/base.json`),
     await import(`./${lng}/help.json`),
   ]);
 
-  const pages = resources[0].pages;
+  const base = resources[0].base;
   const help = resources[1].help;
 
   return {
     key: lng,
     value: {
-      pages,
+      base,
       help,
     },
   };

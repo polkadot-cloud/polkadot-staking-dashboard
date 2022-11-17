@@ -38,7 +38,7 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
