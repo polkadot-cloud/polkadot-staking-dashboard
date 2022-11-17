@@ -56,7 +56,7 @@
     "@types/react-dom": "^18.0.8",
     "@types/react-helmet": "^6.1.5",
     "@types/react-lottie": "^1.2.6",
-    "@types/react-scroll": "^1.8.3",
+    "@types/react-scroll": "^1.8.5",
     "@types/styled-components": "^5.1.21",
     "@types/styled-theming": "^2.2.5",
     "@types/window-or-global": "^1.0.4",
