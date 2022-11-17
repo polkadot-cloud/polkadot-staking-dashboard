@@ -6,7 +6,6 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { loadDefault } from './default';
 
-// get locale from localStorage.
 const localLng = localStorage.getItem('lng');
 const lng = localLng ?? DefaultLocale;
 
