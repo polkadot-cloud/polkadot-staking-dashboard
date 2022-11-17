@@ -35,6 +35,12 @@ if (lng === DefaultLocale) {
   // TODO: get entire language from localStorage if exists.
   // TODO: introduce `lng_resources` localStorage item.
   dynamicLoad = true;
+  resources = {
+    en: {
+      ...pagesEn,
+      ...helpEn,
+    },
+  };
 }
 
 // configure i18n object.
