@@ -26,7 +26,6 @@ export const Help = () => {
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
   const { t, i18n } = useTranslation('help');
-  const { t: tLib } = useTranslation('library');
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
@@ -159,14 +158,14 @@ export const Help = () => {
               {definition && (
                 <ButtonInvertRounded
                   lg
-                  text={tLib('all_resources')}
+                  text={t('modal.all_resources')}
                   iconLeft={faReplyAll}
                   onClick={() => setDefinition(null)}
                 />
               )}
               <ButtonInvertRounded
                 lg
-                text={tLib('close')}
+                text={t('modal.close')}
                 iconLeft={faTimes}
                 onClick={() => closeHelp()}
               />
@@ -174,7 +173,7 @@ export const Help = () => {
             <h1>
               {activeDefinition
                 ? `${activeDefinition.title}`
-                : `${tLib('help_resources')}`}
+                : `${t('modal.help_resources')}`}
             </h1>
 
             {activeDefinition !== null && (
@@ -191,8 +190,8 @@ export const Help = () => {
             {definitions.length > 0 && (
               <>
                 <h3>
-                  {activeDefinition ? `${tLib('related')} ` : ''}
-                  {tLib('definitions')}
+                  {activeDefinition ? `${t('modal.related')} ` : ''}
+                  {t('modal.definitions')}
                 </h3>
                 {activeDefinitions.map(
                   (item: DefinitionWithKeys, index: number) => (
@@ -209,7 +208,7 @@ export const Help = () => {
 
             {activeExternals.length > 0 && (
               <>
-                <h3>{tLib('articles')}</h3>
+                <h3>{t('modal.articles')}</h3>
                 {activeExternals.map(
                   (item: ExternalWithKeys, index: number) => (
                     <External

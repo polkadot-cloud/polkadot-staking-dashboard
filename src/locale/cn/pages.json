@@ -7,6 +7,12 @@
     "pools": "提名池",
     "payouts": "收益",
     "community": "社区",
-    "favorites": "收藏夹"
+    "favorites": "收藏夹",
+    "network": "网络",
+    "feedback": "反馈",
+    "help": "帮助",
+    "support": "支持",
+    "inactive": "未激活",
+    "active": "激活"
   }
 }

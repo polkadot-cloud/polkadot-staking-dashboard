@@ -7,6 +7,12 @@
     "pools": "Pools",
     "payouts": "Payouts",
     "community": "Community",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "network": "Network",
+    "feedback": "Feedback",
+    "help": "Help",
+    "inactive": "Inactive",
+    "active": "Active",
+    "support": "Support"
   }
 }

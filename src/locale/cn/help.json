@@ -1,5 +1,13 @@
 {
   "help": {
+    "modal": {
+      "help_resources": "帮助信息",
+      "all_resources": "所有信息",
+      "close": "关闭",
+      "definitions": "定义",
+      "articles": "文章",
+      "related": "相关"
+    },
     "definitions": {
       "dashboard_tips": {
         "title": "实用提示",

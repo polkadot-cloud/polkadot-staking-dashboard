@@ -1,5 +1,13 @@
 {
   "help": {
+    "modal": {
+      "help_resources": "Help Resources",
+      "all_resources": "All Resources",
+      "close": "Close",
+      "definitions": "Definitions",
+      "articles": "Articles",
+      "related": "Related"
+    },
     "definitions": {
       "dashboard_tips": {
         "title": "Dashboard Tips",
