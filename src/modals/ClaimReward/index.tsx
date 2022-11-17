@@ -44,22 +44,22 @@ export const ClaimReward = () => {
   const [valid, setValid] = useState<boolean>(false);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!api) {
-      return _tx;
+      return tx;
     }
 
     if (claimType === 'bond') {
-      _tx = api.tx.nominationPools.bondExtra('Rewards');
+      tx = api.tx.nominationPools.bondExtra('Rewards');
     } else {
-      _tx = api.tx.nominationPools.claimPayout();
+      tx = api.tx.nominationPools.claimPayout();
     }
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {

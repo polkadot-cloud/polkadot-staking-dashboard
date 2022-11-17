@@ -35,7 +35,7 @@ export const Summary = (props: SetupStepProps) => {
 
   const { controller, bond, nominations, payee } = setup;
 
-  const txs = () => {
+  const getTxs = () => {
     if (!activeAccount || !api) {
       return null;
     }
@@ -53,16 +53,16 @@ export const Summary = (props: SetupStepProps) => {
     };
 
     // construct a batch of transactions
-    const _txs = [
+    const txs = [
       api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
       api.tx.staking.nominate(targetsToSubmit),
       api.tx.staking.setController(controllerToSubmit),
     ];
-    return api.tx.utility.batch(_txs);
+    return api.tx.utility.batch(txs);
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: txs(),
+    tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {},

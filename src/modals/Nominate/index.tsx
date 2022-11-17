@@ -51,22 +51,22 @@ export const Nominate = () => {
   }, [targets]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
     const targetsToSubmit = nominations.map((item: any) => {
       return {
         Id: item.address,
       };
     });
-    _tx = api.tx.staking.nominate(targetsToSubmit);
-    return _tx;
+    tx = api.tx.staking.nominate(targetsToSubmit);
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: controller,
     shouldSubmit: valid,
     callbackSubmit: () => {

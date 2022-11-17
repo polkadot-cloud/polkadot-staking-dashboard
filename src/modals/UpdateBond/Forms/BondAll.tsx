@@ -82,26 +82,26 @@ export const BondAll = (props: FormsProps) => {
   }, [bond]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!bondValid || !api || !activeAccount) {
-      return _tx;
+      return tx;
     }
 
     // convert to submittable string
     const bondToSubmit = bondAfterTxFees.toString();
 
-    // determine _tx
+    // determine tx
     if (isPooling) {
-      _tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
+      tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
     } else if (isStaking) {
-      _tx = api.tx.staking.bondExtra(bondToSubmit);
+      tx = api.tx.staking.bondExtra(bondToSubmit);
     }
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {

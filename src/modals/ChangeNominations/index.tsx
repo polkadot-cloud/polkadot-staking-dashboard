@@ -65,10 +65,10 @@ export const ChangeNominations = () => {
   }, [isValid]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
 
     // targets submission differs between staking and pools
@@ -83,26 +83,26 @@ export const ChangeNominations = () => {
     if (isPool) {
       // if nominations remain, call nominate
       if (remaining !== 0) {
-        _tx = api.tx.nominationPools.nominate(
+        tx = api.tx.nominationPools.nominate(
           selectedActivePool?.id || 0,
           targetsToSubmit
         );
       } else {
         // wishing to stop all nominations, call chill
-        _tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
+        tx = api.tx.nominationPools.chill(selectedActivePool?.id || 0);
       }
     } else if (isStaking) {
       if (remaining !== 0) {
-        _tx = api.tx.staking.nominate(targetsToSubmit);
+        tx = api.tx.staking.nominate(targetsToSubmit);
       } else {
-        _tx = api.tx.staking.chill();
+        tx = api.tx.staking.chill();
       }
     }
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {

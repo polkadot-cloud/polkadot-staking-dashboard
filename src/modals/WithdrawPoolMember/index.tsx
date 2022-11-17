@@ -60,16 +60,16 @@ export const WithdrawPoolMember = () => {
   const [valid] = useState<boolean>(totalWithdraw > 0 ?? false);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
-    _tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth);
-    return _tx;
+    tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth);
+    return tx;
   };
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {

@@ -75,22 +75,22 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: string) => {
-    let _tx = null;
+    let tx = null;
     if (!api) {
-      return _tx;
+      return tx;
     }
     if (isPooling) {
-      _tx = api.tx.nominationPools.bondExtra({
+      tx = api.tx.nominationPools.bondExtra({
         FreeBalance: bondToSubmit,
       });
     } else if (isStaking) {
-      _tx = api.tx.staking.bondExtra(bondToSubmit);
+      tx = api.tx.staking.bondExtra(bondToSubmit);
     }
-    return _tx;
+    return tx;
   };
 
   // the actual bond tx to submit
-  const tx = (bondToSubmit: string) => {
+  const getTx = (bondToSubmit: string) => {
     if (!bondValid || !activeAccount) {
       return null;
     }
@@ -98,7 +98,7 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(bondAfterTxFees.toString()),
+    tx: getTx(bondAfterTxFees.toString()),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {

@@ -91,10 +91,10 @@ export const NominateFromFavorites = () => {
   const overMaxNominations = totalAfterSelection > maxNominations;
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
 
     const targetsToSubmit = nominationsToSubmit.map((item: any) =>
@@ -106,18 +106,18 @@ export const NominateFromFavorites = () => {
     );
 
     if (bondType === 'pool') {
-      _tx = api.tx.nominationPools.nominate(
+      tx = api.tx.nominationPools.nominate(
         selectedActivePool?.id,
         targetsToSubmit
       );
     } else {
-      _tx = api.tx.staking.nominate(targetsToSubmit);
+      tx = api.tx.staking.nominate(targetsToSubmit);
     }
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {

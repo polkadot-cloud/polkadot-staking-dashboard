@@ -39,20 +39,20 @@ export const useBondGreatestFee = ({ bondType }: Props) => {
   const txLargestFee = async () => {
     const bond = freeBalance.toString();
 
-    let _tx = null;
+    let tx = null;
     if (!api) {
       return new BN(0);
     }
     if (bondType === 'pool') {
-      _tx = api.tx.nominationPools.bondExtra({
+      tx = api.tx.nominationPools.bondExtra({
         FreeBalance: bond,
       });
     } else if (bondType === 'stake') {
-      _tx = api.tx.staking.bondExtra(bond);
+      tx = api.tx.staking.bondExtra(bond);
     }
 
-    if (_tx) {
-      const { partialFee } = await _tx.paymentInfo(activeAccount || '');
+    if (tx) {
+      const { partialFee } = await tx.paymentInfo(activeAccount || '');
       return new BN(partialFee.toString());
     }
     return new BN(0);

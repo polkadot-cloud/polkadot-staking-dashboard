@@ -50,21 +50,21 @@ export const UpdateController = () => {
   };
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!selected || !api) {
-      return _tx;
+      return tx;
     }
     const controllerToSubmit = {
       Id: selected?.address ?? '',
     };
-    _tx = api.tx.staking.setController(controllerToSubmit);
-    return _tx;
+    tx = api.tx.staking.setController(controllerToSubmit);
+    return tx;
   };
 
   // handle extrinsic
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {

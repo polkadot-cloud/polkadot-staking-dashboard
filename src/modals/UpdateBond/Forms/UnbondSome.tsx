@@ -92,31 +92,31 @@ export const UnbondSome = (props: FormsProps) => {
   }, [bond]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!bondValid || !api || !activeAccount) {
-      return _tx;
+      return tx;
     }
     // stake unbond: controller must be imported
     if (isStaking && controllerNotImported) {
-      return _tx;
+      return tx;
     }
     // remove decimal errors
     const bondToSubmit = unitToPlanckBn(bond.bond, units);
 
-    // determine _tx
+    // determine tx
     if (isPooling) {
-      _tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+      tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     } else if (isStaking) {
-      _tx = api.tx.staking.unbond(bondToSubmit);
+      tx = api.tx.staking.unbond(bondToSubmit);
     }
-    return _tx;
+    return tx;
   };
 
   const signingAccount = isPooling ? activeAccount : controller;
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {

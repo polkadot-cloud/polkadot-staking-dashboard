@@ -61,21 +61,19 @@ export const UnbondPoolMember = () => {
   }, [bond]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!bondValid || !api || !activeAccount) {
-      return _tx;
+      return tx;
     }
     // remove decimal errors
     const bondToSubmit = unitToPlanckBn(bond.bond, units);
-
-    // determine _tx
-    _tx = api.tx.nominationPools.unbond(who, bondToSubmit);
-    return _tx;
+    tx = api.tx.nominationPools.unbond(who, bondToSubmit);
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {

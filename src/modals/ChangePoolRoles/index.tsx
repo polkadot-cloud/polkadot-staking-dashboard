@@ -28,8 +28,8 @@ export const ChangePoolRoles = () => {
   const { t } = useTranslation('common');
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     const root = roleEdits?.root?.newAddress
       ? { Set: roleEdits?.root?.newAddress }
       : 'Remove';
@@ -40,18 +40,18 @@ export const ChangePoolRoles = () => {
       ? { Set: roleEdits?.stateToggler?.newAddress }
       : 'Remove';
 
-    _tx = api?.tx.nominationPools?.updateRoles(
+    tx = api?.tx.nominationPools?.updateRoles(
       poolId,
       root,
       nominator,
       stateToggler
     );
-    return _tx;
+    return tx;
   };
 
   // handle extrinsic
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {

@@ -96,7 +96,7 @@ export const ValidatorMetrics = () => {
                   <h4>
                     {s.label} <OpenHelpIcon helpKey={s.help} />
                   </h4>
-                  <h3>{s.value}</h3>
+                  <h2>{s.value}</h2>
                 </div>
               </StatWrapper>
             )

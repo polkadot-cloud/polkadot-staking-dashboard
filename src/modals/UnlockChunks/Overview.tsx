@@ -1,13 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
@@ -22,12 +25,13 @@ export const Overview = forwardRef(
 
     const isStaking = bondType === 'stake';
 
-    // calculate total withdraw available
     let withdrawAvailable = new BN(0);
+    let totalUnbonding = new BN(0);
     for (const _chunk of unlocking) {
       const { era, value } = _chunk;
       const left = era - activeEra.index;
 
+      totalUnbonding = totalUnbonding.add(value);
       if (left <= 0) {
         withdrawAvailable = withdrawAvailable.add(value);
       }
@@ -35,65 +39,89 @@ export const Overview = forwardRef(
 
     return (
       <ContentWrapper ref={ref}>
+        <StatsWrapper>
+          <StatWrapper>
+            <div className="inner">
+              <h4>
+                <FontAwesomeIcon icon={faCheckCircle} className="icon" />{' '}
+                Unlocked
+              </h4>
+              <h2>
+                {humanNumber(
+                  toFixedIfNecessary(
+                    planckBnToUnit(withdrawAvailable, units),
+                    3
+                  )
+                )}{' '}
+                {network.unit}
+              </h2>
+            </div>
+          </StatWrapper>
+          <StatWrapper>
+            <div className="inner">
+              <h4>
+                <FontAwesomeIcon icon={faClock} className="icon" /> Unbonding
+              </h4>
+              <h2>
+                {humanNumber(
+                  toFixedIfNecessary(
+                    planckBnToUnit(
+                      totalUnbonding.sub(withdrawAvailable),
+                      units
+                    ),
+                    3
+                  )
+                )}{' '}
+                {network.unit}
+              </h2>
+            </div>
+          </StatWrapper>
+          <StatWrapper>
+            <div className="inner">
+              <h4>Total</h4>
+              <h2>
+                {humanNumber(
+                  toFixedIfNecessary(planckBnToUnit(totalUnbonding, units), 3)
+                )}{' '}
+                {network.unit}
+              </h2>
+            </div>
+          </StatWrapper>
+        </StatsWrapper>
+
         {withdrawAvailable.toNumber() > 0 && (
-          <>
-            <ChunkWrapper noFill>
-              <h4>{t('modals.available_to_withdraw')}</h4>
-              <div>
-                <section>
-                  <h2>
-                    {planckBnToUnit(withdrawAvailable, units)} {network.unit}
-                  </h2>
-                </section>
-                <section>
-                  <div>
-                    <ButtonPrimary
-                      text={t('modals.withdraw')}
-                      onClick={() => {
-                        setTask('withdraw');
-                        setUnlock({
-                          era: 0,
-                          value: withdrawAvailable,
-                        });
-                        setSection(1);
-                      }}
-                    />
-                  </div>
-                </section>
-              </div>
-            </ChunkWrapper>
-          </>
+          <div style={{ margin: '1rem 0 0.5rem 0' }}>
+            <ButtonSubmit
+              text="Withdraw Unlocked"
+              onClick={() => {
+                setTask('withdraw');
+                setUnlock({
+                  era: 0,
+                  value: withdrawAvailable,
+                });
+                setSection(1);
+              }}
+            />
+          </div>
         )}
-        {unlocking.length === 0 && <h2>{t('modals.no_unlocks')}</h2>}
-        {unlocking.map((chunk: any, index: number) => {
+
+        {unlocking.map((chunk: any, i: number) => {
           const { era, value } = chunk;
           const left = era - activeEra.index;
 
           return (
-            <ChunkWrapper key={`unlock_chunk_${index}`}>
-              <h4>
-                {left <= 0
-                  ? t('modals.unlocked')
-                  : `${t('modals.unlocks_after_era')} ${era} `}
-              </h4>
+            <ChunkWrapper key={`unlock_chunk_${i}`}>
               <div>
                 <section>
                   <h2>
                     {planckBnToUnit(value, units)} {network.unit}
                   </h2>
-                  {left > 0 ? (
-                    <h3>
-                      {left} era{left !== 1 && 's'}{' '}
-                      {t('modals.remaining_before_withdraw')}
-                    </h3>
-                  ) : (
-                    <h3>{t('modals.available_to_withdraw')}</h3>
-                  )}
+                  <h4>{left <= 0 ? 'Unlocked' : `Unlocks after era ${era}`}</h4>
                 </section>
                 {isStaking && (
                   <section>
                     <div>
-                      <ButtonPrimary
+                      <ButtonSubmit
                         text={t('modals.rebond')}
                         onClick={() => {
                           setTask('rebond');
@@ -105,7 +133,7 @@ export const Overview = forwardRef(
                   </section>
                 )}
               </div>
-              <Separator />
+              {i === unlocking.length - 1 ? null : <Separator />}
             </ChunkWrapper>
           );
         })}
