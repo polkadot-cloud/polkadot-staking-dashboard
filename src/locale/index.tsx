@@ -9,9 +9,13 @@ import { loadLngAsync } from './default';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 
+// the supported namespaces
+export const lngNamespaces = ['base', 'help'];
+
 let lng: string;
 let dynamicLoad = false;
 
+const resourcesInnerDefault = { ...baseEn, ...helpEn };
 const localLng = localStorage.getItem('lng');
 
 // determine the default language.
@@ -25,13 +29,12 @@ if (!localLng) {
 // determine resources exist without dynamically importing them.
 let resources: AnyJson = null;
 if (lng === DefaultLocale) {
-  const resourcesInner = { ...baseEn, ...helpEn };
   resources = {
-    en: resourcesInner,
+    en: resourcesInnerDefault,
   };
   localStorage.setItem(
     'lng_resources',
-    JSON.stringify({ l: DefaultLocale, r: resourcesInner })
+    JSON.stringify({ l: DefaultLocale, r: resourcesInnerDefault })
   );
 } else {
   // not the default locale, check if local resources exist
@@ -55,10 +58,7 @@ if (lng === DefaultLocale) {
     // no resources exist locally, dynamic import needed.
     dynamicLoad = true;
     resources = {
-      en: {
-        ...baseEn,
-        ...helpEn,
-      },
+      en: resourcesInnerDefault,
     };
   }
 }
@@ -77,16 +77,14 @@ i18next.use(initReactI18next).init({
     return;
   }
   const { l, r } = await loadLngAsync(lng);
-  const { base, help } = r;
-
-  i18next.addResourceBundle(l, 'base', base);
-  i18next.addResourceBundle(l, 'help', help);
 
   localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
 
-  if (l !== i18next.resolvedLanguage) {
-    i18next.changeLanguage(l);
-  }
+  Object.entries(r).forEach(([ns, inner]: [string, AnyJson]) => {
+    i18next.addResourceBundle(l, ns, inner);
+  });
+
+  i18next.changeLanguage(l);
 })();
 
 // export i18next for context.

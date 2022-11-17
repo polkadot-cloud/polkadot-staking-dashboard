@@ -2,24 +2,26 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { AnyJson } from 'types';
+import { lngNamespaces } from './index';
 
 // Load language resources dynamically.
 //
 // Bootstraps i18next with additional language resources.
-export const loadLngAsync = async (lng: string) => {
-  const resources: AnyJson = await Promise.all([
-    await import(`./${lng}/base.json`),
-    await import(`./${lng}/help.json`),
-  ]);
+export const loadLngAsync = async (l: string) => {
+  const resources: AnyJson = await Promise.all(
+    lngNamespaces.map(async (u: string) => {
+      const mod = await import(`./${l}/${u}.json`);
+      return mod;
+    })
+  );
 
-  const base = resources[0].base;
-  const help = resources[1].help;
+  const r: AnyJson = {};
+  resources.forEach((mod: AnyJson, i: number) => {
+    r[lngNamespaces[i]] = mod[lngNamespaces[i]];
+  });
 
   return {
-    l: lng,
-    r: {
-      base,
-      help,
-    },
+    l,
+    r,
   };
 };
