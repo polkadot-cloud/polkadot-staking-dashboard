@@ -25,7 +25,7 @@
     "chartjs-plugin-datalabels": "^2.0.0",
     "che-react-number-easing": "^0.1.4",
     "downshift": "^6.1.7",
-    "framer-motion": "^7.6.6",
+    "framer-motion": "^7.6.7",
     "i18next": "^22.0.5",
     "i18next-browser-languagedetector": "^7.0.1",
     "lodash.throttle": "^4.1.1",
