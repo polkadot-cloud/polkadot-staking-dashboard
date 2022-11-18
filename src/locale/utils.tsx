@@ -25,3 +25,19 @@ export const loadLngAsync = async (l: string) => {
     r,
   };
 };
+
+// Handles a dynamic import
+//
+// Once imports have been loaded, they are added to i18next as resources.
+// Finally, the active langauge is changed to the imported language.
+export const doDynamicImport = async (lng: string, i18next: AnyJson) => {
+  const { l, r } = await loadLngAsync(lng);
+
+  localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
+
+  Object.entries(r).forEach(([ns, inner]: [string, AnyJson]) => {
+    i18next.addResourceBundle(l, ns, inner);
+  });
+
+  i18next.changeLanguage(l);
+};

@@ -7,7 +7,7 @@ import { initReactI18next } from 'react-i18next';
 import { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
-import { loadLngAsync } from './utils';
+import { doDynamicImport } from './utils';
 
 // the supported namespaces
 export const lngNamespaces = ['base', 'help'];
@@ -87,20 +87,9 @@ i18next.use(initReactI18next).init({
 });
 
 // dynamically load default language resources if needed.
-(async () => {
-  if (!dynamicLoad) {
-    return;
-  }
-  const { l, r } = await loadLngAsync(lng);
-
-  localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
-
-  Object.entries(r).forEach(([ns, inner]: [string, AnyJson]) => {
-    i18next.addResourceBundle(l, ns, inner);
-  });
-
-  i18next.changeLanguage(l);
-})();
+if (dynamicLoad) {
+  doDynamicImport(lng, i18next);
+}
 
 // export i18next for context.
 export { i18next };
