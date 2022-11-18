@@ -87,11 +87,11 @@ export const Help = () => {
 
       return fillVariables(
         {
-          title: t(`definitions.${localeKey}.title`),
+          title: t(`definitions.${localeKey}.0`),
           description: i18n.getResource(
             i18n.resolvedLanguage,
             'help',
-            `definitions.${localeKey}.description`
+            `definitions.${localeKey}.1`
           ),
         },
         ['title', 'description']
@@ -107,11 +107,11 @@ export const Help = () => {
   if (activeRecord) {
     const localeKey = stringToKey(activeRecord);
 
-    const title = t(`definitions.${localeKey}.title`);
+    const title = t(`definitions.${localeKey}.0`);
     const description = i18n.getResource(
       i18n.resolvedLanguage,
       'help',
-      `definitions.${localeKey}.description`
+      `definitions.${localeKey}.1`
     );
 
     activeDefinition = fillVariables(
