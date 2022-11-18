@@ -87,6 +87,7 @@ export const ItemWrapper = styled.div<any>`
   padding: 0.65rem 0.85rem;
   margin-right: 1rem;
   align-items: center;
+  width: max-content;
 
   &:last-child {
     margin-right: 0;

@@ -11,7 +11,6 @@ export interface ItemProps {
   onClick: () => void;
   disabled?: boolean;
   active: boolean;
-  width?: number;
 }
 
 export interface CategoryProps {

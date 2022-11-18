@@ -42,7 +42,6 @@ export const Filters = () => {
           transform="grow-4"
           active={validatorOrder === 'commission'}
           onClick={() => handleFilter(orderValidators, 'commission')}
-          width={175}
         />
       </Category>
       <Category
@@ -67,7 +66,6 @@ export const Filters = () => {
           onClick={() => {
             handleFilter(toggleFilterValidators, 'inactive');
           }}
-          width={170}
         />
         <Item
           label="over subscribed"
@@ -77,7 +75,6 @@ export const Filters = () => {
           onClick={() => {
             handleFilter(toggleFilterValidators, 'over_subscribed');
           }}
-          width={155}
         />
         <Item
           label="100% commission"
@@ -87,7 +84,6 @@ export const Filters = () => {
           onClick={() => {
             handleFilter(toggleFilterValidators, 'all_commission');
           }}
-          width={170}
         />
         <Item
           label="blocked nominations"
@@ -97,7 +93,6 @@ export const Filters = () => {
           onClick={() => {
             handleFilter(toggleFilterValidators, 'blocked_nominations');
           }}
-          width={190}
         />
         <Item
           label="missing identity"
@@ -107,7 +102,6 @@ export const Filters = () => {
           onClick={() => {
             handleFilter(toggleFilterValidators, 'missing_identity');
           }}
-          width={160}
         />
       </Category>
     </Container>

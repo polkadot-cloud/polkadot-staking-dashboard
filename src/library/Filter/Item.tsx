@@ -9,7 +9,6 @@ import { ItemWrapper } from './Wrappers';
 export const Item = ({
   icon,
   active,
-  width = 180,
   label,
   transform,
   onClick,
@@ -29,7 +28,7 @@ export const Item = ({
       opacity: disabled ? 0.5 : 1,
     }}
   >
-    <ItemWrapper active={active} style={{ width }}>
+    <ItemWrapper active={active}>
       <div className="icon">
         <FontAwesomeIcon
           icon={icon}
