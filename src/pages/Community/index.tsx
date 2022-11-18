@@ -14,7 +14,7 @@ export const CommunityInner = (props: PageProps) => {
   const { key } = page;
 
   const { activeSection } = useCommunitySections();
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   return (
     <Wrapper>
