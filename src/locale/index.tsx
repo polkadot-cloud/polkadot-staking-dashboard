@@ -12,17 +12,13 @@ import helpEn from './en/help.json';
 // the supported namespaces
 export const lngNamespaces = ['base', 'help'];
 
-// the active language
 let lng: string;
-
-// whether a dynamic import is needed
 let dynamicLoad = false;
 
-// default structure of language resources
 const resourcesInnerDefault = { ...baseEn, ...helpEn };
+const localLng = localStorage.getItem('lng');
 
 // determine the default language.
-const localLng = localStorage.getItem('lng');
 if (!localLng) {
   lng = DefaultLocale;
   localStorage.setItem('lng', DefaultLocale);
