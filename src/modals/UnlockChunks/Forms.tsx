@@ -115,12 +115,14 @@ export const Forms = forwardRef(
             <div style={{ marginTop: '2rem' }}>
               {task === 'rebond' && (
                 <h2>
-                  {t('modals.rebond')} {planckBnToUnit(value, units)} {network.unit}
+                  {t('modals.rebond')} {planckBnToUnit(value, units)}{' '}
+                  {network.unit}
                 </h2>
               )}
               {task === 'withdraw' && (
                 <h2>
-                  {t('modals.withdraw')} {planckBnToUnit(value, units)} {network.unit}
+                  {t('modals.withdraw')} {planckBnToUnit(value, units)}{' '}
+                  {network.unit}
                 </h2>
               )}
             </div>
