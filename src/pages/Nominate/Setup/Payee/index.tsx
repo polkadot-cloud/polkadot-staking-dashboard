@@ -71,7 +71,7 @@ export const Payee = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.payee !== null}
-        title={t('pages.nominate.reward_destination')}
+        title={t('pages.nominate.reward_destination') || ''}
         helpKey="Reward Destination"
         setupType={SetupType.Stake}
       />

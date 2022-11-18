@@ -40,7 +40,7 @@ export const Input = (props: any) => {
       <div style={{ margin: '1rem 0' }}>
         <input
           style={{ width: '100%' }}
-          placeholder={t('pages.pools.pool_name')}
+          placeholder={t('pages.pools.pool_name') || ''}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}

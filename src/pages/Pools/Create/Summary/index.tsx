@@ -96,7 +96,7 @@ export const Summary = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('pages.pools.summary')}
+        title={t('pages.pools.summary') || ''}
         setupType={SetupType.Pool}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

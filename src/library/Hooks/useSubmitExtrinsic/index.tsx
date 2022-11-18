@@ -71,7 +71,7 @@ export const useSubmitExtrinsic = (
 
     const extension = extensions.find((e: Extension) => e.id === source);
     if (extension === undefined) {
-      throw new Error(t('library.wallet_not_found'));
+      throw new Error(t('library.wallet_not_found') || '');
     } else {
       // summons extension popup if not already connected.
       extension.enable(DappName);

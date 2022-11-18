@@ -64,7 +64,7 @@ export const PoolRoles = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.roles !== null}
-        title={t('pages.pools.roles')}
+        title={t('pages.pools.roles') || ''}
         helpKey="Pool Roles"
         setupType={SetupType.Pool}
       />

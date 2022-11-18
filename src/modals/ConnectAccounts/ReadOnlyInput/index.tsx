@@ -103,7 +103,7 @@ export const ReadOnlyInput = () => {
       <div className="input">
         <section>
           <input
-            placeholder={t('modals.address')}
+            placeholder={t('modals.address') || ''}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={value}

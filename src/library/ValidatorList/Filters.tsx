@@ -39,7 +39,7 @@ export const Filters = () => {
     <Container>
       <Category title={t('library.order')}>
         <Item
-          label={t('library.active_low_commission')}
+          label={t('library.active_low_commission') || ''}
           icon={faPercentage}
           transform="grow-4"
           active={validatorOrder === 'commission'}
@@ -62,7 +62,7 @@ export const Filters = () => {
         ]}
       >
         <Item
-          label={t('library.inactive_validators')}
+          label={t('library.inactive_validators') || ''}
           icon={faClock}
           transform="grow-4"
           active={validatorFilters?.includes('inactive') ?? false}
@@ -72,7 +72,7 @@ export const Filters = () => {
           width={170}
         />
         <Item
-          label={t('library.over_subscribed')}
+          label={t('library.over_subscribed') || ''}
           icon={faExclamationTriangle}
           transform="grow-4"
           active={validatorFilters?.includes('over_subscribed') ?? false}
@@ -82,7 +82,7 @@ export const Filters = () => {
           width={155}
         />
         <Item
-          label={t('library.100%_commission')}
+          label={t('library.100%_commission') || ''}
           icon={faBalanceScaleLeft}
           transform="grow-2"
           active={validatorFilters?.includes('all_commission') ?? false}
@@ -92,7 +92,7 @@ export const Filters = () => {
           width={170}
         />
         <Item
-          label={t('library.blocked_nominations')}
+          label={t('library.blocked_nominations') || ''}
           icon={faUserSlash}
           transform="grow-1"
           active={validatorFilters?.includes('blocked_nominations') ?? false}
@@ -102,7 +102,7 @@ export const Filters = () => {
           width={190}
         />
         <Item
-          label={t('library.missing_identity')}
+          label={t('library.missing_identity') || ''}
           icon={faUserTag}
           transform="grow-2"
           active={validatorFilters?.includes('missing_identity') ?? false}

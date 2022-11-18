@@ -190,7 +190,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 <h2>{t('modals.update_pool_name')}</h2>
                 <input
                   style={{ width: '100%' }}
-                  placeholder={t('modals.pool_name')}
+                  placeholder={t('modals.pool_name') || ''}
                   type="text"
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     handleMetadataChange(e)

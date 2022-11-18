@@ -142,7 +142,7 @@ export const Payouts = (props: PageProps) => {
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
-              title={tCommon('pages.payouts.recent_payouts')}
+              title={tCommon('pages.payouts.recent_payouts') || ''}
               payouts={payoutsList}
               pagination
             />
