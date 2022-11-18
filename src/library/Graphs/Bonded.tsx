@@ -68,7 +68,7 @@ export const Bonded = ({
             if (inactive) {
               return 'Inactive';
             }
-            return `${context.label}: ${
+            return `${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)
             } ${network.unit}`;
           },

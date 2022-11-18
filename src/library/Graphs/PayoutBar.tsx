@@ -110,7 +110,6 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         stacked: true,
         grid: {
           display: false,
-          drawBorder: true,
         },
         ticks: {
           font: {
@@ -126,9 +125,11 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
             size: 10,
           },
         },
+        border: {
+          display: false,
+        },
         grid: {
           color: defaultThemes.graphs.grid[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
       },
     },

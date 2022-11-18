@@ -226,6 +226,12 @@ export const extractUrlValue = (key: string, url: string) => {
   return match ? match[1] : null;
 };
 
+// converts a string of text to lowercase and replaces spaces with underscores
+export const stringToKey = (str: string) => {
+  if (!str) return '';
+  return str.toLowerCase().replace(/ /g, '_');
+};
+
 export const registerSaEvent = (e: string, a: AnyApi = {}) => {
   if ((window as AnyApi).sa_event) {
     (window as AnyApi).sa_event(e, a);

@@ -39,7 +39,7 @@ export const RouterInner = () => {
   const { network } = useApi();
   const { search, pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   // register landing source from URL
   useEffect(() => {
