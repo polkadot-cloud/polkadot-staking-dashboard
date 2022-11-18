@@ -1,32 +1,28 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
+
 import { DefaultLocale } from 'consts';
-import { useAppVersion } from 'contexts/AppVersion';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { AnyJson } from 'types';
 import { loadLngAsync } from './default';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
-import packAge from '/Users/tingalin/Desktop/polkadot-staking-dashboard/package.json';
-
-// const _update = () => {
-//   const { updateVersion } = useAppVersion();
-//   const pVersion = packAge.version;
-//   updateVersion(pVersion);
-// };
 
 // the supported namespaces
 export const lngNamespaces = ['base', 'help'];
 
+// the active language
 let lng: string;
+
+// whether a dynamic import is needed
 let dynamicLoad = false;
 
+// default structure of language resources
 const resourcesInnerDefault = { ...baseEn, ...helpEn };
-const localLng = localStorage.getItem('lng');
 
 // determine the default language.
+const localLng = localStorage.getItem('lng');
 if (!localLng) {
   lng = DefaultLocale;
   localStorage.setItem('lng', DefaultLocale);
