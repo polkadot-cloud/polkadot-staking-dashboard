@@ -53,18 +53,18 @@ export const TIPS_CONFIG = [
     localeKey: 'monitoring_pool',
     icon: infoJson,
   },
-  {
-    id: 'join_another_pool',
-    meta: {
-      segment: 6,
-    },
-    title: 'Joining Another Pool',
-    subtitle: 'Switch to a different account to join another pool.',
-    description: [
-      'Only one pool can be joined per account on {NETWORK_NAME}. To join more pools, firstly switch to another account.',
-    ],
-    icon: infoJson,
-  },
+  // {
+  //   id: 'join_another_pool',
+  //   meta: {
+  //     segment: 6,
+  //   },
+  //   title: 'Joining Another Pool',
+  //   subtitle: 'Switch to a different account to join another pool.',
+  //   description: [
+  //     'Only one pool can be joined per account on {NETWORK_NAME}. To join more pools, firstly switch to another account.',
+  //   ],
+  //   icon: infoJson,
+  // },
   {
     id: 'keep_pool_nominating',
     meta: {
