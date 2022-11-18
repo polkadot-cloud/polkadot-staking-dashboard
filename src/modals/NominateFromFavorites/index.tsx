@@ -1,9 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -92,10 +91,10 @@ export const NominateFromFavorites = () => {
   const overMaxNominations = totalAfterSelection > maxNominations;
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!valid || !api) {
-      return _tx;
+      return tx;
     }
 
     const targetsToSubmit = nominationsToSubmit.map((item: any) =>
@@ -107,18 +106,18 @@ export const NominateFromFavorites = () => {
     );
 
     if (bondType === 'pool') {
-      _tx = api.tx.nominationPools.nominate(
+      tx = api.tx.nominationPools.nominate(
         selectedActivePool?.id,
         targetsToSubmit
       );
     } else {
-      _tx = api.tx.staking.nominate(targetsToSubmit);
+      tx = api.tx.staking.nominate(targetsToSubmit);
     }
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
@@ -181,9 +180,10 @@ export const NominateFromFavorites = () => {
               : `${t('modals.no_favorites_selected')}`}
           </h3>
           <div>
-            <button
-              type="button"
-              className="submit"
+            <ButtonSubmit
+              text={`Submit${submitting ? 'ting' : ''}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
               onClick={() => submitTx()}
               disabled={
                 !valid ||
@@ -192,13 +192,7 @@ export const NominateFromFavorites = () => {
                 !accountHasSigner(signingAccount) ||
                 !txFeesValid
               }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              {t('modals.submit')}
-            </button>
+            />
           </div>
         </FooterWrapper>
       </PaddingWrapper>

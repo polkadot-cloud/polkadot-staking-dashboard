@@ -70,8 +70,8 @@ export const NETWORKS: Networks = {
     },
     colors: {
       primary: {
-        light: '#333',
-        dark: '#666',
+        light: '#201f37',
+        dark: '#6c6b80',
       },
       secondary: {
         light: '#999',

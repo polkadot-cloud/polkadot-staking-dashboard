@@ -1,9 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -62,21 +61,19 @@ export const UnbondPoolMember = () => {
   }, [bond]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!bondValid || !api || !activeAccount) {
-      return _tx;
+      return tx;
     }
     // remove decimal errors
     const bondToSubmit = unitToPlanckBn(bond.bond, units);
-
-    // determine _tx
-    _tx = api.tx.nominationPools.unbond(who, bondToSubmit);
-    return _tx;
+    tx = api.tx.nominationPools.unbond(who, bondToSubmit);
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
@@ -104,9 +101,10 @@ export const UnbondPoolMember = () => {
         </div>
         <FooterWrapper>
           <div>
-            <button
-              type="button"
-              className="submit"
+            <ButtonSubmit
+              text={`Submit${submitting ? 'ting' : ''}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
               onClick={() => submitTx()}
               disabled={
                 submitting ||
@@ -114,14 +112,7 @@ export const UnbondPoolMember = () => {
                 !accountHasSigner(activeAccount) ||
                 !txFeesValid
               }
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faArrowAltCircleUp as IconProp}
-              />
-              {t('modals.submit')}
-              {submitting && t('modals.ting')}
-            </button>
+            />
           </div>
         </FooterWrapper>
       </ContentWrapper>

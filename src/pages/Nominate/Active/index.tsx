@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { Button } from 'library/Button';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
@@ -80,13 +80,10 @@ export const Active = () => {
                   <OpenHelpIcon helpKey="Nominations" />
                 </h3>
                 <div>
-                  <Button
-                    small
-                    inline
-                    primary
-                    title={t('pages.nominate.nominate')}
-                    icon={faChevronCircleRight}
-                    transform="grow-1"
+                  <ButtonPrimary
+                    text={t('pages.nominate.nominate')}
+                    iconLeft={faChevronCircleRight}
+                    iconTransform="grow-1"
                     disabled={targets.length === 0 || inSetup() || isSyncing}
                     onClick={() => openModalWith('Nominate', {}, 'small')}
                   />

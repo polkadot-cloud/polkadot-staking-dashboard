@@ -21,11 +21,11 @@ export const Validators = (props: PageProps) => {
   const { isReady } = useApi();
   const { validators } = useValidators();
   const { t: tCommon } = useTranslation('common');
-  const { t: tPages } = useTranslation('pages');
+  const { t } = useTranslation('pages');
 
   return (
     <>
-      <PageTitle title={tPages(key)} />
+      <PageTitle title={t(key)} />
       <StatBoxList>
         <TotalValidatorsStatBox />
         <ActiveValidatorsStatBox />

@@ -4,6 +4,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -14,7 +15,6 @@ import { useTxFees } from 'contexts/TxFees';
 import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
-import { Button } from 'library/Button';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -43,7 +43,7 @@ export const Summary = (props: SetupStepProps) => {
 
   const { metadata, bond, roles, nominations } = setup;
 
-  const txs = () => {
+  const getTxs = () => {
     if (
       !activeAccount ||
       !api ||
@@ -59,7 +59,7 @@ export const Summary = (props: SetupStepProps) => {
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
     // construct a batch of transactions
-    const _txs = [
+    const txs = [
       api.tx.nominationPools.create(
         bondToSubmit,
         roles.root,
@@ -69,11 +69,11 @@ export const Summary = (props: SetupStepProps) => {
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
     ];
-    return api.tx.utility.batch(_txs);
+    return api.tx.utility.batch(txs);
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: txs(),
+    tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {},
@@ -159,13 +159,13 @@ export const Summary = (props: SetupStepProps) => {
             justifyContent: 'end',
           }}
         >
-          <Button
+          <ButtonPrimary
+            lg
             onClick={() => submitTx()}
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            title={t('pages.pools.create_pool')}
-            primary
+            text={t('pages.pools.create_pool')}
           />
         </div>
       </MotionContainer>

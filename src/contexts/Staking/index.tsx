@@ -351,7 +351,9 @@ export const StakingProvider = ({
     }
 
     for (const target of _targets) {
-      const s = eraStakers.stakers.find((_n: any) => _n.address === target);
+      const s = eraStakersRef.current.stakers.find(
+        (_n: any) => _n.address === target
+      );
 
       if (s === undefined) {
         statuses[target] = 'waiting';

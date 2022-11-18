@@ -6,7 +6,5 @@ import { AccountContextInterface } from './types';
 export const defaultAccountContext: AccountContextInterface = {
   // eslint-disable-next-line
   fetchAccountMetaBatch: (k, v, r) => {},
-  // eslint-disable-next-line
-  removeAccountMetaBatch: (k) => {},
   meta: {},
 };

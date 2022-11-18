@@ -7,17 +7,16 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
+import useBondGreatestFee from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { planckBnToUnit } from 'Utils';
-import { NotesWrapper, Separator } from '../../Wrappers';
+import { Separator } from '../../Wrappers';
 import { FormsProps } from '../types';
 import { FormFooter } from './FormFooter';
 
@@ -25,7 +24,6 @@ export const BondAll = (props: FormsProps) => {
   const { setSection, setLocalResize } = props;
   const { t } = useTranslation('common');
 
-  const { mode } = useTheme();
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config } = useModal();
@@ -34,6 +32,7 @@ export const BondAll = (props: FormsProps) => {
   const { bondType } = config;
   const { txFees, txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
+  const largestTxFee = useBondGreatestFee({ bondType });
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
@@ -55,11 +54,11 @@ export const BondAll = (props: FormsProps) => {
   const [bond, setBond] = useState({ bond: freeBalance });
 
   // bond minus tx fees
-  const bondAfterTxFees = BN.max(freeBalanceBn.sub(txFees), BN_ZERO);
+  const bondAfterTxFees = BN.max(freeBalanceBn.sub(largestTxFee), BN_ZERO);
 
   // total possible bond after tx fees
   const totalPossibleBond = planckBnToUnit(
-    BN.max(totalPossibleBondBn.sub(txFees), BN_ZERO),
+    BN.max(totalPossibleBondBn.sub(largestTxFee), BN_ZERO),
     units
   );
 
@@ -83,26 +82,26 @@ export const BondAll = (props: FormsProps) => {
   }, [bond]);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!bondValid || !api || !activeAccount) {
-      return _tx;
+      return tx;
     }
 
     // convert to submittable string
     const bondToSubmit = bondAfterTxFees.toString();
 
-    // determine _tx
+    // determine tx
     if (isPooling) {
-      _tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
+      tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
     } else if (isStaking) {
-      _tx = api.tx.staking.bondExtra(bondToSubmit);
+      tx = api.tx.staking.bondExtra(bondToSubmit);
     }
-    return _tx;
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
@@ -131,22 +130,20 @@ export const BondAll = (props: FormsProps) => {
           )}
           <h4>{t('modals.amount_to_bond')}</h4>
           <h2>
-            {planckBnToUnit(bondAfterTxFees, units)} {network.unit}
+            {largestTxFee.eq(new BN(0))
+              ? '...'
+              : `${planckBnToUnit(bondAfterTxFees, units)} ${network.unit}`}
           </h2>
           <p>{t('modals.update_bond1', { unit })}</p>
           <Separator />
           <h4>{t('modals.new_total_bond')}</h4>
           <h2>
-            {totalPossibleBond} {network.unit}
+            {largestTxFee.eq(new BN(0))
+              ? '...'
+              : `${totalPossibleBond} ${network.unit}`}
           </h2>
-          <NotesWrapper>
-            {txFees.gt(BN_ZERO) && (
-              <p style={{ color: defaultThemes.text.success[mode] }}>
-                {t('modals.update_bond2')}
-              </p>
-            )}
-            <EstimatedTxFee />
-          </NotesWrapper>
+          <Separator />
+          <EstimatedTxFee />
         </>
       </div>
       <FormFooter

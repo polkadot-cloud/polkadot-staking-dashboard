@@ -72,7 +72,7 @@ export interface Network {
 }
 
 export interface PageCategory {
-  _id: number;
+  id: number;
   key: string;
 }
 

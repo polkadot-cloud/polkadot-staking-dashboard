@@ -35,6 +35,7 @@ export const useStatusButtons = () => {
       poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``
     }`,
     icon: faPlusCircle,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||
@@ -48,6 +49,7 @@ export const useStatusButtons = () => {
   const joinPoolBtn = {
     title: `$t('pages.pools.join')`,
     icon: faUserPlus,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||

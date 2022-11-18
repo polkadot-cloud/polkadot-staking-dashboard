@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { Button } from 'library/Button';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
@@ -37,11 +37,8 @@ export const ControllerNotImported = () => {
               <CardHeaderWrapper>
                 <h4>{t('pages.nominate.controller_not_imported')}</h4>
               </CardHeaderWrapper>
-              <Button
-                small
-                primary
-                inline
-                title={t('pages.nominate.set_new_controller')}
+              <ButtonPrimary
+                text={t('pages.nominate.set_new_controller')}
                 onClick={() => openModalWith('UpdateController', {}, 'large')}
               />
             </CardWrapper>

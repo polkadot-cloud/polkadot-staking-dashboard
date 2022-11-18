@@ -1,66 +1,68 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN_ZERO } from '@polkadot/util';
-import { BN, max } from 'bn.js';
+import BN, { max } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
+import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper } from '../../Wrappers';
 import { FormsProps } from '../types';
 import { FormFooter } from './FormFooter';
 
-export const BondSome = (props: FormsProps) => {
-  const { section, setSection, setLocalResize } = props;
-  const { t } = useTranslation('common');
-
+export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   const { api, network } = useApi();
-  const { mode } = useTheme();
   const { units } = network;
-  const { setStatus: setModalStatus, config } = useModal();
+  const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useTransferOptions();
-  const { bondType } = config;
-  const { txFees, txFeesValid } = useTxFees();
+  const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
+  const { bondType } = config;
+  const isStaking = bondType === 'stake';
+  const isPooling = bondType === 'pool';
+  const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
+  const freeBalance = planckBnToUnit(freeBalanceBn, units);
+  const largestTxFee = useBondGreatestFee({ bondType });
+  const { t } = useTranslation('common');
 
+  // calculate any unclaimed pool rewards.
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
   unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
-  const isStaking = bondType === 'stake';
-  const isPooling = bondType === 'pool';
-
-  const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
-  const freeBalance = planckBnToUnit(freeBalanceBn, units);
-
-  // local bond value
+  // local bond value.
   const [bond, setBond] = useState({ bond: freeBalance });
 
-  // bond minus tx fees
-  const enoughToCoverTxFees: boolean =
-    freeBalance - Number(bond.bond) > planckBnToUnit(txFees, units);
-
-  const bondAfterTxFees = enoughToCoverTxFees
-    ? unitToPlanckBn(Number(bond.bond), units)
-    : max(unitToPlanckBn(Number(bond.bond), units).sub(txFees), new BN(0));
-
-  // bond valid
+  // bond valid.
   const [bondValid, setBondValid] = useState<boolean>(false);
 
-  // update bond value on task change
+  // bond minus tx fees.
+  const enoughToCoverTxFees: boolean =
+    freeBalance - Number(bond.bond) > planckBnToUnit(largestTxFee, units);
+
+  // bond value after max tx fees have been deducated.
+  let bondAfterTxFees: BN;
+  if (enoughToCoverTxFees) {
+    bondAfterTxFees = unitToPlanckBn(Number(bond.bond), units);
+  } else {
+    bondAfterTxFees = max(
+      unitToPlanckBn(Number(bond.bond), units).sub(largestTxFee),
+      new BN(0)
+    );
+  }
+
+  // update bond value on task change.
   useEffect(() => {
     const _bond = freeBalance;
     setBond({ bond: _bond });
@@ -68,32 +70,35 @@ export const BondSome = (props: FormsProps) => {
 
   // modal resize on form update
   useEffect(() => {
-    if (section === 1) {
-      if (setLocalResize) setLocalResize();
+    setResize();
+  }, [bond]);
+
+  // determine whether this is a pool or staking transaction.
+  const determineTx = (bondToSubmit: string) => {
+    let tx = null;
+    if (!api) {
+      return tx;
     }
-  }, [bond, txFees, bondValid]);
-
-  // tx to submit
-  const tx = () => {
-    let _tx = null;
-    if (!bondValid || !api || !activeAccount) {
-      return _tx;
-    }
-
-    // convert to submittable string
-    const bondToSubmit = bondAfterTxFees.toString();
-
-    // determine _tx
     if (isPooling) {
-      _tx = api.tx.nominationPools.bondExtra({ FreeBalance: bondToSubmit });
+      tx = api.tx.nominationPools.bondExtra({
+        FreeBalance: bondToSubmit,
+      });
     } else if (isStaking) {
-      _tx = api.tx.staking.bondExtra(bondToSubmit);
+      tx = api.tx.staking.bondExtra(bondToSubmit);
     }
-    return _tx;
+    return tx;
+  };
+
+  // the actual bond tx to submit
+  const getTx = (bondToSubmit: string) => {
+    if (!bondValid || !activeAccount) {
+      return null;
+    }
+    return determineTx(bondToSubmit);
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(bondAfterTxFees.toString()),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
@@ -118,6 +123,7 @@ export const BondSome = (props: FormsProps) => {
           />
         )}
         <BondFeedback
+          syncing={largestTxFee.eq(new BN(0))}
           bondType={bondType}
           listenIsValid={setBondValid}
           defaultBond={null}
@@ -129,15 +135,11 @@ export const BondSome = (props: FormsProps) => {
             },
           ]}
           warnings={warnings}
+          txFees={largestTxFee}
         />
         <NotesWrapper>
-          {txFees.gt(BN_ZERO) && (
-            <p style={{ color: defaultThemes.text.success[mode] }}>
-              {t('modals.update_bond3')}
-            </p>
-          )}
+          <EstimatedTxFee />
         </NotesWrapper>
-        <EstimatedTxFee />
       </div>
       <FormFooter
         setSection={setSection}

@@ -34,7 +34,7 @@ export const Payouts = (props: PageProps) => {
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { t: tCommon } = useTranslation('common');
-  const { t: tPages } = useTranslation('pages');
+  const { t } = useTranslation('pages');
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>();
   const [fromDate, setFromDate] = useState<string | undefined>();
@@ -81,7 +81,7 @@ export const Payouts = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={tPages(key)} />
+      <PageTitle title={t(key)} />
       <StatBoxList>
         <LastEraPayoutStatBox />
       </StatBoxList>

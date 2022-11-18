@@ -2,17 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import Button from 'library/Button';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { determinePoolDisplay } from 'Utils';
 import { Wrapper } from './Wrapper';
@@ -49,14 +48,11 @@ export const Membership = ({ label }: { label: string }) => {
   let paddingRight = 0;
 
   if (isOwner() || isStateToggler()) {
-    paddingRight += 8.2;
+    paddingRight += 9;
     buttons.push(
-      <Button
-        primary
-        inline
-        title={t('pages.pools.manage')}
-        icon={faCog}
-        small
+      <ButtonPrimary
+        text={t('pages.pools.manage')}
+        iconLeft={faCog}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
         onClick={() => openModalWith('ManagePool', {}, 'small')}
       />
@@ -64,14 +60,11 @@ export const Membership = ({ label }: { label: string }) => {
   }
 
   if (isMember() && !isDepositor() && active?.gtn(0)) {
-    paddingRight += 7.9;
+    paddingRight += 8.5;
     buttons.push(
-      <Button
-        primary
-        inline
-        title={t('pages.pools.leave')}
-        icon={faSignOutAlt}
-        small
+      <ButtonPrimary
+        text={t('pages.pools.leave')}
+        iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
         onClick={() =>
           openModalWith('LeavePool', { bondType: 'pool' }, 'small')
@@ -83,7 +76,8 @@ export const Membership = ({ label }: { label: string }) => {
   return (
     <StatWrapper>
       <h4>
-        {label} <OpenHelpIcon helpKey="Pool Membership" />
+        {label}
+        <OpenHelpIcon helpKey="Pool Membership" />
       </h4>
       <Wrapper
         paddingLeft={selectedActivePool !== null}
@@ -100,7 +94,7 @@ export const Membership = ({ label }: { label: string }) => {
           {buttons.length > 0 && (
             <div className="btn">
               {buttons.map((b: any, i: number) => (
-                <React.Fragment key={i}>{b}</React.Fragment>
+                <span key={i}>{b}</span>
               ))}
             </div>
           )}

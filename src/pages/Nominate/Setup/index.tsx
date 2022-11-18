@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useUi } from 'contexts/UI';
 import { defaultStakeSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
-import { Button } from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -26,23 +26,26 @@ export const Setup = () => {
       <PageTitle title={t('pages.nominate.start_nominating')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
-          <Button
-            inline
-            title={t('pages.nominate.go_back')}
-            icon={faChevronLeft}
-            transform="shrink-3"
-            onClick={() => setOnNominatorSetup(0)}
-          />
-          <div className="right">
-            <Button
-              inline
-              title={t('pages.nominate.cancel')}
+          <span>
+            <ButtonSecondary
+              lg
+              text={t('pages.nominate.go_back')}
+              iconLeft={faChevronLeft}
+              iconTransform="shrink-3"
+              onClick={() => setOnNominatorSetup(0)}
+            />
+          </span>
+          <span>
+            <ButtonSecondary
+              lg
+              text={t('pages.nominate.cancel')}
               onClick={() => {
                 setOnNominatorSetup(0);
                 setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
               }}
             />
-          </div>
+          </span>
+          <div className="right" />
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

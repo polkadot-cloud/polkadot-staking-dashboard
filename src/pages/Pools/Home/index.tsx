@@ -42,9 +42,9 @@ export const HomeInner = () => {
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
-  // back to tab 0 if not in a pool
+  // back to tab 0 if not in a pool & on members tab
   useEffect(() => {
-    if (!selectedActivePool) {
+    if (!selectedActivePool && [1].includes(activeTab)) {
       setActiveTab(0);
     }
   }, [selectedActivePool]);

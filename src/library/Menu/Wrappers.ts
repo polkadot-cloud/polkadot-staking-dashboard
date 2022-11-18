@@ -7,7 +7,6 @@ import { borderPrimary, modalBackground, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   background: ${modalBackground};
-  box-sizing: border-box;
   width: ${FloatingMenuWidth}px;
   padding: 0.25rem 0.75rem;
   display: flex;
@@ -22,7 +21,6 @@ export const Wrapper = styled.div`
 
 export const ItemWrapper = styled.button`
   border-bottom: 1px solid ${borderPrimary};
-  box-sizing: border-box;
   display: flex;
   width: 100%;
   padding: 0.75rem 0.5rem;

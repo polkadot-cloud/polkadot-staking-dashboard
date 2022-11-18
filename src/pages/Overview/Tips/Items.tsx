@@ -123,7 +123,7 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
             <h4>
               {subtitle}
               <motion.button
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ scale: 1.02 }}
                 onClick={() => openTipWith(id, {})}
                 type="button"
                 className="more"

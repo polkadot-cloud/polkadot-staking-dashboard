@@ -21,6 +21,7 @@ export const PoolNominations = () => {
         <ListWrapper>
           {targets.length > 0 ? (
             <ValidatorList
+              format="nomination"
               bondType="pool"
               validators={targets}
               nominator={nominator}

@@ -1,10 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -51,21 +50,21 @@ export const UpdateController = () => {
   };
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
     if (!selected || !api) {
-      return _tx;
+      return tx;
     }
     const controllerToSubmit = {
       Id: selected?.address ?? '',
     };
-    _tx = api.tx.staking.setController(controllerToSubmit);
-    return _tx;
+    tx = api.tx.staking.setController(controllerToSubmit);
+    return tx;
   };
 
   // handle extrinsic
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
@@ -103,9 +102,10 @@ export const UpdateController = () => {
           </NotesWrapper>
           <FooterWrapper>
             <div>
-              <button
-                type="button"
-                className="submit"
+              <ButtonSubmit
+                text={`Submit${submitting ? 'ting' : ''}`}
+                iconLeft={faArrowAltCircleUp}
+                iconTransform="grow-2"
                 onClick={() => submitTx()}
                 disabled={
                   selected === null ||
@@ -113,13 +113,7 @@ export const UpdateController = () => {
                   !accountHasSigner(activeAccount) ||
                   !txFeesValid
                 }
-              >
-                <FontAwesomeIcon
-                  transform="grow-2"
-                  icon={faArrowAltCircleUp as IconProp}
-                />
-                {t('modals.submit')}
-              </button>
+              />
             </div>
           </FooterWrapper>
         </div>

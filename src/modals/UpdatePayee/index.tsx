@@ -1,10 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -55,19 +54,18 @@ export const UpdatePayee = () => {
   const [valid, setValid] = useState<boolean>(false);
 
   // tx to submit
-  const tx = () => {
-    let _tx = null;
+  const getTx = () => {
+    let tx = null;
 
     if (!api || !valid) {
-      return _tx;
+      return tx;
     }
-
-    _tx = api.tx.staking.setPayee(selected.key);
-    return _tx;
+    tx = api.tx.staking.setPayee(selected.key);
+    return tx;
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: tx(),
+    tx: getTx(),
     from: controller,
     shouldSubmit: valid,
     callbackSubmit: () => {
@@ -113,9 +111,10 @@ export const UpdatePayee = () => {
           </div>
           <FooterWrapper>
             <div>
-              <button
-                type="button"
-                className="submit"
+              <ButtonSubmit
+                text={`Submit${submitting ? 'ting' : ''}`}
+                iconLeft={faArrowAltCircleUp}
+                iconTransform="grow-2"
                 onClick={() => submitTx()}
                 disabled={
                   !valid ||
@@ -123,13 +122,7 @@ export const UpdatePayee = () => {
                   getControllerNotImported(controller) ||
                   !txFeesValid
                 }
-              >
-                <FontAwesomeIcon
-                  transform="grow-2"
-                  icon={faArrowAltCircleUp as IconProp}
-                />
-                {t('modals.submit')}
-              </button>
+              />
             </div>
           </FooterWrapper>
         </div>

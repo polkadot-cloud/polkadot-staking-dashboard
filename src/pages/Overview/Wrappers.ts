@@ -14,7 +14,6 @@ export const ActiveAccounWrapper = styled.div`
   width: 100%;
 
   .account {
-    box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -27,7 +26,6 @@ export const ActiveAccounWrapper = styled.div`
       margin-right: 0.5rem;
     }
     .title {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
       flex: 1;
@@ -101,13 +99,11 @@ export const ActiveAccounWrapper = styled.div`
 
 export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
   padding: ${(props) => (props.noPadding ? '0' : '0 1.25rem 0rem 1.25rem')};
-  box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
 
   .account {
-    box-sizing: border-box;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -123,7 +119,6 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
       top: 0.1rem;
     }
     .title {
-      box-sizing: border-box;
       margin: 0;
       padding: 0 0.5rem;
       flex: 1;
@@ -179,7 +174,7 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 4rem;
+  margin-top: 5.5rem;
   @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
     margin-top: 3rem;
   }
@@ -205,14 +200,12 @@ export const ReserveWrapper = styled.div`
       position: relative;
 
       &:first-child {
-        box-sizing: border-box;
         overflow: hidden;
         padding-left: 0;
 
         .reserve {
           background: ${buttonSecondaryBackground};
           display: block;
-          box-sizing: border-box;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;

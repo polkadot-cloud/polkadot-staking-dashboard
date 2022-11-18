@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { Dismiss } from './Items/Dismiss';
 import { Tip } from './Items/Tip';
-
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Tips = () => {

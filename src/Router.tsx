@@ -85,23 +85,23 @@ export const RouterInner = () => {
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <AnimatePresence>
               <Routes>
-                {PAGES_CONFIG.map((page, pageIndex) => {
-                  const { Entry } = page;
+                {PAGES_CONFIG.map((page, i) => {
+                  const { Entry, hash, key } = page;
 
                   return (
                     <Route
-                      key={`main_interface_page_${pageIndex}`}
-                      path={page.hash}
+                      key={`main_interface_page_${i}`}
+                      path={hash}
                       element={
                         <PageWrapper
-                          key={`main_interface_key__${pageIndex}`}
+                          key={`main_interface_key__${i}`}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${t(page.key)} : ${TitleDefault}`}</title>
+                            <title>{`${t(key)} : ${TitleDefault}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>

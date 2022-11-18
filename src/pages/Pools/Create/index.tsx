@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useUi } from 'contexts/UI';
 import { defaultPoolSetup } from 'contexts/UI/defaults';
 import { SetupType } from 'contexts/UI/types';
-import Button from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -26,23 +26,26 @@ export const Create = () => {
       <PageTitle title={t('pages.pools.create_a_pool')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
-          <Button
-            inline
-            title={t('pages.pools.go_back')}
-            icon={faChevronLeft}
-            transform="shrink-3"
-            onClick={() => setOnPoolSetup(0)}
-          />
-          <div className="right">
-            <Button
-              inline
-              title={t('pages.pools.cancel')}
+          <span>
+            <ButtonSecondary
+              lg
+              text={t('pages.pools.go_back')}
+              iconLeft={faChevronLeft}
+              iconTransform="shrink-3"
+              onClick={() => setOnPoolSetup(0)}
+            />
+          </span>
+          <span>
+            <ButtonSecondary
+              lg
+              text={t('pages.pools.cancel')}
               onClick={() => {
                 setOnPoolSetup(0);
                 setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
               }}
             />
-          </div>
+          </span>
+          <div className="right" />
         </TopBarWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

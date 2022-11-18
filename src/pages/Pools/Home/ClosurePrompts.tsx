@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -11,10 +12,9 @@ import { PoolState } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { Button, ButtonRow } from 'library/Button';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { PageRowWrapper } from 'Wrappers';
+import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
   const { network } = useApi();
@@ -68,12 +68,10 @@ export const ClosurePrompts = () => {
                   ? t('pages.pools.destroy_pool4')
                   : t('pages.pools.destroy_pool5')}
               </h4>
-              <ButtonRow verticalSpacing>
-                <Button
-                  small
-                  primary
-                  inline
-                  title={t('pages.pools.unbond')}
+              <ButtonRowWrapper verticalSpacing>
+                <ButtonPrimary
+                  marginRight
+                  text={t('pages.pools.unbond')}
                   disabled={
                     poolsSyncing ||
                     (!depositorCanWithdraw && !depositorCanUnbond)
@@ -86,11 +84,9 @@ export const ClosurePrompts = () => {
                     )
                   }
                 />
-                <Button
-                  small
-                  primary
-                  icon={faLockOpen}
-                  title={String(totalUnlockChuncks ?? 0)}
+                <ButtonPrimary
+                  iconLeft={faLockOpen}
+                  text={String(totalUnlockChuncks ?? 0)}
                   disabled={poolsSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith(
@@ -100,7 +96,7 @@ export const ClosurePrompts = () => {
                     )
                   }
                 />
-              </ButtonRow>
+              </ButtonRowWrapper>
             </div>
           </CardWrapper>
         </PageRowWrapper>

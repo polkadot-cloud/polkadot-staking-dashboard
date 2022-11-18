@@ -39,6 +39,7 @@ export const Input = (props: any) => {
     <>
       <div style={{ margin: '1rem 0' }}>
         <input
+          className="textbox"
           style={{ width: '100%' }}
           placeholder={t('pages.pools.pool_name') || ''}
           type="text"

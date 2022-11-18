@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { Button } from 'library/Button';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isNumeric } from 'Utils';
+import { humanNumber, isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
-import { InputWrapper, RowWrapper } from '../Wrappers';
+import { InputWrapper } from '../Wrappers';
 
 export const BondInput = ({
   setters,
@@ -17,6 +17,7 @@ export const BondInput = ({
   freeBalance,
   disableTxFeeUpdate,
   value,
+  syncing = false,
 }: BondInputProps) => {
   const sets = setters ?? [];
   const _value = value ?? 0;
@@ -61,39 +62,45 @@ export const BondInput = ({
   };
 
   return (
-    <RowWrapper>
-      <div>
-        <InputWrapper>
-          <section style={{ opacity: disabled ? 0.5 : 1 }}>
-            <h3>
-              {t('library.bond')} {network.unit}:
-            </h3>
-            <input
-              type="text"
-              placeholder={`0 ${network.unit}`}
-              value={localBond}
-              onChange={(e) => {
-                handleChangeBond(e);
-              }}
-              disabled={disabled}
-            />
-          </section>
-        </InputWrapper>
-      </div>
-      <div>
-        <div>
-          <Button
-            inline
-            small
-            title={t('library.max')}
+    <InputWrapper>
+      <h3>
+        {t('library.bond')} {network.unit}:
+      </h3>
+      <div className="inner">
+        <section style={{ opacity: disabled ? 0.5 : 1 }}>
+          <div className="input">
+            <div>
+              <input
+                type="text"
+                placeholder={`0 ${network.unit}`}
+                value={localBond}
+                onChange={(e) => {
+                  handleChangeBond(e);
+                }}
+                disabled={disabled}
+              />
+            </div>
+            <div>
+              <p>
+                {syncing
+                  ? '...'
+                  : `${humanNumber(freeBalance)} ${network.unit} available`}
+              </p>
+            </div>
+          </div>
+        </section>
+        <section>
+          <ButtonInvert
+            text={t('library.max')}
+            disabled={disabled || syncing || freeBalance === 0}
             onClick={() => {
               setLocalBond(freeBalance);
               updateParentState(freeBalance);
             }}
           />
-        </div>
+        </section>
       </div>
-    </RowWrapper>
+    </InputWrapper>
   );
 };
 
