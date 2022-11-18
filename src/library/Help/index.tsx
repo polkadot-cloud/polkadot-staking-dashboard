@@ -6,27 +6,26 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import {
-  ExternalRecord,
-  HelpDefinition,
-  HelpExternal,
-  HelpExternals,
-  HelpRecord,
-  HelpRecords,
+  DefinitionWithKeys,
+  ExternalItem,
+  ExternalItems,
+  ExternalWithKeys,
+  HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { stringToKey } from 'Utils';
 import Definition from './Items/Definition';
 import External from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
   const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
-  const { fillVariables } = useFillVariables();
   const controls = useAnimation();
-  const { t } = useTranslation('common');
-  const { t: tHelp, i18n } = useTranslation('help');
+  const { fillVariables } = useFillVariables();
+  const { t, i18n } = useTranslation('help');
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
@@ -60,39 +59,39 @@ export const Help = () => {
   // render early if help not open
   if (status === 0) return <></>;
 
-  let meta: any | undefined;
+  let meta: HelpItem | undefined;
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HELP_CONFIG).find((c: any) =>
-      c?.definitions?.find((d: HelpRecord) => d.key === definition)
+    meta = Object.values(HELP_CONFIG).find((c: HelpItem) =>
+      c?.definitions?.find((d: string) => d === definition)
     );
   } else {
     // get all items
-    let _definitions: HelpRecords = [];
-    let _external: HelpExternals = [];
+    let _definitions: Array<string> = [];
+    let _external: ExternalItems = [];
 
-    Object.values(HELP_CONFIG).forEach((c: any) => {
-      _definitions = _definitions.concat([...(c?.definitions || [])]);
-      _external = _external.concat([...(c?.external || [])]);
+    Object.values(HELP_CONFIG).forEach((c: HelpItem) => {
+      _definitions = _definitions.concat([...(c.definitions || [])]);
+      _external = _external.concat([...(c.external || [])]);
     });
     meta = { definitions: _definitions, external: _external };
   }
 
-  // accumulate all definition translations for display
   let definitions = meta?.definitions ?? [];
+
   const activeDefinitions = definitions
-    .filter((d: HelpRecord) => d.key !== definition)
-    .map((d: HelpRecord) => {
-      const { localeKey } = d;
+    .filter((d: string) => d !== definition)
+    .map((d: string) => {
+      const localeKey = stringToKey(d);
 
       return fillVariables(
         {
-          title: tHelp(`${localeKey}.title`),
+          title: t(`definitions.${localeKey}.0`),
           description: i18n.getResource(
             i18n.resolvedLanguage,
             'help',
-            `${localeKey}.description`
+            `definitions.${localeKey}.1`
           ),
         },
         ['title', 'description']
@@ -101,18 +100,18 @@ export const Help = () => {
 
   // get active definiton
   const activeRecord = definition
-    ? definitions.find((d: HelpRecord) => d.key === definition)
+    ? definitions.find((d: string) => d === definition)
     : null;
 
-  let activeDefinition: HelpDefinition | null = null;
+  let activeDefinition: DefinitionWithKeys | null = null;
   if (activeRecord) {
-    const { localeKey } = activeRecord;
+    const localeKey = stringToKey(activeRecord);
 
-    const title = tHelp(`${localeKey}.title`);
+    const title = t(`definitions.${localeKey}.0`);
     const description = i18n.getResource(
       i18n.resolvedLanguage,
       'help',
-      `${localeKey}.description`
+      `definitions.${localeKey}.1`
     );
 
     activeDefinition = fillVariables(
@@ -124,16 +123,18 @@ export const Help = () => {
     );
 
     // filter active definition
-    definitions = definitions.filter((d: HelpRecord) => d.key !== definition);
+    definitions = definitions.filter((d: string) => d !== definition);
   }
 
   // accumulate external resources
   const externals = meta?.external ?? [];
-  const activeExternals = externals.map((e: ExternalRecord) => {
-    const { localeKey, url, website } = e;
+  const activeExternals = externals.map((e: ExternalItem) => {
+    const localeKey = e[0];
+    const url = e[1];
+    const website = e[2];
 
     return {
-      title: tHelp(localeKey),
+      title: t(`externals.${localeKey}`),
       url,
       website,
     };
@@ -157,14 +158,14 @@ export const Help = () => {
               {definition && (
                 <ButtonInvertRounded
                   lg
-                  text={t('library.all_resources')}
+                  text={t('modal.all_resources')}
                   iconLeft={faReplyAll}
                   onClick={() => setDefinition(null)}
                 />
               )}
               <ButtonInvertRounded
                 lg
-                text={t('library.close')}
+                text={t('modal.close')}
                 iconLeft={faTimes}
                 onClick={() => closeHelp()}
               />
@@ -172,7 +173,7 @@ export const Help = () => {
             <h1>
               {activeDefinition
                 ? `${activeDefinition.title}`
-                : `${t('library.help_resources')}`}
+                : `${t('modal.help_resources')}`}
             </h1>
 
             {activeDefinition !== null && (
@@ -180,20 +181,20 @@ export const Help = () => {
                 <Definition
                   open
                   onClick={() => {}}
-                  title={activeDefinition.title}
-                  description={activeDefinition.description}
+                  title={activeDefinition?.title}
+                  description={activeDefinition?.description}
                 />
               </>
             )}
 
-            {activeDefinitions.length > 0 && (
+            {definitions.length > 0 && (
               <>
                 <h3>
-                  {activeDefinition ? `${t('library.related')} ` : ''}
-                  {t('library.definitions')}
+                  {activeDefinition ? `${t('modal.related')} ` : ''}
+                  {t('modal.definitions')}
                 </h3>
                 {activeDefinitions.map(
-                  (item: HelpDefinition, index: number) => (
+                  (item: DefinitionWithKeys, index: number) => (
                     <Definition
                       key={`def_${index}`}
                       onClick={() => {}}
@@ -207,16 +208,18 @@ export const Help = () => {
 
             {activeExternals.length > 0 && (
               <>
-                <h3>{t('library.articles')}</h3>
-                {activeExternals.map((item: HelpExternal, index: number) => (
-                  <External
-                    key={`ext_${index}`}
-                    width="100%"
-                    title={t(item.title)}
-                    url={item.url}
-                    website={item.website}
-                  />
-                ))}
+                <h3>{t('modal.articles')}</h3>
+                {activeExternals.map(
+                  (item: ExternalWithKeys, index: number) => (
+                    <External
+                      key={`ext_${index}`}
+                      width="100%"
+                      title={t(item.title)}
+                      url={item.url}
+                      website={item.website}
+                    />
+                  )
+                )}
               </>
             )}
           </ContentWrapper>

@@ -34,8 +34,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { t: tCommon } = useTranslation('common');
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -63,7 +62,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: tCommon('library.active'),
+            text: t('active'),
           };
         } else if (warning) {
           _pages[i].action = {
@@ -88,7 +87,7 @@ export const Main = () => {
           _pages[i].action = {
             type: 'text',
             status: 'success',
-            text: tCommon('library.active'),
+            text: t('active'),
           };
         } else if (setupPercent > 0 && !inPool) {
           _pages[i].action = {

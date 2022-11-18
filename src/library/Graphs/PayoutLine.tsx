@@ -90,7 +90,6 @@ export const PayoutLine = ({
       x: {
         grid: {
           display: false,
-          drawBorder: false,
         },
         ticks: {
           display: false,
@@ -103,10 +102,11 @@ export const PayoutLine = ({
           display: false,
           beginAtZero: false,
         },
+        border: {
+          display: false,
+        },
         grid: {
-          drawBorder: false,
           color: defaultThemes.graphs.grid[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
       },
     },

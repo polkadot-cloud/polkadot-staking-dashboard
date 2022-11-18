@@ -20,8 +20,8 @@ export const Validators = (props: PageProps) => {
 
   const { isReady } = useApi();
   const { validators } = useValidators();
+  const { t } = useTranslation('base');
   const { t: tCommon } = useTranslation('common');
-  const { t } = useTranslation('pages');
 
   return (
     <>

@@ -15,8 +15,8 @@ export const Favorites = (props: PageProps) => {
   const { page } = props;
   const { key } = page;
   const { favoritesList } = useValidators();
+  const { t } = useTranslation('base');
   const { t: tCommon } = useTranslation('common');
-  const { t } = useTranslation('pages');
 
   const batchKey = 'favorite_validators';
 

@@ -39,7 +39,7 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('base');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -84,22 +84,22 @@ export const SideMenu = () => {
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
         <Main />
-        <Heading title={t('library.support')} minimised={sideMenuMinimised} />
+        <Heading title={t('support')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
             openHelpWith(null, {});
           }}
-          name={t('library.help')}
+          name={t('help')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
             size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
-        <Heading title={t('library.feedback')} minimised={sideMenuMinimised} />
+        <Heading title={t('feedback')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => openModalWith('GoToFeedback')}
-          name={t('library.feedback')}
+          name={t('feedback')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: ForumSVG,
@@ -107,7 +107,7 @@ export const SideMenu = () => {
           }}
         />
         <Separator />
-        <Heading title={t('library.network')} minimised={sideMenuMinimised} />
+        <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
           name={network.name}
           borderColor={borderColor}

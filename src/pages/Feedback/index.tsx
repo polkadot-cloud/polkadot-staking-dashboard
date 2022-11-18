@@ -14,7 +14,7 @@ const BoardToken = '2dda48aa-e149-da7b-f016-98e22279df1e';
 const Feedback = (props: PageProps) => {
   const { page } = props;
   const { key } = page;
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   useEffect(() => {
     (function (w: any, d: any, i: any, s: any) {
