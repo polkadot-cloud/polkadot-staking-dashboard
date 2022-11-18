@@ -1,15 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowDownWideShort, faBan } from '@fortawesome/free-solid-svg-icons';
 import {
-  faBalanceScaleLeft,
-  faClock,
-  faExclamationTriangle,
-  faPercentage,
-  faUserSlash,
-  faUserTag,
-} from '@fortawesome/free-solid-svg-icons';
-import { Category } from 'library/Filter/Category';
+  ButtonInvertRounded,
+  ButtonSecondary,
+} from '@rossbulat/polkadot-dashboard-ui';
 import { Container } from 'library/Filter/Container';
 import { useValidatorFilter } from 'library/Filter/context';
 import { Item } from 'library/Filter/Item';
@@ -34,77 +30,86 @@ export const Filters = () => {
   }, [validatorFilters]);
 
   return (
-    <Container>
-      <Category title="Order">
-        <Item
-          label="Low Commission"
-          icon={faPercentage}
-          transform="grow-4"
-          active={validatorOrder === 'commission'}
-          onClick={() => handleFilter(orderValidators, 'commission')}
-        />
-      </Category>
-      <Category
-        title="Exclude:"
-        buttons={[
-          {
-            title: 'All',
-            onClick: () => toggleAllValidatorFilters(1),
-          },
-          {
-            title: 'Clear',
-            onClick: () => toggleAllValidatorFilters(0),
-            disabled: !validatorFilters.length,
-          },
-        ]}
-      >
-        <Item
-          label="inactive validators"
-          icon={faClock}
-          transform="grow-4"
-          active={validatorFilters?.includes('inactive') ?? false}
+    <>
+      <div style={{ marginBottom: '1.1rem' }}>
+        <ButtonInvertRounded
+          text="Add Filters"
+          marginRight
           onClick={() => {
-            handleFilter(toggleFilterValidators, 'inactive');
+            /* TODO: open filters list */
           }}
         />
-        <Item
-          label="over subscribed"
-          icon={faExclamationTriangle}
-          transform="grow-4"
-          active={validatorFilters?.includes('over_subscribed') ?? false}
-          onClick={() => {
-            handleFilter(toggleFilterValidators, 'over_subscribed');
-          }}
+        <ButtonSecondary
+          text="Apply All"
+          marginRight
+          onClick={() => toggleAllValidatorFilters(1)}
         />
-        <Item
-          label="100% commission"
-          icon={faBalanceScaleLeft}
-          transform="grow-2"
-          active={validatorFilters?.includes('all_commission') ?? false}
+        <ButtonSecondary
+          text="Clear"
           onClick={() => {
-            handleFilter(toggleFilterValidators, 'all_commission');
+            toggleAllValidatorFilters(0);
+            handleFilter(orderValidators, 'default');
           }}
+          disabled={!validatorFilters.length && validatorOrder === 'default'}
         />
-        <Item
-          label="blocked nominations"
-          icon={faUserSlash}
-          transform="grow-1"
-          active={validatorFilters?.includes('blocked_nominations') ?? false}
-          onClick={() => {
-            handleFilter(toggleFilterValidators, 'blocked_nominations');
-          }}
-        />
-        <Item
-          label="missing identity"
-          icon={faUserTag}
-          transform="grow-2"
-          active={validatorFilters?.includes('missing_identity') ?? false}
-          onClick={() => {
-            handleFilter(toggleFilterValidators, 'missing_identity');
-          }}
-        />
-      </Category>
-    </Container>
+      </div>
+      <Container>
+        <div className="items">
+          <Item
+            label="Order: Low Commission"
+            icon={faArrowDownWideShort}
+            transform="grow-2"
+            active={validatorOrder === 'commission'}
+            onClick={() => handleFilter(orderValidators, 'commission')}
+          />
+          <Item
+            label="Inactive Validators"
+            icon={faBan}
+            transform="grow-2"
+            active={validatorFilters?.includes('inactive') ?? false}
+            onClick={() => {
+              handleFilter(toggleFilterValidators, 'inactive');
+            }}
+          />
+          <Item
+            label="Over Subscribed"
+            icon={faBan}
+            transform="grow-2"
+            active={validatorFilters?.includes('over_subscribed') ?? false}
+            onClick={() => {
+              handleFilter(toggleFilterValidators, 'over_subscribed');
+            }}
+          />
+          <Item
+            label="100% Commission"
+            icon={faBan}
+            transform="grow-2"
+            active={validatorFilters?.includes('all_commission') ?? false}
+            onClick={() => {
+              handleFilter(toggleFilterValidators, 'all_commission');
+            }}
+          />
+          <Item
+            label="Blocked Nominations"
+            icon={faBan}
+            transform="grow-2"
+            active={validatorFilters?.includes('blocked_nominations') ?? false}
+            onClick={() => {
+              handleFilter(toggleFilterValidators, 'blocked_nominations');
+            }}
+          />
+          <Item
+            label="Missing Identity"
+            icon={faBan}
+            transform="grow-2"
+            active={validatorFilters?.includes('missing_identity') ?? false}
+            onClick={() => {
+              handleFilter(toggleFilterValidators, 'missing_identity');
+            }}
+          />
+        </div>
+      </Container>
+    </>
   );
 };
 

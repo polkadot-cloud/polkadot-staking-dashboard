@@ -44,8 +44,10 @@ export const ValidatorFilterProvider = ({
         'missing_identity',
         'inactive',
       ]);
+      setValidatorOrder('commission');
     } else {
       setValidatorFilters([]);
+      setValidatorOrder('default');
     }
   };
 

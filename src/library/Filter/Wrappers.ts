@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import {
   borderPrimary,
   buttonPrimaryBackground,
-  buttonSecondaryBackground,
   networkColor,
+  textPrimary,
   textSecondary,
 } from 'theme';
 
@@ -16,8 +16,8 @@ export const Wrapper = styled.div`
   overflow: hidden;
   display: flex;
   flex-wrap: nowrap;
-  height: 65px;
-  margin: 1rem 0;
+  height: 3rem;
+  margin-bottom: 0.5rem;
 
   > .hide-scrollbar {
     position: absolute;
@@ -34,44 +34,13 @@ export const Wrapper = styled.div`
       width: 100%;
       padding-bottom: 3rem;
 
-      > .category {
+      > .items {
         display: flex;
-        flex-flow: column nowrap;
+        flex-flow: row nowrap;
         justify-content: flex-start;
 
-        > .head {
-          color: ${textSecondary};
-          flex: 1;
-          padding-bottom: 0.5rem;
-          padding-left: 0.5rem;
-          font-size: 0.9rem;
-          display: flex;
-          flex-flow: row wrap;
-          align-items: center;
-
-          button {
-            background: ${buttonSecondaryBackground};
-            color: ${textSecondary};
-            font-size: 0.88rem;
-            border-radius: 0.5rem;
-            margin: 0 0.25rem;
-            padding: 0.25rem 0.75rem;
-
-            &:disabled {
-              opacity: 0.5;
-              cursor: default;
-            }
-          }
-        }
-        > .items {
-          flex: 1;
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: flex-start;
-
-          > button {
-            padding: 0 0.25rem;
-          }
+        > button {
+          padding: 0 0.25rem;
         }
       }
     }
@@ -79,21 +48,22 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.div<any>`
-  border: 1px solid ${(props) => (props.active ? networkColor : borderPrimary)};
-  border-radius: 0.7rem;
+  border: 1px solid ${(props) => (props.active ? textSecondary : borderPrimary)};
+  border-radius: 1.5rem;
   display: flex;
   flex-flow: row nowrap;
   position: relative;
-  padding: 0.65rem 0.85rem;
+  padding: 0.6rem 0.95rem;
   margin-right: 1rem;
   align-items: center;
   width: max-content;
+  opacity: ${(props) => (props.active ? 1 : 0.8)};
 
   &:last-child {
     margin-right: 0;
   }
   .icon {
-    color: ${(props) => (props.active ? networkColor : textSecondary)};
+    color: ${(props) => (props.active ? textPrimary : textSecondary)};
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -101,7 +71,7 @@ export const ItemWrapper = styled.div<any>`
     margin-right: 0.75rem;
   }
   p {
-    color: ${(props) => (props.active ? networkColor : textSecondary)};
+    color: ${(props) => (props.active ? textPrimary : textSecondary)};
     font-size: 0.9rem;
     margin: 0;
     text-align: left;

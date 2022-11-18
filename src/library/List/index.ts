@@ -128,10 +128,14 @@ export const List = styled.div<ListProps>`
     flex-flow: row wrap;
 
     > input {
-      border: 1px solid ${borderPrimary};
+      border: 1.5px solid ${borderPrimary};
       border-radius: 1.75rem;
-      padding: 0.85rem 1.25rem;
-      font-size: 1.25rem;
+      padding: 0.75rem 1.25rem;
+      font-size: 1.15rem;
+      font-variation-settings: 'wght' 525;
+      &:focus {
+        border-width: 1.5px;
+      }
     }
   }
 
