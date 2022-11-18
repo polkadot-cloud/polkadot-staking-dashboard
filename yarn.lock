@@ -1246,38 +1246,38 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fortawesome/fontawesome-common-types@6.2.0":
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.2.0.tgz#76467a94aa888aeb22aafa43eb6ff889df3a5a7f"
-  integrity sha512-rBevIsj2nclStJ7AxTdfsa3ovHb1H+qApwrxcTVo+NNdeJiB9V75hsKfrkG5AwNcRUNxrPPiScGYCNmLMoh8pg==
+"@fortawesome/fontawesome-common-types@6.2.1":
+  version "6.2.1"
+  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.2.1.tgz#411e02a820744d3f7e0d8d9df9d82b471beaa073"
+  integrity sha512-Sz07mnQrTekFWLz5BMjOzHl/+NooTdW8F8kDQxjWwbpOJcnoSg4vUDng8d/WR1wOxM0O+CY9Zw0nR054riNYtQ==
 
-"@fortawesome/fontawesome-svg-core@6.2.0":
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.2.0.tgz#11856eaf4dd1d865c442ddea1eed8ee855186ba2"
-  integrity sha512-Cf2mAAeMWFMzpLC7Y9H1I4o3wEU+XovVJhTiNG8ZNgSQj53yl7OCJaS80K4YjrABWZzbAHVaoHE1dVJ27AAYXw==
+"@fortawesome/fontawesome-svg-core@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.2.1.tgz#e87e905e444b5e7b715af09b64d27b53d4c8f9d9"
+  integrity sha512-HELwwbCz6C1XEcjzyT1Jugmz2NNklMrSPjZOWMlc+ZsHIVk+XOvOXLGGQtFBwSyqfJDNgRq4xBCwWOaZ/d9DEA==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.2.0"
+    "@fortawesome/fontawesome-common-types" "6.2.1"
 
-"@fortawesome/free-brands-svg-icons@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.2.0.tgz#ce072179677f9b5d6767f918cfbf296f357cc1d0"
-  integrity sha512-fm1y4NyZ2qKYNmYhdMz9VAWRw1Et7PMHNunSw3W0SVAwKwv6o0qiJworLH3Y9SnmhHzAymXJwCX1op22FFvGiA==
+"@fortawesome/free-brands-svg-icons@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.npmjs.org/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.2.1.tgz#04a6d6f7898f7ef392aba7a65030a584d4f4c84f"
+  integrity sha512-L8l4MfdHPmZlJ72PvzdfwOwbwcCAL0vx48tJRnI6u1PJXh+j2f3yDoKyQgO3qjEsgD5Fr2tQV/cPP8F/k6aUig==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.2.0"
+    "@fortawesome/fontawesome-common-types" "6.2.1"
 
-"@fortawesome/free-regular-svg-icons@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.2.0.tgz#947e1f03be17da3a60bfeb2666b5348b19448ce2"
-  integrity sha512-M1dG+PAmkYMTL9BSUHFXY5oaHwBYfHCPhbJ8qj8JELsc9XCrUJ6eEHWip4q0tE+h9C0DVyFkwIM9t7QYyCpprQ==
+"@fortawesome/free-regular-svg-icons@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.npmjs.org/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.2.1.tgz#650e56d937755a8341f2eef258ecb6f95458820f"
+  integrity sha512-wiqcNDNom75x+pe88FclpKz7aOSqS2lOivZeicMV5KRwOAeypxEYWAK/0v+7r+LrEY30+qzh8r2XDaEHvoLsMA==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.2.0"
+    "@fortawesome/fontawesome-common-types" "6.2.1"
 
-"@fortawesome/free-solid-svg-icons@6.2.0":
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.2.0.tgz#8dcde48109354fd7a5ece8ea48d678bb91d4b5f0"
-  integrity sha512-UjCILHIQ4I8cN46EiQn0CZL/h8AwCGgR//1c4R96Q5viSRwuKVo0NdQEc4bm+69ZwC0dUvjbDqAHF1RR5FA3XA==
+"@fortawesome/free-solid-svg-icons@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.2.1.tgz#2290ea5adcf1537cbd0c43de6feb38af02141d27"
+  integrity sha512-oKuqrP5jbfEPJWTij4sM+/RvgX+RMFwx3QZCZcK9PrBDgxC35zuc7AOFsyMjMd/PIFPeB2JxyqDr5zs/DZFPPw==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "6.2.0"
+    "@fortawesome/fontawesome-common-types" "6.2.1"
 
 "@fortawesome/react-fontawesome@^0.2.0":
   version "0.2.0"
@@ -1975,20 +1975,7 @@
     ed2curve "^0.3.0"
     tweetnacl "^1.0.3"
 
-"@polkadot/util@10.1.12":
-  version "10.1.12"
-  resolved "https://registry.yarnpkg.com/@polkadot/util/-/util-10.1.12.tgz#9652de84c87b0b5b9b50767cd4d93f5f2d70a074"
-  integrity sha512-bOz1WqDFzIgkTpT6oRhAdXKqETr2GffZdRlYqyOvP1ATAEa48/sRgzIvg7WTiI68D8By3fJmKuA+ggX3YrNF/w==
-  dependencies:
-    "@babel/runtime" "^7.20.1"
-    "@polkadot/x-bigint" "10.1.12"
-    "@polkadot/x-global" "10.1.12"
-    "@polkadot/x-textdecoder" "10.1.12"
-    "@polkadot/x-textencoder" "10.1.12"
-    "@types/bn.js" "^5.1.1"
-    bn.js "^5.2.1"
-
-"@polkadot/util@^10.1.12":
+"@polkadot/util@10.1.12", "@polkadot/util@^10.1.12":
   version "10.1.12"
   resolved "https://registry.npmjs.org/@polkadot/util/-/util-10.1.12.tgz#9652de84c87b0b5b9b50767cd4d93f5f2d70a074"
   integrity sha512-bOz1WqDFzIgkTpT6oRhAdXKqETr2GffZdRlYqyOvP1ATAEa48/sRgzIvg7WTiI68D8By3fJmKuA+ggX3YrNF/w==
@@ -2153,10 +2140,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.17":
-  version "0.1.0-alpha.17"
-  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.17.tgz#a7636eeb9f2f667995fa794088f2a8acd48cf76f"
-  integrity sha512-9oJxj8vUm9Mu7X7IQvs9PdAvDzkyG/j6QJ7YGfcfxfJ6YDBug5SWt48r07lJghEf2EzGzuYzNr0CcFsjEbD5bA==
+"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.19":
+  version "0.1.0-alpha.19"
+  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.19.tgz#8205bdc1285c2960d73be9b94d236d253e4090ce"
+  integrity sha512-+AQmCdzqWE7G4eL+zdI4A4MFiwsbbQhVColkBHjxv09AuWgqvZShzWOmsd+7snFeWdIlyie7w6ewmpvnimvKng==
 
 "@rushstack/eslint-patch@^1.1.0":
   version "1.2.0"
@@ -2637,10 +2624,10 @@
   resolved "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react-dom@^18.0.0", "@types/react-dom@^18.0.8":
-  version "18.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.8.tgz#d2606d855186cd42cc1b11e63a71c39525441685"
-  integrity sha512-C3GYO0HLaOkk9dDAz3Dl4sbe4AKUGTCfFIZsz3n/82dPNN8Du533HzKatDxeUYWu24wJgMP1xICqkWk1YOLOIw==
+"@types/react-dom@^18.0.0", "@types/react-dom@^18.0.9":
+  version "18.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.9.tgz#ffee5e4bfc2a2f8774b15496474f8e7fe8d0b504"
+  integrity sha512-qnVvHxASt/H7i+XG1U1xMiY5t+IHcPGUK7TDMDzom08xa7e86eCeKOiLZezwCKVxJn6NEiiy2ekgX8aQssjIKg==
   dependencies:
     "@types/react" "*"
 
@@ -2658,10 +2645,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-scroll@^1.8.3":
-  version "1.8.4"
-  resolved "https://registry.npmjs.org/@types/react-scroll/-/react-scroll-1.8.4.tgz#2b6258fb34104d3fcc7a22e8eceaadc669ba3ad1"
-  integrity sha512-DpHA9PYw42/rBrfKbGE/kAEvHRfyDL/ACfKB/ORWUYuCLi/yGrntxSzYXmg/7TLgQsJ5ma13GCDOzFSOz+8XOA==
+"@types/react-scroll@^1.8.5":
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.8.5.tgz#be0803e62a40ba3ffbe4dcc7348cea32d8a87f41"
+  integrity sha512-+adEt41hQHMX4aoBOD9Y336QzQzAtlFXTrsFWToS+efgqsYXUOo0JKLeI0O5GLE50Peap6DsbUQRK6gnv8t6wQ==
   dependencies:
     "@types/react" "*"
 
@@ -3835,12 +3822,12 @@ char-regex@^2.0.0:
   resolved "https://registry.npmjs.org/char-regex/-/char-regex-2.0.1.tgz#6dafdb25f9d3349914079f010ba8d0e6ff9cd01e"
   integrity sha512-oSvEeo6ZUD7NepqAat3RqoucZ5SeqLJgOvVIwkafu6IP3V0pO38s/ypdVUmDDK6qIIHNlYHJAKX9E7R7HoKElw==
 
-chart.js@^3.8.0:
-  version "3.9.1"
-  resolved "https://registry.npmjs.org/chart.js/-/chart.js-3.9.1.tgz#3abf2c775169c4c71217a107163ac708515924b8"
-  integrity sha512-Ro2JbLmvg83gXF5F4sniaQ+lTbSv18E+TIf2cOeiH1Iqd2PGFOtem+DUufMZsCJwFE7ywPOpfXFBwRTGq7dh6w==
+chart.js@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-4.0.1.tgz#93d5d50ac222a5b3b6ac7488e82e1553ac031592"
+  integrity sha512-5/8/9eBivwBZK81mKvmIwTb2Pmw4D/5h1RK9fBWZLLZ8mCJ+kfYNmV9rMrGoa5Hgy2/wVDBMLSUDudul2/9ihA==
 
-chartjs-plugin-datalabels@^2.0.0:
+chartjs-plugin-datalabels@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/chartjs-plugin-datalabels/-/chartjs-plugin-datalabels-2.1.0.tgz#d42f05a0481831b2d79fb8c0521f8fa56e1e6db1"
   integrity sha512-WA6R4saSlY6mnyX78SkbSo2gGc+cj87lFi5zBrsjjYxE76JgXyxHa1OTodVCzRPoqeYJqSEOffeJ/897kRHR6w==
@@ -5547,10 +5534,10 @@ fraction.js@^4.2.0:
   resolved "https://registry.npmjs.org/fraction.js/-/fraction.js-4.2.0.tgz#448e5109a313a3527f5a3ab2119ec4cf0e0e2950"
   integrity sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==
 
-framer-motion@^7.6.6:
-  version "7.6.6"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-7.6.6.tgz#50e0d3bc29b899a79dbafb6085e398fb53a2f04a"
-  integrity sha512-7ti5mEzhTRBFCMlKs8Zxu9dWtVattpj2jPCNc4jaz4d7bDFekClALaBzmi1pGOKzsOWJsKMeV5ckIkD1DLI9lw==
+framer-motion@^7.6.7:
+  version "7.6.7"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-7.6.7.tgz#4ab0f33d0b77b4fe2289ce8b7c5cf6448d84f23d"
+  integrity sha512-vEGsjXygf4qSmgXXsCT1FC56DjiZau9tSQTCchwAP2mOHnYHUy5gbthc4RXFWJh4Z/gFtqE8bzEmjahwOrfT7w==
   dependencies:
     "@motionone/dom" "10.13.1"
     framesync "6.1.2"
@@ -8678,10 +8665,10 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
-react-chartjs-2@^4.2.0:
-  version "4.3.1"
-  resolved "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-4.3.1.tgz#9941e7397fb963f28bb557addb401e9ff96c6681"
-  integrity sha512-5i3mjP6tU7QSn0jvb8I4hudTzHJqS8l00ORJnVwI2sYu0ihpj83Lv2YzfxunfxTZkscKvZu2F2w9LkwNBhj6xA==
+react-chartjs-2@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-5.0.1.tgz#7ef7dd57441903e8d34e1d06a1aead1095d0bca8"
+  integrity sha512-u38C9OxynlNCBp+79grgXRs7DSJ9w8FuQ5/HO5FbYBbri8HSZW+9SWgjVshLkbXBfXnMGWakbHEtvN0nL2UG7Q==
 
 react-content-loader@^6.2.0:
   version "6.2.0"
@@ -10041,10 +10028,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.5.5:
-  version "4.8.4"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.8.4.tgz#c464abca159669597be5f96b8943500b238e60e6"
-  integrity sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==
+typescript@^4.9.3:
+  version "4.9.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.3.tgz#3aea307c1746b8c384435d8ac36b8a2e580d85db"
+  integrity sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
