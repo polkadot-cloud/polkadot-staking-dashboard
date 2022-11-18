@@ -225,3 +225,9 @@ export const extractUrlValue = (key: string, url: string) => {
   const match = url.match(`[?&]${key}=([^&]+)`);
   return match ? match[1] : null;
 };
+
+// converts a string of text to lowercase and replaces spaces with underscores
+export const stringToKey = (str: string) => {
+  if (!str) return '';
+  return str.toLowerCase().replace(/ /g, '_');
+};
