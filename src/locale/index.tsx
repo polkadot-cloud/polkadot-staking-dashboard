@@ -17,7 +17,7 @@ const fallbackResources = { ...baseEn, ...helpEn, ...tipsEn };
 
 // check app version, wipe `lng_resources` if version is different.
 const localAppVersion = localStorage.getItem('app_version');
-if (localAppVersion !== AppVersion) {
+if (localAppVersion !== AppVersion || process.env.NODE_ENV === 'development') {
   localStorage.removeItem('lng_resources');
   // localisation is currently the only feature that uses AppVersion.
   // if more features require AppVersion in the future, this should be

@@ -41,7 +41,7 @@ export const Tips = () => {
   const { getTransferOptions } = useTransferOptions();
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
-  const { t, i18n } = useTranslation('tips');
+  const { t, i18n } = useTranslation();
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -151,8 +151,8 @@ export const Tips = () => {
     return fillVariables(
       {
         ...i,
-        title: t(`${id}.title`),
-        subtitle: t(`${id}.subtitle`),
+        title: t(`${id}.title`, { ns: 'tips' }),
+        subtitle: t(`${id}.subtitle`, { ns: 'tips' }),
         description: i18n.getResource(
           i18n.resolvedLanguage,
           'tips',
@@ -179,7 +179,7 @@ export const Tips = () => {
     <CardWrapper>
       <CardHeaderWrapper withAction>
         <h4>
-          Tips
+          {t('tips', { ns: 'base' })}
           <OpenHelpIcon helpKey="Dashboard Tips" />
         </h4>
         <div>
