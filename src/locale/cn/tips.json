@@ -1,5 +1,11 @@
 {
   "tips": {
+    "module": {
+      "tips": "提示",
+      "one_moment": "请稍等...",
+      "syncing_with": "同步 {{network}}",
+      "more": "更多"
+    },
     "connect_extensions": [
       "连接扩展",
       "连接您的帐户,开始使用Polkadot staking.",

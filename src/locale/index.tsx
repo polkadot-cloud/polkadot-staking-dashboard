@@ -6,15 +6,14 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
-import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
 
 // the supported namespaces.
-export const lngNamespaces = ['base', 'help', 'tips', 'pages'];
+export const lngNamespaces = ['base', 'help', 'tips'];
 
 // default structure of language resources.
-const fallbackResources = { ...baseEn, ...helpEn, ...pagesEn, ...tipsEn };
+const fallbackResources = { ...baseEn, ...helpEn, ...tipsEn };
 
 // check app version, wipe `lng_resources` if version is different.
 const localAppVersion = localStorage.getItem('app_version');

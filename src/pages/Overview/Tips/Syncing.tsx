@@ -11,7 +11,7 @@ export const Syncing = () => {
   const {
     network: { name },
   } = useApi();
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('tips');
 
   const animateOptions = {
     loop: true,
@@ -46,10 +46,10 @@ export const Syncing = () => {
           </section>
           <section>
             <div className="title">
-              <h3>{t('overview.syncing_with', { network: name })}</h3>
+              <h3>{t('module.syncing_with', { network: name })}</h3>
             </div>
             <div className="desc">
-              <h4>{t('overview.one_moment')}</h4>
+              <h4>{t('module.one_moment')}</h4>
             </div>
           </section>
         </ItemInnerWrapper>
