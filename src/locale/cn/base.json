@@ -13,10 +13,6 @@
     "help": "帮助",
     "support": "支持",
     "inactive": "未激活",
-    "active": "激活",
-    "tips": "提示",
-    "one_moment_please": "请稍等...",
-    "syncing_with": "同步",
-    "more": "更多"
+    "active": "激活"
   }
 }

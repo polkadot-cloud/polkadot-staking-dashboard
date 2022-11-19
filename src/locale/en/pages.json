@@ -1,0 +1,10 @@
+{
+  "pages": {
+    "overview": {
+      "tips": "Tips",
+      "one_moment_please": "One moment please...",
+      "syncing_with": "Syncing with {{network}}",
+      "more": "More"
+    }
+  }
+}
