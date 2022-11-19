@@ -141,7 +141,7 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.segment));
+  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.s));
 
   items = items.map((i: any) => {
     const { id } = i;
