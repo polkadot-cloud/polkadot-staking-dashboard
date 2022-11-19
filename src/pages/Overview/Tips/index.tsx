@@ -151,13 +151,9 @@ export const Tips = () => {
     return fillVariables(
       {
         ...i,
-        title: t(`${id}.title`, { ns: 'tips' }),
-        subtitle: t(`${id}.subtitle`, { ns: 'tips' }),
-        description: i18n.getResource(
-          i18n.resolvedLanguage,
-          'tips',
-          `${id}.description`
-        ),
+        title: t(`${id}.0`, { ns: 'tips' }),
+        subtitle: t(`${id}.1`, { ns: 'tips' }),
+        description: i18n.getResource(i18n.resolvedLanguage, 'tips', `${id}.2`),
       },
       ['title', 'subtitle', 'description']
     );
