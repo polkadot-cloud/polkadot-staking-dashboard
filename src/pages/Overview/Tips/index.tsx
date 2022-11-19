@@ -146,17 +146,17 @@ export const Tips = () => {
   );
 
   items = items.map((i: any) => {
-    const { localeKey } = i;
+    const { id } = i;
 
     return fillVariables(
       {
         ...i,
-        title: t(`${localeKey}.title`),
-        subtitle: t(`${localeKey}.subtitle`),
+        title: t(`${id}.title`),
+        subtitle: t(`${id}.subtitle`),
         description: i18n.getResource(
           i18n.resolvedLanguage,
           'tips',
-          `${localeKey}.description`
+          `${id}.description`
         ),
       },
       ['title', 'subtitle', 'description']

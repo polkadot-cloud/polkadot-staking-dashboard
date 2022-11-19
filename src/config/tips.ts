@@ -10,7 +10,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 1,
     },
-    localeKey: 'connect_extensions',
     icon: infoJson,
   },
   {
@@ -18,7 +17,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 2,
     },
-    localeKey: 'recommended_nominator',
     icon: infoJson,
   },
   {
@@ -26,7 +24,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 3,
     },
-    localeKey: 'recommended_join_pool',
     icon: infoJson,
   },
   {
@@ -34,7 +31,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 4,
     },
-    localeKey: 'how_to_stake',
     icon: helpCenterJson,
   },
   {
@@ -42,7 +38,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 5,
     },
-    localeKey: 'managing_nominations',
     icon: infoJson,
   },
   {
@@ -50,7 +45,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 6,
     },
-    localeKey: 'monitoring_pool',
     icon: infoJson,
   },
   {
@@ -58,7 +52,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 6,
     },
-    localeKey: 'join_another_pool',
     icon: infoJson,
   },
   {
@@ -66,7 +59,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 7,
     },
-    localeKey: 'keep_pool_nominating',
     icon: infoJson,
   },
   {
@@ -74,7 +66,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 8,
     },
-    localeKey: 'reviewing_payouts',
     icon: infoJson,
   },
   {
@@ -82,7 +73,6 @@ export const TIPS_CONFIG = [
     meta: {
       segment: 8,
     },
-    localeKey: 'understanding_validator_performance',
     icon: infoJson,
   },
 ];

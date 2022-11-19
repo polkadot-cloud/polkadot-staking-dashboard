@@ -59,16 +59,16 @@ export const Tips = () => {
 
   // fill placeholder variables
   if (activeTip) {
-    const { localeKey } = activeTip;
+    const { id } = activeTip;
 
     activeTip = fillVariables(
       {
-        title: t(`${localeKey}.title`, { ns: 'tips' }),
-        subtitle: t(`${localeKey}.subtitle`, { ns: 'tips' }),
+        title: t(`${id}.title`, { ns: 'tips' }),
+        subtitle: t(`${id}.subtitle`, { ns: 'tips' }),
         description: i18n.getResource(
           i18n.resolvedLanguage,
           'tips',
-          `${localeKey}.description`
+          `${id}.description`
         ),
       },
       ['title', 'subtitle', 'description']
