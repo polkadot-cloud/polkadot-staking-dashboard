@@ -22,6 +22,7 @@ import useFillVariables from 'library/Hooks/useFillVariables';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
@@ -40,6 +41,7 @@ export const Tips = () => {
   const { getTransferOptions } = useTransferOptions();
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
+  const { t, i18n } = useTranslation('tips');
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -139,12 +141,27 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((t: AnyJson) =>
-    segments.includes(t.meta.segment)
+  let items = TIPS_CONFIG.filter((i: AnyJson) =>
+    segments.includes(i.meta.segment)
   );
-  items = items.map((i: AnyJson) =>
-    fillVariables(i, ['title', 'subtitle', 'description'])
-  );
+
+  items = items.map((i: any) => {
+    const { localeKey } = i;
+
+    return fillVariables(
+      {
+        ...i,
+        title: t(`${localeKey}.title`),
+        subtitle: t(`${localeKey}.subtitle`),
+        description: i18n.getResource(
+          i18n.resolvedLanguage,
+          'tips',
+          `${localeKey}.description`
+        ),
+      },
+      ['title', 'subtitle', 'description']
+    );
+  });
 
   // determine items to be displayed
   const endItem = networkSyncing

@@ -6,16 +6,17 @@ import { useTips } from 'contexts/Tips';
 import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { Dismiss } from './Items/Dismiss';
 import { Tip } from './Items/Tip';
-
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Tips = () => {
   const { setStatus, status, tip, closeTip, dismissOpen } = useTips();
   const { fillVariables } = useFillVariables();
   const controls = useAnimation();
+  const { t, i18n } = useTranslation('tips');
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -57,9 +58,24 @@ export const Tips = () => {
     : null;
 
   // fill placeholder variables
-  activeTip = activeTip
-    ? fillVariables(activeTip, ['title', 'subtitle', 'description'])
-    : null;
+  if (activeTip) {
+    const { localeKey } = activeTip;
+
+    activeTip = fillVariables(
+      {
+        title: t(`${localeKey}.title`),
+        subtitle: t(`${localeKey}.subtitle`),
+        description: i18n.getResource(
+          i18n.resolvedLanguage,
+          'tips',
+          `${localeKey}.description`
+        ),
+      },
+      ['title', 'subtitle', 'description']
+    );
+  } else {
+    activeTip = null;
+  }
 
   return (
     <Wrapper
