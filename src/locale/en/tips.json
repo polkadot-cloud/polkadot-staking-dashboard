@@ -4,7 +4,14 @@
       "tips": "Tips",
       "one_moment": "One moment please...",
       "syncing_with": "Syncing with {{network}}",
-      "more": "More"
+      "more": "More",
+      "close": "Close",
+      "dismiss_tips": "Dismiss Tips",
+      "dismiss_result": "Dismissing tips will remove them from your overview.",
+      "re-enable": "Tips can be turned re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.",
+      "disable_dashboard_tips": "Disable Dashboard Tips",
+      "cancel": "Cancel",
+      "of": "of"
     },
     "connect_extensions": [
       "Connect Extensions",

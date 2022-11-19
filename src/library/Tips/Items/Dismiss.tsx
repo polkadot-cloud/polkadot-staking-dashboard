@@ -7,33 +7,35 @@ import {
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useTips } from 'contexts/Tips';
 import { useUi } from 'contexts/UI';
+import { useTranslation } from 'react-i18next';
 import { TipWrapper } from '../Wrappers';
 
 export const Dismiss = () => {
   const { closeTip } = useTips();
   const { toggleService } = useUi();
+  const { t } = useTranslation('tips');
 
   return (
     <TipWrapper>
       <div>
-        <h1>Dismiss Tips</h1>
+        <h1>{t('module.dismiss_tips')}</h1>
       </div>
       <div>
-        <h4>Dismissing tips will remove them from your overview.</h4>
-        <h4>
-          Tips can be turned re-enabled from dashboard settings, that can be
-          accessed via the cog icon in the bottom left corner of the side menu.
-        </h4>
+        <h4>{t('module.dismiss_result')}</h4>
+        <h4>{t('module.re-enable')}</h4>
         <div className="buttons">
           <ButtonPrimary
             marginRight
-            text="Disable Dashboard Tips"
+            text={t('module.disable_dashboard_tips')}
             onClick={() => {
               toggleService('tips');
               closeTip();
             }}
           />
-          <ButtonSecondary text="Cancel" onClick={() => closeTip()} />
+          <ButtonSecondary
+            text={t('module.cancel')}
+            onClick={() => closeTip()}
+          />
         </div>
       </div>
     </TipWrapper>

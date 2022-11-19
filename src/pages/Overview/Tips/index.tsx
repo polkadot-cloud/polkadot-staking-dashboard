@@ -201,7 +201,7 @@ export const Tips = () => {
               </span>
               {totalPages > 1 && (
                 <>
-                  of <span>{items.length}</span>
+                  {t('module.of', { ns: 'tips' })} <span>{items.length}</span>
                 </>
               )}
             </h4>
