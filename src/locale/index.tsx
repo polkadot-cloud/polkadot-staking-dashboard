@@ -5,6 +5,7 @@ import { AppVersion, DefaultLocale } from 'consts';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import baseEn from './en/base.json';
+import commonEn from './en/common.json';
 import helpEn from './en/help.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
@@ -13,7 +14,7 @@ import { doDynamicImport, getActiveLanguage, getResources } from './utils';
 export const lngNamespaces = ['base', 'help', 'tips'];
 
 // default structure of language resources.
-const fallbackResources = { ...baseEn, ...helpEn, ...tipsEn };
+const fallbackResources = { ...baseEn, ...commonEn, ...helpEn, ...tipsEn };
 
 // check app version, wipe `lng_resources` if version is different.
 const localAppVersion = localStorage.getItem('app_version');
