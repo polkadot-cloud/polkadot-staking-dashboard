@@ -2,7 +2,7 @@
   "pages": {
     "overview": {
       "tips": "提示",
-      "one_moment_please": "请稍等...",
+      "one_moment": "请稍等...",
       "syncing_with": "同步 {{network}}",
       "more": "更多"
     }

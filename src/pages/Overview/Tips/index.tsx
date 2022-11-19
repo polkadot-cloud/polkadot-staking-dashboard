@@ -173,7 +173,7 @@ export const Tips = () => {
     <CardWrapper>
       <CardHeaderWrapper withAction>
         <h4>
-          {t('tips', { ns: 'base' })}
+          {t('overview.tips', { ns: 'pages' })}
           <OpenHelpIcon helpKey="Dashboard Tips" />
         </h4>
         <div>
