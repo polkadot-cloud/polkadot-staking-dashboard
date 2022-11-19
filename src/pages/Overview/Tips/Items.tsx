@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTips } from 'contexts/Tips';
 import { motion, useAnimationControls } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
@@ -55,6 +56,7 @@ export const ItemsInner = ({ items, page }: any) => {
 
 const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
   const { openTipWith } = useTips();
+  const { t } = useTranslation('tips');
 
   const [isStopped, setIsStopped] = useState(true);
 
@@ -127,7 +129,7 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
                 type="button"
                 className="more"
               >
-                More
+                {t('module.more')}
                 <FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
               </motion.button>
             </h4>
