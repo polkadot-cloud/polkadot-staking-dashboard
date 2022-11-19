@@ -9,15 +9,15 @@ import { TipWrapper } from '../Wrappers';
 
 export const Tip = (props: any) => {
   const { title, description } = props;
-  const { t } = useTranslation('common');
   const { closeTip } = useTips();
+  const { t } = useTranslation('tips');
 
   return (
     <>
       <TipWrapper>
         <div className="close-button">
           <ButtonInvertRounded
-            text={t('library.close')}
+            text={t('module.close')}
             iconLeft={faTimes}
             iconTransform="grow-2"
             onClick={() => closeTip()}

@@ -56,7 +56,8 @@ export const ItemsInner = ({ items, page }: any) => {
 
 const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
   const { openTipWith } = useTips();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('tips');
+
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
@@ -128,7 +129,7 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
                 type="button"
                 className="more"
               >
-                {t('pages.overview.more')}
+                {t('module.more')}
                 <FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
               </motion.button>
             </h4>

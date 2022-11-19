@@ -120,7 +120,7 @@ export const BalanceGraph = () => {
         },
         callbacks: {
           label: (context: any) => {
-            return `${context.label}: ${
+            return `${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)
             } ${network.unit}`;
           },

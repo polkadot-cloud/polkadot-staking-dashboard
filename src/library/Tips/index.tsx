@@ -16,7 +16,7 @@ export const Tips = () => {
   const { setStatus, status, tip, closeTip, dismissOpen } = useTips();
   const { fillVariables } = useFillVariables();
   const controls = useAnimation();
-  const { t: tTips, i18n } = useTranslation('tips');
+  const { t, i18n } = useTranslation();
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -59,17 +59,13 @@ export const Tips = () => {
 
   // fill placeholder variables
   if (activeTip) {
-    const { localeKey } = activeTip;
+    const { id } = activeTip;
 
     activeTip = fillVariables(
       {
-        title: tTips(`${localeKey}.title`),
-        subtitle: tTips(`${localeKey}.subtitle`),
-        description: i18n.getResource(
-          i18n.resolvedLanguage,
-          'tips',
-          `${localeKey}.description`
-        ),
+        title: t(`${id}.0`, { ns: 'tips' }),
+        subtitle: t(`${id}.1`, { ns: 'tips' }),
+        description: i18n.getResource(i18n.resolvedLanguage, 'tips', `${id}.2`),
       },
       ['title', 'subtitle', 'description']
     );

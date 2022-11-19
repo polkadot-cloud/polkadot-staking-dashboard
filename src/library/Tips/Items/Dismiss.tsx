@@ -13,26 +13,27 @@ import { TipWrapper } from '../Wrappers';
 export const Dismiss = () => {
   const { closeTip } = useTips();
   const { toggleService } = useUi();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('tips');
+
   return (
     <TipWrapper>
       <div>
-        <h1>{t('library.dismiss_tips')}</h1>
+        <h1>{t('module.dismiss_tips')}</h1>
       </div>
       <div>
-        <h4>{t('library.dismiss_result')}</h4>
-        <h4>{t('library.re-enable')}</h4>
+        <h4>{t('module.dismiss_result')}</h4>
+        <h4>{t('module.re-enable')}</h4>
         <div className="buttons">
           <ButtonPrimary
             marginRight
-            text={t('library.disable_dashboard_tips')}
+            text={t('module.disable_dashboard_tips')}
             onClick={() => {
               toggleService('tips');
               closeTip();
             }}
           />
           <ButtonSecondary
-            text={t('library.cancel')}
+            text={t('module.cancel')}
             onClick={() => closeTip()}
           />
         </div>

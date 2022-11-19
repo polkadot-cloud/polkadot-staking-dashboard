@@ -41,8 +41,7 @@ export const Tips = () => {
   const { getTransferOptions } = useTransferOptions();
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
-  const { t } = useTranslation('common');
-  const { t: tTips, i18n } = useTranslation('tips');
+  const { t, i18n } = useTranslation();
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -142,23 +141,17 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((i: AnyJson) =>
-    segments.includes(i.meta.segment)
-  );
+  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.s));
 
   items = items.map((i: any) => {
-    const { localeKey } = i;
+    const { id } = i;
 
     return fillVariables(
       {
         ...i,
-        title: tTips(`${localeKey}.title`),
-        subtitle: tTips(`${localeKey}.subtitle`),
-        description: i18n.getResource(
-          i18n.resolvedLanguage,
-          'tips',
-          `${localeKey}.description`
-        ),
+        title: t(`${id}.0`, { ns: 'tips' }),
+        subtitle: t(`${id}.1`, { ns: 'tips' }),
+        description: i18n.getResource(i18n.resolvedLanguage, 'tips', `${id}.2`),
       },
       ['title', 'subtitle', 'description']
     );
@@ -180,7 +173,7 @@ export const Tips = () => {
     <CardWrapper>
       <CardHeaderWrapper withAction>
         <h4>
-          {t('pages.overview.tips')}
+          {t('module.tips', { ns: 'tips' })}
           <OpenHelpIcon helpKey="Dashboard Tips" />
         </h4>
         <div>
@@ -208,7 +201,7 @@ export const Tips = () => {
               </span>
               {totalPages > 1 && (
                 <>
-                  of <span>{items.length}</span>
+                  {t('module.of', { ns: 'tips' })} <span>{items.length}</span>
                 </>
               )}
             </h4>
