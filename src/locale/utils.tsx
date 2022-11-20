@@ -3,6 +3,7 @@
 
 import { DefaultLocale } from 'consts';
 import moment from 'moment';
+import 'moment/min/locales';
 import { AnyJson } from 'types';
 import { i18ToMomentLocale, lngNamespaces } from './index';
 

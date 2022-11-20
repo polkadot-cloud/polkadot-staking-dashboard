@@ -4,7 +4,6 @@
 import { AppVersion, DefaultLocale } from 'consts';
 import i18next from 'i18next';
 import moment from 'moment';
-import 'moment/min/locales';
 import { initReactI18next } from 'react-i18next';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
