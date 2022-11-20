@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import { MaybeString } from 'types';
 import { defaultOverlayContext } from './defaults';
 import { OverlayContextInterface } from './types';
 
@@ -19,14 +18,13 @@ export const OverlayProvider = ({
 }) => {
   const [state, setState] = useState<any>({
     status: 0,
-    overlay: null,
-    config: {},
+    Overlay: null,
   });
 
-  const setOverlay = (overlay: MaybeString) => {
+  const setOverlay = (Overlay: any) => {
     const _state = {
       ...state,
-      overlay,
+      Overlay,
     };
     setState(_state);
   };
@@ -40,12 +38,11 @@ export const OverlayProvider = ({
     setState(_state);
   };
 
-  const openOverlayWith = (overlay: MaybeString, _config: any = {}) => {
+  const openOverlayWith = (Overlay: any) => {
     setState({
       ...state,
-      overlay,
+      Overlay,
       status: 1,
-      config: _config,
     });
   };
 
@@ -53,7 +50,7 @@ export const OverlayProvider = ({
     setState({
       ...state,
       status: 0,
-      overlay: null,
+      Overlay: null,
     });
   };
 
@@ -65,7 +62,7 @@ export const OverlayProvider = ({
         setStatus,
         setOverlay,
         status: state.status,
-        overlay: state.overlay,
+        Overlay: state.Overlay,
       }}
     >
       {children}

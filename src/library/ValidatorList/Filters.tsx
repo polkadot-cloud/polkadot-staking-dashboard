@@ -15,6 +15,8 @@ import { Container } from 'library/Filter/Container';
 import { useValidatorFilter } from 'library/Filter/context';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { FilterValidators } from './FilterValidators';
+import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
   const {
@@ -43,7 +45,7 @@ export const Filters = () => {
           marginRight
           iconLeft={faArrowDownWideShort}
           onClick={() => {
-            openOverlayWith('', {});
+            openOverlayWith(<OrderValidators />);
           }}
         />
         <ButtonInvertRounded
@@ -51,7 +53,7 @@ export const Filters = () => {
           marginRight
           iconLeft={faFilterCircleXmark}
           onClick={() => {
-            openOverlayWith('', {});
+            openOverlayWith(<FilterValidators />);
           }}
         />
         <ButtonSecondary

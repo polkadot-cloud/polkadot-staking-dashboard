@@ -3,8 +3,8 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useOverlay } from 'contexts/Overlay';
-import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { FunctionComponent } from 'react';
 import { TitleWrapper } from './Wrappers';
@@ -35,9 +35,7 @@ export const Title = ({ helpKey, title, icon, Svg }: TitleProps) => {
         </h2>
       </div>
       <div>
-        <button type="button" onClick={() => closeOverlay()}>
-          <CrossSVG style={{ width: '1.4rem', height: '1.4rem' }} />
-        </button>
+        <ButtonInvertRounded text="Done" onClick={() => closeOverlay()} />
       </div>
     </TitleWrapper>
   );

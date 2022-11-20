@@ -12,7 +12,7 @@ import {
 } from 'theme';
 
 export const OverlayWrapper = styled.div`
-  background: rgba(200, 200, 200, 0.5);
+  background: rgba(200, 200, 200, 0.35);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -44,7 +44,7 @@ export const HeightWrapper = styled.div`
   width: 100%;
   max-width: 500px;
   max-height: 100%;
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   z-index: 9;
   position: relative;
   overflow: hidden;
@@ -69,30 +69,11 @@ export const ContentWrapper = styled.div`
   }
   .body {
     padding: 0 1rem;
-
-    h4 {
-      margin-top: 1.25rem;
-    }
-
-    .item {
-      background: ${buttonPrimaryBackground};
-      width: 100%;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      border-radius: 1rem;
-      padding: 0.2rem 1rem;
-      margin: 1rem 0;
-
-      svg {
-        margin-right: 0.75rem;
-      }
-    }
   }
 `;
 
 export const TitleWrapper = styled.div`
-  padding: 1.75rem 1rem 0 1rem;
+  padding: 1.5rem 0.5rem 0 0.5rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -132,14 +113,31 @@ export const TitleWrapper = styled.div`
         margin-right: 0.9rem;
       }
     }
+  }
+`;
 
-    &:last-child {
-      button {
-        opacity: 0.25;
-        &:hover {
-          opacity: 1;
-        }
-      }
+export const FilterListWrapper = styled.div`
+  padding-bottom: 0.5rem;
+  h5 {
+    margin-top: 1.25rem;
+  }
+  .item {
+    background: ${buttonPrimaryBackground};
+    border: 1px solid ${buttonPrimaryBackground};
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem 0;
+
+    h4 {
+      margin: 0;
+    }
+
+    svg {
+      margin-right: 0.75rem;
     }
   }
 `;

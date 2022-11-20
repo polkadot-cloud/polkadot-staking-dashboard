@@ -5,12 +5,12 @@ import { OverlayContextInterface } from './types';
 
 export const defaultOverlayContext: OverlayContextInterface = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  openOverlayWith: (d, c) => {},
+  openOverlayWith: (o) => {},
   closeOverlay: () => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setStatus: (s) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setOverlay: (d) => {},
   status: 0,
-  overlay: null,
+  Overlay: null,
 };
