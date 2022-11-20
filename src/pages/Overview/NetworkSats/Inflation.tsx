@@ -13,8 +13,8 @@ import { InflationWrapper } from './Wrappers';
 export const Inflation = () => {
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
-  const { t } = useTranslation('common');
   const { inflation, stakedReturn } = useInflation();
+  const { t } = useTranslation('pages');
 
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;
@@ -40,7 +40,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                {t('pages.overview.historical_rewards_rate')}{' '}
+                {t('overview.historical_rewards_rate')}{' '}
                 <OpenHelpIcon helpKey="Historical Rewards Rate" />
               </h4>
             </div>
@@ -54,8 +54,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                {t('pages.overview.inflation')}{' '}
-                <OpenHelpIcon helpKey="Inflation" />
+                {t('overview.inflation')} <OpenHelpIcon helpKey="Inflation" />
               </h4>
             </div>
           </div>
@@ -63,7 +62,7 @@ export const Inflation = () => {
             <div className="inner">
               <h2>{supplyAsPercent}%</h2>
               <h4>
-                {t('pages.overview.supply_staked')}{' '}
+                {t('overview.supply_staked')}{' '}
                 <OpenHelpIcon helpKey="Supply Staked" />
               </h4>
             </div>

@@ -33,7 +33,6 @@ import { Tips } from './Tips';
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
-  const { t } = useTranslation('common');
   const { payouts, poolClaims } = useSubscan();
   const { services } = useUi();
   const { lastReward } = formatRewardsForGraphs(
@@ -43,13 +42,14 @@ export const Overview = () => {
     payouts,
     poolClaims
   );
+  const { t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 410;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
   return (
     <>
-      <PageTitle title={t('pages.overview.overview')} />
+      <PageTitle title={t('overview.overview')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <ActiveAccount />
@@ -86,7 +86,7 @@ export const Overview = () => {
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
-              <h4>{t('pages.overview.recent_payouts')}</h4>
+              <h4>{t('overview.recent_payouts')}</h4>
               <h2>
                 {lastReward === null
                   ? 0

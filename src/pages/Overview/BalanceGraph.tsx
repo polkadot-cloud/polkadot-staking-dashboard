@@ -39,7 +39,7 @@ export const BalanceGraph = () => {
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
   const { locale } = useLocale();
 
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -132,10 +132,10 @@ export const BalanceGraph = () => {
 
   // determine stats
   const _labels = [
-    t('pages.overview.available'),
-    t('pages.overview.unlocking'),
-    t('pages.overview.staking'),
-    t('pages.overview.in_pool'),
+    t('overview.available'),
+    t('overview.unlocking'),
+    t('overview.nominating'),
+    t('overview.in_pool'),
   ];
   const _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
   const _colors = zeroBalance
@@ -183,7 +183,7 @@ export const BalanceGraph = () => {
     <>
       <div className="head">
         <h4>
-          {t('pages.overview.balance')}
+          {t('overview.balance')}
           <OpenHelpIcon helpKey="Your Balance" />
         </h4>
         <h2>

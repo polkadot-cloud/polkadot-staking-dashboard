@@ -12,14 +12,14 @@ const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
   const { sessionEra } = useSessionEra();
   const eraTimeLeft = useEraTimeLeft();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   // format era time left
   const _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
   const timeleft = `${_timeleft.hours()}:${_timeleft.minutes()}:${_timeleft.seconds()}`;
 
   const params = {
-    label: t('pages.overview.active_era'),
+    label: t('overview.active_era'),
     stat: {
       value: metrics.activeEra.index,
       unit: '',

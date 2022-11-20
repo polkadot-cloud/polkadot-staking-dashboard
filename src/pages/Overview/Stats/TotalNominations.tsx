@@ -10,7 +10,7 @@ import { toFixedIfNecessary } from 'Utils';
 export const TotalNominatorsStatBox = () => {
   const { staking } = useStaking();
   const { totalNominators, maxNominatorsCount } = staking;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   // total active nominators as percent
   let totalNominatorsAsPercent = 0;
@@ -21,7 +21,7 @@ export const TotalNominatorsStatBox = () => {
   }
 
   const params = {
-    label: t('pages.overview.total_nominators'),
+    label: t('overview.total_nominators'),
     stat: {
       value: totalNominators.toNumber(),
       total: maxNominatorsCount.toNumber(),

@@ -16,13 +16,13 @@ export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
   const { activeAccount, getAccount } = useConnect();
   const accountData = getAccount(activeAccount);
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   // click to copy notification
   let notification: NotificationText | null = null;
   if (accountData !== null) {
     notification = {
-      title: t('pages.overview.address_copied'),
+      title: t('overview.address_copied'),
       subtitle: accountData.address,
     };
   }
@@ -67,7 +67,7 @@ export const ActiveAccount = () => {
               </>
             )}
 
-            {!accountData && t('pages.overview.no_account_connected')}
+            {!accountData && t('overview.no_account_connected')}
           </h3>
         </div>
       </div>

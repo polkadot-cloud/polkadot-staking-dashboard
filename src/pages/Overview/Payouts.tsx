@@ -14,7 +14,7 @@ export const Payouts = () => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -27,13 +27,13 @@ export const Payouts = () => {
         <StatusLabel
           status="active_service"
           statusFor="subscan"
-          title={t('pages.overview.subscan_disabled')}
+          title={t('overview.subscan_disabled')}
           topOffset="37%"
         />
       ) : (
         <StatusLabel
           status="sync_or_setup"
-          title={t('pages.overview.not_staking')}
+          title={t('overview.not_staking')}
           topOffset="37%"
         />
       )}

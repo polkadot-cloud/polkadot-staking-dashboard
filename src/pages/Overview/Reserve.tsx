@@ -15,14 +15,14 @@ export const Reserve = (props: ReserveProps) => {
   const { height } = props;
   const { network } = useApi();
   const { existentialAmount } = useBalances();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   return (
     <SectionWrapper style={{ height }}>
       <ReserveWrapper>
         <Separator />
         <h4>
-          {t('pages.overview.reserved')}
+          {t('overview.reserved')}
           <OpenHelpIcon helpKey="Reserve Balance" />
         </h4>
 

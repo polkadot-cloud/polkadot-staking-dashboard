@@ -3,18 +3,22 @@
 
 import { AppVersion, DefaultLocale } from 'consts';
 import i18next from 'i18next';
+import moment from 'moment';
 import { initReactI18next } from 'react-i18next';
 import baseEn from './en/base.json';
-import commonEn from './en/common.json';
 import helpEn from './en/help.json';
+import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
 
+// available languages as an array of strings.
+export const availableLanguages = ['en', 'cn'];
+
 // the supported namespaces.
-export const lngNamespaces = ['base', 'help', 'tips'];
+export const lngNamespaces = ['base', 'help', 'tips', 'pages'];
 
 // default structure of language resources.
-const fallbackResources = { ...baseEn, ...commonEn, ...helpEn, ...tipsEn };
+const fallbackResources = { ...baseEn, ...helpEn, ...tipsEn, ...pagesEn };
 
 // check app version, wipe `lng_resources` if version is different.
 const localAppVersion = localStorage.getItem('app_version');
@@ -34,19 +38,14 @@ const lng: string = getActiveLanguage();
 // the active language.
 const { resources, dynamicLoad } = getResources(lng, fallbackResources);
 
-// // get locale from localStorage.
-// const _locale = localStorage.getItem('locale');
-// const locale = _locale ?? DefaultLocale;
-
-// if (!_locale) {
-//   localStorage.setItem('locale', DefaultLocale);
-// }
+// default language to show before any dynamic load
+const defaultLng = dynamicLoad ? DefaultLocale : lng;
 
 // configure i18n object.
 i18next.use(initReactI18next).init({
   debug: process.env.REACT_APP_DEBUG_I18N === '1',
   fallbackLng: DefaultLocale,
-  lng: dynamicLoad ? DefaultLocale : lng,
+  lng: defaultLng,
   resources,
 });
 
@@ -54,12 +53,6 @@ i18next.use(initReactI18next).init({
 if (dynamicLoad) {
   doDynamicImport(lng, i18next);
 }
-
-// export i18next for context.
-export { i18next };
-
-// available languages as an array of strings.
-export const availableLanguages = Object.keys(resources);
 
 // map i18n to moment locale keys, with any custom amendments.
 const i18ToMomentLocaleMap: { [key: string]: string } = {
@@ -71,3 +64,9 @@ const i18ToMomentLocaleMap: { [key: string]: string } = {
 export const i18ToMomentLocale = (l: string) => {
   return i18ToMomentLocaleMap[l] || DefaultLocale;
 };
+
+// set moment locale
+moment.locale(i18ToMomentLocale(defaultLng));
+
+// export i18next for context.
+export { i18next };

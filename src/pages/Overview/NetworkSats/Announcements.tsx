@@ -38,7 +38,7 @@ export const Announcements = () => {
   } = staking;
   const { bondedPools } = useBondedPools();
   const { totalIssuance } = metrics;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   let totalPoolPoints = new BN(0);
   bondedPools.forEach((b: BondedPool) => {
@@ -93,8 +93,8 @@ export const Announcements = () => {
   if (nominatorCapReached && !isSyncing) {
     announcements.push({
       class: 'danger',
-      title: t('pages.overview.announcements1'),
-      subtitle: t('pages.overview.announcements2'),
+      title: t('overview.nominator_limit'),
+      subtitle: t('overview.maximum_allowed'),
     });
   }
 
@@ -105,8 +105,8 @@ export const Announcements = () => {
       title: `${toFixedIfNecessary(
         nominatorReachedPercentage.toNumber(),
         2
-      )} ${t('pages.overview.announcements3')}`,
-      subtitle: `${t('pages.overview.announcements4')} ${humanNumber(
+      )}${t('overview.limit_reached')}`,
+      subtitle: `${t('overview.maximum_amount')} ${humanNumber(
         maxNominatorsCount.toNumber()
       )}.`,
     });
@@ -118,17 +118,15 @@ export const Announcements = () => {
     // total pools active
     announcements.push({
       class: 'pools',
-      title: `${bondedPools.length} ${t('pages.overview.announcements5')}`,
-      subtitle: `${t('pages.overview.available_to_join', { networkName })}`,
+      title: `${bondedPools.length} ${t('overview.pools_are_active')}`,
+      subtitle: `${t('overview.available_to_join', { networkName })}`,
     });
 
     // total locked in pols
     announcements.push({
       class: 'pools',
-      title: `${totalPoolPointsBase} ${network.unit} ${t(
-        'pages.overview.announcements7'
-      )}`,
-      subtitle: `${t('pages.overview.the_total', { networkUnit })}`,
+      title: `${totalPoolPointsBase} ${network.unit} ${t('overview.in_pools')}`,
+      subtitle: `${t('overview.bonded_in_pools', { networkUnit })}`,
     });
 
     if (poolMembers.length > 0 && !poolsSyncing) {
@@ -136,9 +134,9 @@ export const Announcements = () => {
       announcements.push({
         class: 'pools',
         title: `${humanNumber(poolMembers.length)} ${t(
-          'pages.overview.pool_members_bonding'
+          'overview.pool_members_bonding'
         )}`,
-        subtitle: `${t('pages.overview.total_num_accounts')}`,
+        subtitle: `${t('overview.total_num_accounts')}`,
       });
     }
   }
@@ -146,22 +144,23 @@ export const Announcements = () => {
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `${t('pages.overview.announcements9')} ${minNominatorBondBase} ${
+    title: `${t('overview.minimum_nominator_bond')} ${minNominatorBondBase} ${
       network.unit
     }.`,
-    subtitle: `${t('pages.overview.minimum_bonding_amount', {
+    subtitle: `${t('overview.minimum_bonding_amount', {
       networkName,
     })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
+
   const _lastTotalStakeBase = humanNumber(lastTotalStakeBase.toNumber());
   // supply staked
   announcements.push({
     class: 'neutral',
-    title: `${t('pages.overview.currently_staked', {
+    title: `${t('overview.currently_staked', {
       supplyAsPercent,
       networkUnit,
     })}`,
-    subtitle: `${t('pages.overview.staking_on_the_network', {
+    subtitle: `${t('overview.staking_on_the_network', {
       _lastTotalStakeBase,
       networkUnit,
     })}`,

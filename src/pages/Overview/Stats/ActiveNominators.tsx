@@ -13,7 +13,7 @@ export const ActiveNominatorsStatBox = () => {
   const { maxElectingVoters } = consts;
   const { eraStakers } = useStaking();
   const { totalActiveNominators } = eraStakers;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0;
@@ -24,7 +24,7 @@ export const ActiveNominatorsStatBox = () => {
   }
 
   const params = {
-    label: t('pages.overview.active_nominators'),
+    label: t('overview.active_nominators'),
     stat: {
       value: totalActiveNominators,
       total: maxElectingVoters,

@@ -9,13 +9,13 @@ import { Inflation } from './Inflation';
 import { Wrapper } from './Wrappers';
 
 export const NetworkStats = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('pages');
 
   return (
     <CardWrapper>
       <CardHeaderWrapper>
         <h3>
-          {t('pages.overview.network_stats')}
+          {t('overview.network_stats')}
           <OpenHelpIcon helpKey="Network Stats" />
         </h3>
       </CardHeaderWrapper>
