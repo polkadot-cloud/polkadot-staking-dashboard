@@ -12,6 +12,7 @@ import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
+import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
 import { Tips } from 'library/Tips';
 import { Tooltip } from 'library/Tooltip';
@@ -57,9 +58,9 @@ export const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {/* Modal: closed by default */}
-      <Modal />
       <BodyInterfaceWrapper>
+        {/* Modal: closed by default */}
+        <Modal />
         {/* Help: closed by default */}
         <Help />
 
@@ -71,6 +72,9 @@ export const RouterInner = () => {
 
         {/* Tooltip: invisible by default */}
         <Tooltip />
+
+        {/* Overlay: closed by default */}
+        <Overlay />
 
         {/* Left side menu */}
         <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>

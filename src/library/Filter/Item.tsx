@@ -29,13 +29,15 @@ export const Item = ({
     }}
   >
     <ItemWrapper active={active}>
-      <div className="icon">
-        <FontAwesomeIcon
-          icon={icon}
-          transform={transform}
-          opacity={active ? 1 : 0.7}
-        />
-      </div>
+      {icon ? (
+        <div className="icon">
+          <FontAwesomeIcon
+            icon={icon}
+            transform={transform}
+            opacity={active ? 1 : 0.7}
+          />
+        </div>
+      ) : null}
       <p>{label}</p>
     </ItemWrapper>
   </motion.button>

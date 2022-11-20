@@ -18,6 +18,7 @@ import { MenuProvider } from './contexts/Menu';
 import { ModalProvider } from './contexts/Modal';
 import { NetworkMetricsProvider } from './contexts/Network';
 import { NotificationsProvider } from './contexts/Notifications';
+import { OverlayProvider } from './contexts/Overlay';
 import { ActivePoolsProvider } from './contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from './contexts/Pools/BondedPools';
 import { PoolMembersProvider } from './contexts/Pools/PoolMembers';
@@ -81,7 +82,8 @@ export const Providers = withProviders(
   ExtrinsicsProvider,
   ModalProvider,
   SessionEraProvider,
-  TipsProvider
+  TipsProvider,
+  OverlayProvider
 )(ThemedRouter);
 
 export default Providers;

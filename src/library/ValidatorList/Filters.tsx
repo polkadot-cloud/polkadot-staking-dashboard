@@ -1,11 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowDownWideShort, faBan } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowDownWideShort,
+  faBan,
+  faFilterCircleXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonInvertRounded,
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
+import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { useValidatorFilter } from 'library/Filter/context';
 import { Item } from 'library/Filter/Item';
@@ -19,6 +24,7 @@ export const Filters = () => {
     toggleFilterValidators,
     toggleAllValidatorFilters,
   } = useValidatorFilter();
+  const { openOverlayWith } = useOverlay();
 
   const handleFilter = (fn: any, filter: string) => {
     fn(filter);
@@ -33,10 +39,19 @@ export const Filters = () => {
     <>
       <div style={{ marginBottom: '1.1rem' }}>
         <ButtonInvertRounded
-          text="Add Filters"
+          text="Order"
           marginRight
+          iconLeft={faArrowDownWideShort}
           onClick={() => {
-            /* TODO: open filters list */
+            openOverlayWith('', {});
+          }}
+        />
+        <ButtonInvertRounded
+          text="Filter"
+          marginRight
+          iconLeft={faFilterCircleXmark}
+          onClick={() => {
+            openOverlayWith('', {});
           }}
         />
         <ButtonSecondary
@@ -57,8 +72,6 @@ export const Filters = () => {
         <div className="items">
           <Item
             label="Order: Low Commission"
-            icon={faArrowDownWideShort}
-            transform="grow-2"
             active={validatorOrder === 'commission'}
             onClick={() => handleFilter(orderValidators, 'commission')}
           />

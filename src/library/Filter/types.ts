@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React from 'react';
 
 export interface ItemProps {
-  icon: IconProp;
+  icon?: IconProp;
   label?: string;
   transform?: string;
   onClick: () => void;
