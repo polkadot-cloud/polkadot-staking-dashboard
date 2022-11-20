@@ -12,7 +12,7 @@ import {
 } from 'theme';
 
 export const OverlayWrapper = styled.div`
-  background: rgba(200, 200, 200, 0.35);
+  background: rgba(200, 200, 200, 0.45);
   position: fixed;
   width: 100%;
   height: 100%;
