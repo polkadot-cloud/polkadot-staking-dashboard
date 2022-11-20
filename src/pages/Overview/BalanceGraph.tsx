@@ -13,6 +13,7 @@ import { usePrices } from 'library/Hooks/usePrices';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import {
   defaultThemes,
   networkColors,
@@ -37,6 +38,7 @@ export const BalanceGraph = () => {
   const balance = getAccountBalance(activeAccount);
   const { services } = useUi();
   const prices = usePrices();
+  const { t } = useTranslation('pages');
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -126,7 +128,12 @@ export const BalanceGraph = () => {
   };
 
   // determine stats
-  const _labels = ['Available', 'Unlocking', 'Nominating', 'In Pool'];
+  const _labels = [
+    t('overview.available'),
+    t('overview.unlocking'),
+    t('overview.nominating'),
+    t('overview.in_pool'),
+  ];
   const _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
   const _colors = zeroBalance
     ? [
@@ -173,7 +180,7 @@ export const BalanceGraph = () => {
     <>
       <div className="head">
         <h4>
-          Balance
+          {t('overview.balance')}
           <OpenHelpIcon helpKey="Your Balance" />
         </h4>
         <h2>
