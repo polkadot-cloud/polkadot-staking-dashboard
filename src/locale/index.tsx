@@ -10,6 +10,9 @@ import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
 
+// available languages as an array of strings.
+export const availableLanguages = ['en', 'cn'];
+
 // the supported namespaces.
 export const lngNamespaces = ['base', 'help', 'tips', 'pages'];
 
@@ -46,6 +49,17 @@ i18next.use(initReactI18next).init({
 if (dynamicLoad) {
   doDynamicImport(lng, i18next);
 }
+
+// map i18n to moment locale keys, with any custom amendments.
+const i18ToMomentLocaleMap: { [key: string]: string } = {
+  ...Object.fromEntries(availableLanguages.map((a: string) => [a, a])),
+  cn: 'zh-cn',
+};
+
+// convert i18 locale key to moment key if needed.
+export const i18ToMomentLocale = (l: string) => {
+  return i18ToMomentLocaleMap[l] || DefaultLocale;
+};
 
 // export i18next for context.
 export { i18next };
