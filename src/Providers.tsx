@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { LocaleProvider } from 'contexts/Locale';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { TxFeesProvider } from 'contexts/TxFees';
@@ -58,6 +59,7 @@ export const ThemedRouter = () => {
 };
 
 export const Providers = withProviders(
+  LocaleProvider,
   APIProvider,
   ConnectProvider,
   HelpProvider,
