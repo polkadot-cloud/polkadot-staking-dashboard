@@ -1,40 +1,21 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
-import { useTips } from 'contexts/Tips';
-import { useTranslation } from 'react-i18next';
-import { TipWrapper } from '../Wrappers';
+import { Title } from 'library/Overlay/Title';
 
 export const Tip = (props: any) => {
   const { title, description } = props;
 
-  const { closeTip } = useTips();
-  const { t } = useTranslation('tips');
-
   return (
     <>
-      <TipWrapper>
-        <div className="close-button">
-          <ButtonInvertRounded
-            text={t('module.close')}
-            iconLeft={faTimes}
-            iconTransform="grow-2"
-            onClick={() => closeTip()}
-          />
-        </div>
-        <div>
-          <h1>{title}</h1>
-        </div>
-        <div>
-          {description.map((item: any, index: number) => (
-            <h4 key={`inner_def_${index}`} className="definition">
-              {item}
-            </h4>
-          ))}
-        </div>
-      </TipWrapper>
+      <Title title={title} />
+      <div className="body">
+        {description.map((item: any, index: number) => (
+          <h4 key={`inner_def_${index}`} className="definition">
+            {item}
+          </h4>
+        ))}
+      </div>
     </>
   );
 };

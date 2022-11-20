@@ -11,7 +11,6 @@ export const OrderValidators = () => {
     <FilterListWrapper>
       <Title title="Order Validators" />
       <div className="body">
-        <h5>Order By:</h5>
         <button
           type="button"
           className="item"

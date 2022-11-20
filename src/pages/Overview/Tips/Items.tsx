@@ -3,8 +3,9 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTips } from 'contexts/Tips';
+import { useOverlay } from 'contexts/Overlay';
 import { motion, useAnimationControls } from 'framer-motion';
+import { Tip } from 'library/Tips/Items/Tip';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';
@@ -54,8 +55,16 @@ export const ItemsInner = ({ items, page }: any) => {
   );
 };
 
-const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
-  const { openTipWith } = useTips();
+const Item = ({
+  title,
+  subtitle,
+  description,
+  icon,
+  index,
+  controls,
+  initial,
+}: any) => {
+  const { openOverlayWith } = useOverlay();
   const { t } = useTranslation('tips');
 
   const [isStopped, setIsStopped] = useState(true);
@@ -125,7 +134,12 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
               {subtitle}
               <motion.button
                 whileHover={{ scale: 1.02 }}
-                onClick={() => openTipWith(id, {})}
+                onClick={() =>
+                  openOverlayWith(
+                    <Tip title={title} description={description} />,
+                    'large'
+                  )
+                }
                 type="button"
                 className="more"
               >

@@ -11,7 +11,6 @@ export const FilterValidators = () => {
     <FilterListWrapper>
       <Title title="Filter Validators" />
       <div className="body">
-        <h5>Exclude:</h5>
         <button
           type="button"
           className="item"

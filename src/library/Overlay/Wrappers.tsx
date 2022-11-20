@@ -42,7 +42,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
   box-shadow: ${cardShadow} ${shadowColor};
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
-  max-width: ${(props) => (props.size === 'small' ? '500px' : '800px')};
+  max-width: ${(props) => (props.size === 'small' ? '500px' : '700px')};
   max-height: 100%;
   border-radius: 1.5rem;
   z-index: 9;
@@ -68,12 +68,12 @@ export const ContentWrapper = styled.div`
     padding: 1rem 1rem 0 1rem;
   }
   .body {
-    padding: 0 1rem;
+    padding: 1rem 1.5rem 0.75rem 1.5rem;
   }
 `;
 
 export const TitleWrapper = styled.div`
-  padding: 1.5rem 0.5rem 0 0.5rem;
+  padding: 1.5rem 1rem 0 1rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -118,9 +118,6 @@ export const TitleWrapper = styled.div`
 
 export const FilterListWrapper = styled.div`
   padding-bottom: 0.5rem;
-  h5 {
-    margin-top: 1.25rem;
-  }
   .item {
     background: ${buttonPrimaryBackground};
     border: 1px solid ${buttonPrimaryBackground};
@@ -131,6 +128,10 @@ export const FilterListWrapper = styled.div`
     border-radius: 1rem;
     padding: 1rem;
     margin: 1rem 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     h4 {
       margin: 0;
