@@ -4,7 +4,7 @@ import { useOverlay } from 'contexts/Overlay';
 import { ContentWrapper, HeightWrapper, OverlayWrapper } from './Wrappers';
 
 export const Overlay = () => {
-  const { closeOverlay, status, Overlay: OverlayInner } = useOverlay();
+  const { closeOverlay, size, status, Overlay: OverlayInner } = useOverlay();
 
   if (status === 0) {
     return <></>;
@@ -13,7 +13,7 @@ export const Overlay = () => {
   return (
     <OverlayWrapper>
       <div>
-        <HeightWrapper>
+        <HeightWrapper size={size}>
           <ContentWrapper>{OverlayInner}</ContentWrapper>
         </HeightWrapper>
         <button type="button" className="close" onClick={() => closeOverlay()}>

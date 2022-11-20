@@ -17,6 +17,7 @@ export const OverlayProvider = ({
   children: React.ReactNode;
 }) => {
   const [state, setState] = useState<any>({
+    size: 'large',
     status: 0,
     Overlay: null,
   });
@@ -38,9 +39,10 @@ export const OverlayProvider = ({
     setState(_state);
   };
 
-  const openOverlayWith = (Overlay: any) => {
+  const openOverlayWith = (Overlay: any, size = 'small') => {
     setState({
       ...state,
+      size,
       Overlay,
       status: 1,
     });
@@ -61,6 +63,7 @@ export const OverlayProvider = ({
         closeOverlay,
         setStatus,
         setOverlay,
+        size: state.size,
         status: state.status,
         Overlay: state.Overlay,
       }}

@@ -38,11 +38,11 @@ export const OverlayWrapper = styled.div`
   }
 `;
 
-export const HeightWrapper = styled.div`
+export const HeightWrapper = styled.div<{ size: string }>`
   box-shadow: ${cardShadow} ${shadowColor};
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
-  max-width: 500px;
+  max-width: ${(props) => (props.size === 'small' ? '500px' : '800px')};
   max-height: 100%;
   border-radius: 1.5rem;
   z-index: 9;
