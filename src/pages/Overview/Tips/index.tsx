@@ -11,10 +11,10 @@ import { TIPS_CONFIG } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useTips } from 'contexts/Tips';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
@@ -33,7 +33,7 @@ export const Tips = () => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { networkSyncing } = useUi();
-  const { toggleDismiss } = useTips();
+  const { openModalWith } = useModal();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
   const { isNominating, staking } = useStaking();
@@ -223,7 +223,7 @@ export const Tips = () => {
             <button
               type="button"
               onClick={() => {
-                toggleDismiss(true);
+                openModalWith('DismissTips', {});
               }}
             >
               <FontAwesomeIcon icon={faCog} />

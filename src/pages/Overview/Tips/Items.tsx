@@ -5,7 +5,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useOverlay } from 'contexts/Overlay';
 import { motion, useAnimationControls } from 'framer-motion';
-import { Tip } from 'library/Tips/Items/Tip';
+import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';

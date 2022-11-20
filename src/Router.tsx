@@ -14,7 +14,6 @@ import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
 import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
-import { Tips } from 'library/Tips';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
@@ -63,9 +62,6 @@ export const RouterInner = () => {
         <Modal />
         {/* Help: closed by default */}
         <Help />
-
-        {/* Tips: closed by default */}
-        <Tips />
 
         {/* Menu: closed by default */}
         <Menu />

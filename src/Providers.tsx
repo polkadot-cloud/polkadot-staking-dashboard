@@ -28,7 +28,6 @@ import { SessionEraProvider } from './contexts/SessionEra';
 import { StakingProvider } from './contexts/Staking';
 import { SubscanProvider } from './contexts/Subscan';
 import { useTheme } from './contexts/Themes';
-import { TipsProvider } from './contexts/Tips';
 import { UIProvider } from './contexts/UI';
 import { ValidatorsProvider } from './contexts/Validators';
 
@@ -82,7 +81,6 @@ export const Providers = withProviders(
   ExtrinsicsProvider,
   ModalProvider,
   SessionEraProvider,
-  TipsProvider,
   OverlayProvider
 )(ThemedRouter);
 
