@@ -8,6 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
+import { useTranslation } from 'react-i18next';
 import { clipAddress, convertRemToPixels } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 
@@ -15,12 +16,13 @@ export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
   const { activeAccount, getAccount } = useConnect();
   const accountData = getAccount(activeAccount);
+  const { t } = useTranslation('pages');
 
   // click to copy notification
   let notification: NotificationText | null = null;
   if (accountData !== null) {
     notification = {
-      title: 'Address Copied to Clipboard',
+      title: t('overview.address_copied'),
       subtitle: accountData.address,
     };
   }
@@ -65,7 +67,7 @@ export const ActiveAccount = () => {
               </>
             )}
 
-            {!accountData && 'No Account Connected'}
+            {!accountData && t('overview.no_account_connected')}
           </h3>
         </div>
       </div>

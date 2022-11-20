@@ -6,18 +6,20 @@ import { useSessionEra } from 'contexts/SessionEra';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { Pie } from 'library/StatBoxList/Pie';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
   const { sessionEra } = useSessionEra();
   const eraTimeLeft = useEraTimeLeft();
+  const { t } = useTranslation('pages');
 
   // format era time left
   const _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
   const timeleft = `${_timeleft.hours()}:${_timeleft.minutes()}:${_timeleft.seconds()}`;
 
   const params = {
-    label: 'Active Era',
+    label: t('overview.active_era'),
     stat: {
       value: metrics.activeEra.index,
       unit: '',

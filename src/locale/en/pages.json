@@ -1,0 +1,44 @@
+{
+    "pages": {
+        "overview": {
+            "nominator_limit": "Nominator Limit Has Been Reached.",
+            "maximum_allowed": "The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.",
+            "limit_reached": "% of Nominator Limit Reached.",
+            "maximum_amount": "The maximum amount of nominators has almost been reached. The nominator cap is currently",
+            "pools_are_active": "nomination pools are active.",
+            "available_to_join": "The number of nomination pools available to join on {{networkName}}.",
+            "in_pools": "is currently bonded in pools.",
+            "bonded_in_pools": "The total {{networkUnit}}  currently bonded in nomination pools.",
+            "pool_members_bonding": "pool members are actively bonding in pools.",
+            "total_num_accounts": "The total number of accounts that have joined a pool.",
+            "minimum_nominator_bond": "The minimum nominator bond is now",
+            "minimum_bonding_amount": "The minimum bonding amount to start nominating on {{networkName}} is now",
+            "currently_staked": "{{supplyAsPercent}}% of total {{networkUnit}} supply is currently staked.",
+            "staking_on_the_network": "A total of {{_lastTotalStakeBase}}{{networkUnit}} is actively staking on the network.",
+            "network_stats": "Network Stats",
+            "historical_rewards_rate": "Historical Rewards Rate",
+            "inflation": "Inflation",
+            "supply_staked": "Supply Staked",
+            "active_era": "Active Era",
+            "total_nominators": "Total Nominators",
+            "active_nominators": "Active Nominators",
+            "address_copied": "Address Copied to Clipboard",
+            "no_account_connected": "No Account Connected",
+            "in_pool": "In Pool",
+            "available": "Available",
+            "unlocking": "Unlocking",
+            "nominating": "Nominating",
+            "balance": "Balance",
+            "overview": "Overview",
+            "recent_payouts": "Recent Payouts",
+            "subscan_disabled": "Subscan Disabled",
+            "not_staking": "Not Staking",
+            "reserved": "Reserved"
+        },
+        "favorites": {
+            "fetching_favorite_validators": "正在获取收藏夹的验证人...",
+            "no_favorites": "No Favorites.",
+            "favorite_validators": "Favorite Validators"
+        }
+    }
+}
