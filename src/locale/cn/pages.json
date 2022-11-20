@@ -20,6 +20,7 @@
             "inflation": "通货膨胀",
             "supply_staked": "抵押比例",
             "active_era": "活跃 Era",
+            "total_nominators": "提名人总数",
             "active_nominators": "活跃提名人",
             "address_copied": "地址已复制到剪贴板",
             "no_account_connected": "未连接帐户",

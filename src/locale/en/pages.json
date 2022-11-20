@@ -20,6 +20,7 @@
             "inflation": "Inflation",
             "supply_staked": "Supply Staked",
             "active_era": "Active Era",
+            "total_nominators": "Total Nominators",
             "active_nominators": "Active Nominators",
             "address_copied": "Address Copied to Clipboard",
             "no_account_connected": "No Account Connected",
