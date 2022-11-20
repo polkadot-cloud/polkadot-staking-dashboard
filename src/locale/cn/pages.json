@@ -2,13 +2,13 @@
     "pages": {
         "overview": {
             "nominator_limit": "已达到提名人数上限",
-            "the_maximum_allowed": "已达到提名人数上限。请等待可用的名额",
+            "maximum_allowed": "已达到提名人数上限。请等待可用的名额",
             "limit_reached": "%提名人限额己被达到",
             "maximum_amount": "提名人数接近最高。提名人上限目前为",
             "pools_are_active": "个提名池活跃中",
             "available_to_join": "在{{networkName}}网络中可参与的池数",
             "in_pools": "当前质押在提名池中",
-            "the_total": "提名池中当前质押的{{networkUnit}}总数",
+            "bonded_in_pools": "提名池中当前质押的{{networkUnit}}总数",
             "pool_members_bonding": "名成员正在提名池活跃质押中.",
             "total_num_accounts": "已加入提名池的帐户总数.",
             "minimum_nominator_bond": "提名人抵押额最低为",

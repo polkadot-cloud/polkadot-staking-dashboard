@@ -2,13 +2,13 @@
     "pages": {
         "overview": {
             "nominator_limit": "Nominator Limit Has Been Reached.",
-            "the_maximum_allowed": "The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.",
+            "maximum_allowed": "The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.",
             "limit_reached": "% of Nominator Limit Reached.",
             "maximum_amount": "The maximum amount of nominators has almost been reached. The nominator cap is currently",
             "pools_are_active": "nomination pools are active.",
             "available_to_join": "The number of nomination pools available to join on {{networkName}}.",
             "in_pools": "is currently bonded in pools.",
-            "the_total": "The total {{networkUnit}}  currently bonded in nomination pools.",
+            "bonded_in_pools": "The total {{networkUnit}}  currently bonded in nomination pools.",
             "pool_members_bonding": "pool members are actively bonding in pools.",
             "total_num_accounts": "The total number of accounts that have joined a pool.",
             "minimum_nominator_bond": "The minimum nominator bond is now",
