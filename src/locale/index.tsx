@@ -3,6 +3,8 @@
 
 import { AppVersion, DefaultLocale } from 'consts';
 import i18next from 'i18next';
+import moment from 'moment';
+import 'moment/min/locales';
 import { initReactI18next } from 'react-i18next';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
@@ -37,11 +39,14 @@ const lng: string = getActiveLanguage();
 // the active language.
 const { resources, dynamicLoad } = getResources(lng, fallbackResources);
 
+// default language to show before any dynamic load
+const defaultLng = dynamicLoad ? DefaultLocale : lng;
+
 // configure i18n object.
 i18next.use(initReactI18next).init({
   debug: process.env.REACT_APP_DEBUG_I18N === '1',
   fallbackLng: DefaultLocale,
-  lng: dynamicLoad ? DefaultLocale : lng,
+  lng: defaultLng,
   resources,
 });
 
@@ -60,6 +65,9 @@ const i18ToMomentLocaleMap: { [key: string]: string } = {
 export const i18ToMomentLocale = (l: string) => {
   return i18ToMomentLocaleMap[l] || DefaultLocale;
 };
+
+// set moment locale
+moment.locale(i18ToMomentLocale(defaultLng));
 
 // export i18next for context.
 export { i18next };
