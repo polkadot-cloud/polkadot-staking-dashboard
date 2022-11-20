@@ -34,6 +34,11 @@
             "subscan_disabled": "Subscan Disabled",
             "not_staking": "Not Staking",
             "reserved": "Reserved"
+        },
+        "favorites": {
+            "fetching_favorite_validators": "正在获取收藏夹的验证人...",
+            "no_favorites": "No Favorites.",
+            "favorite_validators": "Favorite Validators"
         }
     }
 }
