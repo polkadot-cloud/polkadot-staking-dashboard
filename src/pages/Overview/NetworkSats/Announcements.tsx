@@ -94,7 +94,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'danger',
       title: t('overview.nominator_limit'),
-      subtitle: t('overview.the_maximum_allowed'),
+      subtitle: t('overview.maximum_allowed'),
     });
   }
 
@@ -127,7 +127,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'pools',
       title: `${totalPoolPointsBase} ${network.unit} ${t('overview.in_pools')}`,
-      subtitle: `${t('overview.the_total', { networkUnit })}`,
+      subtitle: `${t('overview.bonded_in_pools', { networkUnit })}`,
     });
 
     if (poolMembers.length > 0 && !poolsSyncing) {
