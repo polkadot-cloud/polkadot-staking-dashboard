@@ -69,7 +69,7 @@ export const SetController = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        title={t('nominate.set_controller_account')}
+        title={t('nominate.set_controller_account') || ''}
         helpKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
         setupType={SetupType.Stake}

@@ -21,7 +21,7 @@ export interface GenerateNominationsInnerProps {
 }
 
 export interface HeaderProps {
-  title?: string | null;
+  title?: string;
   helpKey?: string;
   complete?: boolean | null;
   thisSection: number;
