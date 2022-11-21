@@ -18,6 +18,7 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { Stat } from 'library/Stat';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Membership } from './Membership';
@@ -34,6 +35,7 @@ export const Status = ({ height }: { height: number }) => {
   const { meta, validators } = useValidators();
   const { stakers } = eraStakers;
   const poolStash = selectedActivePool?.addresses?.stash || '';
+  const { t } = useTranslation('pages');
 
   const nominationStatuses = getNominationsStatusFromTargets(
     poolStash,
@@ -63,7 +65,7 @@ export const Status = ({ height }: { height: number }) => {
   const buttonsRewards = unclaimedRewards.gt(minUnclaimedDisplay)
     ? [
         {
-          title: 'Withdraw',
+          title: t('pools.withdraw'),
           icon: faShare,
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
@@ -71,7 +73,7 @@ export const Status = ({ height }: { height: number }) => {
             openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
         },
         {
-          title: 'Bond',
+          title: t('pools.bond'),
           icon: faPlus,
           disabled:
             !isReady ||
@@ -134,21 +136,23 @@ export const Status = ({ height }: { height: number }) => {
   // determine pool status - left side
   const poolStatusLeft =
     poolState === PoolState.Block
-      ? 'Locked / '
+      ? t('pools.locked/')
       : poolState === PoolState.Destroy
-      ? 'Destroying / '
+      ? t('pools.destroying/')
       : '';
 
   // determine pool status - right side
   const poolStatusRight = poolsSyncing
-    ? 'Inactive: Pool Not Nominating'
+    ? t('pools.inactive_pool_not_nominating')
     : !isNominating
-    ? 'Inactive: Pool Not Nominating'
+    ? t('pools.inactive_pool_not_nominating')
     : activeNominees.length
-    ? `Nominating and ${
-        earningRewards ? 'Earning Rewards' : 'Not Earning Rewards'
+    ? `${t('pools.nominating_and')} ${
+        earningRewards
+          ? t('pools.earning_rewards')
+          : t('pools.not_earning_rewards')
       }`
-    : 'Waiting for Active Nominations';
+    : t('pools.waiting_for_active_nominations');
 
   const { label, buttons } = useStatusButtons();
 
@@ -158,15 +162,15 @@ export const Status = ({ height }: { height: number }) => {
         <Membership label={label} />
       ) : (
         <Stat
-          label="Pool Membership"
+          label={t('pools.pool_membership')}
           helpKey="Pool Membership"
-          stat="Not in Pool"
+          stat={t('pools.not_in_pool')}
           buttons={poolsSyncing ? [] : buttons}
         />
       )}
       <Separator />
       <Stat
-        label="Unclaimed Rewards"
+        label={t('pools.unclaimed_rewards')}
         helpKey="Pool Rewards"
         stat={labelRewards}
         buttons={poolsSyncing ? [] : buttonsRewards}
@@ -176,7 +180,7 @@ export const Status = ({ height }: { height: number }) => {
           <Separator />
           <Stat
             icon={poolsSyncing ? undefined : poolStateIcon}
-            label="Pool Status"
+            label={t('pools.pool_status')}
             helpKey="Nomination Status"
             stat={`${poolStatusLeft}${poolStatusRight}`}
           />

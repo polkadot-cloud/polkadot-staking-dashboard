@@ -8,6 +8,7 @@ import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import PoolList from 'library/PoolList';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const Favorites = () => {
@@ -15,6 +16,7 @@ export const Favorites = () => {
   const { favorites, removeFavorite } = usePoolsConfig();
   const { bondedPools } = useBondedPools();
   const { poolsSyncing } = useUi();
+  const { t } = useTranslation('pages');
 
   // store local favorite list and update when favorites list is mutated
   const [favoritesList, setFavoritesList] = useState<Array<any>>([]);
@@ -40,7 +42,7 @@ export const Favorites = () => {
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favoritesList === null || poolsSyncing ? (
-            <h3>Fetching favorite pools...</h3>
+            <h3>{t('pools.fetching_favorite_pools')}</h3>
           ) : (
             <>
               {isReady && (
@@ -49,12 +51,12 @@ export const Favorites = () => {
                     <PoolList
                       batchKey="favorite_pools"
                       pools={favoritesList}
-                      title="Favorites List"
+                      title={t('pools.favorites_list')}
                       allowMoreCols
                       pagination
                     />
                   ) : (
-                    <h3>No Favorites.</h3>
+                    <h3>{t('pools.no_favorites')}</h3>
                   )}
                 </>
               )}
