@@ -33,7 +33,7 @@ export const Payouts = (props: PageProps) => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { t } = useTranslation('base');
+  const { t } = useTranslation();
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>();
   const [fromDate, setFromDate] = useState<string | undefined>();
@@ -80,7 +80,7 @@ export const Payouts = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={t(key)} />
+      <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
         <LastEraPayoutStatBox />
       </StatBoxList>
@@ -89,7 +89,7 @@ export const Payouts = (props: PageProps) => {
           <SubscanButton />
           <CardHeaderWrapper padded>
             <h4>
-              Payout History
+              {t('payouts.payout_history', { ns: 'pages' })}
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
@@ -99,7 +99,7 @@ export const Payouts = (props: PageProps) => {
                   {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}
                 </>
               ) : (
-                'None'
+                t('payouts.none', { ns: 'pages' })
               )}
             </h2>
           </CardHeaderWrapper>
@@ -108,13 +108,13 @@ export const Payouts = (props: PageProps) => {
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"
-                title="Subscan Disabled"
+                title={t('payouts.subscan_disabled', { ns: 'pages' })}
                 topOffset="30%"
               />
             ) : (
               <StatusLabel
                 status="sync_or_setup"
-                title="Not Staking"
+                title={t('payouts.not_staking', { ns: 'pages' })}
                 topOffset="30%"
               />
             )}
@@ -141,7 +141,7 @@ export const Payouts = (props: PageProps) => {
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
-              title="Recent Payouts"
+              title={t('payouts.recent_payouts', { ns: 'pages' })}
               payouts={payoutsList}
               pagination
             />

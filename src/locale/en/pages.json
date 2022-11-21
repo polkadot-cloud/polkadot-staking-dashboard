@@ -190,6 +190,19 @@
             "validators": "'s Validators",
             "validator_one": "{{count}} Validator",
             "validator_other": "{{count}} Validators"
+        },
+        "payouts": {
+            "pool_claim": "Pool Claim",
+            "payout": "Payout",
+            "slashed": "Slashed",
+            "none": "None",
+            "recent_payouts": "Recent Payouts",
+            "subscan_disabled": "Subscan Disabled",
+            "last_era_payout": "Last Era Payout",
+            "payout_history": "Payout History",
+            "not_staking": "Not Staking",
+            "from_pool": "From Pool",
+            "deducted_from_bond": "Deducted from bond"
         }
     }
 }

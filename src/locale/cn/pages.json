@@ -188,6 +188,19 @@
             "bio": "简介",
             "validators": "的验证人",
             "validator": "{{count}} 个验证人"
+        },
+        "payouts": {
+            "pool_claim": "提名池收益",
+            "payout": "收益",
+            "slashed": "除名",
+            "none": "无",
+            "recent_payouts": "最近收益",
+            "subscan_disabled": "Subscan己断开",
+            "last_era_payout": "上Era收益",
+            "payout_history": "收益记录",
+            "not_staking": "无抵押",
+            "from_pool": "从提名池",
+            "deducted_from_bond": "从质押里扣除"
         }
     }
 }
