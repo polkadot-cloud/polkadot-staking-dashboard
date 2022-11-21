@@ -4,24 +4,23 @@
 import { ReactNode } from 'react';
 import { MaybeString } from 'types';
 
-export type HelpContentRaw = Array<HelpItemRaw>;
+export type HelpItems = Array<HelpItem>;
 
-export interface HelpItemRaw {
+export interface HelpItem {
   key?: string;
-  definitions?: HelpDefinitions;
-  external?: HelpExternals;
+  definitions?: Array<string>;
+  external?: ExternalItems;
 }
 
-export type HelpExternals = Array<HelpExternal>;
+export type ExternalItems = Array<ExternalItem>;
+export type ExternalItem = [string, string, string];
 
-export type HelpDefinitions = Array<HelpDefinition>;
-
-export type HelpDefinition = {
+export type DefinitionWithKeys = {
   title: string;
   description: string[];
 };
 
-export interface HelpExternal {
+export interface ExternalWithKeys {
   title: string;
   url: string;
   website?: string;

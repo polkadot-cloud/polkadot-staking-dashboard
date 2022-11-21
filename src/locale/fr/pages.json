@@ -1,12 +1,44 @@
 {
-  "pages": {
-    "stake": "Investissement",
-    "validators": "Validateurs",
-    "overview": "Aperçu",
-    "nominate": "Désigner",
-    "pools": "Pools",
-    "payouts": "Paiements",
-    "community": "Communauté",
-    "favorites": "Favoris"
-  }
+    "pages": {
+        "overview": {
+            "nominator_limit": "La limite de nominateurs a été atteinte.",
+            "maximum_allowed": "Le nombre maximum de nominateurs autorisés a été atteint sur le réseau. Veuillez attendre les créneaux disponibles si vous souhaitez proposer une candidature.",
+            "limit_reached": "% de la limite de nominateurs atteinte.",
+            "maximum_amount": "Le nombre maximum de nominateurs a presque été atteint. Le plafond de nominateurs est actuellement de",
+            "pools_are_active": "les pools de nomination sont actifs.",
+            "available_to_join": "Le nombre de pools de nomination disponibles pour rejoindre sur {{networkName}}.",
+            "in_pools": "est actuellement lié à une pools.",
+            "bonded_in_pools": "Le total des {{networkUnit}} actuellement liées dans les pools de nomination.",
+            "pool_members_bonding": "les membres du pool se lient activement dans les pools.",
+            "total_num_accounts": "Le nombre total de comptes qui ont rejoint une pool.",
+            "minimum_nominator_bond": "La caution minimale du nominateur est maintenant",
+            "minimum_bonding_amount": "Le montant minimum de la caution pour commencer à nominer sur {{nom du réseau}} est maintenant The minimum bonding amount to start nominating on {{networkName}} is now",
+            "currently_staked": "{{supplyAsPercent}}% du total {{networkUnit}} est actuellement jalonnée.",
+            "staking_on_the_network": "Un total de {{_lastTotalStakeBase}}{{networkUnit}} est activement investi sur le réseau.",
+            "network_stats": "Statistiques du Réseau",
+            "historical_rewards_rate": "Historique des taux de rémunération",
+            "inflation": "Inflation",
+            "supply_staked": "Approvisionnement Investi",
+            "active_era": "L'ère active",
+            "total_nominators": "Total des Nominateurs",
+            "active_nominators": "Nominateurs Actifs",
+            "address_copied": "Adresse copiée dans le presse-papiers",
+            "no_account_connected": "Aucun compte connecté",
+            "in_pool": "Dans une Pool",
+            "available": "Disponible",
+            "unlocking": "Déverrouiller",
+            "nominating": "Désignation",
+            "balance": "Balance",
+            "overview": "Aperçu",
+            "recent_payouts": "Paiements récents",
+            "subscan_disabled": "Subscan Désactivé",
+            "not_staking": "Non Investi",
+            "reserved": "Réservé"
+        },
+        "favorites": {
+            "fetching_favorite_validators": "Récupération des validateurs favoris...",
+            "no_favorites": "Pas de favoris.",
+            "favorite_validators": "Validateurs favoris"
+        }
+    }
 }

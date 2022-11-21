@@ -1,0 +1,18 @@
+{
+  "base": {
+    "stake": "Stake",
+    "validators": "Validators",
+    "overview": "Overview",
+    "nominate": "Nominate",
+    "pools": "Pools",
+    "payouts": "Payouts",
+    "community": "Community",
+    "favorites": "Favorites",
+    "network": "Network",
+    "feedback": "Feedback",
+    "help": "Help",
+    "inactive": "Inactive",
+    "active": "Active",
+    "support": "Support"
+  }
+}

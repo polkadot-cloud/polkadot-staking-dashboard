@@ -1,0 +1,18 @@
+{
+  "base": {
+    "stake": "Investissement",
+    "validators": "Validateurs",
+    "overview": "Aperçu",
+    "nominate": "Désigner",
+    "pools": "Pools",
+    "payouts": "Paiements",
+    "community": "Communauté",
+    "favorites": "Favoris",
+    "network": "Réseau",
+    "feedback": "Feedback",
+    "help": "Aide",
+    "inactive": "Inactif",
+    "active": "Actif",
+    "support": "Support"
+  }
+}

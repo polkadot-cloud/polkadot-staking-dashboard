@@ -22,6 +22,7 @@ import useFillVariables from 'library/Hooks/useFillVariables';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
@@ -40,6 +41,7 @@ export const Tips = () => {
   const { getTransferOptions } = useTransferOptions();
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
+  const { t, i18n } = useTranslation();
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -139,12 +141,21 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((t: AnyJson) =>
-    segments.includes(t.meta.segment)
-  );
-  items = items.map((i: AnyJson) =>
-    fillVariables(i, ['title', 'subtitle', 'description'])
-  );
+  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.s));
+
+  items = items.map((i: any) => {
+    const { id } = i;
+
+    return fillVariables(
+      {
+        ...i,
+        title: t(`${id}.0`, { ns: 'tips' }),
+        subtitle: t(`${id}.1`, { ns: 'tips' }),
+        description: i18n.getResource(i18n.resolvedLanguage, 'tips', `${id}.2`),
+      },
+      ['title', 'subtitle', 'description']
+    );
+  });
 
   // determine items to be displayed
   const endItem = networkSyncing
@@ -162,7 +173,7 @@ export const Tips = () => {
     <CardWrapper>
       <CardHeaderWrapper withAction>
         <h4>
-          Tips
+          {t('module.tips', { ns: 'tips' })}
           <OpenHelpIcon helpKey="Dashboard Tips" />
         </h4>
         <div>
@@ -190,7 +201,7 @@ export const Tips = () => {
               </span>
               {totalPages > 1 && (
                 <>
-                  of <span>{items.length}</span>
+                  {t('module.of', { ns: 'tips' })} <span>{items.length}</span>
                 </>
               )}
             </h4>

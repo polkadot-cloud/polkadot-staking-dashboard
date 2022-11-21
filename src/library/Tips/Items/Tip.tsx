@@ -4,19 +4,21 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useTips } from 'contexts/Tips';
+import { useTranslation } from 'react-i18next';
 import { TipWrapper } from '../Wrappers';
 
 export const Tip = (props: any) => {
   const { title, description } = props;
 
   const { closeTip } = useTips();
+  const { t } = useTranslation('tips');
 
   return (
     <>
       <TipWrapper>
         <div className="close-button">
           <ButtonInvertRounded
-            text="Close"
+            text={t('module.close')}
             iconLeft={faTimes}
             iconTransform="grow-2"
             onClick={() => closeTip()}

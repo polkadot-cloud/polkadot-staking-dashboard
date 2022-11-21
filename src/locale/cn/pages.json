@@ -1,12 +1,44 @@
 {
-  "pages": {
-    "stake": "抵押",
-    "validators": "验证人",
-    "overview": "总览",
-    "nominate": "抵押",
-    "pools": "提名池",
-    "payouts": "收益",
-    "community": "社区",
-    "favorites": "收藏夹"
-  }
+    "pages": {
+        "overview": {
+            "nominator_limit": "已达到提名人数上限",
+            "maximum_allowed": "已达到提名人数上限。请等待可用的名额",
+            "limit_reached": "%提名人限额己被达到",
+            "maximum_amount": "提名人数接近最高。提名人上限目前为",
+            "pools_are_active": "个提名池活跃中",
+            "available_to_join": "在{{networkName}}网络中可参与的池数",
+            "in_pools": "当前质押在提名池中",
+            "bonded_in_pools": "提名池中当前质押的{{networkUnit}}总数",
+            "pool_members_bonding": "名成员正在提名池活跃质押中.",
+            "total_num_accounts": "已加入提名池的帐户总数.",
+            "minimum_nominator_bond": "提名人抵押额最低为",
+            "minimum_bonding_amount": "在{{networkName}}提名最低绑定额为",
+            "currently_staked": "{{networkUnit}}中的{{supplyAsPercent}} % 目前己被抵押.",
+            "staking_on_the_network": "共 {{_lastTotalStakeBase}}{{networkUnit}}在网络中被活跃抵押中",
+            "network_stats": "网络信息",
+            "historical_rewards_rate": "历史奖励率",
+            "inflation": "通货膨胀",
+            "supply_staked": "抵押比例",
+            "active_era": "活跃 Era",
+            "total_nominators": "提名人总数",
+            "active_nominators": "活跃提名人",
+            "address_copied": "地址已复制到剪贴板",
+            "no_account_connected": "未连接帐户",
+            "in_pool": "提名池中",
+            "available": "可用",
+            "unlocking": "正在解锁",
+            "nominating": "提名中",
+            "balance": "余额",
+            "overview": "概述",
+            "recent_payouts": "最近收益",
+            "subscan_disabled": "Subscan己断开",
+            "not_staking": "无抵押",
+            "reserved": "己储备"
+        },
+        "favorites": {
+            "fetching_favorite_validators": "Fetching favorite validators...",
+            "no_favorites": "无收藏夹",
+            "favorite_validators": "藏夹中的验证人"
+        }
+    }
 }

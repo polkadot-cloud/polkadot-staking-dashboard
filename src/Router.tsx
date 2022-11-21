@@ -38,7 +38,7 @@ export const RouterInner = () => {
   const { network } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {

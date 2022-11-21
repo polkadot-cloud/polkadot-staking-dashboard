@@ -12,6 +12,7 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import {
   PageRowWrapper,
@@ -41,13 +42,14 @@ export const Overview = () => {
     payouts,
     poolClaims
   );
+  const { t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 410;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
   return (
     <>
-      <PageTitle title="Overview" />
+      <PageTitle title={t('overview.overview')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <ActiveAccount />
@@ -84,7 +86,7 @@ export const Overview = () => {
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
-              <h4>Recent Payouts</h4>
+              <h4>{t('overview.recent_payouts')}</h4>
               <h2>
                 {lastReward === null
                   ? 0
