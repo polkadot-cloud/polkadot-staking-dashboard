@@ -177,6 +177,17 @@
             "depositor": "存款人",
             "nominator": "提名人",
             "state_toggler": "状态切换人"
+        },
+        "community": {
+            "fetching_validators": "正在获取验证人信息...",
+            "no_validators": "不包含验证人",
+            "connecting": "连接中...",
+            "go_back": "返回",
+            "website": "个人网站",
+            "email": "邮箱",
+            "bio": "简介",
+            "validators": "的验证人",
+            "validator": "{{count}} 个验证人"
         }
     }
 }

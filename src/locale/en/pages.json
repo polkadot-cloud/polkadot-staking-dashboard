@@ -178,6 +178,18 @@
             "depositor": "Depositor",
             "nominator": "Nominator",
             "state_toggler": "State Toggler"
+        },
+        "community": {
+            "fetching_validators": "Fetching validators...",
+            "no_validators": "This entity contains no validators.",
+            "connecting": "Connecting...",
+            "go_back": "Go Back",
+            "website": "Website",
+            "email": "Email",
+            "bio": "Bio",
+            "validators": "'s Validators",
+            "validator_one": "{{count}} Validator",
+            "validator_other": "{{count}} Validators"
         }
     }
 }
