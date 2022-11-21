@@ -5,6 +5,7 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { humanNumber } from 'Utils';
 import { BondedProps } from './types';
@@ -21,6 +22,7 @@ export const Bonded = ({
 }: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
+  const { t } = useTranslation('library');
 
   // graph data
   let graphActive = active;
@@ -90,7 +92,7 @@ export const Bonded = ({
       ];
 
   const data = {
-    labels: ['Active', 'Unlocking', 'Free'],
+    labels: [t('active'), t('unlocking'), t('free')],
     datasets: [
       {
         label: network.unit,

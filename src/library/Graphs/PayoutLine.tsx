@@ -18,6 +18,7 @@ import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Line } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import {
   defaultThemes,
   networkColors,
@@ -50,6 +51,7 @@ export const PayoutLine = ({
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
+  const { t } = useTranslation('library');
 
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
@@ -132,7 +134,7 @@ export const PayoutLine = ({
     labels: payoutsByDay.map(() => ''),
     datasets: [
       {
-        label: 'Payout',
+        label: t('payout'),
         data: combinedPayouts.map((item: AnySubscan) => item?.amount ?? 0),
         borderColor: color,
         backgroundColor: color,
@@ -146,7 +148,7 @@ export const PayoutLine = ({
   return (
     <>
       <h5 className="secondary">
-        {average > 1 ? `${average} Day Average` : null}
+        {average > 1 ? `${average} ${t('day_average')}` : null}
       </h5>
       <div
         className="graph_line"

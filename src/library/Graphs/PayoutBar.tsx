@@ -20,6 +20,7 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import {
   defaultThemes,
   networkColors,
@@ -49,6 +50,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
+  const { t } = useTranslation('library');
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
@@ -82,7 +84,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     ),
     datasets: [
       {
-        label: 'Payout',
+        label: t('payout'),
         data: payoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
@@ -90,7 +92,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         borderRadius: 3,
       },
       {
-        label: 'Pool Claim',
+        label: t('pool_claim'),
         data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
