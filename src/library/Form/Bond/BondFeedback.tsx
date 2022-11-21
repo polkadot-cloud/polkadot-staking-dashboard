@@ -10,6 +10,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
@@ -35,8 +36,9 @@ export const BondFeedback = ({
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units, unit } = network;
+  const { units } = network;
   const { minNominatorBond } = staking;
+  const { t } = useTranslation('library');
 
   const defBond = defaultBond || '';
 
@@ -113,36 +115,33 @@ export const BondFeedback = ({
     const _errors = warnings;
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
+    const _unit = network.unit;
 
     // bond errors
     if (freeBalance === 0) {
       _bondDisabled = true;
-      _errors.push(`You have no free ${network.unit} to bond.`);
+      _errors.push(`${t('no_free', { _unit })}`);
     }
 
     if (Number(bond.bond) > freeBalance) {
-      _errors.push('Bond amount is more than your free balance.');
+      _errors.push(t('more_than_balance'));
     }
 
     if (bond.bond !== '' && Number(bond.bond) < _planck) {
-      _errors.push('Bond amount is too small.');
+      _errors.push(t('too_small'));
     }
 
     if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
-      _errors.push(`Not enough ${unit} to bond after transaction fees.`);
+      _errors.push(`${t('not_enough_after', { _unit })}`);
     }
 
     if (inSetup) {
       if (freeBalance < minBondBase) {
         _bondDisabled = true;
-        _errors.push(
-          `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
-        );
+        _errors.push(`${t('not_meet')} ${minBondBase} ${network.unit}.`);
       }
       if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
-        _errors.push(
-          `Bond amount must be at least ${minBondBase} ${network.unit}.`
-        );
+        _errors.push(`${t('at_least')} ${minBondBase} ${network.unit}.`);
       }
     }
 

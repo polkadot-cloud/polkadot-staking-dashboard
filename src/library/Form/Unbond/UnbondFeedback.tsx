@@ -10,6 +10,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
@@ -40,6 +41,7 @@ export const UnbondFeedback = ({
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
+  const { t } = useTranslation('library');
 
   // get bond options for either staking or pooling.
   const transferOptions =
@@ -105,6 +107,7 @@ export const UnbondFeedback = ({
 
   // get the actively bonded amount.
   const activeBase = planckBnToUnit(active, units);
+  const unit = network.unit;
 
   // handle error updates
   const handleErrors = () => {
@@ -113,27 +116,24 @@ export const UnbondFeedback = ({
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // unbond errors
-    if (Number(bond.bond) > activeBase)
-      _errors.push('Unbond amount is more than your bonded balance.');
+    if (Number(bond.bond) > activeBase) _errors.push(t('unbond_amount'));
 
     // unbond errors for staking only
     if (bondType === 'stake')
       if (getControllerNotImported(controller))
-        _errors.push(
-          'You must have your controller account imported to unbond.'
-        );
+        _errors.push(t('imported_to_unbond'));
 
     if (bond.bond !== '' && Number(bond.bond) < _planck)
-      _errors.push('Value is too small');
+      _errors.push(t('value_is_too_small'));
 
     if (Number(bond.bond) > freeToUnbondToMin)
       _errors.push(
-        `A minimum bond of ${minBondBase} ${network.unit} is required ${
+        `${t('minimum_bond', { minBondBase, unit })} ${
           bondType === 'stake'
-            ? `when actively nominating`
+            ? `${t('when_actively_nominating')}`
             : isDepositor()
-            ? `as the pool depositor`
-            : `as a pool member`
+            ? `${t('as_the_pool_depositor')}`
+            : `${t('as_a_pool_member')}`
         }.`
       );
 

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useTheme } from 'contexts/Themes';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { clipAddress, convertRemToPixels } from 'Utils';
 import Identicon from '../Identicon';
@@ -26,6 +27,7 @@ export const Account = ({
   const { mode } = useTheme();
   const { getAccount } = useConnect();
   const [displayValue, setDisplayValue] = useState<string | undefined>();
+  const { t } = useTranslation('library');
 
   const unassigned = value === null || value === undefined || !value.length;
 
@@ -69,7 +71,7 @@ export const Account = ({
       )}
 
       {unassigned ? (
-        <span className="title unassigned">Not Staking</span>
+        <span className="title unassigned">{t('not_staking')}</span>
       ) : (
         <>
           {format !== 'text' && (
