@@ -3,6 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
+import { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {
   const { consts } = useApi();
@@ -142,33 +143,42 @@ export const useValidatorFilters = () => {
     );
   };
 
-  const getFiltersToApply = (excludes: Array<string>) => {
-    const fnsToApply = [];
-    if (excludes.includes('missing_identity')) {
-      fnsToApply.push(filterMissingIdentity);
-    }
-    if (excludes.includes('over_subscribed')) {
-      fnsToApply.push(filterOverSubscribed);
-    }
-    if (excludes.includes('all_commission')) {
-      fnsToApply.push(filterAllCommission);
-    }
-    if (excludes.includes('blocked_nominations')) {
-      fnsToApply.push(filterBlockedNominations);
-    }
+  const filterToFunction: { [key: string]: AnyFunction } = {
+    missing_identity: filterMissingIdentity,
+    over_subscribed: filterOverSubscribed,
+    all_commission: filterAllCommission,
+    blocked_nominations: filterBlockedNominations,
+    inactive: filterInactive,
+    not_parachain_validator: filterNonParachainValidator,
+    in_session: filterInSession,
+  };
 
-    if (excludes.includes('inactive')) {
-      fnsToApply.push(filterInactive);
+  const getFiltersToApply = (excludes: Array<string>) => {
+    const fns = [];
+
+    for (const exclude of excludes) {
+      if (filterToFunction[exclude]) {
+        fns.push(filterToFunction[exclude]);
+      }
     }
-    if (excludes.includes('not_parachain_validator')) {
-      fnsToApply.push(filterNonParachainValidator);
+    return fns;
+  };
+
+  const filter = (
+    excludes: Array<string> | null,
+    list: AnyJson,
+    batchKey: string
+  ) => {
+    if (!excludes) {
+      return list;
     }
-    if (excludes.includes('in_session')) {
-      fnsToApply.push(filterInSession);
+    for (const fn of getFiltersToApply(excludes)) {
+      list = fn(list, batchKey);
     }
+    return list;
   };
 
   return {
-    filters: getFiltersToApply,
+    filter,
   };
 };

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useFilters } from 'contexts/Filters';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StakingContext } from 'contexts/Staking';
@@ -27,6 +28,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
+import { useValidatorFilters } from './useValidatorFilters';
 
 export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
@@ -45,13 +47,17 @@ export const ValidatorListInner = (props: any) => {
   const { selected, listFormat, setListFormat } = provider;
 
   const { isSyncing } = useUi();
+
+  // TODO: deprecate
   const {
     validatorFilters,
     validatorOrder,
-    applyValidatorFilters,
     applyValidatorOrder,
     validatorSearchFilter,
   } = useValidatorFilter();
+
+  const { getExcludes } = useFilters();
+  const { filter } = useValidatorFilters();
 
   const {
     batchKey,
@@ -155,7 +161,12 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [validatorFilters, validatorOrder, isSyncing]);
+  }, [
+    validatorFilters,
+    validatorOrder,
+    isSyncing,
+    getExcludes('validators')?.length,
+  ]);
 
   // handle modal resize on list format change
   useEffect(() => {
@@ -175,13 +186,19 @@ export const ValidatorListInner = (props: any) => {
     filteredValidators: any = Object.assign(validatorsDefault)
   ) => {
     if (allowFilters) {
+      // TODO: apply ordering from Filters context
       if (validatorOrder !== 'default') {
         filteredValidators = applyValidatorOrder(
           filteredValidators,
           validatorOrder
         );
       }
-      filteredValidators = applyValidatorFilters(filteredValidators, batchKey);
+      // apply excludes
+      filteredValidators = filter(
+        getExcludes('validators'),
+        filteredValidators,
+        batchKey
+      );
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);

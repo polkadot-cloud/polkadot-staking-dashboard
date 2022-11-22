@@ -10,6 +10,7 @@ import {
   ButtonInvertRounded,
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
+import { useFilters } from 'contexts/Filters';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { useValidatorFilter } from 'library/Filter/context';
@@ -19,13 +20,10 @@ import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
-  const {
-    validatorOrder,
-    validatorFilters,
-    orderValidators,
-    toggleFilterValidators,
-    toggleAllValidatorFilters,
-  } = useValidatorFilter();
+  const { validatorOrder, validatorFilters, orderValidators } =
+    useValidatorFilter();
+  const { clearExcludes, getExcludes, setMultiExcludes, toggleExclude } =
+    useFilters();
   const { openOverlayWith } = useOverlay();
 
   const handleFilter = (fn: any, filter: string) => {
@@ -36,6 +34,16 @@ export const Filters = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [validatorFilters]);
+
+  const excludes = getExcludes('validators');
+
+  const excludeToLabel: { [key: string]: string } = {
+    inactive: 'Inactive Validators',
+    over_subscribed: 'Over Subscribed',
+    all_commission: '100% Commission',
+    blocked_nominations: 'Blocked Nominations',
+    missing_identity: 'Missing Identity',
+  };
 
   return (
     <>
@@ -59,15 +67,23 @@ export const Filters = () => {
         <ButtonSecondary
           text="Apply All"
           marginRight
-          onClick={() => toggleAllValidatorFilters(1)}
+          onClick={() =>
+            setMultiExcludes('validators', [
+              'missing_identity',
+              'over_subscribed',
+              'all_commission',
+              'blocked_nominations',
+              'inactive',
+            ])
+          }
         />
         <ButtonSecondary
           text="Clear"
           onClick={() => {
-            toggleAllValidatorFilters(0);
+            clearExcludes('validators');
             handleFilter(orderValidators, 'default');
           }}
-          disabled={!validatorFilters.length && validatorOrder === 'default'}
+          disabled={!excludes?.length && validatorOrder === 'default'}
         />
       </div>
       <Container>
@@ -77,51 +93,18 @@ export const Filters = () => {
             active={validatorOrder === 'commission'}
             onClick={() => handleFilter(orderValidators, 'commission')}
           />
-          <Item
-            label="Inactive Validators"
-            icon={faBan}
-            transform="grow-2"
-            active={validatorFilters?.includes('inactive') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'inactive');
-            }}
-          />
-          <Item
-            label="Over Subscribed"
-            icon={faBan}
-            transform="grow-2"
-            active={validatorFilters?.includes('over_subscribed') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'over_subscribed');
-            }}
-          />
-          <Item
-            label="100% Commission"
-            icon={faBan}
-            transform="grow-2"
-            active={validatorFilters?.includes('all_commission') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'all_commission');
-            }}
-          />
-          <Item
-            label="Blocked Nominations"
-            icon={faBan}
-            transform="grow-2"
-            active={validatorFilters?.includes('blocked_nominations') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'blocked_nominations');
-            }}
-          />
-          <Item
-            label="Missing Identity"
-            icon={faBan}
-            transform="grow-2"
-            active={validatorFilters?.includes('missing_identity') ?? false}
-            onClick={() => {
-              handleFilter(toggleFilterValidators, 'missing_identity');
-            }}
-          />
+          {excludes?.map((e: string, i: number) => (
+            <Item
+              key={`validator_filter_${i}`}
+              active
+              label={excludeToLabel[e]}
+              icon={faBan}
+              transform="grow-2"
+              onClick={() => {
+                toggleExclude('validators', e);
+              }}
+            />
+          ))}
         </div>
       </Container>
     </>

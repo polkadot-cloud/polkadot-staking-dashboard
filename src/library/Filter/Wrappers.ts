@@ -6,7 +6,6 @@ import {
   borderPrimary,
   buttonPrimaryBackground,
   networkColor,
-  textPrimary,
   textSecondary,
 } from 'theme';
 
@@ -48,7 +47,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.div<any>`
-  border: 1px solid ${(props) => (props.active ? textSecondary : borderPrimary)};
+  border: 1px solid ${borderPrimary};
   border-radius: 1.5rem;
   display: flex;
   flex-flow: row nowrap;
@@ -63,7 +62,7 @@ export const ItemWrapper = styled.div<any>`
     margin-right: 0;
   }
   .icon {
-    color: ${(props) => (props.active ? textPrimary : textSecondary)};
+    color: ${textSecondary};
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -71,7 +70,7 @@ export const ItemWrapper = styled.div<any>`
     margin-right: 0.75rem;
   }
   p {
-    color: ${(props) => (props.active ? textPrimary : textSecondary)};
+    color: ${textSecondary};
     font-size: 0.9rem;
     margin: 0;
     text-align: left;

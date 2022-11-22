@@ -49,19 +49,22 @@ export const FiltersProvider = ({
       setExcludes(newExcludes);
       return;
     }
-    const newExcludes = [...excludes].map((e: FilterExclude) => {
-      if (e.key !== g) return e;
-      let { filters } = e;
-      if (filters.includes(f)) {
-        filters.splice(filters.indexOf(f), 1);
-      } else {
-        filters = filters.concat(f);
-      }
-      return {
-        key: e.key,
-        filters,
-      };
-    });
+    const newExcludes = [...excludes]
+      .map((e: FilterExclude) => {
+        if (e.key !== g) return e;
+        let { filters } = e;
+
+        if (filters.includes(f)) {
+          filters.splice(filters.indexOf(f), 1);
+        } else {
+          filters = filters.concat(f);
+        }
+        return {
+          key: e.key,
+          filters,
+        };
+      })
+      .filter((e: FilterExclude) => e.filters.length !== 0);
     setExcludes(newExcludes);
   };
 
