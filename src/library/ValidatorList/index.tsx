@@ -24,6 +24,7 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
@@ -36,6 +37,7 @@ export const ValidatorListInner = (props: any) => {
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
+  const { t } = useTranslation('library');
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -217,7 +219,7 @@ export const ValidatorListInner = (props: any) => {
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.address === value.address)
+        index === self.findIndex((i: any) => i.address === value.address)
     );
 
     handleValidatorsFilterUpdate(filteredValidators);
@@ -232,9 +234,9 @@ export const ValidatorListInner = (props: any) => {
         <div>
           <h4>
             {title ||
-              `Dispalying ${validators.length} Validator${
-                validators.length === 1 ? '' : 's'
-              }`}
+              `${t('displaying_validators', {
+                count: validators.length,
+              })}`}
           </h4>
         </div>
         <div>
@@ -325,9 +327,7 @@ export const ValidatorListInner = (props: any) => {
             </>
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
-              {isSearching
-                ? 'No validators match this criteria.'
-                : 'No validators.'}
+              {isSearching ? t('no_validators_match') : t('no_validators')}
             </h4>
           )}
         </MotionContainer>

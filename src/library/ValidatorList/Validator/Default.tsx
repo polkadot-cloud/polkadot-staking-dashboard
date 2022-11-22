@@ -18,6 +18,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useValidators } from '../../../contexts/Validators';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -45,6 +46,7 @@ export const Default = (props: DefaultProps) => {
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { meta } = useValidators();
   const { selectActive } = useList();
+  const { t } = useTranslation('library');
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -62,7 +64,7 @@ export const Default = (props: DefaultProps) => {
     address == null
       ? null
       : {
-          title: 'Address Copied to Clipboard',
+          title: t('address_copied_to_clipboard'),
           subtitle: address,
         };
 
@@ -72,7 +74,7 @@ export const Default = (props: DefaultProps) => {
     {
       icon: <FontAwesomeIcon icon={faChartLine as IconProp} />,
       wrap: null,
-      title: `View Metrics`,
+      title: `View Metrics${t('view_metrics')}`,
       cb: () => {
         openModalWith(
           'ValidatorMetrics',
@@ -87,7 +89,7 @@ export const Default = (props: DefaultProps) => {
     {
       icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
       wrap: null,
-      title: `Copy Address`,
+      title: `Copy Address ${t('copy_address')}`,
       cb: () => {
         navigator.clipboard.writeText(address);
         if (notificationCopyAddress) {
