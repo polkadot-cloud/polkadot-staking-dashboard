@@ -46,7 +46,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const ItemWrapper = styled.div<any>`
+export const ItemWrapper = styled.div`
   border: 1px solid ${borderPrimary};
   border-radius: 1.5rem;
   display: flex;
@@ -56,7 +56,6 @@ export const ItemWrapper = styled.div<any>`
   margin-right: 1rem;
   align-items: center;
   width: max-content;
-  opacity: ${(props) => (props.active ? 1 : 0.8)};
 
   &:last-child {
     margin-right: 0;

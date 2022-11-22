@@ -9,8 +9,6 @@ export interface ItemProps {
   label?: string;
   transform?: string;
   onClick: () => void;
-  disabled?: boolean;
-  active: boolean;
 }
 
 export interface CategoryProps {

@@ -6,36 +6,19 @@ import { motion } from 'framer-motion';
 import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
 
-export const Item = ({
-  icon,
-  active,
-  label,
-  transform,
-  onClick,
-  disabled = false,
-}: ItemProps) => (
+export const Item = ({ icon, label, transform, onClick }: ItemProps) => (
   <motion.button
-    disabled={disabled}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.99 }}
     transition={{
       duration: 0.3,
     }}
-    onClick={() => {
-      onClick();
-    }}
-    style={{
-      opacity: disabled ? 0.5 : 1,
-    }}
+    onClick={() => onClick()}
   >
-    <ItemWrapper active={active}>
+    <ItemWrapper>
       {icon ? (
         <div className="icon">
-          <FontAwesomeIcon
-            icon={icon}
-            transform={transform}
-            opacity={active ? 1 : 0.7}
-          />
+          <FontAwesomeIcon icon={icon} transform={transform} />
         </div>
       ) : null}
       <p>{label}</p>

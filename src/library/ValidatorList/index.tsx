@@ -49,12 +49,8 @@ export const ValidatorListInner = (props: any) => {
   const { isSyncing } = useUi();
 
   // TODO: deprecate
-  const {
-    validatorFilters,
-    validatorOrder,
-    applyValidatorOrder,
-    validatorSearchFilter,
-  } = useValidatorFilter();
+  const { validatorOrder, applyValidatorOrder, validatorSearchFilter } =
+    useValidatorFilter();
 
   const { getExcludes } = useFilters();
   const { filter } = useValidatorFilters();
@@ -161,12 +157,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [
-    validatorFilters,
-    validatorOrder,
-    isSyncing,
-    getExcludes('validators')?.length,
-  ]);
+  }, [validatorOrder, isSyncing, getExcludes('validators')?.length]);
 
   // handle modal resize on list format change
   useEffect(() => {

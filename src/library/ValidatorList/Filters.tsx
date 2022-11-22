@@ -20,11 +20,12 @@ import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
-  const { validatorOrder, validatorFilters, orderValidators } =
-    useValidatorFilter();
+  const { validatorOrder, orderValidators } = useValidatorFilter();
+  const { openOverlayWith } = useOverlay();
   const { clearExcludes, getExcludes, setMultiExcludes, toggleExclude } =
     useFilters();
-  const { openOverlayWith } = useOverlay();
+
+  const excludes = getExcludes('validators');
 
   const handleFilter = (fn: any, filter: string) => {
     fn(filter);
@@ -33,9 +34,7 @@ export const Filters = () => {
   // scroll to top of the window on every filter.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [validatorFilters]);
-
-  const excludes = getExcludes('validators');
+  }, [excludes]);
 
   const excludeToLabel: { [key: string]: string } = {
     inactive: 'Inactive Validators',
@@ -76,6 +75,7 @@ export const Filters = () => {
               'inactive',
             ])
           }
+          disabled={excludes?.length === 5}
         />
         <ButtonSecondary
           text="Clear"
@@ -90,13 +90,11 @@ export const Filters = () => {
         <div className="items">
           <Item
             label="Order: Low Commission"
-            active={validatorOrder === 'commission'}
             onClick={() => handleFilter(orderValidators, 'commission')}
           />
           {excludes?.map((e: string, i: number) => (
             <Item
               key={`validator_filter_${i}`}
-              active
               label={excludeToLabel[e]}
               icon={faBan}
               transform="grow-2"
