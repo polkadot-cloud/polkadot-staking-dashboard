@@ -13,6 +13,7 @@ import { APIProvider, useApi } from './contexts/Api';
 import { BalancesProvider } from './contexts/Balances';
 import { ConnectProvider } from './contexts/Connect';
 import { ExtrinsicsProvider } from './contexts/Extrinsics';
+import { FiltersProvider } from './contexts/Filters';
 import { HelpProvider } from './contexts/Help';
 import { MenuProvider } from './contexts/Menu';
 import { ModalProvider } from './contexts/Modal';
@@ -58,6 +59,7 @@ export const ThemedRouter = () => {
 };
 
 export const Providers = withProviders(
+  FiltersProvider,
   APIProvider,
   ConnectProvider,
   HelpProvider,
