@@ -4,7 +4,7 @@
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 
-export const useFilters = () => {
+export const useValidatorFilters = () => {
   const { consts } = useApi();
   const { meta, session, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
