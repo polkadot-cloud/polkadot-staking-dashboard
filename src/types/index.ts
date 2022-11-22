@@ -105,6 +105,8 @@ export type AnyApi = any;
 // eslint-disable-next-line
 export type AnyJson = any;
 // eslint-disable-next-line
+export type AnyFunction = any;
+// eslint-disable-next-line
 export type AnyMetaBatch = any;
 // eslint-disable-next-line
 export type AnySubscan = any;
