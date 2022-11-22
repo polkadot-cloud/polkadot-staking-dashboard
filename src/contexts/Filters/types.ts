@@ -5,8 +5,8 @@ import { AnyFunction, AnyJson } from 'types';
 
 export interface FiltersContextInterface {
   getExcludes: (g: string) => Array<string> | null;
-  toggleExclude: (g: string, k: string) => void;
-  setMultiExcludes: (g: string, ks: Array<string>) => void;
+  toggleExclude: (g: string, f: string) => void;
+  setMultiExcludes: (g: string, fs: Array<string>) => void;
   getOrder: (g: string) => string | null;
   setOrder: (g: string, o: string) => void;
   getSearchTerm: (g: string) => string | null;

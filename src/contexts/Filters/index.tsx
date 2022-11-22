@@ -35,35 +35,56 @@ export const FiltersProvider = ({
   const [searchTerms, setSearchTerms] = useState<FilterSearches>([]);
 
   // Get stored filters for a group.
-  const getExcludes = (g: string) => {
+  const getExcludes = (g: string): Array<string> | null => {
     return excludes.find((e: FilterExclude) => e.key === g)?.filters || null;
   };
 
-  // Toggle ane exclude for a group.
+  // Toggle an exclude for a group.
   // Adds the group to `excludes` if it does not already exist.
-  const toggleExclude = (g: string, key: string) => {
+  const toggleExclude = (g: string, f: string) => {
     const current = getExcludes(g);
-    if (current) {
-      setExcludes([
-        ...excludes,
-        { key: g, filters: current.splice(current.indexOf(key), 1) },
-      ]);
-    } else {
-      setExcludes([...excludes, { key: g, filters: [key] }]);
+
+    if (!current) {
+      const newExcludes = [...excludes, { key: g, filters: [f] }];
+      setExcludes(newExcludes);
+      return;
     }
+    const newExcludes = [...excludes].map((e: FilterExclude) => {
+      if (e.key !== g) return e;
+      let { filters } = e;
+      if (filters.includes(f)) {
+        filters.splice(filters.indexOf(f), 1);
+      } else {
+        filters = filters.concat(f);
+      }
+      return {
+        key: e.key,
+        filters,
+      };
+    });
+    setExcludes(newExcludes);
   };
 
   // Sets an array of excludes to a group.
-  const setMultiExcludes = (g: string, keys: Array<string>) => {
+  const setMultiExcludes = (g: string, fs: Array<string>) => {
     const current = getExcludes(g);
-    if (current) {
-      const newCurrent = current
-        .filter((c: string) => !keys.includes(c))
-        .concat(keys);
-      setExcludes([...excludes, { key: g, filters: newCurrent }]);
-    } else {
-      setExcludes([...excludes, { key: g, filters: keys }]);
+
+    if (!current) {
+      const newExcludes = [...excludes, { key: g, filters: [...fs] }];
+      setExcludes(newExcludes);
+      return;
     }
+    const newExcludes = [...excludes].map((e: FilterExclude) => {
+      if (e.key !== g) return e;
+      let { filters } = e;
+      filters = filters.filter((f: string) => !fs.includes(f)).concat(fs);
+
+      return {
+        key: e.key,
+        filters,
+      };
+    });
+    setExcludes(newExcludes);
   };
 
   // Get the current order of a list or null.

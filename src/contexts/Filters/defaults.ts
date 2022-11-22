@@ -7,9 +7,9 @@ export const defaultFiltersInterface = {
   // eslint-disable-next-line
   getExcludes: (g: string) => [],
   // eslint-disable-next-line
-  toggleExclude: (g: string, k: string) => { },
+  toggleExclude: (g: string, f: string) => { },
   // eslint-disable-next-line
-  setMultiExcludes: (g: string, ks: Array<string>) => { },
+  setMultiExcludes: (g: string, fs: Array<string>) => { },
   // eslint-disable-next-line
   getOrder: (g: string) => null,
   // eslint-disable-next-line
