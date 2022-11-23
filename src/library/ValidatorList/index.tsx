@@ -14,10 +14,7 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { motion } from 'framer-motion';
-import {
-  useValidatorFilter,
-  ValidatorFilterProvider,
-} from 'library/Filter/context';
+import { ValidatorFilterProvider } from 'library/Filter/context';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
@@ -38,6 +35,7 @@ export const ValidatorListInner = (props: any) => {
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
+  const { isSyncing } = useUi();
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -46,13 +44,8 @@ export const ValidatorListInner = (props: any) => {
 
   const { selected, listFormat, setListFormat } = provider;
 
-  const { isSyncing } = useUi();
-
-  // TODO: deprecate
-  const { validatorSearchFilter } = useValidatorFilter();
-
   const { getExcludes, getOrder } = useFilters();
-  const { filter, applyOrder } = useValidatorFilters();
+  const { filter, applyOrder, applySearch } = useValidatorFilters();
   const excludes = getExcludes('validators');
   const order = getOrder('validators');
 
@@ -209,11 +202,8 @@ export const ValidatorListInner = (props: any) => {
     const newValue = e.currentTarget.value;
     // update validator list
     let filteredValidators = Object.assign(validatorsDefault);
-    filteredValidators = validatorSearchFilter(
-      filteredValidators,
-      batchKey,
-      newValue
-    );
+
+    filteredValidators = applySearch(filteredValidators, batchKey, newValue);
 
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(

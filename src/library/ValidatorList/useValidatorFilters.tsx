@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { AnyFunction, AnyJson } from 'types';
@@ -227,10 +228,63 @@ export const useValidatorFilters = () => {
     return list;
   };
 
+  /*
+   * applySearch
+   * Iterates through the supplied list and refers to the meta
+   * batch of the list to filter those list items that match
+   * the search term.
+   * Returns the updated filtered list.
+   */
+  const applySearch = (list: any, batchKey: string, searchTerm: string) => {
+    if (meta[batchKey] === undefined) return list;
+    const filteredList: any = [];
+    for (const validator of list) {
+      const batchIndex =
+        meta[batchKey].addresses?.indexOf(validator.address) ?? -1;
+      const identities = meta[batchKey]?.identities ?? false;
+      const supers = meta[batchKey]?.supers ?? false;
+
+      // if we cannot derive data, fallback to include validator in filtered list
+      if (batchIndex === -1 || !identities || !supers) {
+        filteredList.push(validator);
+        continue;
+      }
+
+      const address = meta[batchKey].addresses[batchIndex];
+
+      const identity = identities[batchIndex] ?? '';
+      const identityRaw = identity?.info?.display?.Raw ?? '';
+      const identityAsBytes = u8aToString(u8aUnwrapBytes(identityRaw));
+      const identitySearch = (
+        identityAsBytes === '' ? identityRaw : identityAsBytes
+      ).toLowerCase();
+
+      const superIdentity = supers[batchIndex] ?? null;
+      const superIdentityRaw =
+        superIdentity?.identity?.info?.display?.Raw ?? '';
+      const superIdentityAsBytes = u8aToString(
+        u8aUnwrapBytes(superIdentityRaw)
+      );
+      const superIdentitySearch = (
+        superIdentityAsBytes === '' ? superIdentityRaw : superIdentityAsBytes
+      ).toLowerCase();
+
+      if (address.toLowerCase().includes(searchTerm.toLowerCase()))
+        filteredList.push(validator);
+      if (
+        identitySearch.includes(searchTerm.toLowerCase()) ||
+        superIdentitySearch.includes(searchTerm.toLowerCase())
+      )
+        filteredList.push(validator);
+    }
+    return filteredList;
+  };
+
   return {
     filtersToLabels,
     ordersToLabels,
     filter,
     applyOrder,
+    applySearch,
   };
 };
