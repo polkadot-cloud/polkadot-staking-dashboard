@@ -19,9 +19,9 @@ export const defaultFiltersInterface = {
   // eslint-disable-next-line
   setSearchTerm: (g: string, t: string) => { },
   // eslint-disable-next-line
-  clearExcludes: (g: string) => { },
+  resetExcludes: (g: string) => { },
   // eslint-disable-next-line
-  clearOrder: (g: string) => { },
+  resetOrder: (g: string) => { },
   // eslint-disable-next-line
   clearSearchTerm: (g: string) => { },
   // eslint-disable-next-line

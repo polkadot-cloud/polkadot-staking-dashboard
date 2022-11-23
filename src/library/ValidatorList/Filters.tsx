@@ -13,7 +13,6 @@ import {
 import { useFilters } from 'contexts/Filters';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
-import { useValidatorFilter } from 'library/Filter/context';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
 import { FilterValidators } from './FilterValidators';
@@ -21,23 +20,12 @@ import { OrderValidators } from './OrderValidators';
 import { useValidatorFilters } from './useValidatorFilters';
 
 export const Filters = () => {
-  const { validatorOrder, orderValidators } = useValidatorFilter();
   const { openOverlayWith } = useOverlay();
-  const {
-    clearExcludes,
-    getExcludes,
-    getOrder,
-    setMultiExcludes,
-    toggleExclude,
-  } = useFilters();
+  const { resetExcludes, getExcludes, getOrder, toggleExclude } = useFilters();
   const { filtersToLabels, ordersToLabels } = useValidatorFilters();
 
   const excludes = getExcludes('validators');
   const order = getOrder('validators');
-
-  const handleFilter = (fn: any, filter: string) => {
-    fn(filter);
-  };
 
   // scroll to top of the window on every filter.
   useEffect(() => {
@@ -64,26 +52,11 @@ export const Filters = () => {
           }}
         />
         <ButtonSecondary
-          text="Apply All"
-          marginRight
-          onClick={() =>
-            setMultiExcludes('validators', [
-              'missing_identity',
-              'over_subscribed',
-              'all_commission',
-              'blocked_nominations',
-              'inactive',
-            ])
-          }
-          disabled={excludes?.length === 5}
-        />
-        <ButtonSecondary
-          text="Clear"
+          text="Reset"
           onClick={() => {
-            clearExcludes('validators');
-            handleFilter(orderValidators, 'default');
+            resetExcludes('validators');
           }}
-          disabled={!excludes?.length && validatorOrder === 'default'}
+          disabled={!excludes?.length && order === 'default'}
         />
       </div>
       <Container>

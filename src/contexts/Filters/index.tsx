@@ -130,13 +130,13 @@ export const FiltersProvider = ({
     setSearchTerms(newSearchTerms);
   };
 
-  // clear excludes for a given group
-  const clearExcludes = (g: string) => {
+  // resets excludes for a given group
+  const resetExcludes = (g: string) => {
     setExcludes([...excludes].filter((e: FilterExclude) => e.key !== g));
   };
 
-  // clear order for a given group
-  const clearOrder = (g: string) => {
+  // resets order for a given group
+  const resetOrder = (g: string) => {
     setOrders([...orders].filter((e: FilterOrder) => e.key !== g));
   };
 
@@ -173,8 +173,8 @@ export const FiltersProvider = ({
         setOrder,
         getSearchTerm,
         setSearchTerm,
-        clearExcludes,
-        clearOrder,
+        resetExcludes,
+        resetOrder,
         clearSearchTerm,
         applyExcludes,
         applyOrder,

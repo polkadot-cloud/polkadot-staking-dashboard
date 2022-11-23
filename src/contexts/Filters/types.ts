@@ -11,8 +11,8 @@ export interface FiltersContextInterface {
   setOrder: (g: string, o: string) => void;
   getSearchTerm: (g: string) => string | null;
   setSearchTerm: (g: string, t: string) => void;
-  clearExcludes: (g: string) => void;
-  clearOrder: (g: string) => void;
+  resetExcludes: (g: string) => void;
+  resetOrder: (g: string) => void;
   clearSearchTerm: (g: string) => void;
   applyExcludes: (g: string, list: AnyJson, fn: AnyFunction) => void;
   applyOrder: (g: string, list: AnyJson, fn: AnyFunction) => void;
