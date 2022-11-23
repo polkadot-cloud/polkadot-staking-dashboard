@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 import { toFixedIfNecessary } from 'Utils';
 
 export const SupplyStakedStatBox = () => {
@@ -14,6 +15,7 @@ export const SupplyStakedStatBox = () => {
   const { metrics } = useNetworkMetrics();
   const { totalIssuance } = metrics;
   const { staking } = useStaking();
+  const { t } = useTranslation('pages');
 
   const { lastTotalStake } = staking;
 
@@ -30,7 +32,7 @@ export const SupplyStakedStatBox = () => {
   const totalIssuanceBase = totalIssuance.div(new BN(10 ** units));
 
   const params = {
-    label: 'Total Supply Staked',
+    label: t('nominate.total_supply_staked'),
     stat: {
       value: lastTotalStakeBase.toNumber(),
       unit: network.unit,

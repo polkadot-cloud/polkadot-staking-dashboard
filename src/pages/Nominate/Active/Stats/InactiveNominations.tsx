@@ -3,10 +3,12 @@
 
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 
 export const ActiveNominationsStatBox = () => {
   const { getNominationsStatus, isNominating } = useStaking();
   const nominationStatuses = getNominationsStatus();
+  const { t } = useTranslation('pages');
 
   const total = Object.values(nominationStatuses).length;
   const inactive =
@@ -20,7 +22,7 @@ export const ActiveNominationsStatBox = () => {
   }
 
   const params = {
-    label: 'Inactive Nominations',
+    label: t('nominate.inactive_nominations'),
     stat: {
       value: inactive,
       total,
