@@ -146,13 +146,16 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   h4 {
     color: ${(props) => (props.active ? networkColor : textSecondary)};
+    font-variation-settings: 'wght' 560;
     transition: color 0.1s;
     margin: 0;
   }
 
   svg {
     color: ${(props) => (props.active ? networkColor : textSecondary)};
+    opacity: ${(props) => (props.active ? 1 : 0.7)};
     transition: color 0.1s;
-    margin-right: 0.75rem;
+    margin-left: 0.2rem;
+    margin-right: 0.9rem;
   }
 `;

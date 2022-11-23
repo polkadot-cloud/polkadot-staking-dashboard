@@ -34,7 +34,7 @@ export const FilterValidators = () => {
             }}
           >
             <FontAwesomeIcon
-              transform="grow-2"
+              transform="grow-5"
               icon={excludes?.includes(f) ? faCheckCircle : faCircle}
             />
             <h4>{l}</h4>
