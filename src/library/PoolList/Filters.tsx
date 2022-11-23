@@ -16,7 +16,7 @@ import { FilterPools } from './FilterPools';
 
 export const Filters = () => {
   const { resetExcludes, getExcludes, toggleExclude } = useFilters();
-  const { filtersToLabels } = usePoolFilters();
+  const { filtersToLabels } = usePoolFilters({ batchKey: 'bonded_pools' });
   const { openOverlayWith } = useOverlay();
 
   const excludes = getExcludes('pools');

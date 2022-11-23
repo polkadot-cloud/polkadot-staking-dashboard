@@ -1,8 +1,16 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { BondedPool } from 'contexts/Pools/types';
+import { useStaking } from 'contexts/Staking';
 import { AnyFunction, AnyJson } from 'types';
 
-export const usePoolFilters = () => {
+export const usePoolFilters = ({ batchKey }: { batchKey: string }) => {
+  const { meta } = useBondedPools();
+  const { getNominationsStatusFromTargets } = useStaking();
+  // get pool targets from nominations meta batch
+  const nominations = meta[batchKey]?.nominations ?? [];
+
   /*
    * filterInactive
    * Iterates through the supplied list and refers to the meta
@@ -11,7 +19,21 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const filterInactive = (list: any) => {
-    return list;
+    let i = 0;
+    const filteredList = list.filter((p: BondedPool) => {
+      const targets = nominations[i]?.targets ?? [];
+      // targets have not yet synced
+      if (!targets.length) {
+        return list;
+      }
+      const status = getNominationsStatusFromTargets(
+        p.addresses.stash,
+        targets
+      );
+      i++;
+      return status === 'active';
+    });
+    return filteredList;
   };
 
   /*
@@ -58,11 +80,7 @@ export const usePoolFilters = () => {
     return fns;
   };
 
-  const applyFilter = (
-    excludes: Array<string> | null,
-    list: AnyJson,
-    batchKey: string
-  ) => {
+  const applyFilter = (excludes: Array<string> | null, list: AnyJson) => {
     if (!excludes) {
       return list;
     }
