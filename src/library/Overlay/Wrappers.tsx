@@ -9,6 +9,7 @@ import {
   networkColor,
   shadowColor,
   textPrimary,
+  textSecondary,
 } from 'theme';
 
 export const OverlayWrapper = styled.div`
@@ -122,27 +123,36 @@ export const TitleWrapper = styled.div`
 
 export const FilterListWrapper = styled.div`
   padding-bottom: 0.5rem;
-  .item {
-    background: ${buttonPrimaryBackground};
-    border: 1px solid ${buttonPrimaryBackground};
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    border-radius: 1rem;
-    padding: 1rem;
-    margin: 1rem 0;
 
-    &:last-child {
+  > .body {
+    button:last-child {
       margin-bottom: 0;
     }
+  }
+`;
 
-    h4 {
-      margin: 0;
-    }
+export const FilterListItem = styled.button<{ active: boolean }>`
+  border: 1px solid
+    ${(props) => (props.active ? networkColor : buttonPrimaryBackground)};
+  background: ${buttonPrimaryBackground};
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  border-radius: 1rem;
+  padding: 0rem 1rem;
+  margin: 1rem 0;
+  transition: border 0.1s;
 
-    svg {
-      margin-right: 0.75rem;
-    }
+  h4 {
+    color: ${(props) => (props.active ? networkColor : textSecondary)};
+    transition: color 0.1s;
+    margin: 0;
+  }
+
+  svg {
+    color: ${(props) => (props.active ? networkColor : textSecondary)};
+    transition: color 0.1s;
+    margin-right: 0.75rem;
   }
 `;
