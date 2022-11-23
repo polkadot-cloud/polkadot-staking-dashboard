@@ -10,8 +10,8 @@ import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolState } from 'contexts/Pools/types';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
@@ -38,7 +38,7 @@ export const Pool = (props: PoolProps) => {
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { meta } = useBondedPools();
-  const { isBonding } = useActivePools();
+  const { membership } = usePoolMemberships();
   const { addNotification } = useNotifications();
   const { validators } = useValidators();
   const { poolsSyncing } = useUi();
@@ -141,7 +141,7 @@ export const Pool = (props: PoolProps) => {
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!poolsSyncing &&
             state === PoolState.Open &&
-            !isBonding() &&
+            !membership &&
             !isReadOnlyAccount(activeAccount) &&
             activeAccount && (
               <Labels>

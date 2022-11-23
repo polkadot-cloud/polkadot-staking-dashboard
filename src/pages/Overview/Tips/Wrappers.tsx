@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   backgroundLabel,
@@ -8,15 +9,13 @@ import {
   textPrimary,
   textSecondary,
 } from 'theme';
-import { motion } from 'framer-motion';
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
-  box-sizing: border-box;
   display: flex;
   flex-flow: row nowrap;
   justify-items: center;
-  margin: 0.25rem 0 0.15rem 0;
+  margin: 0.25rem 0 0rem 0;
 `;
 export const ItemWrapper = styled(motion.div)`
   padding: 0;
@@ -28,7 +27,6 @@ export const ItemWrapper = styled(motion.div)`
 
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
   border-radius: 1.25rem;
-  box-sizing: border-box;
   transition: border 0.05s;
   display: flex;
   flex-flow: row wrap;
@@ -89,7 +87,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           height: 1.9rem;
 
           > span {
-            box-sizing: border-box;
             position: absolute;
             right: 0;
             min-width: 6.2rem;
@@ -113,7 +110,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         justify-content: flex-start;
         overflow: hidden;
         width: 100%;
-        height: 1.8rem;
+        height: 1.85rem;
         position: relative;
 
         h4 {
@@ -122,11 +119,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           top: 0;
           left: 0;
           width: auto;
-          height: 1.8rem;
+          height: 1.85rem;
           max-width: 100%;
-          box-sizing: border-box;
           margin: 0;
-          padding: 0.15rem 6rem 0 0;
+          padding: 0.15rem 6rem 0rem 0;
           text-align: left;
           font-size: 1.05rem;
           text-overflow: ellipsis;
@@ -143,7 +139,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           background: ${networkColor};
           color: white;
           border-radius: 1.5rem;
-          padding: 0.25rem 0.75rem;
+          padding: 0.1rem 0.85rem;
           font-size: 1rem;
 
           > svg {
@@ -167,8 +163,9 @@ export const PageToggleWrapper = styled.div`
   margin-left: 0.75rem;
 
   > button {
-    margin: 0;
+    margin: 0 0.5rem;
     opacity: 0.75;
+    font-size: 1.1rem;
     transition: color 0.2s;
 
     > svg {

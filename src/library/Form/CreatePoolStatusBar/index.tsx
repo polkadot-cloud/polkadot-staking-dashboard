@@ -11,28 +11,25 @@ import { planckBnToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const CreatePoolStatusBar = (props: NominateStatusBarProps) => {
-  const { value } = props;
-
-  const { network } = useApi();
-  const { stats } = usePoolsConfig();
+export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
+  const { minCreateBond } = usePoolsConfig().stats;
   const { isSyncing } = useUi();
-  const { unit, units } = network;
-  const { minCreateBond } = stats;
+  const { unit, units } = useApi().network;
 
   const minCreateBondBase = planckBnToUnit(minCreateBond, units);
-  const gtMinCreateBond = value >= minCreateBondBase;
+  const sectionClassName =
+    value >= minCreateBondBase && !isSyncing ? 'invert' : '';
 
   return (
     <Wrapper>
       <div className="bars">
-        <section className={gtMinCreateBond && !isSyncing ? 'invert' : ''}>
+        <section className={sectionClassName}>
           <h4>&nbsp;</h4>
           <div className="bar">
             <h5>0 {unit}</h5>
           </div>
         </section>
-        <section className={gtMinCreateBond && !isSyncing ? 'invert' : ''}>
+        <section className={sectionClassName}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
             &nbsp;Create Pool

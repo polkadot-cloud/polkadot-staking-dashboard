@@ -70,7 +70,6 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
 export const CardWrapper = styled.div<CardWrapperProps>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
-  box-sizing: border-box;
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
   border-radius: 1.1rem;
@@ -142,7 +141,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 export const GraphWrapper = styled.div<GraphWrapperProps>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
-  box-sizing: border-box;
   border-radius: 1rem;
   background: ${backgroundSecondary};
   display: flex;

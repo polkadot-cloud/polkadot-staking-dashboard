@@ -13,8 +13,16 @@ import { convertRemToPixels } from 'Utils';
 import { AccountDropdownProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
 
-export const AccountDropdown = (props: AccountDropdownProps) => {
-  const { items, onChange, placeholder, value, current, height } = props;
+export const AccountDropdown = ({
+  items,
+  onChange,
+  placeholder,
+  value,
+  current,
+  height,
+}: AccountDropdownProps) => {
+  // store input items
+  const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
 
   useEffect(() => {
     setInputItems(items);
@@ -25,8 +33,6 @@ export const AccountDropdown = (props: AccountDropdownProps) => {
     return name;
   };
 
-  // store input items
-  const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
   const c = useCombobox({
     items: inputItems,
     itemToString,

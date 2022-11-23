@@ -12,13 +12,10 @@ import { planckBnToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const NominateStatusBar = (props: NominateStatusBarProps) => {
-  const { value } = props;
-
-  const { network } = useApi();
+export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { staking, eraStakers } = useStaking();
   const { isSyncing } = useUi();
-  const { unit, units } = network;
+  const { unit, units } = useApi().network;
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
 

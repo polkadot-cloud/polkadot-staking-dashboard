@@ -6,6 +6,7 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
+export const AppVersion = '1.0.1';
 export const UriPrefix = '/';
 export const TitleDefault = 'Polkadot Staking Dashboard';
 export const DappName = 'Polkadot Staking Dashboard';
@@ -92,3 +93,8 @@ export const DefaultParams = {
   minInflation: 0.025,
   stakeTarget: 0.5,
 };
+
+/*
+ * locale
+ */
+export const DefaultLocale = 'en';

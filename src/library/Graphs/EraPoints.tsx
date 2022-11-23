@@ -27,23 +27,20 @@ ChartJS.register(
   Legend
 );
 
-export const EraPoints = (props: EraPointsProps) => {
+export const EraPoints = ({ items = [], height }: EraPointsProps) => {
   const { mode } = useTheme();
-  const { network } = useApi();
-  let { items } = props;
-  const { height } = props;
-
-  items = items === undefined ? [] : items;
+  const { name } = useApi().network;
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
       x: {
+        border: {
+          display: false,
+        },
         grid: {
-          drawBorder: false,
           color: defaultThemes.transparent[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
         ticks: {
           display: true,
@@ -59,14 +56,15 @@ export const EraPoints = (props: EraPointsProps) => {
         },
       },
       y: {
+        border: {
+          display: false,
+        },
+        grid: {
+          color: defaultThemes.graphs.grid[mode],
+        },
         ticks: {
           display: true,
           beginAtZero: false,
-        },
-        grid: {
-          drawBorder: false,
-          color: defaultThemes.graphs.grid[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
       },
     },
@@ -89,9 +87,7 @@ export const EraPoints = (props: EraPointsProps) => {
           title: () => {
             return [];
           },
-          label: (context: any) => {
-            return `${context.parsed.y}`;
-          },
+          label: (context: any) => `${context.parsed.y}`,
         },
         intersect: false,
         interaction: {
@@ -102,18 +98,13 @@ export const EraPoints = (props: EraPointsProps) => {
   };
 
   const data = {
-    labels: items.map((item: any) => {
-      return item.era;
-    }),
+    labels: items.map((item: any) => item.era),
     datasets: [
       {
         label: 'Points',
-        // data: empty_data,
-        data: items.map((item: any) => {
-          return item.reward_point;
-        }),
-        borderColor: networkColors[`${network.name}-${mode}`],
-        backgroundColor: networkColors[`${network.name}-${mode}`],
+        data: items.map((item: any) => item.reward_point),
+        borderColor: networkColors[`${name}-${mode}`],
+        backgroundColor: networkColors[`${name}-${mode}`],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,
@@ -124,7 +115,7 @@ export const EraPoints = (props: EraPointsProps) => {
   return (
     <div
       style={{
-        height: height === undefined ? 'auto' : height,
+        height: height || 'auto',
       }}
     >
       <Line options={options} data={data} />

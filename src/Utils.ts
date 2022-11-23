@@ -5,7 +5,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
-import { AnyApi, AnyMetaBatch, PagesConfig } from 'types/index';
+import { AnyApi, AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -136,13 +136,6 @@ export const pageFromUri = (pathname: string) => {
   return page;
 };
 
-export const pageTitleFromUri = (pathname: string, pages: PagesConfig) => {
-  for (const page of pages) {
-    if (page.uri === pathname) return page.title;
-  }
-  return '';
-};
-
 export const isNumeric = (str: string | number) => {
   str = typeof str === 'string' ? str.trim() : String(str);
   return str !== '' && !Number.isNaN(Number(str));
@@ -231,6 +224,12 @@ export const extractUrlValue = (key: string, url: string) => {
   if (typeof url === 'undefined') url = window.location.href;
   const match = url.match(`[?&]${key}=([^&]+)`);
   return match ? match[1] : null;
+};
+
+// converts a string of text to lowercase and replaces spaces with underscores
+export const stringToKey = (str: string) => {
+  if (!str) return '';
+  return str.toLowerCase().replace(/ /g, '_');
 };
 
 export const registerSaEvent = (e: string, a: AnyApi = {}) => {

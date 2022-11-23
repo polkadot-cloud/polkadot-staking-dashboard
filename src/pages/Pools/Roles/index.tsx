@@ -6,13 +6,13 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
-import Button from 'library/Button';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState } from 'react';
@@ -145,13 +145,10 @@ export const Roles = (props: RolesProps) => {
           <>
             {isEditing && (
               <div>
-                <Button
-                  small
-                  icon={faTimesCircle}
-                  transform="grow-1"
-                  inline
-                  primary
-                  title="Cancel"
+                <ButtonPrimary
+                  iconLeft={faTimesCircle}
+                  iconTransform="grow-1"
+                  text="Cancel"
                   disabled={poolsSyncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
@@ -159,13 +156,10 @@ export const Roles = (props: RolesProps) => {
             )}
             &nbsp;&nbsp;
             <div>
-              <Button
-                small
-                icon={isEditing ? faCheckCircle : faEdit}
-                transform="grow-1"
-                inline
-                primary
-                title={isEditing ? 'Save' : 'Edit'}
+              <ButtonPrimary
+                iconLeft={isEditing ? faCheckCircle : faEdit}
+                iconTransform="grow-1"
+                text={isEditing ? 'Save' : 'Edit'}
                 disabled={
                   poolsSyncing ||
                   isReadOnlyAccount(activeAccount) ||

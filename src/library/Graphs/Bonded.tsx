@@ -12,12 +12,15 @@ import { GraphWrapper } from './Wrappers';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const Bonded = (props: BondedProps) => {
+export const Bonded = ({
+  active,
+  free,
+  unlocking,
+  unlocked,
+  inactive,
+}: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
-
-  const { active, unlocking, unlocked, inactive } = props;
-  const { free } = props;
 
   // graph data
   let graphActive = active;
@@ -65,7 +68,7 @@ export const Bonded = (props: BondedProps) => {
             if (inactive) {
               return 'Inactive';
             }
-            return `${context.label}: ${
+            return `${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)
             } ${network.unit}`;
           },

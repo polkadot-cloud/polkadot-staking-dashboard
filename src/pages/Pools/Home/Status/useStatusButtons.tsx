@@ -8,9 +8,9 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { registerSaEvent } from 'Utils';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
+import { registerSaEvent } from 'Utils';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
@@ -32,6 +32,7 @@ export const useStatusButtons = () => {
   const createBtn = {
     title: `Create${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
     icon: faPlusCircle,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||
@@ -50,6 +51,7 @@ export const useStatusButtons = () => {
   const joinPoolBtn = {
     title: `Join`,
     icon: faUserPlus,
+    large: true,
     transform: 'grow-1',
     disabled:
       !isReady ||

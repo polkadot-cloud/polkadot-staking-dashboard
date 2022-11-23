@@ -32,7 +32,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
       `
       box-shadow: none;
       border: none;`}
-    box-sizing: border-box;
     flex: 1;
     border-radius: 1rem;
     display: flex;
@@ -48,7 +47,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
     height: 100%;
     padding: 0;
     .row {
-      box-sizing: border-box;
       flex: 1 0 100%;
       height: 3.25rem;
       display: flex;
@@ -104,10 +102,12 @@ export const Labels = styled.div`
     margin: 0 0.2rem;
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       margin: 0 0.2rem;
-
       &.pool {
         margin: 0 0.4rem;
       }
+    }
+    button {
+      font-size: 1.1rem;
     }
     &.button-with-text {
       margin-right: 0;
@@ -136,7 +136,6 @@ export const Labels = styled.div`
 `;
 
 export const OverSubscribedWrapper = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -151,7 +150,6 @@ export const OverSubscribedWrapper = styled.div`
   }
 `;
 export const IdentityWrapper = styled(motion.div)`
-  box-sizing: border-box;
   display: flex;
   margin-right: 0.5rem;
   flex-flow: row nowrap;

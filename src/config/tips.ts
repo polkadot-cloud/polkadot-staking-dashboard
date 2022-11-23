@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import * as infoJson from 'img/json/info-outline.json';
 import * as helpCenterJson from 'img/json/help-center-outline.json';
+import * as infoJson from 'img/json/info-outline.json';
 
 export const TIPS_CONFIG = [
   {
@@ -88,6 +88,18 @@ export const TIPS_CONFIG = [
     description: [
       'Pools will manage nominations on your behalf, but it is still a good idea to check regularly whether your pool is actively earning rewards.',
       "Monitor your pool's status to ensure that it is performing well regularly, and consider joining another pool if you are not receiving any rewards.",
+    ],
+    icon: infoJson,
+  },
+  {
+    id: 'join_another_pool',
+    meta: {
+      segment: 6,
+    },
+    title: 'Joining Another Pool',
+    subtitle: 'Switch to a different account to join another pool.',
+    description: [
+      'Only one pool can be joined per account on {NETWORK_NAME}. To join more pools, firstly switch to another account.',
     ],
     icon: infoJson,
   },

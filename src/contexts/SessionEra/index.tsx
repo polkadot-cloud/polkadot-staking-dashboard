@@ -28,12 +28,12 @@ export const SessionEraProvider = ({
 
   useEffect(() => {
     if (status === 'connecting') {
-      setStateWithRef(defaults.sessionEra, setSessioEra, sessionEraRef);
+      setStateWithRef(defaults.sessionEra, setSessionEra, sessionEraRef);
     }
   }, [status]);
 
   // store network metrics in state
-  const [sessionEra, setSessioEra] = useState<SessionEra>(defaults.sessionEra);
+  const [sessionEra, setSessionEra] = useState<SessionEra>(defaults.sessionEra);
   const sessionEraRef = useRef(sessionEra);
 
   const [unsub, setUnsub] = useState<AnyApi>(null);
@@ -61,7 +61,7 @@ export const SessionEraProvider = ({
             sessionProgress: session.sessionProgress.toNumber(),
             sessionsPerEra: session.sessionsPerEra.toNumber(),
           },
-          setSessioEra,
+          setSessionEra,
           sessionEraRef
         );
       });

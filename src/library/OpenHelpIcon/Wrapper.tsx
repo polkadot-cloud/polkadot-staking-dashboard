@@ -21,6 +21,7 @@ export const Wrapper = styled.button<{ light?: boolean }>`
   border-radius: 50%;
   padding: 0.05rem;
   transition: all 0.15s;
+  font-size: 1.15rem;
 
   &:hover {
     fill: ${networkColor};

@@ -9,22 +9,24 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useEffect, useState } from 'react';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { planckBnToUnit } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import { UnbondInput } from './UnbondInput';
 
-export const UnbondFeedback = (props: UnbondFeedbackProps) => {
-  const { bondType } = props;
-  const inSetup = props.inSetup ?? false;
-  const warnings = props.warnings ?? [];
-  const setters = props.setters ?? [];
-  const listenIsValid = props.listenIsValid ?? (() => {});
-  const defaultBond = props.defaultBond || '';
+export const UnbondFeedback = ({
+  bondType,
+  inSetup = false,
+  warnings = [],
+  setters = [],
+  listenIsValid = () => {},
+  defaultBond,
+  setLocalResize,
+  txFees,
+}: UnbondFeedbackProps) => {
+  const defaultValue = defaultBond || '';
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
@@ -36,7 +38,6 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
   const { minJoinBond, minCreateBond } = stats;
   const { units } = network;
   const controller = getBondedAccount(activeAccount);
-  const { txFees } = useTxFees();
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -51,13 +52,13 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
   // local bond state
   const [bond, setBond] = useState<{ bond: number | string }>({
-    bond: defaultBond,
+    bond: defaultValue,
   });
 
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: defaultBond,
+      bond: defaultValue,
     });
   }, [activeAccount]);
 
@@ -68,7 +69,7 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
   // if resize is present, handle on error change
   useEffect(() => {
-    if (props.setLocalResize) props.setLocalResize();
+    if (setLocalResize) setLocalResize();
   }, [errors]);
 
   // add this component's setBond to setters
@@ -107,29 +108,25 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
 
   // handle error updates
   const handleErrors = () => {
-    const _errors = warnings;
+    const _errors = [...warnings];
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // unbond errors
-    if (Number(bond.bond) > activeBase) {
+    if (Number(bond.bond) > activeBase)
       _errors.push('Unbond amount is more than your bonded balance.');
-    }
 
     // unbond errors for staking only
-    if (bondType === 'stake') {
-      if (getControllerNotImported(controller)) {
+    if (bondType === 'stake')
+      if (getControllerNotImported(controller))
         _errors.push(
           'You must have your controller account imported to unbond.'
         );
-      }
-    }
 
-    if (bond.bond !== '' && Number(bond.bond) < _planck) {
+    if (bond.bond !== '' && Number(bond.bond) < _planck)
       _errors.push('Value is too small');
-    }
 
-    if (Number(bond.bond) > freeToUnbondToMin) {
+    if (Number(bond.bond) > freeToUnbondToMin)
       _errors.push(
         `A minimum bond of ${minBondBase} ${network.unit} is required ${
           bondType === 'stake'
@@ -139,26 +136,20 @@ export const UnbondFeedback = (props: UnbondFeedbackProps) => {
             : `as a pool member`
         }.`
       );
-    }
-    const bondValid = !_errors.length && _bond !== '';
 
-    listenIsValid(bondValid);
+    listenIsValid(!_errors.length && _bond !== '');
     setErrors(_errors);
   };
 
   return (
     <>
-      <CardHeaderWrapper>
-        <h4>
-          Bonded: {humanNumber(activeBase)} {network.unit}
-        </h4>
-      </CardHeaderWrapper>
       {errors.map((err: string, index: number) => (
         <Warning key={`unbond_error_${index}`} text={err} />
       ))}
       <Spacer />
       <UnbondInput
-        defaultValue={defaultBond}
+        active={active}
+        defaultValue={defaultValue}
         disabled={false}
         freeToUnbondToMin={freeToUnbondToMin}
         setters={setters}
